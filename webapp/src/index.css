@@ -1,0 +1,51 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+a {
+  color: #30D7A9;
+}
+
+a:hover {
+  color: #30D7A9;
+  text-decoration: none;
+}
+
+#app {
+  height: 100%;
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+
+/* -----------------------------------------------------------------------
+  Key colors */
+
+.won      { background-color: #4A90E2; color: #4A90E2; fill: #4A90E2; }
+.winning  { background-color: #90B9E9; color: #90B9E9; fill: #90B9E9; }
+.lost     { background-color: #4F225F; color: #4F225F; fill: #4F225F; }
+.outbid   { background-color: #F04ACC; color: #F04ACC; fill: #F04ACC; }
+.taken    { background-color: #39516B; color: #39516B; fill: #39516B; }
+.genesis  { background-color: #FFFFFF; color: #FFFFFF; fill: #FFFFFF; }
+.roads    { background-color: #5C5C5C; color: #5C5C5C; fill: #5C5C5C; }
+.district { background-color: #B18AE0; color: #B18AE0; fill: #B18AE0; }
+.pending  { background-color: #64D1B3; color: #64D1B3; fill: #64D1B3; }
+.default  { background-color: #EAEAEA; color: #EAEAEA; fill: #EAEAEA; }
+.loading  { background-color: #AAAAAA; color: #AAAAAA; fill: #AAAAAA; }
+
+.little-value { border-top-color: #FFF189; }
+.big-value    { border-bottom-color: #EF303B; }

@@ -1,0 +1,67 @@
+.Icon {
+  background-position: 0 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.Icon-decentraland {
+  width: 152px;
+  height: 152px;
+  background-image: url("../images/logo.svg");
+}
+
+.Icon-decentraland-loading {
+  width: 100px;
+  height: 100px;
+  background-image: url("../images/decentraland-loading.gif");
+}
+
+.Icon-hamburger {
+  width: 16px;
+  height: 11px;
+  background-image: url("../images/hamburger.svg");
+}
+
+.Icon-laquo {
+  width: 12px;
+  height: 10px;
+  background-image: url("../images/laquo.svg");
+}
+
+.Icon-address {
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/address.svg");
+}
+
+.Icon-pencil {
+  width: 11px;
+  height: 11px;
+  background-image: url("../images/pencil.svg");
+}
+
+.Icon-link-graph {
+  width: 126px;
+  height: 24px;
+  background-image: url("../images/link-graph.svg");
+}
+
+.Icon-linked-graph {
+  width: 126px;
+  height: 24px;
+  background-image: url("../images/linked-graph.svg");
+}
+
+.Icon-twitter, .Icon-rocketchat, .Icon-github, .Icon-reddit, .Icon-facebook {
+  width: 16px;
+  height: 15px;
+  background-image: url("../images/social-icons.svg");
+}
+
+.Icon-twitter    { background-position: 0 0; }
+.Icon-rocketchat { background-position: -40px 0; }
+.Icon-github     { background-position: -78px 0; }
+.Icon-reddit     { background-position: -114px 0; }
+.Icon-facebook   { background-position: -152px 0; }
+

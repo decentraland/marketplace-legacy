@@ -1,0 +1,51 @@
+.StaticPage {
+  height: 100%;
+}
+
+.StaticPage .content {
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #3E396B;
+}
+
+.StaticPageStreched .content {
+  margin: auto;
+  padding: 0 80px;
+  display: block;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .StaticPageStreched .content {
+    padding: 0 30px;
+  }
+}
+
+.StaticPage .content h2 {
+  margin-top: 0;
+  margin-bottom: 40px;
+  font-size: 28px;
+  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
+}
+
+.StaticPage .message {
+  height: 80%;
+  width: 100%;
+  max-width: 485px;
+  margin: auto;
+}
+
+.StaticPage .message p {
+  font-size: 16px;
+}
+
+.StaticPage .btn-primary {
+  background-color: #30D7A9;
+  color: #FFFFFF;
+  margin-top: 16px;
+  padding: 8px 24px;
+  border: none;
+}

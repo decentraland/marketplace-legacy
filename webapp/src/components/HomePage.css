@@ -1,0 +1,24 @@
+.HomePage {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.HomePage .controls {
+  height: 100%;
+  top: 0;
+  left: 24px;
+  position: absolute;
+}
+
+.HomePage .top-controls {
+  height: 100%;
+  left: 8px;
+  display: inline-block;
+  position: relative;
+}
+
+.HomePage > .Loading {
+  font-size: 10px;
+  top: 25%;
+}

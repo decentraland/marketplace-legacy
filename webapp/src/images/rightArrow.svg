@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="7px" height="10px" viewBox="0 0 7 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="sidebar" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-486.000000, -271.000000)">
+        <g fill="#7B7B7B" fill-rule="nonzero" id="form">
+            <g transform="translate(16.000000, 164.000000)">
+                <g id="email" transform="translate(16.000000, 100.000000)">
+                    <g id="cta" transform="translate(445.550000, 0.000000)">
+                        <path d="M10.7552588,11.9988835 L14.5854984,8.111221 C14.6817126,8.01520176 14.6794217,7.85665837 14.5809168,7.75840613 L13.8959636,7.07510646 C13.7974587,6.97685422 13.6371018,6.97462122 13.5408876,7.07064045 L8.8630471,11.8180101 C8.81264921,11.8671362 8.78974108,11.9341263 8.7943227,11.9988835 C8.79203189,12.0658737 8.81494002,12.1306308 8.8630471,12.1797569 L13.5408876,16.9293595 C13.6371018,17.0253788 13.7974587,17.0231458 13.8959636,16.9248935 L14.5809168,16.2415939 C14.6794217,16.1433416 14.6817126,15.9847982 14.5854984,15.888779 L10.7552588,11.9988835 Z" id="icon" transform="translate(11.725000, 12.000000) rotate(-180.000000) translate(-11.725000, -12.000000) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

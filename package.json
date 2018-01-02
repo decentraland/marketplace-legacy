@@ -1,0 +1,53 @@
+{
+  "name": "Marketplace",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint --fix .",
+    "test": "npx mocha -r babel-register -r specs/spec_utils.js specs/setup.js specs/*.spec.js",
+    "watch:test": "npx mocha -r babel-register -r specs/spec_utils.js specs/setup.js specs/*.spec.js --watch",
+    "build": "npm run lint && npm run test",
+    "start": "babel-node src/server.js",
+    "dev": "nodemon --exec npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decentraland/marketplace.git"
+  },
+  "keywords": [
+    "decentraland",
+    "marketplace",
+    "dapp"
+  ],
+  "author": "Decentraland",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^5.0.0",
+    "body-parser": "^1.18.2",
+    "decentraland-commons": "git+https://github.com/decentraland/commons.git#release",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^4.12.1",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-react": "^7.5.1",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.12.1",
+    "prettier": "^1.7.4",
+    "sinon": "^4.0.1"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "plugins": ["react", "prettier"],
+  "env": {
+    "es6": true,
+    "mocha": true
+  },
+  "globals": {
+    "document": true,
+    "console": true,
+    "window": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "jsx": true,
+      "classes": true
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "prettier/prettier": "error",
+    "no-console": 0,
+    "no-unused-vars": ["error", {
+      "vars": "all",
+      "args": "none",
+      "ignoreRestSiblings": false
+    }]
+  }
+}

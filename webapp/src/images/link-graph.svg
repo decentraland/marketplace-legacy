@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="110px" height="21px" viewBox="0 0 110 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>link-graph</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0 24 0 24 24 0 24"></polygon>
+    </defs>
+    <g id="lock-modal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-665.000000, -507.000000)">
+        <g id="link-graph" transform="translate(661.000000, 506.000000)">
+            <g id="ic_lock_open_black_24px">
+                <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M12,17 C13.1,17 14,16.1 14,15 C14,13.9 13.1,13 12,13 C10.9,13 10,13.9 10,15 C10,16.1 10.9,17 12,17 Z M18,8 L17,8 L17,6 C17,3.24 14.76,1 12,1 C9.24,1 7,3.24 7,6 L8.9,6 C8.9,4.29 10.29,2.9 12,2.9 C13.71,2.9 15.1,4.29 15.1,6 L15.1,8 L6,8 C4.9,8 4,8.9 4,10 L4,20 C4,21.1 4.9,22 6,22 L18,22 C19.1,22 20,21.1 20,20 L20,10 C20,8.9 19.1,8 18,8 Z M18,20 L6,20 L6,10 L18,10 L18,20 Z" id="Shape" fill="#3E396B" fill-rule="nonzero"></path>
+            </g>
+            <g id="ic_lock_outline_black_24px" transform="translate(94.000000, 0.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="a"></g>
+                <path d="M12,17 C13.1,17 14,16.1 14,15 C14,13.9 13.1,13 12,13 C10.9,13 10,13.9 10,15 C10,16.1 10.9,17 12,17 Z M18,8 L17,8 L17,6 C17,3.24 14.76,1 12,1 C9.24,1 7,3.24 7,6 L7,8 L6,8 C4.9,8 4,8.9 4,10 L4,20 C4,21.1 4.9,22 6,22 L18,22 C19.1,22 20,21.1 20,20 L20,10 C20,8.9 19.1,8 18,8 Z M8.9,6 C8.9,4.29 10.29,2.9 12,2.9 C13.71,2.9 15.1,4.29 15.1,6 L15.1,8 L8.9,8 L8.9,6 Z M18,20 L6,20 L6,10 L18,10 L18,20 Z" id="Shape" fill="#AAAAAA" fill-rule="nonzero" mask="url(#mask-2)"></path>
+            </g>
+            <path d="M42.5,13.5 L75.515148,13.5" id="Line-2" stroke="#AAAAAA" stroke-width="2" fill="#AAAAAA" stroke-linecap="square"></path>
+            <path id="Line-2-decoration-1" d="M75.515148,13.5 L64.715148,10.5 L64.715148,16.5 L75.515148,13.5 Z" stroke="#AAAAAA" stroke-width="2" fill="#AAAAAA" stroke-linecap="square"></path>
+        </g>
+    </g>
+</svg>

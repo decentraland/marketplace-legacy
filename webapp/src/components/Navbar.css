@@ -1,0 +1,90 @@
+
+.navbar {
+  max-width: 1170px;
+  padding: 0 20px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  color: #232323;
+}
+
+.navbar-header {
+  float: left;
+}
+
+.navbar-logo {
+  padding: 20px 0;
+  float: left;
+  display: block;
+}
+
+.navbar-logo > h1 {
+  margin: 0 10px;
+  font-size: 19px;
+  line-height: 50px;
+  color: #232323;
+  font-family: "Source Sans Pro SemiBold", Helvetica, sans-serif;
+}
+
+.navbar-logo .Icon-decentraland {
+  width: 52px;
+  height: 52px;
+}
+
+.navbar-container {
+  margin-top: 18px;
+  float: right;
+}
+
+.nav.navbar-nav {
+  padding-right: 18px;
+}
+
+.nav.navbar-nav li {
+  float: left;
+}
+
+.nav.navbar-nav li a {
+  font-size: 16px;
+  color: #232323;
+}
+
+.nav > li > a {
+  padding: 10px 5px;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  background-color: initial;
+  color: #999;
+}
+
+@media (min-width: 400px) {
+  .navbar-logo {
+    padding: 20px 10px;
+  }
+
+  .nav > li > a {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .navbar-logo {
+    margin-left: -15px;
+  }
+
+  .navbar-container {
+    margin-top: 25px;
+  }
+
+  .nav.navbar-nav {
+    padding-right: 0;
+  }
+
+  .nav > li > a {
+    padding: 10px 15px;
+  }
+}

@@ -1,0 +1,73 @@
+.leaflet-popup {
+  z-index: 800;
+  user-select: none;
+}
+
+.leaflet-popup a.leaflet-popup-close-button {
+  display: none;
+}
+
+.leaflet-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.leaflet-popup .leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  box-shadow: none;
+}
+
+.leaflet-popup .leaflet-popup-tip-container {
+  display: none;
+}
+
+.parcel-popup {
+  font-size: 14px;
+  color: #FFF;
+  user-select: none;
+}
+
+.parcel-popup .header {
+  padding: 8px 3px;
+  text-align: center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: #FFF;
+}
+
+.parcel-popup .header.genesis,
+.parcel-popup .header.roads {
+  color: #666;
+}
+
+.parcel-popup .body {
+  padding: 16px;
+}
+
+.parcel-popup .header:first-letter,
+.parcel-popup .current-bid-status:first-letter {
+  text-transform: capitalize;
+}
+
+.parcel-popup .body a {
+  color: #30D7A9;
+}
+
+.parcel-popup .body a:hover {
+  color: #30D7A9;
+  text-decoration: none;
+}
+
+.parcel-popup .current-bid-status {
+  color: #B2B2B2;
+}
+
+.parcel-popup .body > div {
+  margin-bottom: 8px;
+}
+.parcel-popup .body > div:last-child {
+  margin-bottom: 0;
+}

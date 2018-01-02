@@ -1,0 +1,10 @@
+.CollapsedSidebar {
+  width: 86px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.CollapsedSidebar header {
+  background-color: #FCFCFC;
+  border-bottom: 1px solid #EDEDED;
+}
