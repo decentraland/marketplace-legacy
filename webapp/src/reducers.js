@@ -10,6 +10,8 @@ const INITIAL_STATE = {
     ledger: false
   },
 
+  userParcels: { loading: true },
+
   range: {
     minX: 0,
     maxX: 0,
@@ -17,14 +19,14 @@ const INITIAL_STATE = {
     maxY: 0
   },
 
+  sidebar: {
+    open: false
+  },
+
   modal: {
     open: false,
     name: '',
     data: null
-  },
-
-  sidebar: {
-    open: false
   }
 }
 
@@ -37,11 +39,14 @@ function getEthereumConnection(state) {
 function getLoading(state) {
   return state.loading
 }
-function getSidebar(state) {
-  return state.sidebar
+function getUserParcels(state) {
+  return state.userParcels
 }
 function getRange(state) {
   return state.range
+}
+function getSidebar(state) {
+  return state.sidebar
 }
 function getModal(state) {
   return state.modal
@@ -51,8 +56,9 @@ export const selectors = {
   getWeb3Connected,
   getEthereumConnection,
   getLoading,
-  getSidebar,
+  getUserParcels,
   getRange,
+  getSidebar,
   getModal
 }
 
@@ -91,6 +97,28 @@ function loading(state = INITIAL_STATE.loading, action) {
   }
 }
 
+function userParcels(state = INITIAL_STATE.userParcels, action) {
+  switch (action.type) {
+    case types.fetchUserParcels.request:
+      return { ...state, loading: true, error: null }
+    case types.fetchUserParcels.success:
+      return { loading: false, error: null, data: action.userParcels }
+    case types.fetchUserParcels.failed:
+      return { ...state, loading: false, error: action.error }
+    default:
+      return state
+  }
+}
+
+function range(state = INITIAL_STATE.range, action) {
+  switch (action.type) {
+    case types.parcelRangeChanged:
+      return action
+    default:
+      return state
+  }
+}
+
 function sidebar(state = INITIAL_STATE.sidebar, action) {
   switch (action.type) {
     case types.sidebar.open:
@@ -105,15 +133,6 @@ function sidebar(state = INITIAL_STATE.sidebar, action) {
       }
     case types.sidebar.close:
       return INITIAL_STATE.sidebar
-    default:
-      return state
-  }
-}
-
-function range(state = INITIAL_STATE.range, action) {
-  switch (action.type) {
-    case types.parcelRangeChanged:
-      return action
     default:
       return state
   }
@@ -138,8 +157,9 @@ export default {
   web3Connected,
   ethereumConnection,
   loading,
-  sidebar,
+  userParcels,
   range,
+  sidebar,
   modal
 }
 

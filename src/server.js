@@ -38,19 +38,25 @@ if (env.isProduction()) {
 }
 
 /**
- * Test endpoint
+ * Return the parcels an address owns
  * @param  {string} address - User address
  * @return {object}
  */
-app.get('/api/test', server.handleRequest(test))
+app.get('/api/userParcels', server.handleRequest(getUserParcels))
 
-export function test(req) {
+export async function getUserParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  return {
-    address,
-    prop: 'value'
-  }
+  const parcels = [
+    { x: 0, y: 0, price: 13230, name: '', description: '' },
+    { x: 1, y: 0, price: 1030, name: '', description: '' },
+    { x: 0, y: 1, price: 1500, name: '', description: '' }
+  ] // from contract
+
+  // TODO: We'll need to add the price to each parcel we fetch from the contract
+  // using the parcel_states table
+
+  return parcels
 }
 
 /**

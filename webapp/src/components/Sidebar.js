@@ -10,12 +10,13 @@ import './Sidebar.css'
 export default class Sidebar extends React.Component {
   static propTypes = {
     visible: PropTypes.bool,
+    userParcels: PropTypes.object,
     isLoading: PropTypes.bool,
     changeVisibility: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    visible: false,
+    visible: true,
     isLoading: false
   }
 
@@ -37,17 +38,17 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    let { visible } = this.props
+    let { userParcels, visible } = this.props
 
     return (
       <div className={`Sidebar ${this.getVisibilityClassName()}`}>
         <header>
           <Icon name={this.getDecentralandIconName()} />
-          {visible && <h1 className="sidebar-title fadein">Decentraland</h1>}
+          {visible && <h1 className="sidebar-title fadein">Marketplace</h1>}
         </header>
 
         {visible ? (
-          <ExpandedSidebar />
+          <ExpandedSidebar userParcels={userParcels} />
         ) : (
           <CollapsedSidebar onClick={this.toggle} />
         )}

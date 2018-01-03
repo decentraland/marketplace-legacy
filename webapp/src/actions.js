@@ -21,7 +21,13 @@ export function setLoading(loading = false) {
 }
 
 // -------------------------------------------------------------------------
-// Parcel States
+// Parcels
+
+export function fetchUserParcels() {
+  return {
+    type: types.fetchUserParcels.request
+  }
+}
 
 export function parcelRangeChange(minX, minY, maxX, maxY) {
   return {

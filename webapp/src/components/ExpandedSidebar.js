@@ -1,25 +1,81 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import locations from '../locations'
+import { buildCoordinate } from '../lib/utils'
+
+import Loading from './Loading'
 import Icon from './Icon'
 
 import './ExpandedSidebar.css'
 
-export default function ExpandedSidebar(props) {
+export default function ExpandedSidebar({ userParcels }) {
   return (
     <div className="ExpandedSidebar fadein">
-      <UserData />
+      {userParcels.loading ? (
+        <Loading />
+      ) : (
+        <UserParcels userParcels={userParcels.data} />
+      )}
+
       <Footer />
     </div>
   )
 }
 
-ExpandedSidebar.propTypes = {}
+ExpandedSidebar.propTypes = {
+  userParcels: PropTypes.object
+}
 
-function UserData() {
+function UserParcels({ userParcels }) {
   return (
-    <div className="UserData">
-      <h2>Your parcels</h2>
+    <div className="UserParcels">
+      <div className="heading">
+        My Land&nbsp;
+        <span className="parcel-count">{userParcels.length} parcels</span>
+      </div>
+      <ParcelTable parcels={userParcels} />
+    </div>
+  )
+}
+
+function ParcelTable({ parcels }) {
+  if (parcels.length) {
+    return (
+      <div className="table">
+        <div className="table-row table-header">
+          <div className="col-coord">COORD</div>
+          <div className="col-price">PURCHASE PRICE</div>
+          <div className="col-name">NAME</div>
+          <div className="col-actions" />
+        </div>
+
+        {parcels.map((parcel, index) => (
+          <ParcelTableRow
+            key={index}
+            parcel={parcel}
+            className={index % 2 === 0 ? 'gray' : ''}
+          />
+        ))}
+      </div>
+    )
+  } else {
+    return <div className="table-row-empty">You have no available land yet</div>
+  }
+}
+
+function ParcelTableRow({ parcel, className }) {
+  const coord = buildCoordinate(parcel.x, parcel.y)
+
+  return (
+    <div className={`table-row ${className}`}>
+      <div className="col-coord">
+        <Link to={locations.parcelDetail(parcel.x, parcel.y)}>{coord}</Link>
+      </div>
+      <div className="col-price">{parcel.price.toLocaleString()} MANA</div>
+      <div className="col-name">{parcel.name}</div>
+      <div className="col-actions">edit</div>
     </div>
   )
 }

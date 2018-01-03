@@ -7,18 +7,48 @@
 }
 
 /* -----------------------------------------------------------------------
- UserData */
+ UserParcels */
 
-.UserData {
+.UserParcels {
+}
+
+.UserParcels .heading .parcel-count {
+  margin-left: 18px;
+  color: #7B7B7B;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+.UserParcels .table-row {
+  width: 100%;
+  height: 64px;
   padding: 24px;
 }
 
-.UserData h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 20px;
-  color: #000000;
+.UserParcels .table-row-empty {
+  width: 100%;
+  padding-top: 24px;
+  padding-left: 24px;
+  font-size: 15px;
+  color: #7B7B7B;
 }
+
+.UserParcels .table-header {
+  color: #7B7B7B;
+}
+
+.UserParcels .table-row.gray {
+  background-color: #FBFBFB;
+}
+
+.UserParcels .table-row > div {
+  height: 100%;
+  float: left;
+}
+
+.UserParcels .table .col-coord   { width: 20%; }
+.UserParcels .table .col-price   { width: 30%; }
+.UserParcels .table .col-name    { width: 40%; }
+.UserParcels .table .col-actions { width: 10%; }
 
 /* -----------------------------------------------------------------------
  Footer */
