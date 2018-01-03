@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { stateData } from '../lib/propTypes'
+
 import Icon from './Icon'
 import ExpandedSidebar from './ExpandedSidebar'
 import CollapsedSidebar from './CollapsedSidebar'
@@ -10,7 +12,8 @@ import './Sidebar.css'
 export default class Sidebar extends React.Component {
   static propTypes = {
     visible: PropTypes.bool,
-    userParcels: PropTypes.object,
+    address: PropTypes.string,
+    userParcels: stateData(PropTypes.array),
     isLoading: PropTypes.bool,
     changeVisibility: PropTypes.func.isRequired
   }
@@ -38,17 +41,17 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    let { userParcels, visible } = this.props
+    let { address, userParcels, visible } = this.props
 
     return (
       <div className={`Sidebar ${this.getVisibilityClassName()}`}>
         <header>
           <Icon name={this.getDecentralandIconName()} />
-          {visible && <h1 className="sidebar-title fadein">Marketplace</h1>}
+          {visible && <h1 className="sidebar-title fadein">Decentraland</h1>}
         </header>
 
         {visible ? (
-          <ExpandedSidebar userParcels={userParcels} />
+          <ExpandedSidebar address={address} userParcels={userParcels} />
         ) : (
           <CollapsedSidebar onClick={this.toggle} />
         )}

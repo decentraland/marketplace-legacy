@@ -36,6 +36,9 @@ function getWeb3Connected(state) {
 function getEthereumConnection(state) {
   return state.ethereumConnection
 }
+function getAddress(state) {
+  return state.ethereumConnection.address
+}
 function getLoading(state) {
   return state.loading
 }
@@ -55,6 +58,7 @@ function getModal(state) {
 export const selectors = {
   getWeb3Connected,
   getEthereumConnection,
+  getAddress,
   getLoading,
   getUserParcels,
   getRange,

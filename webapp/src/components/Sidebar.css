@@ -22,24 +22,10 @@
 }
 
 .Sidebar header {
+  padding: 12px 18px 8px;
+  border-bottom: 1px solid #EDEDED;
+  background-color: #FCFCFC;
   position: relative;
-  padding: 18px;
-}
-
-.Sidebar.in header .HelpButton {
-  margin: 6px;
-  padding-top: 3px;
-  width: 36px;
-  height: 36px;
-  font-size: 20px;
-  left: inherit;
-  bottom: inherit;
-  position: relative;
-  float: right;
-}
-
-.Sidebar.out header .HelpButton {
-  display: none;
 }
 
 .Sidebar .Icon-decentraland {

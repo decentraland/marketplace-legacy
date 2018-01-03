@@ -13,8 +13,6 @@ export default {
     return this
   },
 
-  async createIndex() {},
-
   async createSchema() {
     await this.createTable(
       'address_states',

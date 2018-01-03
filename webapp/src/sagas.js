@@ -106,7 +106,7 @@ function* connectWeb3(action = {}) {
 
 function* handleFetchUserParcels(action) {
   try {
-    const { address } = yield select(selectors.getEthereumConnection)
+    const address = yield select(selectors.getAddress)
     const userParcels = yield call(() => api.fetchUserParcels(address))
 
     yield put({ type: types.fetchUserParcels.success, userParcels })

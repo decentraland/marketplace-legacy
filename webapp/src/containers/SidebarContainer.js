@@ -4,12 +4,14 @@ import { connect } from 'react-redux'
 
 import { selectors } from '../reducers'
 import { openSidebar, closeSidebar } from '../actions'
+import { stateData } from '../lib/propTypes'
 
 import Sidebar from '../components/Sidebar'
 
 class SidebarContainer extends React.Component {
   static propTypes = {
-    userParcels: PropTypes.object,
+    address: PropTypes.string,
+    userParcels: stateData(PropTypes.array),
     sidebar: PropTypes.shape({
       open: PropTypes.boolean
     }),
@@ -30,11 +32,12 @@ class SidebarContainer extends React.Component {
   }
 
   render() {
-    const { userParcels, sidebar } = this.props
+    const { address, userParcels, sidebar } = this.props
 
     return (
       <Sidebar
         visible={sidebar.open}
+        address={address}
         userParcels={userParcels}
         isLoading={this.isLoading()}
         changeVisibility={this.changeVisibility}
@@ -45,6 +48,7 @@ class SidebarContainer extends React.Component {
 
 export default connect(
   state => ({
+    address: selectors.getAddress(state),
     userParcels: selectors.getUserParcels(state),
     loading: selectors.getLoading(state),
     sidebar: selectors.getSidebar(state)

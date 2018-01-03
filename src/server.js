@@ -48,8 +48,14 @@ export async function getUserParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
   const parcels = [
-    { x: 0, y: 0, price: 13230, name: '', description: '' },
-    { x: 1, y: 0, price: 1030, name: '', description: '' },
+    {
+      x: 0,
+      y: 0,
+      price: 13230,
+      name: 'Some loren ipsum',
+      description: 'This is the description from the first parcel'
+    },
+    { x: 1, y: 0, price: 1030, name: 'Say my goddamn name', description: '' },
     { x: 0, y: 1, price: 1500, name: '', description: '' }
   ] // from contract
 
