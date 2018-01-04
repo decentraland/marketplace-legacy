@@ -215,18 +215,28 @@ const LeafletParcelGrid = L.Layer.extend({
     const offset = this.getBoundsOffset(bounds)
     const tiles = []
 
+    if (!this._tiles) {
+      this._tiles = {};
+    }
+
     for (let i = 0; i <= this.rows; i++) {
       for (let j = 0; j <= this.cols; j++) {
+
         const row = i - offset.rows
         const col = j - offset.cols
-        const tileBounds = this.getCellExtent(row, col)
-        const tileCenter = tileBounds.getCenter()
+        const id = row + ':' + col;
 
-        tiles.push({
-          id: row + ':' + col,
-          bounds: tileBounds,
-          center: tileCenter
-        })
+        if (!this._tiles[id]) {
+          const tileBounds = this.getCellExtent(row, col)
+          const tileCenter = tileBounds.getCenter()
+          this._tiles[id] = {
+            id,
+            bounds: tileBounds,
+            center: tileCenter
+          };
+        }
+        
+        tiles.push(this._tiles[id]);
       }
     }
 
