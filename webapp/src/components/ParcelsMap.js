@@ -31,6 +31,11 @@ export default class ParcelsMap extends React.Component {
     onZoomEnd: PropTypes.func
   }
 
+  constructor(props) {
+    super(props);
+    this.debouncedAddPopup = debounce(this.addPopup, 215);
+  }
+
   static defaultProps = {
     bounds: [[], []],
     onMoveEnd: () => {},
@@ -109,7 +114,9 @@ export default class ParcelsMap extends React.Component {
     this.parcelGrid = new LeafletParcelGrid({
       getTileAttributes: this.getTileAttributes,
       onTileClick: this.onTileClick,
-      onMouseMove: debounce(this.onMouseMove, 100),
+      onMouseDown: this.onMouseDown,
+      onMouseUp: this.onMouseUp,
+      onMouseMove: this.onMouseMove,
       tileSize: tileSize
     })
 
@@ -258,7 +265,21 @@ export default class ParcelsMap extends React.Component {
     console.log('onTileClick', { x, y })
   }
 
+  onMouseDown = latlng => {
+    this.dragging = true;
+    if (this.popup) {
+      this.popup.remove();
+    }
+  }
+
+  onMouseUp = latlng => {
+    this.dragging = false;
+  }
+
   onMouseMove = latlng => {
+    if (this.dragging) {
+      return;
+    }
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
 
     if (
@@ -266,17 +287,20 @@ export default class ParcelsMap extends React.Component {
       this.tileHovered.x !== x ||
       this.tileHovered.y !== y
     ) {
-      this.tileHovered = { x, y }
-      console.log('onTileHover', { x, y })
+      
       if (this.popup) {
         this.popup.remove()
       }
-      this.popup = this.addPopup(x, y, latlng)
+      this.tileHovered = { x, y }
+      this.debouncedAddPopup(x, y, latlng)
     }
   }
 
   // Called by the Parcel Grid on each tile hover
   addPopup = (x, y, latlng) => {
+    if (this.dragging) {
+      return;
+    }
     console.log('addPopup', { x, y, latlng })
 
     const parcel = { x, y, amount: 10 } //this.getParcelData(x, y)
@@ -297,6 +321,8 @@ export default class ParcelsMap extends React.Component {
       .setContent(popup)
       .addTo(this.map)
 
+    this.popup = leafletPopup;
+    
     return leafletPopup
   }
 

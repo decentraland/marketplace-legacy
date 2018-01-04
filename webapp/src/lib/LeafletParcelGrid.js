@@ -19,6 +19,8 @@ const LeafletParcelGrid = L.Layer.extend({
   options: {
     getTileAttributes: () => {},
     onTileClick: () => {},
+    onMouseDown: () => {},
+    onMouseUp: () => {},
     onMouseMove: () => {},
     tileSize: 64
     // delayFactor: 0.05,
@@ -84,6 +86,8 @@ const LeafletParcelGrid = L.Layer.extend({
     map.on('moveend', this.moveHandler, this)
     map.on('zoomend', this.zoomHandler, this)
     map.on('resize', this.resizeHandler, this)
+    map.on('mousedown', this.mousedownHandler, this)
+    map.on('mouseup', this.mouseupHandler, this)
     map.on('mousemove', this.mousemoveHandler, this)
     map.on('click', this.clickHandler, this)
     map.on('viewreset', this.reset, this)
@@ -99,6 +103,8 @@ const LeafletParcelGrid = L.Layer.extend({
     map.off('moveend', this.moveHandler, this)
     map.off('zoomend', this.zoomHandler, this)
     map.off('resize', this.resizeHandler, this)
+    map.off('mousedown', this.mousedownHandler, this)
+    map.off('mouseup', this.mouseupHandler, this)
     map.off('mousemove', this.mousemoveHandler, this)
     map.off('click', this.clickHandler, this)
     map.off('viewreset', this.reset, this)
@@ -148,6 +154,14 @@ const LeafletParcelGrid = L.Layer.extend({
 
   mousemoveHandler(e) {
     this.options.onMouseMove(e.latlng)
+  },
+
+  mousedownHandler(e) {
+    this.options.onMouseDown(e.latlng)
+  },
+
+  mouseupHandler(e) {
+    this.options.onMouseUp(e.latlng)
   },
 
   clickHandler(e) {
