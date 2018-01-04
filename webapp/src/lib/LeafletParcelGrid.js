@@ -1,5 +1,5 @@
 import L from 'leaflet'
-import { requestAnimationFrame, cancelAnimationFrame } from './util'
+import { requestAnimationFrame, cancelAnimationFrame } from './utils'
 
 const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
