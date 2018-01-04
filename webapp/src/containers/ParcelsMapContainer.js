@@ -38,7 +38,7 @@ class ParcelsMapContainer extends React.Component {
     this.baseTileSize = 128
 
     this.state = {
-      zoom: this.baseZoom - 2
+      zoom: this.baseZoom - 1
     }
   }
 

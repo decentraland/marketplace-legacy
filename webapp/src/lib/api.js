@@ -6,8 +6,12 @@ const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
 
 class API {
-  test() {
-    return this.request('get', '/test', { address: '0xdeadbeef' })
+  fetchUserParcels(address) {
+    return this.request('get', '/userParcels', { address })
+  }
+
+  editParcel(message, signature) {
+    return this.request('post', '/userParcels/edit', { message, signature })
   }
 
   request(method, path, params) {
@@ -18,7 +22,7 @@ class API {
 
     if (params) {
       if (method === 'get') {
-        options.params = { params }
+        options.params = params
       } else {
         options.data = params
       }
