@@ -1,18 +1,5 @@
 import L from 'leaflet'
-
-const requestAnimationFrame =
-  window.requestAnimationFrame ||
-  window.mozRequestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.msRequestAnimationFrame ||
-  (callback => setTimeout(callback, 1000 / 60))
-
-const cancelAnimationFrame =
-  window.cancelAnimationFrame ||
-  window.mozCancelAnimationFrame ||
-  window.webkitCancelAnimationFrame ||
-  window.msCancelAnimationFrame ||
-  (id => clearTimeout(id))
+import { requestAnimationFrame, cancelAnimationFrame } from './util'
 
 const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
