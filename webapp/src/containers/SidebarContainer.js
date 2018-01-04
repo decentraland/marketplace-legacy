@@ -9,6 +9,7 @@ import Sidebar from '../components/Sidebar'
 
 class SidebarContainer extends React.Component {
   static propTypes = {
+    address: PropTypes.string,
     sidebar: PropTypes.shape({
       open: PropTypes.boolean
     }),
@@ -29,11 +30,12 @@ class SidebarContainer extends React.Component {
   }
 
   render() {
-    const { sidebar } = this.props
+    const { address, sidebar } = this.props
 
     return (
       <Sidebar
         visible={sidebar.open}
+        address={address}
         isLoading={this.isLoading()}
         changeVisibility={this.changeVisibility}
       />
@@ -43,6 +45,7 @@ class SidebarContainer extends React.Component {
 
 export default connect(
   state => ({
+    address: selectors.getAddress(state),
     loading: selectors.getLoading(state),
     sidebar: selectors.getSidebar(state)
   }),

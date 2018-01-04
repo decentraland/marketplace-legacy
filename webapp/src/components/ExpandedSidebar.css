@@ -7,51 +7,24 @@
 }
 
 /* -----------------------------------------------------------------------
- UserData */
+ Marketplace Title */
 
-.UserData {
-  padding: 24px;
+.MarketplaceTitle {
+  padding: 40px 24px;
 }
 
-.UserData h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
+.MarketplaceTitle h2 {
+  margin: 0;
   font-size: 20px;
   color: #000000;
 }
 
-/* -----------------------------------------------------------------------
- Footer */
-
-.Footer {
-  width: 100%;
-  margin-top: 40px;
-  padding: 32px 0;
-  font-size: 14px;
-  background-color: #FBFBFB;
-  text-align: center;
+.MarketplaceTitle .address {
+  font-size: 15px;
+  float: right;
 }
 
-.Footer .social-icons a {
-  margin-right: 24px;
-}
-.Footer .social-icons a:last-child {
-  margin-right: 0;
-}
-
-.Footer .links {
-  margin-top: 40px;
-  margin-bottom: 30px;
-}
-
-.Footer .links a {
-  margin-right: 27px;
-  color: #000;
-}
-.Footer .links a:last-child {
-  margin-right: 0;
-}
-
-.Footer .copyright {
-  color: #929292;
+.MarketplaceTitle .Icon-address {
+  margin-right: 12px;
+  vertical-align: text-bottom;
 }

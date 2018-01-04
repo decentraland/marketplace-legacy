@@ -23,9 +23,11 @@ class IntercomContainer extends React.Component {
   }
 
   injectIntercom() {
+    const address = this.getAddress()
+
     intercomUtils
       .inject()
-      .then(() => intercomUtils.render())
+      .then(() => intercomUtils.render(address))
       .catch(err => console.error('Could not inject intercom', err))
   }
 

@@ -41,6 +41,12 @@
   background-image: url("../images/pencil.svg");
 }
 
+.Icon-tick {
+  width: 15px;
+  height: 11px;
+  background-image: url("../images/tick.svg");
+}
+
 .Icon-link-graph {
   width: 126px;
   height: 24px;

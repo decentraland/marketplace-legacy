@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { selectors } from '../../reducers'
 import { closeModal } from '../../actions'
 
-import { preventDefault } from '../../lib/util'
+import { preventDefault } from '../../lib/utils'
 
 import * as modals from '../../components/modals'
 import * as modalContainers from './index'

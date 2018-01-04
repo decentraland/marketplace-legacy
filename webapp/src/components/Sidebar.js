@@ -10,12 +10,13 @@ import './Sidebar.css'
 export default class Sidebar extends React.Component {
   static propTypes = {
     visible: PropTypes.bool,
+    address: PropTypes.string,
     isLoading: PropTypes.bool,
     changeVisibility: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    visible: false,
+    visible: true,
     isLoading: false
   }
 
@@ -37,7 +38,7 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    let { visible } = this.props
+    let { address, visible } = this.props
 
     return (
       <div className={`Sidebar ${this.getVisibilityClassName()}`}>
@@ -47,7 +48,7 @@ export default class Sidebar extends React.Component {
         </header>
 
         {visible ? (
-          <ExpandedSidebar />
+          <ExpandedSidebar address={address} />
         ) : (
           <CollapsedSidebar onClick={this.toggle} />
         )}

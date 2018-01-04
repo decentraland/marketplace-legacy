@@ -2,10 +2,10 @@ import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
-
 import { server, env } from 'decentraland-commons'
-import db from './lib/db'
 
+import db from './lib/db'
+import verifySignedMessage from './lib/verifySignedMessage'
 // import {} from './lib/models'
 // import {} from './lib/services'
 
@@ -38,19 +38,50 @@ if (env.isProduction()) {
 }
 
 /**
- * Test endpoint
+ * Return the parcels an address owns
  * @param  {string} address - User address
  * @return {object}
  */
-app.get('/api/test', server.handleRequest(test))
+app.get('/api/userParcels', server.handleRequest(getUserParcels))
 
-export function test(req) {
+export async function getUserParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  return {
-    address,
-    prop: 'value'
-  }
+  const parcels = [
+    {
+      x: 0,
+      y: 0,
+      price: 13230,
+      name: 'Some loren ipsum',
+      description: 'This is the description from the first parcel'
+    },
+    { x: 1, y: 0, price: 1030, name: 'Say my goddamn name', description: '' },
+    { x: 0, y: 1, price: 1500, name: '', description: '' }
+  ] // from contract
+
+  // TODO: We'll need to add the price to each parcel we fetch from the contract
+  // using the parcel_states table
+
+  return parcels
+}
+
+/**
+ * Edit the metadata of an owned parcel
+ * @param  {string} address - Owner of the parcel address
+ * @param  {object} parcel - New parcel data
+ * @return {object}
+ */
+app.post('/api/userParcels/edit', server.handleRequest(editUserParcels))
+
+export async function editUserParcels(req) {
+  const message = server.extractFromReq(req, 'message')
+  const signature = server.extractFromReq(req, 'signature')
+
+  const decoded = verifySignedMessage(message, signature)
+
+  console.log(decoded)
+
+  return true
 }
 
 /**
