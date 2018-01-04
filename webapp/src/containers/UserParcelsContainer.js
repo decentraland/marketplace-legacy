@@ -24,7 +24,7 @@ class UserParcelsContainer extends React.Component {
 
     return userParcels.loading ? (
       <Loading />
-    ) : (
+    ) : userParcels.error ? null : (
       <UserParcels userParcels={userParcels.data} onEdit={this.onEdit} />
     )
   }

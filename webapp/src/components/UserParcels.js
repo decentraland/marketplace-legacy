@@ -18,6 +18,7 @@ export default function UserParcels({ userParcels, onEdit }) {
         My Land&nbsp;
         <span className="parcel-count">{userParcels.length} parcels</span>
       </div>
+
       <ParcelTable parcels={userParcels} onEdit={onEdit} />
     </div>
   )
@@ -67,9 +68,21 @@ class ParcelRow extends React.Component {
     this.setState({ editing: true })
   }
 
-  finishEditing = parcel => {
+  finishEditing = newParcel => {
     this.setState({ editing: false })
-    this.props.onEdit(parcel)
+
+    if (this.hasEdits(newParcel)) {
+      this.props.onEdit(newParcel)
+    }
+  }
+
+  hasEdits(newParcel) {
+    const { parcel } = this.props
+
+    return (
+      newParcel.name !== parcel.name ||
+      newParcel.description !== parcel.description
+    )
   }
 
   render() {
