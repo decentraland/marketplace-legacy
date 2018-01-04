@@ -32,8 +32,8 @@ export default class ParcelsMap extends React.Component {
   }
 
   constructor(props) {
-    super(props);
-    this.debouncedAddPopup = debounce(this.addPopup, 215);
+    super(props)
+    this.debouncedAddPopup = debounce(this.addPopup, 215)
   }
 
   static defaultProps = {
@@ -266,19 +266,19 @@ export default class ParcelsMap extends React.Component {
   }
 
   onMouseDown = latlng => {
-    this.dragging = true;
+    this.dragging = true
     if (this.popup) {
-      this.popup.remove();
+      this.popup.remove()
     }
   }
 
   onMouseUp = latlng => {
-    this.dragging = false;
+    this.dragging = false
   }
 
   onMouseMove = latlng => {
     if (this.dragging) {
-      return;
+      return
     }
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
 
@@ -287,7 +287,6 @@ export default class ParcelsMap extends React.Component {
       this.tileHovered.x !== x ||
       this.tileHovered.y !== y
     ) {
-      
       if (this.popup) {
         this.popup.remove()
       }
@@ -299,7 +298,7 @@ export default class ParcelsMap extends React.Component {
   // Called by the Parcel Grid on each tile hover
   addPopup = (x, y, latlng) => {
     if (this.dragging) {
-      return;
+      return
     }
     console.log('addPopup', { x, y, latlng })
 
@@ -321,8 +320,8 @@ export default class ParcelsMap extends React.Component {
       .setContent(popup)
       .addTo(this.map)
 
-    this.popup = leafletPopup;
-    
+    this.popup = leafletPopup
+
     return leafletPopup
   }
 
