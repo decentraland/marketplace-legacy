@@ -71,5 +71,4 @@ export default function AddressErrorPage() {
   )
 }
 
-AddressErrorPage.propTypes = {
-}
+AddressErrorPage.propTypes = {}

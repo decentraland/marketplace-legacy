@@ -2,10 +2,10 @@ import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
-
 import { server, env } from 'decentraland-commons'
-import db from './lib/db'
 
+import db from './lib/db'
+import verifySignedMessage from './lib/verifySignedMessage'
 // import {} from './lib/models'
 // import {} from './lib/services'
 
@@ -74,10 +74,12 @@ export async function getUserParcels(req) {
 app.post('/api/userParcels/edit', server.handleRequest(editUserParcels))
 
 export async function editUserParcels(req) {
-  const address = server.extractFromReq(req, 'address')
-  const parcel = server.extractFromReq(req, 'parcel')
+  const message = server.extractFromReq(req, 'message')
+  const signature = server.extractFromReq(req, 'signature')
 
-  // TODO: Require a signature
+  const decoded = verifySignedMessage(message, signature)
+
+  console.log(decoded)
 
   return true
 }

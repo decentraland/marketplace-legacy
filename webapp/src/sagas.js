@@ -9,7 +9,7 @@ import {
 import { push, replace } from 'react-router-redux'
 
 import { utils } from 'decentraland-commons'
-import { eth as web3Eth } from 'decentraland-commons'
+import { eth } from 'decentraland-commons'
 
 import { isChrome } from './lib/browser'
 import { selectors } from './reducers'
@@ -59,19 +59,19 @@ async function connectLedger(action = {}, retries = 0) {
 async function connectBrowser(action = {}) {
   try {
     let retries = 0
-    let connected = await web3Eth.reconnect(action.address)
+    let connected = await eth.reconnect(action.address)
 
     while (!connected && retries <= 3) {
       await utils.sleep(1500)
-      connected = await web3Eth.connect(action.address)
+      connected = await eth.connect(action.address)
       retries += 1
     }
 
     if (!connected) return false
-    const address = await web3Eth.getAddress()
+    const address = await eth.getAddress()
 
     return {
-      ethereum: web3Eth,
+      ethereum: eth,
       address: address.toLowerCase()
     }
   } catch (error) {
@@ -79,6 +79,9 @@ async function connectBrowser(action = {}) {
   }
 }
 
+// TODO: The web3 connection was correctly encapsulated in `eth.connect`, imported from `decentraland-commons`
+// We later introduced ledger support but only on the sagas, without moving the behaviour to commons.
+// We shouldn't leak how the connection works and ideally it should be the same interface for the ledger and web3 objects.
 function* connectWeb3(action = {}) {
   try {
     const { ledger, browser } = yield all({
@@ -103,6 +106,32 @@ function* connectWeb3(action = {}) {
   }
 }
 
+// TODO: This is another candidate for `decentraland-commons`, it leverages web3 and ledger message signing
+function* sign(payload) {
+  const { ethereum, ledger, address } = yield select(
+    selectors.getEthereumConnection
+  )
+  const message = eth.utils.toHex(payload)
+  let signature = null
+
+  if (ledger) {
+    const result = yield call(() =>
+      ethereum.signPersonalMessage_async("44'/60'/0'/0", message.substring(2))
+    )
+
+    let v = result['v'] - 27
+    v = v.toString(16)
+    if (v.length < 2) {
+      v = '0' + v
+    }
+    signature = '0x' + result['r'] + result['s'] + v
+  } else {
+    signature = yield call(() => ethereum.remoteSign(message, address))
+  }
+
+  return { message, signature }
+}
+
 // -------------------------------------------------------------------------
 // Parcels
 
@@ -120,8 +149,16 @@ function* handleFetchUserParcels(action) {
 
 function* handleEditParcel(action) {
   try {
-    const address = yield select(selectors.getAddress)
-    yield call(() => api.editParcel(address, action.parcel))
+    const parcel = action.parcel
+    const payload = `Decentraland Marketplace: Editing parcel (${Date.now()})
+x: ${parcel.x}
+y: ${parcel.y}
+Name: ${parcel.name}
+Description: ${parcel.description}
+`
+    const { message, signature } = yield call(() => sign(payload))
+
+    yield call(() => api.editParcel(message, signature))
 
     yield put({ type: types.editParcel.success })
   } catch (error) {

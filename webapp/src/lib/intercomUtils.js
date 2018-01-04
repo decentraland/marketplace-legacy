@@ -49,7 +49,9 @@ function IntercomFn(...args) {
   }
 
   if (!APP_ID) {
-    return console.warn('Intercom app id empty. Check that the environment is propery set')
+    return console.warn(
+      'Intercom app id empty. Check that the environment is propery set'
+    )
   }
 
   window.Intercom(...args)
