@@ -29,6 +29,13 @@ export function fetchUserParcels() {
   }
 }
 
+export function editParcel(parcel) {
+  return {
+    type: types.editParcel.request,
+    parcel
+  }
+}
+
 export function parcelRangeChange(minX, minY, maxX, maxY) {
   return {
     type: types.parcelRangeChanged,

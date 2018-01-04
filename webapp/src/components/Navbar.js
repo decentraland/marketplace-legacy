@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <div className="navbar" role="navigation">
       <div className="navbar-header">
-        <Link to="/" className="navbar-logo">
+        <Link to={locations.root} className="navbar-logo">
           <Icon name="decentraland" className="pull-left" />
           <h1 className="pull-left hidden-xs">Decentraland</h1>
         </Link>
@@ -20,14 +20,6 @@ export default function Navbar() {
         <ul className="nav navbar-nav navbar-right">
           <li>
             <Link to={locations.root}>Auction</Link>
-          </li>
-
-          <li>
-            <Link to={locations.stats}>Stats</Link>
-          </li>
-
-          <li>
-            <Link to={locations.faq}>FAQ</Link>
           </li>
 
           <li>

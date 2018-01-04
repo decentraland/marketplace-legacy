@@ -20,8 +20,10 @@ import api from './lib/api'
 
 function* rootSaga() {
   yield takeLatest(types.connectWeb3.request, connectWeb3)
-
   yield takeLatest(types.connectWeb3.success, handleFetchUserParcels)
+
+  yield takeLatest(types.editParcel.request, handleEditParcel)
+  yield takeLatest(types.editParcel.success, handleFetchUserParcels)
 
   yield takeEvery(types.navigateTo, handleLocationChange)
 }
@@ -113,6 +115,18 @@ function* handleFetchUserParcels(action) {
   } catch (error) {
     console.warn(error)
     yield put({ type: types.fetchUserParcels.failed, error: error.message })
+  }
+}
+
+function* handleEditParcel(action) {
+  try {
+    const address = yield select(selectors.getAddress)
+    yield call(() => api.editParcel(address, action.parcel))
+
+    yield put({ type: types.editParcel.success })
+  } catch (error) {
+    console.warn(error)
+    yield put({ type: types.editParcel.failed, error: error.message })
   }
 }
 

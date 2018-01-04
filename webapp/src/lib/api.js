@@ -10,6 +10,10 @@ class API {
     return this.request('get', '/userParcels', { address })
   }
 
+  editParcel(address, parcel) {
+    return this.request('post', '/userParcels/edit', { address, parcel })
+  }
+
   request(method, path, params) {
     let options = {
       method,

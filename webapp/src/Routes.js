@@ -5,9 +5,9 @@ import locations from './locations'
 
 import HomePageContainer from './containers/HomePageContainer'
 import IntercomContainer from './containers/IntercomContainer'
-import AddressErrorPageContainer from './containers/AddressErrorPageContainer'
 
 import WalletErrorPage from './components/WalletErrorPage'
+import AddressErrorPage from './components/AddressErrorPage'
 import ServerError from './components/ServerError'
 
 export default function Routes() {
@@ -17,12 +17,8 @@ export default function Routes() {
       <Route exact path={locations.parcel} component={HomePageContainer} />
 
       <Route exact path={locations.walletError} component={WalletErrorPage} />
+      <Route exact path={locations.addressError} component={AddressErrorPage} />
       <Route exact path={locations.serverError} component={ServerError} />
-      <Route
-        exact
-        path={locations.addressError}
-        component={AddressErrorPageContainer}
-      />
       <Route exact path={locations.error} component={WalletErrorPage} />
     </Switch>,
     <IntercomContainer key="2" />

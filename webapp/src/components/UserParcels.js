@@ -9,6 +9,8 @@ import Icon from './Icon'
 
 import './UserParcels.css'
 
+// TODO: This file contains a plethora of components. They should be extracted
+
 export default function UserParcels({ userParcels, onEdit }) {
   return (
     <div className="UserParcels">
@@ -65,12 +67,9 @@ class ParcelRow extends React.Component {
     this.setState({ editing: true })
   }
 
-  finishEditing = () => {
+  finishEditing = parcel => {
     this.setState({ editing: false })
-
-    this.props.onEdit({
-      parcel: 'data'
-    })
+    this.props.onEdit(parcel)
   }
 
   render() {
@@ -88,40 +87,74 @@ class ParcelRow extends React.Component {
   }
 }
 
-function ParcelRowEdit({ parcel, finishEditing }) {
-  return (
-    <div className="parcel-row-editing">
-      <div className="col col-editing">
-        Editing&nbsp;&nbsp;
-        <CoordinateLink parcel={parcel} />
-      </div>
-      <div className="col col-actions" onClick={finishEditing}>
-        <Icon name="tick" />
-        Done
-      </div>
+class ParcelRowEdit extends React.Component {
+  constructor(props) {
+    super(props)
 
-      <div className="editing-fields">
-        <div className="field">
-          <label htmlFor="name-field">NAME</label>
-          <input
-            type="text"
-            name="name-field"
-            id="name-field"
-            defaultValue={parcel.name}
-          />
+    const { name, description } = props.parcel
+    this.state = { name, description }
+  }
+
+  getOnChange(stateName) {
+    return event =>
+      this.setState({
+        [stateName]: event.currentTarget.value
+      })
+  }
+
+  finishEditing = () => {
+    const { parcel } = this.props
+    const { name, description } = this.state
+
+    this.props.finishEditing({
+      ...parcel,
+      name,
+      description
+    })
+  }
+
+  render() {
+    const { parcel } = this.props
+    const { name, description } = this.state
+
+    return (
+      <div className="parcel-row-editing">
+        <div className="col col-editing">
+          Editing&nbsp;&nbsp;
+          <CoordinateLink parcel={parcel} />
+        </div>
+        <div className="col col-actions" onClick={this.finishEditing}>
+          <Icon name="tick" />
+          Done
         </div>
 
-        <div className="field">
-          <label htmlFor="description-field">DESCRIPTION</label>
-          <textarea
-            name="description"
-            id="description-field"
-            defaultValue={parcel.description}
-          />
-        </div>
+        <form action="POST" onSubmit={this.finishEditing}>
+          <div className="editing-fields">
+            <div className="field">
+              <label htmlFor="name-field">NAME</label>
+              <input
+                type="text"
+                name="name-field"
+                id="name-field"
+                value={name}
+                onChange={this.getOnChange('name')}
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="description-field">DESCRIPTION</label>
+              <textarea
+                name="description"
+                id="description-field"
+                value={description}
+                onChange={this.getOnChange('description')}
+              />
+            </div>
+          </div>
+        </form>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 function ParcelRowData({ parcel, startEditing }) {

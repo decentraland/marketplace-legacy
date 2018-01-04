@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { selectors } from '../reducers'
+import { editParcel } from '../actions'
 import { stateData } from '../lib/propTypes'
 
 import UserParcels from '../components/UserParcels'
@@ -10,11 +11,12 @@ import Loading from '../components/Loading'
 
 class UserParcelsContainer extends React.Component {
   static propTypes = {
-    userParcels: stateData(PropTypes.array)
+    userParcels: stateData(PropTypes.array),
+    editParcel: PropTypes.func
   }
 
   onEdit = parcel => {
-    console.log('Send data to server', parcel)
+    this.props.editParcel(parcel)
   }
 
   render() {
@@ -32,5 +34,5 @@ export default connect(
   state => ({
     userParcels: selectors.getUserParcels(state)
   }),
-  {}
+  { editParcel }
 )(UserParcelsContainer)

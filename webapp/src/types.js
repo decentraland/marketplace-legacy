@@ -13,6 +13,12 @@ export default {
     failed: '[Failed] Failed to fetch user parcels'
   },
 
+  editParcel: {
+    request: '[Request] Edit parcel requested',
+    success: '[Success] Parcel edited',
+    failed: '[Failed] Failed to edit parcel'
+  },
+
   sidebar: {
     open: '[Open] Sidebar',
     close: '[Close] Sidebar'

@@ -66,6 +66,23 @@ export async function getUserParcels(req) {
 }
 
 /**
+ * Edit the metadata of an owned parcel
+ * @param  {string} address - Owner of the parcel address
+ * @param  {object} parcel - New parcel data
+ * @return {object}
+ */
+app.post('/api/userParcels/edit', server.handleRequest(editUserParcels))
+
+export async function editUserParcels(req) {
+  const address = server.extractFromReq(req, 'address')
+  const parcel = server.extractFromReq(req, 'parcel')
+
+  // TODO: Require a signature
+
+  return true
+}
+
+/**
  * Start the server
  */
 if (require.main === module) {
