@@ -10,8 +10,8 @@ class API {
     return this.request('get', '/userParcels', { address })
   }
 
-  editParcel(address, parcel) {
-    return this.request('post', '/userParcels/edit', { address, parcel })
+  editParcel(message, signature) {
+    return this.request('post', '/userParcels/edit', { message, signature })
   }
 
   request(method, path, params) {
