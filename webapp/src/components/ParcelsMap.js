@@ -31,6 +31,11 @@ export default class ParcelsMap extends React.Component {
     onZoomEnd: PropTypes.func
   }
 
+  constructor(props) {
+    super(props)
+    this.debouncedAddPopup = debounce(this.addPopup, 215)
+  }
+
   static defaultProps = {
     bounds: [[], []],
     onMoveEnd: () => {},
@@ -109,7 +114,9 @@ export default class ParcelsMap extends React.Component {
     this.parcelGrid = new LeafletParcelGrid({
       getTileAttributes: this.getTileAttributes,
       onTileClick: this.onTileClick,
-      addPopup: this.addPopup,
+      onMouseDown: this.onMouseDown,
+      onMouseUp: this.onMouseUp,
+      onMouseMove: this.onMouseMove,
       tileSize: tileSize
     })
 
@@ -212,9 +219,10 @@ export default class ParcelsMap extends React.Component {
   }
 
   // Called by the Parcel Grid on each tile render
-  getTileAttributes = center => {
+  getTileAttributes = latlng => {
+    const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
     /*
-    const { x, y } = this.mapCoordinates.latLngToCartesian(center)
+    const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
     const parcel = this.getParcelData(x, y)
     const addressState = this.props.getAddressState()
     const maxAmount = this.props.getMaxAmount()
@@ -240,51 +248,79 @@ export default class ParcelsMap extends React.Component {
     }
     */
 
-    // DELETEME
-    this.x = (typeof this.x === 'undefined' ? -1 : this.x) + 1
-    this.y = (typeof this.y === 'undefined' ? -1 : this.y) + 1
-
     return {
-      className: 'default',
-      dataset: { x: this.x, y: this.y }
+      x,
+      y,
+      color: '#B18AE0'
     }
   }
 
   // Called by the Parcel Grid on each tile click
-  onTileClick = (x, y, tile) => {
+  onTileClick = latlng => {
+    const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
+
     // const parcel = this.getParcelData(x, y)
     // setTimeout(() => this.parcelGrid && this.parcelGrid.loadCell(tile, 0), 10)
 
-    console.log('onTileClick', { x, y, tile })
+    console.log('onTileClick', { x, y })
+  }
+
+  onMouseDown = latlng => {
+    this.dragging = true
+    if (this.popup) {
+      this.popup.remove()
+    }
+  }
+
+  onMouseUp = latlng => {
+    this.dragging = false
+  }
+
+  onMouseMove = latlng => {
+    if (this.dragging) {
+      return
+    }
+    const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
+
+    if (
+      !this.tileHovered ||
+      this.tileHovered.x !== x ||
+      this.tileHovered.y !== y
+    ) {
+      if (this.popup) {
+        this.popup.remove()
+      }
+      this.tileHovered = { x, y }
+      this.debouncedAddPopup(x, y, latlng)
+    }
   }
 
   // Called by the Parcel Grid on each tile hover
   addPopup = (x, y, latlng) => {
+    if (this.dragging) {
+      return
+    }
     console.log('addPopup', { x, y, latlng })
 
-    const parcel = this.getParcelData(x, y)
+    const parcel = { x, y, amount: 10 } //this.getParcelData(x, y)
 
     if (!parcel || !this.map) return
 
-    const addressState = this.props.getAddressState() // TODO
-    const projects = this.props.getProjects() // TODO
+    //const addressState = this.props.getAddressState() // TODO
+    //const projects = this.props.getProjects() // TODO
+    // addressState={addressState}
+    // projects={projects}
 
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
 
-    const popup = renderToDOM(
-      <ParcelPopup
-        x={x}
-        y={y}
-        parcel={parcel}
-        addressState={addressState}
-        projects={projects}
-      />
-    )
+    const popup = renderToDOM(<ParcelPopup x={x} y={y} parcel={parcel} />)
 
     leafletPopup
       .setLatLng(latlng)
       .setContent(popup)
       .addTo(this.map)
+
+    this.popup = leafletPopup
 
     return leafletPopup
   }

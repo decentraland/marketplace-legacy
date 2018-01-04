@@ -1,55 +1,130 @@
 import L from 'leaflet'
-import debounce from 'lodash.debounce'
+import { requestAnimationFrame, cancelAnimationFrame } from './util'
 
-const LeafletParcelGrid = L.FeatureGroup.extend({
+const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
   options: {
     getTileAttributes: () => {},
     onTileClick: () => {},
-    addPopup: () => {},
-    tileSize: 64,
-    delayFactor: 0.05,
-    smoothFactor: 2,
-    style: {
-      weight: 1,
-      opacity: 1,
-
-      fill: true,
-      fillOpacity: 0.9,
-
-      clickable: true
-    }
+    onMouseDown: () => {},
+    onMouseUp: () => {},
+    onMouseMove: () => {},
+    tileSize: 64
+    // delayFactor: 0.05,
+    // smoothFactor: 2,
+    // style: {
+    //   weight: 1,
+    //   opacity: 1,
+    //   fill: true,
+    //   fillOpacity: 0.9,
+    //   clickable: true
+    // }
   },
 
-  initialize(options) {
+  initialize(options = {}) {
     L.Util.setOptions(this, options)
-    L.FeatureGroup.prototype.initialize.call(this, [], options)
+    this.canvas = this.createCanvas()
+    this.currentAnimationFrame = -1
+    this.requestAnimationFrame = requestAnimationFrame
+    this.cancelAnimationFrame = cancelAnimationFrame
+  },
+
+  createCanvas: function() {
+    let canvas = document.createElement('canvas')
+    canvas.style.position = 'absolute'
+    canvas.style.top = 0
+    canvas.style.left = 0
+    canvas.style.pointerEvents = 'none'
+    canvas.style.zIndex = 0
+    canvas.setAttribute('class', 'leaflet-tile-container leaflet-zoom-animated')
+    return canvas
   },
 
   onAdd(map) {
-    L.FeatureGroup.prototype.onAdd.call(this, map)
     this.map = map
-    this.popup = null
-    this.debouncedOnMouseOver = debounce(this.onMouseOver, 215)
     this.setupGrid(map.getBounds())
+
+    // add container with the canvas to the tile pane
+    // the container is moved in the oposite direction of the
+    // map pane to keep the canvas always in (0, 0)
+    const pane = map._panes.markerPane
+    const container = L.DomUtil.create('div', 'leaflet-layer')
+    container.appendChild(this.canvas)
+    pane.appendChild(container)
+
+    this.container = container
+
+    // hack: listen to predrag event launched by dragging to
+    // set container in position (0, 0) in screen coordinates
+    if (map.dragging.enabled()) {
+      map.dragging._draggable.on(
+        'predrag',
+        function() {
+          const d = map.dragging._draggable
+          L.DomUtil.setPosition(this.canvas, {
+            x: -d._newPos.x,
+            y: -d._newPos.y
+          })
+        },
+        this
+      )
+    }
 
     map.on('moveend', this.moveHandler, this)
     map.on('zoomend', this.zoomHandler, this)
     map.on('resize', this.resizeHandler, this)
+    map.on('mousedown', this.mousedownHandler, this)
+    map.on('mouseup', this.mouseupHandler, this)
+    map.on('mousemove', this.mousemoveHandler, this)
+    map.on('click', this.clickHandler, this)
+    map.on('viewreset', this.reset, this)
+    map.on('resize', this.reset, this)
+    map.on('move', this.redraw, this)
+
+    this.reset()
   },
 
   onRemove(map) {
-    L.FeatureGroup.prototype.onRemove.call(this, map)
+    this.container.parentNode.removeChild(this.container)
 
     map.off('moveend', this.moveHandler, this)
     map.off('zoomend', this.zoomHandler, this)
     map.off('resize', this.resizeHandler, this)
+    map.off('mousedown', this.mousedownHandler, this)
+    map.off('mouseup', this.mouseupHandler, this)
+    map.off('mousemove', this.mousemoveHandler, this)
+    map.off('click', this.clickHandler, this)
+    map.off('viewreset', this.reset, this)
+    map.off('resize', this.reset, this)
+    map.off('move', this.redraw, this)
   },
 
-  clearLayers(...args) {
-    L.FeatureGroup.prototype.clearLayers(this, ...args)
-    this.loadedTiles = {}
-    this.loadedCoordinates = {}
+  reset: function() {
+    const size = this.map.getSize()
+    this.canvas.width = size.x
+    this.canvas.height = size.y
+    this.redraw()
+  },
+
+  render: function() {
+    if (this.currentAnimationFrame >= 0) {
+      this.cancelAnimationFrame.call(window, this.currentAnimationFrame)
+    }
+    this.currentAnimationFrame = this.requestAnimationFrame.call(window, () =>
+      this.renderTiles(this.map.getBounds())
+    )
+  },
+
+  redraw: function(direct) {
+    const pos = L.DomUtil.getPosition(this.map.getPanes().mapPane)
+    if (pos) {
+      L.DomUtil.setPosition(this.canvas, { x: -pos.x, y: -pos.y })
+    }
+    if (direct) {
+      this.renderTiles(this.map.getBounds())
+    } else {
+      this.render()
+    }
   },
 
   moveHandler(event) {
@@ -57,7 +132,6 @@ const LeafletParcelGrid = L.FeatureGroup.extend({
   },
 
   zoomHandler(event) {
-    this.clearLayers()
     this.renderTiles(event.target.getBounds())
   },
 
@@ -65,16 +139,26 @@ const LeafletParcelGrid = L.FeatureGroup.extend({
     this.setupSize()
   },
 
+  mousemoveHandler(e) {
+    this.options.onMouseMove(e.latlng)
+  },
+
+  mousedownHandler(e) {
+    this.options.onMouseDown(e.latlng)
+  },
+
+  mouseupHandler(e) {
+    this.options.onMouseUp(e.latlng)
+  },
+
+  clickHandler(e) {
+    this.options.onTileClick(e.latlng)
+  },
+
   setupGrid(bounds) {
     this.origin = this.map.project(bounds.getNorthWest())
     this.tileSize = this.options.tileSize
-
     this.setupSize()
-
-    this.loadedTiles = {}
-    this.loadedCoordinates = {}
-
-    this.clearLayers()
     this.renderTiles(bounds)
   },
 
@@ -85,105 +169,33 @@ const LeafletParcelGrid = L.FeatureGroup.extend({
 
   renderTiles(bounds) {
     const tiles = this.getCellsInBounds(bounds)
-    this.fire('newtiles', tiles)
+    //this.fire('newtiles', tiles)
+
+    // clear canvas
+    const ctx = this.canvas.getContext('2d')
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     for (let index = tiles.length - 1; index >= 0; index--) {
-      this.loadCell(tiles[index], this.options.delayFactor * index)
+      this.renderTile(tiles[index])
     }
   },
 
-  loadCell(tile, renderDelay) {
-    const { className, dataset, fillColor } = this.options.getTileAttributes(
+  renderTile(tile) {
+    const { /* x, y,*/ color } = this.options.getTileAttributes(
       tile.bounds.getNorthWest()
     )
 
-    const loadedTile = this.loadedTiles[tile.id]
-
-    if (!loadedTile) {
-      const attributes = Object.assign({}, this.options.style, {
-        className,
-        fillColor
-      })
-      const { x, y } = dataset
-      const rect = this.getRectangleLayer(tile, attributes, x, y)
-
-      setTimeout(() => this.addLayer(rect), renderDelay)
-
-      if (this.shouldShowCoordinates(x, y)) {
-        this.loadCellCoordinates(x, y, tile)
-      }
-
-      this.loadedTiles[tile.id] = rect
-    } else if (this.tileChanged(loadedTile, className, fillColor)) {
-      const element = loadedTile.getElement()
-      if (!element) return
-
-      element.removeAttribute('style')
-
-      if (loadedTile.className) {
-        element.classList.remove(loadedTile.className)
-      }
-
-      if (className) {
-        element.classList.add(className)
-      } else {
-        Object.assign(element.style, { fill: fillColor })
-      }
-
-      this.loadedTiles[tile.id].className = className
-      this.loadedTiles[tile.id].fill = fillColor
-    }
-  },
-
-  getRectangleLayer(tile, attributes, x, y) {
-    const rect = L.rectangle(tile.bounds, attributes)
-
-    rect
-      .on('click', () => this.options.onTileClick(x, y, tile))
-      .on('mouseover', () => this.mouseOverChange(x, y, tile.center))
-
-    rect.className = attributes.className
-    rect.fillColor = attributes.fillColor
-
-    return rect
-  },
-
-  tileChanged(tile, className, fillColor) {
-    return tile.className !== className || tile.fillColor !== fillColor
-  },
-
-  mouseOverChange(x, y, center) {
-    this.clearPopup()
-    this.debouncedOnMouseOver(x, y, center)
-  },
-
-  onMouseOver(x, y, center) {
-    this.clearPopup()
-    this.popup = this.options.addPopup(x, y, center)
-  },
-
-  clearPopup() {
-    if (this.popup) this.popup.remove()
-  },
-
-  loadCellCoordinates(x, y, tile) {
-    if (!this.loadedCoordinates[tile.id]) {
-      const marker = L.marker(tile.bounds.getNorthWest(), {
-        icon: new L.DivIcon({
-          className: `coordinates coordinates-zoom-${this.map.getZoom()}`,
-          iconSize: new L.Point(0, 0),
-          html: `${x},${y}`
-        })
-      })
-
-      setTimeout(() => this.addLayer(marker))
-
-      this.loadedCoordinates[tile.id] = true
-    }
-  },
-
-  shouldShowCoordinates(x, y) {
-    return x % 10 === 0 && y % 10 === 0
+    // render tile
+    const ctx = this.canvas.getContext('2d')
+    const point = this.map.latLngToContainerPoint(tile.center)
+    ctx.fillStyle = color
+    const padding = 1
+    ctx.fillRect(
+      point.x + padding,
+      point.y + padding,
+      this.tileSize - padding * 2,
+      this.tileSize - padding * 2
+    )
   },
 
   getCellPoint(row, col) {
@@ -204,18 +216,27 @@ const LeafletParcelGrid = L.FeatureGroup.extend({
     const offset = this.getBoundsOffset(bounds)
     const tiles = []
 
+    if (!this._tiles) {
+      this._tiles = {}
+    }
+
     for (let i = 0; i <= this.rows; i++) {
       for (let j = 0; j <= this.cols; j++) {
         const row = i - offset.rows
         const col = j - offset.cols
-        const tileBounds = this.getCellExtent(row, col)
-        const tileCenter = tileBounds.getCenter()
+        const id = row + ':' + col
 
-        tiles.push({
-          id: row + ':' + col,
-          bounds: tileBounds,
-          center: tileCenter
-        })
+        if (!this._tiles[id]) {
+          const tileBounds = this.getCellExtent(row, col)
+          const tileCenter = tileBounds.getCenter()
+          this._tiles[id] = {
+            id,
+            bounds: tileBounds,
+            center: tileCenter
+          }
+        }
+
+        tiles.push(this._tiles[id])
       }
     }
 
