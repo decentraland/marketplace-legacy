@@ -10,13 +10,13 @@ class ParcelRowEdit extends React.PureComponent {
     this.state = { name, description }
   }
 
-  onNameChange = e => {
+  handleNameChange = e => {
     this.setState({
       name: e.currentTarget.value
     })
   }
 
-  onDescriptionChange = e => {
+  handleDescriptionChange = e => {
     this.setState({
       description: e.currentTarget.value
     })
@@ -57,7 +57,7 @@ class ParcelRowEdit extends React.PureComponent {
                 name="name-field"
                 id="name-field"
                 value={name}
-                onChange={this.onNameChange}
+                onChange={this.handleNameChange}
               />
             </div>
 
@@ -67,7 +67,7 @@ class ParcelRowEdit extends React.PureComponent {
                 name="description"
                 id="description-field"
                 value={description}
-                onChange={this.onDescriptionChange}
+                onChange={this.handleDescriptionChange}
               />
             </div>
           </div>
