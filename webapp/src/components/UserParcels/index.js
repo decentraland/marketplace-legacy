@@ -1,3 +1,3 @@
-import UserParcels from './UserParcels'
+import UserParcels from './UserParcels.container'
 
 export default UserParcels

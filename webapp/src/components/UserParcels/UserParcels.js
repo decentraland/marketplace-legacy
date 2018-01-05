@@ -2,11 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ParcelTable from './ParcelTable'
+import Loading from 'components/Loading'
+
 import './UserParcels.css'
 
 class UserParcels extends React.PureComponent {
   render() {
-    const { userParcels, onEdit } = this.props
+    const { userParcels, onEdit, isLoading } = this.props
+
+    if (isLoading) {
+      return <Loading />
+    }
+
     return (
       <div className="UserParcels">
         <div className="heading">
@@ -22,7 +29,8 @@ class UserParcels extends React.PureComponent {
 
 UserParcels.propTypes = {
   userParcels: PropTypes.array,
-  onEdit: PropTypes.func
+  onEdit: PropTypes.func,
+  isLoading: PropTypes.bool
 }
 
 export default UserParcels

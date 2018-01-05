@@ -4,7 +4,7 @@ import CoordinateLink from '../CoordinateLink'
 
 class ParcelRowData extends React.PureComponent {
   render() {
-    const { parcel, startEditing } = this.props
+    const { parcel, onEdit } = this.props
     return (
       <div className="table-row">
         <div className="col col-coord">
@@ -14,7 +14,7 @@ class ParcelRowData extends React.PureComponent {
           {parcel.price.toLocaleString()} MANA
         </div>
         <div className="col col-name">{parcel.name}</div>
-        <div className="col col-actions" onClick={startEditing}>
+        <div className="col col-actions" onClick={onEdit}>
           <Icon name="pencil" />
           Edit
         </div>

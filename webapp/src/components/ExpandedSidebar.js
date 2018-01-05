@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { shortenAddress } from '../lib/utils'
 
-import UserParcelsContainer from '../containers/UserParcelsContainer'
+import UserParcels from './UserParcels'
 
 import Icon from './Icon'
 import Footer from './Footer'
@@ -25,7 +25,7 @@ export default function ExpandedSidebar({ address }) {
         </h2>
       </div>
 
-      <UserParcelsContainer />
+      <UserParcels />
 
       <Footer />
     </div>

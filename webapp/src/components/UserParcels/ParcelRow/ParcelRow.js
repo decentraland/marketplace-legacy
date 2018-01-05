@@ -11,11 +11,11 @@ class ParcelRow extends React.PureComponent {
     }
   }
 
-  startEditing = () => {
+  handleEdit = () => {
     this.setState({ editing: true })
   }
 
-  finishEditing = newParcel => {
+  handleSubmit = newParcel => {
     this.setState({ editing: false })
 
     if (this.hasEdits(newParcel)) {
@@ -38,9 +38,9 @@ class ParcelRow extends React.PureComponent {
     return (
       <div className={className}>
         {this.state.editing ? (
-          <ParcelRowEdit parcel={parcel} finishEditing={this.finishEditing} />
+          <ParcelRowEdit parcel={parcel} onSubmit={this.handleSubmit} />
         ) : (
-          <ParcelRowData parcel={parcel} startEditing={this.startEditing} />
+          <ParcelRowData parcel={parcel} onEdit={this.handleEdit} />
         )}
       </div>
     )

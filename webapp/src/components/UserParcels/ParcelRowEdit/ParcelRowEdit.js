@@ -22,11 +22,10 @@ class ParcelRowEdit extends React.PureComponent {
     })
   }
 
-  finishEditing = () => {
-    const { parcel } = this.props
+  handleSubmit = () => {
+    const { parcel, onSubmit } = this.props
     const { name, description } = this.state
-
-    this.props.finishEditing({
+    onSubmit({
       ...parcel,
       name,
       description
@@ -43,12 +42,12 @@ class ParcelRowEdit extends React.PureComponent {
           Editing&nbsp;&nbsp;
           <CoordinateLink parcel={parcel} />
         </div>
-        <div className="col col-actions" onClick={this.finishEditing}>
+        <div className="col col-actions" onClick={this.handleSubmit}>
           <Icon name="tick" />
           Done
         </div>
 
-        <form action="POST" onSubmit={this.finishEditing}>
+        <form action="POST" onSubmit={this.handleSubmit}>
           <div className="editing-fields">
             <div className="field">
               <label htmlFor="name-field">NAME</label>
