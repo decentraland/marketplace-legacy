@@ -2,7 +2,7 @@ import React from 'react'
 import ParcelRowEdit from '../ParcelRowEdit'
 import ParcelRowData from '../ParcelRowData'
 
-class ParcelRow extends React.Component {
+class ParcelRow extends React.PureComponent {
   constructor(props) {
     super(props)
 

@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from 'components/Icon'
 import CoordinateLink from '../CoordinateLink'
 
-class ParcelRowEdit extends React.Component {
+class ParcelRowEdit extends React.PureComponent {
   constructor(props) {
     super(props)
 
