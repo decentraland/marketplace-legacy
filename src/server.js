@@ -5,7 +5,6 @@ import path from 'path'
 import { server, env } from 'decentraland-commons'
 
 import db from './lib/db'
-import verifySignedMessage from './lib/verifySignedMessage'
 // import {} from './lib/models'
 // import {} from './lib/services'
 
@@ -63,25 +62,6 @@ export async function getUserParcels(req) {
   // using the parcel_states table
 
   return parcels
-}
-
-/**
- * Edit the metadata of an owned parcel
- * @param  {string} address - Owner of the parcel address
- * @param  {object} parcel - New parcel data
- * @return {object}
- */
-app.post('/api/userParcels/edit', server.handleRequest(editUserParcels))
-
-export async function editUserParcels(req) {
-  const message = server.extractFromReq(req, 'message')
-  const signature = server.extractFromReq(req, 'signature')
-
-  const decoded = verifySignedMessage(message, signature)
-
-  console.log(decoded)
-
-  return true
 }
 
 /**
