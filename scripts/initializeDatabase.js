@@ -4,8 +4,6 @@ import { execSync } from 'child_process'
 import { Log, env, cli } from 'decentraland-commons'
 
 import db from '../src/db'
-import { District } from '../src/District'
-import { Parcel } from '../src/Parcel'
 
 const log = new Log('init')
 
@@ -17,21 +15,16 @@ async function initializeDatabase() {
   )
   if (!shouldContinue) return process.exit()
 
-  const districtCount = await District.count()
-  const parcelCount = await Parcel.count()
+  log.info('Dumping parcel_states')
+  execSync('psql $CONNECTION_STRING -c \'DROP TABLE IF EXISTS parcel_states;\'')
+  execSync('psql $CONNECTION_STRING -f ../dumps/parcel_states.20180105.sql')
 
-  if (districtCount > 0 || parcelCount > 0) {
-    log.info('Tables already have data, skipping')
-  } else {
-    log.info('Dumping parcel_states')
-    execSync('psql $CONNECTION_STRING -f ../dumps/parcel_states.20180105.sql')
+  log.info('Dumping projects')
+  execSync('psql $CONNECTION_STRING -c \'DROP TABLE IF EXISTS projects;\'')
+  execSync('psql $CONNECTION_STRING -f ../dumps/projects.20180105.sql')
 
-    log.info('Dumping projects')
-    execSync('psql $CONNECTION_STRING -f ../dumps/projects.20180105.sql')
-
-    log.info('Normalizing names for new model')
-    execSync('psql $CONNECTION_STRING -f ./init.sql')
-  }
+  log.info('Normalizing names for new model')
+  execSync('psql $CONNECTION_STRING -f ./init.sql')
 
   log.info('All done!')
   process.exit()

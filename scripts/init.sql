@@ -1,8 +1,6 @@
 -- Drops
 DROP TABLE districts;
 DROP TABLE parcels;
-DROP TABLE parcel_states;
-DROP TABLE projects;
 
 -- Renames
 ALTER TABLE projects RENAME TO districts;
