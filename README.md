@@ -33,5 +33,5 @@ If you don't want to install `babel-node` globally, you can use [npx](https://ww
 
 ### Front-end
 
-- __Adding the .env files (NODE_PATH)__<br />
-- __Running the front-end__<br />
+- __Adding the .env files (NODE_PATH)__<br /> Create an `.env` file on the [`/src/webapp`](https://github.com/decentraland/marketplace/tree/master/src/webapp) folder and fill it following the `.env.example` file found there. You will need to specify `NODE_PATH` to be `src/` and `REACT_APP_API_URL` to be `http://localhost:5000` (unless you changed the default server configuration, if so point to the right `host:port`).
+- __Running the front-end__<br /> You will need to first have the server running (see above). After that just jump into the webapp folder `$ cd webapp` and start the local development `$ npm start`
