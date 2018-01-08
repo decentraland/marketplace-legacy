@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 
 import { shortenAddress } from 'lib/utils'
 
-import WalletParcels from '../WalletParcels'
+import WalletParcels from './WalletParcels'
 
 import Icon from 'components/Icon'
-import Footer from 'components/Footer'
+import Footer from './Footer'
 
 import './ExpandedSidebar.css'
 

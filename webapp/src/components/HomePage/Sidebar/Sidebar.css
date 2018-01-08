@@ -86,8 +86,8 @@
   cursor: pointer;
 }
 .Sidebar .toggle-button.in {
-  background-image: url('../../images/collapseArrow.svg');
+  background-image: url('../../../images/collapseArrow.svg');
 }
 .Sidebar .toggle-button.out {
-  background-image: url('../../images/expandArrow.svg');
+  background-image: url('../../../images/expandArrow.svg');
 }

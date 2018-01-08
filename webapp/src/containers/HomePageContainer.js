@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { connectWeb3 } from '../actions'
 
-import HomePage from '../components/HomePage'
+import HomePage from 'components/HomePage'
 
 class HomePageContainer extends React.Component {
   static propTypes = {

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import locations from '../locations'
-import { navigateTo, setLoading } from '../actions'
-import * as parcelUtils from '../lib/parcelUtils'
+import locations from 'locations'
+import { navigateTo, setLoading } from 'actions'
+import * as parcelUtils from 'lib/parcelUtils'
 
-import ParcelsMap from '../components/ParcelsMap'
-import Loading from '../components/Loading'
+import ParcelsMap from 'components/HomePage/ParcelsMap'
+import Loading from 'components/Loading'
 
 class ParcelsMapContainer extends React.Component {
   static propTypes = {

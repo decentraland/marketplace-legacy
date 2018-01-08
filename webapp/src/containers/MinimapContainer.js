@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import locations from '../locations'
-import { selectors } from '../reducers'
-import { navigateTo } from '../actions'
+import locations from 'locations'
+import { selectors } from 'reducers'
+import { navigateTo } from 'actions'
 
-import Minimap from '../components/Minimap.js'
+import Minimap from 'components/HomePage/Minimap'
 
 class MinimapContainer extends React.Component {
   static propTypes = {

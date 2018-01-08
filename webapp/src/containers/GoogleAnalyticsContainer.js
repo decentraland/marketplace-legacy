@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { selectors } from '../reducers'
+import { selectors } from 'reducers'
 
 class GoogleAnalyticsContainer extends React.Component {
   static propTypes = {

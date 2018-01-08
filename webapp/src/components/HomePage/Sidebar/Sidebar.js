@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Icon from 'components/Icon'
-import ExpandedSidebar from '../ExpandedSidebar'
-import CollapsedSidebar from '../CollapsedSidebar'
+import ExpandedSidebar from './ExpandedSidebar'
+import CollapsedSidebar from './CollapsedSidebar'
 
 import './Sidebar.css'
 

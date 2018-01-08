@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { selectors } from '../reducers'
+import { selectors } from 'reducers'
 
-import intercomUtils from '../lib/intercomUtils'
+import intercomUtils from 'lib/intercomUtils'
 
 import './Intercom.css'
 

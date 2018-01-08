@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { selectors } from '../reducers'
-import { openSidebar, closeSidebar } from '../actions'
+import { selectors } from 'reducers'
+import { openSidebar, closeSidebar } from 'actions'
 
-import Sidebar from '../components/Sidebar'
+import Sidebar from 'components/HomePage/Sidebar'
 
 class SidebarContainer extends React.Component {
   static propTypes = {

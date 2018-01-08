@@ -7,7 +7,7 @@ import debounce from 'lodash.debounce'
 import LeafletMapCoordinates from 'lib/LeafletMapCoordinates'
 import LeafletParcelGrid from 'lib/LeafletParcelGrid'
 
-import ParcelPopup from '../ParcelPopup'
+import ParcelPopup from './ParcelPopup'
 
 import './ParcelsMap.css'
 
