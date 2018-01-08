@@ -9,7 +9,7 @@ chai.use(require('chai-as-promised'))
 env.load({ path: './specs/.env' })
 
 chai.Assertion.addChainableMethod('equalRow', function(expectedRow) {
-  const ommitedProps = ['createdAt', 'updatedAt']
+  const ommitedProps = ['created_at', 'updated_at']
 
   if (!expectedRow.id) {
     ommitedProps.push('id')
@@ -20,7 +20,7 @@ chai.Assertion.addChainableMethod('equalRow', function(expectedRow) {
 })
 
 chai.Assertion.addChainableMethod('equalRows', function(expectedRows) {
-  const ommitedProps = ['createdAt', 'updatedAt']
+  const ommitedProps = ['created_at', 'updated_at']
 
   if (expectedRows.every(row => !row.id)) {
     ommitedProps.push('id')

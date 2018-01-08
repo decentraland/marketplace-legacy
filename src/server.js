@@ -4,9 +4,9 @@ import bodyParser from 'body-parser'
 import path from 'path'
 import { server, env } from 'decentraland-commons'
 
-import db from './lib/db'
-// import {} from './lib/models'
-// import {} from './lib/services'
+import db from './db'
+import { District } from './District'
+import { Parcel, ParcelService } from './Parcel'
 
 env.load()
 
@@ -37,31 +37,57 @@ if (env.isProduction()) {
 }
 
 /**
- * Return the parcels an address owns
- * @param  {string} address - User address
+ * Returns the parcels that land in between the supplied coordinates
+ * @param  {string} nw - North west coordinate
+ * @param  {string} sw - South west coordinate
+ * @return {array}
+ */
+app.get('/parcels', server.handleRequest(getParcels))
+
+export async function getParcels(req) {
+  const mincoords = server.extractFromReq(req, 'mincoords')
+  const maxcoords = server.extractFromReq(req, 'maxcoords')
+
+  // TODO: We'll need to add the owners of the parcels from the contract here
+
+  return Parcel.inRange(mincoords, maxcoords)
+}
+
+/**
+ * Returns the parcels an address owns
+ * @param  {string} address - Parcel owner
  * @return {object}
  */
-app.get('/api/userParcels', server.handleRequest(getUserParcels))
+app.get(
+  '/api/addresses/:address/parcels',
+  server.handleRequest(getAddressParcels)
+)
 
-export async function getUserParcels(req) {
+export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  const parcels = [
+  let parcels = [
     {
       x: 0,
       y: 0,
-      price: 13230,
       name: 'Some loren ipsum',
       description: 'This is the description from the first parcel'
     },
-    { x: 1, y: 0, price: 1030, name: 'Say my goddamn name', description: '' },
-    { x: 0, y: 1, price: 1500, name: '', description: '' }
+    { x: 1, y: 0, name: 'Say my goddamn name', description: '' },
+    { x: 0, y: 1, name: '', description: '' }
   ] // from contract
 
-  // TODO: We'll need to add the price to each parcel we fetch from the contract
-  // using the parcel_states table
+  return new ParcelService().addPrice(parcels)
+}
 
-  return parcels
+/**
+ * Returns all stored districts
+ * @return {array}
+ */
+app.get('/api/districts', server.handleRequest(getDistricts))
+
+export function getDistricts(req) {
+  return District.find()
 }
 
 /**

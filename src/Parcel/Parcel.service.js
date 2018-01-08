@@ -1,8 +1,8 @@
-import { ParcelState } from '../models'
+import Parcel from './Parcel'
 
-class ParcelStateService {
+class ParcelService {
   constructor() {
-    this.ParcelState = ParcelState
+    this.Parcel = Parcel
   }
 
   async insertMatrix(minX, minY, maxX, maxY) {
@@ -14,11 +14,21 @@ class ParcelStateService {
       const inserts = []
 
       for (let y = minY; y <= maxY; y++) {
-        inserts.push(this.ParcelState.insert({ x, y }).catch(skipDuplicates))
+        inserts.push(this.Parcel.insert({ x, y }).catch(skipDuplicates))
       }
 
       await Promise.all(inserts)
     }
+  }
+
+  async addPrice(parcels) {
+    return await Promise.all(
+      parcels.map(parcel =>
+        Parcel.getPrice(parcel.x, parcel.y).then(
+          price => (parcel.price = price)
+        )
+      )
+    )
   }
 }
 
@@ -27,4 +37,4 @@ function isDuplicatedError(error) {
   return error && error.search && error.search(duplicateErrorRegexp) !== -1
 }
 
-export default ParcelStateService
+export default ParcelService

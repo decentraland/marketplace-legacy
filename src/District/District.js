@@ -1,18 +1,18 @@
 import { Model } from 'decentraland-commons'
 import uuid from 'uuid'
 
-class Project extends Model {
-  static tableName = 'projects'
+class District extends Model {
+  static tableName = 'districts'
   static columnNames = [
     'id',
     'name',
-    'desc',
+    'description',
     'link',
     'public',
     'parcels',
     'priority',
     'disabled',
-    'lookup'
+    'center'
   ]
 
   static findByName(name) {
@@ -25,4 +25,4 @@ class Project extends Model {
   }
 }
 
-export default Project
+export default District

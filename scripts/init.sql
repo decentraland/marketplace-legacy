@@ -1,6 +1,7 @@
 -- Renames
 ALTER TABLE projects RENAME "createdAt" TO created_at;
 ALTER TABLE projects RENAME "updatedAt" TO updated_at;
+ALTER TABLE projects RENAME parcels TO parcel_count;
 ALTER TABLE projects RENAME lookup TO center;
 ALTER TABLE projects RENAME "desc" TO description;
 
