@@ -2,7 +2,9 @@ import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
-import { server, env } from 'decentraland-commons'
+
+import { server, env, eth } from 'decentraland-commons'
+import { LANDToken } from 'decentraland-commons'
 
 import db from './database'
 import { District } from './District'
@@ -48,9 +50,8 @@ export async function getParcels(req) {
   const mincoords = server.extractFromReq(req, 'mincoords')
   const maxcoords = server.extractFromReq(req, 'maxcoords')
 
-  // TODO: We'll need to add the owners of the parcels from the contract here
-
-  return Parcel.inRange(mincoords, maxcoords)
+  const parcels = await Parcel.inRange(mincoords, maxcoords)
+  return new ParcelService.setOwners(parcels)
 }
 
 /**
@@ -90,16 +91,31 @@ export function getDistricts(req) {
   return District.find()
 }
 
-/**
- * Start the server
- */
+/* Start the server only if run directly */
 if (require.main === module) {
-  db
-    .connect()
-    .then(() => {
-      httpServer.listen(SERVER_PORT, () =>
-        console.log('Server running on port', SERVER_PORT)
-      )
-    })
+  Promise.resolve()
+    .then(connectDatabase)
+    .then(connectEthereum)
+    .then(listenOnServerPort)
     .catch(console.error)
+}
+
+function connectDatabase() {
+  return db.connect()
+}
+
+function connectEthereum() {
+  return eth
+    .connect([LANDToken])
+    .catch(() =>
+      console.error(
+        'Could not connect to the Ethereum node. Some endpoints may not work correctly. Make sure you have a node running on port 8545'
+      )
+    )
+}
+
+function listenOnServerPort() {
+  return httpServer.listen(SERVER_PORT, () =>
+    console.log('Server running on port', SERVER_PORT)
+  )
 }

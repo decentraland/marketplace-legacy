@@ -1,3 +1,4 @@
+import { LANDToken } from 'decentraland-commons'
 import Parcel from './Parcel'
 
 class ParcelService {
@@ -6,15 +7,11 @@ class ParcelService {
   }
 
   async insertMatrix(minX, minY, maxX, maxY) {
-    const skipDuplicates = error => {
-      if (!isDuplicatedError(error)) throw new Error(error)
-    }
-
     for (let x = minX; x <= maxX; x++) {
       const inserts = []
 
       for (let y = minY; y <= maxY; y++) {
-        inserts.push(this.Parcel.insert({ x, y }).catch(skipDuplicates))
+        inserts.push(this.Parcel.insert({ x, y }).catch(skipDuplicateError))
       }
 
       await Promise.all(inserts)
@@ -22,14 +19,31 @@ class ParcelService {
   }
 
   async addPrice(parcels) {
-    const priceAdditions = parcels.map(async parcel => {
+    const priceSetters = parcels.map(async parcel => {
       const price = await Parcel.getPrice(parcel.x, parcel.y)
-      parcel.price = price
-      return parcel
+      return Object.assign({}, parcel, { price })
     })
 
-    return await Promise.all(priceAdditions)
+    return await Promise.all(priceSetters)
   }
+
+  async addOwners(parcels) {
+    const contract = LANDToken.getInstance()
+
+    const ownerSetters = parcels.map(async parcel => {
+      const owner = parcel.district_id
+        ? null
+        : await contract.getOwner(parcel.x, parcel.y)
+
+      return Object.assign({}, parcel, { owner })
+    })
+
+    return await Promise.all(ownerSetters)
+  }
+}
+
+function skipDuplicateError(error) {
+  if (!isDuplicatedError(error)) throw new Error(error)
 }
 
 function isDuplicatedError(error) {

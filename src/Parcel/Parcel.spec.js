@@ -121,6 +121,22 @@ describe('ParcelService', function() {
 
       expect(parcelsWithPrice).to.deep.equal(parcels)
     })
+
+    it('should add a zero for missing coordinates', async function() {
+      const coordinates = [{ x: 0, y: 0 }, { x: 10, y: -2 }, { x: -5, y: 20 }]
+      const parcels = coordinates.map(coord =>
+        Object.assign({}, coord, { price: 0 })
+      )
+
+      const parcelService = new ParcelService()
+      const parcelsWithPrice = await parcelService.addPrice(coordinates)
+
+      expect(parcelsWithPrice).to.deep.equal(parcels)
+    })
+  })
+
+  describe('#addOwners', function() {
+    xit('should use the LANDToken contract to add the avaiable owner addresses')
   })
 
   afterEach(() => db.truncate('parcels'))
