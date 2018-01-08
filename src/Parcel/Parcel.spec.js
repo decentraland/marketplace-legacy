@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
+import { LANDToken } from 'decentraland-contracts'
 
 import db from '../database'
 import Parcel from './Parcel'
@@ -101,7 +102,7 @@ describe('ParcelService', function() {
     })
   })
 
-  describe('#addPrice', async function() {
+  describe('#addPrices', async function() {
     it('should add the price fetched from the database to each parcel and return a new array', async function() {
       const coordinates = [
         { id: '0,0', x: 0, y: 0 },
@@ -117,7 +118,7 @@ describe('ParcelService', function() {
       await Promise.all(parcels.map(parcel => Parcel.insert(parcel)))
 
       const parcelService = new ParcelService()
-      const parcelsWithPrice = await parcelService.addPrice(coordinates)
+      const parcelsWithPrice = await parcelService.addPrices(coordinates)
 
       expect(parcelsWithPrice).to.deep.equal(parcels)
     })
@@ -129,14 +130,36 @@ describe('ParcelService', function() {
       )
 
       const parcelService = new ParcelService()
-      const parcelsWithPrice = await parcelService.addPrice(coordinates)
+      const parcelsWithPrice = await parcelService.addPrices(coordinates)
 
       expect(parcelsWithPrice).to.deep.equal(parcels)
     })
   })
 
   describe('#addOwners', function() {
-    xit('should use the LANDToken contract to add the avaiable owner addresses')
+    const contract = {
+      getOwner: (x, y) => (x === 1 && y === 2 ? '0xdeadbeef' : null)
+    }
+
+    beforeEach(() => {
+      sinon.stub(LANDToken, 'getInstance').returns(contract)
+    })
+
+    it('should use the LANDToken contract to add the avaiable owner addresses', async function() {
+      const coordinates = [{ x: -1, y: 10 }, { x: 1, y: 2 }]
+
+      const parcelService = new ParcelService()
+      const parcelsWithOwner = await parcelService.addOwners(coordinates)
+
+      expect(parcelsWithOwner).to.deep.equal([
+        { x: -1, y: 10, owner: null },
+        { x: 1, y: 2, owner: '0xdeadbeef' }
+      ])
+    })
+
+    afterEach(() => {
+      LANDToken.getInstance.restore()
+    })
   })
 
   afterEach(() => db.truncate('parcels'))

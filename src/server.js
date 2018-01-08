@@ -78,7 +78,7 @@ export async function getAddressParcels(req) {
     { x: 0, y: 1, name: '', description: '' }
   ] // from contract
 
-  return new ParcelService().addPrice(parcels)
+  return new ParcelService().addPrices(parcels)
 }
 
 /**

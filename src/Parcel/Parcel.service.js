@@ -1,4 +1,5 @@
-import { LANDToken } from 'decentraland-commons'
+import { LANDToken } from 'decentraland-contracts'
+
 import Parcel from './Parcel'
 
 class ParcelService {
@@ -18,7 +19,7 @@ class ParcelService {
     }
   }
 
-  async addPrice(parcels) {
+  async addPrices(parcels) {
     const priceSetters = parcels.map(async parcel => {
       const price = await Parcel.getPrice(parcel.x, parcel.y)
       return Object.assign({}, parcel, { price })
