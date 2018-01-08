@@ -1,7 +1,7 @@
 #!/usr/bin/env babel-node
 
 import { execSync } from 'child_process'
-import { env, Log } from 'decentraland-commons'
+import { Log, env, cli } from 'decentraland-commons'
 
 import db from '../src/db'
 import { District } from '../src/District'
@@ -12,6 +12,11 @@ const log = new Log('init')
 env.load()
 
 async function initializeDatabase() {
+  const shouldContinue = await cli.confirm(
+    'Careful! this will DROP and reset the current `parcels` and `districts` database.\nAre you sure you want to continue?'
+  )
+  if (!shouldContinue) return process.exit()
+
   const districtCount = await District.count()
   const parcelCount = await Parcel.count()
 

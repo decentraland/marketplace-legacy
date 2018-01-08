@@ -23,7 +23,7 @@ export default {
       "district_id" TEXT`,
       { sequenceName: null }
     )
-    await this.createIndex('parcel_states', 'parcel_states_x_y_idx', ['x', 'y'])
+    await this.createIndex('parcels', 'parcels_x_y_idx', ['x', 'y'])
 
     await this.createTable(
       'districts',
