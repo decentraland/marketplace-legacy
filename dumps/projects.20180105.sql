@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: projects; Type: TABLE; Schema: public; Owner: auction
+-- Name: projects; Type: TABLE; Schema: public; Owner: marketplace
 --
 
 CREATE TABLE projects (
@@ -39,10 +39,10 @@ CREATE TABLE projects (
 );
 
 
-ALTER TABLE projects OWNER TO auction;
+ALTER TABLE projects OWNER TO marketplace;
 
 --
--- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: auction
+-- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: marketplace
 --
 
 COPY projects (id, name, "desc", link, public, parcels, priority, lookup, disabled, "createdAt", "updatedAt") FROM stdin;
@@ -110,7 +110,7 @@ ea2c3a3e-bbd6-49d9-814c-3b64b37b057a	SciArt Lab	Research and Development Lab for
 
 
 --
--- Name: projects projects_pkey; Type: CONSTRAINT; Schema: public; Owner: auction
+-- Name: projects projects_pkey; Type: CONSTRAINT; Schema: public; Owner: marketplace
 --
 
 ALTER TABLE ONLY projects
