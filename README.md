@@ -16,16 +16,20 @@ Once those dependencies are installed you can configure each part of the project
 
 The backend lives on the [`/src`](https://github.com/decentraland/marketplace/tree/master/src) folder and the front on the [`/webapp`](https://github.com/decentraland/marketplace/tree/master/webapp) folder.
 
+Keep in mind that both sides use [`dotenv`](https://github.com/motdotla/dotenv) via [decentraland-commons](https://github.com/decentraland/commons) to configure the environment. As such, you'll need to create your own `.env` files, following the `.env.example`s located on each folder.
+
 First of all, you'll need to run [`npm install`](https://docs.npmjs.com/cli/install) on both directories. Once that's done, you can move to configuring each part:
 
 ### Back-end
 
-- _Creating DB user_
-- _Creating the database_
-- _Adding the .env files_
-- _Running the initialize script_
-- _Running an ethereum node_
-- _Running the server_
+- _Creating the DB user_: Create a PostgreSQL named marketplace. You can do it running `$ createuser marketplace` on the terminal or by running the query `CREATE USER marketplace;`
+- _Creating the database_: You'll need to create a `marketplace` database.  You can do it running `$ createdb -O dev marketplace` on the terminal or by running the query `CREATE DATABASE marketplace OWNER marketplace;`. You can create a `marketplace_test` database if you want to run tests against it.
+- _Adding the .env files_: Create a `.env` file on the [`/src`](https://github.com/decentraland/marketplace/tree/master/src) folder and fill it following the `.env.example` file found there. You can skip most variables as they have a default value. There are some notable exceptions like `CONNECTION_STRING` which might look something like `CONNECTION_STRING="postgres://localhost:5432/marketplace"`
+- _Running the initialize script_: Go to the [`/scripts`](https://github.com/decentraland/marketplace/tree/master/scripts) folder and run the `initializeDatabase.js` script like this `babel-node initializeDatabase.js`. **Important!** Don't forget to add a `.env` file there!
+- _Running an Ethereum node_: If you want to be able to get that from the Ethereum blockchain, you'll need to have a node running on `http://localhost:8545`. You can use [Parity](https://www.parity.io/), [geth](https://github.com/ethereum/go-ethereum/wiki/geth), etc.
+- _Running the server_: To run the server, go to the [`/src`](https://github.com/decentraland/marketplace/tree/master/src) folder and run the `server.js` script like this `babel-node server.js`
+
+If you don't want to install `babel-node` globally, you can use [npx](https://www.npmjs.com/package/npx) and install it locally.
 
 ### Front-end
 
