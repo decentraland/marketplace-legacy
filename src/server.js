@@ -42,7 +42,7 @@ if (env.isProduction()) {
  * @param  {string} sw - South west coordinate
  * @return {array}
  */
-app.get('/parcels', server.handleRequest(getParcels))
+app.get('/api/parcels', server.handleRequest(getParcels))
 
 export async function getParcels(req) {
   const mincoords = server.extractFromReq(req, 'mincoords')

@@ -1,4 +1,5 @@
 module.exports = {
-  require('./Parcel'),
-  require('./ParcelService')
+  Parcel: require('./Parcel'),
+  ParcelService: require('./Parcel.service'),
+  coordinates: require('./coordinates')
 }
