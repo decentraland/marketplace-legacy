@@ -47,10 +47,10 @@ if (env.isProduction()) {
 app.get('/api/parcels', server.handleRequest(getParcels))
 
 export async function getParcels(req) {
-  const mincoords = server.extractFromReq(req, 'mincoords')
-  const maxcoords = server.extractFromReq(req, 'maxcoords')
+  const nw = server.extractFromReq(req, 'nw')
+  const sw = server.extractFromReq(req, 'sw')
 
-  const parcels = await Parcel.inRange(mincoords, maxcoords)
+  const parcels = await Parcel.inRange(nw, sw)
   return new ParcelService.setOwners(parcels)
 }
 
