@@ -2,7 +2,7 @@
 
 # Marketplace
 
-LAND manager and wallet for [Decentraland](https://decentraland.org)
+[Decentraland](https://decentraland.org)'s LAND Manager, Wallet and Marketplace
 
 ## Running the project
 
