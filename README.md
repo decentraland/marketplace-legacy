@@ -1,3 +1,5 @@
+![](https://raw.githubusercontent.com/decentraland/web/gh-pages/img/decentraland.ico)
+
 # Marketplace
 
 LAND manager and wallet for [Decentraland](https://decentraland.org)
@@ -16,16 +18,16 @@ The backend lives on the [`/src`](https://github.com/decentraland/marketplace/tr
 
 First of all, you'll need to run [`npm install`](https://docs.npmjs.com/cli/install) on both directories. Once that's done, you can move to configuring each part:
 
-**Back-end**
+### Back-end
 
-_Creating DB user_
-_Creating the database_
-_Adding the .env files_
-_Running the initialize script_
-_Running an ethereum node_
-_Running the server_
+- _Creating DB user_
+- _Creating the database_
+- _Adding the .env files_
+- _Running the initialize script_
+- _Running an ethereum node_
+- _Running the server_
 
-**Front-end**
+### Front-end
 
-_Adding the .env files (NODE_PATH)_
-_Running the front-end_
+- _Adding the .env files (NODE_PATH)_
+- _Running the front-end_
