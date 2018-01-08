@@ -1,5 +1,6 @@
 {
-  "name": "marketplace-webapp",
+  "name": "Marketplace-webapp",
+  "description": "Decentraland's LAND Manager, Wallet and Marketplace",
   "version": "0.1.0",
   "private": true,
   "scripts": {

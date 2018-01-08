@@ -1,7 +1,7 @@
 {
   "name": "Marketplace",
   "version": "0.1.0",
-  "description": "",
+  "description": "Decentraland's LAND Manager, Wallet and Marketplace",
   "main": "src/server.js",
   "scripts": {
     "lint": "npx eslint .",
