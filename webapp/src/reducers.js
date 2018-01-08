@@ -102,7 +102,6 @@ function loading(state = INITIAL_STATE.loading, action) {
 }
 
 function userParcels(state = INITIAL_STATE.userParcels, action) {
-  console.log(action)
   switch (action.type) {
     case types.fetchUserParcels.request:
       return { ...state, loading: true, error: null }
