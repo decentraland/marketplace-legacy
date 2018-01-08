@@ -3,7 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 
-import { server, env, eth } from 'decentraland-commons'
+import { server, env, eth, utils } from 'decentraland-commons'
 import { LANDToken } from 'decentraland-commons'
 
 import db from './database'
@@ -67,7 +67,7 @@ app.get(
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  let parcels = [
+  const contractParcels = [
     {
       x: 0,
       y: 0,
@@ -78,7 +78,9 @@ export async function getAddressParcels(req) {
     { x: 0, y: 1, name: '', description: '' }
   ] // from contract
 
-  return new ParcelService().addPrices(parcels)
+  const parcels = new ParcelService().addPrices(contractParcels)
+
+  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
 
 /**
@@ -87,8 +89,9 @@ export async function getAddressParcels(req) {
  */
 app.get('/api/districts', server.handleRequest(getDistricts))
 
-export function getDistricts(req) {
-  return District.find()
+export async function getDistricts(req) {
+  const districts = await District.find()
+  return utils.mapOmit(districts, ['parcel_ids', 'created_at', 'updated_at'])
 }
 
 /* Start the server only if run directly */

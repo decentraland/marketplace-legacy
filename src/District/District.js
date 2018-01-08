@@ -9,10 +9,11 @@ class District extends Model {
     'description',
     'link',
     'public',
-    'parcels',
+    'parcel_count',
+    'parcel_ids',
     'priority',
-    'disabled',
-    'center'
+    'center',
+    'disabled'
   ]
 
   static findByName(name) {
