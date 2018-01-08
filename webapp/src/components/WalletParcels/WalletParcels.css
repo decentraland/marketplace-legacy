@@ -1,0 +1,96 @@
+
+.WalletParcels {
+}
+
+.WalletParcels .heading .parcel-count {
+  margin-left: 18px;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+.WalletParcels .table-row {
+  width: 100%;
+  height: 64px;
+  padding: 24px;
+}
+
+.WalletParcels .parcel-row-editing {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+}
+
+.WalletParcels .table-row-empty {
+  width: 100%;
+  padding-top: 24px;
+  padding-left: 24px;
+  font-size: 15px;
+}
+
+.WalletParcels .table-row.gray {
+  background-color: #FBFBFB;
+}
+
+.WalletParcels .table .col {
+  height: 100%;
+  float: left;
+}
+
+.WalletParcels .table .col-editing { width: 90%; }
+.WalletParcels .table .col-coord   { width: 20%; }
+.WalletParcels .table .col-price   { width: 30%; }
+.WalletParcels .table .col-name    { width: 40%; }
+.WalletParcels .table .col-actions { width: 10%; }
+
+.WalletParcels .table .col-editing {
+  font-family: "Source Sans Pro SemiBold", Helvetica, sans-serif;
+}
+
+.WalletParcels .col-actions {
+  cursor: pointer;
+}
+
+.WalletParcels .col-actions .Icon {
+  margin-right: 3px;
+}
+
+.WalletParcels .editing-fields {
+  width: 100%;
+  padding-top: 10px;
+  overflow: hidden;
+  display: flex;
+}
+
+.WalletParcels .field {
+  width: 50%;
+  display: inline-block;
+}
+
+.WalletParcels .field label {
+  display: block;
+}
+
+.WalletParcels .field input,
+.WalletParcels .field textarea {
+  width: 66%;
+  padding: 10px;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.05);
+  border-radius: 2px;
+  border: none;
+}
+
+.WalletParcels .field textarea {
+  width: 95%;
+}
+
+.WalletParcels .field input:focus,
+.WalletParcels .field textarea {
+  outline-width: 0;
+}
+
+
+.WalletParcels .heading .parcel-count,
+.WalletParcels .table-row-empty,
+.WalletParcels .col-actions,
+.WalletParcels .field label {
+  color: #7B7B7B;
+}
