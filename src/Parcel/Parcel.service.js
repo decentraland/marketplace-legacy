@@ -22,13 +22,13 @@ class ParcelService {
   }
 
   async addPrice(parcels) {
-    return await Promise.all(
-      parcels.map(parcel =>
-        Parcel.getPrice(parcel.x, parcel.y).then(
-          price => (parcel.price = price)
-        )
-      )
-    )
+    const priceAdditions = parcels.map(async parcel => {
+      const price = await Parcel.getPrice(parcel.x, parcel.y)
+      parcel.price = price
+      return parcel
+    })
+
+    return await Promise.all(priceAdditions)
   }
 }
 

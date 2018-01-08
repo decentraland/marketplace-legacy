@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import path from 'path'
 import { server, env } from 'decentraland-commons'
 
-import db from './db'
+import db from './database'
 import { District } from './District'
 import { Parcel, ParcelService } from './Parcel'
 

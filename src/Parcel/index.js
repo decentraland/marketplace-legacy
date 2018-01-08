@@ -1,2 +1,4 @@
-export { default as Parcel } from './Parcel'
-export { default as ParcelService } from './Parcel.service'
+module.exports = {
+  require('./Parcel'),
+  require('./ParcelService')
+}

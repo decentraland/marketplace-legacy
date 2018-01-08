@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
 
-import db from '../db'
+import db from '../database'
 import Parcel from './Parcel'
 import ParcelService from './Parcel.service'
 import coordinates from './coordinates'
@@ -48,23 +48,23 @@ describe('Parcel', function() {
     })
   })
 
-  afterEach(() => Promise.all(['parcel_states'].map(db.truncate.bind(db))))
+  afterEach(() => db.truncate('parcels'))
 })
 
 describe('ParcelService', function() {
-  let Parcel
+  let ParcelMock
   let parcelService
 
   beforeEach(() => {
-    Parcel = { insert: () => Promise.resolve() }
+    ParcelMock = { insert: () => Promise.resolve() }
 
     parcelService = new ParcelService()
-    parcelService.Parcel = Parcel
+    parcelService.Parcel = ParcelMock
   })
 
   describe('#insertMatrix', function() {
     it('should call the `insert` method of parcel state for each element of the matrix', async function() {
-      const spy = sinon.spy(Parcel, 'insert')
+      const spy = sinon.spy(ParcelMock, 'insert')
 
       await parcelService.insertMatrix(-1, -1, 1, 2)
 
@@ -93,7 +93,7 @@ describe('ParcelService', function() {
       const error =
         'duplicate key value violates unique constraint "parcel_states_pkey"'
 
-      sinon.stub(Parcel, 'insert').returns(Promise.reject(error))
+      sinon.stub(ParcelMock, 'insert').returns(Promise.reject(error))
 
       return expect(
         parcelService.insertMatrix(0, 0, 1, 1)
@@ -102,8 +102,28 @@ describe('ParcelService', function() {
   })
 
   describe('#addPrice', async function() {
+    it('should add the price fetched from the database to each parcel and return a new array', async function() {
+      const coordinates = [
+        { id: '0,0', x: 0, y: 0 },
+        { id: '10,-2', x: 10, y: -2 },
+        { id: '-5,20', x: -5, y: 20 }
+      ]
+      const prices = ['1000', '1250', '5234']
 
+      const parcels = coordinates.map((coord, index) =>
+        Object.assign({}, coord, { price: prices[index] })
+      )
+
+      await Promise.all(parcels.map(parcel => Parcel.insert(parcel)))
+
+      const parcelService = new ParcelService()
+      const parcelsWithPrice = await parcelService.addPrice(coordinates)
+
+      expect(parcelsWithPrice).to.deep.equal(parcels)
+    })
   })
+
+  afterEach(() => db.truncate('parcels'))
 })
 
 describe('coordinates', function() {

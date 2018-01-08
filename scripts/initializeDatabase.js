@@ -3,7 +3,7 @@
 import { execSync } from 'child_process'
 import { Log, env, cli } from 'decentraland-commons'
 
-import db from '../src/db'
+import db from '../src/database'
 
 const log = new Log('init')
 

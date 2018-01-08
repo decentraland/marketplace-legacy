@@ -1,1 +1,1 @@
-export { default as District } from './District'
+module.exports = require('./District')

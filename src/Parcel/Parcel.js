@@ -32,17 +32,18 @@ class Parcel extends Model {
     const result = await this.db.query(
       `SELECT price
         FROM ${this.tableName}
-        WHERE x = $1 AND y = $2`
+        WHERE x = $1 AND y = $2`,
+      [x, y]
     )
 
     return result.length ? result[0].price : 0
   }
 
-  static async insert(parcelState) {
-    const { x, y } = parcelState
-    parcelState.id = Parcel.hashId(x, y)
+  static async insert(parcel) {
+    const { x, y } = parcel
+    parcel.id = Parcel.hashId(x, y)
 
-    return await super.insert(parcelState)
+    return await super.insert(parcel)
   }
 }
 
