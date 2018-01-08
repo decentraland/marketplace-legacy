@@ -110,9 +110,14 @@ const LeafletParcelGrid = L.Layer.extend({
     if (this.currentAnimationFrame >= 0) {
       this.cancelAnimationFrame.call(window, this.currentAnimationFrame)
     }
-    this.currentAnimationFrame = this.requestAnimationFrame.call(window, () =>
-      this.renderTiles(this.map.getBounds())
-    )
+    this.currentAnimationFrame = this.requestAnimationFrame.call(window, () => {
+      try {
+        this.renderTiles(this.map.getBounds())
+      } catch (e) {
+        // sometimes this line is reached because at the time the requestAnimationFrame callback
+        // get called the map is uninitialized ¯\_(ツ)_/¯
+      }
+    })
   },
 
   redraw: function(direct) {
