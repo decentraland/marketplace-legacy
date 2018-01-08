@@ -1,1 +1,3 @@
-module.exports = require('./db')
+import db from './db'
+
+export default db
