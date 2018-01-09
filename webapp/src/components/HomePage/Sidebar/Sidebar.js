@@ -9,10 +9,11 @@ import './Sidebar.css'
 
 export default class Sidebar extends React.Component {
   static propTypes = {
-    visible: PropTypes.bool,
     address: PropTypes.string,
+    isOpen: PropTypes.bool,
     isLoading: PropTypes.bool,
-    changeVisibility: PropTypes.func.isRequired
+    onOpen: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -21,42 +22,51 @@ export default class Sidebar extends React.Component {
   }
 
   toggle = () => {
-    const { visible, changeVisibility } = this.props
-    changeVisibility(!visible)
+    const { isOpen, onOpen, onClose } = this.props
+    if (isOpen) {
+      onClose()
+    } else {
+      onOpen()
+    }
   }
 
   hide = () => {
-    this.props.changeVisibility(false)
+    const { onClose } = this.props
+    onClose()
   }
 
-  getVisibilityClassName() {
-    return this.props.visible ? 'in' : 'out'
+  getSidebarClasses() {
+    const { isOpen } = this.props
+    return isOpen ? 'in' : 'out'
   }
 
   getDecentralandIconName() {
-    return this.props.isLoading ? 'decentraland-loading' : 'decentraland'
+    const { isLoading } = this.props
+    return isLoading ? 'decentraland-loading' : 'decentraland'
   }
 
   render() {
-    let { address, visible } = this.props
+    let { address, isOpen } = this.props
+    const classes = this.getSidebarClasses()
+
+    const header = isOpen ? (
+      <h1 className="sidebar-title fadein">Decentraland</h1>
+    ) : null
+
+    const sidebar = isOpen ? (
+      <ExpandedSidebar address={address} />
+    ) : (
+      <CollapsedSidebar onClick={this.toggle} />
+    )
 
     return (
-      <div className={`Sidebar ${this.getVisibilityClassName()}`}>
+      <div className={`Sidebar ${classes}`}>
         <header>
           <Icon name={this.getDecentralandIconName()} />
-          {visible && <h1 className="sidebar-title fadein">Decentraland</h1>}
+          {header}
         </header>
-
-        {visible ? (
-          <ExpandedSidebar address={address} />
-        ) : (
-          <CollapsedSidebar onClick={this.toggle} />
-        )}
-
-        <div
-          className={`toggle-button ${this.getVisibilityClassName()}`}
-          onClick={this.toggle}
-        />
+        {sidebar}
+        <div className={`toggle-button ${classes}`} onClick={this.toggle} />
       </div>
     )
   }
