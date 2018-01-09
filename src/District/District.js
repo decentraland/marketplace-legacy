@@ -16,6 +16,10 @@ class District extends Model {
     'disabled'
   ]
 
+  static findEnabled() {
+    return this.find({ disabled: false })
+  }
+
   static findByName(name) {
     return this.findOne({ name })
   }

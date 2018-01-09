@@ -92,8 +92,8 @@ export async function getAddressParcels(req) {
 app.get('/api/districts', server.handleRequest(getDistricts))
 
 export async function getDistricts(req) {
-  const districts = await District.find()
-  return utils.mapOmit(districts, ['parcel_ids', 'created_at', 'updated_at'])
+  const districts = await District.findEnabled()
+  return utils.mapOmit(districts, ['disabled', 'parcel_ids', 'created_at', 'updated_at'])
 }
 
 /* Start the server only if run directly */
