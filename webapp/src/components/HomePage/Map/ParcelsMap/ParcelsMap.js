@@ -28,7 +28,8 @@ export default class ParcelsMap extends React.Component {
     tileSize: PropTypes.number.isRequired,
 
     onMoveEnd: PropTypes.func,
-    onZoomEnd: PropTypes.func
+    onZoomEnd: PropTypes.func,
+    onSelect: PropTypes.func
   }
 
   constructor(props) {
@@ -262,7 +263,8 @@ export default class ParcelsMap extends React.Component {
     // const parcel = this.getParcelData(x, y)
     // setTimeout(() => this.parcelGrid && this.parcelGrid.loadCell(tile, 0), 10)
 
-    console.log('onTileClick', { x, y })
+    const { onSelect } = this.props
+    onSelect(x, y)
   }
 
   onMouseDown = latlng => {

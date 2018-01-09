@@ -14,7 +14,9 @@ export default class MapComponent extends React.Component {
       y: PropTypes.string
     }),
     onNavigate: PropTypes.func.isRequired,
-    onLoading: PropTypes.func.isRequired
+    onLoading: PropTypes.func.isRequired,
+    onRangeChange: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -70,15 +72,17 @@ export default class MapComponent extends React.Component {
   }
 
   fetchParcelRange(minX, minY, maxX, maxY) {
-    // const bounds = parcelUtils.getBounds()
-
-    // this.props.parcelRangeChange(
-    //   bounds.minX > minX ? bounds.minX : minX,
-    //   bounds.minY > minY ? bounds.minY : minY,
-    //   bounds.maxX < maxX ? bounds.maxX : maxX,
-    //   bounds.maxY < maxY ? bounds.maxY : maxY
-    // )
-    console.log('fetchParcelRange', { minX, minY, maxX, maxY })
+    const bounds = parcelUtils.getBounds()
+    const { onRangeChange } = this.props
+    const nw = {
+      x: bounds.minX > minX ? bounds.minX : minX,
+      y: bounds.minY > minY ? bounds.minY : minY
+    }
+    const se = {
+      x: bounds.maxX < maxX ? bounds.maxX : maxX,
+      y: bounds.maxY < maxY ? bounds.maxY : maxY
+    }
+    onRangeChange(nw, se)
   }
 
   getTileSize() {
@@ -92,7 +96,7 @@ export default class MapComponent extends React.Component {
 
   render() {
     const { zoom } = this.state
-    const { isReady } = this.props
+    const { isReady, onSelect } = this.props
     const { x, y } = this.getCenter()
 
     return isReady ? (
@@ -108,6 +112,7 @@ export default class MapComponent extends React.Component {
         onMoveStart={this.onMoveStart}
         onMoveEnd={this.onMoveEnd}
         onZoomEnd={this.onZoomEnd}
+        onSelect={onSelect}
       />
     ) : (
       <Loading />

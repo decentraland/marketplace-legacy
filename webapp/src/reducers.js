@@ -1,33 +1,16 @@
 import types from './types'
+import { combineReducers } from 'redux'
+import { routerReducer as router } from 'react-router-redux'
+import ui from 'modules/ui/reducer'
 
 const INITIAL_STATE = {
-  loading: false, // Comunicate that *something* is loading. Should be manually set to false again
-
   web3Connected: false,
   ethereumConnection: {
     ethereum: null,
     address: null,
     ledger: false
   },
-
-  userParcels: { loading: true },
-
-  range: {
-    minX: 0,
-    maxX: 0,
-    minY: 0,
-    maxY: 0
-  },
-
-  sidebar: {
-    open: false
-  },
-
-  modal: {
-    open: false,
-    name: '',
-    data: null
-  }
+  userParcels: { loading: true }
 }
 
 function getWeb3Connected(state) {
@@ -39,31 +22,15 @@ function getEthereumConnection(state) {
 function getAddress(state) {
   return state.ethereumConnection.address
 }
-function getLoading(state) {
-  return state.loading
-}
 function getUserParcels(state) {
   return state.userParcels
-}
-function getRange(state) {
-  return state.range
-}
-function getSidebar(state) {
-  return state.sidebar
-}
-function getModal(state) {
-  return state.modal
 }
 
 export const selectors = {
   getWeb3Connected,
   getEthereumConnection,
   getAddress,
-  getLoading,
-  getUserParcels,
-  getRange,
-  getSidebar,
-  getModal
+  getUserParcels
 }
 
 function web3Connected(state = INITIAL_STATE.web3Connected, action) {
@@ -92,15 +59,6 @@ function ethereumConnection(state = INITIAL_STATE.ethereumConnection, action) {
   }
 }
 
-function loading(state = INITIAL_STATE.loading, action) {
-  switch (action.type) {
-    case types.setLoading:
-      return action.loading
-    default:
-      return state
-  }
-}
-
 function userParcels(state = INITIAL_STATE.userParcels, action) {
   switch (action.type) {
     case types.fetchUserParcels.request:
@@ -114,59 +72,6 @@ function userParcels(state = INITIAL_STATE.userParcels, action) {
   }
 }
 
-function range(state = INITIAL_STATE.range, action) {
-  switch (action.type) {
-    case types.parcelRangeChanged:
-      return action
-    default:
-      return state
-  }
-}
-
-function sidebar(state = INITIAL_STATE.sidebar, action) {
-  switch (action.type) {
-    case types.sidebar.open:
-      return {
-        open: true
-      }
-    case types.deleteUnconfirmedBid:
-    case types.appendUnconfirmedBid:
-    case types.parcelRangeChanged:
-      return {
-        open: false
-      }
-    case types.sidebar.close:
-      return INITIAL_STATE.sidebar
-    default:
-      return state
-  }
-}
-
-function modal(state = INITIAL_STATE.modal, action) {
-  switch (action.type) {
-    case types.modal.open:
-      return {
-        open: true,
-        name: action.name,
-        data: action.data
-      }
-    case types.modal.close:
-      return INITIAL_STATE.modal
-    default:
-      return state
-  }
-}
-
-export default {
-  web3Connected,
-  ethereumConnection,
-  loading,
-  userParcels,
-  range,
-  sidebar,
-  modal
-}
-
 export function analytics(state, action) {
   switch (action.type) {
     case '@@router/LOCATION_CHANGE':
@@ -176,3 +81,12 @@ export function analytics(state, action) {
       return action
   }
 }
+
+//---------
+export default combineReducers({
+  ui,
+  router,
+  web3Connected,
+  ethereumConnection,
+  userParcels
+})

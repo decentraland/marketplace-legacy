@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
 import { selectors } from 'reducers'
-import { openSidebar, closeSidebar } from 'actions'
+import { isLoading } from 'modules/ui/loading/reducer'
+import { isOpen } from 'modules/ui/sidebar/reducer'
+import { openSidebar, closeSidebar } from 'modules/ui/sidebar/actions'
 import Sidebar from './Sidebar'
 
 const mapState = state => {
   return {
     address: selectors.getAddress(state),
-    isLoading: selectors.getLoading(state),
-    isOpen: selectors.getSidebar(state).open
+    isLoading: isLoading(state),
+    isOpen: isOpen(state)
   }
 }
 
