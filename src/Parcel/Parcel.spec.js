@@ -141,11 +141,9 @@ describe('ParcelService', function() {
       getOwner: (x, y) => (x === 1 && y === 2 ? '0xdeadbeef' : null)
     }
 
-    beforeEach(() => {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
-    })
-
     it('should use the LANDToken contract to add the avaiable owner addresses', async function() {
+      sinon.stub(LANDToken, 'getInstance').returns(contract)
+
       const coordinates = [{ x: -1, y: 10 }, { x: 1, y: 2 }]
 
       const parcelService = new ParcelService()
@@ -155,6 +153,17 @@ describe('ParcelService', function() {
         { x: -1, y: 10, owner: null },
         { x: 1, y: 2, owner: '0xdeadbeef' }
       ])
+    })
+
+    it('should return the same array if the LANDToken contract fails', async function() {
+      sinon.stub(LANDToken, 'getInstance').throws()
+
+      const coordinates = [{ x: -1, y: 10 }, { x: 1, y: 2 }]
+
+      const parcelService = new ParcelService()
+      const parcelsWithOwner = await parcelService.addOwners(coordinates)
+
+      expect(parcelsWithOwner).to.equal(coordinates)
     })
 
     afterEach(() => {

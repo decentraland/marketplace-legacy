@@ -50,8 +50,10 @@ export async function getParcels(req) {
   const nw = server.extractFromReq(req, 'nw')
   const sw = server.extractFromReq(req, 'sw')
 
-  const parcels = await Parcel.inRange(nw, sw)
-  return new ParcelService.setOwners(parcels)
+  let parcels = await Parcel.inRange(nw, sw)
+  parcels = await new ParcelService().addOwners(parcels)
+
+  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
 
 /**

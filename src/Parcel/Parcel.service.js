@@ -1,6 +1,9 @@
+import { Log } from 'decentraland-commons'
 import { LANDToken } from 'decentraland-contracts'
 
 import Parcel from './Parcel'
+
+const log = new Log('ParcelService')
 
 class ParcelService {
   constructor() {
@@ -29,17 +32,25 @@ class ParcelService {
   }
 
   async addOwners(parcels) {
-    const contract = LANDToken.getInstance()
+    try {
+      const contract = LANDToken.getInstance()
 
-    const ownerSetters = parcels.map(async parcel => {
-      const owner = parcel.district_id
-        ? null
-        : await contract.getOwner(parcel.x, parcel.y)
+      const ownerSetters = parcels.map(async parcel => {
+        const owner = parcel.district_id
+          ? null
+          : await contract.getOwner(parcel.x, parcel.y)
 
-      return Object.assign({}, parcel, { owner })
-    })
+        return Object.assign({}, parcel, { owner })
+      })
 
-    return await Promise.all(ownerSetters)
+      return await Promise.all(ownerSetters)
+    } catch (error) {
+      log.warn(
+        '[WARN] Error trying to get owners from LANDToken contract',
+        error
+      )
+      return parcels
+    }
   }
 }
 
