@@ -48,9 +48,9 @@ app.get('/api/parcels', server.handleRequest(getParcels))
 
 export async function getParcels(req) {
   const nw = server.extractFromReq(req, 'nw')
-  const sw = server.extractFromReq(req, 'sw')
+  const se = server.extractFromReq(req, 'se')
 
-  let parcels = await Parcel.inRange(nw, sw)
+  let parcels = await Parcel.inRange(nw, se)
   parcels = await new ParcelService().addOwners(parcels)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
