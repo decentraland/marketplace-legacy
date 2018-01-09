@@ -119,9 +119,9 @@ function connectEthereum() {
     .connect(null, [LANDToken])
     .catch(error =>
       console.error(
-        'Could not connect to the Ethereum node. Some endpoints may not work correctly.',
+        '\nCould not connect to the Ethereum node. Some endpoints may not work correctly.',
         '\nMake sure you have a node running on port 8545.',
-        `\nError: "${error.message}"`
+        `\nError: "${error.message}"\n`
       )
     )
 }

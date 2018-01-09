@@ -8,10 +8,13 @@ import {
   FETCH_WALLET_SUCCESS,
   FETCH_WALLET_FAILURE
 } from './actions'
+import { FETCH_DISTRICTS_REQUEST } from 'modules/districts/actions'
+
 import { connectEthereumWallet } from './utils'
 
 export default function* walletSaga() {
   yield takeLatest(FETCH_WALLET_REQUEST, handleWalletRequest)
+  yield takeLatest(FETCH_WALLET_SUCCESS, handleWalletSuccess)
 }
 
 // Defined on `connectEthereumWallet`
@@ -31,4 +34,8 @@ function* handleWalletRequest(action = {}) {
     yield put(replace(locations.walletError))
     yield put({ type: FETCH_WALLET_FAILURE, message: error.message })
   }
+}
+
+function* handleWalletSuccess(action) {
+  yield put({ type: FETCH_DISTRICTS_REQUEST })
 }

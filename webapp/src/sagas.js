@@ -1,12 +1,13 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery, put, all } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 
 import types from './types'
 
 import walletSaga from 'modules/wallet/sagas'
+import districtsSaga from 'modules/districts/sagas'
 
 function* rootSaga() {
-  yield walletSaga()
+  yield all([districtsSaga(), walletSaga()])
 
   yield takeEvery(types.navigateTo, handleLocationChange)
 }
