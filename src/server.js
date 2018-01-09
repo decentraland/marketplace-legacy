@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import path from 'path'
 
 import { server, env, eth, utils } from 'decentraland-commons'
-import { LANDToken } from 'decentraland-commons'
+import { LANDToken } from 'decentraland-contracts'
 
 import db from './database'
 import { District } from './District'
@@ -93,7 +93,12 @@ app.get('/api/districts', server.handleRequest(getDistricts))
 
 export async function getDistricts(req) {
   const districts = await District.findEnabled()
-  return utils.mapOmit(districts, ['disabled', 'parcel_ids', 'created_at', 'updated_at'])
+  return utils.mapOmit(districts, [
+    'disabled',
+    'parcel_ids',
+    'created_at',
+    'updated_at'
+  ])
 }
 
 /* Start the server only if run directly */
@@ -111,10 +116,12 @@ function connectDatabase() {
 
 function connectEthereum() {
   return eth
-    .connect([LANDToken])
-    .catch(() =>
+    .connect(null, [LANDToken])
+    .catch(error =>
       console.error(
-        'Could not connect to the Ethereum node. Some endpoints may not work correctly. Make sure you have a node running on port 8545'
+        'Could not connect to the Ethereum node. Some endpoints may not work correctly.',
+        '\nMake sure you have a node running on port 8545.',
+        `\nError: "${error.message}"`
       )
     )
 }
