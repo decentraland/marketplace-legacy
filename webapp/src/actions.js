@@ -1,16 +1,6 @@
 import types from './types'
 
 // -------------------------------------------------------------------------
-// Web3
-
-export function connectWeb3(address) {
-  return {
-    type: types.connectWeb3.request,
-    address
-  }
-}
-
-// -------------------------------------------------------------------------
 // Parcels
 
 export function fetchUserParcels() {

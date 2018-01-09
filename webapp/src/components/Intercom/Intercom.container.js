@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { selectors } from 'reducers'
+import { getAddress } from 'modules/wallet/reducer'
 import Intercom from './Intercom'
 
 const mapState = state => {
   return {
-    ethereum: selectors.getEthereumConnection(state)
+    address: getAddress(state)
   }
 }
 

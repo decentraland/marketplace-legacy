@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { connectWeb3 } from 'actions'
+import { fetchWallet } from 'modules/wallet/actions'
 
 import HomePage from './HomePage'
 
@@ -10,7 +10,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onConnect: () => dispatch(connectWeb3())
+  onConnect: () => dispatch(fetchWallet())
 })
 
 export default connect(mapState, mapDispatch)(HomePage)
