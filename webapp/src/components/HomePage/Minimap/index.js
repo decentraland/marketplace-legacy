@@ -1,3 +1,3 @@
-import Minimap from './Minimap'
+import Minimap from './Minimap.container'
 
 export default Minimap

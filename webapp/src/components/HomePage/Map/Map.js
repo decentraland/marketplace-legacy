@@ -1,16 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
-
 import locations from 'locations'
-import { navigateTo, setLoading } from 'actions'
 import * as parcelUtils from 'lib/parcelUtils'
 
-import ParcelsMap from 'components/HomePage/ParcelsMap'
+import ParcelsMap from './ParcelsMap'
 import Loading from 'components/Loading'
 
-class ParcelsMapContainer extends React.Component {
+export default class MapComponent extends React.Component {
   static propTypes = {
     isReady: PropTypes.bool,
     center: PropTypes.shape({
@@ -51,10 +47,12 @@ class ParcelsMapContainer extends React.Component {
   }
 
   onMoveStart = () => {
-    this.props.setLoading(true) // Set back to false on `types.fetchParcels.success`
+    const { onLoading } = this.props
+    onLoading() // Set back to false on `types.fetchParcels.success`
   }
 
   onMoveEnd = ({ position, bounds }) => {
+    const { onNavigate } = this.props
     const offset = this.getBoundsOffset()
 
     this.fetchParcelRange(
@@ -64,7 +62,7 @@ class ParcelsMapContainer extends React.Component {
       bounds.max.y - offset
     )
 
-    this.props.navigateTo(locations.parcelDetail(position.x, position.y))
+    onNavigate(locations.parcelDetail(position.x, position.y))
   }
 
   onZoomEnd = zoom => {
@@ -116,13 +114,3 @@ class ParcelsMapContainer extends React.Component {
     )
   }
 }
-
-export default withRouter(
-  connect(
-    (state, ownProps) => ({
-      isReady: ownProps.isReady,
-      center: ownProps.match.params // from withRouter
-    }),
-    { navigateTo, setLoading }
-  )(ParcelsMapContainer)
-)

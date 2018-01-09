@@ -1,10 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
-import { selectors } from 'reducers'
-
-class GoogleAnalyticsContainer extends React.Component {
+export default class GoogleAnalytics extends React.PureComponent {
   static propTypes = {
     ethereum: PropTypes.object
   }
@@ -44,10 +41,3 @@ class GoogleAnalyticsContainer extends React.Component {
     return null
   }
 }
-
-export default connect(
-  state => ({
-    ethereum: selectors.getEthereumConnection(state)
-  }),
-  {}
-)(GoogleAnalyticsContainer)

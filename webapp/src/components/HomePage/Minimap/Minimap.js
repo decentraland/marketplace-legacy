@@ -79,8 +79,9 @@ export default class Minimap extends React.Component {
   }
 
   submitChange(deltaX, deltaY, otherState) {
+    const { onUpdate } = this.props
     const { x, y } = this.newCenter(deltaX, deltaY)
-    this.props.update(x, y)
+    onUpdate(x, y)
     this.updateWithDeltaMouseCoords(deltaX, deltaY, { down: false })
   }
 

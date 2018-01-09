@@ -1,5 +1,5 @@
 import { env } from 'decentraland-commons'
-import { insertScript } from './utils'
+import { insertScript } from 'lib/utils'
 
 const APP_ID = env.get('REACT_APP_INTERCOM_APP_ID', '')
 

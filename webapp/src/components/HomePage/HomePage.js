@@ -2,16 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import SidebarContainer from 'containers/SidebarContainer'
-import ParcelsMapContainer from 'containers/ParcelsMapContainer'
-// import MinimapContainer from '../containers/MinimapContainer'
-import GoogleAnalyticsContainer from 'containers/GoogleAnalyticsContainer'
+import MapComponent from './Map'
+// import MinimapContainer from './Minimap'
+import GoogleAnalytics from './GoogleAnalytics'
 import ModalContainer from 'containers/modals/ModalContainer'
 
 import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
   static propTypes = {
-    isReady: PropTypes.bool
+    isReady: PropTypes.bool,
+    onConnect: PropTypes.func
+  }
+
+  componentWillMount() {
+    const { onConnect } = this.props
+    onConnect()
   }
 
   render() {
@@ -24,10 +30,10 @@ export default class HomePage extends React.PureComponent {
             <SidebarContainer />
           </div>
         )}
-        <ParcelsMapContainer isReady={isReady} />
+        <MapComponent isReady={isReady} />
         {/*isReady && <MinimapContainer />*/}
         <ModalContainer />
-        <GoogleAnalyticsContainer />
+        <GoogleAnalytics />
       </div>
     )
   }
