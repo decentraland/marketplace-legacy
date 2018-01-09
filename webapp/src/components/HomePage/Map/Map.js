@@ -13,8 +13,8 @@ export default class MapComponent extends React.Component {
       x: PropTypes.string,
       y: PropTypes.string
     }),
-    navigateTo: PropTypes.func.isRequired,
-    setLoading: PropTypes.func.isRequired
+    onNavigate: PropTypes.func.isRequired,
+    onLoading: PropTypes.func.isRequired
   }
 
   static defaultProps = {
