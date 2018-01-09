@@ -21,7 +21,7 @@
   },
   "rules": {
     "react/prop-types": 0,
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", {"printWidth": 80, "singleQuote": true, "semi": false}],
     "no-console": 0,
     "no-unused-vars": ["error", {
       "vars": "all",

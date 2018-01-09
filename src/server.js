@@ -2,12 +2,13 @@ import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
-import { server, env } from 'decentraland-commons'
 
-import db from './lib/db'
-import verifySignedMessage from './lib/verifySignedMessage'
-// import {} from './lib/models'
-// import {} from './lib/services'
+import { server, env, eth, utils } from 'decentraland-commons'
+import { LANDToken } from 'decentraland-contracts'
+
+import db from './database'
+import { District } from './District'
+import { Parcel, ParcelService } from './Parcel'
 
 env.load()
 
@@ -38,62 +39,95 @@ if (env.isProduction()) {
 }
 
 /**
- * Return the parcels an address owns
- * @param  {string} address - User address
+ * Returns the parcels that land in between the supplied coordinates
+ * @param  {string} nw - North west coordinate
+ * @param  {string} sw - South west coordinate
+ * @return {array}
+ */
+app.get('/api/parcels', server.handleRequest(getParcels))
+
+export async function getParcels(req) {
+  const nw = server.extractFromReq(req, 'nw')
+  const se = server.extractFromReq(req, 'se')
+
+  let parcels = await Parcel.inRange(nw, se)
+  parcels = await new ParcelService().addOwners(parcels)
+
+  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
+}
+
+/**
+ * Returns the parcels an address owns
+ * @param  {string} address - Parcel owner
  * @return {object}
  */
-app.get('/api/userParcels', server.handleRequest(getUserParcels))
+app.get(
+  '/api/addresses/:address/parcels',
+  server.handleRequest(getAddressParcels)
+)
 
-export async function getUserParcels(req) {
+export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  const parcels = [
+  const contractParcels = [
     {
       x: 0,
       y: 0,
-      price: 13230,
       name: 'Some loren ipsum',
       description: 'This is the description from the first parcel'
     },
-    { x: 1, y: 0, price: 1030, name: 'Say my goddamn name', description: '' },
-    { x: 0, y: 1, price: 1500, name: '', description: '' }
+    { x: 1, y: 0, name: 'Say my goddamn name', description: '' },
+    { x: 0, y: 1, name: '', description: '' }
   ] // from contract
 
-  // TODO: We'll need to add the price to each parcel we fetch from the contract
-  // using the parcel_states table
+  const parcels = new ParcelService().addPrices(contractParcels)
 
-  return parcels
+  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
 
 /**
- * Edit the metadata of an owned parcel
- * @param  {string} address - Owner of the parcel address
- * @param  {object} parcel - New parcel data
- * @return {object}
+ * Returns all stored districts
+ * @return {array}
  */
-app.post('/api/userParcels/edit', server.handleRequest(editUserParcels))
+app.get('/api/districts', server.handleRequest(getDistricts))
 
-export async function editUserParcels(req) {
-  const message = server.extractFromReq(req, 'message')
-  const signature = server.extractFromReq(req, 'signature')
-
-  const decoded = verifySignedMessage(message, signature)
-
-  console.log(decoded)
-
-  return true
+export async function getDistricts(req) {
+  const districts = await District.findEnabled()
+  return utils.mapOmit(districts, [
+    'disabled',
+    'parcel_ids',
+    'created_at',
+    'updated_at'
+  ])
 }
 
-/**
- * Start the server
- */
+/* Start the server only if run directly */
 if (require.main === module) {
-  db
-    .connect()
-    .then(() => {
-      httpServer.listen(SERVER_PORT, () =>
-        console.log('Server running on port', SERVER_PORT)
-      )
-    })
+  Promise.resolve()
+    .then(connectDatabase)
+    .then(connectEthereum)
+    .then(listenOnServerPort)
     .catch(console.error)
+}
+
+function connectDatabase() {
+  return db.connect()
+}
+
+function connectEthereum() {
+  return eth
+    .connect(null, [LANDToken])
+    .catch(error =>
+      console.error(
+        'Could not connect to the Ethereum node. Some endpoints may not work correctly.',
+        '\nMake sure you have a node running on port 8545.',
+        `\nError: "${error.message}"`
+      )
+    )
+}
+
+function listenOnServerPort() {
+  return httpServer.listen(SERVER_PORT, () =>
+    console.log('Server running on port', SERVER_PORT)
+  )
 }

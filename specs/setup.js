@@ -1,4 +1,4 @@
-import db from '../src/lib/db'
+import db from '../src/database'
 
 before(() => db.connect())
 after(() => db.close())
