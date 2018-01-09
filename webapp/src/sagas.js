@@ -5,9 +5,11 @@ import types from './types'
 
 import walletSaga from 'modules/wallet/sagas'
 import districtsSaga from 'modules/districts/sagas'
+import uiSaga from 'modules/ui/sagas'
+import parcelsSaga from 'modules/parcels/sagas'
 
 function* rootSaga() {
-  yield all([districtsSaga(), walletSaga()])
+  yield all([districtsSaga(), walletSaga(), uiSaga(), parcelsSaga()])
 
   yield takeEvery(types.navigateTo, handleLocationChange)
 }

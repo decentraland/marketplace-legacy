@@ -12,7 +12,7 @@ import { FETCH_DISTRICTS_REQUEST } from 'modules/districts/actions'
 
 import { connectEthereumWallet } from './utils'
 
-export default function* walletSaga() {
+export default function* saga() {
   yield takeLatest(FETCH_WALLET_REQUEST, handleWalletRequest)
   yield takeLatest(FETCH_WALLET_SUCCESS, handleWalletSuccess)
 }

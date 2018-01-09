@@ -17,10 +17,10 @@
   "dependencies": {
     "axios": "^0.17.0",
     "date-fns": "^1.29.0",
-    "lodash.debounce": "^4.0.8",
     "decentraland-commons": "git+https://github.com/decentraland/commons.git#release",
     "history": "^4.7.2",
     "leaflet": "^1.2.0",
+    "lodash.debounce": "^4.0.8",
     "prop-types": "^15.5.10",
     "react": "^16.0.0",
     "react-autocomplete": "^1.7.2",
@@ -34,6 +34,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "tinycolor2": "^1.4.1"
   },
   "devDependencies": {

@@ -8,7 +8,7 @@ import { createLogger } from 'redux-logger'
 
 import { createGoogleAnalyticsMiddleware } from './analyticsMiddleware'
 
-import reducer, { analytics } from './reducers'
+import reducer, { analytics } from './reducer'
 import rootSaga from './sagas'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

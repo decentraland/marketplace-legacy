@@ -14,6 +14,10 @@ class API {
     return this.request('get', '/districts', {})
   }
 
+  fetchParcels(nw, se) {
+    return this.request('get', '/parcels', { nw, se })
+  }
+
   request(method, path, params) {
     let options = {
       method,
