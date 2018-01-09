@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import Sidebar from './Sidebar'
 import MapComponent from './Map'
-// import MinimapContainer from './Minimap'
-import ModalContainer from 'containers/modals/ModalContainer'
+// import Minimap from './Minimap'
+import Modal from 'components/Modal'
 
 import './HomePage.css'
 
@@ -30,8 +30,8 @@ export default class HomePage extends React.PureComponent {
           </div>
         )}
         <MapComponent isReady={isReady} />
-        {/*isReady && <MinimapContainer />*/}
-        <ModalContainer />
+        {/*isReady && <Minimap />*/}
+        <Modal />
       </div>
     )
   }

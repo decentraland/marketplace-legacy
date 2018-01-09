@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Modal from 'components/modals/Modal'
+import BaseModal from '../BaseModal'
 import Icon from 'components/Icon'
 import Button from 'components/Button'
 
@@ -8,14 +8,14 @@ import './IntroModal.css'
 
 export default class IntroModal extends React.Component {
   static propTypes = {
-    ...Modal.propTypes
+    ...BaseModal.propTypes
   }
 
   render() {
     const { onClose, ...props } = this.props
 
     return (
-      <Modal className="IntroModal modal-lg" onClose={onClose} {...props}>
+      <BaseModal className="IntroModal modal-lg" onClose={onClose} {...props}>
         <div className="banner">
           <h2>
             <Icon name="decentraland" /> Welcome to the Terraform Auction
@@ -149,7 +149,7 @@ export default class IntroModal extends React.Component {
             </Button>
           </div>
         </div>
-      </Modal>
+      </BaseModal>
     )
   }
 }

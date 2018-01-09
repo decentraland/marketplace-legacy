@@ -91,13 +91,12 @@ function* connectWeb3(action = {}) {
 
     if (!ledger && !browser) throw new Error('Could not connect to web3')
 
-    const { address, ethereum } = ledger ? ledger : browser
+    const { address } = ledger ? ledger : browser
 
     yield put({
       type: types.connectWeb3.success,
       web3Connected: true,
       ledger: !!ledger,
-      ethereum: ethereum,
       address: address
     })
   } catch (error) {

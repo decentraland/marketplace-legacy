@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './Modal.css'
+import './BaseModal.css'
 
-export default function Modal(props) {
+export default function BaseModal(props) {
   const {
     className,
     title,
-    visible,
+    isOpen,
     body,
     footer,
     children,
@@ -15,8 +15,8 @@ export default function Modal(props) {
     onKeyDown
   } = props
 
-  const containerClassName = `${className} ${visible ? 'modal-open' : ''}`
-  const modalClassName = `modal fade ${visible ? 'in' : ''}`
+  const containerClassName = `${className} ${isOpen ? 'modal-open' : ''}`
+  const modalClassName = `modal fade ${isOpen ? 'in' : ''}`
 
   return (
     <div className={containerClassName}>
@@ -40,24 +40,24 @@ export default function Modal(props) {
           </div>
         </div>
       </div>
-      {visible && <div className="modal-backdrop fade in" />}
+      {isOpen && <div className="modal-backdrop fade in" />}
     </div>
   )
 }
 
-Modal.propTypes = {
+BaseModal.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
-  visible: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   body: PropTypes.node,
   footer: PropTypes.node,
   children: PropTypes.node,
   onClose: PropTypes.func.isRequired
 }
 
-Modal.defaultProps = {
+BaseModal.defaultProps = {
   className: '',
-  visible: false
+  isOpen: false
 }
 
 export function ModalCloseButton({ onClose, children }) {
