@@ -8,9 +8,11 @@ export default class Icon extends React.PureComponent {
     name: PropTypes.string,
     className: PropTypes.string
   }
+
   static defaultProps = {
     className: ''
   }
+
   render() {
     let { name, className } = this.props
     className += ' Icon'
