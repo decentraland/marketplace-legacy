@@ -74,7 +74,7 @@ async function tryConnect(method, retries = 0) {
   } catch (error) {
     if (retries >= 3) return null
 
-    await utils.sleep(1500)
+    await utils.sleep(500)
     return tryConnect(method, retries + 1)
   }
 }
