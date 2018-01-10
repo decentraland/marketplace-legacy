@@ -3,7 +3,8 @@ import { getDistricts } from 'modules/districts/reducer'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
-  FETCH_PARCELS_FAILURE
+  FETCH_PARCELS_FAILURE,
+  EDIT_PARCEL
 } from './actions'
 
 const INITIAL_STATE = {
@@ -36,6 +37,16 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         loading: false,
         error: action.error
+      }
+    }
+    case EDIT_PARCEL: {
+      const { parcel } = action
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [parcel.id]: parcel
+        }
       }
     }
     default:

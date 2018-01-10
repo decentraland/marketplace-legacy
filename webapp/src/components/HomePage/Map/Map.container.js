@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { changeRange, setLoading, selectParcel } from 'modules/ui/actions'
-import { navigateTo } from 'actions'
+import { navigateTo } from 'modules/location/actions'
 import MapComponent from './Map'
 
 const mapState = (state, ownProps) => {

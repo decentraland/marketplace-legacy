@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { editParcel } from 'actions'
+import { editParcel } from 'modules/parcels/actions'
 
 import WalletParcels from './WalletParcels'
 
