@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 export default class GoogleAnalytics extends React.PureComponent {
   static propTypes = {
-    ethereum: PropTypes.object
+    address: PropTypes.string
   }
 
   constructor(props) {
@@ -18,7 +18,7 @@ export default class GoogleAnalytics extends React.PureComponent {
   }
 
   shouldConfig() {
-    return !this.configurated && !!this.props.ethereum
+    return !this.configurated && !!this.props.address
   }
 
   config() {
@@ -28,12 +28,13 @@ export default class GoogleAnalytics extends React.PureComponent {
       )
     }
 
-    const { address } = this.props.ethereum
+    const { address } = this.props
 
     window.gtag('js', new Date())
     window.gtag('config', window.GA_TRACKING_ID, {
       user_id: address
     })
+
     this.configurated = true
   }
 

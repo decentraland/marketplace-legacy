@@ -4,6 +4,7 @@ import ParcelRow from '../ParcelRow'
 class ParcelTable extends React.PureComponent {
   render() {
     const { parcels, onEdit } = this.props
+
     if (parcels.length) {
       return (
         <div className="table">

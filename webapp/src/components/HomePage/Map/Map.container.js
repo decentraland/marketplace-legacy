@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { navigateTo, setLoading } from 'actions'
+import { changeRange, setLoading, selectParcel } from 'modules/ui/actions'
+import { navigateTo } from 'modules/location/actions'
 import MapComponent from './Map'
 
 const mapState = (state, ownProps) => {
@@ -12,7 +13,9 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = dispatch => ({
   onNavigate: location => dispatch(navigateTo(location)),
-  onLoading: () => dispatch(setLoading(true))
+  onLoading: () => dispatch(setLoading(true)),
+  onRangeChange: (nw, se) => dispatch(changeRange(nw, se)),
+  onSelect: (x, y) => dispatch(selectParcel(x, y))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(MapComponent))

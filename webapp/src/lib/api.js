@@ -10,8 +10,16 @@ class API {
     return this.request('get', '/userParcels', { address })
   }
 
-  editParcel(message, signature) {
-    return this.request('post', '/userParcels/edit', { message, signature })
+  fetchDistricts() {
+    return this.request('get', '/districts', {})
+  }
+
+  fetchParcels(nw, se) {
+    return this.request('get', '/parcels', { nw, se })
+  }
+
+  fetchAddressParcels(address) {
+    return this.request('get', `/addresses/${address}/parcels`, {})
   }
 
   request(method, path, params) {

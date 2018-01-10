@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { selectors } from 'reducers'
-import { closeModal } from 'actions'
+import { getModal } from 'modules/ui/reducer'
+import { closeModal } from 'modules/ui/actions'
 import Modal from './Modal'
 
 const mapState = state => {
   return {
-    modal: selectors.getModal(state)
+    modal: getModal(state)
   }
 }
 
