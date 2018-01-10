@@ -8,14 +8,14 @@ import './WalletParcels.css'
 
 class WalletParcels extends React.PureComponent {
   static propTypes = {
-    parcels: PropTypes.array,
+    wallet: PropTypes.object,
     onEdit: PropTypes.func,
     isLoading: PropTypes.bool,
     hasError: PropTypes.bool
   }
 
   render() {
-    const { parcels, onEdit, isLoading, hasError } = this.props
+    const { wallet, onEdit, isLoading, hasError } = this.props
 
     if (isLoading) {
       return <Loading />
@@ -29,10 +29,10 @@ class WalletParcels extends React.PureComponent {
       <div className="WalletParcels">
         <div className="heading">
           My Land&nbsp;
-          <span className="parcel-count">{parcels.length} parcels</span>
+          <span className="parcel-count">{wallet.parcels.length} parcels</span>
         </div>
 
-        <ParcelTable parcels={parcels} onEdit={onEdit} />
+        <ParcelTable parcels={wallet.parcels} onEdit={onEdit} />
       </div>
     )
   }

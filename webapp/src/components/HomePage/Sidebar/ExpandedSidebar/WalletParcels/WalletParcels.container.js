@@ -1,15 +1,14 @@
 import { connect } from 'react-redux'
 import { editParcel } from 'actions'
+import { getWallet, isLoading, isError } from 'modules/wallet/reducer'
 
 import WalletParcels from './WalletParcels'
 
 const mapState = state => {
-  // TODO: Get user parcels here
-  const parcels = { data: [] }
   return {
-    isLoading: parcels.loading,
-    hasError: parcels.error != null,
-    parcels: parcels.data
+    isLoading: isLoading(state),
+    hasError: isError(state),
+    wallet: getWallet(state)
   }
 }
 
