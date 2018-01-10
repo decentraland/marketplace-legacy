@@ -29,6 +29,7 @@ ALTER TABLE contributions RENAME "userTimestamp" TO timestamp;
 ALTER TABLE contributions DROP "action";
 ALTER INDEX district_entries_pkey RENAME TO contributions_pkey;
 ALTER INDEX district_entries_address_idx RENAME TO contributions_address_idx;
+DROP INDEX district_entries_project_id_idx;
 
 -- Add parcel info to districts
 ALTER TABLE districts ADD parcel_ids TEXT[] DEFAULT NULL;

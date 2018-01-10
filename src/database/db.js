@@ -53,7 +53,7 @@ export default {
     await this.createIndex('contributions', 'contributions_address_idx', [
       'address'
     ])
-    await this.createIndex('contributions', 'contributions_project_id_idx', [
+    await this.createIndex('contributions', 'contributions_district_id_idx', [
       'district_id'
     ])
   }
