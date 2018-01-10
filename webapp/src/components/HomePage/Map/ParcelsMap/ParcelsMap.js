@@ -8,6 +8,8 @@ import LeafletMapCoordinates from 'lib/LeafletMapCoordinates'
 import LeafletParcelGrid from 'lib/LeafletParcelGrid'
 
 import ParcelPopup from './ParcelPopup'
+import { buildCoordinate } from 'lib/utils'
+import { getColor } from 'lib/parcelUtils'
 
 import './ParcelsMap.css'
 
@@ -17,6 +19,8 @@ L.Icon.Default.imagePath = 'https://cdnjs.com/ajax/libs/leaflet/1.0.3/images/'
 
 export default class ParcelsMap extends React.Component {
   static propTypes = {
+    parcels: PropTypes.array,
+
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     bounds: PropTypes.arrayOf(PropTypes.array),
@@ -34,7 +38,7 @@ export default class ParcelsMap extends React.Component {
 
   constructor(props) {
     super(props)
-    this.debouncedAddPopup = debounce(this.addPopup, 215)
+    this.debouncedAddPopup = debounce(this.addPopup, 400)
   }
 
   static defaultProps = {
@@ -248,11 +252,13 @@ export default class ParcelsMap extends React.Component {
       fillColor
     }
     */
+    const { parcels } = this.props
+    const id = buildCoordinate(x, y)
 
     return {
       x,
       y,
-      color: '#B18AE0'
+      color: getColor(parcels[id])
     }
   }
 

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { getDistricts } from 'modules/districts/reducer'
+import { getSelected } from 'modules/ui/reducer'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
@@ -62,17 +63,36 @@ export const getError = state => getState(state).error
 export const getParcels = createSelector(
   getData,
   getDistricts,
-  (data, districts) =>
-    Object.keys(data).reduce((map, parcelId) => {
-      const currentData = data[parcelId]
-      const newData = {
-        ...currentData,
-        district: districts[currentData.district_id]
+  getSelected,
+  state => state.wallet.data,
+  state => state.address.data,
+  (data, districts, selected, wallet, addresses) => {
+    const now = Date.now()
+    const result = Object.keys(data).reduce((newData, parcelId) => {
+      const parcel = data[parcelId]
+      const district = parcel.district_id ? districts[parcel.district_id] : null
+      const address = addresses[wallet.address]
+      const owned = address
+        ? address.parcel_ids.some(id => id === parcelId)
+        : false
+
+      const newParcel = {
+        ...parcel,
+        price: parseInt(parcel.price),
+        district,
+        owned,
+        selected: selected
+          ? selected.x === parcel.x && selected.y === parcel.y
+          : false
       }
 
       return {
-        ...data,
-        [parcelId]: newData
+        ...newData,
+        [parcelId]: newParcel
       }
     }, {})
+    const elapsed = Date.now() - now
+    console.log(elapsed)
+    return result
+  }
 )
