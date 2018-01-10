@@ -16,11 +16,12 @@ export default function* saga() {
 
 function* handleAddressParcelsRequest(action) {
   try {
-    const parcels = yield call(() => api.fetchAddressParcels(action.address))
+    const { address } = action
+    const parcels = yield call(() => api.fetchAddressParcels(address))
 
     yield put({
       type: FETCH_ADDRESS_PARCELS_SUCCESS,
-      address: action.address,
+      address,
       parcels
     })
   } catch (error) {

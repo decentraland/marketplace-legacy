@@ -3,6 +3,7 @@ import {
   FETCH_DISTRICTS_SUCCESS,
   FETCH_DISTRICTS_FAILURE
 } from './actions'
+import { toDistrictObject } from './utils'
 
 const INITIAL_STATE = {
   data: [],
@@ -13,9 +14,13 @@ const INITIAL_STATE = {
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_DISTRICTS_REQUEST:
-      return { loading: true }
+      return { ...state, loading: true }
     case FETCH_DISTRICTS_SUCCESS:
-      return { loading: false, error: null, data: action.districts }
+      return {
+        loading: false,
+        error: null,
+        data: toDistrictObject(action.districts)
+      }
     case FETCH_DISTRICTS_FAILURE:
       return { ...state, loading: false, error: action.error }
     default:

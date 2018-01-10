@@ -29,15 +29,17 @@ function* handleWalletRequest(action = {}) {
 
     yield put({
       type: FETCH_WALLET_SUCCESS,
-      address
+      wallet: { address }
     })
   } catch (error) {
     yield put(replace(locations.walletError))
-    yield put({ type: FETCH_WALLET_FAILURE, message: error.message })
+    yield put({ type: FETCH_WALLET_FAILURE, error: error.message })
   }
 }
 
 function* handleWalletSuccess(action) {
-  yield put({ type: FETCH_ADDRESS_PARCELS_REQUEST, address: action.address })
+  const { address } = action.wallet
+
+  yield put({ type: FETCH_ADDRESS_PARCELS_REQUEST, address })
   yield put({ type: FETCH_DISTRICTS_REQUEST })
 }
