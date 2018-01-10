@@ -6,6 +6,7 @@ import {
   FETCH_PARCELS_FAILURE,
   EDIT_PARCEL
 } from './actions'
+import { toParcelObject } from './utils'
 
 const INITIAL_STATE = {
   data: {},
@@ -18,7 +19,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case FETCH_PARCELS_REQUEST: {
       return {
         ...state,
-        loading: false
+        loading: true
       }
     }
     case FETCH_PARCELS_SUCCESS: {
@@ -28,7 +29,7 @@ export default function reducer(state = INITIAL_STATE, action) {
         loading: false,
         data: {
           ...state.data,
-          ...action.parcels
+          ...toParcelObject(action.parcels)
         }
       }
     }
@@ -50,7 +51,7 @@ export default function reducer(state = INITIAL_STATE, action) {
       }
     }
     default:
-      return INITIAL_STATE
+      return state
   }
 }
 
@@ -62,11 +63,16 @@ export const getParcels = createSelector(
   getData,
   getDistricts,
   (data, districts) =>
-    Object.keys(data).reduce((map, parcel) => {
-      const district = districts[parcel.district_id]
-      return {
-        ...parcel,
-        district
+    Object.keys(data).reduce((map, parcelId) => {
+      const currentData = data[parcelId]
+      const newData = {
+        ...currentData,
+        district: districts[currentData.district_id]
       }
-    })
+
+      return {
+        ...data,
+        [parcelId]: newData
+      }
+    }, {})
 )

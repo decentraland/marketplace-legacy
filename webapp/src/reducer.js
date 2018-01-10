@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
-import ui from 'modules/ui/reducer'
-import wallet from 'modules/wallet/reducer'
+import address from 'modules/address/reducer'
 import districts from 'modules/districts/reducer'
 import parcels from 'modules/parcels/reducer'
+import ui from 'modules/ui/reducer'
+import wallet from 'modules/wallet/reducer'
 
 export function analytics(state, action) {
   switch (action.type) {
@@ -17,10 +18,11 @@ export function analytics(state, action) {
 
 //---------
 export default combineReducers({
-  ui,
-  wallet,
+  address,
   districts,
   parcels,
+  ui,
+  wallet,
   router,
   analytics
 })

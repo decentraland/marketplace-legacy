@@ -18,6 +18,10 @@ class API {
     return this.request('get', '/parcels', { nw, se })
   }
 
+  fetchAddressParcels(address) {
+    return this.request('get', `/addresses/${address}/parcels`, {})
+  }
+
   request(method, path, params) {
     let options = {
       method,

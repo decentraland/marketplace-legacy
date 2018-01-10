@@ -69,18 +69,16 @@ app.get(
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  const contractParcels = [
-    {
-      x: 0,
-      y: 0,
-      name: 'Some loren ipsum',
-      description: 'This is the description from the first parcel'
-    },
-    { x: 1, y: 0, name: 'Say my goddamn name', description: '' },
-    { x: 0, y: 1, name: '', description: '' }
-  ] // from contract
+  // TODO: Change this. It should be fetched from the LAND contract
+  let contractParcels = await Parcel.inRange([12, 14], [14, 16])
+  contractParcels = contractParcels.map((parcel, index) =>
+    Object.assign(
+      { name: `Name ${index}`, description: `Description ${index}` },
+      parcel
+    )
+  )
 
-  const parcels = new ParcelService().addPrices(contractParcels)
+  const parcels = await new ParcelService().addPrices(contractParcels)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }

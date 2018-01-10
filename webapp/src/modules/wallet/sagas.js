@@ -8,6 +8,7 @@ import {
   FETCH_WALLET_SUCCESS,
   FETCH_WALLET_FAILURE
 } from './actions'
+import { FETCH_ADDRESS_PARCELS_REQUEST } from 'modules/address/actions'
 import { FETCH_DISTRICTS_REQUEST } from 'modules/districts/actions'
 
 import { connectEthereumWallet } from './utils'
@@ -28,14 +29,17 @@ function* handleWalletRequest(action = {}) {
 
     yield put({
       type: FETCH_WALLET_SUCCESS,
-      address: address
+      wallet: { address }
     })
   } catch (error) {
     yield put(replace(locations.walletError))
-    yield put({ type: FETCH_WALLET_FAILURE, message: error.message })
+    yield put({ type: FETCH_WALLET_FAILURE, error: error.message })
   }
 }
 
 function* handleWalletSuccess(action) {
+  const { address } = action.wallet
+
+  yield put({ type: FETCH_ADDRESS_PARCELS_REQUEST, address })
   yield put({ type: FETCH_DISTRICTS_REQUEST })
 }

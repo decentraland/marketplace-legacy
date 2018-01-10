@@ -8,7 +8,7 @@ import {
 
 import api from 'lib/api'
 
-export default function* districtsSaga() {
+export default function* saga() {
   yield takeLatest(FETCH_DISTRICTS_REQUEST, handleDistrictsRequest)
 }
 
@@ -18,6 +18,6 @@ function* handleDistrictsRequest(action) {
 
     yield put({ type: FETCH_DISTRICTS_SUCCESS, districts })
   } catch (error) {
-    yield put({ type: FETCH_DISTRICTS_FAILURE, message: error.message })
+    yield put({ type: FETCH_DISTRICTS_FAILURE, error: error.message })
   }
 }
