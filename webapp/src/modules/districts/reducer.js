@@ -6,7 +6,7 @@ import {
 import { toDistrictObject } from './utils'
 
 const INITIAL_STATE = {
-  data: [],
+  data: {},
   loading: true,
   error: null
 }

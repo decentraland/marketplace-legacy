@@ -50,17 +50,21 @@ export const getError = state => getState(state).error
 export const getAddresses = createSelector(
   getData,
   getParcels,
-  (data, parcels) =>
+  (data, allParcels) =>
     Object.keys(data).reduce((map, address) => {
       const currentData = data[address]
-      const newData = {
-        ...currentData,
-        parcels: currentData.parcel_ids.map(id => parcels[id])
-      }
+      const parcels = []
+
+      currentData.parcel_ids.forEach(id => {
+        if (allParcels[id]) parcels.push(allParcels[id])
+      })
 
       return {
         ...data,
-        [address]: newData
+        [address]: {
+          ...currentData,
+          parcels
+        }
       }
     }, {})
 )
