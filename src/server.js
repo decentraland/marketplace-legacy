@@ -9,6 +9,7 @@ import { LANDToken } from 'decentraland-contracts'
 import db from './database'
 import { District } from './District'
 import { Parcel, ParcelService } from './Parcel'
+import { Contribution } from './Contribution'
 
 env.load()
 
@@ -84,12 +85,34 @@ export async function getAddressParcels(req) {
 }
 
 /**
+ * Get the contributions for an address
+ * @param  {string} address - District contributor
+ * @return {object}
+ */
+app.get(
+  '/api/addresses/:address/contributions',
+  server.handleRequest(getAddressContributions)
+)
+
+export async function getAddressContributions(req) {
+  const address = server.extractFromReq(req, 'address')
+  const districts = await Contribution.findByAddress(address)
+
+  return utils.mapOmit(districts, [
+    'message',
+    'signature',
+    'created_at',
+    'updated_at'
+  ])
+}
+
+/**
  * Returns all stored districts
  * @return {array}
  */
 app.get('/api/districts', server.handleRequest(getDistricts))
 
-export async function getDistricts(req) {
+export async function getDistricts() {
   const districts = await District.findEnabled()
   return utils.mapOmit(districts, [
     'disabled',
