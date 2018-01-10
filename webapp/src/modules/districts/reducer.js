@@ -5,7 +5,9 @@ import {
 } from './actions'
 
 const INITIAL_STATE = {
-  loading: true
+  data: [],
+  loading: true,
+  error: null
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -23,3 +25,5 @@ export default function reducer(state = INITIAL_STATE, action) {
 
 export const getState = state => state.districts
 export const getDistricts = state => getState(state).data
+export const isLoading = state => getState(state).loading
+export const getError = state => getState(state).error

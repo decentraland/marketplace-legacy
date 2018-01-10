@@ -3,13 +3,20 @@ import { push } from 'react-router-redux'
 
 import types from './types'
 
-import walletSaga from 'modules/wallet/sagas'
+import addressSaga from 'modules/address/sagas'
 import districtsSaga from 'modules/districts/sagas'
-import uiSaga from 'modules/ui/sagas'
 import parcelsSaga from 'modules/parcels/sagas'
+import uiSaga from 'modules/ui/sagas'
+import walletSaga from 'modules/wallet/sagas'
 
 function* rootSaga() {
-  yield all([districtsSaga(), walletSaga(), uiSaga(), parcelsSaga()])
+  yield all([
+    addressSaga(),
+    districtsSaga(),
+    parcelsSaga(),
+    uiSaga(),
+    walletSaga()
+  ])
 
   yield takeEvery(types.navigateTo, handleLocationChange)
 }

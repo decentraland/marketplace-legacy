@@ -8,7 +8,7 @@ import {
 
 import api from 'lib/api'
 
-export default function* districtsSaga() {
+export default function* saga() {
   yield takeLatest(FETCH_DISTRICTS_REQUEST, handleDistrictsRequest)
 }
 
