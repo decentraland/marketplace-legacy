@@ -58,7 +58,7 @@ class ParcelRowEdit extends React.PureComponent {
                 type="text"
                 name="name-field"
                 id="name-field"
-                value={name}
+                value={name || ''}
                 onChange={this.handleNameChange}
               />
             </div>
@@ -68,7 +68,7 @@ class ParcelRowEdit extends React.PureComponent {
               <textarea
                 name="description"
                 id="description-field"
-                value={description}
+                value={description || ''}
                 onChange={this.handleDescriptionChange}
               />
             </div>
