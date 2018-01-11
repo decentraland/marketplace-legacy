@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
 import { LANDToken } from 'decentraland-contracts'
+import { tx, utils } from 'decentraland-commons'
 
 import db from '../database'
 import Parcel from './Parcel'
@@ -53,21 +54,22 @@ describe('Parcel', function() {
 })
 
 describe('ParcelService', function() {
-  let ParcelMock
-  let parcelService
-
-  beforeEach(() => {
-    ParcelMock = { insert: () => Promise.resolve() }
-
-    parcelService = new ParcelService()
-    parcelService.Parcel = ParcelMock
-  })
+  const testParcel = { x: 1, y: 2 }
+  const contract = {
+    ownerOfLand: (x, y) => {
+      return x === testParcel.x && y === testParcel.y ? tx.DUMMY_TX_ID : null
+    }
+  }
 
   describe('#insertMatrix', function() {
     it('should call the `insert` method of parcel state for each element of the matrix', async function() {
+      const ParcelMock = { insert: () => Promise.resolve() }
       const spy = sinon.spy(ParcelMock, 'insert')
 
-      await parcelService.insertMatrix(-1, -1, 1, 2)
+      const service = new ParcelService()
+      service.Parcel = ParcelMock
+
+      await service.insertMatrix(-1, -1, 1, 2)
 
       expect(spy.callCount).to.be.equal(12)
       expect(
@@ -94,12 +96,42 @@ describe('ParcelService', function() {
       const error =
         'duplicate key value violates unique constraint "parcel_states_pkey"'
 
-      sinon.stub(ParcelMock, 'insert').returns(Promise.reject(error))
+      const ParcelMock = { insert: () => Promise.reject(error) }
+      const service = new ParcelService()
+      service.Parcel = ParcelMock
 
-      return expect(
-        parcelService.insertMatrix(0, 0, 1, 1)
-      ).not.to.be.rejectedWith(error)
+      return expect(service.insertMatrix(0, 0, 1, 1)).not.to.be.rejectedWith(
+        error
+      )
     })
+  })
+
+  describe('#isOwner', function() {
+    it('should return true if the parcel belongs to the address', async function() {
+      sinon.stub(LANDToken, 'getInstance').returns(contract)
+
+      const result = await new ParcelService().isOwner(
+        tx.DUMMY_TX_ID,
+        testParcel
+      )
+      expect(result).to.be.true
+    })
+
+    it('should return false if the parcel belongs to someone else', async function() {
+      sinon.stub(LANDToken, 'getInstance').returns(contract)
+
+      const service = new ParcelService()
+      const wrongParcel = await service.isOwner(tx.DUMMY_TX_ID, {
+        x: 10,
+        y: -2
+      })
+      const wrongAddr = await service.isOwner('0xnothing', testParcel)
+
+      expect(wrongAddr).to.be.false
+      expect(wrongParcel).to.be.false
+    })
+
+    afterEach(() => LANDToken.getInstance.restore())
   })
 
   describe('#addPrices', async function() {
@@ -117,8 +149,8 @@ describe('ParcelService', function() {
 
       await Promise.all(parcels.map(parcel => Parcel.insert(parcel)))
 
-      const parcelService = new ParcelService()
-      const parcelsWithPrice = await parcelService.addPrices(coordinates)
+      const service = new ParcelService()
+      const parcelsWithPrice = await service.addPrices(coordinates)
 
       expect(parcelsWithPrice).to.deep.equal(parcels)
     })
@@ -129,25 +161,23 @@ describe('ParcelService', function() {
         Object.assign({}, coord, { price: 0 })
       )
 
-      const parcelService = new ParcelService()
-      const parcelsWithPrice = await parcelService.addPrices(coordinates)
+      const service = new ParcelService()
+      const parcelsWithPrice = await service.addPrices(coordinates)
 
       expect(parcelsWithPrice).to.deep.equal(parcels)
     })
+
+    afterEach(() => db.truncate('parcels'))
   })
 
   describe('#addOwners', function() {
-    const contract = {
-      getOwner: (x, y) => (x === 1 && y === 2 ? '0xdeadbeef' : null)
-    }
-
     it('should use the LANDToken contract to add the avaiable owner addresses', async function() {
       sinon.stub(LANDToken, 'getInstance').returns(contract)
 
-      const coordinates = [{ x: -1, y: 10 }, { x: 1, y: 2 }]
+      const coordinates = [{ x: -1, y: 10 }, testParcel]
 
-      const parcelService = new ParcelService()
-      const parcelsWithOwner = await parcelService.addOwners(coordinates)
+      const service = new ParcelService()
+      const parcelsWithOwner = await service.addOwners(coordinates)
 
       expect(parcelsWithOwner).to.deep.equal([
         { x: -1, y: 10, owner: null },
@@ -158,20 +188,43 @@ describe('ParcelService', function() {
     it('should return the same array if the LANDToken contract fails', async function() {
       sinon.stub(LANDToken, 'getInstance').throws()
 
-      const coordinates = [{ x: -1, y: 10 }, { x: 1, y: 2 }]
+      const coordinates = [{ x: -1, y: 10 }, testParcel]
 
-      const parcelService = new ParcelService()
-      const parcelsWithOwner = await parcelService.addOwners(coordinates)
+      const service = new ParcelService()
+      const parcelsWithOwner = await service.addOwners(coordinates)
 
       expect(parcelsWithOwner).to.equal(coordinates)
     })
 
-    afterEach(() => {
-      LANDToken.getInstance.restore()
-    })
+    afterEach(() => LANDToken.getInstance.restore())
   })
 
-  afterEach(() => db.truncate('parcels'))
+  describe('#getValuesFromSignedMessage', function() {
+    it('should return an object with each value it finds on the message text, following the extract convention', async function() {
+      const values = {
+        id: null,
+        x: 42,
+        y: null,
+        name: 'Name of the parcel',
+        description: 'Super description'
+      }
+
+      const signedMessage = {
+        extract(columnNames) {
+          expect(columnNames).to.deep.equal(Parcel.columnNames)
+          return Object.values(values)
+        }
+      }
+
+      const service = new ParcelService()
+      const signedValues = await service.getValuesFromSignedMessage(
+        signedMessage
+      )
+
+      const result = utils.omit(values, ['id', 'y']) // remove nulls
+      expect(signedValues).to.deep.equal(result)
+    })
+  })
 })
 
 describe('coordinates', function() {

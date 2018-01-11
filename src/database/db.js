@@ -16,10 +16,12 @@ export default {
   async createSchema() {
     await this.createTable(
       'parcels',
-      `"id" text NOT NULL,
+      `"id" TEXT NOT NULL,
       "x" int NOT NULL,
       "y" int NOT NULL,
-      "price" text,
+      "price" TEXT,
+      "name" TEXT,
+      "description" TEXT,
       "district_id" TEXT`,
       { sequenceName: null }
     )

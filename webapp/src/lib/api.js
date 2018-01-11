@@ -22,6 +22,10 @@ class API {
     return this.request('get', `/addresses/${address}/parcels`, {})
   }
 
+  editParcel(message, signature) {
+    return this.request('post', '/parcels/edit', { message, signature })
+  }
+
   request(method, path, params) {
     let options = {
       method,

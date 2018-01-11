@@ -3,7 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 
-import { server, env, eth, utils } from 'decentraland-commons'
+import { server, env, eth, utils, SignedMessage } from 'decentraland-commons'
 import { LANDToken } from 'decentraland-contracts'
 
 import db from './database'
@@ -31,7 +31,10 @@ if (env.isProduction()) {
   app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Request-Method', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, DELETE')
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      'OPTIONS, GET, POST, PUT, DELETE'
+    )
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
     next()
@@ -57,6 +60,34 @@ export async function getParcels(req) {
 }
 
 /**
+ * Edit the metadata of an owned parcel
+ * @param  {string} address - Owner of the parcel address
+ * @param  {object} parcel - New parcel data
+ * @return {object}
+ */
+app.post('/api/parcels/edit', server.handleRequest(editParcels))
+
+export async function editParcels(req) {
+  const message = server.extractFromReq(req, 'message')
+  const signature = server.extractFromReq(req, 'signature')
+
+  const signedMessage = new SignedMessage(message, signature)
+  const parcelService = new ParcelService()
+
+  const changes = parcelService.getValuesFromSignedMessage(signedMessage)
+  const address = signedMessage.getAddress()
+  const parcel = { x: changes.x, y: changes.y }
+
+  if (await parcelService.isOwner(address, parcel)) {
+    await Parcel.update(changes, parcel)
+  } else {
+    throw new Error('You can only edit your own parcels')
+  }
+
+  return true
+}
+
+/**
  * Returns the parcels an address owns
  * @param  {string} address - Parcel owner
  * @return {object}
@@ -69,8 +100,11 @@ app.get(
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  // TODO: Change this. It should be fetched from the LAND contract
+  // TODO: Change this. It should be fetched from the LAND contract's `assetsOf`
+  // TODO: Filter if it's 0
   let contractParcels = await Parcel.inRange([12, 14], [14, 16])
+
+  // TODO: Change this. It should be fetched from DB (for now)
   contractParcels = contractParcels.map((parcel, index) =>
     Object.assign(
       { name: `Name ${index}`, description: `Description ${index}` },

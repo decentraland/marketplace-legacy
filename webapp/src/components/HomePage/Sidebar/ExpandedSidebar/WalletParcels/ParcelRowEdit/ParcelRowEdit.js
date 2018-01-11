@@ -22,14 +22,17 @@ class ParcelRowEdit extends React.PureComponent {
     })
   }
 
-  handleSubmit = () => {
+  handleSubmit = e => {
     const { parcel, onSubmit } = this.props
     const { name, description } = this.state
+
     onSubmit({
       ...parcel,
       name,
       description
     })
+
+    e.preventDefault()
   }
 
   render() {
