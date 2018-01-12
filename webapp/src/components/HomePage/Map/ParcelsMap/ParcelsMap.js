@@ -71,8 +71,12 @@ export default class ParcelsMap extends React.Component {
     const shouldDebounce = this.props.tileSize !== nextProps.tileSize
 
     if (shouldUpdateCenter) {
-      const newCenter = this.getLatLng(nextProps.x, nextProps.y)
-      this.setView(newCenter)
+      if (this.skipCenter) {
+        this.skipCenter = false
+      } else {
+        const newCenter = this.getLatLng(nextProps.x, nextProps.y)
+        this.recenterMap(newCenter)
+      }
     }
 
     if (shouldRedraw) {
@@ -107,7 +111,7 @@ export default class ParcelsMap extends React.Component {
       minZoom,
       maxZoom,
       zoom,
-      center: new L.LatLng(0, 0),
+      center: new L.LatLng(x, y),
       layers: [],
       renderer: L.svg(),
       zoomAnimation: false,
@@ -149,7 +153,7 @@ export default class ParcelsMap extends React.Component {
     this.map.on('zoomend', this.onZoomEnd)
   }
 
-  setView(center) {
+  recenterMap(center) {
     this.map.setView(center)
     this.redrawMap()
   }
@@ -161,10 +165,17 @@ export default class ParcelsMap extends React.Component {
   }
 
   onMapMoveStart = () => {
+    this.panInProgress = true
+    this.startMove = Date.now()
     this.props.onMoveStart()
   }
 
   onMapMoveEnd = () => {
+    const elapsed = Date.now() - this.startMove
+    this.panInProgress = false
+    if (elapsed > 100) {
+      this.skipCenter = true
+    }
     this.debouncedOnMoveEnd()
   }
 

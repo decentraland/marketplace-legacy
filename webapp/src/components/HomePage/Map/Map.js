@@ -39,7 +39,7 @@ export default class MapComponent extends React.Component {
     this.baseTileSize = 128
 
     this.state = {
-      zoom: this.baseZoom - 2
+      zoom: this.baseZoom - 3
     }
   }
 
@@ -109,7 +109,7 @@ export default class MapComponent extends React.Component {
         wallet={wallet}
         parcels={parcels}
         districts={districts}
-        minZoom={this.baseZoom - 4}
+        minZoom={this.baseZoom - 3}
         maxZoom={this.baseZoom}
         baseZoom={this.baseZoom}
         zoom={zoom}
