@@ -18,12 +18,9 @@ export default function* saga() {
   yield takeLatest(FETCH_WALLET_SUCCESS, handleWalletSuccess)
 }
 
-// Defined on `connectEthereumWallet`
-let wallet = null
-
 function* handleWalletRequest(action = {}) {
   try {
-    wallet = yield call(() => connectEthereumWallet())
+    const wallet = yield call(() => connectEthereumWallet())
 
     const address = yield call(() => wallet.getAddress())
 

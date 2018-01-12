@@ -3,6 +3,8 @@ import { eth, utils } from 'decentraland-commons'
 // TODO: The web3 connection was correctly encapsulated in `eth.connect`, imported from `decentraland-commons`
 // We later introduced ledger support but only on the sagas, without moving the behaviour to commons.
 // We shouldn't leak how the connection works and ideally it should be the same interface for the ledger and web3 objects.
+let wallet = null
+
 export async function connectEthereumWallet() {
   let [ledger, browser] = await Promise.all([
     tryConnect(connectLedger),
@@ -11,7 +13,12 @@ export async function connectEthereumWallet() {
 
   if (!ledger && !browser) throw new Error('Could not connect to web3')
 
-  return ledger || browser
+  wallet = ledger || browser
+  return wallet
+}
+
+export function getWallet() {
+  return wallet
 }
 
 async function connectLedger(action = {}, retries = 0) {
@@ -27,7 +34,6 @@ async function connectLedger(action = {}, retries = 0) {
   // so the easiest way is to try fetching the address. It'll throw if it's not possible
   const address = await ledgerEth.getAddress_async(derivationPath)
 
-  // ledger wallet
   return {
     async getAddress() {
       return address.toLowerCase()
@@ -52,16 +58,15 @@ async function connectBrowser(action = {}, retries = 0) {
   let connected = await eth.reconnect()
   if (!connected) throw new Error('Could not connect to Ethereum')
 
-  // web3 wallet
+  const address = await eth.getAddress()
+
   return {
     async getAddress() {
-      const address = await eth.getAddress()
       return address.toLowerCase()
     },
     async sign(payload) {
-      const address = await this.getAddress()
       const message = eth.utils.toHex(payload)
-      const signature = eth.remoteSign(message, address)
+      const signature = await eth.remoteSign(message, address)
 
       return { message, signature }
     }
@@ -79,7 +84,7 @@ async function tryConnect(method, retries = 0) {
   }
 }
 
-export function isChrome() {
+function isChrome() {
   // Please note, that IE11 now returns `undefined` again for window.chrome,
   // new Opera 30 outputs true for window.chrome,
   // new IE Edge outputs to true for window.chrome

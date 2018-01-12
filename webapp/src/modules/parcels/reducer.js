@@ -4,7 +4,7 @@ import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
   FETCH_PARCELS_FAILURE,
-  EDIT_PARCEL
+  EDIT_PARCEL_SUCCESS
 } from './actions'
 import { toParcelObject } from './utils'
 
@@ -40,7 +40,7 @@ export default function reducer(state = INITIAL_STATE, action) {
         error: action.error
       }
     }
-    case EDIT_PARCEL: {
+    case EDIT_PARCEL_SUCCESS: {
       const { parcel } = action
       return {
         ...state,

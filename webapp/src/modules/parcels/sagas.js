@@ -2,13 +2,18 @@ import { takeEvery, call, put } from 'redux-saga/effects'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
-  FETCH_PARCELS_FAILURE
+  FETCH_PARCELS_FAILURE,
+  EDIT_PARCEL_REQUEST,
+  EDIT_PARCEL_SUCCESS,
+  EDIT_PARCEL_FAILURE
 } from './actions'
 import api from 'lib/api'
+import { getWallet } from 'modules/wallet/utils'
 import { buildCoordinate } from 'lib/utils'
 
 export default function* saga() {
   yield takeEvery(FETCH_PARCELS_REQUEST, handleParcelsRequest)
+  yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
 }
 
 function* handleParcelsRequest(action) {
@@ -22,9 +27,31 @@ function* handleParcelsRequest(action) {
       parcels
     })
   } catch (error) {
+    console.warn(error)
     yield put({
       type: FETCH_PARCELS_FAILURE,
       error: error.message
     })
+  }
+}
+
+function* handleEditParcelsRequest(action) {
+  try {
+    const parcel = action.parcel
+    const payload = `Decentraland Marketplace: Editing parcel (${Date.now()})
+x: ${parcel.x}
+y: ${parcel.y}
+name: ${parcel.name}
+description: ${parcel.description}`
+
+    const wallet = getWallet()
+    const { message, signature } = yield call(() => wallet.sign(payload))
+
+    yield call(() => api.editParcel(message, signature))
+
+    yield put({ type: EDIT_PARCEL_SUCCESS, parcel })
+  } catch (error) {
+    console.warn(error)
+    yield put({ type: EDIT_PARCEL_FAILURE, error: error.message })
   }
 }

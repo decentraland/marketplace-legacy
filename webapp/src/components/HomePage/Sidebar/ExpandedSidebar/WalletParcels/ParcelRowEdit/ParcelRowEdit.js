@@ -22,14 +22,17 @@ class ParcelRowEdit extends React.PureComponent {
     })
   }
 
-  handleSubmit = () => {
+  handleSubmit = e => {
     const { parcel, onSubmit } = this.props
     const { name, description } = this.state
+
     onSubmit({
       ...parcel,
       name,
       description
     })
+
+    e.preventDefault()
   }
 
   render() {
@@ -55,7 +58,7 @@ class ParcelRowEdit extends React.PureComponent {
                 type="text"
                 name="name-field"
                 id="name-field"
-                value={name}
+                value={name || ''}
                 onChange={this.handleNameChange}
               />
             </div>
@@ -65,7 +68,7 @@ class ParcelRowEdit extends React.PureComponent {
               <textarea
                 name="description"
                 id="description-field"
-                value={description}
+                value={description || ''}
                 onChange={this.handleDescriptionChange}
               />
             </div>

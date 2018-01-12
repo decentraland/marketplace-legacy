@@ -22,6 +22,18 @@ class ParcelService {
     }
   }
 
+  async isOwner(address, parcel) {
+    try {
+      const contract = LANDToken.getInstance()
+      const { x, y } = parcel
+
+      const owner = await contract.ownerOfLand(x, y) // TODO: check if it's 0
+      return address === owner
+    } catch (error) {
+      return false
+    }
+  }
+
   async addPrices(parcels) {
     const priceSetters = parcels.map(async parcel => {
       const price = await Parcel.getPrice(parcel.x, parcel.y)
@@ -36,9 +48,11 @@ class ParcelService {
       const contract = LANDToken.getInstance()
 
       const ownerSetters = parcels.map(async parcel => {
+        // TODO: check if it's 0
+        // TODO: use contract's `ownerOfLandMany`
         const owner = parcel.district_id
           ? null
-          : await contract.getOwner(parcel.x, parcel.y)
+          : await contract.ownerOfLand(parcel.x, parcel.y)
 
         return Object.assign({}, parcel, { owner })
       })
@@ -51,6 +65,21 @@ class ParcelService {
       )
       return parcels
     }
+  }
+
+  getValuesFromSignedMessage(signedMessage) {
+    const values = signedMessage.extract(Parcel.columnNames)
+    const changes = {}
+
+    for (const [index, columnName] of Parcel.columnNames.entries()) {
+      const value = values[index]
+
+      if (value) {
+        changes[columnName] = value
+      }
+    }
+
+    return changes
   }
 }
 
