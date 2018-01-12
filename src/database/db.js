@@ -39,5 +39,22 @@ export default {
       "disabled" BOOLEAN NOT NULL DEFAULT false`,
       { sequenceName: null }
     )
+
+    await this.createTable(
+      'contributions',
+      `"id" int NOT NULL DEFAULT nextval('contributions_id_seq'),
+      "address" varchar(42) NOT NULL,
+      "district_id" varchar(36) NOT NULL,
+      "land_counts" int NOT NULL,
+      "timestamp" varchar(20) NOT NULL,
+      "message" BYTEA DEFAULT NULL,
+      "signature" BYTEA DEFAULT NULL`
+    )
+    await this.createIndex('contributions', 'contributions_address_idx', [
+      'address'
+    ])
+    await this.createIndex('contributions', 'contributions_district_id_idx', [
+      'district_id'
+    ])
   }
 }

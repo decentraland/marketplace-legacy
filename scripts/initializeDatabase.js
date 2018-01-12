@@ -15,13 +15,17 @@ async function initializeDatabase() {
   )
   if (!shouldContinue) return process.exit()
 
+  log.info('Dropping current state')
+  execSync('psql $CONNECTION_STRING -f ./drop.sql')
+
   log.info('Dumping parcel_states')
-  execSync('psql $CONNECTION_STRING -c \'DROP TABLE IF EXISTS parcel_states;\'')
   execSync('psql $CONNECTION_STRING -f ../dumps/parcel_states.20180105.sql')
 
   log.info('Dumping projects')
-  execSync('psql $CONNECTION_STRING -c \'DROP TABLE IF EXISTS projects;\'')
   execSync('psql $CONNECTION_STRING -f ../dumps/projects.20180105.sql')
+
+  log.info('Dumping district_entries')
+  execSync('psql $CONNECTION_STRING -f ../dumps/districts.20180105.sql')
 
   log.info('Normalizing names for new model')
   execSync('psql $CONNECTION_STRING -f ./init.sql')
