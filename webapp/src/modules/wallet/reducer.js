@@ -44,10 +44,12 @@ export const getWallet = createSelector(
   (wallet, addresses) => {
     const address = addresses[wallet.address]
     const parcels = address ? address.parcels : []
+    const contributions = address ? address.contributions : []
 
     return {
       ...wallet,
-      parcels
+      parcels,
+      contributions
     }
   }
 )

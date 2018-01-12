@@ -7,6 +7,8 @@ import * as parcelUtils from 'lib/parcelUtils'
 import ParcelsMap from './ParcelsMap'
 import Loading from 'components/Loading'
 
+import './Map.css'
+
 export default class MapComponent extends React.Component {
   static propTypes = {
     isReady: PropTypes.bool,
@@ -104,23 +106,25 @@ export default class MapComponent extends React.Component {
     const { x, y } = this.getCenter()
 
     return isReady ? (
-      <ParcelsMap
-        x={x}
-        y={y}
-        wallet={wallet}
-        parcels={parcels}
-        districts={districts}
-        minZoom={this.baseZoom - 3}
-        maxZoom={this.baseZoom}
-        baseZoom={this.baseZoom}
-        zoom={zoom}
-        bounds={this.bounds}
-        tileSize={this.getTileSize()}
-        onMoveStart={this.onMoveStart}
-        onMoveEnd={this.onMoveEnd}
-        onZoomEnd={this.onZoomEnd}
-        onSelect={onSelect}
-      />
+      <div className="map-container">
+        <ParcelsMap
+          x={x}
+          y={y}
+          wallet={wallet}
+          parcels={parcels}
+          districts={districts}
+          minZoom={this.baseZoom - 3}
+          maxZoom={this.baseZoom}
+          baseZoom={this.baseZoom}
+          zoom={zoom}
+          bounds={this.bounds}
+          tileSize={this.getTileSize()}
+          onMoveStart={this.onMoveStart}
+          onMoveEnd={this.onMoveEnd}
+          onZoomEnd={this.onZoomEnd}
+          onSelect={onSelect}
+        />
+      </div>
     ) : (
       <Loading />
     )

@@ -1,0 +1,49 @@
+.WalletContributions {
+}
+
+.WalletContributions .heading .parcel-count {
+  margin-left: 18px;
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+}
+
+.WalletContributions .table-row {
+  width: 100%;
+  height: 64px;
+  padding: 24px;
+}
+
+.WalletContributions .parcel-row-editing {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+}
+
+.WalletContributions .table-row-empty {
+  width: 100%;
+  padding-top: 24px;
+  padding-left: 24px;
+  font-size: 15px;
+}
+
+.WalletContributions .table-row.gray {
+  background-color: #fbfbfb;
+}
+
+.WalletContributions .table .col {
+  height: 100%;
+  float: left;
+}
+
+.WalletContributions .table .col-district {
+  width: 60%;
+}
+.WalletContributions .table .col-parcels {
+  width: 40%;
+}
+
+.WalletContributions .heading .parcel-count,
+.WalletContributions .table-row-empty,
+.WalletContributions .col-actions,
+.WalletContributions .field label {
+  color: #7b7b7b;
+}

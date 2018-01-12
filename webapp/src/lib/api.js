@@ -22,6 +22,10 @@ class API {
     return this.request('get', `/addresses/${address}/parcels`, {})
   }
 
+  fetchAddressContributions(address) {
+    return this.request('get', `/addresses/${address}/contributions`, {})
+  }
+
   editParcel(message, signature) {
     return this.request('post', '/parcels/edit', { message, signature })
   }
