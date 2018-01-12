@@ -45,4 +45,6 @@ export function getState() {
   return store.getState()
 }
 
+window.getState = store.getState
+
 export { history, store }

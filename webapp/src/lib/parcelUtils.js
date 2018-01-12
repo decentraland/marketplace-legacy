@@ -1,13 +1,10 @@
-export const COLOR_WON = '#4A90E2'
-export const COLOR_WINNING = '#90B9E9'
-export const COLOR_LOST = '#4F225F'
-export const COLOR_OUTBID = '#F04ACC'
-export const COLOR_TAKEN = '#39516B'
-export const COLOR_GENESIS = '#FFFFFF'
-export const COLOR_ROADS = '#5C5C5C'
-export const COLOR_DISTRICT = '#B18AE0'
-export const COLOR_PENDING = '#64D1B3'
-export const COLOR_DEFAULT = '#EAEAEA'
+export const COLOR_MY_PARCELS = '#D98494' //'#4A90E2'
+export const COLOR_DISTRICT = '#73C7E1' //'#FDF06F'
+export const COLOR_DISTRICTS_CONTRIBUTED = '#4A90E2' //'#CD6FE7'
+export const COLOR_ROADS = '#39516B' //'#35312E'
+export const COLOR_PLAZA = '#FCFCFC' //'#F47E31'
+export const COLOR_TAKEN = '#AEDC89' //'#9AC776' //'#B9F587' //'#F9F7E8'
+export const COLOR_UNOWNED = '#F9F7E8'
 export const COLOR_LOADING = '#AAAAAA'
 
 export const COLORS = {
@@ -46,24 +43,67 @@ export function getBounds() {
   }
 }
 
-export function getColor(parcel) {
+export function getParcelAttributes(wallet, parcel, district) {
   if (!parcel) {
-    return COLOR_LOADING
+    return {
+      label: 'Loading...',
+      color: 'white',
+      backgroundColor: COLOR_LOADING
+    }
   }
   if (parcel.district_id) {
-    if (!parcel.district) {
-      return COLOR_LOADING
+    if (!district) {
+      return {
+        label: 'Loading...',
+        color: 'white',
+        backgroundColor: COLOR_LOADING
+      }
     }
-    if (parcel.district.name === 'Roads') {
-      return COLOR_ROADS
+    if (district.name === 'Roads') {
+      return {
+        label: 'Road',
+        color: 'white',
+        backgroundColor: COLOR_ROADS
+      }
     }
-    if (parcel.district.name === 'Genesis Plaza') {
-      return COLOR_GENESIS
+    if (district.name === 'Genesis Plaza') {
+      return {
+        label: 'Genesis Plaza',
+        color: 'black',
+        backgroundColor: COLOR_PLAZA
+      }
     }
-    return COLOR_DISTRICT
+    if (district.name === 'Embassy Town') {
+      return {
+        label: 'District',
+        color: 'black',
+        backgroundColor: COLOR_DISTRICTS_CONTRIBUTED
+      }
+    }
+    return {
+      label: 'District',
+      color: 'black',
+      backgroundColor: COLOR_DISTRICT
+    }
   }
-  if (parcel.owned) {
-    return COLOR_WON
+
+  if (wallet.parcels.some(p => p.id === parcel.id)) {
+    return {
+      label: 'Your Parcel',
+      color: 'white',
+      backgroundColor: COLOR_MY_PARCELS
+    }
   }
-  return COLOR_DEFAULT
+  if (!parcel.price && !district) {
+    return {
+      label: 'No Owner',
+      color: 'black',
+      backgroundColor: COLOR_UNOWNED
+    }
+  }
+  return {
+    label: 'Taken',
+    color: 'black',
+    backgroundColor: COLOR_TAKEN
+  }
 }

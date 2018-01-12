@@ -52,17 +52,15 @@ export const getAddresses = createSelector(
   getParcels,
   (data, allParcels) =>
     Object.keys(data).reduce((map, address) => {
-      const currentData = data[address]
       const parcels = []
-
-      currentData.parcel_ids.forEach(id => {
+      data[address].parcel_ids.forEach(id => {
         if (allParcels[id]) parcels.push(allParcels[id])
       })
 
       return {
-        ...data,
+        ...map,
         [address]: {
-          ...currentData,
+          ...data[address],
           parcels
         }
       }

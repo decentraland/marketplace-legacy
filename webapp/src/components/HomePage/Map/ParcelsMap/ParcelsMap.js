@@ -9,7 +9,7 @@ import LeafletParcelGrid from 'lib/LeafletParcelGrid'
 
 import ParcelPopup from './ParcelPopup'
 import { buildCoordinate } from 'lib/utils'
-import { getColor } from 'lib/parcelUtils'
+import { getParcelAttributes } from 'lib/parcelUtils'
 
 import './ParcelsMap.css'
 
@@ -19,7 +19,9 @@ L.Icon.Default.imagePath = 'https://cdnjs.com/ajax/libs/leaflet/1.0.3/images/'
 
 export default class ParcelsMap extends React.Component {
   static propTypes = {
-    parcels: PropTypes.array,
+    wallet: PropTypes.any,
+    parcels: PropTypes.any,
+    districts: PropTypes.any,
 
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -252,13 +254,26 @@ export default class ParcelsMap extends React.Component {
       fillColor
     }
     */
-    const { parcels } = this.props
+    const { wallet, parcels, districts } = this.props
     const id = buildCoordinate(x, y)
-
+    const parcel = parcels[id]
+    const district = parcel ? districts[parcel.district_id] : null
+    const price = parcel ? parcel.price : null
+    const owner = parcel ? parcel.price : null
+    const { backgroundColor, color, label } = getParcelAttributes(
+      wallet,
+      parcel,
+      district
+    )
     return {
       x,
       y,
-      color: getColor(parcels[id])
+      color,
+      backgroundColor,
+      label,
+      district,
+      price,
+      owner
     }
   }
 
@@ -308,20 +323,27 @@ export default class ParcelsMap extends React.Component {
     if (this.dragging) {
       return
     }
-    console.log('addPopup', { x, y, latlng })
-
-    const parcel = { x, y, amount: 10 } //this.getParcelData(x, y)
-
-    if (!parcel || !this.map) return
-
-    //const addressState = this.props.getAddressState() // TODO
-    //const projects = this.props.getProjects() // TODO
-    // addressState={addressState}
-    // projects={projects}
+    const {
+      price,
+      color,
+      label,
+      district,
+      backgroundColor
+    } = this.getTileAttributes(latlng)
 
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
 
-    const popup = renderToDOM(<ParcelPopup x={x} y={y} parcel={parcel} />)
+    const popup = renderToDOM(
+      <ParcelPopup
+        x={x}
+        y={y}
+        price={price}
+        color={color}
+        backgroundColor={backgroundColor}
+        label={label}
+        district={district}
+      />
+    )
 
     leafletPopup
       .setLatLng(latlng)

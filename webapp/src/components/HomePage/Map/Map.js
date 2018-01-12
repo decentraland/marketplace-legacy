@@ -9,7 +9,9 @@ import Loading from 'components/Loading'
 export default class MapComponent extends React.Component {
   static propTypes = {
     isReady: PropTypes.bool,
-    parcels: PropTypes.array,
+    wallet: PropTypes.any,
+    parcels: PropTypes.any,
+    districts: PropTypes.any,
     center: PropTypes.shape({
       x: PropTypes.string,
       y: PropTypes.string
@@ -37,7 +39,7 @@ export default class MapComponent extends React.Component {
     this.baseTileSize = 128
 
     this.state = {
-      zoom: this.baseZoom - 1
+      zoom: this.baseZoom - 2
     }
   }
 
@@ -97,15 +99,17 @@ export default class MapComponent extends React.Component {
 
   render() {
     const { zoom } = this.state
-    const { parcels, isReady, onSelect } = this.props
+    const { wallet, parcels, districts, isReady, onSelect } = this.props
     const { x, y } = this.getCenter()
 
     return isReady ? (
       <ParcelsMap
         x={x}
         y={y}
+        wallet={wallet}
         parcels={parcels}
-        minZoom={this.baseZoom - 3}
+        districts={districts}
+        minZoom={this.baseZoom - 4}
         maxZoom={this.baseZoom}
         baseZoom={this.baseZoom}
         zoom={zoom}
