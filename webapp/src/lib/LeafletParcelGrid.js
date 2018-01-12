@@ -168,8 +168,8 @@ const LeafletParcelGrid = L.Layer.extend({
   },
 
   setupSize() {
-    this.rows = Math.ceil(this.map.getSize().x / this.tileSize)
-    this.cols = Math.ceil(this.map.getSize().y / this.tileSize)
+    this.rows = Math.ceil(this.map.getSize().x / this.tileSize) + 1
+    this.cols = Math.ceil(this.map.getSize().y / this.tileSize) + 1
   },
 
   renderTiles(bounds) {
@@ -178,7 +178,8 @@ const LeafletParcelGrid = L.Layer.extend({
 
     // clear canvas
     const ctx = this.canvas.getContext('2d')
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    ctx.fillStyle = '#FEFEFE'
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
     for (let index = tiles.length - 1; index >= 0; index--) {
       this.renderTile(tiles[index])
@@ -186,20 +187,20 @@ const LeafletParcelGrid = L.Layer.extend({
   },
 
   renderTile(tile) {
-    const { /* x, y,*/ color } = this.options.getTileAttributes(
+    const { backgroundColor } = this.options.getTileAttributes(
       tile.bounds.getNorthWest()
     )
 
     // render tile
     const ctx = this.canvas.getContext('2d')
     const point = this.map.latLngToContainerPoint(tile.center)
-    ctx.fillStyle = color
+    ctx.fillStyle = backgroundColor
     const padding = 1
     ctx.fillRect(
-      point.x + padding,
-      point.y + padding,
-      this.tileSize - padding * 2,
-      this.tileSize - padding * 2
+      point.x - this.tileSize,
+      point.y - this.tileSize,
+      this.tileSize - padding,
+      this.tileSize - padding
     )
   },
 

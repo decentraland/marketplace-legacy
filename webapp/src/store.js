@@ -1,11 +1,13 @@
 import { compose, createStore, applyMiddleware } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
+import { env } from 'decentraland-commons'
 
 import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
-import thunkMiddleware from 'redux-thunk'
+import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
+import api from 'lib/api'
 import { createGoogleAnalyticsMiddleware } from './analyticsMiddleware'
 
 import reducer, { analytics } from './reducer'
@@ -21,7 +23,7 @@ const analyticsMiddleware = createGoogleAnalyticsMiddleware(analytics)
 const loggerMiddleware = createLogger({ collapsed: () => true })
 
 const middleware = applyMiddleware(
-  thunkMiddleware,
+  thunk.withExtraArgument(api),
   loggerMiddleware,
   sagasMiddleware,
   historyMiddleware,
@@ -42,6 +44,10 @@ export function dispatch(action) {
 
 export function getState() {
   return store.getState()
+}
+
+if (env.isDevelopment()) {
+  window.getState = store.getState
 }
 
 export { history, store }

@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
 import locations from 'locations'
-import { selectors } from 'reducers'
-import { navigateTo } from 'actions'
+import { getRange } from 'modules/ui/reducer'
+import { navigateTo } from 'modules/location/actions'
 
-import Minimap from 'components/HomePage/Minimap'
+import Minimap from './Minimap'
 
 const mapState = state => {
-  const { minX, minY, maxX, maxY } = selectors.getRange(state)
+  const { nw, se } = getRange(state)
   return {
-    minX,
-    minY,
-    maxX,
-    maxY
+    minX: nw.x,
+    minY: nw.y,
+    maxX: se.x,
+    maxY: se.y
   }
 }
 

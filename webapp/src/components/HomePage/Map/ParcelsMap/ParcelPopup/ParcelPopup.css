@@ -26,16 +26,20 @@
 
 .parcel-popup {
   font-size: 14px;
-  color: #FFF;
+  color: #fff;
   user-select: none;
 }
 
 .parcel-popup .header {
-  padding: 8px 3px;
+  padding: 8px 8px;
   text-align: center;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  color: #FFF;
+  color: #fff;
+}
+
+.parcel-popup .header span {
+  opacity: 0.9;
 }
 
 .parcel-popup .header.genesis,
@@ -47,22 +51,26 @@
   padding: 16px;
 }
 
+.parcel-popup .body .coordinates {
+  text-align: center;
+}
+
 .parcel-popup .header:first-letter,
 .parcel-popup .current-bid-status:first-letter {
   text-transform: capitalize;
 }
 
 .parcel-popup .body a {
-  color: #30D7A9;
+  color: #30d7a9;
 }
 
 .parcel-popup .body a:hover {
-  color: #30D7A9;
+  color: #30d7a9;
   text-decoration: none;
 }
 
 .parcel-popup .current-bid-status {
-  color: #B2B2B2;
+  color: #b2b2b2;
 }
 
 .parcel-popup .body > div {

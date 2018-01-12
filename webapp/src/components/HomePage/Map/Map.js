@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import locations from 'locations'
+import { walletType, parcelType, districtType } from 'components/types'
 import * as parcelUtils from 'lib/parcelUtils'
 
 import ParcelsMap from './ParcelsMap'
@@ -9,6 +10,9 @@ import Loading from 'components/Loading'
 export default class MapComponent extends React.Component {
   static propTypes = {
     isReady: PropTypes.bool,
+    wallet: walletType.isRequired,
+    parcels: PropTypes.objectOf(parcelType).isRequired,
+    districts: PropTypes.objectOf(districtType).isRequired,
     center: PropTypes.shape({
       x: PropTypes.string,
       y: PropTypes.string
@@ -36,7 +40,7 @@ export default class MapComponent extends React.Component {
     this.baseTileSize = 128
 
     this.state = {
-      zoom: this.baseZoom - 1
+      zoom: this.baseZoom - 2
     }
   }
 
@@ -96,14 +100,17 @@ export default class MapComponent extends React.Component {
 
   render() {
     const { zoom } = this.state
-    const { isReady, onSelect } = this.props
+    const { wallet, parcels, districts, isReady, onSelect } = this.props
     const { x, y } = this.getCenter()
 
     return isReady ? (
       <ParcelsMap
         x={x}
         y={y}
-        minZoom={this.baseZoom - 4}
+        wallet={wallet}
+        parcels={parcels}
+        districts={districts}
+        minZoom={this.baseZoom - 3}
         maxZoom={this.baseZoom}
         baseZoom={this.baseZoom}
         zoom={zoom}

@@ -1,12 +1,14 @@
 .Minimap {
   width: 150px;
   height: 150px;
-  background: rgba(0, 0, 0, 0.4) url('../images/minimap.png');
+  background: rgba(0, 0, 0, 0.4) url('../../../images/minimap.png');
   background-size: contain;
   position: absolute;
   right: 20px;
   bottom: 20px;
   z-index: 1040;
+  opacity: 0.9;
+  border: 1px solid white;
 }
 
 .Minimap .minimap-focus {

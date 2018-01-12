@@ -1,20 +1,16 @@
 import React from 'react'
-
+import { isDistrict } from 'lib/parcelUtils'
 import { shortenAddress } from 'lib/utils'
-import * as parcelUtils from 'lib/parcelUtils'
 
 import './ParcelPopup.css'
 
 export default function ParcelPopup(props) {
-  const { x, y, parcel } = props
-
-  const className = parcelUtils.getClassName(parcel)
-
+  const { x, y, owner, price, color, backgroundColor, label, district } = props
   return (
     <div className="parcel-popup">
-      {className && (
-        <div className={`header ${className}`}>
-          {parcelUtils.getBidStatus(parcel)}
+      {label && (
+        <div className={`header`} style={{ color, backgroundColor }}>
+          <span>{label}</span>
         </div>
       )}
       <div className="body">
@@ -22,13 +18,14 @@ export default function ParcelPopup(props) {
           {x},{y}
         </div>
 
-        {parcel.address && (
-          <div className="address-link">{shortenAddress(parcel.address)}</div>
-        )}
+        {owner && <div className="address-link">{shortenAddress(owner)}</div>}
 
-        <div className="current-bid-status" />
+        {price && <div className="text mana">{price} MANA</div>}
 
-        {parcel.amount && <div className="text mana">{parcel.amount} MANA</div>}
+        {district &&
+          isDistrict(district.id) && (
+            <div className="text mana">{district.name}</div>
+          )}
       </div>
     </div>
   )
