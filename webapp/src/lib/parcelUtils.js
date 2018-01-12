@@ -12,11 +12,6 @@ export const colors = {
   LOADING: '#AAAAAA'
 }
 
-export const COLORS = {
-  littleValue: '#FFF189',
-  bigValue: '#EF303B'
-}
-
 export const CLASS_NAMES = {
   won: 'won',
   winning: 'winning',
