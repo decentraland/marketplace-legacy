@@ -31,14 +31,6 @@ export const CLASS_NAMES = {
   loading: 'loading'
 }
 
-export function getClassName() {
-  return CLASS_NAMES.default
-}
-
-export function getBidStatus() {
-  return CLASS_NAMES.default
-}
-
 export function getBounds() {
   return {
     minX: -153,
@@ -53,7 +45,7 @@ export function isRoad(district_id) {
 }
 
 export function isPlaza(district_id) {
-  district_id === PLAZA_ID
+  return district_id === PLAZA_ID
 }
 
 export function isDistrict(district_id) {
@@ -64,7 +56,7 @@ export function getParcelAttributes(wallet, parcel, district) {
   if (!parcel) {
     return {
       label: 'Loading...',
-      color: 'white',
+      color: 'black',
       backgroundColor: colors.LOADING
     }
   }

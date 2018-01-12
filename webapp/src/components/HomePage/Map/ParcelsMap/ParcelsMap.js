@@ -7,6 +7,8 @@ import debounce from 'lodash.debounce'
 import LeafletMapCoordinates from 'lib/LeafletMapCoordinates'
 import LeafletParcelGrid from 'lib/LeafletParcelGrid'
 
+import { walletType, parcelType, districtType } from 'components/types'
+
 import ParcelPopup from './ParcelPopup'
 import { buildCoordinate } from 'lib/utils'
 import { getParcelAttributes } from 'lib/parcelUtils'
@@ -19,9 +21,13 @@ L.Icon.Default.imagePath = 'https://cdnjs.com/ajax/libs/leaflet/1.0.3/images/'
 
 export default class ParcelsMap extends React.Component {
   static propTypes = {
-    wallet: PropTypes.any,
-    parcels: PropTypes.any,
-    districts: PropTypes.any,
+    wallet: walletType.isRequired,
+    parcels: PropTypes.objectOf(parcelType).isRequired,
+    districts: PropTypes.objectOf(districtType).isRequired,
+    center: PropTypes.shape({
+      x: PropTypes.string,
+      y: PropTypes.string
+    }),
 
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -173,7 +179,7 @@ export default class ParcelsMap extends React.Component {
   onMapMoveEnd = () => {
     const elapsed = Date.now() - this.startMove
     this.panInProgress = false
-    if (elapsed > 100) {
+    if (elapsed > 500) {
       this.skipCenter = true
     }
     this.debouncedOnMoveEnd()
