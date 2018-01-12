@@ -1,14 +1,16 @@
-export const COLOR_MY_PARCELS = '#D98494' //'#4A90E2'
-export const COLOR_DISTRICT = '#73C7E1' //'#FDF06F'
-export const COLOR_DISTRICTS_CONTRIBUTED = '#4A90E2' //'#CD6FE7'
-export const COLOR_ROADS = '#39516B' //'#35312E'
-export const COLOR_PLAZA = '#FCFCFC' //'#F47E31'
-export const COLOR_TAKEN = '#AEDC89' //'#9AC776' //'#B9F587' //'#F9F7E8'
-export const COLOR_UNOWNED = '#F9F7E8'
-export const COLOR_LOADING = '#AAAAAA'
+export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
+export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 
-const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
-const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
+export const colors = {
+  MY_PARCELS: '#D98494',
+  DISTRICT: '#73C7E1',
+  DISTRICTS_CONTRIBUTED: '#4A90E2',
+  ROADS: '#39516B',
+  PLAZA: '#FCFCFC',
+  TAKEN: '#AEDC89',
+  UNOWNED: '#F9F7E8',
+  LOADING: '#AAAAAA'
+}
 
 export const COLORS = {
   littleValue: '#FFF189',
@@ -46,40 +48,52 @@ export function getBounds() {
   }
 }
 
+export function isRoad(district_id) {
+  return district_id === ROADS_ID
+}
+
+export function isPlaza(district_id) {
+  district_id === PLAZA_ID
+}
+
+export function isDistrict(district_id) {
+  return !isRoad(district_id) && !isPlaza(district_id)
+}
+
 export function getParcelAttributes(wallet, parcel, district) {
   if (!parcel) {
     return {
       label: 'Loading...',
       color: 'white',
-      backgroundColor: COLOR_LOADING
+      backgroundColor: colors.LOADING
     }
   }
   if (parcel.district_id) {
-    if (parcel.district_id === ROADS_ID) {
+    if (isRoad(parcel.district_id)) {
       return {
         label: 'Road',
         color: 'white',
-        backgroundColor: COLOR_ROADS
+        backgroundColor: colors.ROADS
       }
     }
-    if (parcel.district_id === PLAZA_ID) {
+    if (isPlaza(parcel.district_id)) {
       return {
         label: 'Genesis Plaza',
         color: 'black',
-        backgroundColor: COLOR_PLAZA
+        backgroundColor: colors.PLAZA
       }
     }
     // if (district.name === 'Embassy Town') {
     //   return {
     //     label: 'District',
     //     color: 'black',
-    //     backgroundColor: COLOR_DISTRICTS_CONTRIBUTED
+    //     backgroundColor: colors.DISTRICTS_CONTRIBUTED
     //   }
     // }
     return {
       label: 'District',
       color: 'black',
-      backgroundColor: COLOR_DISTRICT
+      backgroundColor: colors.DISTRICT
     }
   }
 
@@ -87,19 +101,19 @@ export function getParcelAttributes(wallet, parcel, district) {
     return {
       label: 'Your Parcel',
       color: 'white',
-      backgroundColor: COLOR_MY_PARCELS
+      backgroundColor: colors.MY_PARCELS
     }
   }
   if (!parcel.price && !district) {
     return {
       label: 'No Owner',
       color: 'black',
-      backgroundColor: COLOR_UNOWNED
+      backgroundColor: colors.UNOWNED
     }
   }
   return {
     label: 'Taken',
     color: 'black',
-    backgroundColor: COLOR_TAKEN
+    backgroundColor: colors.TAKEN
   }
 }

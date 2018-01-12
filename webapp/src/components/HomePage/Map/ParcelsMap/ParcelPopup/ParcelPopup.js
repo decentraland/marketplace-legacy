@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { shortenAddress } from 'lib/utils'
-import * as parcelUtils from 'lib/parcelUtils'
 
 import './ParcelPopup.css'
 

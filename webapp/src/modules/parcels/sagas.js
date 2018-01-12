@@ -1,5 +1,4 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
-import { setLoading } from 'modules/ui/actions'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,

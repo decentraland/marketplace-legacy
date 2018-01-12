@@ -1,5 +1,6 @@
 import { compose, createStore, applyMiddleware } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
+import { env } from 'decentraland-commons'
 
 import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
@@ -45,6 +46,8 @@ export function getState() {
   return store.getState()
 }
 
-window.getState = store.getState
+if (env.isDevelopment()) {
+  window.getState = store.getState
+}
 
 export { history, store }
