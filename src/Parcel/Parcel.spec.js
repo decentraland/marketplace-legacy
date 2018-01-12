@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import { LANDToken } from 'decentraland-contracts'
+import { LANDRegistry } from 'decentraland-contracts'
 import { tx, utils } from 'decentraland-commons'
 
 import db from '../database'
@@ -148,7 +148,7 @@ describe('ParcelService', function() {
 
   describe('#isOwner', function() {
     it('should return true if the parcel belongs to the address', async function() {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
 
       const result = await new ParcelService().isOwner(
         tx.DUMMY_TX_ID,
@@ -158,7 +158,7 @@ describe('ParcelService', function() {
     })
 
     it('should return false if the parcel belongs to someone else', async function() {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
 
       const service = new ParcelService()
       const wrongParcel = await service.isOwner(tx.DUMMY_TX_ID, {
@@ -171,12 +171,12 @@ describe('ParcelService', function() {
       expect(wrongParcel).to.be.false
     })
 
-    afterEach(() => LANDToken.getInstance.restore())
+    afterEach(() => LANDRegistry.getInstance.restore())
   })
 
   describe('#addOwners', function() {
-    it('should use the LANDToken contract to add the avaiable owner addresses', async function() {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
+    it('should use the LANDRegistry contract to add the avaiable owner addresses', async function() {
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
 
       const parcels = [testParcel1, testParcel2, { x: 11, y: -2 }]
       const parcelsWithOwner = await new ParcelService().addOwners(parcels)
@@ -188,8 +188,8 @@ describe('ParcelService', function() {
       ])
     })
 
-    it('should return the same array if the LANDToken contract fails', async function() {
-      sinon.stub(LANDToken, 'getInstance').throws()
+    it('should return the same array if the LANDRegistry contract fails', async function() {
+      sinon.stub(LANDRegistry, 'getInstance').throws()
 
       const parcels = [testParcel1, testParcel2]
       const parcelsWithOwner = await new ParcelService().addOwners(parcels)
@@ -197,12 +197,12 @@ describe('ParcelService', function() {
       expect(parcelsWithOwner).to.equal(parcels)
     })
 
-    afterEach(() => LANDToken.getInstance.restore())
+    afterEach(() => LANDRegistry.getInstance.restore())
   })
 
   describe('#getLandOf', function() {
     it('should return an array of {x, y} pairs from the lands the address owns', async function() {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
 
       const landPairs = await new ParcelService().getLandOf(testAddress)
 
@@ -210,14 +210,14 @@ describe('ParcelService', function() {
     })
 
     it('should return an empty array on error', async function() {
-      sinon.stub(LANDToken, 'getInstance').throws()
+      sinon.stub(LANDRegistry, 'getInstance').throws()
 
       const landPairs = await new ParcelService().getLandOf(testAddress)
 
       expect(landPairs).to.deep.equal([])
     })
 
-    afterEach(() => LANDToken.getInstance.restore())
+    afterEach(() => LANDRegistry.getInstance.restore())
   })
 
   describe('#addDbData', function() {

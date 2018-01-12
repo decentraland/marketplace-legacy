@@ -1,4 +1,4 @@
-import { LANDToken } from 'decentraland-contracts'
+import { LANDRegistry } from 'decentraland-contracts'
 
 import Parcel from './Parcel'
 import coordinates from './coordinates'
@@ -24,7 +24,7 @@ class ParcelService {
     const parcels = []
 
     try {
-      const contract = LANDToken.getInstance()
+      const contract = LANDRegistry.getInstance()
       const [xCoords, yCoords] = await contract.landOf(address)
 
       for (let i = 0; i < xCoords.length; i++) {
@@ -44,7 +44,7 @@ class ParcelService {
     let isOwner = false
 
     try {
-      const contract = LANDToken.getInstance()
+      const contract = LANDRegistry.getInstance()
       const { x, y } = parcel
 
       const owner = await contract.ownerOfLand(x, y)
@@ -60,7 +60,7 @@ class ParcelService {
 
     try {
       const { x, y } = coordinates.splitPairs(parcels)
-      const contract = LANDToken.getInstance()
+      const contract = LANDRegistry.getInstance()
       const addresses = await contract.ownerOfLandMany(x, y)
 
       for (const [index, parcel] of parcels.entries()) {
