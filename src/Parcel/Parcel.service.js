@@ -29,8 +29,8 @@ class ParcelService {
       const [xCoords, yCoords] = await contract.landOf(address)
 
       for (let i = 0; i < xCoords.length; i++) {
-        const x = xCoords[i]
-        const y = yCoords[i]
+        const x = xCoords[i].toString()
+        const y = yCoords[i].toString()
 
         parcels.push({ x, y })
       }
@@ -83,7 +83,7 @@ class ParcelService {
     const dbParcelsObj = this.toParcelObject(dbParcels)
 
     return parcels.map((parcel, index) => {
-      const dbParcel = dbParcelsObj[parcel.id]
+      const dbParcel = dbParcelsObj[Parcel.buildId(parcel.x, parcel.y)]
       if (!dbParcel) return parcel
 
       const { name, description, price } = dbParcel

@@ -223,9 +223,9 @@ describe('ParcelService', function() {
   describe('#addDbData', function() {
     it('should add the data stored on the db to each parcel and return a new array', async function() {
       const contractParcels = [
-        { id: '0,0', x: 0, y: 0 },
-        { id: '10,-2', x: 10, y: -2 },
-        { id: '-5,20', x: -5, y: 20 }
+        { x: 0, y: 0 },
+        { x: 10, y: -2 },
+        { x: -5, y: 20 }
       ]
       const parcelData = [
         { name: 'Name 1', description: 'Description 1', price: '1000' },
