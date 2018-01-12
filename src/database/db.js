@@ -37,6 +37,7 @@ export default {
       "parcel_count" DECIMAL,
       "parcel_ids" TEXT[],
       "priority" INT,
+      "address" TEXT,
       "center" TEXT,
       "disabled" BOOLEAN NOT NULL DEFAULT false`,
       { sequenceName: null }

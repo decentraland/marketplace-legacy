@@ -4,12 +4,30 @@
  */
 const coordinates = {
   /**
+   * Takes an array of { x, y } pairs and splits them into x and y arrays
+   * @param  {Array<object>} pairs - Array of { x, y } pairs
+   * @return {Object} coordinates  - Object with a x[] and y[] properties
+   */
+  splitPairs(pairs) {
+    const x = []
+    const y = []
+
+    for (const pair of pairs) {
+      x.push(pair.x)
+      y.push(pair.y)
+    }
+
+    return { x, y }
+  },
+
+  /**
    * Split coordinate string into an array.
    * @param  {string|array} coordinate
-   * @return {array} The splitted result. From "1, 2" to [1, 2]
+   * @return {array} The result array. From "1, 2" to [1, 2] and from [1, 2] to a new [1, 2]
    */
   toArray(coordinate) {
     this.checkIsValid(coordinate)
+
     return coordinate
       .toString()
       .split(',')

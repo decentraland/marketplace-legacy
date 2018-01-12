@@ -104,15 +104,23 @@ export async function getAddressParcels(req) {
   // TODO: Filter if it's 0
   let contractParcels = await Parcel.inRange([12, 14], [14, 16])
 
-  // TODO: Change this. It should be fetched from DB (for now)
-  contractParcels = contractParcels.map((parcel, index) =>
-    Object.assign(
-      { name: `Name ${index}`, description: `Description ${index}` },
-      parcel
-    )
+  // TODO: Move to ParcelService
+  const parcelIds = contractParcels.map(parcel =>
+    Parcel.buildId(parcel.x, parcel.y)
   )
+  const dbParcels = await Parcel.findInIds(parcelIds)
+  const dbParcelsObj = dbParcels.reduce((map, parcel) => {
+    map[parcel.id] = parcel
+    return map
+  }, {})
 
-  const parcels = await new ParcelService().addPrices(contractParcels)
+  const parcels = contractParcels.map((parcel, index) => {
+    const dbParcel = dbParcelsObj[parcel.id]
+    if (!dbParcel) return parcel
+
+    const { name, description, price } = dbParcel
+    return Object.assign({ name, description, price }, parcel)
+  })
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
@@ -127,6 +135,7 @@ export async function getDistricts(req) {
   const districts = await District.findEnabled()
   return utils.mapOmit(districts, [
     'disabled',
+    'address',
     'parcel_ids',
     'created_at',
     'updated_at'

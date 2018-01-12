@@ -9,19 +9,41 @@ import ParcelService from './Parcel.service'
 import coordinates from './coordinates'
 
 describe('Parcel', function() {
-  describe('.hashId', function() {
+  describe('.buildId', function() {
     it('should concat both coordinates with pipes', function() {
-      expect(Parcel.hashId(22, '30')).to.equal('22,30')
-      expect(Parcel.hashId(0, 0)).to.equal('0,0')
+      expect(Parcel.buildId(22, '30')).to.equal('22,30')
+      expect(Parcel.buildId(0, 0)).to.equal('0,0')
     })
 
     it('should throw if any coordinate is invalid', function() {
-      expect(() => Parcel.hashId(22)).to.throw(
+      expect(() => Parcel.buildId(22)).to.throw(
         'You need to supply both coordinates to be able to hash them. x = 22 y = undefined'
       )
-      expect(() => Parcel.hashId(undefined, 'y coord')).to.throw(
+      expect(() => Parcel.buildId(undefined, 'y coord')).to.throw(
         'You need to supply both coordinates to be able to hash them. x = undefined y = y coord'
       )
+    })
+  })
+
+  describe('.findInCoordinates', function() {
+    it('should attach an array of bid groups for the address', async function() {
+      await new ParcelService().insertMatrix(-1, -1, 3, 3)
+
+      const result = await Parcel.findInCoordinates([
+        '1,2',
+        '3,3',
+        '4,4',
+        '0,0',
+        '-1,-1'
+      ])
+
+      expect(result.length).to.be.equal(4)
+    })
+
+    it('should throw if any coordinate is invalid', function() {
+      return expect(
+        Parcel.findInCoordinates(['1,1', 'nonsense'])
+      ).to.be.rejectedWith('The coordinate "nonsense" are not valid')
     })
   })
 
@@ -54,10 +76,22 @@ describe('Parcel', function() {
 })
 
 describe('ParcelService', function() {
-  const testParcel = { x: 1, y: 2 }
+  const testParcel1 = { x: 1, y: 2 }
+  const testParcel2 = { x: -7, y: 5 }
+
   const contract = {
     ownerOfLand: (x, y) => {
-      return x === testParcel.x && y === testParcel.y ? tx.DUMMY_TX_ID : null
+      const isDummy = testParcel1.x === x && testParcel1.y === y
+      return isDummy ? tx.DUMMY_TX_ID : null
+    },
+    ownerOfLandMany: (x, y) => {
+      const isDummy =
+        testParcel1.x === x[0] &&
+        testParcel1.y === y[0] &&
+        testParcel2.x === x[1] &&
+        testParcel2.y === y[1]
+
+      return isDummy ? [tx.DUMMY_TX_ID, tx.DUMMY_TX_ID] : null
     }
   }
 
@@ -112,7 +146,7 @@ describe('ParcelService', function() {
 
       const result = await new ParcelService().isOwner(
         tx.DUMMY_TX_ID,
-        testParcel
+        testParcel1
       )
       expect(result).to.be.true
     })
@@ -125,7 +159,7 @@ describe('ParcelService', function() {
         x: 10,
         y: -2
       })
-      const wrongAddr = await service.isOwner('0xnothing', testParcel)
+      const wrongAddr = await service.isOwner('0xnothing', testParcel1)
 
       expect(wrongAddr).to.be.false
       expect(wrongParcel).to.be.false
@@ -134,66 +168,30 @@ describe('ParcelService', function() {
     afterEach(() => LANDToken.getInstance.restore())
   })
 
-  describe('#addPrices', async function() {
-    it('should add the price fetched from the database to each parcel and return a new array', async function() {
-      const coordinates = [
-        { id: '0,0', x: 0, y: 0 },
-        { id: '10,-2', x: 10, y: -2 },
-        { id: '-5,20', x: -5, y: 20 }
-      ]
-      const prices = ['1000', '1250', '5234']
-
-      const parcels = coordinates.map((coord, index) =>
-        Object.assign({}, coord, { price: prices[index] })
-      )
-
-      await Promise.all(parcels.map(parcel => Parcel.insert(parcel)))
-
-      const service = new ParcelService()
-      const parcelsWithPrice = await service.addPrices(coordinates)
-
-      expect(parcelsWithPrice).to.deep.equal(parcels)
-    })
-
-    it('should add a zero for missing coordinates', async function() {
-      const coordinates = [{ x: 0, y: 0 }, { x: 10, y: -2 }, { x: -5, y: 20 }]
-      const parcels = coordinates.map(coord =>
-        Object.assign({}, coord, { price: 0 })
-      )
-
-      const service = new ParcelService()
-      const parcelsWithPrice = await service.addPrices(coordinates)
-
-      expect(parcelsWithPrice).to.deep.equal(parcels)
-    })
-
-    afterEach(() => db.truncate('parcels'))
-  })
-
   describe('#addOwners', function() {
     it('should use the LANDToken contract to add the avaiable owner addresses', async function() {
       sinon.stub(LANDToken, 'getInstance').returns(contract)
 
-      const coordinates = [{ x: -1, y: 10 }, testParcel]
+      const parcels = [testParcel1, testParcel2]
 
       const service = new ParcelService()
-      const parcelsWithOwner = await service.addOwners(coordinates)
+      const parcelsWithOwner = await service.addOwners(parcels)
 
       expect(parcelsWithOwner).to.deep.equal([
-        { x: -1, y: 10, owner: null },
-        { x: 1, y: 2, owner: '0xdeadbeef' }
+        { x: 1, y: 2, owner: '0xdeadbeef' },
+        { x: -7, y: 5, owner: '0xdeadbeef' }
       ])
     })
 
     it('should return the same array if the LANDToken contract fails', async function() {
       sinon.stub(LANDToken, 'getInstance').throws()
 
-      const coordinates = [{ x: -1, y: 10 }, testParcel]
+      const parcels = [testParcel1, testParcel2]
 
       const service = new ParcelService()
-      const parcelsWithOwner = await service.addOwners(coordinates)
+      const parcelsWithOwner = await service.addOwners(parcels)
 
-      expect(parcelsWithOwner).to.equal(coordinates)
+      expect(parcelsWithOwner).to.equal(parcels)
     })
 
     afterEach(() => LANDToken.getInstance.restore())
@@ -250,6 +248,27 @@ describe('coordinates', function() {
       expect(() => coordinates.checkIsValid('1,-2')).not.to.throw()
       expect(() => coordinates.checkIsValid([22, 23])).not.to.throw()
       expect(() => coordinates.checkIsValid('1,   2')).not.to.throw()
+    })
+  })
+
+  describe('.splitPairs', function() {
+    it('should return an object of x[] and y[] properties', function() {
+      const result = coordinates.splitPairs([
+        { x: 1, y: 2 },
+        { x: 5, y: 3 },
+        { x: -1, y: -2 },
+        { x: 9, y: -7 }
+      ])
+      expect(result).to.deep.equal({
+        x: [1, 5, -1, 9],
+        y: [2, 3, -2, -7]
+      })
+    })
+
+    it('should throw if the coordinates are invalid', function() {
+      expect(() => coordinates.toArray('a,  2')).to.throw(
+        'The coordinate "a,  2" are not valid'
+      )
     })
   })
 

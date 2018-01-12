@@ -1,9 +1,7 @@
-import { Log } from 'decentraland-commons'
 import { LANDToken } from 'decentraland-contracts'
 
 import Parcel from './Parcel'
-
-const log = new Log('ParcelService')
+import coordinates from './coordinates'
 
 class ParcelService {
   constructor() {
@@ -27,44 +25,32 @@ class ParcelService {
       const contract = LANDToken.getInstance()
       const { x, y } = parcel
 
-      const owner = await contract.ownerOfLand(x, y) // TODO: check if it's 0
-      return address === owner
+      const owner = await contract.ownerOfLand(x, y)
+      return !!owner && address === owner
     } catch (error) {
       return false
     }
   }
 
-  async addPrices(parcels) {
-    const priceSetters = parcels.map(async parcel => {
-      const price = await Parcel.getPrice(parcel.x, parcel.y)
-      return Object.assign({}, parcel, { price })
-    })
-
-    return await Promise.all(priceSetters)
-  }
-
   async addOwners(parcels) {
+    let newParcels = []
+
     try {
+      const { x, y } = coordinates.splitPairs(parcels)
       const contract = LANDToken.getInstance()
+      const addresses = await contract.ownerOfLandMany(x, y)
 
-      const ownerSetters = parcels.map(async parcel => {
-        // TODO: check if it's 0
-        // TODO: use contract's `ownerOfLandMany`
-        const owner = parcel.district_id
-          ? null
-          : await contract.ownerOfLand(parcel.x, parcel.y)
-
-        return Object.assign({}, parcel, { owner })
-      })
-
-      return await Promise.all(ownerSetters)
+      for (const [index, address] of addresses.entries()) {
+        if (address) {
+          const parcel = parcels[index]
+          newParcels.push({ ...parcel, owner: address })
+        }
+      }
     } catch (error) {
-      log.warn(
-        '[WARN] Error trying to get owners from LANDToken contract',
-        error
-      )
-      return parcels
+      newParcels = parcels
     }
+
+    return newParcels
   }
 
   getValuesFromSignedMessage(signedMessage) {
