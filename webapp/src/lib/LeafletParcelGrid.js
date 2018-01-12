@@ -168,8 +168,8 @@ const LeafletParcelGrid = L.Layer.extend({
   },
 
   setupSize() {
-    this.rows = Math.ceil(this.map.getSize().x / this.tileSize)
-    this.cols = Math.ceil(this.map.getSize().y / this.tileSize)
+    this.rows = Math.ceil(this.map.getSize().x / this.tileSize) + 1
+    this.cols = Math.ceil(this.map.getSize().y / this.tileSize) + 1
   },
 
   renderTiles(bounds) {
