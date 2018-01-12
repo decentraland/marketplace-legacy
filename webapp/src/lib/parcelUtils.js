@@ -7,6 +7,9 @@ export const COLOR_TAKEN = '#AEDC89' //'#9AC776' //'#B9F587' //'#F9F7E8'
 export const COLOR_UNOWNED = '#F9F7E8'
 export const COLOR_LOADING = '#AAAAAA'
 
+const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
+const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
+
 export const COLORS = {
   littleValue: '#FFF189',
   bigValue: '#EF303B'
@@ -52,34 +55,27 @@ export function getParcelAttributes(wallet, parcel, district) {
     }
   }
   if (parcel.district_id) {
-    if (!district) {
-      return {
-        label: 'Loading...',
-        color: 'white',
-        backgroundColor: COLOR_LOADING
-      }
-    }
-    if (district.name === 'Roads') {
+    if (parcel.district_id === ROADS_ID) {
       return {
         label: 'Road',
         color: 'white',
         backgroundColor: COLOR_ROADS
       }
     }
-    if (district.name === 'Genesis Plaza') {
+    if (parcel.district_id === PLAZA_ID) {
       return {
         label: 'Genesis Plaza',
         color: 'black',
         backgroundColor: COLOR_PLAZA
       }
     }
-    if (district.name === 'Embassy Town') {
-      return {
-        label: 'District',
-        color: 'black',
-        backgroundColor: COLOR_DISTRICTS_CONTRIBUTED
-      }
-    }
+    // if (district.name === 'Embassy Town') {
+    //   return {
+    //     label: 'District',
+    //     color: 'black',
+    //     backgroundColor: COLOR_DISTRICTS_CONTRIBUTED
+    //   }
+    // }
     return {
       label: 'District',
       color: 'black',
