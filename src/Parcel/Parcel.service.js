@@ -1,3 +1,4 @@
+import { Contract } from 'decentraland-commons'
 import { LANDRegistry } from 'decentraland-contracts'
 
 import Parcel from './Parcel'
@@ -48,7 +49,7 @@ class ParcelService {
       const { x, y } = parcel
 
       const owner = await contract.ownerOfLand(x, y)
-      isOwner = !!owner && address === owner
+      isOwner = !Contract.isEmptyAddress(owner) && address === owner
     } catch (error) {
       // Use default
     }
@@ -65,7 +66,7 @@ class ParcelService {
 
       for (const [index, parcel] of parcels.entries()) {
         const address = addresses[index]
-        const owner = address || null
+        const owner = Contract.isEmptyAddress(address) ? null : address
         newParcels.push({ ...parcel, owner })
       }
     } catch (error) {
