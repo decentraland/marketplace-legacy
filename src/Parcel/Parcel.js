@@ -25,10 +25,11 @@ class Parcel extends Model {
   }
 
   static async findInIds(ids) {
-    let inValues = ids.map(id => `${id}`)
+    const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
 
     return await this.db.query(
-      `SELECT * FROM ${this.tableName} WHERE id IN (${inValues})`
+      `SELECT * FROM ${this.tableName} WHERE id IN (${inPlaceholders})`,
+      ids
     )
   }
 

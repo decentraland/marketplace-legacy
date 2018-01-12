@@ -100,27 +100,10 @@ app.get(
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  // TODO: Change this. It should be fetched from the LAND contract's `assetsOf`
-  // TODO: Filter if it's 0
-  let contractParcels = await Parcel.inRange([12, 14], [14, 16])
+  const parcelService = new ParcelService()
 
-  // TODO: Move to ParcelService
-  const parcelIds = contractParcels.map(parcel =>
-    Parcel.buildId(parcel.x, parcel.y)
-  )
-  const dbParcels = await Parcel.findInIds(parcelIds)
-  const dbParcelsObj = dbParcels.reduce((map, parcel) => {
-    map[parcel.id] = parcel
-    return map
-  }, {})
-
-  const parcels = contractParcels.map((parcel, index) => {
-    const dbParcel = dbParcelsObj[parcel.id]
-    if (!dbParcel) return parcel
-
-    const { name, description, price } = dbParcel
-    return Object.assign({ name, description, price }, parcel)
-  })
+  const contractParcels = await parcelService.getLandOf(address)
+  const parcels = parcelService.addDbData(contractParcels)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }

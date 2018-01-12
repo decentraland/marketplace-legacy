@@ -78,13 +78,14 @@ describe('Parcel', function() {
 describe('ParcelService', function() {
   const testParcel1 = { x: 1, y: 2 }
   const testParcel2 = { x: -7, y: 5 }
+  const testAddress = '0xfede'
 
   const contract = {
-    ownerOfLand: (x, y) => {
+    ownerOfLand(x, y) {
       const isDummy = testParcel1.x === x && testParcel1.y === y
       return isDummy ? tx.DUMMY_TX_ID : null
     },
-    ownerOfLandMany: (x, y) => {
+    ownerOfLandMany(x, y) {
       const isDummy =
         testParcel1.x === x[0] &&
         testParcel1.y === y[0] &&
@@ -92,6 +93,11 @@ describe('ParcelService', function() {
         testParcel2.y === y[1]
 
       return isDummy ? [tx.DUMMY_TX_ID, tx.DUMMY_TX_ID] : null
+    },
+    landOf(address) {
+      return address === testAddress
+        ? [[testParcel1.x, testParcel2.x], [testParcel1.y, testParcel2.y]]
+        : [[], []]
     }
   }
 
@@ -134,9 +140,9 @@ describe('ParcelService', function() {
       const service = new ParcelService()
       service.Parcel = ParcelMock
 
-      return expect(service.insertMatrix(0, 0, 1, 1)).not.to.be.rejectedWith(
-        error
-      )
+      const matrix = service.insertMatrix(0, 0, 1, 1)
+
+      return expect(matrix).not.to.be.rejectedWith(error)
     })
   })
 
@@ -172,14 +178,13 @@ describe('ParcelService', function() {
     it('should use the LANDToken contract to add the avaiable owner addresses', async function() {
       sinon.stub(LANDToken, 'getInstance').returns(contract)
 
-      const parcels = [testParcel1, testParcel2]
-
-      const service = new ParcelService()
-      const parcelsWithOwner = await service.addOwners(parcels)
+      const parcels = [testParcel1, testParcel2, { x: 11, y: -2 }]
+      const parcelsWithOwner = await new ParcelService().addOwners(parcels)
 
       expect(parcelsWithOwner).to.deep.equal([
-        { x: 1, y: 2, owner: '0xdeadbeef' },
-        { x: -7, y: 5, owner: '0xdeadbeef' }
+        { x: 1, y: 2, owner: '0xdeadbeef' }, // testParcel1
+        { x: -7, y: 5, owner: '0xdeadbeef' }, // testParcel2
+        { x: 11, y: -2, owner: null }
       ])
     })
 
@@ -187,14 +192,59 @@ describe('ParcelService', function() {
       sinon.stub(LANDToken, 'getInstance').throws()
 
       const parcels = [testParcel1, testParcel2]
-
-      const service = new ParcelService()
-      const parcelsWithOwner = await service.addOwners(parcels)
+      const parcelsWithOwner = await new ParcelService().addOwners(parcels)
 
       expect(parcelsWithOwner).to.equal(parcels)
     })
 
     afterEach(() => LANDToken.getInstance.restore())
+  })
+
+  describe('#getLandOf', function() {
+    it('should return an array of {x, y} pairs from the lands the address owns', async function() {
+      sinon.stub(LANDToken, 'getInstance').returns(contract)
+
+      const landPairs = await new ParcelService().getLandOf(testAddress)
+
+      expect(landPairs).to.deep.equal([testParcel1, testParcel2])
+    })
+
+    it('should return an empty array on error', async function() {
+      sinon.stub(LANDToken, 'getInstance').throws()
+
+      const landPairs = await new ParcelService().getLandOf(testAddress)
+
+      expect(landPairs).to.deep.equal([])
+    })
+
+    afterEach(() => LANDToken.getInstance.restore())
+  })
+
+  describe('#addDbData', function() {
+    it('should add the data stored on the db to each parcel and return a new array', async function() {
+      const contractParcels = [
+        { id: '0,0', x: 0, y: 0 },
+        { id: '10,-2', x: 10, y: -2 },
+        { id: '-5,20', x: -5, y: 20 }
+      ]
+      const parcelData = [
+        { name: 'Name 1', description: 'Description 1', price: '1000' },
+        { name: 'Name 2', description: 'Description 2', price: '1250' },
+        { name: 'Name 3', description: 'Description 3', price: '5234' }
+      ]
+      const parcels = contractParcels.map((coord, index) =>
+        Object.assign({}, coord, parcelData[index])
+      )
+      await Promise.all(parcels.map(parcel => Parcel.insert(parcel)))
+
+      const parcelsWithData = await new ParcelService().addDbData(
+        contractParcels
+      )
+
+      expect(parcelsWithData).to.deep.equal(parcels)
+    })
+
+    afterEach(() => db.truncate('parcels'))
   })
 
   describe('#getValuesFromSignedMessage', function() {
@@ -214,8 +264,7 @@ describe('ParcelService', function() {
         }
       }
 
-      const service = new ParcelService()
-      const signedValues = await service.getValuesFromSignedMessage(
+      const signedValues = await new ParcelService().getValuesFromSignedMessage(
         signedMessage
       )
 

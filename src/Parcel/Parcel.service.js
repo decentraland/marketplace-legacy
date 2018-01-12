@@ -20,16 +20,39 @@ class ParcelService {
     }
   }
 
+  async getLandOf(address) {
+    const parcels = []
+
+    try {
+      const contract = LANDToken.getInstance()
+      const [xCoords, yCoords] = await contract.landOf(address)
+
+      for (let i = 0; i < xCoords.length; i++) {
+        const x = xCoords[i]
+        const y = yCoords[i]
+
+        parcels.push({ x, y })
+      }
+    } catch (error) {
+      // Use default
+    }
+
+    return parcels
+  }
+
   async isOwner(address, parcel) {
+    let isOwner = false
+
     try {
       const contract = LANDToken.getInstance()
       const { x, y } = parcel
 
       const owner = await contract.ownerOfLand(x, y)
-      return !!owner && address === owner
+      isOwner = !!owner && address === owner
     } catch (error) {
-      return false
+      // Use default
     }
+    return isOwner
   }
 
   async addOwners(parcels) {
@@ -40,17 +63,38 @@ class ParcelService {
       const contract = LANDToken.getInstance()
       const addresses = await contract.ownerOfLandMany(x, y)
 
-      for (const [index, address] of addresses.entries()) {
-        if (address) {
-          const parcel = parcels[index]
-          newParcels.push({ ...parcel, owner: address })
-        }
+      for (const [index, parcel] of parcels.entries()) {
+        const address = addresses[index]
+        const owner = address || null
+        newParcels.push({ ...parcel, owner })
       }
     } catch (error) {
       newParcels = parcels
     }
 
     return newParcels
+  }
+
+  async addDbData(parcels) {
+    const parcelIds = parcels.map(parcel => Parcel.buildId(parcel.x, parcel.y))
+
+    const dbParcels = await Parcel.findInIds(parcelIds)
+    const dbParcelsObj = this.toParcelObject(dbParcels)
+
+    return parcels.map((parcel, index) => {
+      const dbParcel = dbParcelsObj[parcel.id]
+      if (!dbParcel) return parcel
+
+      const { name, description, price } = dbParcel
+      return Object.assign({ name, description, price }, parcel)
+    })
+  }
+
+  toParcelObject(parcelArray) {
+    return parcelArray.reduce((map, parcel) => {
+      map[parcel.id] = parcel
+      return map
+    }, {})
   }
 
   getValuesFromSignedMessage(signedMessage) {
