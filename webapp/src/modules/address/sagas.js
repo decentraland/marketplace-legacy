@@ -51,16 +51,6 @@ function* handleAddressContributionsRequest(action) {
     const { address } = action
     let contributions = yield call(() => api.fetchAddressContributions(address))
 
-    contributions = [
-      {
-        id: 2,
-        address: '0xec6e6c0841a2ba474e92bf42baf76bfe80e8657c',
-        district_id: '219ac351-e6ce-4e17-8b84-eb008afddf69',
-        land_count: 6,
-        timestamp: '1507144067874'
-      }
-    ]
-
     yield put({
       type: FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
       address,
