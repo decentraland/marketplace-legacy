@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ContributionTable from './ContributionTable'
-import Loading from 'components/Loading'
 
 import './WalletContributions.css'
 
