@@ -275,8 +275,7 @@ export default class ParcelsMap extends React.Component {
     const id = buildCoordinate(x, y)
     const parcel = parcels[id]
     const district = parcel ? districts[parcel.district_id] : null
-    const price = parcel ? parcel.price : null
-    const owner = parcel ? parcel.price : null
+    const description = parcel ? parcel.description : null
     const { backgroundColor, color, label } = getParcelAttributes(
       wallet,
       parcel,
@@ -288,9 +287,7 @@ export default class ParcelsMap extends React.Component {
       color,
       backgroundColor,
       label,
-      district,
-      price,
-      owner
+      description
     }
   }
 
@@ -341,11 +338,10 @@ export default class ParcelsMap extends React.Component {
       return
     }
     const {
-      price,
       color,
       label,
-      district,
-      backgroundColor
+      backgroundColor,
+      description
     } = this.getTileAttributes(latlng)
 
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
@@ -354,11 +350,10 @@ export default class ParcelsMap extends React.Component {
       <ParcelPopup
         x={x}
         y={y}
-        price={price}
         color={color}
         backgroundColor={backgroundColor}
         label={label}
-        district={district}
+        description={description}
       />
     )
 

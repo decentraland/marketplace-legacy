@@ -49,8 +49,9 @@ function* handleAddressParcelsSuccess(action) {
 function* handleAddressContributionsRequest(action) {
   try {
     const { address } = action
-    let contributions = yield call(() => api.fetchAddressContributions(address))
-
+    const contributions = yield call(() =>
+      api.fetchAddressContributions(address)
+    )
     yield put({
       type: FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
       address,
