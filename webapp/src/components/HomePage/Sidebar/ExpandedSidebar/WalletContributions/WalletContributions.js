@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ParcelTable from './ParcelTable'
-import Loading from 'components/Loading'
+import ContributionTable from './ContributionTable'
 
-import './WalletParcels.css'
+import './WalletContributions.css'
 
 class WalletParcels extends React.PureComponent {
   static propTypes = {
@@ -15,10 +14,10 @@ class WalletParcels extends React.PureComponent {
   }
 
   render() {
-    const { wallet, onEdit, isLoading, hasError } = this.props
+    const { wallet, isLoading, hasError } = this.props
 
     if (isLoading) {
-      return <Loading />
+      return null
     }
 
     if (hasError) {
@@ -26,17 +25,17 @@ class WalletParcels extends React.PureComponent {
     }
 
     return (
-      <div className="WalletParcels">
+      <div className="WalletContributions">
         <div className="heading">
-          My Land&nbsp;
+          My Contributions&nbsp;
           <span className="parcel-count">
-            {wallet.parcels.length} parcel{wallet.parcels.length === 1
+            {wallet.contributions.length} district{wallet.contributions.length
               ? ''
               : 's'}
           </span>
         </div>
 
-        <ParcelTable parcels={wallet.parcels} onEdit={onEdit} />
+        <ContributionTable contributions={wallet.contributions} />
       </div>
     )
   }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { shortenAddress } from 'lib/utils'
 
 import WalletParcels from './WalletParcels'
+import WalletContributions from './WalletContributions'
 
 import Icon from 'components/Icon'
 import Footer from './Footer'
@@ -21,7 +22,7 @@ export default class ExpandedSidebar extends React.PureComponent {
       <div className="ExpandedSidebar fadein">
         <div className="MarketplaceTitle">
           <h2>
-            Marketplace
+            Land Manager
             {address && (
               <div className="address">
                 <Icon name="address" />
@@ -32,6 +33,7 @@ export default class ExpandedSidebar extends React.PureComponent {
         </div>
 
         <WalletParcels />
+        <WalletContributions />
 
         <Footer />
       </div>
