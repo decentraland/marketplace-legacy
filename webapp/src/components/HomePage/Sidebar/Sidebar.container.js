@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
-import { getAddress } from 'modules/wallet/reducer'
+import { getWallet } from 'modules/wallet/reducer'
 import { isLoading } from 'modules/ui/loading/reducer'
 import { isOpen } from 'modules/ui/sidebar/reducer'
 import { openSidebar, closeSidebar } from 'modules/ui/sidebar/actions'
 import Sidebar from './Sidebar'
 
 const mapState = state => {
+  const wallet = getWallet(state)
   return {
-    address: getAddress(state),
+    address: wallet.address,
+    balance: wallet.balance,
     isLoading: isLoading(state),
     isOpen: isOpen(state)
   }

@@ -6,8 +6,10 @@
   "scripts": {
     "lint": "npx eslint .",
     "lint:fix": "npx eslint --fix .",
-    "test": "npx mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js",
-    "watch:test": "npx mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
+    "test":
+      "npx mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js",
+    "watch:test":
+      "npx mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
     "build": "npm run lint && npm run test",
     "start": "cd src && babel-node server.js",
     "dev": "nodemon --exec npm run start"
@@ -16,18 +18,16 @@
     "type": "git",
     "url": "https://github.com/decentraland/marketplace.git"
   },
-  "keywords": [
-    "decentraland",
-    "marketplace",
-    "dapp"
-  ],
+  "keywords": ["decentraland", "marketplace", "dapp"],
   "author": "Decentraland",
   "license": "ISC",
   "dependencies": {
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
-    "decentraland-commons": "git+https://github.com/decentraland/commons.git#release",
-    "decentraland-contracts": "git+https://github.com/decentraland/contracts.git#release",
+    "decentraland-commons":
+      "git+https://github.com/decentraland/commons.git#release",
+    "decentraland-contracts":
+      "git+https://github.com/decentraland/contracts.git#release",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "uuid": "^3.1.0"
@@ -47,8 +47,8 @@
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.5.1",
     "mocha": "^4.0.1",
-    "nodemon": "^1.12.1",
-    "prettier": "^1.7.4",
-    "sinon": "^4.0.1"
+    "nodemon": "^1.14.11",
+    "prettier": "^1.10.2",
+    "sinon": "^4.1.5"
   }
 }

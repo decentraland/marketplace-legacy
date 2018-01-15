@@ -21,7 +21,7 @@ class WalletParcels extends React.PureComponent {
     }
 
     if (hasError) {
-      return <p>Error</p>
+      return null
     }
 
     return (

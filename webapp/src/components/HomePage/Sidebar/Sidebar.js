@@ -10,6 +10,7 @@ import './Sidebar.css'
 export default class Sidebar extends React.Component {
   static propTypes = {
     address: PropTypes.string,
+    balance: PropTypes.number,
     isOpen: PropTypes.bool,
     isLoading: PropTypes.bool,
     onOpen: PropTypes.func.isRequired,
@@ -46,7 +47,7 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    let { address, isOpen } = this.props
+    let { address, balance, isOpen } = this.props
     const classes = this.getSidebarClasses()
 
     const header = isOpen ? (
@@ -54,7 +55,7 @@ export default class Sidebar extends React.Component {
     ) : null
 
     const sidebar = isOpen ? (
-      <ExpandedSidebar address={address} />
+      <ExpandedSidebar address={address} balance={balance} />
     ) : (
       <CollapsedSidebar onClick={this.toggle} />
     )

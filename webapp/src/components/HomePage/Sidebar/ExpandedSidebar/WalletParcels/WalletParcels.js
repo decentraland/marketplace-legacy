@@ -22,7 +22,13 @@ class WalletParcels extends React.PureComponent {
     }
 
     if (hasError) {
-      return <p>Error</p>
+      return (
+        <div className="WalletParcels">
+          <p className="error">
+            Uh-oh. We couldn’t retrieve your wallet information.
+          </p>
+        </div>
+      )
     }
 
     return (
