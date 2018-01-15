@@ -103,3 +103,8 @@
 .WalletParcels .field label {
   color: #7b7b7b;
 }
+
+.WalletParcels .error {
+  padding-left: 24px;
+  color: #e20505;
+}

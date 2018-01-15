@@ -3,11 +3,17 @@ import { getAddresses } from 'modules/address/reducer'
 import {
   FETCH_WALLET_REQUEST,
   FETCH_WALLET_SUCCESS,
-  FETCH_WALLET_FAILURE
+  FETCH_WALLET_FAILURE,
+  FETCH_BALANCE_REQUEST,
+  FETCH_BALANCE_SUCCESS,
+  FETCH_BALANCE_FAILURE
 } from './actions'
 
 const INITIAL_STATE = {
-  data: {},
+  data: {
+    balance: 0,
+    address: null
+  },
   loading: false,
   error: null
 }
@@ -15,13 +21,22 @@ const INITIAL_STATE = {
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_WALLET_REQUEST:
+    case FETCH_BALANCE_REQUEST:
       return {
         ...state,
         loading: true
       }
     case FETCH_WALLET_SUCCESS:
-      return { loading: false, data: action.wallet }
+    case FETCH_BALANCE_SUCCESS:
+      return {
+        loading: false,
+        data: {
+          ...state.data,
+          ...action.wallet
+        }
+      }
     case FETCH_WALLET_FAILURE:
+    case FETCH_BALANCE_FAILURE:
       return {
         ...state,
         loading: false,
@@ -35,7 +50,7 @@ export default function reducer(state = INITIAL_STATE, action) {
 export const getState = state => state.wallet
 export const getData = state => getState(state).data
 export const isLoading = state => getState(state).loading
-export const isError = state => getState(state).error
+export const getError = state => getState(state).error
 export const getAddress = state => getData(state).address
 export const isConnected = state => !!getData(state).address
 export const getWallet = createSelector(
