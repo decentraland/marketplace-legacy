@@ -55,8 +55,8 @@ function* handleWalletSuccess(action) {
 function* handleBalanceRequest(action) {
   try {
     const address = yield select(getAddress)
-    const manaInstance = MANAToken.getInstance()
-    const balance = yield call(() => manaInstance.balanceOf(address))
+    const contract = MANAToken.getInstance()
+    const balance = yield call(() => contract.getBalance(address))
 
     yield put({
       type: FETCH_BALANCE_SUCCESS,

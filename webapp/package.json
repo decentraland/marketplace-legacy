@@ -18,6 +18,7 @@
     "axios": "^0.17.0",
     "date-fns": "^1.29.0",
     "decentraland-commons": "git+https://github.com/decentraland/commons.git#release",
+    "decentraland-contracts": "git+https://github.com/decentraland/contracts.git#release",
     "history": "^4.7.2",
     "leaflet": "^1.2.0",
     "lodash.debounce": "^4.0.8",
