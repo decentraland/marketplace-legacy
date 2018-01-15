@@ -103,7 +103,7 @@ export async function getAddressParcels(req) {
   const parcelService = new ParcelService()
 
   const contractParcels = await parcelService.getLandOf(address)
-  const parcels = parcelService.addDbData(contractParcels)
+  const parcels = await parcelService.addDbData(contractParcels)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
