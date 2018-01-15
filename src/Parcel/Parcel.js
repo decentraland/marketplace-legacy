@@ -14,7 +14,7 @@ class Parcel extends Model {
     'district_id'
   ]
 
-  static hashId(x, y) {
+  static buildId(x, y) {
     if (x == null || y == null) {
       throw new Error(
         `You need to supply both coordinates to be able to hash them. x = ${x} y = ${y}`
@@ -22,6 +22,27 @@ class Parcel extends Model {
     }
 
     return `${x},${y}`
+  }
+
+  static async findInIds(ids) {
+    const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
+    if (ids.length === 0) return []
+
+    return await this.db.query(
+      `SELECT * FROM ${this.tableName} WHERE id IN (${inPlaceholders})`,
+      ids
+    )
+  }
+
+  static async findInCoordinates(coords) {
+    let where = coords.map(coord => {
+      const [x, y] = coordinates.toArray(coord)
+      return `(x = ${x} AND y = ${y})`
+    })
+
+    where = where.join(' OR ')
+
+    return await this.db.query(`SELECT * FROM ${this.tableName} WHERE ${where}`)
   }
 
   static async inRange(min, max) {
@@ -49,7 +70,7 @@ class Parcel extends Model {
 
   static async insert(parcel) {
     const { x, y } = parcel
-    parcel.id = Parcel.hashId(x, y)
+    parcel.id = Parcel.buildId(x, y)
 
     return await super.insert(parcel)
   }

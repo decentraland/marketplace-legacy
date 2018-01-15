@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import path from 'path'
 
 import { server, env, eth, utils, SignedMessage } from 'decentraland-commons'
-import { LANDToken } from 'decentraland-contracts'
+import { LANDRegistry } from 'decentraland-contracts'
 
 import db from './database'
 import { District } from './District'
@@ -101,19 +101,10 @@ app.get(
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  // TODO: Change this. It should be fetched from the LAND contract's `assetsOf`
-  // TODO: Filter if it's 0
-  let contractParcels = await Parcel.inRange([12, 14], [14, 16])
+  const parcelService = new ParcelService()
 
-  // TODO: Change this. It should be fetched from DB (for now)
-  contractParcels = contractParcels.map((parcel, index) =>
-    Object.assign(
-      { name: `Name ${index}`, description: `Description ${index}` },
-      parcel
-    )
-  )
-
-  const parcels = await new ParcelService().addPrices(contractParcels)
+  const contractParcels = await parcelService.getLandOf(address)
+  const parcels = await parcelService.addDbData(contractParcels)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
@@ -150,6 +141,7 @@ export async function getDistricts() {
   const districts = await District.findEnabled()
   return utils.mapOmit(districts, [
     'disabled',
+    'address',
     'parcel_ids',
     'created_at',
     'updated_at'
@@ -171,7 +163,7 @@ function connectDatabase() {
 
 function connectEthereum() {
   return eth
-    .connect(null, [LANDToken])
+    .connect(null, [LANDRegistry])
     .catch(error =>
       console.error(
         '\nCould not connect to the Ethereum node. Some endpoints may not work correctly.',

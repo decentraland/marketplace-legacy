@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import { LANDToken } from 'decentraland-contracts'
+import { LANDRegistry } from 'decentraland-contracts'
 import { tx, utils } from 'decentraland-commons'
 
 import db from '../database'
@@ -9,19 +9,41 @@ import ParcelService from './Parcel.service'
 import coordinates from './coordinates'
 
 describe('Parcel', function() {
-  describe('.hashId', function() {
+  describe('.buildId', function() {
     it('should concat both coordinates with pipes', function() {
-      expect(Parcel.hashId(22, '30')).to.equal('22,30')
-      expect(Parcel.hashId(0, 0)).to.equal('0,0')
+      expect(Parcel.buildId(22, '30')).to.equal('22,30')
+      expect(Parcel.buildId(0, 0)).to.equal('0,0')
     })
 
     it('should throw if any coordinate is invalid', function() {
-      expect(() => Parcel.hashId(22)).to.throw(
+      expect(() => Parcel.buildId(22)).to.throw(
         'You need to supply both coordinates to be able to hash them. x = 22 y = undefined'
       )
-      expect(() => Parcel.hashId(undefined, 'y coord')).to.throw(
+      expect(() => Parcel.buildId(undefined, 'y coord')).to.throw(
         'You need to supply both coordinates to be able to hash them. x = undefined y = y coord'
       )
+    })
+  })
+
+  describe('.findInCoordinates', function() {
+    it('should attach an array of bid groups for the address', async function() {
+      await new ParcelService().insertMatrix(-1, -1, 3, 3)
+
+      const result = await Parcel.findInCoordinates([
+        '1,2',
+        '3,3',
+        '4,4',
+        '0,0',
+        '-1,-1'
+      ])
+
+      expect(result.length).to.be.equal(4)
+    })
+
+    it('should throw if any coordinate is invalid', function() {
+      return expect(
+        Parcel.findInCoordinates(['1,1', 'nonsense'])
+      ).to.be.rejectedWith('The coordinate "nonsense" are not valid')
     })
   })
 
@@ -54,10 +76,28 @@ describe('Parcel', function() {
 })
 
 describe('ParcelService', function() {
-  const testParcel = { x: 1, y: 2 }
+  const testParcel1 = { x: 1, y: 2 }
+  const testParcel2 = { x: -7, y: 5 }
+  const testAddress = '0xfede'
+
   const contract = {
-    ownerOfLand: (x, y) => {
-      return x === testParcel.x && y === testParcel.y ? tx.DUMMY_TX_ID : null
+    ownerOfLand(x, y) {
+      const isDummy = testParcel1.x === x && testParcel1.y === y
+      return isDummy ? tx.DUMMY_TX_ID : null
+    },
+    ownerOfLandMany(x, y) {
+      const isDummy =
+        testParcel1.x === x[0] &&
+        testParcel1.y === y[0] &&
+        testParcel2.x === x[1] &&
+        testParcel2.y === y[1]
+
+      return isDummy ? [tx.DUMMY_TX_ID, tx.DUMMY_TX_ID] : null
+    },
+    landOf(address) {
+      return address === testAddress
+        ? [[testParcel1.x, testParcel2.x], [testParcel1.y, testParcel2.y]]
+        : [[], []]
     }
   }
 
@@ -100,103 +140,111 @@ describe('ParcelService', function() {
       const service = new ParcelService()
       service.Parcel = ParcelMock
 
-      return expect(service.insertMatrix(0, 0, 1, 1)).not.to.be.rejectedWith(
-        error
-      )
+      const matrix = service.insertMatrix(0, 0, 1, 1)
+
+      return expect(matrix).not.to.be.rejectedWith(error)
     })
   })
 
   describe('#isOwner', function() {
     it('should return true if the parcel belongs to the address', async function() {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
 
       const result = await new ParcelService().isOwner(
         tx.DUMMY_TX_ID,
-        testParcel
+        testParcel1
       )
       expect(result).to.be.true
     })
 
     it('should return false if the parcel belongs to someone else', async function() {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
 
       const service = new ParcelService()
       const wrongParcel = await service.isOwner(tx.DUMMY_TX_ID, {
         x: 10,
         y: -2
       })
-      const wrongAddr = await service.isOwner('0xnothing', testParcel)
+      const wrongAddr = await service.isOwner('0xnothing', testParcel1)
 
       expect(wrongAddr).to.be.false
       expect(wrongParcel).to.be.false
     })
 
-    afterEach(() => LANDToken.getInstance.restore())
-  })
-
-  describe('#addPrices', async function() {
-    it('should add the price fetched from the database to each parcel and return a new array', async function() {
-      const coordinates = [
-        { id: '0,0', x: 0, y: 0 },
-        { id: '10,-2', x: 10, y: -2 },
-        { id: '-5,20', x: -5, y: 20 }
-      ]
-      const prices = ['1000', '1250', '5234']
-
-      const parcels = coordinates.map((coord, index) =>
-        Object.assign({}, coord, { price: prices[index] })
-      )
-
-      await Promise.all(parcels.map(parcel => Parcel.insert(parcel)))
-
-      const service = new ParcelService()
-      const parcelsWithPrice = await service.addPrices(coordinates)
-
-      expect(parcelsWithPrice).to.deep.equal(parcels)
-    })
-
-    it('should add a zero for missing coordinates', async function() {
-      const coordinates = [{ x: 0, y: 0 }, { x: 10, y: -2 }, { x: -5, y: 20 }]
-      const parcels = coordinates.map(coord =>
-        Object.assign({}, coord, { price: 0 })
-      )
-
-      const service = new ParcelService()
-      const parcelsWithPrice = await service.addPrices(coordinates)
-
-      expect(parcelsWithPrice).to.deep.equal(parcels)
-    })
-
-    afterEach(() => db.truncate('parcels'))
+    afterEach(() => LANDRegistry.getInstance.restore())
   })
 
   describe('#addOwners', function() {
-    it('should use the LANDToken contract to add the avaiable owner addresses', async function() {
-      sinon.stub(LANDToken, 'getInstance').returns(contract)
+    it('should use the LANDRegistry contract to add the avaiable owner addresses', async function() {
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
 
-      const coordinates = [{ x: -1, y: 10 }, testParcel]
-
-      const service = new ParcelService()
-      const parcelsWithOwner = await service.addOwners(coordinates)
+      const parcels = [testParcel1, testParcel2, { x: 11, y: -2 }]
+      const parcelsWithOwner = await new ParcelService().addOwners(parcels)
 
       expect(parcelsWithOwner).to.deep.equal([
-        { x: -1, y: 10, owner: null },
-        { x: 1, y: 2, owner: '0xdeadbeef' }
+        { x: 1, y: 2, owner: '0xdeadbeef' }, // testParcel1
+        { x: -7, y: 5, owner: '0xdeadbeef' }, // testParcel2
+        { x: 11, y: -2, owner: null }
       ])
     })
 
-    it('should return the same array if the LANDToken contract fails', async function() {
-      sinon.stub(LANDToken, 'getInstance').throws()
+    it('should return the same array if the LANDRegistry contract fails', async function() {
+      sinon.stub(LANDRegistry, 'getInstance').throws()
 
-      const coordinates = [{ x: -1, y: 10 }, testParcel]
+      const parcels = [testParcel1, testParcel2]
+      const parcelsWithOwner = await new ParcelService().addOwners(parcels)
 
-      const service = new ParcelService()
-      const parcelsWithOwner = await service.addOwners(coordinates)
-
-      expect(parcelsWithOwner).to.equal(coordinates)
+      expect(parcelsWithOwner).to.equal(parcels)
     })
 
-    afterEach(() => LANDToken.getInstance.restore())
+    afterEach(() => LANDRegistry.getInstance.restore())
+  })
+
+  describe('#getLandOf', function() {
+    it('should return an array of {x, y} pairs from the lands the address owns', async function() {
+      sinon.stub(LANDRegistry, 'getInstance').returns(contract)
+
+      const landPairs = await new ParcelService().getLandOf(testAddress)
+
+      expect(landPairs).to.deep.equal([testParcel1, testParcel2])
+    })
+
+    it('should return an empty array on error', async function() {
+      sinon.stub(LANDRegistry, 'getInstance').throws()
+
+      const landPairs = await new ParcelService().getLandOf(testAddress)
+
+      expect(landPairs).to.deep.equal([])
+    })
+
+    afterEach(() => LANDRegistry.getInstance.restore())
+  })
+
+  describe('#addDbData', function() {
+    it('should add the data stored on the db to each parcel and return a new array', async function() {
+      const contractParcels = [
+        { x: 0, y: 0 },
+        { x: 10, y: -2 },
+        { x: -5, y: 20 }
+      ]
+      const parcelData = [
+        { name: 'Name 1', description: 'Description 1', price: '1000' },
+        { name: 'Name 2', description: 'Description 2', price: '1250' },
+        { name: 'Name 3', description: 'Description 3', price: '5234' }
+      ]
+      const parcels = contractParcels.map((coord, index) =>
+        Object.assign({}, coord, parcelData[index])
+      )
+      await Promise.all(parcels.map(parcel => Parcel.insert(parcel)))
+
+      const parcelsWithData = await new ParcelService().addDbData(
+        contractParcels
+      )
+
+      expect(parcelsWithData).to.deep.equal(parcels)
+    })
+
+    afterEach(() => db.truncate('parcels'))
   })
 
   describe('#getValuesFromSignedMessage', function() {
@@ -216,8 +264,7 @@ describe('ParcelService', function() {
         }
       }
 
-      const service = new ParcelService()
-      const signedValues = await service.getValuesFromSignedMessage(
+      const signedValues = await new ParcelService().getValuesFromSignedMessage(
         signedMessage
       )
 
@@ -250,6 +297,27 @@ describe('coordinates', function() {
       expect(() => coordinates.checkIsValid('1,-2')).not.to.throw()
       expect(() => coordinates.checkIsValid([22, 23])).not.to.throw()
       expect(() => coordinates.checkIsValid('1,   2')).not.to.throw()
+    })
+  })
+
+  describe('.splitPairs', function() {
+    it('should return an object of x[] and y[] properties', function() {
+      const result = coordinates.splitPairs([
+        { x: 1, y: 2 },
+        { x: 5, y: 3 },
+        { x: -1, y: -2 },
+        { x: 9, y: -7 }
+      ])
+      expect(result).to.deep.equal({
+        x: [1, 5, -1, 9],
+        y: [2, 3, -2, -7]
+      })
+    })
+
+    it('should throw if the coordinates are invalid', function() {
+      expect(() => coordinates.toArray('a,  2')).to.throw(
+        'The coordinate "a,  2" are not valid'
+      )
     })
   })
 
