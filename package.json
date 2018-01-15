@@ -29,6 +29,7 @@
     "decentraland-commons": "git+https://github.com/decentraland/commons.git#release",
     "decentraland-contracts": "git+https://github.com/decentraland/contracts.git#release",
     "ejs": "^2.5.7",
+    "ethereum-blockies": "^0.1.1",
     "express": "^4.16.2",
     "uuid": "^3.1.0"
   },
