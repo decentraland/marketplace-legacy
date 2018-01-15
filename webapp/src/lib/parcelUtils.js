@@ -1,3 +1,5 @@
+import { shortenAddress } from 'lib/utils'
+
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 
@@ -70,23 +72,23 @@ export function getParcelAttributes(wallet, parcel, district) {
         backgroundColor: colors.PLAZA
       }
     }
-    // if (district.name === 'Embassy Town') {
-    //   return {
-    //     label: 'District',
-    //     color: 'black',
-    //     backgroundColor: colors.DISTRICTS_CONTRIBUTED
-    //   }
-    // }
+    if (district && wallet.contributionsById[district.id]) {
+      return {
+        label: district ? district.name : 'District',
+        color: 'black',
+        backgroundColor: colors.DISTRICTS_CONTRIBUTED
+      }
+    }
     return {
-      label: 'District',
+      label: district ? district.name : 'District',
       color: 'black',
       backgroundColor: colors.DISTRICT
     }
   }
 
-  if (wallet.parcels.some(p => p.id === parcel.id)) {
+  if (wallet.parcelsById[parcel.id]) {
     return {
-      label: 'Your Parcel',
+      label: parcel.name || 'Your Parcel',
       color: 'white',
       backgroundColor: colors.MY_PARCELS
     }
@@ -99,7 +101,7 @@ export function getParcelAttributes(wallet, parcel, district) {
     }
   }
   return {
-    label: 'Taken',
+    label: parcel.name || shortenAddress(parcel.address) || 'No Name',
     color: 'black',
     backgroundColor: colors.TAKEN
   }
