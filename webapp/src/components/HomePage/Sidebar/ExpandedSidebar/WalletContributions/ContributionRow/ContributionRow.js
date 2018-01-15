@@ -1,6 +1,7 @@
 import React from 'react'
 import DistrictLink from '../DistrictLink'
 import Icon from 'components/Icon'
+import land from 'lib/land'
 
 class ContributionRow extends React.PureComponent {
   render() {
@@ -14,9 +15,11 @@ class ContributionRow extends React.PureComponent {
           <DistrictLink contribution={contribution} />
         </div>
         <div className="col col-contributed">
-          {contribution.land_count.toLocaleString()} LAND ({contribution.land_count *
-            1000}{' '}
-          MANA)
+          {contribution.land_count.toLocaleString()} LAND ({land.convert(
+            contribution.land_count,
+            'mana'
+          )}
+          &nbsp;MANA)
         </div>
         <div className="col col-proposal">
           <a href={link} className="link" target="_blank" rel="noopener">
