@@ -14,12 +14,10 @@ export default function ParcelPopup(props) {
           </span>
         </div>
       }
-      <div className="body">{<div className="text">{label}</div>}</div>
-      {description && (
-        <div className="body">
-          {<div className="text mana">{description}</div>}
-        </div>
-      )}
+      <div className="body">
+        <div className="text label">{label}</div>
+        {description && <div className="text description">{description}</div>}
+      </div>
     </div>
   )
 }
