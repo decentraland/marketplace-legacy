@@ -63,7 +63,6 @@ function* handleBalanceRequest(action) {
       wallet: { balance }
     })
   } catch (error) {
-    console.error(error)
     yield put({ type: FETCH_BALANCE_FAILURE, error: error.message })
   }
 }

@@ -11,7 +11,7 @@ import {
 
 const INITIAL_STATE = {
   data: {
-    balance: 0,
+    balance: null,
     address: null
   },
   loading: false,

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { getWallet } from 'modules/wallet/reducer'
+import { isLoading } from 'modules/address/reducer'
 import { OPEN_SIDEBAR, CLOSE_SIDEBAR } from './actions'
 import land from 'lib/land'
 
@@ -22,15 +23,26 @@ export default function reducer(state = INITIAL_STATE, action) {
 
 export const getState = state => state.ui.sidebar
 export const isOpen = state => getState(state).open
-export const getStats = createSelector(getWallet, wallet => {
-  return {
-    balance: wallet.balance,
-    parcels: wallet.parcels.length,
-    contribDistricts: wallet.contributions.length,
-    contribMana: wallet.contributions.reduce(
-      (total, contribution) =>
-        total + land.convert(contribution.land_count, 'mana'),
-      0
-    )
+export const getStats = createSelector(
+  getWallet,
+  isLoading,
+  (wallet, loading) => {
+    const balance = wallet.balance
+    const loaded = balance !== null && !loading
+    const parcels = loaded ? wallet.parcels.length : null
+    const contribDistricts = loaded ? wallet.contributions.length : null
+    const contribMana = loaded
+      ? wallet.contributions.reduce(
+          (total, contribution) =>
+            total + land.convert(contribution.land_count, 'mana'),
+          0
+        )
+      : null
+    return {
+      balance,
+      parcels,
+      contribDistricts,
+      contribMana
+    }
   }
-})
+)

@@ -1,4 +1,3 @@
-
 .ExpandedSidebar {
   width: 620px;
   height: 100%;
@@ -19,9 +18,25 @@
   color: #000000;
 }
 
-.MarketplaceTitle .address {
-  font-size: 15px;
+.MarketplaceTitle .info {
   float: right;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+}
+
+.MarketplaceTitle .info .address {
+  font-size: 15px;
+}
+
+.MarketplaceTitle .info .address canvas {
+  vertical-align: sub;
+  margin-right: 10px;
+}
+
+.MarketplaceTitle .info .balance {
+  font-size: 15px;
+  color: grey;
 }
 
 .MarketplaceTitle .Icon-address {

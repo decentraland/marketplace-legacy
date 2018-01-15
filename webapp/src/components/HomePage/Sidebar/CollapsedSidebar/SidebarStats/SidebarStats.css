@@ -3,7 +3,8 @@
   padding: 0;
   list-style: none;
   padding-top: 50px;
-  padding-left: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .SidebarStats li {

@@ -47,3 +47,16 @@ export const cancelAnimationFrame =
   window.webkitCancelAnimationFrame ||
   window.msCancelAnimationFrame ||
   (id => clearTimeout(id))
+
+const prettyAmount = amount => parseFloat(amount.toFixed(1))
+export function format(amount, unit = 'MANA') {
+  if (amount < 1000) {
+    return `${amount} MANA`
+  } else if (amount < 1000000) {
+    return `${prettyAmount(amount / 1000)}K MANA`
+  } else if (amount < 1000000000) {
+    return `${prettyAmount(amount / 1000000)}M MANA`
+  } else {
+    return `${prettyAmount(amount / 1000000000)}G MANA`
+  }
+}
