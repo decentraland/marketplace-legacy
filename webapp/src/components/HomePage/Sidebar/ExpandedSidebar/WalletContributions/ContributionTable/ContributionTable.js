@@ -11,6 +11,7 @@ class ContributionTable extends React.PureComponent {
           <div className="table-row table-header">
             <div className="col col-district">DISTRICT</div>
             <div className="col col-contributed">CONTRIBUTED</div>
+            <div className="col col-proposal">PROPOSAL</div>
           </div>
 
           {contributions.map((contribution, index) => (

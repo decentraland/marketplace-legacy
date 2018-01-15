@@ -41,8 +41,22 @@
   width: 40%;
   margin-right: 20px;
 }
-.WalletContributions .table .col-parcels {
-  width: 60%;
+.WalletContributions .table .col-contributed {
+  width: 40%;
+}
+
+.WalletContributions .table .col-proposal {
+  width: 15%;
+}
+
+.WalletContributions .table .col-proposal .link {
+  color: #7b7b7b;
+  text-align: right;
+}
+
+.WalletContributions .table .col-proposal .link:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .WalletContributions .heading .parcel-count,
