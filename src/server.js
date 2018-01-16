@@ -121,7 +121,7 @@ app.get(
 
 export async function getAddressContributions(req) {
   const address = server.extractFromReq(req, 'address')
-  const districts = await Contribution.findByAddress(address)
+  const districts = await Contribution.findGroupedByAddress(address)
 
   return utils.mapOmit(districts, [
     'message',
