@@ -25,6 +25,31 @@ export default class IntroModal extends React.PureComponent {
         <div className="modal-body">
           <div className="text">
             <h3>Terms & Conditions</h3>
+            <h4>Acceptance of terms</h4>
+            <p>
+              Decentraland provides a platform for managing cryptographic tokens
+              representing land in a virtual world (the “LAND Manager”),
+              allowing users to interact with the LAND contract hosted on the
+              Ethereum blockchain through their provided wallet software, also
+              known as the piece of software providing the Web3 interface (the
+              “Web3 Provider”), i.e. the MetaMask browser plugin, the USB
+              interface for Ledger Wallet, or by means of visiting the website
+              using the Mist browser. The user is fully in control over what
+              transactions they approve, through their Web3 Provider. The Site,
+              and any other features, tools, materials, or other services
+              offered from time to time by Decentraland are referred to here as
+              the “Service.” Please read these Terms of Use (the “Terms” or
+              “Terms of Use”) carefully before using the Service. By using or
+              otherwise accessing the Services, or clicking to accept or agree
+              to these Terms where that option is made available, you (1) accept
+              and agree to these Terms (2) consent to the collection, use,
+              disclosure and other handling of information as described in our
+              Privacy Policy and (3) any additional terms, rules and conditions
+              of participation issued by Decentraland from time to time. If you
+              do not agree to the Terms, then you may not access or use the
+              Content or Services.
+            </p>
+
             <h4>Modification of Terms of Use</h4>
             <p>
               Except for Section 14, providing for binding arbitration and
