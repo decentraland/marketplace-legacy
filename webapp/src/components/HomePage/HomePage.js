@@ -5,6 +5,7 @@ import Sidebar from './Sidebar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
 import Modal from 'components/Modal'
+import localStorage from '../../lib/localStorage'
 
 import './HomePage.css'
 
@@ -17,6 +18,13 @@ export default class HomePage extends React.PureComponent {
   componentWillMount() {
     const { onConnect } = this.props
     onConnect()
+  }
+
+  componentWillUpdate() {
+    if (this.isReady && !localStorage.getItem('seenIntro')) {
+      this.props.openModal('IntroModal')
+      localStorage.setItem('seenIntro', new Date().getTime())
+    }
   }
 
   render() {
