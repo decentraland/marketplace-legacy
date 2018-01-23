@@ -1,7 +1,7 @@
 import { call, takeLatest, put, select } from 'redux-saga/effects'
 import { getAddress } from 'modules/wallet/reducer'
 import { replace } from 'react-router-redux'
-import { MANAToken } from 'decentraland-contracts'
+import { eth } from 'decentraland-commons'
 
 import locations from '../../locations'
 
@@ -55,7 +55,7 @@ function* handleWalletSuccess(action) {
 function* handleBalanceRequest(action) {
   try {
     const address = yield select(getAddress)
-    const contract = MANAToken.getInstance()
+    const contract = eth.getContract('MANAToken')
     const balance = yield call(() => contract.getBalance(address))
 
     yield put({

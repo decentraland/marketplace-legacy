@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import path from 'path'
 
 import { server, env, eth, utils, SignedMessage } from 'decentraland-commons'
-import { LANDRegistry } from 'decentraland-contracts'
+import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 
 import db from './database'
 import { District } from './District'
@@ -163,7 +163,7 @@ function connectDatabase() {
 
 function connectEthereum() {
   return eth
-    .connect(null, [LANDRegistry])
+    .connect({ contracts: [LANDRegistry] })
     .catch(error =>
       console.error(
         '\nCould not connect to the Ethereum node. Some endpoints may not work correctly.',

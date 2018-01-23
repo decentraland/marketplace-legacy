@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import { LANDRegistry } from 'decentraland-contracts'
 import { tx, utils } from 'decentraland-commons'
 
 import db from '../database'
