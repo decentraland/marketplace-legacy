@@ -28,10 +28,11 @@ class ParcelService {
       const [xCoords, yCoords] = await contract.landOf(address)
 
       for (let i = 0; i < xCoords.length; i++) {
-        const x = xCoords[i].toString()
-        const y = yCoords[i].toString()
+        const x = xCoords[i].toNumber()
+        const y = yCoords[i].toNumber()
+        const id = this.Parcel.buildId(x, y)
 
-        parcels.push({ x, y })
+        parcels.push({ id, x, y })
       }
     } catch (error) {
       // Use default
