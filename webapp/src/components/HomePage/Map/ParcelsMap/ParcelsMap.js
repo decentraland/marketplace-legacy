@@ -244,43 +244,19 @@ export default class ParcelsMap extends React.Component {
 
   // Called by the Parcel Grid on each tile render
   getTileAttributes = latlng => {
-    const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
-    /*
-    const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
-    const parcel = this.getParcelData(x, y)
-    const addressState = this.props.getAddressState()
-    const maxAmount = this.props.getMaxAmount()
-    const pendingConfirmationBids = this.props.getPendingConfirmationBids()
-
-    const className = parcelUtils.getClassName(
-      parcel,
-      addressState,
-      pendingConfirmationBids
-    )
-    const dataset = { x, y }
-
-    let fillColor = null
-
-    if (!className) {
-      fillColor = parcelUtils.getColorByAmount(parcel.amount, maxAmount)
-    }
-
-    return {
-      className,
-      dataset,
-      fillColor
-    }
-    */
     const { wallet, parcels, districts } = this.props
-    const id = buildCoordinate(x, y)
-    const parcel = parcels[id]
+    const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
+    const parcel = parcels[buildCoordinate(x, y)]
+
     const district = parcel ? districts[parcel.district_id] : null
     const description = parcel ? parcel.description : null
+
     const { backgroundColor, color, label } = getParcelAttributes(
       wallet,
       parcel,
       district
     )
+
     return {
       x,
       y,
@@ -294,11 +270,8 @@ export default class ParcelsMap extends React.Component {
   // Called by the Parcel Grid on each tile click
   onTileClick = latlng => {
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
-
-    // const parcel = this.getParcelData(x, y)
-    // setTimeout(() => this.parcelGrid && this.parcelGrid.loadCell(tile, 0), 10)
-
     const { onSelect } = this.props
+
     onSelect(x, y)
   }
 

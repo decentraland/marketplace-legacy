@@ -8,7 +8,7 @@ export default function ParcelPopup(props) {
   return (
     <div className="parcel-popup">
       {
-        <div className={`header`} style={{ color, backgroundColor }}>
+        <div className="header" style={{ color, backgroundColor }}>
           <span>
             {x},{y}
           </span>
