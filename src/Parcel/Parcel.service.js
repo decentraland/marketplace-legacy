@@ -63,13 +63,15 @@ class ParcelService {
       const { x, y } = coordinates.splitPairs(parcels)
       const contract = this.getLANDRegistryContract()
       const addresses = await contract.ownerOfLandMany(x, y)
-
+      console.log('addresses', addresses)
       for (const [index, parcel] of parcels.entries()) {
         const address = addresses[index]
+        console.log('address', address)
         const owner = Contract.isEmptyAddress(address) ? null : address
         newParcels.push({ ...parcel, owner })
       }
     } catch (error) {
+      console.error('error', error)
       newParcels = parcels
     }
 

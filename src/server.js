@@ -49,15 +49,22 @@ if (env.isProduction()) {
  * @return {array}
  */
 app.get('/api/parcels', server.handleRequest(getParcels))
-
+const BATCH_SIZE = 1000
 export async function getParcels(req) {
   const nw = server.extractFromReq(req, 'nw')
   const se = server.extractFromReq(req, 'se')
 
   let parcels = await Parcel.inRange(nw, se)
-  parcels = await new ParcelService().addOwners(parcels)
-
-  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
+  let parcelsWithOwner = []
+  while (parcels.length > 0) {
+    const newParcelsWithOwner = await new ParcelService().addOwners(
+      parcels.slice(0, BATCH_SIZE)
+    )
+    parcelsWithOwner = [...parcelsWithOwner, ...newParcelsWithOwner]
+    parcels = parcels.slice(BATCH_SIZE)
+  }
+  console.log('parcelsWithOwner', parcelsWithOwner)
+  return utils.mapOmit(parcelsWithOwner, ['created_at', 'updated_at'])
 }
 
 /**
@@ -104,6 +111,7 @@ export async function getAddressParcels(req) {
   const parcelService = new ParcelService()
 
   const contractParcels = await parcelService.getLandOf(address)
+  console.log(contractParcels)
   const parcels = await parcelService.addDbData(contractParcels)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
