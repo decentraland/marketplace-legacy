@@ -47,7 +47,7 @@
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   -webkit-background-clip: padding-box;
-          background-clip: padding-box;
+  background-clip: padding-box;
   outline: 0;
 }
 .modal-backdrop {
@@ -77,20 +77,22 @@
   float: right;
   padding: 0;
   margin-top: -2px;
+  margin-right: 5px;
   border: 0;
-  font-size: 21px;
+  font-size: 30px;
   font-weight: 700;
   line-height: 1;
   color: #000;
   text-shadow: 0 1px 0 #fff;
   filter: alpha(opacity=20);
-  opacity: .2;
+  opacity: 0.5;
   cursor: pointer;
   background: 0 0;
 }
-.modal-header:before, .modal-header:after {
+.modal-header:before,
+.modal-header:after {
   display: table;
-  content: " ";
+  content: ' ';
   clear: both;
 }
 .modal-title {
