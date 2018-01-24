@@ -102,7 +102,10 @@ export function getParcelAttributes(wallet, parcel, district) {
   }
 
   return {
-    label: parcel.name || shortenAddress(parcel.owner),
+    label:
+      parcel.name || parcel.owner
+        ? 'Owner: ' + shortenAddress(parcel.owner)
+        : 'No Name',
     color: 'black',
     backgroundColor: colors.TAKEN
   }
