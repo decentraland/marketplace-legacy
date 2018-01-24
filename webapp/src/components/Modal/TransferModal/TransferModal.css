@@ -52,6 +52,10 @@
   color: #A94442;
 }
 
+.TransferModal .etherscan-link {
+  word-break: break-word;
+}
+
 .TransferModal .submit-transfer {
   text-align: center;
 }

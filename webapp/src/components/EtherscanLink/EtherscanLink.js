@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-export default function EtherscanLink({ address, tx, target, text }) {
+export default function EtherscanLink({ address, tx, className, target, text }) {
   if (!address && !tx) {
     console.warn(
       'Tried to render an EtherscanLink without either an address or tx hash. Please supply one of those'
@@ -19,7 +19,7 @@ export default function EtherscanLink({ address, tx, target, text }) {
   const href = `${origin}${pathname}`
 
   return (
-    <Link to={href} target={target}>
+    <Link className={className} to={href} target={target}>
       {text || href}
     </Link>
   )
@@ -28,11 +28,13 @@ export default function EtherscanLink({ address, tx, target, text }) {
 EtherscanLink.propTypes = {
   address: PropTypes.string,
   tx: PropTypes.string,
+  className: PropTypes.string,
   target: PropTypes.string,
   text: PropTypes.string
 }
 
 EtherscanLink.defaultProps = {
+  className: 'etherscan-link',
   target: '_blank',
   text: null
 }
