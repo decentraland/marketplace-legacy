@@ -12,11 +12,13 @@ export default class Button extends React.PureComponent {
     isSubmit: PropTypes.bool,
     children: PropTypes.node
   }
+
   static defaultProps = {
     className: '',
     type: 'primary',
     isSubmit: false
   }
+
   render() {
     const { className, type, size, isSubmit, children, ...rest } = this.props
     const buttonType = isSubmit ? 'submit' : 'button'

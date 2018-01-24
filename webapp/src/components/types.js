@@ -1,8 +1,24 @@
-import { arrayOf, shape, string, number, bool } from 'prop-types'
+import {
+  arrayOf,
+  oneOfType,
+  shape,
+  object,
+  string,
+  number,
+  bool
+} from 'prop-types'
+
+export function getStateData(data) {
+  return shape({
+    data,
+    loading: bool,
+    error: oneOfType([object, string])
+  })
+}
 
 export const parcelType = shape({
-  district_id: string,
   id: string.isRequired,
+  district_id: string,
   price: string,
   address: string,
   x: number.isRequired,
@@ -10,9 +26,9 @@ export const parcelType = shape({
 })
 
 export const districtType = shape({
+  id: string.isRequired,
   center: string.isRequired,
   description: string.isRequired,
-  id: string.isRequired,
   link: string.isRequired,
   name: string.isRequired,
   parcel_count: string,

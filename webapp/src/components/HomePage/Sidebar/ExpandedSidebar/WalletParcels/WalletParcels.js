@@ -10,12 +10,13 @@ class WalletParcels extends React.PureComponent {
   static propTypes = {
     wallet: PropTypes.object,
     onEdit: PropTypes.func,
+    onTransfer: PropTypes.func,
     isLoading: PropTypes.bool,
     hasError: PropTypes.bool
   }
 
   render() {
-    const { wallet, onEdit, isLoading, hasError } = this.props
+    const { wallet, onEdit, onTransfer, isLoading, hasError } = this.props
 
     if (isLoading) {
       return <Loading />
@@ -42,7 +43,11 @@ class WalletParcels extends React.PureComponent {
           </span>
         </div>
 
-        <ParcelTable parcels={wallet.parcels} onEdit={onEdit} />
+        <ParcelTable
+          parcels={wallet.parcels}
+          onEdit={onEdit}
+          onTransfer={onTransfer}
+        />
       </div>
     )
   }

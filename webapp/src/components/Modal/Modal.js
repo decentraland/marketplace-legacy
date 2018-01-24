@@ -36,7 +36,7 @@ export default class Modal extends React.Component {
 
     if (!ModalComponent) {
       if (name) {
-        console.warn(`Couldn't find "${name}" as a modal`)
+        console.warn(`Couldn't find a modal named "${name}"`)
       }
       ModalComponent = modals.BaseModal
     }
