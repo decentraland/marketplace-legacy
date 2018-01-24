@@ -60,7 +60,7 @@ export default class TransferModal extends React.PureComponent {
     return this.state.address.trim() === ''
   }
 
-  onClose = () => {
+  handleClose = () => {
     const { onClose, cleanTransfer } = this.props
 
     onClose()
@@ -77,7 +77,7 @@ export default class TransferModal extends React.PureComponent {
       <BaseModal
         className="TransferModal modal-lg"
         {...props}
-        onClose={this.onClose /* Override deafult onClose */}
+        onClose={this.handleClose /* Override deafult onClose */}
       >
         <div className="banner">
           <h2>
@@ -88,7 +88,7 @@ export default class TransferModal extends React.PureComponent {
         <div className="modal-body">
           {isLoading ? (
             <Loading />
-          ) : !error && transfer.hash ? (
+          ) : (!error && transfer.hash) || 1 == 1 ? (
             <div>
               <SuccessCheck />
               <p>
@@ -96,6 +96,9 @@ export default class TransferModal extends React.PureComponent {
                 You can check its status on etherscan: <br />
                 <EtherscanLink tx={transfer.hash} />
               </p>
+              <Button type="primary" isSubmit={true} onClick={this.handleClose}>
+                CLOSE
+              </Button>
             </div>
           ) : (
             <form action="POST" onSubmit={this.handleTransfer}>
