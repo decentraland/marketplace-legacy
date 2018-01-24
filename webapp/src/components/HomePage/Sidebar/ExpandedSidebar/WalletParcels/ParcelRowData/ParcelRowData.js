@@ -30,14 +30,16 @@ class ParcelRowData extends React.PureComponent {
         {/*<div className="col col-name">{parcel.name}</div>*/}
 
         <div className="col col-actions">
-          {/*<div onClick={onEdit}>
+          {/*<span onClick={onEdit} data-balloon="Edit" data-balloon-pos="up">
             <Icon name="pencil" />
-            edit
-          </div>*/}
-          <div onClick={onTransfer}>
+          </span>*/}
+          <span
+            onClick={onTransfer}
+            data-balloon="Transfer"
+            data-balloon-pos="up"
+          >
             <Icon name="exchange" />
-            transfer
-          </div>
+          </span>
         </div>
       </div>
     )
