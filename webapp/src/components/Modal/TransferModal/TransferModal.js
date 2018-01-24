@@ -88,7 +88,7 @@ export default class TransferModal extends React.PureComponent {
         <div className="modal-body">
           {isLoading ? (
             <Loading />
-          ) : (!error && transfer.hash) || 1 == 1 ? (
+          ) : !error && transfer.hash ? (
             <div>
               <SuccessCheck />
               <p>
