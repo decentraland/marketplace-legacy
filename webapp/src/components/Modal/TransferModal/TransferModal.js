@@ -1,13 +1,23 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import BaseModal from '../BaseModal'
 import Button from 'components/Button'
+import Loading from 'components/Loading'
+import SuccessCheck from 'components/SuccessCheck'
+import EtherscanLink from 'components/EtherscanLink'
+import { transferType } from 'components/types'
 
 import './TransferModal.css'
 
-export default class TransferModal extends React.Component {
+export default class TransferModal extends React.PureComponent {
   static propTypes = {
-    ...BaseModal.propTypes
+    ...BaseModal.propTypes,
+    transfer: transferType,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
+    address: PropTypes.string,
+    onTransfer: PropTypes.func
   }
 
   constructor(props) {
@@ -19,21 +29,55 @@ export default class TransferModal extends React.Component {
   }
 
   handleAddressChange = e => {
-    this.setState({
-      address: e.currentTarget.value
-    })
+    const { error, cleanTransfer } = this.props
+    const { address } = this.state
+    const newAddress = e.currentTarget.value
+
+    if (address !== newAddress) {
+      if (error) cleanTransfer()
+      this.setState({ address: newAddress })
+    }
+  }
+
+  handleTransfer = e => {
+    const parcel = this.getParcel()
+    const newAddress = this.state.address
+
+    this.props.onTransfer(parcel, newAddress)
+    e.preventDefault()
+  }
+
+  getParcel() {
+    return this.props.data
+  }
+
+  getClassName() {
+    const { error } = this.props
+    return `address-input ${error ? 'address-input-error' : ''}`
+  }
+
+  isEmptyAddress() {
+    return this.state.address.trim() === ''
+  }
+
+  onClose = () => {
+    const { onClose, cleanTransfer } = this.props
+
+    onClose()
+    cleanTransfer()
   }
 
   render() {
-    const { onClose, data, ...props } = this.props
+    const { isLoading, transfer, error, ...props } = this.props
     const { address } = this.state
-    const { x, y } = data // data === parcel
+    const { x, y } = this.getParcel()
+    const className = this.getClassName()
 
     return (
       <BaseModal
         className="TransferModal modal-lg"
-        onClose={onClose}
         {...props}
+        onClose={this.onClose /* Override deafult onClose */}
       >
         <div className="banner">
           <h2>
@@ -42,32 +86,50 @@ export default class TransferModal extends React.Component {
         </div>
 
         <div className="modal-body">
-          <form action="POST">
-            <div className="text">
+          {isLoading ? (
+            <Loading />
+          ) : !error && transfer.hash ? (
+            <div>
+              <SuccessCheck />
               <p>
-                Remember that transfering LAND is an irreversible operation.<br />
-                Please check the address carefully.
+                Transaction sent successfully!<br />
+                You can check its status on etherscan: <br />
+                <EtherscanLink tx={transfer.hash} />
               </p>
+            </div>
+          ) : (
+            <form action="POST" onSubmit={this.handleTransfer}>
+              <div className="text">
+                <p>
+                  Remember that transfering LAND is an irreversible operation.<br />
+                  Please check the address carefully.
+                </p>
 
-              <div className="address-container">
-                <label htmlFor="address-input">Recipient address</label>
-                <input
-                  id="address-input"
-                  className="address-input"
-                  type="text"
-                  placeholder="Ex: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
-                  value={address}
-                  onChange={this.handleAddressChange}
-                />
+                <div className="address-container">
+                  <label htmlFor="address-input">Recipient address</label>
+                  <input
+                    id="address-input"
+                    className={className}
+                    type="text"
+                    placeholder="Ex: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
+                    value={address}
+                    onChange={this.handleAddressChange}
+                  />
+                  <div className="error-message">{error}</div>
+                </div>
               </div>
-            </div>
 
-            <div className="submit-transfer">
-              <Button type="primary" isSubmit={true} onClick={onClose}>
-                TRANSFER
-              </Button>
-            </div>
-          </form>
+              <div className="submit-transfer">
+                <Button
+                  type="primary"
+                  isSubmit={true}
+                  disabled={this.isEmptyAddress()}
+                >
+                  TRANSFER
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
       </BaseModal>
     )

@@ -6,7 +6,7 @@ import Button from 'components/Button'
 
 import './IntroModal.css'
 
-export default class IntroModal extends React.Component {
+export default class IntroModal extends React.PureComponent {
   static propTypes = {
     ...BaseModal.propTypes
   }

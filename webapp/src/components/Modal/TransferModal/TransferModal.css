@@ -47,6 +47,11 @@
   display: block;
 }
 
+.TransferModal .modal-body .error-message {
+  margin-top: 10px;
+  color: #A94442;
+}
+
 .TransferModal .submit-transfer {
   text-align: center;
 }

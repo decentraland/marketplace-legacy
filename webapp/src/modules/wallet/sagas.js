@@ -1,7 +1,7 @@
 import { call, takeLatest, put, select } from 'redux-saga/effects'
+import { eth } from 'decentraland-commons'
 import { getAddress } from 'modules/wallet/reducer'
 import { replace } from 'react-router-redux'
-import { eth } from 'decentraland-commons'
 
 import locations from '../../locations'
 
@@ -30,7 +30,6 @@ export default function* saga() {
 function* handleWalletRequest(action = {}) {
   try {
     const wallet = yield call(() => connectEthereumWallet())
-
     const address = yield call(() => wallet.getAddress())
 
     yield put({

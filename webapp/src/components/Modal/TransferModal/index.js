@@ -1,3 +1,3 @@
-import TransferModal from './TransferModal'
+import TransferModal from './TransferModal.container'
 
 export default TransferModal
