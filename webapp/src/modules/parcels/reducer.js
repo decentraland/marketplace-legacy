@@ -4,6 +4,8 @@ import {
   FETCH_PARCELS_FAILURE,
   EDIT_PARCEL_SUCCESS
 } from './actions'
+import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
+import { buildCoordinate } from 'lib/utils'
 import { toParcelObject } from './utils'
 
 const INITIAL_STATE = {
@@ -45,6 +47,21 @@ export default function reducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           [parcel.id]: parcel
+        }
+      }
+    }
+    case TRANSFER_PARCEL_SUCCESS: {
+      const { x, y, newOwner } = action.transfer
+      const parcelId = buildCoordinate(x, y)
+      const parcel = state.data[parcelId]
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [parcel.id]: {
+            ...parcel,
+            owner: newOwner.toLowerCase()
+          }
         }
       }
     }
