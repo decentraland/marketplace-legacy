@@ -63,7 +63,6 @@ export async function getParcels(req) {
     parcelsWithOwner = [...parcelsWithOwner, ...newParcelsWithOwner]
     parcels = parcels.slice(BATCH_SIZE)
   }
-  console.log('parcelsWithOwner', parcelsWithOwner)
   return utils.mapOmit(parcelsWithOwner, ['created_at', 'updated_at'])
 }
 
@@ -111,7 +110,6 @@ export async function getAddressParcels(req) {
   const parcelService = new ParcelService()
 
   const contractParcels = await parcelService.getLandOf(address)
-  console.log(contractParcels)
   const parcels = await parcelService.addDbData(contractParcels)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
