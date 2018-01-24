@@ -227,7 +227,7 @@ describe('ParcelService', function() {
   })
 
   describe('#addDbData', function() {
-    it('should add the data stored on the db to each parcel and return a new array', async function() {
+    xit('should add the data stored on the db to each parcel and return a new array', async function() {
       const contractParcels = [
         { x: 0, y: 0 },
         { x: 10, y: -2 },
