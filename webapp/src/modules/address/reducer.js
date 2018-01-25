@@ -23,7 +23,13 @@ const INITIAL_STATE = {
   error: null
 }
 export default function reducer(state = INITIAL_STATE, action) {
+  /* 
+    The following import is due to a cyclic import,
+    if imported at the top of the file it is undefined.
+    More elegant solutions are welcome 😇.
+  */
   const { TRANSFER_PARCEL_SUCCESS } = require('modules/transfer/actions')
+
   switch (action.type) {
     case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
     case FETCH_ADDRESS_PARCELS_REQUEST:
