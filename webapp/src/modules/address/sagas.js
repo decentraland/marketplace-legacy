@@ -8,7 +8,7 @@ import {
   FETCH_ADDRESS_CONTRIBUTIONS_FAILURE
 } from './actions'
 
-import { FETCH_PARCELS_SUCCESS } from 'modules/parcels/actions'
+import { MERGE_PARCELS } from 'modules/parcels/actions'
 
 import api from 'lib/api'
 
@@ -41,7 +41,7 @@ function* handleAddressParcelsRequest(action) {
 
 function* handleAddressParcelsSuccess(action) {
   yield put({
-    type: FETCH_PARCELS_SUCCESS,
+    type: MERGE_PARCELS,
     parcels: action.parcels
   })
 }

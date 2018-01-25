@@ -2,7 +2,8 @@ import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
   FETCH_PARCELS_FAILURE,
-  EDIT_PARCEL_SUCCESS
+  EDIT_PARCEL_SUCCESS,
+  MERGE_PARCELS
 } from './actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { buildCoordinate } from 'lib/utils'
@@ -10,7 +11,7 @@ import { toParcelObject } from './utils'
 
 const INITIAL_STATE = {
   data: {},
-  loading: false,
+  loading_count: 0,
   error: null
 }
 
@@ -19,14 +20,14 @@ export default function reducer(state = INITIAL_STATE, action) {
     case FETCH_PARCELS_REQUEST: {
       return {
         ...state,
-        loading: true
+        loading_count: state.loading_count + 1
       }
     }
     case FETCH_PARCELS_SUCCESS: {
       return {
         ...state,
         error: null,
-        loading: false,
+        loading_count: state.loading_count - 1,
         data: {
           ...state.data,
           ...toParcelObject(action.parcels)
@@ -36,8 +37,17 @@ export default function reducer(state = INITIAL_STATE, action) {
     case FETCH_PARCELS_FAILURE: {
       return {
         ...state,
-        loading: false,
+        loading_count: state.loading_count - 1,
         error: action.error
+      }
+    }
+    case MERGE_PARCELS: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...toParcelObject(action.parcels)
+        }
       }
     }
     case EDIT_PARCEL_SUCCESS: {
@@ -72,5 +82,5 @@ export default function reducer(state = INITIAL_STATE, action) {
 
 export const getState = state => state.parcels
 export const getParcels = state => getState(state).data
-export const isLoading = state => getState(state).loading
+export const isLoading = state => getState(state).loading_count > 0
 export const getError = state => getState(state).error

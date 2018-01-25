@@ -1,9 +1,9 @@
-import { takeLatest, put } from 'redux-saga/effects'
+import { takeEvery, put } from 'redux-saga/effects'
 import { FETCH_PARCELS_REQUEST } from 'modules/parcels/actions'
 import { CHANGE_RANGE } from './actions'
 
 export default function* saga() {
-  yield takeLatest(CHANGE_RANGE, handleChangeRange)
+  yield takeEvery(CHANGE_RANGE, handleChangeRange)
 }
 
 function* handleChangeRange(action) {
