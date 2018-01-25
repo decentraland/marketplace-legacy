@@ -2,9 +2,16 @@
   width: 86px;
   height: 100%;
   cursor: pointer;
+  position: relative;
 }
 
 .CollapsedSidebar header {
   background-color: #FCFCFC;
   border-bottom: 1px solid #EDEDED;
+}
+
+.CollapsedSidebar .ColorCodesButton {
+  left: 31%;
+  bottom: 100px;
+  position: absolute;
 }
