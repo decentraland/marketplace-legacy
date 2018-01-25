@@ -35,17 +35,11 @@ a:hover {
 /* -----------------------------------------------------------------------
   Key colors */
 
-.won      { background-color: #4A90E2; color: #4A90E2; fill: #4A90E2; }
-.winning  { background-color: #90B9E9; color: #90B9E9; fill: #90B9E9; }
-.lost     { background-color: #4F225F; color: #4F225F; fill: #4F225F; }
-.outbid   { background-color: #F04ACC; color: #F04ACC; fill: #F04ACC; }
-.taken    { background-color: #39516B; color: #39516B; fill: #39516B; }
-.genesis  { background-color: #FFFFFF; color: #FFFFFF; fill: #FFFFFF; }
-.roads    { background-color: #5C5C5C; color: #5C5C5C; fill: #5C5C5C; }
-.district { background-color: #B18AE0; color: #B18AE0; fill: #B18AE0; }
-.pending  { background-color: #64D1B3; color: #64D1B3; fill: #64D1B3; }
-.default  { background-color: #EAEAEA; color: #EAEAEA; fill: #EAEAEA; }
-.loading  { background-color: #AAAAAA; color: #AAAAAA; fill: #AAAAAA; }
-
-.little-value { border-top-color: #FFF189; }
-.big-value    { border-bottom-color: #EF303B; }
+.my-parcels   { background-color: #D98494; color: #D98494; fill: #D98494; }
+.district     { background-color: #73C7E1; color: #73C7E1; fill: #73C7E1; }
+.contribution { background-color: #4A90E2; color: #4A90E2; fill: #4A90E2; }
+.roads        { background-color: #39516B; color: #39516B; fill: #39516B; }
+.plaza        { background-color: #FCFCFC; color: #FCFCFC; fill: #FCFCFC; }
+.taken        { background-color: #AEDC89; color: #AEDC89; fill: #AEDC89; }
+.unowned      { background-color: #F9F7E8; color: #F9F7E8; fill: #F9F7E8; }
+.loading      { background-color: #AAAAAA; color: #AAAAAA; fill: #AAAAAA; }

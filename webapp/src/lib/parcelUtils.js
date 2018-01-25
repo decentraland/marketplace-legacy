@@ -6,26 +6,12 @@ export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 export const colors = {
   MY_PARCELS: '#D98494',
   DISTRICT: '#73C7E1',
-  DISTRICTS_CONTRIBUTED: '#4A90E2',
+  CONTRIBUTION: '#4A90E2',
   ROADS: '#39516B',
   PLAZA: '#FCFCFC',
   TAKEN: '#AEDC89',
   UNOWNED: '#F9F7E8',
   LOADING: '#AAAAAA'
-}
-
-export const CLASS_NAMES = {
-  won: 'won',
-  winning: 'winning',
-  lost: 'lost',
-  outbid: 'outbid',
-  taken: 'taken',
-  genesis: 'genesis',
-  district: 'district',
-  roads: 'roads',
-  default: 'default',
-  pending: 'pending',
-  loading: 'loading'
 }
 
 export function getBounds() {
@@ -45,8 +31,8 @@ export function isPlaza(district_id) {
   return district_id === PLAZA_ID
 }
 
-export function isDistrict(district_id) {
-  return !isRoad(district_id) && !isPlaza(district_id)
+export function isDistrict(parcel) {
+  return !!parcel.district_id
 }
 
 export function getParcelAttributes(wallet, parcel, district) {
@@ -57,7 +43,7 @@ export function getParcelAttributes(wallet, parcel, district) {
       backgroundColor: colors.LOADING
     }
   }
-  if (parcel.district_id) {
+  if (isDistrict(parcel)) {
     if (isRoad(parcel.district_id)) {
       return {
         label: 'Road',
@@ -76,7 +62,7 @@ export function getParcelAttributes(wallet, parcel, district) {
       return {
         label: district ? district.name : 'District',
         color: 'black',
-        backgroundColor: colors.DISTRICTS_CONTRIBUTED
+        backgroundColor: colors.CONTRIBUTION
       }
     }
     return {
