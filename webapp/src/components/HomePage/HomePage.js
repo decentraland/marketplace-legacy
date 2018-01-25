@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import localStorage from 'lib/localStorage'
+
 import Sidebar from './Sidebar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
@@ -15,8 +17,13 @@ export default class HomePage extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { onConnect } = this.props
+    const { onConnect, onFirstVisit } = this.props
+
     onConnect()
+
+    if (!localStorage.getItem('seenTermsModal')) {
+      onFirstVisit()
+    }
   }
 
   render() {
