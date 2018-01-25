@@ -11,11 +11,37 @@ export default class IntroModal extends React.PureComponent {
     ...BaseModal.propTypes
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      acceptedTerms: false
+    }
+  }
+
+  handleOnClose = () => {
+    if (this.state.acceptedTerms) {
+      this.props.onClose()
+    }
+  }
+
+  onAgree = () => {
+    this.setState(
+      {
+        acceptedTerms: true
+      },
+      this.handleOnClose
+    )
+  }
+
   render() {
-    const { onClose, ...props } = this.props
+    const { ...props } = this.props
 
     return (
-      <BaseModal className="IntroModal modal-lg" onClose={onClose} {...props}>
+      <BaseModal
+        className="IntroModal modal-lg"
+        {...props}
+        onClose={this.handleOnClose}
+      >
         <div className="banner">
           <h2>
             <Icon name="decentraland" /> Welcome to the LAND Manager
@@ -262,7 +288,7 @@ export default class IntroModal extends React.PureComponent {
           </div>
 
           <div className="get-started">
-            <Button type="primary" onClick={onClose}>
+            <Button type="primary" onClick={this.onAgree}>
               I Agree
             </Button>
           </div>
