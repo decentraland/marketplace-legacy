@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { openModal } from 'modules/ui/actions'
 import { fetchWallet } from 'modules/wallet/actions'
 
 import HomePage from './HomePage'
@@ -10,7 +11,8 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onConnect: () => dispatch(fetchWallet())
+  onConnect: () => dispatch(fetchWallet()),
+  onFirstVisit: () => dispatch(openModal('IntroModal'))
 })
 
 export default connect(mapState, mapDispatch)(HomePage)

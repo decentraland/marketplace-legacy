@@ -156,7 +156,7 @@ export default class IntroModal extends React.PureComponent {
             </p>
 
             <h3>Indemnity</h3>
-            <h4>
+            <p>
               You agree to release and to indemnify, defend and hold harmless
               Decentraland and its parents, subsidiaries, affiliates and
               agencies, as well as the officers, directors, employees,
@@ -171,10 +171,10 @@ export default class IntroModal extends React.PureComponent {
               of any matter otherwise subject to indemnification by you and, in
               such case, you agree to cooperate with Decentraland in the defense
               of such matter.
-            </h4>
+            </p>
 
             <h3>Limitation on liability</h3>
-            <h4>
+            <p>
               YOU ACKNOWLEDGE AND AGREE THAT YOU ASSUME FULL RESPONSIBILITY FOR
               YOUR USE OF THE SITE AND SERVICE. YOU ACKNOWLEDGE AND AGREE THAT
               ANY INFORMATION YOU SEND OR RECEIVE DURING YOUR USE OF THE SITE
@@ -209,10 +209,10 @@ export default class IntroModal extends React.PureComponent {
               CERTAIN WARRANTIES OR THE LIMITATION OR EXCLUSION OF LIABILITY FOR
               INCIDENTAL OR CONSEQUENTIAL DAMAGES. ACCORDINGLY, SOME OF THE
               ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
-            </h4>
+            </p>
 
             <h3>Our proprietary rights</h3>
-            <h4>
+            <p>
               All title, ownership and intellectual property rights in and to
               the Service are owned by Decentraland or its licensors. You
               acknowledge and agree that the Service contains proprietary and
@@ -222,10 +222,10 @@ export default class IntroModal extends React.PureComponent {
               lease, loan, sell, distribute, perform, display or create
               derivative works based on the Service, in whole or in part.
               Decentraland issues a license for Decentraland, found here.
-            </h4>
+            </p>
 
             <h3>Links</h3>
-            <h4>
+            <p>
               The Service provides, or third parties may provide, links to other
               World Wide Web or accessible sites, applications or resources.
               Because Decentraland has no control over such sites, applications
@@ -239,10 +239,10 @@ export default class IntroModal extends React.PureComponent {
               loss caused or alleged to be caused by or in connection with use
               of or reliance on any such content, goods or services available on
               or through any such site or resource.
-            </h4>
+            </p>
 
             <h3>Termination and suspension</h3>
-            <h4>
+            <p>
               Decentraland may terminate or suspend all or part of the Service
               and your Decentraland access immediately, without prior notice or
               liability, if you breach any of the terms or conditions of the
@@ -252,13 +252,13 @@ export default class IntroModal extends React.PureComponent {
               DISCLAIMERS; LIMITATION ON LIABILITY; OUR PROPRIETARY RIGHTS;
               LINKS; TERMINATION; NO THIRD PARTY BENEFICIARIES; BINDING
               ARBITRATION AND CLASS ACTION WAIVER; GENERAL INFORMATION.
-            </h4>
+            </p>
 
             <h3>No third party beneficiaries</h3>
-            <h4>
+            <p>
               You agree that, except as otherwise expressly provided in these
               Terms, there shall be no third party beneficiaries to the Terms.
-            </h4>
+            </p>
           </div>
 
           <div className="get-started">
