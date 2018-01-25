@@ -289,7 +289,7 @@ export default class IntroModal extends React.PureComponent {
 
           <div className="get-started">
             <Button type="primary" onClick={this.onAgree}>
-              I Agree
+              I AGREE
             </Button>
           </div>
         </div>
