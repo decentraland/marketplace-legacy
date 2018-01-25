@@ -91,14 +91,22 @@ export default class TransferModal extends React.PureComponent {
           ) : !error && transfer.hash ? (
             <div>
               <SuccessCheck />
-              <p>
-                Transaction sent successfully!<br />
-                You can check its status on etherscan: <br />
-                <EtherscanLink tx={transfer.hash} />
+              <p className="success-text">
+                <h4>Transaction sent successfully!</h4>
+                You can check its status on etherscan
               </p>
-              <Button type="primary" isSubmit={true} onClick={this.handleClose}>
-                CLOSE
-              </Button>
+              <span className="close-link" onClick={this.handleClose}>
+                close
+              </span>
+              <EtherscanLink tx={transfer.hash}>
+                <Button
+                  type="primary"
+                  isSubmit={true}
+                  onClick={this.handleClose}
+                >
+                  Go to Etherscan
+                </Button>
+              </EtherscanLink>
             </div>
           ) : (
             <form action="POST" onSubmit={this.handleTransfer}>

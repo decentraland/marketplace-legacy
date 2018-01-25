@@ -1,5 +1,5 @@
 import { call, select, takeLatest, put } from 'redux-saga/effects'
-import { eth, utils } from 'decentraland-commons'
+import { eth } from 'decentraland-commons'
 import { getAddress } from 'modules/wallet/reducer'
 import {
   TRANSFER_PARCEL_REQUEST,
@@ -26,8 +26,6 @@ function* handleTransferRequest(action) {
 
     const contract = eth.getContract('LANDRegistry')
     const hash = yield call(() => contract.transferTo(x, y, newOwner))
-
-    yield call(() => utils.sleep(2000))
 
     yield put({
       type: TRANSFER_PARCEL_SUCCESS,

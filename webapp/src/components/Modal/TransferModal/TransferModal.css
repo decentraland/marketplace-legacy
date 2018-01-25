@@ -33,6 +33,21 @@
   font-size: 16px;
 }
 
+.TransferModal .modal-body .success-text {
+  margin-bottom: 18px;
+}
+
+.TransferModal .modal-body .success-text h4 {
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.TransferModal .modal-body .close-link {
+  color: #666;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
 .TransferModal .modal-body .address-container {
   margin: 30px 0;
 }
@@ -50,10 +65,6 @@
 .TransferModal .modal-body .error-message {
   margin-top: 10px;
   color: #A94442;
-}
-
-.TransferModal .etherscan-link {
-  word-break: break-word;
 }
 
 .TransferModal .submit-transfer {
