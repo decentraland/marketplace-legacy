@@ -24,7 +24,7 @@ export default class IntroModal extends React.PureComponent {
 
         <div className="modal-body">
           <div className="text">
-            <h3>Terms & Conditions</h3>
+            <h2>Terms & Conditions</h2>
             <h4>Acceptance of terms</h4>
             <p>
               Decentraland provides a platform for managing cryptographic tokens
@@ -263,7 +263,7 @@ export default class IntroModal extends React.PureComponent {
 
           <div className="get-started">
             <Button type="primary" onClick={onClose}>
-              Get Started
+              I Agree
             </Button>
           </div>
         </div>
