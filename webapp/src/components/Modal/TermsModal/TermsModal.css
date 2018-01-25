@@ -1,41 +1,41 @@
-.IntroModal {
+.TermsModal {
   color: #3E396B;
   user-select: text;
 }
 
-.IntroModal .modal-header {
+.TermsModal .modal-header {
   padding: 15px 15px 0;
   border: none;
   background-color: #FCFCFC;
 }
 
-.IntroModal .banner {
+.TermsModal .banner {
   padding: 0px 0 25px;
   border-bottom: 1px solid #EDEDED;
   background-color: #FCFCFC;
   text-align: center;
 }
 
-.IntroModal h3 {
+.TermsModal h3 {
   margin-top: 0;
   margin-bottom: 20px;
   font-size: 20px;
   padding-right: 60px;
 }
 
-.IntroModal h4 {
+.TermsModal h4 {
   font-size: 18px;
   font-weight: bold;
 }
 
-.IntroModal .banner h2 {
+.TermsModal .banner h2 {
   font-size: 28px;
   margin-top: 0;
   padding-top: 0;
   font-family: "Source Sans Pro Light", Helvetica, sans-serif;
 }
 
-.IntroModal .banner .Icon-decentraland {
+.TermsModal .banner .Icon-decentraland {
   width: 40px;
   height: 40px;
   top: 10px;
@@ -43,11 +43,11 @@
   right: 7px;
 }
 
-.IntroModal .modal-body {
+.TermsModal .modal-body {
   padding: 30px 50px;
 }
 
-.IntroModal .modal-body p {
+.TermsModal .modal-body p {
   font-family: "Source Sans Pro Light", Helvetica, sans-serif;
   font-size: 16px;
 }
@@ -65,18 +65,18 @@
   border-left: 32px solid transparent;
 }
 
-.IntroModal .get-started {
+.TermsModal .get-started {
   margin-top: 50px;
   text-align: center;
 }
 
-.IntroModal .get-started .Button {
+.TermsModal .get-started .Button {
   padding: 11px 44px;
   border-radius: 20px;
 }
 
 @media (min-width: 768px) {
-  .IntroModal .modal-dialog {
+  .TermsModal .modal-dialog {
     width: 720px;
   }
 }

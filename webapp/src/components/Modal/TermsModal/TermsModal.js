@@ -1,12 +1,14 @@
 import React from 'react'
 
+import localStorage from 'lib/localStorage'
+
 import BaseModal from '../BaseModal'
 import Icon from 'components/Icon'
 import Button from 'components/Button'
 
-import './IntroModal.css'
+import './TermsModal.css'
 
-export default class IntroModal extends React.PureComponent {
+export default class TermsModal extends React.PureComponent {
   static propTypes = {
     ...BaseModal.propTypes
   }
@@ -21,25 +23,19 @@ export default class IntroModal extends React.PureComponent {
   handleOnClose = () => {
     if (this.state.acceptedTerms) {
       this.props.onClose()
+      localStorage.setItem('seenTermsModal', new Date().getTime())
     }
   }
 
   onAgree = () => {
-    this.setState(
-      {
-        acceptedTerms: true
-      },
-      this.handleOnClose
-    )
+    this.setState({ acceptedTerms: true }, this.handleOnClose)
   }
 
   render() {
-    const { ...props } = this.props
-
     return (
       <BaseModal
-        className="IntroModal modal-lg"
-        {...props}
+        className="TermsModal modal-lg"
+        {...this.props}
         onClose={this.handleOnClose}
       >
         <div className="banner">

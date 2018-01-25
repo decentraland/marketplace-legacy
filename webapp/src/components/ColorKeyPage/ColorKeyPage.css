@@ -1,0 +1,51 @@
+.ColorKeyPage .message {
+  max-width: 80%;
+}
+
+.ColorKeyPage .land-color-keys {
+  padding: 35px 50px 20px 50px;
+  margin: 26px 0;
+  background: #FBFBFB;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.10);
+  border-radius: 5px;
+}
+
+.ColorKeyPage .land-color-keys h3 {
+  margin-bottom: 0;
+  font-size: 20px;
+  color: #000;
+  padding-right: 80px;
+}
+
+.land-color-keys .land {
+  min-width: 132px;
+  margin-bottom: 15px;
+  margin-right: 34px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.land-color-keys .key {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #666;
+  float: left;
+  position: relative;
+}
+
+.land-color-keys .text {
+  padding-top: 5px;
+  margin-left: 8px;
+  float: left;
+}
+
+@media (min-width: 768px) {
+  .ColorKeyPage .message {
+    width: 770px;
+    max-width: 100%;
+  }
+
+  .land-color-keys .land {
+    margin-right: 14px;
+  }
+}

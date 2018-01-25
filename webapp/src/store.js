@@ -8,13 +8,10 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import api from 'lib/api'
-import localStorage from 'lib/localStorage'
 import { createGoogleAnalyticsMiddleware } from './analyticsMiddleware'
 
 import reducer, { analytics } from './reducer'
 import rootSaga from './sagas'
-
-import { openModal } from 'modules/ui/actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -36,11 +33,6 @@ const enhancer = composeEnhancers(middleware)
 const store = createStore(reducer, enhancer)
 
 sagasMiddleware.run(rootSaga)
-
-if (!localStorage.getItem('seenIntroModal')) {
-  store.dispatch(openModal('IntroModal'))
-  localStorage.setItem('seenIntroModal', new Date().getTime())
-}
 
 export function dispatch(action) {
   if (typeof action === 'string') {

@@ -12,7 +12,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   onConnect: () => dispatch(fetchWallet()),
-  onFirstVisit: () => dispatch(openModal('IntroModal'))
+  onFirstVisit: () => dispatch(openModal('TermsModal'))
 })
 
 export default connect(mapState, mapDispatch)(HomePage)

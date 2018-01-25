@@ -24,6 +24,7 @@ export default class Sidebar extends React.Component {
 
   toggle = () => {
     const { isOpen, onOpen, onClose } = this.props
+
     if (isOpen) {
       onClose()
     } else {
