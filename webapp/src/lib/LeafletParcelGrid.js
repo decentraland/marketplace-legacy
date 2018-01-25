@@ -10,15 +10,6 @@ const LeafletParcelGrid = L.Layer.extend({
     onMouseUp: () => {},
     onMouseMove: () => {},
     tileSize: 64
-    // delayFactor: 0.05,
-    // smoothFactor: 2,
-    // style: {
-    //   weight: 1,
-    //   opacity: 1,
-    //   fill: true,
-    //   fillOpacity: 0.9,
-    //   clickable: true
-    // }
   },
 
   initialize(options = {}) {
@@ -174,9 +165,8 @@ const LeafletParcelGrid = L.Layer.extend({
 
   renderTiles(bounds) {
     const tiles = this.getCellsInBounds(bounds)
-    //this.fire('newtiles', tiles)
 
-    // clear canvas
+    // Clear canvas
     const ctx = this.canvas.getContext('2d')
     ctx.fillStyle = '#FEFEFE'
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
@@ -191,11 +181,12 @@ const LeafletParcelGrid = L.Layer.extend({
       tile.bounds.getNorthWest()
     )
 
-    // render tile
+    // Render tile
     const ctx = this.canvas.getContext('2d')
     const point = this.map.latLngToContainerPoint(tile.center)
-    ctx.fillStyle = backgroundColor
     const padding = 1
+
+    ctx.fillStyle = backgroundColor
     ctx.fillRect(
       point.x - this.tileSize,
       point.y - this.tileSize,

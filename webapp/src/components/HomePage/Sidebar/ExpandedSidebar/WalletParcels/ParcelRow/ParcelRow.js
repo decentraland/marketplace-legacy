@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ParcelRowEdit from '../ParcelRowEdit'
 import ParcelRowData from '../ParcelRowData'
 
@@ -23,6 +24,11 @@ class ParcelRow extends React.PureComponent {
     }
   }
 
+  handleTransfer = () => {
+    const { parcel } = this.props
+    this.props.onTransfer(parcel)
+  }
+
   hasEdits(newParcel) {
     const { parcel } = this.props
 
@@ -40,7 +46,11 @@ class ParcelRow extends React.PureComponent {
         {this.state.editing ? (
           <ParcelRowEdit parcel={parcel} onSubmit={this.handleSubmit} />
         ) : (
-          <ParcelRowData parcel={parcel} onEdit={this.handleEdit} />
+          <ParcelRowData
+            parcel={parcel}
+            onEdit={this.handleEdit}
+            onTransfer={this.handleTransfer}
+          />
         )}
       </div>
     )

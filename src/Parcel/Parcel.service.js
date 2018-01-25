@@ -1,7 +1,9 @@
-import { eth, Contract } from 'decentraland-commons'
+import { eth, Contract, Log } from 'decentraland-commons'
 
 import Parcel from './Parcel'
 import coordinates from './coordinates'
+
+const log = new Log('ParcelService')
 
 class ParcelService {
   constructor() {
@@ -21,20 +23,26 @@ class ParcelService {
   }
 
   async getLandOf(address) {
-    const parcels = []
+    let parcels = []
 
     try {
       const contract = this.getLANDRegistryContract()
       const [xCoords, yCoords] = await contract.landOf(address)
 
       for (let i = 0; i < xCoords.length; i++) {
-        const x = xCoords[i].toString()
-        const y = yCoords[i].toString()
+        const x = xCoords[i].toNumber()
+        const y = yCoords[i].toNumber()
+        const id = this.Parcel.buildId(x, y)
 
-        parcels.push({ x, y })
+        parcels.push({ id, x, y })
       }
     } catch (error) {
-      // Use default
+      log.warn(
+        `An error occurred getting the land of ${address}.\nError: ${
+          error.message
+        }`
+      )
+      parcels = []
     }
 
     return parcels
@@ -50,8 +58,14 @@ class ParcelService {
       const owner = await contract.ownerOfLand(x, y)
       isOwner = !Contract.isEmptyAddress(owner) && address === owner
     } catch (error) {
-      // Use default
+      log.warn(
+        `An error occurred verifying if ${address} owns ${JSON.stringify(
+          parcel
+        )}.\nError: ${error.message}`
+      )
+      isOwner = false
     }
+
     return isOwner
   }
 
@@ -62,13 +76,17 @@ class ParcelService {
       const { x, y } = coordinates.splitPairs(parcels)
       const contract = this.getLANDRegistryContract()
       const addresses = await contract.ownerOfLandMany(x, y)
-
       for (const [index, parcel] of parcels.entries()) {
         const address = addresses[index]
         const owner = Contract.isEmptyAddress(address) ? null : address
         newParcels.push({ ...parcel, owner })
       }
     } catch (error) {
+      log.warn(
+        `An error occurred adding owners for ${
+          parcels.length
+        } parcels.\nError: ${error.message}`
+      )
       newParcels = parcels
     }
 

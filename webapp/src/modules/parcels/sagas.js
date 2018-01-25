@@ -21,6 +21,7 @@ function* handleParcelsRequest(action) {
     const nw = buildCoordinate(action.nw.x, action.nw.y)
     const se = buildCoordinate(action.se.x, action.se.y)
     const parcels = yield call(() => api.fetchParcels(nw, se))
+
     yield put({
       type: FETCH_PARCELS_SUCCESS,
       parcels

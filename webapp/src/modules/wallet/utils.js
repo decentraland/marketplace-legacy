@@ -1,5 +1,6 @@
 import { eth, utils } from 'decentraland-commons'
 import { MANAToken } from 'decentraland-commons/dist/contracts/MANAToken'
+import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 
 // TODO: The web3 connection was correctly encapsulated in `eth.connect`, imported from `decentraland-commons`
 // We later introduced ledger support but only on the sagas, without moving the behaviour to commons.
@@ -56,7 +57,7 @@ async function connectLedger(action = {}, retries = 0) {
 }
 
 async function connectBrowser(action = {}, retries = 0) {
-  let connected = await eth.reconnect({ contracts: [MANAToken] })
+  let connected = await eth.reconnect({ contracts: [MANAToken, LANDRegistry] })
   if (!connected) throw new Error('Could not connect to Ethereum')
 
   const address = await eth.getAddress()
@@ -78,7 +79,10 @@ async function tryConnect(method, retries = 0) {
   try {
     return await method()
   } catch (error) {
-    if (retries >= 3) return null
+    if (retries >= 3) {
+      console.warn(error)
+      return null
+    }
     await utils.sleep(500)
     return tryConnect(method, retries + 1)
   }

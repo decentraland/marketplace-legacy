@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import { tx, utils } from 'decentraland-commons'
+import { eth, tx, utils } from 'decentraland-commons'
 
 import db from '../database'
 import Parcel from './Parcel'
@@ -75,8 +75,16 @@ describe('Parcel', function() {
 })
 
 describe('ParcelService', function() {
-  const testParcel1 = { x: '1', y: '2' }
-  const testParcel2 = { x: '-7', y: '5' }
+  const testParcel1 = { x: 1, y: 2 }
+  const testParcel2 = { x: -7, y: 5 }
+  const testParcel1WithId = {
+    ...testParcel1,
+    id: Parcel.buildId(testParcel1.x, testParcel1.y)
+  }
+  const testParcel2WithId = {
+    ...testParcel2,
+    id: Parcel.buildId(testParcel2.x, testParcel2.y)
+  }
   const testAddress = '0xfede'
 
   const contract = {
@@ -94,9 +102,12 @@ describe('ParcelService', function() {
       return isDummy ? [tx.DUMMY_TX_ID, tx.DUMMY_TX_ID] : null
     },
     landOf(address) {
-      return address === testAddress
-        ? [[testParcel1.x, testParcel2.x], [testParcel1.y, testParcel2.y]]
-        : [[], []]
+      const result =
+        address === testAddress
+          ? [[testParcel1.x, testParcel2.x], [testParcel1.y, testParcel2.y]]
+          : [[], []]
+
+      return result.map(pair => pair.map(eth.utils.toBigNumber))
     }
   }
 
@@ -174,13 +185,13 @@ describe('ParcelService', function() {
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns(contract)
 
-      const parcels = [testParcel1, testParcel2, { x: '11', y: '-2' }]
+      const parcels = [testParcel1, testParcel2, { x: 11, y: -2 }]
       const parcelsWithOwner = await service.addOwners(parcels)
 
       expect(parcelsWithOwner).to.deep.equal([
-        { x: '1', y: '2', owner: '0xdeadbeef' }, // testParcel1
-        { x: '-7', y: '5', owner: '0xdeadbeef' }, // testParcel2
-        { x: '11', y: '-2', owner: null }
+        { x: 1, y: 2, owner: '0xdeadbeef' }, // testParcel1
+        { x: -7, y: 5, owner: '0xdeadbeef' }, // testParcel2
+        { x: 11, y: -2, owner: null }
       ])
     })
 
@@ -196,13 +207,13 @@ describe('ParcelService', function() {
   })
 
   describe('#getLandOf', function() {
-    it('should return an array of {x, y} pairs from the lands the address owns', async function() {
+    it('should return an array of {id, x, y} pairs from the lands the address owns', async function() {
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns(contract)
 
       const landPairs = await service.getLandOf(testAddress)
 
-      expect(landPairs).to.deep.equal([testParcel1, testParcel2])
+      expect(landPairs).to.deep.equal([testParcel1WithId, testParcel2WithId])
     })
 
     it('should return an empty array on error', async function() {

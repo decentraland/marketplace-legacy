@@ -1,8 +1,9 @@
+import { combineReducers } from 'redux'
+
 import loading from './loading/reducer'
 import map from './map/reducer'
 import modal from './modal/reducer'
 import sidebar from './sidebar/reducer'
-import { combineReducers } from 'redux'
 
 export * from './loading/reducer'
 export * from './map/reducer'

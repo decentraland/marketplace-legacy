@@ -9,15 +9,27 @@ import {
   FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
   FETCH_ADDRESS_CONTRIBUTIONS_FAILURE
 } from './actions'
+import { buildCoordinate } from 'lib/utils'
 import { toAddressParcelIds } from './utils'
+
+const EMPTY_ADDRESS = {
+  contributions: [],
+  parcel_ids: []
+}
 
 const INITIAL_STATE = {
   data: {},
   loading: true,
   error: null
 }
-
 export default function reducer(state = INITIAL_STATE, action) {
+  /* 
+    The following import is due to a cyclic import,
+    if imported at the top of the file it is undefined.
+    More elegant solutions are welcome 😇.
+  */
+  const { TRANSFER_PARCEL_SUCCESS } = require('modules/transfer/actions')
+
   switch (action.type) {
     case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
     case FETCH_ADDRESS_PARCELS_REQUEST:
@@ -56,6 +68,26 @@ export default function reducer(state = INITIAL_STATE, action) {
           }
         }
       }
+    case TRANSFER_PARCEL_SUCCESS: {
+      const { x, y, oldOwner, newOwner } = action.transfer
+      const parcelId = buildCoordinate(x, y)
+      const oldOwnerAddress = state.data[oldOwner] || { ...EMPTY_ADDRESS }
+      const newOwnerAddress = state.data[newOwner] || { ...EMPTY_ADDRESS }
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [oldOwner]: {
+            ...oldOwnerAddress,
+            parcel_ids: oldOwnerAddress.parcel_ids.filter(x => x !== parcelId)
+          },
+          [newOwner]: {
+            ...newOwnerAddress,
+            parcel_ids: newOwnerAddress.parcel_ids.concat(parcelId)
+          }
+        }
+      }
+    }
     default:
       return state
   }

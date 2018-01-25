@@ -93,15 +93,19 @@ export function getParcelAttributes(wallet, parcel, district) {
       backgroundColor: colors.MY_PARCELS
     }
   }
-  if (!parcel.price && !district) {
+  if (!parcel.owner && !district) {
     return {
       label: 'No Owner',
       color: 'black',
       backgroundColor: colors.UNOWNED
     }
   }
+
   return {
-    label: parcel.name || shortenAddress(parcel.address) || 'No Name',
+    label:
+      parcel.name || parcel.owner
+        ? 'Owner: ' + shortenAddress(parcel.owner)
+        : 'No Name',
     color: 'black',
     backgroundColor: colors.TAKEN
   }

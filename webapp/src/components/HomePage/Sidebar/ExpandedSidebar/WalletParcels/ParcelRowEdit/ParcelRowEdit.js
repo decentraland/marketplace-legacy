@@ -1,8 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Icon from 'components/Icon'
+import { parcelType } from 'components/types'
+
 import CoordinateLink from '../CoordinateLink'
 
 class ParcelRowEdit extends React.PureComponent {
+  static propTypes = {
+    parcel: parcelType,
+    onSubmit: PropTypes.func
+  }
+
   constructor(props) {
     super(props)
 
