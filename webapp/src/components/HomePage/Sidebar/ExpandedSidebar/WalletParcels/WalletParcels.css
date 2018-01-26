@@ -36,16 +36,16 @@
 }
 
 .WalletParcels .table .col-editing {
-  width: 90%;
+  width: 80%;
 }
 .WalletParcels .table .col-coord {
-  width: 25%;
+  width: 20%;
 }
 .WalletParcels .table .col-price {
-  width: 35%;
+  width: 27%;
 }
 .WalletParcels .table .col-name {
-  width: 40%;
+  width: 30%;
 }
 .WalletParcels .table .col-actions {
   width: 20%;
@@ -60,7 +60,7 @@
 }
 
 .WalletParcels .col-actions .Icon {
-  margin-right: 3px;
+  margin-right: 8px;
 }
 
 .WalletParcels .editing-fields {

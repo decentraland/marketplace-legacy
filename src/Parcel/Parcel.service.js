@@ -1,4 +1,5 @@
 import { eth, Contract, Log } from 'decentraland-commons'
+import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 
 import { Parcel } from './Parcel'
 import { coordinates } from './coordinates'
@@ -6,6 +7,8 @@ import { coordinates } from './coordinates'
 const log = new Log('ParcelService')
 
 export class ParcelService {
+  static CURRENT_DATA_VERSION = 0
+
   constructor() {
     this.Parcel = Parcel
   }
@@ -48,6 +51,26 @@ export class ParcelService {
     return parcels
   }
 
+  async addLandData(parcels) {
+    const contract = this.getLANDRegistryContract()
+
+    const parcelPromises = parcels.map(async parcel => {
+      let data
+
+      try {
+        const landData = await contract.getData(parcel.x, parcel.y)
+        data = LANDRegistry.decodeLandData(landData)
+      } catch (error) {
+        log.warn(error.message)
+        data = { version: ParcelService.CURRENT_DATA_VERSION }
+      }
+
+      return Object.assign({ data }, parcel)
+    })
+
+    return await Promise.all(parcelPromises)
+  }
+
   async isOwner(address, parcel) {
     let isOwner = false
 
@@ -76,6 +99,7 @@ export class ParcelService {
       const { x, y } = coordinates.splitPairs(parcels)
       const contract = this.getLANDRegistryContract()
       const addresses = await contract.ownerOfLandMany(x, y)
+
       for (const [index, parcel] of parcels.entries()) {
         const address = addresses[index]
         const owner = Contract.isEmptyAddress(address) ? null : address
@@ -87,7 +111,7 @@ export class ParcelService {
           parcels.length
         } parcels.\nError: ${error.message}`
       )
-      newParcels = parcels
+      newParcels = parcels.slice() // Copy
     }
 
     return newParcels
@@ -103,8 +127,8 @@ export class ParcelService {
       const dbParcel = dbParcelsObj[Parcel.buildId(parcel.x, parcel.y)]
       if (!dbParcel) return parcel
 
-      const { name, description, price } = dbParcel
-      return Object.assign({ name, description, price }, parcel)
+      const { price } = dbParcel
+      return Object.assign({ price }, parcel)
     })
   }
 
@@ -113,21 +137,6 @@ export class ParcelService {
       map[parcel.id] = parcel
       return map
     }, {})
-  }
-
-  getValuesFromSignedMessage(signedMessage) {
-    const values = signedMessage.extract(Parcel.columnNames)
-    const changes = {}
-
-    for (const [index, columnName] of Parcel.columnNames.entries()) {
-      const value = values[index]
-
-      if (value) {
-        changes[columnName] = value
-      }
-    }
-
-    return changes
   }
 
   getLANDRegistryContract() {

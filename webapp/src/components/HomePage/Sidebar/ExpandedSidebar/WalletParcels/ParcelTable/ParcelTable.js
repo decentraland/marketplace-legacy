@@ -11,7 +11,7 @@ class ParcelTable extends React.PureComponent {
           <div className="table-row table-header">
             <div className="col col-coord">COORD</div>
             <div className="col col-price">PURCHASE PRICE</div>
-            {/*<div className="col col-name">NAME</div>*/}
+            <div className="col col-name">NAME</div>
             <div className="col col-actions">ACTIONS</div>
           </div>
 

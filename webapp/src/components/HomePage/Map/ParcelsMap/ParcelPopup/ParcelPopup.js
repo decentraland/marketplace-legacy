@@ -3,7 +3,7 @@ import React from 'react'
 import './ParcelPopup.css'
 
 export default function ParcelPopup(props) {
-  let { x, y, color, backgroundColor, label, description } = props
+  let { x, y, color, backgroundColor, label } = props
 
   return (
     <div className="parcel-popup">
@@ -16,7 +16,7 @@ export default function ParcelPopup(props) {
       }
       <div className="body">
         <div className="text label">{label}</div>
-        {description && <div className="text description">{description}</div>}
+        {/*description && <div className="text description">{description}</div>*/}
       </div>
     </div>
   )

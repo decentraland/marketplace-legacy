@@ -3,10 +3,11 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 
-import { server, env, eth, utils, SignedMessage } from 'decentraland-commons'
+import { server, env, eth, utils } from 'decentraland-commons'
 import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 
 import { db } from './database'
+import { asyncBatch } from './lib/asyncBatch'
 import { District } from './District'
 import { Parcel, ParcelService } from './Parcel'
 import { Contribution } from './Contribution'
@@ -14,6 +15,8 @@ import { Contribution } from './Contribution'
 env.load()
 
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
+const OWNERS_BATCH_SIZE = 1000
+const DATA_BATCH_SIZE = 100
 
 const app = express()
 const httpServer = http.Server(app)
@@ -49,49 +52,21 @@ if (env.isProduction()) {
  * @return {array}
  */
 app.get('/api/parcels', server.handleRequest(getParcels))
-const BATCH_SIZE = 1000
+
 export async function getParcels(req) {
   const nw = server.extractFromReq(req, 'nw')
   const se = server.extractFromReq(req, 'se')
 
-  let parcels = await Parcel.inRange(nw, se)
-  let parcelsWithOwner = []
-  while (parcels.length > 0) {
-    const newParcelsWithOwner = await new ParcelService().addOwners(
-      parcels.slice(0, BATCH_SIZE)
-    )
-    parcelsWithOwner = [...parcelsWithOwner, ...newParcelsWithOwner]
-    parcels = parcels.slice(BATCH_SIZE)
-  }
+  const parcels = await Parcel.inRange(nw, se)
+  const service = new ParcelService()
+
+  const parcelsWithOwner = await asyncBatch({
+    elements: parcels,
+    callback: parcels => service.addOwners(parcels),
+    batchSize: OWNERS_BATCH_SIZE
+  })
+
   return utils.mapOmit(parcelsWithOwner, ['created_at', 'updated_at'])
-}
-
-/**
- * Edit the metadata of an owned parcel
- * @param  {string} address - Owner of the parcel address
- * @param  {object} parcel - New parcel data
- * @return {object}
- */
-app.post('/api/parcels/edit', server.handleRequest(editParcels))
-
-export async function editParcels(req) {
-  const message = server.extractFromReq(req, 'message')
-  const signature = server.extractFromReq(req, 'signature')
-
-  const signedMessage = new SignedMessage(message, signature)
-  const parcelService = new ParcelService()
-
-  const changes = parcelService.getValuesFromSignedMessage(signedMessage)
-  const address = signedMessage.getAddress()
-  const parcel = { x: changes.x, y: changes.y }
-
-  if (await parcelService.isOwner(address, parcel)) {
-    await Parcel.update(changes, parcel)
-  } else {
-    throw new Error('You can only edit your own parcels')
-  }
-
-  return true
 }
 
 /**
@@ -107,10 +82,15 @@ app.get(
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
 
-  const parcelService = new ParcelService()
+  const service = new ParcelService()
 
-  const contractParcels = await parcelService.getLandOf(address)
-  const parcels = await parcelService.addDbData(contractParcels)
+  let parcels = await service.getLandOf(address)
+  parcels = await service.addDbData(parcels)
+  parcels = await asyncBatch({
+    elements: parcels,
+    callback: parcels => service.addLandData(parcels),
+    batchSize: DATA_BATCH_SIZE
+  })
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }

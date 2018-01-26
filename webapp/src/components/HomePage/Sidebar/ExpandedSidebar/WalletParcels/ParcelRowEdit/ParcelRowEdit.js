@@ -37,8 +37,11 @@ class ParcelRowEdit extends React.PureComponent {
 
     onSubmit({
       ...parcel,
-      name,
-      description
+      data: {
+        ...parcel.data,
+        name,
+        description
+      }
     })
 
     e.preventDefault()

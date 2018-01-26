@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
+import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
@@ -38,15 +39,12 @@ function* handleParcelsRequest(action) {
 function* handleEditParcelsRequest(action) {
   try {
     const parcel = action.parcel
-    const payload = `Decentraland Marketplace: Editing parcel (${Date.now()})
-x: ${parcel.x}
-y: ${parcel.y}
-name: ${parcel.name}
-description: ${parcel.description}`
+    const contract = eth.getContract('LANDRegistry')
 
-    const { message, signature } = yield call(() => eth.sign(payload))
+    const { x, y, data } = parcel
+    const dataString = LANDRegistry.encodeLandData(data)
 
-    yield call(() => api.editParcel(message, signature))
+    yield call(() => contract.updateLandData(x, y, dataString))
 
     yield put({ type: EDIT_PARCEL_SUCCESS, parcel })
   } catch (error) {

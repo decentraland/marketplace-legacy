@@ -30,11 +30,11 @@ class ParcelRow extends React.PureComponent {
   }
 
   hasEdits(newParcel) {
-    const { parcel } = this.props
+    const data = this.props.parcel
+    const newData = newParcel.data
 
     return (
-      newParcel.name !== parcel.name ||
-      newParcel.description !== parcel.description
+      data.name !== newData.name || data.description !== newData.description
     )
   }
 
