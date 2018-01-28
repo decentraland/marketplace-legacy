@@ -24,28 +24,6 @@ describe('Parcel', function() {
     })
   })
 
-  describe('.findInCoordinates', function() {
-    it('should attach an array of bid groups for the address', async function() {
-      await new ParcelService().insertMatrix(-1, -1, 3, 3)
-
-      const result = await Parcel.findInCoordinates([
-        '1,2',
-        '3,3',
-        '4,4',
-        '0,0',
-        '-1,-1'
-      ])
-
-      expect(result.length).to.be.equal(4)
-    })
-
-    it('should throw if any coordinate is invalid', function() {
-      return expect(
-        Parcel.findInCoordinates(['1,1', 'nonsense'])
-      ).to.be.rejectedWith('The coordinate "nonsense" are not valid')
-    })
-  })
-
   describe('.inRange', function() {
     it('should return an array of parcel states which are on the supplied range', async function() {
       await new ParcelService().insertMatrix(0, 0, 10, 10)

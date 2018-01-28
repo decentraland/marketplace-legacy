@@ -34,17 +34,6 @@ class Parcel extends Model {
     )
   }
 
-  static async findInCoordinates(coords) {
-    let where = coords.map(coord => {
-      const [x, y] = coordinates.toArray(coord)
-      return `(x = ${x} AND y = ${y})`
-    })
-
-    where = where.join(' OR ')
-
-    return await this.db.query(`SELECT * FROM ${this.tableName} WHERE ${where}`)
-  }
-
   static async inRange(min, max) {
     const [minx, miny] = coordinates.toArray(min)
     const [maxx, maxy] = coordinates.toArray(max)
