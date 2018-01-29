@@ -1,4 +1,4 @@
-import { arrayOf, shape, string, number, bool } from 'prop-types'
+import { arrayOf, shape, string, number, bool, oneOf } from 'prop-types'
 
 export const parcelType = shape({
   id: string.isRequired,
@@ -34,4 +34,11 @@ export const addressType = shape({
 export const walletType = shape({
   address: string,
   parcels: arrayOf(parcelType).isRequired
+})
+
+export const toastType = shape({
+  id: string.isRequired,
+  kind: oneOf(['info', 'success', 'error', 'warning']),
+  message: string,
+  delay: number
 })

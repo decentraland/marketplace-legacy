@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as modals from '.'
 
-export default class Modal extends React.Component {
+export default class Modal extends React.PureComponent {
   static propTypes = {
     modal: PropTypes.shape({
       open: PropTypes.bool,
