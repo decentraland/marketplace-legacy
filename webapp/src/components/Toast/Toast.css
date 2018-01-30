@@ -34,8 +34,8 @@
 
 .toast .close {
   font-size: 19px;
-  top: -10px;
-  right: -9px;
+  top: -9px;
+  right: -12px;
   position: relative;
   float: right;
   cursor: pointer;
