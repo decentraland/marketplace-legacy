@@ -45,7 +45,6 @@ jobs:
           - v1-dependencies-{{ checksum "webapp/package.json" }}
           - v1-dependencies-
       - run: cd webapp && npm install
-      - run: npm install npx
       - save_cache:
           paths:
             - node_modules
