@@ -1,2 +1,1 @@
-import Toast from './Toast.container'
-export default Toast
+export { Toast } from './Toast.container'

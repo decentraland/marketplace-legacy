@@ -5,7 +5,7 @@ import { toastType } from 'components/types'
 
 import './Toast.css'
 
-export default class Toast extends React.PureComponent {
+export class Toast extends React.PureComponent {
   static propTypes = {
     toasts: PropTypes.objectOf(toastType),
     onClose: PropTypes.func

@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   // id, kind, message, delay
 }
 
-export default function reducer(state = INITIAL_STATE, action) {
+export function toastReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case OPEN_TOAST: {
       return {
