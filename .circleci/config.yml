@@ -40,6 +40,9 @@ jobs:
     working_directory: /tmp/marketplace
     steps:
       - checkout
+      - type: shell
+        name: Install System Dependencies
+        command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "webapp/package.json" }}
