@@ -80,6 +80,9 @@ jobs:
       - run:
           name: Deploy to S3 if tests pass and branch is release
           command: aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
+      - run:
+          name: Invalidate Cloudfront cache
+          command: aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
   deploy-staging:
     docker:
       - image: circleci/node:7.10
@@ -92,6 +95,9 @@ jobs:
       - run:
           name: Deploy to S3 if tests pass and branch is staging
           command: aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
+      - run:
+          name: Invalidate Cloudfront cache
+          command: aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
 
 workflows:
   version: 2
