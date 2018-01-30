@@ -1,8 +1,8 @@
 import { Model } from 'decentraland-commons'
 
-import coordinates from './coordinates'
+import { coordinates } from './coordinates'
 
-class Parcel extends Model {
+export class Parcel extends Model {
   static tableName = 'parcels'
   static columnNames = [
     'id',
@@ -64,5 +64,3 @@ class Parcel extends Model {
     return await super.insert(parcel)
   }
 }
-
-export default Parcel

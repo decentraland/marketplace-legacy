@@ -3,13 +3,13 @@
 import { execSync } from 'child_process'
 import { Log, env, cli } from 'decentraland-commons'
 
-import db from '../src/database'
+import { db } from '../src/database'
 
 const log = new Log('init')
 
 env.load()
 
-async function initializeDatabase() {
+export async function initializeDatabase() {
   const shouldContinue = await cli.confirm(
     'Careful! this will DROP and reset the current `parcels` and `districts` database.\nAre you sure you want to continue?'
   )
@@ -38,5 +38,3 @@ db
   .connect()
   .then(initializeDatabase)
   .catch(console.error)
-
-export default initializeDatabase

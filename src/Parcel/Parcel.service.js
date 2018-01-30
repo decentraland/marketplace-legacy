@@ -1,11 +1,11 @@
 import { eth, Contract, Log } from 'decentraland-commons'
 
-import Parcel from './Parcel'
-import coordinates from './coordinates'
+import { Parcel } from './Parcel'
+import { coordinates } from './coordinates'
 
 const log = new Log('ParcelService')
 
-class ParcelService {
+export class ParcelService {
   constructor() {
     this.Parcel = Parcel
   }
@@ -143,5 +143,3 @@ function isDuplicatedError(error) {
   const duplicateErrorRegexp = /duplicate key value violates unique constraint ".+_pkey"/
   return error && error.search && error.search(duplicateErrorRegexp) !== -1
 }
-
-export default ParcelService

@@ -1,1 +1,1 @@
-export { default as Contribution } from './Contribution'
+export { Contribution } from './Contribution'

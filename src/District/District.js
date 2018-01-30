@@ -1,7 +1,7 @@
 import { Model } from 'decentraland-commons'
 import uuid from 'uuid'
 
-class District extends Model {
+export class District extends Model {
   static tableName = 'districts'
   static columnNames = [
     'id',
@@ -29,5 +29,3 @@ class District extends Model {
     return super.insert(project)
   }
 }
-
-export default District

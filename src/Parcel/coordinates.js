@@ -2,7 +2,7 @@
  * A set of helpers to work with (x, y) coordinates
  * @type {Object}
  */
-const coordinates = {
+export const coordinates = {
   /**
    * Takes an array of { x, y } pairs and splits them into x and y arrays
    * @param  {Array<object>} pairs - Array of { x, y } pairs
@@ -53,5 +53,3 @@ const coordinates = {
     return !!match
   }
 }
-
-export default coordinates
