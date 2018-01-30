@@ -21,7 +21,7 @@ export const districtType = shape({
   description: string.isRequired,
   link: string.isRequired,
   name: string.isRequired,
-  parcel_count: string,
+  parcel_count: string.isRequired,
   priority: number.isRequired,
   public: bool.isRequired
 })

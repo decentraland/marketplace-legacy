@@ -1,4 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
+import { eth } from 'decentraland-commons'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
@@ -8,7 +9,6 @@ import {
   EDIT_PARCEL_FAILURE
 } from './actions'
 import api from 'lib/api'
-import { getWallet } from 'modules/wallet/utils'
 import { buildCoordinate } from 'lib/utils'
 
 export default function* saga() {
@@ -44,8 +44,7 @@ y: ${parcel.y}
 name: ${parcel.name}
 description: ${parcel.description}`
 
-    const wallet = getWallet()
-    const { message, signature } = yield call(() => wallet.sign(payload))
+    const { message, signature } = yield call(() => eth.sign(payload))
 
     yield call(() => api.editParcel(message, signature))
 

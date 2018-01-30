@@ -29,8 +29,8 @@ export default function* saga() {
 
 function* handleWalletRequest(action = {}) {
   try {
-    const wallet = yield call(() => connectEthereumWallet())
-    const address = yield call(() => wallet.getAddress())
+    yield call(() => connectEthereumWallet())
+    const address = yield call(() => eth.getAddress())
 
     yield put({
       type: FETCH_WALLET_SUCCESS,
@@ -45,6 +45,7 @@ function* handleWalletRequest(action = {}) {
 
 function* handleWalletSuccess(action) {
   const { address } = action.wallet
+
   yield put({ type: FETCH_ADDRESS_PARCELS_REQUEST, address })
   yield put({ type: FETCH_ADDRESS_CONTRIBUTIONS_REQUEST, address })
   yield put({ type: FETCH_DISTRICTS_REQUEST })
