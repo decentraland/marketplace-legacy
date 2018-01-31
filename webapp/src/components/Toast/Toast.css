@@ -1,0 +1,42 @@
+.toasts-container {
+  bottom: 20px;
+  right: 180px;
+  position: absolute;
+  z-index: 1040;
+}
+
+.toast {
+  min-width: 220px;
+  width: 290px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  position: relative;
+  color: #FFF;
+  background-color: #FFF;
+}
+.toasts-container .toast:last-child {
+  margin-bottom: 0;
+}
+
+.toast-info {
+  background-color: #1976D2;
+}
+.toast-success {
+  background-color: #2E7D32;
+}
+.toast-error {
+  background-color: #E53935;
+}
+.toast-warning {
+  background-color: #EF6C00;
+}
+
+.toast .close {
+  font-size: 19px;
+  top: -9px;
+  right: -12px;
+  position: relative;
+  float: right;
+  cursor: pointer;
+}
