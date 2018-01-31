@@ -9,13 +9,14 @@ import CoordinateLink from '../CoordinateLink'
 class ParcelRowEdit extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    onCancel: PropTypes.func
   }
 
   constructor(props) {
     super(props)
 
-    const { name, description } = props.parcel
+    const { name, description } = props.parcel.data
     this.state = { name, description }
   }
 
@@ -37,11 +38,18 @@ class ParcelRowEdit extends React.PureComponent {
 
     onSubmit({
       ...parcel,
-      name,
-      description
+      data: {
+        ...parcel.data,
+        name,
+        description
+      }
     })
 
     e.preventDefault()
+  }
+
+  handleCancel = () => {
+    this.props.onCancel()
   }
 
   render() {
@@ -54,9 +62,26 @@ class ParcelRowEdit extends React.PureComponent {
           Editing&nbsp;&nbsp;
           <CoordinateLink parcel={parcel} />
         </div>
-        <div className="col col-actions" onClick={this.handleSubmit}>
-          <Icon name="tick" />
-          Done
+        <div className="col col-actions">
+          <div className="action" onClick={this.handleSubmit}>
+            <Icon name="tick" className="action-icon" />
+            Done
+          </div>
+          {parcel.isEditing ? (
+            <i
+              className="action"
+              data-balloon="Reject the transaction to cancel"
+              data-balloon-pos="left"
+            >
+              <span className="times action-icon">&times;</span>
+              Cancel
+            </i>
+          ) : (
+            <div className="action" onClick={this.handleCancel}>
+              <span className="times action-icon">&times;</span>
+              Cancel
+            </div>
+          )}
         </div>
 
         <form action="POST" onSubmit={this.handleSubmit}>

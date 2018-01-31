@@ -20,8 +20,6 @@ export const database = {
       "x" int NOT NULL,
       "y" int NOT NULL,
       "price" TEXT,
-      "name" TEXT,
-      "description" TEXT,
       "district_id" TEXT`,
       { sequenceName: null }
     )

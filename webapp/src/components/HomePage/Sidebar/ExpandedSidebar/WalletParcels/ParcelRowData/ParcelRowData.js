@@ -19,7 +19,7 @@ class ParcelRowData extends React.PureComponent {
   }
 
   render() {
-    const { parcel, onTransfer } = this.props
+    const { parcel, onEdit, onTransfer } = this.props
 
     return (
       <div className="table-row">
@@ -27,13 +27,19 @@ class ParcelRowData extends React.PureComponent {
           <CoordinateLink parcel={parcel} />
         </div>
         <div className="col col-price">{this.getPrice()}</div>
-        {/*<div className="col col-name">{parcel.name}</div>*/}
+        <div className="col col-name">{parcel.data.name}</div>
 
         <div className="col col-actions">
-          {/*<span onClick={onEdit} data-balloon="Edit" data-balloon-pos="up">
-            <Icon name="pencil" />
-          </span>*/}
           <span
+            className="action"
+            onClick={onEdit}
+            data-balloon="Edit"
+            data-balloon-pos="up"
+          >
+            <Icon name="pencil" />
+          </span>
+          <span
+            className="action"
             onClick={onTransfer}
             data-balloon="Transfer"
             data-balloon-pos="up"

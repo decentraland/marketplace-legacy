@@ -2,7 +2,9 @@ import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCELS_SUCCESS,
   FETCH_PARCELS_FAILURE,
+  EDIT_PARCEL_REQUEST,
   EDIT_PARCEL_SUCCESS,
+  EDIT_PARCEL_FAILURE,
   MERGE_PARCELS
 } from './actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
@@ -50,13 +52,24 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case EDIT_PARCEL_SUCCESS: {
+    case EDIT_PARCEL_REQUEST: {
       const { parcel } = action
       return {
         ...state,
         data: {
           ...state.data,
-          [parcel.id]: parcel
+          [parcel.id]: { ...parcel, isEditing: true }
+        }
+      }
+    }
+    case EDIT_PARCEL_SUCCESS:
+    case EDIT_PARCEL_FAILURE: {
+      const { parcel } = action
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [parcel.id]: { ...parcel, isEditing: false }
         }
       }
     }

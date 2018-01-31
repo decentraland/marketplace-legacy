@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import { eth, tx, utils } from 'decentraland-commons'
+import { eth, tx } from 'decentraland-commons'
 
 import { db } from '../database'
 import { Parcel } from './Parcel'
@@ -55,6 +55,7 @@ describe('Parcel', function() {
 describe('ParcelService', function() {
   const testParcel1 = { x: 1, y: 2 }
   const testParcel2 = { x: -7, y: 5 }
+
   const testParcel1WithId = {
     ...testParcel1,
     id: Parcel.buildId(testParcel1.x, testParcel1.y)
@@ -63,21 +64,22 @@ describe('ParcelService', function() {
     ...testParcel2,
     id: Parcel.buildId(testParcel2.x, testParcel2.y)
   }
+
   const testAddress = '0xfede'
 
   const contract = {
     ownerOfLand(x, y) {
-      const isDummy = testParcel1.x === x && testParcel1.y === y
-      return isDummy ? tx.DUMMY_TX_ID : null
+      return this.isTestParcel(x, y) ? tx.DUMMY_TX_ID : null
     },
-    ownerOfLandMany(x, y) {
-      const isDummy =
-        testParcel1.x === x[0] &&
-        testParcel1.y === y[0] &&
-        testParcel2.x === x[1] &&
-        testParcel2.y === y[1]
+    ownerOfLandMany(xCoords, yCoords) {
+      const isTestParcel =
+        this.isTestParcel(xCoords[0], yCoords[0]) &&
+        this.isTestParcel(xCoords[1], yCoords[1])
 
-      return isDummy ? [tx.DUMMY_TX_ID, tx.DUMMY_TX_ID] : null
+      return isTestParcel ? [tx.DUMMY_TX_ID, tx.DUMMY_TX_ID] : null
+    },
+    getData(x, y) {
+      return this.isTestParcel(x, y) ? '0,awesome name,super description,' : ''
     },
     landOf(address) {
       const result =
@@ -86,6 +88,12 @@ describe('ParcelService', function() {
           : [[], []]
 
       return result.map(pair => pair.map(eth.utils.toBigNumber))
+    },
+    isTestParcel(x, y) {
+      return (
+        (testParcel1.x === x && testParcel1.y === y) ||
+        (testParcel2.x === x && testParcel2.y === y)
+      )
     }
   }
 
@@ -134,6 +142,46 @@ describe('ParcelService', function() {
     })
   })
 
+  describe('#addLandData', function() {
+    it('should add the decoded land data to the parcel', async function() {
+      const service = new ParcelService()
+      sinon.stub(service, 'getLANDRegistryContract').returns(contract)
+
+      const result = await service.addLandData([testParcel1])
+      expect(result).to.deep.equal([
+        {
+          ...testParcel1,
+          data: {
+            version: 0,
+            name: 'awesome name',
+            description: 'super description',
+            ipns: ''
+          }
+        }
+      ])
+    })
+
+    it('should return an object with only the CURRENT_DATA_VERSION as property if the getter or decoding fails', async function() {
+      const service = new ParcelService()
+      sinon.stub(service, 'getLANDRegistryContract').returns({
+        getData: () => {
+          throw new Error('Expected spy error')
+        }
+      })
+
+      const result = await service.addLandData([{ x: -22, y: 42 }])
+      expect(result).to.deep.equal([
+        {
+          x: -22,
+          y: 42,
+          data: {
+            version: 0
+          }
+        }
+      ])
+    })
+  })
+
   describe('#isOwner', function() {
     it('should return true if the parcel belongs to the address', async function() {
       const service = new ParcelService()
@@ -167,20 +215,22 @@ describe('ParcelService', function() {
       const parcelsWithOwner = await service.addOwners(parcels)
 
       expect(parcelsWithOwner).to.deep.equal([
-        { x: 1, y: 2, owner: '0xdeadbeef' }, // testParcel1
-        { x: -7, y: 5, owner: '0xdeadbeef' }, // testParcel2
+        { ...testParcel1, owner: '0xdeadbeef' },
+        { ...testParcel2, owner: '0xdeadbeef' },
         { x: 11, y: -2, owner: null }
       ])
     })
 
     it('should return the same array if the LANDRegistry contract fails', async function() {
       const service = new ParcelService()
-      sinon.stub(service, 'getLANDRegistryContract').throws()
+      sinon
+        .stub(service, 'getLANDRegistryContract')
+        .throws(new Error('Expected spy error'))
 
       const parcels = [testParcel1, testParcel2]
       const parcelsWithOwner = await service.addOwners(parcels)
 
-      expect(parcelsWithOwner).to.equal(parcels)
+      expect(parcelsWithOwner).to.deep.equal([testParcel1, testParcel2])
     })
   })
 
@@ -196,7 +246,9 @@ describe('ParcelService', function() {
 
     it('should return an empty array on error', async function() {
       const service = new ParcelService()
-      sinon.stub(service, 'getLANDRegistryContract').throws()
+      sinon
+        .stub(service, 'getLANDRegistryContract')
+        .throws(new Error('Expected spy error'))
 
       const landPairs = await service.getLandOf(testAddress)
 
@@ -212,9 +264,9 @@ describe('ParcelService', function() {
         { x: -5, y: 20 }
       ]
       const parcelData = [
-        { name: 'Name 1', description: 'Description 1', price: '1000' },
-        { name: 'Name 2', description: 'Description 2', price: '1250' },
-        { name: 'Name 3', description: 'Description 3', price: '5234' }
+        { price: '1000' },
+        { price: '1250' },
+        { price: '5234' }
       ]
       const parcels = contractParcels.map((coord, index) =>
         Object.assign({}, coord, parcelData[index])
@@ -232,32 +284,6 @@ describe('ParcelService', function() {
     })
 
     afterEach(() => db.truncate('parcels'))
-  })
-
-  describe('#getValuesFromSignedMessage', function() {
-    it('should return an object with each value it finds on the message text, following the extract convention', async function() {
-      const values = {
-        id: null,
-        x: 42,
-        y: null,
-        name: 'Name of the parcel',
-        description: 'Super description'
-      }
-
-      const signedMessage = {
-        extract(columnNames) {
-          expect(columnNames).to.deep.equal(Parcel.columnNames)
-          return Object.values(values)
-        }
-      }
-
-      const signedValues = await new ParcelService().getValuesFromSignedMessage(
-        signedMessage
-      )
-
-      const result = utils.omit(values, ['id', 'y']) // remove nulls
-      expect(signedValues).to.deep.equal(result)
-    })
   })
 })
 
