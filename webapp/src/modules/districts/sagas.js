@@ -1,14 +1,12 @@
 import { call, takeLatest, put } from 'redux-saga/effects'
-
 import {
   FETCH_DISTRICTS_REQUEST,
   FETCH_DISTRICTS_SUCCESS,
   FETCH_DISTRICTS_FAILURE
 } from './actions'
+import { api } from 'lib/api'
 
-import api from 'lib/api'
-
-export default function* saga() {
+export function* districtsSaga() {
   yield takeLatest(FETCH_DISTRICTS_REQUEST, handleDistrictsRequest)
 }
 

@@ -1,4 +1,4 @@
-export default function createAnalyticsMiddleware(sendEvent, reducer) {
+export function createAnalyticsMiddleware(sendEvent, reducer) {
   if (!reducer) reducer = action => action
 
   return store => next => action => {

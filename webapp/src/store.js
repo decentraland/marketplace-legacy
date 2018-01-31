@@ -7,11 +7,11 @@ import createSagasMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-import api from 'lib/api'
-import { createGoogleAnalyticsMiddleware } from './analyticsMiddleware'
+import { api } from 'lib/api'
+import { createGoogleAnalyticsMiddleware } from 'middleware'
 
-import reducer, { analytics } from './reducer'
-import rootSaga from './sagas'
+import { rootReducer, analytics } from './reducer'
+import { rootSaga } from './sagas'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -30,7 +30,7 @@ const middleware = applyMiddleware(
   analyticsMiddleware
 )
 const enhancer = composeEnhancers(middleware)
-const store = createStore(reducer, enhancer)
+const store = createStore(rootReducer, enhancer)
 
 sagasMiddleware.run(rootSaga)
 

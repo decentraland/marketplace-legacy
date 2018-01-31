@@ -2,42 +2,44 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-export default function EtherscanLink(props) {
-  const { address, tx, className, target, text, children } = props
-
-  if (!address && !tx) {
-    console.warn(
-      'Tried to render an EtherscanLink without either an address or tx hash. Please supply one of those'
-    )
-    return null
+export default class EtherscanLink extends React.PureComponent {
+  static propTypes = {
+    address: PropTypes.string,
+    tx: PropTypes.string,
+    className: PropTypes.string,
+    target: PropTypes.string,
+    text: PropTypes.string,
+    children: PropTypes.node
   }
 
-  // TODO: Use the wallet network to get correct etherscan subdomain.
-  // See: https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#construction_worker-network-check.
-  // it would be nice to have it in commons, under eth, and as a util function here in the marketplace
+  static defaultProps = {
+    className: 'etherscan-link',
+    target: '_blank',
+    text: null
+  }
 
-  const origin = 'https://etherscan.io'
-  const pathname = address ? `/address/${address}` : `/tx/${tx}`
-  const href = `${origin}${pathname}`
+  render() {
+    const { address, tx, className, target, text, children } = this.props
 
-  return (
-    <Link className={className} to={href} target={target}>
-      {children || text || href}
-    </Link>
-  )
-}
+    if (!address && !tx) {
+      console.warn(
+        'Tried to render an EtherscanLink without either an address or tx hash. Please supply one of those'
+      )
+      return null
+    }
 
-EtherscanLink.propTypes = {
-  address: PropTypes.string,
-  tx: PropTypes.string,
-  className: PropTypes.string,
-  target: PropTypes.string,
-  text: PropTypes.string,
-  children: PropTypes.node
-}
+    // TODO: Use the wallet network to get correct etherscan subdomain.
+    // See: https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#construction_worker-network-check.
+    // it would be nice to have it in commons, under eth, and as a util function here in the marketplace
 
-EtherscanLink.defaultProps = {
-  className: 'etherscan-link',
-  target: '_blank',
-  text: null
+    const origin = 'https://etherscan.io'
+    const pathname = address ? `/address/${address}` : `/tx/${tx}`
+    const href = `${origin}${pathname}`
+
+    return (
+      <Link className={className} to={href} target={target}>
+        {children || text || href}
+      </Link>
+    )
+  }
 }

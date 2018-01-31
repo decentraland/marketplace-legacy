@@ -1,7 +1,5 @@
-const localStorage = window.localStorage || {
+export const localStorage = window.localStorage || {
   getItem: () => {},
   setItem: () => {},
   removeItem: () => {}
 }
-
-export default localStorage

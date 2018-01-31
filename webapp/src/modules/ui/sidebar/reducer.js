@@ -2,13 +2,13 @@ import { createSelector } from 'reselect'
 import { getWallet } from 'modules/wallet/reducer'
 import { isLoading } from 'modules/address/reducer'
 import { OPEN_SIDEBAR, CLOSE_SIDEBAR } from './actions'
-import land from 'lib/land'
+import { land } from 'lib/land'
 
 const INITIAL_STATE = {
   open: false
 }
 
-export default function reducer(state = INITIAL_STATE, action) {
+export function sidebarReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case OPEN_SIDEBAR:
       return {

@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   data: null
 }
 
-export default function reducer(state = INITIAL_STATE, action) {
+export function modalReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case OPEN_MODAL: {
       const { name, data } = action

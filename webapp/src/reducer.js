@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
-import address from 'modules/address/reducer'
-import districts from 'modules/districts/reducer'
-import parcels from 'modules/parcels/reducer'
-import transfer from 'modules/transfer/reducer'
-import ui from 'modules/ui/reducer'
-import wallet from 'modules/wallet/reducer'
+
+import { addressReducer as address } from 'modules/address/reducer'
+import { districtsReducer as districts } from 'modules/districts/reducer'
+import { parcelsReducer as parcels } from 'modules/parcels/reducer'
+import { transferReducer as transfer } from 'modules/transfer/reducer'
+import { uiReducer as ui } from 'modules/ui/reducer'
+import { walletReducer as wallet } from 'modules/wallet/reducer'
 
 export function analytics(state, action) {
   switch (action.type) {
@@ -18,7 +19,7 @@ export function analytics(state, action) {
 }
 
 //---------
-export default combineReducers({
+export const rootReducer = combineReducers({
   address,
   districts,
   parcels,

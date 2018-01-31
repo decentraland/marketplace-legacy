@@ -6,7 +6,7 @@ import path from 'path'
 import { server, env, eth, utils, SignedMessage } from 'decentraland-commons'
 import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 
-import db from './database'
+import { db } from './database'
 import { District } from './District'
 import { Parcel, ParcelService } from './Parcel'
 import { Contribution } from './Contribution'

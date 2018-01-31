@@ -1,7 +1,7 @@
 import L from 'leaflet'
 import { requestAnimationFrame, cancelAnimationFrame } from './utils'
 
-const LeafletParcelGrid = L.Layer.extend({
+export const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
   options: {
     getTileAttributes: () => {},
@@ -251,5 +251,3 @@ const LeafletParcelGrid = L.Layer.extend({
     }
   }
 })
-
-export default LeafletParcelGrid

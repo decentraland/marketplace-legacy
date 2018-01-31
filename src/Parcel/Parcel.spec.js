@@ -2,10 +2,10 @@ import { expect } from 'chai'
 import sinon from 'sinon'
 import { eth, tx, utils } from 'decentraland-commons'
 
-import db from '../database'
-import Parcel from './Parcel'
-import ParcelService from './Parcel.service'
-import coordinates from './coordinates'
+import { db } from '../database'
+import { Parcel } from './Parcel'
+import { ParcelService } from './Parcel.service'
+import { coordinates } from './coordinates'
 
 describe('Parcel', function() {
   describe('.buildId', function() {

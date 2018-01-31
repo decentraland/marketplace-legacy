@@ -1,1 +1,1 @@
-export { default as District } from './District'
+export { District } from './District'

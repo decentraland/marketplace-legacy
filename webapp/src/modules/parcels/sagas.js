@@ -8,10 +8,10 @@ import {
   EDIT_PARCEL_SUCCESS,
   EDIT_PARCEL_FAILURE
 } from './actions'
-import api from 'lib/api'
+import { api } from 'lib/api'
 import { buildCoordinate } from 'lib/utils'
 
-export default function* saga() {
+export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCELS_REQUEST, handleParcelsRequest)
   yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
 }

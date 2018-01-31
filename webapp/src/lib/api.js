@@ -5,7 +5,7 @@ import { env } from 'decentraland-commons'
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
 
-class API {
+export class API {
   fetchUserParcels(address) {
     return this.request('get', '/userParcels', { address })
   }
@@ -93,4 +93,4 @@ export class AuthorizationError {
   }
 }
 
-export default new API()
+export const api = new API()

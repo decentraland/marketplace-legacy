@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import locations from 'locations'
+
+import { locations } from 'locations'
 import { walletType, parcelType, districtType } from 'components/types'
 import * as parcelUtils from 'lib/parcelUtils'
 

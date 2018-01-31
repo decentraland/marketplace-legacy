@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router'
 
-import locations from './locations'
+import { locations } from 'locations'
 
 import HomePage from 'components/HomePage'
 import ColorKeyPage from './components/ColorKeyPage'

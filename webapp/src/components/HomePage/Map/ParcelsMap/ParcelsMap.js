@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import L from 'leaflet'
 import debounce from 'lodash.debounce'
 
-import LeafletMapCoordinates from 'lib/LeafletMapCoordinates'
-import LeafletParcelGrid from 'lib/LeafletParcelGrid'
+import { LeafletMapCoordinates } from 'lib/LeafletMapCoordinates'
+import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
 
 import { walletType, parcelType, districtType } from 'components/types'
 

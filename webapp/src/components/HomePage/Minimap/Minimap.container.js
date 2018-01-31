@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import locations from 'locations'
+
+import { locations } from 'locations'
 import { getRange } from 'modules/ui/reducer'
 import { navigateTo } from 'modules/location/actions'
 

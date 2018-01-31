@@ -1,6 +1,6 @@
 import { Model } from 'decentraland-commons'
 
-class Contribution extends Model {
+export class Contribution extends Model {
   static tableName = 'contributions'
   static columnNames = [
     'id',
@@ -24,5 +24,3 @@ class Contribution extends Model {
     )
   }
 }
-
-export default Contribution

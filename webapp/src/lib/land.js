@@ -1,6 +1,6 @@
 export const ONE_LAND_IN_MANA = 1000
 
-export default {
+export const land = {
   ONE_LAND_IN_MANA,
 
   convert(amount, unit = 'land') {

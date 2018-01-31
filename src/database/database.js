@@ -1,6 +1,6 @@
 import { db, env } from 'decentraland-commons'
 
-export default {
+export const database = {
   ...db.postgres,
 
   async connect() {

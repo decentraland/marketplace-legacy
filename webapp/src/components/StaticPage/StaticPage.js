@@ -5,23 +5,26 @@ import Navbar from './Navbar'
 
 import './StaticPage.css'
 
-export default function StaticPage({ className, children }) {
-  return (
-    <div className={`StaticPage ${className}`}>
-      <Navbar />
+export default class StaticPage extends React.PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.node.isRequired
+  }
 
-      <div className="content">
-        <div>{children}</div>
+  static defaultProps = {
+    className: ''
+  }
+
+  render() {
+    const { className, children } = this.props
+    return (
+      <div className={`StaticPage ${className}`}>
+        <Navbar />
+
+        <div className="content">
+          <div>{children}</div>
+        </div>
       </div>
-    </div>
-  )
-}
-
-StaticPage.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired
-}
-
-StaticPage.defaultProps = {
-  className: ''
+    )
+  }
 }

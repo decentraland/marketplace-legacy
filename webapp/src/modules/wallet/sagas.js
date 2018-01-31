@@ -1,10 +1,9 @@
 import { call, takeLatest, put, select } from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
-import { getAddress } from 'modules/wallet/reducer'
 import { replace } from 'react-router-redux'
 
-import locations from '../../locations'
-
+import { locations } from 'locations'
+import { getAddress } from 'modules/wallet/reducer'
 import {
   FETCH_WALLET_REQUEST,
   FETCH_WALLET_SUCCESS,
@@ -21,7 +20,7 @@ import { FETCH_DISTRICTS_REQUEST } from 'modules/districts/actions'
 
 import { connectEthereumWallet } from './utils'
 
-export default function* saga() {
+export function* walletSaga() {
   yield takeLatest(FETCH_WALLET_REQUEST, handleWalletRequest)
   yield takeLatest(FETCH_WALLET_SUCCESS, handleWalletSuccess)
   yield takeLatest(FETCH_BALANCE_REQUEST, handleBalanceRequest)

@@ -1,6 +1,6 @@
 import L from 'leaflet'
 
-export default class LeafletMapCoordinates {
+export class LeafletMapCoordinates {
   constructor(map, tileSize) {
     this.map = map
     this.tileSize = tileSize
