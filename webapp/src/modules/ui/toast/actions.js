@@ -2,19 +2,19 @@ export const OPEN_TOAST = 'Open Toast'
 export const CLOSE_TOAST = 'Close Toast'
 
 export function openInfoToast(message) {
-  return openToast('info', message)
+  return openToast({ kind: 'info', message })
 }
 
 export function openSuccessToast(message) {
-  return openToast('success', message)
+  return openToast({ kind: 'success', message })
 }
 
 export function openErrorToast(message) {
-  return openToast('error', message)
+  return openToast({ kind: 'error', message })
 }
 
 export function openWarningToast(message) {
-  return openToast('warning', message)
+  return openToast({ kind: 'warning', message })
 }
 
 export function openToast({ id, kind, message, delay } = {}) {
