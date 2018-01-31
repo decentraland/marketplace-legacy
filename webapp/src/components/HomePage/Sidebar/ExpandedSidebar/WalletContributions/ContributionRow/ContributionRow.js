@@ -1,7 +1,7 @@
 import React from 'react'
 import DistrictLink from '../DistrictLink'
 import Icon from 'components/Icon'
-import land from 'lib/land'
+import { land } from 'lib/land'
 
 class ContributionRow extends React.PureComponent {
   render() {

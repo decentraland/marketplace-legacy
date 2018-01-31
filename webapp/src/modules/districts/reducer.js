@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   error: null
 }
 
-export default function reducer(state = INITIAL_STATE, action) {
+export function districtsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_DISTRICTS_REQUEST:
       return { ...state, loading: true }

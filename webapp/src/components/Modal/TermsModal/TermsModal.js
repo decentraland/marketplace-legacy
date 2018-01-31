@@ -1,6 +1,6 @@
 import React from 'react'
 
-import localStorage from 'lib/localStorage'
+import { localStorage } from 'lib/localStorage'
 
 import BaseModal from '../BaseModal'
 import Icon from 'components/Icon'

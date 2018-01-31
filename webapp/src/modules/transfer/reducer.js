@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   error: null
 }
 
-export default function reducer(state = INITIAL_STATE, action) {
+export function transferReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case TRANSFER_PARCEL_REQUEST: {
       return {

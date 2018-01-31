@@ -22,8 +22,9 @@ const INITIAL_STATE = {
   loading: true,
   error: null
 }
-export default function reducer(state = INITIAL_STATE, action) {
-  /* 
+
+export function addressReducer(state = INITIAL_STATE, action) {
+  /*
     The following import is due to a cyclic import,
     if imported at the top of the file it is undefined.
     More elegant solutions are welcome 😇.

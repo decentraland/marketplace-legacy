@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   error: null
 }
 
-export default function reducer(state = INITIAL_STATE, action) {
+export function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_WALLET_REQUEST:
     case FETCH_BALANCE_REQUEST:

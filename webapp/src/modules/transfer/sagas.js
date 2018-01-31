@@ -7,7 +7,7 @@ import {
   TRANSFER_PARCEL_FAILURE
 } from './actions'
 
-export default function* saga() {
+export function* transferSaga() {
   yield takeLatest(TRANSFER_PARCEL_REQUEST, handleTransferRequest)
 }
 

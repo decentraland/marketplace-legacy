@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import locations from 'locations'
+
+import { locations } from 'locations'
 import { buildCoordinate } from 'lib/utils'
 
 class CoordinateLink extends React.PureComponent {

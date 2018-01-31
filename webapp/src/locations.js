@@ -1,4 +1,4 @@
-export default {
+export const locations = {
   root: '/',
 
   parcel: '/:x/:y',

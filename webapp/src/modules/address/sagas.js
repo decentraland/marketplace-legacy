@@ -7,12 +7,10 @@ import {
   FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
   FETCH_ADDRESS_CONTRIBUTIONS_FAILURE
 } from './actions'
-
 import { MERGE_PARCELS } from 'modules/parcels/actions'
+import { api } from 'lib/api'
 
-import api from 'lib/api'
-
-export default function* saga() {
+export function* addressSaga() {
   yield takeEvery(FETCH_ADDRESS_PARCELS_REQUEST, handleAddressParcelsRequest)
   yield takeEvery(FETCH_ADDRESS_PARCELS_SUCCESS, handleAddressParcelsSuccess)
   yield takeEvery(

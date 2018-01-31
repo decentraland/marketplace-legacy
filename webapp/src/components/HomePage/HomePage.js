@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import localStorage from 'lib/localStorage'
+import { localStorage } from 'lib/localStorage'
 
 import Sidebar from './Sidebar'
 import MapComponent from './Map'
