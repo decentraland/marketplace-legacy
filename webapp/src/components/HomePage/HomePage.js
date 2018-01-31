@@ -7,7 +7,7 @@ import Sidebar from './Sidebar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
 import Modal from 'components/Modal'
-import { Toast } from 'components/Toast'
+import Toast from 'components/Toast'
 
 import './HomePage.css'
 
