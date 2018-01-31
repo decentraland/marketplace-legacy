@@ -36,19 +36,19 @@
 }
 
 .WalletParcels .table .col-editing {
-  width: 80%;
+  width: 75%;
 }
 .WalletParcels .table .col-coord {
   width: 20%;
 }
 .WalletParcels .table .col-price {
-  width: 27%;
+  width: 25%;
 }
 .WalletParcels .table .col-name {
-  width: 30%;
+  width: 27%;
 }
 .WalletParcels .table .col-actions {
-  width: 20%;
+  width: 25%;
 }
 
 .WalletParcels .table .col-editing {
@@ -59,8 +59,18 @@
   cursor: pointer;
 }
 
-.WalletParcels .col-actions .Icon {
-  margin-right: 8px;
+.WalletParcels .col-actions .action {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.WalletParcels .col-actions .action-icon {
+  margin-right: 4px;
+}
+
+.WalletParcels .col-actions .times {
+  font-size: 17px;
+  vertical-align: middle;
 }
 
 .WalletParcels .editing-fields {

@@ -16,6 +16,10 @@ class ParcelRow extends React.PureComponent {
     this.setState({ editing: true })
   }
 
+  handleCancel = () => {
+    this.setState({ editing: false })
+  }
+
   handleSubmit = newParcel => {
     this.setState({ editing: false })
 
@@ -43,8 +47,12 @@ class ParcelRow extends React.PureComponent {
 
     return (
       <div className={className}>
-        {this.state.editing ? (
-          <ParcelRowEdit parcel={parcel} onSubmit={this.handleSubmit} />
+        {this.state.editing || parcel.isEditing ? (
+          <ParcelRowEdit
+            parcel={parcel}
+            onSubmit={this.handleSubmit}
+            onCancel={this.handleCancel}
+          />
         ) : (
           <ParcelRowData
             parcel={parcel}

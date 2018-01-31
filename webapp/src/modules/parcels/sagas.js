@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects'
+import { takeEvery, select, call, put } from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
 import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 import {
@@ -10,6 +10,7 @@ import {
   EDIT_PARCEL_FAILURE
 } from './actions'
 import { api } from 'lib/api'
+import { getParcels } from './reducer'
 import { buildCoordinate } from 'lib/utils'
 
 export function* parcelsSaga() {
@@ -37,11 +38,11 @@ function* handleParcelsRequest(action) {
 }
 
 function* handleEditParcelsRequest(action) {
-  try {
-    const parcel = action.parcel
-    const contract = eth.getContract('LANDRegistry')
+  const parcel = action.parcel
+  const { x, y, data } = parcel
 
-    const { x, y, data } = parcel
+  try {
+    const contract = eth.getContract('LANDRegistry')
     const dataString = LANDRegistry.encodeLandData(data)
 
     yield call(() => contract.updateLandData(x, y, dataString))
@@ -49,6 +50,13 @@ function* handleEditParcelsRequest(action) {
     yield put({ type: EDIT_PARCEL_SUCCESS, parcel })
   } catch (error) {
     console.warn(error)
-    yield put({ type: EDIT_PARCEL_FAILURE, error: error.message })
+    const parcels = yield select(getParcels)
+    const currentParcel = parcels[buildCoordinate(x, y)]
+
+    yield put({
+      type: EDIT_PARCEL_FAILURE,
+      error: error.message,
+      parcel: currentParcel
+    })
   }
 }
