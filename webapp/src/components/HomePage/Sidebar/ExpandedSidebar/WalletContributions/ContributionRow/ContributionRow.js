@@ -1,9 +1,10 @@
 import React from 'react'
-import DistrictLink from '../DistrictLink'
+
+import ContributionLink from '../ContributionLink'
 import Icon from 'components/Icon'
 import { land } from 'lib/land'
 
-class ContributionRow extends React.PureComponent {
+export default class ContributionRow extends React.PureComponent {
   render() {
     const { contribution } = this.props
 
@@ -12,7 +13,7 @@ class ContributionRow extends React.PureComponent {
     return (
       <div className="table-row">
         <div className="col col-district">
-          <DistrictLink contribution={contribution} />
+          <ContributionLink contribution={contribution} />
         </div>
         <div className="col col-contributed">
           {contribution.land_count.toLocaleString()} LAND ({land.convert(
@@ -30,5 +31,3 @@ class ContributionRow extends React.PureComponent {
     )
   }
 }
-
-export default ContributionRow

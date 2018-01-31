@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
+import { fetchWalletRequest, isLoading } from 'modules/wallet/actions'
 import { openModal } from 'modules/ui/actions'
-import { fetchWalletRequest } from 'modules/wallet/actions'
 
 import HomePage from './HomePage'
 
 const mapState = state => {
   return {
-    isReady: true
+    isLoading: isLoading(state)
   }
 }
 

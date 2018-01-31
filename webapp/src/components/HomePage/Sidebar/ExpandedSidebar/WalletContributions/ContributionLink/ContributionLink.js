@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom'
 import { locations } from 'locations'
 import { splitCoordinate } from 'lib/utils'
 
-class DistrictLink extends React.PureComponent {
+export default class ContributionLink extends React.PureComponent {
   render() {
     const { contribution } = this.props
     const district = contribution.district
     if (!district) return null
     const [x, y] = splitCoordinate(district.center)
-    return <Link to={locations.parcelDetail(x, y)}>{district.name}</Link>
+    return <Link to={locations.parcelMapDetail(x, y)}>{district.name}</Link>
   }
 }
-
-export default DistrictLink

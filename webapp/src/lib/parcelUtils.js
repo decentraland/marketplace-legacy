@@ -40,7 +40,11 @@ export function isDistrict(parcel) {
   return !!parcel.district_id
 }
 
-export function getParcelAttributes(wallet, parcel, district) {
+export function getDistrict(parcel, districts = {}) {
+  return parcel && districts[parcel.district_id]
+}
+
+export function getParcelAttributes(wallet, parcel, districts) {
   if (!parcel) {
     return {
       label: 'Loading...',
@@ -49,6 +53,8 @@ export function getParcelAttributes(wallet, parcel, district) {
       backgroundColor: colors.LOADING
     }
   }
+  const district = getDistrict(parcel)
+
   if (isDistrict(parcel)) {
     if (isRoad(parcel.district_id)) {
       return {

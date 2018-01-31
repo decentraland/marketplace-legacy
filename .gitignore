@@ -1,4 +1,5 @@
 .DS_Store
+.idea
 data
 postgres_data
 out

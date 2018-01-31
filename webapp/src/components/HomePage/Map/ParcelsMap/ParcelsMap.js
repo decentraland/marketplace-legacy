@@ -271,12 +271,11 @@ export default class ParcelsMap extends React.Component {
   // Called by the Parcel Grid on each tile render
   getTileAttributes = (x, y, { wallet, parcels, districts } = this.props) => {
     const parcel = parcels[buildCoordinate(x, y)]
-    const district = parcel ? districts[parcel.district_id] : null
 
     const { backgroundColor, color, label, description } = getParcelAttributes(
       wallet,
       parcel,
-      district
+      districts
     )
 
     return {

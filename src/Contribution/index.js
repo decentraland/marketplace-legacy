@@ -1,1 +1,3 @@
-export { Contribution } from './Contribution'
+import Contribution from './Contribution'
+
+export default Contribution

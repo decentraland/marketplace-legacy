@@ -1,0 +1,23 @@
+.ParcelDetailPage {
+  height: 100%;
+}
+
+.ParcelDetailPage > .Loading {
+  font-size: 10px;
+  top: 35%;
+}
+
+.ParcelDetail h2 {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-size: 28px;
+  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
+}
+
+.ParcelDetail .square {
+  height: 20px;
+  width: 20px;
+  border: 1px solid #CCC;
+  display: inline-block;
+  vertical-align: middle;
+}

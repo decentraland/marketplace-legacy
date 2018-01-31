@@ -13,7 +13,7 @@ import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
   static propTypes = {
-    isReady: PropTypes.bool,
+    isLoading: PropTypes.bool,
     onConnect: PropTypes.func
   }
 
@@ -27,8 +27,12 @@ export default class HomePage extends React.PureComponent {
     }
   }
 
+  isReady() {
+    return !this.props.isLoading
+  }
+
   render() {
-    const { isReady } = this.props
+    const isReady = this.isReady()
 
     return (
       <div className="HomePage">
