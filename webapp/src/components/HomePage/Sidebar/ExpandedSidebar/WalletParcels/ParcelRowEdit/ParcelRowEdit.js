@@ -15,7 +15,7 @@ class ParcelRowEdit extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    const { name, description } = props.parcel
+    const { name, description } = props.parcel.data
     this.state = { name, description }
   }
 
