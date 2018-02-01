@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
+import Button from 'components/Button'
+
 import { getParcelAttributes } from 'lib/parcelUtils'
 import { walletType, parcelType, districtType } from 'components/types'
 
@@ -10,11 +12,12 @@ export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
     wallet: walletType.isRequired,
     districts: PropTypes.objectOf(districtType).isRequired,
-    parcel: parcelType.isRequired
+    parcel: parcelType.isRequired,
+    onTransfer: PropTypes.func.isRequired
   }
 
   render() {
-    const { wallet, parcel, districts } = this.props
+    const { wallet, parcel, districts, onTransfer } = this.props
     const { x, y } = parcel
 
     const coordinate = `${x}, ${y}`
@@ -27,7 +30,7 @@ export default class ParcelDetail extends React.PureComponent {
     return (
       <div className="ParcelDetail">
         <div className="row">
-          <div className="col-xs-12">
+          <div className="col-xs-12 col-sm-offset-2 col-sm-4">
             <h3 className="parcel-name">
               {parcel.name
                 ? [
@@ -43,19 +46,12 @@ export default class ParcelDetail extends React.PureComponent {
                     </span>
                   ]}
             </h3>
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-xs-12">
             <div className="owned-by">
               Owned by <Link to={locations.parcelMapDetail(x, y)}>{label}</Link>&nbsp;
               <div className="square" style={{ backgroundColor }} />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
+
             {parcel.description ? (
               <p className="parcel-description">{parcel.description}</p>
             ) : (
@@ -63,6 +59,10 @@ export default class ParcelDetail extends React.PureComponent {
                 This parcel has no description
               </p>
             )}
+          </div>
+
+          <div className="col-xs-12 col-sm-6 text-center">
+            <Button onClick={onTransfer}>TRANSFER</Button>
           </div>
         </div>
       </div>

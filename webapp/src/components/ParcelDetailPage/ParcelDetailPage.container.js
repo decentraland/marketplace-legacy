@@ -8,6 +8,7 @@ import { getParcels, getError as getParcelError } from 'modules/parcels/reducer'
 import { getDistricts } from 'modules/districts/reducer'
 import { fetchWallet } from 'modules/wallet/actions'
 import { fetchParcel } from 'modules/parcels/actions'
+import { openModal } from 'modules/ui/actions'
 
 import { buildCoordinate } from 'lib/utils'
 
@@ -31,7 +32,8 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = dispatch => ({
   onConnect: () => dispatch(fetchWallet()),
-  onFetchParcel: (x, y) => dispatch(fetchParcel(x, y))
+  onFetchParcel: (x, y) => dispatch(fetchParcel(x, y)),
+  onTransfer: parcel => dispatch(openModal('TransferModal', parcel))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(ParcelDetailPage))

@@ -19,7 +19,8 @@ export default class ParcelDetailPage extends React.PureComponent {
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
     onConnect: PropTypes.func,
-    onFetchParcel: PropTypes.func
+    onFetchParcel: PropTypes.func,
+    onTransfer: PropTypes.func
   }
 
   componentWillMount() {
@@ -31,6 +32,11 @@ export default class ParcelDetailPage extends React.PureComponent {
 
   isLoading() {
     return !this.props.parcel || this.props.isAddressLoading
+  }
+
+  handleTransfer = e => {
+    const { parcel } = this.props
+    this.props.onTransfer(parcel)
   }
 
   render() {
@@ -52,6 +58,7 @@ export default class ParcelDetailPage extends React.PureComponent {
               wallet={wallet}
               parcel={parcel}
               districts={districts}
+              onTransfer={this.handleTransfer}
             />
           </div>
         )}

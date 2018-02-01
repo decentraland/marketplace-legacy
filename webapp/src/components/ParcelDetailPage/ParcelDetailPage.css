@@ -17,12 +17,14 @@
 }
 
 .ParcelDetailPage .ParcelDetail {
+  padding-top: 35px;
   font-size: 15px;
 }
 
 .ParcelDetail .parcel-name {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  margin-top: 0;
   font-size: 26px;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
 }
 
 .ParcelDetail .parcel-name-secondary {
@@ -31,18 +33,26 @@
 }
 
 .ParcelDetail .square {
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   border: 1px solid #AAA;
+  margin-left: 5px;
+  top: 2px;
+  position: relative;
   display: inline-block;
-  vertical-align: middle;
 }
 
 .ParcelDetail .parcel-description {
-  margin: 20px 0;
+  margin-top: 30px;
 }
 
 .ParcelDetail .parcel-description-empty {
   color: #AAA;
   font-style: italic;
+}
+
+@media (min-width: 768px) {
+  .ParcelDetail .Button {
+    margin-top: 5px;
+  }
 }
