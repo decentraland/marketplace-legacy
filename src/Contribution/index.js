@@ -1,3 +1,1 @@
-import Contribution from './Contribution'
-
-export default Contribution
+export { Contribution } from './Contribution'

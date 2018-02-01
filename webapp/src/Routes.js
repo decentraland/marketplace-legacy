@@ -5,12 +5,12 @@ import { locations } from 'locations'
 
 import HomePage from 'components/HomePage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
-import ColorKeyPage from './components/ColorKeyPage'
-import PrivacyPage from './components/PrivacyPage'
+import ColorKeyPage from 'components/ColorKeyPage'
+import PrivacyPage from 'components/PrivacyPage'
 
-import WalletErrorPage from './components/WalletErrorPage'
-import AddressErrorPage from './components/AddressErrorPage'
-import ServerError from './components/ServerError'
+import WalletErrorPage from 'components/WalletErrorPage'
+import AddressErrorPage from 'components/AddressErrorPage'
+import ServerError from 'components/ServerError'
 
 import GoogleAnalytics from 'components/GoogleAnalytics'
 import Intercom from 'components/Intercom'
