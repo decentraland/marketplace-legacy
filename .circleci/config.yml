@@ -104,19 +104,19 @@ workflows:
   build-deploy-release:
     jobs:
       - build-release
-      - deploy:
-          requires:
-            - build-release
           filters:
             branches:
               only: release
+      - deploy-release:
+          requires:
+            - build-release
 
   build-deploy-staging:
     jobs:
       - build-staging
-      - deploy:
-          requires:
-            - build-staging
           filters:
             branches:
               only: staging
+      - deploy-staging:
+          requires:
+            - build-staging
