@@ -6,12 +6,12 @@
 }
 
 .CollapsedSidebar header {
-  background-color: #FCFCFC;
-  border-bottom: 1px solid #EDEDED;
+  background-color: #fcfcfc;
+  border-bottom: 1px solid #ededed;
 }
 
 .CollapsedSidebar .ColorCodesButton {
   left: 31%;
-  bottom: 100px;
+  bottom: 180px;
   position: absolute;
 }
