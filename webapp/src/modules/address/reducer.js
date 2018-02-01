@@ -17,21 +17,44 @@ const EMPTY_ADDRESS = {
 
 const INITIAL_STATE = {
   data: {},
-  loading: true,
+  loading: [],
   error: null
 }
 
 export function addressReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
+      return {
+        ...state,
+        loading: [
+          ...state.loading,
+          { id: action.address, type: 'contributions' }
+        ]
+      }
     case FETCH_ADDRESS_PARCELS_REQUEST:
       return {
         ...state,
-        loading: true
+        loading: [...state.loading, { id: action.address, type: 'parcel_ids' }]
+      }
+    case FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS:
+      return {
+        loading: state.loading.filter(
+          item => item.id === action.address && item.type === 'contributions'
+        ),
+        error: null,
+        data: {
+          ...state.data,
+          [action.address]: {
+            ...state.data[action.address],
+            contributions: action.contributions
+          }
+        }
       }
     case FETCH_ADDRESS_PARCELS_SUCCESS:
       return {
-        loading: false,
+        loading: state.loading.filter(
+          item => item.id === action.address && item.type === 'parcel_ids'
+        ),
         error: null,
         data: {
           ...state.data,
@@ -42,23 +65,20 @@ export function addressReducer(state = INITIAL_STATE, action) {
         }
       }
     case FETCH_ADDRESS_CONTRIBUTIONS_FAILURE:
+      return {
+        ...state,
+        loading: state.loading.filter(
+          item => item.id === action.address && item.type === 'contributions'
+        ),
+        error: action.error
+      }
     case FETCH_ADDRESS_PARCELS_FAILURE:
       return {
         ...state,
-        loading: false,
+        loading: state.loading.filter(
+          item => item.id === action.address && item.type === 'parcel_ids'
+        ),
         error: action.error
-      }
-    case FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS:
-      return {
-        loading: false,
-        error: null,
-        data: {
-          ...state.data,
-          [action.address]: {
-            ...state.data[action.address],
-            contributions: action.contributions
-          }
-        }
       }
     case TRANSFER_PARCEL_SUCCESS: {
       const { x, y, oldOwner, newOwner } = action.transfer

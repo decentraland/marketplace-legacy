@@ -4,8 +4,15 @@ import { getDistricts } from 'modules/districts/selectors'
 
 export const getState = state => state.address
 export const getData = state => getState(state).data
-export const isLoading = state => getState(state).loading
+
+export const isLoading = state => getState(state).loading.length > 0
+export const isLoadingId = (state, id) =>
+  state.loading.some(item => item.id === id)
+export const isLoadingType = (state, type) =>
+  state.loading.some(item => item.type === type)
+
 export const getError = state => getState(state).error
+
 export const getAddresses = createSelector(
   getData,
   getParcels,
