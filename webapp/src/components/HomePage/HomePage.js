@@ -6,8 +6,6 @@ import { localStorage } from 'lib/localStorage'
 import Sidebar from './Sidebar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
-import Modal from 'components/Modal'
-import Toast from 'components/Toast'
 
 import './HomePage.css'
 
@@ -43,8 +41,6 @@ export default class HomePage extends React.PureComponent {
         )}
         <MapComponent isReady={isReady} />
         {isReady && <Minimap />}
-        <Modal />
-        <Toast />
       </div>
     )
   }

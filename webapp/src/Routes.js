@@ -15,6 +15,9 @@ import ServerError from 'components/ServerError'
 import GoogleAnalytics from 'components/GoogleAnalytics'
 import Intercom from 'components/Intercom'
 
+import Modal from 'components/Modal'
+import Toast from 'components/Toast'
+
 export default function Routes() {
   return [
     <Switch key="1">
@@ -28,7 +31,9 @@ export default function Routes() {
       <Route exact path={locations.serverError} component={ServerError} />
       <Route exact path={locations.error} component={WalletErrorPage} />
     </Switch>,
-    <Intercom key="2" />,
-    <GoogleAnalytics key="3" />
+    <Modal key="2" />,
+    <Toast key="3" />,
+    <Intercom key="4" />,
+    <GoogleAnalytics key="5" />
   ]
 }
