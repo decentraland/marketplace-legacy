@@ -21,8 +21,8 @@ const mapState = (state, ownProps) => {
   return {
     wallet: getWallet(state),
     isAddressLoading: isAddressLoading(state),
-    districts: getDistricts(state),
     isParcelError: !!getParcelError(state),
+    districts: getDistricts(state),
     parcel,
     x,
     y

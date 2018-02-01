@@ -1,5 +1,6 @@
 .ParcelDetailPage {
   height: 100%;
+  color: #3E396B;
 }
 
 .ParcelDetailPage > .Loading {
@@ -7,17 +8,41 @@
   top: 35%;
 }
 
-.ParcelDetail h2 {
+.ParcelDetailPage .title {
   margin-top: 20px;
   margin-bottom: 0;
   font-size: 28px;
   font-family: "Source Sans Pro Light", Helvetica, sans-serif;
+  text-align: center;
+}
+
+.ParcelDetailPage .ParcelDetail {
+  font-size: 15px;
+}
+
+.ParcelDetail .parcel-name {
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-size: 26px;
+}
+
+.ParcelDetail .parcel-name-secondary {
+  margin-left: 6px;
+  color: #AAA;
 }
 
 .ParcelDetail .square {
   height: 20px;
   width: 20px;
-  border: 1px solid #CCC;
+  border: 1px solid #AAA;
   display: inline-block;
   vertical-align: middle;
+}
+
+.ParcelDetail .parcel-description {
+  margin: 20px 0;
+}
+
+.ParcelDetail .parcel-description-empty {
+  color: #AAA;
+  font-style: italic;
 }
