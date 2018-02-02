@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import L from 'leaflet'
 import debounce from 'lodash.debounce'
+import isEqual from 'lodash/isEqual'
 
 import { LeafletMapCoordinates } from 'lib/LeafletMapCoordinates'
 import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
@@ -10,7 +11,7 @@ import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
 import { walletType, parcelType, districtType } from 'components/types'
 
 import ParcelPopup from './ParcelPopup'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate, requestAnimationFrame } from 'lib/utils'
 import { getParcelAttributes } from 'lib/parcelUtils'
 
 import './ParcelsMap.css'
@@ -96,6 +97,20 @@ export default class ParcelsMap extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    // check if the land data has changed in order to update the popup
+    if (this.popup && this.tileHovered) {
+      const { x, y } = this.tileHovered
+      const coords = buildCoordinate(x, y)
+      const nextParcel = nextProps.parcels[coords]
+      const currentParcel = this.props.parcels[coords]
+      const nextParcelData = (nextParcel && nextParcel.data) || null
+      const currentParcelData = (currentParcel && currentParcel.data) || null
+      const isDifferent = !isEqual(nextParcelData, currentParcelData)
+      if (isDifferent) {
+        const { wallet, parcels, districts } = nextProps
+        this.renderPopup(x, y, wallet, parcels, districts)
+      }
+    }
     return this.props.tileSize !== nextProps.tileSize
   }
 
@@ -130,7 +145,7 @@ export default class ParcelsMap extends React.Component {
     this.mapCoordinates = new LeafletMapCoordinates(this.map, tileSize)
 
     this.parcelGrid = new LeafletParcelGrid({
-      getTileAttributes: this.getTileAttributes,
+      getTileAttributes: this.getTileAttributesFromLatLng,
       onTileClick: this.handleTileClick,
       onMouseDown: this.handleMousedown,
       onMouseUp: this.handleMouseUp,
@@ -243,12 +258,14 @@ export default class ParcelsMap extends React.Component {
     }
   }
 
-  // Called by the Parcel Grid on each tile render
-  getTileAttributes = latlng => {
-    const { wallet, parcels, districts } = this.props
+  getTileAttributesFromLatLng = latlng => {
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
+    const { wallet, parcels, districts } = this.props
+    return this.getTileAttributes(x, y, wallet, parcels, districts)
+  }
+  // Called by the Parcel Grid on each tile render
+  getTileAttributes = (x, y, wallet, parcels, districts) => {
     const parcel = parcels[buildCoordinate(x, y)]
-
     const district = parcel ? districts[parcel.district_id] : null
 
     const { backgroundColor, color, label, description } = getParcelAttributes(
@@ -317,34 +334,39 @@ export default class ParcelsMap extends React.Component {
     if (this.dragging) {
       return
     }
-    const {
-      color,
-      label,
-      backgroundColor,
-      description
-    } = this.getTileAttributes(latlng)
 
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
-
-    const popup = renderToDOM(
-      <ParcelPopup
-        x={x}
-        y={y}
-        color={color}
-        backgroundColor={backgroundColor}
-        label={label}
-        description={description}
-      />
-    )
-
-    leafletPopup
-      .setLatLng(latlng)
-      .setContent(popup)
-      .addTo(this.map)
-
+    leafletPopup.setLatLng(latlng).addTo(this.map)
     this.popup = leafletPopup
 
+    const { wallet, parcels, districts } = this.props
+    this.renderPopup(x, y, wallet, parcels, districts)
+
     return leafletPopup
+  }
+
+  renderPopup = (x, y, wallet, parcels, districts) => {
+    if (this.popup) {
+      const {
+        color,
+        label,
+        backgroundColor,
+        description
+      } = this.getTileAttributes(x, y, wallet, parcels, districts)
+
+      const content = renderToDOM(
+        <ParcelPopup
+          x={x}
+          y={y}
+          color={color}
+          backgroundColor={backgroundColor}
+          label={label}
+          description={description}
+        />
+      )
+
+      requestAnimationFrame(() => this.popup.setContent(content))
+    }
   }
 
   render() {
