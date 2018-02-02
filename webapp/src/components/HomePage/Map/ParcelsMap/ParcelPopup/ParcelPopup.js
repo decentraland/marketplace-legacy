@@ -19,7 +19,6 @@ export default function ParcelPopup(props) {
         {description ? (
           <div className="text description">{description}</div>
         ) : null}
-        {/*description && <div className="text description">{description}</div>*/}
       </div>
     </div>
   )
