@@ -20,6 +20,6 @@ function* handleHoverParcel(action) {
   if (!inBounds(x, y)) return
   const parcels = yield select(getParcels)
   const parcel = parcels[buildCoordinate(x, y)]
-  if (!parcel || !parcel.owner || parcel.data) return // only fetch data if the parcel is loaded and has an owner, but the land data has not been loaded yet
+  if (!parcel || !parcel.owner) return // only fetch data if the parcel is loaded and has an owner
   yield put(fetchParcelData(x, y))
 }
