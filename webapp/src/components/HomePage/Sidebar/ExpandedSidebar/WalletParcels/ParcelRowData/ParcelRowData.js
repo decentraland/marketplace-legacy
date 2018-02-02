@@ -27,7 +27,7 @@ class ParcelRowData extends React.PureComponent {
           <CoordinateLink parcel={parcel} />
         </div>
         <div className="col col-price">{this.getPrice()}</div>
-        <div className="col col-name">{parcel.data.name}</div>
+        <div className="col col-name">{parcel.data.name || '--'}</div>
 
         <div className="col col-actions">
           <span

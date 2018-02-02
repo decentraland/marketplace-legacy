@@ -39,14 +39,15 @@ export default class ParcelsMap extends React.Component {
     zoom: PropTypes.number.isRequired,
     tileSize: PropTypes.number.isRequired,
 
-    onMoveEnd: PropTypes.func,
-    onZoomEnd: PropTypes.func,
-    onSelect: PropTypes.func
+    onMoveEnd: PropTypes.func.isRequired,
+    onZoomEnd: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    onHover: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
-    this.debouncedAddPopup = debounce(this.addPopup, 400)
+    this.debouncedHandleHover = debounce(this.handleHover, 400)
   }
 
   static defaultProps = {
@@ -104,8 +105,8 @@ export default class ParcelsMap extends React.Component {
       this.redrawMap,
       Math.min(200, delay / tileSize)
     )
-    this.debouncedOnMoveEnd = debounce(
-      this.onMoveEnd,
+    this.debouncedMoveEnd = debounce(
+      this.handleMoveEnd,
       Math.min(200, delay / tileSize)
     )
   }
@@ -130,10 +131,10 @@ export default class ParcelsMap extends React.Component {
 
     this.parcelGrid = new LeafletParcelGrid({
       getTileAttributes: this.getTileAttributes,
-      onTileClick: this.onTileClick,
-      onMouseDown: this.onMouseDown,
-      onMouseUp: this.onMouseUp,
-      onMouseMove: this.onMouseMove,
+      onTileClick: this.handleTileClick,
+      onMouseDown: this.handleMousedown,
+      onMouseUp: this.handleMouseUp,
+      onMouseMove: this.handleMouseMove,
       tileSize: tileSize
     })
 
@@ -145,7 +146,7 @@ export default class ParcelsMap extends React.Component {
     if (!this.isNearTheCenter()) {
       // Only trigger this outside the bounds of the center,
       // 0,0 and it's surroundings are always fetched on load.
-      this.onMapMoveEnd()
+      this.handleMapMoveEnd()
     }
 
     this.attachMapEvents()
@@ -154,9 +155,9 @@ export default class ParcelsMap extends React.Component {
   }
 
   attachMapEvents() {
-    this.map.on('movestart', this.onMapMoveStart)
-    this.map.on('moveend', this.onMapMoveEnd)
-    this.map.on('zoomend', this.onZoomEnd)
+    this.map.on('movestart', this.handleMapMoveStart)
+    this.map.on('moveend', this.handleMapMoveEnd)
+    this.map.on('zoomend', this.handleMapZoomEnd)
   }
 
   recenterMap(center) {
@@ -170,27 +171,27 @@ export default class ParcelsMap extends React.Component {
     }
   }
 
-  onMapMoveStart = () => {
+  handleMapMoveStart = () => {
     this.panInProgress = true
     this.startMove = Date.now()
     this.props.onMoveStart()
   }
 
-  onMapMoveEnd = () => {
+  handleMapMoveEnd = () => {
     const elapsed = Date.now() - this.startMove
     this.panInProgress = false
     if (elapsed > 500) {
       this.skipCenter = true
     }
-    this.debouncedOnMoveEnd()
+    this.debouncedMoveEnd()
   }
 
-  onZoomEnd = () => {
+  handleMapZoomEnd = () => {
     this.props.onZoomEnd(this.map.getZoom())
-    this.debouncedOnMoveEnd()
+    this.debouncedMoveEnd()
   }
 
-  onMoveEnd = () => {
+  handleMoveEnd = () => {
     if (this.map) {
       this.props.onMoveEnd(this.getCurrentPositionAndBounds())
     }
@@ -250,7 +251,7 @@ export default class ParcelsMap extends React.Component {
 
     const district = parcel ? districts[parcel.district_id] : null
 
-    const { backgroundColor, color, label } = getParcelAttributes(
+    const { backgroundColor, color, label, description } = getParcelAttributes(
       wallet,
       parcel,
       district
@@ -261,30 +262,31 @@ export default class ParcelsMap extends React.Component {
       y,
       color,
       backgroundColor,
-      label
+      label,
+      description
     }
   }
 
   // Called by the Parcel Grid on each tile click
-  onTileClick = latlng => {
+  handleTileClick = latlng => {
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
     const { onSelect } = this.props
 
     onSelect(x, y)
   }
 
-  onMouseDown = latlng => {
+  handleMousedown = latlng => {
     this.dragging = true
     if (this.popup) {
       this.popup.remove()
     }
   }
 
-  onMouseUp = latlng => {
+  handleMouseUp = latlng => {
     this.dragging = false
   }
 
-  onMouseMove = latlng => {
+  handleMouseMove = latlng => {
     if (this.dragging) {
       return
     }
@@ -297,10 +299,17 @@ export default class ParcelsMap extends React.Component {
     ) {
       if (this.popup) {
         this.popup.remove()
+        this.popup = null
       }
       this.tileHovered = { x, y }
-      this.debouncedAddPopup(x, y, latlng)
+      this.debouncedHandleHover(x, y, latlng)
     }
+  }
+
+  handleHover = (x, y, latlng) => {
+    const { onHover } = this.props
+    onHover(x, y)
+    this.addPopup(x, y, latlng)
   }
 
   // Called by the Parcel Grid on each tile hover
@@ -308,7 +317,12 @@ export default class ParcelsMap extends React.Component {
     if (this.dragging) {
       return
     }
-    const { color, label, backgroundColor } = this.getTileAttributes(latlng)
+    const {
+      color,
+      label,
+      backgroundColor,
+      description
+    } = this.getTileAttributes(latlng)
 
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
 
@@ -319,6 +333,7 @@ export default class ParcelsMap extends React.Component {
         color={color}
         backgroundColor={backgroundColor}
         label={label}
+        description={description}
       />
     )
 

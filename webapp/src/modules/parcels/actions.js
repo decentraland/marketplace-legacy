@@ -32,10 +32,11 @@ export function fetchParcel(x, y) {
   }
 }
 
-export function fetchParcelData(parcel) {
+export function fetchParcelData(x, y) {
   return {
     type: FETCH_PARCEL_DATA_REQUEST,
-    parcel
+    x,
+    y
   }
 }
 

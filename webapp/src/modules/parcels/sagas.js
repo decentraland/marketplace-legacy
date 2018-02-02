@@ -18,6 +18,7 @@ import {
 import { api } from 'lib/api'
 import { getParcels } from './reducer'
 import { buildCoordinate } from 'lib/utils'
+import { inBounds } from 'lib/parcelUtils'
 
 export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCELS_REQUEST, handleParcelsRequest)
@@ -73,14 +74,19 @@ function* handleParcelRequest(action) {
 
 function* handleParcelDataRequest(action) {
   try {
-    const { x, y } = action.parcel
-    const data = yield call(() => api.fetchParcelData(x, y))
+    const { x, y } = action
+    if (!inBounds(x, y)) return
 
-    const parcel = { ...action.parcel, data }
+    const parcels = yield select(getParcels)
+    const parcel = parcels[buildCoordinate(x, y)]
+    if (!parcel) return
+
+    const data = yield call(() => api.fetchParcelData(x, y))
+    const newParcel = { ...parcel, data }
 
     yield put({
       type: FETCH_PARCEL_DATA_SUCCESS,
-      parcels: [parcel]
+      parcels: [newParcel]
     })
   } catch (error) {
     console.warn(error)
