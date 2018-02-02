@@ -19,5 +19,7 @@
 
 .SidebarStats .stats-value {
   font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
   color: #000000;
 }
