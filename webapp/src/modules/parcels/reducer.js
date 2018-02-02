@@ -42,7 +42,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         loading_count: state.loading_count - 1,
         data: {
           ...state.data,
-          ...toParcelObject(action.parcels)
+          ...toParcelObject(action.parcels, state.data)
         }
       }
     }
@@ -60,7 +60,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         ...state,
         data: {
           ...state.data,
-          ...toParcelObject(action.parcels)
+          ...toParcelObject(action.parcels, state.data)
         }
       }
     }
