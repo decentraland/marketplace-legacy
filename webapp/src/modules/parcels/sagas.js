@@ -75,11 +75,15 @@ function* handleParcelRequest(action) {
 function* handleParcelDataRequest(action) {
   try {
     const { x, y } = action
-    if (!inBounds(x, y)) return
+    if (!inBounds(x, y)) {
+      throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
+    }
 
     const parcels = yield select(getParcels)
     const parcel = parcels[buildCoordinate(x, y)]
-    if (!parcel) return
+    if (!parcel) {
+      throw new Error(`Parcel (${x}, ${y}) is not in the state:`, parcels)
+    }
 
     const data = yield call(() => api.fetchParcelData(x, y))
     const newParcel = { ...parcel, data }
