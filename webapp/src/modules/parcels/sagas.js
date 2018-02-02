@@ -41,6 +41,9 @@ function* handleEditParcelsRequest(action) {
   const parcel = action.parcel
   const { x, y, data } = parcel
 
+  const parcels = yield select(getParcels)
+  const currentParcel = parcels[buildCoordinate(x, y)]
+
   try {
     const contract = eth.getContract('LANDRegistry')
     const dataString = LANDRegistry.encodeLandData(data)
@@ -50,9 +53,6 @@ function* handleEditParcelsRequest(action) {
     yield put({ type: EDIT_PARCEL_SUCCESS, parcel })
   } catch (error) {
     console.warn(error)
-    const parcels = yield select(getParcels)
-    const currentParcel = parcels[buildCoordinate(x, y)]
-
     yield put({
       type: EDIT_PARCEL_FAILURE,
       error: error.message,

@@ -53,12 +53,13 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case EDIT_PARCEL_REQUEST: {
-      const { parcel } = action
+      const parcelId = action.parcel.id
+      const parcel = state.data[parcelId]
       return {
         ...state,
         data: {
           ...state.data,
-          [parcel.id]: { ...parcel, isEditing: true }
+          [parcelId]: { ...parcel, isEditing: true }
         }
       }
     }
