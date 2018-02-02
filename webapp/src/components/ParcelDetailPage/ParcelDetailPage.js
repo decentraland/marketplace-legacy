@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { locations } from 'locations'
 import Navbar from 'components/Navbar'
 import Loading from 'components/Loading'
 import ParcelDetail from './ParcelDetail'
@@ -30,6 +31,12 @@ export default class ParcelDetailPage extends React.PureComponent {
     onFetchParcel(x, y)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isParcelError) {
+      return this.props.onNavigate(locations.root)
+    }
+  }
+
   isLoading() {
     return !this.props.parcel || this.props.isAddressLoading
   }
@@ -46,9 +53,7 @@ export default class ParcelDetailPage extends React.PureComponent {
       <div className="ParcelDetailPage">
         <Navbar />
 
-        {isParcelError ? (
-          <div>ERROR PAGE</div>
-        ) : this.isLoading() ? (
+        {isParcelError ? null : this.isLoading() ? (
           <Loading />
         ) : (
           <div className="container">

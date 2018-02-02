@@ -44,6 +44,8 @@ function* handleParcelRequest(action) {
     const nw = parcelId
     const se = parcelId
 
+    if (!inBounds(x, y)) throw new Error(`Parcel ${x}, ${y} is out of bounds`)
+
     let [parcels, data] = yield all([
       api.fetchParcels(nw, se),
       api.fetchParcelData(x, y)

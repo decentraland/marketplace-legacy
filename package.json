@@ -4,8 +4,8 @@
   "description": "Decentraland's LAND Manager, Wallet and Marketplace",
   "main": "src/server.js",
   "scripts": {
-    "lint": "./node_modules/eslint/bin/eslint.js eslint .",
-    "lint:fix": "./node_modules/eslint/bin/eslint.js eslint --fix .",
+    "lint": "./node_modules/eslint/bin/eslint.js .",
+    "lint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js",
     "watch:test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
     "build": "npm run lint && npm run test",

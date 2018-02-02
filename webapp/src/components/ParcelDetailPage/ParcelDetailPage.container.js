@@ -9,6 +9,7 @@ import { getDistricts } from 'modules/districts/reducer'
 import { fetchWallet } from 'modules/wallet/actions'
 import { fetchParcel } from 'modules/parcels/actions'
 import { openModal } from 'modules/ui/actions'
+import { navigateTo } from 'modules/location/actions'
 
 import { buildCoordinate } from 'lib/utils'
 
@@ -21,9 +22,9 @@ const mapState = (state, ownProps) => {
 
   return {
     wallet: getWallet(state),
+    districts: getDistricts(state),
     isAddressLoading: isAddressLoading(state),
     isParcelError: !!getParcelError(state),
-    districts: getDistricts(state),
     parcel,
     x,
     y
@@ -31,6 +32,7 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = dispatch => ({
+  onNavigate: location => dispatch(navigateTo(location)),
   onConnect: () => dispatch(fetchWallet()),
   onFetchParcel: (x, y) => dispatch(fetchParcel(x, y)),
   onTransfer: parcel => dispatch(openModal('TransferModal', parcel))

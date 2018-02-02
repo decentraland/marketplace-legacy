@@ -53,7 +53,7 @@ export function getParcelAttributes(wallet, parcel, districts) {
       backgroundColor: colors.LOADING
     }
   }
-  const district = getDistrict(parcel)
+  const district = getDistrict(parcel, districts)
 
   if (isDistrict(parcel)) {
     if (isRoad(parcel.district_id)) {
