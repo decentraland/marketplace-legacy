@@ -49,6 +49,7 @@ export const cancelAnimationFrame =
   (id => clearTimeout(id))
 
 const prettyAmount = amount => parseFloat(amount.toFixed(1))
+
 export function format(amount, unit = 'MANA') {
   if (amount < 1000) {
     return `${amount} MANA`

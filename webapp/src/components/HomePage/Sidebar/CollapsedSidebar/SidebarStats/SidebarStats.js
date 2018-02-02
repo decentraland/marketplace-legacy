@@ -13,16 +13,28 @@ export default class SidebarStats extends React.PureComponent {
       contribMana: PropTypes.number
     })
   }
+
+  renderStatsValue(value) {
+    const formattedValue = format(value, 'mana')
+    return (
+      <div
+        className="stats-value"
+        title={formattedValue.length >= 15 ? value : null}
+      >
+        {value === null ? '--' : formattedValue}
+      </div>
+    )
+  }
+
   render() {
     const { stats } = this.props
     const { balance, parcels, contribDistricts, contribMana } = stats
+
     return (
       <ul className="SidebarStats">
         <li>
           <div className="stats-heading">BALANCE</div>
-          <div className="stats-value">
-            {balance === null ? '--' : format(balance, 'mana')}
-          </div>
+          {this.renderStatsValue(balance)}
         </li>
         <li>
           <div className="stats-heading">PARCELS</div>
@@ -36,9 +48,7 @@ export default class SidebarStats extends React.PureComponent {
         </li>
         <li>
           <div className="stats-heading">CONTRIB. MANA</div>
-          <div className="stats-value">
-            {contribMana == null ? '--' : format(contribMana, 'mana')}
-          </div>
+          {this.renderStatsValue(contribMana)}
         </li>
       </ul>
     )
