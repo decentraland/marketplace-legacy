@@ -365,7 +365,7 @@ export default class ParcelsMap extends React.Component {
         />
       )
 
-      requestAnimationFrame(() => this.popup.setContent(content))
+      requestAnimationFrame(() => this.popup && this.popup.setContent(content))
     }
   }
 
