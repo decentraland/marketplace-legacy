@@ -76,7 +76,7 @@ jobs:
       - restore_cache:
           keys:
           - build-release-{{ .Revision }}
-      - run: sudo apt-get -y -qq install awscli
+      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user && export PATH=~/.local/bin:$PATH
       - run:
           name: Deploy to S3 if tests pass and branch is release
           command: aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
@@ -91,7 +91,7 @@ jobs:
       - restore_cache:
           keys:
           - build-staging-{{ .Revision }}
-      - run: sudo apt-get -y -qq install awscli
+      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user && export PATH=~/.local/bin:$PATH
       - run:
           name: Deploy to S3 if tests pass and branch is staging
           command: aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
