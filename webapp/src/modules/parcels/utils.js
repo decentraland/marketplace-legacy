@@ -14,8 +14,8 @@ const emptyParcel = {
 
 export function toParcelObject(parcelsArray, allParcels) {
   return parcelsArray.reduce((map, parcel) => {
-    const oldParcel = (allParcels && allParcels[parcel.id]) || emptyParcel
-    map[parcel.id] = { ...oldParcel, ...parcel }
+    const oldParcel = allParcels[parcel.id]
+    map[parcel.id] = { ...emptyParcel, ...oldParcel, ...parcel }
     return map
   }, {})
 }
