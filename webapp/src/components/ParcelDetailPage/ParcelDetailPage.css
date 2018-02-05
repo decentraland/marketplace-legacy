@@ -11,7 +11,8 @@
 .ParcelDetailPage .title {
   margin-top: 20px;
   margin-bottom: 0;
-  font-size: 28px;
+  font-size: 42px;
+  font-size: 4.2rem;
   font-family: "Source Sans Pro Light", Helvetica, sans-serif;
   text-align: center;
 }
