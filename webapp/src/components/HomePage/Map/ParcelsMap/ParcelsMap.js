@@ -110,8 +110,7 @@ export default class ParcelsMap extends React.Component {
         return true
       }
       // check if my wallet data has changed in order to update the popup
-      const isWalletDifferent = this.props.wallet != nextProps.wallet
-      return isWalletDifferent
+      return this.props.wallet !== nextProps.wallet
     }
   }
 
