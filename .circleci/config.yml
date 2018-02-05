@@ -79,10 +79,10 @@ jobs:
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user && export PATH=~/.local/bin:$PATH
       - run:
           name: Deploy to S3 if tests pass and branch is release
-          command: aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
+          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
   deploy-staging:
     docker:
       - image: circleci/node:7.10
@@ -94,10 +94,10 @@ jobs:
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user && export PATH=~/.local/bin:$PATH
       - run:
           name: Deploy to S3 if tests pass and branch is staging
-          command: aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
+          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
 
 workflows:
   version: 2
