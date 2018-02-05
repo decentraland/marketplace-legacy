@@ -143,7 +143,7 @@ export default class TermsModal extends React.PureComponent {
               non-infringement. You acknowledge and agree that Decentraland has
               no control over, and no duty to take any action regarding: which
               users gain access to or use the Service; what effects the Service
-              may have on you; the land you own;; how you may interpret or use
+              may have on you; the land you own; how you may interpret or use
               the Service; or what actions you may take or fail to take as a
               result of having been exposed to the Service. You release
               Decentraland from all liability for your inability to access to

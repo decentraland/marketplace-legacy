@@ -40,7 +40,7 @@ export default class ExpandedSidebar extends React.PureComponent {
       <div className="ExpandedSidebar fadein">
         <div className="MarketplaceTitle">
           <h2>
-            Land Manager
+            LAND Manager
             <div className="info">
               {this.renderAddress()}
               {this.renderBalance()}

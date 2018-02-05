@@ -27,7 +27,7 @@ class ParcelTable extends React.PureComponent {
         </div>
       )
     } else {
-      return <div className="table-row-empty">You don&apos;t own any land.</div>
+      return <div className="table-row-empty">You don&apos;t own any LAND.</div>
     }
   }
 }
