@@ -61,7 +61,8 @@ export default class PrivacyPage extends React.PureComponent {
         </p>
         <p>
           1.4 Any questions, comments or complaints that you might have should
-          be emailed to privacy@decentraland.org.
+          be emailed to{' '}
+          <a href="mailto:privacy@decentraland.org">privacy@decentraland.org</a>.
         </p>
 
         <h3>2. Information We Collect</h3>
@@ -212,7 +213,8 @@ export default class PrivacyPage extends React.PureComponent {
           9.1 If you reside in California, you may request certain general
           information regarding our disclosure of personal information to third
           parties for their direct marketing purposes. To make such a request,
-          please write to us at the following address: privacy@decentraland.org.
+          please write to us at the following address:{' '}
+          <a href="mailto:privacy@decentraland.org">privacy@decentraland.org</a>.
         </p>
 
         <h3>10. Changes and updates</h3>
@@ -223,7 +225,10 @@ export default class PrivacyPage extends React.PureComponent {
           constitutes your agreement to this Privacy Policy and any future
           revisions.
         </p>
-        <p>10.2 Contact Information: privacy@decentraland.org.</p>
+        <p>
+          10.2 Contact Information:{' '}
+          <a href="mailto:privacy@decentraland.org">privacy@decentraland.org</a>.
+        </p>
 
         <a className="btn btn-primary" href="/">
           GO BACK
