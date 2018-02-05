@@ -19,7 +19,7 @@ export default class Navbar extends React.PureComponent {
         <div id="navbar" className="navbar-container">
           <ul className="nav navbar-nav navbar-right">
             <li>
-              <Link to={locations.root}>Land Manager</Link>
+              <Link to={locations.root}>LAND Manager</Link>
             </li>
 
             <li>

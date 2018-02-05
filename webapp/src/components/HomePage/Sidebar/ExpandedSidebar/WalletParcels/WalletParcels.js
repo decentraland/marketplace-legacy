@@ -35,7 +35,7 @@ class WalletParcels extends React.PureComponent {
     return (
       <div className="WalletParcels">
         <div className="heading">
-          My Land&nbsp;
+          My LAND&nbsp;
           <span className="parcel-count">
             {wallet.parcels.length} parcel{wallet.parcels.length === 1
               ? ''
