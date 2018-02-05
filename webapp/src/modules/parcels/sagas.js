@@ -3,11 +3,11 @@ import { eth } from 'decentraland-commons'
 import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 import {
   FETCH_PARCELS_REQUEST,
-  FETCH_PARCELS_SUCCESS,
-  FETCH_PARCELS_FAILURE,
   EDIT_PARCEL_REQUEST,
-  EDIT_PARCEL_SUCCESS,
-  EDIT_PARCEL_FAILURE
+  fetchParcelsSuccess,
+  fetchParcelsFailure,
+  editParcelSuccess,
+  editParcelFailure
 } from './actions'
 import { api } from 'lib/api'
 import { getParcels } from './reducer'
@@ -24,16 +24,9 @@ function* handleParcelsRequest(action) {
     const se = buildCoordinate(action.se.x, action.se.y)
     const parcels = yield call(() => api.fetchParcels(nw, se))
 
-    yield put({
-      type: FETCH_PARCELS_SUCCESS,
-      parcels
-    })
+    yield put(fetchParcelsSuccess(parcels))
   } catch (error) {
-    console.warn(error)
-    yield put({
-      type: FETCH_PARCELS_FAILURE,
-      error: error.message
-    })
+    yield put(fetchParcelsFailure(error.message))
   }
 }
 
@@ -47,16 +40,10 @@ function* handleEditParcelsRequest(action) {
   try {
     const contract = eth.getContract('LANDRegistry')
     const dataString = LANDRegistry.encodeLandData(data)
-
     yield call(() => contract.updateLandData(x, y, dataString))
 
-    yield put({ type: EDIT_PARCEL_SUCCESS, parcel })
+    yield put(editParcelSuccess(parcel))
   } catch (error) {
-    console.warn(error)
-    yield put({
-      type: EDIT_PARCEL_FAILURE,
-      error: error.message,
-      parcel: currentParcel
-    })
+    yield put(editParcelFailure(currentParcel, error.message))
   }
 }

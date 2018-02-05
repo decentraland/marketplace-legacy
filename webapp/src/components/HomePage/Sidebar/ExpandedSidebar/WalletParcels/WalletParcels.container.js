@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { editParcel } from 'modules/parcels/actions'
+import { editParcelRequest } from 'modules/parcels/actions'
 import { openModal } from 'modules/ui/actions'
 import { getWallet, isLoading, getError } from 'modules/wallet/reducer'
 
@@ -14,7 +14,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onEdit: parcel => dispatch(editParcel(parcel)),
+  onEdit: parcel => dispatch(editParcelRequest(parcel)),
   onTransfer: parcel => dispatch(openModal('TransferModal', parcel))
 })
 

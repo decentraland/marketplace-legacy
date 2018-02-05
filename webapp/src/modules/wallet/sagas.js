@@ -7,16 +7,18 @@ import { getAddress } from 'modules/wallet/reducer'
 import {
   FETCH_WALLET_REQUEST,
   FETCH_WALLET_SUCCESS,
-  FETCH_WALLET_FAILURE,
   FETCH_BALANCE_REQUEST,
-  FETCH_BALANCE_SUCCESS,
-  FETCH_BALANCE_FAILURE
+  fetchWalletSuccess,
+  fetchWalletFailure,
+  fetchBalanceRequest,
+  fetchBalanceSuccess,
+  fetchBalanceFailure
 } from './actions'
 import {
-  FETCH_ADDRESS_PARCELS_REQUEST,
-  FETCH_ADDRESS_CONTRIBUTIONS_REQUEST
+  fetchAddressParcelsRequest,
+  fetchAddressContributionsRequest
 } from 'modules/address/actions'
-import { FETCH_DISTRICTS_REQUEST } from 'modules/districts/actions'
+import { fetchDistrictsRequest } from 'modules/districts/actions'
 
 import { connectEthereumWallet } from './utils'
 
@@ -30,25 +32,21 @@ function* handleWalletRequest(action = {}) {
   try {
     yield call(() => connectEthereumWallet())
     const address = yield call(() => eth.getAddress())
-
-    yield put({
-      type: FETCH_WALLET_SUCCESS,
-      wallet: { address }
-    })
+    const wallet = { address }
+    yield put(fetchWalletSuccess(wallet))
   } catch (error) {
-    console.error(error)
     yield put(replace(locations.walletError))
-    yield put({ type: FETCH_WALLET_FAILURE, error: error.message })
+    yield put(fetchWalletFailure(error.message))
   }
 }
 
 function* handleWalletSuccess(action) {
   const { address } = action.wallet
 
-  yield put({ type: FETCH_ADDRESS_PARCELS_REQUEST, address })
-  yield put({ type: FETCH_ADDRESS_CONTRIBUTIONS_REQUEST, address })
-  yield put({ type: FETCH_DISTRICTS_REQUEST })
-  yield put({ type: FETCH_BALANCE_REQUEST })
+  yield put(fetchAddressParcelsRequest(address))
+  yield put(fetchAddressContributionsRequest(address))
+  yield put(fetchDistrictsRequest())
+  yield put(fetchBalanceRequest())
 }
 
 function* handleBalanceRequest(action) {
@@ -56,12 +54,9 @@ function* handleBalanceRequest(action) {
     const address = yield select(getAddress)
     const contract = eth.getContract('MANAToken')
     const balance = yield call(() => contract.getBalance(address))
-
-    yield put({
-      type: FETCH_BALANCE_SUCCESS,
-      wallet: { balance }
-    })
+    const wallet = { balance }
+    yield put(fetchBalanceSuccess(wallet))
   } catch (error) {
-    yield put({ type: FETCH_BALANCE_FAILURE, error: error.message })
+    yield put(fetchBalanceFailure(error.message))
   }
 }

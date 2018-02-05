@@ -1,8 +1,8 @@
 import { call, takeLatest, put } from 'redux-saga/effects'
 import {
   FETCH_DISTRICTS_REQUEST,
-  FETCH_DISTRICTS_SUCCESS,
-  FETCH_DISTRICTS_FAILURE
+  fetchDistrictsSuccess,
+  fetchDistrictsFailure
 } from './actions'
 import { api } from 'lib/api'
 
@@ -13,9 +13,8 @@ export function* districtsSaga() {
 function* handleDistrictsRequest(action) {
   try {
     const districts = yield call(() => api.fetchDistricts())
-
-    yield put({ type: FETCH_DISTRICTS_SUCCESS, districts })
+    yield put(fetchDistrictsSuccess(districts))
   } catch (error) {
-    yield put({ type: FETCH_DISTRICTS_FAILURE, error: error.message })
+    yield put(fetchDistrictsFailure(error.message))
   }
 }
