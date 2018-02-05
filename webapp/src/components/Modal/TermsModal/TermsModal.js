@@ -60,11 +60,10 @@ export default class TermsModal extends React.PureComponent {
               using or otherwise accessing the Services, you (1) accept and
               agree to be bound by these Terms (2) consent to the collection,
               use, disclosure and other handling of information as described in
-              our Privacy Policy, available here
+              our Privacy Policy, available at (
               <a href="https://land.decentraland.org/privacy">
                 https://land.decentraland.org/privacy
-              </a>
-              and (3) any additional terms, rules and conditions of
+              </a>) and (3) any additional terms, rules and conditions of
               participation issued by Decentraland from time to time. If you do
               not agree to the Terms, then you must not access or use the
               Service.
@@ -131,19 +130,6 @@ export default class TermsModal extends React.PureComponent {
               the Ethereum blockchain. You understand that your Ethereum public
               address will be made publicly visible whenever you engage in a
               transaction using the Service.
-            </p>
-
-            <h4>Sophistication and Risk of Cryptographic Systems</h4>
-            <p>
-              By utilizing the Service or interacting with the Content or
-              platform in any way, you represent that you understand the
-              inherent risks associated with cryptographic systems; and warrant
-              that you have an understanding of the usage and intricacies of
-              native cryptographic tokens, like Ether (ETH) and Bitcoin (BTC),
-              smart contract based tokens such as those that follow the Ethereum
-              Token Standard (<a href="https://github.com/ethereum/EIPs/issues/20">
-                https://github.com/ethereum/EIPs/issues/20
-              </a>), and blockchain-based software systems.
             </p>
 
             <h3>5. REPRESENTATIONS AND RISKS</h3>
