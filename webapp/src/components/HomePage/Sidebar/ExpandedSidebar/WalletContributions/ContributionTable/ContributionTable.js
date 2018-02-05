@@ -22,7 +22,7 @@ class ContributionTable extends React.PureComponent {
     } else {
       return (
         <div className="table-row-empty">
-          {"You haven't contributed land to any districts."}
+          {"You haven't contributed LAND to any districts."}
         </div>
       )
     }
