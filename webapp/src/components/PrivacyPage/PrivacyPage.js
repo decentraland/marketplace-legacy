@@ -15,19 +15,20 @@ export default class PrivacyPage extends React.PureComponent {
           1.1 Decentraland recognizes that people who use Decentraland value
           their privacy. This Privacy Policy details important information
           regarding the collection, use and disclosure of User information
-          collected on the Decentraland website located at
-          https://Decentraland.org/ (the “Site”), and any other features, tools,
-          materials, or other services (including co-branded or affiliated
-          services) offered from time to time by Decentraland (the “Service”).
-          Decentraland provides this Privacy Policy to help you understand how
-          your personal information is used by us and your choices regarding our
-          use of it. By using the Site or Service, you agree that we can
-          collect, use, disclose, and process your information as described in
-          this Privacy Policy. This Privacy Policy only applies to the Site and
-          Service, and not to any other websites, products or services you may
-          be able to access or link to via the Site or Service. We encourage you
-          to read the privacy policies of any other websites you visit before
-          providing your information to them.
+          collected on the Decentraland website located at&nbps;
+          <a href="https://decentraland.org">https://Decentraland.org/</a> (the
+          “Site”), and any other features, tools, materials, or other services
+          (including co-branded or affiliated services) offered from time to
+          time by Decentraland (the “Service”). Decentraland provides this
+          Privacy Policy to help you understand how your personal information is
+          used by us and your choices regarding our use of it. By using the Site
+          or Service, you agree that we can collect, use, disclose, and process
+          your information as described in this Privacy Policy. This Privacy
+          Policy only applies to the Site and Service, and not to any other
+          websites, products or services you may be able to access or link to
+          via the Site or Service. We encourage you to read the privacy policies
+          of any other websites you visit before providing your information to
+          them.
         </p>
         <p>
           While our values will not shift, the Site and Service will evolve over

@@ -371,8 +371,8 @@ export default class TermsModal extends React.PureComponent {
               SITE AND SERVICE MAY NOT BE SECURE AND MAY BE INTERCEPTED OR LATER
               ACQUIRED BY UNAUTHORIZED PARTIES. YOU ACKNOWLEDGE AND AGREE THAT
               YOUR USE OF THE SITE AND SERVICE IS AT YOUR OWN RISK. YOU
-              ACKNOWLEDGE AND AGREE THAT THE SERVICE IS PROVIDED "AS IS" AND "AS
-              AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR
+              ACKNOWLEDGE AND AGREE THAT THE SERVICE IS PROVIDED “AS IS“ AND “AS
+              AVAILABLE“ WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR
               IMPLIED. RECOGNIZING SUCH, YOU ACKNOWLEDGE AND AGREE THAT, TO THE
               FULLEST EXTENT PERMITTED BY APPLICABLE LAW, NEITHER DECENTRALAND
               NOR ITS SUPPLIERS OR LICENSORS WILL BE LIABLE TO YOU FOR ANY
@@ -672,7 +672,7 @@ export default class TermsModal extends React.PureComponent {
               statement by you, made under penalty of perjury, that the above
               information in your Notice is accurate and that you are the
               copyright or intellectual property owner or authorized to act on
-              the copyright or intellectual property owner's behalf.
+              the copyright or intellectual property owner&#39;s behalf.
               Decentraland’s Copyright Agent can be reached at: Email:
               legal@decentraland.org
             </p>
@@ -703,7 +703,7 @@ export default class TermsModal extends React.PureComponent {
               Specifically, any dispute that is not resolved under the Initial
               Dispute Resolution provision shall be determined by final and
               binding arbitration under the London Court of International
-              Arbitration ("LCIA") Rules, which rules are deemed to be
+              Arbitration (“LCIA”) Rules, which rules are deemed to be
               incorporated by reference into this clause. The following shall
               apply in respect of such arbitration: (i) the number of
               arbitrators shall be three (one nominated by each party and one
@@ -720,17 +720,18 @@ export default class TermsModal extends React.PureComponent {
               that are in another language must be accompanied by an English
               translation and the award will be in the English language.
               Claimants and respondents shall bear its or their own costs of the
-              arbitration, including attorney's fees, and share equally the
-              arbitrators' fees and LCIA's administrative costs. For purposes of
-              cost sharing, all claimants shall be considered one party and all
-              respondents shall be considered one party. The parties shall
-              maintain strict confidentiality with respect to all aspects of any
-              arbitration commenced pursuant to these Terms and shall not
-              disclose the fact, conduct or outcome of the arbitration to any
-              non-parties or non-participants, except to the extent required by
-              applicable Law or to the extent necessary to recognize, confirm or
-              enforce the final award or decision in the arbitration, without
-              the prior written consent of all parties to the arbitration.
+              arbitration, including attorney&#39;s fees, and share equally the
+              arbitrators&#39; fees and LCIA&#39;s administrative costs. For
+              purposes of cost sharing, all claimants shall be considered one
+              party and all respondents shall be considered one party. The
+              parties shall maintain strict confidentiality with respect to all
+              aspects of any arbitration commenced pursuant to these Terms and
+              shall not disclose the fact, conduct or outcome of the arbitration
+              to any non-parties or non-participants, except to the extent
+              required by applicable Law or to the extent necessary to
+              recognize, confirm or enforce the final award or decision in the
+              arbitration, without the prior written consent of all parties to
+              the arbitration.
             </p>
 
             <h4>17.3 Class Action Waiver</h4>
@@ -755,10 +756,10 @@ export default class TermsModal extends React.PureComponent {
               Claims Court Claims
             </h4>
             <p>
-              Notwithstanding the parties' decision to resolve all disputes
+              Notwithstanding the parties&#39; decision to resolve all disputes
               through arbitration, either party may bring an action in state or
               federal court to protect its intellectual property rights
-              ("intellectual property rights" including patents, copyrights,
+              (“intellectual property rights” including patents, copyrights,
               moral rights, trademarks, and trade secrets, but not privacy or
               publicity rights). Either party may also seek relief in a small
               claims court for disputes or claims within the scope of that
@@ -813,9 +814,9 @@ export default class TermsModal extends React.PureComponent {
               or provision. If any provision of the Terms is found by an
               arbitrator or court of competent jurisdiction to be invalid, the
               parties nevertheless agree that the arbitrator or court should
-              endeavor to give effect to the parties' intentions as reflected in
-              the provision, and the other provisions of the Terms remain in
-              full force and effect.
+              endeavor to give effect to the parties&#39; intentions as
+              reflected in the provision, and the other provisions of the Terms
+              remain in full force and effect.
             </p>
 
             <h4>18.3 Statute of Limitations</h4>
