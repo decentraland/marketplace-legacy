@@ -6,16 +6,16 @@ const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
 
 export class API {
-  fetchUserParcels(address) {
-    return this.request('get', '/userParcels', { address })
-  }
-
   fetchDistricts() {
     return this.request('get', '/districts', {})
   }
 
   fetchParcels(nw, se) {
     return this.request('get', '/parcels', { nw, se })
+  }
+
+  fetchParcelData(x, y) {
+    return this.request('get', `/parcels/${x}/${y}/data`, {})
   }
 
   fetchAddressParcels(address) {

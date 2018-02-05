@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import L from 'leaflet'
 import debounce from 'lodash.debounce'
+import isEqual from 'lodash/isEqual'
 
 import { LeafletMapCoordinates } from 'lib/LeafletMapCoordinates'
 import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
@@ -10,7 +11,7 @@ import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
 import { walletType, parcelType, districtType } from 'components/types'
 
 import ParcelPopup from './ParcelPopup'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate, requestAnimationFrame } from 'lib/utils'
 import { getParcelAttributes } from 'lib/parcelUtils'
 
 import './ParcelsMap.css'
@@ -39,14 +40,15 @@ export default class ParcelsMap extends React.Component {
     zoom: PropTypes.number.isRequired,
     tileSize: PropTypes.number.isRequired,
 
-    onMoveEnd: PropTypes.func,
-    onZoomEnd: PropTypes.func,
-    onSelect: PropTypes.func
+    onMoveEnd: PropTypes.func.isRequired,
+    onZoomEnd: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    onHover: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
-    this.debouncedAddPopup = debounce(this.addPopup, 400)
+    this.debouncedHandleHover = debounce(this.handleHover, 400)
   }
 
   static defaultProps = {
@@ -94,7 +96,30 @@ export default class ParcelsMap extends React.Component {
     }
   }
 
+  shouldPopupUpdate = nextProps => {
+    if (this.popup && this.tileHovered) {
+      // check if the land data has changed in order to update the popup
+      const { x, y } = this.tileHovered
+      const coords = buildCoordinate(x, y)
+      const nextParcel = nextProps.parcels[coords]
+      const currentParcel = this.props.parcels[coords]
+      const nextParcelData = (nextParcel && nextParcel.data) || null
+      const currentParcelData = (currentParcel && currentParcel.data) || null
+      const isDataDifferent = !isEqual(nextParcelData, currentParcelData)
+      if (isDataDifferent) {
+        return true
+      }
+      // check if my wallet data has changed in order to update the popup
+      const isWalletDifferent = this.props.wallet != nextProps.wallet
+      return isWalletDifferent
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.shouldPopupUpdate(nextProps)) {
+      const { x, y } = this.tileHovered
+      this.renderPopup(x, y, nextProps)
+    }
     return this.props.tileSize !== nextProps.tileSize
   }
 
@@ -104,8 +129,8 @@ export default class ParcelsMap extends React.Component {
       this.redrawMap,
       Math.min(200, delay / tileSize)
     )
-    this.debouncedOnMoveEnd = debounce(
-      this.onMoveEnd,
+    this.debouncedMoveEnd = debounce(
+      this.handleMoveEnd,
       Math.min(200, delay / tileSize)
     )
   }
@@ -128,11 +153,11 @@ export default class ParcelsMap extends React.Component {
     this.mapCoordinates = new LeafletMapCoordinates(this.map, tileSize)
 
     this.parcelGrid = new LeafletParcelGrid({
-      getTileAttributes: this.getTileAttributes,
-      onTileClick: this.onTileClick,
-      onMouseDown: this.onMouseDown,
-      onMouseUp: this.onMouseUp,
-      onMouseMove: this.onMouseMove,
+      getTileAttributes: this.getTileAttributesFromLatLng,
+      onTileClick: this.handleTileClick,
+      onMouseDown: this.handleMousedown,
+      onMouseUp: this.handleMouseUp,
+      onMouseMove: this.handleMouseMove,
       tileSize: tileSize
     })
 
@@ -144,7 +169,7 @@ export default class ParcelsMap extends React.Component {
     if (!this.isNearTheCenter()) {
       // Only trigger this outside the bounds of the center,
       // 0,0 and it's surroundings are always fetched on load.
-      this.onMapMoveEnd()
+      this.handleMapMoveEnd()
     }
 
     this.attachMapEvents()
@@ -153,9 +178,9 @@ export default class ParcelsMap extends React.Component {
   }
 
   attachMapEvents() {
-    this.map.on('movestart', this.onMapMoveStart)
-    this.map.on('moveend', this.onMapMoveEnd)
-    this.map.on('zoomend', this.onZoomEnd)
+    this.map.on('movestart', this.handleMapMoveStart)
+    this.map.on('moveend', this.handleMapMoveEnd)
+    this.map.on('zoomend', this.handleMapZoomEnd)
   }
 
   recenterMap(center) {
@@ -169,27 +194,27 @@ export default class ParcelsMap extends React.Component {
     }
   }
 
-  onMapMoveStart = () => {
+  handleMapMoveStart = () => {
     this.panInProgress = true
     this.startMove = Date.now()
     this.props.onMoveStart()
   }
 
-  onMapMoveEnd = () => {
+  handleMapMoveEnd = () => {
     const elapsed = Date.now() - this.startMove
     this.panInProgress = false
     if (elapsed > 500) {
       this.skipCenter = true
     }
-    this.debouncedOnMoveEnd()
+    this.debouncedMoveEnd()
   }
 
-  onZoomEnd = () => {
+  handleMapZoomEnd = () => {
     this.props.onZoomEnd(this.map.getZoom())
-    this.debouncedOnMoveEnd()
+    this.debouncedMoveEnd()
   }
 
-  onMoveEnd = () => {
+  handleMoveEnd = () => {
     if (this.map) {
       this.props.onMoveEnd(this.getCurrentPositionAndBounds())
     }
@@ -241,15 +266,16 @@ export default class ParcelsMap extends React.Component {
     }
   }
 
-  // Called by the Parcel Grid on each tile render
-  getTileAttributes = latlng => {
-    const { wallet, parcels, districts } = this.props
+  getTileAttributesFromLatLng = latlng => {
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
+    return this.getTileAttributes(x, y)
+  }
+  // Called by the Parcel Grid on each tile render
+  getTileAttributes = (x, y, { wallet, parcels, districts } = this.props) => {
     const parcel = parcels[buildCoordinate(x, y)]
-
     const district = parcel ? districts[parcel.district_id] : null
 
-    const { backgroundColor, color, label } = getParcelAttributes(
+    const { backgroundColor, color, label, description } = getParcelAttributes(
       wallet,
       parcel,
       district
@@ -260,30 +286,31 @@ export default class ParcelsMap extends React.Component {
       y,
       color,
       backgroundColor,
-      label
+      label,
+      description
     }
   }
 
   // Called by the Parcel Grid on each tile click
-  onTileClick = latlng => {
+  handleTileClick = latlng => {
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
     const { onSelect } = this.props
 
     onSelect(x, y)
   }
 
-  onMouseDown = latlng => {
+  handleMousedown = latlng => {
     this.dragging = true
     if (this.popup) {
       this.popup.remove()
     }
   }
 
-  onMouseUp = latlng => {
+  handleMouseUp = latlng => {
     this.dragging = false
   }
 
-  onMouseMove = latlng => {
+  handleMouseMove = latlng => {
     if (this.dragging) {
       return
     }
@@ -296,10 +323,17 @@ export default class ParcelsMap extends React.Component {
     ) {
       if (this.popup) {
         this.popup.remove()
+        this.popup = null
       }
       this.tileHovered = { x, y }
-      this.debouncedAddPopup(x, y, latlng)
+      this.debouncedHandleHover(x, y, latlng)
     }
+  }
+
+  handleHover = (x, y, latlng) => {
+    const { onHover } = this.props
+    onHover(x, y)
+    this.addPopup(x, y, latlng)
   }
 
   // Called by the Parcel Grid on each tile hover
@@ -307,28 +341,37 @@ export default class ParcelsMap extends React.Component {
     if (this.dragging) {
       return
     }
-    const { color, label, backgroundColor } = this.getTileAttributes(latlng)
 
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
-
-    const popup = renderToDOM(
-      <ParcelPopup
-        x={x}
-        y={y}
-        color={color}
-        backgroundColor={backgroundColor}
-        label={label}
-      />
-    )
-
-    leafletPopup
-      .setLatLng(latlng)
-      .setContent(popup)
-      .addTo(this.map)
-
+    leafletPopup.setLatLng(latlng).addTo(this.map)
     this.popup = leafletPopup
+    this.renderPopup(x, y)
 
     return leafletPopup
+  }
+
+  renderPopup = (x, y, props = this.props) => {
+    if (this.popup) {
+      const {
+        color,
+        label,
+        backgroundColor,
+        description
+      } = this.getTileAttributes(x, y, props)
+
+      const content = renderToDOM(
+        <ParcelPopup
+          x={x}
+          y={y}
+          color={color}
+          backgroundColor={backgroundColor}
+          label={label}
+          description={description}
+        />
+      )
+
+      requestAnimationFrame(() => this.popup && this.popup.setContent(content))
+    }
   }
 
   render() {
