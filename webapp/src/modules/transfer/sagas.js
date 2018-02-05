@@ -1,6 +1,6 @@
 import { call, select, takeLatest, put } from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
-import { getAddress } from 'modules/wallet/reducer'
+import { getAddress } from 'modules/wallet/selectors'
 import {
   TRANSFER_PARCEL_REQUEST,
   TRANSFER_PARCEL_SUCCESS,

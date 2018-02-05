@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getWallet, isLoading, getError } from 'modules/wallet/reducer'
+import { getWallet, isLoading, getError } from 'modules/wallet/selectors'
 
 import WalletContributions from './WalletContributions'
 

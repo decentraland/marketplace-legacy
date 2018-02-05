@@ -16,7 +16,7 @@ import {
   EDIT_PARCEL_FAILURE
 } from './actions'
 import { api } from 'lib/api'
-import { getParcels } from './reducer'
+import { getParcels } from './selectors'
 import { buildCoordinate } from 'lib/utils'
 import { inBounds } from 'lib/parcelUtils'
 

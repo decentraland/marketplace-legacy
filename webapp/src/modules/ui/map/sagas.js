@@ -1,5 +1,5 @@
 import { takeEvery, put, select } from 'redux-saga/effects'
-import { getParcels } from 'modules/parcels/reducer'
+import { getParcels } from 'modules/parcels/selectors'
 import { buildCoordinate } from 'lib/utils'
 import { inBounds } from 'lib/parcelUtils'
 import { fetchParcelData, fetchParcels } from 'modules/parcels/actions'

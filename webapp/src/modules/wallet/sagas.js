@@ -3,7 +3,7 @@ import { eth } from 'decentraland-commons'
 import { replace } from 'react-router-redux'
 
 import { locations } from 'locations'
-import { getAddress } from 'modules/wallet/reducer'
+import { getAddress } from 'modules/wallet/selectors'
 import {
   FETCH_WALLET_REQUEST,
   FETCH_WALLET_SUCCESS,

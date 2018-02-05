@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getStats } from 'modules/ui/reducer'
+import { getStats } from 'modules/ui/selectors'
 import SidebarStats from './SidebarStats'
 
 const mapState = state => {

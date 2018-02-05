@@ -1,6 +1,3 @@
-import { createSelector } from 'reselect'
-import { getParcels } from 'modules/parcels/reducer'
-import { getDistricts } from 'modules/districts/reducer'
 import {
   FETCH_ADDRESS_PARCELS_REQUEST,
   FETCH_ADDRESS_PARCELS_SUCCESS,
@@ -9,6 +6,7 @@ import {
   FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
   FETCH_ADDRESS_CONTRIBUTIONS_FAILURE
 } from './actions'
+import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { buildCoordinate } from 'lib/utils'
 import { toAddressParcelIds } from './utils'
 
@@ -24,13 +22,6 @@ const INITIAL_STATE = {
 }
 
 export function addressReducer(state = INITIAL_STATE, action) {
-  /*
-    The following import is due to a cyclic import,
-    if imported at the top of the file it is undefined.
-    More elegant solutions are welcome 😇.
-  */
-  const { TRANSFER_PARCEL_SUCCESS } = require('modules/transfer/actions')
-
   switch (action.type) {
     case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
     case FETCH_ADDRESS_PARCELS_REQUEST:
@@ -93,49 +84,3 @@ export function addressReducer(state = INITIAL_STATE, action) {
       return state
   }
 }
-
-export const getState = state => state.address
-export const getData = state => getState(state).data
-export const isLoading = state => getState(state).loading
-export const getError = state => getState(state).error
-export const getAddresses = createSelector(
-  getData,
-  getParcels,
-  getDistricts,
-  (data, allParcels, districts) =>
-    Object.keys(data).reduce((map, address) => {
-      const parcels = []
-      const parcelsById = {}
-      const parcels_ids = data[address].parcel_ids || []
-      parcels_ids.forEach(id => {
-        if (allParcels[id]) {
-          parcels.push(allParcels[id])
-          parcelsById[id] = allParcels[id]
-        }
-      })
-
-      const contributionsById = {}
-      const contributions = []
-      if (data[address].contributions) {
-        data[address].contributions.forEach(contribution => {
-          const newContribution = {
-            ...contribution,
-            district: districts[contribution.district_id]
-          }
-          contributions.push(newContribution)
-          contributionsById[contribution.district_id] = newContribution
-        })
-      }
-
-      return {
-        ...map,
-        [address]: {
-          ...data[address],
-          parcels,
-          parcelsById,
-          contributions,
-          contributionsById
-        }
-      }
-    }, {})
-)
