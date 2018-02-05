@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { getParcels } from 'modules/parcels/reducer'
-import { getDistricts } from 'modules/districts/reducer'
+import { getParcels } from 'modules/parcels/selectors'
+import { getDistricts } from 'modules/districts/selectors'
 
 export const getState = state => state.address
 export const getData = state => getState(state).data

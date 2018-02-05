@@ -17,5 +17,3 @@ export function loadingReducer(state = INITIAL_STATE, action) {
       return state
   }
 }
-
-export const isLoading = state => state.ui.loading
