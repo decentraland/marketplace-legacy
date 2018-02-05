@@ -82,7 +82,11 @@ function* handleParcelDataRequest(action) {
     const parcels = yield select(getParcels)
     const parcel = parcels[buildCoordinate(x, y)]
     if (!parcel) {
-      throw new Error(`Parcel (${x}, ${y}) is not in the state:`, parcels)
+      throw new Error(
+        `Parcel (${x}, ${y}) is not in the state. Valid parcels are: ${Object.keys(
+          parcels
+        )}`
+      )
     }
 
     const data = yield call(() => api.fetchParcelData(x, y))
