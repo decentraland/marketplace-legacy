@@ -96,20 +96,30 @@ export default class ParcelsMap extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // check if the land data has changed in order to update the popup
+  shouldPopupUpdate = nextProps => {
     if (this.popup && this.tileHovered) {
+      // check if the land data has changed in order to update the popup
       const { x, y } = this.tileHovered
       const coords = buildCoordinate(x, y)
       const nextParcel = nextProps.parcels[coords]
       const currentParcel = this.props.parcels[coords]
       const nextParcelData = (nextParcel && nextParcel.data) || null
       const currentParcelData = (currentParcel && currentParcel.data) || null
-      const isDifferent = !isEqual(nextParcelData, currentParcelData)
-      if (isDifferent) {
-        const { wallet, parcels, districts } = nextProps
-        this.renderPopup(x, y, wallet, parcels, districts)
+      const isDataDifferent = !isEqual(nextParcelData, currentParcelData)
+      if (isDataDifferent) {
+        return true
       }
+      // check if my wallet data has changed in order to update the popup
+      const isWalletDifferent = this.props.wallet != nextProps.wallet
+      return isWalletDifferent
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.shouldPopupUpdate(nextProps)) {
+      const { x, y } = this.tileHovered
+      const { wallet, parcels, districts } = nextProps
+      this.renderPopup(x, y, wallet, parcels, districts)
     }
     return this.props.tileSize !== nextProps.tileSize
   }
