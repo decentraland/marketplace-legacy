@@ -5,6 +5,7 @@ export const locations = {
   parcelDetail: (x, y) => `/${x}/${y}`,
 
   colorCodes: '/colorCodes',
+  privacy: '/privacy',
 
   error: '/error',
   walletError: '/walletError',
