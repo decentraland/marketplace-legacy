@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router'
 import { locations } from 'locations'
 
 import HomePage from 'components/HomePage'
+import SettingsPage from 'components/SettingsPage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
@@ -24,6 +25,7 @@ export default function Routes() {
       <Route exact path={locations.root} component={HomePage} />
       <Route exact path={locations.parcelMap} component={HomePage} />
       <Route exact path={locations.parcel} component={ParcelDetailPage} />
+      <Route exact path={locations.settings} component={SettingsPage} />
       <Route exact path={locations.colorCodes} component={ColorKeyPage} />
       <Route exact path={locations.privacy} component={PrivacyPage} />
       <Route exact path={locations.walletError} component={WalletErrorPage} />

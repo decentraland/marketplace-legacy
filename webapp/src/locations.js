@@ -4,6 +4,8 @@ export const locations = {
   parcelMap: '/:x/:y',
   parcelMapDetail: (x, y) => `/${x}/${y}`,
 
+  settings: '/settings',
+
   colorCodes: '/colorCodes',
   privacy: '/privacy',
 
