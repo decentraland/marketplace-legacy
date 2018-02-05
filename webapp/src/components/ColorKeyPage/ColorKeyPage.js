@@ -7,7 +7,7 @@ import './ColorKeyPage.css'
 export default function ColorKey() {
   return (
     <StaticPage className="ColorKeyPage">
-      <h2>Land manager color key</h2>
+      <h2>LAND manager color key</h2>
 
       <div className="message">
         <div className="land-color-keys">

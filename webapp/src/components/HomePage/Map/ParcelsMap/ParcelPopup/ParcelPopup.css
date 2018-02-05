@@ -79,3 +79,7 @@
 .parcel-popup .body > div:last-child {
   margin-bottom: 0;
 }
+
+.text.description {
+  color: lightgray;
+}

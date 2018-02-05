@@ -61,7 +61,7 @@ export class ParcelService {
         const landData = await contract.getData(parcel.x, parcel.y)
         data = LANDRegistry.decodeLandData(landData)
       } catch (error) {
-        log.warn(error.message)
+        log.debug(error.message)
         data = { version: ParcelService.CURRENT_DATA_VERSION }
       }
 

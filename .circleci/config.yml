@@ -68,6 +68,40 @@ jobs:
           paths:
             - webapp/build
           key: build-staging-{{ .Revision }}
+  build-master:
+    docker:
+      - image: circleci/node:7.10
+    working_directory: /tmp/marketplace
+    steps:
+      - checkout
+      - type: shell
+        name: Install System Dependencies
+        command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "webapp/package.json" }}
+          - v1-dependencies-
+      - run: cd webapp && npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "webapp/package.json" }}
+      - run:
+          name: Build
+          command: cd webapp && npm run build
+          environment:
+            NODE_PATH: src/
+            NODE_ENV: production
+            REACT_APP_API_URL: https://api.land.decentraland.zone
+            REACT_APP_VERSION: 0.1
+            REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
+            REACT_APP_INTERCOM_APP_ID: z0h94kay
+            REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS: 0x2a8fd99c19271f4f04b1b7b9c4f7cf264b626edb
+            REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS: 0x7a73483784ab79257bb11b96fd62a2c3ae4fb75b
+      - save_cache:
+          paths:
+            - webapp/build
+          key: build-master-{{ .Revision }}
   deploy-release:
     docker:
       - image: circleci/node:7.10
@@ -76,13 +110,13 @@ jobs:
       - restore_cache:
           keys:
           - build-release-{{ .Revision }}
-      - run: sudo apt-get -y -qq install awscli
+      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Deploy to S3 if tests pass and branch is release
-          command: aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
+          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
   deploy-staging:
     docker:
       - image: circleci/node:7.10
@@ -91,13 +125,28 @@ jobs:
       - restore_cache:
           keys:
           - build-staging-{{ .Revision }}
-      - run: sudo apt-get -y -qq install awscli
+      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Deploy to S3 if tests pass and branch is staging
-          command: aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
+          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
+  deploy-master:
+    docker:
+      - image: circleci/node:7.10
+    working_directory: /tmp/marketplace
+    steps:
+      - restore_cache:
+          keys:
+          - build-master-{{ .Revision }}
+      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
+      - run:
+          name: Deploy to S3 if tests pass and branch is staging
+          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.zone/ --delete --acl public-read
+      - run:
+          name: Invalidate Cloudfront cache
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E21WUW7C12KG5E  --paths "/" "/*"
 
 workflows:
   version: 2
@@ -110,7 +159,6 @@ workflows:
       - deploy-release:
           requires:
             - build-release
-
   build-deploy-staging:
     jobs:
       - build-staging:
@@ -120,3 +168,12 @@ workflows:
       - deploy-staging:
           requires:
             - build-staging
+  build-deploy-master:
+    jobs:
+      - build-release:
+          filters:
+            branches:
+              only: master
+      - deploy-release:
+          requires:
+            - build-release

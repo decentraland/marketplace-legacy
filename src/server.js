@@ -70,6 +70,24 @@ export async function getParcels(req) {
 }
 
 /**
+ * Returns the parcel data for an x,y coordinate
+ * @param  {string} x
+ * @param  {string} y
+ * @return {object}
+ */
+app.get('/api/parcels/:x/:y/data', server.handleRequest(getParcelData))
+
+export async function getParcelData(req) {
+  const x = server.extractFromReq(req, 'x')
+  const y = server.extractFromReq(req, 'y')
+
+  const parcels = [{ x, y }]
+  const [parcel] = await new ParcelService().addLandData(parcels)
+
+  return parcel.data
+}
+
+/**
  * Returns the parcels an address owns
  * @param  {string} address - Parcel owner
  * @return {object}
