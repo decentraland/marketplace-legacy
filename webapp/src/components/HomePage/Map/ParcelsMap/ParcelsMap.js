@@ -98,19 +98,18 @@ export default class ParcelsMap extends React.Component {
 
   shouldPopupUpdate = nextProps => {
     if (this.popup && this.tileHovered) {
-      // check if the land data has changed in order to update the popup
+      // Check if the land or wallet data has changed in order to update the popup
       const { x, y } = this.tileHovered
       const coords = buildCoordinate(x, y)
       const nextParcel = nextProps.parcels[coords]
       const currentParcel = this.props.parcels[coords]
-      const nextParcelData = (nextParcel && nextParcel.data) || null
-      const currentParcelData = (currentParcel && currentParcel.data) || null
-      const isDataDifferent = !isEqual(nextParcelData, currentParcelData)
-      if (isDataDifferent) {
-        return true
-      }
-      // check if my wallet data has changed in order to update the popup
-      return this.props.wallet !== nextProps.wallet
+      const nextParcelData = nextParcel && nextParcel.data
+      const currentParcelData = currentParcel && currentParcel.data
+
+      return (
+        !isEqual(nextParcelData, currentParcelData) ||
+        this.props.wallet !== nextProps.wallet
+      )
     }
   }
 
