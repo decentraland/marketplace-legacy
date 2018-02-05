@@ -82,7 +82,7 @@ jobs:
           command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
   deploy-staging:
     docker:
       - image: circleci/node:7.10
@@ -97,7 +97,7 @@ jobs:
           command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
 
 workflows:
   version: 2
