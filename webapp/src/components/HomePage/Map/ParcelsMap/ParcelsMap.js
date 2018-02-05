@@ -118,8 +118,7 @@ export default class ParcelsMap extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.shouldPopupUpdate(nextProps)) {
       const { x, y } = this.tileHovered
-      const { wallet, parcels, districts } = nextProps
-      this.renderPopup(x, y, wallet, parcels, districts)
+      this.renderPopup(x, y, nextProps)
     }
     return this.props.tileSize !== nextProps.tileSize
   }
@@ -269,11 +268,10 @@ export default class ParcelsMap extends React.Component {
 
   getTileAttributesFromLatLng = latlng => {
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
-    const { wallet, parcels, districts } = this.props
-    return this.getTileAttributes(x, y, wallet, parcels, districts)
+    return this.getTileAttributes(x, y)
   }
   // Called by the Parcel Grid on each tile render
-  getTileAttributes = (x, y, wallet, parcels, districts) => {
+  getTileAttributes = (x, y, { wallet, parcels, districts } = this.props) => {
     const parcel = parcels[buildCoordinate(x, y)]
     const district = parcel ? districts[parcel.district_id] : null
 
@@ -347,21 +345,19 @@ export default class ParcelsMap extends React.Component {
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
     leafletPopup.setLatLng(latlng).addTo(this.map)
     this.popup = leafletPopup
-
-    const { wallet, parcels, districts } = this.props
-    this.renderPopup(x, y, wallet, parcels, districts)
+    this.renderPopup(x, y)
 
     return leafletPopup
   }
 
-  renderPopup = (x, y, wallet, parcels, districts) => {
+  renderPopup = (x, y, props = this.props) => {
     if (this.popup) {
       const {
         color,
         label,
         backgroundColor,
         description
-      } = this.getTileAttributes(x, y, wallet, parcels, districts)
+      } = this.getTileAttributes(x, y, props)
 
       const content = renderToDOM(
         <ParcelPopup
