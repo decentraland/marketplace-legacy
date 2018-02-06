@@ -176,4 +176,4 @@ workflows:
               only: master
       - deploy-release:
           requires:
-            - build-release
+            - build-master
