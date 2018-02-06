@@ -30,6 +30,12 @@ function* handleTransferRequest(action) {
     const transfer = { hash, oldOwner, newOwner, x, y }
     yield put(transferParcelSuccess(transfer))
   } catch (error) {
-    yield put(transferParcelFailure(error.message))
+    // "Recommended" way to check for rejections
+    // https://github.com/MetaMask/faq/issues/6#issuecomment-264900031
+    const message = error.message.includes('User denied transaction signature')
+      ? 'Transaction rejected'
+      : error.message
+
+    yield put(transferParcelFailure(message))
   }
 }

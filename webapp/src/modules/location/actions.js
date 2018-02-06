@@ -1,4 +1,4 @@
-// Change Location
+// Navigate to
 
 export const NAVIGATE_TO = 'Navigate to URL'
 
