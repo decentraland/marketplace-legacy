@@ -15,8 +15,8 @@ export default class PrivacyPage extends React.PureComponent {
           1.1 Decentraland recognizes that people who use Decentraland value
           their privacy. This Privacy Policy details important information
           regarding the collection, use and disclosure of User information
-          collected on the Decentraland website located at&nbps;
-          <a href="https://decentraland.org">https://Decentraland.org/</a> (the
+          collected on the Decentraland website located at&nbsp;
+          <a href="https://decentraland.org">https://decentraland.org/</a> (the
           “Site”), and any other features, tools, materials, or other services
           (including co-branded or affiliated services) offered from time to
           time by Decentraland (the “Service”). Decentraland provides this
