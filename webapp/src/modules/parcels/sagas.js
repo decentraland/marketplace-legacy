@@ -6,6 +6,8 @@ import {
   FETCH_PARCEL_REQUEST,
   FETCH_PARCEL_DATA_REQUEST,
   EDIT_PARCEL_REQUEST,
+  fetchParcelSuccess,
+  fetchParcelFailure,
   fetchParcelsSuccess,
   fetchParcelsFailure,
   editParcelSuccess,
@@ -44,7 +46,9 @@ function* handleParcelRequest(action) {
     const nw = parcelId
     const se = parcelId
 
-    if (!inBounds(x, y)) throw new Error(`Parcel ${x}, ${y} is out of bounds`)
+    if (!inBounds(x, y)) {
+      throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
+    }
 
     let [parcels, data] = yield all([
       api.fetchParcels(nw, se),
@@ -52,10 +56,10 @@ function* handleParcelRequest(action) {
     ])
     const parcel = parcels.find(p => p.id === parcelId)
     Object.assign(parcel, { data })
-    yield put(fetchParcelsSuccess(x, y, parcel))
+    yield put(fetchParcelSuccess(x, y, parcel))
   } catch (error) {
     console.warn(error)
-    yield put(fetchParcelsFailure(x, y, error.message))
+    yield put(fetchParcelFailure(x, y, error.message))
   }
 }
 

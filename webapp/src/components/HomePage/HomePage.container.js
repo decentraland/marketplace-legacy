@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
-import { fetchWalletRequest, isLoading } from 'modules/wallet/actions'
+
+import { isLoading } from 'modules/wallet/selectors'
+import { fetchWalletRequest } from 'modules/wallet/actions'
 import { openModal } from 'modules/ui/actions'
 
 import HomePage from './HomePage'
