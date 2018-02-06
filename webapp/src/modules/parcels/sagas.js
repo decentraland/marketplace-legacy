@@ -3,17 +3,15 @@ import { eth } from 'decentraland-commons'
 import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 import {
   FETCH_PARCELS_REQUEST,
-  FETCH_PARCELS_SUCCESS,
-  FETCH_PARCELS_FAILURE,
   FETCH_PARCEL_REQUEST,
-  FETCH_PARCEL_SUCCESS,
-  FETCH_PARCEL_FAILURE,
   FETCH_PARCEL_DATA_REQUEST,
-  FETCH_PARCEL_DATA_SUCCESS,
-  FETCH_PARCEL_DATA_FAILURE,
   EDIT_PARCEL_REQUEST,
-  EDIT_PARCEL_SUCCESS,
-  EDIT_PARCEL_FAILURE
+  fetchParcelsSuccess,
+  fetchParcelsFailure,
+  editParcelSuccess,
+  editParcelFailure,
+  fetchParcelDataSuccess,
+  fetchParcelDataFailure
 } from './actions'
 import { api } from 'lib/api'
 import { getParcels } from './selectors'
@@ -33,48 +31,35 @@ function* handleParcelsRequest(action) {
     const se = buildCoordinate(action.se.x, action.se.y)
     const parcels = yield call(() => api.fetchParcels(nw, se))
 
-    yield put({
-      type: FETCH_PARCELS_SUCCESS,
-      parcels
-    })
+    yield put(fetchParcelsSuccess(parcels))
   } catch (error) {
-    console.warn(error)
-    yield put({
-      type: FETCH_PARCELS_FAILURE,
-      error: error.message
-    })
+    yield put(fetchParcelsFailure(error.message))
   }
 }
 
 function* handleParcelRequest(action) {
+  const { x, y } = action
   try {
-    const { x, y } = action
-    const nw = buildCoordinate(x, y)
-    const se = buildCoordinate(x, y)
+    const parcelId = buildCoordinate(x, y)
+    const nw = parcelId
+    const se = parcelId
 
     let [parcels, data] = yield all([
       api.fetchParcels(nw, se),
       api.fetchParcelData(x, y)
     ])
-
-    parcels = parcels.map(parcel => Object.assign(parcel, { data }))
-
-    yield put({
-      type: FETCH_PARCEL_SUCCESS,
-      parcels
-    })
+    const parcel = parcels.find(p => p.id === parcelId)
+    Object.assign(parcel, { data })
+    yield put(fetchParcelsSuccess(x, y, parcel))
   } catch (error) {
     console.warn(error)
-    yield put({
-      type: FETCH_PARCEL_FAILURE,
-      error: error.message
-    })
+    yield put(fetchParcelsFailure(x, y, error.message))
   }
 }
 
 function* handleParcelDataRequest(action) {
+  const { x, y } = action
   try {
-    const { x, y } = action
     if (!inBounds(x, y)) {
       throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
     }
@@ -91,40 +76,26 @@ function* handleParcelDataRequest(action) {
 
     const data = yield call(() => api.fetchParcelData(x, y))
     const newParcel = { ...parcel, data }
-
-    yield put({
-      type: FETCH_PARCEL_DATA_SUCCESS,
-      parcels: [newParcel]
-    })
+    yield put(fetchParcelDataSuccess(x, y, newParcel))
   } catch (error) {
-    console.warn(error)
-    yield put({
-      type: FETCH_PARCEL_DATA_FAILURE,
-      error: error.message
-    })
+    yield put(fetchParcelDataFailure(x, y, error.message))
   }
 }
 
 function* handleEditParcelsRequest(action) {
-  const parcel = action.parcel
-  const { x, y, data } = parcel
-
-  const parcels = yield select(getParcels)
-  const currentParcel = parcels[buildCoordinate(x, y)]
-
   try {
+    const parcel = action.parcel
+    const { x, y, data } = parcel
+
     const contract = eth.getContract('LANDRegistry')
     const dataString = LANDRegistry.encodeLandData(data)
-
     yield call(() => contract.updateLandData(x, y, dataString))
 
-    yield put({ type: EDIT_PARCEL_SUCCESS, parcel })
+    yield put(editParcelSuccess(parcel))
   } catch (error) {
-    console.warn(error)
-    yield put({
-      type: EDIT_PARCEL_FAILURE,
-      error: error.message,
-      parcel: currentParcel
-    })
+    const parcels = yield select(getParcels)
+    const { x, y } = action.parcel
+    const parcel = parcels[buildCoordinate(x, y)]
+    yield put(editParcelFailure(parcel, error.message))
   }
 }

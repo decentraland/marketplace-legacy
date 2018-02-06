@@ -1,22 +1,10 @@
-export const FETCH_PARCELS_REQUEST = '[Request] Parcels fetch requested'
-export const FETCH_PARCELS_SUCCESS = '[Success] Parcels fetched'
-export const FETCH_PARCELS_FAILURE = '[Failure] Failure to fetch parcels'
+// Fetch Parcels
 
-export const FETCH_PARCEL_REQUEST = '[Request] Parcel fetch requested'
-export const FETCH_PARCEL_SUCCESS = '[Success] Parcel fetched'
-export const FETCH_PARCEL_FAILURE = '[Failure] Failure to fetch parcel'
+export const FETCH_PARCELS_REQUEST = '[Request] Fetch Parcels'
+export const FETCH_PARCELS_SUCCESS = '[Success] Fetch Parcels'
+export const FETCH_PARCELS_FAILURE = '[Failure] Fetch Parcels'
 
-export const FETCH_PARCEL_DATA_REQUEST = '[Request] Parcel data fetch requested'
-export const FETCH_PARCEL_DATA_SUCCESS = '[Success] Parcel data fetched'
-export const FETCH_PARCEL_DATA_FAILURE = '[Failure] Failure to fetch data'
-
-export const EDIT_PARCEL_REQUEST = '[Request] Edit Parcel requested'
-export const EDIT_PARCEL_SUCCESS = '[Success] Parcel edited'
-export const EDIT_PARCEL_FAILURE = '[Failure] Failure to edit parcel'
-
-export const MERGE_PARCELS = 'Merge Parcels'
-
-export function fetchParcels(nw, se) {
+export function fetchParcelsRequest(nw, se) {
   return {
     type: FETCH_PARCELS_REQUEST,
     nw,
@@ -24,7 +12,66 @@ export function fetchParcels(nw, se) {
   }
 }
 
-export function fetchParcel(x, y) {
+export function fetchParcelsSuccess(parcels) {
+  return {
+    type: FETCH_PARCELS_SUCCESS,
+    parcels
+  }
+}
+
+export function fetchParcelsFailure(error) {
+  return {
+    type: FETCH_PARCELS_FAILURE,
+    error
+  }
+}
+
+// Merge Parcels
+
+export const MERGE_PARCELS = 'Merge Parcels'
+
+export function mergeParcels(parcels) {
+  return {
+    type: MERGE_PARCELS,
+    parcels
+  }
+}
+
+// Edit Parcel
+
+export const EDIT_PARCEL_REQUEST = '[Request] Edit Parcel'
+export const EDIT_PARCEL_SUCCESS = '[Success] Edit Parcel'
+export const EDIT_PARCEL_FAILURE = '[Failure] Edit Parcel'
+
+export function editParcelRequest(parcel) {
+  return {
+    type: EDIT_PARCEL_REQUEST,
+    parcel
+  }
+}
+
+export function editParcelSuccess(parcel) {
+  return {
+    type: EDIT_PARCEL_SUCCESS,
+    parcel
+  }
+}
+
+export function editParcelFailure(parcel, error) {
+  return {
+    type: EDIT_PARCEL_FAILURE,
+    parcel,
+    error
+  }
+}
+
+// Fetch Parcel
+
+export const FETCH_PARCEL_REQUEST = '[Request] Fetch Parcel'
+export const FETCH_PARCEL_SUCCESS = '[Success] Fetch Parcel'
+export const FETCH_PARCEL_FAILURE = '[Failure] Fetch Parcel'
+
+export function fetchParcelRequest(x, y) {
   return {
     type: FETCH_PARCEL_REQUEST,
     x,
@@ -32,7 +79,31 @@ export function fetchParcel(x, y) {
   }
 }
 
-export function fetchParcelData(x, y) {
+export function fetchParcelSuccess(x, y, parcel) {
+  return {
+    type: FETCH_PARCEL_SUCCESS,
+    x,
+    y,
+    parcel
+  }
+}
+
+export function fetchParcelFailure(x, y, error) {
+  return {
+    type: FETCH_PARCEL_FAILURE,
+    x,
+    y,
+    error
+  }
+}
+
+// Fatch Parcel Data
+
+export const FETCH_PARCEL_DATA_REQUEST = '[Request] Fetch Parcel Data'
+export const FETCH_PARCEL_DATA_SUCCESS = '[Success] Fetch Parcel Data'
+export const FETCH_PARCEL_DATA_FAILURE = '[Failure] Fetch Parcel Data'
+
+export function fetchParcelDataRequest(x, y) {
   return {
     type: FETCH_PARCEL_DATA_REQUEST,
     x,
@@ -40,9 +111,20 @@ export function fetchParcelData(x, y) {
   }
 }
 
-export function editParcel(parcel) {
+export function fetchParcelDataSuccess(x, y, parcel) {
   return {
-    type: EDIT_PARCEL_REQUEST,
+    type: FETCH_PARCEL_DATA_SUCCESS,
+    x,
+    y,
     parcel
+  }
+}
+
+export function fetchParcelDataFailure(x, y, error) {
+  return {
+    type: FETCH_PARCEL_DATA_FAILURE,
+    x,
+    y,
+    error
   }
 }

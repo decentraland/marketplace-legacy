@@ -2,12 +2,13 @@ import { takeEvery, call, put } from 'redux-saga/effects'
 import {
   FETCH_ADDRESS_PARCELS_REQUEST,
   FETCH_ADDRESS_PARCELS_SUCCESS,
-  FETCH_ADDRESS_PARCELS_FAILURE,
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
-  FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
-  FETCH_ADDRESS_CONTRIBUTIONS_FAILURE
+  fetchAddressParcelsSuccess,
+  fetchAddressParcelsFailure,
+  fetchAddressContributionsSuccess,
+  fetchAddressContributionsFailure
 } from './actions'
-import { MERGE_PARCELS } from 'modules/parcels/actions'
+import { mergeParcels } from 'modules/parcels/actions'
 import { api } from 'lib/api'
 
 export function* addressSaga() {
@@ -20,45 +21,27 @@ export function* addressSaga() {
 }
 
 function* handleAddressParcelsRequest(action) {
+  const { address } = action
   try {
-    const { address } = action
     const parcels = yield call(() => api.fetchAddressParcels(address))
-
-    yield put({
-      type: FETCH_ADDRESS_PARCELS_SUCCESS,
-      address,
-      parcels
-    })
+    yield put(fetchAddressParcelsSuccess(address, parcels))
   } catch (error) {
-    yield put({
-      type: FETCH_ADDRESS_PARCELS_FAILURE,
-      error: error.message
-    })
+    yield put(fetchAddressParcelsFailure(address, error.message))
   }
 }
 
 function* handleAddressParcelsSuccess(action) {
-  yield put({
-    type: MERGE_PARCELS,
-    parcels: action.parcels
-  })
+  yield put(mergeParcels(action.parcels))
 }
 
 function* handleAddressContributionsRequest(action) {
+  const { address } = action
   try {
-    const { address } = action
     const contributions = yield call(() =>
       api.fetchAddressContributions(address)
     )
-    yield put({
-      type: FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
-      address,
-      contributions
-    })
+    yield put(fetchAddressContributionsSuccess(address, contributions))
   } catch (error) {
-    yield put({
-      type: FETCH_ADDRESS_CONTRIBUTIONS_FAILURE,
-      error: error.message
-    })
+    yield put(fetchAddressContributionsFailure(address, error.message))
   }
 }

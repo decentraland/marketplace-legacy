@@ -17,12 +17,12 @@ export const transferType = shape({
 
 export const districtType = shape({
   id: string.isRequired,
-  center: string.isRequired,
+  center: string, // Not required since one district has no center
   description: string.isRequired,
   link: string.isRequired,
   name: string.isRequired,
-  parcel_count: string.isRequired,
-  priority: number.isRequired,
+  parcel_count: string, // Not required since Plazas don't have parcel count
+  priority: number, // Not required since one district has no prority
   public: bool.isRequired
 })
 

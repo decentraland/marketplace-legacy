@@ -1,8 +1,10 @@
-export const CHANGE_LOCATION = 'Navigate to URL'
+// Change Location
+
+export const NAVIGATE_TO = 'Navigate to URL'
 
 export function navigateTo(url) {
   return {
-    type: CHANGE_LOCATION,
+    type: NAVIGATE_TO,
     url
   }
 }

@@ -34,7 +34,23 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PARCEL_SUCCESS:
-    case FETCH_PARCEL_DATA_SUCCESS:
+    case FETCH_PARCEL_DATA_SUCCESS: {
+      const parcelId = action.parcel.id
+      const oldParcel = state[action.parcel.id]
+      const newParcel = action.parcel
+      return {
+        ...state,
+        error: null,
+        loading_count: state.loading_count - 1,
+        data: {
+          ...state.data,
+          [parcelId]: {
+            ...oldParcel,
+            ...newParcel
+          }
+        }
+      }
+    }
     case FETCH_PARCELS_SUCCESS: {
       return {
         ...state,

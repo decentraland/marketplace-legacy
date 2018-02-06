@@ -2,7 +2,10 @@ import { takeEvery, put, select } from 'redux-saga/effects'
 import { getParcels } from 'modules/parcels/selectors'
 import { buildCoordinate } from 'lib/utils'
 import { inBounds } from 'lib/parcelUtils'
-import { fetchParcelData, fetchParcels } from 'modules/parcels/actions'
+import {
+  fetchParcelDataRequest,
+  fetchParcelsRequest
+} from 'modules/parcels/actions'
 import { CHANGE_RANGE, HOVER_PARCEL } from './actions'
 
 export function* mapSaga() {
@@ -12,7 +15,7 @@ export function* mapSaga() {
 
 function* handleChangeRange(action) {
   const { nw, se } = action
-  yield put(fetchParcels(nw, se))
+  yield put(fetchParcelsRequest(nw, se))
 }
 
 function* handleHoverParcel(action) {
@@ -21,5 +24,5 @@ function* handleHoverParcel(action) {
   const parcels = yield select(getParcels)
   const parcel = parcels[buildCoordinate(x, y)]
   if (!parcel || !parcel.owner) return // only fetch data if the parcel is loaded and has an owner
-  yield put(fetchParcelData(x, y))
+  yield put(fetchParcelDataRequest(x, y))
 }

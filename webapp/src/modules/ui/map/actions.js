@@ -1,5 +1,17 @@
+// Select Parcel
+
 export const SELECT_PARCEL = 'Select Parcel'
-export const HOVER_PARCEL = 'Hover Parcel'
+
+export function selectParcel(x, y) {
+  return {
+    type: SELECT_PARCEL,
+    x,
+    y
+  }
+}
+
+// Change Range
+
 export const CHANGE_RANGE = 'Change Range'
 
 export function changeRange(nw, se) {
@@ -10,13 +22,9 @@ export function changeRange(nw, se) {
   }
 }
 
-export function selectParcel(x, y) {
-  return {
-    type: SELECT_PARCEL,
-    x,
-    y
-  }
-}
+// Hover Parcel
+
+export const HOVER_PARCEL = 'Hover Parcel'
 
 export function hoverParcel(x, y) {
   return {

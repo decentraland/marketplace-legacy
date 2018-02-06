@@ -3,8 +3,8 @@ import { eth } from 'decentraland-commons'
 import { getAddress } from 'modules/wallet/selectors'
 import {
   TRANSFER_PARCEL_REQUEST,
-  TRANSFER_PARCEL_SUCCESS,
-  TRANSFER_PARCEL_FAILURE
+  transferParcelSuccess,
+  transferParcelFailure
 } from './actions'
 
 export function* transferSaga() {
@@ -27,11 +27,9 @@ function* handleTransferRequest(action) {
     const contract = eth.getContract('LANDRegistry')
     const hash = yield call(() => contract.transferTo(x, y, newOwner))
 
-    yield put({
-      type: TRANSFER_PARCEL_SUCCESS,
-      transfer: { hash, oldOwner, newOwner, x, y }
-    })
+    const transfer = { hash, oldOwner, newOwner, x, y }
+    yield put(transferParcelSuccess(transfer))
   } catch (error) {
-    yield put({ type: TRANSFER_PARCEL_FAILURE, error: error.message })
+    yield put(transferParcelFailure(error.message))
   }
 }

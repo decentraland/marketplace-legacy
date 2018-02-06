@@ -58,7 +58,7 @@ export default class MapComponent extends React.Component {
 
   handleMoveStart = () => {
     const { onLoading } = this.props
-    onLoading() // Set back to false on `types.fetchParcels.success`
+    onLoading()
   }
 
   handleMoveEnd = ({ position, bounds }) => {
