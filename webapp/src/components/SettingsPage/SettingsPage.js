@@ -73,7 +73,7 @@ export default class SettingsPage extends React.PureComponent {
 function SettingsForm(props) {
   const {
     address,
-    email,
+    // email,
     manaAuthorized,
     onManaAuthorizedChange,
     isLandAuthorized,
@@ -94,7 +94,7 @@ function SettingsForm(props) {
           />
         </div>
 
-        <div className="InputGroup">
+        {/*<div className="InputGroup">
           <label htmlFor="email">Email address</label>
           <input
             id="email"
@@ -103,7 +103,7 @@ function SettingsForm(props) {
             value={email}
             placeholder="Example: youremail@gmail.com"
           />
-        </div>
+        </div>*/}
 
         <div className="InputGroup">
           <input
