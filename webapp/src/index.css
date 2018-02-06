@@ -9,11 +9,12 @@ body {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
 }
 
-a {
+a, .link {
   color: #30D7A9;
+  cursor: pointer;
 }
 
-a:hover {
+a:hover, .link:hover {
   color: #30D7A9;
   text-decoration: none;
 }
@@ -43,3 +44,26 @@ a:hover {
 .taken        { background-color: #AEDC89; color: #AEDC89; fill: #AEDC89; }
 .unowned      { background-color: #F9F7E8; color: #F9F7E8; fill: #F9F7E8; }
 .loading      { background-color: #AAAAAA; color: #AAAAAA; fill: #AAAAAA; }
+
+/* -----------------------------------------------------------------------
+  Form Elements */
+
+label {
+  font-weight: 400;
+}
+
+input[type=email], input[type=number], input[type=password], input[type=text], textarea {
+  border: 1px solid #EEE;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: .4px;
+  outline: none;
+}
+
+input[type=email]:focus, input[type=number]:focus, input[type=password]:focus, input[type=text]:focus {
+  border-color: #30D7A9;
+}
+
+button {
+  cursor: pointer
+}

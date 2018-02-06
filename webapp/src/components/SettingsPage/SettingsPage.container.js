@@ -1,14 +1,18 @@
 import { connect } from 'react-redux'
 
-import { getAddress } from 'modules/wallet/reducer'
+import { getWallet, isLoading } from 'modules/wallet/selectors'
+import { fetchWallet } from 'modules/wallet/actions'
 import SettingsPage from './SettingsPage'
 
 const mapState = state => {
   return {
-    address: getAddress(state)
+    wallet: getWallet(state),
+    isLoading: isLoading(state)
   }
 }
 
-const mapDispatch = dispatch => ({})
+const mapDispatch = dispatch => ({
+  onConnect: () => dispatch(fetchWallet())
+})
 
 export default connect(mapState, mapDispatch)(SettingsPage)

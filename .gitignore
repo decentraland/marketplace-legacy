@@ -9,3 +9,7 @@ out
 /webapp/package-lock.json
 
 .env
+
+/.idea/
+
+/webapp/.idea/

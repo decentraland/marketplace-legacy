@@ -109,7 +109,7 @@ export default class TransferModal extends React.PureComponent {
               </EtherscanLink>
             </div>
           ) : (
-            <form action="POST" onSubmit={this.handleTransfer}>
+            <form action="" method="POST" onSubmit={this.handleTransfer}>
               <div className="text">
                 <p>
                   Remember that transfering LAND is an irreversible operation.<br />

@@ -10,8 +10,8 @@ import { env } from 'decentraland-commons'
 import Routes from './Routes'
 import { store, history } from './store'
 
-import './index.css'
 import './rollbar'
+import './index.css'
 
 env.load()
 
