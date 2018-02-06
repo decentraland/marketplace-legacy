@@ -39,9 +39,9 @@ export function mergeParcels(parcels) {
 
 // Edit Parcel
 
-export const FETCH_PARCEL_REQUEST = '[Request] Edit Parcel'
-export const FETCH_PARCEL_SUCCESS = '[Success] Edit Parcel'
-export const FETCH_PARCEL_FAILURE = '[Failure] Edit Parcel'
+export const EDIT_PARCEL_REQUEST = '[Request] Edit Parcel'
+export const EDIT_PARCEL_SUCCESS = '[Success] Edit Parcel'
+export const EDIT_PARCEL_FAILURE = '[Failure] Edit Parcel'
 
 export function editParcelRequest(parcel) {
   return {
@@ -67,9 +67,9 @@ export function editParcelFailure(parcel, error) {
 
 // Fetch Parcel
 
-export const EDIT_PARCEL_REQUEST = '[Request] Fetch Parcel'
-export const EDIT_PARCEL_SUCCESS = '[Success] Fetch Parcel'
-export const EDIT_PARCEL_FAILURE = '[Failure] Fetch Parcel'
+export const FETCH_PARCEL_REQUEST = '[Request] Fetch Parcel'
+export const FETCH_PARCEL_SUCCESS = '[Success] Fetch Parcel'
+export const FETCH_PARCEL_FAILURE = '[Failure] Fetch Parcel'
 
 export function fetchParcelRequest(x, y) {
   return {
