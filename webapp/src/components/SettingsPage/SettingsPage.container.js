@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { getWallet, isLoading } from 'modules/wallet/selectors'
-import { fetchWallet } from 'modules/wallet/actions'
+import { fetchWalletRequest } from 'modules/wallet/actions'
 import SettingsPage from './SettingsPage'
 
 const mapState = state => {
@@ -12,7 +12,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onConnect: () => dispatch(fetchWallet())
+  onConnect: () => dispatch(fetchWalletRequest())
 })
 
 export default connect(mapState, mapDispatch)(SettingsPage)
