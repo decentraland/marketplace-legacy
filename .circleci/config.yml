@@ -170,10 +170,10 @@ workflows:
             - build-staging
   build-deploy-master:
     jobs:
-      - build-release:
+      - build-master:
           filters:
             branches:
               only: master
-      - deploy-release:
+      - deploy-master:
           requires:
             - build-master
