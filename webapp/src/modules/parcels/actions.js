@@ -122,7 +122,7 @@ export function fetchParcelDataSuccess(x, y, parcel) {
 
 export function fetchParcelDataFailure(x, y, error) {
   return {
-    type: FETCH_PARCEL_DATA_SUCCESS,
+    type: FETCH_PARCEL_DATA_FAILURE,
     x,
     y,
     error
