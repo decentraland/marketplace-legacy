@@ -314,7 +314,18 @@ export default class TermsModal extends React.PureComponent {
               claimed or imposed by any governmental authority (collectively,
               “Taxes”) associated with your use of the Service (including,
               without limitation, any Taxes that may become payable as the
-              result of your ownership, or transfer of any parcel). Except for income taxes levied on Decentraland, you: (i) will pay or reimburse us for all national, federal, state, local or other taxes and assessments of any jurisdiction, including value added taxes and taxes as required by international tax treaties, customs or other import or export taxes, and amounts levied in lieu thereof based on charges set, services performed or payments made hereunder, as are now or hereafter may be imposed under the authority of any national, state, local or any other taxing jurisdiction; and (ii) shall not be entitled to deduct the amount of any such taxes, duties or assessments from payments made to us pursuant to these Terms.
+              result of your ownership, or transfer of any parcel). Except for
+              income taxes levied on Decentraland, you: (i) will pay or
+              reimburse us for all national, federal, state, local or other
+              taxes and assessments of any jurisdiction, including value added
+              taxes and taxes as required by international tax treaties, customs
+              or other import or export taxes, and amounts levied in lieu
+              thereof based on charges set, services performed or payments made
+              hereunder, as are now or hereafter may be imposed under the
+              authority of any national, state, local or any other taxing
+              jurisdiction; and (ii) shall not be entitled to deduct the amount
+              of any such taxes, duties or assessments from payments made to us
+              pursuant to these Terms.
             </p>
 
             <h4>7. Changes</h4>
@@ -768,8 +779,16 @@ export default class TermsModal extends React.PureComponent {
 
             <h4>17.5 30-Day Right to Opt Out</h4>
             <p>
-        You have the right to opt-out and not be bound by the arbitration and class action waiver provisions set forth above by sending written notice of your decision to opt-out to the following email address: <a href="mailto:legal@decentraland.org">legal@decentraland.org</a>.
-        Your notice must be sent within 30 days of your first use of the Service, otherwise you shall be bound to arbitrate disputes in accordance with the terms of those paragraphs. If you opt-out of these arbitration provisions, Decentraland also will not be bound by them.
+              You have the right to opt-out and not be bound by the arbitration
+              and class action waiver provisions set forth above by sending
+              written notice of your decision to opt-out to the following email
+              address:{' '}
+              <a href="mailto:legal@decentraland.org">legal@decentraland.org</a>.
+              Your notice must be sent within 30 days of your first use of the
+              Service, otherwise you shall be bound to arbitrate disputes in
+              accordance with the terms of those paragraphs. If you opt-out of
+              these arbitration provisions, Decentraland also will not be bound
+              by them.
             </p>
 
             <h4>17.6 Changes to This Section</h4>
