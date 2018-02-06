@@ -1,11 +1,11 @@
 import { takeLatest, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { CHANGE_LOCATION } from './actions'
+import { NAVIGATE_TO } from './actions'
 
 export function* locationSaga() {
-  yield takeLatest(CHANGE_LOCATION, handleLocationChange)
+  yield takeLatest(NAVIGATE_TO, handleNavigateTo)
 }
 
-function* handleLocationChange(action) {
+function* handleNavigateTo(action) {
   yield put(push(action.url))
 }

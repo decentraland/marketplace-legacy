@@ -5,6 +5,7 @@ import { locations } from 'locations'
 
 import HomePage from 'components/HomePage'
 import ColorKeyPage from './components/ColorKeyPage'
+import PrivacyPage from './components/PrivacyPage'
 
 import WalletErrorPage from './components/WalletErrorPage'
 import AddressErrorPage from './components/AddressErrorPage'
@@ -19,6 +20,7 @@ export default function Routes() {
       <Route exact path={locations.root} component={HomePage} />
       <Route exact path={locations.parcel} component={HomePage} />
       <Route exact path={locations.colorCodes} component={ColorKeyPage} />
+      <Route exact path={locations.privacy} component={PrivacyPage} />
       <Route exact path={locations.walletError} component={WalletErrorPage} />
       <Route exact path={locations.addressError} component={AddressErrorPage} />
       <Route exact path={locations.serverError} component={ServerError} />

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { locations } from 'locations'
-import { getRange } from 'modules/ui/reducer'
+import { getRange } from 'modules/ui/selectors'
 import { navigateTo } from 'modules/location/actions'
 
 import Minimap from './Minimap'

@@ -74,9 +74,3 @@
   padding: 11px 44px;
   border-radius: 20px;
 }
-
-@media (min-width: 768px) {
-  .TermsModal .modal-dialog {
-    width: 720px;
-  }
-}

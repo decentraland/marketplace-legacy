@@ -20,5 +20,3 @@ export function toastReducer(state = INITIAL_STATE, action) {
       return state
   }
 }
-
-export const getToasts = state => state.ui.toast

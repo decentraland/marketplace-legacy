@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { getAddress } from 'modules/wallet/reducer'
-import { getTransfer, isLoading, getError } from 'modules/transfer/reducer'
+import { getAddress } from 'modules/wallet/selectors'
+import { getTransfer, isLoading, getError } from 'modules/transfer/selectors'
 import { transferParcelRequest, cleanTransfer } from 'modules/transfer/actions'
 import TransferModal from './TransferModal'
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getAddress } from 'modules/wallet/reducer'
+import { getAddress } from 'modules/wallet/selectors'
 import Intercom from './Intercom'
 
 const mapState = state => {

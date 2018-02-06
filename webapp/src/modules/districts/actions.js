@@ -1,6 +1,8 @@
-export const FETCH_DISTRICTS_REQUEST = '[Request] Districts fetch requested'
-export const FETCH_DISTRICTS_SUCCESS = '[Success] Districts fetched'
-export const FETCH_DISTRICTS_FAILURE = '[Failure] Failure to fetch districts'
+// Fetch Districts
+
+export const FETCH_DISTRICTS_REQUEST = '[Request] Fetch Districts'
+export const FETCH_DISTRICTS_SUCCESS = '[Success] Fetch Districts'
+export const FETCH_DISTRICTS_FAILURE = '[Failure] Fetch Districts'
 
 export function fetchDistrictsRequest() {
   return {

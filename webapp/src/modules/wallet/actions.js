@@ -1,10 +1,8 @@
-export const FETCH_WALLET_REQUEST = '[Request] Wallet fetch requested'
-export const FETCH_WALLET_SUCCESS = '[Success] Wallet fetched'
-export const FETCH_WALLET_FAILURE = '[Failure] Failure to fetch wallet'
+// Fetch Wallet
 
-export const FETCH_BALANCE_REQUEST = '[Request] Balance fetch requested'
-export const FETCH_BALANCE_SUCCESS = '[Success] Balance fetched'
-export const FETCH_BALANCE_FAILURE = '[Failure] Failure to fetch balance'
+export const FETCH_WALLET_REQUEST = '[Request] Fetch Wallet'
+export const FETCH_WALLET_SUCCESS = '[Success] Fetch Wallet'
+export const FETCH_WALLET_FAILURE = '[Failure] Fetch Wallet'
 
 export function fetchWalletRequest() {
   return {
@@ -25,6 +23,12 @@ export function fetchWalletFailure(error) {
     error
   }
 }
+
+// Fetch Balance
+
+export const FETCH_BALANCE_REQUEST = '[Request] Fetch Balance'
+export const FETCH_BALANCE_SUCCESS = '[Success] Fetch Balance'
+export const FETCH_BALANCE_FAILURE = '[Failure] Fetch Balance'
 
 export function fetchBalanceRequest() {
   return {

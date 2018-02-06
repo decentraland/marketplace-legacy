@@ -23,7 +23,8 @@ export default class MapComponent extends React.Component {
     onNavigate: PropTypes.func.isRequired,
     onLoading: PropTypes.func.isRequired,
     onRangeChange: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired,
+    onHover: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -55,12 +56,12 @@ export default class MapComponent extends React.Component {
     }
   }
 
-  onMoveStart = () => {
+  handleMoveStart = () => {
     const { onLoading } = this.props
     onLoading()
   }
 
-  onMoveEnd = ({ position, bounds }) => {
+  handleMoveEnd = ({ position, bounds }) => {
     const { onNavigate } = this.props
     const offset = this.getBoundsOffset()
 
@@ -74,7 +75,7 @@ export default class MapComponent extends React.Component {
     onNavigate(locations.parcelDetail(position.x, position.y))
   }
 
-  onZoomEnd = zoom => {
+  handleZoomEnd = zoom => {
     this.setState({ zoom })
   }
 
@@ -103,7 +104,14 @@ export default class MapComponent extends React.Component {
 
   render() {
     const { zoom } = this.state
-    const { wallet, parcels, districts, isReady, onSelect } = this.props
+    const {
+      wallet,
+      parcels,
+      districts,
+      isReady,
+      onSelect,
+      onHover
+    } = this.props
     const { x, y } = this.getCenter()
 
     return isReady ? (
@@ -120,10 +128,11 @@ export default class MapComponent extends React.Component {
           zoom={zoom}
           bounds={this.bounds}
           tileSize={this.getTileSize()}
-          onMoveStart={this.onMoveStart}
-          onMoveEnd={this.onMoveEnd}
-          onZoomEnd={this.onZoomEnd}
+          onMoveStart={this.handleMoveStart}
+          onMoveEnd={this.handleMoveEnd}
+          onZoomEnd={this.handleZoomEnd}
           onSelect={onSelect}
+          onHover={onHover}
         />
       </div>
     ) : (

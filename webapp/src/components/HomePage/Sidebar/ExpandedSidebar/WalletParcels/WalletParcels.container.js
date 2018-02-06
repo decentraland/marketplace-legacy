@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { editParcelRequest } from 'modules/parcels/actions'
 import { openModal } from 'modules/ui/actions'
-import { getWallet, isLoading, getError } from 'modules/wallet/reducer'
+import { getWallet, isLoading, getError } from 'modules/wallet/selectors'
 
 import WalletParcels from './WalletParcels'
 

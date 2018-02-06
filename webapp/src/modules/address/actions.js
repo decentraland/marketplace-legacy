@@ -1,20 +1,8 @@
-export const FETCH_ADDRESS_PARCELS_REQUEST =
-  '[Request] Address parcels fetch requested'
+// Fetch Address Parcels
 
-export const FETCH_ADDRESS_PARCELS_SUCCESS =
-  '[Success] Address parcels fetched successfully'
-
-export const FETCH_ADDRESS_PARCELS_FAILURE =
-  '[Failure] Failure to fetch address parcels'
-
-export const FETCH_ADDRESS_CONTRIBUTIONS_REQUEST =
-  '[Request] Address contributions fetch requested'
-
-export const FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS =
-  '[Success] Address contributions fetched successfully'
-
-export const FETCH_ADDRESS_CONTRIBUTIONS_FAILURE =
-  '[Failure] Failure to fetch address contributions'
+export const FETCH_ADDRESS_PARCELS_REQUEST = '[Request] Fetch Address Parcels'
+export const FETCH_ADDRESS_PARCELS_SUCCESS = '[Success] Fetch Address Parcels'
+export const FETCH_ADDRESS_PARCELS_FAILURE = '[Failure] Fetch Address Parcels'
 
 export function fetchAddressParcelsRequest(address) {
   return {
@@ -38,6 +26,15 @@ export function fetchAddressParcelsFailure(address, error) {
     error
   }
 }
+
+// Fetch Address Contributions
+
+export const FETCH_ADDRESS_CONTRIBUTIONS_REQUEST =
+  '[Request] Fetch Address Contributions'
+export const FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS =
+  '[Success] Fetch Address Contributions'
+export const FETCH_ADDRESS_CONTRIBUTIONS_FAILURE =
+  '[Failure] Fetch Address Contributions'
 
 export function fetchAddressContributionsRequest(address) {
   return {

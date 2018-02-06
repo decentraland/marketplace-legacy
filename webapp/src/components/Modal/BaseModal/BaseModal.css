@@ -139,8 +139,9 @@
     width: 300px;
   }
 }
+
 @media (min-width: 992px) {
-  .modal-lg {
+  .modal-lg .modal-dialog {
     width: 900px;
   }
 }

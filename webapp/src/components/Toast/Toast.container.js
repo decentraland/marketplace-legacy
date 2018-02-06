@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { getToasts } from 'modules/ui/reducer'
+import { getToasts } from 'modules/ui/selectors'
 import { closeToast } from 'modules/ui/actions'
 
 import Toast from './Toast'

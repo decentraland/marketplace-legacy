@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { locations } from 'locations'
 import Icon from 'components/Icon'
 
 import './Footer.css'
@@ -36,6 +37,7 @@ export default class Footer extends React.PureComponent {
           <Link to="https://decentraland.org/whitepaper.pdf" target="_blank">
             Whitepaper
           </Link>
+          <Link to={locations.privacy}>Privacy Policy</Link>
         </div>
         <div className="copyright">
           Copyright 2017 Decentraland. All rights reserved.

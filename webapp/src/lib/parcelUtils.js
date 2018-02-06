@@ -23,6 +23,11 @@ export function getBounds() {
   }
 }
 
+export function inBounds(x, y) {
+  const { minX, minY, maxX, maxY } = getBounds()
+  return x >= minX && x <= maxX && y >= minY && y <= maxY
+}
+
 export function isRoad(district_id) {
   return district_id === ROADS_ID
 }
@@ -39,6 +44,7 @@ export function getParcelAttributes(wallet, parcel, district) {
   if (!parcel) {
     return {
       label: 'Loading...',
+      description: null,
       color: 'black',
       backgroundColor: colors.LOADING
     }
@@ -47,6 +53,7 @@ export function getParcelAttributes(wallet, parcel, district) {
     if (isRoad(parcel.district_id)) {
       return {
         label: 'Road',
+        description: null,
         color: 'white',
         backgroundColor: colors.ROADS
       }
@@ -54,6 +61,7 @@ export function getParcelAttributes(wallet, parcel, district) {
     if (isPlaza(parcel.district_id)) {
       return {
         label: 'Genesis Plaza',
+        description: null,
         color: 'black',
         backgroundColor: colors.PLAZA
       }
@@ -61,34 +69,48 @@ export function getParcelAttributes(wallet, parcel, district) {
     if (district && wallet.contributionsById[district.id]) {
       return {
         label: district ? district.name : 'District',
+        description: null,
         color: 'black',
         backgroundColor: colors.CONTRIBUTION
       }
     }
     return {
       label: district ? district.name : 'District',
+      description: null,
       color: 'black',
       backgroundColor: colors.DISTRICT
     }
   }
 
+  const label = parcel.data.name || null
+  let description = 'No Owner'
+  if (parcel.owner) {
+    description =
+      parcel.owner === wallet.address
+        ? 'Your parcel'
+        : `Owner: ${shortenAddress(parcel.owner)}`
+  }
+
   if (wallet.parcelsById[parcel.id]) {
     return {
-      label: parcel.data.name || 'Your Parcel',
+      label,
+      description,
       color: 'white',
       backgroundColor: colors.MY_PARCELS
     }
   }
   if (!parcel.owner && !district) {
     return {
-      label: 'No Owner',
+      label,
+      description,
       color: 'black',
       backgroundColor: colors.UNOWNED
     }
   }
 
   return {
-    label: parcel.owner ? 'Owner: ' + shortenAddress(parcel.owner) : 'No Name',
+    label,
+    description,
     color: 'black',
     backgroundColor: colors.TAKEN
   }

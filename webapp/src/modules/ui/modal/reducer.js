@@ -23,5 +23,3 @@ export function modalReducer(state = INITIAL_STATE, action) {
       return state
   }
 }
-
-export const getModal = state => state.ui.modal

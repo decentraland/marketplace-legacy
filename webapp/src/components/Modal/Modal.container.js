@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getModal } from 'modules/ui/reducer'
+import { getModal } from 'modules/ui/selectors'
 import { closeModal } from 'modules/ui/actions'
 import Modal from './Modal'
 
