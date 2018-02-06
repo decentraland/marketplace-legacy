@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { env } from 'decentraland-commons'
 
 import Icon from 'components/Icon'
 import { parcelType } from 'components/types'
@@ -30,14 +31,16 @@ class ParcelRowData extends React.PureComponent {
         <div className="col col-name">{parcel.data.name || '--'}</div>
 
         <div className="col col-actions">
-          <span
-            className="action"
-            onClick={onEdit}
-            data-balloon="Edit"
-            data-balloon-pos="up"
-          >
-            <Icon name="pencil" />
-          </span>
+          {env.isDevelopment() ? (
+            <span
+              className="action"
+              onClick={onEdit}
+              data-balloon="Edit"
+              data-balloon-pos="up"
+            >
+              <Icon name="pencil" />
+            </span>
+          ) : null}
           <span
             className="action"
             onClick={onTransfer}
