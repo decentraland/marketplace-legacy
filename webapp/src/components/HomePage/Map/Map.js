@@ -72,7 +72,7 @@ export default class MapComponent extends React.Component {
       bounds.max.y - offset
     )
 
-    onNavigate(locations.parcelDetail(position.x, position.y))
+    onNavigate(locations.parcelMapDetail(position.x, position.y))
   }
 
   handleZoomEnd = zoom => {

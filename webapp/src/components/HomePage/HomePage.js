@@ -6,14 +6,12 @@ import { localStorage } from 'lib/localStorage'
 import Sidebar from './Sidebar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
-import Modal from 'components/Modal'
-import Toast from 'components/Toast'
 
 import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
   static propTypes = {
-    isReady: PropTypes.bool,
+    isLoading: PropTypes.bool,
     onConnect: PropTypes.func
   }
 
@@ -27,8 +25,12 @@ export default class HomePage extends React.PureComponent {
     }
   }
 
+  isReady() {
+    return !this.props.isLoading
+  }
+
   render() {
-    const { isReady } = this.props
+    const isReady = this.isReady()
 
     return (
       <div className="HomePage">
@@ -39,8 +41,6 @@ export default class HomePage extends React.PureComponent {
         )}
         <MapComponent isReady={isReady} />
         {isReady && <Minimap />}
-        <Modal />
-        <Toast />
       </div>
     )
   }

@@ -17,7 +17,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onUpdate: (x, y) => dispatch(navigateTo(locations.parcelDetail(x, y)))
+  onUpdate: (x, y) => dispatch(navigateTo(locations.parcelMapDetail(x, y)))
 })
 
 export default connect(mapState, mapDispatch)(Minimap)

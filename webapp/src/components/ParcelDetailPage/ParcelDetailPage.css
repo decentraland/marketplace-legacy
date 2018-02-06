@@ -1,0 +1,59 @@
+.ParcelDetailPage {
+  height: 100%;
+  color: #3E396B;
+}
+
+.ParcelDetailPage > .Loading {
+  font-size: 10px;
+  top: 35%;
+}
+
+.ParcelDetailPage .title {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-size: 42px;
+  font-size: 4.2rem;
+  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
+  text-align: center;
+}
+
+.ParcelDetailPage .ParcelDetail {
+  padding-top: 35px;
+  font-size: 15px;
+}
+
+.ParcelDetail .parcel-name {
+  margin-top: 0;
+  font-size: 26px;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+.ParcelDetail .parcel-name-secondary {
+  margin-left: 6px;
+  color: #AAA;
+}
+
+.ParcelDetail .square {
+  height: 15px;
+  width: 15px;
+  border: 1px solid #AAA;
+  margin-left: 5px;
+  top: 2px;
+  position: relative;
+  display: inline-block;
+}
+
+.ParcelDetail .parcel-description {
+  margin-top: 30px;
+}
+
+.ParcelDetail .parcel-description-empty {
+  color: #AAA;
+  font-style: italic;
+}
+
+@media (min-width: 768px) {
+  .ParcelDetail .Button {
+    margin-top: 5px;
+  }
+}
