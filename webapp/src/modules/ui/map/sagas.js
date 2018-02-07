@@ -1,12 +1,12 @@
 import { takeEvery, put, select } from 'redux-saga/effects'
+import { CHANGE_RANGE, HOVER_PARCEL } from './actions'
 import { getParcels } from 'modules/parcels/selectors'
-import { buildCoordinate } from 'lib/utils'
-import { inBounds } from 'lib/parcelUtils'
 import {
   fetchParcelDataRequest,
   fetchParcelsRequest
 } from 'modules/parcels/actions'
-import { CHANGE_RANGE, HOVER_PARCEL } from './actions'
+import { buildCoordinate } from 'lib/utils'
+import { inBounds } from 'lib/parcelUtils'
 
 export function* mapSaga() {
   yield takeEvery(CHANGE_RANGE, handleChangeRange)

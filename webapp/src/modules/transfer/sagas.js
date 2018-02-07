@@ -1,11 +1,11 @@
 import { call, select, takeLatest, put } from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
-import { getAddress } from 'modules/wallet/selectors'
 import {
   TRANSFER_PARCEL_REQUEST,
   transferParcelSuccess,
   transferParcelFailure
 } from './actions'
+import { getAddress } from 'modules/wallet/selectors'
 
 export function* transferSaga() {
   yield takeLatest(TRANSFER_PARCEL_REQUEST, handleTransferRequest)

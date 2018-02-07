@@ -10,35 +10,38 @@ import { walletType } from 'components/types'
 
 import './SettingsPage.css'
 
+const MANA_TO_APPROVE = 100000 // 100k
+
 export default class SettingsPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
     isLoading: PropTypes.bool,
-    onConnect: PropTypes.func
+    onConnect: PropTypes.func,
+    onApproveMana: PropTypes.func,
+    onAuthorizeLand: PropTypes.func
   }
+
   componentWillMount() {
     this.props.onConnect()
   }
 
-  handleLandAuthorizedChange = e => {
-    if (e.currentTarget.checked) {
-      console.log('authorize LAND')
-    } else {
-      console.log('DE-authorize LAND')
-    }
+  manaApproval = e => {
+    // Support both a checkbox click and a element click
+    const manaToApprove =
+      e.currentTarget.type !== 'checkbox' || e.currentTarget.checked
+        ? MANA_TO_APPROVE
+        : 0
+
+    this.props.onApproveMana(manaToApprove)
   }
 
-  handleManaAuthorizedChange = e => {
-    if (e.currentTarget.type !== 'checkbox' || e.currentTarget.checked) {
-      // Support both a checkbox click and a element click
-      console.log('authorize MANA')
-    } else {
-      console.log('DE-authorize MANA')
-    }
+  handleLandAuthorization = e => {
+    this.props.onAuthorizeLand(e.currentTarget.checked)
   }
 
   render() {
     const { isLoading, wallet } = this.props
+    const { address, approvedBalance, landIsAuthorized } = wallet
     const email = ''
 
     return (
@@ -54,12 +57,12 @@ export default class SettingsPage extends React.PureComponent {
             <div className="row">
               <div className="col-xs-12 col-sm-offset-3 col-sm-6">
                 <SettingsForm
-                  address={wallet.address}
+                  address={address}
                   email={email}
-                  manaAuthorized={1000}
-                  onManaAuthorizedChange={this.handleManaAuthorizedChange}
-                  isLandAuthorized={true}
-                  onLandAuthorizedChange={this.handleLandAuthorizedChange}
+                  manaAuthorized={approvedBalance}
+                  onManaAuthorizedChange={this.handleManaApproval}
+                  isLandAuthorized={landIsAuthorized}
+                  onLandAuthorizedChange={this.handleLandAuthorization}
                 />
               </div>
             </div>
@@ -116,13 +119,21 @@ function SettingsForm(props) {
             <p className="authorize-detail">
               You have {manaAuthorized} MANA authorized to be used by the
               contract.<br />
-              <span className="link" onClick={onManaAuthorizedChange}>
-                Authorize more
-              </span>
+              {manaAuthorized < MANA_TO_APPROVE && (
+                <span
+                  className="link"
+                  data-balloon={`You will authorize ${MANA_TO_APPROVE.toLocaleString()} MANA`}
+                  data-balloon-pos="up"
+                  onClick={onManaAuthorizedChange}
+                >
+                  Authorize more
+                </span>
+              )}
             </p>
           ) : (
             <p className="authorize-detail">
-              Authorize MANA usage for the contract
+              Authorize {MANA_TO_APPROVE.toLocaleString()} MANA usage for the
+              contract
             </p>
           )}
         </div>
@@ -153,7 +164,7 @@ SettingsForm.propTypes = {
   address: PropTypes.string,
   email: PropTypes.string,
   manaAuthorized: PropTypes.number,
-  onManaAuthorizedChange: PropTypes.bool,
+  onManaAuthorizedChange: PropTypes.func,
   isLandAuthorized: PropTypes.bool,
   onLandAuthorizedChange: PropTypes.func
 }

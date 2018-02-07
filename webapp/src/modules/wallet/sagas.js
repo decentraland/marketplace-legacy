@@ -1,18 +1,18 @@
-import { call, takeLatest, put, select } from 'redux-saga/effects'
+import { call, takeLatest, all, put, select } from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
 import { replace } from 'react-router-redux'
 
 import { locations } from 'locations'
-import { getAddress } from 'modules/wallet/selectors'
+import { getAddress } from './selectors'
 import {
+  CONNECT_WALLET_REQUEST,
+  CONNECT_WALLET_SUCCESS,
   FETCH_WALLET_REQUEST,
-  FETCH_WALLET_SUCCESS,
-  FETCH_BALANCE_REQUEST,
+  connectWalletSuccess,
+  connectWalletFailure,
+  fetchWalletRequest,
   fetchWalletSuccess,
-  fetchWalletFailure,
-  fetchBalanceRequest,
-  fetchBalanceSuccess,
-  fetchBalanceFailure
+  fetchWalletFailure
 } from './actions'
 import {
   fetchAddressParcelsRequest,
@@ -23,40 +23,52 @@ import { fetchDistrictsRequest } from 'modules/districts/actions'
 import { connectEthereumWallet } from './utils'
 
 export function* walletSaga() {
+  yield takeLatest(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
+  yield takeLatest(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
   yield takeLatest(FETCH_WALLET_REQUEST, handleWalletRequest)
-  yield takeLatest(FETCH_WALLET_SUCCESS, handleWalletSuccess)
-  yield takeLatest(FETCH_BALANCE_REQUEST, handleBalanceRequest)
 }
 
-function* handleWalletRequest(action = {}) {
+function* handleConnectWalletRequest(action = {}) {
   try {
     yield call(() => connectEthereumWallet())
+
     const address = yield call(() => eth.getAddress())
     const wallet = { address }
-    yield put(fetchWalletSuccess(wallet))
+
+    yield put(connectWalletSuccess(wallet))
   } catch (error) {
     yield put(replace(locations.walletError))
-    yield put(fetchWalletFailure(error.message))
+    yield put(connectWalletFailure(error.message))
   }
 }
 
-function* handleWalletSuccess(action) {
+function* handleConnectWalletSuccess(action) {
   const { address } = action.wallet
 
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressContributionsRequest(address))
   yield put(fetchDistrictsRequest())
-  yield put(fetchBalanceRequest())
+  yield put(fetchWalletRequest())
 }
 
-function* handleBalanceRequest(action) {
+function* handleWalletRequest(action) {
   try {
     const address = yield select(getAddress)
-    const contract = eth.getContract('MANAToken')
-    const balance = yield call(() => contract.getBalance(address))
-    const wallet = { balance }
-    yield put(fetchBalanceSuccess(wallet))
+
+    const manaTokenContract = eth.getContract('MANAToken')
+    const landRegistryContract = eth.getContract('LANDRegistry')
+    const marketplaceContract = eth.getContract('Marketplace')
+
+    const [balance, approvedBalance, landIsAuthorized] = yield all([
+      manaTokenContract.getBalance(address),
+      manaTokenContract.getAllowance(address, marketplaceContract.address),
+      landRegistryContract.isOperatorAuthorizedBy(marketplaceContract.address)
+    ])
+
+    const wallet = { balance, approvedBalance, landIsAuthorized }
+
+    yield put(fetchWalletSuccess(wallet))
   } catch (error) {
-    yield put(fetchBalanceFailure(error.message))
+    yield put(fetchWalletFailure(error.message))
   }
 }

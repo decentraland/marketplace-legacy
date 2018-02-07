@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { isLoading } from 'modules/wallet/selectors'
-import { fetchWalletRequest } from 'modules/wallet/actions'
+import { connectWalletRequest } from 'modules/wallet/actions'
 import { openModal } from 'modules/ui/actions'
 
 import HomePage from './HomePage'
@@ -13,7 +13,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onConnect: () => dispatch(fetchWalletRequest()),
+  onConnect: () => dispatch(connectWalletRequest()),
   onFirstVisit: () => dispatch(openModal('TermsModal'))
 })
 

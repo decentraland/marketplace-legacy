@@ -1,11 +1,12 @@
 import { eth, utils } from 'decentraland-commons'
 import { MANAToken } from 'decentraland-commons/dist/contracts/MANAToken'
 import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
+import { Marketplace } from 'decentraland-commons/dist/contracts/Marketplace'
 
 export async function connectEthereumWallet(retries = 0) {
   try {
     let connected = await eth.connect({
-      contracts: [MANAToken, LANDRegistry]
+      contracts: [MANAToken, LANDRegistry, Marketplace]
     })
     if (!connected) throw new Error('Could not connect to Ethereum')
   } catch (error) {
