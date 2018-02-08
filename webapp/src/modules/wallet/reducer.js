@@ -2,7 +2,8 @@ import {
   CONNECT_WALLET_REQUEST,
   CONNECT_WALLET_SUCCESS,
   CONNECT_WALLET_FAILURE,
-  APPROVE_MANA_SUCCESS
+  APPROVE_MANA_SUCCESS,
+  AUTHORIZE_LAND_SUCCESS
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 
@@ -48,6 +49,14 @@ export function walletReducer(state = INITIAL_STATE, action) {
             data: {
               ...state.data,
               approvedBalance: actionRef.mana
+            }
+          }
+        case AUTHORIZE_LAND_SUCCESS:
+          return {
+            loading: false,
+            data: {
+              ...state.data,
+              isLandAuthorized: actionRef.isAuthorized
             }
           }
         default:

@@ -1,4 +1,5 @@
-import { arrayOf, shape, string, number, bool, oneOf } from 'prop-types'
+import { txUtils } from 'decentraland-commons'
+import { arrayOf, shape, object, string, number, bool, oneOf } from 'prop-types'
 
 export const parcelType = shape({
   id: string.isRequired,
@@ -33,6 +34,11 @@ export const addressType = shape({
 
 export const walletType = shape({
   address: string,
+  balance: number,
+  approvedBalance: number,
+  isLandAuthorized: bool,
+  approveManaTransactions: arrayOf(transactionType),
+  authorizeLandTransactions: arrayOf(transactionType),
   parcels: arrayOf(parcelType).isRequired
 })
 
@@ -41,4 +47,13 @@ export const toastType = shape({
   kind: oneOf(['info', 'success', 'error', 'warning']),
   message: string,
   delay: number
+})
+
+export const transactionType = shape({
+  hash: string.isRequired,
+  blockNumber: number,
+  timestamp: number,
+  status: oneOf(txUtils.TRANSACTION_STATUS),
+  action: object,
+  error: string
 })

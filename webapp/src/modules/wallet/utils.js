@@ -25,3 +25,8 @@ export async function connectEthereumWallet(retries = 0) {
 export function getManaToApprove() {
   return 100000 // 100k
 }
+
+export function getMarketplaceAddress() {
+  const marketplaceContract = eth.getContract('Marketplace')
+  return marketplaceContract.address
+}

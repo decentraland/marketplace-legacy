@@ -1,0 +1,16 @@
+.SettingsForm {
+  margin: 30px 0;
+}
+
+.SettingsForm .tx-pending .authorize-detail {
+  font-style: italic;
+}
+
+.SettingsForm .authorize-detail {
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.SettingsForm .TransactionStatus {
+  font-style: italic;
+}

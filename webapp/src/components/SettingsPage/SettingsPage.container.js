@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { getWallet, isLoading, getError } from 'modules/wallet/selectors'
 import {
   connectWalletRequest,
-  approveManaRequest
+  approveManaRequest,
+  authorizeLandRequest
 } from 'modules/wallet/actions'
 import SettingsPage from './SettingsPage'
 
@@ -18,7 +19,7 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   onConnect: () => dispatch(connectWalletRequest()),
   onApproveMana: mana => dispatch(approveManaRequest(mana)),
-  onAuthorizeLand: isAuthorized => dispatch(console.log)
+  onAuthorizeLand: isAuthorized => dispatch(authorizeLandRequest(isAuthorized))
 })
 
 export default connect(mapState, mapDispatch)(SettingsPage)

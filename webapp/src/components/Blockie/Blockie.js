@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import blockies from 'ethereum-blockies/blockies'
 
-class Blockie extends Component {
+export default class Blockie extends React.Component {
+  componentDidMount() {
+    this.draw()
+  }
+
   getOpts() {
     return {
       seed: this.props.seed,
@@ -12,17 +16,14 @@ class Blockie extends Component {
       scale: 2
     }
   }
-  componentDidMount() {
-    this.draw()
-  }
+
   draw() {
     blockies.render(this.getOpts(), this.canvas)
   }
+
   render() {
     return React.createElement('canvas', {
       ref: canvas => (this.canvas = canvas)
     })
   }
 }
-
-export default Blockie

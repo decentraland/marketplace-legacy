@@ -40,13 +40,19 @@ export default class SettingsPage extends React.PureComponent {
 
   getApproveTransaction() {
     // Transactions are ordered, the last one corresponds to the last sent
-    const { approveTransactions } = this.props.wallet
-    return approveTransactions[approveTransactions.length - 1]
+    const { approveManaTransactions } = this.props.wallet
+    return approveManaTransactions[approveManaTransactions.length - 1]
+  }
+
+  getAuthorizeTransaction() {
+    // Transactions are ordered, the last one corresponds to the last sent
+    const { authorizeLandTransactions } = this.props.wallet
+    return authorizeLandTransactions[authorizeLandTransactions.length - 1]
   }
 
   render() {
     const { isLoading, hasError, wallet } = this.props
-    const { address, approvedBalance, landIsAuthorized } = wallet
+    const { address, approvedBalance, isLandAuthorized } = wallet
 
     const email = ''
 
@@ -70,7 +76,8 @@ export default class SettingsPage extends React.PureComponent {
                   manaApproved={approvedBalance}
                   approveTransaction={this.getApproveTransaction()}
                   onManaApprovedChange={this.handleManaApproval}
-                  isLandAuthorized={landIsAuthorized}
+                  isLandAuthorized={isLandAuthorized}
+                  authorizeTransaction={this.getAuthorizeTransaction()}
                   onLandAuthorizedChange={this.handleLandAuthorization}
                 />
               </div>

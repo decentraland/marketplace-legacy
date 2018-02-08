@@ -2,10 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { txUtils } from 'decentraland-commons'
 
-import Button from 'components/Button'
+import InputGroup from 'components/InputGroup'
 import EtherscanLink from 'components/EtherscanLink'
+import TransactionStatus from '../TransactionStatus'
 
-import { getManaToApprove } from 'modules/wallet/utils'
+import { getManaToApprove, getMarketplaceAddress } from 'modules/wallet/utils'
+
+import './SettingsForm.css'
 
 const MANA_TO_APPROVE = getManaToApprove()
 
@@ -28,25 +31,28 @@ export default class SettingsForm extends React.PureComponent {
   render() {
     const {
       address,
-      // email,
       manaApproved,
       approveTransaction,
       onManaApprovedChange,
       isLandAuthorized,
+      authorizeTransaction,
       onLandAuthorizedChange
     } = this.props
 
     const isApprovePending = txUtils.isPending(approveTransaction)
     const isApproveFailure = txUtils.isFailure(approveTransaction)
 
+    const isAuthorizePending = txUtils.isPending(authorizeTransaction)
+    const isAuthorizeFailure = txUtils.isFailure(authorizeTransaction)
+
     return (
       <div className="SettingsForm">
         <form
           action=""
           method="POST"
-          className={isApprovePending ? 'tx-pending' : ''}
+          className={isApprovePending || isAuthorizePending ? 'tx-pending' : ''}
         >
-          <div className="InputGroup">
+          <InputGroup>
             <label htmlFor="address">Wallet address</label>
             <input
               id="address"
@@ -55,20 +61,9 @@ export default class SettingsForm extends React.PureComponent {
               type="text"
               value={address}
             />
-          </div>
+          </InputGroup>
 
-          {/*<div className="InputGroup">
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            className="input"
-            type="text"
-            value={email}
-            placeholder="Example: youremail@gmail.com"
-          />
-        </div>*/}
-
-          <div className="InputGroup">
+          <InputGroup>
             <input
               type="checkbox"
               checked={manaApproved > 0}
@@ -102,41 +97,63 @@ export default class SettingsForm extends React.PureComponent {
               </p>
             ) : (
               <p className="authorize-detail">
-                Approve {MANA_TO_APPROVE.toLocaleString()} MANA usage for the
-                contract
+                Approve {MANA_TO_APPROVE.toLocaleString()} MANA usage for
+                the&nbsp;
+                <EtherscanLink address={getMarketplaceAddress()}>
+                  Marketplace contract
+                </EtherscanLink>
               </p>
             )}
 
-            {isApprovePending || isApproveFailure ? (
-              <small className="tx-pending-message">
-                {isApprovePending
-                  ? 'You have a pending transaction waiting to be confirmed.'
-                  : 'Your transaction failed, you can try sending a new one.'}
-                &nbsp;You can check Etherscan&nbsp;
-                <EtherscanLink txHash={approveTransaction.hash}>
-                  here
-                </EtherscanLink>
-              </small>
-            ) : null}
-          </div>
+            <TransactionStatus
+              transaction={approveTransaction}
+              isPending={isApprovePending}
+              isFailure={isApproveFailure}
+            />
+          </InputGroup>
 
-          <div className="InputGroup">
+          <InputGroup>
             <input
               type="checkbox"
-              value={isLandAuthorized || false}
+              checked={isLandAuthorized || false}
+              disabled={isAuthorizePending}
+              data-balloon={
+                isAuthorizePending
+                  ? 'You have a pending transaction'
+                  : manaApproved > 0
+                    ? 'Unchecking unauthorize LAND usage for the Marketplace contract'
+                    : `Check to authorize LAND usage to the Marketplace contract`
+              }
+              data-balloon-pos="left"
               onChange={onLandAuthorizedChange}
             />
 
             <p className="authorize-detail">
-              {isLandAuthorized
-                ? 'You have authorized the Marketplace contract to operate LAND on your behalf'
-                : 'Authorize the Marketplace contract to operate LAND on your behalf'}
+              {isLandAuthorized ? (
+                <span>
+                  You have authorized the&nbsp;
+                  <EtherscanLink address={getMarketplaceAddress()}>
+                    Marketplace contract
+                  </EtherscanLink>
+                  &nbsp;to operate LAND on your behalf
+                </span>
+              ) : (
+                <span>
+                  Authorize the&nbsp;
+                  <EtherscanLink address={getMarketplaceAddress()}>
+                    Marketplace contract
+                  </EtherscanLink>
+                  &nbsp;to operate LAND on your behalf
+                </span>
+              )}
             </p>
-          </div>
 
-          <div className="text-center">
-            <Button isSubmit={true}>SAVE</Button>
-          </div>
+            <TransactionStatus
+              transaction={authorizeTransaction}
+              isPending={isAuthorizePending}
+              isFailure={isAuthorizeFailure}
+            />
+          </InputGroup>
         </form>
       </div>
     )
