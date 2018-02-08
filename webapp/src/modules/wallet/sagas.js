@@ -39,14 +39,13 @@ function* handleConnectWalletRequest(action = {}) {
     const address = yield call(() => eth.getAddress())
 
     const manaTokenContract = eth.getContract('MANAToken')
-    // const landRegistryContract = eth.getContract('LANDRegistry')
+    const landRegistryContract = eth.getContract('LANDRegistry')
     const marketplaceAddress = getMarketplaceAddress()
 
     const [balance, approvedBalance, isLandAuthorized] = yield all([
       manaTokenContract.getBalance(address),
       manaTokenContract.getAllowance(address, marketplaceAddress),
-      // landRegistryContract.isOperatorAuthorizedBy(marketplaceAddress, address)
-      false
+      landRegistryContract.isOperatorAuthorizedBy(marketplaceAddress, address)
     ])
 
     const wallet = { address, balance, approvedBalance, isLandAuthorized }
