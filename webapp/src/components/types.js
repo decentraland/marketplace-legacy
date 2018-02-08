@@ -27,6 +27,15 @@ export const districtType = shape({
   public: bool.isRequired
 })
 
+export const transactionType = shape({
+  hash: string.isRequired,
+  blockNumber: number,
+  timestamp: number,
+  status: oneOf(Object.values(txUtils.TRANSACTION_STATUS)),
+  action: object,
+  error: string
+})
+
 export const addressType = shape({
   parcel_ids: arrayOf(string).isRequired,
   parcels: arrayOf(parcelType).isRequired
@@ -47,13 +56,4 @@ export const toastType = shape({
   kind: oneOf(['info', 'success', 'error', 'warning']),
   message: string,
   delay: number
-})
-
-export const transactionType = shape({
-  hash: string.isRequired,
-  blockNumber: number,
-  timestamp: number,
-  status: oneOf(txUtils.TRANSACTION_STATUS),
-  action: object,
-  error: string
 })

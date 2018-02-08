@@ -4,7 +4,7 @@
   background: rgba(0, 0, 0, 0.4) url('../../../images/minimap.png');
   background-size: contain;
   position: absolute;
-  right: 20px;
+  right: 60px;
   bottom: 20px;
   z-index: 1040;
   opacity: 0.9;

@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
+
 import { getWallet } from 'modules/wallet/selectors'
 import { isLoading } from 'modules/ui/loading/selectors'
 import { isLoading as isLoadingParcels } from 'modules/parcels/selectors'
 import { isOpen } from 'modules/ui/sidebar/selectors'
 import { openSidebar, closeSidebar } from 'modules/ui/sidebar/actions'
+
 import Sidebar from './Sidebar'
 
 const mapState = state => {

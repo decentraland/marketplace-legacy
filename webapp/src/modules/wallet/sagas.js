@@ -32,7 +32,9 @@ export function* walletSaga() {
 
 function* handleConnectWalletRequest(action = {}) {
   try {
-    yield call(() => connectEthereumWallet())
+    if (!eth.isConnected()) {
+      yield call(() => connectEthereumWallet())
+    }
 
     const address = yield call(() => eth.getAddress())
 

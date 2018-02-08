@@ -20,7 +20,6 @@ export default class TransactionStatus extends React.PureComponent {
           ? 'You have a pending transaction waiting to be confirmed.'
           : 'Your transaction failed, you can try sending a new one.'}
         &nbsp;You can check Etherscan&nbsp;
-
         <EtherscanLink txHash={transaction.hash}>here</EtherscanLink>
       </small>
     ) : null

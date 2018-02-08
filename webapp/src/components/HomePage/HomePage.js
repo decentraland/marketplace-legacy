@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { localStorage } from 'lib/localStorage'
 
+import AccountControls from './AccountControls'
 import Sidebar from './Sidebar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
@@ -34,11 +35,7 @@ export default class HomePage extends React.PureComponent {
 
     return (
       <div className="HomePage">
-        {isReady && (
-          <div className="controls">
-            <Sidebar />
-          </div>
-        )}
+        {isReady && [<AccountControls key="1" />, <Sidebar key="2" />]}
         <MapComponent isReady={isReady} />
         {isReady && <Minimap />}
       </div>
