@@ -1,19 +1,23 @@
 import { connect } from 'react-redux'
 
-import { getWallet, isLoading } from 'modules/wallet/selectors'
-import { connectWalletRequest } from 'modules/wallet/actions'
+import { getWallet, isLoading, getError } from 'modules/wallet/selectors'
+import {
+  connectWalletRequest,
+  approveManaRequest
+} from 'modules/wallet/actions'
 import SettingsPage from './SettingsPage'
 
 const mapState = state => {
   return {
     wallet: getWallet(state),
-    isLoading: isLoading(state)
+    isLoading: isLoading(state),
+    hasError: !!getError(state)
   }
 }
 
 const mapDispatch = dispatch => ({
   onConnect: () => dispatch(connectWalletRequest()),
-  onApproveMana: mana => dispatch(console.log),
+  onApproveMana: mana => dispatch(approveManaRequest(mana)),
   onAuthorizeLand: isAuthorized => dispatch(console.log)
 })
 

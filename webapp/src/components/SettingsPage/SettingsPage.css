@@ -21,8 +21,16 @@
   margin-bottom: 0;
 }
 
+.SettingsPage .tx-pending .authorize-detail {
+  font-style: italic;
+}
+
 .SettingsForm {
   margin: 30px 0;
+}
+
+.SettingsForm .tx-pending-message {
+  font-style: italic;
 }
 
 .InputGroup {

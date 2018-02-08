@@ -1,3 +1,5 @@
+import { buildTransactionAction } from 'modules/transaction/utils'
+
 // Connect Wallet
 
 export const CONNECT_WALLET_REQUEST = '[Request] Connect Wallet'
@@ -24,28 +26,30 @@ export function connectWalletFailure(error) {
   }
 }
 
-// Fetch Wallet
+// Approve Mana
 
-export const FETCH_WALLET_REQUEST = '[Request] Fetch Wallet'
-export const FETCH_WALLET_SUCCESS = '[Success] Fetch Wallet'
-export const FETCH_WALLET_FAILURE = '[Failure] Fetch Wallet'
+export const APPROVE_MANA_REQUEST = '[Request] Approve mana'
+export const APPROVE_MANA_SUCCESS = '[Success] Approve mana'
+export const APPROVE_MANA_FAILURE = '[Failure] Approve mana'
 
-export function fetchWalletRequest() {
+export function approveManaRequest(mana) {
   return {
-    type: FETCH_WALLET_REQUEST
+    type: APPROVE_MANA_REQUEST,
+    mana
   }
 }
 
-export function fetchWalletSuccess(wallet) {
+export function approveManaSuccess(mana, txHash) {
   return {
-    type: FETCH_WALLET_SUCCESS,
-    wallet
+    type: APPROVE_MANA_SUCCESS,
+    ...buildTransactionAction(txHash, { mana }),
+    mana
   }
 }
 
-export function fetchWalletFailure(error) {
+export function approveManaFailure(error) {
   return {
-    type: FETCH_WALLET_FAILURE,
+    type: APPROVE_MANA_FAILURE,
     error
   }
 }

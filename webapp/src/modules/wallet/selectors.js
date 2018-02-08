@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect'
+import { APPROVE_MANA_SUCCESS } from './actions'
 import { getAddresses } from 'modules/address/selectors'
+import { getTransactionsByType } from 'modules/transaction/selectors'
 
 export const getState = state => state.wallet
 export const getData = state => getState(state).data
@@ -10,19 +12,23 @@ export const isConnected = state => !!getData(state).address
 export const getWallet = createSelector(
   getData,
   getAddresses,
-  (wallet, addresses) => {
-    const address = addresses[wallet.address]
-    const parcels = address ? address.parcels : []
-    const parcelsById = address ? address.parcelsById : {}
-    const contributions = address ? address.contributions : []
-    const contributionsById = address ? address.contributionsById : {}
+  state => getTransactionsByType(state, APPROVE_MANA_SUCCESS),
+  (wallet, addresses, approveTransactions) => {
+    const address = addresses[wallet.address] || {}
+    const {
+      parcels = [],
+      parcelsById = {},
+      contributions = [],
+      contributionsById = {}
+    } = address
 
     return {
       ...wallet,
       parcels,
       parcelsById,
       contributions,
-      contributionsById
+      contributionsById,
+      approveTransactions
     }
   }
 )

@@ -98,7 +98,7 @@ export default class TransferModal extends React.PureComponent {
               <span className="close-link" onClick={this.handleClose}>
                 close
               </span>
-              <EtherscanLink tx={transfer.hash}>
+              <EtherscanLink txHash={transfer.hash}>
                 <Button
                   type="primary"
                   isSubmit={true}

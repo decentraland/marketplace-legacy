@@ -21,3 +21,7 @@ export async function connectEthereumWallet(retries = 0) {
     return connectEthereumWallet(retries + 1)
   }
 }
+
+export function getManaToApprove() {
+  return 100000 // 100k
+}
