@@ -64,7 +64,7 @@ export const database = {
       "price" DECIMAL NOT NULL,
       "status" TEXT NOT NULL,
       "expires_at" timestamp`,
-      { primaryKey: 'tx_hash' }
+      { primaryKey: 'tx_hash', sequenceName: null }
     )
     await this.createIndex('publications', 'publications_address_idx', [
       'address'
