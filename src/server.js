@@ -8,9 +8,10 @@ import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
 
 import { db } from './database'
 import { asyncBatch } from './lib/asyncBatch'
-import { District } from './District'
 import { Parcel, ParcelService } from './Parcel'
 import { Contribution } from './Contribution'
+import { District } from './District'
+import { Publication } from './Publication'
 
 env.load()
 
@@ -150,6 +151,20 @@ export async function getDistricts() {
     'created_at',
     'updated_at'
   ])
+}
+
+/**
+ * Returns all publications for a particular address
+ * @param  {string} address - Publications owner
+ * @return {array}
+ */
+app.get('/api/publications', server.handleRequest(getPublications))
+
+export async function getPublications(req) {
+  const address = server.extractFromReq(req, 'address')
+  const publications = await Publication.findByAddress(address)
+
+  return publications
 }
 
 /* Start the server only if run directly */

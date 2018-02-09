@@ -35,7 +35,6 @@ export const database = {
       "parcel_count" DECIMAL,
       "parcel_ids" TEXT[],
       "priority" INT,
-      "address" TEXT,
       "center" TEXT,
       "disabled" BOOLEAN NOT NULL DEFAULT false`,
       { sequenceName: null }
@@ -56,6 +55,19 @@ export const database = {
     ])
     await this.createIndex('contributions', 'contributions_district_id_idx', [
       'district_id'
+    ])
+
+    await this.createTable(
+      'publications',
+      `"tx_hash" TEXT NOT NULL,
+      "address" varchar(42) NOT NULL,
+      "price" DECIMAL NOT NULL,
+      "status" TEXT NOT NULL,
+      "expires_at" timestamp`,
+      { primaryKey: 'tx_hash' }
+    )
+    await this.createIndex('publications', 'publications_address_idx', [
+      'address'
     ])
   }
 }
