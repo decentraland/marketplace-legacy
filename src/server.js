@@ -3,8 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 
-import { server, env, eth, utils } from 'decentraland-commons'
-import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
+import { server, env, eth, contracts, utils } from 'decentraland-commons'
 
 import { db } from './database'
 import { asyncBatch } from './lib/asyncBatch'
@@ -18,6 +17,8 @@ env.load()
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
 const OWNERS_BATCH_SIZE = 1000
 const DATA_BATCH_SIZE = 100
+
+const { LANDRegistry } = contracts
 
 const app = express()
 const httpServer = http.Server(app)
