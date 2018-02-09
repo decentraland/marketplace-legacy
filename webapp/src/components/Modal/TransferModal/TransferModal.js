@@ -130,6 +130,8 @@ export default class TransferModal extends React.PureComponent {
                     placeholder="Ex: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
                     value={address}
                     onChange={this.handleAddressChange}
+                    autoComplete="off"
+                    autoFocus={true}
                   />
                   {error && (
                     <div className="error-message">
@@ -137,7 +139,7 @@ export default class TransferModal extends React.PureComponent {
                         error
                       ) : (
                         <span>
-                          An unknown error occurred.<br />
+                          An unknown error occurred, the details are below.<br />
                           If the problem persists, contact us at our&nbsp;
                           <Link
                             to="https://chat.decentraland.org"
@@ -145,7 +147,7 @@ export default class TransferModal extends React.PureComponent {
                           >
                             Community Chat
                           </Link>.<br />
-                          Error details: {error}
+                          <div className="error-stack">{error}</div>
                         </span>
                       )}
                     </div>
