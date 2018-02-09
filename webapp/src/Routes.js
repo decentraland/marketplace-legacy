@@ -9,7 +9,6 @@ import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 
 import WalletErrorPage from 'components/WalletErrorPage'
-import AddressErrorPage from 'components/AddressErrorPage'
 import ServerError from 'components/ServerError'
 
 import GoogleAnalytics from 'components/GoogleAnalytics'
@@ -27,7 +26,6 @@ export default function Routes() {
       <Route exact path={locations.colorCodes} component={ColorKeyPage} />
       <Route exact path={locations.privacy} component={PrivacyPage} />
       <Route exact path={locations.walletError} component={WalletErrorPage} />
-      <Route exact path={locations.addressError} component={AddressErrorPage} />
       <Route exact path={locations.serverError} component={ServerError} />
       <Route exact path={locations.error} component={WalletErrorPage} />
     </Switch>,

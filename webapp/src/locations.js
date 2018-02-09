@@ -15,6 +15,5 @@ export const locations = {
 
   error: '/error',
   walletError: '/walletError',
-  addressError: '/addressError',
   serverError: '/serverError'
 }
