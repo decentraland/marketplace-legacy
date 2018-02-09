@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import BaseModal from '../BaseModal'
@@ -41,10 +42,17 @@ export default class TransferModal extends React.PureComponent {
 
   handleTransfer = e => {
     const parcel = this.getParcel()
-    const newAddress = this.state.address
+    const newAddress = this.state.address.trim()
 
     this.props.onTransfer(parcel, newAddress)
     e.preventDefault()
+  }
+
+  handleClose = () => {
+    const { onClose, cleanTransfer } = this.props
+
+    onClose()
+    cleanTransfer()
   }
 
   getParcel() {
@@ -60,11 +68,8 @@ export default class TransferModal extends React.PureComponent {
     return this.state.address.trim() === ''
   }
 
-  handleClose = () => {
-    const { onClose, cleanTransfer } = this.props
-
-    onClose()
-    cleanTransfer()
+  isTransferError(error) {
+    return !error.includes('Error: Error:')
   }
 
   render() {
@@ -126,7 +131,25 @@ export default class TransferModal extends React.PureComponent {
                     value={address}
                     onChange={this.handleAddressChange}
                   />
-                  <div className="error-message">{error}</div>
+                  {error && (
+                    <div className="error-message">
+                      {this.isTransferError(error) ? (
+                        error
+                      ) : (
+                        <span>
+                          An unknown error occurred.<br />
+                          If the problem persists, contact us at our&nbsp;
+                          <Link
+                            to="https://chat.decentraland.org"
+                            target="_blank"
+                          >
+                            Community Chat
+                          </Link>.<br />
+                          Error details: {error}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 
