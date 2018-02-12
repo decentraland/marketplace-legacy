@@ -45,7 +45,7 @@ function* handleConnectWalletRequest(action = {}) {
     const [balance, approvedBalance, isLandAuthorized] = yield all([
       manaTokenContract.getBalance(address),
       manaTokenContract.getAllowance(address, marketplaceAddress),
-      landRegistryContract.isOperatorAuthorizedBy(marketplaceAddress, address)
+      landRegistryContract.isOperatorAuthorizedFor(marketplaceAddress, address)
     ])
 
     const wallet = { address, balance, approvedBalance, isLandAuthorized }
