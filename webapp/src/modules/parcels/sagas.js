@@ -15,8 +15,8 @@ import {
   fetchParcelDataSuccess,
   fetchParcelDataFailure
 } from './actions'
-import { api } from 'lib/api'
 import { getParcels } from './selectors'
+import { api } from 'lib/api'
 import { buildCoordinate } from 'lib/utils'
 import { inBounds } from 'lib/parcelUtils'
 

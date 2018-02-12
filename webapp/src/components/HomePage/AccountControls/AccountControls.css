@@ -1,0 +1,11 @@
+.AccountControls {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  z-index: 500;
+}
+
+.AccountControls .Blockie {
+  border: 2px solid #666;
+  border-radius: 30px;
+}

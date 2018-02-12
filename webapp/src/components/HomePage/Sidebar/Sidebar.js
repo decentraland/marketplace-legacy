@@ -62,13 +62,15 @@ export default class Sidebar extends React.Component {
     )
 
     return (
-      <div className={`Sidebar ${classes}`}>
-        <header>
-          <Icon name={this.getDecentralandIconName()} />
-          {header}
-        </header>
-        {sidebar}
-        <div className={`toggle-button ${classes}`} onClick={this.toggle} />
+      <div className="Sidebar">
+        <div className={`sidebar-content ${classes}`}>
+          <header>
+            <Icon name={this.getDecentralandIconName()} />
+            {header}
+          </header>
+          {sidebar}
+          <div className={`toggle-button ${classes}`} onClick={this.toggle} />
+        </div>
       </div>
     )
   }

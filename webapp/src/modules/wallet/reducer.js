@@ -1,16 +1,18 @@
 import {
-  FETCH_WALLET_REQUEST,
-  FETCH_WALLET_SUCCESS,
-  FETCH_WALLET_FAILURE,
-  FETCH_BALANCE_REQUEST,
-  FETCH_BALANCE_SUCCESS,
-  FETCH_BALANCE_FAILURE
+  CONNECT_WALLET_REQUEST,
+  CONNECT_WALLET_SUCCESS,
+  CONNECT_WALLET_FAILURE,
+  APPROVE_MANA_SUCCESS,
+  AUTHORIZE_LAND_SUCCESS
 } from './actions'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 
 const INITIAL_STATE = {
   data: {
+    address: null,
     balance: null,
-    address: null
+    approvedBalance: null,
+    landIsAuthorized: null
   },
   loading: false,
   error: null
@@ -18,14 +20,12 @@ const INITIAL_STATE = {
 
 export function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_WALLET_REQUEST:
-    case FETCH_BALANCE_REQUEST:
+    case CONNECT_WALLET_REQUEST:
       return {
         ...state,
         loading: true
       }
-    case FETCH_WALLET_SUCCESS:
-    case FETCH_BALANCE_SUCCESS:
+    case CONNECT_WALLET_SUCCESS:
       return {
         loading: false,
         data: {
@@ -33,13 +33,36 @@ export function walletReducer(state = INITIAL_STATE, action) {
           ...action.wallet
         }
       }
-    case FETCH_WALLET_FAILURE:
-    case FETCH_BALANCE_FAILURE:
+    case CONNECT_WALLET_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.error
       }
+    case FETCH_TRANSACTION_SUCCESS: {
+      const actionRef = action.transaction.action
+
+      switch (actionRef.type) {
+        case APPROVE_MANA_SUCCESS:
+          return {
+            loading: false,
+            data: {
+              ...state.data,
+              approvedBalance: actionRef.mana
+            }
+          }
+        case AUTHORIZE_LAND_SUCCESS:
+          return {
+            loading: false,
+            data: {
+              ...state.data,
+              isLandAuthorized: actionRef.isAuthorized
+            }
+          }
+        default:
+          return state
+      }
+    }
     default:
       return state
   }

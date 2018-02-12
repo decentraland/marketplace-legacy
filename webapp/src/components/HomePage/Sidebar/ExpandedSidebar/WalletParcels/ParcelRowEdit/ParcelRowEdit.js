@@ -84,7 +84,7 @@ class ParcelRowEdit extends React.PureComponent {
           )}
         </div>
 
-        <form action="POST" onSubmit={this.handleSubmit}>
+        <form action="" method="POST" onSubmit={this.handleSubmit}>
           <div className="editing-fields">
             <div className="field">
               <label htmlFor="name-field">NAME</label>

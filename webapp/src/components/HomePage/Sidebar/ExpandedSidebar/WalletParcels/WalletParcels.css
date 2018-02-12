@@ -92,10 +92,6 @@
 .WalletParcels .field input,
 .WalletParcels .field textarea {
   width: 66%;
-  padding: 10px;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-  border: none;
 }
 
 .WalletParcels .field textarea {

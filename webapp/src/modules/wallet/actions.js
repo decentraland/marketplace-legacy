@@ -1,51 +1,83 @@
-// Fetch Wallet
+import { buildTransactionAction } from 'modules/transaction/utils'
 
-export const FETCH_WALLET_REQUEST = '[Request] Fetch Wallet'
-export const FETCH_WALLET_SUCCESS = '[Success] Fetch Wallet'
-export const FETCH_WALLET_FAILURE = '[Failure] Fetch Wallet'
+// Connect Wallet
 
-export function fetchWalletRequest() {
+export const CONNECT_WALLET_REQUEST = '[Request] Connect Wallet'
+export const CONNECT_WALLET_SUCCESS = '[Success] Connect Wallet'
+export const CONNECT_WALLET_FAILURE = '[Failure] Connect Wallet'
+
+export function connectWalletRequest() {
   return {
-    type: FETCH_WALLET_REQUEST
+    type: CONNECT_WALLET_REQUEST
   }
 }
 
-export function fetchWalletSuccess(wallet) {
+export function connectWalletSuccess(wallet) {
   return {
-    type: FETCH_WALLET_SUCCESS,
+    type: CONNECT_WALLET_SUCCESS,
     wallet
   }
 }
 
-export function fetchWalletFailure(error) {
+export function connectWalletFailure(error) {
   return {
-    type: FETCH_WALLET_FAILURE,
+    type: CONNECT_WALLET_FAILURE,
     error
   }
 }
 
-// Fetch Balance
+// Approve MANA
 
-export const FETCH_BALANCE_REQUEST = '[Request] Fetch Balance'
-export const FETCH_BALANCE_SUCCESS = '[Success] Fetch Balance'
-export const FETCH_BALANCE_FAILURE = '[Failure] Fetch Balance'
+export const APPROVE_MANA_REQUEST = '[Request] Approve MANA'
+export const APPROVE_MANA_SUCCESS = '[Success] Approve MANA'
+export const APPROVE_MANA_FAILURE = '[Failure] Approve MANA'
 
-export function fetchBalanceRequest() {
+export function approveManaRequest(mana) {
   return {
-    type: FETCH_BALANCE_REQUEST
+    type: APPROVE_MANA_REQUEST,
+    mana
   }
 }
 
-export function fetchBalanceSuccess(wallet) {
+export function approveManaSuccess(txHash, mana) {
   return {
-    type: FETCH_BALANCE_SUCCESS,
-    wallet
+    type: APPROVE_MANA_SUCCESS,
+    ...buildTransactionAction(txHash, { mana }),
+    mana
   }
 }
 
-export function fetchBalanceFailure(error) {
+export function approveManaFailure(error) {
   return {
-    type: FETCH_BALANCE_FAILURE,
+    type: APPROVE_MANA_FAILURE,
+    error
+  }
+}
+
+// Authorize LAND
+
+export const AUTHORIZE_LAND_REQUEST = '[Request] Authorize LAND'
+export const AUTHORIZE_LAND_SUCCESS = '[Success] Authorize LAND'
+export const AUTHORIZE_LAND_FAILURE = '[Failure] Authorize LAND'
+
+export function authorizeLandRequest(isAuthorized) {
+  return {
+    type: AUTHORIZE_LAND_REQUEST,
+    isAuthorized
+  }
+}
+
+export function authorizeLandSuccess(txHash, isAuthorized) {
+  return {
+    type: AUTHORIZE_LAND_SUCCESS,
+    ...buildTransactionAction(txHash, { isAuthorized }),
+    isAuthorized
+  }
+}
+
+export function authorizeLandFailure(error) {
+  return {
+    type: AUTHORIZE_LAND_FAILURE,
     error
   }
 }

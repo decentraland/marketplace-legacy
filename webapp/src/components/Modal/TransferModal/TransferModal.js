@@ -98,7 +98,7 @@ export default class TransferModal extends React.PureComponent {
               <span className="close-link" onClick={this.handleClose}>
                 close
               </span>
-              <EtherscanLink tx={transfer.hash}>
+              <EtherscanLink txHash={transfer.hash}>
                 <Button
                   type="primary"
                   isSubmit={true}
@@ -109,7 +109,7 @@ export default class TransferModal extends React.PureComponent {
               </EtherscanLink>
             </div>
           ) : (
-            <form action="POST" onSubmit={this.handleTransfer}>
+            <form action="" method="POST" onSubmit={this.handleTransfer}>
               <div className="text">
                 <p>
                   Remember that transfering LAND is an irreversible operation.<br />

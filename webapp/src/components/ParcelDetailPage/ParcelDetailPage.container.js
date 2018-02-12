@@ -9,7 +9,7 @@ import {
 } from 'modules/parcels/selectors'
 import { isLoading as isAddressLoading } from 'modules/address/selectors'
 import { getDistricts } from 'modules/districts/selectors'
-import { fetchWalletRequest } from 'modules/wallet/actions'
+import { connectWalletRequest } from 'modules/wallet/actions'
 import { fetchParcelRequest } from 'modules/parcels/actions'
 import { openModal } from 'modules/ui/actions'
 import { navigateTo } from 'modules/location/actions'
@@ -36,7 +36,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = dispatch => ({
   onNavigate: location => dispatch(navigateTo(location)),
-  onConnect: () => dispatch(fetchWalletRequest()),
+  onConnect: () => dispatch(connectWalletRequest()),
   onFetchParcel: (x, y) => dispatch(fetchParcelRequest(x, y)),
   onTransfer: parcel => dispatch(openModal('TransferModal', parcel))
 })

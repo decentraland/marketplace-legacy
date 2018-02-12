@@ -159,7 +159,7 @@ export default class ParcelsMap extends React.Component {
       tileSize: tileSize
     })
 
-    this.map.zoomControl.setPosition('topright')
+    this.map.zoomControl.setPosition('bottomright')
     this.map.setMaxBounds(this.mapCoordinates.toLatLngBounds(bounds))
     this.map.addLayer(this.parcelGrid)
     this.map.setView(this.getLatLng(x, y))

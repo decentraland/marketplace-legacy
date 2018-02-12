@@ -8,7 +8,10 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
-import { createGoogleAnalyticsMiddleware } from 'middleware'
+import {
+  createGoogleAnalyticsMiddleware,
+  createTransactionMiddleware
+} from 'middleware'
 
 import { rootReducer, analytics } from './reducer'
 import { rootSaga } from './sagas'
@@ -19,14 +22,16 @@ const history = createHistory()
 
 const historyMiddleware = routerMiddleware(history)
 const sagasMiddleware = createSagasMiddleware()
-const analyticsMiddleware = createGoogleAnalyticsMiddleware(analytics)
 const loggerMiddleware = createLogger({ collapsed: () => true })
+const transactionMiddleware = createTransactionMiddleware()
+const analyticsMiddleware = createGoogleAnalyticsMiddleware(analytics)
 
 const middleware = applyMiddleware(
   thunk.withExtraArgument(api),
-  loggerMiddleware,
-  sagasMiddleware,
   historyMiddleware,
+  sagasMiddleware,
+  loggerMiddleware,
+  transactionMiddleware,
   analyticsMiddleware
 )
 const enhancer = composeEnhancers(middleware)

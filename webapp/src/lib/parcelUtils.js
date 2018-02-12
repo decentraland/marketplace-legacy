@@ -3,16 +3,16 @@ import { shortenAddress } from 'lib/utils'
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 
-export const colors = {
-  MY_PARCELS: '#D98494',
-  DISTRICT: '#73C7E1',
-  CONTRIBUTION: '#4A90E2',
-  ROADS: '#39516B',
-  PLAZA: '#FCFCFC',
-  TAKEN: '#AEDC89',
-  UNOWNED: '#F9F7E8',
-  LOADING: '#AAAAAA'
-}
+export const COLORS = Object.freeze({
+  myParcels: '#D98494',
+  district: '#73C7E1',
+  contribution: '#4A90E2',
+  roads: '#39516B',
+  plaza: '#FCFCFC',
+  taken: '#AEDC89',
+  unowned: '#F9F7E8',
+  loading: '#AAAAAA'
+})
 
 export function getBounds() {
   return {
@@ -50,7 +50,7 @@ export function getParcelAttributes(wallet, parcel, districts) {
       label: 'Loading...',
       description: null,
       color: 'black',
-      backgroundColor: colors.LOADING
+      backgroundColor: COLORS.loading
     }
   }
   const district = getDistrict(parcel, districts)
@@ -61,7 +61,7 @@ export function getParcelAttributes(wallet, parcel, districts) {
         label: 'Road',
         description: null,
         color: 'white',
-        backgroundColor: colors.ROADS
+        backgroundColor: COLORS.roads
       }
     }
     if (isPlaza(parcel.district_id)) {
@@ -69,7 +69,7 @@ export function getParcelAttributes(wallet, parcel, districts) {
         label: 'Genesis Plaza',
         description: null,
         color: 'black',
-        backgroundColor: colors.PLAZA
+        backgroundColor: COLORS.plaza
       }
     }
     if (district && wallet.contributionsById[district.id]) {
@@ -77,14 +77,14 @@ export function getParcelAttributes(wallet, parcel, districts) {
         label: district ? district.name : 'District',
         description: null,
         color: 'black',
-        backgroundColor: colors.CONTRIBUTION
+        backgroundColor: COLORS.contribution
       }
     }
     return {
       label: district ? district.name : 'District',
       description: null,
       color: 'black',
-      backgroundColor: colors.DISTRICT
+      backgroundColor: COLORS.district
     }
   }
 
@@ -102,7 +102,7 @@ export function getParcelAttributes(wallet, parcel, districts) {
       label,
       description,
       color: 'white',
-      backgroundColor: colors.MY_PARCELS
+      backgroundColor: COLORS.myParcels
     }
   }
   if (!parcel.owner && !district) {
@@ -110,7 +110,7 @@ export function getParcelAttributes(wallet, parcel, districts) {
       label,
       description,
       color: 'black',
-      backgroundColor: colors.UNOWNED
+      backgroundColor: COLORS.unowned
     }
   }
 
@@ -118,6 +118,6 @@ export function getParcelAttributes(wallet, parcel, districts) {
     label,
     description,
     color: 'black',
-    backgroundColor: colors.TAKEN
+    backgroundColor: COLORS.taken
   }
 }
