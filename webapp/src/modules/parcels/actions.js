@@ -26,17 +26,6 @@ export function fetchParcelsFailure(error) {
   }
 }
 
-// Merge Parcels
-
-export const MERGE_PARCELS = 'Merge Parcels'
-
-export function mergeParcels(parcels) {
-  return {
-    type: MERGE_PARCELS,
-    parcels
-  }
-}
-
 // Edit Parcel
 
 export const EDIT_PARCEL_REQUEST = '[Request] Edit Parcel'

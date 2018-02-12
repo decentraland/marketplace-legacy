@@ -17,7 +17,8 @@ import {
 } from './actions'
 import {
   fetchAddressParcelsRequest,
-  fetchAddressContributionsRequest
+  fetchAddressContributionsRequest,
+  fetchAddressPublicationsRequest
 } from 'modules/address/actions'
 import { fetchDistrictsRequest } from 'modules/districts/actions'
 
@@ -61,6 +62,7 @@ function* handleConnectWalletSuccess(action) {
   const { address } = action.wallet
 
   yield put(fetchAddressParcelsRequest(address))
+  yield put(fetchAddressPublicationsRequest(address))
   yield put(fetchAddressContributionsRequest(address))
   yield put(fetchDistrictsRequest())
 }

@@ -4,6 +4,7 @@ import { addressSaga } from 'modules/address/sagas'
 import { districtsSaga } from 'modules/districts/sagas'
 import { locationSaga } from 'modules/location/sagas'
 import { parcelsSaga } from 'modules/parcels/sagas'
+import { publicationSaga } from 'modules/publication/sagas'
 import { transactionSaga } from 'modules/transaction/sagas'
 import { transferSaga } from 'modules/transfer/sagas'
 import { uiSaga } from 'modules/ui/sagas'
@@ -15,6 +16,7 @@ export function* rootSaga() {
     districtsSaga(),
     locationSaga(),
     parcelsSaga(),
+    publicationSaga(),
     transactionSaga(),
     transferSaga(),
     uiSaga(),

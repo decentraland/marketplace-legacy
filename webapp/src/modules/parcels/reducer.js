@@ -10,9 +10,9 @@ import {
   FETCH_PARCEL_DATA_FAILURE,
   EDIT_PARCEL_REQUEST,
   EDIT_PARCEL_SUCCESS,
-  EDIT_PARCEL_FAILURE,
-  MERGE_PARCELS
+  EDIT_PARCEL_FAILURE
 } from './actions'
+import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { buildCoordinate } from 'lib/utils'
 import { toParcelObject } from './utils'
@@ -71,7 +71,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         error: action.error
       }
     }
-    case MERGE_PARCELS: {
+    case FETCH_ADDRESS_PARCELS_SUCCESS: {
       return {
         ...state,
         data: {
