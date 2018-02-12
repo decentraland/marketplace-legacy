@@ -92,7 +92,7 @@ export async function getParcelData(req) {
 /**
  * Returns the parcels an address owns
  * @param  {string} address - Parcel owner
- * @return {object}
+ * @return {array}
  */
 app.get(
   '/api/addresses/:address/parcels',
@@ -118,7 +118,7 @@ export async function getAddressParcels(req) {
 /**
  * Get the contributions for an address
  * @param  {string} address - District contributor
- * @return {object}
+ * @return {array}
  */
 app.get(
   '/api/addresses/:address/contributions',
@@ -127,14 +127,31 @@ app.get(
 
 export async function getAddressContributions(req) {
   const address = server.extractFromReq(req, 'address')
-  const districts = await Contribution.findGroupedByAddress(address)
+  const contributions = await Contribution.findGroupedByAddress(address)
 
-  return utils.mapOmit(districts, [
+  return utils.mapOmit(contributions, [
     'message',
     'signature',
     'created_at',
     'updated_at'
   ])
+}
+
+/**
+ * Returns the publications an address owns
+ * @param  {string} address - Publication owner
+ * @return {array}
+ */
+app.get(
+  '/api/addresses/:address/publications',
+  server.handleRequest(getAddressPublications)
+)
+
+export async function getAddressPublications(req) {
+  const address = server.extractFromReq(req, 'address')
+  const publications = await Publication.findByAddress(address)
+
+  return publications
 }
 
 /**
@@ -155,17 +172,13 @@ export async function getDistricts() {
 }
 
 /**
- * Returns all publications for a particular address
- * @param  {string} address - Publications owner
+ * Returns all publications
  * @return {array}
  */
 app.get('/api/publications', server.handleRequest(getPublications))
 
 export async function getPublications(req) {
-  const address = server.extractFromReq(req, 'address')
-  const publications = await Publication.findByAddress(address)
-
-  return publications
+  return await Publication.find()
 }
 
 /* Start the server only if run directly */
