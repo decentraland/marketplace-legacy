@@ -49,6 +49,7 @@ export default class ParcelsMap extends React.Component {
   constructor(props) {
     super(props)
     this.debouncedHandleHover = debounce(this.handleHover, 400)
+    this.debouncedRedrawMap = debounce(this.redrawMap, 400)
   }
 
   static defaultProps = {
@@ -61,8 +62,6 @@ export default class ParcelsMap extends React.Component {
     this.map = null
     this.parcelGrid = null
     this.mapCoordinates = null
-
-    this.debounceMapMethodsByTileSize(this.props.tileSize)
   }
 
   componentWillUnmount() {
@@ -76,8 +75,6 @@ export default class ParcelsMap extends React.Component {
 
     const shouldRedraw = !!this.map
 
-    const shouldDebounce = this.props.tileSize !== nextProps.tileSize
-
     if (shouldUpdateCenter) {
       if (this.skipCenter) {
         this.skipCenter = false
@@ -89,10 +86,6 @@ export default class ParcelsMap extends React.Component {
 
     if (shouldRedraw) {
       this.debouncedRedrawMap()
-    }
-
-    if (shouldDebounce) {
-      this.debounceMapMethodsByTileSize(nextProps.tileSize)
     }
   }
 
@@ -119,18 +112,6 @@ export default class ParcelsMap extends React.Component {
       this.renderPopup(x, y, nextProps)
     }
     return this.props.tileSize !== nextProps.tileSize
-  }
-
-  debounceMapMethodsByTileSize(tileSize) {
-    const delay = 6400
-    this.debouncedRedrawMap = debounce(
-      this.redrawMap,
-      Math.min(200, delay / tileSize)
-    )
-    this.debouncedMoveEnd = debounce(
-      this.handleMoveEnd,
-      Math.min(200, delay / tileSize)
-    )
   }
 
   createMap(container) {
@@ -204,12 +185,12 @@ export default class ParcelsMap extends React.Component {
     if (elapsed > 500) {
       this.skipCenter = true
     }
-    this.debouncedMoveEnd()
+    this.handleMoveEnd()
   }
 
   handleMapZoomEnd = () => {
     this.props.onZoomEnd(this.map.getZoom())
-    this.debouncedMoveEnd()
+    this.handleMoveEnd()
   }
 
   handleMoveEnd = () => {
@@ -335,7 +316,7 @@ export default class ParcelsMap extends React.Component {
 
   // Called by the Parcel Grid on each tile hover
   addPopup = (x, y, latlng) => {
-    if (this.dragging) {
+    if (this.dragging || !this.map) {
       return
     }
 
