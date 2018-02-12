@@ -6,6 +6,7 @@ import {
   AUTHORIZE_LAND_SUCCESS
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { loadingReducer } from 'modules/loading/reducer'
 
 const INITIAL_STATE = {
   data: {
@@ -14,7 +15,7 @@ const INITIAL_STATE = {
     approvedBalance: null,
     landIsAuthorized: null
   },
-  loading: false,
+  loading: [],
   error: null
 }
 
@@ -23,11 +24,12 @@ export function walletReducer(state = INITIAL_STATE, action) {
     case CONNECT_WALLET_REQUEST:
       return {
         ...state,
-        loading: true
+        loading: loadingReducer(state.loading, action)
       }
     case CONNECT_WALLET_SUCCESS:
       return {
-        loading: false,
+        loading: loadingReducer(state.loading, action),
+        error: null,
         data: {
           ...state.data,
           ...action.wallet
@@ -36,7 +38,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
     case CONNECT_WALLET_FAILURE:
       return {
         ...state,
-        loading: false,
+        loading: loadingReducer(state.loading, action),
         error: action.error
       }
     case FETCH_TRANSACTION_SUCCESS: {

@@ -4,6 +4,7 @@ import {
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_PUBLICATIONS_FAILURE
 } from './actions'
+import { loadingReducer } from 'modules/loading/reducer'
 import { toPublicationsObject } from './utils'
 
 const INITIAL_STATE = {
@@ -17,7 +18,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
     case FETCH_PUBLICATIONS_REQUEST: {
       return {
         ...state,
-        loading: true
+        loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_ADDRESS_PUBLICATIONS_SUCCESS:
@@ -28,14 +29,14 @@ export function publicationReducer(state = INITIAL_STATE, action) {
           ...state.data,
           ...toPublicationsObject(action.publications)
         },
-        loading: false,
+        loading: loadingReducer(state.loading, action),
         error: null
       }
     }
     case FETCH_PUBLICATIONS_FAILURE: {
       return {
         ...state,
-        loading: false,
+        loading: loadingReducer(state.loading, action),
         error: action.error
       }
     }
