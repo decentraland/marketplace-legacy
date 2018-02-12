@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import StaticPage from 'components/StaticPage'
 
@@ -15,32 +16,20 @@ export default class ServerError extends React.PureComponent {
           <br />
           <p>
             If the problem persists, contact us at our&nbsp;
-            <a
-              href="https://chat.decentraland.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link to="https://chat.decentraland.org" target="_blank">
               Community Chat
-            </a>
+            </Link>
             &nbsp; or via&nbsp;
-            <a
-              href="https://twitter.com/decentraland"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link to="https://twitter.com/decentraland" target="_blank">
               Twitter
-            </a>.
+            </Link>.
           </p>
           <br />
           <p>
             Confused about what&#39;s going on? Check out the&nbsp;
-            <a
-              href="https://wiki.decentraland.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link to="https://wiki.decentraland.org/" target="_blank">
               wiki
-            </a>&nbsp; for answers.
+            </Link>&nbsp; for answers.
           </p>
         </div>
       </StaticPage>

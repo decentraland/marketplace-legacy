@@ -62,6 +62,12 @@
 .TransferModal .modal-body .error-message {
   margin-top: 10px;
   color: #A94442;
+  word-break: break-word;
+}
+
+.TransferModal .modal-body .error-stack {
+  padding: 10px 30px;
+  text-align: left;
 }
 
 .TransferModal .submit-transfer {
