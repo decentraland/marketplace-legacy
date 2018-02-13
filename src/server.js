@@ -10,7 +10,11 @@ import { asyncBatch } from './lib/asyncBatch'
 import { Parcel, ParcelService } from './Parcel'
 import { Contribution } from './Contribution'
 import { District } from './District'
-import { Publication } from './Publication'
+import {
+  Publication,
+  PublicationService,
+  PublicationRequestFilters
+} from './Publication'
 
 env.load()
 
@@ -151,7 +155,7 @@ export async function getAddressPublications(req) {
   const address = server.extractFromReq(req, 'address')
   const publications = await Publication.findByAddress(address)
 
-  return publications
+  return utils.mapOmit(publications, ['updated_at'])
 }
 
 /**
@@ -172,13 +176,20 @@ export async function getDistricts() {
 }
 
 /**
- * Returns all publications
+ * Returns all publications. Supports pagination and filtering
+ * @param  {string} sort_by - Publication prop
+ * @param  {string} sort_order - asc or desc
+ * @param  {number} limit
+ * @param  {number} offset
  * @return {array}
  */
 app.get('/api/publications', server.handleRequest(getPublications))
 
 export async function getPublications(req) {
-  return await Publication.find()
+  const filters = new PublicationRequestFilters(req)
+  const publications = await new PublicationService().filter(filters)
+
+  return utils.mapOmit(publications, ['is_sold', 'status', 'updated_at'])
 }
 
 /* Start the server only if run directly */

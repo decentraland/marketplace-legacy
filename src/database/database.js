@@ -61,8 +61,11 @@ export const database = {
       'publications',
       `"tx_hash" TEXT NOT NULL,
       "address" varchar(42) NOT NULL,
+      "x" int NOT NULL,
+      "y" int NOT NULL,
       "price" DECIMAL NOT NULL,
-      "status" TEXT NOT NULL,
+      "tx_status" TEXT NOT NULL,
+      "is_sold" BOOLEAN NOT NULL DEFAULT true,
       "expires_at" timestamp`,
       { primaryKey: 'tx_hash', sequenceName: null }
     )
