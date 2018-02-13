@@ -4,27 +4,23 @@ const log = new Log('EventMonitor')
 
 export class EventMonitor {
   constructor(contractName, eventNames) {
+    this.setContract(contractName)
+
     this.contractName = contractName
     this.eventNames = eventNames
   }
 
-  getContract() {
-    const contract = contracts[this.contractName]
-
-    if (!contract) {
-      throw new Error(
-        `You need to supply a valid contract name, "${
-          this.contractName
-        }" not found. Valid options are ${Object.keys(contracts)}`
-      )
-    }
-
-    return contract
-  }
-
+  /**
+   * Watch or filter events for the contract
+   * @param  {object}   options
+   * @param  {boolean} [options.watch] - If true, the connection will remain open for new events
+   * @param  {string} [options.args] - Stringified return values you want to filter the logs by
+   * @param  {number|string} [options.fromBlock=0] - The number of the earliest block. latest means the most recent and pending currently mining, block
+   * @param  {number|string} [options.toBlock='latest'] - The number of the latest block latest means the most recent and pending currently mining, block
+   * @param  {string} [options.address] - An address or a list of addresses to only get logs from particular account(s).
+   * @param  {function} callback - Node style callback, receiving (error, eventLogs)
+   */
   run(options = {}, callback) {
-    const contract = this.getContract()
-
     const {
       watch,
       args = '{}',
@@ -41,8 +37,6 @@ export class EventMonitor {
       address
     }
 
-    eth.setContracts([contract])
-
     for (let eventName of this.eventNames) {
       log.info(
         `Running "${action}" with ${eventName} events for ${
@@ -53,6 +47,24 @@ export class EventMonitor {
       const event = this.getEvent(eventName)
       event[action]({ args: eventArgs, opts: eventOptions }, callback)
     }
+  }
+
+  /**
+   * Uses decentraland-common's eth and contracts objects to find and set the contract name supplied.
+   * It'll throw if it's not defined on the contracts object
+   * @param {string} contractName
+   */
+  setContract(contractName) {
+    const contract = contracts[contractName]
+
+    if (!contract) {
+      const validNames = Object.keys(contracts).join(', ')
+      throw new Error(
+        `Could not find contract, "${contractName}". Valid options are ${validNames}`
+      )
+    }
+
+    eth.setContracts([contract])
   }
 
   getEvent(eventName) {
