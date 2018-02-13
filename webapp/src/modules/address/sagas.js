@@ -1,7 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import {
   FETCH_ADDRESS_PARCELS_REQUEST,
-  FETCH_ADDRESS_PARCELS_SUCCESS,
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
   FETCH_ADDRESS_PUBLICATIONS_REQUEST,
   fetchAddressParcelsSuccess,
