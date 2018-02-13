@@ -13,7 +13,7 @@ const INITIAL_STATE = {
     address: null,
     balance: null,
     approvedBalance: null,
-    landIsAuthorized: null
+    isLandAuthorized: null
   },
   loading: [],
   error: null
