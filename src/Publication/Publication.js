@@ -4,12 +4,12 @@ export class Publication extends Model {
   static tableName = 'publications'
   static columnNames = [
     'tx_hash',
-    'address',
+    'tx_status',
     'x',
     'y',
+    'address',
     'price',
     'is_sold',
-    'tx_status',
     'expires_at'
   ]
   static primaryKey = 'tx_hash'

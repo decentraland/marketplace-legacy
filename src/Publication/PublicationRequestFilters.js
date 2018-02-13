@@ -65,7 +65,7 @@ export class PublicationRequestFilters {
         break
       case 'limit':
       case 'offset':
-        isAllowed = Number.isInteger(+value)
+        isAllowed = value > 0 && value < 100
         break
       default:
         isAllowed = false

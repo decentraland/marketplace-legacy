@@ -60,12 +60,12 @@ export const database = {
     await this.createTable(
       'publications',
       `"tx_hash" TEXT NOT NULL,
-      "address" varchar(42) NOT NULL,
+      "tx_status" TEXT NOT NULL DEFAULT 'pending',
       "x" int NOT NULL,
       "y" int NOT NULL,
+      "address" varchar(42) NOT NULL,
       "price" DECIMAL NOT NULL,
-      "tx_status" TEXT NOT NULL,
-      "is_sold" BOOLEAN NOT NULL DEFAULT true,
+      "is_sold" BOOLEAN NOT NULL DEFAULT false,
       "expires_at" timestamp`,
       { primaryKey: 'tx_hash', sequenceName: null }
     )
