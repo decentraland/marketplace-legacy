@@ -9,7 +9,7 @@ import { toPublicationsObject } from './utils'
 
 const INITIAL_STATE = {
   data: {},
-  loading: false,
+  loading: [],
   error: null
 }
 
@@ -25,12 +25,12 @@ export function publicationReducer(state = INITIAL_STATE, action) {
     case FETCH_PUBLICATIONS_SUCCESS: {
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
         data: {
           ...state.data,
           ...toPublicationsObject(action.publications)
-        },
-        loading: loadingReducer(state.loading, action),
-        error: null
+        }
       }
     }
     case FETCH_PUBLICATIONS_FAILURE: {
