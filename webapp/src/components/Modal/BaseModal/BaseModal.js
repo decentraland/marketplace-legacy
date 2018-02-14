@@ -64,7 +64,7 @@ export function ModalCloseButton({ onClose, children }) {
   return (
     <button
       type="button"
-      className="close btn btn-secondary"
+      className="close"
       data-dismiss="modal"
       onClick={onClose}
     >

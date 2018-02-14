@@ -1,0 +1,8 @@
+.ui.form .field > label, .ui.form .fields > label {
+  color: var(--dark-gray);
+  font-weight: 400;
+}
+
+.ui.form .field.disabled > label, .ui.form .fields.disabled > label {
+  opacity: 1;
+}

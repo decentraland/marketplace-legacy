@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { locations } from 'locations'
+import { Button } from 'semantic-ui-react'
 import StaticPage from 'components/StaticPage'
 
 import './ColorKeyPage.css'
@@ -46,9 +48,9 @@ export default function ColorKey() {
         </div>
       </div>
 
-      <a className="btn btn-primary" href="/">
+      <Button as="a" href={locations.root} primary={true}>
         GO BACK
-      </a>
+      </Button>
     </StaticPage>
   )
 }

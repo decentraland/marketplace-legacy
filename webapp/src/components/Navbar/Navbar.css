@@ -1,12 +1,16 @@
 
 .navbar {
   max-width: 1170px;
+  min-height: 50px;
   padding: 0 20px;
   margin-right: auto;
-  margin-left: auto;
-  border-radius: 0;
   margin-bottom: 0;
+  border: 1px solid transparent;
+  margin-left: auto;
+  position: relative;
+  border-radius: 0;
   background-color: transparent;
+  overflow: hidden;
   color: #232323;
 }
 
@@ -38,6 +42,12 @@
   float: right;
 }
 
+.nav {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
 .nav.navbar-nav {
   padding-right: 18px;
 }
@@ -51,8 +61,16 @@
   color: #232323;
 }
 
+.nav > li {
+  position: relative;
+  display: block;
+}
+
 .nav > li > a {
   padding: 10px 5px;
+  line-height: 20px;
+  position: relative;
+  display: block;
 }
 
 .nav > li > a:hover, .nav > li > a:focus {
@@ -71,7 +89,6 @@
 }
 
 @media (min-width: 768px) {
-
   .navbar-logo {
     margin-left: -15px;
   }
@@ -80,8 +97,14 @@
     margin-top: 25px;
   }
 
+  .navbar-right {
+    float: right !important;
+    margin-right: -15px;
+  }
+
   .nav.navbar-nav {
     padding-right: 0;
+    margin: 0;
   }
 
   .nav > li > a {

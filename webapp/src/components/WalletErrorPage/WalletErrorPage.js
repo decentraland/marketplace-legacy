@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { locations } from 'locations'
+import { Button } from 'semantic-ui-react'
 import StaticPage from 'components/StaticPage'
 
 export default class WalletErrorPage extends React.PureComponent {
@@ -50,9 +52,9 @@ export default class WalletErrorPage extends React.PureComponent {
           <br />
         </div>
 
-        <a className="btn btn-primary" href="/">
-          Retry
-        </a>
+        <Button as="a" href={locations.root} primary={true}>
+          RETRY
+        </Button>
       </StaticPage>
     )
   }
