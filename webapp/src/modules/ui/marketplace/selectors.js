@@ -8,3 +8,4 @@ export const getPublications = createSelector(
   getAllPublications,
   (grid, publications) => grid.map(tx_hash => publications[tx_hash])
 )
+export const getTotal = state => getState(state).total

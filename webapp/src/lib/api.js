@@ -135,6 +135,27 @@ const MOCK_PUBLICATIONS = [
   }
 ]
 
+const randomHash = () => {
+  let hash = '0x'
+  for (let i = 0; i < 40; i++) {
+    hash += ((Math.random() * 16) | 0).toString(16)
+  }
+  return hash
+}
+for (let i = 0; i < 90; i++) {
+  MOCK_PUBLICATIONS.push({
+    tx_hash: randomHash(),
+    address: randomHash(),
+    x: (Math.random() * 150 - Math.random() * 150) | 0,
+    y: (Math.random() * 150 - Math.random() * 150) | 0,
+    price: ((Math.random() * 100000) | 0).toString(),
+    tx_status: Math.random() > 0.05 ? 'confirmed' : 'pending',
+    created_at: Date.now() + i * 86400000,
+    expires_at: Date.now() + i * 86400000 + 14 * 86400000,
+    is_sold: Math.random() < 0.1
+  })
+}
+
 export class API {
   fetchDistricts() {
     return this.request('get', '/districts', {})
@@ -171,13 +192,23 @@ export class API {
 
     // TODO: remove mock
     return new Promise(resolve => {
-      const result = _sortBy(MOCK_PUBLICATIONS, sortBy).slice(
-        offset,
-        offset + limit
+      let result = _sortBy(
+        MOCK_PUBLICATIONS.map(x => ({ ...x, price: +x.price })),
+        sortBy
       )
+      if (sortOrder === 'desc') {
+        result = result.reverse()
+      }
+      result = result
+        .slice(offset, offset + limit)
+        .map(x => ({ ...x, price: x.price.toString() }))
       setTimeout(
-        () => resolve(sortOrder === 'asc' ? result : result.reverse()),
-        200
+        () =>
+          resolve({
+            publications: result,
+            total: MOCK_PUBLICATIONS.length
+          }),
+        500
       )
     })
 

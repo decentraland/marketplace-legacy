@@ -3,12 +3,13 @@
   --secondary: #3e396b;
 
   --text: var(--secondary);
-  --background: #FCFCFC;
+  --background: #fcfcfc;
 
   --light-gray: #ededed;
   --gray: #4f4f4f;
   --dark-gray: #222222;
 
+  --light-green: #d1eee6;
   --green: #30d7a9;
   --dark-green: #2e7d32;
 
@@ -16,7 +17,7 @@
 
   --yellow: #f2be24;
 
-  --orange: #EF6C00;
+  --orange: #ef6c00;
 
   --light-blue: #4db1dd;
   --blue: #1976d2;

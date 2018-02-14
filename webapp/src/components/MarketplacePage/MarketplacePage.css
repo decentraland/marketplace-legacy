@@ -3,5 +3,19 @@
 }
 
 .MarketplacePage .publications {
-  margin-top: 30px;
+  position: relative;
+  margin-top: 50px;
+  min-height: 200px;
+}
+
+.MarketplacePage .pagination {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.MarketplacePage .empty {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  color: var(--gray);
 }

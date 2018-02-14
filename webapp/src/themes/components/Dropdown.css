@@ -2,6 +2,7 @@
   border: none;
 }
 
+.ui.selection.dropdown:focus,
 .ui.selection.active.dropdown,
 .ui.selection.active.dropdown:hover,
 .ui.selection.active.dropdown .menu,

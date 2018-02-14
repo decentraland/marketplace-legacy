@@ -1,36 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Menu, Container, Card, Header, Dropdown } from 'semantic-ui-react'
+import {
+  Menu,
+  Container,
+  Card,
+  Header,
+  Dropdown,
+  Pagination,
+  Loader
+} from 'semantic-ui-react'
 import Publication from './Publication'
 import Navbar from 'components/Navbar'
 
 import { publicationType } from 'components/types'
 
+import {
+  SORT_TYPES,
+  getOptionsFromSortType,
+  getSortTypeFromOptions
+} from './utils'
+
 import './MarketplacePage.css'
 
-const sortOptions = [
-  {
-    text: 'Newest',
-    value: 'newest'
-  },
-  {
-    text: 'Cheapest',
-    value: 'cheapest'
-  },
-  {
-    text: 'Most expensive',
-    value: 'most-expensive'
-  },
-  {
-    text: 'Closest to expire',
-    value: 'closest-to-expired'
-  }
-]
+const sortOptions = Object.values(SORT_TYPES).map(type => ({
+  text: type,
+  value: type
+}))
 
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
-    publications: PropTypes.arrayOf(publicationType)
+    publications: PropTypes.arrayOf(publicationType),
+    page: PropTypes.number.isRequired,
+    pages: PropTypes.number.isRequired,
+    sortBy: PropTypes.string.isRequired,
+    sortOrder: PropTypes.string.isRequired,
+    onNavigate: PropTypes.func.isRequired,
+    onConnect: PropTypes.func.isRequired,
+    onFetchPublications: PropTypes.func.isRequired
   }
 
   componentWillMount() {
@@ -39,9 +46,71 @@ export default class MarketplacePage extends React.PureComponent {
     onFetchPublications()
   }
 
-  render() {
-    const { publications } = this.props
+  componentWillReceiveProps(nextProps) {
+    const { page, sortBy, sortOrder } = this.props
+    if (
+      page !== nextProps.page ||
+      sortBy !== nextProps.sortBy ||
+      sortOrder !== nextProps.sortOrder
+    ) {
+      this.shouldFetchPublications = true
+    }
+  }
 
+  componentDidUpdate() {
+    if (this.shouldFetchPublications) {
+      this.props.onFetchPublications()
+      this.shouldFetchPublications = false
+    }
+  }
+
+  navigateTo(options) {
+    const navigationOptions = {
+      ...this.props,
+      ...options
+    }
+    const { page, sortBy, sortOrder, onNavigate } = navigationOptions
+    const url = `/marketplace?page=${page}&sort_by=${sortBy}&sort_order=${sortOrder}`
+    onNavigate(url)
+  }
+
+  handlePageChange = (event, data) => {
+    this.navigateTo({
+      page: data.activePage
+    })
+  }
+
+  handleSort = (event, data) => {
+    const options = getOptionsFromSortType(data.value)
+    this.navigateTo(options)
+  }
+
+  renderLoading() {
+    return <Loader />
+  }
+
+  renderEmpty() {
+    return (
+      <div className="empty">
+        <p>Oops... nothing found here.</p>
+      </div>
+    )
+  }
+
+  renderPublications() {
+    const { publications } = this.props
+    return (
+      <Card.Group>
+        {publications.map(publication => (
+          <Publication key={publication.tx_hash} publication={publication} />
+        ))}
+      </Card.Group>
+    )
+  }
+
+  render() {
+    const { page, pages, isLoading, isEmpty, sortBy, sortOrder } = this.props
+    const sortType = getSortTypeFromOptions({ sortBy, sortOrder })
     return (
       <div className="MarketplacePage">
         <Navbar />
@@ -55,20 +124,34 @@ export default class MarketplacePage extends React.PureComponent {
             <Menu.Item name="Parcels" active onClick={this.handleItemClick} />
             <Menu.Menu position="right">
               <Menu.Item>
-                <Dropdown placeholder="Sort" selection options={sortOptions} />
+                <Dropdown
+                  placeholder="Sort"
+                  selection
+                  value={sortType}
+                  options={sortOptions}
+                  onChange={this.handleSort}
+                />
               </Menu.Item>
             </Menu.Menu>
           </Menu>
         </Container>
         <Container className="publications">
-          <Card.Group>
-            {publications.map(publication => (
-              <Publication
-                key={publication.tx_hash}
-                publication={publication}
-              />
-            ))}
-          </Card.Group>
+          {isLoading
+            ? this.renderLoading()
+            : isEmpty ? this.renderEmpty() : this.renderPublications()}
+        </Container>
+        <Container textAlign="center" className="pagination">
+          {isLoading || isEmpty ? null : (
+            <Pagination
+              activePage={page}
+              firstItem={null}
+              lastItem={null}
+              pointing
+              secondary
+              totalPages={pages}
+              onPageChange={this.handlePageChange}
+            />
+          )}
         </Container>
       </div>
     )

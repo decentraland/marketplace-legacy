@@ -1,7 +1,8 @@
 import { FETCH_PUBLICATIONS_SUCCESS } from '../../publication/actions'
 
 export const INITIAL_STATE = {
-  grid: []
+  grid: [],
+  total: 0
 }
 
 export function marketplaceReducer(state = INITIAL_STATE, action) {
@@ -9,7 +10,8 @@ export function marketplaceReducer(state = INITIAL_STATE, action) {
     case FETCH_PUBLICATIONS_SUCCESS: {
       return {
         ...state,
-        grid: action.publications.map(publication => publication.tx_hash)
+        grid: action.publications.map(publication => publication.tx_hash),
+        total: action.total
       }
     }
     default:

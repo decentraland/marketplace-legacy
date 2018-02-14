@@ -29,6 +29,7 @@
 .Publication .price {
   display: flex;
   margin: 0px;
+  font-weight: 700;
 }
 
 .Publication .price .amount {
