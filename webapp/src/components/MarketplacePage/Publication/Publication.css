@@ -20,26 +20,22 @@
   }
 }
 
-.Publication .tx-icon {
+.Publication .tx-status {
   position: absolute;
   right: 12px;
   top: 12px;
 }
 
-.Publication .tx-icon .confirmed {
-  color: var(--green);
-}
-
-.Publication .tx-icon .pending {
-  color: var(--yellow) !important;
-}
-
-.Publication .tx-icon .failed {
-  color: var(--red) !important;
-}
-
 .Publication .price {
+  display: flex;
   margin: 0px;
+}
+
+.Publication .price .amount {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
 }
 
 .Publication .footer {

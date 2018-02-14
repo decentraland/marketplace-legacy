@@ -67,5 +67,5 @@ export const publicationType = shape({
   y: number,
   created_at: number,
   expires_at: number,
-  sold: bool
+  is_sold: bool
 })

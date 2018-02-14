@@ -23,7 +23,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'pending',
     created_at: 1518474436085,
     expires_at: 1518647236085,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -35,7 +35,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1518474436085,
     expires_at: 1518647236085,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -47,7 +47,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'failed',
     created_at: 1518474436085,
     expires_at: 1518647236085,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -59,7 +59,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1518474436085,
     expires_at: 1518647236085,
-    sold: true
+    is_sold: true
   },
   {
     tx_hash:
@@ -71,7 +71,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1518820036085,
     expires_at: 1518992836085,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -83,7 +83,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1519120036085,
     expires_at: 1519392836085,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -95,7 +95,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1519684505522,
     expires_at: 1520030115015,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -107,7 +107,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1520202964125,
     expires_at: 1520375770074,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -119,7 +119,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1520548623220,
     expires_at: 1520721432816,
-    sold: false
+    is_sold: false
   },
   {
     tx_hash:
@@ -131,7 +131,7 @@ const MOCK_PUBLICATIONS = [
     tx_status: 'confirmed',
     created_at: 1520548623221,
     expires_at: 1520721432816,
-    sold: false
+    is_sold: false
   }
 ]
 

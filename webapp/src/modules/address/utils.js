@@ -6,7 +6,7 @@ export function toAddressPublicationIds(publicationsArray) {
   return publicationsArray.map(publication => publication.tx_hash)
 }
 
-export function grab(all, ids) {
+export function pickAndMap(all, ids) {
   const array = []
   const byId = {}
   ids.forEach(id => {

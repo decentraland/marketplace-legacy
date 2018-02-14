@@ -3,9 +3,9 @@ import { Header, Card, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { publicationType } from 'components/types'
 import { txUtils } from 'decentraland-commons'
-import EtherscanLink from 'components/EtherscanLink'
-import numeral from 'numeral'
-import moment from 'moment'
+import TxStatus from 'components/TxStatus'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import format from 'date-fns/format'
 import './Publication.css'
 
 export default class Publication extends React.PureComponent {
@@ -14,16 +14,10 @@ export default class Publication extends React.PureComponent {
   }
   render() {
     const { publication } = this.props
-    let iconName = 'check circle outline'
-    let iconTooltip = 'Transaction confirmed'
-    if (publication.tx_status === txUtils.TRANSACTION_STATUS.pending) {
-      iconName = 'warning sign'
-      iconTooltip = 'Transaction pending'
-    } else if (publication.tx_status === txUtils.TRANSACTION_STATUS.failed) {
-      iconName = 'remove circle outline'
-      iconTooltip = 'Transaction failed'
-    }
+    const price = (+publication.price).toLocaleString()
+
     const isExpired = publication.expires_at < Date.now()
+
     return (
       <Card className="Publication">
         <Card.Content>
@@ -31,36 +25,37 @@ export default class Publication extends React.PureComponent {
             <Icon name="map" />
             {publication.x},{publication.y}
           </Link>
-          <Card.Meta>
-            {isExpired
-              ? `Expired`
-              : `Expires ${moment(publication.expires_at).fromNow()}`}
-          </Card.Meta>
-          <span
-            data-balloon-pos="up"
-            data-balloon={iconTooltip}
-            className="tx-icon"
+          <Card.Meta
+            title={format(publication.expires_at, 'MMMM Do, YYYY - hh:MMa')}
           >
-            <EtherscanLink txHash={publication.tx_hash}>
-              <Icon name={iconName} className={publication.tx_status} />
-            </EtherscanLink>
-          </span>
+            {isExpired
+              ? `Expired ${distanceInWordsToNow(publication.expires_at)} ago`
+              : `Expires in ${distanceInWordsToNow(publication.expires_at)}`}
+          </Card.Meta>
+          <TxStatus
+            txHash={publication.tx_hash}
+            txStatus={publication.tx_status}
+            className="tx-status"
+          />
         </Card.Content>
         <Card.Content extra>
           <span className="footer">
             <Header size="medium" floated="left" className="price">
-              {numeral(publication.price).format('0,0.00')} MANA
+              <span className="amount" title={price}>
+                {price}
+              </span>{' '}
+              &nbsp;MANA
             </Header>
             <Button
               floated="right"
               size="tiny"
               disabled={
                 isExpired ||
-                publication.sold ||
+                publication.is_sold ||
                 publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
               }
             >
-              {publication.sold ? 'Sold' : 'Buy'}
+              {publication.is_sold ? 'Sold' : 'Buy'}
             </Button>
           </span>
         </Card.Content>

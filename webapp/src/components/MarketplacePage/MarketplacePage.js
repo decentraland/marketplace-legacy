@@ -28,7 +28,7 @@ const sortOptions = [
   }
 ]
 
-export default class ParcelDetailPage extends React.PureComponent {
+export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
     publications: PropTypes.arrayOf(publicationType)
   }
