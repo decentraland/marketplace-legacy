@@ -1,4 +1,4 @@
-import { call, takeLatest, put } from 'redux-saga/effects'
+import { call, takeEvery, put } from 'redux-saga/effects'
 import {
   FETCH_PUBLICATIONS_REQUEST,
   fetchPublicationsSuccess,
@@ -7,7 +7,7 @@ import {
 import { api } from 'lib/api'
 
 export function* publicationSaga() {
-  yield takeLatest(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
+  yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
 }
 
 function* handlePublicationsRequest(action) {

@@ -6,6 +6,7 @@
   position: relative;
   margin-top: 50px;
   min-height: 200px;
+  padding: 1px;
 }
 
 .MarketplacePage .pagination {

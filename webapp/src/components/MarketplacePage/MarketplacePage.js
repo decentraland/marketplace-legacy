@@ -8,7 +8,8 @@ import {
   Header,
   Dropdown,
   Pagination,
-  Loader
+  Loader,
+  Dimmer
 } from 'semantic-ui-react'
 import Publication from './Publication'
 import Navbar from 'components/Navbar'
@@ -81,12 +82,19 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   handleSort = (event, data) => {
+    if (this.props.isLoading) {
+      return
+    }
     const options = getOptionsFromSortType(data.value)
     this.navigateTo(options)
   }
 
   renderLoading() {
-    return <Loader />
+    return (
+      <Dimmer active inverted>
+        <Loader size="large" />
+      </Dimmer>
+    )
   }
 
   renderEmpty() {
@@ -136,12 +144,13 @@ export default class MarketplacePage extends React.PureComponent {
           </Menu>
         </Container>
         <Container className="publications">
-          {isLoading
-            ? this.renderLoading()
-            : isEmpty ? this.renderEmpty() : this.renderPublications()}
+          {isEmpty && !isLoading
+            ? this.renderEmpty()
+            : this.renderPublications()}
+          {isLoading ? this.renderLoading() : null}
         </Container>
         <Container textAlign="center" className="pagination">
-          {isLoading || isEmpty ? null : (
+          {isEmpty ? null : (
             <Pagination
               activePage={page}
               firstItem={null}

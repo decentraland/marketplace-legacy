@@ -3,9 +3,9 @@
 }
 
 .ui.loader:before {
-  border-color: var(--light-green);
+  border-color: var(--light-green) !important;
 }
 
 .ui.loader:after {
-  border-color: var(--green) transparent transparent;
+  border-color: var(--green) transparent transparent !important;
 }

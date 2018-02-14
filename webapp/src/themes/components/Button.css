@@ -2,7 +2,7 @@
   margin: 0 auto;
   padding: 10px 22px;
   font-size: 16px;
-  border-radius: 5px;
+  border-radius: 50px;
   line-height: 1.42857143;
   border: 1px solid lightgray;
   font-family: 'Source Sans Pro', Helvetica, sans-serif;
@@ -18,12 +18,13 @@
 
 .ui.button.primary {
   background-color: var(--primary);
-  color: #FFF;
+  color: #fff;
   border: none;
 }
 
-.ui.button.primary:hover, .ui.button.primary:visited  {
+.ui.button.primary:hover,
+.ui.button.primary:visited {
   background-color: var(--primary);
-  box-shadow: 0 8px 30px rgba(48, 215, 169, 0.5);
-  color: #FFF;
+  box-shadow: 0 8px 30px #30d7a980;
+  color: #fff;
 }
