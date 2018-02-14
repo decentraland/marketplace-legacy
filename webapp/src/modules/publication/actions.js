@@ -33,3 +33,30 @@ export function fetchPublicationsFailure(error) {
     error
   }
 }
+
+// Publish LAND
+
+export const PUBLISH_REQUEST = '[Request] Publish LAND'
+export const PUBLISH_SUCCESS = '[Success] Publish LAND'
+export const PUBLISH_FAILURE = '[Failure] Publish LAND'
+
+export function publishRequest(data = {}) {
+  return {
+    type: PUBLISH_REQUEST,
+    data
+  }
+}
+
+export function publishSuccess(publication) {
+  return {
+    type: PUBLISH_SUCCESS,
+    publication
+  }
+}
+
+export function publishFailure(error) {
+  return {
+    type: PUBLISH_FAILURE,
+    error
+  }
+}

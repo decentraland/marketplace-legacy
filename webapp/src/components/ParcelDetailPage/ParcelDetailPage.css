@@ -25,7 +25,8 @@
 .ParcelDetail .parcel-name {
   margin-top: 0;
   font-size: 26px;
-  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-weight: 400;
 }
 
 .ParcelDetail .parcel-name-secondary {

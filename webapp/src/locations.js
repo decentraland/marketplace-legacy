@@ -8,6 +8,9 @@ export const locations = {
 
   marketplace: '/marketplace',
 
+  publish: '/publish/:x/:y',
+  publishLand: (x, y) => `/publish/${x}/${y}`,
+
   colorCodes: '/colorCodes',
   privacy: '/privacy',
 
