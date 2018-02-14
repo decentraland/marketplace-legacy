@@ -1,0 +1,8 @@
+.ui.button {
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-weight: bold;
+  border-radius: 100px;
+  text-transform: uppercase;
+  background-color: white;
+  border: 1px solid lightgray;
+}

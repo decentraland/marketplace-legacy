@@ -1,0 +1,12 @@
+.ui.secondary.pointing.menu .active.item {
+  border-color: var(--dark-purple);
+  color: var(--dark-purple);
+  transition: border-bottom-width 0.1s linear;
+}
+
+.ui.secondary.pointing.menu .active.item:hover {
+  border-color: var(--dark-purple);
+  color: var(--dark-purple);
+  border-bottom-width: 4px !important;
+  cursor: pointer;
+}

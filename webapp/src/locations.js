@@ -6,6 +6,8 @@ export const locations = {
 
   settings: '/settings',
 
+  marketplace: '/marketplace',
+
   colorCodes: '/colorCodes',
   privacy: '/privacy',
 

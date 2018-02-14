@@ -1,0 +1,36 @@
+.Publication {
+  width: calc(25% - 20px) !important;
+}
+
+.Publication .tx-icon {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.Publication .tx-icon .confirmed {
+  color: var(--green);
+}
+
+.Publication .tx-icon .pending {
+  color: var(--yellow) !important;
+}
+
+.Publication .tx-icon .failed {
+  color: var(--red) !important;
+}
+
+.Publication .price {
+  margin: 0px;
+}
+
+.Publication .footer {
+  display: flex;
+  flex-direction: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Publication .footer:after {
+  display: none;
+}
