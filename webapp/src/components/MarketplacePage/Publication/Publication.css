@@ -1,5 +1,23 @@
 .Publication {
-  width: calc(25% - 20px) !important;
+  width: calc(100% - 14px) !important;
+}
+
+@media (min-width: 480px) {
+  .Publication {
+    width: calc(50% - 14px) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .Publication {
+    width: calc(33% - 14px) !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .Publication {
+    width: calc(25% - 14px) !important;
+  }
 }
 
 .Publication .tx-icon {
