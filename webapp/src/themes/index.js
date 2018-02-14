@@ -1,3 +1,6 @@
+// Base
+import 'semantic-ui-css/semantic.min.css'
+
 // Variables
 import './variables.css'
 

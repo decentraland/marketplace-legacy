@@ -1,6 +1,7 @@
 .ui.header {
   font-family: 'Source Sans Pro Light', Helvetica, sans-serif !important;
-  color: var(--dark-purple) !important;
+  font-weight: 400;
+  color: var(--purple) !important;
 }
 
 .ui.header.huge {

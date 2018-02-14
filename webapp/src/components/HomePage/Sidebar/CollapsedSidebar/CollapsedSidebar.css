@@ -6,8 +6,8 @@
 }
 
 .CollapsedSidebar header {
-  background-color: #fcfcfc;
-  border-bottom: 1px solid #ededed;
+  background-color: var(--background);
+  border-bottom: 1px solid var(--light-gray);
 }
 
 .CollapsedSidebar .ColorCodesButton {

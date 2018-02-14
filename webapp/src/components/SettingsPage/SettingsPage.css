@@ -1,6 +1,6 @@
 .SettingsPage {
   height: 100%;
-  color: #3E396B;
+  color: var(--text);
 }
 
 .SettingsPage > .Loading {

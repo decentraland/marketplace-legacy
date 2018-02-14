@@ -61,11 +61,11 @@
 }
 
 .parcel-popup .body a {
-  color: #30d7a9;
+  color: var(--primary);
 }
 
 .parcel-popup .body a:hover {
-  color: #30d7a9;
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -81,5 +81,5 @@
 }
 
 .text.description {
-  color: lightgray;
+  color: var(--light-gray);
 }

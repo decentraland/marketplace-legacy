@@ -10,12 +10,12 @@ body {
 }
 
 a, .link {
-  color: #30D7A9;
+  color: var(--primary);
   cursor: pointer;
 }
 
 a:hover, .link:hover {
-  color: #30D7A9;
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -61,7 +61,7 @@ input[type=email], input[type=number], input[type=password], input[type=text], t
 }
 
 input[type=email]:focus, input[type=number]:focus, input[type=password]:focus, input[type=text]:focus {
-  border-color: #30D7A9;
+  border-color: var(--primary);
 }
 
 button {
