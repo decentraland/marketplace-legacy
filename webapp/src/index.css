@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
 }
@@ -5,8 +9,14 @@ html, body {
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
 }
 
 a, .link {
@@ -33,6 +43,20 @@ a:hover, .link:hover {
   opacity: 1;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.pull-left {
+  float: left;
+}
+
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none;
+  }
+}
+
 /* -----------------------------------------------------------------------
   Key colors */
 
@@ -48,8 +72,40 @@ a:hover, .link:hover {
 /* -----------------------------------------------------------------------
   Form Elements */
 
+
 label {
+  max-width: 100%;
+  margin-bottom: 5px;
   font-weight: 400;
+  display: inline-block;
+}
+
+input[type="search"] {
+  box-sizing: border-box
+}
+
+input[type="radio"],input[type="checkbox"] {
+  margin: 5px 0 0;
+  margin-top: 1px \9;
+  line-height: normal;
+}
+
+input[type="file"] {
+  display: block;
+}
+
+input[type="range"] {
+  width: 100%;
+  display: block;
+}
+
+select[multiple], select[size] {
+  height: auto;
+}
+
+input[type="file"]:focus, input[type="radio"]:focus, input[type="checkbox"]:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
 
 input[type=email], input[type=number], input[type=password], input[type=text], textarea {
@@ -62,6 +118,18 @@ input[type=email], input[type=number], input[type=password], input[type=text], t
 
 input[type=email]:focus, input[type=number]:focus, input[type=password]:focus, input[type=text]:focus {
   border-color: var(--primary);
+}
+
+input::-webkit-input-placeholder, input[type=text]::-webkit-input-placeholder {
+  color: #9c9c9b;
+}
+
+button[disabled], input[disabled] {
+  cursor: default;
+}
+
+button[disabled]:hover {
+  box-shadow: none;
 }
 
 button {

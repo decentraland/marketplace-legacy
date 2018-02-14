@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
+import { Button } from 'semantic-ui-react'
 import BaseModal from '../BaseModal'
-import Button from 'components/Button'
 import Loading from 'components/Loading'
 import SuccessCheck from 'components/SuccessCheck'
 import EtherscanLink from 'components/EtherscanLink'
@@ -104,11 +104,7 @@ export default class TransferModal extends React.PureComponent {
                 close
               </span>
               <EtherscanLink txHash={transfer.hash}>
-                <Button
-                  type="primary"
-                  isSubmit={true}
-                  onClick={this.handleClose}
-                >
+                <Button type="submit" primary={true} onClick={this.handleClose}>
                   Go to Etherscan
                 </Button>
               </EtherscanLink>
@@ -157,8 +153,8 @@ export default class TransferModal extends React.PureComponent {
 
               <div className="submit-transfer">
                 <Button
-                  type="primary"
-                  isSubmit={true}
+                  type="submit"
+                  primary={true}
                   disabled={this.isEmptyAddress()}
                 >
                   TRANSFER

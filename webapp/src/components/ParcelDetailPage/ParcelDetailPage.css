@@ -11,10 +11,6 @@
 .ParcelDetailPage .title {
   margin-top: 20px;
   margin-bottom: 0;
-  font-size: 42px;
-  font-size: 4.2rem;
-  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
-  text-align: center;
 }
 
 .ParcelDetailPage .ParcelDetail {
@@ -53,7 +49,7 @@
 }
 
 @media (min-width: 768px) {
-  .ParcelDetail .Button {
+  .ParcelDetail .button {
     margin-top: 5px;
   }
 }
