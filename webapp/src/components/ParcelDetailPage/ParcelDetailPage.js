@@ -59,11 +59,6 @@ export default class ParcelDetailPage extends React.PureComponent {
           <Loading />
         ) : (
           <React.Fragment>
-            <Container>
-              <Header as="h2" size="huge" textAlign="center" className="title">
-                Parcel Detail
-              </Header>
-            </Container>
             <div className="parcel-preview">
               <ParcelPreview x={parcel.x} y={parcel.y} />
             </div>
