@@ -190,12 +190,21 @@ export async function getPublications(req) {
   const { publications, total } = await new PublicationService().filter(filters)
 
   return {
-    publications: utils.mapOmit(publications, [
-      'is_sold',
-      'updated_at'
-    ]),
+    publications: utils.mapOmit(publications, ['is_sold', 'updated_at']),
     total
   }
+}
+
+/**
+ * Get a publication by transaction hash
+ * @param  {string} txHash
+ * @return {array}
+ */
+app.get('/api/publications/:txHash', server.handleRequest(getPublication))
+
+export async function getPublication(req) {
+  const txHash = server.extractFromReq(req, 'txHash')
+  return await Publication.findOne(txHash)
 }
 
 /* Start the server only if run directly */
