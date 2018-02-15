@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import * as modals from '.'
+import { preventDefault } from 'lib/utils'
 
 export default class Modal extends React.PureComponent {
   static propTypes = {
@@ -21,11 +23,7 @@ export default class Modal extends React.PureComponent {
   }
 
   handleClose = e => {
-    const { onClose } = this.props
-    if (e && e.preventDefault) {
-      e.preventDefault()
-    }
-    onClose()
+    this.props.onClose()
   }
 
   render() {
@@ -46,7 +44,7 @@ export default class Modal extends React.PureComponent {
         data={data}
         isOpen={open}
         onKeyDown={this.handleKeyDown}
-        onClose={this.handleClose}
+        onClose={preventDefault(this.handleClose)}
       />
     )
   }

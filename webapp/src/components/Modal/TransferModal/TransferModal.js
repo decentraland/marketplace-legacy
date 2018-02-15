@@ -9,6 +9,8 @@ import SuccessCheck from 'components/SuccessCheck'
 import EtherscanLink from 'components/EtherscanLink'
 import { transferType } from 'components/types'
 
+import { preventDefault } from 'lib/utils'
+
 import './TransferModal.css'
 
 export default class TransferModal extends React.PureComponent {
@@ -40,12 +42,11 @@ export default class TransferModal extends React.PureComponent {
     }
   }
 
-  handleTransfer = e => {
+  handleTransfer = () => {
     const parcel = this.getParcel()
     const newAddress = this.state.address.trim()
 
     this.props.onTransfer(parcel, newAddress)
-    e.preventDefault()
   }
 
   handleClose = () => {
@@ -110,7 +111,11 @@ export default class TransferModal extends React.PureComponent {
               </EtherscanLink>
             </div>
           ) : (
-            <form action="" method="POST" onSubmit={this.handleTransfer}>
+            <form
+              action=""
+              method="POST"
+              onSubmit={preventDefault(this.handleTransfer)}
+            >
               <div className="text">
                 <p>
                   Remember that transfering LAND is an irreversible operation.<br />
