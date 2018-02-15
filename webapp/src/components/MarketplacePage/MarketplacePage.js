@@ -123,7 +123,7 @@ export default class MarketplacePage extends React.PureComponent {
       <div className="MarketplacePage">
         <Navbar />
         <Container>
-          <Header size="huge" textAlign="center" className="title">
+          <Header as="h1" size="huge" textAlign="center" className="title">
             Marketplace
           </Header>
         </Container>

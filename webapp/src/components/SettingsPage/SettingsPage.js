@@ -67,7 +67,7 @@ export default class SettingsPage extends React.PureComponent {
           <p>Whoops, error</p>
         ) : (
           <Container text>
-            <Header as="h2" size="huge" textAlign="center" className="title">
+            <Header as="h1" size="huge" textAlign="center" className="title">
               Settings
             </Header>
 
