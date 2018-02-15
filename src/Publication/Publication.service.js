@@ -7,20 +7,24 @@ export class PublicationService {
     this.Publication = Publication
   }
 
-  filter(filters) {
-    const { sort, pagination } = filters.sanitize() // sanitizes the data
+  async filter(filters) {
+    const { sort, pagination } = filters.sanitize()
 
-    const isSold = false
-    const txStatus = txUtils.TRANSACTION_STATUS.confirmed
+    const conditions = {
+      is_sold: false,
+      tx_status: txUtils.TRANSACTION_STATUS.confirmed
+    }
+    const order = { [sort.by]: sort.order }
+    const paginate = `LIMIT ${pagination.limit} OFFSET ${pagination.offset}`
 
-    return this.Publication.db.query(
-      `SELECT *
-        FROM ${this.Publication.tableName}
-        WHERE is_sold = $1 AND
-          tx_status = $2
-        ORDER BY ${sort.by} ${sort.order}
-        LIMIT $3 OFFSET $4`,
-      [isSold, txStatus, pagination.limit, pagination.offset]
-    )
+    const [publications, total] = await Promise.all([
+      this.Publication.find(conditions, order, paginate),
+      this.Publication.count(conditions)
+    ])
+
+    return {
+      publications,
+      total
+    }
   }
 }

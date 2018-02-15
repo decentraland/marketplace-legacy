@@ -187,9 +187,15 @@ app.get('/api/publications', server.handleRequest(getPublications))
 
 export async function getPublications(req) {
   const filters = new PublicationRequestFilters(req)
-  const publications = await new PublicationService().filter(filters)
+  const { publications, total } = await new PublicationService().filter(filters)
 
-  return utils.mapOmit(publications, ['is_sold', 'status', 'updated_at'])
+  return {
+    publications: utils.mapOmit(publications, [
+      'is_sold',
+      'updated_at'
+    ]),
+    total
+  }
 }
 
 /* Start the server only if run directly */

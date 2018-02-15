@@ -78,7 +78,7 @@ describe('PublicationService', function() {
           order: 'desc'
         },
         pagination: {
-          limit: 2,
+          limit: 1,
           offset: 1
         }
       }
@@ -89,19 +89,31 @@ describe('PublicationService', function() {
     it('should filter the publications using the supplied filters', async function() {
       const address = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
-      const publications = [
-        { tx_hash: '0xdeadbeef1', x: 0, y: 0, price: 3000, address, tx_status },
+      const soldPublication = {
+        tx_hash: '0xdeadbeef1',
+        x: 0,
+        y: 0,
+        price: 3,
+        is_sold: true,
+        address,
+        tx_status
+      }
+      const publicationRows = [
+        soldPublication,
         { tx_hash: '0xdeadbeef2', x: 0, y: 1, price: 2000, address, tx_status },
         { tx_hash: '0xdeadbeef3', x: 1, y: 1, price: 5000, address, tx_status },
         { tx_hash: '0xdeadbeef4', x: 1, y: 2, price: 4000, address, tx_status }
       ]
-      const inserts = publications.map(publication =>
+      const inserts = publicationRows.map(publication =>
         Publication.insert(publication)
       )
       await Promise.all(inserts)
 
-      const result = await new PublicationService().filter(filters)
-      expect(result).to.be.equalRows([
+      const { publications, total } = await new PublicationService().filter(
+        filters
+      )
+
+      expect(publications).to.be.equalRows([
         {
           tx_hash: '0xdeadbeef4',
           x: 1,
@@ -111,18 +123,9 @@ describe('PublicationService', function() {
           is_sold: false,
           address,
           tx_status
-        },
-        {
-          tx_hash: '0xdeadbeef1',
-          x: 0,
-          y: 0,
-          price: '3000',
-          expires_at: null,
-          is_sold: false,
-          address,
-          tx_status
         }
       ])
+      expect(total).to.be.equal(3)
     })
   })
 
