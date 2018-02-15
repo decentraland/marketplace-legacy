@@ -26,6 +26,15 @@
   top: 12px;
 }
 
+.Publication .preview {
+  height: 140px;
+  overflow: hidden;
+}
+
+.Publication .body {
+  position: relative;
+}
+
 .Publication .price {
   display: flex;
   margin: 0px;

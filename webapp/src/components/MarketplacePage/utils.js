@@ -1,6 +1,6 @@
 import QueryString from 'query-string'
 
-export const PAGE_SIZE = 20
+export const PAGE_SIZE = 12
 export const SORT_TYPES = {
   NEWEST: 'Newest',
   CHEAPEST: 'Cheapest',

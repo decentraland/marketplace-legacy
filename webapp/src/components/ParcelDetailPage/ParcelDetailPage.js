@@ -5,6 +5,7 @@ import { locations } from 'locations'
 import { Container, Header } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import Loading from 'components/Loading'
+import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 
 import { walletType, parcelType, districtType } from 'components/types'
@@ -57,18 +58,24 @@ export default class ParcelDetailPage extends React.PureComponent {
         {isParcelError ? null : this.isLoading() ? (
           <Loading />
         ) : (
-          <Container>
-            <Header as="h2" size="huge" textAlign="center" className="title">
-              Parcel Detail
-            </Header>
-
-            <ParcelDetail
-              wallet={wallet}
-              parcel={parcel}
-              districts={districts}
-              onTransfer={this.handleTransfer}
-            />
-          </Container>
+          <React.Fragment>
+            <Container>
+              <Header as="h2" size="huge" textAlign="center" className="title">
+                Parcel Detail
+              </Header>
+            </Container>
+            <div className="parcel-preview">
+              <ParcelPreview x={parcel.x} y={parcel.y} />
+            </div>
+            <Container>
+              <ParcelDetail
+                wallet={wallet}
+                parcel={parcel}
+                districts={districts}
+                onTransfer={this.handleTransfer}
+              />
+            </Container>
+          </React.Fragment>
         )}
       </div>
     )

@@ -1,10 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-commons'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import format from 'date-fns/format'
 import { Header, Card, Button, Icon } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
+import ParcelPreview from 'components/ParcelPreview'
 import { locations } from 'locations'
 import { publicationType } from 'components/types'
 
@@ -12,17 +14,27 @@ import './Publication.css'
 
 export default class Publication extends React.PureComponent {
   static propTypes = {
-    publication: publicationType
+    publication: publicationType,
+    debounce: PropTypes.number
   }
   render() {
-    const { publication } = this.props
+    const { publication, debounce } = this.props
     const price = (+publication.price).toLocaleString()
 
     const isExpired = publication.expires_at < Date.now()
 
     return (
       <Card className="Publication">
-        <Card.Content>
+        <Link to={locations.parcelDetail(publication.x, publication.y)}>
+          <div className="preview">
+            <ParcelPreview
+              x={publication.x}
+              y={publication.y}
+              debounce={debounce}
+            />
+          </div>
+        </Link>
+        <Card.Content className="body">
           <Link to={locations.parcelMapDetail(publication.x, publication.y)}>
             <Icon name="map" />
             {publication.x},{publication.y}
@@ -48,17 +60,19 @@ export default class Publication extends React.PureComponent {
               </span>{' '}
               &nbsp;MANA
             </Header>
-            <Button
-              floated="right"
-              size="tiny"
-              disabled={
-                isExpired ||
-                publication.is_sold ||
-                publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
-              }
-            >
-              {publication.is_sold ? 'Sold' : 'Buy'}
-            </Button>
+            <Link to={locations.parcelDetail(publication.x, publication.y)}>
+              <Button
+                floated="right"
+                size="tiny"
+                disabled={
+                  isExpired ||
+                  publication.is_sold ||
+                  publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
+                }
+              >
+                {publication.is_sold ? 'Sold' : 'View'}
+              </Button>
+            </Link>
           </span>
         </Card.Content>
       </Card>

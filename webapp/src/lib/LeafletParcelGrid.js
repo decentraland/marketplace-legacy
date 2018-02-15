@@ -168,8 +168,7 @@ export const LeafletParcelGrid = L.Layer.extend({
 
     // Clear canvas
     const ctx = this.canvas.getContext('2d')
-    ctx.fillStyle = '#FEFEFE'
-    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     for (let index = tiles.length - 1; index >= 0; index--) {
       this.renderTile(tiles[index])
