@@ -108,7 +108,7 @@ export default class MarketplacePage extends React.PureComponent {
   renderPublications() {
     const { publications } = this.props
     return (
-      <Card.Group>
+      <Card.Group stackable={true}>
         {publications.map(publication => (
           <Publication key={publication.tx_hash} publication={publication} />
         ))}
