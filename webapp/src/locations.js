@@ -14,7 +14,7 @@ export const locations = {
   parcel: '/:x/:y/detail',
   parcelDetail: (x, y) => `/${x}/${y}/detail`,
 
-  activities: '/activities',
+  activity: '/activity',
 
   colorCodes: '/colorCodes',
   privacy: '/privacy',

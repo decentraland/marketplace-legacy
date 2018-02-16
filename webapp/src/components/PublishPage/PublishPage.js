@@ -67,7 +67,7 @@ export default class PublishPage extends React.PureComponent {
   }
 
   handleConfirmation = () => {
-    this.props.onNavigate(locations.activities)
+    this.props.onNavigate(locations.activity)
   }
 
   isLoading() {

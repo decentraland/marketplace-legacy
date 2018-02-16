@@ -11,15 +11,21 @@ export const getPublications = createSelector(
   getData,
   state => getTransactionsByType(state, PUBLISH_SUCCESS),
   (publications = {}, publishTransactions) => {
+    const txPublications = {}
+
     for (const transaction of publishTransactions) {
       const publication = transaction.payload
-      publications[publication.tx_hash] = {
+
+      txPublications[publication.tx_hash] = {
         ...publications[publication.tx_hash],
         ...publication,
         tx_status: transaction.status
       }
     }
 
-    return publications
+    return {
+      ...publications,
+      ...txPublications
+    }
   }
 )
