@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { locations } from 'locations'
-import { Dimmer, Loader, Container, Header, Grid } from 'semantic-ui-react'
+import { Container, Header, Grid, Loader } from 'semantic-ui-react'
 import PublicationForm from './PublicationForm'
 import Navbar from 'components/Navbar'
 
@@ -83,9 +83,7 @@ export default class PublishPage extends React.PureComponent {
         <Navbar />
 
         {this.isLoading() ? (
-          <Dimmer active inverted>
-            <Loader size="huge" />
-          </Dimmer>
+          <Loader size="huge" />
         ) : null}
 
         <Container text textAlign="center">

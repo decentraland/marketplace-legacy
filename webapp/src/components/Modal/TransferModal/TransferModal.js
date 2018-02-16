@@ -2,9 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import { Button } from 'semantic-ui-react'
+import { Button, Loader } from 'semantic-ui-react'
 import BaseModal from '../BaseModal'
-import Loading from 'components/Loading'
 import SuccessCheck from 'components/SuccessCheck'
 import EtherscanLink from 'components/EtherscanLink'
 import { transferType } from 'components/types'
@@ -93,7 +92,7 @@ export default class TransferModal extends React.PureComponent {
 
         <div className="modal-body">
           {isLoading ? (
-            <Loading />
+            <Loader size="big" />
           ) : !error && transfer.hash ? (
             <div>
               <SuccessCheck />

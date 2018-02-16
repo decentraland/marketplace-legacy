@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Loader } from 'semantic-ui-react'
 import ParcelTable from './ParcelTable'
-import Loading from 'components/Loading'
 
 import './WalletParcels.css'
 
@@ -19,7 +19,7 @@ class WalletParcels extends React.PureComponent {
     const { wallet, onEdit, onTransfer, isLoading, hasError } = this.props
 
     if (isLoading) {
-      return <Loading />
+      return <Loader size="big" />
     }
 
     if (hasError) {

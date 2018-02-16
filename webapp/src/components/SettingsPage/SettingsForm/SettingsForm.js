@@ -26,9 +26,7 @@ export default class SettingsForm extends React.PureComponent {
 
   static defaultProps = {
     address: '',
-    email: '',
-    approveTransaction: {},
-    authorizeTransaction: {}
+    email: ''
   }
 
   render() {
@@ -101,10 +99,12 @@ export default class SettingsForm extends React.PureComponent {
             </p>
           )}
 
-          <TxStatus.Text
-            txHash={approveTransaction.hash}
-            txStatus={approveTransaction.status}
-          />
+          {approveTransaction && (
+            <TxStatus.Text
+              txHash={approveTransaction.hash}
+              txStatus={approveTransaction.status}
+            />
+          )}
         </Form.Field>
 
         <Form.Field>
@@ -143,10 +143,12 @@ export default class SettingsForm extends React.PureComponent {
             )}
           </p>
 
-          <TxStatus.Text
-            txHash={authorizeTransaction.hash}
-            txStatus={authorizeTransaction.status}
-          />
+          {authorizeTransaction && (
+            <TxStatus.Text
+              txHash={authorizeTransaction.hash}
+              txStatus={authorizeTransaction.status}
+            />
+          )}
         </Form.Field>
       </Form>
     )
