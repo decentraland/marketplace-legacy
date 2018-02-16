@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { eth } from 'decentraland-commons'
 import { Link } from 'react-router-dom'
 
 export default class EtherscanLink extends React.PureComponent {
@@ -18,6 +19,18 @@ export default class EtherscanLink extends React.PureComponent {
     text: null
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      network: null
+    }
+  }
+
+  async componentWillMount() {
+    const network = await eth.getNetwork()
+    this.setState({ network })
+  }
+
   render() {
     const { address, txHash, className, target, text, children } = this.props
 
@@ -28,11 +41,10 @@ export default class EtherscanLink extends React.PureComponent {
       return null
     }
 
-    // TODO: Use the wallet network to get correct etherscan subdomain.
-    // See: https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#construction_worker-network-check.
-    // We can use `eth.getNetwork`
-
-    const origin = 'https://etherscan.io'
+    let origin = 'https://etherscan.io'
+    if (this.state.network && this.state.network.name !== 'mainnet') {
+      origin = `https://${this.state.network.name}.etherscan.io`
+    }
     const pathname = address ? `/address/${address}` : `/tx/${txHash}`
     const href = `${origin}${pathname}`
 
