@@ -1,4 +1,4 @@
-import QueryString from 'query-string'
+import queryString from 'query-string'
 
 export const PAGE_SIZE = 12
 export const SORT_TYPES = {
@@ -9,12 +9,12 @@ export const SORT_TYPES = {
 }
 
 export function getPageFromRouter({ search }) {
-  const query = QueryString.parse(search)
+  const query = queryString.parse(search)
   return query.page || 1
 }
 
 export function getOptionsFromRouter({ search }) {
-  const query = QueryString.parse(search)
+  const query = queryString.parse(search)
   return {
     limit: PAGE_SIZE,
     offset: query.page ? (query.page - 1) * PAGE_SIZE : 0,
