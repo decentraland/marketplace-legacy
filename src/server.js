@@ -3,20 +3,26 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 
-import { server, env, eth, utils } from 'decentraland-commons'
-import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
+import { server, env, eth, contracts, utils } from 'decentraland-commons'
 
 import { db } from './database'
 import { asyncBatch } from './lib/asyncBatch'
-import { District } from './District'
 import { Parcel, ParcelService } from './Parcel'
 import { Contribution } from './Contribution'
+import { District } from './District'
+import {
+  Publication,
+  PublicationService,
+  PublicationRequestFilters
+} from './Publication'
 
 env.load()
 
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
 const OWNERS_BATCH_SIZE = 1000
 const DATA_BATCH_SIZE = 100
+
+const { LANDRegistry } = contracts
 
 const app = express()
 const httpServer = http.Server(app)
@@ -90,7 +96,7 @@ export async function getParcelData(req) {
 /**
  * Returns the parcels an address owns
  * @param  {string} address - Parcel owner
- * @return {object}
+ * @return {array}
  */
 app.get(
   '/api/addresses/:address/parcels',
@@ -116,7 +122,7 @@ export async function getAddressParcels(req) {
 /**
  * Get the contributions for an address
  * @param  {string} address - District contributor
- * @return {object}
+ * @return {array}
  */
 app.get(
   '/api/addresses/:address/contributions',
@@ -125,14 +131,31 @@ app.get(
 
 export async function getAddressContributions(req) {
   const address = server.extractFromReq(req, 'address')
-  const districts = await Contribution.findGroupedByAddress(address)
+  const contributions = await Contribution.findGroupedByAddress(address)
 
-  return utils.mapOmit(districts, [
+  return utils.mapOmit(contributions, [
     'message',
     'signature',
     'created_at',
     'updated_at'
   ])
+}
+
+/**
+ * Returns the publications an address owns
+ * @param  {string} address - Publication owner
+ * @return {array}
+ */
+app.get(
+  '/api/addresses/:address/publications',
+  server.handleRequest(getAddressPublications)
+)
+
+export async function getAddressPublications(req) {
+  const address = server.extractFromReq(req, 'address')
+  const publications = await Publication.findByAddress(address)
+
+  return utils.mapOmit(publications, ['updated_at'])
 }
 
 /**
@@ -150,6 +173,46 @@ export async function getDistricts() {
     'created_at',
     'updated_at'
   ])
+}
+
+/**
+ * Returns all publications. Supports pagination and filtering
+ * @param  {string} sort_by - Publication prop
+ * @param  {string} sort_order - asc or desc
+ * @param  {number} limit
+ * @param  {number} offset
+ * @return {array}
+ */
+app.get('/api/publications', server.handleRequest(getPublications))
+
+export async function getPublications(req) {
+  const filters = new PublicationRequestFilters(req)
+  const { publications, total } = await new PublicationService().filter(filters)
+
+  return {
+    publications: utils.mapOmit(publications, ['is_sold', 'updated_at']),
+    total
+  }
+}
+
+/**
+ * Get a publication by transaction hash
+ * @param  {string} txHash
+ * @return {array}
+ */
+app.get('/api/publications/:txHash', server.handleRequest(getPublication))
+
+export async function getPublication(req) {
+  const txHash = server.extractFromReq(req, 'txHash')
+  const publication = await Publication.findOne({ tx_hash: txHash })
+
+  if (!publication) {
+    throw new Error(
+      `Could not find a valid publication for the hash "${txHash}"`
+    )
+  }
+
+  return publication
 }
 
 /* Start the server only if run directly */

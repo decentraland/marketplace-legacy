@@ -9,6 +9,10 @@
   background-color: var(--background);
 }
 
+.TermsModal .modal-header .close {
+  display: none;
+}
+
 .TermsModal .banner {
   padding: 0px 0 25px;
   border-bottom: 1px solid var(--light-gray);

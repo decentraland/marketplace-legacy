@@ -1,10 +1,10 @@
-import { eth, Contract, Log } from 'decentraland-commons'
-import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
+import { eth, Contract, Log, contracts } from 'decentraland-commons'
 
 import { Parcel } from './Parcel'
 import { coordinates } from './coordinates'
 
 const log = new Log('ParcelService')
+const { LANDRegistry } = contracts
 
 export class ParcelService {
   static CURRENT_DATA_VERSION = 0
