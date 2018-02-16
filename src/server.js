@@ -204,7 +204,15 @@ app.get('/api/publications/:txHash', server.handleRequest(getPublication))
 
 export async function getPublication(req) {
   const txHash = server.extractFromReq(req, 'txHash')
-  return await Publication.findOne(txHash)
+  const publication = await Publication.findOne({ tx_hash: txHash })
+
+  if (!publication) {
+    throw new Error(
+      `Could not find a valid publication for the hash "${txHash}"`
+    )
+  }
+
+  return publication
 }
 
 /* Start the server only if run directly */
