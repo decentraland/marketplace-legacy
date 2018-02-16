@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { locations } from 'locations'
-import { Container, Header } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import Loading from 'components/Loading'
 import ParcelPreview from 'components/ParcelPreview'
