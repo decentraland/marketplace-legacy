@@ -25,16 +25,23 @@ export default class PublishPage extends React.PureComponent {
     onNavigate: PropTypes.func.isRequired
   }
 
+  constructor(props) {
+    super(props)
+
+    // Because this component is connected to the router and redirects on a
+    // lifecycle method instead of via a user fired event, we need to avoid navigating multiple times
+    this.navigatingAway = false
+  }
+
   componentWillMount() {
     this.props.onConnect()
   }
 
-  componentWillUpdate(nextProps) {
-    const isWalletLoading =
-      this.props.isWalletLoading || nextProps.isWalletLoading
+  componentWillReceiveProps(nextProps) {
+    const { isWalletLoading, isAddressLoading, wallet } = nextProps
 
-    if (!isWalletLoading && !nextProps.isAddressLoading) {
-      this.checkParcelOwner(nextProps.wallet)
+    if (!isWalletLoading && !isAddressLoading) {
+      this.checkParcelOwner(wallet)
     }
   }
 
@@ -42,7 +49,8 @@ export default class PublishPage extends React.PureComponent {
     const { x, y, onNavigate } = this.props
     const parcelId = buildCoordinate(x, y)
 
-    if (!wallet.parcelsById[parcelId]) {
+    if (!this.navigatingAway && !wallet.parcelsById[parcelId]) {
+      this.navigatingAway = true
       return onNavigate(locations.marketplace)
     }
   }

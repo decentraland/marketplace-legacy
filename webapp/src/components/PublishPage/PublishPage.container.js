@@ -2,7 +2,10 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { getParams } from 'modules/location/selectors'
-import { getWallet, isLoading as isWalletLoading } from 'modules/wallet/selectors'
+import {
+  getWallet,
+  isLoading as isWalletLoading
+} from 'modules/wallet/selectors'
 import { isLoading as isAddressLoading } from 'modules/address/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { connectWalletRequest } from 'modules/wallet/actions'
