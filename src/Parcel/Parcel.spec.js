@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import { eth, tx } from 'decentraland-commons'
+import { eth, txUtils } from 'decentraland-commons'
 
 import { db } from '../database'
 import { Parcel } from './Parcel'
@@ -69,17 +69,19 @@ describe('ParcelService', function() {
 
   const contract = {
     ownerOfLand(x, y) {
-      return this.isTestParcel(x, y) ? tx.DUMMY_TX_ID : null
+      return this.isTestParcel(x, y) ? txUtils.DUMMY_TX_ID : null
     },
     ownerOfLandMany(xCoords, yCoords) {
       const isTestParcel =
         this.isTestParcel(xCoords[0], yCoords[0]) &&
         this.isTestParcel(xCoords[1], yCoords[1])
 
-      return isTestParcel ? [tx.DUMMY_TX_ID, tx.DUMMY_TX_ID] : null
+      return isTestParcel ? [txUtils.DUMMY_TX_ID, txUtils.DUMMY_TX_ID] : null
     },
     getData(x, y) {
-      return this.isTestParcel(x, y) ? '0,awesome name,super description,' : ''
+      return this.isTestParcel(x, y)
+        ? '0,awesome name,super description,ipns:QmVP3WAkJRcc9AkS83r5fwaWAxpgtP7cpDupVWRos9qStY'
+        : ''
     },
     landOf(address) {
       const result =
@@ -155,7 +157,7 @@ describe('ParcelService', function() {
             version: 0,
             name: 'awesome name',
             description: 'super description',
-            ipns: ''
+            ipns: 'ipns:QmVP3WAkJRcc9AkS83r5fwaWAxpgtP7cpDupVWRos9qStY'
           }
         }
       ])
@@ -187,7 +189,7 @@ describe('ParcelService', function() {
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns(contract)
 
-      const result = await service.isOwner(tx.DUMMY_TX_ID, testParcel1)
+      const result = await service.isOwner(txUtils.DUMMY_TX_ID, testParcel1)
       expect(result).to.be.true
     })
 
@@ -195,7 +197,7 @@ describe('ParcelService', function() {
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns(contract)
 
-      const wrongParcel = await service.isOwner(tx.DUMMY_TX_ID, {
+      const wrongParcel = await service.isOwner(txUtils.DUMMY_TX_ID, {
         x: 10,
         y: -2
       })

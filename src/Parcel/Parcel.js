@@ -4,15 +4,7 @@ import { coordinates } from './coordinates'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
-  static columnNames = [
-    'id',
-    'x',
-    'y',
-    'name',
-    'description',
-    'price',
-    'district_id'
-  ]
+  static columnNames = ['id', 'x', 'y', 'price', 'district_id']
 
   static buildId(x, y) {
     if (x == null || y == null) {
