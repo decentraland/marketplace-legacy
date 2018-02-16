@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Container, Grid, Header } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import Loading from 'components/Loading'
 import SettingsForm from './SettingsForm'
@@ -65,24 +66,24 @@ export default class SettingsPage extends React.PureComponent {
         ) : hasError ? (
           <p>Whoops, error</p>
         ) : (
-          <div className="container">
-            <h2 className="title">Settings</h2>
+          <Container text>
+            <Header as="h1" size="huge" textAlign="center" className="title">
+              Settings
+            </Header>
 
-            <div className="row">
-              <div className="col-xs-12 col-sm-offset-3 col-sm-6">
-                <SettingsForm
-                  address={address}
-                  email={email || ''}
-                  manaApproved={approvedBalance}
-                  approveTransaction={this.getApproveTransaction()}
-                  onManaApprovedChange={this.handleManaApproval}
-                  isLandAuthorized={isLandAuthorized}
-                  authorizeTransaction={this.getAuthorizeTransaction()}
-                  onLandAuthorizedChange={this.handleLandAuthorization}
-                />
-              </div>
-            </div>
-          </div>
+            <Grid.Column>
+              <SettingsForm
+                address={address}
+                email={email || ''}
+                manaApproved={approvedBalance}
+                approveTransaction={this.getApproveTransaction()}
+                onManaApprovedChange={this.handleManaApproval}
+                isLandAuthorized={isLandAuthorized}
+                authorizeTransaction={this.getAuthorizeTransaction()}
+                onLandAuthorizedChange={this.handleLandAuthorization}
+              />
+            </Grid.Column>
+          </Container>
         )}
       </div>
     )

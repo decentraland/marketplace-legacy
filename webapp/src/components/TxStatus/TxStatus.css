@@ -1,0 +1,11 @@
+.TxStatus .confirmed {
+  color: var(--green);
+}
+
+.TxStatus .pending {
+  color: var(--yellow);
+}
+
+.TxStatus .failed {
+  color: var(--red);
+}

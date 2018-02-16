@@ -1,6 +1,6 @@
 .ParcelDetailPage {
   height: 100%;
-  color: #3E396B;
+  color: var(--text);
 }
 
 .ParcelDetailPage > .Loading {
@@ -10,11 +10,11 @@
 
 .ParcelDetailPage .title {
   margin-top: 20px;
-  margin-bottom: 0;
-  font-size: 42px;
-  font-size: 4.2rem;
-  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
-  text-align: center;
+  margin-bottom: 30px !important;
+}
+
+.ParcelDetailPage .parcel-preview {
+  height: 300px;
 }
 
 .ParcelDetailPage .ParcelDetail {
@@ -25,18 +25,18 @@
 .ParcelDetail .parcel-name {
   margin-top: 0;
   font-size: 26px;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
 }
 
 .ParcelDetail .parcel-name-secondary {
   margin-left: 6px;
-  color: #AAA;
+  color: #aaa;
 }
 
 .ParcelDetail .square {
   height: 15px;
   width: 15px;
-  border: 1px solid #AAA;
+  border: 1px solid #aaa;
   margin-left: 5px;
   top: 2px;
   position: relative;
@@ -48,12 +48,12 @@
 }
 
 .ParcelDetail .parcel-description-empty {
-  color: #AAA;
+  color: #aaa;
   font-style: italic;
 }
 
 @media (min-width: 768px) {
-  .ParcelDetail .Button {
+  .ParcelDetail .button {
     margin-top: 5px;
   }
 }

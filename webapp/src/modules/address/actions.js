@@ -58,3 +58,35 @@ export function fetchAddressContributionsFailure(address, error) {
     error
   }
 }
+
+// Fetch Address Publications
+
+export const FETCH_ADDRESS_PUBLICATIONS_REQUEST =
+  '[Request] Fetch Address Publications'
+export const FETCH_ADDRESS_PUBLICATIONS_SUCCESS =
+  '[Success] Fetch Address Publications'
+export const FETCH_ADDRESS_PUBLICATIONS_FAILURE =
+  '[Failure] Fetch Address Publications'
+
+export function fetchAddressPublicationsRequest(address) {
+  return {
+    type: FETCH_ADDRESS_PUBLICATIONS_REQUEST,
+    address
+  }
+}
+
+export function fetchAddressPublicationsSuccess(address, publications) {
+  return {
+    type: FETCH_ADDRESS_PUBLICATIONS_SUCCESS,
+    address,
+    publications
+  }
+}
+
+export function fetchAddressPublicationsFailure(address, error) {
+  return {
+    type: FETCH_ADDRESS_PUBLICATIONS_FAILURE,
+    address,
+    error
+  }
+}

@@ -57,3 +57,15 @@ export const toastType = shape({
   message: string,
   delay: number
 })
+
+export const publicationType = shape({
+  tx_hash: string,
+  tx_status: oneOf(Object.values(txUtils.TRANSACTION_STATUS)),
+  price: string,
+  address: string,
+  x: number,
+  y: number,
+  created_at: number,
+  expires_at: number,
+  is_sold: bool
+})

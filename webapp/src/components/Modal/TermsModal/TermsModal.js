@@ -2,9 +2,9 @@ import React from 'react'
 
 import { localStorage } from 'lib/localStorage'
 
+import { Button } from 'semantic-ui-react'
 import BaseModal from '../BaseModal'
 import Icon from 'components/Icon'
-import Button from 'components/Button'
 
 import './TermsModal.css'
 
@@ -860,7 +860,7 @@ export default class TermsModal extends React.PureComponent {
           </div>
 
           <div className="get-started">
-            <Button type="primary" onClick={this.onAgree}>
+            <Button primary={true} onClick={this.onAgree}>
               I AGREE
             </Button>
           </div>

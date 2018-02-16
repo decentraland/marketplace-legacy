@@ -20,16 +20,16 @@
 }
 
 .toast-info {
-  background-color: #1976D2;
+  background-color: var(--blue);
 }
 .toast-success {
-  background-color: #2E7D32;
+  background-color: var(--dark-green);
 }
 .toast-error {
-  background-color: #E53935;
+  background-color: var(--red);
 }
 .toast-warning {
-  background-color: #EF6C00;
+  background-color: var(--orange);
 }
 
 .toast .close {

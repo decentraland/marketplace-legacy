@@ -1,0 +1,30 @@
+.ui.button {
+  margin: 0 auto;
+  padding: 10px 22px;
+  font-size: 16px;
+  border-radius: 50px;
+  line-height: 1.42857143;
+  border: 1px solid lightgray;
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  text-transform: uppercase;
+  background-color: white;
+  cursor: pointer;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  background-image: none;
+  display: inline-block;
+}
+
+.ui.button.primary {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+}
+
+.ui.button.primary:hover,
+.ui.button.primary:visited {
+  background-color: var(--primary);
+  box-shadow: 0 8px 30px #30d7a980;
+  color: #fff;
+}

@@ -1,0 +1,12 @@
+.ui.menu .ui.dropdown .menu .active.item {
+  border: none;
+}
+
+.ui.selection.dropdown:focus,
+.ui.selection.active.dropdown,
+.ui.selection.active.dropdown:hover,
+.ui.selection.active.dropdown .menu,
+.ui.selection.active.dropdown .menu:hover,
+.ui.selection.active.dropdown:hover .menu {
+  border-color: var(--green);
+}

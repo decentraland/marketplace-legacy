@@ -1,17 +1,14 @@
 .SettingsPage {
   height: 100%;
-  color: #3E396B;
+  color: var(--text);
 }
 
 .SettingsPage > .Loading {
   font-size: 10px;
-  top: 35%;
+  top: 25%;
 }
 
 .SettingsPage .title {
   margin-top: 20px;
   margin-bottom: 0;
-  font-size: 42px;
-  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
-  text-align: center;
 }

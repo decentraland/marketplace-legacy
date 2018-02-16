@@ -1,0 +1,22 @@
+.MarketplacePage .title {
+  margin-bottom: 10px !important;
+}
+
+.MarketplacePage .publications {
+  position: relative;
+  margin-top: 50px;
+  min-height: 200px;
+  padding: 1px;
+}
+
+.MarketplacePage .pagination {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.MarketplacePage .empty {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  color: var(--gray);
+}

@@ -1,4 +1,5 @@
 import 'babel-polyfill'
+import 'themes'
 import React from 'react'
 import ReactDOM from 'react-dom'
 

@@ -10,16 +10,17 @@ import {
   FETCH_PARCEL_DATA_FAILURE,
   EDIT_PARCEL_REQUEST,
   EDIT_PARCEL_SUCCESS,
-  EDIT_PARCEL_FAILURE,
-  MERGE_PARCELS
+  EDIT_PARCEL_FAILURE
 } from './actions'
+import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { buildCoordinate } from 'lib/utils'
 import { toParcelObject } from './utils'
+import { loadingReducer } from 'modules/loading/reducer'
 
 const INITIAL_STATE = {
   data: {},
-  loading_count: 0,
+  loading: [],
   error: null
 }
 
@@ -30,7 +31,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     case FETCH_PARCELS_REQUEST: {
       return {
         ...state,
-        loading_count: state.loading_count + 1
+        loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_PARCEL_SUCCESS:
@@ -40,8 +41,8 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       const newParcel = action.parcel
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         error: null,
-        loading_count: state.loading_count - 1,
         data: {
           ...state.data,
           [parcelId]: {
@@ -54,8 +55,8 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     case FETCH_PARCELS_SUCCESS: {
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         error: null,
-        loading_count: state.loading_count - 1,
         data: {
           ...state.data,
           ...toParcelObject(action.parcels, state.data)
@@ -67,11 +68,11 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     case FETCH_PARCELS_FAILURE: {
       return {
         ...state,
-        loading_count: state.loading_count - 1,
+        loading: loadingReducer(state.loading, action),
         error: action.error
       }
     }
-    case MERGE_PARCELS: {
+    case FETCH_ADDRESS_PARCELS_SUCCESS: {
       return {
         ...state,
         data: {

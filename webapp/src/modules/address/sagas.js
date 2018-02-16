@@ -1,22 +1,26 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import {
   FETCH_ADDRESS_PARCELS_REQUEST,
-  FETCH_ADDRESS_PARCELS_SUCCESS,
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
+  FETCH_ADDRESS_PUBLICATIONS_REQUEST,
   fetchAddressParcelsSuccess,
   fetchAddressParcelsFailure,
   fetchAddressContributionsSuccess,
-  fetchAddressContributionsFailure
+  fetchAddressContributionsFailure,
+  fetchAddressPublicationsSuccess,
+  fetchAddressPublicationsFailure
 } from './actions'
-import { mergeParcels } from 'modules/parcels/actions'
 import { api } from 'lib/api'
 
 export function* addressSaga() {
   yield takeEvery(FETCH_ADDRESS_PARCELS_REQUEST, handleAddressParcelsRequest)
-  yield takeEvery(FETCH_ADDRESS_PARCELS_SUCCESS, handleAddressParcelsSuccess)
   yield takeEvery(
     FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
     handleAddressContributionsRequest
+  )
+  yield takeEvery(
+    FETCH_ADDRESS_PUBLICATIONS_REQUEST,
+    handleAddressPublicationsRequest
   )
 }
 
@@ -30,10 +34,6 @@ function* handleAddressParcelsRequest(action) {
   }
 }
 
-function* handleAddressParcelsSuccess(action) {
-  yield put(mergeParcels(action.parcels))
-}
-
 function* handleAddressContributionsRequest(action) {
   const { address } = action
   try {
@@ -43,5 +43,15 @@ function* handleAddressContributionsRequest(action) {
     yield put(fetchAddressContributionsSuccess(address, contributions))
   } catch (error) {
     yield put(fetchAddressContributionsFailure(address, error.message))
+  }
+}
+
+function* handleAddressPublicationsRequest(action) {
+  const { address } = action
+  try {
+    const publications = yield call(() => api.fetchAddressPublications(address))
+    yield put(fetchAddressPublicationsSuccess(address, publications))
+  } catch (error) {
+    yield put(fetchAddressPublicationsFailure(address, error.message))
   }
 }

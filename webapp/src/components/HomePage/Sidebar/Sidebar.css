@@ -36,8 +36,8 @@
 
 .Sidebar header {
   padding: 12px 18px 8px;
-  border-bottom: 1px solid #ededed;
-  background-color: #fcfcfc;
+  border-bottom: 1px solid var(--light-gray);
+  background-color: var(--background);
   position: relative;
 }
 
@@ -72,9 +72,9 @@
 
 .Sidebar .heading {
   padding: 16px;
-  border-top: 1px solid #ededed;
+  border-top: 1px solid var(--light-gray);
   font-size: 14px;
-  background-color: #fcfcfc;
+  background-color: var(--background);
   color: #000000;
   font-family: 'Source Sans Pro SemiBold', Helvetica, sans-serif;
 }

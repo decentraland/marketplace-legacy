@@ -4,15 +4,20 @@ import {
   FETCH_ADDRESS_PARCELS_FAILURE,
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
   FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS,
-  FETCH_ADDRESS_CONTRIBUTIONS_FAILURE
+  FETCH_ADDRESS_CONTRIBUTIONS_FAILURE,
+  FETCH_ADDRESS_PUBLICATIONS_REQUEST,
+  FETCH_ADDRESS_PUBLICATIONS_SUCCESS,
+  FETCH_ADDRESS_PUBLICATIONS_FAILURE
 } from './actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
+import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'lib/utils'
-import { toAddressParcelIds } from './utils'
+import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 
 const EMPTY_ADDRESS = {
   contributions: [],
-  parcel_ids: []
+  parcel_ids: [],
+  publication_ids: []
 }
 
 const INITIAL_STATE = {
@@ -23,24 +28,16 @@ const INITIAL_STATE = {
 
 export function addressReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
-      return {
-        ...state,
-        loading: [
-          ...state.loading,
-          { id: action.address, type: 'contributions' }
-        ]
-      }
     case FETCH_ADDRESS_PARCELS_REQUEST:
+    case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
+    case FETCH_ADDRESS_PUBLICATIONS_REQUEST:
       return {
         ...state,
-        loading: [...state.loading, { id: action.address, type: 'parcel_ids' }]
+        loading: loadingReducer(state.loading, action)
       }
     case FETCH_ADDRESS_CONTRIBUTIONS_SUCCESS:
       return {
-        loading: state.loading.filter(
-          item => item.id === action.address && item.type === 'contributions'
-        ),
+        loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
@@ -52,9 +49,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
       }
     case FETCH_ADDRESS_PARCELS_SUCCESS:
       return {
-        loading: state.loading.filter(
-          item => item.id === action.address && item.type === 'parcel_ids'
-        ),
+        loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
@@ -64,20 +59,24 @@ export function addressReducer(state = INITIAL_STATE, action) {
           }
         }
       }
-    case FETCH_ADDRESS_CONTRIBUTIONS_FAILURE:
+    case FETCH_ADDRESS_PUBLICATIONS_SUCCESS:
       return {
-        ...state,
-        loading: state.loading.filter(
-          item => item.id === action.address && item.type === 'contributions'
-        ),
-        error: action.error
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          [action.address]: {
+            ...state.data[action.address],
+            publication_ids: toAddressPublicationIds(action.publications)
+          }
+        }
       }
+    case FETCH_ADDRESS_CONTRIBUTIONS_FAILURE:
+    case FETCH_ADDRESS_PUBLICATIONS_FAILURE:
     case FETCH_ADDRESS_PARCELS_FAILURE:
       return {
         ...state,
-        loading: state.loading.filter(
-          item => item.id === action.address && item.type === 'parcel_ids'
-        ),
+        loading: loadingReducer(state.loading, action),
         error: action.error
       }
     case TRANSFER_PARCEL_SUCCESS: {

@@ -4,13 +4,14 @@ import {
   FETCH_TRANSACTION_SUCCESS,
   FETCH_TRANSACTION_FAILURE
 } from './actions'
+import { loadingReducer } from 'modules/loading/reducer'
 import { getTransactionFromAction, omitTransactionFromAction } from './utils'
 
 const { TRANSACTION_STATUS } = txUtils
 
 const INITIAL_STATE = {
   data: [],
-  loading: false,
+  loading: [],
   error: null
 }
 
@@ -21,6 +22,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
       const actionRef = omitTransactionFromAction(action.actionRef) // Slimmer state
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         data: [
           ...state.data,
           {
@@ -29,15 +31,14 @@ export function transactionReducer(state = INITIAL_STATE, action) {
             action: actionRef,
             status: TRANSACTION_STATUS.pending
           }
-        ],
-        loading: true
+        ]
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         error: null,
-        loading: false,
         data: state.data.map(
           transaction =>
             action.transaction.hash === transaction.hash
@@ -53,6 +54,8 @@ export function transactionReducer(state = INITIAL_STATE, action) {
     case FETCH_TRANSACTION_FAILURE: {
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
+        error: action.error,
         data: state.data.map(
           transaction =>
             action.transaction.hash === transaction.hash
@@ -63,9 +66,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
                   error: action.error
                 }
               : transaction
-        ),
-        loading: false,
-        error: action.error
+        )
       }
     }
     default:

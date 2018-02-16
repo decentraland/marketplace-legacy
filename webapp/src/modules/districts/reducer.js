@@ -3,26 +3,34 @@ import {
   FETCH_DISTRICTS_SUCCESS,
   FETCH_DISTRICTS_FAILURE
 } from './actions'
+import { loadingReducer } from 'modules/loading/reducer'
 import { toDistrictObject } from './utils'
 
 const INITIAL_STATE = {
   data: {},
-  loading: true,
+  loading: [],
   error: null
 }
 
 export function districtsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_DISTRICTS_REQUEST:
-      return { ...state, loading: true }
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action)
+      }
     case FETCH_DISTRICTS_SUCCESS:
       return {
-        loading: false,
+        loading: loadingReducer(state.loading, action),
         error: null,
         data: toDistrictObject(action.districts)
       }
     case FETCH_DISTRICTS_FAILURE:
-      return { ...state, loading: false, error: action.error }
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: action.error
+      }
     default:
       return state
   }

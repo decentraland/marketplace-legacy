@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: #3E396B;
+  color: var(--text);
 }
 
 .StaticPageStreched .content {
@@ -40,12 +40,4 @@
 
 .StaticPage .message p {
   font-size: 16px;
-}
-
-.StaticPage .btn-primary {
-  background-color: #30D7A9;
-  color: #FFFFFF;
-  margin-top: 16px;
-  padding: 8px 24px;
-  border: none;
 }

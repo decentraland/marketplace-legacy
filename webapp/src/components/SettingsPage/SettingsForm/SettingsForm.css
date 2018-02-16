@@ -1,12 +1,27 @@
 .SettingsForm {
   margin: 30px 0;
+  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
 }
 
 .SettingsForm .tx-pending .authorize-detail {
   font-style: italic;
 }
 
+.SettingsForm.form .field {
+  margin-bottom: 30px;
+}
+
+.SettingsForm.form .field > label {
+  font-size: 16px;
+}
+
+.SettingsForm.form input[type="checkbox"] {
+  margin-right: 10px;
+  float: left;
+}
+
 .SettingsForm .authorize-detail {
+  font-size: 18px;
   overflow: hidden;
   margin-bottom: 0;
 }

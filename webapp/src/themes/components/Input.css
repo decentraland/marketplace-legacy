@@ -1,0 +1,7 @@
+.ui.form input[type=text] {
+  color: var(--gray);
+}
+
+.ui.form .field > input[disabled], .ui.form .fields > input[disabled] {
+  background-color: #EAEAEA;
+}

@@ -5,7 +5,7 @@ import { getTransactionsByType } from 'modules/transaction/selectors'
 
 export const getState = state => state.wallet
 export const getData = state => getState(state).data
-export const isLoading = state => getState(state).loading
+export const isLoading = state => getState(state).loading.length > 0
 export const getError = state => getState(state).error
 export const getAddress = state => getData(state).address
 export const isConnected = state => !!getData(state).address

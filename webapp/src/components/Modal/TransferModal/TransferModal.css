@@ -1,18 +1,18 @@
 .TransferModal {
-  color: #3E396B;
+  color: var(--text);
   user-select: text;
 }
 
 .TransferModal .modal-header {
   padding: 15px 15px 0;
   border: none;
-  background-color: #FCFCFC;
+  background-color: var(--background);
 }
 
 .TransferModal .banner {
   padding: 0px 0 25px;
-  border-bottom: 1px solid #EDEDED;
-  background-color: #FCFCFC;
+  border-bottom: 1px solid var(--light-gray);
+  background-color: var(--background);
   text-align: center;
 }
 
@@ -74,7 +74,7 @@
   text-align: center;
 }
 
-.TransferModal .submit-transfer .Button {
+.TransferModal .submit-transfer .button {
   padding: 11px 44px;
   border-radius: 20px;
 }

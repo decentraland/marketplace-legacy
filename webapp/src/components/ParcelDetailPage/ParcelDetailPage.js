@@ -2,8 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { locations } from 'locations'
+import { Container } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import Loading from 'components/Loading'
+import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 
 import { walletType, parcelType, districtType } from 'components/types'
@@ -56,16 +58,19 @@ export default class ParcelDetailPage extends React.PureComponent {
         {isParcelError ? null : this.isLoading() ? (
           <Loading />
         ) : (
-          <div className="container">
-            <h2 className="title">Parcel Detail</h2>
-
-            <ParcelDetail
-              wallet={wallet}
-              parcel={parcel}
-              districts={districts}
-              onTransfer={this.handleTransfer}
-            />
-          </div>
+          <React.Fragment>
+            <div className="parcel-preview">
+              <ParcelPreview x={parcel.x} y={parcel.y} />
+            </div>
+            <Container>
+              <ParcelDetail
+                wallet={wallet}
+                parcel={parcel}
+                districts={districts}
+                onTransfer={this.handleTransfer}
+              />
+            </Container>
+          </React.Fragment>
         )}
       </div>
     )

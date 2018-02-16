@@ -1,0 +1,60 @@
+.Publication {
+  width: calc(100% - 14px) !important;
+}
+
+@media (min-width: 480px) {
+  .Publication {
+    width: calc(50% - 14px) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .Publication {
+    width: calc(33% - 14px) !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .Publication {
+    width: calc(25% - 14px) !important;
+  }
+}
+
+.Publication .tx-status {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.Publication .preview {
+  height: 140px;
+  overflow: hidden;
+}
+
+.Publication .body {
+  position: relative;
+}
+
+.Publication .price {
+  display: flex;
+  margin: 0px;
+  font-weight: 700;
+}
+
+.Publication .price .amount {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+
+.Publication .footer {
+  display: flex;
+  flex-direction: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Publication .footer:after {
+  display: none;
+}

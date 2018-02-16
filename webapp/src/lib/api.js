@@ -4,6 +4,12 @@ import { env } from 'decentraland-commons'
 
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
+const FILTER_DEFAULTS = {
+  limit: 20,
+  offset: 0,
+  sortBy: 'created_at',
+  sortOrder: 'asc'
+}
 
 export class API {
   fetchDistricts() {
@@ -20,6 +26,23 @@ export class API {
 
   fetchAddressParcels(address) {
     return this.request('get', `/addresses/${address}/parcels`, {})
+  }
+
+  fetchAddressPublications(address) {
+    return this.request('get', `/addresses/${address}/publications`, {})
+  }
+
+  fetchPublications(options = FILTER_DEFAULTS) {
+    const { limit, offset, sortBy, sortOrder } = {
+      ...FILTER_DEFAULTS,
+      ...options
+    }
+
+    return this.request(
+      'get',
+      `/publications?limit=${limit}&offset=${offset}&sort_by=${sortBy}&sort_order=${sortOrder}`,
+      {}
+    )
   }
 
   fetchAddressContributions(address) {

@@ -1,0 +1,27 @@
+:root {
+  --primary: #30d7a9;
+  --secondary: #3e396b;
+
+  --text: var(--secondary);
+  --background: #fcfcfc;
+
+  --light-gray: #ededed;
+  --gray: #4f4f4f;
+  --dark-gray: #222222;
+
+  --light-green: #d1eee6;
+  --green: #30d7a9;
+  --dark-green: #2e7d32;
+
+  --red: #e53935;
+
+  --yellow: #f2be24;
+
+  --orange: #ef6c00;
+
+  --light-blue: #4db1dd;
+  --blue: #1976d2;
+
+  --purple: #3e396b;
+  --dark-purple: #5d5890;
+}
