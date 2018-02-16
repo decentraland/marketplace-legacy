@@ -1,4 +1,5 @@
 import queryString from 'query-string'
+import { locations } from 'locations'
 
 export const PAGE_SIZE = 12
 export const SORT_TYPES = {
@@ -6,6 +7,14 @@ export const SORT_TYPES = {
   CHEAPEST: 'Cheapest',
   MOST_EXPENSIVE: 'Most expensive',
   CLOSEST_TO_EXPIRE: 'Closest to expire'
+}
+
+export function buildUrl({ page, sortBy, sortOrder }) {
+  return `${locations.marketplace}?${queryString.stringify({
+    page,
+    sort_by: sortBy,
+    sort_order: sortOrder
+  })}`
 }
 
 export function getPageFromRouter({ search }) {

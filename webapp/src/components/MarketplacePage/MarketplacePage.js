@@ -19,7 +19,8 @@ import { publicationType } from 'components/types'
 import {
   SORT_TYPES,
   getOptionsFromSortType,
-  getSortTypeFromOptions
+  getSortTypeFromOptions,
+  buildUrl
 } from './utils'
 
 import './MarketplacePage.css'
@@ -70,8 +71,8 @@ export default class MarketplacePage extends React.PureComponent {
       ...this.props,
       ...options
     }
-    const { page, sortBy, sortOrder, onNavigate } = navigationOptions
-    const url = `/marketplace?page=${page}&sort_by=${sortBy}&sort_order=${sortOrder}`
+    const { onNavigate } = this.props
+    const url = buildUrl(navigationOptions)
     onNavigate(url)
   }
 
