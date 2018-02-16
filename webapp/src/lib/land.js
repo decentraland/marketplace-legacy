@@ -1,8 +1,6 @@
 export const ONE_LAND_IN_MANA = 1000
 
 export const land = {
-  ONE_LAND_IN_MANA,
-
   convert(amount, unit = 'land') {
     if (amount <= 0) return 0
 

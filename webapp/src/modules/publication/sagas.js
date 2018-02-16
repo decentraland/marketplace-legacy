@@ -1,13 +1,18 @@
 import { call, takeEvery, put } from 'redux-saga/effects'
+import { eth } from 'decentraland-commons'
 import {
   FETCH_PUBLICATIONS_REQUEST,
+  PUBLISH_REQUEST,
   fetchPublicationsSuccess,
-  fetchPublicationsFailure
+  fetchPublicationsFailure,
+  publishSuccess,
+  publishFailure
 } from './actions'
 import { api } from 'lib/api'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
+  yield takeEvery(PUBLISH_REQUEST, handlePublishRequest)
 }
 
 function* handlePublicationsRequest(action) {
@@ -19,5 +24,35 @@ function* handlePublicationsRequest(action) {
     yield put(fetchPublicationsSuccess(publications, total))
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
+  }
+}
+
+function* handlePublishRequest(action) {
+  try {
+    // TODO: Use real contract method
+
+    // const { x, y, price, expirationDate } = action.publication
+    const marketplaceContract = eth.getContract('Marketplace')
+
+    // const txHash = yield call(() =>
+    //   marketplaceContract.publish(x, y, price, expirationDate)
+    // )
+
+    const mana = 0
+    const manaTokenContract = eth.getContract('MANAToken')
+
+    console.log(manaTokenContract.address, mana)
+    const txHash = yield call(() =>
+      manaTokenContract.approve(marketplaceContract.address, mana)
+    )
+
+    const publication = {
+      tx_hash: txHash,
+      ...action.publication
+    }
+
+    yield put(publishSuccess(txHash, publication))
+  } catch (error) {
+    yield put(publishFailure(error.message))
   }
 }

@@ -1,3 +1,5 @@
+import { buildTransactionAction } from 'modules/transaction/utils'
+
 // Fetch Publications
 
 export const FETCH_PUBLICATIONS_REQUEST = '[Request] Fetch Publications'
@@ -40,16 +42,17 @@ export const PUBLISH_REQUEST = '[Request] Publish LAND'
 export const PUBLISH_SUCCESS = '[Success] Publish LAND'
 export const PUBLISH_FAILURE = '[Failure] Publish LAND'
 
-export function publishRequest(data = {}) {
+export function publishRequest(publication = {}) {
   return {
     type: PUBLISH_REQUEST,
-    data
+    publication
   }
 }
 
-export function publishSuccess(publication) {
+export function publishSuccess(txHash, publication) {
   return {
     type: PUBLISH_SUCCESS,
+    ...buildTransactionAction(txHash, publication),
     publication
   }
 }

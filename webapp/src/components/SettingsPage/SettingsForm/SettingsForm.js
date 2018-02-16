@@ -4,7 +4,7 @@ import { txUtils } from 'decentraland-commons'
 
 import { Form } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
-import TransactionStatus from '../TransactionStatus'
+import TxStatus from 'components/TxStatus'
 
 import { getManaToApprove, getMarketplaceAddress } from 'modules/wallet/utils'
 
@@ -20,12 +20,15 @@ export default class SettingsForm extends React.PureComponent {
     approveTransaction: PropTypes.object,
     onManaApprovedChange: PropTypes.func,
     isLandAuthorized: PropTypes.bool,
+    authorizeTransaction: PropTypes.object,
     onLandAuthorizedChange: PropTypes.func
   }
 
   static defaultProps = {
     address: '',
-    email: ''
+    email: '',
+    approveTransaction: {},
+    authorizeTransaction: {}
   }
 
   render() {
@@ -40,10 +43,7 @@ export default class SettingsForm extends React.PureComponent {
     } = this.props
 
     const isApprovePending = txUtils.isPending(approveTransaction)
-    const isApproveFailure = txUtils.isFailure(approveTransaction)
-
     const isAuthorizePending = txUtils.isPending(authorizeTransaction)
-    const isAuthorizeFailure = txUtils.isFailure(authorizeTransaction)
 
     const isPending = isApprovePending || isAuthorizePending
 
@@ -101,10 +101,9 @@ export default class SettingsForm extends React.PureComponent {
             </p>
           )}
 
-          <TransactionStatus
-            transaction={approveTransaction}
-            isPending={isApprovePending}
-            isFailure={isApproveFailure}
+          <TxStatus.Text
+            txHash={approveTransaction.hash}
+            txStatus={approveTransaction.status}
           />
         </Form.Field>
 
@@ -117,8 +116,8 @@ export default class SettingsForm extends React.PureComponent {
               isAuthorizePending
                 ? 'You have a pending transaction'
                 : manaApproved > 0
-                  ? 'Unchecking unauthorize LAND usage for the Marketplace contract'
-                  : `Check to authorize LAND usage to the Marketplace contract`
+                  ? 'Unchecking unauthorizes LAND usage for the Marketplace contract'
+                  : 'Checking authorizes LAND usage to the Marketplace contract'
             }
             data-balloon-pos="left"
             onChange={onLandAuthorizedChange}
@@ -144,10 +143,9 @@ export default class SettingsForm extends React.PureComponent {
             )}
           </p>
 
-          <TransactionStatus
-            transaction={authorizeTransaction}
-            isPending={isAuthorizePending}
-            isFailure={isAuthorizeFailure}
+          <TxStatus.Text
+            txHash={authorizeTransaction.hash}
+            txStatus={authorizeTransaction.status}
           />
         </Form.Field>
       </Form>
