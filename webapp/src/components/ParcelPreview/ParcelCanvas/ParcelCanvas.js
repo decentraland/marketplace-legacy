@@ -105,7 +105,7 @@ export default class ParcelPreview extends React.PureComponent {
         const cx = width / 2
         const cy = height / 2
         const offsetX = (x - px) * size
-        const offsetY = (y - py) * size
+        const offsetY = (py - y) * size
         const rx = cx - offsetX
         const ry = cy - offsetY
 
