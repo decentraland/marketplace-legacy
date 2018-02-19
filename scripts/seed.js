@@ -25,7 +25,7 @@ const seed = {
               type: 'input',
               name: columnName,
               message: `${columnName} (empty for random value)`,
-              default: null
+              default: undefined
             }
           })
 
@@ -38,8 +38,12 @@ const seed = {
             const row = {}
 
             for (const columnName of Model.columnNames) {
-              row[columnName] =
+              const value =
                 answers[columnName] || getRandomColumnValue(columnName)
+
+              if (value !== undefined) {
+                row[columnName] = value
+              }
             }
 
             log.info(
