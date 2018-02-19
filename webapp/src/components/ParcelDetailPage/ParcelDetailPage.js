@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { locations } from 'locations'
-import { Container } from 'semantic-ui-react'
+import { Container, Loader } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
-import Loading from 'components/Loading'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 
@@ -56,7 +55,7 @@ export default class ParcelDetailPage extends React.PureComponent {
         <Navbar />
 
         {isParcelError ? null : this.isLoading() ? (
-          <Loading />
+          <Loader size="massive" />
         ) : (
           <React.Fragment>
             <div className="parcel-preview">

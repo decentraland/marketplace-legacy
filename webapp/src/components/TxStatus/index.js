@@ -1,2 +1,7 @@
-import TxStatus from './TxStatus'
-export default TxStatus
+import TxStatusIcon from './TxStatusIcon'
+import TxStatusText from './TxStatusText'
+
+export default {
+  Icon: TxStatusIcon,
+  Text: TxStatusText
+}

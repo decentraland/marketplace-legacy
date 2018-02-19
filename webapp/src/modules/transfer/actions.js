@@ -1,8 +1,8 @@
 // Transfer Parcel
 
-export const TRANSFER_PARCEL_REQUEST = '[Request] Parcel transfer requested'
-export const TRANSFER_PARCEL_SUCCESS = '[Success] Parcel transfered'
-export const TRANSFER_PARCEL_FAILURE = '[Failure] Failure to transfer parcel'
+export const TRANSFER_PARCEL_REQUEST = '[Request] Parcel transfer'
+export const TRANSFER_PARCEL_SUCCESS = '[Success] Parcel transfer'
+export const TRANSFER_PARCEL_FAILURE = '[Failure] Parcel transfer'
 
 export function transferParcelRequest(parcel, address) {
   return {

@@ -26,6 +26,7 @@
 .TransferModal .modal-body {
   padding: 30px 50px;
   text-align: center;
+  min-height: 270px;
 }
 
 .TransferModal .modal-body p {

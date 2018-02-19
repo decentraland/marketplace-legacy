@@ -8,14 +8,16 @@ export const locations = {
 
   marketplace: '/marketplace',
 
-  colorCodes: '/colorCodes',
-  privacy: '/privacy',
+  publish: '/:x/:y/publish',
+  publishLand: (x, y) => `/${x}/${y}/publish`,
 
   parcel: '/:x/:y/detail',
   parcelDetail: (x, y) => `/${x}/${y}/detail`,
 
-  parcelTransfer: '/:x/:y/transfer',
-  parcelTransferDetail: (x, y) => `/${x}/${y}/transfer`,
+  activity: '/activity',
+
+  colorCodes: '/colorCodes',
+  privacy: '/privacy',
 
   error: '/error',
   walletError: '/walletError',

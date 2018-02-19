@@ -26,6 +26,7 @@
   margin-bottom: 0;
 }
 
-.SettingsForm .TransactionStatus {
+.SettingsForm .TxStatusText {
+  font-size: 80%;
   font-style: italic;
 }

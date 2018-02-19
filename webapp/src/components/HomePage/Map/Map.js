@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { locations } from 'locations'
+import { Loader } from 'semantic-ui-react'
 import { walletType, parcelType, districtType } from 'components/types'
 import * as parcelUtils from 'lib/parcelUtils'
 
 import ParcelsMap from './ParcelsMap'
-import Loading from 'components/Loading'
 
 import './Map.css'
 
@@ -136,7 +136,7 @@ export default class MapComponent extends React.Component {
         />
       </div>
     ) : (
-      <Loading />
+      <Loader size="massive" />
     )
   }
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { toastType } from 'components/types'
+import { preventDefault } from 'lib/utils'
 
 import './Toast.css'
 
@@ -38,11 +39,6 @@ class ToastMessage extends React.PureComponent {
 
   handleClose = e => {
     const { id, onClose } = this.props
-
-    if (e && e.preventDefault) {
-      e.preventDefault()
-    }
-
     onClose(id)
   }
 
@@ -51,7 +47,7 @@ class ToastMessage extends React.PureComponent {
 
     return (
       <div className={`toast toast-${kind}`}>
-        <div className="close" onClick={this.handleClose}>
+        <div className="close" onClick={preventDefault(this.handleClose)}>
           <span aria-hidden="true">&times;</span>
         </div>
 
