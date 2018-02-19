@@ -25,7 +25,7 @@ export const getAddresses = createSelector(
         })
       )
       const contributionIds = allContributions.map(
-        contribution => contribution.id
+        (contribution, index) => index
       )
       const [contributions, contributionsById] = pickAndMap(
         allContributions,
