@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Container, Grid, Header } from 'semantic-ui-react'
+import { Container, Grid, Header, Loader } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
-import Loading from 'components/Loading'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
@@ -62,7 +61,7 @@ export default class SettingsPage extends React.PureComponent {
         <Navbar />
 
         {isLoading || !address ? (
-          <Loading />
+          <Loader size="massive" />
         ) : hasError ? (
           <p>Whoops, error</p>
         ) : (

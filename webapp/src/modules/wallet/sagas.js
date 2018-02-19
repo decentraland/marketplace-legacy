@@ -5,7 +5,6 @@ import { replace } from 'react-router-redux'
 import { locations } from 'locations'
 import {
   CONNECT_WALLET_REQUEST,
-  CONNECT_WALLET_SUCCESS,
   APPROVE_MANA_REQUEST,
   AUTHORIZE_LAND_REQUEST,
   connectWalletSuccess,
@@ -26,7 +25,6 @@ import { connectEthereumWallet, getMarketplaceAddress } from './utils'
 
 export function* walletSaga() {
   yield takeLatest(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
-  yield takeLatest(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
   yield takeLatest(APPROVE_MANA_REQUEST, handleApproveManaRequest)
   yield takeLatest(AUTHORIZE_LAND_REQUEST, handleAuthorizeLandRequest)
 }
@@ -51,6 +49,7 @@ function* handleConnectWalletRequest(action = {}) {
 
     const wallet = { address, balance, approvedBalance, isLandAuthorized }
 
+    yield handleConnectWalletSuccess(address)
     yield put(connectWalletSuccess(wallet))
   } catch (error) {
     yield put(replace(locations.walletError))
@@ -58,9 +57,7 @@ function* handleConnectWalletRequest(action = {}) {
   }
 }
 
-function* handleConnectWalletSuccess(action) {
-  const { address } = action.wallet
-
+function* handleConnectWalletSuccess(address) {
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressPublicationsRequest(address))
   yield put(fetchAddressContributionsRequest(address))

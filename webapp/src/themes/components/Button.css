@@ -16,7 +16,8 @@
   display: inline-block;
 }
 
-.ui.button.primary {
+.ui.button.primary,
+.ui.button.primary:active {
   background-color: var(--primary);
   color: #fff;
   border: none;

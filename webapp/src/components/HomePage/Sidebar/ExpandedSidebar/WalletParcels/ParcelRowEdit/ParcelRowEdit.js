@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import Icon from 'components/Icon'
 import { parcelType } from 'components/types'
+import { preventDefault } from 'lib/utils'
 
 import CoordinateLink from '../CoordinateLink'
 
@@ -32,7 +33,7 @@ class ParcelRowEdit extends React.PureComponent {
     })
   }
 
-  handleSubmit = e => {
+  handleSubmit = () => {
     const { parcel, onSubmit } = this.props
     const { name, description } = this.state
 
@@ -44,8 +45,6 @@ class ParcelRowEdit extends React.PureComponent {
         description
       }
     })
-
-    e.preventDefault()
   }
 
   handleCancel = () => {
@@ -63,7 +62,7 @@ class ParcelRowEdit extends React.PureComponent {
           <CoordinateLink parcel={parcel} />
         </div>
         <div className="col col-actions">
-          <div className="action" onClick={this.handleSubmit}>
+          <div className="action" onClick={preventDefault(this.handleSubmit)}>
             <Icon name="tick" className="action-icon" />
             Done
           </div>

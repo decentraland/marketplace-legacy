@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-commons'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import format from 'date-fns/format'
+
+import { locations } from 'locations'
 import { Header, Card, Button, Icon } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import ParcelPreview from 'components/ParcelPreview'
-import { locations } from 'locations'
 import { publicationType } from 'components/types'
 
 import './Publication.css'
@@ -46,7 +47,7 @@ export default class Publication extends React.PureComponent {
               ? `Expired ${distanceInWordsToNow(publication.expires_at)} ago`
               : `Expires in ${distanceInWordsToNow(publication.expires_at)}`}
           </Card.Meta>
-          <TxStatus
+          <TxStatus.Icon
             txHash={publication.tx_hash}
             txStatus={publication.tx_status}
             className="tx-status"
