@@ -29,9 +29,13 @@ export default class EtherscanLink extends React.PureComponent {
 
   async componentWillMount() {
     this.mounted = true
-    const network = await eth.getNetwork()
-    if (this.mounted) {
-      this.setState({ network })
+    try {
+      const network = await eth.getNetwork()
+      if (this.mounted) {
+        this.setState({ network })
+      }
+    } catch (error) {
+      // do nothing
     }
   }
 
