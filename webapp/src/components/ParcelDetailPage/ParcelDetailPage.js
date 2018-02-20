@@ -14,9 +14,9 @@ import './ParcelDetailPage.css'
 export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
-    districts: PropTypes.objectOf(districtType).isRequired,
-    isAddressLoading: PropTypes.bool.isRequired,
-    isParcelError: PropTypes.bool.isRequired,
+    districts: PropTypes.objectOf(districtType),
+    isLoading: PropTypes.bool.isRequired,
+    hasError: PropTypes.bool.isRequired,
     parcel: parcelType,
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
@@ -33,28 +33,23 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isParcelError) {
+    if (nextProps.hasError) {
       return this.props.onNavigate(locations.root)
     }
   }
 
   isLoading() {
-    return !this.props.parcel || this.props.isAddressLoading
-  }
-
-  handleTransfer = e => {
-    const { parcel } = this.props
-    this.props.onTransfer(parcel)
+    return !this.props.parcel || this.props.isLoading
   }
 
   render() {
-    const { wallet, parcel, districts, isParcelError } = this.props
+    const { parcel, hasError, isOwner } = this.props
 
     return (
       <div className="ParcelDetailPage">
         <Navbar />
 
-        {isParcelError ? null : this.isLoading() ? (
+        {hasError ? null : this.isLoading() ? (
           <Loader size="massive" />
         ) : (
           <React.Fragment>
@@ -62,12 +57,7 @@ export default class ParcelDetailPage extends React.PureComponent {
               <ParcelPreview x={parcel.x} y={parcel.y} />
             </div>
             <Container>
-              <ParcelDetail
-                wallet={wallet}
-                parcel={parcel}
-                districts={districts}
-                onTransfer={this.handleTransfer}
-              />
+              <ParcelDetail parcel={parcel} isOwner={isOwner} />
             </Container>
           </React.Fragment>
         )}

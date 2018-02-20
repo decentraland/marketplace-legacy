@@ -1,3 +1,7 @@
 .PublicationForm .ui.button {
   padding: 12px 42px;
 }
+
+.PublicationForm button + button {
+  margin-left: 20px !important;
+}

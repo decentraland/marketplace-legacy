@@ -1,2 +1,5 @@
-.PublishPage {
+.PublishPage .subtitle {
+  color: var(--dark-purple);
+  font-weight: 100;
+  font-family: 'Source Sans Pro Light';
 }

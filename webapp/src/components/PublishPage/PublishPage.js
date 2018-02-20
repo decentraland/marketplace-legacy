@@ -1,14 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { locations } from 'locations'
 import { Container, Header, Grid, Loader } from 'semantic-ui-react'
 import PublicationForm from './PublicationForm'
 import Navbar from 'components/Navbar'
+import ParcelName from 'components/ParcelName'
 
-import { walletType, publicationType } from 'components/types'
-import { buildCoordinate } from 'lib/utils'
+import { walletType, publicationType, parcelType } from 'components/types'
 
 import './PublishPage.css'
 
@@ -16,10 +15,8 @@ export default class PublishPage extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
     wallet: walletType,
-    isWalletLoading: PropTypes.bool,
-    isAddressLoading: PropTypes.bool,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    parcel: parcelType,
+    isLoading: PropTypes.bool,
     onConnect: PropTypes.func.isRequired,
     onPublish: PropTypes.func.isRequired,
     onNavigate: PropTypes.func.isRequired
@@ -38,29 +35,28 @@ export default class PublishPage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isWalletLoading, isAddressLoading, wallet } = nextProps
+    const { isLoading, wallet } = nextProps
 
-    if (!isWalletLoading && !isAddressLoading) {
+    if (!isLoading) {
       this.checkParcelOwner(wallet)
     }
   }
 
   checkParcelOwner(wallet) {
-    const { x, y, onNavigate } = this.props
-    const parcelId = buildCoordinate(x, y)
+    const { parcel, onNavigate } = this.props
 
-    if (!this.navigatingAway && !wallet.parcelsById[parcelId]) {
+    if (parcel && !this.navigatingAway && !wallet.parcelsById[parcel.id]) {
       this.navigatingAway = true
       return onNavigate(locations.marketplace)
     }
   }
 
   handlePublish = ({ price, expiresAt }) => {
-    const { x, y, onPublish } = this.props
+    const { parcel, onPublish } = this.props
 
     onPublish({
-      x,
-      y,
+      x: parcel.x,
+      y: parcel.y,
       price,
       expiresAt
     })
@@ -70,47 +66,48 @@ export default class PublishPage extends React.PureComponent {
     this.props.onNavigate(locations.activity)
   }
 
-  isLoading() {
-    const { isWalletLoading, isAddressLoading } = this.props
-    return isWalletLoading || isAddressLoading
+  handleCancel = () => {
+    const { parcel } = this.props
+    this.props.onNavigate(locations.parcelDetail(parcel.x, parcel.y))
   }
 
   render() {
-    const { publication, x, y } = this.props
+    const { publication, parcel, isLoading } = this.props
 
     return (
       <div className="PublishPage">
         <Navbar />
 
-        {this.isLoading() ? (
+        {isLoading ? (
           <Loader size="huge" />
-        ) : null}
+        ) : (
+          <React.Fragment>
+            <Container text textAlign="center">
+              <Header as="h2" size="huge" className="title">
+                List LAND for sale
+              </Header>
+              <p className="subtitle">
+                Set a price and a expiration date for{' '}
+                <ParcelName size="small" parcel={parcel} />
+              </p>
+            </Container>
 
-        <Container text textAlign="center">
-          <Header as="h2" size="huge" className="title">
-            Publish LAND
-          </Header>
-          <p>
-            Set a price and a expiration date for the LAND at&nbsp;
-            <Link to={locations.parcelDetail(x, y)}>
-              {x}, {y}
-            </Link>
-          </p>
-        </Container>
+            <br />
 
-        <br />
-
-        <Container text>
-          <Grid>
-            <Grid.Column>
-              <PublicationForm
-                publication={publication}
-                onPublish={this.handlePublish}
-                onConfirm={this.handleConfirmation}
-              />
-            </Grid.Column>
-          </Grid>
-        </Container>
+            <Container text>
+              <Grid>
+                <Grid.Column>
+                  <PublicationForm
+                    publication={publication}
+                    onPublish={this.handlePublish}
+                    onConfirm={this.handleConfirmation}
+                    onCancel={this.handleCancel}
+                  />
+                </Grid.Column>
+              </Grid>
+            </Container>
+          </React.Fragment>
+        )}
       </div>
     )
   }

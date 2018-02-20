@@ -1,0 +1,20 @@
+.ParcelOwner.is-address {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  color: #aaa;
+}
+
+.ParcelOwner.is-district {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #aaa;
+  max-width: 100%;
+}
+
+.ParcelOwner.is-district .district-name {
+  color: var(--dark-purple);
+}

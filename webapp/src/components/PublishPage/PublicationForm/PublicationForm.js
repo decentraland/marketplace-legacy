@@ -21,7 +21,8 @@ export default class PublicationForm extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
     onPublish: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired
+    onConfirm: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -88,7 +89,7 @@ export default class PublicationForm extends React.PureComponent {
   }
 
   render() {
-    const { publication } = this.props
+    const { publication, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
 
     const isConfirmed =
@@ -149,6 +150,9 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         <br />
         <div className="text-center">
+          <Button disabled={isPending || isConfirmed} onClick={onCancel}>
+            Cancel
+          </Button>
           <Button
             type="submit"
             primary={true}

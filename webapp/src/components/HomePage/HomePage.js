@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 
 import { localStorage } from 'lib/localStorage'
 
-import AccountControls from './AccountControls'
+import AddressLink from 'components/AddressLink'
 import Sidebar from './Sidebar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
+import { walletType } from 'components/types'
+import { locations } from 'locations'
 
 import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
   static propTypes = {
+    wallet: walletType,
     isLoading: PropTypes.bool,
     onConnect: PropTypes.func
   }
@@ -27,15 +30,26 @@ export default class HomePage extends React.PureComponent {
   }
 
   isReady() {
-    return !this.props.isLoading
+    const { isLoading, wallet } = this.props
+    return !isLoading && wallet.address
   }
 
   render() {
     const isReady = this.isReady()
 
+    const { wallet } = this.props
+
     return (
       <div className="HomePage">
-        {isReady && [<AccountControls key="1" />, <Sidebar key="2" />]}
+        {isReady && [
+          <AddressLink
+            key="1"
+            address={wallet.address}
+            className="settings"
+            link={locations.settings}
+          />,
+          <Sidebar key="2" />
+        ]}
         <MapComponent isReady={isReady} />
         {isReady && <Minimap />}
       </div>

@@ -27,7 +27,7 @@ export default function Routes() {
       <Route exact path={locations.parcelMap} component={HomePage} />
       <Route exact path={locations.parcel} component={ParcelDetailPage} />
       <Route exact path={locations.marketplace} component={MarketplacePage} />
-      <Route exact path={locations.publish} component={PublishPage} />
+      <Route exact path={locations.sell} component={PublishPage} />
       <Route exact path={locations.settings} component={SettingsPage} />
       <Route exact path={locations.colorCodes} component={ColorKeyPage} />
       <Route exact path={locations.privacy} component={PrivacyPage} />
