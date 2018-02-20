@@ -16,7 +16,7 @@ class ParcelRowData extends React.PureComponent {
 
   getPrice() {
     const { parcel } = this.props
-    return parcel.price ? `${parcel.price} MANA` : '--'
+    return parcel.auctionPrice ? `${parcel.auctionPrice} MANA` : '--'
   }
 
   render() {

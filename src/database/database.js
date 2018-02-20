@@ -19,7 +19,9 @@ export const database = {
       `"id" TEXT NOT NULL,
       "x" int NOT NULL,
       "y" int NOT NULL,
-      "price" TEXT,
+      "auctionPrice" TEXT,
+      "owner" varchar(42),
+      "data" json,
       "district_id" TEXT`,
       { sequenceName: null }
     )

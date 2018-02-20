@@ -4,7 +4,15 @@ import { coordinates } from './coordinates'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
-  static columnNames = ['id', 'x', 'y', 'price', 'district_id']
+  static columnNames = [
+    'id',
+    'x',
+    'y',
+    'auctionPrice',
+    'owner',
+    'data',
+    'district_id'
+  ]
 
   static buildId(x, y) {
     if (x == null || y == null) {
@@ -26,6 +34,15 @@ export class Parcel extends Model {
     )
   }
 
+  static async findInCoordinate(x, y) {
+    const id = this.buildId(x, y)
+    return await this.findOne({ id })
+  }
+
+  static async findByOwner(owner) {
+    return await this.find({ owner })
+  }
+
   static async inRange(min, max) {
     const [minx, miny] = coordinates.toArray(min)
     const [maxx, maxy] = coordinates.toArray(max)
@@ -40,13 +57,13 @@ export class Parcel extends Model {
 
   static async getPrice(x, y) {
     const result = await this.db.query(
-      `SELECT price
+      `SELECT auctionPrice
         FROM ${this.tableName}
         WHERE x = $1 AND y = $2`,
       [x, y]
     )
 
-    return result.length ? result[0].price : 0
+    return result.length ? result[0].auctionPrice : 0
   }
 
   static async insert(parcel) {
