@@ -38,8 +38,8 @@ export default class ParcelDetail extends React.PureComponent {
         <Grid.Row>
           <Grid.Column width={10}>
             <h3>Description</h3>
-            {parcel.description ? (
-              <p className="parcel-description">{parcel.description}</p>
+            {parcel.data.description ? (
+              <p className="parcel-description">{parcel.data.description}</p>
             ) : (
               <p className="parcel-description parcel-description-empty">
                 This parcel has no description
