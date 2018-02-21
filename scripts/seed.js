@@ -75,7 +75,7 @@ function getRandomColumnValue(columnName) {
       break
     case 'tx_hash':
     case 'hash':
-      value = eth.utils.sha3(Math.floor(Math.random()))
+      value = generateEthereumAddress()
       break
     case 'tx_status': {
       value = faker.random.objectElement(txUtils.TRANSACTION_STATUS)
