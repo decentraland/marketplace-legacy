@@ -31,7 +31,7 @@ export default class HomePage extends React.PureComponent {
 
   isReady() {
     const { isLoading, wallet } = this.props
-    return !isLoading && wallet.address
+    return !isLoading && !!wallet.address
   }
 
   render() {
