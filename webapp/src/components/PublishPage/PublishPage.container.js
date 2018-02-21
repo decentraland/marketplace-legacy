@@ -1,55 +1,34 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-
+import { push } from 'react-router-redux'
 import { getParams } from 'modules/location/selectors'
-import {
-  getWallet,
-  isLoading as isWalletLoading
-} from 'modules/wallet/selectors'
-import {
-  isLoading as isAddressLoading,
-  getData as getAddresses
-} from 'modules/address/selectors'
 import { getPublications } from 'modules/publication/selectors'
-import { connectWalletRequest } from 'modules/wallet/actions'
 import { publishRequest } from 'modules/publication/actions'
-import { navigateTo } from 'modules/location/actions'
-import { getParcels } from 'modules/parcels/selectors'
-import { buildCoordinate } from 'lib/utils'
-
 import { findPublicationByCoordinates } from 'modules/publication/utils'
+import { locations } from 'locations'
 
 import PublishPage from './PublishPage'
 
 const mapState = (state, ownProps) => {
   const params = getParams(ownProps)
-  const publications = getPublications(state)
-
   const x = parseInt(params.x, 10)
   const y = parseInt(params.y, 10)
-
-  const parcels = getParcels(state)
-  const parcel = parcels[buildCoordinate(x, y)]
-
-  const wallet = getWallet(state)
-  const addresses = getAddresses(state)
-  let isLoading = !parcel || isWalletLoading(state) || isAddressLoading(state)
-  if (wallet && wallet.address && addresses[wallet.address]) {
-    isLoading = false
-  }
-
+  const publications = getPublications(state)
   return {
     publication: findPublicationByCoordinates(publications, x, y),
-    wallet,
-    isLoading,
-    parcel
+    x,
+    y
   }
 }
 
-const mapDispatch = dispatch => ({
-  onConnect: () => dispatch(connectWalletRequest()),
-  onPublish: publication => dispatch(publishRequest(publication)),
-  onNavigate: location => dispatch(navigateTo(location))
-})
+const mapDispatch = (dispatch, ownProps) => {
+  const params = getParams(ownProps)
+  const x = parseInt(params.x, 10)
+  const y = parseInt(params.y, 10)
+  return {
+    onPublish: publication => dispatch(publishRequest(publication)),
+    onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
+  }
+}
 
 export default withRouter(connect(mapState, mapDispatch)(PublishPage))
