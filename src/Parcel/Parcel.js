@@ -24,6 +24,16 @@ export class Parcel extends Model {
     return `${x},${y}`
   }
 
+  static splitId(id = '') {
+    const coordinates = id.split(',')
+
+    if (coordinates.length !== 2) {
+      throw new Error(`You need to supply a valid id to split. id = ${id}`)
+    }
+
+    return coordinates
+  }
+
   static async findInIds(ids) {
     const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
     if (ids.length === 0) return []
