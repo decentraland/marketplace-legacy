@@ -1,7 +1,16 @@
-.ui.form input[type=text] {
+.ui.form .input input[type='text'] {
   color: var(--gray);
 }
 
-.ui.form .field > input[disabled], .ui.form .fields > input[disabled] {
-  background-color: #EAEAEA;
+.ui.form .input.error input[type='text'] {
+  background-color: #fff6f6;
+  border-color: #e0b4b4;
+  color: #9f3a38;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.ui.form .field > input[disabled],
+.ui.form .fields > input[disabled] {
+  background-color: #eaeaea;
 }

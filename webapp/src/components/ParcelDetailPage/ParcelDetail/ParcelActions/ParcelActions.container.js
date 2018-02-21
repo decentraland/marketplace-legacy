@@ -10,6 +10,7 @@ const mapState = (state, { parcel }) => {
 
 const mapDispatch = dispatch => ({
   onTransfer: parcel => dispatch(openModal('TransferModal', parcel)),
+  onEdit: parcel => dispatch(push(locations.editLand(parcel.x, parcel.y))),
   onSell: parcel => dispatch(push(locations.sellLand(parcel.x, parcel.y)))
 })
 

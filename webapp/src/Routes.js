@@ -7,6 +7,7 @@ import HomePage from 'components/HomePage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import MarketplacePage from 'components/MarketplacePage'
 import PublishPage from 'components/PublishPage'
+import EditParcelPage from 'components/EditParcelPage'
 import SettingsPage from 'components/SettingsPage'
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
@@ -28,6 +29,7 @@ export default function Routes() {
       <Route exact path={locations.parcel} component={ParcelDetailPage} />
       <Route exact path={locations.marketplace} component={MarketplacePage} />
       <Route exact path={locations.sell} component={PublishPage} />
+      <Route exact path={locations.edit} component={EditParcelPage} />
       <Route exact path={locations.settings} component={SettingsPage} />
       <Route exact path={locations.colorCodes} component={ColorKeyPage} />
       <Route exact path={locations.privacy} component={PrivacyPage} />

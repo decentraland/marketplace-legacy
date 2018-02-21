@@ -14,6 +14,9 @@ export const locations = {
   sell: '/:x/:y/sell',
   sellLand: (x, y) => `/${x}/${y}/sell`,
 
+  edit: '/:x/:y/edit',
+  editLand: (x, y) => `/${x}/${y}/edit`,
+
   parcel: '/:x/:y/detail',
   parcelDetail: (x, y) => `/${x}/${y}/detail`,
 

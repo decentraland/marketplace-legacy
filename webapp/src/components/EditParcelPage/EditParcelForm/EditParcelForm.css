@@ -1,0 +1,7 @@
+.EditParcelForm .ui.button {
+  padding: 12px 42px;
+}
+
+.EditParcelForm button + button {
+  margin-left: 20px !important;
+}
