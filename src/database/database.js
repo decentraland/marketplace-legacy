@@ -25,7 +25,9 @@ export const database = {
       "district_id" TEXT`,
       { sequenceName: null }
     )
-    await this.createIndex('parcels', 'parcels_x_y_idx', ['x', 'y'])
+    await this.createIndex('parcels', 'parcels_x_y_idx', ['x', 'y'], {
+      unique: true
+    })
 
     await this.createTable(
       'districts',
@@ -63,16 +65,23 @@ export const database = {
       'publications',
       `"tx_hash" TEXT NOT NULL,
       "tx_status" TEXT NOT NULL DEFAULT 'pending',
+      "status" TEXT NOT NULL DEFAULT 'open',
       "x" int NOT NULL,
       "y" int NOT NULL,
-      "address" varchar(42) NOT NULL,
+      "owner" varchar(42) NOT NULL,
+      "buyer" varchar(42),
       "price" DECIMAL NOT NULL,
-      "is_sold" BOOLEAN NOT NULL DEFAULT false,
       "expires_at" timestamp`,
       { primaryKey: 'tx_hash', sequenceName: null }
     )
-    await this.createIndex('publications', 'publications_address_idx', [
-      'address'
+    await this.createIndex('publications', 'publications_owner_idx', [
+      'owner'
+    ])
+    await this.createIndex('publications', 'publications_tx_status_idx', [
+      'tx_status'
+    ])
+    await this.createIndex('publications', 'publications_status_idx', [
+      'status'
     ])
   }
 }

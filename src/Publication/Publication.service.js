@@ -11,7 +11,7 @@ export class PublicationService {
     const { sort, pagination } = filters.sanitize()
 
     const conditions = {
-      is_sold: false,
+      status: Publication.STATUS.open,
       tx_status: txUtils.TRANSACTION_STATUS.confirmed
     }
     const order = { [sort.by]: sort.order }

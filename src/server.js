@@ -6,8 +6,7 @@ import path from 'path'
 import { server, env, eth, contracts, utils } from 'decentraland-commons'
 
 import { db } from './database'
-import { asyncBatch } from './lib/asyncBatch'
-import { Parcel, ParcelService } from './Parcel'
+import { Parcel } from './Parcel'
 import { Contribution } from './Contribution'
 import { District } from './District'
 import {
@@ -130,7 +129,7 @@ app.get(
 
 export async function getAddressPublications(req) {
   const address = server.extractFromReq(req, 'address')
-  const publications = await Publication.findByAddress(address)
+  const publications = await Publication.findByOwner(address)
 
   return utils.mapOmit(publications, ['updated_at'])
 }
@@ -167,7 +166,7 @@ export async function getPublications(req) {
   const { publications, total } = await new PublicationService().filter(filters)
 
   return {
-    publications: utils.mapOmit(publications, ['is_sold', 'updated_at']),
+    publications: utils.mapOmit(publications, ['updated_at']),
     total
   }
 }

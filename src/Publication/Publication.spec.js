@@ -94,7 +94,7 @@ describe('PublicationService', function() {
         x: 0,
         y: 0,
         price: 3,
-        is_sold: true,
+        status: Publication.STATUS.sold,
         address,
         tx_status
       }
@@ -120,7 +120,7 @@ describe('PublicationService', function() {
           y: 2,
           price: '4000',
           expires_at: null,
-          is_sold: false,
+          status: Publication.STATUS.open,
           address,
           tx_status
         }
