@@ -127,8 +127,8 @@ export class ParcelService {
       const dbParcel = dbParcelsObj[Parcel.buildId(parcel.x, parcel.y)]
       if (!dbParcel) return parcel
 
-      const { auctionPrice } = dbParcel
-      return Object.assign({}, parcel, { auctionPrice })
+      const { auction_price } = dbParcel
+      return Object.assign({}, parcel, { auction_price })
     })
   }
 

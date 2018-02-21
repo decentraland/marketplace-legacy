@@ -8,7 +8,7 @@ export class Parcel extends Model {
     'id',
     'x',
     'y',
-    'auctionPrice',
+    'auction_price',
     'owner',
     'data',
     'district_id'
@@ -67,13 +67,13 @@ export class Parcel extends Model {
 
   static async getPrice(x, y) {
     const result = await this.db.query(
-      `SELECT auctionPrice
+      `SELECT auction_price
         FROM ${this.tableName}
         WHERE x = $1 AND y = $2`,
       [x, y]
     )
 
-    return result.length ? result[0].auctionPrice : 0
+    return result.length ? result[0].auction_price : 0
   }
 
   static async insert(parcel) {

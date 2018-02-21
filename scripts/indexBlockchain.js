@@ -46,8 +46,10 @@ async function indexParcels() {
   log.info('All done')
 }
 
-Promise.resolve()
-  .then(() => db.connect())
-  .then(() => eth.connect({ contracts: [contracts.LANDRegistry] }))
-  .then(indexBlockchain)
-  .catch(error => console.error('An error occurred.\n', error))
+if (require.main === module) {
+  Promise.resolve()
+    .then(() => db.connect())
+    .then(() => eth.connect({ contracts: [contracts.LANDRegistry] }))
+    .then(indexBlockchain)
+    .catch(error => console.error('An error occurred.\n', error))
+}
