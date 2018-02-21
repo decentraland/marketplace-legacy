@@ -9,7 +9,7 @@ const log = new Log('update')
 
 env.load()
 
-const BATCH_SIZE = 200
+const BATCH_SIZE = env.get('INDEX_BATCH_SIZE', 1000)
 
 export async function indexBlockchain() {
   log.info('Indexing `parcels`')
@@ -20,6 +20,7 @@ async function indexParcels() {
   const service = new ParcelService()
   const parcels = await Parcel.find()
 
+  let updates = []
   let total = BATCH_SIZE
 
   await asyncBatch({
@@ -30,7 +31,7 @@ async function indexParcels() {
 
       log.info(`Indexing ${total}/${parcels.length} parcels`)
 
-      await Promise.all(
+      updates = updates.concat(
         newParcels.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
       )
 
@@ -38,6 +39,11 @@ async function indexParcels() {
     },
     batchSize: BATCH_SIZE
   })
+  log.info('Waiting for the Database operations to finish')
+
+  await Promise.all(updates)
+
+  log.info('All done')
 }
 
 Promise.resolve()
