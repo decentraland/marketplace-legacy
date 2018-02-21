@@ -121,3 +121,44 @@ export function getParcelAttributes(wallet, parcel, districts) {
     backgroundColor: COLORS.taken
   }
 }
+
+export function drawMarker(
+  ctx,
+  x,
+  y,
+  scale = 2.5,
+  fill = '#d1344e',
+  stroke = '#000000',
+  width = 0.5
+) {
+  const upperRadious = 5 * scale
+  const holeRadious = 2 * scale
+  const lowerRadious = 1 * scale
+  const height = 10 * scale
+  ctx.fillStyle = fill
+  ctx.strokeStyle = stroke
+  ctx.strokeWidth = width
+  ctx.beginPath()
+  const angle = Math.atan2(upperRadious, height)
+  ctx.arc(x, y - height, upperRadious, angle, Math.PI - angle, true)
+  ctx.lineTo(
+    x - lowerRadious * Math.cos(angle),
+    y - lowerRadious * Math.sin(angle)
+  )
+  ctx.arc(
+    x,
+    y - lowerRadious,
+    lowerRadious,
+    Math.PI - angle,
+    2 * Math.PI + angle,
+    true
+  )
+  ctx.lineTo(
+    x + Math.cos(angle) * upperRadious,
+    y - height + Math.sin(angle) * upperRadious
+  )
+  ctx.moveTo(x + holeRadious, y - height)
+  ctx.arc(x, y - height, holeRadious, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.stroke()
+}

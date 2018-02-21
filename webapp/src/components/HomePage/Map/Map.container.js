@@ -7,24 +7,26 @@ import { getParcels } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { changeRange, setLoading } from 'modules/ui/actions'
 import { navigateTo } from 'modules/location/actions'
-import MapComponent from './Map'
 import { hoverParcel } from 'modules/ui/actions'
+import MapComponent from './Map'
+import { getMarker } from './utils'
 
-const mapState = (state, ownProps) => {
+const mapState = (state, { isReady, match, location }) => {
   const wallet = getWallet(state)
   const parcels = getParcels(state)
   const districts = getDistricts(state)
 
   return {
-    isReady: ownProps.isReady,
-    center: ownProps.match.params, // from withRouter
+    isReady,
+    center: match.params, // from withRouter
     parcels,
     districts,
-    wallet
+    wallet,
+    marker: getMarker(location)
   }
 }
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch, { location }) => ({
   onNavigate: location => dispatch(navigateTo(location)),
   onLoading: () => dispatch(setLoading(true)),
   onRangeChange: (nw, se) =>

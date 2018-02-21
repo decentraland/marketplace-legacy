@@ -1,5 +1,6 @@
 import L from 'leaflet'
 import { requestAnimationFrame, cancelAnimationFrame } from './utils'
+import { drawMarker } from './parcelUtils'
 
 export const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
@@ -9,7 +10,8 @@ export const LeafletParcelGrid = L.Layer.extend({
     onMouseDown: () => {},
     onMouseUp: () => {},
     onMouseMove: () => {},
-    tileSize: 64
+    tileSize: 64,
+    marker: null
   },
 
   initialize(options = {}) {
@@ -169,14 +171,24 @@ export const LeafletParcelGrid = L.Layer.extend({
     // Clear canvas
     const ctx = this.canvas.getContext('2d')
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
-    for (let index = tiles.length - 1; index >= 0; index--) {
-      this.renderTile(tiles[index])
+    let marker = null
+    for (let index = 0; index < tiles.length; index++) {
+      const point = this.renderTile(tiles[index])
+      if (point) {
+        marker = point
+      }
+    }
+    if (marker) {
+      drawMarker(
+        ctx,
+        marker.x - this.tileSize / 2,
+        marker.y - this.tileSize / 2
+      )
     }
   },
 
   renderTile(tile) {
-    const { backgroundColor } = this.options.getTileAttributes(
+    const { id, backgroundColor } = this.options.getTileAttributes(
       tile.bounds.getNorthWest()
     )
 
@@ -192,6 +204,10 @@ export const LeafletParcelGrid = L.Layer.extend({
       this.tileSize - padding,
       this.tileSize - padding
     )
+
+    if (this.options.marker === id) {
+      return point
+    }
   },
 
   getCellPoint(row, col) {

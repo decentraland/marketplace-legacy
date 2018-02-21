@@ -6,6 +6,6 @@
   font-weight: 400;
 }
 
-.ParcelName .map.icon {
-  margin-right: 0.2em !important;
+.ParcelName .marker.icon {
+  margin-right: 0.1em !important;
 }

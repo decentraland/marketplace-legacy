@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { parcelType } from 'components/types'
 import debounce from 'lodash.debounce'
 import { buildCoordinate } from 'lib/utils'
-import { getParcelAttributes } from 'lib/parcelUtils'
+import { getParcelAttributes, drawMarker } from 'lib/parcelUtils'
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
@@ -100,6 +100,7 @@ export default class ParcelPreview extends React.PureComponent {
     const { nw, se } = this.state
     const ctx = this.canvas.getContext('2d')
     ctx.clearRect(0, 0, width, height)
+    let marker = null
     for (let px = nw.x; px < se.x; px++) {
       for (let py = nw.y; py < se.y; py++) {
         const cx = width / 2
@@ -118,10 +119,14 @@ export default class ParcelPreview extends React.PureComponent {
               districts
             ))
         const isCenter = px === x && py === y
-        ctx.fillStyle = isCenter ? '#d1344e' : backgroundColor
+        if (isCenter) {
+          marker = { x: rx, y: ry }
+        }
+        ctx.fillStyle = backgroundColor
         ctx.fillRect(rx - size / 2, ry - size / 2, size - 1, size - 1)
       }
     }
+    drawMarker(ctx, marker.x, marker.y, 2)
   }
 
   refCanvas = canvas => {

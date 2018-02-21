@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { Header, Icon } from 'semantic-ui-react'
 import { locations } from 'locations'
 import './ParcelName.css'
+import { buildCoordinate } from 'lib/utils'
 
 export default class ParcelName extends React.PureComponent {
   static propTypes = {
@@ -29,8 +30,8 @@ export default class ParcelName extends React.PureComponent {
     return (
       <Header size={size} className="ParcelName">
         {data.name ? <span>{data.name}&nbsp;</span> : null}
-        <Link to={locations.parcelMapDetail(x, y)}>
-          <Icon name="map" />
+        <Link to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}>
+          <Icon name="marker" />
           {x}, {y}
         </Link>
       </Header>

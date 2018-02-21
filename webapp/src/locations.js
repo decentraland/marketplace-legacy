@@ -5,7 +5,8 @@ export const locations = {
   addressDetail: address => `/address/${address}`,
 
   parcelMap: '/:x/:y',
-  parcelMapDetail: (x, y) => `/${x}/${y}`,
+  parcelMapDetail: (x, y, marker) =>
+    `/${x}/${y}` + (marker ? `?marker=${marker}` : ''),
 
   settings: '/settings',
 
