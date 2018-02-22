@@ -14,7 +14,7 @@ export async function transform_Marketplace(event) {
 
   switch (event.event) {
     case 'AuctionCreated': {
-      const { priceInWei, expiresAt } = event.args
+      const { creator, priceInWei, expiresAt } = event.args
       const [x, y] = Parcel.splitId(id)
 
       console.log(
@@ -25,7 +25,7 @@ export async function transform_Marketplace(event) {
         tx_hash: transactionHash,
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: Publication.STATUS.open,
-        owner: null, // TODO: Add owner
+        owner: creator,
         buyer: null,
         price: eth.utils.fromWei(priceInWei.toNumber()),
         expires_at: new Date(expiresAt),
