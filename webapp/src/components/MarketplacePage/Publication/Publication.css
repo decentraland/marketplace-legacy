@@ -20,7 +20,7 @@
   }
 }
 
-.Publication .tx-status {
+.Publication .publication-owner {
   position: absolute;
   right: 12px;
   top: 12px;

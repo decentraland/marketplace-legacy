@@ -30,14 +30,18 @@ export default class ParcelName extends React.PureComponent {
         </Header>
       )
     }
+    let classes = 'ParcelName'
     let name
     if (parcel) {
       x = parcel.x
       y = parcel.y
       name = parcel.data.name
     }
+    if (!name) {
+      classes += ' no-name'
+    }
     return (
-      <Header size={size} className="ParcelName">
+      <Header size={size} className={classes}>
         {name ? <span>{name}&nbsp;</span> : null}
         <Link to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}>
           <Icon name="marker" />

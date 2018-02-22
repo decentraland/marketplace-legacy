@@ -42,7 +42,7 @@ export default class ParcelName extends React.PureComponent {
     if (parcel.owner) {
       return (
         <span className="ParcelOwner is-address">
-          Owned by&nbsp;&nbsp;<AddressLink address={parcel.owner} scale={2} />
+          Owned by&nbsp;&nbsp;<AddressLink address={parcel.owner} scale={3} />
         </span>
       )
     }
