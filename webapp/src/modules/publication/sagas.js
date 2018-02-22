@@ -31,20 +31,16 @@ function* handlePublicationsRequest(action) {
 
 function* handlePublishRequest(action) {
   try {
-    // TODO: Use real contract method
+    const { x, y, price, expires_at } = action.publication
 
-    // const { x, y, price, expirationDate } = action.publication
     const marketplaceContract = eth.getContract('Marketplace')
+    const landRegistryContract = eth.getContract('LANDRegistry')
 
-    // const txHash = yield call(() =>
-    //   marketplaceContract.publish(x, y, price, expirationDate)
-    // )
-
-    const mana = 0
-    const manaTokenContract = eth.getContract('MANAToken')
+    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
+    const priceInWei = eth.utils.toWei(price)
 
     const txHash = yield call(() =>
-      manaTokenContract.approve(marketplaceContract.address, mana)
+      marketplaceContract.createOrder(assetId, priceInWei, expires_at)
     )
 
     const publication = {
