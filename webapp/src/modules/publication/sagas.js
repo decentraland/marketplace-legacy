@@ -43,7 +43,6 @@ function* handlePublishRequest(action) {
     const mana = 0
     const manaTokenContract = eth.getContract('MANAToken')
 
-    console.log(manaTokenContract.address, mana)
     const txHash = yield call(() =>
       manaTokenContract.approve(marketplaceContract.address, mana)
     )

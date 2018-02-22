@@ -32,7 +32,7 @@
   "dependencies": {
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
-    "decentraland-commons": "^2.7.3",
+    "decentraland-commons": "^3.0.0",
     "express": "^4.16.2",
     "node-pg-migrate": "^2.23.0",
     "uuid": "^3.1.0"
