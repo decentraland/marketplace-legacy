@@ -2,7 +2,7 @@
 
 import { eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
-import { Cli } from './Cli'
+import { TransformCli } from './TransformCli'
 import { db } from '../../src/database'
 import { loadEnv } from '../../scripts/utils'
 
@@ -21,7 +21,7 @@ Promise.resolve()
   })
   .then(() => {
     log.debug('Starting CLI')
-    return new Cli(handlers).run()
+    return new TransformCli(handlers).run()
   })
   .catch(error => {
     log.error(error)
