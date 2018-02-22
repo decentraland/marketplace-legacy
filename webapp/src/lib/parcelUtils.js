@@ -128,7 +128,7 @@ export function drawMarker(
   y,
   scale = 2.5,
   fill = '#d1344e',
-  stroke = '#000000',
+  stroke = '#970a09',
   width = 0.5
 ) {
   const upperRadious = 5 * scale
@@ -157,8 +157,13 @@ export function drawMarker(
     x + Math.cos(angle) * upperRadious,
     y - height + Math.sin(angle) * upperRadious
   )
+  ctx.stroke()
+  ctx.fill()
+  ctx.closePath()
+  ctx.beginPath()
   ctx.moveTo(x + holeRadious, y - height)
   ctx.arc(x, y - height, holeRadious, 0, Math.PI * 2)
+  ctx.fillStyle = '#970a09'
   ctx.fill()
-  ctx.stroke()
+  ctx.closePath()
 }
