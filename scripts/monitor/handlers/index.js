@@ -73,17 +73,6 @@ export async function transform_LANDRegistry(event) {
 
   switch (event.event) {
     case 'Update': {
-      const { to } = event.args
-
-      debounceById(id, () => {
-        console.log(
-          `[LANDRegistry-Transfer] Updating "${id}" owner with "${to}"`
-        )
-        Parcel.update({ owner: to }, { id })
-      })
-      break
-    }
-    case 'Transfer': {
       try {
         const { data } = event.args
         const attributes = { data: contracts.LANDRegistry.decodeLandData(data) }
@@ -97,7 +86,17 @@ export async function transform_LANDRegistry(event) {
       } catch (error) {
         // Skip badly formed data
       }
+      break
+    }
+    case 'Transfer': {
+      const { to } = event.args
 
+      debounceById(id, () => {
+        console.log(
+          `[LANDRegistry-Transfer] Updating "${id}" owner with "${to}"`
+        )
+        Parcel.update({ owner: to }, { id })
+      })
       break
     }
     default:
