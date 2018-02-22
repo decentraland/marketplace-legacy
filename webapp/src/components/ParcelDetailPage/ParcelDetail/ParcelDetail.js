@@ -1,31 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-
-import { locations } from 'locations'
-import { Grid, Button } from 'semantic-ui-react'
-
-import { getParcelAttributes } from 'lib/parcelUtils'
-import { walletType, parcelType, districtType } from 'components/types'
+import { Grid } from 'semantic-ui-react'
+import ParcelName from 'components/ParcelName'
+import ParcelOwner from './ParcelOwner'
+import ParcelActions from './ParcelActions'
+import { parcelType } from 'components/types'
 
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
-    wallet: walletType.isRequired,
-    districts: PropTypes.objectOf(districtType).isRequired,
-    parcel: parcelType.isRequired,
-    onTransfer: PropTypes.func.isRequired
+    parcel: parcelType.isRequired
   }
 
   render() {
-    const { wallet, parcel, districts, onTransfer } = this.props
-    const { x, y } = parcel
-
-    const coordinate = `${x}, ${y}`
-    const { backgroundColor, label } = getParcelAttributes(
-      wallet,
-      parcel,
-      districts
-    )
+    const { parcel, isOwner } = this.props
 
     return (
       <Grid
@@ -34,42 +20,33 @@ export default class ParcelDetail extends React.PureComponent {
         centered={true}
         className="ParcelDetail"
       >
-        <Grid.Column width={7}>
-          <h3 className="parcel-name">
-            {parcel.name
-              ? [
-                  parcel.name,
-                  <span key="1" className="parcel-name-secondary">
-                    &nbsp;{coordinate}
-                  </span>
-                ]
-              : [
-                  coordinate,
-                  <span key="1" className="parcel-name-secondary">
-                    &nbsp;Untitled Parcel
-                  </span>
-                ]}
-          </h3>
-
-          <div className="owned-by">
-            Owned by <Link to={locations.parcelMapDetail(x, y)}>{label}</Link>&nbsp;
-            <div className="square" style={{ backgroundColor }} />
-          </div>
-
-          {parcel.description ? (
-            <p className="parcel-description">{parcel.description}</p>
-          ) : (
-            <p className="parcel-description parcel-description-empty">
-              This parcel has no description
-            </p>
-          )}
-        </Grid.Column>
-
-        <Grid.Column width={3}>
-          <Button primary={true} onClick={onTransfer}>
-            TRANSFER
-          </Button>
-        </Grid.Column>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            <ParcelName parcel={parcel} />
+          </Grid.Column>
+          <Grid.Column width={4}>
+            <ParcelOwner parcel={parcel} />
+          </Grid.Column>
+        </Grid.Row>
+        {isOwner ? (
+          <Grid.Row>
+            <Grid.Column width={10}>
+              <ParcelActions parcel={parcel} />
+            </Grid.Column>
+          </Grid.Row>
+        ) : null}
+        <Grid.Row>
+          <Grid.Column width={10}>
+            <h3>Description</h3>
+            {parcel.data.description ? (
+              <p className="parcel-description">{parcel.data.description}</p>
+            ) : (
+              <p className="parcel-description parcel-description-empty">
+                This parcel has no description
+              </p>
+            )}
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     )
   }

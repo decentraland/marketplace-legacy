@@ -1,3 +1,5 @@
+import { buildTransactionAction } from 'modules/transaction/utils'
+
 // Fetch Parcels
 
 export const FETCH_PARCELS_REQUEST = '[Request] Fetch Parcels'
@@ -39,9 +41,10 @@ export function editParcelRequest(parcel) {
   }
 }
 
-export function editParcelSuccess(parcel) {
+export function editParcelSuccess(txHash, parcel) {
   return {
     type: EDIT_PARCEL_SUCCESS,
+    ...buildTransactionAction(txHash, parcel),
     parcel
   }
 }

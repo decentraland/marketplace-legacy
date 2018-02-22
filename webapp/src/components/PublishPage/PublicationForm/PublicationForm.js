@@ -8,7 +8,7 @@ import differenceInDays from 'date-fns/difference_in_days'
 import { Form, Button, Input, Message, Icon } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 
-import { publicationType } from 'components/types'
+import { parcelType, publicationType } from 'components/types'
 import { preventDefault } from 'lib/utils'
 import { ONE_LAND_IN_MANA } from 'lib/land'
 
@@ -20,8 +20,9 @@ const MINIMUM_DAY_INTERVAL = 1
 export default class PublicationForm extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
+    parcel: parcelType,
     onPublish: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -37,14 +38,6 @@ export default class PublicationForm extends React.PureComponent {
       price: '',
       expiresAt: dateFormat(expiresAt, 'YYYY-MM-DD'),
       formErrors: []
-    }
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    const { publication } = nextProps
-
-    if (publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed) {
-      setTimeout(() => this.props.onConfirm(), 3000)
     }
   }
 
@@ -67,7 +60,7 @@ export default class PublicationForm extends React.PureComponent {
   }
 
   handlePublish = () => {
-    const { onPublish } = this.props
+    const { parcel, onPublish } = this.props
     const { price, expiresAt } = this.state
 
     const formErrors = []
@@ -81,14 +74,19 @@ export default class PublicationForm extends React.PureComponent {
     }
 
     if (formErrors.length === 0) {
-      onPublish({ price, expiresAt })
+      onPublish({
+        x: parcel.x,
+        y: parcel.y,
+        price,
+        expiresAt
+      })
     } else {
       this.setState({ formErrors })
     }
   }
 
   render() {
-    const { publication } = this.props
+    const { publication, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
 
     const isConfirmed =
@@ -149,6 +147,9 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         <br />
         <div className="text-center">
+          <Button disabled={isPending || isConfirmed} onClick={onCancel}>
+            Cancel
+          </Button>
           <Button
             type="submit"
             primary={true}

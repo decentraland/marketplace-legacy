@@ -1,4 +1,5 @@
 import { call, takeEvery, put } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
 import { eth } from 'decentraland-commons'
 import {
   FETCH_PUBLICATIONS_REQUEST,
@@ -8,6 +9,7 @@ import {
   publishSuccess,
   publishFailure
 } from './actions'
+import { locations } from 'locations'
 import { api } from 'lib/api'
 
 export function* publicationSaga() {
@@ -52,6 +54,7 @@ function* handlePublishRequest(action) {
     }
 
     yield put(publishSuccess(txHash, publication))
+    yield put(push(locations.activity))
   } catch (error) {
     yield put(publishFailure(error.message))
   }

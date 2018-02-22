@@ -1,0 +1,10 @@
+.AddressLink {
+  position: relative;
+  display: inline-flex;
+  flex: 1 0 auto;
+}
+
+.AddressLink .Blockie {
+  border: 2px solid #666;
+  border-radius: 30px;
+}

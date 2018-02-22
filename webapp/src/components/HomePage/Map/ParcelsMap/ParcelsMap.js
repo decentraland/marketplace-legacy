@@ -279,9 +279,7 @@ export default class ParcelsMap extends React.Component {
 
   handleMousedown = latlng => {
     this.dragging = true
-    if (this.popup) {
-      this.popup.remove()
-    }
+    this.removePopup()
   }
 
   handleMouseUp = latlng => {
@@ -299,10 +297,7 @@ export default class ParcelsMap extends React.Component {
       this.tileHovered.x !== x ||
       this.tileHovered.y !== y
     ) {
-      if (this.popup) {
-        this.popup.remove()
-        this.popup = null
-      }
+      this.removePopup()
       this.tileHovered = { x, y }
       this.debouncedHandleHover(x, y, latlng)
     }
@@ -319,13 +314,20 @@ export default class ParcelsMap extends React.Component {
     if (this.dragging || !this.map) {
       return
     }
-
+    this.removePopup()
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
     leafletPopup.setLatLng(latlng).addTo(this.map)
     this.popup = leafletPopup
     this.renderPopup(x, y)
 
     return leafletPopup
+  }
+
+  removePopup() {
+    if (this.popup) {
+      this.popup.remove()
+      this.popup = null
+    }
   }
 
   renderPopup = (x, y, props = this.props) => {
@@ -337,7 +339,12 @@ export default class ParcelsMap extends React.Component {
         description
       } = this.getTileAttributes(x, y, props)
 
-      const content = renderToDOM(
+      if (this.popupContent) {
+        ReactDOM.unmountComponentAtNode(this.popupContent)
+        this.popupContent = null
+      }
+
+      this.popupContent = renderToDOM(
         <ParcelPopup
           x={x}
           y={y}
@@ -348,7 +355,9 @@ export default class ParcelsMap extends React.Component {
         />
       )
 
-      requestAnimationFrame(() => this.popup && this.popup.setContent(content))
+      requestAnimationFrame(
+        () => this.popup && this.popup.setContent(this.popupContent)
+      )
     }
   }
 

@@ -22,39 +22,11 @@
   font-size: 15px;
 }
 
-.ParcelDetail .parcel-name {
-  margin-top: 0;
-  font-size: 26px;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-  font-weight: 400;
-}
-
-.ParcelDetail .parcel-name-secondary {
-  margin-left: 6px;
-  color: #aaa;
-}
-
-.ParcelDetail .square {
-  height: 15px;
-  width: 15px;
-  border: 1px solid #aaa;
-  margin-left: 5px;
-  top: 2px;
-  position: relative;
-  display: inline-block;
-}
-
 .ParcelDetail .parcel-description {
-  margin-top: 30px;
+  color: var(--dark-purple);
 }
 
 .ParcelDetail .parcel-description-empty {
   color: #aaa;
   font-style: italic;
-}
-
-@media (min-width: 768px) {
-  .ParcelDetail .button {
-    margin-top: 5px;
-  }
 }

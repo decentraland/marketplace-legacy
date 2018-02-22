@@ -1,37 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container, Header, Grid } from 'semantic-ui-react'
-import PublicationForm from './PublicationForm'
 import Navbar from 'components/Navbar'
-import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
+import ParcelName from 'components/ParcelName'
 
-import { publicationType } from 'components/types'
+import EditParcelForm from './EditParcelForm'
+import './EditParcelPage.css'
 
-import './PublishPage.css'
-
-export default class PublishPage extends React.PureComponent {
+export default class EditParcelPage extends React.PureComponent {
   static propTypes = {
-    publication: publicationType,
-    onPublish: PropTypes.func.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const { publication, x, y, onPublish, onCancel } = this.props
+    const { x, y, onSubmit, onCancel } = this.props
 
     return (
-      <div className="PublishPage">
+      <div className="EditParcelPage">
         <Navbar />
         <Parcel x={x} y={y} ownerOnly>
           {parcel => (
             <React.Fragment>
               <Container text textAlign="center">
                 <Header as="h2" size="huge" className="title">
-                  List LAND for sale
+                  Edit LAND
                 </Header>
                 <span className="subtitle">
-                  Set a price and a expiration date for{' '}
+                  Set a name and description for{' '}
                   <ParcelName size="small" parcel={parcel} />
                 </span>
               </Container>
@@ -39,10 +38,9 @@ export default class PublishPage extends React.PureComponent {
               <Container text>
                 <Grid>
                   <Grid.Column>
-                    <PublicationForm
+                    <EditParcelForm
                       parcel={parcel}
-                      publication={publication}
-                      onPublish={onPublish}
+                      onSubmit={onSubmit}
                       onCancel={onCancel}
                     />
                   </Grid.Column>
