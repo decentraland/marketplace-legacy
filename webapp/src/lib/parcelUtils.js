@@ -127,15 +127,16 @@ export function drawMarker(
   x,
   y,
   scale = 2.5,
-  fill = '#d1344e',
+  fillPrimary = '#d1344e',
+  fillSecondary = '#970a09',
   stroke = '#970a09',
-  width = 0.5
+  width = 1
 ) {
   const upperRadius = 5 * scale
-  const holeRadius = 2 * scale
+  const innerRadius = 2 * scale
   const lowerRadius = 1 * scale
   const height = 10 * scale
-  ctx.fillStyle = fill
+  ctx.fillStyle = fillPrimary
   ctx.strokeStyle = stroke
   ctx.strokeWidth = width
   ctx.beginPath()
@@ -161,9 +162,9 @@ export function drawMarker(
   ctx.fill()
   ctx.closePath()
   ctx.beginPath()
-  ctx.moveTo(x + holeRadius, y - height)
-  ctx.arc(x, y - height, holeRadius, 0, Math.PI * 2)
-  ctx.fillStyle = '#970a09'
+  ctx.moveTo(x + innerRadius, y - height)
+  ctx.arc(x, y - height, innerRadius, 0, Math.PI * 2)
+  ctx.fillStyle = fillSecondary
   ctx.fill()
   ctx.closePath()
 }
