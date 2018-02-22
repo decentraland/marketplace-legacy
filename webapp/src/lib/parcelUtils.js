@@ -131,38 +131,38 @@ export function drawMarker(
   stroke = '#970a09',
   width = 0.5
 ) {
-  const upperRadious = 5 * scale
-  const holeRadious = 2 * scale
-  const lowerRadious = 1 * scale
+  const upperRadius = 5 * scale
+  const holeRadius = 2 * scale
+  const lowerRadius = 1 * scale
   const height = 10 * scale
   ctx.fillStyle = fill
   ctx.strokeStyle = stroke
   ctx.strokeWidth = width
   ctx.beginPath()
-  const angle = Math.atan2(upperRadious, height)
-  ctx.arc(x, y - height, upperRadious, angle, Math.PI - angle, true)
+  const angle = Math.atan2(upperRadius, height)
+  ctx.arc(x, y - height, upperRadius, angle, Math.PI - angle, true)
   ctx.lineTo(
-    x - lowerRadious * Math.cos(angle),
-    y - lowerRadious * Math.sin(angle)
+    x - lowerRadius * Math.cos(angle),
+    y - lowerRadius * Math.sin(angle)
   )
   ctx.arc(
     x,
-    y - lowerRadious,
-    lowerRadious,
+    y - lowerRadius,
+    lowerRadius,
     Math.PI - angle,
     2 * Math.PI + angle,
     true
   )
   ctx.lineTo(
-    x + Math.cos(angle) * upperRadious,
-    y - height + Math.sin(angle) * upperRadious
+    x + Math.cos(angle) * upperRadius,
+    y - height + Math.sin(angle) * upperRadius
   )
   ctx.stroke()
   ctx.fill()
   ctx.closePath()
   ctx.beginPath()
-  ctx.moveTo(x + holeRadious, y - height)
-  ctx.arc(x, y - height, holeRadious, 0, Math.PI * 2)
+  ctx.moveTo(x + holeRadius, y - height)
+  ctx.arc(x, y - height, holeRadius, 0, Math.PI * 2)
   ctx.fillStyle = '#970a09'
   ctx.fill()
   ctx.closePath()
