@@ -4,7 +4,15 @@ import { coordinates } from './coordinates'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
-  static columnNames = ['id', 'x', 'y', 'price', 'district_id']
+  static columnNames = [
+    'id',
+    'x',
+    'y',
+    'auction_price',
+    'owner',
+    'data',
+    'district_id'
+  ]
 
   static buildId(x, y) {
     if (x == null || y == null) {
@@ -16,6 +24,16 @@ export class Parcel extends Model {
     return `${x},${y}`
   }
 
+  static splitId(id = '') {
+    const coordinates = id.split(',')
+
+    if (coordinates.length !== 2) {
+      throw new Error(`You need to supply a valid id to split. id = ${id}`)
+    }
+
+    return coordinates
+  }
+
   static async findInIds(ids) {
     const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
     if (ids.length === 0) return []
@@ -24,6 +42,15 @@ export class Parcel extends Model {
       `SELECT * FROM ${this.tableName} WHERE id IN (${inPlaceholders})`,
       ids
     )
+  }
+
+  static async findInCoordinate(x, y) {
+    const id = this.buildId(x, y)
+    return await this.findOne({ id })
+  }
+
+  static async findByOwner(owner) {
+    return await this.find({ owner })
   }
 
   static async inRange(min, max) {
@@ -40,13 +67,13 @@ export class Parcel extends Model {
 
   static async getPrice(x, y) {
     const result = await this.db.query(
-      `SELECT price
+      `SELECT auction_price
         FROM ${this.tableName}
         WHERE x = $1 AND y = $2`,
       [x, y]
     )
 
-    return result.length ? result[0].price : 0
+    return result.length ? result[0].auction_price : 0
   }
 
   static async insert(parcel) {

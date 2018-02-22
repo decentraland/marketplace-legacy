@@ -13,3 +13,10 @@ export function findPublicationByCoordinates(publications, x, y) {
     publication => publication.x === x && publication.y === y
   )
 }
+
+// From Publication.js on the server
+export const PUBLICATION_STATUS = Object.freeze({
+  open: 'open',
+  sold: 'sold',
+  canceled: 'canceled'
+})

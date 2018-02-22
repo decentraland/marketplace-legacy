@@ -1,10 +1,5 @@
-#!/usr/bin/env babel-node
-
-import { cli, Log } from 'decentraland-commons'
+import { cli } from 'decentraland-commons'
 import { HandlersIndex } from './handlers'
-import { EventMonitor } from './EventMonitor'
-
-const log = new Log('Cli')
 
 export class Cli {
   /**
@@ -28,39 +23,22 @@ export class Cli {
    * @param {object} program - commander.js {@link https://github.com/tj/commander.js} program supplied on `cli.runProgram`
    */
   addCommands(program) {
-    this.defineCommand('transform', program)
+    // Override on subclasses
   }
 
   /**
-   * Defines a new command.
-   * It uses EventMonitor to check the Blockchain. It handles the event with one of the handlers supplied on the constructor
-   * It'll use the options defined by `addOptions`
+   * Defines a new command. It'll use the options defined by `addOptions`.
    * @param  {string} commandName
    * @param  {object} program     - commander.js {@link https://github.com/tj/commander.js} program supplied on `cli.runProgram`.
+   * @param  {function} callback  - function to run when the command is executed
    * @return {object} command
    */
-  defineCommand(commandName, program) {
+  defineCommand(commandName, program, callback) {
     const command = program.command(
       `${commandName} <contractName> [eventNames...]`
     )
 
-    return this.addOptions(command).action(
-      (contractName, eventNames, options) => {
-        const eventMonitor = new EventMonitor(contractName, eventNames)
-        const handler = this.handlers.get(commandName, contractName, eventNames)
-
-        if (!handler) throw new Error('Could not find a valid handler')
-
-        eventMonitor.run(options, async (error, logs) => {
-          if (error) {
-            log.error(`Error monitoring "${contractName}" for "${eventNames}"`)
-            log.error(error)
-          } else {
-            await handler(logs)
-          }
-        })
-      }
-    )
+    return this.addOptions(command).action((...args) => callback(...args))
   }
 
   /**
