@@ -4,11 +4,12 @@ require('babel-polyfill')
 
 const { spawn } = require('child_process')
 const { env } = require('decentraland-commons')
+const { loadEnv, resolve } = require('../scripts/utils')
 
 let CONNECTION_STRING = process.env.CONNECTION_STRING
 
 if (!CONNECTION_STRING) {
-  env.load({ path: '../src/.env' })
+  loadEnv()
 
   CONNECTION_STRING = env.get('CONNECTION_STRING', () => {
     throw new Error(
@@ -18,12 +19,12 @@ if (!CONNECTION_STRING) {
 }
 
 const child = spawn(
-  './node-pg-migrate',
+  resolve('./node-pg-migrate'),
   [
     '--database-url-var',
     'CONNECTION_STRING',
     '--migrations-dir',
-    '.',
+    __dirname,
     '--ignore-pattern',
     '\\..*|.*migrate',
     ...process.argv.slice(2)
@@ -32,7 +33,8 @@ const child = spawn(
     env: { ...process.env, CONNECTION_STRING }
   }
 )
-console.log(`Running command "${child.spawnargs.join(' ')}"\n`)
+console.log('Running command:')
+console.log(child.spawnargs.join(' '))
 
 child.on('error', function(error) {
   console.log(error.message)

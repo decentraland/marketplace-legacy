@@ -4,19 +4,18 @@ import { Log, env, eth, contracts } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { asyncBatch } from '../src/lib/asyncBatch'
+import { loadEnv } from './utils'
 
 const log = new Log('update')
 
-env.load()
-
-const BATCH_SIZE = env.get('INDEX_BATCH_SIZE', 1000)
-
-export async function indexBlockchain() {
-  log.info('Indexing `parcels`')
-  await indexParcels()
+export async function renewBlockchainData() {
+  log.info('Storing `parcels` data')
+  await storeParcels()
 }
 
-async function indexParcels() {
+async function storeParcels() {
+  const BATCH_SIZE = env.get('RENEW_BATCH_SIZE', 1000)
+
   const service = new ParcelService()
   const parcels = await Parcel.find()
 
@@ -29,7 +28,7 @@ async function indexParcels() {
       newParcels = await service.addLandData(newParcels)
       newParcels = await service.addOwners(newParcels)
 
-      log.info(`Indexing ${total}/${parcels.length} parcels`)
+      log.info(`Processing ${total}/${parcels.length} parcels`)
 
       updates = updates.concat(
         newParcels.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
@@ -47,9 +46,11 @@ async function indexParcels() {
 }
 
 if (require.main === module) {
+  loadEnv()
+
   Promise.resolve()
     .then(() => db.connect())
     .then(() => eth.connect({ contracts: [contracts.LANDRegistry] }))
-    .then(indexBlockchain)
+    .then(renewBlockchainData)
     .catch(error => console.error('An error occurred.\n', error))
 }

@@ -17,8 +17,11 @@ const seed = {
         try {
           const ModelManifest = require(`../src/${ModelName}`)
           const Model = ModelManifest[ModelName]
+          let amount = options.amount || 1
 
-          log.info(`Fill the template for each ${ModelName} row to add`)
+          log.info(
+            `Fill the template for each ${ModelName} row to add (${amount})`
+          )
 
           const questions = Model.columnNames.map(columnName => {
             return {
@@ -28,10 +31,8 @@ const seed = {
               default: undefined
             }
           })
-
           const answers = await cli.prompt(questions)
 
-          let amount = options.amount || 1
           log.info(`Inserting ${amount} rows into ${Model.tableName}`)
 
           while (amount > 0) {
@@ -81,9 +82,6 @@ function getRandomColumnValue(columnName) {
       value = faker.random.objectElement(txUtils.TRANSACTION_STATUS)
       break
     }
-    case 'price':
-      value = faker.random.number(10000000) // 10M max
-      break
     case 'link':
       value = faker.internet.url()
       break
@@ -98,7 +96,9 @@ function getRandomColumnValue(columnName) {
       value = Math.floor(Math.random() * 307) - 153
       break
     default: {
-      if (columnName.includes('_count')) {
+      if (columnName.includes('price')) {
+        value = faker.random.number(10000000) // 10M max
+      } else if (columnName.includes('_count')) {
         value = faker.random.number(1000) // 1k max
       } else if (columnName.includes('_at')) {
         value = faker.date.recent()

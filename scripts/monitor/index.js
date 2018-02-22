@@ -1,13 +1,14 @@
 #!/usr/bin/env babel-node
 
-import { env, eth, Log } from 'decentraland-commons'
+import { eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
 import { Cli } from './Cli'
 import { db } from '../../src/database'
-
-env.load()
+import { loadEnv } from '../../scripts/utils'
 
 const log = new Log('main')
+
+loadEnv()
 
 Promise.resolve()
   .then(() => {
