@@ -2,11 +2,12 @@ import 'babel-polyfill'
 
 import chai from 'chai'
 
-import { env, utils } from 'decentraland-commons'
+import { utils } from 'decentraland-commons'
+import { loadEnv } from '../scripts/utils'
 
 chai.use(require('chai-as-promised'))
 
-env.load({ path: './specs/.env' })
+loadEnv('./specs/.env')
 
 chai.Assertion.addChainableMethod('equalRow', function(expectedRow) {
   const ommitedProps = ['created_at', 'updated_at']

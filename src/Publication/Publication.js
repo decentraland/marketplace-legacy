@@ -5,16 +5,23 @@ export class Publication extends Model {
   static columnNames = [
     'tx_hash',
     'tx_status',
+    'status',
     'x',
     'y',
-    'address',
+    'owner',
+    'buyer',
     'price',
-    'is_sold',
     'expires_at'
   ]
   static primaryKey = 'tx_hash'
 
-  static findByAddress(address) {
-    return this.find({ address })
+  static STATUS = Object.freeze({
+    open: 'open',
+    sold: 'sold',
+    cancelled: 'cancelled'
+  })
+
+  static findByOwner(owner) {
+    return this.find({ owner })
   }
 }

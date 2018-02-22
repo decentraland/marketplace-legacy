@@ -58,14 +58,14 @@ export class ParcelService {
       let data
 
       try {
-        const landData = await contract.getData(parcel.x, parcel.y)
+        const landData = await contract.landData(parcel.x, parcel.y)
         data = LANDRegistry.decodeLandData(landData)
       } catch (error) {
         log.debug(error.message)
         data = { version: ParcelService.CURRENT_DATA_VERSION }
       }
 
-      return Object.assign({ data }, parcel)
+      return Object.assign({}, parcel, { data })
     })
 
     return await Promise.all(parcelPromises)
@@ -127,8 +127,8 @@ export class ParcelService {
       const dbParcel = dbParcelsObj[Parcel.buildId(parcel.x, parcel.y)]
       if (!dbParcel) return parcel
 
-      const { price } = dbParcel
-      return Object.assign({ price }, parcel)
+      const { auction_price } = dbParcel
+      return Object.assign({}, parcel, { auction_price })
     })
   }
 

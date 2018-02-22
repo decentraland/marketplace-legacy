@@ -6,8 +6,7 @@ import path from 'path'
 import { server, env, eth, contracts, utils } from 'decentraland-commons'
 
 import { db } from './database'
-import { asyncBatch } from './lib/asyncBatch'
-import { Parcel, ParcelService } from './Parcel'
+import { Parcel } from './Parcel'
 import { Contribution } from './Contribution'
 import { District } from './District'
 import {
@@ -19,10 +18,6 @@ import {
 env.load()
 
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
-const OWNERS_BATCH_SIZE = 1000
-const DATA_BATCH_SIZE = 100
-
-const { LANDRegistry } = contracts
 
 const app = express()
 const httpServer = http.Server(app)
@@ -62,17 +57,9 @@ app.get('/api/parcels', server.handleRequest(getParcels))
 export async function getParcels(req) {
   const nw = server.extractFromReq(req, 'nw')
   const se = server.extractFromReq(req, 'se')
-
   const parcels = await Parcel.inRange(nw, se)
-  const service = new ParcelService()
 
-  const parcelsWithOwner = await asyncBatch({
-    elements: parcels,
-    callback: parcels => service.addOwners(parcels),
-    batchSize: OWNERS_BATCH_SIZE
-  })
-
-  return utils.mapOmit(parcelsWithOwner, ['created_at', 'updated_at'])
+  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
 
 /**
@@ -86,9 +73,7 @@ app.get('/api/parcels/:x/:y/data', server.handleRequest(getParcelData))
 export async function getParcelData(req) {
   const x = server.extractFromReq(req, 'x')
   const y = server.extractFromReq(req, 'y')
-
-  const parcels = [{ x, y }]
-  const [parcel] = await new ParcelService().addLandData(parcels)
+  const parcel = await Parcel.findInCoordinate(x, y)
 
   return parcel.data
 }
@@ -105,16 +90,7 @@ app.get(
 
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
-
-  const service = new ParcelService()
-
-  let parcels = await service.getLandOf(address)
-  parcels = await service.addDbData(parcels)
-  parcels = await asyncBatch({
-    elements: parcels,
-    callback: parcels => service.addLandData(parcels),
-    batchSize: DATA_BATCH_SIZE
-  })
+  const parcels = await Parcel.findByOwner(address)
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
@@ -153,7 +129,7 @@ app.get(
 
 export async function getAddressPublications(req) {
   const address = server.extractFromReq(req, 'address')
-  const publications = await Publication.findByAddress(address)
+  const publications = await Publication.findByOwner(address)
 
   return utils.mapOmit(publications, ['updated_at'])
 }
@@ -190,7 +166,7 @@ export async function getPublications(req) {
   const { publications, total } = await new PublicationService().filter(filters)
 
   return {
-    publications: utils.mapOmit(publications, ['is_sold', 'updated_at']),
+    publications: utils.mapOmit(publications, ['updated_at']),
     total
   }
 }
@@ -230,7 +206,7 @@ function connectDatabase() {
 
 function connectEthereum() {
   return eth
-    .connect({ contracts: [LANDRegistry] })
+    .connect({ contracts: [contracts.LANDRegistry] })
     .catch(error =>
       console.error(
         '\nCould not connect to the Ethereum node. Some endpoints may not work correctly.',

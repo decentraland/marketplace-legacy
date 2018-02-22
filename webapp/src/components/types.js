@@ -1,5 +1,6 @@
 import { txUtils } from 'decentraland-commons'
 import { arrayOf, shape, object, string, number, bool, oneOf } from 'prop-types'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
 export const parcelType = shape({
   id: string.isRequired,
@@ -61,11 +62,12 @@ export const toastType = shape({
 export const publicationType = shape({
   tx_hash: string,
   tx_status: oneOf(Object.values(txUtils.TRANSACTION_STATUS)),
+  status: oneOf(Object.values(PUBLICATION_STATUS)),
   price: string,
-  address: string,
+  owner: string,
+  buyer: string,
   x: number,
   y: number,
   created_at: number,
-  expires_at: number,
-  is_sold: bool
+  expires_at: number
 })

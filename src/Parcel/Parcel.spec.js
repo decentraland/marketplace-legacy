@@ -266,9 +266,9 @@ describe('ParcelService', function() {
         { x: -5, y: 20 }
       ]
       const parcelData = [
-        { price: '1000' },
-        { price: '1250' },
-        { price: '5234' }
+        { auction_price: '1000' },
+        { auction_price: '1250' },
+        { auction_price: '5234' }
       ]
       const parcels = contractParcels.map((coord, index) =>
         Object.assign({}, coord, parcelData[index])

@@ -10,6 +10,7 @@ import { Header, Card, Button, Icon } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
 import './Publication.css'
 
@@ -67,11 +68,11 @@ export default class Publication extends React.PureComponent {
                 size="tiny"
                 disabled={
                   isExpired ||
-                  publication.is_sold ||
+                  publication.status !== PUBLICATION_STATUS.open ||
                   publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
                 }
               >
-                {publication.is_sold ? 'Sold' : 'View'}
+                View
               </Button>
             </Link>
           </span>

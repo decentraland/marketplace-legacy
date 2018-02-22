@@ -1,13 +1,14 @@
 #!/usr/bin/env babel-node
 
-import { env, eth, Log } from 'decentraland-commons'
+import { eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
-import { Cli } from './Cli'
+import { TransformCli } from './TransformCli'
 import { db } from '../../src/database'
-
-env.load()
+import { loadEnv } from '../../scripts/utils'
 
 const log = new Log('main')
+
+loadEnv()
 
 Promise.resolve()
   .then(() => {
@@ -20,7 +21,7 @@ Promise.resolve()
   })
   .then(() => {
     log.debug('Starting CLI')
-    return new Cli(handlers).run()
+    return new TransformCli(handlers).run()
   })
   .catch(error => {
     log.error(error)
