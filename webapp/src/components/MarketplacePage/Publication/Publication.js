@@ -6,7 +6,8 @@ import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import format from 'date-fns/format'
 
 import { locations } from 'locations'
-import { Header, Card, Button, Icon } from 'semantic-ui-react'
+import { Header, Card, Button } from 'semantic-ui-react'
+import ParcelName from 'components/ParcelName'
 import TxStatus from 'components/TxStatus'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
@@ -37,10 +38,7 @@ export default class Publication extends React.PureComponent {
           </div>
         </Link>
         <Card.Content className="body">
-          <Link to={locations.parcelMapDetail(publication.x, publication.y)}>
-            <Icon name="map" />
-            {publication.x},{publication.y}
-          </Link>
+          <ParcelName x={publication.x} y={publication.y} size="small" />
           <Card.Meta
             title={format(publication.expires_at, 'MMMM Do, YYYY - hh:MMa')}
           >

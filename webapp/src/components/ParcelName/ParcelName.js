@@ -10,26 +10,35 @@ import { buildCoordinate } from 'lib/utils'
 export default class ParcelName extends React.PureComponent {
   static propTypes = {
     size: PropTypes.oneOf(['tiny', 'small', 'medium', 'large', 'huge']),
-    parcel: parcelType
+    parcel: parcelType,
+    x: PropTypes.number,
+    y: PropTypes.number
   }
 
   static defaultProps = {
-    size: 'large'
+    size: 'large',
+    x: null,
+    y: null
   }
 
   render() {
-    const { size, parcel } = this.props
-    if (!parcel) {
+    let { size, parcel, x, y } = this.props
+    if (!parcel && x == null && y == null) {
       return (
         <Header size={size} className="ParcelName">
           Loading&hellip;
         </Header>
       )
     }
-    const { x, y, data } = parcel
+    let name
+    if (parcel) {
+      x = parcel.x
+      y = parcel.y
+      name = parcel.data.name
+    }
     return (
       <Header size={size} className="ParcelName">
-        {data.name ? <span>{data.name}&nbsp;</span> : null}
+        {name ? <span>{name}&nbsp;</span> : null}
         <Link to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}>
           <Icon name="marker" />
           {x}, {y}
