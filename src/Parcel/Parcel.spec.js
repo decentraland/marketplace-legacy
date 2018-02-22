@@ -78,7 +78,7 @@ describe('ParcelService', function() {
 
       return isTestParcel ? [txUtils.DUMMY_TX_ID, txUtils.DUMMY_TX_ID] : null
     },
-    getData(x, y) {
+    landData(x, y) {
       return this.isTestParcel(x, y)
         ? '0,awesome name,super description,ipns:QmVP3WAkJRcc9AkS83r5fwaWAxpgtP7cpDupVWRos9qStY'
         : ''

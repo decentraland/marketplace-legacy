@@ -21,6 +21,9 @@ Do you wish to continue?`
   )
   if (!shouldContinue) return process.exit()
 
+  log.info('Connecting database')
+  await db.connect()
+
   log.info('Initializing state')
   execSync(runpsql('./drop.sql'))
   await db.truncate([
@@ -139,7 +142,6 @@ if (require.main === module) {
   loadEnv()
 
   Promise.resolve()
-    .then(() => db.connect())
     .then(initializeDatabase)
     .catch(console.error)
 }

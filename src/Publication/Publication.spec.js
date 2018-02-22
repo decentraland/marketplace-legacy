@@ -87,7 +87,7 @@ describe('PublicationService', function() {
 
   describe('#filter', function() {
     it('should filter the publications using the supplied filters', async function() {
-      const address = '0xasdf'
+      const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
       const soldPublication = {
         tx_hash: '0xdeadbeef1',
@@ -95,14 +95,14 @@ describe('PublicationService', function() {
         y: 0,
         price: 3,
         status: Publication.STATUS.sold,
-        address,
+        owner,
         tx_status
       }
       const publicationRows = [
         soldPublication,
-        { tx_hash: '0xdeadbeef2', x: 0, y: 1, price: 2000, address, tx_status },
-        { tx_hash: '0xdeadbeef3', x: 1, y: 1, price: 5000, address, tx_status },
-        { tx_hash: '0xdeadbeef4', x: 1, y: 2, price: 4000, address, tx_status }
+        { tx_hash: '0xdeadbeef2', x: 0, y: 1, price: 2000, owner, tx_status },
+        { tx_hash: '0xdeadbeef3', x: 1, y: 1, price: 5000, owner, tx_status },
+        { tx_hash: '0xdeadbeef4', x: 1, y: 2, price: 4000, owner, tx_status }
       ]
       const inserts = publicationRows.map(publication =>
         Publication.insert(publication)
@@ -120,8 +120,9 @@ describe('PublicationService', function() {
           y: 2,
           price: '4000',
           expires_at: null,
+          buyer: null,
           status: Publication.STATUS.open,
-          address,
+          owner,
           tx_status
         }
       ])

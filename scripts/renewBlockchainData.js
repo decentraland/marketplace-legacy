@@ -9,6 +9,12 @@ import { loadEnv } from './utils'
 const log = new Log('update')
 
 export async function renewBlockchainData() {
+  log.info('Connecting database')
+  await db.connect()
+
+  log.info('Connecting to Ethereum node')
+  await eth.connect({ contracts: [contracts.LANDRegistry] })
+
   log.info('Storing `parcels` data')
   await storeParcels()
 }
@@ -49,8 +55,7 @@ if (require.main === module) {
   loadEnv()
 
   Promise.resolve()
-    .then(() => db.connect())
-    .then(() => eth.connect({ contracts: [contracts.LANDRegistry] }))
     .then(renewBlockchainData)
+    .then(() => process.exit())
     .catch(error => console.error('An error occurred.\n', error))
 }
