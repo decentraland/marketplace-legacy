@@ -96,10 +96,10 @@ export default class TransferModal extends React.PureComponent {
           ) : !error && transfer.hash ? (
             <div>
               <SuccessCheck />
-              <p className="success-text">
+              <div className="success-text">
                 <h4>Transaction sent successfully!</h4>
                 You can check its status on etherscan
-              </p>
+              </div>
               <span className="close-link" onClick={this.handleClose}>
                 close
               </span>

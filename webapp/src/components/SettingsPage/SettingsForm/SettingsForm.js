@@ -70,41 +70,45 @@ export default class SettingsForm extends React.PureComponent {
                   ? 'Unchecking will approve 0 MANA'
                   : `Check to approve ${MANA_TO_APPROVE} MANA`
             }
+            data-balloon-length="large"
             data-balloon-pos="left"
             onChange={onManaApprovedChange}
           />
 
-          {manaApproved > 0 ? (
-            <p className="authorize-detail">
-              You have {manaApproved} MANA approved to be used by the contract.<br />
-              {!isApprovePending &&
-                manaApproved < MANA_TO_APPROVE && (
-                  <span
-                    className="link"
-                    data-balloon={`You will authorize ${MANA_TO_APPROVE.toLocaleString()} MANA`}
-                    data-balloon-pos="up"
-                    onClick={onManaApprovedChange}
-                  >
-                    Approve more
-                  </span>
-                )}
-            </p>
-          ) : (
-            <p className="authorize-detail">
-              Approve {MANA_TO_APPROVE.toLocaleString()} MANA usage for
-              the&nbsp;
-              <EtherscanLink address={getMarketplaceAddress()}>
-                Marketplace contract
-              </EtherscanLink>
-            </p>
-          )}
+          <div className="authorize-detail">
+            {manaApproved > 0 ? (
+              <React.Fragment>
+                You have {manaApproved} MANA approved to be used by the
+                contract.<br />
+                {!isApprovePending &&
+                  manaApproved < MANA_TO_APPROVE && (
+                    <span
+                      className="link"
+                      data-balloon={`You will authorize ${MANA_TO_APPROVE.toLocaleString()} MANA`}
+                      data-balloon-pos="up"
+                      onClick={onManaApprovedChange}
+                    >
+                      Approve more
+                    </span>
+                  )}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                Approve {MANA_TO_APPROVE.toLocaleString()} MANA usage for
+                the&nbsp;
+                <EtherscanLink address={getMarketplaceAddress()}>
+                  Marketplace contract
+                </EtherscanLink>
+              </React.Fragment>
+            )}
 
-          {approveTransaction && (
-            <TxStatus.Text
-              txHash={approveTransaction.hash}
-              txStatus={approveTransaction.status}
-            />
-          )}
+            {approveTransaction && (
+              <TxStatus.Text
+                txHash={approveTransaction.hash}
+                txStatus={approveTransaction.status}
+              />
+            )}
+          </div>
         </Form.Field>
 
         <Form.Field>
@@ -119,36 +123,37 @@ export default class SettingsForm extends React.PureComponent {
                   ? 'Unchecking unauthorizes LAND usage for the Marketplace contract'
                   : 'Checking authorizes LAND usage to the Marketplace contract'
             }
+            data-balloon-length="large"
             data-balloon-pos="left"
             onChange={onLandAuthorizedChange}
           />
 
-          <p className="authorize-detail">
+          <div className="authorize-detail">
             {isLandAuthorized ? (
-              <span>
+              <React.Fragment>
                 You have authorized the&nbsp;
                 <EtherscanLink address={getMarketplaceAddress()}>
                   Marketplace contract
                 </EtherscanLink>
                 &nbsp;to operate LAND on your behalf
-              </span>
+              </React.Fragment>
             ) : (
-              <span>
+              <React.Fragment>
                 Authorize the&nbsp;
                 <EtherscanLink address={getMarketplaceAddress()}>
                   Marketplace contract
                 </EtherscanLink>
                 &nbsp;to operate LAND on your behalf
-              </span>
+              </React.Fragment>
             )}
-          </p>
 
-          {authorizeTransaction && (
-            <TxStatus.Text
-              txHash={authorizeTransaction.hash}
-              txStatus={authorizeTransaction.status}
-            />
-          )}
+            {authorizeTransaction && (
+              <TxStatus.Text
+                txHash={authorizeTransaction.hash}
+                txStatus={authorizeTransaction.status}
+              />
+            )}
+          </div>
         </Form.Field>
       </Form>
     )
