@@ -1,15 +1,15 @@
-.HomePage {
+.AtlasPage {
   height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.HomePage > .Loading {
+.AtlasPage > .Loading {
   font-size: 10px;
   top: 35%;
 }
 
-.HomePage .settings {
+.AtlasPage .settings {
   position: absolute;
   top: 20px;
   left: 20px;

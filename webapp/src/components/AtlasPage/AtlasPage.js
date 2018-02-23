@@ -10,9 +10,9 @@ import Minimap from './Minimap'
 import { walletType } from 'components/types'
 import { locations } from 'locations'
 
-import './HomePage.css'
+import './AtlasPage.css'
 
-export default class HomePage extends React.PureComponent {
+export default class AtlasPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
     isLoading: PropTypes.bool,
@@ -40,7 +40,7 @@ export default class HomePage extends React.PureComponent {
     const { wallet } = this.props
 
     return (
-      <div className="HomePage">
+      <div className="AtlasPage">
         {isReady && [
           <AddressLink
             key="1"

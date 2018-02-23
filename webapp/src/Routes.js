@@ -3,13 +3,14 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { locations } from 'locations'
 
-import HomePage from 'components/HomePage'
+import AtlasPage from 'components/AtlasPage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import MarketplacePage from 'components/MarketplacePage'
 import ProfilePage from 'components/ProfilePage'
 import PublishPage from 'components/PublishPage'
 import EditParcelPage from 'components/EditParcelPage'
 import SettingsPage from 'components/SettingsPage'
+
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 
@@ -25,7 +26,7 @@ import Toast from 'components/Toast'
 export default function Routes() {
   return [
     <Switch key="1">
-      <Route exact path={locations.root} component={HomePage} />
+      <Route exact path={locations.root} component={AtlasPage} />
       <Route exact path={locations.parcel} component={ParcelDetailPage} />
       <Route exact path={locations.marketplace} component={MarketplacePage} />
       <Route exact path={locations.profile} component={ProfilePage} />
@@ -34,7 +35,7 @@ export default function Routes() {
       <Route exact path={locations.settings} component={SettingsPage} />
       <Route exact path={locations.colorCodes} component={ColorKeyPage} />
       <Route exact path={locations.privacy} component={PrivacyPage} />
-      <Route exact path={locations.parcelMap} component={HomePage} />
+      <Route exact path={locations.parcelMap} component={AtlasPage} />
       <Route exact path={locations.walletError} component={WalletErrorPage} />
       <Route exact path={locations.serverError} component={ServerError} />
       <Route exact path={locations.error} component={WalletErrorPage} />
