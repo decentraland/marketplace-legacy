@@ -43,8 +43,7 @@ export default class ParcelsMap extends React.Component {
 
     onMoveEnd: PropTypes.func.isRequired,
     onZoomEnd: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    onHover: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -317,8 +316,6 @@ export default class ParcelsMap extends React.Component {
   }
 
   handleHover = (x, y, latlng) => {
-    const { onHover } = this.props
-    onHover(x, y)
     this.addPopup(x, y, latlng)
   }
 

@@ -20,10 +20,6 @@ export class API {
     return this.request('get', '/parcels', { nw, se })
   }
 
-  fetchParcelData(x, y) {
-    return this.request('get', `/parcels/${x}/${y}/data`, {})
-  }
-
   fetchAddressParcels(address) {
     return this.request('get', `/addresses/${address}/parcels`, {})
   }

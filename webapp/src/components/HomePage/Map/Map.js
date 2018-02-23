@@ -24,8 +24,7 @@ export default class MapComponent extends React.Component {
     onNavigate: PropTypes.func.isRequired,
     onLoading: PropTypes.func.isRequired,
     onRangeChange: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    onHover: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -111,7 +110,6 @@ export default class MapComponent extends React.Component {
       districts,
       isReady,
       onSelect,
-      onHover,
       marker
     } = this.props
     const { x, y } = this.getCenter()
@@ -134,7 +132,6 @@ export default class MapComponent extends React.Component {
           onMoveEnd={this.handleMoveEnd}
           onZoomEnd={this.handleZoomEnd}
           onSelect={onSelect}
-          onHover={onHover}
           marker={marker}
         />
       </div>

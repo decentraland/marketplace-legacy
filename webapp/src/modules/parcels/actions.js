@@ -88,35 +88,3 @@ export function fetchParcelFailure(x, y, error) {
     error
   }
 }
-
-// Fatch Parcel Data
-
-export const FETCH_PARCEL_DATA_REQUEST = '[Request] Fetch Parcel Data'
-export const FETCH_PARCEL_DATA_SUCCESS = '[Success] Fetch Parcel Data'
-export const FETCH_PARCEL_DATA_FAILURE = '[Failure] Fetch Parcel Data'
-
-export function fetchParcelDataRequest(x, y) {
-  return {
-    type: FETCH_PARCEL_DATA_REQUEST,
-    x,
-    y
-  }
-}
-
-export function fetchParcelDataSuccess(x, y, parcel) {
-  return {
-    type: FETCH_PARCEL_DATA_SUCCESS,
-    x,
-    y,
-    parcel
-  }
-}
-
-export function fetchParcelDataFailure(x, y, error) {
-  return {
-    type: FETCH_PARCEL_DATA_FAILURE,
-    x,
-    y,
-    error
-  }
-}
