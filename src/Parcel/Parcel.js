@@ -44,11 +44,6 @@ export class Parcel extends Model {
     )
   }
 
-  static async findInCoordinate(x, y) {
-    const id = this.buildId(x, y)
-    return await this.findOne({ id })
-  }
-
   static async findByOwner(owner) {
     return await this.find({ owner })
   }

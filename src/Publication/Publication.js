@@ -24,4 +24,8 @@ export class Publication extends Model {
   static findByOwner(owner) {
     return this.find({ owner })
   }
+
+  static findInCoordinate(x, y) {
+    return this.find({ x, y }, { created_at: 'DESC' })
+  }
 }

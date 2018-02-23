@@ -63,6 +63,25 @@ export async function getParcels(req) {
 }
 
 /**
+ * Returns the publications for a parcel
+ * @param  {string} x
+ * @param  {string} y
+ * @return {array}
+ */
+app.get(
+  '/api/parcels/:x/:y/publications',
+  server.handleRequest(getParcelPublications)
+)
+
+export async function getParcelPublications(req) {
+  const x = server.extractFromReq(req, 'x')
+  const y = server.extractFromReq(req, 'y')
+  const publications = await Publication.findInCoordinate(x, y)
+
+  return publications
+}
+
+/**
  * Returns the parcels an address owns
  * @param  {string} address - Parcel owner
  * @return {array}
