@@ -49,7 +49,7 @@ describe('Parcel', function() {
     })
   })
 
-  afterEach(() => db.truncate('parcels'))
+  afterEach(() => db.truncate(Parcel.tableName))
 })
 
 describe('ParcelService', function() {
@@ -285,7 +285,7 @@ describe('ParcelService', function() {
       expect(parcelsWithData).to.deep.equal(parcels)
     })
 
-    afterEach(() => db.truncate('parcels'))
+    afterEach(() => db.truncate(Parcel.tableName))
   })
 })
 

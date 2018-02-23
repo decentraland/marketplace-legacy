@@ -2,32 +2,45 @@ import 'babel-polyfill'
 
 import chai from 'chai'
 
-import { utils } from 'decentraland-commons'
-import { loadEnv } from '../scripts/utils'
+import { env, utils } from 'decentraland-commons'
 
 chai.use(require('chai-as-promised'))
 
-loadEnv('./specs/.env')
+env.load({ path: './specs/.env' })
 
 chai.Assertion.addChainableMethod('equalRow', function(expectedRow) {
-  const ommitedProps = ['created_at', 'updated_at']
+  const omittedProps = ['created_at', 'updated_at']
 
   if (!expectedRow.id) {
-    ommitedProps.push('id')
+    omittedProps.push('id')
   }
-  const actualRow = utils.omit(this._obj, ommitedProps)
+  const actualRow = omitProps(this._obj, omittedProps)
 
   return new chai.Assertion(expectedRow).to.deep.equal(actualRow)
 })
 
 chai.Assertion.addChainableMethod('equalRows', function(expectedRows) {
-  const ommitedProps = ['created_at', 'updated_at']
+  const omittedProps = ['created_at', 'updated_at']
 
   if (expectedRows.every(row => !row.id)) {
-    ommitedProps.push('id')
+    omittedProps.push('id')
   }
 
-  const actualRows = this._obj.map(_obj => utils.omit(_obj, ommitedProps))
+  const actualRows = this._obj.map(_obj => omitProps(_obj, omittedProps))
 
   return new chai.Assertion(expectedRows).to.deep.equal(actualRows)
 })
+
+function omitProps(obj, omittedProps) {
+  const newObj = utils.omit(obj, omittedProps)
+
+  for (const prop in newObj) {
+    const value = newObj[prop]
+
+    if (value !== null && typeof value === 'object') {
+      newObj[prop] = omitProps(value, omittedProps)
+    }
+  }
+
+  return newObj
+}

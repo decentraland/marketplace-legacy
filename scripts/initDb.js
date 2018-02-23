@@ -26,11 +26,9 @@ Do you wish to continue?`
 
   log.info('Initializing state')
   execSync(runpsql('./drop.sql'))
-  await db.truncate([
-    Parcel.tableName,
-    District.tableName,
-    Contribution.tableName
-  ])
+  await Promise.all(
+    [Parcel, District, Contribution].map(Model => db.truncate(Model.tableName))
+  )
 
   log.info('Dumping parcel_states')
   execSync(runpsql('../dumps/parcel_states.20180105.sql'))

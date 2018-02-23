@@ -19,5 +19,5 @@ describe('District', function() {
     })
   })
 
-  afterEach(() => db.truncate('districts'))
+  afterEach(() => db.truncate(District.tableName))
 })

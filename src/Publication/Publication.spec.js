@@ -113,7 +113,7 @@ describe('PublicationService', function() {
         filters
       )
 
-      expect(publications).to.be.equalRows([
+      expect(publications).to.equalRows([
         {
           tx_hash: '0xdeadbeef4',
           x: 1,
@@ -130,5 +130,5 @@ describe('PublicationService', function() {
     })
   })
 
-  afterEach(() => db.truncate('publications'))
+  afterEach(() => db.truncate(Publication.tableName))
 })
