@@ -6,7 +6,7 @@ import { preventDefault } from 'lib/utils'
 
 import './EditParcelForm.css'
 
-export default class EditParcelPage extends React.PureComponent {
+export default class EditParcelForm extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -15,6 +15,7 @@ export default class EditParcelPage extends React.PureComponent {
 
   constructor(props) {
     super(props)
+
     const { data } = this.props.parcel
     this.state = {
       name: data.name || '',
