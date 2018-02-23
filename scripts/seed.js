@@ -1,12 +1,15 @@
 #!/usr/bin/env babel-node
 
-import { Log, env, cli, eth, txUtils } from 'decentraland-commons'
+import { Log, cli, txUtils } from 'decentraland-commons'
 import faker from 'faker'
+
+import { loadEnv } from './utils'
 import { db } from '../src/database'
+import { Publication } from '../src/Publication'
 
 const log = new Log('seed')
 
-env.load()
+loadEnv()
 
 const seed = {
   addCommands(program) {
@@ -40,7 +43,8 @@ const seed = {
 
             for (const columnName of Model.columnNames) {
               const value =
-                answers[columnName] || getRandomColumnValue(columnName)
+                answers[columnName] ||
+                getRandomColumnValue(columnName, Model.tableName)
 
               if (value !== undefined) {
                 row[columnName] = value
@@ -64,7 +68,7 @@ const seed = {
   }
 }
 
-function getRandomColumnValue(columnName) {
+function getRandomColumnValue(columnName, tableName) {
   let value = null
 
   switch (columnName) {
@@ -104,6 +108,11 @@ function getRandomColumnValue(columnName) {
         value = faker.date.recent()
       } else if (columnName.includes('is_')) {
         value = faker.random.boolean()
+      } else if (
+        tableName === Publication.tableName &&
+        columnName === 'status'
+      ) {
+        value = faker.random.objectElement(Publication.STATUS)
       } else {
         value = faker.random.words()
       }
