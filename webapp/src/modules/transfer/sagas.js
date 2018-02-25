@@ -25,7 +25,7 @@ function* handleTransferRequest(action) {
     }
 
     const contract = eth.getContract('LANDRegistry')
-    const hash = yield call(() => contract.transferTo(x, y, newOwner))
+    const hash = yield call(() => contract.transferLand(x, y, newOwner))
 
     const transfer = { hash, oldOwner, newOwner, x, y }
     yield put(transferParcelSuccess(transfer))

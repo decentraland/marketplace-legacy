@@ -17,6 +17,7 @@
 }
 
 .ui.button.primary,
+.ui.button.primary:focus,
 .ui.button.primary:active {
   background-color: var(--primary);
   color: #fff;

@@ -1,10 +1,8 @@
-import { eth, utils } from 'decentraland-commons'
-import { MANAToken } from 'decentraland-commons/dist/contracts/MANAToken'
-import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
-import { Marketplace } from 'decentraland-commons/dist/contracts/Marketplace'
+import { eth, utils, contracts } from 'decentraland-commons'
 
 export async function connectEthereumWallet(retries = 0) {
   try {
+    const { MANAToken, LANDRegistry, Marketplace } = contracts
     let connected = await eth.connect({
       contracts: [MANAToken, LANDRegistry, Marketplace]
     })

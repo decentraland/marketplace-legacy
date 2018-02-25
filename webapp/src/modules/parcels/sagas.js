@@ -1,7 +1,6 @@
 import { takeEvery, select, all, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { eth } from 'decentraland-commons'
-import { LANDRegistry } from 'decentraland-commons/dist/contracts/LANDRegistry'
+import { eth, contracts } from 'decentraland-commons'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCEL_REQUEST,
@@ -96,7 +95,7 @@ function* handleEditParcelsRequest(action) {
     const { x, y, data } = parcel
 
     const contract = eth.getContract('LANDRegistry')
-    const dataString = LANDRegistry.encodeLandData(data)
+    const dataString = contracts.LANDRegistry.encodeLandData(data)
     const txHash = yield call(() => contract.updateLandData(x, y, dataString))
 
     yield put(editParcelSuccess(txHash, parcel))
