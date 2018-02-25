@@ -1,0 +1,49 @@
+.Contribution {
+  width: calc(100% - 14px) !important;
+}
+
+@media (min-width: 480px) {
+  .Contribution {
+    width: calc(50% - 14px) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .Contribution {
+    width: calc(33% - 14px) !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .Contribution {
+    width: calc(25% - 14px) !important;
+  }
+}
+
+.Contribution .body {
+  position: relative;
+}
+
+.Contribution .land-count {
+  display: flex;
+  margin: 0px;
+  font-weight: 700;
+}
+
+.Contribution .land-count .amount {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+
+.Contribution .footer {
+  display: flex;
+  flex-direction: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Contribution .footer:after {
+  display: none;
+}

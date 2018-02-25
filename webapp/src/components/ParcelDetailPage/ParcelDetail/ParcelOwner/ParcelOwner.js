@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { parcelType, districtType } from 'components/types'
 import { getDistrict, isDistrict } from 'lib/parcelUtils'
+import isEmpty from 'lodash/isEmpty'
 import AddressLink from 'components/AddressLink'
 
 import './ParcelOwner.css'
@@ -14,7 +15,7 @@ export default class ParcelName extends React.PureComponent {
 
   render() {
     const { districts, parcel } = this.props
-    if (!parcel) {
+    if (!parcel || isEmpty(districts)) {
       return null
     }
     if (isDistrict(parcel)) {

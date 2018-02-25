@@ -14,11 +14,7 @@ import {
   authorizeLandSuccess,
   authorizeLandFailure
 } from './actions'
-import {
-  fetchAddressParcelsRequest,
-  fetchAddressContributionsRequest,
-  fetchAddressPublicationsRequest
-} from 'modules/address/actions'
+import { fetchAddress } from 'modules/address/actions'
 import { fetchDistrictsRequest } from 'modules/districts/actions'
 
 import { connectEthereumWallet, getMarketplaceAddress } from './utils'
@@ -58,9 +54,7 @@ function* handleConnectWalletRequest(action = {}) {
 }
 
 function* handleConnectWalletSuccess(address) {
-  yield put(fetchAddressParcelsRequest(address))
-  yield put(fetchAddressPublicationsRequest(address))
-  yield put(fetchAddressContributionsRequest(address))
+  yield put(fetchAddress(address))
   yield put(fetchDistrictsRequest())
 }
 

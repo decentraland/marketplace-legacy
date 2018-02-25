@@ -43,11 +43,11 @@ export default class AddressLink extends React.Component {
         className={`AddressLink ${className}`}
         data-balloon-pos="up"
         data-balloon={
-          hasTooltip ? (isUser ? 'You!' : shortenAddress(address)) : null
+          hasTooltip ? (isUser ? "It's you!" : shortenAddress(address)) : null
         }
       >
         {address && (
-          <Link to={link ? link : locations.addressDetail(address)}>
+          <Link to={link ? link : locations.profilePage(address)}>
             <Blockie seed={address} size={size} scale={scale} />
           </Link>
         )}

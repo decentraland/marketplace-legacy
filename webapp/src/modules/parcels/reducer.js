@@ -113,7 +113,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           ...state.data,
           [parcel.id]: {
             ...parcel,
-            owner: newOwner.toLowerCase()
+            owner: newOwner
           }
         }
       }

@@ -71,3 +71,9 @@ export const publicationType = shape({
   created_at: number,
   expires_at: number
 })
+
+export const contributionType = shape({
+  address: string,
+  district_id: string,
+  land_count: string
+})

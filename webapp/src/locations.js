@@ -1,8 +1,8 @@
 export const locations = {
   root: '/',
 
-  address: '/address/:address',
-  addressDetail: address => `/address/${address}`,
+  profile: '/address/:address/:tab',
+  profilePage: (address, tab = 'parcels') => `/address/${address}/${tab}`,
 
   parcelMap: '/:x/:y',
   parcelMapDetail: (x, y, marker) =>

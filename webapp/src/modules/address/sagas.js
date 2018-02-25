@@ -1,12 +1,16 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import {
+  FETCH_ADDRESS,
   FETCH_ADDRESS_PARCELS_REQUEST,
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
   FETCH_ADDRESS_PUBLICATIONS_REQUEST,
+  fetchAddressParcelsRequest,
   fetchAddressParcelsSuccess,
   fetchAddressParcelsFailure,
+  fetchAddressContributionsRequest,
   fetchAddressContributionsSuccess,
   fetchAddressContributionsFailure,
+  fetchAddressPublicationsRequest,
   fetchAddressPublicationsSuccess,
   fetchAddressPublicationsFailure
 } from './actions'
@@ -22,6 +26,7 @@ export function* addressSaga() {
     FETCH_ADDRESS_PUBLICATIONS_REQUEST,
     handleAddressPublicationsRequest
   )
+  yield takeEvery(FETCH_ADDRESS, handleFetchAddress)
 }
 
 function* handleAddressParcelsRequest(action) {
@@ -54,4 +59,11 @@ function* handleAddressPublicationsRequest(action) {
   } catch (error) {
     yield put(fetchAddressPublicationsFailure(address, error.message))
   }
+}
+
+function* handleFetchAddress(action) {
+  const { address } = action
+  yield put(fetchAddressParcelsRequest(address))
+  yield put(fetchAddressPublicationsRequest(address))
+  yield put(fetchAddressContributionsRequest(address))
 }
