@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { Log, cli, txUtils } from 'decentraland-commons'
+import { Log, cli, eth, txUtils } from 'decentraland-commons'
 import faker from 'faker'
 
 import { loadEnv } from './utils'
@@ -76,11 +76,13 @@ function getRandomColumnValue(columnName, tableName) {
       value = undefined
       break
     case 'address':
+    case 'owner':
+    case 'buyer':
       value = generateEthereumAddress()
       break
     case 'tx_hash':
     case 'hash':
-      value = generateEthereumAddress()
+      value = generateEthereumTxHash()
       break
     case 'tx_status': {
       value = faker.random.objectElement(txUtils.TRANSACTION_STATUS)
@@ -153,6 +155,12 @@ function generateEthereumAddress() {
   }
 
   return '0x' + address
+}
+
+function generateEthereumTxHash() {
+  const seed = Math.floor(Math.random())
+  const hash = eth.utils.sha3(seed)
+  return hash.toString('hex')
 }
 
 db
