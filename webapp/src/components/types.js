@@ -1,5 +1,14 @@
 import { txUtils } from 'decentraland-commons'
-import { arrayOf, shape, object, string, number, bool, oneOf } from 'prop-types'
+import {
+  arrayOf,
+  shape,
+  object,
+  string,
+  number,
+  bool,
+  oneOf,
+  oneOfType
+} from 'prop-types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
 export const parcelType = shape({
@@ -68,8 +77,8 @@ export const publicationType = shape({
   buyer: string,
   x: number,
   y: number,
-  created_at: number,
-  expires_at: number
+  created_at: oneOfType([number, string]),
+  expires_at: oneOfType([number, string])
 })
 
 export const contributionType = shape({

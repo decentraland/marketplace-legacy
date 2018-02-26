@@ -16,7 +16,7 @@ export function buildUrl({ address, tab, page }) {
 
 export function getPageFromRouter({ search }) {
   const query = queryString.parse(search)
-  return query.page || 1
+  return +query.page || 1
 }
 
 export function paginate(array, page) {

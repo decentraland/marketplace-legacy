@@ -19,7 +19,7 @@ export function buildUrl({ page, sortBy, sortOrder }) {
 
 export function getPageFromRouter({ search }) {
   const query = queryString.parse(search)
-  return query.page || 1
+  return +query.page || 1
 }
 
 export function getOptionsFromRouter({ search }) {

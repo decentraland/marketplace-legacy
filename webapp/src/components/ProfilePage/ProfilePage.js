@@ -122,11 +122,7 @@ export default class ProfilePage extends React.PureComponent {
     if (array.length === 0) {
       return null
     }
-    return (
-      <Label color="gray" size="tiny">
-        {array.length}
-      </Label>
-    )
+    return <Label size="tiny">{array.length}</Label>
   }
 
   handleItemClick = (event, { name }) => {
