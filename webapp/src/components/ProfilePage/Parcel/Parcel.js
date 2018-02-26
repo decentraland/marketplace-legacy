@@ -9,7 +9,7 @@ import { parcelType } from 'components/types'
 
 import './Parcel.css'
 
-export default class Publication extends React.PureComponent {
+export default class Parcel extends React.PureComponent {
   static propTypes = {
     parcel: parcelType
   }
