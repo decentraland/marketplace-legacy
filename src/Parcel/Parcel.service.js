@@ -58,7 +58,7 @@ export class ParcelService {
       let data
 
       try {
-        const landData = await contract.getData(parcel.x, parcel.y)
+        const landData = await contract.landData(parcel.x, parcel.y)
         data = LANDRegistry.decodeLandData(landData)
       } catch (error) {
         log.debug(error.message)
