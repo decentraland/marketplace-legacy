@@ -7,7 +7,6 @@ import {
   Card,
   Pagination,
   Loader,
-  Dimmer,
   Label
 } from 'semantic-ui-react'
 import AddressLink from 'components/AddressLink'
@@ -47,11 +46,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   renderLoading() {
-    return (
-      <Dimmer active inverted>
-        <Loader size="huge" />
-      </Dimmer>
-    )
+    return <Loader size="huge" />
   }
 
   renderEmpty() {

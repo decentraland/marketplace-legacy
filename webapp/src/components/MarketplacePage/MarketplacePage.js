@@ -93,7 +93,7 @@ export default class MarketplacePage extends React.PureComponent {
   renderLoading() {
     return (
       <Dimmer active inverted>
-        <Loader size="huge" />
+        <Loader active size="huge" />
       </Dimmer>
     )
   }
