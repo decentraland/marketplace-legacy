@@ -1,6 +1,6 @@
 import L from 'leaflet'
 import { requestAnimationFrame, cancelAnimationFrame } from './utils'
-import { drawMarker } from './parcelUtils'
+import { marker } from './marker'
 
 export const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
@@ -171,18 +171,19 @@ export const LeafletParcelGrid = L.Layer.extend({
     // Clear canvas
     const ctx = this.canvas.getContext('2d')
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    let marker = null
+    let markerCenter = null
     for (let index = 0; index < tiles.length; index++) {
-      const point = this.renderTile(tiles[index])
-      if (point) {
-        marker = point
+      const tile = tiles[index]
+      const tileId = this.renderTile(tile)
+      if (this.options.marker === tileId) {
+        markerCenter = this.map.latLngToContainerPoint(tile.center)
       }
     }
-    if (marker) {
-      drawMarker(
+    if (markerCenter) {
+      marker.draw(
         ctx,
-        marker.x - this.tileSize / 2,
-        marker.y - this.tileSize / 2
+        markerCenter.x - this.tileSize / 2,
+        markerCenter.y - this.tileSize / 2
       )
     }
   },
@@ -205,9 +206,7 @@ export const LeafletParcelGrid = L.Layer.extend({
       this.tileSize - padding
     )
 
-    if (this.options.marker === id) {
-      return point
-    }
+    return id
   },
 
   getCellPoint(row, col) {
