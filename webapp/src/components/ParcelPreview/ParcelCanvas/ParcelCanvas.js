@@ -66,7 +66,9 @@ export default class ParcelPreview extends React.PureComponent {
       newState.height !== this.oldState.height
     ) {
       const { nw, se } = newState
-      onFetchParcels(nw, se)
+      if (!this.inStore(nw, se, nextProps.parcels)) {
+        onFetchParcels(nw, se)
+      }
       this.oldState = newState
       this.setState(newState)
     }
@@ -78,6 +80,22 @@ export default class ParcelPreview extends React.PureComponent {
     } else if (nextProps.width !== width || nextProps.height !== height) {
       this.shouldRefreshMap = true
     }
+  }
+
+  inStore(nw, se, parcels) {
+    if (!parcels) {
+      return false
+    }
+    for (let x = nw.x; x < se.x; x++) {
+      for (let y = nw.y; y < se.y; y++) {
+        const parcelId = buildCoordinate(x, y)
+        if (!parcels[parcelId]) {
+          return false
+        }
+      }
+    }
+
+    return true
   }
 
   componentDidUpdate() {
