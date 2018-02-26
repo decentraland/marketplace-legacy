@@ -16,8 +16,8 @@ import Publication from 'components/MarketplacePage/Publication'
 import Parcel from './Parcel'
 import Contribution from './Contribution'
 import { publicationType } from 'components/types'
-
-import { TABS, buildUrl } from './utils'
+import { PROFILE_PAGE_TABS } from 'locations'
+import { buildUrl } from './utils'
 
 import './ProfilePage.css'
 
@@ -81,14 +81,14 @@ export default class ProfilePage extends React.PureComponent {
   renderGrid() {
     const { grid, tab } = this.props
     switch (tab) {
-      case TABS.PARCELS: {
+      case PROFILE_PAGE_TABS.PARCELS: {
         return (
           <Card.Group stackable={true}>
             {grid.map(parcel => <Parcel key={parcel.id} parcel={parcel} />)}
           </Card.Group>
         )
       }
-      case TABS.CONTRIBUTIONS: {
+      case PROFILE_PAGE_TABS.CONTRIBUTIONS: {
         return (
           <Card.Group stackable={true}>
             {grid.map(contribution => (
@@ -100,7 +100,7 @@ export default class ProfilePage extends React.PureComponent {
           </Card.Group>
         )
       }
-      case TABS.PUBLICATIONS: {
+      case PROFILE_PAGE_TABS.PUBLICATIONS: {
         return (
           <Card.Group stackable={true}>
             {grid.map(publication => (
@@ -156,22 +156,22 @@ export default class ProfilePage extends React.PureComponent {
         <Container>
           <Menu pointing secondary>
             <Menu.Item
-              name={TABS.PARCELS}
-              active={tab === TABS.PARCELS}
+              name={PROFILE_PAGE_TABS.PARCELS}
+              active={tab === PROFILE_PAGE_TABS.PARCELS}
               onClick={this.handleItemClick}
             >
               Parcels{this.renderBadge(parcels)}
             </Menu.Item>
             <Menu.Item
-              name={TABS.CONTRIBUTIONS}
-              active={tab === TABS.CONTRIBUTIONS}
+              name={PROFILE_PAGE_TABS.CONTRIBUTIONS}
+              active={tab === PROFILE_PAGE_TABS.CONTRIBUTIONS}
               onClick={this.handleItemClick}
             >
               Contributions{this.renderBadge(contributions)}
             </Menu.Item>
             <Menu.Item
-              name={TABS.PUBLICATIONS}
-              active={tab === TABS.PUBLICATIONS}
+              name={PROFILE_PAGE_TABS.PUBLICATIONS}
+              active={tab === PROFILE_PAGE_TABS.PUBLICATIONS}
               onClick={this.handleItemClick}
             >
               On Sale{this.renderBadge(publications)}

@@ -7,7 +7,8 @@ import { getLoading } from 'modules/address/selectors'
 import { getAddresses } from 'modules/address/selectors'
 
 import ProfilePage from './ProfilePage'
-import { getPageFromRouter, TABS, paginate } from './utils'
+import { PROFILE_PAGE_TABS } from 'locations'
+import { getPageFromRouter, paginate } from './utils'
 
 const mapState = (state, { location, match }) => {
   let { address, tab } = match.params
@@ -21,21 +22,21 @@ const mapState = (state, { location, match }) => {
     publications = addresses[address].publications
   }
   const isLoading = getLoading(state).some(action => action.address === address)
-  if (!Object.values(TABS).includes(tab)) {
-    tab = TABS.parcels
+  if (!Object.values(PROFILE_PAGE_TABS).includes(tab)) {
+    tab = PROFILE_PAGE_TABS.parcels
   }
   const page = getPageFromRouter(location)
   let pagination
   switch (tab) {
-    case TABS.PUBLICATIONS: {
+    case PROFILE_PAGE_TABS.PUBLICATIONS: {
       pagination = paginate(publications, page)
       break
     }
-    case TABS.CONTRIBUTIONS: {
+    case PROFILE_PAGE_TABS.CONTRIBUTIONS: {
       pagination = paginate(contributions, page)
       break
     }
-    case TABS.PARCELS:
+    case PROFILE_PAGE_TABS.PARCELS:
     default: {
       pagination = paginate(parcels, page)
     }

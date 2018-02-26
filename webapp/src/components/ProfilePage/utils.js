@@ -2,11 +2,6 @@ import queryString from 'query-string'
 import { locations } from 'locations'
 
 export const PAGE_SIZE = 12
-export const TABS = {
-  PARCELS: 'parcels',
-  CONTRIBUTIONS: 'contributions',
-  PUBLICATIONS: 'publications'
-}
 
 export function buildUrl({ address, tab, page }) {
   return `${locations.profilePage(address, tab)}?${queryString.stringify({
