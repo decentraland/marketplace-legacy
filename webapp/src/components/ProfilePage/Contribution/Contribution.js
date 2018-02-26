@@ -4,10 +4,35 @@ import { contributionType } from 'components/types'
 
 import './Contribution.css'
 
-export default class Publication extends React.PureComponent {
+export default class Contribution extends React.PureComponent {
   static propTypes = {
     contribution: contributionType
   }
+
+  renderProposalButton() {
+    const { contribution } = this.props
+
+    let proposalButton = (
+      <Button floated="right" size="tiny" disabled={!contribution.district}>
+        Proposal
+      </Button>
+    )
+
+    if (contribution.district) {
+      proposalButton = (
+        <a
+          href={contribution.district.link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {proposalButton}
+        </a>
+      )
+    }
+
+    return proposalButton
+  }
+
   render() {
     const { contribution } = this.props
 
@@ -29,15 +54,7 @@ export default class Publication extends React.PureComponent {
               <span className="amount">{contribution.land_count}</span>{' '}
               &nbsp;LAND
             </Header>
-            <a
-              href={contribution.district ? contribution.district.link : '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button floated="right" size="tiny">
-                Proposal
-              </Button>
-            </a>
+            {this.renderProposalButton()}
           </span>
         </Card.Content>
       </Card>
