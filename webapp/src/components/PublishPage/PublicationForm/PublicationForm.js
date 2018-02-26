@@ -147,7 +147,11 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         <br />
         <div className="text-center">
-          <Button disabled={isPending || isConfirmed} onClick={onCancel}>
+          <Button
+            disabled={isPending || isConfirmed}
+            onClick={onCancel}
+            type="button"
+          >
             Cancel
           </Button>
           <Button

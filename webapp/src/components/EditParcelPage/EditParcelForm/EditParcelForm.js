@@ -80,7 +80,9 @@ export default class EditParcelPage extends React.PureComponent {
         </Form.Field>
         <br />
         <div className="text-center">
-          <Button onClick={onCancel}>Cancel</Button>
+          <Button type="button" onClick={onCancel}>
+            Cancel
+          </Button>
           <Button type="submit" primary={true}>
             Submit
           </Button>
