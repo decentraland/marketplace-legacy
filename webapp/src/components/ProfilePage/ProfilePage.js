@@ -183,7 +183,7 @@ export default class ProfilePage extends React.PureComponent {
           {isLoading ? this.renderLoading() : this.renderGrid()}
         </Container>
         <Container textAlign="center" className="pagination">
-          {isEmpty ? null : (
+          {isEmpty || pages <= 1 ? null : (
             <Pagination
               activePage={page}
               firstItem={null}
