@@ -11,6 +11,7 @@ import {
 } from './actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { buildCoordinate } from 'lib/utils'
 import { toParcelObject } from './utils'
 import { loadingReducer } from 'modules/loading/reducer'
@@ -97,19 +98,25 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case TRANSFER_PARCEL_SUCCESS: {
-      const { x, y, newOwner } = action.transfer
-      const parcelId = buildCoordinate(x, y)
-      const parcel = state.data[parcelId]
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [parcel.id]: {
-            ...parcel,
-            owner: newOwner
+    case FETCH_TRANSACTION_SUCCESS: {
+      const actionRef = action.transaction.action
+
+      switch (actionRef.type) {
+        case TRANSFER_PARCEL_SUCCESS: {
+          const { parcel, newOwner } = action.transfer
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [parcel.id]: {
+                ...state.data[parcel.id],
+                owner: newOwner.toLowerCase()
+              }
+            }
           }
         }
+        default:
+          return state
       }
     }
     default:

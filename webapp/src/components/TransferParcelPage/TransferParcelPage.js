@@ -1,46 +1,56 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { Container, Header, Grid } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
 
-import EditParcelForm from './EditParcelForm'
-import './EditParcelPage.css'
+import TransferParcelForm from './TransferParcelForm'
 
-export default class EditParcelPage extends React.PureComponent {
+import './TransferParcelPage.css'
+
+export default class TransferParcelPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    error: PropTypes.string,
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    onCleanTransfer: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, onSubmit, onCancel } = this.props
+    const { x, y, error } = this.props
+    const { onSubmit, onCancel, onCleanTransfer } = this.props
 
     return (
-      <div className="EditParcelPage">
+      <div className="TransferParcelPage">
         <Navbar />
         <Parcel x={x} y={y} ownerOnly>
           {parcel => (
             <React.Fragment>
               <Container text textAlign="center">
                 <Header as="h2" size="huge" className="title">
-                  Edit LAND
+                  Transfer LAND
                 </Header>
-                <span className="subtitle">
-                  Set a name and description for{' '}
+                <div className="subtitle">
+                  You&#39;re about to transfer&nbsp;
                   <ParcelName size="small" parcel={parcel} />
-                </span>
+                  <br />
+                  Remember that transfering LAND is an irreversible operation.<br />
+                  Please check the address carefully<br />
+                </div>
               </Container>
               <br />
               <Container text>
                 <Grid.Column>
-                  <EditParcelForm
+                  <TransferParcelForm
                     parcel={parcel}
+                    error={error}
                     onSubmit={onSubmit}
                     onCancel={onCancel}
+                    onCleanTransfer={onCleanTransfer}
                   />
                 </Grid.Column>
               </Container>

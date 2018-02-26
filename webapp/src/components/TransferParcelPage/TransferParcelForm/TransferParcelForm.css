@@ -1,0 +1,7 @@
+.TransferParcelForm .ui.button {
+  padding: 12px 42px;
+}
+
+.TransferParcelForm .ui.button + .ui.button {
+  margin-left: 20px;
+}

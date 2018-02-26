@@ -37,16 +37,14 @@ export default class PublishPage extends React.PureComponent {
               </Container>
               <br />
               <Container text>
-                <Grid>
-                  <Grid.Column>
-                    <PublicationForm
-                      parcel={parcel}
-                      publication={publication}
-                      onPublish={onPublish}
-                      onCancel={onCancel}
-                    />
-                  </Grid.Column>
-                </Grid>
+                <Grid.Column>
+                  <PublicationForm
+                    parcel={parcel}
+                    publication={publication}
+                    onPublish={onPublish}
+                    onCancel={onCancel}
+                  />
+                </Grid.Column>
               </Container>
             </React.Fragment>
           )}

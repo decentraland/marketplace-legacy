@@ -21,11 +21,17 @@ export function transferReducer(state = INITIAL_STATE, action) {
       }
     }
     case TRANSFER_PARCEL_SUCCESS: {
+      const { txHash } = action.transfer
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
-        data: action.transfer
+        data: {
+          [txHash]: {
+            ...state.data[txHash],
+            ...action.transfer
+          }
+        }
       }
     }
     case TRANSFER_PARCEL_FAILURE: {

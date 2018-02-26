@@ -7,7 +7,6 @@ export const locations = {
 
   parcelMap: '/:x/:y',
   parcelMapDetail: (x, y, marker) => `/${x}/${y}` + (marker ? `?marker=${marker}` : ''),
-  settings: '/settings',
 
   marketplace: '/marketplace',
 
@@ -17,9 +16,13 @@ export const locations = {
   edit: '/:x/:y/edit',
   editLand: (x, y) => `/${x}/${y}/edit`,
 
+  transfer: '/:x/:y/transfer',
+  transferLand: (x, y) => `/${x}/${y}/transfer`,
+
   parcel: '/:x/:y/detail',
   parcelDetail: (x, y) => `/${x}/${y}/detail`,
 
+  settings: '/settings',
   activity: '/activity',
 
   colorCodes: '/colorCodes',
