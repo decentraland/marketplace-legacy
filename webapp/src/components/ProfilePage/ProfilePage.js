@@ -26,11 +26,8 @@ export default class ProfilePage extends React.PureComponent {
     publications: PropTypes.arrayOf(publicationType),
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
-    sortBy: PropTypes.string.isRequired,
-    sortOrder: PropTypes.string.isRequired,
     onNavigate: PropTypes.func.isRequired,
-    onConnect: PropTypes.func.isRequired,
-    onFetchPublications: PropTypes.func.isRequired
+    onConnect: PropTypes.func.isRequired
   }
 
   componentWillMount() {
