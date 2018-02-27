@@ -28,15 +28,15 @@ const mapState = (state, { location, match }) => {
   const page = getPageFromRouter(location)
   let pagination
   switch (tab) {
-    case PROFILE_PAGE_TABS.PUBLICATIONS: {
+    case PROFILE_PAGE_TABS.publications: {
       pagination = paginate(publications, page)
       break
     }
-    case PROFILE_PAGE_TABS.CONTRIBUTIONS: {
+    case PROFILE_PAGE_TABS.contributions: {
       pagination = paginate(contributions, page)
       break
     }
-    case PROFILE_PAGE_TABS.PARCELS:
+    case PROFILE_PAGE_TABS.parcels:
     default: {
       pagination = paginate(parcels, page)
     }

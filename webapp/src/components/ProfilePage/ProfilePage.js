@@ -76,14 +76,14 @@ export default class ProfilePage extends React.PureComponent {
   renderGrid() {
     const { grid, tab } = this.props
     switch (tab) {
-      case PROFILE_PAGE_TABS.PARCELS: {
+      case PROFILE_PAGE_TABS.parcels: {
         return (
           <Card.Group stackable={true}>
             {grid.map(parcel => <Parcel key={parcel.id} parcel={parcel} />)}
           </Card.Group>
         )
       }
-      case PROFILE_PAGE_TABS.CONTRIBUTIONS: {
+      case PROFILE_PAGE_TABS.contributions: {
         return (
           <Card.Group stackable={true}>
             {grid.map(contribution => (
@@ -95,7 +95,7 @@ export default class ProfilePage extends React.PureComponent {
           </Card.Group>
         )
       }
-      case PROFILE_PAGE_TABS.PUBLICATIONS: {
+      case PROFILE_PAGE_TABS.publications: {
         return (
           <Card.Group stackable={true}>
             {grid.map(publication => (
@@ -151,22 +151,22 @@ export default class ProfilePage extends React.PureComponent {
         <Container>
           <Menu pointing secondary>
             <Menu.Item
-              name={PROFILE_PAGE_TABS.PARCELS}
-              active={tab === PROFILE_PAGE_TABS.PARCELS}
+              name={PROFILE_PAGE_TABS.parcels}
+              active={tab === PROFILE_PAGE_TABS.parcels}
               onClick={this.handleItemClick}
             >
               Parcels{this.renderBadge(parcels)}
             </Menu.Item>
             <Menu.Item
-              name={PROFILE_PAGE_TABS.CONTRIBUTIONS}
-              active={tab === PROFILE_PAGE_TABS.CONTRIBUTIONS}
+              name={PROFILE_PAGE_TABS.contributions}
+              active={tab === PROFILE_PAGE_TABS.contributions}
               onClick={this.handleItemClick}
             >
               Contributions{this.renderBadge(contributions)}
             </Menu.Item>
             <Menu.Item
-              name={PROFILE_PAGE_TABS.PUBLICATIONS}
-              active={tab === PROFILE_PAGE_TABS.PUBLICATIONS}
+              name={PROFILE_PAGE_TABS.publications}
+              active={tab === PROFILE_PAGE_TABS.publications}
               onClick={this.handleItemClick}
             >
               On Sale{this.renderBadge(publications)}

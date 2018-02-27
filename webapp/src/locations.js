@@ -1,14 +1,12 @@
 export const locations = {
   root: '/',
 
-  profile: '/address/:address/:tab',
-  profilePage: (address, tab = PROFILE_PAGE_TABS.PARCELS) =>
+  profile: '/address/:address/:tab?',
+  profilePage: (address, tab = PROFILE_PAGE_TABS.parcels) =>
     `/address/${address}/${tab}`,
 
   parcelMap: '/:x/:y',
-  parcelMapDetail: (x, y, marker) =>
-    `/${x}/${y}` + (marker ? `?marker=${marker}` : ''),
-
+  parcelMapDetail: (x, y, marker) => `/${x}/${y}` + (marker ? `?marker=${marker}` : ''),
   settings: '/settings',
 
   marketplace: '/marketplace',
@@ -32,8 +30,8 @@ export const locations = {
   serverError: '/serverError'
 }
 
-export const PROFILE_PAGE_TABS = {
-  PARCELS: 'parcels',
-  CONTRIBUTIONS: 'contributions',
-  PUBLICATIONS: 'publications'
-}
+export const PROFILE_PAGE_TABS = Object.freeze({
+  parcels: 'parcels',
+  contributions: 'contributions',
+  publications: 'publications'
+})
