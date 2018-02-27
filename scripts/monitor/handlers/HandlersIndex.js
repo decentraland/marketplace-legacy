@@ -9,8 +9,9 @@ export class HandlersIndex {
   /**
    * Get a handler from the handlers hash following the following convention
    *   - operation_name_[actions_...]
+   *   - operation_name
    *   - name_[actions_...]
-   *   - [actions...]
+   *   - name
    * @param  {string} operation - Executed operation
    * @param  {string} [name]    - Main name
    * @param  {Array<string>} [actions=[]] - Possible actions
@@ -18,12 +19,22 @@ export class HandlersIndex {
    */
   get(operation, name, actions = []) {
     const parts = [operation]
+    const slices = [{ start: 0 }]
 
-    if (name) parts.push(name)
-    if (actions.length) parts.push(actions.join('_'))
+    if (name) {
+      parts.push(name)
+      slices.push({ start: 0, end: -1 })
+    }
+    if (actions.length) {
+      parts.push(actions.join('_'))
+      slices.push({ start: 1 })
+    }
 
-    for (let i = 0; i < parts.length; i++) {
-      const handlerName = parts.slice(i).join('_')
+    if (name) slices.push({ start: 1, end: -1 })
+
+    for (let i = 0; i < slices.length; i++) {
+      const { start, end } = slices[i]
+      const handlerName = parts.slice(start, end).join('_')
       const handler = this.handlers[handlerName]
 
       if (handler) {

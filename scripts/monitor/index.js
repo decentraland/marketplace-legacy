@@ -8,7 +8,7 @@ import { loadEnv } from '../../scripts/utils'
 
 const log = new Log('main')
 
-loadEnv()
+loadEnv('../../src/.env')
 
 Promise.resolve()
   .then(() => {
