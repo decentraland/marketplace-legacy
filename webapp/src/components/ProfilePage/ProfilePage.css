@@ -12,11 +12,11 @@
   margin-left: 10px;
 }
 
-.ProfilePage .content {
+.ProfilePage .profile-menu {
   margin-top: 23px;
 }
 
-.ProfilePage .publications {
+.ProfilePage .profile-grid {
   position: relative;
   margin-top: 50px;
   min-height: 200px;

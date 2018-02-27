@@ -156,7 +156,7 @@ export default class ProfilePage extends React.PureComponent {
     return (
       <div className="ProfilePage">
         <Navbar />
-        <Container className="content">
+        <Container className="profile-menu">
           <Menu pointing secondary>
             <Menu.Item
               name={PROFILE_PAGE_TABS.parcels}
@@ -191,7 +191,7 @@ export default class ProfilePage extends React.PureComponent {
             )}
           </Menu>
         </Container>
-        <Container className="publications">
+        <Container className="profile-grid">
           {isEmpty && !isLoading ? this.renderEmpty() : null}
           {isLoading ? this.renderLoading() : this.renderGrid()}
         </Container>
