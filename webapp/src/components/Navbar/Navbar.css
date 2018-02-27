@@ -46,6 +46,31 @@
   height: 52px;
 }
 
+.Navbar .navbar-menu .item {
+  color: var(--purple) !important;
+  transition: none;
+}
+
+.Navbar .navbar-menu .item.active,
+.Navbar .navbar-menu .item:hover {
+  background-color: var(--purple) !important;
+  color: white !important;
+  transition: none;
+}
+
+.Navbar .navbar-menu .item .label {
+  background-color: var(--purple) !important;
+  color: white !important;
+  transition: none;
+}
+
+.Navbar .navbar-menu .item.active .label,
+.Navbar .navbar-menu .item:hover .label {
+  background-color: white !important;
+  color: var(--purple) !important;
+  transition: none;
+}
+
 @media (max-width: 800px) {
   .Navbar {
     justify-content: flex-start;
