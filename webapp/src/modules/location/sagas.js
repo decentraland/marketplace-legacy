@@ -1,4 +1,4 @@
-import { takeLatest, put } from 'redux-saga/effects'
+import { takeLatest, put, select } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { NAVIGATE_TO } from './actions'
 
@@ -7,5 +7,8 @@ export function* locationSaga() {
 }
 
 function* handleNavigateTo(action) {
-  yield put(push(action.url))
+  const { pathname, search } = yield select(state => state.router.location)
+  if (pathname + search !== action.url) {
+    yield put(push(action.url))
+  }
 }
