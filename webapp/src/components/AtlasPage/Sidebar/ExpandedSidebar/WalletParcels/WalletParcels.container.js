@@ -1,6 +1,7 @@
+import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { locations } from 'locations'
 import { editParcelRequest } from 'modules/parcels/actions'
-import { openModal } from 'modules/ui/actions'
 import { getWallet, isLoading, getError } from 'modules/wallet/selectors'
 
 import WalletParcels from './WalletParcels'
@@ -15,7 +16,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   onEdit: parcel => dispatch(editParcelRequest(parcel)),
-  onTransfer: parcel => dispatch(openModal('TransferModal', parcel))
+  onTransfer: ({ x, y }) => dispatch(push(locations.transferLand(x, y)))
 })
 
 export default connect(mapState, mapDispatch)(WalletParcels)
