@@ -34,6 +34,10 @@ export default class EditParcelForm extends React.PureComponent {
     this.setState({ description: event.target.value })
   }
 
+  handleCancel = () => {
+    this.props.onCancel()
+  }
+
   isFormValid() {
     return !this.state.name || !this.state.description
   }
@@ -54,7 +58,7 @@ export default class EditParcelForm extends React.PureComponent {
   }
 
   render() {
-    const { isTxIdle, onCancel } = this.props
+    const { isTxIdle } = this.props
     const { name, description } = this.state
 
     return (
@@ -85,7 +89,7 @@ export default class EditParcelForm extends React.PureComponent {
         </Form.Field>
         <br />
         <div className="text-center">
-          <Button type="button" onClick={onCancel}>
+          <Button type="button" onClick={this.handleCancel}>
             Cancel
           </Button>
           <Button
