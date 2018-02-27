@@ -2,6 +2,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { getParams } from 'modules/location/selectors'
+import { isEditTransactionIdle } from 'modules/parcels/selectors'
 import { editParcelRequest } from 'modules/parcels/actions'
 import { locations } from 'locations'
 
@@ -13,7 +14,8 @@ const mapState = (state, ownProps) => {
   const y = parseInt(params.y, 10)
   return {
     x,
-    y
+    y,
+    isTxIdle: isEditTransactionIdle(state)
   }
 }
 

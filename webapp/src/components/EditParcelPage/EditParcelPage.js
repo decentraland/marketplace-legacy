@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { Container, Header, Grid } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
+import TxStatus from 'components/TxStatus'
 
 import EditParcelForm from './EditParcelForm'
 import './EditParcelPage.css'
@@ -12,12 +14,13 @@ export default class EditParcelPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    isTxIdle: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, onSubmit, onCancel } = this.props
+    const { x, y, isTxIdle, onSubmit, onCancel } = this.props
 
     return (
       <div className="EditParcelPage">
@@ -30,8 +33,7 @@ export default class EditParcelPage extends React.PureComponent {
                   Edit LAND
                 </Header>
                 <span className="subtitle">
-                  Set a name and description for{' '}
-                  <ParcelName size="small" parcel={parcel} />
+                  Set a name and description for <ParcelName parcel={parcel} />
                 </span>
               </Container>
               <br />
@@ -39,9 +41,11 @@ export default class EditParcelPage extends React.PureComponent {
                 <Grid.Column>
                   <EditParcelForm
                     parcel={parcel}
+                    isTxIdle={isTxIdle}
                     onSubmit={onSubmit}
                     onCancel={onCancel}
                   />
+                  <TxStatus.Parcel parcel={parcel} />
                 </Grid.Column>
               </Container>
             </React.Fragment>

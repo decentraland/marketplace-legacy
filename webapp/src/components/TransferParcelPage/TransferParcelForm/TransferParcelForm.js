@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Form, Input, Message } from 'semantic-ui-react'
-import { TxStatusParcel } from 'components/TxStatusParcel'
 import { parcelType } from 'components/types'
+import TxStatus from 'components/TxStatus'
+import { isTransactionRejectedError } from 'modules/transaction/utils'
 import { preventDefault } from 'lib/utils'
 
 import './TransferParcelForm.css'
@@ -11,7 +12,8 @@ import './TransferParcelForm.css'
 export default class TransferParcelForm extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    error: PropTypes.string,
+    isTxIdle: PropTypes.bool,
+    transferError: PropTypes.string,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCleanTransfer: PropTypes.func.isRequired
@@ -26,12 +28,12 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   handleAddressChange = e => {
-    const { error } = this.props
+    const { transferError } = this.props
     const { address } = this.state
     const newAddress = e.currentTarget.value
 
     if (address !== newAddress) {
-      if (error) this.handleClearFormErrors()
+      if (transferError) this.handleClearFormErrors()
       this.setState({ address: newAddress })
     }
   }
@@ -54,20 +56,27 @@ export default class TransferParcelForm extends React.PureComponent {
     return this.state.address.trim() === ''
   }
 
-  isTransferError() {
-    return !this.props.error.includes('Error: Error:')
+  hasError() {
+    const { transferError } = this.props
+    return transferError && !isTransactionRejectedError(transferError)
+  }
+
+  isExpectedError() {
+    return !this.props.transferError.includes('Error: Error:')
   }
 
   render() {
-    const { parcel, error } = this.props
+    const { isTxIdle, transferError } = this.props
     const { address } = this.state
-    const inputClassName = `address-input ${error ? 'address-input-error' : ''}`
+    const inputClassName = `address-input ${
+      transferError ? 'address-input-transferError' : ''
+    }`
 
     return (
       <Form
         className="TransferParcelForm"
         onSubmit={preventDefault(this.handleSubmit)}
-        error={!!error}
+        error={!!transferError}
       >
         <Form.Field>
           <label>Recipient address</label>
@@ -82,10 +91,10 @@ export default class TransferParcelForm extends React.PureComponent {
             autoFocus={true}
           />
 
-          {error && (
+          {this.hasError() && (
             <Message error onDismiss={this.handleClearFormErrors}>
-              {this.isTransferError() ? (
-                <React.Fragment>{error}</React.Fragment>
+              {this.isExpectedError() ? (
+                <React.Fragment>{transferError}</React.Fragment>
               ) : (
                 <React.Fragment>
                   An unknown error occurred, the details are below.<br />
@@ -97,13 +106,13 @@ export default class TransferParcelForm extends React.PureComponent {
                   >
                     Community Chat
                   </a>.<br />
-                  <div className="error-stack">{error}</div>
+                  <div className="error-stack">{transferError}</div>
                 </React.Fragment>
               )}
             </Message>
           )}
 
-          <TxStatusParcel parcel={parcel} />
+          <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
 
         <br />
@@ -113,7 +122,11 @@ export default class TransferParcelForm extends React.PureComponent {
             Cancel
           </Button>
 
-          <Button type="submit" primary={true} disabled={this.isEmptyAddress()}>
+          <Button
+            type="submit"
+            primary={true}
+            disabled={this.isEmptyAddress() || isTxIdle}
+          >
             Submit
           </Button>
         </div>

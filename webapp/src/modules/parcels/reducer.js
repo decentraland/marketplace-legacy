@@ -80,9 +80,10 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       const parcel = state.data[parcelId]
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
-          [parcelId]: { ...parcel, isEditing: true }
+          [parcelId]: { ...parcel }
         }
       }
     }
@@ -91,9 +92,10 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       const { parcel } = action
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
-          [parcel.id]: { ...parcel, isEditing: false }
+          [parcel.id]: { ...parcel }
         }
       }
     }
@@ -102,7 +104,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
 
       switch (actionRef.type) {
         case TRANSFER_PARCEL_SUCCESS: {
-          const { parcelId, newOwner } = action.transfer
+          const { parcelId, newOwner } = actionRef.transfer
           return {
             ...state,
             data: {

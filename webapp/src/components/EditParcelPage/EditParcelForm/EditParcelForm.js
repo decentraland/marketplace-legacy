@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { Button, Form, Input } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
+import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
 
 import './EditParcelForm.css'
@@ -9,6 +11,7 @@ import './EditParcelForm.css'
 export default class EditParcelForm extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
+    isTxIdle: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
@@ -31,12 +34,12 @@ export default class EditParcelForm extends React.PureComponent {
     this.setState({ description: event.target.value })
   }
 
-  isDisabled() {
+  isFormValid() {
     return !this.state.name || !this.state.description
   }
 
   handleSubmit = () => {
-    if (!this.isDisabled()) {
+    if (!this.isFormValid()) {
       const { parcel, onSubmit } = this.props
       const { name, description } = this.state
       onSubmit({
@@ -51,7 +54,7 @@ export default class EditParcelForm extends React.PureComponent {
   }
 
   render() {
-    const { onCancel } = this.props
+    const { isTxIdle, onCancel } = this.props
     const { name, description } = this.state
 
     return (
@@ -78,13 +81,18 @@ export default class EditParcelForm extends React.PureComponent {
             onChange={this.handleDescriptionChange}
             error={name.length > 140}
           />
+          <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
         <br />
         <div className="text-center">
           <Button type="button" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit" primary={true}>
+          <Button
+            type="submit"
+            primary={true}
+            disabled={this.isFormValid() || isTxIdle}
+          >
             Submit
           </Button>
         </div>

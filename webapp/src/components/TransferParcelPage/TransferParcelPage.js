@@ -5,6 +5,7 @@ import { Container, Header, Grid } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
+import TxStatus from 'components/TxStatus'
 
 import TransferParcelForm from './TransferParcelForm'
 
@@ -14,14 +15,15 @@ export default class TransferParcelPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    error: PropTypes.string,
+    isTxIdle: PropTypes.bool.isRequired,
+    transferError: PropTypes.string,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCleanTransfer: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, error } = this.props
+    const { x, y, isTxIdle, transferError } = this.props
     const { onSubmit, onCancel, onCleanTransfer } = this.props
 
     return (
@@ -36,7 +38,7 @@ export default class TransferParcelPage extends React.PureComponent {
                 </Header>
                 <div className="subtitle">
                   You&#39;re about to transfer&nbsp;
-                  <ParcelName size="small" parcel={parcel} />
+                  <ParcelName parcel={parcel} />
                   <br />
                   Remember that transfering LAND is an irreversible operation.<br />
                   Please check the address carefully<br />
@@ -47,11 +49,13 @@ export default class TransferParcelPage extends React.PureComponent {
                 <Grid.Column>
                   <TransferParcelForm
                     parcel={parcel}
-                    error={error}
+                    isTxIdle={isTxIdle}
+                    transferError={transferError}
                     onSubmit={onSubmit}
                     onCancel={onCancel}
                     onCleanTransfer={onCleanTransfer}
                   />
+                  <TxStatus.Parcel parcel={parcel} />
                 </Grid.Column>
               </Container>
             </React.Fragment>

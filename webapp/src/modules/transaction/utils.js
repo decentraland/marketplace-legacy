@@ -28,3 +28,9 @@ export function buildTransactionAction(hash, payload = {}, events = []) {
     }
   }
 }
+
+export function isTransactionRejectedError(message) {
+  // "Recommended" way to check for rejections
+  // https://github.com/MetaMask/faq/issues/6#issuecomment-264900031
+  return message.includes('User denied transaction signature')
+}

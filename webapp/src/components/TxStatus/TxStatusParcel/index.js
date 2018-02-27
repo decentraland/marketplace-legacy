@@ -1,3 +1,3 @@
-import TxStatusParcel from './TxStatusParcel'
+import TxStatusParcel from './TxStatusParcel.container'
 
 export default TxStatusParcel

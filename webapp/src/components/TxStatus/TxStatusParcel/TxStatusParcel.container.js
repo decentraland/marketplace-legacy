@@ -2,19 +2,14 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { txUtils } from 'decentraland-commons'
 
-import { getParcels } from 'modules/parcels/selectors'
-import { getData as getTransactions } from 'modules/parcels/selectors'
-import { buildCoordinate } from 'lib/utils'
+import { getData as getTransactions } from 'modules/transaction/selectors'
 
 import TxStatusParcel from './TxStatusParcel'
 
-const mapState = (state, { x, y }) => {
-  const parcels = getParcels(state)
-  const parcel = parcels[buildCoordinate(x, y)]
-
+const mapState = (state, { parcel }) => {
   const transactions = getTransactions(state)
-    .filter(tx => tx.payload.parcel.x == x && tx.payload.parcel.y == y)
-    .filter(tx => tx.status === txUtils.TRANSACTION_STATUS.confirmed)
+    .filter(tx => tx.payload.parcel.id === parcel.id)
+    .filter(tx => tx.status === txUtils.TRANSACTION_STATUS.pending)
 
   return {
     parcel,

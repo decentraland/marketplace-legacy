@@ -21,6 +21,7 @@ export default class PublicationForm extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
     parcel: parcelType,
+    isTxIdle: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
@@ -86,7 +87,7 @@ export default class PublicationForm extends React.PureComponent {
   }
 
   render() {
-    const { publication, onCancel } = this.props
+    const { publication, isTxIdle, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
 
     const isConfirmed =
@@ -123,6 +124,12 @@ export default class PublicationForm extends React.PureComponent {
             onChange={this.handleExpiresAtChange}
           />
         </Form.Field>
+        {formErrors.length > 0 ? (
+          <Message error onDismiss={this.handleClearFormErrors}>
+            {formErrors.map((error, index) => <div key={index}>{error}</div>)}
+          </Message>
+        ) : null}
+        <TxStatus.Idle isIdle={isTxIdle} />
         {isPending || isFailure ? (
           <Message icon>
             {isPending && <Icon name="circle notched" loading />}
@@ -134,18 +141,10 @@ export default class PublicationForm extends React.PureComponent {
             </Message.Content>
           </Message>
         ) : null}
-        {formErrors.length > 0 ? (
-          <Message error onDismiss={this.handleClearFormErrors}>
-            {formErrors.map((error, index) => <div key={index}>{error}</div>)}
-          </Message>
-        ) : null}
-        {isConfirmed ? (
-          <Message success>
-            Transaction confirmed!<br />
-            You will be redirected to your activity overview
-          </Message>
-        ) : null}
+        {isConfirmed ? <Message success>Transaction confirmed!</Message> : null}
+
         <br />
+
         <div className="text-center">
           <Button
             disabled={isPending || isConfirmed}
@@ -157,7 +156,7 @@ export default class PublicationForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={isPending || isConfirmed}
+            disabled={isPending || isConfirmed || isTxIdle}
           >
             Submit
           </Button>

@@ -3,7 +3,9 @@ import {
   FETCH_PUBLICATIONS_REQUEST,
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_PUBLICATIONS_FAILURE,
-  PUBLISH_SUCCESS
+  PUBLISH_REQUEST,
+  PUBLISH_SUCCESS,
+  PUBLISH_FAILURE
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
@@ -40,6 +42,14 @@ export function publicationReducer(state = INITIAL_STATE, action) {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: action.error
+      }
+    }
+    case PUBLISH_REQUEST:
+    case PUBLISH_SUCCESS:
+    case PUBLISH_FAILURE: {
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
