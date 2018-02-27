@@ -15,29 +15,39 @@ export default class AddressLink extends React.Component {
     size: PropTypes.number,
     scale: PropTypes.number,
     hasTooltip: PropTypes.bool,
-    isUser: PropTypes.bool
+    isUser: PropTypes.bool,
+    className: PropTypes.string
   }
 
   static defaultProps = {
     link: null,
-    size: 11,
+    size: 6,
     scale: 3,
-    hasTooltip: true
+    hasTooltip: true,
+    className: ''
   }
 
   render() {
-    const { address, link, size, scale, hasTooltip, isUser } = this.props
+    const {
+      address,
+      link,
+      size,
+      scale,
+      hasTooltip,
+      isUser,
+      className
+    } = this.props
 
     return (
       <div
-        className="AddressLink"
+        className={`AddressLink ${className}`}
         data-balloon-pos="up"
         data-balloon={
-          hasTooltip ? (isUser ? 'You!' : shortenAddress(address)) : null
+          hasTooltip ? (isUser ? "It's you!" : shortenAddress(address)) : null
         }
       >
         {address && (
-          <Link to={link ? link : locations.addressDetail(address)}>
+          <Link to={link ? link : locations.profilePage(address)}>
             <Blockie seed={address} size={size} scale={scale} />
           </Link>
         )}

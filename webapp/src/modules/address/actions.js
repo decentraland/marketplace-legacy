@@ -1,3 +1,14 @@
+// Fetch Address
+
+export const FETCH_ADDRESS = 'Fetch Address'
+
+export function fetchAddress(address) {
+  return {
+    type: FETCH_ADDRESS,
+    address
+  }
+}
+
 // Fetch Address Parcels
 
 export const FETCH_ADDRESS_PARCELS_REQUEST = '[Request] Fetch Address Parcels'

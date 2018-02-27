@@ -1,11 +1,13 @@
 export const locations = {
   root: '/',
 
-  address: '/address/:address',
-  addressDetail: address => `/address/${address}`,
+  profile: '/address/:address/:tab',
+  profilePage: (address, tab = PROFILE_PAGE_TABS.PARCELS) =>
+    `/address/${address}/${tab}`,
 
   parcelMap: '/:x/:y',
-  parcelMapDetail: (x, y) => `/${x}/${y}`,
+  parcelMapDetail: (x, y, marker) =>
+    `/${x}/${y}` + (marker ? `?marker=${marker}` : ''),
 
   settings: '/settings',
 
@@ -28,4 +30,10 @@ export const locations = {
   error: '/error',
   walletError: '/walletError',
   serverError: '/serverError'
+}
+
+export const PROFILE_PAGE_TABS = {
+  PARCELS: 'parcels',
+  CONTRIBUTIONS: 'contributions',
+  PUBLICATIONS: 'publications'
 }

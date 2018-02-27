@@ -6,8 +6,9 @@ import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import format from 'date-fns/format'
 
 import { locations } from 'locations'
-import { Header, Card, Button, Icon } from 'semantic-ui-react'
-import TxStatus from 'components/TxStatus'
+import { Header, Card, Button } from 'semantic-ui-react'
+import ParcelName from 'components/ParcelName'
+import AddressLink from 'components/AddressLink'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
@@ -17,10 +18,14 @@ import './Publication.css'
 export default class Publication extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
-    debounce: PropTypes.number
+    debounce: PropTypes.number,
+    isOwnerVisible: PropTypes.bool
+  }
+  static defaultProps = {
+    isOwnerVisible: true
   }
   render() {
-    const { publication, debounce } = this.props
+    const { publication, debounce, isOwnerVisible } = this.props
     const price = (+publication.price).toLocaleString()
 
     const isExpired = publication.expires_at < Date.now()
@@ -37,10 +42,7 @@ export default class Publication extends React.PureComponent {
           </div>
         </Link>
         <Card.Content className="body">
-          <Link to={locations.parcelMapDetail(publication.x, publication.y)}>
-            <Icon name="map" />
-            {publication.x},{publication.y}
-          </Link>
+          <ParcelName x={publication.x} y={publication.y} size="small" />
           <Card.Meta
             title={format(publication.expires_at, 'MMMM Do, YYYY - hh:MMa')}
           >
@@ -48,11 +50,13 @@ export default class Publication extends React.PureComponent {
               ? `Expired ${distanceInWordsToNow(publication.expires_at)} ago`
               : `Expires in ${distanceInWordsToNow(publication.expires_at)}`}
           </Card.Meta>
-          <TxStatus.Icon
-            txHash={publication.tx_hash}
-            txStatus={publication.tx_status}
-            className="tx-status"
-          />
+          {isOwnerVisible && (
+            <AddressLink
+              address={publication.owner}
+              scale={2}
+              className="publication-owner"
+            />
+          )}
         </Card.Content>
         <Card.Content extra>
           <span className="footer">

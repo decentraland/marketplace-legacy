@@ -6,7 +6,8 @@ import { pickAndMap } from './utils'
 
 export const getState = state => state.address
 export const getData = state => getState(state).data
-export const isLoading = state => getState(state).loading.length > 0
+export const getLoading = state => getState(state).loading
+export const isLoading = state => getLoading(state).length > 0
 export const getError = state => getState(state).error
 export const getAddresses = createSelector(
   getData,
@@ -31,8 +32,7 @@ export const getAddresses = createSelector(
         allContributions,
         contributionIds
       )
-
-      const publicationsIds = data[address].publications_ids || []
+      const publicationsIds = data[address].publication_ids || []
       const [publications, publicationsById] = pickAndMap(
         allPublications,
         publicationsIds

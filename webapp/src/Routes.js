@@ -6,6 +6,7 @@ import { locations } from 'locations'
 import HomePage from 'components/HomePage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import MarketplacePage from 'components/MarketplacePage'
+import ProfilePage from 'components/ProfilePage'
 import PublishPage from 'components/PublishPage'
 import EditParcelPage from 'components/EditParcelPage'
 import SettingsPage from 'components/SettingsPage'
@@ -28,6 +29,7 @@ export default function Routes() {
       <Route exact path={locations.parcelMap} component={HomePage} />
       <Route exact path={locations.parcel} component={ParcelDetailPage} />
       <Route exact path={locations.marketplace} component={MarketplacePage} />
+      <Route exact path={locations.profile} component={ProfilePage} />
       <Route exact path={locations.sell} component={PublishPage} />
       <Route exact path={locations.edit} component={EditParcelPage} />
       <Route exact path={locations.settings} component={SettingsPage} />

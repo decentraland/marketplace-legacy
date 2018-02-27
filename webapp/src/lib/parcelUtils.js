@@ -8,7 +8,7 @@ export const COLORS = Object.freeze({
   district: '#73C7E1',
   contribution: '#4A90E2',
   roads: '#39516B',
-  plaza: '#FCFCFC',
+  plaza: '#FBFBF9',
   taken: '#AEDC89',
   unowned: '#F9F7E8',
   loading: '#AAAAAA'

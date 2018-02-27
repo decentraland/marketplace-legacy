@@ -4,6 +4,7 @@ import { parcelType } from 'components/types'
 import debounce from 'lodash.debounce'
 import { buildCoordinate } from 'lib/utils'
 import { getParcelAttributes } from 'lib/parcelUtils'
+import { marker } from 'lib/marker'
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
@@ -66,7 +67,9 @@ export default class ParcelPreview extends React.PureComponent {
       newState.height !== this.oldState.height
     ) {
       const { nw, se } = newState
-      onFetchParcels(nw, se)
+      if (!this.inStore(nw, se, nextProps.parcels)) {
+        onFetchParcels(nw, se)
+      }
       this.oldState = newState
       this.setState(newState)
     }
@@ -78,6 +81,22 @@ export default class ParcelPreview extends React.PureComponent {
     } else if (nextProps.width !== width || nextProps.height !== height) {
       this.shouldRefreshMap = true
     }
+  }
+
+  inStore(nw, se, parcels) {
+    if (!parcels) {
+      return false
+    }
+    for (let x = nw.x; x < se.x; x++) {
+      for (let y = nw.y; y < se.y; y++) {
+        const parcelId = buildCoordinate(x, y)
+        if (!parcels[parcelId]) {
+          return false
+        }
+      }
+    }
+
+    return true
   }
 
   componentDidUpdate() {
@@ -100,6 +119,7 @@ export default class ParcelPreview extends React.PureComponent {
     const { nw, se } = this.state
     const ctx = this.canvas.getContext('2d')
     ctx.clearRect(0, 0, width, height)
+    let markerCenter = null
     for (let px = nw.x; px < se.x; px++) {
       for (let py = nw.y; py < se.y; py++) {
         const cx = width / 2
@@ -118,10 +138,14 @@ export default class ParcelPreview extends React.PureComponent {
               districts
             ))
         const isCenter = px === x && py === y
-        ctx.fillStyle = isCenter ? '#d1344e' : backgroundColor
+        if (isCenter) {
+          markerCenter = { x: rx, y: ry }
+        }
+        ctx.fillStyle = backgroundColor
         ctx.fillRect(rx - size / 2, ry - size / 2, size - 1, size - 1)
       }
     }
+    marker.draw(ctx, markerCenter.x, markerCenter.y, 2)
   }
 
   refCanvas = canvas => {

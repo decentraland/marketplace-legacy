@@ -20,6 +20,7 @@ export default class MapComponent extends React.Component {
       x: PropTypes.string,
       y: PropTypes.string
     }),
+    marker: PropTypes.string,
     onNavigate: PropTypes.func.isRequired,
     onLoading: PropTypes.func.isRequired,
     onRangeChange: PropTypes.func.isRequired,
@@ -62,7 +63,7 @@ export default class MapComponent extends React.Component {
   }
 
   handleMoveEnd = ({ position, bounds }) => {
-    const { onNavigate } = this.props
+    const { marker, onNavigate } = this.props
     const offset = this.getBoundsOffset()
 
     this.fetchParcelRange(
@@ -72,7 +73,7 @@ export default class MapComponent extends React.Component {
       bounds.max.y - offset
     )
 
-    onNavigate(locations.parcelMapDetail(position.x, position.y))
+    onNavigate(locations.parcelMapDetail(position.x, position.y, marker))
   }
 
   handleZoomEnd = zoom => {
@@ -110,7 +111,8 @@ export default class MapComponent extends React.Component {
       districts,
       isReady,
       onSelect,
-      onHover
+      onHover,
+      marker
     } = this.props
     const { x, y } = this.getCenter()
 
@@ -133,6 +135,7 @@ export default class MapComponent extends React.Component {
           onZoomEnd={this.handleZoomEnd}
           onSelect={onSelect}
           onHover={onHover}
+          marker={marker}
         />
       </div>
     ) : (

@@ -33,6 +33,7 @@ export default class ParcelsMap extends React.Component {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     bounds: PropTypes.arrayOf(PropTypes.array),
+    marker: PropTypes.string,
 
     minZoom: PropTypes.number.isRequired,
     maxZoom: PropTypes.number.isRequired,
@@ -115,7 +116,16 @@ export default class ParcelsMap extends React.Component {
   }
 
   createMap(container) {
-    const { x, y, tileSize, minZoom, maxZoom, bounds, zoom } = this.props
+    const {
+      x,
+      y,
+      tileSize,
+      minZoom,
+      maxZoom,
+      bounds,
+      zoom,
+      marker
+    } = this.props
 
     this.map = new L.Map(MAP_ID, {
       minZoom,
@@ -137,7 +147,8 @@ export default class ParcelsMap extends React.Component {
       onMouseDown: this.handleMousedown,
       onMouseUp: this.handleMouseUp,
       onMouseMove: this.handleMouseMove,
-      tileSize: tileSize
+      tileSize,
+      marker
     })
 
     this.map.zoomControl.setPosition('bottomright')
@@ -251,7 +262,8 @@ export default class ParcelsMap extends React.Component {
   }
   // Called by the Parcel Grid on each tile render
   getTileAttributes = (x, y, { wallet, parcels, districts } = this.props) => {
-    const parcel = parcels[buildCoordinate(x, y)]
+    const id = buildCoordinate(x, y)
+    const parcel = parcels[id]
 
     const { backgroundColor, color, label, description } = getParcelAttributes(
       wallet,
@@ -260,6 +272,7 @@ export default class ParcelsMap extends React.Component {
     )
 
     return {
+      id,
       x,
       y,
       color,

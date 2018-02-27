@@ -1,0 +1,33 @@
+.ProfilePage .title {
+  margin-bottom: 10px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProfilePage .title .address {
+  color: var(--gray);
+  font-size: 26px;
+  font-family: 'Source Sans Pro Light';
+  margin-left: 10px;
+}
+
+.ProfilePage .publications {
+  position: relative;
+  margin-top: 50px;
+  min-height: 200px;
+  padding: 1px;
+}
+
+.ProfilePage .pagination {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.ProfilePage .empty {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  color: #aaa;
+  font-style: italic;
+}
