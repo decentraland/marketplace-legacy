@@ -2,8 +2,6 @@
 .ParcelName a {
   display: inline-block;
   margin-top: 0;
-  font-family: 'Source Sans Pro', Helvetica, sans-serif;
-  font-weight: 400;
 }
 
 .ParcelName .marker.icon {
