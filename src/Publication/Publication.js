@@ -21,6 +21,10 @@ export class Publication extends Model {
     cancelled: 'cancelled'
   })
 
+  static isValidStatus(status) {
+    return Object.values(this.STATUS).includes(status)
+  }
+
   static findByOwner(owner) {
     return this.find({ owner })
   }
@@ -29,15 +33,18 @@ export class Publication extends Model {
     return this.find({ x, y }, { created_at: 'DESC' })
   }
 
-  static findLastOpen() {
-    return this.db.query(this.findLastOpenSql())
+  static findByStatus(status) {
+    return this.db.query(this.findByStatusSql(status))
   }
 
-  static findLastOpenSql() {
+  static findOpenSql(status) {
+    if (!this.isValidStatus(status)) {
+      throw new Error(`Trying to filter by invalid status '${status}'`)
+    }
+
     return `
       SELECT * FROM ${this.tableName}
-        WHERE status = '${this.STATUS.open}'
-        ORDER BY created_at DESC
-        LIMIT 1`
+        WHERE status = '${status}'
+        ORDER BY created_at DESC`
   }
 }
