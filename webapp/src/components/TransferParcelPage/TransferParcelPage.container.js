@@ -2,7 +2,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { getTransfer, getError } from 'modules/transfer/selectors'
+import { getError } from 'modules/transfer/selectors'
 import { getParams } from 'modules/location/selectors'
 import { transferParcelRequest, cleanTransfer } from 'modules/transfer/actions'
 import { locations } from 'locations'
@@ -16,8 +16,7 @@ const mapState = (state, ownProps) => {
   return {
     x,
     y,
-    transfer: getTransfer(state),
-    error: getError(state)
+    error: getError(state) // TODO: getErrors(txHash). transferError
   }
 }
 
@@ -29,7 +28,7 @@ const mapDispatch = (dispatch, ownProps) => {
     onSubmit: (parcel, address) =>
       dispatch(transferParcelRequest(parcel, address)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y))),
-    onCleanTransfer: () => dispatch(cleanTransfer())
+    onCleanTransfer: () => dispatch(cleanTransfer()) // TODO: by id
   }
 }
 

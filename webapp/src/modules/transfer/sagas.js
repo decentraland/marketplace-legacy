@@ -1,4 +1,3 @@
-import { delay } from 'redux-saga'
 import { call, select, takeLatest, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-commons'
@@ -33,10 +32,12 @@ function* handleTransferRequest(action) {
     }
 
     const contract = eth.getContract('LANDRegistry')
-    const txHash = yield call(() => contract.transferLand(parcel.x, parcel.y, newOwner))
+    const txHash = yield call(() =>
+      contract.transferLand(parcel.x, parcel.y, newOwner)
+    )
 
-    const transfer = { oldOwner, newOwner, parcel }
-    yield put(transferParcelSuccess(txHash, transfer))
+    const transfer = { txHash, oldOwner, newOwner, parcelId: parcel.id }
+    yield put(transferParcelSuccess(txHash, parcel, transfer))
     yield put(push(locations.activity))
   } catch (error) {
     // "Recommended" way to check for rejections

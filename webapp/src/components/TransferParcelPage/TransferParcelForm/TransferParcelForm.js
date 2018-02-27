@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Form, Input, Message, Icon } from 'semantic-ui-react'
+
+import { Button, Form, Input, Message } from 'semantic-ui-react'
+import { TxStatusParcel } from 'components/TxStatusParcel'
 import { parcelType } from 'components/types'
 import { preventDefault } from 'lib/utils'
 
@@ -44,6 +46,10 @@ export default class TransferParcelForm extends React.PureComponent {
     this.props.onCleanTransfer()
   }
 
+  handleCancel = () => {
+    this.props.onCancel()
+  }
+
   isEmptyAddress() {
     return this.state.address.trim() === ''
   }
@@ -53,7 +59,7 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   render() {
-    const { onCancel, error } = this.props
+    const { parcel, error } = this.props
     const { address } = this.state
     const inputClassName = `address-input ${error ? 'address-input-error' : ''}`
 
@@ -96,14 +102,17 @@ export default class TransferParcelForm extends React.PureComponent {
               )}
             </Message>
           )}
+
+          <TxStatusParcel parcel={parcel} />
         </Form.Field>
 
         <br />
 
         <div className="text-center">
-          <Button type="button" onClick={onCancel}>
+          <Button type="button" onClick={this.handleCancel}>
             Cancel
           </Button>
+
           <Button type="submit" primary={true} disabled={this.isEmptyAddress()}>
             Submit
           </Button>
