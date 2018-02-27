@@ -12,6 +12,10 @@
   margin-left: 10px;
 }
 
+.ProfilePage .content {
+  margin-top: 23px;
+}
+
 .ProfilePage .publications {
   position: relative;
   margin-top: 50px;
@@ -30,4 +34,15 @@
   justify-content: center;
   color: #aaa;
   font-style: italic;
+}
+
+.ProfilePage .profile-owner {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #aaa;
+}
+
+.ProfilePage .profile-owner .AddressLink {
+  height: 20px;
 }

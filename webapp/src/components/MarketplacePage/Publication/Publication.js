@@ -38,6 +38,7 @@ export default class Publication extends React.PureComponent {
               x={publication.x}
               y={publication.y}
               debounce={debounce}
+              size={15}
             />
           </div>
         </Link>

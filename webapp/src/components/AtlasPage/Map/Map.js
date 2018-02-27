@@ -66,6 +66,8 @@ export default class MapComponent extends React.Component {
     const offset = this.getBoundsOffset()
 
     this.fetchParcelRange(
+      position.x,
+      position.y,
       bounds.min.x + offset,
       bounds.min.y + offset,
       bounds.max.x - offset,
@@ -79,7 +81,7 @@ export default class MapComponent extends React.Component {
     this.setState({ zoom })
   }
 
-  fetchParcelRange(minX, minY, maxX, maxY) {
+  fetchParcelRange(centerX, centerY, minX, minY, maxX, maxY) {
     const bounds = parcelUtils.getBounds()
     const { onRangeChange } = this.props
     const nw = {
@@ -90,7 +92,8 @@ export default class MapComponent extends React.Component {
       x: bounds.maxX < maxX ? bounds.maxX : maxX,
       y: bounds.maxY < maxY ? bounds.maxY : maxY
     }
-    onRangeChange(nw, se)
+    const center = { x: centerX, y: centerY }
+    onRangeChange(center, nw, se)
   }
 
   getTileSize() {
@@ -104,14 +107,7 @@ export default class MapComponent extends React.Component {
 
   render() {
     const { zoom } = this.state
-    const {
-      wallet,
-      parcels,
-      districts,
-      isReady,
-      onSelect,
-      marker
-    } = this.props
+    const { wallet, parcels, districts, isReady, onSelect, marker } = this.props
     const { x, y } = this.getCenter()
 
     return isReady ? (

@@ -20,7 +20,7 @@ export default class Parcel extends React.PureComponent {
       <Card className="Parcel">
         <Link to={locations.parcelDetail(parcel.x, parcel.y)}>
           <div className="preview">
-            <ParcelPreview x={parcel.x} y={parcel.y} />
+            <ParcelPreview x={parcel.x} y={parcel.y} size={15} />
           </div>
         </Link>
         <Card.Content className="body">

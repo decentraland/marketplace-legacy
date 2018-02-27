@@ -2,6 +2,10 @@ import { CHANGE_RANGE, SELECT_PARCEL } from './actions'
 
 const INITIAL_STATE = {
   selected: null,
+  center: {
+    x: 0,
+    y: 0
+  },
   range: {
     nw: {
       x: 0,
@@ -24,9 +28,10 @@ export function mapReducer(state = INITIAL_STATE, action) {
       }
     }
     case CHANGE_RANGE: {
-      const { nw, se } = action
+      const { center, nw, se } = action
       return {
         ...state,
+        center,
         range: {
           nw,
           se

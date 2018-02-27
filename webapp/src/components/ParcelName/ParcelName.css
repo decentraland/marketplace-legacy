@@ -3,6 +3,9 @@
   display: inline-block;
   margin-top: 0;
 }
+.ParcelName .name {
+  color: var(--purple);
+}
 
 .ParcelName .marker.icon {
   margin-right: 0.1em !important;

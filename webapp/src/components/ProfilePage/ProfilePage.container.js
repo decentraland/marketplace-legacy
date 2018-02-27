@@ -4,6 +4,7 @@ import { push } from 'react-router-redux'
 import { connectWalletRequest } from 'modules/wallet/actions'
 import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
+import { getWallet } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
 
 import ProfilePage from './ProfilePage'
@@ -11,6 +12,7 @@ import { PROFILE_PAGE_TABS } from 'locations'
 import { getPageFromRouter, paginate } from './utils'
 
 const mapState = (state, { location, match }) => {
+  const wallet = getWallet(state)
   let { address, tab } = match.params
   const addresses = getAddresses(state)
   let parcels = []
@@ -52,7 +54,8 @@ const mapState = (state, { location, match }) => {
     page,
     pages,
     isLoading,
-    isEmpty
+    isEmpty,
+    isOwner: wallet.address === address
   }
 }
 

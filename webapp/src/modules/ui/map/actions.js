@@ -14,9 +14,10 @@ export function selectParcel(x, y) {
 
 export const CHANGE_RANGE = 'Change Range'
 
-export function changeRange(nw, se) {
+export function changeRange(center, nw, se) {
   return {
     type: CHANGE_RANGE,
+    center,
     nw,
     se
   }

@@ -29,8 +29,8 @@ const mapState = (state, { isReady, match, location }) => {
 const mapDispatch = (dispatch, { location }) => ({
   onNavigate: location => dispatch(navigateTo(location)),
   onLoading: () => dispatch(setLoading(true)),
-  onRangeChange: (nw, se) =>
-    setTimeout(() => dispatch(changeRange(nw, se)), 250),
+  onRangeChange: (center, nw, se) =>
+    setTimeout(() => dispatch(changeRange(center, nw, se)), 250),
   onSelect: (x, y) => dispatch(push(locations.parcelDetail(x, y)))
 })
 

@@ -24,7 +24,11 @@ export default class ParcelName extends React.PureComponent {
   render() {
     let { parcel, x, y } = this.props
     if (!parcel && x == null && y == null) {
-      return <div className="ParcelName">Loading&hellip;</div>
+      return (
+        <div className="ParcelName">
+          <span className="name">Loading&hellip;</span>
+        </div>
+      )
     }
     let classes = 'ParcelName'
     let name
@@ -38,7 +42,7 @@ export default class ParcelName extends React.PureComponent {
     }
     return (
       <div className={classes}>
-        {name ? <span>{name}&nbsp;</span> : null}
+        {name ? <span className="name">{name}&nbsp;</span> : null}
         <Link to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}>
           <Icon name="marker" />
           {x}, {y}
