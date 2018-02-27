@@ -4,7 +4,7 @@ import { getWallet, isLoading } from 'modules/wallet/selectors'
 import { connectWalletRequest } from 'modules/wallet/actions'
 import { openModal } from 'modules/ui/actions'
 
-import HomePage from './HomePage'
+import AtlasPage from './AtlasPage'
 
 const mapState = state => {
   return {
@@ -18,4 +18,4 @@ const mapDispatch = dispatch => ({
   onFirstVisit: () => dispatch(openModal('TermsModal'))
 })
 
-export default connect(mapState, mapDispatch)(HomePage)
+export default connect(mapState, mapDispatch)(AtlasPage)

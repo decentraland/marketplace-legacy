@@ -7,43 +7,53 @@ import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
 import TxStatus from 'components/TxStatus'
 
-import EditParcelForm from './EditParcelForm'
-import './EditParcelPage.css'
+import TransferParcelForm from './TransferParcelForm'
 
-export default class EditParcelPage extends React.PureComponent {
+import './TransferParcelPage.css'
+
+export default class TransferParcelPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
+    transferError: PropTypes.string,
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    onCleanTransfer: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, isTxIdle, onSubmit, onCancel } = this.props
+    const { x, y, isTxIdle, transferError } = this.props
+    const { onSubmit, onCancel, onCleanTransfer } = this.props
 
     return (
-      <div className="EditParcelPage">
+      <div className="TransferParcelPage">
         <Navbar />
         <Parcel x={x} y={y} ownerOnly>
           {parcel => (
             <React.Fragment>
               <Container text textAlign="center">
                 <Header as="h2" size="huge" className="title">
-                  Edit LAND
+                  Transfer LAND
                 </Header>
-                <span className="subtitle">
-                  Set a name and description for <ParcelName parcel={parcel} />
-                </span>
+                <div className="subtitle">
+                  You&#39;re about to transfer&nbsp;
+                  <ParcelName parcel={parcel} />
+                  <br />
+                  Remember that transfering LAND is an irreversible operation.<br />
+                  Please check the address carefully<br />
+                </div>
               </Container>
               <br />
               <Container text>
                 <Grid.Column>
-                  <EditParcelForm
+                  <TransferParcelForm
                     parcel={parcel}
                     isTxIdle={isTxIdle}
+                    transferError={transferError}
                     onSubmit={onSubmit}
                     onCancel={onCancel}
+                    onCleanTransfer={onCleanTransfer}
                   />
                   <TxStatus.Parcel parcel={parcel} />
                 </Grid.Column>

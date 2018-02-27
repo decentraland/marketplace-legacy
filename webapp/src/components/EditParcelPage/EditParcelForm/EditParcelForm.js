@@ -1,20 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { Button, Form, Input } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
+import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
 
 import './EditParcelForm.css'
 
-export default class EditParcelPage extends React.PureComponent {
+export default class EditParcelForm extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
+    isTxIdle: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
+
     const { data } = this.props.parcel
     this.state = {
       name: data.name || '',
@@ -30,12 +34,16 @@ export default class EditParcelPage extends React.PureComponent {
     this.setState({ description: event.target.value })
   }
 
-  isDisabled() {
+  handleCancel = () => {
+    this.props.onCancel()
+  }
+
+  isFormValid() {
     return !this.state.name || !this.state.description
   }
 
   handleSubmit = () => {
-    if (!this.isDisabled()) {
+    if (!this.isFormValid()) {
       const { parcel, onSubmit } = this.props
       const { name, description } = this.state
       onSubmit({
@@ -50,7 +58,7 @@ export default class EditParcelPage extends React.PureComponent {
   }
 
   render() {
-    const { onCancel } = this.props
+    const { isTxIdle } = this.props
     const { name, description } = this.state
 
     return (
@@ -77,13 +85,18 @@ export default class EditParcelPage extends React.PureComponent {
             onChange={this.handleDescriptionChange}
             error={name.length > 140}
           />
+          <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
         <br />
         <div className="text-center">
-          <Button type="button" onClick={onCancel}>
+          <Button type="button" onClick={this.handleCancel}>
             Cancel
           </Button>
-          <Button type="submit" primary={true}>
+          <Button
+            type="submit"
+            primary={true}
+            disabled={this.isFormValid() || isTxIdle}
+          >
             Submit
           </Button>
         </div>

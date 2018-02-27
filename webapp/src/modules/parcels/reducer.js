@@ -11,7 +11,7 @@ import {
 } from './actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
-import { buildCoordinate } from 'lib/utils'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { toParcelObject } from './utils'
 import { loadingReducer } from 'modules/loading/reducer'
 
@@ -80,9 +80,10 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       const parcel = state.data[parcelId]
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
-          [parcelId]: { ...parcel, isEditing: true }
+          [parcelId]: { ...parcel }
         }
       }
     }
@@ -91,25 +92,32 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       const { parcel } = action
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
-          [parcel.id]: { ...parcel, isEditing: false }
+          [parcel.id]: { ...parcel }
         }
       }
     }
-    case TRANSFER_PARCEL_SUCCESS: {
-      const { x, y, newOwner } = action.transfer
-      const parcelId = buildCoordinate(x, y)
-      const parcel = state.data[parcelId]
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [parcel.id]: {
-            ...parcel,
-            owner: newOwner
+    case FETCH_TRANSACTION_SUCCESS: {
+      const actionRef = action.transaction.action
+
+      switch (actionRef.type) {
+        case TRANSFER_PARCEL_SUCCESS: {
+          const { parcelId, newOwner } = actionRef.transfer
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [parcelId]: {
+                ...state.data[parcelId],
+                owner: newOwner.toLowerCase()
+              }
+            }
           }
         }
+        default:
+          return state
       }
     }
     default:

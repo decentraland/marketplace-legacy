@@ -21,9 +21,10 @@ export const parcelType = shape({
 })
 
 export const transferType = shape({
-  hash: string,
+  txHash: string,
   oldOwner: string,
-  newOwner: string
+  newOwner: string,
+  parcelId: string
 })
 
 export const districtType = shape({

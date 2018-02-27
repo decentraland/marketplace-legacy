@@ -1,3 +1,5 @@
+import { buildTransactionAction } from 'modules/transaction/utils'
+
 // Transfer Parcel
 
 export const TRANSFER_PARCEL_REQUEST = '[Request] Parcel transfer'
@@ -12,9 +14,10 @@ export function transferParcelRequest(parcel, address) {
   }
 }
 
-export function transferParcelSuccess(transfer) {
+export function transferParcelSuccess(txHash, parcel, transfer) {
   return {
     type: TRANSFER_PARCEL_SUCCESS,
+    ...buildTransactionAction(txHash, { parcel, transfer }),
     transfer
   }
 }

@@ -1,12 +1,13 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+
+import { isTxIdle, getError } from 'modules/transfer/selectors'
 import { getParams } from 'modules/location/selectors'
-import { isEditTransactionIdle } from 'modules/parcels/selectors'
-import { editParcelRequest } from 'modules/parcels/actions'
+import { transferParcelRequest, cleanTransfer } from 'modules/transfer/actions'
 import { locations } from 'locations'
 
-import EditParcelPage from './EditParcelPage'
+import TransferParcelPage from './TransferParcelPage'
 
 const mapState = (state, ownProps) => {
   const params = getParams(ownProps)
@@ -15,7 +16,8 @@ const mapState = (state, ownProps) => {
   return {
     x,
     y,
-    isTxIdle: isEditTransactionIdle(state)
+    isTxIdle: isTxIdle(state),
+    transferError: getError(state)
   }
 }
 
@@ -24,9 +26,11 @@ const mapDispatch = (dispatch, ownProps) => {
   const x = parseInt(params.x, 10)
   const y = parseInt(params.y, 10)
   return {
-    onSubmit: parcel => dispatch(editParcelRequest(parcel)),
-    onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
+    onSubmit: (parcel, address) =>
+      dispatch(transferParcelRequest(parcel, address)),
+    onCancel: () => dispatch(push(locations.parcelDetail(x, y))),
+    onCleanTransfer: () => dispatch(cleanTransfer())
   }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(EditParcelPage))
+export default withRouter(connect(mapState, mapDispatch)(TransferParcelPage))

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from 'semantic-ui-react'
+import { Header, Grid } from 'semantic-ui-react'
 import ParcelName from 'components/ParcelName'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
@@ -22,7 +22,9 @@ export default class ParcelDetail extends React.PureComponent {
       >
         <Grid.Row>
           <Grid.Column width={6}>
-            <ParcelName parcel={parcel} />
+            <Header size="large">
+              <ParcelName parcel={parcel} />
+            </Header>
           </Grid.Column>
           <Grid.Column width={4}>
             <ParcelOwner parcel={parcel} />

@@ -1,13 +1,9 @@
-h1, h2, h3, h4, h5 {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-}
-
 .ui.header {
-  font-family: 'Source Sans Pro Light', Helvetica, sans-serif !important;
+  font-family: 'Source Sans Pro Light', Helvetica, sans-serif;
   font-weight: 400;
-  color: var(--purple) !important;
+  color: var(--purple);
 }
 
 .ui.header.huge {
-  font-size: 42px !important;
+  font-size: 42px;
 }

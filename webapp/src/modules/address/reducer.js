@@ -11,7 +11,6 @@ import {
 } from './actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { buildCoordinate } from 'lib/utils'
 import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 
 const EMPTY_ADDRESS = {
@@ -80,8 +79,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
         error: action.error
       }
     case TRANSFER_PARCEL_SUCCESS: {
-      const { x, y, oldOwner, newOwner } = action.transfer
-      const parcelId = buildCoordinate(x, y)
+      const { oldOwner, newOwner, parcelId } = action.transfer
       const oldOwnerAddress = state.data[oldOwner] || { ...EMPTY_ADDRESS }
       const newOwnerAddress = state.data[newOwner] || { ...EMPTY_ADDRESS }
       return {
