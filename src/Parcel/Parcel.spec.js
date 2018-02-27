@@ -6,6 +6,7 @@ import { db } from '../database'
 import { Parcel } from './Parcel'
 import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
+import { Publication } from '../Publication'
 
 describe('Parcel', function() {
   describe('.buildId', function() {
@@ -25,9 +26,9 @@ describe('Parcel', function() {
   })
 
   describe('.inRange', function() {
-    it('should return an array of parcel states which are on the supplied range', async function() {
-      await new ParcelService().insertMatrix(0, 0, 10, 10)
+    beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
 
+    it('should return an array of parcel states which are on the supplied range', async function() {
       const range = await Parcel.inRange([2, 3], [5, 5])
       const coordinates = range.map(coord => `${coord.x},${coord.y}`)
 
@@ -47,9 +48,51 @@ describe('Parcel', function() {
         '5,5'
       ])
     })
+
+    it('should join the last open publication', async function() {
+      const publication = {
+        tx_hash: '0xdeadbeef',
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        status: Publication.STATUS.open,
+        x: 3,
+        y: 5,
+        owner: '0xdeadbeef33',
+        buyer: null,
+        price: 1500,
+        expires_at: null
+      }
+      await Publication.insert(publication)
+
+      const range = await Parcel.inRange([3, 5], [4, 5])
+
+      expect(range).to.equalRows([
+        {
+          x: 3,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          publication
+        },
+        {
+          x: 4,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          publication: null
+        }
+      ])
+    })
   })
 
-  afterEach(() => db.truncate(Parcel.tableName))
+  afterEach(() =>
+    Promise.all(
+      [Parcel, Publication].map(Model => db.truncate(Model.tableName))
+    )
+  )
 })
 
 describe('ParcelService', function() {

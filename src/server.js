@@ -63,19 +63,22 @@ export async function getParcels(req) {
 }
 
 /**
- * Returns the parcel data for an x,y coordinate
+ * Returns the publications for a parcel
  * @param  {string} x
  * @param  {string} y
- * @return {object}
+ * @return {array}
  */
-app.get('/api/parcels/:x/:y/data', server.handleRequest(getParcelData))
+app.get(
+  '/api/parcels/:x/:y/publications',
+  server.handleRequest(getParcelPublications)
+)
 
-export async function getParcelData(req) {
+export async function getParcelPublications(req) {
   const x = server.extractFromReq(req, 'x')
   const y = server.extractFromReq(req, 'y')
-  const parcel = await Parcel.findInCoordinate(x, y)
+  const publications = await Publication.findInCoordinate(x, y)
 
-  return parcel.data
+  return publications
 }
 
 /**

@@ -1,6 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { coordinates } from './coordinates'
+import { Publication } from '../Publication'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
@@ -44,11 +45,6 @@ export class Parcel extends Model {
     )
   }
 
-  static async findInCoordinate(x, y) {
-    const id = this.buildId(x, y)
-    return await this.findOne({ id })
-  }
-
   static async findByOwner(owner) {
     return await this.find({ owner })
   }
@@ -58,9 +54,13 @@ export class Parcel extends Model {
     const [maxx, maxy] = coordinates.toArray(max)
 
     return await this.db.query(
-      `SELECT * FROM ${this.tableName}
-        WHERE x >= $1 AND y >= $2
-          AND x <= $3 AND y <= $4`,
+      `SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
+        FROM ${this.tableName} as par
+        LEFT JOIN (
+          ${Publication.findOpenSql(Publication.STATUS.open)}
+        ) as pub ON par."x" = pub."x" AND par."y" = pub."y"
+        WHERE par.x >= $1 AND par.y >= $2
+          AND par.x <= $3 AND par.y <= $4`,
       [minx, miny, maxx, maxy]
     )
   }
