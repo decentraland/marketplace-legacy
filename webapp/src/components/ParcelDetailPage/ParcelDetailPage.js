@@ -7,6 +7,7 @@ import Navbar from 'components/Navbar'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
+import { districtType } from 'components/types'
 
 import './ParcelDetailPage.css'
 
@@ -14,7 +15,8 @@ export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
     error: PropTypes.string,
     x: PropTypes.string.isRequired,
-    y: PropTypes.string.isRequired
+    y: PropTypes.string.isRequired,
+    districts: PropTypes.objectOf(districtType).isRequired
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,7 +26,7 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { x, y, error } = this.props
+    const { x, y, error, districts } = this.props
     if (error) {
       return null
     }
@@ -38,7 +40,11 @@ export default class ParcelDetailPage extends React.PureComponent {
                 <ParcelPreview x={parcel.x} y={parcel.y} />
               </div>
               <Container>
-                <ParcelDetail parcel={parcel} isOwner={isOwner} />
+                <ParcelDetail
+                  parcel={parcel}
+                  isOwner={isOwner}
+                  districts={districts}
+                />
               </Container>
             </React.Fragment>
           )}

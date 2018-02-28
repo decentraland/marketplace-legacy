@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getParams } from 'modules/location/selectors'
 import { navigateTo } from 'modules/location/actions'
 import { getError } from 'modules/parcels/selectors'
+import { getDistricts } from 'modules/districts/selectors'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
@@ -11,6 +12,7 @@ const mapState = (state, ownProps) => {
   return {
     x,
     y,
+    districts: getDistricts(state),
     error: getError(state)
   }
 }

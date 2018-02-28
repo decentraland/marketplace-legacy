@@ -1,2 +1,2 @@
-import ParcelOwner from './ParcelOwner.container'
+import ParcelOwner from './ParcelOwner'
 export default ParcelOwner
