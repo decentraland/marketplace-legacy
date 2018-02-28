@@ -8,7 +8,7 @@
   top: 25%;
 }
 
-.SettingsPage .title {
-  margin-top: 30px !important;
+.SettingsPage .ui.header.title {
+  margin-top: 30px;
   margin-bottom: 0;
 }
