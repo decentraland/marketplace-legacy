@@ -1,10 +1,19 @@
-.ParcelName,
+.ParcelName {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  margin-top: 0;
+}
+
 .ParcelName a {
   display: inline-block;
   margin-top: 0;
 }
+
 .ParcelName .name {
   color: var(--purple);
+  white-space: nowrap;
 }
 
 .ParcelName .marker.icon {
