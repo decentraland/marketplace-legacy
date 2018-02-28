@@ -48,7 +48,7 @@ export default class AddressLink extends React.Component {
       >
         {address && (
           <Link to={link ? link : locations.profilePage(address)}>
-            <Blockie seed={address} size={size} scale={scale} />
+            <Blockie seed={address.toLowerCase()} size={size} scale={scale} />
           </Link>
         )}
       </div>

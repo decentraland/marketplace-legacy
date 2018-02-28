@@ -5,7 +5,6 @@ import {
   Menu,
   Container,
   Card,
-  Header,
   Dropdown,
   Pagination,
   Loader,
@@ -127,11 +126,6 @@ export default class MarketplacePage extends React.PureComponent {
     return (
       <div className="MarketplacePage">
         <Navbar />
-        <Container>
-          <Header as="h1" size="huge" textAlign="center" className="title">
-            Marketplace
-          </Header>
-        </Container>
         <Container>
           <Menu pointing secondary>
             <Menu.Item name="Parcels" active onClick={this.handleItemClick} />

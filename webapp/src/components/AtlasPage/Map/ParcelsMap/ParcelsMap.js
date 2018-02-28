@@ -111,7 +111,10 @@ export default class ParcelsMap extends React.Component {
       const { x, y } = this.tileHovered
       this.renderPopup(x, y, nextProps)
     }
-    return this.props.tileSize !== nextProps.tileSize
+    return (
+      this.props.tileSize !== nextProps.tileSize ||
+      this.props.marker !== nextProps.marker
+    )
   }
 
   createMap(container) {
@@ -150,7 +153,7 @@ export default class ParcelsMap extends React.Component {
       marker
     })
 
-    this.map.zoomControl.setPosition('bottomright')
+    this.map.zoomControl.setPosition('topright')
     this.map.setMaxBounds(this.mapCoordinates.toLatLngBounds(bounds))
     this.map.addLayer(this.parcelGrid)
     this.map.setView(this.getLatLng(x, y))

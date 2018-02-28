@@ -14,7 +14,7 @@ import Navbar from 'components/Navbar'
 import Publication from 'components/MarketplacePage/Publication'
 import Parcel from './Parcel'
 import Contribution from './Contribution'
-import { publicationType } from 'components/types'
+import { parcelType, contributionType, publicationType } from 'components/types'
 import { PROFILE_PAGE_TABS } from 'locations'
 import { buildUrl } from './utils'
 
@@ -22,9 +22,19 @@ import './ProfilePage.css'
 
 export default class ProfilePage extends React.PureComponent {
   static propTypes = {
+    address: PropTypes.string,
+    parcels: PropTypes.arrayOf(parcelType),
+    contributions: PropTypes.arrayOf(contributionType),
     publications: PropTypes.arrayOf(publicationType),
+    grid: PropTypes.arrayOf(
+      PropTypes.oneOfType([parcelType, contributionType, publicationType])
+    ),
+    tab: PropTypes.string,
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
+    isLoading: PropTypes.bool,
+    isEmpty: PropTypes.bool,
+    isOwner: PropTypes.bool,
     onNavigate: PropTypes.func.isRequired,
     onConnect: PropTypes.func.isRequired
   }
@@ -140,15 +150,13 @@ export default class ProfilePage extends React.PureComponent {
       isEmpty,
       parcels,
       contributions,
-      publications
+      publications,
+      isOwner
     } = this.props
     return (
       <div className="ProfilePage">
         <Navbar />
-        <Container textAlign="center">
-          <AddressLink address={address} scale={8} />
-        </Container>
-        <Container>
+        <Container className="profile-menu">
           <Menu pointing secondary>
             <Menu.Item
               name={PROFILE_PAGE_TABS.parcels}
@@ -171,9 +179,19 @@ export default class ProfilePage extends React.PureComponent {
             >
               On Sale{this.renderBadge(publications)}
             </Menu.Item>
+            {isOwner ? null : (
+              <Menu.Menu position="right">
+                <span className="profile-owner">
+                  Owned by&nbsp;&nbsp;<AddressLink
+                    address={address}
+                    scale={3}
+                  />
+                </span>
+              </Menu.Menu>
+            )}
           </Menu>
         </Container>
-        <Container className="publications">
+        <Container className="profile-grid">
           {isEmpty && !isLoading ? this.renderEmpty() : null}
           {isLoading ? this.renderLoading() : this.renderGrid()}
         </Container>

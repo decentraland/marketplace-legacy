@@ -1,113 +1,100 @@
+.Navbar {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 94px;
+  justify-content: center;
+  padding: 0px 40px;
+  min-width: 400px;
+}
 
-.navbar {
-  max-width: 1170px;
-  min-height: 50px;
-  padding: 0 20px;
-  margin-right: auto;
-  margin-bottom: 0;
-  border: 1px solid transparent;
-  margin-left: auto;
+.Navbar .navbar-header {
+  position: absolute;
+  left: 40px;
+}
+
+.Navbar .navbar-account {
+  position: absolute;
+  right: 40px;
+}
+
+.Navbar .navbar-icon {
   position: relative;
-  border-radius: 0;
-  background-color: transparent;
-  overflow: hidden;
-  color: #232323;
-}
-
-.navbar-header {
+  width: 52px;
+  height: 52px;
   float: left;
 }
 
-.navbar-logo {
-  padding: 20px 0;
-  float: left;
-  display: block;
+.Navbar .navbar-icon .Icon-decentraland-loading {
+  width: 68px;
+  height: 68px;
+  position: absolute;
+  top: -8px;
+  left: -8px;
 }
 
-.navbar-logo > h1 {
-  margin: 0 10px;
+.Navbar .navbar-logo > h1 {
+  margin: 0 15px;
   font-size: 19px;
   line-height: 50px;
   color: #232323;
-  font-family: "Source Sans Pro SemiBold", Helvetica, sans-serif;
+  font-family: 'Source Sans Pro SemiBold', Helvetica, sans-serif;
 }
 
-.navbar-logo .Icon-decentraland {
+.Navbar .navbar-logo .Icon-decentraland {
   width: 52px;
   height: 52px;
 }
 
-.navbar-container {
-  margin-top: 18px;
-  float: right;
+.Navbar .navbar-menu .item {
+  color: var(--purple) !important;
+  transition: none;
 }
 
-.nav {
-  margin-bottom: 0;
-  padding-left: 0;
-  list-style: none;
+.Navbar .navbar-menu .item.active,
+.Navbar .navbar-menu .item:hover {
+  background-color: var(--purple) !important;
+  color: white !important;
+  transition: none;
 }
 
-.nav.navbar-nav {
-  padding-right: 18px;
+.Navbar .navbar-menu .item .label {
+  background-color: var(--purple) !important;
+  color: white !important;
+  transition: none;
 }
 
-.nav.navbar-nav li {
-  float: left;
+.Navbar .navbar-menu .item.active .label,
+.Navbar .navbar-menu .item:hover .label {
+  background-color: white !important;
+  color: var(--purple) !important;
+  transition: none;
 }
 
-.nav.navbar-nav li a {
-  font-size: 16px;
-  color: #232323;
-}
-
-.nav > li {
-  position: relative;
-  display: block;
-}
-
-.nav > li > a {
-  padding: 10px 5px;
-  line-height: 20px;
-  position: relative;
-  display: block;
-}
-
-.nav > li > a:hover, .nav > li > a:focus {
-  background-color: initial;
-  color: #999;
-}
-
-@media (min-width: 400px) {
-  .navbar-logo {
-    padding: 20px 10px;
+@media (max-width: 800px) {
+  .Navbar {
+    justify-content: flex-start;
   }
-
-  .nav > li > a {
-    padding: 10px;
+  .Navbar .navbar-header {
+    display: none;
   }
 }
 
-@media (min-width: 768px) {
-  .navbar-logo {
-    margin-left: -15px;
+@media (max-width: 550px) {
+  .Navbar {
+    padding: 0px 20px;
   }
 
-  .navbar-container {
-    margin-top: 25px;
+  .Navbar .navbar-account {
+    right: 20px;
   }
 
-  .navbar-right {
-    float: right !important;
-    margin-right: -15px;
+  .Account .balance {
+    display: none;
   }
 
-  .nav.navbar-nav {
-    padding-right: 0;
-    margin: 0;
-  }
-
-  .nav > li > a {
-    padding: 10px 15px;
+  .Navbar .menu a.item {
+    padding: 0.4em 0.7em !important;
+    margin: 0 0.1em !important;
   }
 }

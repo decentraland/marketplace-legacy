@@ -1,0 +1,14 @@
+.Account {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.Account .balance {
+  margin-right: 10px;
+  color: gray;
+}
+
+.Account .AddressLink {
+  height: 28px;
+}

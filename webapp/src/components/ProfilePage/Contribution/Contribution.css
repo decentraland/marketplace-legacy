@@ -47,3 +47,7 @@
 .Contribution .footer:after {
   display: none;
 }
+
+.Contribution .ui.header {
+  color: var(--purple) !important;
+}

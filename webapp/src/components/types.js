@@ -87,3 +87,8 @@ export const contributionType = shape({
   district_id: string,
   land_count: string
 })
+
+export const coordsType = shape({
+  x: number,
+  y: number
+})
