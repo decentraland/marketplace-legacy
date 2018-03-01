@@ -1,0 +1,27 @@
+.ActivityPage {
+}
+
+.ActivityPage .container {
+  padding-top: 20px;
+}
+
+.ActivityPage .section-title {
+  margin-bottom: 10px;
+  font-weight: bolder;
+  overflow: hidden;
+}
+
+.ActivityPage .transaction-list {
+  margin-top: 30px;
+}
+
+.ActivityPage .Badge {
+  float: right;
+}
+
+.ActivityPage .empty {
+  margin-top: 40px;
+  font-size: 16px;
+  text-align: center;
+  color: var(--gray);
+}
