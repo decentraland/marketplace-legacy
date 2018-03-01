@@ -36,7 +36,7 @@ export default class ParcelActions extends React.PureComponent {
           <Icon name="edit" />Edit
         </Button>
         <Button onClick={this.handleTransfer} size="tiny">
-          <Icon name="exchange" />Trasfer
+          <Icon name="exchange" />Transfer
         </Button>
         <Button onClick={this.handleSell} size="tiny">
           <Icon name="tag" />Sell
