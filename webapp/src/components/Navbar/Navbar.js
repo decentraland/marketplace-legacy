@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Menu, Label } from 'semantic-ui-react'
+
+import { Menu } from 'semantic-ui-react'
 import Account from './Account'
 import Icon from 'components/Icon'
+import Badge from 'components/Badge'
 
 import { walletType, coordsType } from 'components/types'
 import { locations, NAVBAR_PAGES } from 'locations'
@@ -49,11 +51,13 @@ export default class Navbar extends React.PureComponent {
   }
 
   renderActivityBadge() {
-    const { activityBadge } = this.props
+    const { activityBadge, activePage } = this.props
+
     if (activityBadge === 0) {
       return null
     }
-    return <Label>{activityBadge}</Label>
+    const isActive = activePage === NAVBAR_PAGES.activity
+    return <Badge color={isActive ? 'white' : 'purple'}>{activityBadge}</Badge>
   }
 
   render() {
