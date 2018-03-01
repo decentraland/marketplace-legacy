@@ -83,3 +83,8 @@
 .text.description {
   color: var(--light-gray);
 }
+
+.parcel-popup .on-sale {
+  font-weight: bold;
+  color: white;
+}

@@ -126,7 +126,8 @@ export default class ParcelsMap extends React.Component {
       maxZoom,
       bounds,
       zoom,
-      marker
+      marker,
+      parcels
     } = this.props
 
     this.map = new L.Map(MAP_ID, {
@@ -150,7 +151,8 @@ export default class ParcelsMap extends React.Component {
       onMouseUp: this.handleMouseUp,
       onMouseMove: this.handleMouseMove,
       tileSize,
-      marker
+      marker,
+      parcels
     })
 
     this.map.zoomControl.setPosition('topright')
@@ -280,7 +282,8 @@ export default class ParcelsMap extends React.Component {
       color,
       backgroundColor,
       label,
-      description
+      description,
+      publication: parcel ? parcel.publication : null
     }
   }
 
@@ -349,7 +352,8 @@ export default class ParcelsMap extends React.Component {
         color,
         label,
         backgroundColor,
-        description
+        description,
+        publication
       } = this.getTileAttributes(x, y, props)
 
       if (this.popupContent) {
@@ -365,6 +369,7 @@ export default class ParcelsMap extends React.Component {
           backgroundColor={backgroundColor}
           label={label}
           description={description}
+          publication={publication}
         />
       )
 

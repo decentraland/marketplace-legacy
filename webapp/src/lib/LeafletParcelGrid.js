@@ -172,13 +172,34 @@ export const LeafletParcelGrid = L.Layer.extend({
     const ctx = this.canvas.getContext('2d')
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     let markerCenter = null
+    const parcelsOnSale = []
     for (let index = 0; index < tiles.length; index++) {
       const tile = tiles[index]
-      const tileId = this.renderTile(tile)
-      if (this.options.marker === tileId) {
-        markerCenter = this.map.latLngToContainerPoint(tile.center)
+      const {
+        id,
+        backgroundColor,
+        publication
+      } = this.options.getTileAttributes(tile.bounds.getNorthWest())
+      const point = this.map.latLngToContainerPoint(tile.center)
+      this.renderTile(point.x, point.y, backgroundColor)
+      if (this.options.marker === id) {
+        markerCenter = point
+      }
+      if (publication) {
+        parcelsOnSale.push(point)
       }
     }
+    parcelsOnSale.forEach(parcelOnSale => {
+      marker.draw(
+        ctx,
+        parcelOnSale.x - this.tileSize / 2,
+        parcelOnSale.y - this.tileSize / 2,
+        2.5,
+        '#5d5890',
+        '#3e396b',
+        '#3e396b'
+      )
+    })
     if (markerCenter) {
       marker.draw(
         ctx,
@@ -192,25 +213,18 @@ export const LeafletParcelGrid = L.Layer.extend({
     }
   },
 
-  renderTile(tile) {
-    const { id, backgroundColor } = this.options.getTileAttributes(
-      tile.bounds.getNorthWest()
-    )
-
+  renderTile(x, y, color) {
     // Render tile
     const ctx = this.canvas.getContext('2d')
-    const point = this.map.latLngToContainerPoint(tile.center)
     const padding = 1
 
-    ctx.fillStyle = backgroundColor
+    ctx.fillStyle = color
     ctx.fillRect(
-      point.x - this.tileSize,
-      point.y - this.tileSize,
+      x - this.tileSize,
+      y - this.tileSize,
       this.tileSize - padding,
       this.tileSize - padding
     )
-
-    return id
   },
 
   getCellPoint(row, col) {

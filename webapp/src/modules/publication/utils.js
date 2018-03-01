@@ -10,7 +10,10 @@ export function toPublicationsObject(publicationsArray) {
 
 export function findPublicationByCoordinates(publications, x, y) {
   return Object.values(publications).find(
-    publication => publication.x === x && publication.y === y
+    publication =>
+      publication.x === x &&
+      publication.y === y &&
+      publication.status === PUBLICATION_STATUS.open
   )
 }
 
