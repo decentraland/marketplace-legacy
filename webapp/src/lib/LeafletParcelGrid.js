@@ -183,7 +183,11 @@ export const LeafletParcelGrid = L.Layer.extend({
       marker.draw(
         ctx,
         markerCenter.x - this.tileSize / 2,
-        markerCenter.y - this.tileSize / 2
+        markerCenter.y - this.tileSize / 2,
+        2.5,
+        '#30d7a9',
+        '#26a582',
+        '#26a582'
       )
     }
   },

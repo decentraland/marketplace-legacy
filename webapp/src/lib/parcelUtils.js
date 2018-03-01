@@ -55,6 +55,15 @@ export function getParcelAttributes(wallet, parcel, districts) {
   }
   const district = getDistrict(parcel, districts)
 
+  // if (parcel.publication) {
+  //   return {
+  //     label: 'On Sale',
+  //     description: parcel.publication.price.toLocaleString() + ' MANA',
+  //     color: 'black',
+  //     backgroundColor: '#d1344e'
+  //   }
+  // }
+
   if (isDistrict(parcel)) {
     if (isRoad(parcel.district_id)) {
       return {

@@ -25,6 +25,13 @@
   overflow: hidden;
 }
 
-.parcel .body {
-  position: relative;
+.Parcel .footer {
+  display: flex;
+  flex-direction: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Parcel .footer a {
+  font-size: 1.2em;
 }
