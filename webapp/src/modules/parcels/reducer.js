@@ -100,11 +100,11 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
-      const actionRef = action.transaction.action
+      const transaction = action.transaction
 
-      switch (actionRef.type) {
+      switch (transaction.actionType) {
         case TRANSFER_PARCEL_SUCCESS: {
-          const { parcelId, newOwner } = actionRef.transfer
+          const { parcelId, newOwner } = transaction.payload
           return {
             ...state,
             data: {
