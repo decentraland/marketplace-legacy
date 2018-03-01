@@ -52,7 +52,11 @@ export function publishRequest(publication = {}) {
 export function publishSuccess(txHash, publication) {
   return {
     type: PUBLISH_SUCCESS,
-    ...buildTransactionAction(txHash, publication),
+    ...buildTransactionAction(txHash, {
+      tx_hash: publication.tx_hash,
+      x: publication.x,
+      y: publication.y
+    }),
     publication
   }
 }

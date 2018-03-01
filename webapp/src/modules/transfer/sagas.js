@@ -39,7 +39,7 @@ function* handleTransferRequest(action) {
     const transfer = { txHash, oldOwner, newOwner, parcelId: parcel.id }
 
     yield put(push(locations.activity))
-    yield put(transferParcelSuccess(txHash, parcel, transfer))
+    yield put(transferParcelSuccess(txHash, transfer, parcel))
   } catch (error) {
     yield put(transferParcelFailure(error.message))
   }

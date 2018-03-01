@@ -10,6 +10,7 @@ import ProfilePage from 'components/ProfilePage'
 import PublishPage from 'components/PublishPage'
 import EditParcelPage from 'components/EditParcelPage'
 import TransferParcelPage from 'components/TransferParcelPage'
+import ActivityPage from 'components/ActivityPage'
 import SettingsPage from 'components/SettingsPage'
 
 import ColorKeyPage from 'components/ColorKeyPage'
@@ -34,6 +35,7 @@ export default function Routes() {
       <Route exact path={locations.sell} component={PublishPage} />
       <Route exact path={locations.edit} component={EditParcelPage} />
       <Route exact path={locations.transfer} component={TransferParcelPage} />
+      <Route exact path={locations.activity} component={ActivityPage} />
       <Route exact path={locations.settings} component={SettingsPage} />
       <Route exact path={locations.colorCodes} component={ColorKeyPage} />
       <Route exact path={locations.privacy} component={PrivacyPage} />

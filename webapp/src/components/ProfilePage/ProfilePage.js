@@ -56,7 +56,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   renderLoading() {
-    return <Loader size="huge" />
+    return <Loader active size="huge" />
   }
 
   renderEmpty() {

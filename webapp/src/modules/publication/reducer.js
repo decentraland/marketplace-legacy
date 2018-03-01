@@ -45,25 +45,39 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       }
     }
     case PUBLISH_REQUEST:
-    case PUBLISH_SUCCESS:
     case PUBLISH_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
       }
     }
+    case PUBLISH_SUCCESS: {
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          [action.publication.tx_hash]: {
+            ...action.publication
+          }
+        }
+      }
+    }
     case FETCH_TRANSACTION_SUCCESS: {
-      const actionRef = action.transaction.action
+      const transaction = action.transaction
 
-      switch (actionRef.type) {
+      switch (transaction.actionType) {
         case PUBLISH_SUCCESS: {
-          const tx_hash = actionRef.publication.tx_hash
+          const tx_hash = transaction.payload.tx_hash
 
           return {
-            ...state.data,
-            [tx_hash]: {
-              ...state.data[tx_hash],
-              ...actionRef.publication
+            ...state,
+            data: {
+              ...state.data,
+              [tx_hash]: {
+                ...state.data[tx_hash]
+              }
             }
           }
         }

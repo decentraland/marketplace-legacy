@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { txUtils } from 'decentraland-commons'
-import dateFormat from 'date-fns/format'
 import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
 
@@ -9,7 +8,7 @@ import { Form, Button, Input, Message, Icon } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 
 import { parcelType, publicationType } from 'components/types'
-import { preventDefault } from 'lib/utils'
+import { preventDefault, formatDate } from 'lib/utils'
 import { ONE_LAND_IN_MANA } from 'lib/land'
 
 import './PublicationForm.css'
@@ -37,7 +36,7 @@ export default class PublicationForm extends React.PureComponent {
 
     this.state = {
       price: '',
-      expiresAt: dateFormat(expiresAt, 'YYYY-MM-DD'),
+      expiresAt: formatDate(expiresAt, 'YYYY-MM-DD'),
       formErrors: []
     }
   }

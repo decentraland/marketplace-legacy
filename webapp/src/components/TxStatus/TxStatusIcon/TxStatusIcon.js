@@ -22,10 +22,12 @@ export default class TxStatusIcon extends React.PureComponent {
     const { txHash, txStatus, className } = this.props
     let iconName = 'check circle outline'
     let iconTooltip = 'Transaction confirmed'
+    let loading = false
 
     if (txStatus === txUtils.TRANSACTION_STATUS.pending) {
-      iconName = 'warning sign'
+      iconName = 'circle notched'
       iconTooltip = 'Transaction pending'
+      loading = true
     } else if (txStatus === txUtils.TRANSACTION_STATUS.failed) {
       iconName = 'remove circle outline'
       iconTooltip = 'Transaction failed'
@@ -40,7 +42,7 @@ export default class TxStatusIcon extends React.PureComponent {
         className={classes}
       >
         <EtherscanLink txHash={txHash}>
-          <Icon name={iconName} className={txStatus} />
+          <Icon name={iconName} loading={loading} className={txStatus} />
         </EtherscanLink>
       </span>
     )

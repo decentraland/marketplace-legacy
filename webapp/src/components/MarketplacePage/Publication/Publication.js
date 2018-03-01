@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-commons'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-import format from 'date-fns/format'
 
 import { locations } from 'locations'
 import { Header, Card, Button } from 'semantic-ui-react'
@@ -12,6 +11,7 @@ import AddressLink from 'components/AddressLink'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import {formatDate} from "lib/utils"
 
 import './Publication.css'
 
@@ -45,7 +45,7 @@ export default class Publication extends React.PureComponent {
         <Card.Content className="body">
           <ParcelName x={publication.x} y={publication.y} size="small" />
           <Card.Meta
-            title={format(publication.expires_at, 'MMMM Do, YYYY - hh:MMa')}
+            title={formatDate(publication.expires_at)}
           >
             {isExpired
               ? `Expired ${distanceInWordsToNow(publication.expires_at)} ago`

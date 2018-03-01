@@ -1,5 +1,5 @@
 import { takeEvery, put, call, select } from 'redux-saga/effects'
-import { txUtils } from 'decentraland-commons'
+import { txUtils, utils } from 'decentraland-commons'
 import {
   FETCH_TRANSACTION_REQUEST,
   fetchTransactionSuccess,
@@ -13,19 +13,23 @@ export function* transactionSaga() {
 }
 
 function* handleTransactionRequest(action = {}) {
-  const hash = getTransactionHashFromAction(action.actionRef)
+  const actionRef = action.action
+  const hash = getTransactionHashFromAction(actionRef)
   const transactions = yield select(getData)
   const transaction = transactions.find(tx => tx.hash === hash)
 
   try {
-    const confirmedTransaction = yield call(() =>
+    let { recepeit, ...tx } = yield call(() =>
       txUtils.getConfirmedTransaction(hash, transaction.events)
     )
+
+    const confirmedTx = utils.omit(tx, ['input', 's', 'r', 'v'])
+    confirmedTx.recepeit = utils.omit(recepeit, 'logsBloom')
 
     yield put(
       fetchTransactionSuccess({
         ...transaction,
-        ...confirmedTransaction
+        ...confirmedTx
       })
     )
   } catch (error) {

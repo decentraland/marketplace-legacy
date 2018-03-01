@@ -44,7 +44,11 @@ export function editParcelRequest(parcel) {
 export function editParcelSuccess(txHash, parcel) {
   return {
     type: EDIT_PARCEL_SUCCESS,
-    ...buildTransactionAction(txHash, parcel),
+    ...buildTransactionAction(txHash, {
+      x: parcel.x,
+      y: parcel.y,
+      data: parcel.data
+    }),
     parcel
   }
 }

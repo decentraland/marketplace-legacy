@@ -1,4 +1,4 @@
-import { takeEvery, select, all, call, put } from 'redux-saga/effects'
+import { takeEvery, select, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth, contracts } from 'decentraland-commons'
 import {
@@ -47,12 +47,9 @@ function* handleParcelRequest(action) {
       throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
     }
 
-    let [parcels, data] = yield all([
-      api.fetchParcels(nw, se),
-      api.fetchParcelData(x, y)
-    ])
+    const parcels = yield call(() => api.fetchParcels(nw, se))
     const parcel = parcels.find(p => p.id === parcelId)
-    Object.assign(parcel, { data })
+
     yield put(fetchParcelSuccess(x, y, parcel))
   } catch (error) {
     console.warn(error)

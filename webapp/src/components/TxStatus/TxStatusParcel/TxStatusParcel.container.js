@@ -1,15 +1,15 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { txUtils } from 'decentraland-commons'
 
 import { getData as getTransactions } from 'modules/transaction/selectors'
+import { isParcelPendingTransaction } from './utils'
 
 import TxStatusParcel from './TxStatusParcel'
 
 const mapState = (state, { parcel }) => {
-  const transactions = getTransactions(state)
-    .filter(tx => tx.payload.parcel.id === parcel.id)
-    .filter(tx => tx.status === txUtils.TRANSACTION_STATUS.pending)
+  const transactions = getTransactions(state).filter(tx =>
+    isParcelPendingTransaction(parcel, tx)
+  )
 
   return {
     parcel,

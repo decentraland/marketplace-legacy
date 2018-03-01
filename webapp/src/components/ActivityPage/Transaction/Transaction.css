@@ -1,0 +1,11 @@
+.Transaction .TxStatusIcon {
+  margin-right: 15px;
+}
+
+.Transaction .text {
+  word-break: break-all;
+}
+
+.Transaction .timestamp {
+  color: var(--gray);
+}

@@ -4,10 +4,10 @@ export const FETCH_TRANSACTION_REQUEST = '[Request] Fetch Transaction'
 export const FETCH_TRANSACTION_SUCCESS = '[Success] Fetch Transaction'
 export const FETCH_TRANSACTION_FAILURE = '[Failure] Fetch Transaction'
 
-export function fetchTransactionRequest(actionRef) {
+export function fetchTransactionRequest(action) {
   return {
     type: FETCH_TRANSACTION_REQUEST,
-    actionRef
+    action
   }
 }
 
