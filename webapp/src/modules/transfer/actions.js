@@ -14,10 +14,14 @@ export function transferParcelRequest(parcel, address) {
   }
 }
 
-export function transferParcelSuccess(txHash, parcel, transfer) {
+export function transferParcelSuccess(txHash, transfer, parcel) {
   return {
     type: TRANSFER_PARCEL_SUCCESS,
-    ...buildTransactionAction(txHash, { parcel, transfer }),
+    ...buildTransactionAction(txHash, {
+      x: parcel.x,
+      y: parcel.y,
+      newOwner: transfer.newOwner
+    }),
     transfer
   }
 }

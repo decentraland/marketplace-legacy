@@ -1,3 +1,5 @@
+import dateFnsFormat from 'date-fns/format'
+
 export function buildCoordinate(x, y) {
   return `${x},${y}`
 }
@@ -50,7 +52,7 @@ export const cancelAnimationFrame =
 
 const prettyAmount = amount => parseFloat(amount.toFixed(1))
 
-export function format(amount, unit = 'MANA') {
+export function formatMana(amount, unit = 'MANA') {
   if (amount < 1000) {
     return `${amount} MANA`
   } else if (amount < 1000000) {
@@ -60,4 +62,8 @@ export function format(amount, unit = 'MANA') {
   } else {
     return `${prettyAmount(amount / 1000000000)}G MANA`
   }
+}
+
+export function formatDate(date, format = 'MMMM Do, YYYY - hh:MMa') {
+  return dateFnsFormat(date, format)
 }

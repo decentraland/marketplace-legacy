@@ -47,26 +47,20 @@
 }
 
 .Navbar .navbar-menu .item {
-  color: var(--purple) !important;
+  color: var(--purple);
   transition: none;
 }
 
-.Navbar .navbar-menu .item.active,
-.Navbar .navbar-menu .item:hover {
-  background-color: var(--purple) !important;
-  color: white !important;
+.Navbar .navbar-menu .ui.menu .item.active,
+.Navbar .navbar-menu .ui.menu .item:hover {
+  background-color: var(--purple);
+  color: #FFF;
   transition: none;
 }
 
-.Navbar .navbar-menu .item .label {
-  background-color: var(--purple) !important;
-  color: white !important;
-  transition: none;
-}
-
-.Navbar .navbar-menu .item.active .label,
-.Navbar .navbar-menu .item:hover .label {
-  background-color: white !important;
+/* Same as Label color="white" found on Label.css */
+.Navbar .navbar-menu .ui.menu .item:hover .label {
+  background-color: #FFF !important;
   color: var(--purple) !important;
   transition: none;
 }

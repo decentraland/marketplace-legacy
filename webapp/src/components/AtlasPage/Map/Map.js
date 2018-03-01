@@ -132,7 +132,7 @@ export default class MapComponent extends React.Component {
         />
       </div>
     ) : (
-      <Loader size="massive" />
+      <Loader active size="massive" />
     )
   }
 }

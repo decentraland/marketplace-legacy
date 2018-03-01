@@ -1,4 +1,4 @@
-.MarketplacePage .title {
+.MarketplacePage .ui.header.title {
   margin-bottom: 10px !important;
 }
 
@@ -19,4 +19,5 @@
   flex-flow: row nowrap;
   justify-content: center;
   color: var(--gray);
+  font-size: 16px;
 }

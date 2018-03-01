@@ -5,7 +5,7 @@ import {
   FETCH_TRANSACTION_FAILURE
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { getTransactionFromAction, omitTransactionFromAction } from './utils'
+import { getTransactionFromAction } from './utils'
 
 const { TRANSACTION_STATUS } = txUtils
 
@@ -18,8 +18,8 @@ const INITIAL_STATE = {
 export function transactionReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_TRANSACTION_REQUEST: {
-      const transaction = getTransactionFromAction(action.actionRef)
-      const actionRef = omitTransactionFromAction(action.actionRef) // Slimmer state
+      const actionRef = action.action
+      const transaction = getTransactionFromAction(actionRef)
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -28,7 +28,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
           {
             ...transaction,
             timestamp: Date.now(),
-            action: actionRef,
+            actionType: actionRef.type,
             status: TRANSACTION_STATUS.pending
           }
         ]

@@ -12,9 +12,12 @@ import { PROFILE_PAGE_TABS } from 'locations'
 import { getPageFromRouter, paginate } from './utils'
 
 const mapState = (state, { location, match }) => {
-  const wallet = getWallet(state)
   let { address, tab } = match.params
+  const wallet = getWallet(state)
   const addresses = getAddresses(state)
+  const isLoading = getLoading(state).some(action => action.address === address)
+  const page = getPageFromRouter(location)
+
   let parcels = []
   let contributions = []
   let publications = []
@@ -23,11 +26,11 @@ const mapState = (state, { location, match }) => {
     contributions = addresses[address].contributions
     publications = addresses[address].publications
   }
-  const isLoading = getLoading(state).some(action => action.address === address)
+
   if (!Object.values(PROFILE_PAGE_TABS).includes(tab)) {
     tab = PROFILE_PAGE_TABS.parcels
   }
-  const page = getPageFromRouter(location)
+
   let pagination
   switch (tab) {
     case PROFILE_PAGE_TABS.publications: {
@@ -44,6 +47,7 @@ const mapState = (state, { location, match }) => {
     }
   }
   const [grid, isEmpty, pages] = pagination
+
   return {
     address,
     parcels,
