@@ -1,5 +1,5 @@
 .ui.form .input input[type='text'] {
-  color: var(--gray);
+  color: var(--dark-gray);
 }
 
 .ui.form .input.error input[type='text'] {

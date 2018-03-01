@@ -9,6 +9,12 @@
   opacity: 1;
 }
 
-.ui.menu .item.active .ui.label {
-  background: var(--purple);
+.ui.purple.label, .ui.purple.labels .label {
+  background-color: var(--purple) !important;
+  border-color: var(--purple) !important;
+}
+
+.ui.white.label, .ui.white.labels .label {
+  background-color: #FFF !important;
+  color: var(--purple) !important;
 }

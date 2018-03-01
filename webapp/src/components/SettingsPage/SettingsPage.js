@@ -61,7 +61,7 @@ export default class SettingsPage extends React.PureComponent {
         <Navbar />
 
         {isLoading || !address ? (
-          <Loader size="massive" />
+          <Loader active size="massive" />
         ) : hasError ? (
           <p>Whoops, error</p>
         ) : (
