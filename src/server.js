@@ -209,7 +209,10 @@ function connectDatabase() {
 
 function connectEthereum() {
   return eth
-    .connect({ contracts: [contracts.LANDRegistry] })
+    .connect({
+      contracts: [contracts.LANDRegistry],
+      providerUrl: env.get('RPC_URL') // default to localhost
+    })
     .catch(error =>
       console.error(
         '\nCould not connect to the Ethereum node. Some endpoints may not work correctly.',
