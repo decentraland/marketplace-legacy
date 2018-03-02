@@ -3,6 +3,7 @@ const { TRANSACTION_STATUS } = txUtils
 
 export const getState = state => state.transaction
 export const getData = state => getState(state).data
+export const getLoading = state => getState(state).loading
 
 export const getPendingTransactions = state =>
   getTransactionsByStatus(state, TRANSACTION_STATUS.pending)

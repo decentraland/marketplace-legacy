@@ -2,6 +2,10 @@
   margin-right: 15px;
 }
 
+.Transaction i.icon {
+  font-size: 1.2em;
+}
+
 .Transaction .text {
   word-break: break-all;
 }

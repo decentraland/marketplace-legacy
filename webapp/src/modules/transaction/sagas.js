@@ -2,29 +2,38 @@ import { takeEvery, put, call, select } from 'redux-saga/effects'
 import { txUtils, utils } from 'decentraland-commons'
 import {
   FETCH_TRANSACTION_REQUEST,
+  WATCH_LOADING_TRANSACTIONS,
   fetchTransactionSuccess,
   fetchTransactionFailure
 } from './actions'
 import { getTransactionHashFromAction } from './utils'
-import { getData } from './selectors'
+import { getData, getLoading } from './selectors'
 
 export function* transactionSaga() {
   yield takeEvery(FETCH_TRANSACTION_REQUEST, handleTransactionRequest)
+  yield takeEvery(WATCH_LOADING_TRANSACTIONS, handleWatchLoadingTransactions)
+}
+
+const watchIndex = {
+  // hash: true
 }
 
 function* handleTransactionRequest(action = {}) {
-  const actionRef = action.action
-  const hash = getTransactionHashFromAction(actionRef)
+  const hash = getTransactionHash(action)
   const transactions = yield select(getData)
   const transaction = transactions.find(tx => tx.hash === hash)
 
   try {
-    let { recepeit, ...tx } = yield call(() =>
+    watchIndex[hash] = true
+
+    const { recepeit, ...tx } = yield call(() =>
       txUtils.getConfirmedTransaction(hash, transaction.events)
     )
 
     const confirmedTx = utils.omit(tx, ['input', 's', 'r', 'v'])
     confirmedTx.recepeit = utils.omit(recepeit, 'logsBloom')
+
+    delete watchIndex[hash]
 
     yield put(
       fetchTransactionSuccess({
@@ -35,4 +44,22 @@ function* handleTransactionRequest(action = {}) {
   } catch (error) {
     yield put(fetchTransactionFailure(transaction, error.message))
   }
+}
+
+function* handleWatchLoadingTransactions(action) {
+  const transactionRequests = yield select(getLoading)
+
+  for (const action of transactionRequests) {
+    const hash = getTransactionHash(action)
+    if (!watchIndex[hash]) {
+      yield handleTransactionRequest(action)
+    }
+  }
+}
+
+function getTransactionHash(action) {
+  // The second action is the originator of the transaction in the first place
+  // Transfering land for example
+  const actionRef = action.action
+  return getTransactionHashFromAction(actionRef)
 }
