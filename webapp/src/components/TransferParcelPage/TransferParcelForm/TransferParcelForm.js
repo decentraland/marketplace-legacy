@@ -32,7 +32,7 @@ export default class TransferParcelForm extends React.PureComponent {
     const { address } = this.state
     const newAddress = e.currentTarget.value
 
-    if (address !== newAddress) {
+    if (address !== newAddress.toLowerCase()) {
       if (transferError) this.handleClearFormErrors()
       this.setState({ address: newAddress })
     }
@@ -40,7 +40,7 @@ export default class TransferParcelForm extends React.PureComponent {
 
   handleSubmit = () => {
     const { parcel } = this.props
-    const newAddress = this.state.address.trim()
+    const newAddress = this.state.address.trim().toLowerCase()
     this.props.onSubmit(parcel, newAddress)
   }
 

@@ -31,7 +31,8 @@ function* handleConnectWalletRequest(action = {}) {
       yield call(() => connectEthereumWallet())
     }
 
-    const address = yield call(() => eth.getAddress())
+    let address = yield call(() => eth.getAddress())
+    address = address.toLowerCase()
 
     const manaTokenContract = eth.getContract('MANAToken')
     const landRegistryContract = eth.getContract('LANDRegistry')

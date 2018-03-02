@@ -7,7 +7,7 @@ export function getActivePage({ pathname, wallet }) {
   } else if (
     wallet.address &&
     pathname.slice(0, 9) === '/address/' &&
-    pathname.slice(9, 51).toLowerCase() === wallet.address.toLowerCase()
+    pathname.slice(9, 51).toLowerCase() === wallet.address
   ) {
     currentPage = NAVBAR_PAGES.profile
   } else if (/^\/-?\d+\/-?\d+$/gi.test(pathname)) {

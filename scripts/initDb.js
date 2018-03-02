@@ -93,7 +93,7 @@ async function normalizeDistrictEntries() {
   for (const districtEntry of districtEntries) {
     await Contribution.insert({
       id: districtEntry.id,
-      address: districtEntry.address,
+      address: districtEntry.address.toLowerCase(),
       district_id: districtEntry.project_id,
       land_count: districtEntry.lands,
       timestamp: districtEntry.userTimestamp,
