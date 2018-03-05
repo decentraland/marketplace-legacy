@@ -9,27 +9,20 @@ import { transactionReducer as transaction } from 'modules/transaction/reducer'
 import { transferReducer as transfer } from 'modules/transfer/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
+import { analyticsReduceer as analytics } from 'modules/analytics/reducer'
+import { storageReducer } from 'modules/storage/reducer'
 
-export function analytics(state, action) {
-  switch (action.type) {
-    case '@@router/LOCATION_CHANGE':
-      return null
-    // Customize how certain actions report to analytics here
-    default:
-      return action
-  }
-}
-
-//---------
-export const rootReducer = combineReducers({
-  address,
-  districts,
-  parcels,
-  publication,
-  transaction,
-  transfer,
-  ui,
-  wallet,
-  router,
-  analytics
-})
+export const rootReducer = storageReducer(
+  combineReducers({
+    address,
+    districts,
+    parcels,
+    publication,
+    transaction,
+    transfer,
+    ui,
+    wallet,
+    router,
+    analytics
+  })
+)

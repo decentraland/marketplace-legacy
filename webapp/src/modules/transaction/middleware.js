@@ -1,5 +1,5 @@
-import { fetchTransactionRequest } from 'modules/transaction/actions'
-import { isTransactionAction } from 'modules/transaction/utils'
+import { fetchTransactionRequest } from './actions'
+import { isTransactionAction } from './utils'
 
 export function createTransactionMiddleware() {
   return store => next => action => {

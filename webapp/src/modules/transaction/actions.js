@@ -25,3 +25,13 @@ export function fetchTransactionFailure(transaction, error) {
     error
   }
 }
+
+// Watch transactions
+
+export const WATCH_LOADING_TRANSACTIONS = 'Watch loading transactions'
+
+export function watchLoadingTransactions() {
+  return {
+    type: WATCH_LOADING_TRANSACTIONS
+  }
+}

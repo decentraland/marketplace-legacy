@@ -11,6 +11,7 @@ export default class TxStatusIcon extends React.PureComponent {
   static propTypes = {
     txHash: PropTypes.string.isRequired,
     txStatus: PropTypes.string.isRequired,
+    size: PropTypes.string,
     className: PropTypes.string
   }
 
@@ -19,7 +20,7 @@ export default class TxStatusIcon extends React.PureComponent {
   }
 
   render() {
-    const { txHash, txStatus, className } = this.props
+    const { txHash, txStatus, size, className } = this.props
     let iconName = 'check circle outline'
     let iconTooltip = 'Transaction confirmed'
     let loading = false
@@ -42,7 +43,12 @@ export default class TxStatusIcon extends React.PureComponent {
         className={classes}
       >
         <EtherscanLink txHash={txHash}>
-          <Icon name={iconName} loading={loading} className={txStatus} />
+          <Icon
+            name={iconName}
+            loading={loading}
+            size={size}
+            className={txStatus}
+          />
         </EtherscanLink>
       </span>
     )
