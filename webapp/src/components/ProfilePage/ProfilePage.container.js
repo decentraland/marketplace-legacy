@@ -12,7 +12,8 @@ import { PROFILE_PAGE_TABS } from 'locations'
 import { getPageFromRouter, paginate } from './utils'
 
 const mapState = (state, { location, match }) => {
-  let { address, tab } = match.params
+  let { tab } = match.params
+  const address = match.params.address.toLowerCase()
   const wallet = getWallet(state)
   const addresses = getAddresses(state)
   const isLoading = getLoading(state).some(action => action.address === address)

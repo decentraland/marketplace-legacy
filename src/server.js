@@ -93,7 +93,7 @@ app.get(
 
 export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
-  const parcels = await Parcel.findByOwner(address)
+  const parcels = await Parcel.findByOwner(address.toLowerCase())
 
   return utils.mapOmit(parcels, ['created_at', 'updated_at'])
 }
@@ -110,7 +110,9 @@ app.get(
 
 export async function getAddressContributions(req) {
   const address = server.extractFromReq(req, 'address')
-  const contributions = await Contribution.findGroupedByAddress(address)
+  const contributions = await Contribution.findGroupedByAddress(
+    address.toLowerCase()
+  )
 
   return utils.mapOmit(contributions, [
     'message',
@@ -132,7 +134,7 @@ app.get(
 
 export async function getAddressPublications(req) {
   const address = server.extractFromReq(req, 'address')
-  const publications = await Publication.findByOwner(address)
+  const publications = await Publication.findByOwner(address.toLowerCase())
 
   return utils.mapOmit(publications, ['updated_at'])
 }

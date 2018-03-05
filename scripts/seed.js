@@ -154,13 +154,13 @@ function generateEthereumAddress() {
     ])
   }
 
-  return '0x' + address
+  return ('0x' + address).toLowerCase()
 }
 
 function generateEthereumTxHash() {
   const seed = Math.floor(Math.random())
   const hash = eth.utils.sha3(seed)
-  return hash.toString('hex')
+  return hash.toString('hex').toLowerCase()
 }
 
 db
