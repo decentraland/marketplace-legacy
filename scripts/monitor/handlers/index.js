@@ -90,11 +90,15 @@ export async function transform_LANDRegistry(event) {
     }
     case 'Transfer': {
       const { to } = event.args
+      const [x, y] = Parcel.splitId(id)
 
       debounceById(id, () => {
         console.log(
           `[LANDRegistry-Transfer] Updating "${id}" owner with "${to}"`
         )
+        Publication.update({ status: Publication.STATUS.cancelled }, {
+          x, y
+        })
         Parcel.update({ owner: to.toLowerCase() }, { id })
       })
       break
