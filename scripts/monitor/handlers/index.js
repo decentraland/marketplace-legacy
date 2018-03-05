@@ -34,11 +34,11 @@ export async function transform_Marketplace(event) {
       })
       break
     }
-    case 'AuctionSuccessfull': {
+    case 'AuctionSuccessful': {
       const { totalPrice, winner } = event.args
 
       console.log(
-        `[Marketplace-AuctionSuccessfull] Publication ${id} sold to ${winner}`
+        `[Marketplace-AuctionSuccessful] Publication ${id} sold to ${winner}`
       )
 
       await Publication.update(
