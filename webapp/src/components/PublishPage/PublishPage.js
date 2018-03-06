@@ -7,8 +7,6 @@ import Navbar from 'components/Navbar'
 import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
 import TxStatus from 'components/TxStatus'
-import EtherscanLink from 'components/EtherscanLink'
-import { getMarketplaceAddress } from 'modules/wallet/utils'
 
 import { publicationType, walletType } from 'components/types'
 import { locations } from 'locations'
