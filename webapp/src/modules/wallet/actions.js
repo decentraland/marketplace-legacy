@@ -81,3 +81,14 @@ export function authorizeLandFailure(error) {
     error
   }
 }
+
+// Update derivation path
+
+export const UPDATE_DERIVATION_PATH = 'Update derivation path'
+
+export function updateDerivationPath(derivationPath) {
+  return {
+    type: UPDATE_DERIVATION_PATH,
+    derivationPath
+  }
+}

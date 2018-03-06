@@ -3,7 +3,8 @@ import {
   CONNECT_WALLET_SUCCESS,
   CONNECT_WALLET_FAILURE,
   APPROVE_MANA_SUCCESS,
-  AUTHORIZE_LAND_SUCCESS
+  AUTHORIZE_LAND_SUCCESS,
+  UPDATE_DERIVATION_PATH
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
@@ -13,7 +14,8 @@ const INITIAL_STATE = {
     address: null,
     balance: null,
     approvedBalance: null,
-    isLandAuthorized: null
+    isLandAuthorized: null,
+    derivationPath: null
   },
   loading: [],
   error: null
@@ -65,6 +67,13 @@ export function walletReducer(state = INITIAL_STATE, action) {
           return state
       }
     }
+    case UPDATE_DERIVATION_PATH:
+      return {
+        data: {
+          ...state.data,
+          derivationPath: action.derivationPath
+        }
+      }
     default:
       return state
   }
