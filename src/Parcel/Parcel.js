@@ -45,10 +45,6 @@ export class Parcel extends Model {
     )
   }
 
-  // static async findByOwner(owner) {
-  //   return await this.find({ owner })
-  // }
-
   static async findByOwner(owner) {
     return await this.db.query(
       `SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
