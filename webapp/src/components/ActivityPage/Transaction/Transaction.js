@@ -54,11 +54,11 @@ export default class Transaction extends React.PureComponent {
         const { name, description } = data
         return (
           <React.Fragment>
-            You edited
+            You edited&nbsp;
             <Link to={locations.parcelDetail(x, y)}>
               {x}, {y}
-            </Link>&nbsp; with the name &quot;<i>{name}</i>&quot; and
-            description &quot;<i>{description}</i>&quot;
+            </Link>&nbsp;with the name &quot;<i>{name}</i>&quot; and description
+            &quot;<i>{description}</i>&quot;
           </React.Fragment>
         )
       }

@@ -25,7 +25,7 @@ export async function transform_Marketplace(event) {
         tx_hash: transactionHash,
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: Publication.STATUS.open,
-        owner: creator,
+        owner: creator.toLowerCase(),
         buyer: null,
         price: eth.utils.fromWei(priceInWei.toNumber()),
         expires_at: new Date(expiresAt),
@@ -34,17 +34,17 @@ export async function transform_Marketplace(event) {
       })
       break
     }
-    case 'AuctionSuccessfull': {
+    case 'AuctionSuccessful': {
       const { totalPrice, winner } = event.args
 
       console.log(
-        `[Marketplace-AuctionSuccessfull] Publication ${id} sold to ${winner}`
+        `[Marketplace-AuctionSuccessful] Publication ${id} sold to ${winner}`
       )
 
       await Publication.update(
         {
           status: Publication.STATUS.sold,
-          buyer: winner,
+          buyer: winner.toLowerCase(),
           price: eth.utils.fromWei(totalPrice.toNumber())
         },
         { id }
@@ -90,12 +90,16 @@ export async function transform_LANDRegistry(event) {
     }
     case 'Transfer': {
       const { to } = event.args
+      const [x, y] = Parcel.splitId(id)
 
       debounceById(id, () => {
         console.log(
           `[LANDRegistry-Transfer] Updating "${id}" owner with "${to}"`
         )
-        Parcel.update({ owner: to }, { id })
+        Publication.update({ status: Publication.STATUS.cancelled }, {
+          x, y
+        })
+        Parcel.update({ owner: to.toLowerCase() }, { id })
       })
       break
     }

@@ -16,6 +16,7 @@ import {
 } from './actions'
 import { fetchAddress } from 'modules/address/actions'
 import { fetchDistrictsRequest } from 'modules/districts/actions'
+import { watchLoadingTransactions } from 'modules/transaction/actions'
 
 import { connectEthereumWallet, getMarketplaceAddress } from './utils'
 
@@ -31,7 +32,8 @@ function* handleConnectWalletRequest(action = {}) {
       yield call(() => connectEthereumWallet())
     }
 
-    const address = yield call(() => eth.getAddress())
+    let address = yield call(() => eth.getAddress())
+    address = address.toLowerCase()
 
     const manaTokenContract = eth.getContract('MANAToken')
     const landRegistryContract = eth.getContract('LANDRegistry')
@@ -56,6 +58,7 @@ function* handleConnectWalletRequest(action = {}) {
 function* handleConnectWalletSuccess(address) {
   yield put(fetchAddress(address))
   yield put(fetchDistrictsRequest())
+  yield put(watchLoadingTransactions())
 }
 
 function* handleApproveManaRequest(action) {
