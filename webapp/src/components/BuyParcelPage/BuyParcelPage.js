@@ -105,7 +105,7 @@ export default class BuyParcelPage extends React.PureComponent {
                           <br />
                           Please go to{' '}
                           <Link to={locations.settings}>Settings</Link> and
-                          approve some more MANA.
+                          approve some MANA.
                         </React.Fragment>
                       )}
                     </Message>
