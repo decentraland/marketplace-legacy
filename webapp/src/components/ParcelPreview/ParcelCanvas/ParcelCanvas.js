@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { parcelType } from 'components/types'
 import debounce from 'lodash.debounce'
 import { buildCoordinate } from 'lib/utils'
-import { getParcelAttributes } from 'lib/parcelUtils'
+import { getParcelAttributes, inBounds } from 'lib/parcelUtils'
 import { marker } from 'lib/marker'
 
 export default class ParcelPreview extends React.PureComponent {
@@ -90,7 +90,7 @@ export default class ParcelPreview extends React.PureComponent {
     for (let x = nw.x; x < se.x; x++) {
       for (let y = nw.y; y < se.y; y++) {
         const parcelId = buildCoordinate(x, y)
-        if (!parcels[parcelId]) {
+        if (!parcels[parcelId] && inBounds(x, y)) {
           return false
         }
       }
@@ -115,6 +115,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
+    console.log('rendermap')
     const { width, height, x, y, size, wallet, districts, parcels } = this.props
     const { nw, se } = this.state
     const ctx = this.canvas.getContext('2d')

@@ -16,10 +16,10 @@ export const COLORS = Object.freeze({
 
 export function getBounds() {
   return {
-    minX: -153,
-    minY: -153,
-    maxX: 153,
-    maxY: 153
+    minX: -150,
+    minY: -150,
+    maxX: 150,
+    maxY: 150
   }
 }
 
@@ -54,15 +54,6 @@ export function getParcelAttributes(wallet, parcel, districts) {
     }
   }
   const district = getDistrict(parcel, districts)
-
-  // if (parcel.publication) {
-  //   return {
-  //     label: 'On Sale',
-  //     description: parcel.publication.price.toLocaleString() + ' MANA',
-  //     color: 'black',
-  //     backgroundColor: '#d1344e'
-  //   }
-  // }
 
   if (isDistrict(parcel)) {
     if (isRoad(parcel.district_id)) {

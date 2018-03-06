@@ -14,6 +14,12 @@ export const locations = {
   sell: '/:x/:y/sell',
   sellLand: (x, y) => `/${x}/${y}/sell`,
 
+  buy: '/:x/:y/buy',
+  buyLand: (x, y) => `/${x}/${y}/buy`,
+
+  cancelSale: '/:x/:y/cancel-sale',
+  cancelSaleLand: (x, y) => `/${x}/${y}/cancel-sale`,
+
   edit: '/:x/:y/edit',
   editLand: (x, y) => `/${x}/${y}/edit`,
 

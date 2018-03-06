@@ -4,10 +4,16 @@ import { eth } from 'decentraland-commons'
 import {
   FETCH_PUBLICATIONS_REQUEST,
   PUBLISH_REQUEST,
+  BUY_REQUEST,
+  CANCEL_SALE_REQUEST,
   fetchPublicationsSuccess,
   fetchPublicationsFailure,
   publishSuccess,
-  publishFailure
+  publishFailure,
+  buySuccess,
+  buyFailure,
+  cancelSaleSuccess,
+  cancelSaleFailure
 } from './actions'
 import { locations } from 'locations'
 import { api } from 'lib/api'
@@ -15,6 +21,8 @@ import { api } from 'lib/api'
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
   yield takeEvery(PUBLISH_REQUEST, handlePublishRequest)
+  yield takeEvery(BUY_REQUEST, handleBuyRequest)
+  yield takeEvery(CANCEL_SALE_REQUEST, handleCancelSaleRequest)
 }
 
 function* handlePublicationsRequest(action) {
@@ -52,5 +60,41 @@ function* handlePublishRequest(action) {
     yield put(push(locations.activity))
   } catch (error) {
     yield put(publishFailure(error.message))
+  }
+}
+
+function* handleBuyRequest(action) {
+  try {
+    const { x, y } = action.publication
+
+    const marketplaceContract = eth.getContract('Marketplace')
+    const landRegistryContract = eth.getContract('LANDRegistry')
+
+    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
+
+    const txHash = yield call(() => marketplaceContract.executeOrder(assetId))
+
+    yield put(buySuccess(txHash))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(buyFailure(error.message))
+  }
+}
+
+function* handleCancelSaleRequest(action) {
+  try {
+    const { x, y } = action.publication
+
+    const marketplaceContract = eth.getContract('Marketplace')
+    const landRegistryContract = eth.getContract('LANDRegistry')
+
+    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
+
+    const txHash = yield call(() => marketplaceContract.cancelOrder(assetId))
+
+    yield put(cancelSaleSuccess(txHash))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(cancelSaleFailure(error.message))
   }
 }

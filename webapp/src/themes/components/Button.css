@@ -30,3 +30,14 @@
   box-shadow: 0 8px 30px #30d7a980;
   color: #fff;
 }
+
+.ui.button.negative {
+  background-color: var(--red) !important;
+  border: none;
+}
+
+.ui.button.negative:hover,
+.ui.button.negative:visited {
+  background-color: var(--red);
+  box-shadow: 0 8px 30px var(--dark-red);
+}

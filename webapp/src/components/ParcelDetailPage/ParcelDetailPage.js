@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { locations } from 'locations'
 import { Container } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import ParcelPreview from 'components/ParcelPreview'
@@ -16,17 +15,19 @@ export default class ParcelDetailPage extends React.PureComponent {
     error: PropTypes.string,
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
-    districts: PropTypes.objectOf(districtType).isRequired
+    districts: PropTypes.objectOf(districtType).isRequired,
+    onError: PropTypes.func.isRequired,
+    onBuy: PropTypes.func.isRequired
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
-      return this.props.onNavigate(locations.root)
+      return this.props.onError(nextProps.error)
     }
   }
 
   render() {
-    const { x, y, error, districts } = this.props
+    const { x, y, error, districts, publications, onBuy } = this.props
     if (error) {
       return null
     }
@@ -44,6 +45,8 @@ export default class ParcelDetailPage extends React.PureComponent {
                   parcel={parcel}
                   isOwner={isOwner}
                   districts={districts}
+                  publications={publications}
+                  onBuy={onBuy}
                 />
               </Container>
             </React.Fragment>

@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { parcelType } from 'components/types'
+import { parcelType, publicationType } from 'components/types'
 import { Button, Icon } from 'semantic-ui-react'
 import './ParcelActions.css'
 
 export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
+    publications: PropTypes.objectOf(publicationType),
     onTransfer: PropTypes.func.isRequired
   }
 
@@ -20,9 +21,18 @@ export default class ParcelActions extends React.PureComponent {
     onEdit(parcel)
   }
 
+  isOnSale() {
+    const { parcel, publications } = this.props
+    return parcel.publication_tx_hash in publications
+  }
+
   handleSell = () => {
-    const { parcel, onSell } = this.props
-    onSell(parcel)
+    const { parcel, onSell, onCancelSale } = this.props
+    if (this.isOnSale()) {
+      onCancelSale(parcel)
+    } else {
+      onSell(parcel)
+    }
   }
 
   render() {
@@ -39,7 +49,8 @@ export default class ParcelActions extends React.PureComponent {
           <Icon name="exchange" />Transfer
         </Button>
         <Button onClick={this.handleSell} size="tiny">
-          <Icon name="tag" />Sell
+          <Icon name={this.isOnSale() ? 'cancel' : 'tag'} />
+          {this.isOnSale() ? 'Cancel sale' : 'sell'}
         </Button>
       </span>
     )

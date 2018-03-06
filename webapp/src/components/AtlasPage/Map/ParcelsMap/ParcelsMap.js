@@ -8,7 +8,12 @@ import isEqual from 'lodash/isEqual'
 import { LeafletMapCoordinates } from 'lib/LeafletMapCoordinates'
 import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
 
-import { walletType, parcelType, districtType } from 'components/types'
+import {
+  walletType,
+  parcelType,
+  districtType,
+  publicationType
+} from 'components/types'
 
 import ParcelPopup from './ParcelPopup'
 import { buildCoordinate, requestAnimationFrame } from 'lib/utils'
@@ -25,6 +30,7 @@ export default class ParcelsMap extends React.Component {
     wallet: walletType.isRequired,
     parcels: PropTypes.objectOf(parcelType).isRequired,
     districts: PropTypes.objectOf(districtType).isRequired,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     center: PropTypes.shape({
       x: PropTypes.string,
       y: PropTypes.string
@@ -265,7 +271,11 @@ export default class ParcelsMap extends React.Component {
     return this.getTileAttributes(x, y)
   }
   // Called by the Parcel Grid on each tile render
-  getTileAttributes = (x, y, { wallet, parcels, districts } = this.props) => {
+  getTileAttributes = (
+    x,
+    y,
+    { wallet, parcels, districts, publications } = this.props
+  ) => {
     const id = buildCoordinate(x, y)
     const parcel = parcels[id]
 
@@ -275,6 +285,11 @@ export default class ParcelsMap extends React.Component {
       districts
     )
 
+    const publication =
+      parcel && parcel.publication_tx_hash in publications
+        ? publications[parcel.publication_tx_hash]
+        : null
+
     return {
       id,
       x,
@@ -283,7 +298,7 @@ export default class ParcelsMap extends React.Component {
       backgroundColor,
       label,
       description,
-      publication: parcel ? parcel.publication : null
+      publication
     }
   }
 

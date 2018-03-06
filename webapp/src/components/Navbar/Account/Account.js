@@ -17,7 +17,9 @@ export default class Account extends React.PureComponent {
     }
     return (
       <span className="Account">
-        <span className="balance">{formatMana(wallet.balance)}</span>
+        <span title={wallet.balance} className="balance">
+          {formatMana(wallet.balance)}
+        </span>
         <AddressLink
           scale={4}
           link={locations.settings}

@@ -67,3 +67,67 @@ export function publishFailure(error) {
     error
   }
 }
+
+// Buy LAND
+
+export const BUY_REQUEST = '[Request] Buy LAND'
+export const BUY_SUCCESS = '[Success] Buy LAND'
+export const BUY_FAILURE = '[Failure] Buy LAND'
+
+export function buyRequest(publication = {}) {
+  return {
+    type: BUY_REQUEST,
+    publication
+  }
+}
+
+export function buySuccess(txHash, publication) {
+  return {
+    type: BUY_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      tx_hash: publication.tx_hash,
+      x: publication.x,
+      y: publication.y
+    }),
+    publication
+  }
+}
+
+export function buyFailure(error) {
+  return {
+    type: BUY_FAILURE,
+    error
+  }
+}
+
+// Cancel LAND Sale
+
+export const CANCEL_SALE_REQUEST = '[Request] Cancel LAND Sale'
+export const CANCEL_SALE_SUCCESS = '[Success] Cancel LAND Sale'
+export const CANCEL_SALE_FAILURE = '[Failure] Cancel LAND Sale'
+
+export function cancelSaleRequest(publication = {}) {
+  return {
+    type: CANCEL_SALE_REQUEST,
+    publication
+  }
+}
+
+export function cancelSaleSuccess(txHash, publication) {
+  return {
+    type: CANCEL_SALE_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      tx_hash: publication.tx_hash,
+      x: publication.x,
+      y: publication.y
+    }),
+    publication
+  }
+}
+
+export function cancelSaleFailure(error) {
+  return {
+    type: CANCEL_SALE_FAILURE,
+    error
+  }
+}

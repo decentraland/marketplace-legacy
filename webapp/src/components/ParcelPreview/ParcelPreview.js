@@ -17,6 +17,7 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   render() {
+    console.log('pepe')
     return (
       <AutoSizer>
         {props => <ParcelCanvas {...props} {...this.props} />}

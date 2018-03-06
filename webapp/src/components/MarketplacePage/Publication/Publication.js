@@ -11,7 +11,7 @@ import AddressLink from 'components/AddressLink'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
-import {formatDate} from "lib/utils"
+import { formatDate } from 'lib/utils'
 
 import './Publication.css'
 
@@ -23,6 +23,34 @@ export default class Publication extends React.PureComponent {
   }
   static defaultProps = {
     isOwnerVisible: true
+  }
+
+  renderButton({ publication, isExpired }) {
+    let text = 'View'
+    if (publication.status === PUBLICATION_STATUS.sold) {
+      text = 'Sold'
+    }
+    if (publication.status === PUBLICATION_STATUS.canceled) {
+      text = 'Canceled'
+    }
+
+    const isDisabled =
+      isExpired ||
+      publication.status !== PUBLICATION_STATUS.open ||
+      publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
+
+    const button = (
+      <Button floated="right" size="tiny" disabled={isDisabled}>
+        {text}
+      </Button>
+    )
+    return isDisabled ? (
+      button
+    ) : (
+      <Link to={locations.parcelDetail(publication.x, publication.y)}>
+        {button}
+      </Link>
+    )
   }
   render() {
     const { publication, debounce, isOwnerVisible } = this.props
@@ -44,9 +72,7 @@ export default class Publication extends React.PureComponent {
         </Link>
         <Card.Content className="body">
           <ParcelName x={publication.x} y={publication.y} size="small" />
-          <Card.Meta
-            title={formatDate(publication.expires_at)}
-          >
+          <Card.Meta title={formatDate(publication.expires_at)}>
             {isExpired
               ? `Expired ${distanceInWordsToNow(publication.expires_at)} ago`
               : `Expires in ${distanceInWordsToNow(publication.expires_at)}`}
@@ -67,19 +93,7 @@ export default class Publication extends React.PureComponent {
               </span>{' '}
               &nbsp;MANA
             </Header>
-            <Link to={locations.parcelDetail(publication.x, publication.y)}>
-              <Button
-                floated="right"
-                size="tiny"
-                disabled={
-                  isExpired ||
-                  publication.status !== PUBLICATION_STATUS.open ||
-                  publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
-                }
-              >
-                View
-              </Button>
-            </Link>
+            {this.renderButton({ publication, isExpired })}
           </span>
         </Card.Content>
       </Card>

@@ -68,7 +68,7 @@ export default class SettingsForm extends React.PureComponent {
                 ? 'You have a pending transaction'
                 : manaApproved > 0
                   ? 'Unchecking will approve 0 MANA'
-                  : `Check to approve ${MANA_TO_APPROVE} MANA`
+                  : `Check to approve ${MANA_TO_APPROVE.toLocaleString()} MANA`
             }
             data-balloon-length="large"
             data-balloon-pos="left"
@@ -78,8 +78,8 @@ export default class SettingsForm extends React.PureComponent {
           <div className="authorize-detail">
             {manaApproved > 0 ? (
               <React.Fragment>
-                You have {manaApproved} MANA approved to be used by the
-                contract.<br />
+                You have {manaApproved.toLocaleString()} MANA approved to be
+                used by the contract.<br />
                 {!isApprovePending &&
                   manaApproved < MANA_TO_APPROVE && (
                     <span

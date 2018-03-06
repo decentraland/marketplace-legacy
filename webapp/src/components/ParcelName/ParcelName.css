@@ -2,8 +2,7 @@
   max-width: 400px;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: inline-block;
-  margin-top: 0;
+  display: inline;
 }
 
 .ParcelName a {

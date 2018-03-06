@@ -21,6 +21,7 @@ export default class PublicationForm extends React.PureComponent {
     publication: publicationType,
     parcel: parcelType,
     isTxIdle: PropTypes.bool,
+    isDisabled: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
@@ -86,7 +87,7 @@ export default class PublicationForm extends React.PureComponent {
   }
 
   render() {
-    const { publication, isTxIdle, onCancel } = this.props
+    const { publication, isTxIdle, isDisabled, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
 
     const isConfirmed =
@@ -103,6 +104,24 @@ export default class PublicationForm extends React.PureComponent {
         error={!!formErrors}
         success={isConfirmed}
       >
+        <TxStatus.Idle isIdle={isTxIdle} />
+        {isPending || isFailure ? (
+          <Message icon>
+            {isPending && <Icon name="circle notched" loading />}
+            <Message.Content>
+              <TxStatus.Text
+                txHash={publication.tx_hash}
+                txStatus={publication.tx_status}
+              />
+            </Message.Content>
+          </Message>
+        ) : null}
+        {isConfirmed ? (
+          <Message success>
+            This LAND is already on sale for{' '}
+            {(+publication.price).toLocaleString()} MANA
+          </Message>
+        ) : null}
         <Form.Field>
           <label>Price</label>
           <Input
@@ -128,19 +147,6 @@ export default class PublicationForm extends React.PureComponent {
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}
           </Message>
         ) : null}
-        <TxStatus.Idle isIdle={isTxIdle} />
-        {isPending || isFailure ? (
-          <Message icon>
-            {isPending && <Icon name="circle notched" loading />}
-            <Message.Content>
-              <TxStatus.Text
-                txHash={publication.tx_hash}
-                txStatus={publication.tx_status}
-              />
-            </Message.Content>
-          </Message>
-        ) : null}
-        {isConfirmed ? <Message success>Transaction confirmed!</Message> : null}
 
         <br />
 
@@ -155,7 +161,7 @@ export default class PublicationForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={isPending || isConfirmed || isTxIdle}
+            disabled={isPending || isConfirmed || isTxIdle || isDisabled}
           >
             Submit
           </Button>

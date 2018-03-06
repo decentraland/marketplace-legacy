@@ -40,7 +40,7 @@ export default class TransferParcelPage extends React.PureComponent {
                   You&#39;re about to transfer&nbsp;
                   <ParcelName parcel={parcel} />
                   <br />
-                  Remember that transfering LAND is an irreversible operation.<br />
+                  Remember that transferring LAND is an irreversible operation.<br />
                   Please check the address carefully<br />
                 </div>
               </Container>

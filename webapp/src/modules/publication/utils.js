@@ -17,6 +17,13 @@ export function findPublicationByCoordinates(publications, x, y) {
   )
 }
 
+export function toPublicationObject(publicationsArray) {
+  return publicationsArray.reduce((map, publication) => {
+    map[publication.tx_hash] = publication
+    return map
+  }, {})
+}
+
 // From Publication.js on the server
 export const PUBLICATION_STATUS = Object.freeze({
   open: 'open',

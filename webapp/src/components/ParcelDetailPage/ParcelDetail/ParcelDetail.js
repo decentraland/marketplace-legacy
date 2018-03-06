@@ -4,12 +4,14 @@ import { Header, Grid } from 'semantic-ui-react'
 import ParcelName from 'components/ParcelName'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
+import ParcelPublication from './ParcelPublication'
 import { parcelType, districtType } from 'components/types'
 
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
-    districts: PropTypes.objectOf(districtType).isRequired
+    districts: PropTypes.objectOf(districtType).isRequired,
+    onBuy: PropTypes.func.isRequired
   }
 
   getDescription() {
@@ -24,10 +26,24 @@ export default class ParcelDetail extends React.PureComponent {
     return null
   }
 
+  getPublication() {
+    const { parcel, publications } = this.props
+    if (parcel.publication_tx_hash in publications) {
+      return publications[parcel.publication_tx_hash]
+    }
+    return null
+  }
+
+  handleBuy = () => {
+    const { parcel, onBuy } = this.props
+    onBuy(parcel)
+  }
+
   render() {
     const { parcel, districts, isOwner } = this.props
 
     const description = this.getDescription()
+    const publication = this.getPublication()
 
     return (
       <Grid
@@ -42,7 +58,7 @@ export default class ParcelDetail extends React.PureComponent {
               <ParcelName parcel={parcel} />
             </Header>
           </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column width={4} textAlign="right">
             <ParcelOwner parcel={parcel} districts={districts} />
           </Grid.Column>
         </Grid.Row>
@@ -52,6 +68,13 @@ export default class ParcelDetail extends React.PureComponent {
               <ParcelActions parcel={parcel} />
             </Grid.Column>
           </Grid.Row>
+        ) : null}
+        {publication ? (
+          <ParcelPublication
+            publication={publication}
+            isOwner={isOwner}
+            onBuy={this.handleBuy}
+          />
         ) : null}
         <Grid.Row>
           <Grid.Column width={10}>
