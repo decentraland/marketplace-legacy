@@ -115,7 +115,6 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    console.log('rendermap')
     const { width, height, x, y, size, wallet, districts, parcels } = this.props
     const { nw, se } = this.state
     const ctx = this.canvas.getContext('2d')
