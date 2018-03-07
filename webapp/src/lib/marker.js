@@ -1,5 +1,5 @@
 export const marker = {
-  draw(
+  draw({
     ctx,
     x,
     y,
@@ -8,7 +8,7 @@ export const marker = {
     fillSecondary = '#970a09',
     stroke = '#970a09',
     width = 1
-  ) {
+  }) {
     const upperRadius = 5 * scale
     const innerRadius = 2 * scale
     const lowerRadius = 1 * scale

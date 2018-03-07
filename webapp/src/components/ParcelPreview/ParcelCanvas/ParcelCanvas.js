@@ -145,7 +145,7 @@ export default class ParcelPreview extends React.PureComponent {
         ctx.fillRect(rx - size / 2, ry - size / 2, size - 1, size - 1)
       }
     }
-    marker.draw(ctx, markerCenter.x, markerCenter.y, 2)
+    marker.draw({ ctx, x: markerCenter.x, y: markerCenter.y, scale: 2 })
   }
 
   refCanvas = canvas => {

@@ -190,22 +190,19 @@ export const LeafletParcelGrid = L.Layer.extend({
       }
     }
     parcelsOnSale.forEach(parcelOnSale => {
-      marker.draw(
+      this.renderMarker({
         ctx,
-        parcelOnSale.x - this.tileSize / 2,
-        parcelOnSale.y - this.tileSize / 2,
-        2.5,
-        '#5d5890',
-        '#3e396b',
-        '#3e396b'
-      )
+        center: parcelOnSale,
+        fillPrimary: '#5d5890',
+        fillSecondary: '#3e396b',
+        stroke: '#3e396b'
+      })
     })
     if (markerCenter) {
-      marker.draw(
+      this.renderMarker({
         ctx,
-        markerCenter.x - this.tileSize / 2,
-        markerCenter.y - this.tileSize / 2
-      )
+        center: markerCenter
+      })
     }
   },
 
@@ -221,6 +218,18 @@ export const LeafletParcelGrid = L.Layer.extend({
       this.tileSize - padding,
       this.tileSize - padding
     )
+  },
+
+  renderMarker({ ctx, center, fillPrimary, fillSecondary, stroke, scale }) {
+    marker.draw({
+      ctx,
+      x: center.x - this.tileSize / 2,
+      y: center.y - this.tileSize / 2,
+      fillPrimary,
+      fillSecondary,
+      stroke,
+      scale
+    })
   },
 
   getCellPoint(row, col) {
