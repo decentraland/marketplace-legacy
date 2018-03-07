@@ -96,9 +96,13 @@ export async function transform_LANDRegistry(event) {
         console.log(
           `[LANDRegistry-Transfer] Updating "${id}" owner with "${to}"`
         )
-        Publication.update({ status: Publication.STATUS.cancelled }, {
-          x, y
-        })
+        Publication.update(
+          { status: Publication.STATUS.cancelled },
+          {
+            x,
+            y
+          }
+        )
         Parcel.update({ owner: to.toLowerCase() }, { id })
       })
       break

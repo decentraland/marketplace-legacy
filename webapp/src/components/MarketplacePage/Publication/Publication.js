@@ -30,7 +30,7 @@ export default class Publication extends React.PureComponent {
     if (publication.status === PUBLICATION_STATUS.sold) {
       text = 'Sold'
     }
-    if (publication.status === PUBLICATION_STATUS.canceled) {
+    if (publication.status === PUBLICATION_STATUS.cancelled) {
       text = 'Canceled'
     }
 

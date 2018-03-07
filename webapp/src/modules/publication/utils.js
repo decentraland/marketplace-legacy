@@ -28,5 +28,5 @@ export function toPublicationObject(publicationsArray) {
 export const PUBLICATION_STATUS = Object.freeze({
   open: 'open',
   sold: 'sold',
-  canceled: 'canceled'
+  cancelled: 'cancelled'
 })

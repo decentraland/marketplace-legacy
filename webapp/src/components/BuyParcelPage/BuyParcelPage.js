@@ -14,8 +14,8 @@ import './BuyParcelPage.css'
 export default class BuyParcelPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
-    x: PropTypes.isRequired,
-    y: PropTypes.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
