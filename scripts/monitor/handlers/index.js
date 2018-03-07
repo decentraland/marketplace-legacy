@@ -18,7 +18,7 @@ export async function transform_Marketplace(event) {
       const [x, y] = Parcel.splitId(id)
 
       console.log(
-        `[Marketplace-AuctionCreated] Creating publication for ${x} ${y}`
+        `[Marketplace-AuctionCreated] Creating publication for ${x},${y}`
       )
 
       await Publication.insert({
@@ -28,7 +28,7 @@ export async function transform_Marketplace(event) {
         owner: creator.toLowerCase(),
         buyer: null,
         price: eth.utils.fromWei(priceInWei.toNumber()),
-        expires_at: new Date(expiresAt),
+        expires_at: new Date(expiresAt.toNumber()),
         x,
         y
       })
