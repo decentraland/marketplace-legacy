@@ -6,6 +6,8 @@ import Navbar from 'components/Navbar'
 import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
 
+import { formatMana } from 'lib/utils'
+
 import './CancelSalePage.css'
 
 export default class CancelSalePage extends React.PureComponent {
@@ -41,7 +43,7 @@ export default class CancelSalePage extends React.PureComponent {
                     <React.Fragment>
                       is currently on sale for{' '}
                       <strong className="price">
-                        {(+publication.price).toLocaleString()} MANA
+                        {formatMana(publication.price)}
                       </strong>.
                     </React.Fragment>
                   ) : (

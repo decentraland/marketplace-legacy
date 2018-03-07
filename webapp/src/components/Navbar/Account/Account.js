@@ -15,10 +15,12 @@ export default class Account extends React.PureComponent {
     if (!wallet || !wallet.address || wallet.balance == null) {
       return null
     }
+
+    const balance = formatMana(wallet.balance)
     return (
       <span className="Account">
-        <span title={wallet.balance} className="balance">
-          {formatMana(wallet.balance)}
+        <span title={balance} className="balance">
+          {balance}
         </span>
         <AddressLink
           scale={4}

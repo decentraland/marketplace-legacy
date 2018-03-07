@@ -50,18 +50,9 @@ export const cancelAnimationFrame =
   window.msCancelAnimationFrame ||
   (id => clearTimeout(id))
 
-const prettyAmount = amount => parseFloat(amount.toFixed(1))
-
 export function formatMana(amount, unit = 'MANA') {
-  if (amount < 1000) {
-    return `${amount} MANA`
-  } else if (amount < 1000000) {
-    return `${prettyAmount(amount / 1000)}K MANA`
-  } else if (amount < 1000000000) {
-    return `${prettyAmount(amount / 1000000)}M MANA`
-  } else {
-    return `${prettyAmount(amount / 1000000000)}G MANA`
-  }
+  const amountNumber = +amount
+  return `${amountNumber.toLocaleString()} ${unit}`.trim()
 }
 
 export function formatDate(date, format = 'MMMM Do, YYYY - hh:MMa') {

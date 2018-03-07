@@ -7,6 +7,7 @@ import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
 import { walletType } from 'components/types'
 import { locations } from 'locations'
+import { formatMana } from 'lib/utils'
 
 import './BuyParcelPage.css'
 
@@ -48,7 +49,7 @@ export default class BuyParcelPage extends React.PureComponent {
                     <React.Fragment>
                       for{' '}
                       <strong className="price">
-                        {(+publication.price).toLocaleString()} MANA
+                        {formatMana(publication.price)}
                       </strong>
                     </React.Fragment>
                   ) : (
@@ -82,12 +83,12 @@ export default class BuyParcelPage extends React.PureComponent {
                           <h3>
                             <strong>
                               Your approved balance is{' '}
-                              {approvedBalance.toLocaleString()} MANA
+                              {formatMana(approvedBalance)}
                             </strong>
                           </h3>
                           You need at least{' '}
                           <strong className="price">
-                            {(+publication.price).toLocaleString()} MANA
+                            {formatMana(publication.price)}
                           </strong>{' '}
                           in order to buy this LAND.
                           <br />

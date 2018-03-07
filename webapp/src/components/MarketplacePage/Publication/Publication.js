@@ -11,7 +11,7 @@ import AddressLink from 'components/AddressLink'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
-import { formatDate } from 'lib/utils'
+import { formatDate, formatMana } from 'lib/utils'
 
 import './Publication.css'
 
@@ -54,7 +54,6 @@ export default class Publication extends React.PureComponent {
   }
   render() {
     const { publication, debounce, isOwnerVisible } = this.props
-    const price = (+publication.price).toLocaleString()
 
     const isExpired = publication.expires_at < Date.now()
 
@@ -88,10 +87,9 @@ export default class Publication extends React.PureComponent {
         <Card.Content extra>
           <span className="footer">
             <Header size="medium" floated="left" className="price">
-              <span className="amount" title={price}>
-                {price}
-              </span>{' '}
-              &nbsp;MANA
+              <span className="amount" title={formatMana(publication.price)}>
+                {formatMana(publication.price, '')}
+              </span>&nbsp;MANA
             </Header>
             {this.renderButton({ publication, isExpired })}
           </span>

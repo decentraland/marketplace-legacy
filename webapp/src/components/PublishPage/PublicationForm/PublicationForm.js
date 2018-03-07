@@ -8,7 +8,7 @@ import { Form, Button, Input, Message, Icon } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 
 import { parcelType, publicationType } from 'components/types'
-import { preventDefault, formatDate } from 'lib/utils'
+import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { ONE_LAND_IN_MANA } from 'lib/land'
 
 import './PublicationForm.css'
@@ -118,8 +118,7 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         {isConfirmed ? (
           <Message success>
-            This LAND is already on sale for{' '}
-            {(+publication.price).toLocaleString()} MANA
+            This LAND is already on sale for {formatMana(publication.price)}
           </Message>
         ) : null}
         <Form.Field>
