@@ -17,7 +17,7 @@ import {
 
 import ParcelPopup from './ParcelPopup'
 import { buildCoordinate, requestAnimationFrame } from 'lib/utils'
-import { getParcelAttributes } from 'lib/parcelUtils'
+import { getParcelAttributes, hasPublication } from 'lib/parcelUtils'
 
 import './ParcelsMap.css'
 
@@ -285,10 +285,9 @@ export default class ParcelsMap extends React.Component {
       districts
     )
 
-    const publication =
-      parcel && parcel.publication_tx_hash in publications
-        ? publications[parcel.publication_tx_hash]
-        : null
+    const publication = hasPublication(parcel, publications)
+      ? publications[parcel.publication_tx_hash]
+      : null
 
     return {
       id,

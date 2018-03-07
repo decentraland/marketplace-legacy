@@ -44,6 +44,10 @@ export function getDistrict(parcel, districts = {}) {
   return parcel && districts[parcel.district_id]
 }
 
+export function hasPublication(parcel, publications) {
+  return parcel != null && parcel.publication_tx_hash in publications
+}
+
 export function getParcelAttributes(wallet, parcel, districts) {
   if (!parcel) {
     return {

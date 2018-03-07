@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { parcelType, publicationType } from 'components/types'
 import { Button, Icon } from 'semantic-ui-react'
+import { hasPublication } from 'lib/parcelUtils'
 import './ParcelActions.css'
 
 export default class ParcelActions extends React.PureComponent {
@@ -23,7 +24,7 @@ export default class ParcelActions extends React.PureComponent {
 
   isOnSale() {
     const { parcel, publications } = this.props
-    return parcel.publication_tx_hash in publications
+    return hasPublication(parcel, publications)
   }
 
   handleSell = () => {

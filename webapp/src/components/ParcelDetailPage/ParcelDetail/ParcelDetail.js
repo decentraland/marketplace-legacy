@@ -6,6 +6,7 @@ import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelPublication from './ParcelPublication'
 import { parcelType, districtType } from 'components/types'
+import { hasPublication } from 'lib/parcelUtils'
 
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
@@ -28,7 +29,7 @@ export default class ParcelDetail extends React.PureComponent {
 
   getPublication() {
     const { parcel, publications } = this.props
-    if (parcel.publication_tx_hash in publications) {
+    if (hasPublication(parcel, publications)) {
       return publications[parcel.publication_tx_hash]
     }
     return null
