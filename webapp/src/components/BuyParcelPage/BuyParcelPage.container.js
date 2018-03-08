@@ -2,7 +2,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { getParams } from 'modules/location/selectors'
-import { getWallet } from 'modules/wallet/selectors'
+import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import { getPublications, getLoading } from 'modules/publication/selectors'
 import { findPublicationByCoordinates } from 'modules/publication/utils'
 import { BUY_REQUEST, buyRequest } from 'modules/publication/actions'
@@ -22,7 +22,9 @@ const mapState = (state, ownProps) => {
     x,
     y,
     isDisabled: isLoadingType(getLoading(state), BUY_REQUEST),
-    wallet: getWallet(state)
+    wallet: getWallet(state),
+    isConnected: isConnected(state),
+    isLoading: isConnecting(state)
   }
 }
 

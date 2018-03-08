@@ -37,7 +37,9 @@ export const locations = {
 
   error: '/error',
   walletError: '/walletError',
-  serverError: '/serverError'
+  serverError: '/serverError',
+
+  signIn: '/sign-in'
 }
 
 export const PROFILE_PAGE_TABS = Object.freeze({

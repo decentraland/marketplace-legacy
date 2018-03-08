@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { localStorage } from 'lib/localStorage'
 
 export default class Wallet extends React.PureComponent {
   static propTypes = {

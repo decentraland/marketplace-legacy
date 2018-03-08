@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { Link } from 'react-router-dom'
 import { Container, Grid, Header, Loader } from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
 import { getManaToApprove } from 'modules/wallet/utils'
+import { locations } from 'locations'
 
 import './SettingsPage.css'
 
@@ -14,7 +15,7 @@ export default class SettingsPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
     isLoading: PropTypes.bool,
-    hasError: PropTypes.bool,
+    isConnected: PropTypes.bool,
     onApproveMana: PropTypes.func,
     onAuthorizeLand: PropTypes.func,
     onUpdateDerivationPath: PropTypes.func
@@ -55,7 +56,7 @@ export default class SettingsPage extends React.PureComponent {
   }
 
   render() {
-    const { isLoading, hasError, wallet } = this.props
+    const { isLoading, isConnected, wallet } = this.props
     const {
       address,
       type,
@@ -64,21 +65,20 @@ export default class SettingsPage extends React.PureComponent {
       isLandAuthorized
     } = wallet
 
+    if (isLoading) {
+      return <Loader active size="massive" />
+    }
+
     return (
       <div className="SettingsPage">
         <Navbar />
+        <Container text>
+          <Header as="h1" size="huge" textAlign="center" className="title">
+            Settings
+          </Header>
 
-        {isLoading || !address ? (
-          <Loader active size="massive" />
-        ) : hasError ? (
-          <p>Whoops, error</p>
-        ) : (
-          <Container text>
-            <Header as="h1" size="huge" textAlign="center" className="title">
-              Settings
-            </Header>
-
-            <Grid.Column>
+          <Grid.Column>
+            {isConnected ? (
               <SettingsForm
                 address={address}
                 walletType={type}
@@ -91,9 +91,14 @@ export default class SettingsPage extends React.PureComponent {
                 authorizeTransaction={this.getAuthorizeTransaction()}
                 onLandAuthorizedChange={this.handleLandAuthorization}
               />
-            </Grid.Column>
-          </Container>
-        )}
+            ) : (
+              <p className="sign-in">
+                You need to <Link to={locations.signIn}>Sign In</Link> to access
+                this page
+              </p>
+            )}
+          </Grid.Column>
+        </Container>
       </div>
     )
   }

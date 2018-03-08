@@ -18,12 +18,8 @@ export default class Navbar extends React.PureComponent {
     center: coordsType,
     activePage: PropTypes.oneOf(Object.values(NAVBAR_PAGES)),
     isLoading: PropTypes.bool,
+    isConnected: PropTypes.bool,
     activityBadge: PropTypes.number
-  }
-
-  isConnected() {
-    const { wallet } = this.props
-    return !!wallet && !!wallet.address
   }
 
   handleItemClick = (event, data) => {
@@ -61,7 +57,7 @@ export default class Navbar extends React.PureComponent {
   }
 
   render() {
-    const { wallet, activePage, isLoading } = this.props
+    const { wallet, activePage, isLoading, isConnected } = this.props
     return (
       <div className="Navbar" role="navigation">
         <div className="navbar-header">
@@ -91,20 +87,24 @@ export default class Navbar extends React.PureComponent {
             >
               Marketplace
             </Menu.Item>
-            <Menu.Item
-              name="profile"
-              active={activePage === NAVBAR_PAGES.profile}
-              onClick={this.handleItemClick}
-            >
-              My Land
-            </Menu.Item>
-            <Menu.Item
-              name="activity"
-              active={activePage === NAVBAR_PAGES.activity}
-              onClick={this.handleItemClick}
-            >
-              Activity{this.renderActivityBadge()}
-            </Menu.Item>
+            {isConnected ? (
+              <React.Fragment>
+                <Menu.Item
+                  name="profile"
+                  active={activePage === NAVBAR_PAGES.profile}
+                  onClick={this.handleItemClick}
+                >
+                  My Land
+                </Menu.Item>
+                <Menu.Item
+                  name="activity"
+                  active={activePage === NAVBAR_PAGES.activity}
+                  onClick={this.handleItemClick}
+                >
+                  Activity{this.renderActivityBadge()}
+                </Menu.Item>
+              </React.Fragment>
+            ) : null}
           </Menu>
         </div>
         <div className="navbar-account">

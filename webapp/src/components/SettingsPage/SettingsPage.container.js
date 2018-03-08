@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { getWallet, isLoading, getError } from 'modules/wallet/selectors'
+import { getWallet, isConnecting, isConnected } from 'modules/wallet/selectors'
 import {
   approveManaRequest,
   authorizeLandRequest,
@@ -11,8 +11,8 @@ import SettingsPage from './SettingsPage'
 const mapState = state => {
   return {
     wallet: getWallet(state),
-    isLoading: isLoading(state),
-    hasError: !!getError(state)
+    isLoading: isConnecting(state),
+    isConnected: isConnected(state)
   }
 }
 

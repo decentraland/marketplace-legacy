@@ -11,11 +11,12 @@ export default class ParcelName extends React.PureComponent {
   static propTypes = {
     publication: publicationType.isRequired,
     isOwner: PropTypes.bool,
+    isConnected: PropTypes.bool,
     onBuy: PropTypes.func.isRequired
   }
 
   render() {
-    const { publication, isOwner, onBuy } = this.props
+    const { publication, isOwner, onBuy, isConnected } = this.props
     return (
       <Grid.Row>
         <Grid.Column width={4}>
@@ -27,7 +28,7 @@ export default class ParcelName extends React.PureComponent {
           <p>{distanceInWordsToNow(publication.expires_at)}</p>
         </Grid.Column>
         <Grid.Column width={2} textAlign="right">
-          {!isOwner ? (
+          {!isOwner && isConnected ? (
             <Button primary onClick={onBuy}>
               Buy
             </Button>

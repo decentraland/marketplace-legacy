@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
 
-import { getWallet, isLoading } from 'modules/wallet/selectors'
-import { openModal } from 'modules/ui/actions'
+import { getWallet, isConnecting } from 'modules/wallet/selectors'
 
 import AtlasPage from './AtlasPage'
 
 const mapState = state => {
   return {
     wallet: getWallet(state),
-    isLoading: isLoading(state)
+    isLoading: isConnecting(state)
   }
 }
 

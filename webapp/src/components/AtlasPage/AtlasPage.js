@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { localStorage } from 'lib/localStorage'
-
 import Navbar from 'components/Navbar'
 import MapComponent from './Map'
 import Minimap from './Minimap'
@@ -16,18 +14,13 @@ export default class AtlasPage extends React.PureComponent {
     isLoading: PropTypes.bool
   }
 
-  isReady() {
-    const { isLoading, wallet } = this.props
-    return !isLoading && !!wallet.address
-  }
-
   render() {
-    const isReady = this.isReady()
+    const { isLoading } = this.props
     return (
       <div className="AtlasPage">
         <Navbar />
-        <MapComponent isReady={isReady} />
-        {isReady && <Minimap />}
+        <MapComponent isReady={!isLoading} />
+        {!isLoading && <Minimap />}
       </div>
     )
   }

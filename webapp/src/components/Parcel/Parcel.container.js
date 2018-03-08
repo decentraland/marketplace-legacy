@@ -4,7 +4,7 @@ import { push } from 'react-router-redux'
 import { fetchParcelRequest } from 'modules/parcels/actions'
 import {
   getWallet,
-  isLoading as isWalletLoading
+  isConnecting as isWalletConnecting
 } from 'modules/wallet/selectors'
 import {
   isLoading as isAddressLoading,
@@ -21,7 +21,7 @@ const mapState = (state, { x, y }) => {
 
   const wallet = getWallet(state)
   const addresses = getAddresses(state)
-  let isConnecting = isWalletLoading(state) || isAddressLoading(state)
+  let isConnecting = isWalletConnecting(state) || isAddressLoading(state)
   if (
     wallet &&
     wallet.address &&

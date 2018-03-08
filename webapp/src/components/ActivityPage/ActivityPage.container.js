@@ -5,7 +5,7 @@ import {
   getPendingTransactions,
   getTransactionHistory
 } from 'modules/transaction/selectors'
-import { getWallet, isLoading } from 'modules/wallet/selectors'
+import { isConnecting, isConnected } from 'modules/wallet/selectors'
 
 import ActivityPage from './ActivityPage'
 
@@ -18,7 +18,8 @@ const mapState = state => {
     pendingTransactions,
     transactionHistory,
     isEmpty: totalSent <= 0,
-    isLoading: isLoading(state) || !getWallet(state).address
+    isLoading: isConnecting(state),
+    isConnected: isConnected(state)
   }
 }
 
