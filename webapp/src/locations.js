@@ -53,5 +53,6 @@ export const NAVBAR_PAGES = Object.freeze({
   activity: 'activity',
   atlas: 'atlas',
   profile: 'profile',
-  settings: 'settings'
+  settings: 'settings',
+  signIn: 'signIn'
 })

@@ -16,6 +16,7 @@ import BuyParcelPage from 'components/BuyParcelPage'
 import CancelSalePage from 'components/CancelSalePage'
 import ActivityPage from 'components/ActivityPage'
 import SettingsPage from 'components/SettingsPage'
+import SignInPage from 'components/SignInPage'
 
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
@@ -47,6 +48,7 @@ export default function Routes() {
         <Route exact path={locations.colorCodes} component={ColorKeyPage} />
         <Route exact path={locations.privacy} component={PrivacyPage} />
         <Route exact path={locations.parcelMap} component={AtlasPage} />
+        <Route exact path={locations.signIn} component={SignInPage} />
         <Route exact path={locations.walletError} component={WalletErrorPage} />
         <Route exact path={locations.serverError} component={ServerError} />
         <Route exact path={locations.error} component={WalletErrorPage} />

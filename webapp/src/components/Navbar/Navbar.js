@@ -41,6 +41,10 @@ export default class Navbar extends React.PureComponent {
         onNavigate(locations.activity)
         return
       }
+      case NAVBAR_PAGES.signIn: {
+        onNavigate(locations.signIn)
+        return
+      }
       default:
         return
     }
@@ -108,7 +112,19 @@ export default class Navbar extends React.PureComponent {
           </Menu>
         </div>
         <div className="navbar-account">
-          <Account wallet={wallet} />
+          {isConnected ? (
+            <Account wallet={wallet} />
+          ) : (
+            <Menu secondary>
+              <Menu.Item
+                name="signIn"
+                active={activePage === NAVBAR_PAGES.signIn}
+                onClick={this.handleItemClick}
+              >
+                Sign In
+              </Menu.Item>
+            </Menu>
+          )}
         </div>
       </div>
     )
