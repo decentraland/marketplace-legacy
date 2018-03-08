@@ -1,4 +1,12 @@
-import { call, takeLatest, takeEvery, all, put } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+import {
+  call,
+  select,
+  takeLatest,
+  takeEvery,
+  all,
+  put
+} from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
 import { replace } from 'react-router-redux'
 
@@ -7,6 +15,8 @@ import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
   AUTHORIZE_LAND_REQUEST,
+  UPDATE_DERIVATION_PATH,
+  connectWalletRequest,
   connectWalletSuccess,
   connectWalletFailure,
   approveManaSuccess,
@@ -14,6 +24,8 @@ import {
   authorizeLandSuccess,
   authorizeLandFailure
 } from './actions'
+import { getData } from './selectors'
+import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { fetchDistrictsRequest } from 'modules/districts/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
@@ -24,12 +36,21 @@ export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
   yield takeLatest(APPROVE_MANA_REQUEST, handleApproveManaRequest)
   yield takeLatest(AUTHORIZE_LAND_REQUEST, handleAuthorizeLandRequest)
+  yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
 }
 
 function* handleConnectWalletRequest(action = {}) {
+  while (yield select(isStorageLoading)) yield delay(5)
+
   try {
     if (!eth.isConnected()) {
-      yield call(() => connectEthereumWallet())
+      const { derivationPath } = yield select(getData)
+
+      yield call(() =>
+        connectEthereumWallet({
+          derivationPath
+        })
+      )
     }
 
     let address = yield call(() => eth.getAddress())
@@ -45,7 +66,16 @@ function* handleConnectWalletRequest(action = {}) {
       landRegistryContract.isOperatorAuthorizedFor(marketplaceAddress, address)
     ])
 
-    const wallet = { address, balance, approvedBalance, isLandAuthorized }
+    const { type, derivationPath } = eth.getWalletAttributes()
+
+    const wallet = {
+      address,
+      balance,
+      approvedBalance,
+      isLandAuthorized,
+      type,
+      derivationPath
+    }
 
     yield handleConnectWalletSuccess(address)
     yield put(connectWalletSuccess(wallet))
@@ -92,4 +122,9 @@ function* handleAuthorizeLandRequest(action) {
   } catch (error) {
     yield put(authorizeLandFailure(error.message))
   }
+}
+
+function* handleUpdateDerivationPath(action) {
+  eth.disconnect()
+  yield put(connectWalletRequest())
 }

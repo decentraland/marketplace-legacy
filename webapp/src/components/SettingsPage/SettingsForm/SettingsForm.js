@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { txUtils } from 'decentraland-commons'
+import { WALLET_TYPES, txUtils } from 'decentraland-commons'
 
 import { Form } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
+import DerivationPathDropdown from './DerivationPathDropdown'
 
 import { getManaToApprove, getMarketplaceAddress } from 'modules/wallet/utils'
 
@@ -15,7 +16,9 @@ const MANA_TO_APPROVE = getManaToApprove()
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
     address: PropTypes.string,
-    email: PropTypes.string,
+    walletType: PropTypes.string,
+    walletDerivationPath: PropTypes.string,
+    onDerivationPathChange: PropTypes.func,
     manaApproved: PropTypes.number,
     approveTransaction: PropTypes.object,
     onManaApprovedChange: PropTypes.func,
@@ -25,13 +28,15 @@ export default class SettingsForm extends React.PureComponent {
   }
 
   static defaultProps = {
-    address: '',
-    email: ''
+    address: ''
   }
 
   render() {
     const {
       address,
+      walletType,
+      walletDerivationPath,
+      onDerivationPathChange,
       manaApproved,
       approveTransaction,
       onManaApprovedChange,
@@ -47,16 +52,23 @@ export default class SettingsForm extends React.PureComponent {
 
     return (
       <Form className={`SettingsForm ${isPending ? 'tx-pending' : ''}`}>
-        <Form.Field>
-          <Form.Field
-            id="wallet-address"
-            control="input"
-            type="text"
-            label="Wallet address"
-            disabled={true}
-            value={address}
-          />
-        </Form.Field>
+        {walletType === WALLET_TYPES.ledger ? (
+          <Form.Field>
+            <DerivationPathDropdown
+              defaultValue={walletDerivationPath}
+              onChange={onDerivationPathChange}
+            />
+          </Form.Field>
+        ) : null}
+
+        <Form.Field
+          id="wallet-address"
+          control="input"
+          type="text"
+          label="Wallet address"
+          disabled={true}
+          value={address}
+        />
 
         <Form.Field>
           <input

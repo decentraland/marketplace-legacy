@@ -10,19 +10,23 @@ import { transferReducer as transfer } from 'modules/transfer/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
 import { analyticsReduceer as analytics } from 'modules/analytics/reducer'
-import { storageReducer } from 'modules/storage/reducer'
+import {
+    storageReducer as storage,
+    storageReducerWrapper
+} from 'modules/storage/reducer'
 
-export const rootReducer = storageReducer(
-  combineReducers({
-    address,
-    districts,
-    parcels,
-    publication,
-    transaction,
-    transfer,
-    ui,
-    wallet,
-    router,
-    analytics
-  })
+export const rootReducer = storageReducerWrapper(
+    combineReducers({
+        address,
+        districts,
+        parcels,
+        publication,
+        transaction,
+        transfer,
+        ui,
+        wallet,
+        router,
+        storage,
+        analytics
+    })
 )

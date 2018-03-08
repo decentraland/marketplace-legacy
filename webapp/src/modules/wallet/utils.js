@@ -1,9 +1,10 @@
 import { eth, utils, contracts } from 'decentraland-commons'
 
-export async function connectEthereumWallet(retries = 0) {
+export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
     const { MANAToken, LANDRegistry, Marketplace } = contracts
     let connected = await eth.connect({
+      ...options,
       contracts: [MANAToken, LANDRegistry, Marketplace]
     })
     if (!connected) throw new Error('Could not connect to Ethereum')
@@ -16,7 +17,7 @@ export async function connectEthereumWallet(retries = 0) {
       throw error
     }
     await utils.sleep(500)
-    return connectEthereumWallet(retries + 1)
+    return connectEthereumWallet(options, retries + 1)
   }
 }
 

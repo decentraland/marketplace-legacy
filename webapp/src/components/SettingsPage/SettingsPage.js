@@ -17,7 +17,8 @@ export default class SettingsPage extends React.PureComponent {
     hasError: PropTypes.bool,
     onConnect: PropTypes.func,
     onApproveMana: PropTypes.func,
-    onAuthorizeLand: PropTypes.func
+    onAuthorizeLand: PropTypes.func,
+    onUpdateDerivationPath: PropTypes.func
   }
 
   componentWillMount() {
@@ -38,6 +39,14 @@ export default class SettingsPage extends React.PureComponent {
     this.props.onAuthorizeLand(e.currentTarget.checked)
   }
 
+  handleDerivationPathChange = (e, data) => {
+    const { derivationPath } = this.props.wallet
+
+    if (derivationPath !== data.value) {
+      this.props.onUpdateDerivationPath(data.value)
+    }
+  }
+
   getApproveTransaction() {
     // Transactions are ordered, the last one corresponds to the last sent
     const { approveManaTransactions } = this.props.wallet
@@ -52,9 +61,13 @@ export default class SettingsPage extends React.PureComponent {
 
   render() {
     const { isLoading, hasError, wallet } = this.props
-    const { address, approvedBalance, isLandAuthorized } = wallet
-
-    const email = ''
+    const {
+      address,
+      type,
+      derivationPath,
+      approvedBalance,
+      isLandAuthorized
+    } = wallet
 
     return (
       <div className="SettingsPage">
@@ -73,7 +86,9 @@ export default class SettingsPage extends React.PureComponent {
             <Grid.Column>
               <SettingsForm
                 address={address}
-                email={email || ''}
+                walletType={type}
+                walletDerivationPath={derivationPath}
+                onDerivationPathChange={this.handleDerivationPathChange}
                 manaApproved={approvedBalance}
                 approveTransaction={this.getApproveTransaction()}
                 onManaApprovedChange={this.handleManaApproval}
