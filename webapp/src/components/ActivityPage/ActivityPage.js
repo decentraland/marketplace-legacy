@@ -17,12 +17,7 @@ export default class ActivityPage extends React.PureComponent {
     pendingTransactions: PropTypes.arrayOf(transactionType),
     transactionHistory: PropTypes.arrayOf(transactionType),
     isEmpty: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    onConnect: PropTypes.func.isRequired
-  }
-
-  componentWillMount() {
-    this.props.onConnect()
+    isLoading: PropTypes.bool.isRequired
   }
 
   renderLoading() {

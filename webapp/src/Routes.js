@@ -3,6 +3,8 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { locations } from 'locations'
 
+import Wallet from 'components/Wallet'
+
 import AtlasPage from 'components/AtlasPage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import MarketplacePage from 'components/MarketplacePage'
@@ -28,31 +30,33 @@ import Modal from 'components/Modal'
 import Toast from 'components/Toast'
 
 export default function Routes() {
-  return [
-    <Switch key="1">
-      <Route exact path={locations.root} component={AtlasPage} />
-      <Route exact path={locations.parcel} component={ParcelDetailPage} />
-      <Route exact path={locations.marketplace} component={MarketplacePage} />
-      <Route exact path={locations.profile} component={ProfilePage} />
-      <Route exact path={locations.sell} component={PublishPage} />
-      <Route exact path={locations.edit} component={EditParcelPage} />
-      <Route exact path={locations.transfer} component={TransferParcelPage} />
-      <Route exact path={locations.buy} component={BuyParcelPage} />
-      <Route exact path={locations.cancelSale} component={CancelSalePage} />
-      <Route exact path={locations.activity} component={ActivityPage} />
-      <Route exact path={locations.settings} component={SettingsPage} />
-      <Route exact path={locations.colorCodes} component={ColorKeyPage} />
-      <Route exact path={locations.privacy} component={PrivacyPage} />
-      <Route exact path={locations.parcelMap} component={AtlasPage} />
-      <Route exact path={locations.walletError} component={WalletErrorPage} />
-      <Route exact path={locations.serverError} component={ServerError} />
-      <Route exact path={locations.error} component={WalletErrorPage} />
+  return (
+    <Wallet>
+      <Switch>
+        <Route exact path={locations.root} component={AtlasPage} />
+        <Route exact path={locations.parcel} component={ParcelDetailPage} />
+        <Route exact path={locations.marketplace} component={MarketplacePage} />
+        <Route exact path={locations.profile} component={ProfilePage} />
+        <Route exact path={locations.sell} component={PublishPage} />
+        <Route exact path={locations.edit} component={EditParcelPage} />
+        <Route exact path={locations.transfer} component={TransferParcelPage} />
+        <Route exact path={locations.buy} component={BuyParcelPage} />
+        <Route exact path={locations.cancelSale} component={CancelSalePage} />
+        <Route exact path={locations.activity} component={ActivityPage} />
+        <Route exact path={locations.settings} component={SettingsPage} />
+        <Route exact path={locations.colorCodes} component={ColorKeyPage} />
+        <Route exact path={locations.privacy} component={PrivacyPage} />
+        <Route exact path={locations.parcelMap} component={AtlasPage} />
+        <Route exact path={locations.walletError} component={WalletErrorPage} />
+        <Route exact path={locations.serverError} component={ServerError} />
+        <Route exact path={locations.error} component={WalletErrorPage} />
 
-      <Redirect to={locations.root} />
-    </Switch>,
-    <Modal key="2" />,
-    <Toast key="3" />,
-    <Intercom key="4" />,
-    <GoogleAnalytics key="5" />
-  ]
+        <Redirect to={locations.root} />
+      </Switch>,
+      <Modal />
+      <Toast />
+      <Intercom />
+      <GoogleAnalytics />
+    </Wallet>
+  )
 }

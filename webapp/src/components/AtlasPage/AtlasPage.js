@@ -13,18 +13,7 @@ import './AtlasPage.css'
 export default class AtlasPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
-    isLoading: PropTypes.bool,
-    onConnect: PropTypes.func
-  }
-
-  componentWillMount() {
-    const { onConnect, onFirstVisit } = this.props
-
-    onConnect()
-
-    if (!localStorage.getItem('seenTermsModal')) {
-      onFirstVisit()
-    }
+    isLoading: PropTypes.bool
   }
 
   isReady() {

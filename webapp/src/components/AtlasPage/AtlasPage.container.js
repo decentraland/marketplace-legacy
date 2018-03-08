@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 
 import { getWallet, isLoading } from 'modules/wallet/selectors'
-import { connectWalletRequest } from 'modules/wallet/actions'
 import { openModal } from 'modules/ui/actions'
 
 import AtlasPage from './AtlasPage'
@@ -13,9 +12,6 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => ({
-  onConnect: () => dispatch(connectWalletRequest()),
-  onFirstVisit: () => dispatch(openModal('TermsModal'))
-})
+const mapDispatch = dispatch => ({})
 
 export default connect(mapState, mapDispatch)(AtlasPage)

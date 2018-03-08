@@ -6,7 +6,6 @@ import {
   getTransactionHistory
 } from 'modules/transaction/selectors'
 import { getWallet, isLoading } from 'modules/wallet/selectors'
-import { connectWalletRequest } from 'modules/wallet/actions'
 
 import ActivityPage from './ActivityPage'
 
@@ -23,8 +22,6 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => ({
-  onConnect: () => dispatch(connectWalletRequest())
-})
+const mapDispatch = dispatch => ({})
 
 export default withRouter(connect(mapState, mapDispatch)(ActivityPage))

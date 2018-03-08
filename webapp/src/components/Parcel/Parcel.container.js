@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { locations } from 'locations'
 import { push } from 'react-router-redux'
-import { connectWalletRequest } from 'modules/wallet/actions'
 import { fetchParcelRequest } from 'modules/parcels/actions'
 import {
   getWallet,
@@ -46,7 +45,6 @@ const mapState = (state, { x, y }) => {
 }
 
 const mapDispatch = (dispatch, { x, y }) => ({
-  onConnect: () => dispatch(connectWalletRequest()),
   onFetchParcel: () => dispatch(fetchParcelRequest(x, y)),
   onAccessDenied: () => dispatch(push(locations.parcelDetail(x, y)))
 })

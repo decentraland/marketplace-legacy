@@ -12,7 +12,6 @@ export default class Parcel extends React.PureComponent {
     isLoading: PropTypes.bool,
     ownerOnly: PropTypes.bool,
     onAccessDenied: PropTypes.func.isRequired,
-    onConnect: PropTypes.func.isRequired,
     children: PropTypes.func.isRequired
   }
 
@@ -29,8 +28,7 @@ export default class Parcel extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { onConnect, parcel, isLoading, onFetchParcel } = this.props
-    onConnect()
+    const { parcel, isLoading, onFetchParcel } = this.props
     if (!parcel && !isLoading) {
       onFetchParcel()
     }

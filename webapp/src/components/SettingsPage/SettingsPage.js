@@ -15,14 +15,9 @@ export default class SettingsPage extends React.PureComponent {
     wallet: walletType,
     isLoading: PropTypes.bool,
     hasError: PropTypes.bool,
-    onConnect: PropTypes.func,
     onApproveMana: PropTypes.func,
     onAuthorizeLand: PropTypes.func,
     onUpdateDerivationPath: PropTypes.func
-  }
-
-  componentWillMount() {
-    this.props.onConnect()
   }
 
   handleManaApproval = e => {
