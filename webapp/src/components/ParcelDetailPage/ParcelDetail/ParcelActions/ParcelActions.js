@@ -46,9 +46,11 @@ export default class ParcelActions extends React.PureComponent {
         <Button onClick={this.handleEdit} size="tiny">
           <Icon name="edit" />Edit
         </Button>
-        <Button onClick={this.handleTransfer} size="tiny">
-          <Icon name="exchange" />Transfer
-        </Button>
+        {this.isOnSale() ? null : (
+          <Button onClick={this.handleTransfer} size="tiny">
+            <Icon name="exchange" />Transfer
+          </Button>
+        )}
         <Button onClick={this.handleSell} size="tiny">
           <Icon name={this.isOnSale() ? 'cancel' : 'tag'} />
           {this.isOnSale() ? 'Cancel sale' : 'sell'}

@@ -14,6 +14,7 @@ export default class TransferParcelForm extends React.PureComponent {
     parcel: parcelType,
     isTxIdle: PropTypes.bool,
     transferError: PropTypes.string,
+    hasPublication: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCleanTransfer: PropTypes.func.isRequired
@@ -66,71 +67,77 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   render() {
-    const { isTxIdle, transferError } = this.props
+    const { isTxIdle, transferError, hasPublication } = this.props
     const { address } = this.state
     const inputClassName = `address-input ${
       transferError ? 'address-input-transferError' : ''
     }`
-
+    console.log('form', hasPublication)
     return (
-      <Form
-        className="TransferParcelForm"
-        onSubmit={preventDefault(this.handleSubmit)}
-        error={!!transferError}
-      >
-        <Form.Field>
-          <label>Recipient address</label>
-          <Input
-            id="address-input"
-            className={inputClassName}
-            type="text"
-            placeholder="Ex: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
-            value={address}
-            onChange={this.handleAddressChange}
-            autoComplete="off"
-            autoFocus={true}
-          />
+      <React.Fragment>
+        {hasPublication ? (
+          <Message warning>
+            This LAND can&apos;t be transferred because it&apos;s on sale.
+          </Message>
+        ) : null}
+        <Form
+          className="TransferParcelForm"
+          onSubmit={preventDefault(this.handleSubmit)}
+          error={!!transferError}
+        >
+          <Form.Field>
+            <label>Recipient address</label>
+            <Input
+              id="address-input"
+              className={inputClassName}
+              type="text"
+              placeholder="Ex: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
+              value={address}
+              onChange={this.handleAddressChange}
+              autoComplete="off"
+              autoFocus={true}
+            />
+            {this.hasError() && (
+              <Message error onDismiss={this.handleClearFormErrors}>
+                {this.isExpectedError() ? (
+                  <React.Fragment>{transferError}</React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    An unknown error occurred, the details are below.<br />
+                    If the problem persists, contact us at our&nbsp;
+                    <a
+                      href="https://chat.decentraland.org"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Community Chat
+                    </a>.<br />
+                    <div className="error-stack">{transferError}</div>
+                  </React.Fragment>
+                )}
+              </Message>
+            )}
 
-          {this.hasError() && (
-            <Message error onDismiss={this.handleClearFormErrors}>
-              {this.isExpectedError() ? (
-                <React.Fragment>{transferError}</React.Fragment>
-              ) : (
-                <React.Fragment>
-                  An unknown error occurred, the details are below.<br />
-                  If the problem persists, contact us at our&nbsp;
-                  <a
-                    href="https://chat.decentraland.org"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Community Chat
-                  </a>.<br />
-                  <div className="error-stack">{transferError}</div>
-                </React.Fragment>
-              )}
-            </Message>
-          )}
+            <TxStatus.Idle isIdle={isTxIdle} />
+          </Form.Field>
 
-          <TxStatus.Idle isIdle={isTxIdle} />
-        </Form.Field>
+          <br />
 
-        <br />
+          <div className="text-center">
+            <Button type="button" onClick={this.handleCancel}>
+              Cancel
+            </Button>
 
-        <div className="text-center">
-          <Button type="button" onClick={this.handleCancel}>
-            Cancel
-          </Button>
-
-          <Button
-            type="submit"
-            primary={true}
-            disabled={this.isEmptyAddress() || isTxIdle}
-          >
-            Submit
-          </Button>
-        </div>
-      </Form>
+            <Button
+              type="submit"
+              primary={true}
+              disabled={this.isEmptyAddress() || isTxIdle || hasPublication}
+            >
+              Submit
+            </Button>
+          </div>
+        </Form>
+      </React.Fragment>
     )
   }
 }

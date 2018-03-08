@@ -4,6 +4,7 @@ import { push } from 'react-router-redux'
 
 import { isTxIdle, getError } from 'modules/transfer/selectors'
 import { getParams } from 'modules/location/selectors'
+import { getPublications } from 'modules/publication/selectors'
 import { transferParcelRequest, cleanTransfer } from 'modules/transfer/actions'
 import { locations } from 'locations'
 
@@ -13,11 +14,13 @@ const mapState = (state, ownProps) => {
   const params = getParams(ownProps)
   const x = parseInt(params.x, 10)
   const y = parseInt(params.y, 10)
+  const publications = getPublications(state)
   return {
     x,
     y,
     isTxIdle: isTxIdle(state),
-    transferError: getError(state)
+    transferError: getError(state),
+    publications
   }
 }
 

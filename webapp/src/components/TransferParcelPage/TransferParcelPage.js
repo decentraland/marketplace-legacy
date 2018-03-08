@@ -6,6 +6,8 @@ import Navbar from 'components/Navbar'
 import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
 import TxStatus from 'components/TxStatus'
+import { publicationType } from 'components/types'
+import { hasPublication } from 'lib/parcelUtils'
 
 import TransferParcelForm from './TransferParcelForm'
 
@@ -17,15 +19,15 @@ export default class TransferParcelPage extends React.PureComponent {
     y: PropTypes.number.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
     transferError: PropTypes.string,
+    publications: PropTypes.objectOf(publicationType),
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCleanTransfer: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, isTxIdle, transferError } = this.props
+    const { x, y, isTxIdle, transferError, publications } = this.props
     const { onSubmit, onCancel, onCleanTransfer } = this.props
-
     return (
       <div className="TransferParcelPage">
         <Navbar />
@@ -54,6 +56,7 @@ export default class TransferParcelPage extends React.PureComponent {
                     onSubmit={onSubmit}
                     onCancel={onCancel}
                     onCleanTransfer={onCleanTransfer}
+                    hasPublication={hasPublication(parcel, publications)}
                   />
                   <TxStatus.Parcel parcel={parcel} />
                 </Grid.Column>
