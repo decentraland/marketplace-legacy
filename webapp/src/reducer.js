@@ -11,22 +11,22 @@ import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
 import { analyticsReduceer as analytics } from 'modules/analytics/reducer'
 import {
-    storageReducer as storage,
-    storageReducerWrapper
+  storageReducer as storage,
+  storageReducerWrapper
 } from 'modules/storage/reducer'
 
 export const rootReducer = storageReducerWrapper(
-    combineReducers({
-        address,
-        districts,
-        parcels,
-        publication,
-        transaction,
-        transfer,
-        ui,
-        wallet,
-        router,
-        storage,
-        analytics
-    })
+  combineReducers({
+    address,
+    districts,
+    parcels,
+    publication,
+    transaction,
+    transfer,
+    ui,
+    wallet,
+    router,
+    storage,
+    analytics
+  })
 )
