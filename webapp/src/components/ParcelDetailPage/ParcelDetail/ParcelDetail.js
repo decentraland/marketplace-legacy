@@ -6,7 +6,7 @@ import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelPublication from './ParcelPublication'
 import { parcelType, districtType } from 'components/types'
-import { hasPublication } from 'lib/parcelUtils'
+import { hasPublication, getDistrict } from 'lib/parcelUtils'
 
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
@@ -17,8 +17,10 @@ export default class ParcelDetail extends React.PureComponent {
 
   getDescription() {
     const { parcel, districts } = this.props
-    if (districts && parcel.district_id && districts[parcel.district_id]) {
-      return districts[parcel.district_id].description
+    const district = getDistrict(parcel, districts)
+
+    if (district) {
+      return district.description
     }
     if (parcel.data.description) {
       return parcel.data.description
