@@ -72,7 +72,7 @@ export default class TransferParcelForm extends React.PureComponent {
     const inputClassName = `address-input ${
       transferError ? 'address-input-transferError' : ''
     }`
-    console.log('form', hasPublication)
+
     return (
       <React.Fragment>
         {hasPublication ? (
