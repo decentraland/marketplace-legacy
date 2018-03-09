@@ -1,6 +1,7 @@
 import { Log } from 'decentraland-commons'
 import { Cli } from './Cli'
 import { EventMonitor } from './EventMonitor'
+import { persistEvents } from './persistEvents'
 
 const log = new Log('StoreCli')
 
@@ -19,6 +20,9 @@ export class StoreCli extends Cli {
       const eventNames = this.contractEvents[contractName]
       this.monitor(contractName, eventNames, options)
     }
+
+    log.info('Firing up event persister')
+    persistEvents(options.fromBlock)
   }
 
   monitor = (contractName, eventNames, options) => {

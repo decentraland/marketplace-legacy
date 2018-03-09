@@ -36,8 +36,8 @@ export class Parcel extends Model {
   }
 
   static async findInIds(ids) {
-    const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
     if (ids.length === 0) return []
+    const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
 
     return await this.db.query(
       `SELECT * FROM ${this.tableName} WHERE id IN (${inPlaceholders})`,

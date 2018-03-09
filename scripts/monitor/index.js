@@ -3,7 +3,6 @@
 import { eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
 import { StoreCli } from './StoreCli'
-import { persistEvents } from './persistEvents'
 import { db } from '../../src/database'
 import { loadEnv } from '../../scripts/utils'
 
@@ -28,10 +27,6 @@ Promise.resolve()
       LANDRegistry: ['Transfer']
       // 'LANDRegistry': ['Update', 'Transfer'],
     }).run()
-  })
-  .then(() => {
-    log.debug('Firing up event persister')
-    persistEvents()
   })
   .catch(error => {
     log.error(error)

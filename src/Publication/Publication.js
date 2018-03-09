@@ -47,4 +47,21 @@ export class Publication extends Model {
         WHERE status = '${status}'
         ORDER BY created_at DESC`
   }
+
+  static updateManyStatus(newStatus, txHashes) {
+    if (!this.isValidStatus(newStatus)) {
+      throw new Error(`Trying to filter by invalid status '${newStatus}'`)
+    }
+    if (txHashes.length === 0) {
+      return []
+    }
+    const inPlaceholders = txHashes.map((_, index) => `$${index + 2}`)
+
+    return this.db.query(
+      `UPDATE ${this.tableName}
+        SET status = $1
+        WHERE tx_hash IN (${inPlaceholders})`,
+      [newStatus, ...txHashes]
+    )
+  }
 }
