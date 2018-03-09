@@ -13,8 +13,8 @@ exports.up = pgm => {
         notNull: true,
         default: txUtils.TRANSACTION_STATUS.pending
       },
-      x: { type: 'int', notNull: true },
-      y: { type: 'int', notNull: true },
+      x: { type: 'INT', notNull: true },
+      y: { type: 'INT', notNull: true },
       address: { type: 'VARCHAR(42)', notNull: true },
       price: { type: 'DECIMAL', notNull: true },
       is_sold: { type: 'BOOLEAN', notNull: true, default: false },

@@ -11,7 +11,8 @@ export class Publication extends Model {
     'owner',
     'buyer',
     'price',
-    'expires_at'
+    'expires_at',
+    'contract_id'
   ]
   static primaryKey = 'tx_hash'
 

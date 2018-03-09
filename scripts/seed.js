@@ -97,6 +97,9 @@ function getRandomColumnValue(columnName, tableName) {
     case 'district_id':
       value = faker.random.uuid()
       break
+    case 'contract_id':
+      value = faker.random.uuid().replace(/-/g, '')
+      break
     case 'x':
     case 'y':
       value = Math.floor(Math.random() * 307) - 153

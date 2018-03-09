@@ -2,19 +2,20 @@ import { Publication } from '../src/Publication'
 
 exports.up = pgm => {
   const tableName = Publication.tableName
+
   const publicationStatus = Object.values(Publication.STATUS)
     .map(val => `'${val}'`)
     .join(', ')
 
   pgm.addColumns(tableName, {
     status: {
-      type: 'text',
+      type: 'TEXT',
       notNull: true,
       default: Publication.STATUS.open,
       check: `status IN (${publicationStatus})`
     },
     buyer: {
-      type: 'text'
+      type: 'VARCHAR(42)'
     }
   })
 

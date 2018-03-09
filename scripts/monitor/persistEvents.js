@@ -12,7 +12,7 @@ export async function persistEvents(lastBlockNumber = null, delay = 15000) {
     lastBlockNumber = lastBlockEvent ? lastBlockEvent.block_number : 0
   }
 
-  const blockchainEvents = await BlockchainEvent.findFrom(lastBlockNumber + 1)
+  const blockchainEvents = await BlockchainEvent.findFrom(+lastBlockNumber + 1)
   let i = 0
 
   if (blockchainEvents.length) {
@@ -39,23 +39,29 @@ export async function processEvent(event) {
 
   switch (event.name) {
     case 'AuctionCreated': {
-      const { creator, priceInWei, expiresAt } = event.args
+      const { seller, priceInWei, expiresAt } = event.args
+      const contract_id = event.args.id
 
       const exists = await Publication.count({ tx_hash })
       if (exists) {
         log.info(`[AuctionCreated] Publication ${tx_hash} already exists`)
         return
       }
-      log.info(`[AuctionCreated] Creating publication for ${x},${y}`)
+      if (!contract_id) {
+        log.info(`[AuctionCreated] Publication ${tx_hash} doesn't have an id`)
+        return
+      }
+      log.info(`[AuctionCreated] Creating publication ${contract_id} for ${id}`)
 
       await Publication.insert({
-        tx_hash,
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: Publication.STATUS.open,
-        owner: creator.toLowerCase(),
+        owner: seller.toLowerCase(),
         buyer: null,
         price: eth.utils.fromWei(priceInWei),
         expires_at: new Date(parseInt(expiresAt, 10)),
+        tx_hash,
+        contract_id,
         x,
         y
       })
@@ -63,8 +69,14 @@ export async function processEvent(event) {
     }
     case 'AuctionSuccessful': {
       const { totalPrice, winner } = event.args
+      const contract_id = event.args.id
 
-      log.info(`[AuctionSuccessful] Publication ${id} sold to ${winner}`)
+      if (!contract_id) {
+        log.info(`[AuctionSuccess] Publication ${tx_hash} doesn't have an id`)
+        return
+      }
+
+      log.info(`[AuctionSuccess] Publication ${contract_id} sold to ${winner}`)
 
       await Publication.update(
         {
@@ -72,17 +84,23 @@ export async function processEvent(event) {
           buyer: winner.toLowerCase(),
           price: eth.utils.fromWei(totalPrice)
         },
-        { x, y }
+        { contract_id }
       )
       await Parcel.update({ owner: winner }, { id })
       break
     }
     case 'AuctionCancelled': {
-      log.info(`[AuctionCancelled] Publication ${id} cancelled`)
+      const contract_id = event.args.id
+
+      if (!contract_id) {
+        log.info(`[AuctionCancelled] Publication ${tx_hash} doesn't have an id`)
+        return
+      }
+      log.info(`[AuctionCancelled] Publication ${contract_id} cancelled`)
 
       await Publication.update(
         { status: Publication.STATUS.cancelled },
-        { x, y }
+        { contract_id }
       )
       break
     }
@@ -121,7 +139,7 @@ export async function processEvent(event) {
       break
     }
     default:
-    log.info(`Don't know how to handle event ${event.name}`)
+      log.info(`Don't know how to handle event ${event.name}`)
       break
   }
 

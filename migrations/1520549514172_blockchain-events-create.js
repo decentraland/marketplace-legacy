@@ -9,7 +9,7 @@ exports.up = pgm => {
       tx_hash: { type: 'TEXT', primaryKey: true, unique: true, notNull: true },
       name: 'TEXT',
       block_number: 'BIGINT',
-      args: 'json',
+      args: 'JSON',
       created_at: { type: 'TIMESTAMP', notNull: true },
       updated_at: 'TIMESTAMP'
     },

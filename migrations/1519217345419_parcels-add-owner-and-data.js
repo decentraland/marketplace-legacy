@@ -8,7 +8,7 @@ exports.up = pgm => {
       type: 'VARCHAR(42)'
     },
     data: {
-      type: 'json'
+      type: 'JSON'
     }
   })
 }
