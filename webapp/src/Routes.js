@@ -52,9 +52,8 @@ export default function Routes() {
         <Route exact path={locations.walletError} component={WalletErrorPage} />
         <Route exact path={locations.serverError} component={ServerError} />
         <Route exact path={locations.error} component={WalletErrorPage} />
-
         <Redirect to={locations.root} />
-      </Switch>,
+      </Switch>
       <Modal />
       <Toast />
       <Intercom />
