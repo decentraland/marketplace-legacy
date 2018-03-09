@@ -29,7 +29,7 @@ exports.up = pgm => {
 }
 
 exports.down = pgm => {
-  pgm.dropTable(tableName)
-
   pgm.dropIndex(tableName, 'address')
+
+  pgm.dropTable(tableName)
 }

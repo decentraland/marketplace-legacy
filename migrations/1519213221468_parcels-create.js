@@ -21,7 +21,7 @@ exports.up = pgm => {
 }
 
 exports.down = pgm => {
-  pgm.dropTable(tableName)
-
   pgm.dropIndex(tableName, ['x', 'y'], { name: 'parcels_x_y_idx' })
+
+  pgm.dropTable(tableName)
 }

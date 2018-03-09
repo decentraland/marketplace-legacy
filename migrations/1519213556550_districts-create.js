@@ -35,8 +35,8 @@ exports.up = pgm => {
 }
 
 exports.down = pgm => {
-  pgm.dropTable(tableName)
-
   pgm.dropIndex(tableName, 'disabled')
   pgm.dropIndex(tableName, 'name')
+
+  pgm.dropTable(tableName)
 }
