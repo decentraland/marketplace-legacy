@@ -43,7 +43,10 @@ export default class ParcelName extends React.PureComponent {
     return (
       <div className={classes}>
         {name ? <span className="name">{name}&nbsp;</span> : null}
-        <Link to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}>
+        <Link
+          to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}
+          className="ui"
+        >
           <Icon name="marker" />
           {x}, {y}
         </Link>

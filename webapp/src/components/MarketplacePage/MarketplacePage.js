@@ -7,7 +7,8 @@ import {
   Card,
   Dropdown,
   Pagination,
-  Loader
+  Loader,
+  Dimmer
 } from 'semantic-ui-react'
 import Publication from './Publication'
 import Navbar from 'components/Navbar'
@@ -89,7 +90,11 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   renderLoading() {
-    return <Loader active size="huge" />
+    return (
+      <Dimmer active inverted>
+        <Loader active size="huge" />
+      </Dimmer>
+    )
   }
 
   renderEmpty() {

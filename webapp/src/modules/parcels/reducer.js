@@ -12,7 +12,7 @@ import {
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
-import { toParcelObject } from './utils'
+import { cleanParcel, toParcelObject } from './utils'
 import { loadingReducer } from 'modules/loading/reducer'
 
 const INITIAL_STATE = {
@@ -32,18 +32,13 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_PARCEL_SUCCESS: {
       const parcelId = action.parcel.id
-      const oldParcel = state[action.parcel.id]
-      const newParcel = action.parcel
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
-          [parcelId]: {
-            ...oldParcel,
-            ...newParcel
-          }
+          [parcelId]: cleanParcel(action.parcel)
         }
       }
     }

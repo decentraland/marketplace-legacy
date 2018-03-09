@@ -1,3 +1,8 @@
+.PublishPage .ui.header.title {
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
 .PublishPage .subtitle {
   color: var(--dark-purple);
   font-weight: 100;

@@ -1,21 +1,14 @@
-const emptyParcel = {
-  x: null,
-  y: null,
-  price: null,
-  owner: null,
-  district_id: null,
-  data: {
-    name: '',
-    description: '',
-    ipns: null,
-    version: 0
+export function cleanParcel(parcel) {
+  const { publication, ...rest } = parcel
+  return {
+    ...rest,
+    publication_tx_hash: publication ? publication.tx_hash : null
   }
 }
 
-export function toParcelObject(parcelsArray, allParcels) {
+export function toParcelObject(parcelsArray) {
   return parcelsArray.reduce((map, parcel) => {
-    const oldParcel = allParcels[parcel.id]
-    map[parcel.id] = { ...emptyParcel, ...oldParcel, ...parcel }
+    map[parcel.id] = cleanParcel(parcel)
     return map
   }, {})
 }

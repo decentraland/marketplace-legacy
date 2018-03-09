@@ -1,27 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Container, Header, Grid } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Container, Header, Grid, Message } from 'semantic-ui-react'
 import PublicationForm from './PublicationForm'
 import Navbar from 'components/Navbar'
 import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
 import TxStatus from 'components/TxStatus'
 
-import { publicationType } from 'components/types'
+import { publicationType, walletType } from 'components/types'
+import { locations } from 'locations'
 
 import './PublishPage.css'
 
 export default class PublishPage extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
+    wallet: walletType,
     isTxIdle: PropTypes.bool.isRequired,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, publication, isTxIdle, onPublish, onCancel } = this.props
+    const {
+      wallet,
+      x,
+      y,
+      publication,
+      isTxIdle,
+      onPublish,
+      onCancel
+    } = this.props
+
+    const { isLandAuthorized } = wallet
 
     return (
       <div className="PublishPage">
@@ -47,10 +59,27 @@ export default class PublishPage extends React.PureComponent {
                     isTxIdle={isTxIdle}
                     onPublish={onPublish}
                     onCancel={onCancel}
+                    isDisabled={!isLandAuthorized}
                   />
                   <TxStatus.Parcel parcel={parcel} />
                 </Grid.Column>
               </Container>
+              <br />
+              {!isLandAuthorized ? (
+                <Container text>
+                  <Grid.Column>
+                    <Message warning>
+                      <h3>
+                        <strong>Unauthorized</strong>
+                      </h3>
+                      You need to go to{' '}
+                      <Link to={locations.settings}>Settings</Link> and
+                      authorize the Marketplace to operate LAND on your behalf
+                      before you can list it on sale.
+                    </Message>
+                  </Grid.Column>
+                </Container>
+              ) : null}
             </React.Fragment>
           )}
         </Parcel>

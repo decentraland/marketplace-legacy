@@ -46,7 +46,15 @@ export class Parcel extends Model {
   }
 
   static async findByOwner(owner) {
-    return await this.find({ owner })
+    return await this.db.query(
+      `SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
+        FROM ${this.tableName} as par
+        LEFT JOIN (
+          ${Publication.findOpenSql(Publication.STATUS.open)}
+        ) as pub ON par."x" = pub."x" AND par."y" = pub."y"
+        WHERE par.owner = $1`,
+      [owner]
+    )
   }
 
   static async inRange(min, max) {

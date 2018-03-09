@@ -172,41 +172,64 @@ export const LeafletParcelGrid = L.Layer.extend({
     const ctx = this.canvas.getContext('2d')
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     let markerCenter = null
+    const parcelsOnSale = []
     for (let index = 0; index < tiles.length; index++) {
       const tile = tiles[index]
-      const tileId = this.renderTile(tile)
-      if (this.options.marker === tileId) {
-        markerCenter = this.map.latLngToContainerPoint(tile.center)
+      const {
+        id,
+        backgroundColor,
+        publication
+      } = this.options.getTileAttributes(tile.bounds.getNorthWest())
+      const point = this.map.latLngToContainerPoint(tile.center)
+      this.renderTile(point.x, point.y, backgroundColor)
+      if (this.options.marker === id) {
+        markerCenter = point
+      }
+      if (publication) {
+        parcelsOnSale.push(point)
       }
     }
-    if (markerCenter) {
-      marker.draw(
+    parcelsOnSale.forEach(parcelOnSale => {
+      this.renderMarker({
         ctx,
-        markerCenter.x - this.tileSize / 2,
-        markerCenter.y - this.tileSize / 2
-      )
+        center: parcelOnSale,
+        fillPrimary: '#5d5890',
+        fillSecondary: '#3e396b',
+        stroke: '#3e396b'
+      })
+    })
+    if (markerCenter) {
+      this.renderMarker({
+        ctx,
+        center: markerCenter
+      })
     }
   },
 
-  renderTile(tile) {
-    const { id, backgroundColor } = this.options.getTileAttributes(
-      tile.bounds.getNorthWest()
-    )
-
+  renderTile(x, y, color) {
     // Render tile
     const ctx = this.canvas.getContext('2d')
-    const point = this.map.latLngToContainerPoint(tile.center)
     const padding = 1
 
-    ctx.fillStyle = backgroundColor
+    ctx.fillStyle = color
     ctx.fillRect(
-      point.x - this.tileSize,
-      point.y - this.tileSize,
+      x - this.tileSize,
+      y - this.tileSize,
       this.tileSize - padding,
       this.tileSize - padding
     )
+  },
 
-    return id
+  renderMarker({ ctx, center, fillPrimary, fillSecondary, stroke, scale }) {
+    marker.draw({
+      ctx,
+      x: center.x - this.tileSize / 2,
+      y: center.y - this.tileSize / 2,
+      fillPrimary,
+      fillSecondary,
+      stroke,
+      scale
+    })
   },
 
   getCellPoint(row, col) {

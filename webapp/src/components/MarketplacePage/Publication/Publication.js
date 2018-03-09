@@ -11,7 +11,7 @@ import AddressLink from 'components/AddressLink'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
-import { formatDate } from 'lib/utils'
+import { formatDate, formatMana } from 'lib/utils'
 
 import './Publication.css'
 
@@ -24,9 +24,36 @@ export default class Publication extends React.PureComponent {
   static defaultProps = {
     isOwnerVisible: true
   }
+
+  renderButton({ publication, isExpired }) {
+    let text = 'View'
+    if (publication.status === PUBLICATION_STATUS.sold) {
+      text = 'Sold'
+    }
+    if (publication.status === PUBLICATION_STATUS.cancelled) {
+      text = 'Canceled'
+    }
+
+    const isDisabled =
+      isExpired ||
+      publication.status !== PUBLICATION_STATUS.open ||
+      publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
+
+    const button = (
+      <Button floated="right" size="tiny" disabled={isDisabled}>
+        {text}
+      </Button>
+    )
+    return isDisabled ? (
+      button
+    ) : (
+      <Link to={locations.parcelDetail(publication.x, publication.y)}>
+        {button}
+      </Link>
+    )
+  }
   render() {
     const { publication, debounce, isOwnerVisible } = this.props
-    const price = (+publication.price).toLocaleString()
 
     const isExpired = publication.expires_at < Date.now()
 
@@ -38,7 +65,7 @@ export default class Publication extends React.PureComponent {
               x={publication.x}
               y={publication.y}
               debounce={debounce}
-              size={15}
+              size={18}
             />
           </div>
         </Link>
@@ -60,24 +87,11 @@ export default class Publication extends React.PureComponent {
         <Card.Content extra>
           <span className="footer">
             <Header size="medium" floated="left" className="price">
-              <span className="amount" title={price}>
-                {price}
-              </span>{' '}
-              &nbsp;MANA
+              <span className="amount" title={formatMana(publication.price)}>
+                {formatMana(publication.price, '')}
+              </span>&nbsp;MANA
             </Header>
-            <Link to={locations.parcelDetail(publication.x, publication.y)}>
-              <Button
-                floated="right"
-                size="tiny"
-                disabled={
-                  isExpired ||
-                  publication.status !== PUBLICATION_STATUS.open ||
-                  publication.tx_status !== txUtils.TRANSACTION_STATUS.confirmed
-                }
-              >
-                View
-              </Button>
-            </Link>
+            {this.renderButton({ publication, isExpired })}
           </span>
         </Card.Content>
       </Card>

@@ -8,11 +8,16 @@ import isEqual from 'lodash/isEqual'
 import { LeafletMapCoordinates } from 'lib/LeafletMapCoordinates'
 import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
 
-import { walletType, parcelType, districtType } from 'components/types'
+import {
+  walletType,
+  parcelType,
+  districtType,
+  publicationType
+} from 'components/types'
 
 import ParcelPopup from './ParcelPopup'
 import { buildCoordinate, requestAnimationFrame } from 'lib/utils'
-import { getParcelAttributes } from 'lib/parcelUtils'
+import { getParcelAttributes, hasPublication } from 'lib/parcelUtils'
 
 import './ParcelsMap.css'
 
@@ -25,6 +30,7 @@ export default class ParcelsMap extends React.Component {
     wallet: walletType.isRequired,
     parcels: PropTypes.objectOf(parcelType).isRequired,
     districts: PropTypes.objectOf(districtType).isRequired,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     center: PropTypes.shape({
       x: PropTypes.string,
       y: PropTypes.string
@@ -126,7 +132,8 @@ export default class ParcelsMap extends React.Component {
       maxZoom,
       bounds,
       zoom,
-      marker
+      marker,
+      parcels
     } = this.props
 
     this.map = new L.Map(MAP_ID, {
@@ -150,7 +157,8 @@ export default class ParcelsMap extends React.Component {
       onMouseUp: this.handleMouseUp,
       onMouseMove: this.handleMouseMove,
       tileSize,
-      marker
+      marker,
+      parcels
     })
 
     this.map.zoomControl.setPosition('topright')
@@ -263,7 +271,11 @@ export default class ParcelsMap extends React.Component {
     return this.getTileAttributes(x, y)
   }
   // Called by the Parcel Grid on each tile render
-  getTileAttributes = (x, y, { wallet, parcels, districts } = this.props) => {
+  getTileAttributes = (
+    x,
+    y,
+    { wallet, parcels, districts, publications } = this.props
+  ) => {
     const id = buildCoordinate(x, y)
     const parcel = parcels[id]
 
@@ -273,6 +285,10 @@ export default class ParcelsMap extends React.Component {
       districts
     )
 
+    const publication = hasPublication(parcel, publications)
+      ? publications[parcel.publication_tx_hash]
+      : null
+
     return {
       id,
       x,
@@ -280,7 +296,8 @@ export default class ParcelsMap extends React.Component {
       color,
       backgroundColor,
       label,
-      description
+      description,
+      publication
     }
   }
 
@@ -349,7 +366,8 @@ export default class ParcelsMap extends React.Component {
         color,
         label,
         backgroundColor,
-        description
+        description,
+        publication
       } = this.getTileAttributes(x, y, props)
 
       if (this.popupContent) {
@@ -365,6 +383,7 @@ export default class ParcelsMap extends React.Component {
           backgroundColor={backgroundColor}
           label={label}
           description={description}
+          publication={publication}
         />
       )
 

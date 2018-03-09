@@ -16,10 +16,10 @@ export const COLORS = Object.freeze({
 
 export function getBounds() {
   return {
-    minX: -153,
-    minY: -153,
-    maxX: 153,
-    maxY: 153
+    minX: -150,
+    minY: -150,
+    maxX: 150,
+    maxY: 150
   }
 }
 
@@ -42,6 +42,10 @@ export function isDistrict(parcel) {
 
 export function getDistrict(parcel, districts = {}) {
   return parcel && districts[parcel.district_id]
+}
+
+export function hasPublication(parcel, publications) {
+  return parcel != null && parcel.publication_tx_hash in publications
 }
 
 export function getParcelAttributes(wallet, parcel, districts) {
