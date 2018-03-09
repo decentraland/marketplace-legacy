@@ -16,7 +16,11 @@ import {
 } from 'modules/wallet/actions'
 import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
-import { PUBLISH_SUCCESS } from 'modules/publication/actions'
+import {
+  PUBLISH_SUCCESS,
+  BUY_SUCCESS,
+  CANCEL_SALE_SUCCESS
+} from 'modules/publication/actions'
 
 import './Transaction.css'
 
@@ -79,6 +83,30 @@ export default class Transaction extends React.PureComponent {
         return (
           <React.Fragment>
             You published&nbsp;
+            <Link to={locations.parcelDetail(x, y)}>
+              {x}, {y}
+            </Link>
+          </React.Fragment>
+        )
+      }
+      case BUY_SUCCESS: {
+        const { x, y } = payload
+        return (
+          <React.Fragment>
+            You bought&nbsp;
+            <Link to={locations.parcelDetail(x, y)}>
+              {x}, {y}
+            </Link>
+          </React.Fragment>
+        )
+      }
+      case CANCEL_SALE_SUCCESS: {
+        const { tx_hash, x, y } = payload
+        return (
+          <React.Fragment>
+            You cancelled the&nbsp;
+            <EtherscanLink txHash={tx_hash}>publication</EtherscanLink>
+            &nbsp;on&nbsp;
             <Link to={locations.parcelDetail(x, y)}>
               {x}, {y}
             </Link>

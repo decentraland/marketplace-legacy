@@ -24,8 +24,7 @@ Promise.resolve()
 
     return new StoreCli(handlers, {
       Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
-      LANDRegistry: ['Transfer']
-      // 'LANDRegistry': ['Update', 'Transfer'],
+      LANDRegistry: ['Update', 'Transfer']
     }).run()
   })
   .catch(error => {
