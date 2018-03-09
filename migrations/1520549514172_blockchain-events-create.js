@@ -6,14 +6,14 @@ exports.up = pgm => {
   pgm.createTable(
     tableName,
     {
-      tx_hash: { type: 'TEXT', primaryKey: true, unique: true, notNull: true },
-      name: 'TEXT',
+      tx_hash: { type: 'TEXT', primaryKey: true, notNull: true },
+      name: { type: 'TEXT', primaryKey: true },
       block_number: 'BIGINT',
       args: 'JSON',
       created_at: { type: 'TIMESTAMP', notNull: true },
       updated_at: 'TIMESTAMP'
     },
-    { ifNotExists: true }
+    { ifNotExists: true, primaryKey: ['tx_hash', 'name'] }
   )
 
   pgm.createIndex(tableName, 'block_number')
