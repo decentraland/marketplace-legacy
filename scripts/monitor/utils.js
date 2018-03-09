@@ -1,17 +1,25 @@
 import { eth } from 'decentraland-commons'
 
-// Serves as a crude debounced cache
-const cache = {
+// Serve as crude caches
+const debounceCache = {
   // id: timeoutId
 }
+const assetIdCache = {
+  // assetId: tokenId
+}
 
-export function debounceById(id, callback, delay = 100) {
-  clearTimeout(cache[id])
-  cache[id] = setTimeout(callback, delay)
+export function debounceEvent(parcelId, eventName, callback, delay = 100) {
+  const id = `${parcelId}-${eventName}`
+  clearTimeout(debounceCache[id])
+  debounceCache[id] = setTimeout(callback, delay)
 }
 
 export async function decodeAssetId(assetId) {
-  const contract = eth.getContract('LANDRegistry')
-  const tokenId = await contract.decodeTokenId(assetId)
-  return tokenId.toString()
+  if (!assetIdCache[assetId]) {
+    const contract = eth.getContract('LANDRegistry')
+    const tokenId = await contract.decodeTokenId(assetId)
+    assetIdCache[assetId] = tokenId.toString()
+  }
+
+  return assetIdCache[assetId]
 }

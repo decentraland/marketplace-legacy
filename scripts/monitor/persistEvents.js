@@ -1,5 +1,5 @@
 import { eth, txUtils, contracts, Log } from 'decentraland-commons'
-import { decodeAssetId, debounceById } from './utils'
+import { decodeAssetId, debounceEvent } from './utils'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
@@ -32,12 +32,12 @@ export async function persistEvents(lastBlockNumber = null, delay = 15000) {
 }
 
 export async function processEvent(event) {
-  const { tx_hash, block_number } = event
+  const { tx_hash, block_number, name } = event
   const { assetId } = event.args
-  const id = await decodeAssetId(assetId)
-  const [x, y] = Parcel.splitId(id)
+  const parcelId = await decodeAssetId(assetId)
+  const [x, y] = Parcel.splitId(parcelId)
 
-  switch (event.name) {
+  switch (name) {
     case 'AuctionCreated': {
       const { seller, priceInWei, expiresAt } = event.args
       const contract_id = event.args.id
@@ -51,7 +51,9 @@ export async function processEvent(event) {
         log.info(`[AuctionCreated] Publication ${tx_hash} doesn't have an id`)
         return
       }
-      log.info(`[AuctionCreated] Creating publication ${contract_id} for ${id}`)
+      log.info(
+        `[AuctionCreated] Creating publication ${contract_id} for ${parcelId}`
+      )
 
       await Publication.insert({
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
@@ -86,7 +88,7 @@ export async function processEvent(event) {
         },
         { contract_id }
       )
-      await Parcel.update({ owner: winner }, { id })
+      await Parcel.update({ owner: winner }, { id: parcelId })
       break
     }
     case 'AuctionCancelled': {
@@ -109,22 +111,22 @@ export async function processEvent(event) {
         const { data } = event.args
         const attributes = { data: contracts.LANDRegistry.decodeLandData(data) }
 
-        debounceById(id, () => {
+        debounceEvent(parcelId, name, () => {
           const attrsStr = JSON.stringify(attributes)
-          log.info(`[Update] Updating "${id}" with ${attrsStr}`)
+          log.info(`[Update] Updating "${parcelId}" with ${attrsStr}`)
 
-          Parcel.update(attributes, { id })
+          Parcel.update(attributes, { id: parcelId })
         })
       } catch (error) {
-        log.info(`[Update] Skipping badly formed data for "${id}"`)
+        log.info(`[Update] Skipping badly formed data for "${parcelId}"`)
       }
       break
     }
     case 'Transfer': {
       const { to } = event.args
 
-      debounceById(id, async () => {
-        log.info(`[Transfer] Updating "${id}" owner with "${to}"`)
+      debounceEvent(parcelId, name, async () => {
+        log.info(`[Transfer] Updating "${parcelId}" owner with "${to}"`)
         const publicationHashes = await BlockchainEvent.findOlderTxHashes(
           'AuctionCreated',
           block_number
@@ -134,7 +136,7 @@ export async function processEvent(event) {
           publicationHashes
         )
 
-        await Parcel.update({ owner: to.toLowerCase() }, { id })
+        await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
       })
       break
     }
