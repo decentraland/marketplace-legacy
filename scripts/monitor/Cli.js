@@ -34,9 +34,7 @@ export class Cli {
    * @return {object} command
    */
   defineCommand(commandName, program, callback) {
-    const command = program.command(
-      `${commandName} <contractName> [eventNames...]`
-    )
+    const command = program.command(`${commandName}`)
 
     return this.addOptions(command).action((...args) => callback(...args))
   }

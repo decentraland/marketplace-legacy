@@ -12,6 +12,7 @@ export class HandlersIndex {
    *   - operation_name
    *   - name_[actions_...]
    *   - name
+   *   - operation
    * @param  {string} operation - Executed operation
    * @param  {string} [name]    - Main name
    * @param  {Array<string>} [actions=[]] - Possible actions
@@ -29,8 +30,9 @@ export class HandlersIndex {
       parts.push(actions.join('_'))
       slices.push({ start: 1 })
     }
-
     if (name) slices.push({ start: 1, end: -1 })
+
+    slices.push({ start: 0, end: 1 })
 
     for (let i = 0; i < slices.length; i++) {
       const { start, end } = slices[i]

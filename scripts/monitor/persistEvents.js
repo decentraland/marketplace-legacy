@@ -1,0 +1,115 @@
+import { eth, txUtils, contracts } from 'decentraland-commons'
+import { decodeAssetId, debounceById } from './utils'
+import { Parcel } from '../../src/Parcel'
+import { Publication } from '../../src/Publication'
+import { BlockchainEvent } from '../../src/BlockchainEvent'
+
+export async function transform_Marketplace(event) {
+  const { transactionHash } = event
+  const { assetId } = event.args
+  const id = await decodeAssetId(assetId)
+  const [x, y] = Parcel.splitId(id)
+
+  switch (event.event) {
+    case 'AuctionCreated': {
+      const { creator, priceInWei, expiresAt } = event.args
+
+      console.log(
+        `[Marketplace-AuctionCreated] Creating publication for ${x},${y}`
+      )
+
+      await Publication.insert({
+        tx_hash: transactionHash,
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        status: Publication.STATUS.open,
+        owner: creator.toLowerCase(),
+        buyer: null,
+        price: eth.utils.fromWei(priceInWei.toNumber()),
+        expires_at: new Date(expiresAt.toNumber()),
+        x,
+        y
+      })
+      break
+    }
+    case 'AuctionSuccessful': {
+      const { totalPrice, winner } = event.args
+
+      console.log(
+        `[Marketplace-AuctionSuccessful] Publication ${id} sold to ${winner}`
+      )
+
+      await Publication.update(
+        {
+          status: Publication.STATUS.sold,
+          buyer: winner.toLowerCase(),
+          price: eth.utils.fromWei(totalPrice.toNumber())
+        },
+        { x, y }
+      )
+      await Parcel.update({ owner: winner }, { id })
+      break
+    }
+    case 'AuctionCancelled': {
+      console.log(`[Marketplace-AuctionCancelled] Publication ${id} cancelled`)
+
+      await Publication.update(
+        { status: Publication.STATUS.cancelled },
+        { x, y }
+      )
+      break
+    }
+    default:
+      break
+  }
+
+  return event
+}
+
+export async function transform_LANDRegistry(event) {
+  const { assetId } = event.args
+  const id = await decodeAssetId(assetId)
+
+  switch (event.event) {
+    case 'Update': {
+      try {
+        const { data } = event.args
+        const attributes = { data: contracts.LANDRegistry.decodeLandData(data) }
+
+        debounceById(id, () => {
+          const attrsStr = JSON.stringify(attributes)
+          console.log(`[LANDRegistry-Update] Updating "${id}" with ${attrsStr}`)
+
+          Parcel.update(attributes, { id })
+        })
+      } catch (error) {
+        // Skip badly formed data
+      }
+      break
+    }
+    case 'Transfer': {
+      const { to } = event.args
+      const [x, y] = Parcel.splitId(id)
+
+      debounceById(id, () => {
+        console.log(
+          `[LANDRegistry-Transfer] Updating "${id}" owner with "${to}"`
+        )
+        Publication.update({ status: Publication.STATUS.cancelled }, { x, y })
+        Parcel.update({ owner: to.toLowerCase() }, { id })
+      })
+      break
+    }
+    default:
+      break
+  }
+
+  return event
+}
+
+let lastBlockNumber = null
+
+export function persistEvents(delay = 15000) { // 15segs
+  // For db BlockchainEvents
+  // Call things
+  setTimeout(() => persistEvents(), delay)
+}

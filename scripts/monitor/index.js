@@ -1,8 +1,9 @@
 #!/usr/bin/env babel-node
 
-import { eth, Log, contracts } from 'decentraland-commons'
+import { eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
-import { TransformCli } from './TransformCli'
+import { StoreCli } from './StoreCli'
+import { persistEvents } from './persistEvents'
 import { db } from '../../src/database'
 import { loadEnv } from '../../scripts/utils'
 
@@ -17,15 +18,20 @@ Promise.resolve()
   })
   .then(() => {
     log.debug('Connecting to Ethereum node')
-    // Although the CLI adds the required contracts automatically, we'll need LANDRegistry to decode assetIds
-    // So it's better to have it available at all times
-    return eth.connect({
-      contracts: [contracts.LANDRegistry]
-    })
+    return eth.connect()
   })
   .then(() => {
     log.debug('Starting CLI')
-    return new TransformCli(handlers).run()
+
+    return new StoreCli(handlers, {
+      Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
+      LANDRegistry: ['Transfer']
+      // 'LANDRegistry': ['Update', 'Transfer'],
+    }).run()
+  })
+  .then(() => {
+    log.debug('Firing up event persister')
+    persistEvents()
   })
   .catch(error => {
     log.error(error)
