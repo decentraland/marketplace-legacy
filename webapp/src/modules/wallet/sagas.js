@@ -24,7 +24,6 @@ import {
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
-import { fetchDistrictsRequest } from 'modules/districts/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
 
 import { connectEthereumWallet, getMarketplaceAddress } from './utils'
@@ -39,7 +38,6 @@ export function* walletSaga() {
 function* handleConnectWalletRequest(action = {}) {
   while (yield select(isStorageLoading)) yield delay(5)
   try {
-    yield put(fetchDistrictsRequest())
     if (!eth.isConnected()) {
       const { derivationPath } = yield select(getData)
 

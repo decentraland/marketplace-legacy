@@ -35,43 +35,31 @@ export default class BuyParcelPage extends React.PureComponent {
     onConfirm(publication)
   }
 
-  render() {
-    const {
-      wallet,
-      x,
-      y,
-      publication,
-      isDisabled,
-      onCancel,
-      isConnected,
-      isLoading
-    } = this.props
+  renderLoading() {
+    return <Loader active size="massive" />
+  }
 
-    if (isLoading) {
-      return <Loader active size="massive" />
-    }
+  renderNotConnected() {
+    return (
+      <div className="BuyParcelPage">
+        <Navbar />
+        <Container text textAlign="center">
+          <Header as="h2" size="huge" className="title">
+            Buy LAND
+          </Header>
+          <p className="sign-in">
+            You need to <Link to={locations.signIn}>Sign In</Link> to access
+            this page
+          </p>
+        </Container>
+      </div>
+    )
+  }
 
-    if (!isConnected) {
-      return (
-        <div className="BuyParcelPage">
-          <Navbar />
-          <Container text textAlign="center">
-            <Header as="h2" size="huge" className="title">
-              Buy LAND
-            </Header>
-            <p className="sign-in">
-              You need to <Link to={locations.signIn}>Sign In</Link> to access
-              this page
-            </p>
-          </Container>
-        </div>
-      )
-    }
-
+  renderPage() {
+    const { wallet, x, y, publication, isDisabled, onCancel } = this.props
     const { approvedBalance } = wallet
-
     const isNotEnough = publication && approvedBalance < +publication.price
-
     return (
       <div className="BuyParcelPage">
         <Navbar />
@@ -158,5 +146,19 @@ export default class BuyParcelPage extends React.PureComponent {
         </Parcel>
       </div>
     )
+  }
+
+  render() {
+    const { isConnected, isLoading } = this.props
+
+    if (isLoading) {
+      return this.renderLoading()
+    }
+
+    if (!isConnected) {
+      return this.renderNotConnected()
+    }
+
+    return this.renderPage()
   }
 }

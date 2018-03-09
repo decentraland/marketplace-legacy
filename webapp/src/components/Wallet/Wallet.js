@@ -6,18 +6,21 @@ export default class Wallet extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
     onConnect: PropTypes.func.isRequired,
+    onFetchDistricts: PropTypes.func.isRequired,
     onFirstVisit: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     children: null,
     onConnect: () => {},
+    onFetchDistricts: () => {},
     onFirstVisit: () => {}
   }
 
   componentWillMount() {
-    const { onConnect, onFirstVisit } = this.props
+    const { onConnect, onFetchDistricts, onFirstVisit } = this.props
     onConnect()
+    onFetchDistricts()
     if (!localStorage.getItem('seenTermsModal')) {
       onFirstVisit()
     }
