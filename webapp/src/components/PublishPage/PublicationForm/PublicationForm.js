@@ -104,23 +104,6 @@ export default class PublicationForm extends React.PureComponent {
         error={!!formErrors}
         success={isConfirmed}
       >
-        <TxStatus.Idle isIdle={isTxIdle} />
-        {isPending || isFailure ? (
-          <Message icon>
-            {isPending && <Icon name="circle notched" loading />}
-            <Message.Content>
-              <TxStatus.Text
-                txHash={publication.tx_hash}
-                txStatus={publication.tx_status}
-              />
-            </Message.Content>
-          </Message>
-        ) : null}
-        {isConfirmed ? (
-          <Message success>
-            This LAND is already on sale for {formatMana(publication.price)}
-          </Message>
-        ) : null}
         <Form.Field>
           <label>Price</label>
           <Input
@@ -141,6 +124,23 @@ export default class PublicationForm extends React.PureComponent {
             onChange={this.handleExpiresAtChange}
           />
         </Form.Field>
+        <TxStatus.Idle isIdle={isTxIdle} />
+        {isPending || isFailure ? (
+          <Message icon>
+            {isPending && <Icon name="circle notched" loading />}
+            <Message.Content>
+              <TxStatus.Text
+                txHash={publication.tx_hash}
+                txStatus={publication.tx_status}
+              />
+            </Message.Content>
+          </Message>
+        ) : null}
+        {isConfirmed ? (
+          <Message success>
+            This LAND is already on sale for {formatMana(publication.price)}
+          </Message>
+        ) : null}
         {formErrors.length > 0 ? (
           <Message error onDismiss={this.handleClearFormErrors}>
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}

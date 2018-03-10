@@ -2,7 +2,7 @@
 
 import { eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
-import { TransformCli } from './TransformCli'
+import { StoreCli } from './StoreCli'
 import { db } from '../../src/database'
 import { loadEnv } from '../../scripts/utils'
 
@@ -21,7 +21,11 @@ Promise.resolve()
   })
   .then(() => {
     log.debug('Starting CLI')
-    return new TransformCli(handlers).run()
+
+    return new StoreCli(handlers, {
+      Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
+      LANDRegistry: ['Update', 'Transfer']
+    }).run()
   })
   .catch(error => {
     log.error(error)

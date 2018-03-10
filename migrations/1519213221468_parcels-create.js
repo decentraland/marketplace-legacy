@@ -7,8 +7,8 @@ exports.up = pgm => {
     tableName,
     {
       id: { type: 'TEXT', primaryKey: true, notNull: true },
-      x: { type: 'int', notNull: true },
-      y: { type: 'int', notNull: true },
+      x: { type: 'INT', notNull: true },
+      y: { type: 'INT', notNull: true },
       price: 'TEXT',
       district_id: 'TEXT',
       created_at: { type: 'TIMESTAMP', notNull: true},
@@ -21,7 +21,7 @@ exports.up = pgm => {
 }
 
 exports.down = pgm => {
-  pgm.dropTable(tableName)
-
   pgm.dropIndex(tableName, ['x', 'y'], { name: 'parcels_x_y_idx' })
+
+  pgm.dropTable(tableName)
 }

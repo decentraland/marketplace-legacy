@@ -28,8 +28,8 @@ exports.up = pgm => {
 }
 
 exports.down = pgm => {
-  pgm.dropTable(tableName)
-
   pgm.dropIndex(tableName, 'address')
   pgm.dropIndex(tableName, 'district_id')
+
+  pgm.dropTable(tableName)
 }

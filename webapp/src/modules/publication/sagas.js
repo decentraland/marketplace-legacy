@@ -65,16 +65,18 @@ function* handlePublishRequest(action) {
 
 function* handleBuyRequest(action) {
   try {
-    const { x, y } = action.publication
+    const { x, y, price } = action.publication
 
     const marketplaceContract = eth.getContract('Marketplace')
     const landRegistryContract = eth.getContract('LANDRegistry')
 
     const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
 
-    const txHash = yield call(() => marketplaceContract.executeOrder(assetId))
+    const txHash = yield call(() =>
+      marketplaceContract.executeOrder(assetId, eth.utils.toWei(price))
+    )
 
-    yield put(buySuccess(txHash))
+    yield put(buySuccess(txHash, action.publication))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(buyFailure(error.message))
@@ -92,7 +94,7 @@ function* handleCancelSaleRequest(action) {
 
     const txHash = yield call(() => marketplaceContract.cancelOrder(assetId))
 
-    yield put(cancelSaleSuccess(txHash))
+    yield put(cancelSaleSuccess(txHash, action.publication))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(cancelSaleFailure(error.message))

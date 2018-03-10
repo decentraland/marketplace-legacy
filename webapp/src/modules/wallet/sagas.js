@@ -63,7 +63,7 @@ function* handleConnectWalletRequest(action = {}) {
     const [balance, approvedBalance, isLandAuthorized] = yield all([
       manaTokenContract.balanceOf(address),
       manaTokenContract.allowance(address, marketplaceAddress),
-      landRegistryContract.isOperatorAuthorizedFor(marketplaceAddress, address)
+      landRegistryContract.isApprovedForAll(marketplaceAddress, address)
     ])
 
     const { type, derivationPath } = eth.getWalletAttributes()
@@ -112,7 +112,7 @@ function* handleAuthorizeLandRequest(action) {
     const landRegistryContract = eth.getContract('LANDRegistry')
 
     const txHash = yield call(() =>
-      landRegistryContract.authorizeOperator(
+      landRegistryContract.setApprovalForAll(
         getMarketplaceAddress(),
         isAuthorized
       )

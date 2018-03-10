@@ -9,7 +9,7 @@ exports.up = pgm => {
 exports.down = pgm => {
   pgm.addColumns(tableName, {
     status: {
-      type: 'boolean',
+      type: 'BOOLEAN',
       notNull: true,
       default: false
     }
