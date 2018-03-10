@@ -1,4 +1,5 @@
 import { Model } from 'decentraland-commons'
+import { BlockchainEvent } from '../BlockchainEvent'
 
 export class Publication extends Model {
   static tableName = 'publications'
@@ -49,13 +50,32 @@ export class Publication extends Model {
         ORDER BY created_at DESC`
   }
 
-  static updateManyStatus(newStatus, txHashes) {
-    if (!this.isValidStatus(newStatus)) {
-      throw new Error(`Trying to filter by invalid status '${newStatus}'`)
+  static async cancelOlder(blockNumber) {
+    const rows = await this.db.query(
+      `SELECT p.tx_hash
+        FROM ${this.tableName} p
+        JOIN ${
+          BlockchainEvent.tableName
+        } b ON p.tx_hash = b.tx_hash AND name = $1
+        WHERE b.block_number < $2
+          AND p.status = $3`,
+      ['AuctionCreated', blockNumber, this.STATUS.open]
+    )
+    const txHashes = rows.map(row => row.tx_hash)
+
+    if (txHashes.length) {
+      await this.updateManyStatus(txHashes, this.STATUS.cancelled)
     }
+  }
+
+  static updateManyStatus(txHashes, newStatus) {
     if (txHashes.length === 0) {
       return []
     }
+    if (!this.isValidStatus(newStatus)) {
+      throw new Error(`Trying to filter by invalid status '${newStatus}'`)
+    }
+    // 1 -> newStatus, 2 -> IN
     const inPlaceholders = txHashes.map((_, index) => `$${index + 2}`)
 
     return this.db.query(

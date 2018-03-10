@@ -9,18 +9,6 @@ export class BlockchainEvent extends Model {
     return this.findOne(null, { block_number: 'DESC' })
   }
 
-  static async findOlderTxHashes(name, blockNumber) {
-    const rows = await this.db.query(
-      `SELECT tx_hash
-        FROM ${this.tableName}
-        WHERE name = $1
-          AND block_number < $2
-        ORDER BY block_number DESC`,
-      [name, blockNumber]
-    )
-    return rows.map(row => row.tx_hash)
-  }
-
   static findFrom(blockNumber) {
     return this.db.query(
       `SELECT *

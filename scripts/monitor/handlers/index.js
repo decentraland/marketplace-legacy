@@ -13,7 +13,7 @@ export async function store(eventData) {
     log.info(`[${event}] Blockchain event ${transactionHash} already exists`)
     return
   }
-  log.info(`[${event}] Storing blockchain event`)
+  log.info(`[${event}] Storing blockchain event ${transactionHash}`)
 
   const args = Object.keys(eventData.args).reduce(
     (memo, key) =>

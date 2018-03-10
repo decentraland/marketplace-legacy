@@ -127,15 +127,8 @@ export async function processEvent(event) {
 
       debounceEvent(parcelId, name, async () => {
         log.info(`[Transfer] Updating "${parcelId}" owner with "${to}"`)
-        const publicationHashes = await BlockchainEvent.findOlderTxHashes(
-          'AuctionCreated',
-          block_number
-        )
-        await Publication.updateManyStatus(
-          Publication.STATUS.cancelled,
-          publicationHashes
-        )
 
+        await Publication.cancelOlder(block_number)
         await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
       })
       break
