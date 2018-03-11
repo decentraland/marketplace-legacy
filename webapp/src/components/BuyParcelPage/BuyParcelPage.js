@@ -1,7 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Container, Header, Grid, Button, Message } from 'semantic-ui-react'
+import {
+  Loader,
+  Container,
+  Header,
+  Grid,
+  Button,
+  Message
+} from 'semantic-ui-react'
 import Navbar from 'components/Navbar'
 import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
@@ -17,6 +24,8 @@ export default class BuyParcelPage extends React.PureComponent {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
@@ -26,12 +35,31 @@ export default class BuyParcelPage extends React.PureComponent {
     onConfirm(publication)
   }
 
-  render() {
+  renderLoading() {
+    return <Loader active size="massive" />
+  }
+
+  renderNotConnected() {
+    return (
+      <div className="BuyParcelPage">
+        <Navbar />
+        <Container text textAlign="center">
+          <Header as="h2" size="huge" className="title">
+            Buy LAND
+          </Header>
+          <p className="sign-in">
+            You need to <Link to={locations.signIn}>Sign In</Link> to access
+            this page
+          </p>
+        </Container>
+      </div>
+    )
+  }
+
+  renderPage() {
     const { wallet, x, y, publication, isDisabled, onCancel } = this.props
     const { approvedBalance } = wallet
-
     const isNotEnough = publication && approvedBalance < +publication.price
-
     return (
       <div className="BuyParcelPage">
         <Navbar />
@@ -118,5 +146,19 @@ export default class BuyParcelPage extends React.PureComponent {
         </Parcel>
       </div>
     )
+  }
+
+  render() {
+    const { isConnected, isLoading } = this.props
+
+    if (isLoading) {
+      return this.renderLoading()
+    }
+
+    if (!isConnected) {
+      return this.renderNotConnected()
+    }
+
+    return this.renderPage()
   }
 }

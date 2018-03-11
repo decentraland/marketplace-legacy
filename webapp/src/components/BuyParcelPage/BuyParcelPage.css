@@ -19,3 +19,9 @@
 .BuyParcelPage button + button {
   margin-left: 15px !important;
 }
+
+.BuyParcelPage .sign-in {
+  display: block;
+  text-align: center;
+  margin-top: 50px !important;
+}

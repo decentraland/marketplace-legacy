@@ -1,14 +1,21 @@
 import { createSelector } from 'reselect'
-import { APPROVE_MANA_SUCCESS, AUTHORIZE_LAND_SUCCESS } from './actions'
+import {
+  APPROVE_MANA_SUCCESS,
+  AUTHORIZE_LAND_SUCCESS,
+  CONNECT_WALLET_REQUEST
+} from './actions'
 import { getAddresses } from 'modules/address/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
+import { isLoadingType } from 'modules/loading/selectors'
 
 export const getState = state => state.wallet
 export const getData = state => getState(state).data
-export const isLoading = state => getState(state).loading.length > 0
+export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 export const getAddress = state => getData(state).address
 export const isConnected = state => !!getData(state).address
+export const isConnecting = state =>
+  isLoadingType(getLoading(state), CONNECT_WALLET_REQUEST)
 export const getWallet = createSelector(
   getData,
   getAddresses,

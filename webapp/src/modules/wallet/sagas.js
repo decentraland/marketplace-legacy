@@ -8,9 +8,6 @@ import {
   put
 } from 'redux-saga/effects'
 import { eth } from 'decentraland-commons'
-import { replace } from 'react-router-redux'
-
-import { locations } from 'locations'
 import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
@@ -27,7 +24,6 @@ import {
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
-import { fetchDistrictsRequest } from 'modules/districts/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
 
 import { connectEthereumWallet, getMarketplaceAddress } from './utils'
@@ -41,7 +37,6 @@ export function* walletSaga() {
 
 function* handleConnectWalletRequest(action = {}) {
   while (yield select(isStorageLoading)) yield delay(5)
-
   try {
     if (!eth.isConnected()) {
       const { derivationPath } = yield select(getData)
@@ -76,18 +71,15 @@ function* handleConnectWalletRequest(action = {}) {
       type,
       derivationPath
     }
-
     yield handleConnectWalletSuccess(address)
     yield put(connectWalletSuccess(wallet))
   } catch (error) {
-    yield put(replace(locations.walletError))
     yield put(connectWalletFailure(error.message))
   }
 }
 
 function* handleConnectWalletSuccess(address) {
   yield put(fetchAddress(address))
-  yield put(fetchDistrictsRequest())
   yield put(watchLoadingTransactions())
 }
 

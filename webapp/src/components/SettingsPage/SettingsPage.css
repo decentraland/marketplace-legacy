@@ -12,3 +12,9 @@
   margin-top: 30px;
   margin-bottom: 0;
 }
+
+.SettingsPage .sign-in {
+  display: block;
+  text-align: center;
+  margin-top: 50px;
+}

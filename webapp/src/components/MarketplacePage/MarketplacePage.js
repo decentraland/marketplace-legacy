@@ -37,13 +37,11 @@ export default class MarketplacePage extends React.PureComponent {
     sortBy: PropTypes.string.isRequired,
     sortOrder: PropTypes.string.isRequired,
     onNavigate: PropTypes.func.isRequired,
-    onConnect: PropTypes.func.isRequired,
     onFetchPublications: PropTypes.func.isRequired
   }
 
   componentWillMount() {
-    const { onConnect, onFetchPublications } = this.props
-    onConnect()
+    const { onFetchPublications } = this.props
     onFetchPublications()
   }
 

@@ -46,21 +46,24 @@
   height: 52px;
 }
 
-.Navbar .navbar-menu .item {
+.Navbar .navbar-menu .item,
+.Navbar .navbar-account .item {
   color: var(--purple);
   transition: none;
 }
 
 .Navbar .navbar-menu .ui.menu .item.active,
-.Navbar .navbar-menu .ui.menu .item:hover {
+.Navbar .navbar-menu .ui.menu .item:hover,
+.Navbar .navbar-account .ui.menu .item.active,
+.Navbar .navbar-account .ui.menu .item:hover {
   background-color: var(--purple);
-  color: #FFF;
+  color: #fff;
   transition: none;
 }
 
 /* Same as Label color="white" found on Label.css */
 .Navbar .navbar-menu .ui.menu .item:hover .label {
-  background-color: #FFF !important;
+  background-color: #fff !important;
   color: var(--purple) !important;
   transition: none;
 }

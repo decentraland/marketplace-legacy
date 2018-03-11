@@ -35,13 +35,11 @@ export default class ProfilePage extends React.PureComponent {
     isLoading: PropTypes.bool,
     isEmpty: PropTypes.bool,
     isOwner: PropTypes.bool,
-    onNavigate: PropTypes.func.isRequired,
-    onConnect: PropTypes.func.isRequired
+    onNavigate: PropTypes.func.isRequired
   }
 
   componentWillMount() {
-    const { onConnect, onFetchAddress } = this.props
-    onConnect()
+    const { onFetchAddress } = this.props
     onFetchAddress()
   }
 

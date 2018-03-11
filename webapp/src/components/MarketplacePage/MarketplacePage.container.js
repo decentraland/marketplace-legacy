@@ -1,7 +1,6 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { connectWalletRequest } from 'modules/wallet/actions'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
 import { isLoading } from 'modules/publication/selectors'
 import { getPublications, getTotal } from 'modules/ui/marketplace/selectors'
@@ -29,7 +28,6 @@ const mapState = (state, { location }) => {
 }
 
 const mapDispatch = (dispatch, { location }) => ({
-  onConnect: () => dispatch(connectWalletRequest()),
   onFetchPublications: () =>
     dispatch(fetchPublicationsRequest(getOptionsFromRouter(location))),
   onNavigate: url => dispatch(push(url))

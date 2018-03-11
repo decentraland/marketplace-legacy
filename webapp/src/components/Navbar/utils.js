@@ -16,6 +16,8 @@ export function getActivePage({ pathname, wallet }) {
     currentPage = NAVBAR_PAGES.activity
   } else if (pathname === locations.settings) {
     currentPage = NAVBAR_PAGES.settings
+  } else if (pathname === locations.signIn) {
+    currentPage = NAVBAR_PAGES.signIn
   }
 
   return currentPage

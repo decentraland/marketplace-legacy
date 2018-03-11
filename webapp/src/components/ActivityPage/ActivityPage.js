@@ -18,11 +18,7 @@ export default class ActivityPage extends React.PureComponent {
     transactionHistory: PropTypes.arrayOf(transactionType),
     isEmpty: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    onConnect: PropTypes.func.isRequired
-  }
-
-  componentWillMount() {
-    this.props.onConnect()
+    isConnected: PropTypes.bool.isRequired
   }
 
   renderLoading() {
@@ -76,18 +72,33 @@ export default class ActivityPage extends React.PureComponent {
     )
   }
 
+  renderNotConnected() {
+    return (
+      <p className="sign-in">
+        You need to <Link to={locations.signIn}>Sign In</Link> to access this
+        page
+      </p>
+    )
+  }
+
   render() {
-    const { isEmpty, isLoading } = this.props
+    const { isEmpty, isLoading, isConnected } = this.props
+
+    let content = null
+    if (isLoading) {
+      content = this.renderLoading()
+    } else if (!isConnected) {
+      content = this.renderNotConnected()
+    } else if (isEmpty) {
+      content = this.renderEmpty()
+    } else {
+      content = this.renderTransactionLists()
+    }
 
     return (
       <div className="ActivityPage">
         <Navbar />
-
-        <Container text>
-          {isLoading
-            ? this.renderLoading()
-            : isEmpty ? this.renderEmpty() : this.renderTransactionLists()}
-        </Container>
+        <Container text>{content}</Container>
       </div>
     )
   }

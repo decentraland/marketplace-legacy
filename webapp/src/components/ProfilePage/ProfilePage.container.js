@@ -1,7 +1,6 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { connectWalletRequest } from 'modules/wallet/actions'
 import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet } from 'modules/wallet/selectors'
@@ -65,7 +64,6 @@ const mapState = (state, { location, match }) => {
 }
 
 const mapDispatch = (dispatch, { match }) => ({
-  onConnect: () => dispatch(connectWalletRequest()),
   onFetchAddress: () => dispatch(fetchAddress(match.params.address)),
   onNavigate: url => dispatch(push(url))
 })

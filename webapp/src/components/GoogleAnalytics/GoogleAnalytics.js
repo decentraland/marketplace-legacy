@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 
 export default class GoogleAnalytics extends React.PureComponent {
   static propTypes = {
-    address: PropTypes.string
+    address: PropTypes.string,
+    isConnected: PropTypes.bool,
+    isConnecting: PropTypes.bool
   }
 
   constructor(props) {
     super(props)
-    this.configurated = false
+    this.isConfigured = false
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -18,7 +20,8 @@ export default class GoogleAnalytics extends React.PureComponent {
   }
 
   shouldConfig() {
-    return !this.configurated && !!this.props.address
+    const { isConnected } = this.props
+    return !this.isConfigured && isConnected
   }
 
   config() {
@@ -35,7 +38,7 @@ export default class GoogleAnalytics extends React.PureComponent {
       user_id: address
     })
 
-    this.configurated = true
+    this.isConfigured = true
   }
 
   render() {

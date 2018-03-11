@@ -37,7 +37,9 @@ export const locations = {
 
   error: '/error',
   walletError: '/walletError',
-  serverError: '/serverError'
+  serverError: '/serverError',
+
+  signIn: '/sign-in'
 }
 
 export const PROFILE_PAGE_TABS = Object.freeze({
@@ -51,5 +53,6 @@ export const NAVBAR_PAGES = Object.freeze({
   activity: 'activity',
   atlas: 'atlas',
   profile: 'profile',
-  settings: 'settings'
+  settings: 'settings',
+  signIn: 'signIn'
 })
