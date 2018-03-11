@@ -25,14 +25,7 @@ const httpServer = http.Server(app)
 app.use(bodyParser.urlencoded({ extended: false, limit: '2mb' }))
 app.use(bodyParser.json())
 
-if (env.isProduction()) {
-  const webappPath = env.get(
-    'WEBAPP_PATH',
-    path.join(__dirname, '..', 'webapp/build')
-  )
-
-  app.use('/', express.static(webappPath, { extensions: ['html'] }))
-} else {
+if (env.isDevelopment()) {
   app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Request-Method', '*')
