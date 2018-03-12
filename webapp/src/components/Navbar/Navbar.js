@@ -22,31 +22,14 @@ export default class Navbar extends React.PureComponent {
     activityBadge: PropTypes.number
   }
 
-  handleItemClick = (event, data) => {
-    const { wallet, center, onNavigate } = this.props
-    switch (data.name) {
-      case NAVBAR_PAGES.atlas: {
-        onNavigate(locations.parcelMapDetail(center.x, center.y))
-        return
-      }
-      case NAVBAR_PAGES.profile: {
-        onNavigate(locations.profilePage(wallet.address))
-        return
-      }
-      case NAVBAR_PAGES.marketplace: {
-        onNavigate(locations.marketplace)
-        return
-      }
-      case NAVBAR_PAGES.activity: {
-        onNavigate(locations.activity)
-        return
-      }
-      case NAVBAR_PAGES.signIn: {
-        onNavigate(locations.signIn)
-        return
-      }
-      default:
-        return
+  getNavigationPaths() {
+    const { wallet, center } = this.props
+    return {
+      [NAVBAR_PAGES.atlas]: locations.parcelMapDetail(center.x, center.y),
+      [NAVBAR_PAGES.profile]: locations.profilePage(wallet.address),
+      [NAVBAR_PAGES.marketplace]: locations.marketplace,
+      [NAVBAR_PAGES.activity]: locations.activity,
+      [NAVBAR_PAGES.signIn]: locations.signIn
     }
   }
 
@@ -60,8 +43,15 @@ export default class Navbar extends React.PureComponent {
     return <Badge color={isActive ? 'white' : 'purple'}>{activityBadge}</Badge>
   }
 
+  handleItemClick = (event, data) => {
+    if (data.href) this.props.onNavigate(data.href)
+    event.preventDefault()
+  }
+
   render() {
     const { wallet, activePage, isLoading, isConnected } = this.props
+    const navigationPaths = this.getNavigationPaths()
+
     return (
       <div className="Navbar" role="navigation">
         <div className="navbar-header">
@@ -78,14 +68,14 @@ export default class Navbar extends React.PureComponent {
         <div className="navbar-menu">
           <Menu secondary>
             <Menu.Item
-              name="atlas"
+              href={navigationPaths[NAVBAR_PAGES.atlas]}
               active={activePage === NAVBAR_PAGES.atlas}
               onClick={this.handleItemClick}
             >
               Atlas
             </Menu.Item>
             <Menu.Item
-              name="marketplace"
+              href={navigationPaths[NAVBAR_PAGES.marketplace]}
               active={activePage === NAVBAR_PAGES.marketplace}
               onClick={this.handleItemClick}
             >
@@ -94,14 +84,14 @@ export default class Navbar extends React.PureComponent {
             {isConnected ? (
               <React.Fragment>
                 <Menu.Item
-                  name="profile"
+                  href={navigationPaths[NAVBAR_PAGES.profile]}
                   active={activePage === NAVBAR_PAGES.profile}
                   onClick={this.handleItemClick}
                 >
                   My Land
                 </Menu.Item>
                 <Menu.Item
-                  name="activity"
+                  href={navigationPaths[NAVBAR_PAGES.activity]}
                   active={activePage === NAVBAR_PAGES.activity}
                   onClick={this.handleItemClick}
                 >
@@ -117,7 +107,7 @@ export default class Navbar extends React.PureComponent {
           ) : (
             <Menu secondary>
               <Menu.Item
-                name="signIn"
+                href={navigationPaths[NAVBAR_PAGES.signIn]}
                 active={activePage === NAVBAR_PAGES.signIn}
                 onClick={this.handleItemClick}
               >
