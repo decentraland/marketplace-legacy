@@ -49,7 +49,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
       switch (transaction.actionType) {
         case APPROVE_MANA_SUCCESS:
           return {
-            loading: false,
+            ...state,
             data: {
               ...state.data,
               approvedBalance: transaction.payload.mana
@@ -57,7 +57,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
           }
         case AUTHORIZE_LAND_SUCCESS:
           return {
-            loading: false,
+            ...state,
             data: {
               ...state.data,
               isLandAuthorized: transaction.payload.isAuthorized

@@ -8,7 +8,10 @@ export async function store(eventData) {
 
   const { event, transactionHash, blockNumber } = eventData
 
-  const exists = await BlockchainEvent.count({ tx_hash: transactionHash })
+  const exists = await BlockchainEvent.count({
+    tx_hash: transactionHash,
+    name: event
+  })
   if (exists) {
     log.info(`[${event}] Blockchain event ${transactionHash} already exists`)
     return
