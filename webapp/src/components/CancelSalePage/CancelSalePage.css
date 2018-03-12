@@ -1,8 +1,3 @@
-.CancelSalePage .ui.header.title {
-  margin-top: 30px;
-  margin-bottom: 0;
-}
-
 .CancelSalePage .subtitle {
   color: var(--dark-purple);
   font-weight: 100;

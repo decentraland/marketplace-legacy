@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Container, Header, Grid } from 'semantic-ui-react'
-import Navbar from 'components/Navbar'
 import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
 import TxStatus from 'components/TxStatus'
@@ -29,42 +28,39 @@ export default class TransferParcelPage extends React.PureComponent {
     const { x, y, isTxIdle, transferError, publications } = this.props
     const { onSubmit, onCancel, onCleanTransfer } = this.props
     return (
-      <div className="TransferParcelPage">
-        <Navbar />
-        <Parcel x={x} y={y} ownerOnly>
-          {parcel => (
-            <React.Fragment>
-              <Container text textAlign="center">
-                <Header as="h2" size="huge" className="title">
-                  Transfer LAND
-                </Header>
-                <div className="subtitle">
-                  You&#39;re about to transfer&nbsp;
-                  <ParcelName parcel={parcel} />
-                  <br />
-                  Remember that transferring LAND is an irreversible operation.<br />
-                  Please check the address carefully<br />
-                </div>
-              </Container>
-              <br />
-              <Container text>
-                <Grid.Column>
-                  <TransferParcelForm
-                    parcel={parcel}
-                    isTxIdle={isTxIdle}
-                    transferError={transferError}
-                    onSubmit={onSubmit}
-                    onCancel={onCancel}
-                    onCleanTransfer={onCleanTransfer}
-                    hasPublication={hasPublication(parcel, publications)}
-                  />
-                  <TxStatus.Parcel parcel={parcel} />
-                </Grid.Column>
-              </Container>
-            </React.Fragment>
-          )}
-        </Parcel>
-      </div>
+      <Parcel x={x} y={y} ownerOnly>
+        {parcel => (
+          <div className="TransferParcelPage">
+            <Container text textAlign="center">
+              <Header as="h2" size="huge" className="title">
+                Transfer LAND
+              </Header>
+              <div className="subtitle">
+                You&#39;re about to transfer&nbsp;
+                <ParcelName parcel={parcel} />
+                <br />
+                Remember that transferring LAND is an irreversible operation.<br />
+                Please check the address carefully<br />
+              </div>
+            </Container>
+            <br />
+            <Container text>
+              <Grid.Column>
+                <TransferParcelForm
+                  parcel={parcel}
+                  isTxIdle={isTxIdle}
+                  transferError={transferError}
+                  onSubmit={onSubmit}
+                  onCancel={onCancel}
+                  onCleanTransfer={onCleanTransfer}
+                  hasPublication={hasPublication(parcel, publications)}
+                />
+                <TxStatus.Parcel parcel={parcel} />
+              </Grid.Column>
+            </Container>
+          </div>
+        )}
+      </Parcel>
     )
   }
 }

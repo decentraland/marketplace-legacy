@@ -1,5 +1,9 @@
+.Page > .AtlasPage {
+  height: 90vh;
+  padding: 0;
+}
+
 .AtlasPage {
-  height: 100%;
   position: relative;
   overflow: hidden;
 }
