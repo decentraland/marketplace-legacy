@@ -1,16 +1,10 @@
 .SettingsPage {
-  height: 100%;
   color: var(--text);
 }
 
 .SettingsPage > .Loading {
   font-size: 10px;
   top: 25%;
-}
-
-.SettingsPage .ui.header.title {
-  margin-top: 30px;
-  margin-bottom: 0;
 }
 
 .SettingsPage .sign-in {

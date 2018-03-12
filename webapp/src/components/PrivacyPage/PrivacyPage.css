@@ -1,11 +1,6 @@
-.Privacy {
-  height: auto;
-}
-
 .Privacy .content {
   margin: auto;
   max-width: 720px;
-  padding: 48px 0;
 }
 
 .StaticPage.Privacy h2 {
@@ -23,4 +18,10 @@
   text-align: left;
   font-size: 16px;
 }
- 
+
+@media (max-width: 768px) {
+  .Privacy {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

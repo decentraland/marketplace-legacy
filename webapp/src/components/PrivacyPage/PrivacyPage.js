@@ -230,10 +230,6 @@ export default class PrivacyPage extends React.PureComponent {
           10.2 Contact Information:{' '}
           <a href="mailto:privacy@decentraland.org">privacy@decentraland.org</a>.
         </p>
-
-        <a className="btn btn-primary" href="/">
-          GO BACK
-        </a>
       </StaticPage>
     )
   }

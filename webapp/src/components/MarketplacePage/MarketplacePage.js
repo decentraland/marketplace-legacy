@@ -11,7 +11,6 @@ import {
   Dimmer
 } from 'semantic-ui-react'
 import Publication from './Publication'
-import Navbar from 'components/Navbar'
 
 import { publicationType } from 'components/types'
 
@@ -123,7 +122,6 @@ export default class MarketplacePage extends React.PureComponent {
     const sortType = getSortTypeFromOptions({ sortBy, sortOrder })
     return (
       <div className="MarketplacePage">
-        <Navbar />
         <Container>
           <Menu pointing secondary>
             <Menu.Item name="Parcels" active onClick={this.handleItemClick} />

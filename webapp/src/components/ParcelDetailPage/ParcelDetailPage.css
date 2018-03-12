@@ -1,5 +1,9 @@
+.Page > .ParcelDetailPage {
+  padding-top: 0;
+  padding-bottom: 120px;
+}
+
 .ParcelDetailPage {
-  height: 100%;
   color: var(--text);
 }
 
