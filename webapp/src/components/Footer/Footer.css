@@ -1,0 +1,31 @@
+.Footer {
+  width: 100%;
+  padding: 28px 0;
+  font-size: 14px;
+  background-color: #FBFBFB;
+  text-align: center;
+}
+
+.Footer .social-icons a {
+  margin-right: 24px;
+}
+.Footer .social-icons a:last-child {
+  margin-right: 0;
+}
+
+.Footer .links {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.Footer .links a {
+  margin-right: 27px;
+  color: #000;
+}
+.Footer .links a:last-child {
+  margin-right: 0;
+}
+
+.Footer .copyright {
+  color: #929292;
+}

@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { locations } from 'locations'
 
 import Wallet from 'components/Wallet'
+import Page from 'components/Page'
 
 import AtlasPage from 'components/AtlasPage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
@@ -30,9 +31,9 @@ import Intercom from 'components/Intercom'
 import Modal from 'components/Modal'
 import Toast from 'components/Toast'
 
-export default function Routes() {
-  return (
-    <Wallet>
+export default class Routes extends React.Component {
+  renderRoutes() {
+    return (
       <Switch>
         <Route exact path={locations.root} component={AtlasPage} />
         <Route exact path={locations.parcel} component={ParcelDetailPage} />
@@ -54,10 +55,18 @@ export default function Routes() {
         <Route exact path={locations.error} component={WalletErrorPage} />
         <Redirect to={locations.root} />
       </Switch>
-      <Modal />
-      <Toast />
-      <Intercom />
-      <GoogleAnalytics />
-    </Wallet>
-  )
+    )
+  }
+
+  render() {
+    return (
+      <Wallet>
+        <Page>{this.renderRoutes()}</Page>
+        <Modal />
+        <Toast />
+        <Intercom />
+        <GoogleAnalytics />
+      </Wallet>
+    )
+  }
 }

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import { Container, Loader } from 'semantic-ui-react'
-import Navbar from 'components/Navbar'
 import Badge from 'components/Badge'
 import Transaction from './Transaction'
 
@@ -43,7 +42,7 @@ export default class ActivityPage extends React.PureComponent {
     return (
       <React.Fragment>
         {pendingTransactions.length > 0 ? (
-          <div className="transaction-list">
+          <div className="transaction-list pending-transaction-list">
             <div className="section-title">
               Pending <Badge size="tiny">{pendingTransactions.length}</Badge>
             </div>
@@ -52,8 +51,6 @@ export default class ActivityPage extends React.PureComponent {
             ))}
           </div>
         ) : null}
-
-        <br />
 
         {transactionHistory.length > 0 ? (
           <div className="transaction-list">
@@ -96,10 +93,9 @@ export default class ActivityPage extends React.PureComponent {
     }
 
     return (
-      <div className="ActivityPage">
-        <Navbar />
-        <Container text>{content}</Container>
-      </div>
+      <Container text className="ActivityPage">
+        {content}
+      </Container>
     )
   }
 }

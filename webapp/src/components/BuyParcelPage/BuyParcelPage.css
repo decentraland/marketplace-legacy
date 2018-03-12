@@ -1,8 +1,3 @@
-.BuyParcelPage .ui.header.title {
-  margin-top: 30px;
-  margin-bottom: 0;
-}
-
 .BuyParcelPage .subtitle {
   color: var(--dark-purple);
   font-weight: 100;
@@ -23,5 +18,5 @@
 .BuyParcelPage .sign-in {
   display: block;
   text-align: center;
-  margin-top: 50px !important;
+  margin-top: 50px;
 }

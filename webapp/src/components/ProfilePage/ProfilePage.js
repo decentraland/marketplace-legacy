@@ -10,7 +10,6 @@ import {
   Label
 } from 'semantic-ui-react'
 import AddressLink from 'components/AddressLink'
-import Navbar from 'components/Navbar'
 import Publication from 'components/MarketplacePage/Publication'
 import Parcel from './Parcel'
 import Contribution from './Contribution'
@@ -153,7 +152,6 @@ export default class ProfilePage extends React.PureComponent {
     } = this.props
     return (
       <div className="ProfilePage">
-        <Navbar />
         <Container className="profile-menu">
           <Menu pointing secondary>
             <Menu.Item

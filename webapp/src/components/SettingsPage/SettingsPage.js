@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+
 import { Container, Grid, Header, Loader } from 'semantic-ui-react'
-import Navbar from 'components/Navbar'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
@@ -66,40 +66,41 @@ export default class SettingsPage extends React.PureComponent {
     } = wallet
 
     if (isLoading) {
-      return <Loader active size="massive" />
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
     }
 
     return (
-      <div className="SettingsPage">
-        <Navbar />
-        <Container text>
-          <Header as="h1" size="huge" textAlign="center" className="title">
-            Settings
-          </Header>
+      <Container text className="SettingsPage">
+        <Header as="h1" size="huge" textAlign="center" className="title">
+          Settings
+        </Header>
 
-          <Grid.Column>
-            {isConnected ? (
-              <SettingsForm
-                address={address}
-                walletType={type}
-                walletDerivationPath={derivationPath}
-                onDerivationPathChange={this.handleDerivationPathChange}
-                manaApproved={approvedBalance}
-                approveTransaction={this.getApproveTransaction()}
-                onManaApprovedChange={this.handleManaApproval}
-                isLandAuthorized={isLandAuthorized}
-                authorizeTransaction={this.getAuthorizeTransaction()}
-                onLandAuthorizedChange={this.handleLandAuthorization}
-              />
-            ) : (
-              <p className="sign-in">
-                You need to <Link to={locations.signIn}>Sign In</Link> to access
-                this page
-              </p>
-            )}
-          </Grid.Column>
-        </Container>
-      </div>
+        <Grid.Column>
+          {isConnected ? (
+            <SettingsForm
+              address={address}
+              walletType={type}
+              walletDerivationPath={derivationPath}
+              onDerivationPathChange={this.handleDerivationPathChange}
+              manaApproved={approvedBalance}
+              approveTransaction={this.getApproveTransaction()}
+              onManaApprovedChange={this.handleManaApproval}
+              isLandAuthorized={isLandAuthorized}
+              authorizeTransaction={this.getAuthorizeTransaction()}
+              onLandAuthorizedChange={this.handleLandAuthorization}
+            />
+          ) : (
+            <p className="sign-in">
+              You need to <Link to={locations.signIn}>Sign In</Link> to access
+              this page
+            </p>
+          )}
+        </Grid.Column>
+      </Container>
     )
   }
 }

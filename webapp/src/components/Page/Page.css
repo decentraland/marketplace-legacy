@@ -1,0 +1,10 @@
+.Page {
+}
+
+.Page > div {
+  min-height: 70vh;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  position: relative;
+  overflow: hidden;
+}
