@@ -91,18 +91,7 @@ export default class SettingsForm extends React.PureComponent {
             {manaApproved > 0 ? (
               <React.Fragment>
                 You have {manaApproved.toLocaleString()} MANA approved to be
-                used by the contract.<br />
-                {!isApprovePending &&
-                  manaApproved < MANA_TO_APPROVE && (
-                    <span
-                      className="link"
-                      data-balloon={`You will authorize ${MANA_TO_APPROVE.toLocaleString()} MANA`}
-                      data-balloon-pos="up"
-                      onClick={onManaApprovedChange}
-                    >
-                      Approve more
-                    </span>
-                  )}
+                used by the contract.
               </React.Fragment>
             ) : (
               <React.Fragment>
