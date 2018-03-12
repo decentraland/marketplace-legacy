@@ -47,11 +47,7 @@ export class Parcel extends Model {
 
   static async findByOwner(owner) {
     return await this.db.query(
-      `SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
-        FROM ${this.tableName} as par
-        LEFT JOIN (
-          ${Publication.findOpenSql(Publication.STATUS.open)}
-        ) as pub ON par."x" = pub."x" AND par."y" = pub."y"
+      `${this.findParcelsWithOpenPublicationSql()}
         WHERE par.owner = $1`,
       [owner]
     )
@@ -62,7 +58,15 @@ export class Parcel extends Model {
     const [maxx, maxy] = coordinates.toArray(max)
 
     return await this.db.query(
-      `SELECT par.*, (
+      `${this.findParcelsWithOpenPublicationSql()}
+        WHERE par.x >= $1 AND par.y >= $2
+          AND par.x <= $3 AND par.y <= $4`,
+      [minx, miny, maxx, maxy]
+    )
+  }
+
+  static findParcelsWithOpenPublicationSql() {
+    return `SELECT par.*, (
         SELECT row_to_json(pub.*)
           FROM ${Publication.tableName} AS pub
           WHERE pub.status = '${Publication.STATUS.open}'
@@ -71,11 +75,7 @@ export class Parcel extends Model {
           ORDER BY pub.created_at DESC
           LIMIT 1
       ) as publication
-        FROM ${this.tableName} as par
-        WHERE par.x >= $1 AND par.y >= $2
-          AND par.x <= $3 AND par.y <= $4`,
-      [minx, miny, maxx, maxy]
-    )
+        FROM ${this.tableName} as par`
   }
 
   static async getPrice(x, y) {
