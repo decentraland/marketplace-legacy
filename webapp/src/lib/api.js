@@ -12,6 +12,10 @@ const FILTER_DEFAULTS = {
 }
 
 export class API {
+  fetchTranslations(locale) {
+    return this.request('get', `/translations/${locale}`, {})
+  }
+
   fetchDistricts() {
     return this.request('get', '/districts', {})
   }

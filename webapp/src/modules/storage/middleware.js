@@ -12,6 +12,7 @@ import { UPDATE_DERIVATION_PATH } from 'modules/wallet/actions'
 export function createStorageMiddleware(storageKey) {
   const storageEngine = filter(createStorageEngine(storageKey), [
     'transaction',
+    ['wallet', 'data', 'locale'],
     ['wallet', 'data', 'derivationPath']
   ])
 

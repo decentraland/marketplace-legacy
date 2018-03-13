@@ -1,3 +1,4 @@
+import fs from 'fs'
 import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
@@ -17,6 +18,10 @@ import {
 env.load()
 
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
+const TRANSLATIONS_PATH = env.get(
+  'TRANSLATIONS_PATH',
+  path.resolve(__dirname, './translations')
+)
 
 const app = express()
 const httpServer = http.Server(app)
@@ -36,6 +41,35 @@ if (env.isDevelopment()) {
 
     next()
   })
+}
+
+/**
+ * Returns the translations for a given locale
+ * @param  {string} locale - locale name
+ * @return {array}
+ */
+app.get('/api/translations/:locale', server.handleRequest(getTranslations))
+
+export async function getTranslations(req) {
+  let locale = server.extractFromReq(req, 'locale')
+  locale = locale.slice(0, 2) // We support base locales for now, like en, it, etc
+
+  let translations = {}
+
+  const files = await utils.promisify(fs.readdir)(TRANSLATIONS_PATH)
+  const availableLocales = files.map(filePath =>
+    path.basename(filePath, path.extname(filePath))
+  )
+
+  if (availableLocales.includes(locale)) {
+    const translationsFile = await utils.promisify(fs.readFile)(
+      path.resolve(TRANSLATIONS_PATH, `${locale}.json`),
+      'utf8'
+    )
+    translations = JSON.parse(translationsFile)
+  }
+
+  return translations
 }
 
 /**
