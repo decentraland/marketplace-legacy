@@ -56,12 +56,17 @@ export default class ParcelDetail extends React.PureComponent {
         className="ParcelDetail"
       >
         <Grid.Row>
-          <Grid.Column width={6}>
+          <Grid.Column mobile={16} tablet={6} computer={6}>
             <Header size="large">
               <ParcelName parcel={parcel} />
             </Header>
           </Grid.Column>
-          <Grid.Column width={4} textAlign="right">
+          <Grid.Column
+            mobile={16}
+            tablet={4}
+            computer={4}
+            className="parcel-owner-container"
+          >
             <ParcelOwner parcel={parcel} districts={districts} />
           </Grid.Column>
         </Grid.Row>

@@ -51,7 +51,7 @@ export const cancelAnimationFrame =
   (id => clearTimeout(id))
 
 export function formatMana(amount, unit = 'MANA') {
-  const amountNumber = +amount
+  const amountNumber = parseFloat(amount, 10)
   return `${amountNumber.toLocaleString()} ${unit}`.trim()
 }
 

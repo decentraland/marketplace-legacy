@@ -34,3 +34,9 @@
   color: #aaa;
   font-style: italic;
 }
+
+@media (min-width: 768px) {
+  .ParcelDetailPage .parcel-owner-container {
+    text-align: right;
+  }
+}
