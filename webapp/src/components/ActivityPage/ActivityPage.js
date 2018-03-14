@@ -8,6 +8,7 @@ import Badge from 'components/Badge'
 import Transaction from './Transaction'
 
 import { transactionType } from 'components/types'
+import { t, t_html } from 'modules/translation/utils'
 
 import './ActivityPage.css'
 
@@ -28,9 +29,13 @@ export default class ActivityPage extends React.PureComponent {
     return (
       <div className="empty">
         <p>
-          You have no activity yet.<br />
-          You can start by approving some MANA on your&nbsp;
-          <Link to={locations.settings}>settings</Link>.
+          {t('activity.no_activity')}
+          <br />
+          {t_html('activity.start', {
+            settings_link: (
+              <Link to={locations.settings}>{t('global.settings')}</Link>
+            )
+          })}
         </p>
       </div>
     )
@@ -44,7 +49,8 @@ export default class ActivityPage extends React.PureComponent {
         {pendingTransactions.length > 0 ? (
           <div className="transaction-list pending-transaction-list">
             <div className="section-title">
-              Pending <Badge size="tiny">{pendingTransactions.length}</Badge>
+              {t('activity.history')}&nbsp;
+              <Badge size="tiny">{pendingTransactions.length}</Badge>
             </div>
             {pendingTransactions.map(tx => (
               <Transaction key={tx.hash} tx={tx} />
@@ -55,7 +61,7 @@ export default class ActivityPage extends React.PureComponent {
         {transactionHistory.length > 0 ? (
           <div className="transaction-list">
             <div className="section-title">
-              History&nbsp;
+              {t('activity.history')}&nbsp;
               <Badge size="tiny" color="gray">
                 {transactionHistory.length}
               </Badge>
@@ -70,12 +76,9 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   renderNotConnected() {
-    return (
-      <p className="sign-in">
-        You need to <Link to={locations.signIn}>Sign In</Link> to access this
-        page
-      </p>
-    )
+    return t_html('global.sign_in_notice', {
+      sign_in_link: <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+    })
   }
 
   render() {
@@ -89,6 +92,7 @@ export default class ActivityPage extends React.PureComponent {
     } else if (isEmpty) {
       content = this.renderEmpty()
     } else {
+      content = this.renderEmpty()
       content = this.renderTransactionLists()
     }
 

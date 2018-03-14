@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { parcelType, publicationType } from 'components/types'
+
 import { Button, Icon } from 'semantic-ui-react'
 import { hasPublication } from 'lib/parcelUtils'
+import { parcelType, publicationType } from 'components/types'
+import { t } from 'modules/translation/utils'
+
 import './ParcelActions.css'
 
 export default class ParcelActions extends React.PureComponent {
@@ -44,16 +47,22 @@ export default class ParcelActions extends React.PureComponent {
     return (
       <span className="ParcelActions">
         <Button onClick={this.handleEdit} size="tiny">
-          <Icon name="edit" />Edit
+          <Icon name="edit" />
+          {t('parcel_detail.actions.edit')}
         </Button>
+
         {this.isOnSale() ? null : (
           <Button onClick={this.handleTransfer} size="tiny">
-            <Icon name="exchange" />Transfer
+            <Icon name="exchange" />
+            {t('parcel_detail.actions.transfer')}
           </Button>
         )}
+
         <Button onClick={this.handleSell} size="tiny">
           <Icon name={this.isOnSale() ? 'cancel' : 'tag'} />
-          {this.isOnSale() ? 'Cancel sale' : 'sell'}
+          {this.isOnSale()
+            ? t('parcel_detail.actions.cancel')
+            : t('parcel_detail.actions.sell')}
         </Button>
       </span>
     )

@@ -21,6 +21,7 @@ export function translationReducer(state = INITIAL_STATE, action) {
     case FETCH_TRANSLATIONS_SUCCESS:
       return {
         ...state,
+        loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
           [action.locale]: {

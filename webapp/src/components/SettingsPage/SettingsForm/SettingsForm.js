@@ -8,10 +8,11 @@ import TxStatus from 'components/TxStatus'
 import DerivationPathDropdown from './DerivationPathDropdown'
 
 import { getManaToApprove, getMarketplaceAddress } from 'modules/wallet/utils'
+import { t, t_html } from 'modules/translation/utils'
 
 import './SettingsForm.css'
 
-const MANA_TO_APPROVE = getManaToApprove()
+const MANA_TO_APPROVE = getManaToApprove().toLocaleString()
 
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
@@ -29,6 +30,14 @@ export default class SettingsForm extends React.PureComponent {
 
   static defaultProps = {
     address: ''
+  }
+
+  renderMarketplaceLink() {
+    return (
+      <EtherscanLink address={getMarketplaceAddress()}>
+        {t('settings.marketplace_contract')}
+      </EtherscanLink>
+    )
   }
 
   render() {
@@ -77,31 +86,27 @@ export default class SettingsForm extends React.PureComponent {
             disabled={isApprovePending}
             data-balloon={
               isApprovePending
-                ? 'You have a pending transaction'
+                ? t('settings.pending_tx')
                 : manaApproved > 0
-                  ? 'Unchecking will approve 0 MANA'
-                  : `Check to approve ${MANA_TO_APPROVE.toLocaleString()} MANA`
+                  ? t('settings.unapprove_mana_check')
+                  : t('settings.approve_mana_check', {
+                      mana_to_approve: MANA_TO_APPROVE
+                    })
             }
             data-balloon-length="large"
-            data-balloon-pos="left"
+            data-balloon-pos="right"
             onChange={onManaApprovedChange}
           />
 
           <div className="authorize-detail">
-            {manaApproved > 0 ? (
-              <React.Fragment>
-                You have {manaApproved.toLocaleString()} MANA approved to be
-                used by the contract.
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                Approve {MANA_TO_APPROVE.toLocaleString()} MANA usage for
-                the&nbsp;
-                <EtherscanLink address={getMarketplaceAddress()}>
-                  Marketplace contract
-                </EtherscanLink>
-              </React.Fragment>
-            )}
+            {manaApproved > 0
+              ? t('settings.mana_approved', {
+                  mana_approved: manaApproved.toLocaleString()
+                })
+              : t_html('settings.approve_mana', {
+                  mana_to_approve: MANA_TO_APPROVE,
+                  marketplace_contract_link: this.renderMarketplaceLink()
+                })}
 
             {approveTransaction && (
               <TxStatus.Text
@@ -119,34 +124,24 @@ export default class SettingsForm extends React.PureComponent {
             disabled={isAuthorizePending}
             data-balloon={
               isAuthorizePending
-                ? 'You have a pending transaction'
+                ? t('settings.pending_tx')
                 : manaApproved > 0
-                  ? 'Unchecking unauthorizes LAND usage for the Marketplace contract'
-                  : 'Checking authorizes LAND usage to the Marketplace contract'
+                  ? t('settings.unauthorize_land_check')
+                  : t('settings.authorize_land_check')
             }
             data-balloon-length="large"
-            data-balloon-pos="left"
+            data-balloon-pos="right"
             onChange={onLandAuthorizedChange}
           />
 
           <div className="authorize-detail">
-            {isLandAuthorized ? (
-              <React.Fragment>
-                You have authorized the&nbsp;
-                <EtherscanLink address={getMarketplaceAddress()}>
-                  Marketplace contract
-                </EtherscanLink>
-                &nbsp;to operate LAND on your behalf
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                Authorize the&nbsp;
-                <EtherscanLink address={getMarketplaceAddress()}>
-                  Marketplace contract
-                </EtherscanLink>
-                &nbsp;to operate LAND on your behalf
-              </React.Fragment>
-            )}
+            {isLandAuthorized
+              ? t_html('settings.you_authorized', {
+                  marketplace_contract_link: this.renderMarketplaceLink()
+                })
+              : t_html('settings.authorize', {
+                  marketplace_contract_link: this.renderMarketplaceLink()
+                })}
 
             {authorizeTransaction && (
               <TxStatus.Text

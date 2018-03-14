@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { formatMana } from 'lib/utils'
+import { t } from 'modules/translation/utils'
 
 import './ParcelPopup.css'
 
@@ -21,8 +23,8 @@ export default function ParcelPopup(props) {
           <div className="text description">{description}</div>
         ) : null}
         {publication ? (
-          <div className="text description ">
-            On Sale:&nbsp;
+          <div className="text description">
+            {t('atlas.on_sale')}
             <span className="on-sale">{formatMana(publication.price)}</span>
           </div>
         ) : null}

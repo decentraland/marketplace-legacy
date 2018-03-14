@@ -1,6 +1,7 @@
 import React from 'react'
-import { Card, Header, Button } from 'semantic-ui-react'
+import { Card, Header, Button, Icon } from 'semantic-ui-react'
 import { contributionType } from 'components/types'
+import { t } from 'modules/translation/utils'
 
 import './Contribution.css'
 
@@ -14,7 +15,7 @@ export default class Contribution extends React.PureComponent {
 
     let proposalButton = (
       <Button floated="right" size="tiny" disabled={!contribution.district}>
-        Proposal
+        {t('contribution.proposal')}
       </Button>
     )
 
@@ -39,23 +40,25 @@ export default class Contribution extends React.PureComponent {
     return (
       <Card className="Contribution">
         <Card.Content className="body">
-          <Header size="medium">
-            {contribution.district ? contribution.district.name : 'Loading...'}
-          </Header>
-          <Card.Meta>
-            {contribution.district
-              ? contribution.district.description
-              : 'Loading...'}
-          </Card.Meta>
+          {contribution.district ? (
+            <React.Fragment>
+              <Header size="medium">{contribution.district.name}</Header>
+              <Card.Meta>{contribution.district.description}</Card.Meta>
+            </React.Fragment>
+          ) : (
+            <div className="text-center">
+              <Icon name="circle notched" size="big" loading />
+            </div>
+          )}
         </Card.Content>
         <Card.Content extra>
-          <span className="footer">
+          <div className="footer">
             <Header size="medium" floated="left" className="land-count">
-              <span className="amount">{contribution.land_count}</span>{' '}
-              &nbsp;LAND
+              <span className="amount">{contribution.land_count}</span>
+              &nbsp;&nbsp;LAND
             </Header>
             {this.renderProposalButton()}
-          </span>
+          </div>
         </Card.Content>
       </Card>
     )

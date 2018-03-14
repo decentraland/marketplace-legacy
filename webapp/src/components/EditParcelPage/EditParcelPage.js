@@ -5,8 +5,9 @@ import { Container, Header, Grid } from 'semantic-ui-react'
 import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
 import TxStatus from 'components/TxStatus'
-
 import EditParcelForm from './EditParcelForm'
+import { t, t_html } from 'modules/translation/utils'
+
 import './EditParcelPage.css'
 
 export default class EditParcelPage extends React.PureComponent {
@@ -27,10 +28,12 @@ export default class EditParcelPage extends React.PureComponent {
           <div className="EditParcelPage">
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
-                Edit LAND
+                {t('parcel_edit.edit_land')}
               </Header>
               <span className="subtitle">
-                Set a name and description for <ParcelName parcel={parcel} />
+                {t_html('parcel_edit.set_name_and_desc', {
+                  parcel_name: <ParcelName parcel={parcel} />
+                })}
               </span>
             </Container>
             <br />

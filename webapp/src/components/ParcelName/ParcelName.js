@@ -26,7 +26,7 @@ export default class ParcelName extends React.PureComponent {
     if (!parcel && x == null && y == null) {
       return (
         <div className="ParcelName">
-          <span className="name">Loading&hellip;</span>
+          <span className="name">&hellip;</span>
         </div>
       )
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { PROFILE_PAGE_TABS } from 'locations'
 import {
   Menu,
   Container,
@@ -14,7 +15,7 @@ import Publication from 'components/MarketplacePage/Publication'
 import Parcel from './Parcel'
 import Contribution from './Contribution'
 import { parcelType, contributionType, publicationType } from 'components/types'
-import { PROFILE_PAGE_TABS } from 'locations'
+import { t, t_html } from 'modules/translation/utils'
 import { buildUrl } from './utils'
 
 import './ProfilePage.css'
@@ -60,7 +61,7 @@ export default class ProfilePage extends React.PureComponent {
     const { tab } = this.props
     return (
       <div className="empty">
-        <p>This user has no {tab}</p>
+        <p>{t('profile_page.empty', { content: tab })}</p>
       </div>
     )
   }
@@ -159,29 +160,31 @@ export default class ProfilePage extends React.PureComponent {
               active={tab === PROFILE_PAGE_TABS.parcels}
               onClick={this.handleItemClick}
             >
-              Parcels{this.renderBadge(parcels)}
+              {t('global.parcels')}
+              {this.renderBadge(parcels)}
             </Menu.Item>
             <Menu.Item
               name={PROFILE_PAGE_TABS.contributions}
               active={tab === PROFILE_PAGE_TABS.contributions}
               onClick={this.handleItemClick}
             >
-              Contributions{this.renderBadge(contributions)}
+              {t('global.contributions')}
+              {this.renderBadge(contributions)}
             </Menu.Item>
             <Menu.Item
               name={PROFILE_PAGE_TABS.publications}
               active={tab === PROFILE_PAGE_TABS.publications}
               onClick={this.handleItemClick}
             >
-              On Sale{this.renderBadge(publications)}
+              {t('profile_page.on_sale')}
+              {this.renderBadge(publications)}
             </Menu.Item>
             {isOwner ? null : (
               <Menu.Menu position="right">
                 <span className="profile-owner">
-                  Owned by&nbsp;&nbsp;<AddressLink
-                    address={address}
-                    scale={3}
-                  />
+                  {t_html('global.owned_by', {
+                    address_link: <AddressLink address={address} scale={3} />
+                  })}
                 </span>
               </Menu.Menu>
             )}

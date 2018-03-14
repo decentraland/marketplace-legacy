@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import { locations } from 'locations'
 import { Container, Header, Grid, Message } from 'semantic-ui-react'
 import PublicationForm from './PublicationForm'
 import ParcelName from 'components/ParcelName'
@@ -9,7 +10,7 @@ import Parcel from 'components/Parcel'
 import TxStatus from 'components/TxStatus'
 
 import { publicationType, walletType } from 'components/types'
-import { locations } from 'locations'
+import { t, t_html } from 'modules/translation/utils'
 
 import './PublishPage.css'
 
@@ -41,11 +42,12 @@ export default class PublishPage extends React.PureComponent {
           <div className="PublishPage">
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
-                List LAND for sale
+                {t('parcel_publish.list_land')}
               </Header>
               <span className="subtitle">
-                Set a price and a expiration date for{' '}
-                <ParcelName parcel={parcel} />
+                {t_html('parcel_publish.set_land_price', {
+                  parcel_name: <ParcelName parcel={parcel} />
+                })}
               </span>
             </Container>
             <br />
@@ -67,13 +69,12 @@ export default class PublishPage extends React.PureComponent {
               <Container text>
                 <Grid.Column>
                   <Message warning>
-                    <h3>
-                      <strong>Unauthorized</strong>
-                    </h3>
-                    You need to go to{' '}
-                    <Link to={locations.settings}>Settings</Link> and authorize
-                    the Marketplace to operate LAND on your behalf before you
-                    can list it on sale.
+                    <h3>{t('global.unauthorized')}</h3>
+                    {t_html('parcel_publish.please_authorize', {
+                      settings_link: (
+                        <Link to={locations.settings}>Settings</Link>
+                      )
+                    })}
                   </Message>
                 </Grid.Column>
               </Container>

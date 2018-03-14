@@ -32,7 +32,7 @@ export const locations = {
   settings: '/settings',
   activity: '/activity',
 
-  colorCodes: '/colorCodes',
+  colorKey: '/colorKey',
   privacy: '/privacy',
 
   error: '/error',

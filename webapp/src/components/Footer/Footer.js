@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import Icon from 'components/Icon'
+import { t } from 'modules/translation/utils'
 
 import './Footer.css'
 
@@ -29,17 +30,15 @@ export default class Footer extends React.PureComponent {
         </div>
         <div className="links">
           <Link to="https://blog.decentraland.org" target="_blank">
-            Blog
+            {t('global.blog')}
           </Link>
           <Link to="https://decentraland.org" target="_blank">
-            Website
+            {t('global.website')}
           </Link>
-          <Link to={locations.colorCodes}>Color key</Link>
-          <Link to={locations.privacy}>Privacy Policy</Link>
+          <Link to={locations.colorKey}>{t('footer.color_key')}</Link>
+          <Link to={locations.privacy}>{t('footer.privacy_policy')}</Link>
         </div>
-        <div className="copyright">
-          Copyright 2017 Decentraland. All rights reserved.
-        </div>
+        <div className="copyright">{t('footer.copyright')}</div>
       </footer>
     )
   }

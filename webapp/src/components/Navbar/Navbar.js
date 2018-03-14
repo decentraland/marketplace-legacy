@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import { locations, NAVBAR_PAGES } from 'locations'
 import { Menu } from 'semantic-ui-react'
 import Account from './Account'
 import Icon from 'components/Icon'
 import Badge from 'components/Badge'
 
 import { walletType, coordsType } from 'components/types'
-import { locations, NAVBAR_PAGES } from 'locations'
+import { t } from 'modules/translation/utils'
 
 import './Navbar.css'
 
@@ -72,14 +73,14 @@ export default class Navbar extends React.PureComponent {
               active={activePage === NAVBAR_PAGES.atlas}
               onClick={this.handleItemClick}
             >
-              Atlas
+              {t('global.atlas')}
             </Menu.Item>
             <Menu.Item
               href={navigationPaths[NAVBAR_PAGES.marketplace]}
               active={activePage === NAVBAR_PAGES.marketplace}
               onClick={this.handleItemClick}
             >
-              Marketplace
+              {t('global.marketplace')}
             </Menu.Item>
             {isConnected ? (
               <React.Fragment>
@@ -88,14 +89,15 @@ export default class Navbar extends React.PureComponent {
                   active={activePage === NAVBAR_PAGES.profile}
                   onClick={this.handleItemClick}
                 >
-                  My Land
+                  {t('navbar.my_land')}
                 </Menu.Item>
                 <Menu.Item
                   href={navigationPaths[NAVBAR_PAGES.activity]}
                   active={activePage === NAVBAR_PAGES.activity}
                   onClick={this.handleItemClick}
                 >
-                  Activity{this.renderActivityBadge()}
+                  {t('global.activity')}
+                  {this.renderActivityBadge()}
                 </Menu.Item>
               </React.Fragment>
             ) : null}
@@ -111,7 +113,7 @@ export default class Navbar extends React.PureComponent {
                 active={activePage === NAVBAR_PAGES.signIn}
                 onClick={this.handleItemClick}
               >
-                Sign In
+                {t('global.sign_in')}
               </Menu.Item>
             </Menu>
           )}

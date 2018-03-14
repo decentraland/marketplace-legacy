@@ -7,6 +7,7 @@ import ParcelName from 'components/ParcelName'
 import TxStatus from 'components/TxStatus'
 import { publicationType } from 'components/types'
 import { hasPublication } from 'lib/parcelUtils'
+import { t, t_html } from 'modules/translation/utils'
 
 import TransferParcelForm from './TransferParcelForm'
 
@@ -33,14 +34,15 @@ export default class TransferParcelPage extends React.PureComponent {
           <div className="TransferParcelPage">
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
-                Transfer LAND
+                {t('parcel_transfer.transfer_land')}
               </Header>
               <div className="subtitle">
-                You&#39;re about to transfer&nbsp;
-                <ParcelName parcel={parcel} />
+                {t_html('parcel_transfer.about_to_transfer', {
+                  parcel_name: <ParcelName parcel={parcel} />
+                })}
                 <br />
-                Remember that transferring LAND is an irreversible operation.<br />
-                Please check the address carefully<br />
+                {t('parcel_transfer.irreversible')}<br />
+                {t('parcel_transfer.check_address')}<br />
               </div>
             </Container>
             <br />

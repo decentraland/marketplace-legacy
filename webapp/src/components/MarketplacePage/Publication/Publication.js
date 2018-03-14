@@ -11,6 +11,7 @@ import AddressLink from 'components/AddressLink'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { t } from 'modules/translation/utils'
 import { formatDate, formatMana } from 'lib/utils'
 
 import './Publication.css'
@@ -26,12 +27,12 @@ export default class Publication extends React.PureComponent {
   }
 
   renderButton({ publication, isExpired }) {
-    let text = 'View'
+    let text = t('publication.view')
     if (publication.status === PUBLICATION_STATUS.sold) {
-      text = 'Sold'
+      text = t('publication.sold')
     }
     if (publication.status === PUBLICATION_STATUS.cancelled) {
-      text = 'Canceled'
+      text = t('publication.canceled')
     }
 
     const isDisabled =
@@ -56,6 +57,7 @@ export default class Publication extends React.PureComponent {
     const { publication, debounce, isOwnerVisible } = this.props
 
     const isExpired = publication.expires_at < Date.now()
+    const expirationTimeInWords = distanceInWordsToNow(publication.expires_at)
 
     return (
       <Card className="Publication">
@@ -73,8 +75,8 @@ export default class Publication extends React.PureComponent {
           <ParcelName x={publication.x} y={publication.y} size="small" />
           <Card.Meta title={formatDate(publication.expires_at)}>
             {isExpired
-              ? `Expired ${distanceInWordsToNow(publication.expires_at)} ago`
-              : `Expires in ${distanceInWordsToNow(publication.expires_at)}`}
+              ? t('publication.expired_at', { time: expirationTimeInWords })
+              : t('publication.expires_in', { time: expirationTimeInWords })}
           </Card.Meta>
           {isOwnerVisible && (
             <AddressLink

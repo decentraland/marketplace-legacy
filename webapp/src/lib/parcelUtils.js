@@ -1,4 +1,5 @@
 import { shortenAddress } from 'lib/utils'
+import { t } from 'modules/translation/utils'
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
@@ -93,12 +94,12 @@ export function getParcelAttributes(wallet, parcel, districts) {
   }
 
   const label = parcel.data.name || null
-  let description = 'No Owner'
+  let description = t('atlas.no_owner')
   if (parcel.owner) {
     description =
       parcel.owner === wallet.address
-        ? 'Your parcel'
-        : `Owner: ${shortenAddress(parcel.owner)}`
+        ? t('atlas.your_parcel')
+        : t('atlas.owner', { owner: shortenAddress(parcel.owner) })
   }
 
   if (wallet.parcelsById[parcel.id]) {

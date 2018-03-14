@@ -5,6 +5,7 @@ import { Button, Form, Input } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
+import { t } from 'modules/translation/utils'
 
 import './EditParcelForm.css'
 
@@ -67,7 +68,7 @@ export default class EditParcelForm extends React.PureComponent {
         onSubmit={preventDefault(this.handleSubmit)}
       >
         <Form.Field>
-          <label>Name</label>
+          <label>{t('parcel_edit.name')}</label>
           <Input
             type="text"
             value={name}
@@ -77,7 +78,7 @@ export default class EditParcelForm extends React.PureComponent {
           />
         </Form.Field>
         <Form.Field>
-          <label>Description</label>
+          <label>{t('parcel_edit.description')}</label>
           <Input
             type="text"
             value={description}
@@ -90,14 +91,14 @@ export default class EditParcelForm extends React.PureComponent {
         <br />
         <div className="text-center">
           <Button type="button" onClick={this.handleCancel}>
-            Cancel
+            {t('global.cancel')}
           </Button>
           <Button
             type="submit"
             primary={true}
             disabled={this.isFormValid() || isTxIdle}
           >
-            Submit
+            {t('global.submit')}
           </Button>
         </div>
       </Form>

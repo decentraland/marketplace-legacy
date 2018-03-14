@@ -21,6 +21,7 @@ import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS
 } from 'modules/publication/actions'
+import { t, t_html } from 'modules/translation/utils'
 
 import './Transaction.css'
 
@@ -29,89 +30,85 @@ export default class Transaction extends React.PureComponent {
     tx: transactionType
   }
 
+  renderMarketplaceLink() {
+    return (
+      <EtherscanLink address={getMarketplaceAddress()}>
+        Marketplace contract
+      </EtherscanLink>
+    )
+  }
+
+  renderParcelLink(x, y) {
+    return (
+      <Link to={locations.parcelDetail(x, y)}>
+        {x}, {y}
+      </Link>
+    )
+  }
+
   renderTextFragment() {
     const { tx } = this.props
     const { payload } = tx
 
     switch (tx.actionType) {
       case APPROVE_MANA_SUCCESS:
-        return (
-          <React.Fragment>
-            You approved {formatMana(payload.mana)} to be used by the&nbsp;
-            <EtherscanLink address={getMarketplaceAddress()}>
-              Marketplace contract
-            </EtherscanLink>
-          </React.Fragment>
-        )
-      case AUTHORIZE_LAND_SUCCESS:
-        return (
-          <React.Fragment>
-            You have {payload.isAuthorized ? 'authorized' : 'deauthorized'}
-            &nbsp;the&nbsp;
-            <EtherscanLink address={getMarketplaceAddress()}>
-              Marketplace contract
-            </EtherscanLink>&nbsp; to operate LAND on your behalf
-          </React.Fragment>
-        )
+        return t_html('transaction.approve', {
+          mana: formatMana(payload.mana),
+          marketplace_contract_link: this.renderMarketplaceLink()
+        })
+      case AUTHORIZE_LAND_SUCCESS: {
+        const action = payload.isAuthorized
+          ? t('global.authorized')
+          : t('global.deauthorized')
+
+        return t_html('transaction.authorize', {
+          action: action,
+          marketplace_contract_link: this.renderMarketplaceLink()
+        })
+      }
       case EDIT_PARCEL_SUCCESS: {
         const { x, y, data } = payload
         const { name, description } = data
-        return (
-          <React.Fragment>
-            You edited&nbsp;
-            <Link to={locations.parcelDetail(x, y)}>
-              {x}, {y}
-            </Link>&nbsp;with the name &quot;<i>{name}</i>&quot; and description
-            &quot;<i>{description}</i>&quot;
-          </React.Fragment>
-        )
+
+        return t_html('transaction.edit', {
+          parcel_link: this.renderParcelLink(x, y),
+          name: <i>{name}</i>,
+          description: <i>{description}</i>
+        })
       }
       case TRANSFER_PARCEL_SUCCESS: {
         const { x, y, newOwner } = payload
-        return (
-          <React.Fragment>
-            You transfered&nbsp;
-            <Link to={locations.parcelDetail(x, y)}>
-              {x}, {y}
-            </Link>&nbsp;to&nbsp;
+
+        return t_html('transaction.transfer', {
+          parcel_link: this.renderParcelLink(x, y),
+          owner_link: (
             <Link to={locations.profilePage(newOwner)}>{newOwner}</Link>
-          </React.Fragment>
-        )
+          )
+        })
       }
       case PUBLISH_SUCCESS: {
         const { x, y } = payload
-        return (
-          <React.Fragment>
-            You published&nbsp;
-            <Link to={locations.parcelDetail(x, y)}>
-              {x}, {y}
-            </Link>
-          </React.Fragment>
-        )
+
+        return t_html('transaction.publish', {
+          parcel_link: this.renderParcelLink(x, y)
+        })
       }
       case BUY_SUCCESS: {
         const { x, y } = payload
-        return (
-          <React.Fragment>
-            You bought&nbsp;
-            <Link to={locations.parcelDetail(x, y)}>
-              {x}, {y}
-            </Link>
-          </React.Fragment>
-        )
+
+        return t_html('transaction.buy', {
+          parcel_link: this.renderParcelLink(x, y)
+        })
       }
       case CANCEL_SALE_SUCCESS: {
         const { tx_hash, x, y } = payload
-        return (
-          <React.Fragment>
-            You cancelled the&nbsp;
+
+        return t_html('transaction.cancel', {
+          publication_link: (
             <EtherscanLink txHash={tx_hash}>publication</EtherscanLink>
-            &nbsp;on&nbsp;
-            <Link to={locations.parcelDetail(x, y)}>
-              {x}, {y}
-            </Link>
-          </React.Fragment>
-        )
+          ),
+          parcel_link: this.renderParcelLink(x, y)
+        })
       }
       default:
         return null

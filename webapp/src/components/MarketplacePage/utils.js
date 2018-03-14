@@ -1,12 +1,27 @@
 import queryString from 'query-string'
 import { locations } from 'locations'
+import { t } from 'modules/translation/utils'
 
 export const PAGE_SIZE = 12
-export const SORT_TYPES = {
-  NEWEST: 'Newest',
-  CHEAPEST: 'Cheapest',
-  MOST_EXPENSIVE: 'Most expensive',
-  CLOSEST_TO_EXPIRE: 'Closest to expire'
+let SORT_TYPES = null // filled upon the first call to getSortTypes
+
+export function getSortTypes() {
+  if (!SORT_TYPES) {
+    SORT_TYPES = Object.freeze({
+      NEWEST: t('marketplace.filter.newest'),
+      CHEAPEST: t('marketplace.filter.cheapest'),
+      MOST_EXPENSIVE: t('marketplace.filter.most_expensive'),
+      CLOSEST_TO_EXPIRE: t('marketplace.filter.close_to_expire')
+    })
+  }
+  return SORT_TYPES
+}
+
+export function getSortOptions() {
+  return Object.values(getSortTypes()).map(type => ({
+    text: type,
+    value: type
+  }))
 }
 
 export function buildUrl({ page, sortBy, sortOrder }) {
@@ -34,22 +49,22 @@ export function getOptionsFromRouter({ search }) {
 
 export function getOptionsFromSortType(type) {
   switch (type) {
-    case SORT_TYPES.CHEAPEST:
+    case getSortTypes.CHEAPEST:
       return {
         sortBy: 'price',
         sortOrder: 'asc'
       }
-    case SORT_TYPES.MOST_EXPENSIVE:
+    case getSortTypes.MOST_EXPENSIVE:
       return {
         sortBy: 'price',
         sortOrder: 'desc'
       }
-    case SORT_TYPES.CLOSEST_TO_EXPIRE:
+    case getSortTypes.CLOSEST_TO_EXPIRE:
       return {
         sortBy: 'expires_at',
         sortOrder: 'asc'
       }
-    case SORT_TYPES.NEWEST:
+    case getSortTypes.NEWEST:
     default:
       return {
         sortBy: 'created_at',
@@ -59,7 +74,7 @@ export function getOptionsFromSortType(type) {
 }
 
 export function getSortTypeFromOptions({ sortBy, sortOrder }) {
-  return Object.values(SORT_TYPES)
+  return Object.values(getSortTypes())
     .map(sortType => ({ sortType, options: getOptionsFromSortType(sortType) }))
     .find(
       ({ sortType, options }) =>

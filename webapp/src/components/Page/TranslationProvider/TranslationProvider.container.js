@@ -3,7 +3,8 @@ import { getLocale, isConnecting } from 'modules/wallet/selectors'
 import { getData } from 'modules/translation/selectors'
 import { fetchTranslationsRequest } from 'modules/translation/actions'
 import { getPreferredLanguage } from 'modules/translation/utils'
-import Page from './Page'
+
+import TranslationProvider from './TranslationProvider'
 
 const mapState = state => {
   let locale = getLocale(state)
@@ -24,4 +25,4 @@ const mapDispatch = dispatch => ({
   onFetchTranslations: locale => dispatch(fetchTranslationsRequest(locale))
 })
 
-export default connect(mapState, mapDispatch)(Page)
+export default connect(mapState, mapDispatch)(TranslationProvider)
