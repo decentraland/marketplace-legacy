@@ -21,7 +21,6 @@ export default class TranslationProvider extends React.PureComponent {
     const { locale, onFetchTranslations } = nextProps
 
     if (this.props.locale !== locale) {
-      // TODO: Re-fetch even on local-storage
       onFetchTranslations(locale)
     }
   }
@@ -36,8 +35,6 @@ export default class TranslationProvider extends React.PureComponent {
 
   render() {
     const { children, locale, translations } = this.props
-
-    console.log(translations)
 
     return translations ? (
       <IntlProvider locale={locale} messages={translations}>

@@ -14,6 +14,7 @@
     "confirm": "Confirm",
     "authorized": "Authorized",
     "unauthorized": "Unauthorized",
+    "wallet_address": "Wallet address",
     "for": "for",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",

@@ -8,8 +8,14 @@ export default class TranslationProvider extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { intl } = this.props
-    setupI18n(intl)
+    setupI18n(this.props.intl)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { intl } = nextProps
+    if (intl) {
+      setupI18n(intl)
+    }
   }
 
   render() {

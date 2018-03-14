@@ -74,7 +74,7 @@ export default class SettingsForm extends React.PureComponent {
           id="wallet-address"
           control="input"
           type="text"
-          label="Wallet address"
+          label={t('global.wallet_address')}
           disabled={true}
           value={address}
         />
