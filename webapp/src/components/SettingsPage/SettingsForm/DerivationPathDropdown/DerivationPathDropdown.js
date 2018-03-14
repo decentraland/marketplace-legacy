@@ -9,15 +9,11 @@ const derivationOptions = [
   },
   { text: "m/44'/60'/0'", description: 'Ledger (ETH)' },
   { text: "m/44'/60'/160720'/0'", description: 'Ledger (ETC)' },
-  { text: "m/44'/61'/0'/0", description: 'TREZOR (ETC)' },
-  { text: "m/0'/0'/0'", description: 'SingularDTV' },
-  { text: "m/44'/1'/0'/0", description: 'Network: Testnets' },
-  { text: "m/44'/40'/0'/0", description: 'Network: Expanse' },
-  { text: "m/44'/108'/0'/0", description: 'Network: Ubiq' },
-  { text: "m/44'/163'/0'/0", description: 'Network: Ellaism' }
+  { text: "m/44'/61'/0'/0", description: 'TREZOR (ETC)' }
 ].map(opt => Object.assign(opt, { value: opt.text }))
 
 const DEFAULT_VALUE = derivationOptions[0].value
+const PATH_PREFIX = 'm/'
 
 export default class DerivationPathDropdown extends React.PureComponent {
   static props = Dropdown.propTypes
@@ -26,9 +22,22 @@ export default class DerivationPathDropdown extends React.PureComponent {
     defaultValue: DEFAULT_VALUE
   }
 
+  handleOnChange = (e, data) => {
+    const derivationPath = this.removePrefix(data.value)
+    this.props.onChange(derivationPath)
+  }
+
   getDefaultDerivationPath() {
     const defaultValue = this.props.defaultValue || DEFAULT_VALUE
-    return defaultValue.startsWith('m/') ? defaultValue : `m/${defaultValue}`
+    return this.addPrefix(defaultValue)
+  }
+
+  addPrefix(path) {
+    return path.startsWith(PATH_PREFIX) ? path : `${PATH_PREFIX}${path}`
+  }
+
+  removePrefix(path) {
+    return path.startsWith(PATH_PREFIX) ? path.slice(2) : path
   }
 
   render() {
@@ -39,6 +48,7 @@ export default class DerivationPathDropdown extends React.PureComponent {
         <label>Derivation path</label>
         <Dropdown
           {...this.props}
+          onChange={this.handleOnChange}
           defaultValue={defaultValue}
           options={derivationOptions}
           allowAdditions

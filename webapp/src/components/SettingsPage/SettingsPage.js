@@ -35,11 +35,11 @@ export default class SettingsPage extends React.PureComponent {
     this.props.onAuthorizeLand(e.currentTarget.checked)
   }
 
-  handleDerivationPathChange = (e, data) => {
-    const { derivationPath } = this.props.wallet
+  handleDerivationPathChange = derivationPath => {
+    const { wallet } = this.props
 
-    if (derivationPath !== data.value) {
-      this.props.onUpdateDerivationPath(data.value)
+    if (wallet.derivationPath !== derivationPath) {
+      this.props.onUpdateDerivationPath(derivationPath)
     }
   }
 

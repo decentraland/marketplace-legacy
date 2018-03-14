@@ -1,10 +1,15 @@
-import { eth, utils, contracts } from 'decentraland-commons'
+import { env, eth, utils, contracts } from 'decentraland-commons'
 
 export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
     const { MANAToken, LANDRegistry, Marketplace } = contracts
+    const providerUrl = env.isProduction()
+      ? 'https://mainnet.infura.io/'
+      : 'https://ropsten.infura.io/'
+
     let connected = await eth.connect({
       ...options,
+      providerUrl,
       contracts: [MANAToken, LANDRegistry, Marketplace]
     })
     if (!connected) throw new Error('Could not connect to Ethereum')
