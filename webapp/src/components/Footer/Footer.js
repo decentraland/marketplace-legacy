@@ -10,6 +10,21 @@ export default class Footer extends React.PureComponent {
   render() {
     return (
       <footer className="Footer">
+        <div className="footer-menu">
+          <div className="links">
+            <Link to="https://blog.decentraland.org" target="_blank">
+              Blog
+            </Link>
+            <Link to="https://decentraland.org" target="_blank">
+              Website
+            </Link>
+            <Link to={locations.colorCodes}>Color key</Link>
+            <Link to={locations.privacy}>Privacy Policy</Link>
+          </div>
+          <div className="copyright">
+            Copyright 2017 Decentraland. All rights reserved.
+          </div>
+        </div>
         <div className="social-icons">
           <Link to="https://twitter.com/decentraland/" target="_blank">
             <Icon name="twitter" />
@@ -26,19 +41,6 @@ export default class Footer extends React.PureComponent {
           <Link to="https://www.facebook.com/decentraland/" target="_blank">
             <Icon name="facebook" />
           </Link>
-        </div>
-        <div className="links">
-          <Link to="https://blog.decentraland.org" target="_blank">
-            Blog
-          </Link>
-          <Link to="https://decentraland.org" target="_blank">
-            Website
-          </Link>
-          <Link to={locations.colorCodes}>Color key</Link>
-          <Link to={locations.privacy}>Privacy Policy</Link>
-        </div>
-        <div className="copyright">
-          Copyright 2017 Decentraland. All rights reserved.
         </div>
       </footer>
     )

@@ -1,4 +1,5 @@
 .Page {
+  height: calc(100% - var(--navbar-height));
 }
 
 .Page > div {

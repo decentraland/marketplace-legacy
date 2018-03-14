@@ -2,9 +2,10 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  height: 94px;
+  height: var(--navbar-height);
   justify-content: center;
   padding: 0px 40px;
+  background-color: var(--background);
 }
 
 .Navbar .navbar-header {
@@ -47,17 +48,19 @@
 
 .Navbar .navbar-menu .item,
 .Navbar .navbar-account .item {
-  color: var(--purple);
+  color: var(--primary);
   transition: none;
+  text-transform: uppercase;
 }
 
 .Navbar .navbar-menu .ui.menu .item.active,
 .Navbar .navbar-menu .ui.menu .item:hover,
 .Navbar .navbar-account .ui.menu .item.active,
 .Navbar .navbar-account .ui.menu .item:hover {
-  background-color: var(--purple);
+  background-color: var(--primary);
   color: #fff;
   transition: none;
+  border-radius: 20px;
 }
 
 /* Same as Label color="white" found on Label.css */

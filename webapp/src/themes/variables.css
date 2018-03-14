@@ -1,9 +1,9 @@
 :root {
-  --primary: #30d7a9;
-  --secondary: #3e396b;
+  --primary: #ff4130;
+  --secondary: #00dbef;
 
-  --text: var(--secondary);
-  --background: #fcfcfc;
+  --text: #ffffff;
+  --background: #1f2335;
 
   --light-gray: #ededed;
   --gray: #999999;
@@ -13,16 +13,19 @@
   --green: #30d7a9;
   --dark-green: #2e7d32;
 
-  --red: #d1344e;
-  --dark-red: #970a09;
+  --red: #ff4130;
+  --dark-red: #9f1a10;
 
   --yellow: #f2be24;
 
   --orange: #ef6c00;
 
-  --light-blue: #4db1dd;
+  --light-blue: #00dbef;
   --blue: #1976d2;
 
   --purple: #3e396b;
   --dark-purple: #5d5890;
+
+  --navbar-height: 94px;
+  --footer-height: 80px;
 }
