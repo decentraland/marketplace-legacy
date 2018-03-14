@@ -59,7 +59,8 @@ export default class BuyParcelPage extends React.PureComponent {
   renderPage() {
     const { wallet, x, y, publication, isDisabled, onCancel } = this.props
     const { approvedBalance } = wallet
-    const isNotEnough = publication && approvedBalance < parseFloat(publication.price, 10)
+    const isNotEnough =
+      publication && approvedBalance < parseFloat(publication.price, 10)
 
     return (
       <Parcel x={x} y={y}>

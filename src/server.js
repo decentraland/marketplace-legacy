@@ -1,7 +1,6 @@
 import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
-import path from 'path'
 
 import { server, env, eth, contracts, utils } from 'decentraland-commons'
 
