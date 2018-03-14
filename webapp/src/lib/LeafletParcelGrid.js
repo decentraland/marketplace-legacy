@@ -1,4 +1,5 @@
 import L from 'leaflet'
+import { COLORS } from './parcelUtils'
 import { requestAnimationFrame, cancelAnimationFrame } from './utils'
 import { marker } from './marker'
 
@@ -170,7 +171,8 @@ export const LeafletParcelGrid = L.Layer.extend({
 
     // Clear canvas
     const ctx = this.canvas.getContext('2d')
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    ctx.fillStyle = COLORS.unowned
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     let markerCenter = null
     const parcelsOnSale = []
     for (let index = 0; index < tiles.length; index++) {
@@ -178,10 +180,20 @@ export const LeafletParcelGrid = L.Layer.extend({
       const {
         id,
         backgroundColor,
-        publication
+        publication,
+        connectedLeft,
+        connectedTop,
+        connectedTopLeft
       } = this.options.getTileAttributes(tile.bounds.getNorthWest())
       const point = this.map.latLngToContainerPoint(tile.center)
-      this.renderTile(point.x, point.y, backgroundColor)
+      this.renderTile(
+        point.x,
+        point.y,
+        backgroundColor,
+        connectedLeft,
+        connectedTop,
+        connectedTopLeft
+      )
       if (this.options.marker === id) {
         markerCenter = point
       }
@@ -206,18 +218,28 @@ export const LeafletParcelGrid = L.Layer.extend({
     }
   },
 
-  renderTile(x, y, color) {
+  renderTile(x, y, color, connectedLeft, connectedTop, connectedTopLeft) {
     // Render tile
     const ctx = this.canvas.getContext('2d')
-    const padding = 1
+    const padding = 2
+    const offset = 1
 
     ctx.fillStyle = color
     ctx.fillRect(
-      x - this.tileSize,
-      y - this.tileSize,
-      this.tileSize - padding,
-      this.tileSize - padding
+      x - this.tileSize + (connectedLeft ? -offset : padding),
+      y - this.tileSize + (connectedTop ? -offset : padding),
+      this.tileSize - (connectedLeft ? -offset : padding),
+      this.tileSize - (connectedTop ? -offset : padding)
     )
+    if (connectedLeft && connectedTop && !connectedTopLeft) {
+      ctx.fillStyle = COLORS.unowned
+      ctx.fillRect(
+        x - this.tileSize - offset,
+        y - this.tileSize - offset,
+        padding + offset,
+        padding + offset
+      )
+    }
   },
 
   renderMarker({ ctx, center, fillPrimary, fillSecondary, stroke, scale }) {

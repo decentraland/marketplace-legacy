@@ -4,14 +4,16 @@ export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 
 export const COLORS = Object.freeze({
-  myParcels: '#D98494',
-  district: '#73C7E1',
-  contribution: '#4A90E2',
-  roads: '#39516B',
-  plaza: '#FBFBF9',
-  taken: '#AEDC89',
-  unowned: '#F9F7E8',
-  loading: '#AAAAAA'
+  myParcels: '#ff9990',
+  district: '#7773ff',
+  contribution: '#4a27d4',
+  roads: '#8188a3',
+  plaza: '#80c290',
+  taken: '#505772',
+  onSale: '#746a59',
+  unowned: '#0d0e18',
+  loadingEven: '#131523',
+  loadingOdd: '#181a29'
 })
 
 export function getBounds() {
@@ -48,13 +50,15 @@ export function hasPublication(parcel, publications) {
   return parcel != null && parcel.publication_tx_hash in publications
 }
 
-export function getParcelAttributes(wallet, parcel, districts) {
+export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
+  const parcel = parcels[id]
   if (!parcel) {
     return {
       label: 'Loading...',
       description: null,
       color: 'black',
-      backgroundColor: COLORS.loading
+      backgroundColor:
+        (x + y) % 2 === 0 ? COLORS.loadingEven : COLORS.loadingOdd
     }
   }
   const district = getDistrict(parcel, districts)

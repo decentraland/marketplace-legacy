@@ -133,7 +133,7 @@ export default class MapComponent extends React.Component {
           parcels={parcels}
           districts={districts}
           publications={publications}
-          minZoom={this.baseZoom - 3}
+          minZoom={this.baseZoom - 6}
           maxZoom={this.baseZoom}
           baseZoom={this.baseZoom}
           zoom={zoom}

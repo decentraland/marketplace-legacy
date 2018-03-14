@@ -133,8 +133,12 @@ export default class ParcelPreview extends React.PureComponent {
         const { backgroundColor } = this.cache[parcelId]
           ? this.cache[parcelId]
           : (this.cache[parcelId] = getParcelAttributes(
+              parcelId,
+              px,
+              py,
+              parcelId,
               wallet,
-              parcels[parcelId],
+              parcels,
               districts
             ))
         const isCenter = px === x && py === y

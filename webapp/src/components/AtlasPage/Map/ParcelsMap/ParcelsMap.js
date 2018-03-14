@@ -280,8 +280,11 @@ export default class ParcelsMap extends React.Component {
     const parcel = parcels[id]
 
     const { backgroundColor, color, label, description } = getParcelAttributes(
+      id,
+      x,
+      y,
       wallet,
-      parcel,
+      parcels,
       districts
     )
 
@@ -297,7 +300,10 @@ export default class ParcelsMap extends React.Component {
       backgroundColor,
       label,
       description,
-      publication
+      publication,
+      connectedLeft: parcel && parcel.connectedLeft,
+      connectedTop: parcel && parcel.connectedTop,
+      connectedTopLeft: parcel && parcel.connectedTopLeft
     }
   }
 
