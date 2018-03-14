@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { getParcels } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getPublications } from 'modules/publication/selectors'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { pickAndMap } from './utils'
 
 export const getState = state => state.address
@@ -33,9 +34,14 @@ export const getAddresses = createSelector(
         contributionIds
       )
       const publicationsIds = data[address].publication_ids || []
-      const [publications, publicationsById] = pickAndMap(
+      let [publications, publicationsById] = pickAndMap(
         allPublications,
         publicationsIds
+      )
+
+      // filter only open publications
+      publications = publications.filter(
+        publication => publication.status === PUBLICATION_STATUS.open
       )
 
       return {

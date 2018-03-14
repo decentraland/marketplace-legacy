@@ -9,11 +9,17 @@ import {
   EDIT_PARCEL_SUCCESS,
   EDIT_PARCEL_FAILURE
 } from './actions'
+import {
+  BUY_SUCCESS,
+  CANCEL_SALE_SUCCESS,
+  PUBLISH_SUCCESS
+} from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
-import { cleanParcel, toParcelObject } from './utils'
 import { loadingReducer } from 'modules/loading/reducer'
+import { buildCoordinate } from 'lib/utils'
+import { cleanParcel, toParcelObject } from './utils'
 
 const INITIAL_STATE = {
   data: {},
@@ -110,6 +116,62 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
               }
             }
           }
+        }
+        case BUY_SUCCESS: {
+          const owner = transaction.from
+          const tx_hash = transaction.payload.tx_hash
+          // unset publication_tx_hash and update owner
+          return {
+            ...state,
+            data: Object.values(state.data).reduce((newParcels, parcel) => {
+              if (parcel.publication_tx_hash === tx_hash) {
+                newParcels[parcel.id] = {
+                  ...parcel,
+                  publication_tx_hash: null,
+                  owner
+                }
+              } else {
+                newParcels[parcel.id] = parcel
+              }
+              return newParcels
+            }, {})
+          }
+        }
+        case CANCEL_SALE_SUCCESS: {
+          const tx_hash = transaction.payload.tx_hash
+          // unset publication_tx_hash
+          return {
+            ...state,
+            data: Object.values(state.data).reduce((newParcels, parcel) => {
+              if (parcel.publication_tx_hash === tx_hash) {
+                newParcels[parcel.id] = {
+                  ...parcel,
+                  publication_tx_hash: null
+                }
+              } else {
+                newParcels[parcel.id] = parcel
+              }
+              return newParcels
+            }, {})
+          }
+        }
+        case PUBLISH_SUCCESS: {
+          // set publication_tx_hash
+          const { x, y, tx_hash } = transaction.payload
+          const parcelId = buildCoordinate(x, y)
+          if (parcelId in state.data) {
+            return {
+              ...state,
+              data: {
+                ...state.data,
+                [parcelId]: {
+                  ...state.data[parcelId],
+                  publication_tx_hash: tx_hash
+                }
+              }
+            }
+          }
+          return state
         }
         default:
           return state
