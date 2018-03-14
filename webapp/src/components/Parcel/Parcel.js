@@ -28,8 +28,8 @@ export default class Parcel extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { parcel, isLoading, onFetchParcel } = this.props
-    if (!parcel && !isLoading) {
+    const { isLoading, onFetchParcel } = this.props
+    if (!isLoading) {
       onFetchParcel()
     }
   }
