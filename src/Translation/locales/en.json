@@ -101,7 +101,7 @@
   },
   "parcel_publish": {
     "list_land": "List LAND for sale",
-    "set_land_price": "Set a price and a expiration date for {parcel_name}",
+    "set_land_price": "Set a price and an expiration date for {parcel_name}",
     "price": "Price",
     "price_placeholder": "Price in MANA for this LAND",
     "expiration": "Expiration",
