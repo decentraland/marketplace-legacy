@@ -24,7 +24,7 @@ jobs:
           environment:
             NODE_PATH: src/
             NODE_ENV: production
-            REACT_APP_API_URL: https://api.land.decentraland.org
+            REACT_APP_API_URL: https://api.market.decentraland.org
             REACT_APP_VERSION: 0.1
             REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
             REACT_APP_INTERCOM_APP_ID: z0h94kay
@@ -59,7 +59,7 @@ jobs:
           environment:
             NODE_PATH: src/
             NODE_ENV: production
-            REACT_APP_API_URL: https://api.land.decentraland.today
+            REACT_APP_API_URL: https://api.market.decentraland.today
             REACT_APP_VERSION: 0.1
             REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
             REACT_APP_INTERCOM_APP_ID: z0h94kay
@@ -94,7 +94,7 @@ jobs:
           environment:
             NODE_PATH: src/
             NODE_ENV: development
-            REACT_APP_API_URL: https://api.land.decentraland.zone
+            REACT_APP_API_URL: https://api.market.decentraland.zone
             REACT_APP_VERSION: 0.1
             REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
             REACT_APP_INTERCOM_APP_ID: z0h94kay
@@ -116,10 +116,10 @@ jobs:
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Deploy to S3 if tests pass and branch is release
-          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.org/ --delete --acl public-read
+          command: ~/.local/bin/aws s3 sync webapp/build s3://market.decentraland.org/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2IF2EGXYQC4IG  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E341512D71C4WA  --paths "/" "/*"
   deploy-staging:
     docker:
       - image: circleci/node:7.10
@@ -131,10 +131,10 @@ jobs:
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Deploy to S3 if tests pass and branch is staging
-          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.today/ --delete --acl public-read
+          command: ~/.local/bin/aws s3 sync webapp/build s3://market.decentraland.today/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2X6577Q2KUDV8  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E7M8L196UB6QW  --paths "/" "/*"
   deploy-master:
     docker:
       - image: circleci/node:7.10
@@ -146,10 +146,10 @@ jobs:
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Deploy to S3 if tests pass and branch is staging
-          command: ~/.local/bin/aws s3 sync webapp/build s3://land.decentraland.zone/ --delete --acl public-read
+          command: ~/.local/bin/aws s3 sync webapp/build s3://market.decentraland.zone/ --delete --acl public-read
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E21WUW7C12KG5E  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2TNOPOOOQLC4U  --paths "/" "/*"
 
 workflows:
   version: 2
