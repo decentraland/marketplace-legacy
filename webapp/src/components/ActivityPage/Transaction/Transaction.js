@@ -51,11 +51,15 @@ export default class Transaction extends React.PureComponent {
     const { payload } = tx
 
     switch (tx.actionType) {
-      case APPROVE_MANA_SUCCESS:
-        return t_html('transaction.approve', {
+      case APPROVE_MANA_SUCCESS: {
+        const tkey =
+          payload.mana > 0 ? 'transaction.approved' : 'transaction.disapproved'
+
+        return t_html(tkey, {
           mana: formatMana(payload.mana),
           marketplace_contract_link: this.renderMarketplaceLink()
         })
+      }
       case AUTHORIZE_LAND_SUCCESS: {
         const action = payload.isAuthorized
           ? t('global.authorized')

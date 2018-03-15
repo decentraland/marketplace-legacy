@@ -130,6 +130,7 @@
   },
   "transaction": {
     "approved": "You approved {mana} to be used by the {marketplace_contract_link}",
+    "disapproved": "You deauthorized the {marketplace_contract_link} to transfer funds on your behalf",
     "authorize": "You have {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",

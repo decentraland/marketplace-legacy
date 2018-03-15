@@ -130,6 +130,7 @@
   },
   "transaction": {
     "approved": "Vous avez validé {mana} afin qu'elle soit utilisée {marketplace_contract_link}",
+    "disapproved": "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "authorize": "Vous avez {action} la {marketplace_contract_link} à gérer les LANDs en votre nom",
     "edit": "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
