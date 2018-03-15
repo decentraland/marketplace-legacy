@@ -50,11 +50,10 @@ export class Publication extends Model {
         ORDER BY created_at DESC`
   }
 
-  static async cancelOlder(block_number, { owner, x, y }) {
+  static async cancelOlder(x, y, block_number) {
     const args = [
       BlockchainEvent.EVENTS.publicationCreated,
       block_number,
-      owner,
       x,
       y,
       this.STATUS.open
@@ -66,10 +65,9 @@ export class Publication extends Model {
           BlockchainEvent.tableName
         } b ON p.tx_hash = b.tx_hash AND name = $1
         WHERE b.block_number < $2
-          AND p.owner = $3
-          AND p.x = $4
-          AND p.y = $5
-          AND p.status = $6`,
+          AND p.x = $3
+          AND p.y = $4
+          AND p.status = $5`,
       args
     )
     const txHashes = rows.map(row => row.tx_hash)

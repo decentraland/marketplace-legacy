@@ -126,7 +126,7 @@ export async function processEvent(event) {
       debounceEvent(parcelId, name, async () => {
         log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-        await Publication.cancelOlder(block_number, { owner: from, x, y })
+        await Publication.cancelOlder(x, y, block_number)
         await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
       })
       break
