@@ -46,6 +46,13 @@ export default class Footer extends React.PureComponent {
           </Link>
         </div>
         <div className="links">
+          <span className="language">Language:</span>
+          <LocalesDropdown
+            defaultValue={locale}
+            onChange={this.handleLocaleChange}
+          />
+        </div>
+        <div className="links">
           <Link to="https://blog.decentraland.org" target="_blank">
             {t('global.blog')}
           </Link>
@@ -54,13 +61,6 @@ export default class Footer extends React.PureComponent {
           </Link>
           <Link to={locations.colorKey}>{t('footer.color_key')}</Link>
           <Link to={locations.privacy}>{t('footer.privacy_policy')}</Link>
-        </div>
-        <div className="links">
-          <span className="language">Language:</span>
-          <LocalesDropdown
-            defaultValue={locale}
-            onChange={this.handleLocaleChange}
-          />
         </div>
         <div className="copyright">{t('footer.copyright')}</div>
       </footer>

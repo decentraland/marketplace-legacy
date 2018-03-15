@@ -20,13 +20,18 @@ export function addAvailableLocaleData() {
 export function getPreferredLocale() {
   const navigator = window.navigator
 
-  const language =
+  let locale =
     (navigator.languages && navigator.languages[0]) ||
     navigator.language ||
-    navigator.userLanguage ||
-    DEFAULT_LANG
+    navigator.userLanguage
 
-  return language.slice(0, 2)
+  locale = locale.slice(0, 2)
+
+  if (!getAvailableLocales().includes(locale)) {
+    locale = DEFAULT_LANG
+  }
+
+  return locale
 }
 
 export function getAvailableLocales() {
