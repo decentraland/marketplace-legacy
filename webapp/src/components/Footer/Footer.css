@@ -2,7 +2,7 @@
   width: 100%;
   padding: 28px 0;
   font-size: 14px;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   text-align: center;
 }
 
@@ -18,12 +18,23 @@
   margin-bottom: 20px;
 }
 
-.Footer .links a {
+.Footer .links a,
+.Footer .links .link {
   margin-right: 27px;
   color: #000;
 }
-.Footer .links a:last-child {
+.Footer .links a:last-child,
+.Footer .links .link:last-child {
   margin-right: 0;
+}
+
+.Footer .language {
+  margin-right: 27px;
+}
+
+.Footer .LocaleLink.active {
+  cursor: default;
+  color: var(--gray);
 }
 
 .Footer .copyright {

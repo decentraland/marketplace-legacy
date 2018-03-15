@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getLocale, isConnecting } from 'modules/wallet/selectors'
 import { getData } from 'modules/translation/selectors'
 import { fetchTranslationsRequest } from 'modules/translation/actions'
-import { getPreferredLanguage } from 'modules/translation/utils'
+import { getPreferredLocale } from 'modules/translation/utils'
 
 import TranslationProvider from './TranslationProvider'
 
@@ -10,7 +10,7 @@ const mapState = state => {
   let locale = getLocale(state)
 
   if (!isConnecting(state)) {
-    locale = locale || getPreferredLanguage()
+    locale = locale || getPreferredLocale()
   }
 
   const translations = getData(state)[locale]

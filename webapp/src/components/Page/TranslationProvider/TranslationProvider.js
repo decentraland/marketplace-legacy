@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Loader } from 'semantic-ui-react'
-import { IntlProvider } from 'react-intl'
 import TranslationSetup from './TranslationSetup'
+import { I18nProvider, addAvailableLocaleData } from 'modules/translation/utils'
 
 export default class TranslationProvider extends React.PureComponent {
   static propTypes = {
@@ -15,6 +15,10 @@ export default class TranslationProvider extends React.PureComponent {
 
   static defaultProps = {
     children: null
+  }
+
+  componentWillMount() {
+    addAvailableLocaleData()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,12 +41,12 @@ export default class TranslationProvider extends React.PureComponent {
     const { children, locale, translations } = this.props
 
     return translations ? (
-      <IntlProvider locale={locale} messages={translations}>
+      <I18nProvider locale={locale} messages={translations}>
         <React.Fragment>
           <TranslationSetup />
           {children}
         </React.Fragment>
-      </IntlProvider>
+      </I18nProvider>
     ) : (
       this.renderLoading()
     )
