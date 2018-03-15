@@ -5,6 +5,7 @@ import ParcelName from 'components/ParcelName'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelPublication from './ParcelPublication'
+import ParcelDescription from './ParcelDescription'
 import { parcelType, districtType } from 'components/types'
 import { hasPublication, getDistrict } from 'lib/parcelUtils'
 
@@ -86,15 +87,7 @@ export default class ParcelDetail extends React.PureComponent {
         ) : null}
         <Grid.Row>
           <Grid.Column width={10}>
-            <h3>Description</h3>
-            <p
-              className={
-                'parcel-description' +
-                (description ? '' : ' parcel-description-empty')
-              }
-            >
-              {description || 'This parcel has no description'}
-            </p>
+            <ParcelDescription description={description} />
           </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -7,6 +7,7 @@ import {
   UPDATE_DERIVATION_PATH
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSLATIONS_SUCCESS } from 'modules/translation/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 
 const INITIAL_STATE = {
@@ -15,7 +16,8 @@ const INITIAL_STATE = {
     balance: null,
     approvedBalance: null,
     isLandAuthorized: null,
-    derivationPath: null
+    derivationPath: null,
+    locale: null
   },
   loading: [],
   error: null
@@ -69,9 +71,18 @@ export function walletReducer(state = INITIAL_STATE, action) {
     }
     case UPDATE_DERIVATION_PATH:
       return {
+        ...state,
         data: {
           ...state.data,
           derivationPath: action.derivationPath
+        }
+      }
+    case FETCH_TRANSLATIONS_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          locale: action.locale
         }
       }
     default:

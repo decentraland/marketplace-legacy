@@ -4,10 +4,11 @@ import { parcelType, districtType } from 'components/types'
 import { getDistrict, isDistrict } from 'lib/parcelUtils'
 import isEmpty from 'lodash/isEmpty'
 import AddressLink from 'components/AddressLink'
+import { t, t_html } from 'modules/translation/utils'
 
 import './ParcelOwner.css'
 
-export default class ParcelName extends React.PureComponent {
+export default class ParcelOwner extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     districts: PropTypes.objectOf(districtType).isRequired
@@ -21,6 +22,7 @@ export default class ParcelName extends React.PureComponent {
     if (isDistrict(parcel)) {
       const district = getDistrict(parcel, districts)
       if (!district) return
+
       let districtName = <span className="district-name">{district.name}</span>
       if (district.link) {
         districtName = (
@@ -34,19 +36,28 @@ export default class ParcelName extends React.PureComponent {
           </a>
         )
       }
+
       return (
         <span className="ParcelOwner is-district">
-          Part of &nbsp;{districtName}
+          {t('parcel_detail.owner.part_of', { name: districtName })}
         </span>
       )
     }
+
     if (parcel.owner) {
       return (
         <span className="ParcelOwner is-address">
-          Owned by&nbsp;&nbsp;<AddressLink address={parcel.owner} scale={4} />
+          {t_html('global.owned_by', {
+            address_link: <AddressLink address={parcel.owner} scale={4} />
+          })}
         </span>
       )
     }
-    return <span className="ParcelOwner is-address">No owner</span>
+
+    return (
+      <span className="ParcelOwner is-address">
+        {t('parcel_detail.owner.no_owner')}
+      </span>
+    )
   }
 }

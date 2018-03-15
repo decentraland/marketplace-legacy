@@ -14,6 +14,7 @@ import Parcel from 'components/Parcel'
 import { walletType } from 'components/types'
 import { locations } from 'locations'
 import { formatMana } from 'lib/utils'
+import { t, t_html } from 'modules/translation/utils'
 
 import './BuyParcelPage.css'
 
@@ -46,11 +47,14 @@ export default class BuyParcelPage extends React.PureComponent {
     return (
       <Container text textAlign="center" className="BuyParcelPage">
         <Header as="h2" size="huge" className="title">
-          Buy LAND
+          {t('parcel_buy.buy_land')}
         </Header>
         <p className="sign-in">
-          You need to <Link to={locations.signIn}>Sign In</Link> to access this
-          page
+          {t_html('global.sign_in_notice', {
+            sign_in_link: (
+              <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+            )
+          })}
         </p>
       </Container>
     )
@@ -68,14 +72,15 @@ export default class BuyParcelPage extends React.PureComponent {
           <div className="BuyParcelPage">
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
-                Buy LAND
+                {t('parcel_buy.buy_land')}
               </Header>
               <span className="subtitle">
-                You are about to buy&nbsp;
-                <ParcelName parcel={parcel} />{' '}
+                {t_html('parcel_buy.about_to_buy', {
+                  parcel_name: <ParcelName parcel={parcel} />
+                })}&nbsp;
                 {publication ? (
                   <React.Fragment>
-                    for{' '}
+                    {t('global.for')}&nbsp;
                     <strong className="price">
                       {formatMana(publication.price)}
                     </strong>
@@ -89,7 +94,7 @@ export default class BuyParcelPage extends React.PureComponent {
             <Container text>
               <Grid.Column className="text-center">
                 <Button onClick={onCancel} type="button">
-                  Cancel
+                  {t('global.cancel')}
                 </Button>
                 <Button
                   onClick={this.handleConfirm}
@@ -97,7 +102,7 @@ export default class BuyParcelPage extends React.PureComponent {
                   primary
                   disabled={isDisabled || isNotEnough}
                 >
-                  Confirm
+                  {t('global.confirm')}
                 </Button>
               </Grid.Column>
             </Container>
@@ -110,31 +115,37 @@ export default class BuyParcelPage extends React.PureComponent {
                       <React.Fragment>
                         <h3>
                           <strong>
-                            Your approved balance is{' '}
-                            {formatMana(approvedBalance)}
+                            {t('parcel_buy.approved_balance', {
+                              approved_balance: formatMana(approvedBalance)
+                            })}
                           </strong>
                         </h3>
-                        You need at least{' '}
-                        <strong className="price">
-                          {formatMana(publication.price)}
-                        </strong>{' '}
-                        in order to buy this LAND.
+                        {t('parcel_buy.needs_at_least', {
+                          value: formatMana(publication.price)
+                        })}
                         <br />
-                        Please go to{' '}
-                        <Link to={locations.settings}>Settings</Link> and
-                        approve some more MANA.
+                        {t_html('parcel_buy.plase_approve', {
+                          settings_link: (
+                            <Link to={locations.settings}>
+                              {t('global.settings')}
+                            </Link>
+                          )
+                        })}
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
                         <h3>
-                          <strong>You haven&apos;t approved MANA</strong>
+                          <strong>{t('parcel_buy.didnt_approve')}</strong>
                         </h3>
-                        You need to approve MANA to be used by the Marketplace
-                        before you can buy LAND.
+                        {t('parcel_buy.should_approve')}
                         <br />
-                        Please go to{' '}
-                        <Link to={locations.settings}>Settings</Link> and
-                        approve some MANA.
+                        {t_html('parcel_buy.plase_approve', {
+                          settings_link: (
+                            <Link to={locations.settings}>
+                              {t('global.settings')}
+                            </Link>
+                          )
+                        })}
                       </React.Fragment>
                     )}
                   </Message>

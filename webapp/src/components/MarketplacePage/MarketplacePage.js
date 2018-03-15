@@ -13,20 +13,16 @@ import {
 import Publication from './Publication'
 
 import { publicationType } from 'components/types'
+import { t } from 'modules/translation/utils'
 
 import {
-  SORT_TYPES,
+  getSortOptions,
   getOptionsFromSortType,
   getSortTypeFromOptions,
   buildUrl
 } from './utils'
 
 import './MarketplacePage.css'
-
-const sortOptions = Object.values(SORT_TYPES).map(type => ({
-  text: type,
-  value: type
-}))
 
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
@@ -37,6 +33,11 @@ export default class MarketplacePage extends React.PureComponent {
     sortOrder: PropTypes.string.isRequired,
     onNavigate: PropTypes.func.isRequired,
     onFetchPublications: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.sortOptions = getSortOptions()
   }
 
   componentWillMount() {
@@ -97,7 +98,7 @@ export default class MarketplacePage extends React.PureComponent {
   renderEmpty() {
     return (
       <div className="empty">
-        <p>Oops... nothing found here.</p>
+        <p>{t('marketplace.empty')}</p>
       </div>
     )
   }
@@ -120,18 +121,23 @@ export default class MarketplacePage extends React.PureComponent {
   render() {
     const { page, pages, isLoading, isEmpty, sortBy, sortOrder } = this.props
     const sortType = getSortTypeFromOptions({ sortBy, sortOrder })
+
     return (
       <div className="MarketplacePage">
         <Container>
           <Menu pointing secondary>
-            <Menu.Item name="Parcels" active onClick={this.handleItemClick} />
+            <Menu.Item
+              name={t('global.parcels')}
+              active
+              onClick={this.handleItemClick}
+            />
             <Menu.Menu position="right">
               <Menu.Item>
                 <Dropdown
                   placeholder="Sort"
                   selection
                   value={sortType}
-                  options={sortOptions}
+                  options={this.sortOptions}
                   onChange={this.handleSort}
                 />
               </Menu.Item>

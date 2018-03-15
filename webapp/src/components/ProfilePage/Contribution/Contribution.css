@@ -30,6 +30,10 @@
   font-weight: 700;
 }
 
+.Contribution .icon.loading {
+  color: var(--primary);
+}
+
 .Contribution .land-count .amount {
   display: inline-block;
   overflow: hidden;

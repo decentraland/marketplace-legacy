@@ -26,6 +26,15 @@
   margin-right: 0;
 }
 
+.Footer .language {
+  margin-right: 27px;
+}
+
+.Footer .LocaleLink.active {
+  cursor: default;
+  color: var(--gray);
+}
+
 .Footer .copyright {
   color: #929292;
 }

@@ -6,6 +6,7 @@ import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import { isTransactionRejectedError } from 'modules/transaction/utils'
 import { preventDefault } from 'lib/utils'
+import { t } from 'modules/translation/utils'
 
 import './TransferParcelForm.css'
 
@@ -76,9 +77,7 @@ export default class TransferParcelForm extends React.PureComponent {
     return (
       <React.Fragment>
         {hasPublication ? (
-          <Message warning>
-            This LAND can&apos;t be transferred because it&apos;s on sale.
-          </Message>
+          <Message warning>{t('parcel_transfer.cant_transfer')}</Message>
         ) : null}
         <Form
           className="TransferParcelForm"
@@ -86,12 +85,12 @@ export default class TransferParcelForm extends React.PureComponent {
           error={!!transferError}
         >
           <Form.Field>
-            <label>Recipient address</label>
+            <label>{t('parcel_transfer.recipient_address')}</label>
             <Input
               id="address-input"
               className={inputClassName}
               type="text"
-              placeholder="Ex: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
+              placeholder="0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
               value={address}
               onChange={this.handleAddressChange}
               autoComplete="off"
@@ -103,15 +102,20 @@ export default class TransferParcelForm extends React.PureComponent {
                   <React.Fragment>{transferError}</React.Fragment>
                 ) : (
                   <React.Fragment>
-                    An unknown error occurred, the details are below.<br />
-                    If the problem persists, contact us at our&nbsp;
-                    <a
-                      href="https://chat.decentraland.org"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Community Chat
-                    </a>.<br />
+                    {t('transfer_land.unknown_error')}
+                    <br />
+                    {t('transfer_land.error_persists', {
+                      community_chat_link: (
+                        <a
+                          href="https://chat.decentraland.org"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {t('global.community_chat')}
+                        </a>
+                      )
+                    })}
+                    <br />
                     <div className="error-stack">{transferError}</div>
                   </React.Fragment>
                 )}
@@ -125,7 +129,7 @@ export default class TransferParcelForm extends React.PureComponent {
 
           <div className="text-center">
             <Button type="button" onClick={this.handleCancel}>
-              Cancel
+              {t('global.cancel')}
             </Button>
 
             <Button
@@ -133,7 +137,7 @@ export default class TransferParcelForm extends React.PureComponent {
               primary={true}
               disabled={this.isEmptyAddress() || isTxIdle || hasPublication}
             >
-              Submit
+              {t('global.submit')}
             </Button>
           </div>
         </Form>

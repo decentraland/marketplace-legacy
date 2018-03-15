@@ -6,6 +6,7 @@ import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
 
 import { formatMana } from 'lib/utils'
+import { t } from 'modules/translation/utils'
 
 import './CancelSalePage.css'
 
@@ -32,30 +33,29 @@ export default class CancelSalePage extends React.PureComponent {
           <div className="CancelSalePage">
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
-                Cancel LAND Sale
+                {t('parcel_cancel.cancel_land')}
               </Header>
               <span className="subtitle">
-                <ParcelName parcel={parcel} />{' '}
+                <ParcelName parcel={parcel} />&nbsp;
                 {publication ? (
                   <React.Fragment>
-                    is currently on sale for{' '}
-                    <strong className="price">
-                      {formatMana(publication.price)}
-                    </strong>.
+                    {t('parcel_cancel.currently_on_sale', {
+                      value: formatMana(publication.price)
+                    })}
                   </React.Fragment>
                 ) : (
                   ''
                 )}
               </span>
               <span className="subtitle">
-                You are about to cancel this sale.
+                {t('parcel_cancel.about_to_cancel')}
               </span>
             </Container>
             <br />
             <Container text>
               <Grid.Column className="text-center">
                 <Button onClick={onCancel} type="button">
-                  Cancel
+                  {t('global.cancel')}
                 </Button>
                 <Button
                   onClick={this.handleConfirm}
@@ -63,7 +63,7 @@ export default class CancelSalePage extends React.PureComponent {
                   negative
                   disabled={isDisabled}
                 >
-                  Confirm
+                  {t('global.confirm')}
                 </Button>
               </Grid.Column>
             </Container>

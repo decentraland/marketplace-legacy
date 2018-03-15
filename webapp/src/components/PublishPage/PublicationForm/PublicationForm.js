@@ -10,6 +10,7 @@ import TxStatus from 'components/TxStatus'
 import { parcelType, publicationType } from 'components/types'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { ONE_LAND_IN_MANA } from 'lib/land'
+import { t } from 'modules/translation/utils'
 
 import './PublicationForm.css'
 
@@ -67,11 +68,15 @@ export default class PublicationForm extends React.PureComponent {
     const formErrors = []
 
     if (differenceInDays(expiresAt, new Date()) < MINIMUM_DAY_INTERVAL) {
-      formErrors.push('The minimum expiration date is of one day')
+      formErrors.push(t('parcel_publish.errors.minimum_expiration'))
     }
 
     if (price < ONE_LAND_IN_MANA) {
-      formErrors.push(`The minimum LAND price is ${ONE_LAND_IN_MANA} MANA`)
+      formErrors.push(
+        t('parcel_publish.errors.minimum_land', {
+          value: formatMana(ONE_LAND_IN_MANA)
+        })
+      )
     }
 
     if (formErrors.length === 0) {
@@ -105,20 +110,20 @@ export default class PublicationForm extends React.PureComponent {
         success={isConfirmed}
       >
         <Form.Field>
-          <label>Price</label>
+          <label>{t('parcel_publish.price')}</label>
           <Input
             type="number"
-            placeholder="Price in MANA for this LAND"
+            placeholder={t('parcel_publish.price_placeholder')}
             value={price}
             required={true}
             onChange={this.handlePriceChange}
           />
         </Form.Field>
         <Form.Field>
-          <label>Expiration</label>
+          <label>{t('parcel_publish.expiration')}</label>
           <Input
             type="date"
-            placeholder="Expiration date for this publication"
+            placeholder={t('parcel_publish.expiration_placeholder')}
             value={expiresAt}
             required={true}
             onChange={this.handleExpiresAtChange}
@@ -138,7 +143,9 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         {isConfirmed ? (
           <Message success>
-            This LAND is already on sale for {formatMana(publication.price)}
+            {t('parcel_publish.already_sold', {
+              value: formatMana(publication.price)
+            })}
           </Message>
         ) : null}
         {formErrors.length > 0 ? (
@@ -155,14 +162,14 @@ export default class PublicationForm extends React.PureComponent {
             onClick={onCancel}
             type="button"
           >
-            Cancel
+            {t('global.cancel')}
           </Button>
           <Button
             type="submit"
             primary={true}
             disabled={isPending || isConfirmed || isTxIdle || isDisabled}
           >
-            Submit
+            {t('global.submit')}
           </Button>
         </div>
       </Form>
