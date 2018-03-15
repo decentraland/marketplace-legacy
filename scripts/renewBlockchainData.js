@@ -8,7 +8,11 @@ import { loadEnv } from './utils'
 
 const log = new Log('update')
 
+const BATCH_SIZE = env.get('RENEW_BATCH_SIZE', 1000)
+
 export async function renewBlockchainData() {
+  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
+
   log.info('Connecting database')
   await db.connect()
 
@@ -16,25 +20,38 @@ export async function renewBlockchainData() {
   await eth.connect({ contracts: [contracts.LANDRegistry] })
 
   log.info('Storing `parcels` data')
-  await storeParcels()
+  await processParcels()
 }
 
-async function storeParcels() {
-  const BATCH_SIZE = env.get('RENEW_BATCH_SIZE', 1000)
+async function processParcels() {
+  const parcels = await Parcel.find()
+  await updateParcelsData(parcels)
+
+  log.info('All done')
+}
+
+async function updateParcelsData(parcels) {
+  log.info(`Processing ${parcels.length} parcels`)
 
   const service = new ParcelService()
-  const parcels = await Parcel.find()
 
+  let errors = []
   let updates = []
   let total = BATCH_SIZE
 
   await asyncBatch({
     elements: parcels,
     callback: async newParcels => {
-      newParcels = await service.addLandData(newParcels)
-      newParcels = await service.addOwners(newParcels)
+      try {
+        newParcels = await service.addLandData(newParcels)
+        newParcels = await service.addOwners(newParcels)
+      } catch (error) {
+        log.info(`Error processing ${newParcels.length} parcels, skipping`)
+        errors = errors.concat(newParcels)
+        return
+      }
 
-      log.info(`Processing ${total}/${parcels.length} parcels`)
+      log.info(`Processing ${total}/${parcels.length - errors.length} parcels`)
 
       updates = updates.concat(
         newParcels.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
@@ -44,11 +61,13 @@ async function storeParcels() {
     },
     batchSize: BATCH_SIZE
   })
-  log.info('Waiting for the Database operations to finish')
+  log.info(`Waiting for the DB to finish for ${updates.length} updates`)
 
   await Promise.all(updates)
 
-  log.info('All done')
+  if (errors.length) {
+    return await updateParcelsData(errors)
+  }
 }
 
 if (require.main === module) {

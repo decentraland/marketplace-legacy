@@ -207,10 +207,13 @@ describe('ParcelService', function() {
     })
 
     it('should return an object with only the CURRENT_DATA_VERSION as property if the getter or decoding fails', async function() {
+      const DataError = function() {
+        this.name = 'DataError'
+      }
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns({
-        getData: () => {
-          throw new Error('Expected spy error')
+        landData: () => {
+          throw new DataError('Expected spy error')
         }
       })
 
@@ -265,18 +268,6 @@ describe('ParcelService', function() {
         { x: 11, y: -2, owner: null }
       ])
     })
-
-    it('should return the same array if the LANDRegistry contract fails', async function() {
-      const service = new ParcelService()
-      sinon
-        .stub(service, 'getLANDRegistryContract')
-        .throws(new Error('Expected spy error'))
-
-      const parcels = [testParcel1, testParcel2]
-      const parcelsWithOwner = await service.addOwners(parcels)
-
-      expect(parcelsWithOwner).to.deep.equal([testParcel1, testParcel2])
-    })
   })
 
   describe('#getLandOf', function() {
@@ -288,47 +279,6 @@ describe('ParcelService', function() {
 
       expect(landPairs).to.deep.equal([testParcel1WithId, testParcel2WithId])
     })
-
-    it('should return an empty array on error', async function() {
-      const service = new ParcelService()
-      sinon
-        .stub(service, 'getLANDRegistryContract')
-        .throws(new Error('Expected spy error'))
-
-      const landPairs = await service.getLandOf(testAddress)
-
-      expect(landPairs).to.deep.equal([])
-    })
-  })
-
-  describe('#addDbData', function() {
-    it('should add the data stored on the db to each parcel and return a new array', async function() {
-      const contractParcels = [
-        { x: 0, y: 0 },
-        { x: 10, y: -2 },
-        { x: -5, y: 20 }
-      ]
-      const parcelData = [
-        { auction_price: '1000' },
-        { auction_price: '1250' },
-        { auction_price: '5234' }
-      ]
-      const parcels = contractParcels.map((coord, index) =>
-        Object.assign({}, coord, parcelData[index])
-      )
-
-      // inserts a new parcel object to avoid adding an `id` to the list
-      const inserts = parcels.map(parcel => Parcel.insert({ ...parcel }))
-      await Promise.all(inserts)
-
-      const parcelsWithData = await new ParcelService().addDbData(
-        contractParcels
-      )
-
-      expect(parcelsWithData).to.deep.equal(parcels)
-    })
-
-    afterEach(() => db.truncate(Parcel.tableName))
   })
 })
 
