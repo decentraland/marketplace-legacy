@@ -135,7 +135,7 @@
     "edit": "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
-    "buy": "vous avez acheté {parcel_link}",
+    "buy": "Vous avez acheté {parcel_link}",
     "cancel": "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}"
   },
   "settings": {
