@@ -38,22 +38,20 @@ export async function processEvent(event) {
   const [x, y] = Parcel.splitId(parcelId)
 
   switch (name) {
-    case 'AuctionCreated': {
+    case BlockchainEvent.EVENTS.publicationCreated: {
       const { seller, priceInWei, expiresAt } = event.args
       const contract_id = event.args.id
 
       const exists = await Publication.count({ tx_hash })
       if (exists) {
-        log.info(`[AuctionCreated] Publication ${tx_hash} already exists`)
+        log.info(`[${name}] Publication ${tx_hash} already exists`)
         return
       }
       if (!contract_id) {
-        log.info(`[AuctionCreated] Publication ${tx_hash} doesn't have an id`)
+        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
         return
       }
-      log.info(
-        `[AuctionCreated] Creating publication ${contract_id} for ${parcelId}`
-      )
+      log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
 
       await Publication.insert({
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
@@ -69,16 +67,16 @@ export async function processEvent(event) {
       })
       break
     }
-    case 'AuctionSuccessful': {
+    case BlockchainEvent.EVENTS.publicationSuccessful: {
       const { totalPrice, winner } = event.args
       const contract_id = event.args.id
 
       if (!contract_id) {
-        log.info(`[AuctionSuccess] Publication ${tx_hash} doesn't have an id`)
+        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
         return
       }
 
-      log.info(`[AuctionSuccess] Publication ${contract_id} sold to ${winner}`)
+      log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
 
       await Publication.update(
         {
@@ -91,14 +89,14 @@ export async function processEvent(event) {
       await Parcel.update({ owner: winner }, { id: parcelId })
       break
     }
-    case 'AuctionCancelled': {
+    case BlockchainEvent.EVENTS.publicationCancelled: {
       const contract_id = event.args.id
 
       if (!contract_id) {
-        log.info(`[AuctionCancelled] Publication ${tx_hash} doesn't have an id`)
+        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
         return
       }
-      log.info(`[AuctionCancelled] Publication ${contract_id} cancelled`)
+      log.info(`[${name}] Publication ${contract_id} cancelled`)
 
       await Publication.update(
         { status: Publication.STATUS.cancelled },
@@ -106,29 +104,29 @@ export async function processEvent(event) {
       )
       break
     }
-    case 'Update': {
+    case BlockchainEvent.EVENTS.parcelUpdate: {
       try {
         const { data } = event.args
         const attributes = { data: contracts.LANDRegistry.decodeLandData(data) }
 
         debounceEvent(parcelId, name, () => {
           const attrsStr = JSON.stringify(attributes)
-          log.info(`[Update] Updating "${parcelId}" with ${attrsStr}`)
+          log.info(`[${name}] Updating "${parcelId}" with ${attrsStr}`)
 
           Parcel.update(attributes, { id: parcelId })
         })
       } catch (error) {
-        log.info(`[Update] Skipping badly formed data for "${parcelId}"`)
+        log.info(`[${name}] Skipping badly formed data for "${parcelId}"`)
       }
       break
     }
-    case 'Transfer': {
-      const { to } = event.args
+    case BlockchainEvent.EVENTS.parcelTransfer: {
+      const { from, to } = event.args
 
       debounceEvent(parcelId, name, async () => {
-        log.info(`[Transfer] Updating "${parcelId}" owner with "${to}"`)
+        log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-        await Publication.cancelOlder(block_number)
+        await Publication.cancelOlder(block_number, { owner: from, x, y })
         await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
       })
       break

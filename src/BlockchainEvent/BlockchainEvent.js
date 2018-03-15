@@ -5,6 +5,14 @@ export class BlockchainEvent extends Model {
   static columnNames = ['tx_hash', 'name', 'block_number', 'args']
   static primaryKey = 'tx_hash'
 
+  static EVENTS = {
+    publicationCreated: 'AuctionCreated',
+    publicationSuccessful: 'AuctionSuccessful',
+    publicationCancelled: 'AuctionCancelled',
+    parcelTransfer: 'Transfer',
+    parcelUpdate: 'Update'
+  }
+
   static findLast() {
     return this.findOne(null, { block_number: 'DESC' })
   }

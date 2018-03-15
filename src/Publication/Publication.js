@@ -50,7 +50,15 @@ export class Publication extends Model {
         ORDER BY created_at DESC`
   }
 
-  static async cancelOlder(blockNumber) {
+  static async cancelOlder(block_number, { owner, x, y }) {
+    const args = [
+      BlockchainEvent.EVENTS.publicationCreated,
+      block_number,
+      owner,
+      x,
+      y,
+      this.STATUS.open
+    ]
     const rows = await this.db.query(
       `SELECT p.tx_hash
         FROM ${this.tableName} p
@@ -58,8 +66,11 @@ export class Publication extends Model {
           BlockchainEvent.tableName
         } b ON p.tx_hash = b.tx_hash AND name = $1
         WHERE b.block_number < $2
-          AND p.status = $3`,
-      ['AuctionCreated', blockNumber, this.STATUS.open]
+          AND p.owner = $3
+          AND p.x = $4
+          AND p.y = $5
+          AND p.status = $6`,
+      args
     )
     const txHashes = rows.map(row => row.tx_hash)
 
