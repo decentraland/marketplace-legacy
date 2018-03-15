@@ -161,6 +161,10 @@
     "unowned": "LIBRES",
     "loading": "CHARGEMENT"
   },
+  "sign_in": {
+    "options": "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace.",
+    "account_unlocked": "Assurez-vous que votre compte est déverrouillé"
+  },
   "footer": {
     "color_key": "Code couleur",
     "privacy_policy": "Politique de confidentialité",

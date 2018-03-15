@@ -161,6 +161,10 @@
     "unowned": "UNOWNED",
     "loading": "LOADING"
   },
+  "sign_in": {
+    "options": "Download {metamask_link} or {mist_link} or access with your {ledger_nano_link} link to use the Marketplace.",
+    "account_unlocked": "Make sure your account is unlocked"
+  },
   "footer": {
     "color_key": "Color key",
     "privacy_policy": "Privacy Policy",
