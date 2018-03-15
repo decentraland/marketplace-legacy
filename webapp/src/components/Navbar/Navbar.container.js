@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 
 import { getWallet } from 'modules/wallet/selectors'
 import { getLocation } from 'modules/location/selectors'
@@ -8,6 +7,7 @@ import { isLoading } from 'modules/ui/loading/selectors'
 import { isConnected } from 'modules/wallet/selectors'
 import { isLoading as isLoadingParcels } from 'modules/parcels/selectors'
 import { getPendingTransactions } from 'modules/transaction/selectors'
+import { navigateTo } from 'modules/location/actions'
 
 import { getActivePage } from './utils'
 
@@ -29,7 +29,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onNavigate: url => dispatch(push(url))
+  onNavigate: url => dispatch(navigateTo(url))
 })
 
 export default connect(mapState, mapDispatch)(Navbar)

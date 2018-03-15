@@ -1,14 +1,14 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { fetchAddress } from 'modules/address/actions'
+import { PROFILE_PAGE_TABS } from 'locations'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
+import { fetchAddress } from 'modules/address/actions'
+import { navigateTo } from 'modules/location/actions'
+import { getPageFromRouter, paginate } from './utils'
 
 import ProfilePage from './ProfilePage'
-import { PROFILE_PAGE_TABS } from 'locations'
-import { getPageFromRouter, paginate } from './utils'
 
 const mapState = (state, { location, match }) => {
   let { tab } = match.params
@@ -65,7 +65,7 @@ const mapState = (state, { location, match }) => {
 
 const mapDispatch = (dispatch, { match }) => ({
   onFetchAddress: () => dispatch(fetchAddress(match.params.address)),
-  onNavigate: url => dispatch(push(url))
+  onNavigate: url => dispatch(navigateTo(url))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(ProfilePage))
