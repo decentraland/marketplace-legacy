@@ -73,6 +73,15 @@
   color: #b2b2b2;
 }
 
+.parcel-popup .publication {
+  color: white;
+  display: flex;
+}
+
+.parcel-popup .publication .Mana {
+  margin-left: 10px;
+}
+
 .parcel-popup .body > div {
   margin-bottom: 8px;
 }

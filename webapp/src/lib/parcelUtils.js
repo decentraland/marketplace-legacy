@@ -1,4 +1,5 @@
 import { shortenAddress } from 'lib/utils'
+import { t } from 'modules/translation/utils'
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
@@ -10,7 +11,7 @@ export const COLORS = Object.freeze({
   roads: '#8188a3',
   plaza: '#80c290',
   taken: '#505772',
-  onSale: '#746a59',
+  onSale: '#00dbef',
   unowned: '#1b1e2d',
   background: '#0d0e18',
   loadingEven: '#131523',
@@ -98,12 +99,12 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
   }
 
   const label = parcel.data.name || null
-  let description = 'No Owner'
+  let description = t('atlas.no_owner')
   if (parcel.owner) {
     description =
       parcel.owner === wallet.address
-        ? 'Your parcel'
-        : `Owner: ${shortenAddress(parcel.owner)}`
+        ? t('atlas.your_parcel')
+        : t('atlas.owner', { owner: shortenAddress(parcel.owner) })
   }
 
   if (wallet.parcelsById[parcel.id]) {
@@ -120,6 +121,15 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
       description,
       color: 'white',
       backgroundColor: COLORS.unowned
+    }
+  }
+
+  if (parcel.publication_tx_hash) {
+    return {
+      label,
+      description,
+      color: 'black',
+      backgroundColor: COLORS.onSale
     }
   }
 

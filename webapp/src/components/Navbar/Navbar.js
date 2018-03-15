@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { Menu } from 'semantic-ui-react'
+import { locations, NAVBAR_PAGES } from 'locations'
+import { Menu, Icon } from 'semantic-ui-react'
 import Account from './Account'
 import Badge from 'components/Badge'
 import DecentralandLogo from 'components/DecentralandLogo'
 
 import { walletType, coordsType } from 'components/types'
-import { locations, NAVBAR_PAGES } from 'locations'
+import { t } from 'modules/translation/utils'
 
 import './Navbar.css'
 
@@ -34,11 +35,10 @@ export default class Navbar extends React.PureComponent {
 
   renderActivityBadge() {
     const { activityBadge, activePage } = this.props
-
-    if (activityBadge === 0) {
+    const isActive = activePage === NAVBAR_PAGES.activity
+    if (activityBadge === 0 || isActive) {
       return null
     }
-    const isActive = activePage === NAVBAR_PAGES.activity
     return <Badge color={isActive ? 'white' : 'purple'}>{activityBadge}</Badge>
   }
 
@@ -67,14 +67,14 @@ export default class Navbar extends React.PureComponent {
               active={activePage === NAVBAR_PAGES.atlas}
               onClick={this.handleItemClick}
             >
-              Atlas
+              {t('global.atlas')}
             </Menu.Item>
             <Menu.Item
               href={navigationPaths[NAVBAR_PAGES.marketplace]}
               active={activePage === NAVBAR_PAGES.marketplace}
               onClick={this.handleItemClick}
             >
-              Marketplace
+              {t('global.marketplace')}
             </Menu.Item>
             {isConnected ? (
               <React.Fragment>
@@ -83,14 +83,7 @@ export default class Navbar extends React.PureComponent {
                   active={activePage === NAVBAR_PAGES.profile}
                   onClick={this.handleItemClick}
                 >
-                  My Land
-                </Menu.Item>
-                <Menu.Item
-                  href={navigationPaths[NAVBAR_PAGES.activity]}
-                  active={activePage === NAVBAR_PAGES.activity}
-                  onClick={this.handleItemClick}
-                >
-                  Activity{this.renderActivityBadge()}
+                  {t('navbar.my_land')}
                 </Menu.Item>
               </React.Fragment>
             ) : null}
@@ -98,7 +91,19 @@ export default class Navbar extends React.PureComponent {
         </div>
         <div className="navbar-account">
           {isConnected ? (
-            <Account wallet={wallet} />
+            <React.Fragment>
+              <Menu secondary className="activity-menu">
+                <Menu.Item
+                  href={navigationPaths[NAVBAR_PAGES.activity]}
+                  active={activePage === NAVBAR_PAGES.activity}
+                  onClick={this.handleItemClick}
+                >
+                  <Icon name="bell" />
+                  {this.renderActivityBadge()}
+                </Menu.Item>
+              </Menu>
+              <Account wallet={wallet} />
+            </React.Fragment>
           ) : (
             <Menu secondary>
               <Menu.Item
@@ -106,7 +111,7 @@ export default class Navbar extends React.PureComponent {
                 active={activePage === NAVBAR_PAGES.signIn}
                 onClick={this.handleItemClick}
               >
-                Sign In
+                {t('global.sign_in')}
               </Menu.Item>
             </Menu>
           )}

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import StaticPage from 'components/StaticPage'
+import { t, t_html } from 'modules/translation/utils'
 
 export default class SignInPage extends React.PureComponent {
   render() {
@@ -8,32 +9,37 @@ export default class SignInPage extends React.PureComponent {
       <StaticPage>
         <div className="message">
           <p>
-            Download&nbsp;
-            <a
-              href="https://metamask.io"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Metamask
-            </a>
-            &nbsp; or&nbsp;
-            <a
-              href="https://github.com/ethereum/mist"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Mist
-            </a>
-            &nbsp; or access with your&nbsp;<a
-              href="https://www.ledgerwallet.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Ledger Nano S
-            </a>{' '}
-            to use the Marketplace.
+            {t_html('sign_in.options', {
+              metamask_link: (
+                <a
+                  href="https://metamask.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Metamask
+                </a>
+              ),
+              mist_link: (
+                <a
+                  href="https://github.com/ethereum/mist"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Mist
+                </a>
+              ),
+              ledger_nano_link: (
+                <a
+                  href="https://www.ledgerwallet.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ledger Nano S
+                </a>
+              )
+            })}
           </p>
-          <p>Make sure your account is unlocked.</p>
+          <p>{t('sign_in.account_unlocked')}</p>
         </div>
       </StaticPage>
     )

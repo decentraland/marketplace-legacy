@@ -1,5 +1,6 @@
 .Page {
   height: calc(100% - var(--navbar-height));
+  background-color: var(--background);
 }
 
 .Page > div {

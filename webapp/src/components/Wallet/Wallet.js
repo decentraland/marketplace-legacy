@@ -1,29 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { localStorage } from 'lib/localStorage'
 
 export default class Wallet extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    onConnect: PropTypes.func.isRequired,
-    onFetchDistricts: PropTypes.func.isRequired,
-    onFirstVisit: PropTypes.func.isRequired
+    onConnect: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     children: null,
-    onConnect: () => {},
-    onFetchDistricts: () => {},
-    onFirstVisit: () => {}
+    onConnect: () => {}
   }
 
   componentWillMount() {
-    const { onConnect, onFetchDistricts, onFirstVisit } = this.props
+    const { onConnect } = this.props
     onConnect()
-    onFetchDistricts()
-    if (!localStorage.getItem('seenTermsModal')) {
-      onFirstVisit()
-    }
   }
 
   render() {

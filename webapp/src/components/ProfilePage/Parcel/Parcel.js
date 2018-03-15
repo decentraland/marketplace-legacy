@@ -6,6 +6,7 @@ import { Button, Card } from 'semantic-ui-react'
 import ParcelName from 'components/ParcelName'
 import ParcelPreview from 'components/ParcelPreview'
 import { parcelType } from 'components/types'
+import { t } from 'modules/translation/utils'
 
 import './Parcel.css'
 
@@ -27,7 +28,7 @@ export default class Parcel extends React.PureComponent {
           <span className="footer">
             <ParcelName x={parcel.x} y={parcel.y} size="large" />
             <Link to={locations.parcelDetail(parcel.x, parcel.y)}>
-              <Button size="tiny">View</Button>
+              <Button size="tiny">{t('parcel.view')}</Button>
             </Link>
           </span>
         </Card.Content>

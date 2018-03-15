@@ -45,7 +45,7 @@ export class ParcelService {
           error.message
         }`
       )
-      parcels = []
+      throw error
     }
 
     return parcels
@@ -61,8 +61,11 @@ export class ParcelService {
         const landData = await contract.landData(parcel.x, parcel.y)
         data = LANDRegistry.decodeLandData(landData)
       } catch (error) {
-        log.debug(error.message)
-        data = { version: ParcelService.CURRENT_DATA_VERSION }
+        if (error.name === 'DataError') {
+          data = { version: ParcelService.CURRENT_DATA_VERSION }
+        } else {
+          throw error
+        }
       }
 
       return Object.assign({}, parcel, { data })
@@ -86,7 +89,7 @@ export class ParcelService {
           parcel
         )}.\nError: ${error.message}`
       )
-      isOwner = false
+      throw error
     }
 
     return isOwner
@@ -111,25 +114,10 @@ export class ParcelService {
           parcels.length
         } parcels.\nError: ${error.message}`
       )
-      newParcels = parcels.slice() // Copy
+      throw error
     }
 
     return newParcels
-  }
-
-  async addDbData(parcels) {
-    const parcelIds = parcels.map(parcel => Parcel.buildId(parcel.x, parcel.y))
-
-    const dbParcels = await Parcel.findInIds(parcelIds)
-    const dbParcelsObj = this.toParcelObject(dbParcels)
-
-    return parcels.map((parcel, index) => {
-      const dbParcel = dbParcelsObj[Parcel.buildId(parcel.x, parcel.y)]
-      if (!dbParcel) return parcel
-
-      const { auction_price } = dbParcel
-      return Object.assign({}, parcel, { auction_price })
-    })
   }
 
   toParcelObject(parcelArray) {

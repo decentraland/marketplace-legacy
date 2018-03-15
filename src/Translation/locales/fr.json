@@ -1,0 +1,194 @@
+{
+  "languages": {
+    "en": "Anglais",
+    "fr": "Français"
+  },
+  "global": {
+    "atlas": "Atlas",
+    "marketplace": "Marché",
+    "activity": "Activité",
+    "parcels": "Parcelles",
+    "contributions": "Contributions",
+    "settings": "Paramètres",
+    "blog": "Blog",
+    "website": "Site",
+    "community_chat": "Chat",
+    "cancel": "Annuler",
+    "submit": "Envoyer",
+    "confirm": "Confirmer",
+    "authorized": "Autorisé",
+    "unauthorized": "Non autorisé",
+    "wallet_address": "Adresse du porte-feuille",
+    "for": "pour",
+    "sign_in": "Se connecter",
+    "sign_in_notice":
+      "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
+    "owned_by": "Controlé par {address_link}"
+  },
+  "navbar": {
+    "my_land": "Mes LANDs"
+  },
+  "atlas": {
+    "owner": "Propriétaire : {owner}",
+    "no_owner": "Aucun propriétaire",
+    "your_parcel": "Votre parcelle",
+    "on_sale": "A vendre: "
+  },
+  "marketplace": {
+    "empty": "Oops... rien ne semble correspondre.",
+    "filter": {
+      "newest": "Nouveau",
+      "cheapest": "Moins chère",
+      "most_expensive": "Plus chère",
+      "close_to_expire": "Près de l'expiration"
+    }
+  },
+  "profile_page": {
+    "empty": "L'utilisateur n'as pas de {content}",
+    "on_sale": "A vendre"
+  },
+  "publication": {
+    "expired_at": "A expiré il y a {time}",
+    "expires_in": "Expire dans {time}",
+    "view": "Vue",
+    "sold": "Vendu",
+    "canceled": "Annulé"
+  },
+  "contribution": {
+    "proposal": "Proposition"
+  },
+  "parcel": {
+    "view": "Vue"
+  },
+  "parcel_detail": {
+    "description": "Description",
+    "empty_description": "Cette parcelle n'a pas de description",
+    "actions": {
+      "edit": "Edition",
+      "transfer": "Transferer",
+      "sell": "Vendre",
+      "cancel": "Annuler la vente"
+    },
+    "publication": {
+      "price": "Prix",
+      "time_left": "Temps restant",
+      "buy": "Acheter"
+    },
+    "owner": {
+      "part_of": "Appartient à {name}",
+      "no_owner": "Pas de propriétaire"
+    }
+  },
+  "parcel_edit": {
+    "edit_land": "Editer les informations de ma LAND",
+    "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}",
+    "name": "Nom",
+    "description": "Description"
+  },
+  "parcel_transfer": {
+    "transfer_land": "Transférer une LAND",
+    "about_to_transfer": "Vous êtes sur le point de transferer {parcel_name}",
+    "irreversible": "Chaque transfert de LAND est une opération irréversible.",
+    "check_address": "Merci de vérifier l'addresse soigneusement.",
+    "cant_transfer":
+      "Cette LAND ne peut être transferée car elle est en vente.",
+    "recipient_address": "Adresse du destinataire",
+    "unknown_error":
+      "Une erreur s'est produite, les détails se trouvent ci-dessous.",
+    "error_persists":
+      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}"
+  },
+  "parcel_buy": {
+    "buy_land": "Acheter une LAND",
+    "about_to_buy": "Vous êtes sur le point d'acheter {parcel_name}",
+    "approved_balance": "Votre balance est de {approved_balance}",
+    "needs_at_least":
+      "Vous avez besoin d'au moins {value} pour acheter cette LAND.",
+    "didnt_approve": "Vous n'avez pas de MANA validée",
+    "should_approve":
+      "Vous devez valider de la MANA afin qu'elle soit utilisée sur la place de marché avant d'acheter un terrain.",
+    "please_approve":
+      "Veuillez vous rendre à {settings_link} et valider de la MANA supplémentaire."
+  },
+  "parcel_publish": {
+    "list_land": "Lister les LANDs à vendre",
+    "set_land_price":
+      "Indiquer un prix et une date d'expiration pour {parcel_name}",
+    "price": "Prix",
+    "price_placeholder": "Prix en MANA pour cette LAND",
+    "expiration": "Expiration",
+    "expiration_placeholder": "Date d'expiration pour cette publication",
+    "already_sold": "Cette LAND est déjà en vente pour {value}",
+    "please_authorize":
+      "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
+    "errors": {
+      "minimum_expiration": "La date d'expiration minimale est d'une journée",
+      "minimum_land": "Le prix minimum d'une LAND est de {value} MANA"
+    }
+  },
+  "parcel_cancel": {
+    "cancel_land": "Annuler la vente de la LAND",
+    "currently_on_sale": "est actuellement en vente pour {value}.",
+    "about_to_cancel": "Vous êtes sur le point d'annuler cette vente."
+  },
+  "activity": {
+    "no_activity": "Vous n'avez pas encore d'activité.",
+    "start":
+      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}",
+    "pending": "En attente",
+    "history": "Historique"
+  },
+  "transaction": {
+    "approved":
+      "Vous avez validé {mana} afin qu'elle soit utilisée {marketplace_contract_link}",
+    "disapproved":
+      "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
+    "authorize":
+      "Vous avez {action} la {marketplace_contract_link} à gérer les LANDs en votre nom",
+    "edit":
+      "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
+    "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
+    "publish": "Vous avez publié l'offre {parcel_link}",
+    "buy": "Vous avez acheté {parcel_link}",
+    "cancel":
+      "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}"
+  },
+  "settings": {
+    "pending_tx": "Vous avez une transaction en attente",
+    "unapprove_mana_check": "Décocher cette case validera 0 MANA",
+    "approve_mana_check": "Cocher pour approuver {mana_to_approve} MANA",
+    "mana_approved":
+      "Vous avez {mana_approved} MANA validée(s) pour être utilisé par la place de marché.",
+    "approve_mana":
+      "Approuver l'utilisation de {mana_to_approve} MANA pour le {marketplace_contract_link}",
+    "marketplace_contract": "Contrat de la place de marché",
+    "unauthorize_land_check":
+      "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
+    "authorize_land_check":
+      "Cocher pour autoriser la place de marché à gérer vos LANDs.",
+    "you_authorized": "Vous avez autorisé le {marketplace_contract_link}",
+    "authorize":
+      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom."
+  },
+  "color_key": {
+    "title": "Code couleur",
+    "yours": "LES VOTRES",
+    "taken": "PRISES",
+    "district": "QUARTIERS",
+    "contribution": "CONTRIBUTION",
+    "roads": "ROUTES",
+    "plaza": "PLACES",
+    "unowned": "LIBRES",
+    "loading": "CHARGEMENT"
+  },
+  "sign_in": {
+    "options":
+      "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace.",
+    "account_unlocked": "Assurez-vous que votre compte est déverrouillé"
+  },
+  "footer": {
+    "color_key": "Code couleur",
+    "privacy_policy": "Politique de confidentialité",
+    "copyright": "Copyright 2018 Decentraland. Tous droits reservés."
+  }
+}

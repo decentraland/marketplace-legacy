@@ -1,8 +1,6 @@
 .Mana {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
   color: var(--light-blue);
-  display: flex;
+  display: inline-flex;
   flex-flow: row nowrap;
   align-items: center;
   font-weight: 100;

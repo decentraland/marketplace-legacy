@@ -21,8 +21,8 @@ export function transactionReducer(state = INITIAL_STATE, action) {
       const actionRef = action.action
       const transaction = getTransactionFromAction(actionRef)
       return {
-        ...state,
         loading: loadingReducer(state.loading, action),
+        error: null,
         data: [
           ...state.data,
           {
@@ -36,7 +36,6 @@ export function transactionReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_TRANSACTION_SUCCESS: {
       return {
-        ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
         data: state.data.map(
@@ -53,7 +52,6 @@ export function transactionReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_TRANSACTION_FAILURE: {
       return {
-        ...state,
         loading: loadingReducer(state.loading, action),
         error: action.error,
         data: state.data.map(

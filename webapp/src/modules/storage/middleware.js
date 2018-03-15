@@ -7,11 +7,14 @@ import {
   FETCH_TRANSACTION_SUCCESS,
   FETCH_TRANSACTION_FAILURE
 } from 'modules/transaction/actions'
+import { FETCH_TRANSLATIONS_SUCCESS } from 'modules/translation/actions'
 import { UPDATE_DERIVATION_PATH } from 'modules/wallet/actions'
 
 export function createStorageMiddleware(storageKey) {
   const storageEngine = filter(createStorageEngine(storageKey), [
     'transaction',
+    'translation',
+    ['wallet', 'data', 'locale'],
     ['wallet', 'data', 'derivationPath']
   ])
 
@@ -22,6 +25,7 @@ export function createStorageMiddleware(storageKey) {
       FETCH_TRANSACTION_REQUEST,
       FETCH_TRANSACTION_SUCCESS,
       FETCH_TRANSACTION_FAILURE,
+      FETCH_TRANSLATIONS_SUCCESS,
       UPDATE_DERIVATION_PATH
     ]
   )

@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import { locations } from 'locations'
 import { Container, Grid, Header, Loader } from 'semantic-ui-react'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
 import { getManaToApprove } from 'modules/wallet/utils'
-import { locations } from 'locations'
+import { t, t_html } from 'modules/translation/utils'
 
 import './SettingsPage.css'
 
@@ -35,11 +36,11 @@ export default class SettingsPage extends React.PureComponent {
     this.props.onAuthorizeLand(e.currentTarget.checked)
   }
 
-  handleDerivationPathChange = (e, data) => {
-    const { derivationPath } = this.props.wallet
+  handleDerivationPathChange = derivationPath => {
+    const { wallet } = this.props
 
-    if (derivationPath !== data.value) {
-      this.props.onUpdateDerivationPath(data.value)
+    if (wallet.derivationPath !== derivationPath) {
+      this.props.onUpdateDerivationPath(derivationPath)
     }
   }
 
@@ -76,7 +77,7 @@ export default class SettingsPage extends React.PureComponent {
     return (
       <Container text className="SettingsPage">
         <Header as="h1" size="huge" textAlign="center" className="title">
-          Settings
+          {t('global.settings')}
         </Header>
 
         <Grid.Column>
@@ -95,8 +96,11 @@ export default class SettingsPage extends React.PureComponent {
             />
           ) : (
             <p className="sign-in">
-              You need to <Link to={locations.signIn}>Sign In</Link> to access
-              this page
+              {t_html('global.sign_in_notice', {
+                sign_in_link: (
+                  <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+                )
+              })}
             </p>
           )}
         </Grid.Column>

@@ -1,46 +1,48 @@
 import React from 'react'
 
 import StaticPage from 'components/StaticPage'
+import { t } from 'modules/translation/utils'
+
 import './ColorKeyPage.css'
 
 export default function ColorKey() {
   return (
     <StaticPage className="ColorKeyPage">
-      <h2>Color key</h2>
+      <h2>{t('color_key.title')}</h2>
 
       <div className="message">
         <div className="land-color-keys">
           <div className="land">
             <div className="key my-parcels" />
-            <div className="text">YOURS</div>
+            <div className="text">{t('color_key.yours')}</div>
           </div>
           <div className="land">
             <div className="key taken" />
-            <div className="text">TAKEN</div>
+            <div className="text">{t('color_key.taken')}</div>
           </div>
           <div className="land">
             <div className="key district" />
-            <div className="text">DISTRICT</div>
+            <div className="text">{t('color_key.district')}</div>
           </div>
           <div className="land">
             <div className="key contribution" />
-            <div className="text">CONTRIBUTION</div>
+            <div className="text">{t('color_key.contribution')}</div>
           </div>
           <div className="land">
             <div className="key roads" />
-            <div className="text">ROADS</div>
+            <div className="text">{t('color_key.roads')}</div>
           </div>
           <div className="land">
             <div className="key plaza" />
-            <div className="text">PLAZA</div>
+            <div className="text">{t('color_key.plaza')}</div>
           </div>
           <div className="land">
             <div className="key unowned" />
-            <div className="text">UNOWNED</div>
+            <div className="text">{t('color_key.unowned')}</div>
           </div>
           <div className="land">
             <div className="key loading" />
-            <div className="text">LOADING</div>
+            <div className="text">{t('color_key.loading')}</div>
           </div>
         </div>
       </div>
