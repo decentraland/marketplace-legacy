@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 export default class Wallet extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    onConnect: PropTypes.func.isRequired,
+    onConnect: PropTypes.func.isRequired
   }
 
   static defaultProps = {
