@@ -17,11 +17,12 @@ export const getLocale = state => getData(state).locale
 export const isConnected = state => !!getData(state).address
 export const isConnecting = state =>
   isLoadingType(getLoading(state), CONNECT_WALLET_REQUEST)
+
 export const getWallet = createSelector(
   getData,
   getAddresses,
-  state => getTransactionsByType(state, APPROVE_MANA_SUCCESS),
-  state => getTransactionsByType(state, AUTHORIZE_LAND_SUCCESS),
+  state => getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
+  state => getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
   (wallet, addresses, approveManaTransactions, authorizeLandTransactions) => {
     const address = addresses[wallet.address] || {}
     const {

@@ -19,7 +19,7 @@ const watchIndex = {
 }
 
 function* handleTransactionRequest(action = {}) {
-  const hash = getTransactionHash(action)
+  const hash = action.hash
   const transactions = yield select(getData)
   const transaction = transactions.find(tx => tx.hash === hash)
 

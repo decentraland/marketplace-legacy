@@ -63,10 +63,10 @@ export default class Transaction extends React.PureComponent {
       case AUTHORIZE_LAND_SUCCESS: {
         const action = payload.isAuthorized
           ? t('global.authorized')
-          : t('global.deauthorized')
+          : t('global.unauthorized')
 
         return t_html('transaction.authorize', {
-          action: action,
+          action: action.toLowerCase(),
           marketplace_contract_link: this.renderMarketplaceLink()
         })
       }
