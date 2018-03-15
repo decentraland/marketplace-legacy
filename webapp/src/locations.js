@@ -36,9 +36,6 @@ export const locations = {
   privacy: '/privacy',
 
   error: '/error',
-  walletError: '/walletError',
-  serverError: '/serverError',
-
   signIn: '/sign-in'
 }
 

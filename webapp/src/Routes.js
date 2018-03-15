@@ -22,9 +22,6 @@ import SignInPage from 'components/SignInPage'
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 
-import WalletErrorPage from 'components/WalletErrorPage'
-import ServerError from 'components/ServerError'
-
 import GoogleAnalytics from 'components/GoogleAnalytics'
 import Intercom from 'components/Intercom'
 
@@ -50,9 +47,6 @@ export default class Routes extends React.Component {
         <Route exact path={locations.privacy} component={PrivacyPage} />
         <Route exact path={locations.parcelMap} component={AtlasPage} />
         <Route exact path={locations.signIn} component={SignInPage} />
-        <Route exact path={locations.walletError} component={WalletErrorPage} />
-        <Route exact path={locations.serverError} component={ServerError} />
-        <Route exact path={locations.error} component={WalletErrorPage} />
         <Redirect to={locations.root} />
       </Switch>
     )
