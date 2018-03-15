@@ -16,7 +16,7 @@ const DEFAULT_VALUE = derivationOptions[0].value
 const PATH_PREFIX = 'm/'
 
 export default class DerivationPathDropdown extends React.PureComponent {
-  static props = Dropdown.propTypes
+  static propsTypes = Dropdown.propTypes
 
   static defaultProps = {
     defaultValue: DEFAULT_VALUE

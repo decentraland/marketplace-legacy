@@ -41,8 +41,10 @@ export default class TransferParcelPage extends React.PureComponent {
                   parcel_name: <ParcelName parcel={parcel} />
                 })}
                 <br />
-                {t('parcel_transfer.irreversible')}<br />
-                {t('parcel_transfer.check_address')}<br />
+                {t('parcel_transfer.irreversible')}
+                <br />
+                {t('parcel_transfer.check_address')}
+                <br />
               </div>
             </Container>
             <br />

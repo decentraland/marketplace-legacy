@@ -1,4 +1,8 @@
 {
+  "languages": {
+    "en": "English",
+    "fr": "French"
+  },
   "global": {
     "atlas": "Atlas",
     "marketplace": "Marketplace",

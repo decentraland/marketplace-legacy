@@ -87,7 +87,7 @@ export default class ParcelDetail extends React.PureComponent {
         ) : null}
         <Grid.Row>
           <Grid.Column width={10}>
-            <ParcelDescription description={description}/>
+            <ParcelDescription description={description} />
           </Grid.Column>
         </Grid.Row>
       </Grid>

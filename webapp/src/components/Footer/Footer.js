@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import Icon from 'components/Icon'
-import LocaleLink from './LocaleLink'
-import { t, getAvailableLocales } from 'modules/translation/utils'
+import LocalesDropdown from './LocalesDropdown'
+import { t } from 'modules/translation/utils'
 
 import './Footer.css'
 
@@ -24,7 +24,7 @@ export default class Footer extends React.PureComponent {
   }
 
   render() {
-    const currentLocale = this.props.locale
+    const { locale } = this.props
 
     return (
       <footer className="Footer">
@@ -57,14 +57,10 @@ export default class Footer extends React.PureComponent {
         </div>
         <div className="links">
           <span className="language">Language:</span>
-          {getAvailableLocales().map(locale => (
-            <LocaleLink
-              key={locale}
-              locale={locale}
-              isActive={locale === currentLocale}
-              onClick={this.handleLocaleChange}
-            />
-          ))}
+          <LocalesDropdown
+            defaultValue={locale}
+            onChange={this.handleLocaleChange}
+          />
         </div>
         <div className="copyright">{t('footer.copyright')}</div>
       </footer>

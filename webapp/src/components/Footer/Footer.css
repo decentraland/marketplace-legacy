@@ -2,7 +2,7 @@
   width: 100%;
   padding: 28px 0;
   font-size: 14px;
-  background-color: #fbfbfb;
+  background-color: #FBFBFB;
   text-align: center;
 }
 
@@ -18,13 +18,11 @@
   margin-bottom: 20px;
 }
 
-.Footer .links a,
-.Footer .links .link {
+.Footer .links a {
   margin-right: 27px;
   color: #000;
 }
-.Footer .links a:last-child,
-.Footer .links .link:last-child {
+.Footer .links a:last-child {
   margin-right: 0;
 }
 

@@ -24,7 +24,6 @@ import {
 
 import './MarketplacePage.css'
 
-
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
     publications: PropTypes.arrayOf(publicationType),
