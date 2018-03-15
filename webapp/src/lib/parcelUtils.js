@@ -11,7 +11,8 @@ export const COLORS = Object.freeze({
   plaza: '#80c290',
   taken: '#505772',
   onSale: '#746a59',
-  unowned: '#0d0e18',
+  unowned: '#1b1e2d',
+  background: '#0d0e18',
   loadingEven: '#131523',
   loadingOdd: '#181a29'
 })
@@ -56,7 +57,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
     return {
       label: 'Loading...',
       description: null,
-      color: 'black',
+      color: 'white',
       backgroundColor:
         (x + y) % 2 === 0 ? COLORS.loadingEven : COLORS.loadingOdd
     }
@@ -76,7 +77,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
       return {
         label: 'Genesis Plaza',
         description: null,
-        color: 'black',
+        color: 'white',
         backgroundColor: COLORS.plaza
       }
     }
@@ -84,14 +85,14 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
       return {
         label: district ? district.name : 'District',
         description: null,
-        color: 'black',
+        color: 'white',
         backgroundColor: COLORS.contribution
       }
     }
     return {
       label: district ? district.name : 'District',
       description: null,
-      color: 'black',
+      color: 'white',
       backgroundColor: COLORS.district
     }
   }
@@ -109,7 +110,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
     return {
       label,
       description,
-      color: 'white',
+      color: 'black',
       backgroundColor: COLORS.myParcels
     }
   }
@@ -117,7 +118,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
     return {
       label,
       description,
-      color: 'black',
+      color: 'white',
       backgroundColor: COLORS.unowned
     }
   }
@@ -125,7 +126,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
   return {
     label,
     description,
-    color: 'black',
+    color: 'white',
     backgroundColor: COLORS.taken
   }
 }

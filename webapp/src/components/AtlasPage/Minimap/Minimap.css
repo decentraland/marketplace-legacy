@@ -11,6 +11,8 @@
   opacity: 1;
   border: 1px solid black;
   border-bottom: none;
+  box-shadow: 0 0px 35px rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
 }
 
 .Minimap .minimap-focus {

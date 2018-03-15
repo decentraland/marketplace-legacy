@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 import { Menu } from 'semantic-ui-react'
 import Account from './Account'
-import Icon from 'components/Icon'
 import Badge from 'components/Badge'
+import DecentralandLogo from 'components/DecentralandLogo'
 
 import { walletType, coordsType } from 'components/types'
 import { locations, NAVBAR_PAGES } from 'locations'
@@ -17,7 +17,6 @@ export default class Navbar extends React.PureComponent {
     wallet: walletType,
     center: coordsType,
     activePage: PropTypes.oneOf(Object.values(NAVBAR_PAGES)),
-    isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
     activityBadge: PropTypes.number
   }
@@ -49,7 +48,7 @@ export default class Navbar extends React.PureComponent {
   }
 
   render() {
-    const { wallet, activePage, isLoading, isConnected } = this.props
+    const { wallet, activePage, isConnected } = this.props
     const navigationPaths = this.getNavigationPaths()
 
     return (
@@ -57,12 +56,8 @@ export default class Navbar extends React.PureComponent {
         <div className="navbar-header">
           <Link to={locations.root} className="navbar-logo">
             <span className="navbar-icon">
-              <Icon
-                name={isLoading ? 'decentraland-loading' : 'decentraland'}
-                className="pull-left"
-              />
+              <DecentralandLogo />
             </span>
-            <h1 className="pull-left hidden-xs">Decentraland</h1>
           </Link>
         </div>
         <div className="navbar-menu">

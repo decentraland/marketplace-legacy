@@ -171,7 +171,7 @@ export const LeafletParcelGrid = L.Layer.extend({
 
     // Clear canvas
     const ctx = this.canvas.getContext('2d')
-    ctx.fillStyle = COLORS.unowned
+    ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     let markerCenter = null
     const parcelsOnSale = []

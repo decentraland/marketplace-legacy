@@ -42,8 +42,8 @@
 }
 
 .Navbar .navbar-logo .Icon-decentraland {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
 }
 
 .Navbar .navbar-menu .item,
@@ -51,6 +51,12 @@
   color: var(--primary);
   transition: none;
   text-transform: uppercase;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  padding: 9px;
+  font-weight: 100;
+  color: var(--gray);
 }
 
 .Navbar .navbar-menu .ui.menu .item.active,
