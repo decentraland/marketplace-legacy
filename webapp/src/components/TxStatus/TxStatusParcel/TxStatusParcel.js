@@ -6,6 +6,7 @@ import { locations } from 'locations'
 import { Message } from 'semantic-ui-react'
 import { transactionType, parcelType } from 'components/types'
 import ParcelName from 'components/ParcelName'
+import { t_html } from 'modules/translation/utils'
 
 import './TxStatusParcel.css'
 
@@ -24,10 +25,14 @@ export default class TxStatusParcel extends React.PureComponent {
 
     return transactions.length ? (
       <Message warning className="TxStatusParcel">
-        <ParcelName parcel={parcel} />&nbsp;&nbsp;still has&nbsp;
-        {transactions.length} pending transactions.<br />
-        To see your transaction history in more detail, visit your&nbsp;
-        <Link to={locations.activity}>activity page</Link>.
+        {t_html('transaction_status.parcel.still_pending', {
+          parcel_name: <ParcelName parcel={parcel} />,
+          transaction_count: transactions.length
+        })}
+        <br />
+        {t_html('transaction_status.see_activity', {
+          activity_link: <Link to={locations.activity}>activity page</Link>
+        })}
       </Message>
     ) : null
   }

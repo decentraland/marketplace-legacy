@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-commons'
 
-import EtherscanLink from 'components/EtherscanLink'
+import { locations } from 'locations'
+import { t, t_html } from 'modules/translation/utils'
 
 export default class TxStatusText extends React.PureComponent {
   static propTypes = {
@@ -11,7 +13,7 @@ export default class TxStatusText extends React.PureComponent {
   }
 
   render() {
-    const { txHash, txStatus } = this.props
+    const { txStatus } = this.props
 
     const isPending = txStatus === txUtils.TRANSACTION_STATUS.pending
     const isFailure = txStatus === txUtils.TRANSACTION_STATUS.failed
@@ -19,10 +21,12 @@ export default class TxStatusText extends React.PureComponent {
     return isPending || isFailure ? (
       <div className="TxStatusText">
         {isPending
-          ? 'The transaction is waiting to be confirmed.'
-          : 'Your transaction failed, you can try sending a new one.'}
-        &nbsp;You can check Etherscan&nbsp;
-        <EtherscanLink txHash={txHash}>here</EtherscanLink>
+          ? t('transaction_status.text.pending')
+          : t('transaction_status.text.failed')}
+        &nbsp;
+        {t_html('transaction_status.see_activity', {
+          activity_link: <Link to={locations.activity}>activity page</Link>
+        })}
       </div>
     ) : null
   }

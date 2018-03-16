@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { locations } from 'locations'
 import Blockie from 'components/Blockie'
 import { shortenAddress } from 'lib/utils'
+import { t } from 'modules/translation/utils'
 
 import './AddressLink.css'
 
@@ -43,7 +44,7 @@ export default class AddressLink extends React.Component {
         className={`AddressLink ${className}`}
         data-balloon-pos="up"
         data-balloon={
-          hasTooltip ? (isUser ? "It's you!" : shortenAddress(address)) : null
+          hasTooltip ? (isUser ? t('address.its_you') : shortenAddress(address)) : null
         }
       >
         {address && (
