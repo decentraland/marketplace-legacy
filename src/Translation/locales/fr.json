@@ -101,9 +101,10 @@
     "buy_land": "Acheter une LAND",
     "about_to_buy": "Vous êtes sur le point d'acheter {parcel_name}",
     "approved_balance": "Votre balance est de {approved_balance}",
-    "needs_at_least": "Vous avez besoin d'au moins {value} pour acheter cette LAND.",
+    "needs_at_least": "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
     "didnt_approve": "Vous n'avez pas de MANA validée",
-    "please_approve": "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom."
+    "please_approve": "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",
+    "total_balance": "Votre solde est {solde}"
   },
   "parcel_publish": {
     "list_land": "Lister les LANDs à vendre",

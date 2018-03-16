@@ -44,7 +44,9 @@ export default class AddressLink extends React.Component {
         className={`AddressLink ${className}`}
         data-balloon-pos="up"
         data-balloon={
-          hasTooltip ? (isUser ? t('address.its_you') : shortenAddress(address)) : null
+          hasTooltip
+            ? isUser ? t('address.its_you') : shortenAddress(address)
+            : null
         }
       >
         {address && (

@@ -101,9 +101,10 @@
     "buy_land": "Buy LAND",
     "about_to_buy": "You are about to buy {parcel_name}",
     "approved_balance": "Your approved balance is {approved_balance}",
-    "needs_at_least": "You need at least {value} in order to buy this LAND.",
+    "needs_at_least": "You need at least {mana} in order to buy this LAND.",
     "didnt_approve": "You haven't approved MANA",
-    "please_approve": "Please go to {settings_link} and allow the Marketplace contract to move MANA in your behalf"
+    "please_approve": "Please go to {settings_link} and allow the Marketplace contract to move MANA in your behalf",
+    "total_balance": "Your balance is {balance}"
   },
   "parcel_publish": {
     "list_land": "List LAND for sale",
