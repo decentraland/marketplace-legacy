@@ -135,7 +135,7 @@
     "no_activity": "You have no activity yet.",
     "start": "You can start by approving some MANA on your {settings_link}",
     "pending": "Pending",
-    "history": "History"
+    "completed": "Completed"
   },
   "transaction": {
     "approved":

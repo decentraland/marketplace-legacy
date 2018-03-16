@@ -1,14 +1,9 @@
 .BuyParcelPage .subtitle {
   color: white;
   font-weight: 100;
-  font-family: 'Source Sans Pro Light';
   font-size: 1.2em;
   margin: 20px;
   display: inline-block;
-}
-
-.BuyParcelPage .price {
-  font-family: 'Source Sans Pro';
 }
 
 .BuyParcelPage .message.warning h3 {

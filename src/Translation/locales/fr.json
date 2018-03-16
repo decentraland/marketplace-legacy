@@ -141,7 +141,7 @@
     "start":
       "Vous pouvez commencer en validant de la MANA sur votre {settings_link}",
     "pending": "En attente",
-    "history": "Historique"
+    "completed": "Terminé"
   },
   "transaction": {
     "approved":
