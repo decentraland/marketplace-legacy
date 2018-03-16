@@ -6,7 +6,6 @@ import {
   fetchTransactionSuccess,
   fetchTransactionFailure
 } from './actions'
-import { getTransactionHashFromAction } from './utils'
 import { getData, getLoading } from './selectors'
 
 export function* transactionSaga() {
@@ -50,16 +49,8 @@ function* handleWatchLoadingTransactions(action) {
   const transactionRequests = yield select(getLoading)
 
   for (const action of transactionRequests) {
-    const hash = getTransactionHash(action)
-    if (!watchIndex[hash]) {
+    if (!watchIndex[action.hash]) {
       yield handleTransactionRequest(action)
     }
   }
-}
-
-function getTransactionHash(action) {
-  // The second action is the originator of the transaction in the first place
-  // Transfering land for example
-  const actionRef = action.action
-  return getTransactionHashFromAction(actionRef)
 }
