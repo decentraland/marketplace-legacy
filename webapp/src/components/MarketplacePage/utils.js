@@ -48,23 +48,24 @@ export function getOptionsFromRouter({ search }) {
 }
 
 export function getOptionsFromSortType(type) {
+  const sortTypes = getSortTypes()
   switch (type) {
-    case getSortTypes.CHEAPEST:
+    case sortTypes.CHEAPEST:
       return {
         sortBy: 'price',
         sortOrder: 'asc'
       }
-    case getSortTypes.MOST_EXPENSIVE:
+    case sortTypes.MOST_EXPENSIVE:
       return {
         sortBy: 'price',
         sortOrder: 'desc'
       }
-    case getSortTypes.CLOSEST_TO_EXPIRE:
+    case sortTypes.CLOSEST_TO_EXPIRE:
       return {
         sortBy: 'expires_at',
         sortOrder: 'asc'
       }
-    case getSortTypes.NEWEST:
+    case sortTypes.NEWEST:
     default:
       return {
         sortBy: 'created_at',

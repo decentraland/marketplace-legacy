@@ -2,20 +2,34 @@
   border: none !important;
   background-color: var(--dark-gray) !important;
   color: white !important;
-  border-radius: 50px !important;
+  border-radius: 22px !important;
   font-weight: 100;
 }
 
 .ui.dropdown.active {
-  border: 1px solid var(--red) !important;
+  border: 1px solid white !important;
+  background-color: white !important;
+  border-radius: 5px !important;
 }
 
-.ui.search.dropdown.active > input.search {
+.ui.dropdown .item {
+  border: none !important;
+}
+
+.ui.dropdown .menu {
+  border-radius: 0px 0px 5px 5px !important;
+}
+
+.ui.dropdown.upward .menu {
+  border-radius: 5px 5px 0px 0px !important;
+}
+
+/* .ui.search.dropdown.active > input.search {
   color: white !important;
 }
 
 .ui.active.upward.dropdown {
-  border-radius: 0 0 50px 50px !important;
+  border-radius: 0 0 22px 22px !important;
 }
 
 .ui.dropdown .menu {
@@ -23,14 +37,14 @@
 }
 
 .ui.dropdown .menu .item {
-  color: white;
-  border-color: var(--red) !important;
+  color: white !important;
+  border-color: var(--dark-gray) !important;
 }
 .ui.dropdown .menu .item.active,
 .ui.dropdown .menu .item:hover {
-  background-color: var(--red);
+  background-color: var(--red) !important;
   border-color: var(--red) !important;
-  color: white;
+  color: white !important;
 }
 
 .ui.menu .ui.dropdown .menu .active.item {
@@ -49,3 +63,7 @@
 .ui.dropdown .message {
   color: white !important;
 }
+
+.ui.selection.visible.dropdown > .text:not(.default) {
+  color: white !important;
+} */
