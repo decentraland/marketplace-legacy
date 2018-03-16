@@ -103,8 +103,8 @@
     "about_to_buy": "You are about to buy {parcel_name}",
     "approved_balance": "Your approved balance is {approved_balance}",
     "needs_at_least": "You need at least {mana} in order to buy this LAND.",
-    "didnt_approve": "You haven't approved MANA",
-    "please_approve": "Please go to {settings_link} and allow the Marketplace contract to move MANA in your behalf",
+    "didnt_approve": "You haven't authorized MANA usage",
+    "please_approve": "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
     "total_balance": "Your balance is {balance}"
   },
   "parcel_publish": {
@@ -123,7 +123,7 @@
   },
   "parcel_cancel": {
     "cancel_land": "Cancel LAND Sale",
-    "currently_on_sale": "is currently on sale for {value}.",
+    "currently_on_sale":"is currently on sale for {value}.",
     "about_to_cancel": "You are about to cancel this sale.",
     "not_for_sale": "is not for sale."
   },

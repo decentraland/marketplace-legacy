@@ -123,9 +123,9 @@
   },
   "parcel_cancel": {
     "cancel_land": "Annuler la vente de la LAND",
-    "currently_on_sale": "est actuellement en vente pour {value}.",
+    "currently_on_sale":"est actuellement en vente pour {value}.",
     "about_to_cancel": "Vous êtes sur le point d'annuler cette vente.",
-    "not_for_sale": "n'est pas à vendre."
+    "not_for_sale": "n'est pas à vendre"
   },
   "activity": {
     "no_activity": "Vous n'avez pas encore d'activité.",
