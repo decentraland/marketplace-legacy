@@ -5,13 +5,16 @@ import {
   getPendingTransactions,
   getTransactionHistory
 } from 'modules/transaction/selectors'
-import { isConnecting, isConnected } from 'modules/wallet/selectors'
+import { getAddress, isConnecting, isConnected } from 'modules/wallet/selectors'
 
 import ActivityPage from './ActivityPage'
 
 const mapState = state => {
-  const pendingTransactions = getPendingTransactions(state).reverse()
-  const transactionHistory = getTransactionHistory(state).reverse()
+  const address = getAddress(state)
+
+  const pendingTransactions = getPendingTransactions(state, address).reverse()
+  const transactionHistory = getTransactionHistory(state, address).reverse()
+
   const totalSent = pendingTransactions.length + transactionHistory.length
 
   return {

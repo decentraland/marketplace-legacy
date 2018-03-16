@@ -30,7 +30,7 @@ const mapState = (state, { isReady, match, location }) => {
 }
 
 const mapDispatch = (dispatch, { location }) => ({
-  onNavigate: location => dispatch(navigateTo(location)),
+  onNavigate: url => dispatch(navigateTo(url)),
   onLoading: () => dispatch(setLoading(true)),
   onRangeChange: (center, nw, se) =>
     setTimeout(() => dispatch(changeRange(center, nw, se)), 250),

@@ -7,12 +7,10 @@ import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
 import DerivationPathDropdown from './DerivationPathDropdown'
 
-import { getManaToApprove, getMarketplaceAddress } from 'modules/wallet/utils'
+import { getMarketplaceAddress } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 
 import './SettingsForm.css'
-
-const MANA_TO_APPROVE = getManaToApprove().toLocaleString()
 
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
@@ -88,10 +86,8 @@ export default class SettingsForm extends React.PureComponent {
               isApprovePending
                 ? t('settings.pending_tx')
                 : manaApproved > 0
-                  ? t('settings.unapprove_mana_check')
-                  : t('settings.approve_mana_check', {
-                      mana_to_approve: MANA_TO_APPROVE
-                    })
+                  ? t('settings.disapprove_mana_check')
+                  : t('settings.approve_mana_check')
             }
             data-balloon-length="large"
             data-balloon-pos="right"
@@ -100,11 +96,10 @@ export default class SettingsForm extends React.PureComponent {
 
           <div className="authorize-detail">
             {manaApproved > 0
-              ? t('settings.mana_approved', {
-                  mana_approved: manaApproved.toLocaleString()
+              ? t_html('settings.mana_approved', {
+                  marketplace_contract_link: this.renderMarketplaceLink()
                 })
               : t_html('settings.approve_mana', {
-                  mana_to_approve: MANA_TO_APPROVE,
                   marketplace_contract_link: this.renderMarketplaceLink()
                 })}
 
@@ -125,7 +120,7 @@ export default class SettingsForm extends React.PureComponent {
             data-balloon={
               isAuthorizePending
                 ? t('settings.pending_tx')
-                : manaApproved > 0
+                : isLandAuthorized
                   ? t('settings.unauthorize_land_check')
                   : t('settings.authorize_land_check')
             }

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 
 import { getWallet } from 'modules/wallet/selectors'
 import { getLocation } from 'modules/location/selectors'
 import { getCenter } from 'modules/ui/selectors'
 import { isConnected } from 'modules/wallet/selectors'
 import { getPendingTransactions } from 'modules/transaction/selectors'
+import { navigateTo } from 'modules/location/actions'
 
 import { getActivePage } from './utils'
 
@@ -21,12 +21,12 @@ const mapState = state => {
     wallet,
     center,
     isConnected: isConnected(state),
-    activityBadge: getPendingTransactions(state).length
+    activityBadge: getPendingTransactions(state, wallet.address).length
   }
 }
 
 const mapDispatch = dispatch => ({
-  onNavigate: url => dispatch(push(url))
+  onNavigate: url => dispatch(navigateTo(url))
 })
 
 export default connect(mapState, mapDispatch)(Navbar)

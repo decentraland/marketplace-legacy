@@ -7,7 +7,7 @@ import { Segment, Grid } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import EtherscanLink from 'components/EtherscanLink'
 import { transactionType } from 'components/types'
-import { formatMana, formatDate } from 'lib/utils'
+import { formatDate } from 'lib/utils'
 
 import { getMarketplaceAddress } from 'modules/wallet/utils'
 import {
@@ -56,17 +56,16 @@ export default class Transaction extends React.PureComponent {
           payload.mana > 0 ? 'transaction.approved' : 'transaction.disapproved'
 
         return t_html(tkey, {
-          mana: formatMana(payload.mana),
           marketplace_contract_link: this.renderMarketplaceLink()
         })
       }
       case AUTHORIZE_LAND_SUCCESS: {
         const action = payload.isAuthorized
           ? t('global.authorized')
-          : t('global.deauthorized')
+          : t('global.unauthorized')
 
         return t_html('transaction.authorize', {
-          action: action,
+          action: action.toLowerCase(),
           marketplace_contract_link: this.renderMarketplaceLink()
         })
       }

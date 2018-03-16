@@ -11,6 +11,10 @@
   font-family: 'Source Sans Pro';
 }
 
+.BuyParcelPage .message.warning h3 {
+  font-weight: bolder;
+}
+
 .BuyParcelPage button + button {
   margin-left: 15px !important;
 }

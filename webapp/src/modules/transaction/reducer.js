@@ -28,6 +28,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
           {
             ...transaction,
             timestamp: Date.now(),
+            from: action.address,
             actionType: actionRef.type,
             status: TRANSACTION_STATUS.pending
           }

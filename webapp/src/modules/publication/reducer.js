@@ -20,7 +20,7 @@ import {
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { toPublicationsObject } from './utils'
+import { toPublicationsObject, PUBLICATION_STATUS } from './utils'
 
 const INITIAL_STATE = {
   data: {},
@@ -127,8 +127,34 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       const transaction = action.transaction
 
       switch (transaction.actionType) {
-        case BUY_SUCCESS:
-        case CANCEL_SALE_SUCCESS:
+        case BUY_SUCCESS: {
+          const tx_hash = transaction.payload.tx_hash
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [tx_hash]: {
+                ...state.data[tx_hash],
+                status: PUBLICATION_STATUS.sold
+              }
+            }
+          }
+        }
+        case CANCEL_SALE_SUCCESS: {
+          const tx_hash = transaction.payload.tx_hash
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [tx_hash]: {
+                ...state.data[tx_hash],
+                status: PUBLICATION_STATUS.cancelled
+              }
+            }
+          }
+        }
         case PUBLISH_SUCCESS: {
           const tx_hash = transaction.payload.tx_hash
 
@@ -137,7 +163,8 @@ export function publicationReducer(state = INITIAL_STATE, action) {
             data: {
               ...state.data,
               [tx_hash]: {
-                ...state.data[tx_hash]
+                ...state.data[tx_hash],
+                status: PUBLICATION_STATUS.open
               }
             }
           }

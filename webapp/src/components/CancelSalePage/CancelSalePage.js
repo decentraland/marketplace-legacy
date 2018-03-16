@@ -12,8 +12,8 @@ import './CancelSalePage.css'
 
 export default class CancelSalePage extends React.PureComponent {
   static propTypes = {
-    x: PropTypes.isRequired,
-    y: PropTypes.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
@@ -44,12 +44,16 @@ export default class CancelSalePage extends React.PureComponent {
                     })}
                   </React.Fragment>
                 ) : (
-                  ''
+                  <React.Fragment>
+                    {t('parcel_cancel.not_for_sale')}
+                  </React.Fragment>
                 )}
               </span>
-              <span className="subtitle">
-                {t('parcel_cancel.about_to_cancel')}
-              </span>
+              {publication ? (
+                <span className="subtitle">
+                  {t('parcel_cancel.about_to_cancel')}
+                </span>
+              ) : null}
             </Container>
             <br />
             <Container text>
@@ -60,8 +64,8 @@ export default class CancelSalePage extends React.PureComponent {
                 <Button
                   onClick={this.handleConfirm}
                   type="button"
-                  primary
-                  disabled={isDisabled}
+                  negative
+                  disabled={isDisabled || !publication}
                 >
                   {t('global.confirm')}
                 </Button>

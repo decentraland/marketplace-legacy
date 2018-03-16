@@ -1,9 +1,9 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { fetchPublicationsRequest } from 'modules/publication/actions'
 import { isLoading } from 'modules/publication/selectors'
 import { getPublications, getTotal } from 'modules/ui/marketplace/selectors'
+import { fetchPublicationsRequest } from 'modules/publication/actions'
+import { navigateTo } from 'modules/location/actions'
 
 import { getOptionsFromRouter, PAGE_SIZE } from './utils'
 
@@ -30,7 +30,7 @@ const mapState = (state, { location }) => {
 const mapDispatch = (dispatch, { location }) => ({
   onFetchPublications: () =>
     dispatch(fetchPublicationsRequest(getOptionsFromRouter(location))),
-  onNavigate: url => dispatch(push(url))
+  onNavigate: url => dispatch(navigateTo(url))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(MarketplacePage))

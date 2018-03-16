@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Message, Icon } from 'semantic-ui-react'
 
+import { t } from 'modules/translation/utils'
+
 export default class TxStatusIdle extends React.PureComponent {
   static propTypes = {
     isIdle: PropTypes.bool.isRequired
@@ -13,7 +15,9 @@ export default class TxStatusIdle extends React.PureComponent {
     return isIdle ? (
       <Message icon>
         <Icon name="circle notched" loading />
-        <Message.Content>Please confirm the transaction</Message.Content>
+        <Message.Content>
+          {t('transaction_status.idle.please_confirm')}
+        </Message.Content>
       </Message>
     ) : null
   }
