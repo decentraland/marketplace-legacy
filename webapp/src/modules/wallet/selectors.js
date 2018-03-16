@@ -21,8 +21,10 @@ export const isConnecting = state =>
 export const getWallet = createSelector(
   getData,
   getAddresses,
-  state => getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
-  state => getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
+  state =>
+    getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
+  state =>
+    getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
   (wallet, addresses, approveManaTransactions, authorizeLandTransactions) => {
     const address = addresses[wallet.address] || {}
     const {

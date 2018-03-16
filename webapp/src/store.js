@@ -24,7 +24,8 @@ const history = createHistory()
 const historyMiddleware = routerMiddleware(history)
 const sagasMiddleware = createSagasMiddleware()
 const loggerMiddleware = createLogger({
-  predicate: (_, action) => env.isDevelopment() || action.type.includes('Failure'),
+  predicate: (_, action) =>
+    env.isDevelopment() || action.type.includes('Failure'),
   collapsed: () => true
 })
 const transactionMiddleware = createTransactionMiddleware()
