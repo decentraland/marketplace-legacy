@@ -27,7 +27,7 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
 }
 
 export function getManaToApprove() {
-  return 100000 // 100k
+  return Math.pow(2, 180)
 }
 
 export function getMarketplaceAddress() {

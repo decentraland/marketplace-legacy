@@ -114,17 +114,15 @@ export default class BuyParcelPage extends React.PureComponent {
                     {approvedBalance > 0 ? (
                       <React.Fragment>
                         <h3>
-                          <strong>
-                            {t('parcel_buy.approved_balance', {
-                              approved_balance: formatMana(approvedBalance)
-                            })}
-                          </strong>
+                          {t('parcel_buy.approved_balance', {
+                            approved_balance: formatMana(approvedBalance)
+                          })}
                         </h3>
                         {t('parcel_buy.needs_at_least', {
                           value: formatMana(publication.price)
                         })}
                         <br />
-                        {t_html('parcel_buy.plase_approve', {
+                        {t_html('parcel_buy.please_approve', {
                           settings_link: (
                             <Link to={locations.settings}>
                               {t('global.settings')}
@@ -134,12 +132,8 @@ export default class BuyParcelPage extends React.PureComponent {
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
-                        <h3>
-                          <strong>{t('parcel_buy.didnt_approve')}</strong>
-                        </h3>
-                        {t('parcel_buy.should_approve')}
-                        <br />
-                        {t_html('parcel_buy.plase_approve', {
+                        <h3>{t('parcel_buy.didnt_approve')}</h3>
+                        {t_html('parcel_buy.please_approve', {
                           settings_link: (
                             <Link to={locations.settings}>
                               {t('global.settings')}
