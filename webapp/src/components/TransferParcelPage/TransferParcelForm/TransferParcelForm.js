@@ -21,6 +21,10 @@ export default class TransferParcelForm extends React.PureComponent {
     onCleanTransfer: PropTypes.func.isRequired
   }
 
+  static defaultProps = {
+    transferError: 'Error: bla'
+  }
+
   constructor(props) {
     super(props)
 
@@ -76,9 +80,6 @@ export default class TransferParcelForm extends React.PureComponent {
 
     return (
       <React.Fragment>
-        {hasPublication ? (
-          <Message warning>{t('parcel_transfer.cant_transfer')}</Message>
-        ) : null}
         <Form
           className="TransferParcelForm"
           onSubmit={preventDefault(this.handleSubmit)}
@@ -96,6 +97,14 @@ export default class TransferParcelForm extends React.PureComponent {
               autoComplete="off"
               autoFocus={true}
             />
+            <span className="transfer-warning">
+              {t('parcel_transfer.irreversible')}
+            </span>
+            <br />
+            <span className="transfer-warning">
+              {t('parcel_transfer.check_address')}
+            </span>
+            <br />
             {this.hasError() && (
               <Message error onDismiss={this.handleClearFormErrors}>
                 {this.isExpectedError() ? (

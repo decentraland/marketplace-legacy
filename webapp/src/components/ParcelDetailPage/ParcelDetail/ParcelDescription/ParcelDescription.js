@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { t } from 'modules/translation/utils'
-
 export default class ParcelDescription extends React.PureComponent {
   static propTypes = {
     description: PropTypes.string

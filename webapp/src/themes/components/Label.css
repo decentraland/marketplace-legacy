@@ -1,6 +1,6 @@
 .ui.form .field > label,
 .ui.form .fields > label {
-  color: var(--dark-gray);
+  color: var(--gray);
   font-weight: 400;
 }
 

@@ -1,0 +1,30 @@
+.ui.warning.message {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  background-color: black;
+  color: var(--gray);
+  box-shadow: 0 0px 0px 5px rgba(0, 0, 0, 0.5) !important;
+  font-weight: 100 !important;
+  margin-bottom: 30px;
+}
+
+.ui.warning.message .content {
+  font-size: 15px;
+}
+
+.ui.warning.message .header {
+  color: white !important;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.ui.warning.message .icon {
+  color: var(--yellow);
+}
+
+.ui.error.message {
+  background-color: var(--light-red) !important;
+  color: var(--dark-red) !important;
+  border: 2px solid var(--red);
+  box-shadow: none !important;
+}

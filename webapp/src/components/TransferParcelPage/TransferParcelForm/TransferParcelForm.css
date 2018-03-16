@@ -5,3 +5,8 @@
 .TransferParcelForm .ui.button + .ui.button {
   margin-left: 20px;
 }
+
+.TransferParcelForm .transfer-warning {
+  color: var(--gray);
+  font-style: italic;
+}

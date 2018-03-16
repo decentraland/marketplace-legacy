@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react'
 import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
+import Mana from 'components/Mana'
 import { walletType } from 'components/types'
 import { locations } from 'locations'
 import { formatMana } from 'lib/utils'
@@ -60,6 +61,57 @@ export default class BuyParcelPage extends React.PureComponent {
     )
   }
 
+  renderMessage(approvedBalance, publication) {
+    return (
+      <Container text>
+        <Grid.Column>
+          <Message
+            warning
+            icon="warning sign"
+            header={
+              approvedBalance > 0
+                ? t('parcel_buy.approved_balance', {
+                    approved_balance: formatMana(approvedBalance)
+                  })
+                : t('parcel_buy.didnt_approve')
+            }
+            content={
+              approvedBalance > 0 ? (
+                <React.Fragment>
+                  <span>
+                    {t('parcel_buy.needs_at_least', {
+                      value: formatMana(publication.price)
+                    })}
+                  </span>
+                  <br />
+                  {t_html('parcel_buy.please_approve', {
+                    settings_link: (
+                      <Link to={locations.settings}>
+                        {t('global.settings')}
+                      </Link>
+                    )
+                  })}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <span>{t('parcel_buy.should_approve')}</span>
+                  <br />
+                  {t_html('parcel_buy.please_approve', {
+                    settings_link: (
+                      <Link to={locations.settings}>
+                        {t('global.settings')}
+                      </Link>
+                    )
+                  })}
+                </React.Fragment>
+              )
+            }
+          />
+        </Grid.Column>
+      </Container>
+    )
+  }
+
   renderPage() {
     const { wallet, x, y, publication, isDisabled, onCancel } = this.props
     const { approvedBalance } = wallet
@@ -70,24 +122,35 @@ export default class BuyParcelPage extends React.PureComponent {
       <Parcel x={x} y={y}>
         {parcel => (
           <div className="BuyParcelPage">
+            {isNotEnough
+              ? this.renderMessage(approvedBalance, publication)
+              : null}
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
                 {t('parcel_buy.buy_land')}
               </Header>
               <span className="subtitle">
                 {t_html('parcel_buy.about_to_buy', {
-                  parcel_name: <ParcelName parcel={parcel} />
-                })}&nbsp;
-                {publication ? (
-                  <React.Fragment>
-                    {t('global.for')}&nbsp;
-                    <strong className="price">
-                      {formatMana(publication.price)}
-                    </strong>
-                  </React.Fragment>
-                ) : (
-                  ''
-                )}
+                  parcel_name: <ParcelName parcel={parcel} />,
+                  parcel_price: publication ? (
+                    <React.Fragment>
+                      &nbsp;{t('global.for')}&nbsp;&nbsp;
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          transform: 'translateY(5px)'
+                        }}
+                      >
+                        <Mana
+                          amount={parseFloat(publication.price, 10)}
+                          size={18}
+                        />
+                      </span>
+                    </React.Fragment>
+                  ) : (
+                    ''
+                  )
+                })}
               </span>
             </Container>
             <br />
@@ -106,52 +169,6 @@ export default class BuyParcelPage extends React.PureComponent {
                 </Button>
               </Grid.Column>
             </Container>
-            <br />
-            {isNotEnough ? (
-              <Container text>
-                <Grid.Column>
-                  <Message warning>
-                    {approvedBalance > 0 ? (
-                      <React.Fragment>
-                        <h3>
-                          <strong>
-                            {t('parcel_buy.approved_balance', {
-                              approved_balance: formatMana(approvedBalance)
-                            })}
-                          </strong>
-                        </h3>
-                        {t('parcel_buy.needs_at_least', {
-                          value: formatMana(publication.price)
-                        })}
-                        <br />
-                        {t_html('parcel_buy.plase_approve', {
-                          settings_link: (
-                            <Link to={locations.settings}>
-                              {t('global.settings')}
-                            </Link>
-                          )
-                        })}
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        <h3>
-                          <strong>{t('parcel_buy.didnt_approve')}</strong>
-                        </h3>
-                        {t('parcel_buy.should_approve')}
-                        <br />
-                        {t_html('parcel_buy.plase_approve', {
-                          settings_link: (
-                            <Link to={locations.settings}>
-                              {t('global.settings')}
-                            </Link>
-                          )
-                        })}
-                      </React.Fragment>
-                    )}
-                  </Message>
-                </Grid.Column>
-              </Container>
-            ) : null}
           </div>
         )}
       </Parcel>

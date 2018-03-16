@@ -1,6 +1,7 @@
 .ParcelPublication {
   border-radius: 10px;
   background-color: var(--dark-gray);
+  margin-bottom: 15px;
 }
 
 .ParcelPublication .buy-column {

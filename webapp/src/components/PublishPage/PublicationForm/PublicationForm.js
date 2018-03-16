@@ -141,13 +141,6 @@ export default class PublicationForm extends React.PureComponent {
             </Message.Content>
           </Message>
         ) : null}
-        {isConfirmed ? (
-          <Message success>
-            {t('parcel_publish.already_sold', {
-              value: formatMana(publication.price)
-            })}
-          </Message>
-        ) : null}
         {formErrors.length > 0 ? (
           <Message error onDismiss={this.handleClearFormErrors}>
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}
