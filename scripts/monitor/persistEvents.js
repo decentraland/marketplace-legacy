@@ -7,7 +7,7 @@ import { BlockchainEvent } from '../../src/BlockchainEvent'
 const log = new Log('persistEvents')
 
 export async function persistEvents(lastBlockNumber = null, delay) {
-  delay = delay || env.get('PERSIST_DELAY', 2500)
+  delay = delay || env.get('PERSIST_EVENTS_DELAY', 2500)
 
   if (lastBlockNumber === null || lastBlockNumber === 'latest') {
     const lastBlockEvent = await BlockchainEvent.findLast()
