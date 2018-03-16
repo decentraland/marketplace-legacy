@@ -27,7 +27,7 @@ export default class TxStatusParcel extends React.PureComponent {
       <Message warning className="TxStatusParcel">
         {t_html('transaction_status.parcel.still_pending', {
           parcel_name: <ParcelName parcel={parcel} />,
-          transaction_count: transactions.length
+          transactions_count: transactions.length
         })}
         <br />
         {t_html('transaction_status.see_activity', {
