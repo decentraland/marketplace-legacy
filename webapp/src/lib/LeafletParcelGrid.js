@@ -176,13 +176,17 @@ export const LeafletParcelGrid = L.Layer.extend({
     let markerCenter = null
     for (let index = 0; index < tiles.length; index++) {
       const tile = tiles[index]
+      const attributes = this.options.getTileAttributes(tile.bounds.getNorthWest())
+      if (!attributes) {
+        continue
+      }
       const {
         id,
         backgroundColor,
         connectedLeft,
         connectedTop,
         connectedTopLeft
-      } = this.options.getTileAttributes(tile.bounds.getNorthWest())
+      } = attributes
       const point = this.map.latLngToContainerPoint(tile.center)
       Parcel.draw({
         ctx,

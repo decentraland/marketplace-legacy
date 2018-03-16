@@ -270,6 +270,7 @@ export default class ParcelsMap extends React.Component {
     const { x, y } = this.mapCoordinates.latLngToCartesian(latlng)
     return this.getTileAttributes(x, y)
   }
+
   // Called by the Parcel Grid on each tile render
   getTileAttributes = (
     x,
@@ -368,13 +369,18 @@ export default class ParcelsMap extends React.Component {
 
   renderPopup = (x, y, props = this.props) => {
     if (this.popup) {
+      const attributes = this.getTileAttributes(x, y, props)
+      if (!attributes) {
+        return
+      }
+
       const {
         color,
         label,
         backgroundColor,
         description,
         publication
-      } = this.getTileAttributes(x, y, props)
+      } = attributes
 
       if (this.popupContent) {
         ReactDOM.unmountComponentAtNode(this.popupContent)
