@@ -24,6 +24,7 @@ jobs:
           environment:
             NODE_PATH: src/
             NODE_ENV: production
+            REACT_APP_PROVIDER_URL: https://mainnet.infura.io/
             REACT_APP_API_URL: https://api.market.decentraland.org
             REACT_APP_VERSION: 0.1
             REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
@@ -59,6 +60,7 @@ jobs:
           environment:
             NODE_PATH: src/
             NODE_ENV: development
+            REACT_APP_PROVIDER_URL: https://ropsten.infura.io/
             REACT_APP_API_URL: https://api.market.decentraland.today
             REACT_APP_VERSION: 0.1
             REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
@@ -94,6 +96,7 @@ jobs:
           environment:
             NODE_PATH: src/
             NODE_ENV: development
+            REACT_APP_PROVIDER_URL: https://ropsten.infura.io/
             REACT_APP_API_URL: https://api.market.decentraland.zone
             REACT_APP_VERSION: 0.1
             REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac

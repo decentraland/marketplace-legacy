@@ -23,7 +23,11 @@ const history = createHistory()
 
 const historyMiddleware = routerMiddleware(history)
 const sagasMiddleware = createSagasMiddleware()
-const loggerMiddleware = createLogger({ collapsed: () => true })
+const loggerMiddleware = createLogger({
+  predicate: (_, action) =>
+    env.isDevelopment() || action.type.includes('Failure'),
+  collapsed: () => true
+})
 const transactionMiddleware = createTransactionMiddleware()
 const analyticsMiddleware = createGoogleAnalyticsMiddleware(analyticsReduceer)
 const storageMiddleware = createStorageMiddleware(
