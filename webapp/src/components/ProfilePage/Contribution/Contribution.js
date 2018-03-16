@@ -38,7 +38,10 @@ export default class Contribution extends React.PureComponent {
     const { contribution } = this.props
 
     return (
-      <Card className="Contribution" href="/pepe">
+      <Card
+        className="Contribution"
+        href={contribution.district ? contribution.district.link : undefined}
+      >
         <Card.Content className="body">
           {contribution.district ? (
             <React.Fragment>
