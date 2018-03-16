@@ -17,6 +17,7 @@
     "submit": "Envoyer",
     "confirm": "Confirmer",
     "retry": "Recommencez",
+    "connect": "Connect",
     "authorized": "Autorisé",
     "unauthorized": "Non autorisé",
     "wallet_address": "Adresse du porte-feuille",
@@ -63,7 +64,9 @@
     "proposal": "Proposition"
   },
   "parcel": {
-    "view": "Vue"
+    "view": "Vue",
+    "no_name": "No name",
+    "no_description": "No description"
   },
   "parcel_detail": {
     "description": "Description",
