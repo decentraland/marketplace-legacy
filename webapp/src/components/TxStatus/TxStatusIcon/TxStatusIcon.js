@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { txUtils } from 'decentraland-commons'
 
 import { Icon } from 'semantic-ui-react'
+import ConfirmedIcon from './ConfirmedIcon'
+import FailedIcon from './FailedIcon'
 import EtherscanLink from 'components/EtherscanLink'
 
 import './TxStatusIcon.css'
@@ -11,7 +13,6 @@ export default class TxStatusIcon extends React.PureComponent {
   static propTypes = {
     txHash: PropTypes.string.isRequired,
     txStatus: PropTypes.string.isRequired,
-    size: PropTypes.string,
     className: PropTypes.string
   }
 
@@ -20,17 +21,17 @@ export default class TxStatusIcon extends React.PureComponent {
   }
 
   render() {
-    const { txHash, txStatus, size, className } = this.props
-    let iconName = 'check circle outline'
-    let iconTooltip = 'Transaction confirmed'
-    let loading = false
+    const { txHash, txStatus, className } = this.props
+    let Icon = null
+    let iconTooltip = ''
 
-    if (txStatus === txUtils.TRANSACTION_STATUS.pending) {
-      iconName = 'circle notched'
-      iconTooltip = 'Transaction pending'
-      loading = true
+    if (txStatus === txUtils.TRANSACTION_STATUS.pending) return null
+
+    if (txStatus === txUtils.TRANSACTION_STATUS.confirmed) {
+      Icon = <ConfirmedIcon />
+      iconTooltip = 'Transaction confirmed'
     } else if (txStatus === txUtils.TRANSACTION_STATUS.failed) {
-      iconName = 'remove circle outline'
+      Icon = <FailedIcon />
       iconTooltip = 'Transaction failed'
     }
 
@@ -42,14 +43,7 @@ export default class TxStatusIcon extends React.PureComponent {
         data-balloon={iconTooltip}
         className={classes}
       >
-        <EtherscanLink txHash={txHash}>
-          <Icon
-            name={iconName}
-            loading={loading}
-            size={size}
-            className={txStatus}
-          />
-        </EtherscanLink>
+        <EtherscanLink txHash={txHash}>{Icon}</EtherscanLink>
       </span>
     )
   }

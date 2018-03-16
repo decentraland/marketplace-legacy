@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
 import { locations } from 'locations'
 import { parcelType, districtType } from 'components/types'
+import { buildCoordinate } from 'lib/utils'
 
 import './ParcelName.css'
-import { buildCoordinate } from 'lib/utils'
 
 export default class ParcelName extends React.PureComponent {
   static propTypes = {
