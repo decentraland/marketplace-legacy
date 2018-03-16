@@ -7,11 +7,6 @@
   margin-bottom: 10px;
   font-size: 22px;
   font-weight: bold;
-  overflow: hidden;
-}
-
-.ActivityPage .Badge {
-  float: right;
 }
 
 .ActivityPage .empty {
