@@ -18,13 +18,15 @@
     "submit": "Enviar",
     "confirm": "Confirmar",
     "retry": "Reintentar",
+    "connect": "Conexión",
     "authorized": "Autorizado",
     "unauthorized": "No autorizado",
     "wallet_address": "Dirección de billetera",
     "for": "para",
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
-    "owned_by": "Controlada por {address_link}"
+    "owned_by": "Controlada por",
+    "owned_by_link": "Controlada por {address_link}"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -62,7 +64,9 @@
     "proposal": "propuesta"
   },
   "parcel": {
-    "view": "Ver"
+    "view": "Ver",
+    "no_name": "Sin nombre",
+    "no_description": "Sin descripción"
   },
   "parcel_detail": {
     "description": "Descripción",
@@ -101,7 +105,7 @@
   },
   "parcel_buy": {
     "buy_land": "Comprar LAND",
-    "about_to_buy": "Estas por comprar {parcel_name}",
+    "about_to_buy": "Estas por comprar {parcel_name} {parcel_price}",
     "approved_balance": "Tu balance aprobado es {approved_balance}",
     "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
     "didnt_approve": "No has autorizado el uso de MANA",
@@ -132,7 +136,7 @@
     "no_activity": "No tienes actividad por el momento.",
     "start": "Puedes comenzar aprobando MANA desde {settings_link}",
     "pending": "Pendiente",
-    "history": "Historial"
+    "completed": "Completada"
   },
   "transaction": {
     "approved": "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
@@ -171,17 +175,18 @@
   },
   "color_key": {
     "title": "Mapa de colores",
-    "yours": "TUYA",
-    "taken": "ASIGNADA",
-    "district": "DISTRITO",
-    "contribution": "CONTRIBUCIÓN",
-    "roads": "CAMINOS",
-    "plaza": "PLAZA",
-    "unowned": "SIN DUEÑO",
-    "loading": "CARGANDO"
+    "yours": "Tuya",
+    "taken": "Asignada",
+    "district": "Distrito",
+    "contribution": "Contribución",
+    "roads": "Caminos",
+    "plaza": "Plaza",
+    "unowned": "Sin dueño",
+    "loading": "Cargando",
+    "on_sale": "En venta"
   },
   "sign_in": {
-    "options": "Descarga {metamask_link} o {mist_link} o accede con tu {ledger_nano_link} para usar el Mercado.",
+    "options": "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}.",
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada."
   },
   "footer": {

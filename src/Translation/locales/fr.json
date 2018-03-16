@@ -1,7 +1,8 @@
 {
   "languages": {
-    "en": "Anglais",
-    "fr": "Français"
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French"
   },
   "global": {
     "atlas": "Atlas",
