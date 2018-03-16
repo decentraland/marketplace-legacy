@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { txUtils } from 'decentraland-commons'
 
-import { Icon } from 'semantic-ui-react'
 import ConfirmedIcon from './ConfirmedIcon'
 import FailedIcon from './FailedIcon'
 import EtherscanLink from 'components/EtherscanLink'

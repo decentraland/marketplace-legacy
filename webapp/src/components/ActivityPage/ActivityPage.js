@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import { Container, Loader } from 'semantic-ui-react'
-import Badge from 'components/Badge'
 import Transaction from './Transaction'
 
 import { transactionType } from 'components/types'
