@@ -50,32 +50,21 @@ export default class ParcelDetail extends React.PureComponent {
     const publication = this.getPublication()
 
     return (
-      <Grid
-        columns={2}
-        stackable={true}
-        centered={true}
-        className="ParcelDetail"
-      >
+      <Grid columns={2} stackable={true} className="ParcelDetail">
         <Grid.Row>
-          <Grid.Column mobile={16} tablet={6} computer={6}>
+          <Grid.Column>
             <Header size="large">
               <ParcelName parcel={parcel} />
             </Header>
+            <ParcelDescription description={description} />
           </Grid.Column>
-          <Grid.Column
-            mobile={16}
-            tablet={4}
-            computer={4}
-            className="parcel-owner-container"
-          >
+          <Grid.Column className="parcel-owner-container">
             <ParcelOwner parcel={parcel} districts={districts} />
           </Grid.Column>
         </Grid.Row>
         {isOwner ? (
           <Grid.Row>
-            <Grid.Column width={10}>
-              <ParcelActions parcel={parcel} />
-            </Grid.Column>
+            <ParcelActions parcel={parcel} />
           </Grid.Row>
         ) : null}
         {publication ? (
@@ -85,11 +74,6 @@ export default class ParcelDetail extends React.PureComponent {
             onBuy={this.handleBuy}
           />
         ) : null}
-        <Grid.Row>
-          <Grid.Column width={10}>
-            <ParcelDescription description={description} />
-          </Grid.Column>
-        </Grid.Row>
       </Grid>
     )
   }

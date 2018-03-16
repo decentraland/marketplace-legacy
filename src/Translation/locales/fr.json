@@ -23,7 +23,7 @@
     "sign_in": "Se connecter",
     "sign_in_notice":
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
-    "owned_by": "Controlé par {address_link}"
+    "owned_by": "Controlé par"
   },
   "navbar": {
     "my_land": "Mes LANDs"

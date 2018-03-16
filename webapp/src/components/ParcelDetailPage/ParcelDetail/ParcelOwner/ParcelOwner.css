@@ -3,7 +3,7 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-end;
-  color: #aaa;
+  color: var(--gray);
 }
 
 .ParcelOwner.is-district {
@@ -11,10 +11,15 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: #aaa;
+  color: var(--gray);
   max-width: 100%;
 }
 
 .ParcelOwner.is-district .district-name {
-  color: var(--dark-purple);
+  color: var(--dark-gray);
+}
+
+.ParcelOwner .AddressLink {
+  height: 24px;
+  margin-left: 10px;
 }

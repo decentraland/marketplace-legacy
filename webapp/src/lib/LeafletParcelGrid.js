@@ -1,7 +1,7 @@
 import L from 'leaflet'
 import { COLORS } from './parcelUtils'
 import { requestAnimationFrame, cancelAnimationFrame } from './utils'
-import { selection } from './selection'
+import { Parcel, Selection } from 'lib/render'
 
 export const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
@@ -184,14 +184,16 @@ export const LeafletParcelGrid = L.Layer.extend({
         connectedTopLeft
       } = this.options.getTileAttributes(tile.bounds.getNorthWest())
       const point = this.map.latLngToContainerPoint(tile.center)
-      this.renderTile(
-        point.x,
-        point.y,
-        backgroundColor,
+      Parcel.draw({
+        ctx,
+        x: point.x,
+        y: point.y,
+        size: this.tileSize,
+        color: backgroundColor,
         connectedLeft,
         connectedTop,
         connectedTopLeft
-      )
+      })
       if (this.options.marker === id) {
         markerCenter = point
       }
@@ -204,32 +206,8 @@ export const LeafletParcelGrid = L.Layer.extend({
     }
   },
 
-  renderTile(x, y, color, connectedLeft, connectedTop, connectedTopLeft) {
-    // Render tile
-    const ctx = this.canvas.getContext('2d')
-    const padding = 2
-    const offset = 1
-
-    ctx.fillStyle = color
-    ctx.fillRect(
-      x - this.tileSize + (connectedLeft ? -offset : padding),
-      y - this.tileSize + (connectedTop ? -offset : padding),
-      this.tileSize - (connectedLeft ? -offset : padding),
-      this.tileSize - (connectedTop ? -offset : padding)
-    )
-    if (connectedLeft && connectedTop && !connectedTopLeft) {
-      ctx.fillStyle = COLORS.unowned
-      ctx.fillRect(
-        x - this.tileSize - offset,
-        y - this.tileSize - offset,
-        padding + offset,
-        padding + offset
-      )
-    }
-  },
-
   renderMarker({ ctx, center, fillPrimary, fillSecondary, stroke, scale }) {
-    selection.draw({
+    Selection.draw({
       ctx,
       x: center.x - this.tileSize / 2,
       y: center.y - this.tileSize / 2,

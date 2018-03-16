@@ -1,4 +1,4 @@
-export const selection = {
+export const Selection = {
   draw({
     ctx,
     x,

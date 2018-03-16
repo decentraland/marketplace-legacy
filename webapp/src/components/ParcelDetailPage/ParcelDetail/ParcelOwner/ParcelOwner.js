@@ -4,7 +4,7 @@ import { parcelType, districtType } from 'components/types'
 import { getDistrict, isDistrict } from 'lib/parcelUtils'
 import isEmpty from 'lodash/isEmpty'
 import AddressLink from 'components/AddressLink'
-import { t, t_html } from 'modules/translation/utils'
+import { t } from 'modules/translation/utils'
 
 import './ParcelOwner.css'
 
@@ -47,9 +47,8 @@ export default class ParcelOwner extends React.PureComponent {
     if (parcel.owner) {
       return (
         <span className="ParcelOwner is-address">
-          {t_html('global.owned_by', {
-            address_link: <AddressLink address={parcel.owner} scale={4} />
-          })}
+          <span>{t('global.owned_by')}</span>
+          <AddressLink address={parcel.owner} scale={4} />
         </span>
       )
     }

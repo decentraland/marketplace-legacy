@@ -1,6 +1,5 @@
 .Page {
   height: calc(100% - var(--navbar-height));
-  background-color: var(--background);
 }
 
 .Page > div {
@@ -8,5 +7,6 @@
   padding-top: 30px;
   padding-bottom: 50px;
   position: relative;
-  overflow: hidden;
+  min-height: calc(100% - var(--footer-height));
+  background-color: var(--background);
 }

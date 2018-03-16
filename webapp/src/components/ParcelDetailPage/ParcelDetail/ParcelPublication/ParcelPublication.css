@@ -1,0 +1,15 @@
+.ParcelPublication {
+  border-radius: 10px;
+  background-color: var(--dark-gray);
+}
+
+.ParcelPublication .buy-column {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 25px !important;
+}
+
+.ParcelPublication .buy-column .button {
+  margin: 0px !important;
+}

@@ -11,8 +11,9 @@
 }
 
 .ParcelName .name {
-  color: var(--purple);
+  color: white;
   white-space: nowrap;
+  font-weight: bold;
 }
 
 .ParcelName .marker.icon {

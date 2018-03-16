@@ -9,20 +9,23 @@
 .leaflet-control {
   display: flex;
   flex-flow: row nowrap;
+  background-color: var(--dark-gray) !important;
+  border-color: black !important;
 }
 
 .leaflet-control a {
-  color: var(--gray) !important;
+  color: white !important;
   font-weight: 100 !important;
   font-size: 15px !important;
   height: 25px !important;
   line-height: 24px !important;
+  background-color: var(--background) !important;
 }
 
 .leaflet-control-zoom-in {
   border-radius: 5px 0px 0px 5px !important;
   border-bottom: none !important;
-  border-right: 1px solid var(--light-gray);
+  border-right: 1px solid var(--dark-gray);
 }
 
 .leaflet-control-zoom-out {

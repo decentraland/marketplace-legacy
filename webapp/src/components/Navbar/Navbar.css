@@ -59,6 +59,7 @@
   padding: 9px;
   font-weight: 100;
   color: var(--gray);
+  margin: 0px 10px !important;
 }
 
 .Navbar .navbar-menu .ui.menu .item.active,

@@ -36,7 +36,7 @@ export default class CancelSalePage extends React.PureComponent {
                 {t('parcel_cancel.cancel_land')}
               </Header>
               <span className="subtitle">
-                <ParcelName parcel={parcel} />&nbsp;
+                <ParcelName parcel={parcel} />&nbsp;&nbsp;
                 {publication ? (
                   <React.Fragment>
                     {t('parcel_cancel.currently_on_sale', {
@@ -60,7 +60,7 @@ export default class CancelSalePage extends React.PureComponent {
                 <Button
                   onClick={this.handleConfirm}
                   type="button"
-                  negative
+                  primary
                   disabled={isDisabled}
                 >
                   {t('global.confirm')}

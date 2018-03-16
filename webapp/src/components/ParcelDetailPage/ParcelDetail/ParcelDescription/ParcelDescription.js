@@ -16,10 +16,7 @@ export default class ParcelDescription extends React.PureComponent {
 
     return (
       <div>
-        <h3>{t('parcel_detail.description')}</h3>
-        <p className={className}>
-          {description || t('parcel_detail.empty_description')}
-        </p>
+        <p className={className}>{description}</p>
       </div>
     )
   }

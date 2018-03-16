@@ -22,7 +22,7 @@
     "for": "for",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
-    "owned_by": "Owned by {address_link}"
+    "owned_by": "Owned by"
   },
   "navbar": {
     "my_land": "My Land"
