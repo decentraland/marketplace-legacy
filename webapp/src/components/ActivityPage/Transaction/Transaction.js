@@ -129,20 +129,16 @@ export default class Transaction extends React.PureComponent {
     return (
       <Segment size="large" className="Transaction" vertical>
         <Grid>
-          <Grid.Column width={1}>
+          <Grid.Column mobile={15} tablet={15} computer={13} className="text">
             <TxStatus.Icon txHash={tx.hash} txStatus={tx.status} />
-          </Grid.Column>
-          <Grid.Column mobile={14} tablet={14} computer={12} className="text">
             {textFragment}
-          </Grid.Column>
-          <Grid.Column textAlign="right" only="computer" width={3}>
-            <span
+            <div
               className="timestamp"
               data-balloon-pos="up"
               data-balloon={formatDate(tx.timestamp)}
             >
               {distanceInWordsToNow(tx.timestamp)}
-            </span>
+            </div>
           </Grid.Column>
         </Grid>
       </Segment>
