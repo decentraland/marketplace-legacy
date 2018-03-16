@@ -1,7 +1,3 @@
-.StaticPage {
-  height: 100%;
-}
-
 .StaticPage .content {
   height: 75%;
   display: flex;

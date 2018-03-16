@@ -17,6 +17,7 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "retry": "Retry",
+    "connect": "Connect",
     "authorized": "Authorized",
     "unauthorized": "Unauthorized",
     "wallet_address": "Wallet address",
@@ -202,7 +203,7 @@
   },
   "sign_in": {
     "options":
-      "Download {metamask_link} or {mist_link} or access with your {ledger_nano_link} link to use the Marketplace.",
+      "First off you’ll need a safe place to keep all your land. You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}.",
     "account_unlocked": "Make sure your account is unlocked"
   },
   "footer": {

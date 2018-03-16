@@ -15,7 +15,7 @@ import Publication from 'components/MarketplacePage/Publication'
 import Parcel from './Parcel'
 import Contribution from './Contribution'
 import { parcelType, contributionType, publicationType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
+import { t } from 'modules/translation/utils'
 import { buildUrl } from './utils'
 
 import './ProfilePage.css'

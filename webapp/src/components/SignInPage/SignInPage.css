@@ -1,0 +1,7 @@
+.SignInPage h1 {
+  margin-top: 50px;
+}
+
+.SignInPage .sign-in-options {
+  color: var(--gray);
+}
