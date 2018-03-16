@@ -5,7 +5,7 @@
 .Page > div {
   min-height: 70vh;
   padding-top: 30px;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
   position: relative;
   min-height: calc(100% - var(--footer-height));
   background-color: var(--background);

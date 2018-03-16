@@ -16,7 +16,7 @@
 }
 
 .ParcelOwner.is-district .district-name {
-  color: var(--dark-gray);
+  color: var(--gray);
 }
 
 .ParcelOwner .AddressLink {

@@ -4,7 +4,7 @@ import { parcelType, districtType } from 'components/types'
 import { getDistrict, isDistrict } from 'lib/parcelUtils'
 import isEmpty from 'lodash/isEmpty'
 import AddressLink from 'components/AddressLink'
-import { t } from 'modules/translation/utils'
+import { t, t_html } from 'modules/translation/utils'
 
 import './ParcelOwner.css'
 
@@ -39,7 +39,7 @@ export default class ParcelOwner extends React.PureComponent {
 
       return (
         <span className="ParcelOwner is-district">
-          {t('parcel_detail.owner.part_of', { name: districtName })}
+          {t_html('parcel_detail.owner.part_of', { name: districtName })}
         </span>
       )
     }
