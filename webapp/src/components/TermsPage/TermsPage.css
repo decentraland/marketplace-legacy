@@ -1,0 +1,27 @@
+.Terms .content {
+  margin: auto;
+  max-width: 720px;
+}
+
+.StaticPage.Terms h2 {
+  font-size: 38px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.Terms h3 {
+  text-align: left;
+}
+
+.Terms p {
+  text-align: left;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .Terms {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

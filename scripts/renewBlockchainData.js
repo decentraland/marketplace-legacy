@@ -17,7 +17,10 @@ export async function renewBlockchainData() {
   await db.connect()
 
   log.info('Connecting to Ethereum node')
-  await eth.connect({ contracts: [contracts.LANDRegistry] })
+  await eth.connect({
+    contracts: [contracts.LANDRegistry],
+    providerUrl: env.get('RPC_URL')
+  })
 
   log.info('Storing `parcels` data')
   await processParcels()

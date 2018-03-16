@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { getWallet } from 'modules/wallet/selectors'
-import { getLocation } from 'modules/location/selectors'
+import { getLocation, isStaticPage } from 'modules/location/selectors'
 import { getCenter } from 'modules/ui/selectors'
 import { isConnected } from 'modules/wallet/selectors'
 import { getPendingTransactions } from 'modules/transaction/selectors'
@@ -16,10 +16,12 @@ const mapState = state => {
   const { pathname } = getLocation(state)
   const activePage = getActivePage({ wallet, pathname })
   const center = getCenter(state)
+  const isStatic = isStaticPage(state)
   return {
     activePage,
     wallet,
     center,
+    isStatic,
     isConnected: isConnected(state),
     activityBadge: getPendingTransactions(state, wallet.address).length
   }

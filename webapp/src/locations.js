@@ -34,10 +34,13 @@ export const locations = {
 
   colorKey: '/colorKey',
   privacy: '/privacy',
+  terms: '/terms',
 
   error: '/error',
   signIn: '/sign-in'
 }
+
+export const STATIC_PAGES = ['/privacy', '/terms']
 
 export const PROFILE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',

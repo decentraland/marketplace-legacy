@@ -21,6 +21,7 @@ import SignInPage from 'components/SignInPage'
 
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
+import TermsPage from 'components/TermsPage'
 
 import GoogleAnalytics from 'components/GoogleAnalytics'
 import Intercom from 'components/Intercom'
@@ -45,6 +46,7 @@ export default class Routes extends React.Component {
         <Route exact path={locations.settings} component={SettingsPage} />
         <Route exact path={locations.colorKey} component={ColorKeyPage} />
         <Route exact path={locations.privacy} component={PrivacyPage} />
+        <Route exact path={locations.terms} component={TermsPage} />
         <Route exact path={locations.parcelMap} component={AtlasPage} />
         <Route exact path={locations.signIn} component={SignInPage} />
         <Redirect to={locations.root} />
