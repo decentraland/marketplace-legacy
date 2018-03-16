@@ -1,3 +1,8 @@
+.ui.message {
+  background-color: var(--dark-gray);
+  color: white !important;
+}
+
 .ui.warning.message {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
