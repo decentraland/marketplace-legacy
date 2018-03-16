@@ -192,14 +192,15 @@
   },
   "color_key": {
     "title": "Color key",
-    "yours": "YOURS",
-    "taken": "TAKEN",
-    "district": "DISTRICT",
-    "contribution": "CONTRIBUTION",
-    "roads": "ROADS",
-    "plaza": "PLAZA",
-    "unowned": "UNOWNED",
-    "loading": "LOADING"
+    "yours": "Yours",
+    "taken": "Taken",
+    "district": "District",
+    "contribution": "Contribution",
+    "roads": "Roads",
+    "plaza": "Plaza",
+    "unowned": "Unowned",
+    "loading": "Loading",
+    "on_sale": "On sale"
   },
   "sign_in": {
     "options":

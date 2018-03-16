@@ -17,7 +17,7 @@
     "submit": "Envoyer",
     "confirm": "Confirmer",
     "retry": "Recommencez",
-    "connect": "Connect",
+    "connect": "Connection",
     "authorized": "Autorisé",
     "unauthorized": "Non autorisé",
     "wallet_address": "Adresse du porte-feuille",
@@ -65,8 +65,8 @@
   },
   "parcel": {
     "view": "Vue",
-    "no_name": "No name",
-    "no_description": "No description"
+    "no_name": "Sans nom",
+    "no_description": "Sans description"
   },
   "parcel_detail": {
     "description": "Description",
@@ -149,7 +149,7 @@
   },
   "transaction": {
     "approved":
-      "Vous avez validé {mana} afin qu'elle soit utilisée {marketplace_contract_link}",
+      "Vous avez autorisé {mana} à être utilisé par {marketplace_contract_link}",
     "disapproved":
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "authorize":
@@ -200,14 +200,15 @@
   },
   "color_key": {
     "title": "Code couleur",
-    "yours": "LES VOTRES",
-    "taken": "PRISES",
-    "district": "QUARTIERS",
-    "contribution": "CONTRIBUTION",
-    "roads": "ROUTES",
-    "plaza": "PLACES",
-    "unowned": "LIBRES",
-    "loading": "CHARGEMENT"
+    "yours": "Les votres",
+    "taken": "Prises",
+    "district": "Quartiers",
+    "contribution": "Contribution",
+    "roads": "Routes",
+    "plaza": "Places",
+    "unowned": "Libres",
+    "loading": "Chargement",
+    "on_sale": "À vendre"
   },
   "sign_in": {
     "options":
