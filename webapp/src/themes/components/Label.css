@@ -9,6 +9,10 @@
   opacity: 1;
 }
 
+.ui.label {
+  border-radius: 50px !important;
+}
+
 .ui.purple.label,
 .ui.purple.labels .label {
   background-color: var(--red) !important;

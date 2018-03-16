@@ -13,4 +13,6 @@
 
 .Transaction .timestamp {
   color: var(--gray);
+  display: inline-block;
+  margin-left: 15px;
 }
