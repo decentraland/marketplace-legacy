@@ -6,6 +6,9 @@ import { Button, Loader } from 'semantic-ui-react'
 import StaticPage from 'components/StaticPage'
 import { t, t_html } from 'modules/translation/utils'
 
+import WalletIcon from './WalletIcon'
+import './SignInPage.css'
+
 export default class SignInPage extends React.PureComponent {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
@@ -28,12 +31,14 @@ export default class SignInPage extends React.PureComponent {
     const { isLoading } = this.props
 
     return (
-      <StaticPage>
+      <StaticPage className="SignInPage">
         {isLoading ? (
           <Loader active size="massive" />
         ) : (
           <div className="message">
-            <p>
+            <WalletIcon />
+            <h1>Get Started</h1>
+            <p className="sign-in-options">
               {t_html('sign_in.options', {
                 metamask_link: (
                   <a
@@ -64,10 +69,9 @@ export default class SignInPage extends React.PureComponent {
                 )
               })}
             </p>
-            <p>{t('sign_in.account_unlocked')}</p>
             <br />
             <Button type="button" primary onClick={this.handleRetry}>
-              {t('global.retry')}
+              {t('global.connect')}
             </Button>
           </div>
         )}

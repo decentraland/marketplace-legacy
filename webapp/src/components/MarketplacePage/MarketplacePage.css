@@ -21,3 +21,8 @@
   color: var(--gray);
   font-size: 16px;
 }
+
+.MarketplacePage .dimmer {
+  background-color: var(--background) !important;
+  opacity: 0.8 !important;
+}

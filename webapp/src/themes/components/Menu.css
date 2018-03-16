@@ -14,3 +14,10 @@
   color: var(--red) !important;
   cursor: pointer;
 }
+
+.ui.dropdown .item,
+.ui.dropdown .item,
+.ui.dropdown .item:hover {
+  border: none !important;
+  color: black !important;
+}

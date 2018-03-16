@@ -6,6 +6,8 @@ import { txUtils } from 'decentraland-commons'
 import { locations } from 'locations'
 import { t, t_html } from 'modules/translation/utils'
 
+import './TxStatusText.css'
+
 export default class TxStatusText extends React.PureComponent {
   static propTypes = {
     txHash: PropTypes.string.isRequired,

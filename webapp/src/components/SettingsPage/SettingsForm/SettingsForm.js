@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { WALLET_TYPES, txUtils } from 'decentraland-commons'
 
-import { Form } from 'semantic-ui-react'
+import { Form, Checkbox } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
 import DerivationPathDropdown from './DerivationPathDropdown'
@@ -78,22 +78,11 @@ export default class SettingsForm extends React.PureComponent {
         />
 
         <Form.Field>
-          <input
-            type="checkbox"
+          <Checkbox
             checked={manaApproved > 0}
             disabled={isApprovePending}
-            data-balloon={
-              isApprovePending
-                ? t('settings.pending_tx')
-                : manaApproved > 0
-                  ? t('settings.disapprove_mana_check')
-                  : t('settings.approve_mana_check')
-            }
-            data-balloon-length="large"
-            data-balloon-pos="right"
             onChange={onManaApprovedChange}
           />
-
           <div className="authorize-detail">
             {manaApproved > 0
               ? t_html('settings.mana_approved', {
@@ -113,19 +102,9 @@ export default class SettingsForm extends React.PureComponent {
         </Form.Field>
 
         <Form.Field>
-          <input
-            type="checkbox"
-            checked={isLandAuthorized || false}
+          <Checkbox
+            checked={isLandAuthorized}
             disabled={isAuthorizePending}
-            data-balloon={
-              isAuthorizePending
-                ? t('settings.pending_tx')
-                : isLandAuthorized
-                  ? t('settings.unauthorize_land_check')
-                  : t('settings.authorize_land_check')
-            }
-            data-balloon-length="large"
-            data-balloon-pos="right"
             onChange={onLandAuthorizedChange}
           />
 

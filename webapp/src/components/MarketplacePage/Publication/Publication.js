@@ -55,7 +55,10 @@ export default class Publication extends React.PureComponent {
     const expirationTimeInWords = distanceInWordsToNow(publication.expires_at)
 
     return (
-      <Card className="Publication" link>
+      <Card
+        className="Publication"
+        href={locations.parcelDetail(publication.x, publication.y)}
+      >
         <Link to={locations.parcelDetail(publication.x, publication.y)}>
           <div className="preview">
             <ParcelPreview
