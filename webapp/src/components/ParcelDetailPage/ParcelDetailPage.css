@@ -1,6 +1,5 @@
 .Page > .ParcelDetailPage {
   padding-top: 0;
-  padding-bottom: 120px;
 }
 
 .ParcelDetailPage {
@@ -18,7 +17,7 @@
 }
 
 .ParcelDetailPage .parcel-preview {
-  height: 300px;
+  height: 296px;
 }
 
 .ParcelDetailPage .ParcelDetail {
@@ -26,8 +25,12 @@
   font-size: 15px;
 }
 
+.ParcelDetail .ParcelName .name {
+  margin-right: 0.5em;
+}
+
 .ParcelDetail .parcel-description {
-  color: var(--dark-purple);
+  color: var(--gray);
 }
 
 .ParcelDetail .parcel-description-empty {
@@ -35,8 +38,6 @@
   font-style: italic;
 }
 
-@media (min-width: 768px) {
-  .ParcelDetailPage .parcel-owner-container {
-    text-align: right;
-  }
+.ParcelDetailPage .parcel-owner-container {
+  text-align: right !important;
 }

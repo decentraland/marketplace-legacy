@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { locations, NAVBAR_PAGES } from 'locations'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 import Account from './Account'
-import Icon from 'components/Icon'
 import Badge from 'components/Badge'
+import DecentralandLogo from 'components/DecentralandLogo'
 
 import { walletType, coordsType } from 'components/types'
 import { t } from 'modules/translation/utils'
@@ -18,7 +18,6 @@ export default class Navbar extends React.PureComponent {
     wallet: walletType,
     center: coordsType,
     activePage: PropTypes.oneOf(Object.values(NAVBAR_PAGES)),
-    isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
     activityBadge: PropTypes.number
   }
@@ -36,11 +35,10 @@ export default class Navbar extends React.PureComponent {
 
   renderActivityBadge() {
     const { activityBadge, activePage } = this.props
-
-    if (activityBadge === 0) {
+    const isActive = activePage === NAVBAR_PAGES.activity
+    if (activityBadge === 0 || isActive) {
       return null
     }
-    const isActive = activePage === NAVBAR_PAGES.activity
     return <Badge color={isActive ? 'white' : 'purple'}>{activityBadge}</Badge>
   }
 
@@ -50,7 +48,7 @@ export default class Navbar extends React.PureComponent {
   }
 
   render() {
-    const { wallet, activePage, isLoading, isConnected } = this.props
+    const { wallet, activePage, isConnected } = this.props
     const navigationPaths = this.getNavigationPaths()
 
     return (
@@ -58,12 +56,8 @@ export default class Navbar extends React.PureComponent {
         <div className="navbar-header">
           <Link to={locations.root} className="navbar-logo">
             <span className="navbar-icon">
-              <Icon
-                name={isLoading ? 'decentraland-loading' : 'decentraland'}
-                className="pull-left"
-              />
+              <DecentralandLogo />
             </span>
-            <h1 className="pull-left hidden-xs">Decentraland</h1>
           </Link>
         </div>
         <div className="navbar-menu">
@@ -91,21 +85,25 @@ export default class Navbar extends React.PureComponent {
                 >
                   {t('navbar.my_land')}
                 </Menu.Item>
-                <Menu.Item
-                  href={navigationPaths[NAVBAR_PAGES.activity]}
-                  active={activePage === NAVBAR_PAGES.activity}
-                  onClick={this.handleItemClick}
-                >
-                  {t('global.activity')}
-                  {this.renderActivityBadge()}
-                </Menu.Item>
               </React.Fragment>
             ) : null}
           </Menu>
         </div>
         <div className="navbar-account">
           {isConnected ? (
-            <Account wallet={wallet} />
+            <React.Fragment>
+              <Menu secondary className="activity-menu">
+                <Menu.Item
+                  href={navigationPaths[NAVBAR_PAGES.activity]}
+                  active={activePage === NAVBAR_PAGES.activity}
+                  onClick={this.handleItemClick}
+                >
+                  <Icon name="bell" />
+                  {this.renderActivityBadge()}
+                </Menu.Item>
+              </Menu>
+              <Account wallet={wallet} />
+            </React.Fragment>
           ) : (
             <Menu secondary>
               <Menu.Item

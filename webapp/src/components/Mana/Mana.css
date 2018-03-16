@@ -1,0 +1,11 @@
+.Mana {
+  color: var(--light-blue);
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  font-weight: 200;
+}
+
+.Mana .ManaIcon {
+  margin-right: 0.4em;
+}

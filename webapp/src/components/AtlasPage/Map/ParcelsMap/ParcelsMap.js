@@ -161,7 +161,7 @@ export default class ParcelsMap extends React.Component {
       parcels
     })
 
-    this.map.zoomControl.setPosition('topright')
+    this.map.zoomControl.setPosition('bottomright')
     this.map.setMaxBounds(this.mapCoordinates.toLatLngBounds(bounds))
     this.map.addLayer(this.parcelGrid)
     this.map.setView(this.getLatLng(x, y))
@@ -280,8 +280,11 @@ export default class ParcelsMap extends React.Component {
     const parcel = parcels[id]
 
     const { backgroundColor, color, label, description } = getParcelAttributes(
+      id,
+      x,
+      y,
       wallet,
-      parcel,
+      parcels,
       districts
     )
 
@@ -297,7 +300,10 @@ export default class ParcelsMap extends React.Component {
       backgroundColor,
       label,
       description,
-      publication
+      publication,
+      connectedLeft: parcel && parcel.connectedLeft,
+      connectedTop: parcel && parcel.connectedTop,
+      connectedTopLeft: parcel && parcel.connectedTopLeft
     }
   }
 

@@ -3,14 +3,15 @@ import PropTypes from 'prop-types'
 import { parcelType } from 'components/types'
 import debounce from 'lodash.debounce'
 import { buildCoordinate } from 'lib/utils'
-import { getParcelAttributes, inBounds } from 'lib/parcelUtils'
-import { marker } from 'lib/marker'
+import { COLORS, getParcelAttributes, inBounds } from 'lib/parcelUtils'
+import { Parcel, Selection } from 'lib/render'
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     size: PropTypes.number,
+    padding: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
     parcels: PropTypes.objectOf(parcelType),
@@ -19,6 +20,7 @@ export default class ParcelPreview extends React.PureComponent {
 
   static defaultProps = {
     size: 20,
+    padding: 2,
     width: 100,
     height: 100,
     debounce: 400
@@ -115,10 +117,21 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height, x, y, size, wallet, districts, parcels } = this.props
+    const {
+      width,
+      height,
+      x,
+      y,
+      size,
+      padding,
+      wallet,
+      districts,
+      parcels
+    } = this.props
     const { nw, se } = this.state
     const ctx = this.canvas.getContext('2d')
-    ctx.clearRect(0, 0, width, height)
+    ctx.fillStyle = COLORS.background
+    ctx.fillRect(0, 0, width, height)
     let markerCenter = null
     for (let px = nw.x; px < se.x; px++) {
       for (let py = nw.y; py < se.y; py++) {
@@ -130,22 +143,40 @@ export default class ParcelPreview extends React.PureComponent {
         const ry = cy - offsetY
 
         const parcelId = buildCoordinate(px, py)
+        const parcel = parcels[parcelId]
         const { backgroundColor } = this.cache[parcelId]
           ? this.cache[parcelId]
           : (this.cache[parcelId] = getParcelAttributes(
+              parcelId,
+              px,
+              py,
               wallet,
-              parcels[parcelId],
+              parcels,
               districts
             ))
         const isCenter = px === x && py === y
         if (isCenter) {
           markerCenter = { x: rx, y: ry }
         }
-        ctx.fillStyle = backgroundColor
-        ctx.fillRect(rx - size / 2, ry - size / 2, size - 1, size - 1)
+        Parcel.draw({
+          ctx,
+          x: rx + size / 2,
+          y: ry + size / 2,
+          size,
+          padding,
+          color: backgroundColor,
+          connectedLeft: parcel ? parcel.connectedLeft : false,
+          connectedTop: parcel ? parcel.connectedTop : false,
+          connectedTopLeft: parcel ? parcel.connectedTopLeft : false
+        })
       }
     }
-    marker.draw({ ctx, x: markerCenter.x, y: markerCenter.y, scale: 2 })
+    Selection.draw({
+      ctx,
+      x: markerCenter.x,
+      y: markerCenter.y,
+      size: size
+    })
   }
 
   refCanvas = canvas => {

@@ -1,13 +1,13 @@
 .ui.button {
+  color: var(--primary);
   margin: 0 auto;
   padding: 10px 22px;
   font-size: 16px;
   border-radius: 50px;
   line-height: 1.42857143;
-  border: 1px solid lightgray;
-  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  border: 1px solid var(--red);
   text-transform: uppercase;
-  background-color: white;
+  background-color: transparent;
   cursor: pointer;
   font-weight: normal;
   text-align: center;
@@ -19,25 +19,19 @@
 .ui.button.primary,
 .ui.button.primary:focus,
 .ui.button.primary:active {
-  background-color: var(--primary);
+  background-color: var(--primary) !important;
   color: #fff;
   border: none;
 }
 
 .ui.button.primary:hover,
-.ui.button.primary:visited {
-  background-color: var(--primary);
-  box-shadow: 0 8px 30px #30d7a980;
-  color: #fff;
-}
-
-.ui.button.negative {
-  background-color: var(--red) !important;
-  border: none;
-}
-
-.ui.button.negative:hover,
-.ui.button.negative:visited {
-  background-color: var(--red);
+.ui.button.primary:focus,
+.ui.button.primary:active {
   box-shadow: 0 8px 30px var(--dark-red);
+}
+
+.ui.button:hover,
+.ui.button:visited {
+  background-color: var(--primary);
+  color: #fff;
 }

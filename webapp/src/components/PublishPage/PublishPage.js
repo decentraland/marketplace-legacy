@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { txUtils } from 'decentraland-commons'
 
 import { locations } from 'locations'
 import { Container, Header, Grid, Message } from 'semantic-ui-react'
@@ -11,6 +12,8 @@ import TxStatus from 'components/TxStatus'
 
 import { publicationType, walletType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
+
+import { formatMana } from 'lib/utils'
 
 import './PublishPage.css'
 
@@ -36,10 +39,37 @@ export default class PublishPage extends React.PureComponent {
 
     const { isLandAuthorized } = wallet
 
+    const isAlreadyOnSale =
+      publication &&
+      publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed
+
     return (
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
           <div className="PublishPage">
+            {isAlreadyOnSale ? (
+              <Container text>
+                <Message
+                  warning
+                  icon="warning sign"
+                  content={t('parcel_publish.already_sold', {
+                    value: formatMana(publication.price)
+                  })}
+                />
+              </Container>
+            ) : null}
+            {!isLandAuthorized ? (
+              <Container text>
+                <Message
+                  warning
+                  icon="warning sign"
+                  header={t('global.unauthorized')}
+                  content={t_html('parcel_publish.please_authorize', {
+                    settings_link: <Link to={locations.settings}>Settings</Link>
+                  })}
+                />
+              </Container>
+            ) : null}
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
                 {t('parcel_publish.list_land')}
@@ -64,21 +94,6 @@ export default class PublishPage extends React.PureComponent {
                 <TxStatus.Parcel parcel={parcel} />
               </Grid.Column>
             </Container>
-            <br />
-            {!isLandAuthorized ? (
-              <Container text>
-                <Grid.Column>
-                  <Message warning>
-                    <h3>{t('global.unauthorized')}</h3>
-                    {t_html('parcel_publish.please_authorize', {
-                      settings_link: (
-                        <Link to={locations.settings}>Settings</Link>
-                      )
-                    })}
-                  </Message>
-                </Grid.Column>
-              </Container>
-            ) : null}
           </div>
         )}
       </Parcel>

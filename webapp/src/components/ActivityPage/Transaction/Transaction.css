@@ -1,15 +1,52 @@
-.Transaction .TxStatusIcon {
-  margin-right: 15px;
-}
-
-.Transaction i.icon {
-  font-size: 1.2em;
-}
-
-.Transaction .text {
+.Transaction {
   word-break: break-word;
+  font-size: 15px;
 }
 
-.Transaction .timestamp {
+.Transaction .ui.loader {
+  left: 0;
+}
+
+.Transaction .mini.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50px;
+  top: 46%;
+  left: -2px;
+  position: absolute;
+  background-color: var(--primary);
+}
+
+.Transaction .transaction-text {
+  height: 100%;
+}
+
+.Transaction .transaction-avatar {
+  width: 64px;
+  height: 64px;
+  margin-right: 15px;
+  float: left;
+}
+
+.Transaction .transaction-timestamp {
+  display: inline-block;
   color: var(--gray);
+}
+
+.Transaction .transaction-icon {
+  height: 100%;
+  float: right;
+}
+
+@media (max-width: 768px) {
+  .Transaction .ui.loader,
+  .Transaction .mini.circle {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .Transaction .transaction-text {
+    margin-top: 12px;
+  }
 }

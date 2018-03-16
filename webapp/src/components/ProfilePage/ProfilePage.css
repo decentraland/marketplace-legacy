@@ -8,7 +8,6 @@
 .ProfilePage .title .address {
   color: var(--gray);
   font-size: 26px;
-  font-family: 'Source Sans Pro Light';
   margin-left: 10px;
 }
 
@@ -44,5 +43,15 @@
 }
 
 .ProfilePage .profile-owner .AddressLink {
-  height: 20px;
+  height: 25px;
+  margin-left: 5px;
+}
+
+.ProfilePage .label {
+  background-color: var(--dark-gray) !important;
+  color: white !important;
+}
+
+.ProfilePage .label.active {
+  background-color: var(--red) !important;
 }

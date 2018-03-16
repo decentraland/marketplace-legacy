@@ -4,11 +4,10 @@
   align-items: center;
 }
 
-.Account .balance {
-  margin-right: 10px;
-  color: gray;
+.Account .Mana {
+  margin-right: 25px;
 }
 
 .Account .AddressLink {
-  height: 28px;
+  height: 36px;
 }

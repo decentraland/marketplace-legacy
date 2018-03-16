@@ -33,6 +33,8 @@ export default class LocalesDropdown extends React.PureComponent {
         allowAdditions={false}
         search
         selection
+        size="small"
+        upward={true}
       />
     )
   }

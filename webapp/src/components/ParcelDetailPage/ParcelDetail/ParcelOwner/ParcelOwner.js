@@ -39,7 +39,7 @@ export default class ParcelOwner extends React.PureComponent {
 
       return (
         <span className="ParcelOwner is-district">
-          {t('parcel_detail.owner.part_of', { name: districtName })}
+          {t_html('parcel_detail.owner.part_of', { name: districtName })}
         </span>
       )
     }
@@ -47,9 +47,8 @@ export default class ParcelOwner extends React.PureComponent {
     if (parcel.owner) {
       return (
         <span className="ParcelOwner is-address">
-          {t_html('global.owned_by', {
-            address_link: <AddressLink address={parcel.owner} scale={4} />
-          })}
+          <span>{t('global.owned_by')}</span>
+          <AddressLink address={parcel.owner} scale={4} />
         </span>
       )
     }

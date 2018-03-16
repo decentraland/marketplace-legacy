@@ -5,25 +5,20 @@ import { txUtils } from 'decentraland-commons'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 import { locations } from 'locations'
-import { Header, Card, Button } from 'semantic-ui-react'
-import ParcelName from 'components/ParcelName'
-import AddressLink from 'components/AddressLink'
+import { Icon, Card, Button } from 'semantic-ui-react'
+import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { t } from 'modules/translation/utils'
-import { formatDate, formatMana } from 'lib/utils'
+import { formatDate, buildCoordinate } from 'lib/utils'
 
 import './Publication.css'
 
 export default class Publication extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
-    debounce: PropTypes.number,
-    isOwnerVisible: PropTypes.bool
-  }
-  static defaultProps = {
-    isOwnerVisible: true
+    debounce: PropTypes.number
   }
 
   renderButton({ publication, isExpired }) {
@@ -54,47 +49,37 @@ export default class Publication extends React.PureComponent {
     )
   }
   render() {
-    const { publication, debounce, isOwnerVisible } = this.props
+    const { publication, debounce } = this.props
 
     const isExpired = publication.expires_at < Date.now()
     const expirationTimeInWords = distanceInWordsToNow(publication.expires_at)
 
     return (
-      <Card className="Publication">
+      <Card
+        className="Publication"
+        href={locations.parcelDetail(publication.x, publication.y)}
+      >
         <Link to={locations.parcelDetail(publication.x, publication.y)}>
           <div className="preview">
             <ParcelPreview
               x={publication.x}
               y={publication.y}
               debounce={debounce}
-              size={18}
+              size={12}
             />
           </div>
         </Link>
         <Card.Content className="body">
-          <ParcelName x={publication.x} y={publication.y} size="small" />
+          <Mana amount={parseFloat(publication.price, 10)} />
           <Card.Meta title={formatDate(publication.expires_at)}>
             {isExpired
               ? t('publication.expired_at', { time: expirationTimeInWords })
               : t('publication.expires_in', { time: expirationTimeInWords })}
           </Card.Meta>
-          {isOwnerVisible && (
-            <AddressLink
-              address={publication.owner}
-              scale={2}
-              className="publication-owner"
-            />
-          )}
-        </Card.Content>
-        <Card.Content extra>
-          <span className="footer">
-            <Header size="medium" floated="left" className="price">
-              <span className="amount" title={formatMana(publication.price)}>
-                {formatMana(publication.price, '')}
-              </span>&nbsp;MANA
-            </Header>
-            {this.renderButton({ publication, isExpired })}
-          </span>
+          <div className="coords">
+            <Icon name="marker" size="small" />
+            {buildCoordinate(publication.x, publication.y)}
+          </div>
         </Card.Content>
       </Card>
     )

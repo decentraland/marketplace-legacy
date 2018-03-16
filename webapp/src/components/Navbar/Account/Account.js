@@ -1,7 +1,7 @@
 import React from 'react'
 import AddressLink from 'components/AddressLink'
 import { walletType } from 'components/types'
-import { formatMana } from 'lib/utils'
+import Mana from 'components/Mana'
 import { locations } from 'locations'
 
 import './Account.css'
@@ -15,15 +15,11 @@ export default class Account extends React.PureComponent {
     if (!wallet || !wallet.address || wallet.balance == null) {
       return null
     }
-
-    const balance = formatMana(wallet.balance)
     return (
       <span className="Account">
-        <span title={balance} className="balance">
-          {balance}
-        </span>
+        <Mana amount={wallet.balance} />
         <AddressLink
-          scale={4}
+          scale={6}
           link={locations.settings}
           address={wallet.address}
           hasTooltip={false}

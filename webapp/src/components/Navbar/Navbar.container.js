@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { getWallet } from 'modules/wallet/selectors'
 import { getLocation } from 'modules/location/selectors'
 import { getCenter } from 'modules/ui/selectors'
-import { isLoading } from 'modules/ui/loading/selectors'
 import { isConnected } from 'modules/wallet/selectors'
-import { isLoading as isLoadingParcels } from 'modules/parcels/selectors'
 import { getPendingTransactions } from 'modules/transaction/selectors'
 import { navigateTo } from 'modules/location/actions'
 
@@ -22,7 +20,6 @@ const mapState = state => {
     activePage,
     wallet,
     center,
-    isLoading: isLoading(state) || isLoadingParcels(state),
     isConnected: isConnected(state),
     activityBadge: getPendingTransactions(state, wallet.address).length
   }

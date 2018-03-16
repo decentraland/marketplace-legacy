@@ -1,0 +1,10 @@
+.ui.card {
+  overflow: hidden;
+  background-color: var(--dark-gray) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ui.card .meta {
+  color: var(--gray) !important;
+}

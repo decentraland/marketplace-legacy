@@ -9,13 +9,14 @@ import TxStatus from 'components/TxStatus'
 
 import { parcelType, publicationType } from 'components/types'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
-import { ONE_LAND_IN_MANA } from 'lib/land'
 import { t } from 'modules/translation/utils'
 
 import './PublicationForm.css'
 
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
+
+const MIN_LAND_PRICE = 1
 
 export default class PublicationForm extends React.PureComponent {
   static propTypes = {
@@ -71,10 +72,10 @@ export default class PublicationForm extends React.PureComponent {
       formErrors.push(t('parcel_publish.errors.minimum_expiration'))
     }
 
-    if (price < ONE_LAND_IN_MANA) {
+    if (price < MIN_LAND_PRICE) {
       formErrors.push(
         t('parcel_publish.errors.minimum_land', {
-          value: formatMana(ONE_LAND_IN_MANA)
+          value: formatMana(MIN_LAND_PRICE, '')
         })
       )
     }
@@ -141,21 +142,12 @@ export default class PublicationForm extends React.PureComponent {
             </Message.Content>
           </Message>
         ) : null}
-        {isConfirmed ? (
-          <Message success>
-            {t('parcel_publish.already_sold', {
-              value: formatMana(publication.price)
-            })}
-          </Message>
-        ) : null}
         {formErrors.length > 0 ? (
           <Message error onDismiss={this.handleClearFormErrors}>
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}
           </Message>
         ) : null}
-
         <br />
-
         <div className="text-center">
           <Button
             disabled={isPending || isConfirmed}

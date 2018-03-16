@@ -44,7 +44,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         error: null,
         data: {
           ...state.data,
-          [parcelId]: cleanParcel(action.parcel)
+          [parcelId]: cleanParcel(action.parcel, state.data)
         }
       }
     }

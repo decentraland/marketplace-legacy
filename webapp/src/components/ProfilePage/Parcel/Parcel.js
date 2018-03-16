@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
-import { Button, Card } from 'semantic-ui-react'
-import ParcelName from 'components/ParcelName'
+import { Card, Icon } from 'semantic-ui-react'
 import ParcelPreview from 'components/ParcelPreview'
 import { parcelType } from 'components/types'
 import { t } from 'modules/translation/utils'
+import { buildCoordinate } from 'lib/utils'
 
 import './Parcel.css'
 
@@ -18,20 +18,24 @@ export default class Parcel extends React.PureComponent {
     const { parcel } = this.props
 
     return (
-      <Card className="Parcel">
+      <Card className="Parcel" link>
         <Link to={locations.parcelDetail(parcel.x, parcel.y)}>
           <div className="preview">
-            <ParcelPreview x={parcel.x} y={parcel.y} size={18} />
+            <ParcelPreview x={parcel.x} y={parcel.y} size={12} />
           </div>
+          <Card.Content extra>
+            <div className="name">
+              {parcel.data.name || t('parcel.no_name')}
+            </div>
+            <div className="description">
+              {parcel.data.description || t('parcel.no_description')}
+            </div>
+            <div className="coords">
+              <Icon name="marker" size="small" />
+              {buildCoordinate(parcel.x, parcel.y)}
+            </div>
+          </Card.Content>
         </Link>
-        <Card.Content extra>
-          <span className="footer">
-            <ParcelName x={parcel.x} y={parcel.y} size="large" />
-            <Link to={locations.parcelDetail(parcel.x, parcel.y)}>
-              <Button size="tiny">{t('parcel.view')}</Button>
-            </Link>
-          </span>
-        </Card.Content>
       </Card>
     )
   }

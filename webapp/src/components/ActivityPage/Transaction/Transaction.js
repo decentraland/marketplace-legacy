@@ -1,15 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { txUtils } from 'decentraland-commons'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 import { locations } from 'locations'
-import { Segment, Grid } from 'semantic-ui-react'
+import { Segment, Grid, Loader } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import EtherscanLink from 'components/EtherscanLink'
+import ParcelPreview from 'components/ParcelPreview'
+import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import { formatDate } from 'lib/utils'
-
+import { formatDate, buildCoordinate } from 'lib/utils'
 import { getMarketplaceAddress } from 'modules/wallet/utils'
+import { t, t_html } from 'modules/translation/utils'
+
 import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS
@@ -21,7 +25,6 @@ import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS
 } from 'modules/publication/actions'
-import { t, t_html } from 'modules/translation/utils'
 
 import './Transaction.css'
 
@@ -46,7 +49,7 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  renderTextFragment() {
+  renderText() {
     const { tx } = this.props
     const { payload } = tx
 
@@ -120,29 +123,58 @@ export default class Transaction extends React.PureComponent {
 
   render() {
     const { tx } = this.props
-    const textFragment = this.renderTextFragment()
+    const { x, y } = tx.payload
+    const text = this.renderText()
 
-    if (!textFragment) {
+    if (!text) {
       return null
     }
 
+    const isParcelTransaction = [
+      EDIT_PARCEL_SUCCESS,
+      TRANSFER_PARCEL_SUCCESS,
+      PUBLISH_SUCCESS,
+      BUY_SUCCESS,
+      CANCEL_SALE_SUCCESS
+    ].includes(tx.actionType)
+
     return (
-      <Segment size="large" className="Transaction" vertical>
+      <Segment size="large" vertical>
         <Grid>
-          <Grid.Column width={1}>
-            <TxStatus.Icon txHash={tx.hash} txStatus={tx.status} />
-          </Grid.Column>
-          <Grid.Column mobile={14} tablet={14} computer={12} className="text">
-            {textFragment}
-          </Grid.Column>
-          <Grid.Column textAlign="right" only="computer" width={3}>
-            <span
-              className="timestamp"
-              data-balloon-pos="up"
-              data-balloon={formatDate(tx.timestamp)}
-            >
-              {distanceInWordsToNow(tx.timestamp)}
-            </span>
+          <Grid.Column className="Transaction">
+            {tx.status === txUtils.TRANSACTION_STATUS.pending ? (
+              <Loader active size="mini" />
+            ) : (
+              <div className="mini circle" />
+            )}
+
+            <div className="transaction-avatar">
+              {isParcelTransaction ? (
+                <Link
+                  to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}
+                >
+                  <ParcelPreview x={x} y={y} width={64} height={64} size={15} />
+                </Link>
+              ) : (
+                <Mana size={64} scale={1} />
+              )}
+            </div>
+
+            <div className="transaction-text">
+              <TxStatus.Icon
+                className="transaction-icon"
+                txHash={tx.hash}
+                txStatus={tx.status}
+              />
+              <div>{text}</div>
+              <div
+                className="transaction-timestamp"
+                data-balloon-pos="up"
+                data-balloon={formatDate(tx.timestamp)}
+              >
+                {distanceInWordsToNow(tx.timestamp)}
+              </div>
+            </div>
           </Grid.Column>
         </Grid>
       </Segment>

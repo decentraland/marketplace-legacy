@@ -17,13 +17,15 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "retry": "Retry",
+    "connect": "Connect",
     "authorized": "Authorized",
     "unauthorized": "Unauthorized",
     "wallet_address": "Wallet address",
     "for": "for",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
-    "owned_by": "Owned by {address_link}"
+    "owned_by": "Owned by",
+    "owned_by_link": "Owned by {address_link}"
   },
   "address": {
     "its_you": "It's you"
@@ -61,7 +63,9 @@
     "proposal": "proposal"
   },
   "parcel": {
-    "view": "View"
+    "view": "View",
+    "no_name": "No name",
+    "no_description": "No description"
   },
   "parcel_detail": {
     "description": "Description",
@@ -91,20 +95,23 @@
   "parcel_transfer": {
     "transfer_land": "Transfer LAND",
     "about_to_transfer": "You're about to transfer {parcel_name}",
-    "irreversible": "Remember that transferring LAND is an irreversible operation.",
+    "irreversible":
+      "Remember that transferring LAND is an irreversible operation.",
     "check_address": "Please check the address carefully",
     "cant_transfer": "This LAND can't be transferred because it's on sale.",
     "recipient_address": "Recipient address",
     "unknown_error": "An unknown error occurred, the details are below.",
-    "error_persists": "If the problem persists, contact us at our {community_chat_link}"
+    "error_persists":
+      "If the problem persists, contact us at our {community_chat_link}"
   },
   "parcel_buy": {
     "buy_land": "Buy LAND",
-    "about_to_buy": "You are about to buy {parcel_name}",
+    "about_to_buy": "You are about to buy {parcel_name} {parcel_price}",
     "approved_balance": "Your approved balance is {approved_balance}",
     "needs_at_least": "You need at least {mana} in order to buy this LAND.",
     "didnt_approve": "You haven't authorized MANA usage",
-    "please_approve": "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
+    "please_approve":
+      "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
     "total_balance": "Your balance is {balance}"
   },
   "parcel_publish": {
@@ -115,7 +122,8 @@
     "expiration": "Expiration",
     "expiration_placeholder": "Expiration date for this publication",
     "already_sold": "This LAND is already on sale for {value}",
-    "please_authorize": "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
+    "please_authorize":
+      "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
     "errors": {
       "minimum_expiration": "The minimum expiration date is one day",
       "minimum_land": "The minimum LAND price is {value} MANA"
@@ -123,7 +131,7 @@
   },
   "parcel_cancel": {
     "cancel_land": "Cancel LAND Sale",
-    "currently_on_sale":"is currently on sale for {value}.",
+    "currently_on_sale": "is currently on sale for {value}.",
     "about_to_cancel": "You are about to cancel this sale.",
     "not_for_sale": "is not for sale."
   },
@@ -131,61 +139,77 @@
     "no_activity": "You have no activity yet.",
     "start": "You can start by approving some MANA on your {settings_link}",
     "pending": "Pending",
-    "history": "History"
+    "completed": "Completed"
   },
   "transaction": {
-    "approved": "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "authorize": "You have {action} the {marketplace_contract_link} to operate LAND on your behalf",
-    "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+    "approved":
+      "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "disapproved":
+      "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "authorize":
+      "You have {action} the {marketplace_contract_link} to operate LAND on your behalf",
+    "edit":
+      "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "publish": "You published {parcel_link}",
     "buy": "You bought {parcel_link}",
     "cancel": "You cancelled the {publication_link} on {parcel_link}"
   },
   "transaction_status": {
-    "see_activity": "To see your transaction history, visit your {activity_link}.",
+    "see_activity":
+      "To see your transaction history, visit your {activity_link}.",
     "text": {
       "pending": "The transaction is waiting to be confirmed.",
       "failed": "Your transaction failed, you can try sending a new one."
     },
     "parcel": {
-      "still_pending": "{parcel_name} still has {transactions_count} pending transactions."
+      "still_pending":
+        "{parcel_name} still has {transactions_count} pending transactions."
     },
-    "idle":{
+    "idle": {
       "please_confirm": "Please confirm the transaction"
     }
   },
   "settings": {
     "pending_tx": "You have a pending transaction",
-    "disapprove_mana_check": "Unchecking unauthorizes MANA usage for the Marketplace contract",
-    "approve_mana_check": "Checking authorizes MANA usage to the Marketplace contract",
-    "mana_approved": "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "approve_mana": "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
+    "disapprove_mana_check":
+      "Unchecking unauthorizes MANA usage for the Marketplace contract",
+    "approve_mana_check":
+      "Checking authorizes MANA usage to the Marketplace contract",
+    "mana_approved":
+      "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "approve_mana":
+      "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
     "marketplace_contract": "Marketplace contract",
-    "unauthorize_land_check": "Unchecking unauthorizes LAND usage for the Marketplace contract",
-    "authorize_land_check": "Checking authorizes LAND usage to the Marketplace contract",
-    "you_authorized": "You have authorized the {marketplace_contract_link} to operate LAND on your behalf",
-    "authorize": "Authorize the {marketplace_contract_link} to operate LAND on your behalf"
+    "unauthorize_land_check":
+      "Unchecking unauthorizes LAND usage for the Marketplace contract",
+    "authorize_land_check":
+      "Checking authorizes LAND usage to the Marketplace contract",
+    "you_authorized":
+      "You have authorized the {marketplace_contract_link} to operate LAND on your behalf",
+    "authorize":
+      "Authorize the {marketplace_contract_link} to operate LAND on your behalf"
   },
   "color_key": {
     "title": "Color key",
-    "yours": "YOURS",
-    "taken": "TAKEN",
-    "district": "DISTRICT",
-    "contribution": "CONTRIBUTION",
-    "roads": "ROADS",
-    "plaza": "PLAZA",
-    "unowned": "UNOWNED",
-    "loading": "LOADING"
+    "yours": "Yours",
+    "taken": "Taken",
+    "district": "District",
+    "contribution": "Contribution",
+    "roads": "Roads",
+    "plaza": "Plaza",
+    "unowned": "Unowned",
+    "loading": "Loading",
+    "on_sale": "On sale"
   },
   "sign_in": {
-    "options": "Download {metamask_link} or {mist_link} or access with your {ledger_nano_link} link to use the Marketplace.",
+    "options":
+      "First off you’ll need a safe place to keep all your land. You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}.",
     "account_unlocked": "Make sure your account is unlocked"
   },
   "footer": {
     "color_key": "Color key",
     "privacy_policy": "Privacy Policy",
-    "copyright": "Copyright 2017 Decentraland. All rights reserved."
+    "copyright": "Copyright 2018 Decentraland. All rights reserved."
   }
 }

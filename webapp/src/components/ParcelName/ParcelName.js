@@ -4,16 +4,17 @@ import { Link } from 'react-router-dom'
 
 import { Icon } from 'semantic-ui-react'
 import { locations } from 'locations'
-import { parcelType } from 'components/types'
+import { parcelType, districtType } from 'components/types'
+import { buildCoordinate } from 'lib/utils'
 
 import './ParcelName.css'
-import { buildCoordinate } from 'lib/utils'
 
 export default class ParcelName extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
     x: PropTypes.number,
-    y: PropTypes.number
+    y: PropTypes.number,
+    districts: PropTypes.objectOf(districtType)
   }
 
   static defaultProps = {
@@ -22,7 +23,7 @@ export default class ParcelName extends React.PureComponent {
   }
 
   render() {
-    let { parcel, x, y } = this.props
+    let { parcel, x, y, districts } = this.props
     if (!parcel && x == null && y == null) {
       return (
         <div className="ParcelName">
@@ -35,7 +36,12 @@ export default class ParcelName extends React.PureComponent {
     if (parcel) {
       x = parcel.x
       y = parcel.y
-      name = parcel.data.name
+      if (districts && parcel.district_id in districts) {
+        name = districts[parcel.district_id].name
+      }
+      if (parcel.data.name) {
+        name = parcel.data.name
+      }
     }
     if (!name) {
       classes += ' no-name'

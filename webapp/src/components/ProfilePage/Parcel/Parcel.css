@@ -25,13 +25,27 @@
   overflow: hidden;
 }
 
-.Parcel .footer {
-  display: flex;
-  flex-direction: row nowrap;
-  align-items: center;
-  justify-content: space-between;
+.Parcel .name {
+  color: white;
 }
 
-.Parcel .footer a {
-  font-size: 1.2em;
+.Parcel .description {
+  color: var(--gray);
+}
+
+.Parcel .coords {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline;
+}
+
+.Parcel .extra {
+  position: relative;
+  padding: 10px !important;
+  color: var(--gray);
+}
+
+.Parcel:hover .extra {
+  color: var(--red);
 }

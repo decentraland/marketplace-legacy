@@ -1,6 +1,7 @@
 import L from 'leaflet'
+import { COLORS } from './parcelUtils'
 import { requestAnimationFrame, cancelAnimationFrame } from './utils'
-import { marker } from './marker'
+import { Parcel, Selection } from 'lib/render'
 
 export const LeafletParcelGrid = L.Layer.extend({
   include: L.Mixin.Events,
@@ -170,34 +171,33 @@ export const LeafletParcelGrid = L.Layer.extend({
 
     // Clear canvas
     const ctx = this.canvas.getContext('2d')
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    ctx.fillStyle = COLORS.background
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     let markerCenter = null
-    const parcelsOnSale = []
     for (let index = 0; index < tiles.length; index++) {
       const tile = tiles[index]
       const {
         id,
         backgroundColor,
-        publication
+        connectedLeft,
+        connectedTop,
+        connectedTopLeft
       } = this.options.getTileAttributes(tile.bounds.getNorthWest())
       const point = this.map.latLngToContainerPoint(tile.center)
-      this.renderTile(point.x, point.y, backgroundColor)
+      Parcel.draw({
+        ctx,
+        x: point.x,
+        y: point.y,
+        size: this.tileSize,
+        color: backgroundColor,
+        connectedLeft,
+        connectedTop,
+        connectedTopLeft
+      })
       if (this.options.marker === id) {
         markerCenter = point
       }
-      if (publication) {
-        parcelsOnSale.push(point)
-      }
     }
-    parcelsOnSale.forEach(parcelOnSale => {
-      this.renderMarker({
-        ctx,
-        center: parcelOnSale,
-        fillPrimary: '#5d5890',
-        fillSecondary: '#3e396b',
-        stroke: '#3e396b'
-      })
-    })
     if (markerCenter) {
       this.renderMarker({
         ctx,
@@ -206,29 +206,12 @@ export const LeafletParcelGrid = L.Layer.extend({
     }
   },
 
-  renderTile(x, y, color) {
-    // Render tile
-    const ctx = this.canvas.getContext('2d')
-    const padding = 1
-
-    ctx.fillStyle = color
-    ctx.fillRect(
-      x - this.tileSize,
-      y - this.tileSize,
-      this.tileSize - padding,
-      this.tileSize - padding
-    )
-  },
-
   renderMarker({ ctx, center, fillPrimary, fillSecondary, stroke, scale }) {
-    marker.draw({
+    Selection.draw({
       ctx,
       x: center.x - this.tileSize / 2,
       y: center.y - this.tileSize / 2,
-      fillPrimary,
-      fillSecondary,
-      stroke,
-      scale
+      size: this.tileSize
     })
   },
 

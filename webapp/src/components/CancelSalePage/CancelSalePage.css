@@ -1,7 +1,6 @@
 .CancelSalePage .subtitle {
-  color: var(--dark-purple);
+  color: white;
   font-weight: 100;
-  font-family: 'Source Sans Pro Light';
   font-size: 1.2em;
   margin: 20px;
   display: inline-block;
@@ -9,10 +8,6 @@
 
 .CancelSalePage .subtitle + .subtitle {
   margin-top: 0px;
-}
-
-.CancelSalePage .price {
-  font-family: 'Source Sans Pro';
 }
 
 .CancelSalePage button + button {

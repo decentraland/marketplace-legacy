@@ -2,9 +2,10 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  height: 94px;
+  height: var(--navbar-height);
   justify-content: center;
   padding: 0px 40px;
+  background-color: var(--background);
 }
 
 .Navbar .navbar-header {
@@ -15,6 +16,8 @@
 .Navbar .navbar-account {
   position: absolute;
   right: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .Navbar .navbar-icon {
@@ -41,30 +44,57 @@
 }
 
 .Navbar .navbar-logo .Icon-decentraland {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
 }
 
 .Navbar .navbar-menu .item,
 .Navbar .navbar-account .item {
-  color: var(--purple);
+  color: var(--primary);
   transition: none;
+  text-transform: uppercase;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  padding: 9px;
+  font-weight: 100;
+  color: var(--gray);
+  margin: 0px 10px !important;
 }
 
 .Navbar .navbar-menu .ui.menu .item.active,
 .Navbar .navbar-menu .ui.menu .item:hover,
 .Navbar .navbar-account .ui.menu .item.active,
 .Navbar .navbar-account .ui.menu .item:hover {
-  background-color: var(--purple);
+  background-color: var(--primary);
   color: #fff;
   transition: none;
+  border-radius: 20px;
+}
+
+.Navbar .activity-menu {
+  position: relative;
+  width: 43px;
+  height: 33px;
+  margin-right: 20px !important;
+  margin-bottom: 0px;
+}
+
+.Navbar .activity-menu .item {
+  max-width: 33px;
+  padding: 10px !important;
+  margin-right: 25px !important;
+  position: absolute;
+}
+
+.Navbar .activity-menu .Badge {
+  position: absolute !important;
+  transform: scale(0.8) translateX(-10px) translateY(-5px);
 }
 
 /* Same as Label color="white" found on Label.css */
-.Navbar .navbar-menu .ui.menu .item:hover .label {
-  background-color: #fff !important;
-  color: var(--purple) !important;
-  transition: none;
+.Navbar .activity-menu .item:hover .Badge {
+  display: none;
 }
 
 @media (min-width: 500px) {

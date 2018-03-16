@@ -1,3 +1,6 @@
+.ParcelActions {
+  margin-bottom: 15px;
+}
 .ParcelActions .ui.button + .ui.button {
   margin-left: 15px;
 }

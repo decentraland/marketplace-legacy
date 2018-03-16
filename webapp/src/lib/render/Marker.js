@@ -1,4 +1,4 @@
-export const marker = {
+export const Marker = {
   draw({
     ctx,
     x,

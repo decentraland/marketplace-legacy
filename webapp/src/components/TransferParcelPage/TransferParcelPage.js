@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Container, Header, Grid } from 'semantic-ui-react'
+import { Container, Header, Grid, Message } from 'semantic-ui-react'
 import Parcel from 'components/Parcel'
 import ParcelName from 'components/ParcelName'
 import TxStatus from 'components/TxStatus'
@@ -32,6 +32,15 @@ export default class TransferParcelPage extends React.PureComponent {
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
           <div className="TransferParcelPage">
+            {hasPublication(parcel, publications) ? (
+              <Container text>
+                <Message
+                  warning
+                  icon="warning sign"
+                  content={t('parcel_transfer.cant_transfer')}
+                />
+              </Container>
+            ) : null}
             <Container text textAlign="center">
               <Header as="h2" size="huge" className="title">
                 {t('parcel_transfer.transfer_land')}
@@ -40,10 +49,6 @@ export default class TransferParcelPage extends React.PureComponent {
                 {t_html('parcel_transfer.about_to_transfer', {
                   parcel_name: <ParcelName parcel={parcel} />
                 })}
-                <br />
-                {t('parcel_transfer.irreversible')}
-                <br />
-                {t('parcel_transfer.check_address')}
                 <br />
               </div>
             </Container>
@@ -57,7 +62,6 @@ export default class TransferParcelPage extends React.PureComponent {
                   onSubmit={onSubmit}
                   onCancel={onCancel}
                   onCleanTransfer={onCleanTransfer}
-                  hasPublication={hasPublication(parcel, publications)}
                 />
                 <TxStatus.Parcel parcel={parcel} />
               </Grid.Column>

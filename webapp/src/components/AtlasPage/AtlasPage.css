@@ -1,5 +1,5 @@
 .Page > .AtlasPage {
-  height: 90vh;
+  height: calc(100% - var(--footer-height));
   padding: 0;
 }
 

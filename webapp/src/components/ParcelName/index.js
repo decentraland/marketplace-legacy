@@ -1,2 +1,2 @@
-import ParcelName from './ParcelName'
+import ParcelName from './ParcelName.container'
 export default ParcelName

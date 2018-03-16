@@ -1,6 +1,6 @@
 .ui.form .field > label,
 .ui.form .fields > label {
-  color: var(--dark-gray);
+  color: var(--gray);
   font-weight: 400;
 }
 
@@ -9,12 +9,20 @@
   opacity: 1;
 }
 
-.ui.purple.label, .ui.purple.labels .label {
-  background-color: var(--purple) !important;
-  border-color: var(--purple) !important;
+.ui.label {
+  border-radius: 50px !important;
 }
 
-.ui.white.label, .ui.white.labels .label {
-  background-color: #FFF !important;
-  color: var(--purple) !important;
+.ui.purple.label,
+.ui.purple.labels .label {
+  background-color: var(--red) !important;
+  border-color: var(--red) !important;
+  border-radius: 50px;
+}
+
+.ui.white.label,
+.ui.white.labels .label {
+  background-color: #fff !important;
+  color: var(--red) !important;
+  border-radius: 50px;
 }
