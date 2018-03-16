@@ -38,27 +38,22 @@ export default class Contribution extends React.PureComponent {
     const { contribution } = this.props
 
     return (
-      <Card className="Contribution">
+      <Card className="Contribution" href="/pepe">
         <Card.Content className="body">
           {contribution.district ? (
             <React.Fragment>
               <Header size="medium">{contribution.district.name}</Header>
               <Card.Meta>{contribution.district.description}</Card.Meta>
+              <span className="land-count">
+                <i className="land-icon" />
+                <span>{contribution.land_count} LAND</span>
+              </span>
             </React.Fragment>
           ) : (
             <div className="text-center">
               <Icon name="circle notched" size="big" loading />
             </div>
           )}
-        </Card.Content>
-        <Card.Content extra>
-          <div className="footer">
-            <Header size="medium" floated="left" className="land-count">
-              <span className="amount">{contribution.land_count}</span>
-              &nbsp;&nbsp;LAND
-            </Header>
-            {this.renderProposalButton()}
-          </div>
         </Card.Content>
       </Card>
     )

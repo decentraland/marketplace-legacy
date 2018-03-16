@@ -23,7 +23,8 @@
     "for": "for",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
-    "owned_by": "Owned by"
+    "owned_by": "Owned by",
+    "owned_by_link": "Owned by {address_link}"
   },
   "address": {
     "its_you": "It's you"
@@ -61,7 +62,9 @@
     "proposal": "proposal"
   },
   "parcel": {
-    "view": "View"
+    "view": "View",
+    "no_name": "No name",
+    "no_description": "No description"
   },
   "parcel_detail": {
     "description": "Description",

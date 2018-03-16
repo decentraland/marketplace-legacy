@@ -121,11 +121,19 @@ export default class ProfilePage extends React.PureComponent {
     }
   }
 
-  renderBadge(array) {
+  isActive(tab) {
+    return tab === this.props.tab
+  }
+
+  renderBadge(array, tab) {
     if (array.length === 0) {
       return null
     }
-    return <Label size="tiny">{array.length}</Label>
+    return (
+      <Label className={this.isActive(tab) ? 'active' : ''} size="tiny">
+        {array.length}
+      </Label>
+    )
   }
 
   handleItemClick = (event, { name }) => {
@@ -141,7 +149,6 @@ export default class ProfilePage extends React.PureComponent {
   render() {
     const {
       address,
-      tab,
       page,
       pages,
       isLoading,
@@ -157,34 +164,33 @@ export default class ProfilePage extends React.PureComponent {
           <Menu pointing secondary>
             <Menu.Item
               name={PROFILE_PAGE_TABS.parcels}
-              active={tab === PROFILE_PAGE_TABS.parcels}
+              active={this.isActive(PROFILE_PAGE_TABS.parcels)}
               onClick={this.handleItemClick}
             >
               {t('global.parcels')}
-              {this.renderBadge(parcels)}
+              {this.renderBadge(parcels, PROFILE_PAGE_TABS.parcels)}
             </Menu.Item>
             <Menu.Item
               name={PROFILE_PAGE_TABS.contributions}
-              active={tab === PROFILE_PAGE_TABS.contributions}
+              active={this.isActive(PROFILE_PAGE_TABS.contributions)}
               onClick={this.handleItemClick}
             >
               {t('global.contributions')}
-              {this.renderBadge(contributions)}
+              {this.renderBadge(contributions, PROFILE_PAGE_TABS.contributions)}
             </Menu.Item>
             <Menu.Item
               name={PROFILE_PAGE_TABS.publications}
-              active={tab === PROFILE_PAGE_TABS.publications}
+              active={this.isActive(PROFILE_PAGE_TABS.publications)}
               onClick={this.handleItemClick}
             >
               {t('profile_page.on_sale')}
-              {this.renderBadge(publications)}
+              {this.renderBadge(publications, PROFILE_PAGE_TABS.publications)}
             </Menu.Item>
             {isOwner ? null : (
               <Menu.Menu position="right">
                 <span className="profile-owner">
-                  {t_html('global.owned_by', {
-                    address_link: <AddressLink address={address} scale={3} />
-                  })}
+                  <span>{t('global.owned_by')}</span>&nbsp;
+                  <AddressLink address={address} scale={4} />
                 </span>
               </Menu.Menu>
             )}

@@ -58,3 +58,15 @@
 .Publication .footer:after {
   display: none;
 }
+
+.Publication .coords {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  display: inline;
+  color: var(--gray);
+}
+
+.Publication:hover .coords {
+  color: var(--red);
+}
