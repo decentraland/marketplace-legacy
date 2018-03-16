@@ -1,4 +1,4 @@
-import { eth, txUtils, contracts, Log } from 'decentraland-commons'
+import { env, eth, txUtils, contracts, Log } from 'decentraland-commons'
 import { decodeAssetId, debounceEvent } from './utils'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
@@ -6,7 +6,9 @@ import { BlockchainEvent } from '../../src/BlockchainEvent'
 
 const log = new Log('persistEvents')
 
-export async function persistEvents(lastBlockNumber = null, delay = 15000) {
+export async function persistEvents(lastBlockNumber = null, delay) {
+  delay = delay || env.get('PERSIST_EVENTS_DELAY', 2500)
+
   if (lastBlockNumber === null || lastBlockNumber === 'latest') {
     const lastBlockEvent = await BlockchainEvent.findLast()
     lastBlockNumber = lastBlockEvent ? lastBlockEvent.block_number : 0
@@ -52,6 +54,13 @@ export async function processEvent(event) {
         return
       }
       log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
+
+      await Publication.delete({
+        x,
+        y,
+        owner: seller.toLowerCase(),
+        status: Publication.STATUS.open
+      })
 
       await Publication.insert({
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
