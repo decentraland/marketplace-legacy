@@ -24,7 +24,7 @@ const mapState = state => {
     center,
     isLoading: isLoading(state) || isLoadingParcels(state),
     isConnected: isConnected(state),
-    activityBadge: getPendingTransactions(state).length
+    activityBadge: getPendingTransactions(state, wallet.address).length
   }
 }
 

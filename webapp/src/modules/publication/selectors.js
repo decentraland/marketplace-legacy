@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { PUBLISH_REQUEST, PUBLISH_SUCCESS } from './actions'
+import { getAddress } from 'modules/wallet/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
 
 export const getState = state => state.publication
@@ -13,7 +14,7 @@ export const isTxIdle = state =>
 
 export const getPublications = createSelector(
   getData,
-  state => getTransactionsByType(state, PUBLISH_SUCCESS),
+  state => getTransactionsByType(state, getAddress(state), PUBLISH_SUCCESS),
   (publications = {}, publishTransactions) => {
     const txPublications = {}
 
