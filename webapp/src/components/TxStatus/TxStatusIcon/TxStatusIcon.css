@@ -1,5 +1,5 @@
 .TxStatusIcon .icon.confirmed {
-  color: var(--green);
+  color: var(--light-blue);
 }
 
 .TxStatusIcon .icon.pending {

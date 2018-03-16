@@ -4,7 +4,8 @@
 
 .ui.form .input input[type='text'],
 .ui.form .input input[type='number'],
-.ui.form .input input[type='date'] {
+.ui.form .input input[type='date'],
+.ui.form .disabled input {
   background: transparent;
   border-top: none;
   border-left: none;

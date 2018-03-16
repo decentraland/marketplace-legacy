@@ -2,6 +2,12 @@
   color: var(--text);
 }
 
+.SettingsPage .header {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-weight: 100;
+}
+
 .SettingsPage > .Loading {
   font-size: 10px;
   top: 25%;
@@ -11,4 +17,12 @@
   display: block;
   text-align: center;
   margin-top: 50px;
+}
+
+.SettingsPage .authorize-detail {
+  display: inline;
+  margin-left: 10px;
+  font-weight: 100;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
 }

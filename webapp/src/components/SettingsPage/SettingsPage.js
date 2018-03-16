@@ -22,18 +22,14 @@ export default class SettingsPage extends React.PureComponent {
     onUpdateDerivationPath: PropTypes.func
   }
 
-  handleManaApproval = e => {
-    // Support both a checkbox click and a element click
-    const manaToApprove =
-      e.currentTarget.type !== 'checkbox' || e.currentTarget.checked
-        ? getManaToApprove()
-        : 0
+  handleManaApproval = (event, data) => {
+    const manaToApprove = data.checked ? getManaToApprove() : 0
 
     this.props.onApproveMana(manaToApprove)
   }
 
-  handleLandAuthorization = e => {
-    this.props.onAuthorizeLand(e.currentTarget.checked)
+  handleLandAuthorization = (event, data) => {
+    this.props.onAuthorizeLand(data.checked)
   }
 
   handleDerivationPathChange = derivationPath => {
@@ -75,36 +71,38 @@ export default class SettingsPage extends React.PureComponent {
     }
 
     return (
-      <Container text className="SettingsPage">
-        <Header as="h1" size="huge" textAlign="center" className="title">
-          {t('global.settings')}
-        </Header>
+      <div className="SettingsPage">
+        <Container text>
+          <Header as="h1" size="huge" textAlign="center" className="title">
+            {t('global.settings')}
+          </Header>
 
-        <Grid.Column>
-          {isConnected ? (
-            <SettingsForm
-              address={address}
-              walletType={type}
-              walletDerivationPath={derivationPath}
-              onDerivationPathChange={this.handleDerivationPathChange}
-              manaApproved={approvedBalance}
-              approveTransaction={this.getApproveTransaction()}
-              onManaApprovedChange={this.handleManaApproval}
-              isLandAuthorized={isLandAuthorized}
-              authorizeTransaction={this.getAuthorizeTransaction()}
-              onLandAuthorizedChange={this.handleLandAuthorization}
-            />
-          ) : (
-            <p className="sign-in">
-              {t_html('global.sign_in_notice', {
-                sign_in_link: (
-                  <Link to={locations.signIn}>{t('global.sign_in')}</Link>
-                )
-              })}
-            </p>
-          )}
-        </Grid.Column>
-      </Container>
+          <Grid.Column>
+            {isConnected ? (
+              <SettingsForm
+                address={address}
+                walletType={type}
+                walletDerivationPath={derivationPath}
+                onDerivationPathChange={this.handleDerivationPathChange}
+                manaApproved={approvedBalance}
+                approveTransaction={this.getApproveTransaction()}
+                onManaApprovedChange={this.handleManaApproval}
+                isLandAuthorized={isLandAuthorized}
+                authorizeTransaction={this.getAuthorizeTransaction()}
+                onLandAuthorizedChange={this.handleLandAuthorization}
+              />
+            ) : (
+              <p className="sign-in">
+                {t_html('global.sign_in_notice', {
+                  sign_in_link: (
+                    <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+                  )
+                })}
+              </p>
+            )}
+          </Grid.Column>
+        </Container>
+      </div>
     )
   }
 }
