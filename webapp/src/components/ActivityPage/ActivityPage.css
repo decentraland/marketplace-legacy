@@ -1,3 +1,7 @@
+.ActivityPage.container {
+  overflow: visible;
+}
+
 .ActivityPage .section-title {
   margin-bottom: 10px;
   font-weight: bolder;
