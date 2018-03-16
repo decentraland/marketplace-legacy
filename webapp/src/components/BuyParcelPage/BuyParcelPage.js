@@ -60,11 +60,65 @@ export default class BuyParcelPage extends React.PureComponent {
     )
   }
 
+  renderNotEnough(isNotEnoughMana, isNotEnoughApproved) {
+    const { wallet, publication } = this.props
+    const { balance, approvedBalance } = wallet
+
+    if (!isNotEnoughMana && !isNotEnoughApproved) return null
+
+    return (
+      <Container text>
+        <Grid.Column>
+          <Message warning>
+            {isNotEnoughMana ? (
+              <React.Fragment>
+                <h3>
+                  {t('parcel_buy.total_balance', {
+                    balance: formatMana(balance)
+                  })}
+                </h3>
+                {t('parcel_buy.needs_at_least', {
+                  mana: formatMana(publication.price)
+                })}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {approvedBalance > 0 ? (
+                  <React.Fragment>
+                    <h3>
+                      {t('parcel_buy.approved_balance', {
+                        approved_balance: formatMana(approvedBalance)
+                      })}
+                    </h3>
+                    {t('parcel_buy.needs_at_least', {
+                      mana: formatMana(publication.price)
+                    })}
+                    <br />
+                  </React.Fragment>
+                ) : (
+                  <h3>{t('parcel_buy.didnt_approve')}</h3>
+                )}
+                {t_html('parcel_buy.please_approve', {
+                  settings_link: (
+                    <Link to={locations.settings}>{t('global.settings')}</Link>
+                  )
+                })}
+              </React.Fragment>
+            )}
+          </Message>
+        </Grid.Column>
+      </Container>
+    )
+  }
+
   renderPage() {
     const { wallet, x, y, publication, isDisabled, onCancel } = this.props
-    const { approvedBalance } = wallet
-    const isNotEnough =
-      publication && approvedBalance < parseFloat(publication.price, 10)
+    const { balance, approvedBalance } = wallet
+
+    const price = publication ? parseFloat(publication.price, 10) : 0
+
+    const isNotEnoughMana = balance < price
+    const isNotEnoughApproved = approvedBalance < price
 
     return (
       <Parcel x={x} y={y}>
@@ -100,58 +154,16 @@ export default class BuyParcelPage extends React.PureComponent {
                   onClick={this.handleConfirm}
                   type="button"
                   primary
-                  disabled={isDisabled || isNotEnough}
+                  disabled={
+                    isDisabled || isNotEnoughMana || isNotEnoughApproved
+                  }
                 >
                   {t('global.confirm')}
                 </Button>
               </Grid.Column>
             </Container>
             <br />
-            {isNotEnough ? (
-              <Container text>
-                <Grid.Column>
-                  <Message warning>
-                    {approvedBalance > 0 ? (
-                      <React.Fragment>
-                        <h3>
-                          <strong>
-                            {t('parcel_buy.approved_balance', {
-                              approved_balance: formatMana(approvedBalance)
-                            })}
-                          </strong>
-                        </h3>
-                        {t('parcel_buy.needs_at_least', {
-                          value: formatMana(publication.price)
-                        })}
-                        <br />
-                        {t_html('parcel_buy.plase_approve', {
-                          settings_link: (
-                            <Link to={locations.settings}>
-                              {t('global.settings')}
-                            </Link>
-                          )
-                        })}
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        <h3>
-                          <strong>{t('parcel_buy.didnt_approve')}</strong>
-                        </h3>
-                        {t('parcel_buy.should_approve')}
-                        <br />
-                        {t_html('parcel_buy.plase_approve', {
-                          settings_link: (
-                            <Link to={locations.settings}>
-                              {t('global.settings')}
-                            </Link>
-                          )
-                        })}
-                      </React.Fragment>
-                    )}
-                  </Message>
-                </Grid.Column>
-              </Container>
-            ) : null}
+            {this.renderNotEnough(isNotEnoughMana, isNotEnoughApproved)}
           </div>
         )}
       </Parcel>

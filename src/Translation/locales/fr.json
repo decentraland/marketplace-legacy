@@ -25,6 +25,9 @@
     "sign_in_notice": "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "owned_by": "Controlé par {address_link}"
   },
+  "address": {
+    "its_you": "C'est toi"
+  },
   "navbar": {
     "my_land": "Mes LANDs"
   },
@@ -99,10 +102,10 @@
     "buy_land": "Acheter une LAND",
     "about_to_buy": "Vous êtes sur le point d'acheter {parcel_name}",
     "approved_balance": "Votre balance est de {approved_balance}",
-    "needs_at_least": "Vous avez besoin d'au moins {value} pour acheter cette LAND.",
+    "needs_at_least": "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
     "didnt_approve": "Vous n'avez pas de MANA validée",
-    "should_approve": "Vous devez valider de la MANA afin qu'elle soit utilisée sur la place de marché avant d'acheter un terrain.",
-    "please_approve": "Veuillez vous rendre à {settings_link} et valider de la MANA supplémentaire."
+    "please_approve": "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",
+    "total_balance": "Votre solde est {solde}"
   },
   "parcel_publish": {
     "list_land": "Lister les LANDs à vendre",
@@ -139,16 +142,29 @@
     "buy": "Vous avez acheté {parcel_link}",
     "cancel": "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}"
   },
+  "transaction_status": {
+    "see_activity": "Pour consulter plus en détail l'historique de vos transactions, consultez votre {activity_link}.",
+    "text": {
+      "pending": "La transaction est en attente d'être confirmée.",
+      "failed": "Votre transaction a échoué, vous pouvez essayer d'en envoyer une nouvelle."
+    },
+    "parcel": {
+      "still_pending": "{parcel_name} a toujours {transactions_count} transactions en attente."
+    },
+    "idle":{
+      "please_confirm": "Veuillez confirmer la transaction"
+    }
+  },
   "settings": {
     "pending_tx": "Vous avez une transaction en attente",
-    "unapprove_mana_check": "Décocher cette case validera 0 MANA",
-    "approve_mana_check": "Cocher pour approuver {mana_to_approve} MANA",
-    "mana_approved": "Vous avez {mana_approved} MANA validée(s) pour être utilisé par la place de marché.",
-    "approve_mana": "Approuver l'utilisation de {mana_to_approve} MANA pour le {marketplace_contract_link}",
+    "disapprove_mana_check": "Décocher cette case enlève le droit à la place de marché de gérer votre MANA.",
+    "approve_mana_check": "Cocher pour autoriser la place de marché à gérer votre MANA.",
+    "mana_approved": "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
+    "approve_mana": "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
     "marketplace_contract": "Contrat de la place de marché",
     "unauthorize_land_check": "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
     "authorize_land_check": "Cocher pour autoriser la place de marché à gérer vos LANDs.",
-    "you_authorized": "Vous avez autorisé le {marketplace_contract_link}",
+    "you_authorized": "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom.",
     "authorize": "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom."
   },
   "color_key": {

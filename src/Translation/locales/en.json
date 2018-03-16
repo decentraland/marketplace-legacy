@@ -25,6 +25,9 @@
     "sign_in_notice": "You need to {sign_in_link} to access this page",
     "owned_by": "Owned by {address_link}"
   },
+  "address": {
+    "its_you": "It's you"
+  },
   "navbar": {
     "my_land": "My Land"
   },
@@ -99,10 +102,10 @@
     "buy_land": "Buy LAND",
     "about_to_buy": "You are about to buy {parcel_name}",
     "approved_balance": "Your approved balance is {approved_balance}",
-    "needs_at_least": "You need at least {value} in order to buy this LAND.",
+    "needs_at_least": "You need at least {mana} in order to buy this LAND.",
     "didnt_approve": "You haven't approved MANA",
-    "should_approve": "You need to approve MANA to be used by the Marketplace before you can buy LAND.",
-    "please_approve": "Please go to {settings_link} and approve some more MANA."
+    "please_approve": "Please go to {settings_link} and allow the Marketplace contract to move MANA in your behalf",
+    "total_balance": "Your balance is {balance}"
   },
   "parcel_publish": {
     "list_land": "List LAND for sale",
@@ -130,8 +133,8 @@
     "history": "History"
   },
   "transaction": {
-    "approved": "You approved {mana} to be used by the {marketplace_contract_link}",
-    "disapproved": "You deauthorized the {marketplace_contract_link} to transfer funds on your behalf",
+    "approved": "You allowed the {marketplace_contract_link} to move all your MANA on your behalf",
+    "disapproved": "You disallowed the {marketplace_contract_link} to transfer funds on your behalf",
     "authorize": "You have {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",
@@ -139,16 +142,29 @@
     "buy": "You bought {parcel_link}",
     "cancel": "You cancelled the {publication_link} on {parcel_link}"
   },
+  "transaction_status": {
+    "see_activity": "To see your transaction history, visit your {activity_link}.",
+    "text": {
+      "pending": "The transaction is waiting to be confirmed.",
+      "failed": "Your transaction failed, you can try sending a new one."
+    },
+    "parcel": {
+      "still_pending": "{parcel_name} still has {transactions_count} pending transactions."
+    },
+    "idle":{
+      "please_confirm": "Please confirm the transaction"
+    }
+  },
   "settings": {
     "pending_tx": "You have a pending transaction",
-    "unapprove_mana_check": "Unchecking will approve 0 MANA",
-    "approve_mana_check": "Check to approve {mana_to_approve} MANA",
-    "mana_approved": "You have {mana_approved} MANA approved to be used by the contract.",
-    "approve_mana": "Approve {mana_to_approve} MANA usage for the {marketplace_contract_link}",
+    "disapprove_mana_check": "Unchecking unauthorizes MANA usage for the Marketplace contract",
+    "approve_mana_check": "Checking authorizes MANA usage to the Marketplace contract",
+    "mana_approved": "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "approve_mana": "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
     "marketplace_contract": "Marketplace contract",
     "unauthorize_land_check": "Unchecking unauthorizes LAND usage for the Marketplace contract",
     "authorize_land_check": "Checking authorizes LAND usage to the Marketplace contract",
-    "you_authorized": "You have authorized the {marketplace_contract_link}",
+    "you_authorized": "You have authorized the {marketplace_contract_link} to operate LAND on your behalf",
     "authorize": "Authorize the {marketplace_contract_link} to operate LAND on your behalf"
   },
   "color_key": {
