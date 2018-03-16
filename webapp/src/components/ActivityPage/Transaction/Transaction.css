@@ -17,6 +17,10 @@
   background-color: var(--primary);
 }
 
+.Transaction .transaction-text {
+  height: 100%;
+}
+
 .Transaction .transaction-avatar {
   width: 64px;
   height: 64px;
@@ -30,6 +34,7 @@
 }
 
 .Transaction .transaction-icon {
+  height: 100%;
   float: right;
 }
 
