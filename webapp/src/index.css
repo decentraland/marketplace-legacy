@@ -69,44 +69,44 @@ a:hover,
   Key colors */
 
 .my-parcels {
-  background-color: #d98494;
-  color: #d98494;
-  fill: #d98494;
+  background-color: #ff9990;
+  color: #ff9990;
+  fill: #ff9990;
 }
 .district {
-  background-color: #73c7e1;
-  color: #73c7e1;
-  fill: #73c7e1;
+  background-color: #7773ff;
+  color: #7773ff;
+  fill: #7773ff;
 }
 .contribution {
-  background-color: #4a90e2;
-  color: #4a90e2;
-  fill: #4a90e2;
+  background-color: #4a27d4;
+  color: #4a27d4;
+  fill: #4a27d4;
 }
 .roads {
-  background-color: #39516b;
-  color: #39516b;
-  fill: #39516b;
+  background-color: #8188a3;
+  color: #8188a3;
+  fill: #8188a3;
 }
 .plaza {
-  background-color: #fcfcfc;
-  color: #fcfcfc;
-  fill: #fcfcfc;
+  background-color: #80c290;
+  color: #80c290;
+  fill: #80c290;
 }
 .taken {
-  background-color: #aedc89;
-  color: #aedc89;
-  fill: #aedc89;
+  background-color: #505772;
+  color: #505772;
+  fill: #505772;
+}
+.on-sale {
+  background-color: #00dbef;
+  color: #00dbef;
+  fill: #00dbef;
 }
 .unowned {
-  background-color: #f9f7e8;
-  color: #f9f7e8;
-  fill: #f9f7e8;
-}
-.loading {
-  background-color: #aaaaaa;
-  color: #aaaaaa;
-  fill: #aaaaaa;
+  background-color: #1b1e2d;
+  color: #1b1e2d;
+  fill: #1b1e2d;
 }
 
 /* -----------------------------------------------------------------------

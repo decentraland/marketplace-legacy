@@ -41,8 +41,8 @@ export default function ColorKey() {
             <div className="text">{t('color_key.unowned')}</div>
           </div>
           <div className="land">
-            <div className="key loading" />
-            <div className="text">{t('color_key.loading')}</div>
+            <div className="key on-sale" />
+            <div className="text">{t('color_key.on_sale')}</div>
           </div>
         </div>
       </div>
