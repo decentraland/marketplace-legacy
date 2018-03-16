@@ -13,22 +13,24 @@
   display: none;
 }
 
+.TermsModal .text {
+  text-align: center;
+}
+
 .TermsModal .banner {
-  padding: 0px 0 25px;
-  border-bottom: 1px solid var(--light-gray);
+  padding: 25px 0 0;
   background-color: var(--background);
   text-align: center;
 }
 
 .TermsModal h3 {
   margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 20px;
-  padding-right: 60px;
+  margin-bottom: 50px;
+  font-size: 20pt;
 }
 
 .TermsModal h4 {
-  font-size: 18px;
+  font-size: 14pt;
   font-weight: bold;
 }
 
@@ -48,22 +50,22 @@
 
 .TermsModal .modal-body {
   padding: 30px 50px;
+  background-color: var(--background);
 }
 
 .TermsModal .modal-body p {
   font-size: 16px;
+  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
 }
 
 .little-value {
   top: 0;
   left: 0;
-  border-top: 32px solid #CCC; /* color on index.css */
   border-right: 32px solid transparent;
 }
 .big-value {
   bottom: 0;
   right: 0;
-  border-bottom: 32px solid #CCC; /* color on index.css */
   border-left: 32px solid transparent;
 }
 

@@ -30,13 +30,13 @@ Do you wish to continue?`
     [Parcel, District, Contribution].map(Model => db.truncate(Model.tableName))
   )
 
-  log.info('Dumping parcel_states')
+  log.info('Restoring parcel_states')
   execSync(runpsql('../dumps/parcel_states.20180105.sql'))
 
-  log.info('Dumping projects')
+  log.info('Restoring projects')
   execSync(runpsql('../dumps/projects.20180105.sql'))
 
-  log.info('Dumping district_entries')
+  log.info('Restoring district_entries')
   execSync(runpsql('../dumps/districts.20180105.sql'))
 
   log.info('Normalizing names for new model')

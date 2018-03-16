@@ -47,19 +47,37 @@ export default class Navbar extends React.PureComponent {
     event.preventDefault()
   }
 
+  renderStaticPage() {
+    return (
+      <div className="Navbar" role="navigation">
+        {this.renderLogoHeader()}
+      </div>
+    )
+  }
+
+  renderLogoHeader() {
+    return (
+      <div className="navbar-header">
+        <Link to={locations.root} className="navbar-logo">
+          <span className="navbar-icon">
+            <DecentralandLogo />
+          </span>
+        </Link>
+      </div>
+    )
+  }
+
   render() {
-    const { wallet, activePage, isConnected } = this.props
+    const { wallet, activePage, isConnected, isStatic } = this.props
     const navigationPaths = this.getNavigationPaths()
+
+    if (isStatic) {
+      return this.renderStaticPage()
+    }
 
     return (
       <div className="Navbar" role="navigation">
-        <div className="navbar-header">
-          <Link to={locations.root} className="navbar-logo">
-            <span className="navbar-icon">
-              <DecentralandLogo />
-            </span>
-          </Link>
-        </div>
+        {this.renderLogoHeader()}
         <div className="navbar-menu">
           <Menu secondary>
             <Menu.Item

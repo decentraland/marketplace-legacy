@@ -11,21 +11,40 @@ import './Page.css'
 export default class Page extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
+    isStatic: PropTypes.bool.isRequired,
     onFetchDistricts: PropTypes.func.isRequired,
     onFirstVisit: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     children: null,
+    isStatic: false,
     onFetchDistricts: () => {},
     onFirstVisit: () => {}
   }
 
+  get hasAcceptedTerms() {
+    return localStorage.getItem('seenTermsModal')
+  }
+
   componentWillMount() {
-    const { onFetchDistricts, onFirstVisit } = this.props
+    const { onFetchDistricts } = this.props
 
     onFetchDistricts()
-    if (!localStorage.getItem('seenTermsModal')) {
+
+    this.checkPopTerms()
+  }
+
+  componentWillReceiveProps() {
+    this.checkPopTerms()
+  }
+
+  checkPopTerms() {
+    const { onFirstVisit, isStatic } = this.props
+
+    const shouldTriggerTermsModal = !isStatic && !this.hasAcceptedTerms
+
+    if (shouldTriggerTermsModal) {
       onFirstVisit()
     }
   }

@@ -51,9 +51,11 @@ export default class PrivacyPage extends React.PureComponent {
         </p>
         <p>
           1.2 This Privacy Policy should be read in conjunction with our Terms
-          of Use. By accessing the Service, you are consenting to the
-          information collection and use practices described in this Privacy
-          Policy.
+          of Use, available at (
+          <a href="https://market.decentraland.org/terms">
+            https://market.decentraland.org/terms
+          </a>). By accessing the Service, you are consenting to the information
+          collection and use practices described in this Privacy Policy.
         </p>
         <p>
           1.3 Your use of the Service and any personal information you provide
