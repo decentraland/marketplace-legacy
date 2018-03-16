@@ -8,7 +8,7 @@ import { loadEnv } from './utils'
 
 const log = new Log('update')
 
-const BATCH_SIZE = env.get('RENEW_BATCH_SIZE', 1000)
+const BATCH_SIZE = parseInt(env.get('RENEW_BATCH_SIZE', 1000), 10)
 
 export async function renewBlockchainData() {
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
