@@ -156,14 +156,14 @@
   },
   "settings": {
     "pending_tx": "Vous avez une transaction en attente",
-    "disapprove_mana_check": "Cochez pour interdire le contrat de marché pour déplacer votre MANA",
-    "approve_mana_check": "Cochez cette case pour permettre au contrat de marché de déplacer tous vos comptes MANA en votre nom",
-    "mana_approved": "Vous avez autorisé le {marketplace_contract_link} à déplacer tous vos comptes MANA en votre nom",
-    "approve_mana": "Autoriser le {marketplace_contract_link} à déplacer tous vos comptes MANA en votre nom",
+    "disapprove_mana_check": "Décocher cette case enlève le droit à la place de marché de gérer votre MANA.",
+    "approve_mana_check": "Cocher pour autoriser la place de marché à gérer votre MANA.",
+    "mana_approved": "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
+    "approve_mana": "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
     "marketplace_contract": "Contrat de la place de marché",
     "unauthorize_land_check": "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
     "authorize_land_check": "Cocher pour autoriser la place de marché à gérer vos LANDs.",
-    "you_authorized": "Vous avez autorisé le {marketplace_contract_link}",
+    "you_authorized": "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom.",
     "authorize": "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom."
   },
   "color_key": {

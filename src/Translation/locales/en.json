@@ -156,14 +156,14 @@
   },
   "settings": {
     "pending_tx": "You have a pending transaction",
-    "unapprove_mana_check": "Check to disallow the Marketplace contract to move your MANA",
-    "approve_mana_check": "Check to allow the Marketplace contract to move all your MANA on your behalf",
-    "mana_approved": "You allowed the {marketplace_contract_link} to move all your MANA on your behalf",
-    "approve_mana": "Allow the {marketplace_contract_link} to move all your MANA on your behalf",
+    "disapprove_mana_check": "Unchecking unauthorizes MANA usage for the Marketplace contract",
+    "approve_mana_check": "Checking authorizes MANA usage to the Marketplace contract",
+    "mana_approved": "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "approve_mana": "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
     "marketplace_contract": "Marketplace contract",
     "unauthorize_land_check": "Unchecking unauthorizes LAND usage for the Marketplace contract",
     "authorize_land_check": "Checking authorizes LAND usage to the Marketplace contract",
-    "you_authorized": "You have authorized the {marketplace_contract_link}",
+    "you_authorized": "You have authorized the {marketplace_contract_link} to operate LAND on your behalf",
     "authorize": "Authorize the {marketplace_contract_link} to operate LAND on your behalf"
   },
   "color_key": {

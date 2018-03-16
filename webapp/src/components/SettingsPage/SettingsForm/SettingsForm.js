@@ -120,7 +120,7 @@ export default class SettingsForm extends React.PureComponent {
             data-balloon={
               isAuthorizePending
                 ? t('settings.pending_tx')
-                : manaApproved > 0
+                : isLandAuthorized
                   ? t('settings.unauthorize_land_check')
                   : t('settings.authorize_land_check')
             }
