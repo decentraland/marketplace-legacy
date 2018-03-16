@@ -3,9 +3,7 @@ import { env, eth, utils, contracts } from 'decentraland-commons'
 export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
     const { MANAToken, LANDRegistry, Marketplace } = contracts
-    const providerUrl = env.isProduction()
-      ? 'https://mainnet.infura.io/'
-      : 'https://ropsten.infura.io/'
+    const providerUrl = env.get('REACT_APP_PROVIDER_URL')
 
     let connected = await eth.connect({
       ...options,
