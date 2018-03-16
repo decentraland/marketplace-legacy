@@ -2,7 +2,7 @@ import { Model } from 'decentraland-commons'
 
 export class BlockchainEvent extends Model {
   static tableName = 'blockchain_events'
-  static columnNames = ['tx_hash', 'name', 'block_number', 'args']
+  static columnNames = ['tx_hash', 'name', 'block_number', 'log_index', 'args']
   static primaryKey = 'tx_hash'
 
   static EVENTS = {
@@ -14,7 +14,7 @@ export class BlockchainEvent extends Model {
   }
 
   static findLast() {
-    return this.findOne(null, { block_number: 'DESC' })
+    return this.findOne(null, { block_number: 'DESC', log_index: 'DESC' })
   }
 
   static findFrom(blockNumber) {
@@ -22,7 +22,7 @@ export class BlockchainEvent extends Model {
       `SELECT *
         FROM ${this.tableName}
         WHERE block_number >= $1
-        ORDER BY block_number ASC`,
+        ORDER BY block_number, log_index ASC`,
       [blockNumber]
     )
   }

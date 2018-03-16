@@ -6,11 +6,12 @@ const log = new Log('handlers')
 export async function store(eventData) {
   if (eventData.removed) return
 
-  const { event, transactionHash, blockNumber } = eventData
+  const { event, transactionHash, blockNumber, logIndex } = eventData
 
   const exists = await BlockchainEvent.count({
     tx_hash: transactionHash,
-    name: event
+    name: event,
+    log_index: logIndex
   })
   if (exists) {
     log.info(`[${event}] Blockchain event ${transactionHash} already exists`)
@@ -30,6 +31,7 @@ export async function store(eventData) {
     tx_hash: transactionHash,
     name: event,
     block_number: blockNumber,
+    log_index: logIndex,
     args
   })
 

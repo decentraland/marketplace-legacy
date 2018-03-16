@@ -121,7 +121,7 @@ export async function processEvent(event) {
       break
     }
     case BlockchainEvent.EVENTS.parcelTransfer: {
-      const { from, to } = event.args
+      const { to } = event.args
 
       debounceEvent(parcelId, name, async () => {
         log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
