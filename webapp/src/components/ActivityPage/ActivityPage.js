@@ -48,7 +48,9 @@ export default class ActivityPage extends React.PureComponent {
       <React.Fragment>
         {pendingTransactions.length > 0 ? (
           <div className="transaction-list pending-transaction-list">
-            <div className="section-title">{t('activity.pending')}</div>
+            <div className="section-title">
+              {pendingTransactions.length}&nbsp;{t('activity.pending')}
+            </div>
             {pendingTransactions.map(tx => (
               <Transaction key={tx.hash} tx={tx} />
             ))}
@@ -58,7 +60,7 @@ export default class ActivityPage extends React.PureComponent {
         {transactionHistory.length > 0 ? (
           <div className="transaction-list">
             <div className="section-title">
-              {t('activity.completed')}&nbsp;{transactionHistory.length}
+              {transactionHistory.length}&nbsp;{t('activity.completed')}
             </div>
             {transactionHistory.map(tx => (
               <Transaction key={tx.hash} tx={tx} />
