@@ -2,6 +2,10 @@
   margin-bottom: 10px;
 }
 
+.ui.form .disabled.field {
+  opacity: 1 !important;
+}
+
 .ui.form .input input[type='text'],
 .ui.form .input input[type='number'],
 .ui.form .input input[type='date'],
@@ -12,6 +16,7 @@
   border-right: none;
   border-bottom: 2px solid var(--dark-gray);
   border-radius: 0px;
+  padding: 10px 0px;
   color: white;
 }
 
