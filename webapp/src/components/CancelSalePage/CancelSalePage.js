@@ -45,7 +45,7 @@ export default class CancelSalePage extends React.PureComponent {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    {t('parcel_cancel.about_to_cancel')}
+                    {t('parcel_cancel.not_for_sale')}
                   </React.Fragment>
                 )}
               </span>

@@ -123,8 +123,9 @@
   },
   "parcel_cancel": {
     "cancel_land": "Cancel LAND Sale",
-    "currently_on_sale":"is currently on sale for {value}.",
-    "about_to_cancel": "You are about to cancel this sale."
+    "currently_on_sale": "is currently on sale for {value}.",
+    "about_to_cancel": "You are about to cancel this sale.",
+    "not_for_sale": "is not for sale."
   },
   "activity": {
     "no_activity": "You have no activity yet.",
@@ -133,8 +134,8 @@
     "history": "History"
   },
   "transaction": {
-    "approved": "You allowed the {marketplace_contract_link} to move all your MANA on your behalf",
-    "disapproved": "You disallowed the {marketplace_contract_link} to transfer funds on your behalf",
+    "approved": "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "authorize": "You have {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",
