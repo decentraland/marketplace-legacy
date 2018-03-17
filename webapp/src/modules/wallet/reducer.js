@@ -8,6 +8,7 @@ import {
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { FETCH_TRANSLATIONS_SUCCESS } from 'modules/translation/actions'
+import { BUY_SUCCESS } from 'modules/publication/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 
 const INITIAL_STATE = {
@@ -85,6 +86,15 @@ export function walletReducer(state = INITIAL_STATE, action) {
           locale: action.locale
         }
       }
+    case BUY_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          balance: state.data.balance - parseFloat(action.publication.price, 10)
+        }
+      }
+
     default:
       return state
   }
