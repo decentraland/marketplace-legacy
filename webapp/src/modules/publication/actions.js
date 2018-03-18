@@ -87,7 +87,8 @@ export function buySuccess(txHash, publication) {
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
       x: publication.x,
-      y: publication.y
+      y: publication.y,
+      price: publication.price
     }),
     publication
   }

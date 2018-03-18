@@ -66,6 +66,16 @@ export function walletReducer(state = INITIAL_STATE, action) {
               isLandAuthorized: transaction.payload.isAuthorized
             }
           }
+        case BUY_SUCCESS: {
+          const price = parseFloat(transaction.payload.price, 10)
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              balance: state.data.balance - price
+            }
+          }
+        }
         default:
           return state
       }
@@ -86,15 +96,6 @@ export function walletReducer(state = INITIAL_STATE, action) {
           locale: action.locale
         }
       }
-    case BUY_SUCCESS:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          balance: state.data.balance - parseFloat(action.publication.price, 10)
-        }
-      }
-
     default:
       return state
   }
