@@ -15,6 +15,8 @@ import './PublicationForm.css'
 
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
+const MAX_DAY_INTERVAL = 5 * 365
+const INPUT_FORMAT = 'YYYY-MM-DD'
 
 const MIN_LAND_PRICE = 1
 
@@ -35,11 +37,9 @@ export default class PublicationForm extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    const expiresAt = addDays(new Date(), DEFAULT_DAY_INTERVAL)
-
     this.state = {
       price: '',
-      expiresAt: formatDate(expiresAt, 'YYYY-MM-DD'),
+      expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
       formErrors: []
     }
   }
@@ -92,9 +92,17 @@ export default class PublicationForm extends React.PureComponent {
     }
   }
 
+  formatFutureDate(addedDays, date = new Date()) {
+    date = addDays(date, addedDays)
+    return formatDate(date, INPUT_FORMAT)
+  }
+
   render() {
     const { publication, isTxIdle, isDisabled, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
+
+    const minExpires = this.formatFutureDate(MINIMUM_DAY_INTERVAL)
+    const maxExpires = this.formatFutureDate(MAX_DAY_INTERVAL)
 
     const isConfirmed =
       publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed
@@ -126,6 +134,8 @@ export default class PublicationForm extends React.PureComponent {
             type="date"
             placeholder={t('parcel_publish.expiration_placeholder')}
             value={expiresAt}
+            min={minExpires}
+            max={maxExpires}
             required={true}
             onChange={this.handleExpiresAtChange}
           />
