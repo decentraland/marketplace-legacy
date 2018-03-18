@@ -24,6 +24,16 @@ export function toPublicationObject(publicationsArray) {
   }, {})
 }
 
+export function isOpen(publication) {
+  return (
+    publication.status === PUBLICATION_STATUS.open && !isExpired(publication)
+  )
+}
+
+export function isExpired(publication) {
+  return new Date(publication.expires_at).getTime() < Date.now()
+}
+
 // From Publication.js on the server
 export const PUBLICATION_STATUS = Object.freeze({
   open: 'open',

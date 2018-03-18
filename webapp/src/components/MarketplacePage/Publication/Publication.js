@@ -8,6 +8,7 @@ import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
 import { publicationType } from 'components/types'
 import { t } from 'modules/translation/utils'
+import { isExpired } from 'modules/publication/utils'
 import { formatDate, buildCoordinate } from 'lib/utils'
 
 import './Publication.css'
@@ -21,7 +22,6 @@ export default class Publication extends React.PureComponent {
   render() {
     const { publication, debounce } = this.props
 
-    const isExpired = publication.expires_at < Date.now()
     const expirationTimeInWords = distanceInWordsToNow(publication.expires_at)
 
     return (
@@ -40,7 +40,7 @@ export default class Publication extends React.PureComponent {
         <Card.Content className="body">
           <Mana amount={parseFloat(publication.price, 10)} />
           <Card.Meta title={formatDate(publication.expires_at)}>
-            {isExpired
+            {isExpired(publication)
               ? t('publication.expired_at', { time: expirationTimeInWords })
               : t('publication.expires_in', { time: expirationTimeInWords })}
           </Card.Meta>
