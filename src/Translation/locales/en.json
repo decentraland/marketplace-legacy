@@ -80,7 +80,8 @@
     "publication": {
       "price": "Price",
       "time_left": "Time Left",
-      "buy": "Buy"
+      "buy": "Buy",
+      "more_than_years": "More than {years} years"
     },
     "owner": {
       "part_of": "Part of {name}",
@@ -128,7 +129,8 @@
     "errors": {
       "minimum_expiration": "The minimum expiration date is {date}",
       "maximum_expiration": "The maximum expiration date is {date}",
-      "minimum_land": "The minimum LAND price is {value} MANA"
+      "minimum_land_price": "The minimum LAND price is {value} MANA",
+      "maximum_land_price": "The maximum LAND price is {value} MANA"
     }
   },
   "parcel_cancel": {

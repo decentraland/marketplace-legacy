@@ -86,8 +86,16 @@ export default class PublicationForm extends React.PureComponent {
 
     if (price < MINIMUM_LAND_PRICE) {
       formErrors.push(
-        t('parcel_publish.errors.minimum_land', {
+        t('parcel_publish.errors.minimum_land_price', {
           value: formatMana(MINIMUM_LAND_PRICE, '')
+        })
+      )
+    }
+
+    if (price >= Number.MAX_SAFE_INTEGER) {
+      formErrors.push(
+        t('parcel_publish.errors.maximum_land_price', {
+          value: formatMana(Number.MAX_SAFE_INTEGER, '')
         })
       )
     }
@@ -112,9 +120,6 @@ export default class PublicationForm extends React.PureComponent {
   render() {
     const { publication, isTxIdle, isDisabled, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
-
-    const minExpires = this.formatFutureDate(MINIMUM_DAY_INTERVAL)
-    const maxExpires = this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
 
     const isConfirmed =
       publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed
@@ -146,8 +151,6 @@ export default class PublicationForm extends React.PureComponent {
             type="date"
             placeholder={t('parcel_publish.expiration_placeholder')}
             value={expiresAt}
-            min={minExpires}
-            max={maxExpires}
             required={true}
             onChange={this.handleExpiresAtChange}
           />

@@ -81,7 +81,8 @@
     "publication": {
       "price": "Prix",
       "time_left": "Temps restant",
-      "buy": "Acheter"
+      "buy": "Acheter",
+      "more_than_years": "Plus de {years} ans"
     },
     "owner": {
       "part_of": "Appartient à {name}",
@@ -133,7 +134,8 @@
     "errors": {
       "minimum_expiration": "La date d'expiration minimale est {date}",
       "maximum_expiration": "La date d'expiration maximale est {date}",
-      "minimum_land": "Le prix minimum d'une LAND est de {value} MANA"
+      "minimum_land_price": "Le prix minimum d'une LAND est de {value} MANA",
+      "maximum_land_price": "Le prix maximale d'une LAND est de {value} MANA"
     }
   },
   "parcel_cancel": {
