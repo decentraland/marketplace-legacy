@@ -89,20 +89,24 @@ describe('PublicationService', function() {
     it('should filter the publications using the supplied filters', async function() {
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+      const expires_at = new Date()
+      expires_at.setMonth(expires_at.getMonth() + 3)
+
       const soldPublication = {
-        tx_hash: '0xdeadbeef1',
+        tx_hash: '0x1',
         x: 0,
         y: 0,
         price: 3,
         status: Publication.STATUS.sold,
         owner,
-        tx_status
+        tx_status,
+        expires_at
       }
       const publicationRows = [
         soldPublication,
-        { tx_hash: '0xdeadbeef2', x: 0, y: 1, price: 2000, owner, tx_status },
-        { tx_hash: '0xdeadbeef3', x: 1, y: 1, price: 5000, owner, tx_status },
-        { tx_hash: '0xdeadbeef4', x: 1, y: 2, price: 4000, owner, tx_status }
+        { tx_hash: '0x2', x: 0, y: 1, price: 20, owner, tx_status, expires_at },
+        { tx_hash: '0x3', x: 1, y: 1, price: 50, owner, tx_status, expires_at },
+        { tx_hash: '0x4', x: 1, y: 2, price: 40, owner, tx_status, expires_at }
       ]
       const inserts = publicationRows.map(publication =>
         Publication.insert(publication)
@@ -115,13 +119,13 @@ describe('PublicationService', function() {
 
       expect(publications).to.equalRows([
         {
-          tx_hash: '0xdeadbeef4',
+          tx_hash: '0x4',
           x: 1,
           y: 2,
-          price: '4000',
-          expires_at: null,
+          price: '40',
           buyer: null,
           status: Publication.STATUS.open,
+          expires_at: {},
           owner,
           tx_status
         }

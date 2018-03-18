@@ -10,17 +10,33 @@ export class PublicationService {
   async filter(filters) {
     const { sort, pagination } = filters.sanitize()
 
-    const conditions = {
-      status: Publication.STATUS.open,
-      tx_status: txUtils.TRANSACTION_STATUS.confirmed
-    }
-    const order = { [sort.by]: sort.order }
-    const paginate = `LIMIT ${pagination.limit} OFFSET ${pagination.offset}`
+    const values = [
+      Publication.STATUS.open,
+      txUtils.TRANSACTION_STATUS.confirmed
+    ]
 
-    const [publications, total] = await Promise.all([
-      this.Publication.find(conditions, order, paginate),
-      this.Publication.count(conditions)
+    const [publications, counts] = await Promise.all([
+      this.Publication.query(
+        `SELECT *
+          FROM ${Publication.tableName}
+          WHERE status = $1
+            AND tx_status = $2
+            AND expires_at >= now()
+          ORDER BY ${sort.by} ${sort.order}
+          LIMIT ${pagination.limit} OFFSET ${pagination.offset}`,
+        values
+      ),
+      this.Publication.query(
+        `SELECT COUNT(*)
+          FROM ${Publication.tableName}
+          WHERE status = $1
+            AND tx_status = $2
+            AND expires_at >= now()`,
+        values
+      )
     ])
+
+    const total = parseInt(counts[0].count, 10)
 
     return {
       publications,
