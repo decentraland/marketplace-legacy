@@ -63,8 +63,10 @@ export default class BuyParcelPage extends React.PureComponent {
 
   renderMessage(isNotEnoughMana, isNotEnoughApproved) {
     if (!isNotEnoughMana && !isNotEnoughApproved) return null
+
     const { wallet, publication } = this.props
     const { balance, approvedBalance } = wallet
+
     return (
       <Container text>
         <Grid.Column>
@@ -132,7 +134,7 @@ export default class BuyParcelPage extends React.PureComponent {
 
     return (
       <Parcel x={x} y={y}>
-        {parcel => (
+        {(parcel, isOwner) => (
           <div className="BuyParcelPage">
             {this.renderMessage(isNotEnoughMana, isNotEnoughApproved)}
             <Container text textAlign="center">
@@ -174,7 +176,10 @@ export default class BuyParcelPage extends React.PureComponent {
                   type="button"
                   primary
                   disabled={
-                    isDisabled || isNotEnoughMana || isNotEnoughApproved
+                    isDisabled ||
+                    isOwner ||
+                    isNotEnoughMana ||
+                    isNotEnoughApproved
                   }
                 >
                   {t('global.confirm')}
