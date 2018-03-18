@@ -105,8 +105,6 @@ export default class BuyParcelPage extends React.PureComponent {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <span>{t('parcel_buy.should_approve')}</span>
-                  <br />
                   {t_html('parcel_buy.please_approve', {
                     settings_link: (
                       <Link to={locations.settings}>
