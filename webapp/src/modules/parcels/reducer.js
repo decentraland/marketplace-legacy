@@ -105,7 +105,8 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
 
       switch (transaction.actionType) {
         case TRANSFER_PARCEL_SUCCESS: {
-          const { parcelId, newOwner } = transaction.payload
+          const { x, y, newOwner } = transaction.payload
+          const parcelId = buildCoordinate(x, y)
           return {
             ...state,
             data: {
