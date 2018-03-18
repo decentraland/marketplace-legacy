@@ -113,7 +113,8 @@
     "didnt_approve": "You haven't authorized MANA usage",
     "please_approve":
       "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
-    "total_balance": "Your balance is {balance}"
+    "total_balance": "Your balance is {balance}",
+    "should_approve": ""
   },
   "parcel_publish": {
     "list_land": "List LAND for sale",
@@ -211,6 +212,7 @@
   "footer": {
     "color_key": "Color key",
     "privacy_policy": "Privacy Policy",
+    "terms": "Terms and Conditions",
     "copyright": "Copyright 2018 Decentraland. All rights reserved."
   }
 }

@@ -217,8 +217,9 @@
     "account_unlocked": "Assurez-vous que votre compte est déverrouillé"
   },
   "footer": {
-    "color_key": "Code couleur",
-    "privacy_policy": "Politique de confidentialité",
+    "color_key": "Code Couleur",
+    "privacy_policy": "Politique de Confidentialité",
+    "terms": "Termes et Conditions",
     "copyright": "Copyright 2018 Decentraland. Tous droits reservés."
   }
 }
