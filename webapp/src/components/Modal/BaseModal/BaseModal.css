@@ -40,7 +40,7 @@
 }
 .modal-content {
   position: relative;
-  background-color: #FFF;
+  background-color: #fff;
   border: 1px solid (--gray);
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -144,4 +144,10 @@
   .modal-lg .modal-dialog {
     width: 900px;
   }
+}
+
+.modal-content {
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--background);
 }

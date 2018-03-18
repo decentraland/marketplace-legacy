@@ -27,7 +27,7 @@ export default class Modal extends React.PureComponent {
   }
 
   render() {
-    const { modal } = this.props
+    const { modal, location } = this.props
     const { open, name, data } = modal
 
     let ModalComponent = modals[name]
@@ -45,6 +45,7 @@ export default class Modal extends React.PureComponent {
         isOpen={open}
         onKeyDown={this.handleKeyDown}
         onClose={preventDefault(this.handleClose)}
+        location={location}
       />
     )
   }
