@@ -96,12 +96,16 @@
   "parcel_transfer": {
     "transfer_land": "Transferir LAND",
     "about_to_transfer": "Estas por transferir {parcel_name}",
-    "irreversible": "Recuerda que transferir LAND es una operación irreversible.",
+    "irreversible":
+      "Recuerda que transferir LAND es una operación irreversible.",
     "check_address": "Por favor revisa la dirección cuidadosamente",
-    "cant_transfer": "Esta LAND no puede ser transferida porque se encuentra en venta.",
+    "cant_transfer":
+      "Esta LAND no puede ser transferida porque se encuentra en venta.",
     "recipient_address": "Dirección de destino",
-    "unknown_error": "Un problema desconocido ha ocurrido, los detalles se encuentran debajo.",
-    "error_persists": "Si el problema persiste, contáctate con nosotros en {community_chat_link}"
+    "unknown_error":
+      "Un problema desconocido ha ocurrido, los detalles se encuentran debajo.",
+    "error_persists":
+      "Si el problema persiste, contáctate con nosotros en {community_chat_link}"
   },
   "parcel_buy": {
     "buy_land": "Comprar LAND",
@@ -109,18 +113,21 @@
     "approved_balance": "Tu balance aprobado es {approved_balance}",
     "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
     "didnt_approve": "No has autorizado el uso de MANA",
-    "please_approve": "Por favor entra en {settings_link} y permite al contrato de Mercado a operar MANA por tu cuenta",
+    "please_approve":
+      "Por favor entra en {settings_link} y permite al contrato de Mercado a operar MANA por tu cuenta",
     "total_balance": "Tu balance es {balance}"
   },
   "parcel_publish": {
     "list_land": "Publicar LAND para la venta",
-    "set_land_price": "Configura un precio y fecha de expiración para {parcel_name}",
+    "set_land_price":
+      "Configura un precio y fecha de expiración para {parcel_name}",
     "price": "Precio",
     "price_placeholder": "Precio en MANA para esta LAND",
     "expiration": "Expiración",
     "expiration_placeholder": "Fecha de expiración para esta publicación",
     "already_sold": "Esta LAND ya se encuentra en venta a {value}",
-    "please_authorize": "Tienes que ir a {settings_link} y autorizar al Mercado para operar LAND por tu cuenta antes de publicarla en venta.",
+    "please_authorize":
+      "Tienes que ir a {settings_link} y autorizar al Mercado para operar LAND por tu cuenta antes de publicarla en venta.",
     "errors": {
       "minimum_expiration": "La fecha mínima de expiración es un día",
       "minimum_land": "El precio mínimo de LAND es {value} MANA"
@@ -128,7 +135,7 @@
   },
   "parcel_cancel": {
     "cancel_land": "Cancelar la venta de LAND",
-    "currently_on_sale":"está actualmente en venta por {value}.",
+    "currently_on_sale": "está actualmente en venta por {value}.",
     "about_to_cancel": "Estas por cancelar esta venta.",
     "not_for_sale": "no está para la venta."
   },
@@ -139,39 +146,54 @@
     "completed": "Completada"
   },
   "transaction": {
-    "approved": "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "disapproved": "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "authorize": "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
-    "edit": "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
+    "approved":
+      "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
+    "disapproved":
+      "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
+    "authorize":
+      "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
+    "edit":
+      "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
     "transfer": "Has transferido {parcel_link} a {owner_link}",
     "publish": "Has publicado {parcel_link}",
     "buy": "Has comprado {parcel_link}",
     "cancel": "Has cancelado {publication_link} de {parcel_link}"
   },
   "transaction_status": {
-    "see_activity": "Para ver el historial de transacciones, visita tu {activity_link}.",
+    "see_activity":
+      "Para ver el historial de transacciones, visita tu {activity_link}.",
     "text": {
       "pending": "Tu transacción está esperando ser confirmada.",
-      "failed": "Tu transacción ha fallado, puedes intentar enviándola nuevamente."
+      "failed":
+        "Tu transacción ha fallado, puedes intentar enviándola nuevamente."
     },
     "parcel": {
-      "still_pending": "{parcel_name} todavía tiene {transactions_count} transacciones pendientes."
+      "still_pending":
+        "{parcel_name} todavía tiene {transactions_count} transacciones pendientes."
     },
-    "idle":{
+    "idle": {
       "please_confirm": "Por favor confirma la transacción"
     }
   },
   "settings": {
     "pending_tx": "Tienes una transacción pendiente",
-    "disapprove_mana_check": "Desmarcando desautoriza el uso de MANA al contrato de Mercado",
-    "approve_mana_check": "Marcando autoriza el uso de MANA al contrato de Mercado",
-    "mana_approved": "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
-    "approve_mana": "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "disapprove_mana_check":
+      "Desmarcando desautoriza el uso de MANA al contrato de Mercado",
+    "approve_mana_check":
+      "Marcando autoriza el uso de MANA al contrato de Mercado",
+    "mana_approved":
+      "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "approve_mana":
+      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
     "marketplace_contract": "Contrato de Mercado",
-    "unauthorize_land_check": "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
-    "authorize_land_check": "Marcando autoriza el uso de LAND al contrato de Mercado",
-    "you_authorized": "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
-    "authorize": "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta"
+    "unauthorize_land_check":
+      "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
+    "authorize_land_check":
+      "Marcando autoriza el uso de LAND al contrato de Mercado",
+    "you_authorized":
+      "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "authorize":
+      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta"
   },
   "color_key": {
     "title": "Mapa de colores",
@@ -186,12 +208,14 @@
     "on_sale": "En venta"
   },
   "sign_in": {
-    "options": "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}.",
+    "options":
+      "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}.",
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada."
   },
   "footer": {
     "color_key": "Mapa de Colores",
     "privacy_policy": "Política de Privacidad",
-    "copyright": "Copyright 2017 Decentraland. Todos los derechos reservados."
+    "terms": "Términos & Condiciones",
+    "copyright": "Copyright 2018 Decentraland. Todos los derechos reservados."
   }
 }

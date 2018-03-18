@@ -1,10 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { localStorage } from 'lib/localStorage'
 import { Button } from 'semantic-ui-react'
 
 import DecentralandLogo from 'components/DecentralandLogo'
 import BaseModal from '../BaseModal'
+
+import { locations } from 'locations'
 
 import './TermsModal.css'
 
@@ -32,6 +35,10 @@ export default class TermsModal extends React.PureComponent {
   }
 
   render() {
+    const { location: { pathname } } = this.props
+    if (pathname === locations.terms || pathname === locations.privacy) {
+      return null
+    }
     return (
       <BaseModal
         className="TermsModal modal-lg"
@@ -46,30 +53,19 @@ export default class TermsModal extends React.PureComponent {
 
         <div className="modal-body">
           <div className="text">
-            <h3>Welcome to the LAND Marketplace</h3>
+            <h3>Welcome to Decentraland&apos;s Marketplace</h3>
             <p>
               This dApp interacts with a <strong>decentralized exchange</strong>{' '}
               that runs on the Ethereum blockchain.
             </p>
             <p>
               By choosing &quot;I agree&quot; below, you agree to our{' '}
-              <a
-                href="https://market.decentraland.org/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Terms of Service
-              </a>.
+              <Link to={locations.terms}>Terms of Service</Link>.
             </p>
             <p>
               You also agree to our{' '}
-              <a
-                href="https://market.decentraland.org/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Privacy Policy
-              </a>, which describes how we process your information.
+              <Link to={locations.privacy}>Privacy Policy</Link>, which
+              describes how we process your information.
             </p>
           </div>
 

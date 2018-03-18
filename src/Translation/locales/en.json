@@ -209,8 +209,9 @@
     "account_unlocked": "Make sure your account is unlocked"
   },
   "footer": {
-    "color_key": "Color key",
+    "color_key": "Color Key",
     "privacy_policy": "Privacy Policy",
+    "terms": "Terms & Conditions",
     "copyright": "Copyright 2018 Decentraland. All rights reserved."
   }
 }

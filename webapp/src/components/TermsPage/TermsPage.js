@@ -21,8 +21,8 @@ export default class TermsPage extends React.PureComponent {
           Services, you (1) accept and agree to be bound by these Terms (2)
           consent to the collection, use, disclosure and other handling of
           information as described in our Privacy Policy, available at (
-          <a href="https://land.decentraland.org/privacy">
-            https://land.decentraland.org/privacy
+          <a href="https://market.decentraland.org/privacy">
+            https://market.decentraland.org/privacy
           </a>) and (3) any additional terms, rules and conditions of
           participation issued by Decentraland from time to time. If you do not
           agree to the Terms, then you must not access or use the Service.
