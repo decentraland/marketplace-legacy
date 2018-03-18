@@ -213,5 +213,12 @@
     "privacy_policy": "Privacy Policy",
     "terms": "Terms & Conditions",
     "copyright": "Copyright 2018 Decentraland. All rights reserved."
+  },
+  "homepage": {
+    "hero_title": "Choose your ideal location in Genesis City",
+    "hero_subtitle": "Decentralized market for LAND. Zero fees.",
+    "get_started": "Get Started",
+    "newest_lands": "Newest LANDs",
+    "view_more": "View More"
   }
 }

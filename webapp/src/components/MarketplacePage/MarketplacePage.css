@@ -9,6 +9,10 @@
   padding: 1px;
 }
 
+.MarketplacePage .publications.loading {
+  opacity: 0.5;
+}
+
 .MarketplacePage .pagination {
   margin-top: 50px;
   margin-bottom: 50px;
