@@ -187,3 +187,12 @@ button[disabled]:hover {
 button {
   cursor: pointer;
 }
+
+/* ------------ 
+  Intercom  */
+
+.intercom-launcher-frame,
+.intercom-launcher-discovery-frame {
+  bottom: 10px !important;
+  transform: scale(0.8) !important;
+}

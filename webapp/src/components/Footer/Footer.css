@@ -18,7 +18,7 @@
   justify-content: space-evenly;
   align-items: center;
   flex: 1 0 auto;
-  padding: 0 20px;
+  padding: 0 20px 0px 85px;
 }
 
 .Footer .footer-column.left {
