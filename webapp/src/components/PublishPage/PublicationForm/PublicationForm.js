@@ -15,10 +15,10 @@ import './PublicationForm.css'
 
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
-const MAX_DAY_INTERVAL = 5 * 365
+const MAXIMUM_DAY_INTERVAL = 5 * 365
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
-const MIN_LAND_PRICE = 1
+const MINIMUM_LAND_PRICE = 1
 
 export default class PublicationForm extends React.PureComponent {
   static propTypes = {
@@ -69,13 +69,25 @@ export default class PublicationForm extends React.PureComponent {
     const formErrors = []
 
     if (differenceInDays(expiresAt, new Date()) < MINIMUM_DAY_INTERVAL) {
-      formErrors.push(t('parcel_publish.errors.minimum_expiration'))
+      formErrors.push(
+        t('parcel_publish.errors.minimum_expiration', {
+          date: this.formatFutureDate(MINIMUM_DAY_INTERVAL)
+        })
+      )
     }
 
-    if (price < MIN_LAND_PRICE) {
+    if (differenceInDays(expiresAt, new Date()) > MAXIMUM_DAY_INTERVAL) {
+      formErrors.push(
+        t('parcel_publish.errors.maximum_expiration', {
+          date: this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
+        })
+      )
+    }
+
+    if (price < MINIMUM_LAND_PRICE) {
       formErrors.push(
         t('parcel_publish.errors.minimum_land', {
-          value: formatMana(MIN_LAND_PRICE, '')
+          value: formatMana(MINIMUM_LAND_PRICE, '')
         })
       )
     }
@@ -102,7 +114,7 @@ export default class PublicationForm extends React.PureComponent {
     const { price, expiresAt, formErrors } = this.state
 
     const minExpires = this.formatFutureDate(MINIMUM_DAY_INTERVAL)
-    const maxExpires = this.formatFutureDate(MAX_DAY_INTERVAL)
+    const maxExpires = this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
 
     const isConfirmed =
       publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed

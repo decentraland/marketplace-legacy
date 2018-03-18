@@ -126,7 +126,8 @@
     "please_authorize":
       "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
     "errors": {
-      "minimum_expiration": "The minimum expiration date is one day",
+      "minimum_expiration": "The minimum expiration date is {date}",
+      "maximum_expiration": "The maximum expiration date is {date}",
       "minimum_land": "The minimum LAND price is {value} MANA"
     }
   },

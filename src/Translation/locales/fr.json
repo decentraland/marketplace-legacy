@@ -131,7 +131,8 @@
     "please_authorize":
       "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
     "errors": {
-      "minimum_expiration": "La date d'expiration minimale est d'une journée",
+      "minimum_expiration": "La date d'expiration minimale est {date}",
+      "maximum_expiration": "La date d'expiration maximale est {date}",
       "minimum_land": "Le prix minimum d'une LAND est de {value} MANA"
     }
   },
