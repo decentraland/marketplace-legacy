@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-commons'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
@@ -13,6 +14,7 @@ import { transactionType } from 'components/types'
 import { formatDate, buildCoordinate } from 'lib/utils'
 import { getMarketplaceAddress } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
+import { getEtherscanHref } from 'modules/transaction/utils'
 
 import {
   APPROVE_MANA_SUCCESS,
@@ -30,7 +32,16 @@ import './Transaction.css'
 
 export default class Transaction extends React.PureComponent {
   static propTypes = {
-    tx: transactionType
+    tx: transactionType,
+    network: PropTypes.string
+  }
+
+  handleTransactionClick = e => {
+    if (e.target.nodeName !== 'A') {
+      const { tx, network } = this.props
+      const href = getEtherscanHref({ txHash: tx.hash }, network)
+      window.open(href, '_blank')
+    }
   }
 
   renderMarketplaceLink() {
@@ -141,7 +152,10 @@ export default class Transaction extends React.PureComponent {
     return (
       <Segment size="large" vertical>
         <Grid>
-          <Grid.Column className="Transaction">
+          <Grid.Column
+            className="Transaction"
+            onClick={this.handleTransactionClick}
+          >
             {tx.status === txUtils.TRANSACTION_STATUS.pending ? (
               <Loader active size="mini" />
             ) : (

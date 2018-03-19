@@ -1,3 +1,3 @@
-import EtherscanLink from './EtherscanLink'
+import EtherscanLink from './EtherscanLink.container'
 
 export default EtherscanLink

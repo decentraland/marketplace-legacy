@@ -15,6 +15,7 @@ export default class ActivityPage extends React.PureComponent {
   static propTypes = {
     pendingTransactions: PropTypes.arrayOf(transactionType),
     transactionHistory: PropTypes.arrayOf(transactionType),
+    network: PropTypes.string,
     isEmpty: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired
@@ -41,7 +42,7 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   renderTransactionLists() {
-    const { pendingTransactions, transactionHistory } = this.props
+    const { pendingTransactions, transactionHistory, network } = this.props
 
     return (
       <React.Fragment>
@@ -51,7 +52,7 @@ export default class ActivityPage extends React.PureComponent {
               {pendingTransactions.length}&nbsp;{t('activity.pending')}
             </div>
             {pendingTransactions.map(tx => (
-              <Transaction key={tx.hash} tx={tx} />
+              <Transaction key={tx.hash} tx={tx} network={network} />
             ))}
           </div>
         ) : null}
@@ -62,7 +63,7 @@ export default class ActivityPage extends React.PureComponent {
               {transactionHistory.length}&nbsp;{t('activity.completed')}
             </div>
             {transactionHistory.map(tx => (
-              <Transaction key={tx.hash} tx={tx} />
+              <Transaction key={tx.hash} tx={tx} network={network} />
             ))}
           </div>
         ) : null}

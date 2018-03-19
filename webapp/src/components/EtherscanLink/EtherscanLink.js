@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { eth } from 'decentraland-commons'
 import { Link } from 'react-router-dom'
+import { getEtherscanHref } from 'modules/transaction/utils'
 
 export default class EtherscanLink extends React.PureComponent {
   static propTypes = {
+    network: PropTypes.string,
     address: PropTypes.string,
     txHash: PropTypes.string,
     className: PropTypes.string,
@@ -19,32 +20,8 @@ export default class EtherscanLink extends React.PureComponent {
     text: null
   }
 
-  constructor(props) {
-    super(props)
-    this.mounted = false
-    this.state = {
-      network: null
-    }
-  }
-
-  async componentWillMount() {
-    this.mounted = true
-    try {
-      const network = await eth.getNetwork()
-      if (this.mounted) {
-        this.setState({ network })
-      }
-    } catch (error) {
-      // do nothing
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false
-  }
-
   render() {
-    const { address, txHash, className, target, text, children } = this.props
+    const { address, txHash } = this.props
 
     if (!address && !txHash) {
       console.warn(
@@ -53,12 +30,9 @@ export default class EtherscanLink extends React.PureComponent {
       return null
     }
 
-    let origin = 'https://etherscan.io'
-    if (this.state.network && this.state.network.name !== 'mainnet') {
-      origin = `https://${this.state.network.name}.etherscan.io`
-    }
-    const pathname = address ? `/address/${address}` : `/tx/${txHash}`
-    const href = `${origin}${pathname}`
+    const { network, className, target, text, children } = this.props
+
+    const href = getEtherscanHref({ address, txHash }, network)
 
     return (
       <Link className={className} to={href} target={target}>
