@@ -1,4 +1,5 @@
 import {
+  CHANGE_LOCALE,
   FETCH_TRANSLATIONS_REQUEST,
   FETCH_TRANSLATIONS_SUCCESS,
   FETCH_TRANSLATIONS_FAILURE
@@ -13,6 +14,15 @@ const INITIAL_STATE = {
 
 export function translationReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case CHANGE_LOCALE:
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        data: {
+          ...state.data,
+          [action.locale]: null
+        }
+      }
     case FETCH_TRANSLATIONS_REQUEST:
       return {
         ...state,

@@ -12,14 +12,14 @@ import './Footer.css'
 export default class Footer extends React.PureComponent {
   static propTypes = {
     locale: PropTypes.string,
-    onFetchTranslations: PropTypes.func
+    onChangeLocale: PropTypes.func
   }
 
   handleLocaleChange = newLocale => {
-    const { locale, onFetchTranslations } = this.props
+    const { locale, onChangeLocale } = this.props
 
     if (newLocale !== locale) {
-      onFetchTranslations(newLocale)
+      onChangeLocale(newLocale)
     }
   }
 

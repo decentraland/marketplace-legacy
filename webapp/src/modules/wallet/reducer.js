@@ -7,7 +7,7 @@ import {
   UPDATE_DERIVATION_PATH
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
-import { FETCH_TRANSLATIONS_SUCCESS } from 'modules/translation/actions'
+import { CHANGE_LOCALE, FETCH_TRANSLATIONS_SUCCESS } from 'modules/translation/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 
@@ -89,6 +89,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
           derivationPath: action.derivationPath
         }
       }
+    case CHANGE_LOCALE:
     case FETCH_TRANSLATIONS_SUCCESS:
       return {
         ...state,
