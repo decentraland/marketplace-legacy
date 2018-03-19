@@ -177,12 +177,13 @@
   },
   "settings": {
     "pending_tx": "보류중인 거래가 있습니다.",
-    "disapprove_mana_check": "선택 취소하면 0 MANA가 승인됩니다.",
+    "disapprove_mana_check":
+      "선택 해제하면 마켓 플레이스 계약에 대한 MANA 사용 권한이 승인되지 않음",
     "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
     "mana_approved":
-      "{mana_approved} MANA가 계약에 의해 사용되도록 승인 받았습니다.",
+      "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "approve_mana":
-      "{marketplace_contract_link}에 {mana_to_approve} MANA 사용 승인",
+      "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
     "marketplace_contract": "시장 계약",
     "unauthorize_land_check":
       "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",

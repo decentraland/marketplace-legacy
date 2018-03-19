@@ -172,11 +172,10 @@
   },
   "settings": {
     "pending_tx": "您有待处理的交易",
-    "disapprove_mana_check": "如取消选中将批准0 MANA",
-    "approve_mana_check": "勾选以批准{mana_to_approve} MANA",
-    "mana_approved": "您有{mana_approved} MANA批准被合约使用。",
-    "approve_mana":
-      "批准{虚拟市场合约}{marketplace_contract_link}的{mana_to_approve} MANA使用",
+    "disapprove_mana_check": "取消选中不授权市场合同的MANA使用",
+    "approve_mana_check": "检查授权MANA使用到市场合同",
+    "mana_approved": "您已授权{marketplace_contract_link}以您的名义操作MANA",
+    "approve_mana": "授权{marketplace_contract_link}以您的名义操作MANA",
     "marketplace_contract": "虚拟市场合约",
     "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
     "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
