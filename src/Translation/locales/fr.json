@@ -1,8 +1,10 @@
 {
   "languages": {
-    "en": "English",
-    "es": "Spanish",
-    "fr": "French"
+    "en": "Anglais",
+    "es": "Espanol",
+    "fr": "Français",
+    "zh": "Chinois",
+    "ko": "Coréen"
   },
   "global": {
     "atlas": "Atlas",
@@ -229,7 +231,7 @@
     "hero_title": "Choisissez votre emplacement idéal à Genesis City",
     "hero_subtitle": "Marché décentralisé pour LAND. Zéro frais.",
     "get_started": "Commencer",
-    "newest_lands": "Les plus récents LANDs",
+    "newest_lands": "Les plus récents LAND",
     "view_more": "Afficher plus"
   }
 }

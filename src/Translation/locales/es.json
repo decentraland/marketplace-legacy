@@ -1,8 +1,10 @@
 {
   "languages": {
-    "en": "English",
-    "es": "Spanish",
-    "fr": "French"
+    "en": "Ingles",
+    "es": "Español",
+    "fr": "Frances",
+    "zh": "Chino",
+    "ko": "Coreano"
   },
   "global": {
     "atlas": "Atlas",
@@ -223,7 +225,7 @@
     "hero_title": "Elige tu ubicación ideal en Genesis City",
     "hero_subtitle": "Mercado de LAND de Decentraland. Sin comisiones.",
     "get_started": "Comenzar",
-    "newest_lands": "Nuevas LANDs",
+    "newest_lands": "Nuevas LAND",
     "view_more": "Ver Más"
   }
 }

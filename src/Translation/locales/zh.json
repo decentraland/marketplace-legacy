@@ -1,0 +1,185 @@
+{
+  "languages": {
+    "en": "英语",
+    "es": "西班牙语",
+    "fr": "法国",
+    "zh": "中文",
+    "ko": "朝鲜的"
+  },
+  "global": {
+    "atlas": "地图",
+    "marketplace": "虚拟物品市场",
+    "activity": "活动",
+    "parcels": "地块",
+    "contributions": "小区份额",
+    "settings": "设置",
+    "blog": "博客",
+    "website": "网站",
+    "community_chat": "社区聊天",
+    "cancel": "取消",
+    "submit": "提交",
+    "confirm": "确认",
+    "authorized": "已授权",
+    "unauthorized": "未授权",
+    "wallet_address": "钱包地址",
+    "for": "对于",
+    "sign_in": "登录",
+    "sign_in_notice": "您需要{登录}{sign_in_link}才能访问此页面",
+    "owned_by": "被{address_link}所有"
+  },
+  "navbar": {
+    "my_land": "我的虚拟土地"
+  },
+  "atlas": {
+    "owner": "所有者：{owner}",
+    "no_owner": "没有所有者",
+    "your_parcel": "您的地块",
+    "on_sale": "出售中："
+  },
+  "marketplace": {
+    "empty": "噢......这里没有任何东西。",
+    "filter": {
+      "newest": "最新出售",
+      "cheapest": "最低价",
+      "most_expensive": "最高价",
+      "close_to_expire": "最近到期"
+    }
+  },
+  "profile_page": {
+    "empty": "用户没有{content}",
+    "on_sale": "出售"
+  },
+  "publication": {
+    "expired_at": "已于{time}前过期",
+    "expires_in": "将于{time}后到期",
+    "view": "查看",
+    "sold": "已售出",
+    "canceled": "已取消"
+  },
+  "contribution": {
+    "proposal": "提案"
+  },
+  "parcel": {
+    "view": "查看"
+  },
+  "parcel_detail": {
+    "description": "描述",
+    "empty_description": "这个地块没有描述",
+    "actions": {
+      "edit": "编辑",
+      "transfer": "转让",
+      "sell": "出售",
+      "cancel": "取消出售"
+    },
+    "publication": {
+      "price": "价格",
+      "time_left": "剩下的时间",
+      "buy": "购买"
+    },
+    "owner": {
+      "part_of": "{name}的一部分",
+      "no_owner": "没有所有者"
+    }
+  },
+  "parcel_edit": {
+    "edit_land": "编辑土地",
+    "set_name_and_desc": "为{parcel_name}设置名称和描述",
+    "name": "名称",
+    "description": "描述"
+  },
+  "parcel_transfer": {
+    "transfer_land": "转让土地",
+    "about_to_transfer": "您即将转让{parcel_name}",
+    "irreversible": "请注意，转让土地操作是不可逆的。",
+    "check_address": "请仔细检查地址",
+    "cant_transfer": "这块土地正在出售中，不能转让。",
+    "recipient_address": "接收者地址",
+    "unknown_error": "发生未知错误，详情如下。",
+    "error_persists":
+      "如果问题依然存在，请通过{此链接}{community_chat_link}与我们联系"
+  },
+  "parcel_buy": {
+    "buy_land": "购买土地",
+    "about_to_buy": "您即将购买{parcel_name}",
+    "approved_balance": "您的已批准MANA余额为{approved_balance}",
+    "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
+    "didnt_approve": "您没有批准使用MANA",
+    "should_approve": "您需要先在虚拟市场批准使用MANA，才能购买虚拟土地。",
+    "please_approve": "请前往{设置页面}{settings_link}并批准更多MANA。"
+  },
+  "parcel_publish": {
+    "list_land": "待售虚拟土地上架",
+    "set_land_price": "为{parcel_name}设置价格和到期日期",
+    "price": "价格",
+    "price_placeholder": "此虚拟地块以MANA结算的价格",
+    "expiration": "到期时间",
+    "expiration_placeholder": "此块上架待售土地的到期时间",
+    "already_sold": "这块虚拟土地已以{value}价格在出售中",
+    "please_authorize":
+      "您需要前往设置页面{settings_link}并授权虚拟市场以您的名义操作土地交易，然后才能将其上架出售。",
+    "errors": {
+      "minimum_expiration": "最短有效期限为一天",
+      "minimum_land": "最低的土地价格是{value} MANA"
+    }
+  },
+  "parcel_cancel": {
+    "cancel_land": "取消土地出售",
+    "currently_on_sale": "目前正以价格{value}出售。",
+    "about_to_cancel": "您即将取消这次销售。"
+  },
+  "activity": {
+    "no_activity": "您还没有活动。",
+    "start": "您可以先在您的设置页面{settings_link}上批准一些MANA",
+    "pending": "待定",
+    "history": "历史"
+  },
+  "transaction": {
+    "approved": "您已批准{mana}MANA供{虚拟市场}{marketplace_contract_link}使用",
+    "authorize":
+      "您已{action} {虚拟市场}{marketplace_contract_link}以您的名义操作土地",
+    "edit":
+      "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
+    "transfer": "您已将{parcel_link}转让给{owner_link}",
+    "publish": "您发布了{parcel_link}地块",
+    "buy": "您买入了{parcel_link}地块",
+    "cancel": "您取消了{parcel_link}地块的{发布}{publication_link}"
+  },
+  "settings": {
+    "pending_tx": "您有待处理的交易",
+    "unapprove_mana_check": "如取消选中将批准0 MANA",
+    "approve_mana_check": "勾选以批准{mana_to_approve} MANA",
+    "mana_approved": "您有{mana_approved} MANA批准被合约使用。",
+    "approve_mana":
+      "批准{虚拟市场合约}{marketplace_contract_link}的{mana_to_approve} MANA使用",
+    "marketplace_contract": "虚拟市场合约",
+    "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
+    "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
+    "you_authorized": "您已授权{虚拟市场}{marketplace_contract_link}",
+    "authorize":
+      "授权{虚拟市场}{marketplace_contract_link}以您的名义操作土地交易"
+  },
+  "color_key": {
+    "title": "色彩标记",
+    "yours": "您的土地",
+    "taken": "已被占有",
+    "district": "小区",
+    "contribution": "小区份额",
+    "roads": "道路",
+    "plaza": "广场",
+    "unowned": "无主",
+    "loading": "加载中"
+  },
+  "footer": {
+    "color_key": "色彩标记",
+    "privacy_policy": "隐私政策",
+    "terms": "条款和条件",
+    "copyright": "版权所有2018 Decentraland。保留所有权利。"
+  },
+  "homepage": {
+    "hero_title": "在\"创世纪城\"中挑选你的梦想领地",
+    "hero_subtitle": "去中心化虚拟土地市场。免交易费。",
+    "get_started": "现在就开始",
+    "newest_lands": "最新上架虚拟土地",
+    "view_more": "查看更多"
+  }
+}
