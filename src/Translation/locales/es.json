@@ -196,6 +196,9 @@
     "authorize":
       "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta"
   },
+  "derivation_path": {
+    "supported": "Por el momento solo soportamos derivation paths que comienzan con {paths}"
+  },
   "color_key": {
     "title": "Mapa de colores",
     "yours": "Tuya",
