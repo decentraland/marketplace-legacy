@@ -1,4 +1,7 @@
 import dateFnsFormat from 'date-fns/format'
+import dateFnsDistanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+
+import { getCurrentLocale } from 'modules/translation/utils'
 
 export function buildCoordinate(x, y) {
   return `${x},${y}`
@@ -57,4 +60,10 @@ export function formatMana(amount, unit = 'MANA') {
 
 export function formatDate(date, format = 'MMMM Do, YYYY - hh:MMa') {
   return dateFnsFormat(date, format)
+}
+
+export function distanceInWordsToNow(date) {
+  return dateFnsDistanceInWordsToNow(date, {
+    locale: getCurrentLocale()
+  })
 }

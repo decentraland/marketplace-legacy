@@ -1,20 +1,21 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { intlShape } from 'react-intl'
-import { setI18n } from 'modules/translation/utils'
 
 export default class TranslationProvider extends React.PureComponent {
   static propTypes = {
-    intl: intlShape
+    intl: intlShape,
+    initTranslations: PropTypes.func
   }
 
   componentWillMount() {
-    setI18n(this.props.intl)
+    this.props.initTranslations(this.props.intl)
   }
 
   componentWillReceiveProps(nextProps) {
     const { intl } = nextProps
     if (intl) {
-      setI18n(intl)
+      this.props.initTranslations(intl)
     }
   }
 
