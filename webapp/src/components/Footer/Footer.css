@@ -5,6 +5,7 @@
   background-color: black;
   display: flex;
   flex-flow: row;
+  overflow: hidden;
 }
 
 .Footer .social-icons a {
