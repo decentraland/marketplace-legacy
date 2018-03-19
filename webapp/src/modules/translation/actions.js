@@ -25,13 +25,3 @@ export function fetchTranslationsFailure(error) {
     error
   }
 }
-
-// Initialize I18n object
-export const INITIALIZE_TRANSLATIONS = 'Initialize translations'
-
-export function initTranslations(intl) {
-  return {
-    type: INITIALIZE_TRANSLATIONS,
-    intl
-  }
-}

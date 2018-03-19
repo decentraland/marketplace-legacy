@@ -5,17 +5,17 @@ import { intlShape } from 'react-intl'
 export default class TranslationProvider extends React.PureComponent {
   static propTypes = {
     intl: intlShape,
-    initTranslations: PropTypes.func
+    setI18n: PropTypes.func
   }
 
   componentWillMount() {
-    this.props.initTranslations(this.props.intl)
+    this.props.setI18n(this.props.intl)
   }
 
   componentWillReceiveProps(nextProps) {
     const { intl } = nextProps
     if (intl) {
-      this.props.initTranslations(intl)
+      this.props.setI18n(intl)
     }
   }
 
