@@ -92,7 +92,7 @@ export default class SettingsForm extends React.PureComponent {
                   marketplace_contract_link: this.renderMarketplaceLink()
                 })}
 
-            {approveTransaction && (
+            {isApprovePending && (
               <TxStatus.Text
                 txHash={approveTransaction.hash}
                 txStatus={approveTransaction.status}
@@ -117,7 +117,7 @@ export default class SettingsForm extends React.PureComponent {
                   marketplace_contract_link: this.renderMarketplaceLink()
                 })}
 
-            {authorizeTransaction && (
+            {isAuthorizePending && (
               <TxStatus.Text
                 txHash={authorizeTransaction.hash}
                 txStatus={authorizeTransaction.status}

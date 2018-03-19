@@ -124,8 +124,6 @@ export default class PublicationForm extends React.PureComponent {
 
     const isPending =
       publication.tx_status === txUtils.TRANSACTION_STATUS.pending
-    const isFailure =
-      publication.tx_status === txUtils.TRANSACTION_STATUS.failed
 
     return (
       <Form
@@ -154,9 +152,9 @@ export default class PublicationForm extends React.PureComponent {
           />
         </Form.Field>
         <TxStatus.Idle isIdle={isTxIdle} />
-        {isPending || isFailure ? (
+        {isPending ? (
           <Message icon>
-            {isPending && <Icon name="circle notched" loading />}
+            <Icon name="circle notched" loading />
             <Message.Content>
               <TxStatus.Text
                 txHash={publication.tx_hash}
