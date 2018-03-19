@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
+import { t } from 'modules/translation/utils'
 
 const derivationOptions = [
   {
@@ -14,6 +15,7 @@ const derivationOptions = [
 
 const DEFAULT_VALUE = derivationOptions[0].value
 const PATH_PREFIX = 'm/'
+const SUPPORTED_PATHS = ["m/44'/60'", "m/44'/61'"]
 
 export default class DerivationPathDropdown extends React.PureComponent {
   static propsTypes = Dropdown.propTypes
@@ -23,8 +25,11 @@ export default class DerivationPathDropdown extends React.PureComponent {
   }
 
   handleOnChange = (e, data) => {
-    const derivationPath = this.removePrefix(data.value)
-    this.props.onChange(derivationPath)
+    const derivationPath = data.value
+
+    if (this.isValid(derivationPath)) {
+      this.props.onChange(this.removePrefix(derivationPath))
+    }
   }
 
   getDefaultDerivationPath() {
@@ -40,12 +45,27 @@ export default class DerivationPathDropdown extends React.PureComponent {
     return path.startsWith(PATH_PREFIX) ? path.slice(2) : path
   }
 
+  isValid(derivationPath) {
+    return SUPPORTED_PATHS.some(path => derivationPath.startsWith(path))
+  }
+
   render() {
     const defaultValue = this.getDefaultDerivationPath()
 
     return (
       <React.Fragment>
-        <label>Derivation path</label>
+        <label>
+          Derivation path&nbsp;
+          <strong
+            data-balloon-pos="up"
+            data-balloon-length="xlarge"
+            data-balloon={t('derivation_path.supported', {
+              paths: SUPPORTED_PATHS.join(', ')
+            })}
+          >
+            ?
+          </strong>
+        </label>
         <Dropdown
           {...this.props}
           onChange={this.handleOnChange}
