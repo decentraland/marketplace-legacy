@@ -202,6 +202,9 @@
     "authorize":
       "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom."
   },
+  "derivation_path": {
+    "supported": "Nous ne prenons en charge que les chemins commençant par {paths} pour le moment"
+  },
   "color_key": {
     "title": "Code couleur",
     "yours": "Les votres",

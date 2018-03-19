@@ -194,6 +194,9 @@
     "authorize":
       "Authorize the {marketplace_contract_link} to operate LAND on your behalf"
   },
+  "derivation_path": {
+    "supported": "We only support paths that start with {paths} for the time being"
+  },
   "color_key": {
     "title": "Color key",
     "yours": "Yours",
