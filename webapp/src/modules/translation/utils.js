@@ -48,13 +48,14 @@ export function setI18n(intl) {
 }
 
 export function setCurrentLocale(localeName) {
-  const locale = {
-    en: 'en',
-    es: 'es',
-    fr: 'fr',
-    zh: 'zh_cn',
-    ko: 'ko'
-  }[localeName] || DEFAULT_LOCALE
+  const locale =
+    {
+      en: 'en',
+      es: 'es',
+      fr: 'fr',
+      zh: 'zh_cn',
+      ko: 'ko'
+    }[localeName] || DEFAULT_LOCALE
 
   currentLocale = require(`date-fns/locale/${locale}`)
 }
