@@ -25,3 +25,14 @@ export function fetchTranslationsFailure(error) {
     error
   }
 }
+
+// Change locale
+
+export const CHANGE_LOCALE = 'Change locale'
+
+export function changeLocale(locale) {
+  return {
+    type: CHANGE_LOCALE,
+    locale
+  }
+}

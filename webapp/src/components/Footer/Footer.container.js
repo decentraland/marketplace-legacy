@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getLocale } from 'modules/wallet/selectors'
-import { fetchTranslationsRequest } from 'modules/translation/actions'
+import { changeLocale } from 'modules/translation/actions'
 import Footer from './Footer'
 
 const mapState = state => {
@@ -10,7 +10,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onFetchTranslations: locale => dispatch(fetchTranslationsRequest(locale))
+  onChangeLocale: locale => dispatch(changeLocale(locale))
 })
 
 export default connect(mapState, mapDispatch)(Footer)
