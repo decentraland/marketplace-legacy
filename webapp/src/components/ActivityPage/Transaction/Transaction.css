@@ -6,6 +6,7 @@
 
 .Transaction:hover {
   background-color: var(--dark-gray);
+  border-radius: 10px;
 }
 
 .Transaction .ui.loader {
