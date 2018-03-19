@@ -59,7 +59,7 @@ export const walletType = shape({
   isLandAuthorized: bool,
   approveManaTransactions: arrayOf(transactionType),
   authorizeLandTransactions: arrayOf(transactionType),
-  parcels: arrayOf(parcelType).isRequired,
+  parcels: arrayOf(parcelType).isRequired
 })
 
 export const toastType = shape({

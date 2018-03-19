@@ -10,6 +10,14 @@
   margin-top: 0;
 }
 
+.ParcelName a:hover {
+  text-decoration: underline;
+}
+
+.ParcelName a:hover i {
+  text-decoration: none;
+}
+
 .ParcelName .name {
   color: white;
   white-space: nowrap;
