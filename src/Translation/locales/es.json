@@ -80,7 +80,8 @@
     "publication": {
       "price": "Precio",
       "time_left": "Tiempo Disponible",
-      "buy": "Comprar"
+      "buy": "Comprar",
+      "more_than_years": "Más de {years} años"
     },
     "owner": {
       "part_of": "Parte de {name}",
