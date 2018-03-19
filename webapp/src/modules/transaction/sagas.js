@@ -8,6 +8,8 @@ import {
 } from './actions'
 import { getData, getLoading } from './selectors'
 
+const { TRANSACTION_STATUS } = txUtils
+
 export function* transactionSaga() {
   yield takeEvery(FETCH_TRANSACTION_REQUEST, handleTransactionRequest)
   yield takeEvery(WATCH_LOADING_TRANSACTIONS, handleWatchLoadingTransactions)
@@ -47,10 +49,24 @@ function* handleTransactionRequest(action = {}) {
 
 function* handleWatchLoadingTransactions(action) {
   const transactionRequests = yield select(getLoading)
+  const transactions = yield select(getData)
+  const pendingTransactions = transactions.filter(
+    transaction => transaction.status === TRANSACTION_STATUS.pending
+  )
 
+  const pendingTxHashes = []
   for (const action of transactionRequests) {
-    if (!watchIndex[action.hash]) {
-      yield handleTransactionRequest(action)
+    pendingTxHashes.push(action.hash)
+  }
+  for (const transaction of pendingTransactions) {
+    if (!pendingTxHashes.includes(transaction.hash)) {
+      pendingTxHashes.push(transaction.hash)
+    }
+  }
+
+  for (const hash of pendingTxHashes) {
+    if (!watchIndex[hash]) {
+      yield handleTransactionRequest({ hash })
     }
   }
 }
