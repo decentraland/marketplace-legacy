@@ -13,12 +13,13 @@ import { t } from 'modules/translation/utils'
 
 import './PublicationForm.css'
 
+// TODO: Shouldn't this live on the publication module?
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
-const INPUT_FORMAT = 'YYYY-MM-DD'
-
 const MINIMUM_LAND_PRICE = 1
+
+const INPUT_FORMAT = 'YYYY-MM-DD'
 
 export default class PublicationForm extends React.PureComponent {
   static propTypes = {
@@ -121,8 +122,6 @@ export default class PublicationForm extends React.PureComponent {
     const { publication, isTxIdle, isDisabled, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
 
-    const isConfirmed =
-      publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed
     const isPending =
       publication.tx_status === txUtils.TRANSACTION_STATUS.pending
     const isFailure =
@@ -133,7 +132,6 @@ export default class PublicationForm extends React.PureComponent {
         className="PublicationForm"
         onSubmit={preventDefault(this.handlePublish)}
         error={!!formErrors}
-        success={isConfirmed}
       >
         <Form.Field>
           <label>{t('parcel_publish.price')}</label>
@@ -174,17 +172,13 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         <br />
         <div className="text-center">
-          <Button
-            disabled={isPending || isConfirmed}
-            onClick={onCancel}
-            type="button"
-          >
+          <Button disabled={isPending} onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
           <Button
             type="submit"
             primary={true}
-            disabled={isPending || isConfirmed || isTxIdle || isDisabled}
+            disabled={isPending || isTxIdle || isDisabled}
           >
             {t('global.submit')}
           </Button>

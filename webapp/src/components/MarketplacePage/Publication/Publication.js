@@ -1,14 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 import { locations } from 'locations'
 import { Icon, Card } from 'semantic-ui-react'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
+import PublicationExpiration from 'components/PublicationExpiration'
 import { publicationType } from 'components/types'
-import { t } from 'modules/translation/utils'
-import { isExpired } from 'modules/publication/utils'
 import { formatDate, buildCoordinate } from 'lib/utils'
 
 import './Publication.css'
@@ -21,8 +19,6 @@ export default class Publication extends React.PureComponent {
 
   render() {
     const { publication, debounce } = this.props
-
-    const expirationTimeInWords = distanceInWordsToNow(publication.expires_at)
 
     return (
       <Card
@@ -40,9 +36,7 @@ export default class Publication extends React.PureComponent {
         <Card.Content className="body">
           <Mana amount={parseFloat(publication.price, 10)} />
           <Card.Meta title={formatDate(publication.expires_at)}>
-            {isExpired(publication)
-              ? t('publication.expired_at', { time: expirationTimeInWords })
-              : t('publication.expires_in', { time: expirationTimeInWords })}
+            <PublicationExpiration publication={publication} />
           </Card.Meta>
           <div className="coords">
             <Icon name="marker" size="small" />

@@ -1,3 +1,5 @@
+import { txUtils } from 'decentraland-commons'
+
 export function toPublicationsObject(publicationsArray) {
   return publicationsArray.reduce(
     (obj, publication) => ({
@@ -26,7 +28,9 @@ export function toPublicationObject(publicationsArray) {
 
 export function isOpen(publication) {
   return (
-    publication.status === PUBLICATION_STATUS.open && !isExpired(publication)
+    publication.status === PUBLICATION_STATUS.open &&
+    publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
+    !isExpired(publication)
   )
 }
 

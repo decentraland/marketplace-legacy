@@ -57,6 +57,7 @@
   "publication": {
     "expired_at": "A expiré il y a {time}",
     "expires_in": "Expire dans {time}",
+    "expires_in_more_than_years": "Expire dans plus de 10 ans",
     "view": "Vue",
     "sold": "Vendu",
     "canceled": "Annulé"
@@ -81,8 +82,7 @@
     "publication": {
       "price": "Prix",
       "time_left": "Temps restant",
-      "buy": "Acheter",
-      "more_than_years": "Plus de {years} ans"
+      "buy": "Acheter"
     },
     "owner": {
       "part_of": "Appartient à {name}",
