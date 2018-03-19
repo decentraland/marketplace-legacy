@@ -26,7 +26,7 @@
     "wallet_address": "钱包地址",
     "for": "对于",
     "sign_in": "登录",
-    "sign_in_notice": "您需要{登录}{sign_in_link}才能访问此页面",
+    "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유"
   },
@@ -105,7 +105,7 @@
     "recipient_address": "接收者地址",
     "unknown_error": "发生未知错误，详情如下。",
     "error_persists":
-      "如果问题依然存在，请通过{此链接}{community_chat_link}与我们联系"
+      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系"
   },
   "parcel_buy": {
     "buy_land": "购买土地",
@@ -113,7 +113,8 @@
     "approved_balance": "您的已批准MANA余额为{approved_balance}",
     "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
     "didnt_approve": "您没有批准使用MANA",
-    "please_approve": "请前往{设置页面}{settings_link}并批准更多MANA。",
+    "please_approve":
+      "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
     "total_balance": "您的余额是{balance}"
   },
   "parcel_publish": {
@@ -148,14 +149,13 @@
   "transaction": {
     "approved": "您已批准{mana}MANA供{虚拟市场}{marketplace_contract_link}使用",
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
-    "authorize":
-      "您已{action} {虚拟市场}{marketplace_contract_link}以您的名义操作土地",
+    "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
     "edit":
       "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
     "transfer": "您已将{parcel_link}转让给{owner_link}",
     "publish": "您发布了{parcel_link}地块",
     "buy": "您买入了{parcel_link}地块",
-    "cancel": "您取消了{parcel_link}地块的{发布}{publication_link}"
+    "cancel": "您取消了{parcel_link}上的{publication_link}"
   },
   "transaction_status": {
     "see_activity": "要查看您的交易记录，请访问您的{activity_link}。",
@@ -179,9 +179,8 @@
     "marketplace_contract": "虚拟市场合约",
     "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
     "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
-    "you_authorized": "您已授权{虚拟市场}{marketplace_contract_link}",
-    "authorize":
-      "授权{虚拟市场}{marketplace_contract_link}以您的名义操作土地交易"
+    "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作LAND",
+    "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND"
   },
   "color_key": {
     "title": "色彩标记",
