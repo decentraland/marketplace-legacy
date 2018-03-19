@@ -10,15 +10,15 @@ export default class TermsPage extends React.PureComponent {
         <h2>Terms & Conditions</h2>
         <h3>1. Acceptance of terms</h3>
         <p>
-          Decentraland provides this “LAND Manager” as a platform for managing
-          cryptographic ownership in the virtual world, allowing users to
-          control transactions which are then recorded in the ownership contract
-          hosted on the Ethereum blockchain. The LAND Manager, and any other
-          features, tools, materials, or other services offered from time to
-          time by Decentraland are referred to herein as the “Service.” Please
-          read these Terms of Use (the “Terms” or “Terms of Use”) carefully
-          before using the Service. By using or otherwise accessing the
-          Services, you (1) accept and agree to be bound by these Terms (2)
+          Decentraland provides this “LAND Marketplace” as a platform for
+          managing cryptographic ownership in the virtual world, allowing users
+          to control transactions which are then recorded in the ownership
+          contract hosted on the Ethereum blockchain. The LAND Marketplace, and
+          any other features, tools, materials, or other services offered from
+          time to time by Decentraland are referred to herein as the “Service.”
+          Please read these Terms of Use (the “Terms” or “Terms of Use”)
+          carefully before using the Service. By using or otherwise accessing
+          the Services, you (1) accept and agree to be bound by these Terms (2)
           consent to the collection, use, disclosure and other handling of
           information as described in our Privacy Policy, available at (
           <a href="https://market.decentraland.org/privacy">
@@ -30,8 +30,8 @@ export default class TermsPage extends React.PureComponent {
 
         <h3>2. Beta Disclaimer and Modification of Terms of Use</h3>
         <p>
-          The LAND Manager is still in testing phase and is provided on an “as
-          is” and “as available” basis and may contain defects and software
+          The LAND Marketplace is still in testing phase and is provided on an
+          “as is” and “as available” basis and may contain defects and software
           bugs. You are advised to safeguard important data, property and
           content, to use caution, and to not rely in any way on the correct or
           secure functionality or performance of the Service and the LAND
@@ -65,24 +65,24 @@ export default class TermsPage extends React.PureComponent {
 
         <h3>4. Account Access and Security</h3>
         <p>
-          Access to the LAND Manager is provided via a third party private key
-          manager selected by you (e.g., a Web3 Provider, Metamask, a USB
+          Access to the LAND Marketplace is provided via a third party private
+          key manager selected by you (e.g., a Web3 Provider, Metamask, a USB
           interface for Ledger Wallet, the Mist browser, or other). Security and
-          secure access to each account in the LAND Manager is provided solely
-          by the third party private key manager you select to administer your
-          private key. You and the third party private key manager you select
-          are entirely responsible for security related to access of the LAND
-          Manager. Decentraland bears no responsibility for any breach of
-          security or unauthorized access to your account. You are advised to:
-          (a) avoid any use of the same password with your selected third party
-          private key manager that you have ever used outside of the third party
-          private key manager; and (b) keep your password and any related secret
-          information secure and confidential and do not share them with anyone
-          else. Decentraland cannot and will not be liable for any loss or
-          damage arising from your sharing or other loss of your private key or
-          related information, or any other damage or loss arising from
-          unauthorized access to your LAND Manager account. Transactions that
-          take place using the Service are confirmed and managed via the
+          secure access to each account in the LAND Marketplace is provided
+          solely by the third party private key manager you select to administer
+          your private key. You and the third party private key manager you
+          select are entirely responsible for security related to access of the
+          LAND Marketplace. Decentraland bears no responsibility for any breach
+          of security or unauthorized access to your account. You are advised
+          to: (a) avoid any use of the same password with your selected third
+          party private key manager that you have ever used outside of the third
+          party private key manager; and (b) keep your password and any related
+          secret information secure and confidential and do not share them with
+          anyone else. Decentraland cannot and will not be liable for any loss
+          or damage arising from your sharing or other loss of your private key
+          or related information, or any other damage or loss arising from
+          unauthorized access to your LAND Marketplace account. Transactions
+          that take place using the Service are confirmed and managed via the
           Ethereum blockchain. You understand that your Ethereum public address
           will be made publicly visible whenever you engage in a transaction
           using the Service.
@@ -139,7 +139,7 @@ export default class TermsPage extends React.PureComponent {
           You acknowledge and agree that cryptography is a progressing field.
           Advances in code cracking or technical advances such as the
           development of quantum computers may present risks to
-          cryptocurrencies, the Service, and the LAND Manager, which could
+          cryptocurrencies, the Service, and the LAND Marketplace, which could
           result in the theft or loss of your cryptographic tokens or property.
           To the extent possible, Decentraland intends to undertake reasonable
           measures to update the protocol underlying the Service to account for

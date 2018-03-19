@@ -1,13 +1,15 @@
 {
   "name": "Marketplace",
   "version": "0.1.0",
-  "description": "Decentraland's LAND Manager, Wallet and Marketplace",
+  "description": "Decentraland's LAND Marketplace",
   "main": "src/server.js",
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
-    "test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js",
-    "watch:test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
+    "test":
+      "./node_modules/mocha/bin/mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js",
+    "watch:test":
+      "./node_modules/mocha/bin/mocha -r babel-register -r specs/spec_utils.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
     "init-db": "./scripts/initDb.js",
     "migrate": "./migrations/migrate",
     "renew-blockchain-data": "./scripts/renewBlockchainData.js",
@@ -21,11 +23,7 @@
     "type": "git",
     "url": "https://github.com/decentraland/marketplace.git"
   },
-  "keywords": [
-    "decentraland",
-    "marketplace",
-    "dapp"
-  ],
+  "keywords": ["decentraland", "marketplace", "dapp"],
   "author": "Decentraland",
   "license": "ISC",
   "dependencies": {
