@@ -6,7 +6,7 @@ import { locations, NAVBAR_PAGES } from 'locations'
 import { Menu, Icon } from 'semantic-ui-react'
 import Account from './Account'
 import Badge from 'components/Badge'
-import DecentralandLogo from 'components/DecentralandLogo'
+import { default as DecentralandIcon } from 'components/Icon'
 
 import { walletType, coordsType } from 'components/types'
 import { t } from 'modules/translation/utils'
@@ -18,6 +18,7 @@ export default class Navbar extends React.PureComponent {
     wallet: walletType,
     center: coordsType,
     activePage: PropTypes.oneOf(Object.values(NAVBAR_PAGES)),
+    isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
     activityBadge: PropTypes.number
   }
@@ -56,11 +57,15 @@ export default class Navbar extends React.PureComponent {
   }
 
   renderLogoHeader() {
+    const { isLoading } = this.props
     return (
       <div className="navbar-header">
         <Link to={locations.root} className="navbar-logo">
           <span className="navbar-icon">
-            <DecentralandLogo />
+            <DecentralandIcon
+              name={isLoading ? 'decentraland-loading' : 'decentraland'}
+              className="pull-left"
+            />
           </span>
         </Link>
       </div>
