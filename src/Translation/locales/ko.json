@@ -25,7 +25,12 @@
     "for": "에 대한",
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
-    "owned_by": "{address_link} 소유"
+    "owned_by": "에게 소유 된",
+    "owned_by_link": "{address_link} 소유",
+    "retry": "다시 해 보다"
+  },
+  "address": {
+    "its_you": "너야"
   },
   "navbar": {
     "my_land": "나의 토지"
@@ -52,6 +57,7 @@
   "publication": {
     "expired_at": "{time} 전 만료 됨",
     "expires_in": "{time}에 만료 됨",
+    "expires_in_more_than_years": "{years} 년 만료 됨",
     "view": "보기",
     "sold": "판매 됨",
     "canceled": "취소 됨"
@@ -60,7 +66,9 @@
     "proposal": "제안"
   },
   "parcel": {
-    "view": "보기"
+    "view": "보기",
+    "no_name": "이름 없음",
+    "no_description": "설명 없음"
   },
   "parcel_detail": {
     "description": "설명",
@@ -108,7 +116,8 @@
     "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
     "should_approve":
       "토지를 사기 전에 시장에서 MANA를 사용하도록 승인해야합니다.",
-    "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오."
+    "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
+    "total_balance": "Your balance is {balance}"
   },
   "parcel_publish": {
     "list_land": "판매용 토지 목록",
@@ -122,7 +131,9 @@
       "{settings_link}로 이동하여 판매용으로 등록하기 전에 마켓 플레이스에서 토지를 대신 사용하도록 승인해야합니다.",
     "errors": {
       "minimum_expiration": "최소 만료일은 하루입니다.",
-      "minimum_land": "최저 가격은 {value} MANA입니다."
+      "maximum_expiration": "최대 만료일은 {date}입니다.",
+      "minimum_land_price": "최저 가격은 {value} MANA입니다.",
+      "maximum_land_price": "최대 LAND 가격은 {value} MANA입니다."
     }
   },
   "parcel_cancel": {
@@ -134,13 +145,16 @@
     "no_activity": "아직 활동이 없습니다.",
     "start": "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다.",
     "pending": "보류",
-    "history": "기록"
+    "history": "기록",
+    "completed": "Completed"
   },
   "transaction": {
     "approved":
-      "{marketplace_contract_link}에서 사용하도록 {mana}을(를) 승인했습니다.",
+      "{marketplace_contract_link} 이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
+    "disapproved":
+      "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "authorize":
-      "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link}이 있습니다.",
+      "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
@@ -148,9 +162,23 @@
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다."
   },
+  "transaction_status": {
+    "see_activity": "거래 내역을 보려면 {activity_link}을 방문하십시오.",
+    "text": {
+      "pending": "거래가 확인되기를 기다리고 있습니다.",
+      "failed": "거래가 실패했습니다. 새 거래를 보낼 수 있습니다."
+    },
+    "parcel": {
+      "still_pending":
+        "{parcel_name}에 아직 {transactions_count} 개의 거래가 보류 중입니다."
+    },
+    "idle": {
+      "please_confirm": "Please confirm the transaction"
+    }
+  },
   "settings": {
     "pending_tx": "보류중인 거래가 있습니다.",
-    "unapprove_mana_check": "선택 취소하면 0 MANA가 승인됩니다.",
+    "disapprove_mana_check": "선택 취소하면 0 MANA가 승인됩니다.",
     "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
     "mana_approved":
       "{mana_approved} MANA가 계약에 의해 사용되도록 승인 받았습니다.",
