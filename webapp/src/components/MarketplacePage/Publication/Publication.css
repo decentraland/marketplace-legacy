@@ -33,6 +33,7 @@
 
 .Publication .body {
   position: relative;
+  padding: 1em;
 }
 
 .Publication .price {

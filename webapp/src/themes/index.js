@@ -5,6 +5,7 @@ import 'semantic-ui-css/semantic.min.css'
 import './variables.css'
 
 // Component Themes
+import './components/Container.css'
 import './components/Button.css'
 import './components/Card.css'
 import './components/Header.css'

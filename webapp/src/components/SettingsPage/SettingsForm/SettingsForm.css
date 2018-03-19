@@ -8,6 +8,7 @@
 
 .SettingsForm.form .field {
   margin-bottom: 30px;
+  overflow: hidden;
 }
 
 .SettingsForm.form .field > label,
@@ -15,15 +16,16 @@
   font-size: 16px;
 }
 
-.SettingsForm.form input[type="checkbox"] {
+.SettingsForm.form .ui.checkbox {
+  margin-top: 5px;
   margin-right: 10px;
   float: left;
 }
 
 .SettingsForm .authorize-detail {
   font-size: 18px;
-  overflow: hidden;
   margin-bottom: 0;
+  overflow: hidden;
 }
 
 .SettingsForm .TxStatusText {
