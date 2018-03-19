@@ -31,7 +31,7 @@ jobs:
             REACT_APP_INTERCOM_APP_ID: z0h94kay
             REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942
             REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS: 0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d
-            REACT_APP_MARKETPLACE_CONTRACT_ADDRESS: 0xcd2de7fd530269feaf6075c8bca940526fd7c4de
+            REACT_APP_MARKETPLACE_CONTRACT_ADDRESS: 0xb3bca6f5052c7e24726b44da7403b56a8a1b98f8
       - save_cache:
           paths:
             - webapp/build
