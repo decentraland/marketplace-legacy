@@ -168,7 +168,7 @@
     },
     "parcel": {
       "still_pending":
-        "{parcel_name} still has {transactions_count} pending transactions."
+        "{parcel_name} still has {transactions_count} pending {transactions_count, plural, one {transaction} other {transactions}}"
     },
     "idle": {
       "please_confirm": "Please confirm the transaction"
