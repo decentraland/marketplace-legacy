@@ -56,6 +56,7 @@
   "publication": {
     "expired_at": "Expiró hace {time}",
     "expires_in": "Expira en {time}",
+    "expires_in_more_than_years": "Expira en más de {years} años",
     "view": "Ver",
     "sold": "Vendida",
     "canceled": "Cancelada"

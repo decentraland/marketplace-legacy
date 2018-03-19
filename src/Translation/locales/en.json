@@ -56,6 +56,7 @@
   "publication": {
     "expired_at": "Expired {time} ago",
     "expires_in": "Expires in {time}",
+    "expires_in_more_than_years": "Expires in over {years} years",
     "view": "View",
     "sold": "Sold",
     "canceled": "Canceled"
@@ -126,8 +127,10 @@
     "please_authorize":
       "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
     "errors": {
-      "minimum_expiration": "The minimum expiration date is one day",
-      "minimum_land": "The minimum LAND price is {value} MANA"
+      "minimum_expiration": "The minimum expiration date is {date}",
+      "maximum_expiration": "The maximum expiration date is {date}",
+      "minimum_land_price": "The minimum LAND price is {value} MANA",
+      "maximum_land_price": "The maximum LAND price is {value} MANA"
     }
   },
   "parcel_cancel": {

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { txUtils } from 'decentraland-commons'
 
 import { locations } from 'locations'
 import { Container, Header, Grid, Message } from 'semantic-ui-react'
@@ -11,6 +10,7 @@ import Parcel from 'components/Parcel'
 import TxStatus from 'components/TxStatus'
 
 import { publicationType, walletType } from 'components/types'
+import { isOpen } from 'modules/publication/utils'
 import { t, t_html } from 'modules/translation/utils'
 
 import { formatMana } from 'lib/utils'
@@ -39,15 +39,11 @@ export default class PublishPage extends React.PureComponent {
 
     const { isLandAuthorized } = wallet
 
-    const isAlreadyOnSale =
-      publication &&
-      publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed
-
     return (
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
           <div className="PublishPage">
-            {isAlreadyOnSale ? (
+            {isOpen(publication) ? (
               <Container text>
                 <Message
                   warning

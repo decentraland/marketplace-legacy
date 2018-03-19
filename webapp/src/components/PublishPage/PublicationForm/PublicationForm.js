@@ -13,10 +13,13 @@ import { t } from 'modules/translation/utils'
 
 import './PublicationForm.css'
 
+// TODO: Shouldn't this live on the publication module?
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
+const MAXIMUM_DAY_INTERVAL = 5 * 365
+const MINIMUM_LAND_PRICE = 1
 
-const MIN_LAND_PRICE = 1
+const INPUT_FORMAT = 'YYYY-MM-DD'
 
 export default class PublicationForm extends React.PureComponent {
   static propTypes = {
@@ -35,11 +38,9 @@ export default class PublicationForm extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    const expiresAt = addDays(new Date(), DEFAULT_DAY_INTERVAL)
-
     this.state = {
       price: '',
-      expiresAt: formatDate(expiresAt, 'YYYY-MM-DD'),
+      expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
       formErrors: []
     }
   }
@@ -69,13 +70,33 @@ export default class PublicationForm extends React.PureComponent {
     const formErrors = []
 
     if (differenceInDays(expiresAt, new Date()) < MINIMUM_DAY_INTERVAL) {
-      formErrors.push(t('parcel_publish.errors.minimum_expiration'))
+      formErrors.push(
+        t('parcel_publish.errors.minimum_expiration', {
+          date: this.formatFutureDate(MINIMUM_DAY_INTERVAL)
+        })
+      )
     }
 
-    if (price < MIN_LAND_PRICE) {
+    if (differenceInDays(expiresAt, new Date()) > MAXIMUM_DAY_INTERVAL) {
       formErrors.push(
-        t('parcel_publish.errors.minimum_land', {
-          value: formatMana(MIN_LAND_PRICE, '')
+        t('parcel_publish.errors.maximum_expiration', {
+          date: this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
+        })
+      )
+    }
+
+    if (price < MINIMUM_LAND_PRICE) {
+      formErrors.push(
+        t('parcel_publish.errors.minimum_land_price', {
+          value: formatMana(MINIMUM_LAND_PRICE, '')
+        })
+      )
+    }
+
+    if (price >= Number.MAX_SAFE_INTEGER) {
+      formErrors.push(
+        t('parcel_publish.errors.maximum_land_price', {
+          value: formatMana(Number.MAX_SAFE_INTEGER, '')
         })
       )
     }
@@ -92,12 +113,15 @@ export default class PublicationForm extends React.PureComponent {
     }
   }
 
+  formatFutureDate(addedDays, date = new Date()) {
+    date = addDays(date, addedDays)
+    return formatDate(date, INPUT_FORMAT)
+  }
+
   render() {
     const { publication, isTxIdle, isDisabled, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
 
-    const isConfirmed =
-      publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed
     const isPending =
       publication.tx_status === txUtils.TRANSACTION_STATUS.pending
     const isFailure =
@@ -108,7 +132,6 @@ export default class PublicationForm extends React.PureComponent {
         className="PublicationForm"
         onSubmit={preventDefault(this.handlePublish)}
         error={!!formErrors}
-        success={isConfirmed}
       >
         <Form.Field>
           <label>{t('parcel_publish.price')}</label>
@@ -149,17 +172,13 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         <br />
         <div className="text-center">
-          <Button
-            disabled={isPending || isConfirmed}
-            onClick={onCancel}
-            type="button"
-          >
+          <Button disabled={isPending} onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
           <Button
             type="submit"
             primary={true}
-            disabled={isPending || isConfirmed || isTxIdle || isDisabled}
+            disabled={isPending || isTxIdle || isDisabled}
           >
             {t('global.submit')}
           </Button>

@@ -57,6 +57,7 @@
   "publication": {
     "expired_at": "A expiré il y a {time}",
     "expires_in": "Expire dans {time}",
+    "expires_in_more_than_years": "Expire dans plus de 10 ans",
     "view": "Vue",
     "sold": "Vendu",
     "canceled": "Annulé"
@@ -131,8 +132,10 @@
     "please_authorize":
       "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
     "errors": {
-      "minimum_expiration": "La date d'expiration minimale est d'une journée",
-      "minimum_land": "Le prix minimum d'une LAND est de {value} MANA"
+      "minimum_expiration": "La date d'expiration minimale est {date}",
+      "maximum_expiration": "La date d'expiration maximale est {date}",
+      "minimum_land_price": "Le prix minimum d'une LAND est de {value} MANA",
+      "maximum_land_price": "Le prix maximale d'une LAND est de {value} MANA"
     }
   },
   "parcel_cancel": {

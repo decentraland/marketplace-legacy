@@ -14,3 +14,8 @@
 .ParcelPublication .buy-column .button {
   margin: 0px !important;
 }
+
+.ParcelPublication .PublicationExpiration {
+  font-size: 20px;
+  display: block;
+}
