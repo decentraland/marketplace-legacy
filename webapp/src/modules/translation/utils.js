@@ -1,8 +1,11 @@
 import React from 'react'
 import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl'
 
-const DEFAULT_LANG = 'en'
-let i18n = null // cache
+const DEFAULT_LOCALE = 'en'
+
+// cache
+let i18n = null
+let currentLocale = null
 
 export const I18nProvider = IntlProvider
 
@@ -28,7 +31,7 @@ export function getPreferredLocale() {
   locale = locale.slice(0, 2)
 
   if (!getAvailableLocales().includes(locale)) {
-    locale = DEFAULT_LANG
+    locale = DEFAULT_LOCALE
   }
 
   return locale
@@ -42,7 +45,14 @@ export function getAvailableLocales() {
 
 export function setI18n(intl) {
   i18n = intl
-  return i18n
+}
+
+export function setCurrentLocale(locale) {
+  currentLocale = require(`date-fns/locale/${locale}`)
+}
+
+export function getCurrentLocale(locale) {
+  return currentLocale
 }
 
 export function t(id, values) {

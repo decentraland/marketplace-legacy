@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-commons'
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 import { locations } from 'locations'
 import { Segment, Grid, Loader } from 'semantic-ui-react'
@@ -10,7 +9,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import { formatDate, buildCoordinate } from 'lib/utils'
+import { formatDate, distanceInWordsToNow, buildCoordinate } from 'lib/utils'
 import { getMarketplaceAddress } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 

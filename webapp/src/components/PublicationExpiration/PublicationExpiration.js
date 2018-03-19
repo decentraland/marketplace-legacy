@@ -1,10 +1,10 @@
 import React from 'react'
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import differenceInDays from 'date-fns/difference_in_days'
 
 import { publicationType } from 'components/types'
 import { isExpired } from 'modules/publication/utils'
 import { t } from 'modules/translation/utils'
+import { distanceInWordsToNow } from 'lib/utils'
 
 const MAX_PUBLICATION_EXPIRES = 10 * 365
 
