@@ -14,7 +14,6 @@ import { PUBLICATION_STATUS } from 'modules/publication/utils'
 export const parcelType = shape({
   id: string.isRequired,
   district_id: string,
-  price: string,
   address: string,
   x: number.isRequired,
   y: number.isRequired
@@ -73,7 +72,7 @@ export const publicationType = shape({
   tx_hash: string,
   tx_status: oneOf(Object.values(txUtils.TRANSACTION_STATUS)),
   status: oneOf(Object.values(PUBLICATION_STATUS)),
-  price: string,
+  price: number,
   owner: string,
   buyer: string,
   x: number,
