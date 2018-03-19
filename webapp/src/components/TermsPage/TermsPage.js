@@ -35,14 +35,14 @@ export default class TermsPage extends React.PureComponent {
           bugs. You are advised to safeguard important data, property and
           content, to use caution, and to not rely in any way on the correct or
           secure functionality or performance of the Service and the LAND
-          Manager. Except for Section 17, providing for binding arbitration and
-          waiver of class action rights, Decentraland reserves the right, at its
-          sole discretion, to modify or replace the Terms of Use at any time.
-          The most current version of these Terms will be posted on our Site.
-          You shall be responsible for reviewing and becoming familiar with any
-          such modifications. Use of the Services by you after any modification
-          to the Terms constitutes your acceptance of the Terms of Use as
-          modified.
+          Marketplace. Except for Section 17, providing for binding arbitration
+          and waiver of class action rights, Decentraland reserves the right, at
+          its sole discretion, to modify or replace the Terms of Use at any
+          time. The most current version of these Terms will be posted on our
+          Site. You shall be responsible for reviewing and becoming familiar
+          with any such modifications. Use of the Services by you after any
+          modification to the Terms constitutes your acceptance of the Terms of
+          Use as modified.
         </p>
 
         <h3>3. Eligibility</h3>
