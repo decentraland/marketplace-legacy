@@ -1,5 +1,6 @@
 .ui.header {
-  font-weight: 800;
+  font-family: var(--font-family);
+  font-weight: 200;
   color: white;
 }
 

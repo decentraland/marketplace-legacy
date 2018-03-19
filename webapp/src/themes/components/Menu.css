@@ -21,3 +21,7 @@
   border: none !important;
   color: black !important;
 }
+
+.ui.menu .ui.item {
+  font-family: var(--font-family);
+}
