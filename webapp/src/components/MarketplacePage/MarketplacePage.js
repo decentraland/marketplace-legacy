@@ -88,11 +88,7 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   renderLoading() {
-    return (
-      <Dimmer active inverted>
-        <Loader active size="huge" />
-      </Dimmer>
-    )
+    return <Loader active size="huge" />
   }
 
   renderEmpty() {
@@ -144,7 +140,7 @@ export default class MarketplacePage extends React.PureComponent {
             </Menu.Menu>
           </Menu>
         </Container>
-        <Container className="publications">
+        <Container className={`publications ${isLoading ? 'loading' : ''}`}>
           {isEmpty && !isLoading
             ? this.renderEmpty()
             : this.renderPublications()}

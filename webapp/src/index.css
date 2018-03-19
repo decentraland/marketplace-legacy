@@ -196,3 +196,10 @@ button {
   bottom: 10px !important;
   transform: scale(0.8) !important;
 }
+
+/* ------------
+  App */
+
+#app {
+  background: linear-gradient(#1f2333, #0d0f17);
+}

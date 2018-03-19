@@ -1,6 +1,6 @@
 {
   "name": "Marketplace-webapp",
-  "description": "Decentraland's LAND Manager, Wallet and Marketplace",
+  "description": "Decentraland's LAND Marketplace",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,8 +10,10 @@
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix src/",
     "test": "CI=true react-scripts test --env=jsdom",
     "prebuild": "npm run test",
-    "build": "REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts build",
-    "remotebuild": "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules react-scripts build",
+    "build":
+      "REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts build",
+    "remotebuild":
+      "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules react-scripts build",
     "eject": "react-scripts eject"
   },
   "dependencies": {

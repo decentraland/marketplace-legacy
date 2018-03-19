@@ -46,18 +46,20 @@ export default class BuyParcelPage extends React.PureComponent {
 
   renderNotConnected() {
     return (
-      <Container text textAlign="center" className="BuyParcelPage">
-        <Header as="h2" size="huge" className="title">
-          {t('parcel_buy.buy_land')}
-        </Header>
-        <p className="sign-in">
-          {t_html('global.sign_in_notice', {
-            sign_in_link: (
-              <Link to={locations.signIn}>{t('global.sign_in')}</Link>
-            )
-          })}
-        </p>
-      </Container>
+      <div>
+        <Container text textAlign="center" className="BuyParcelPage">
+          <Header as="h2" size="huge" className="title">
+            {t('parcel_buy.buy_land')}
+          </Header>
+          <p className="sign-in">
+            {t_html('global.sign_in_notice', {
+              sign_in_link: (
+                <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+              )
+            })}
+          </p>
+        </Container>
+      </div>
     )
   }
 

@@ -36,7 +36,11 @@ export default class TermsModal extends React.PureComponent {
 
   render() {
     const { location: { pathname } } = this.props
-    if (pathname === locations.terms || pathname === locations.privacy) {
+    if (
+      pathname === locations.root ||
+      pathname === locations.terms ||
+      pathname === locations.privacy
+    ) {
       return null
     }
     return (
@@ -53,7 +57,7 @@ export default class TermsModal extends React.PureComponent {
 
         <div className="modal-body">
           <div className="text">
-            <h3>Welcome to Decentraland&apos;s Marketplace</h3>
+            <h3>Welcome to Decentraland&apos;s LAND Marketplace</h3>
             <p>
               This dApp interacts with a <strong>decentralized exchange</strong>{' '}
               that runs on the Ethereum blockchain.

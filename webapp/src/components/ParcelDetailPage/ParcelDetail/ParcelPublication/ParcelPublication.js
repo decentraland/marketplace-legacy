@@ -35,7 +35,7 @@ export default class ParcelName extends React.PureComponent {
           </p>
         </Grid.Column>
         <Grid.Column textAlign="right" className="buy-column">
-          {!isOwner && isConnected ? (
+          {!isOwner ? (
             <Button primary onClick={onBuy}>
               {t('parcel_detail.publication.buy')}
             </Button>
