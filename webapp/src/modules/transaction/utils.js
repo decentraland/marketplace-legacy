@@ -28,3 +28,14 @@ export function isTransactionRejectedError(message) {
   // https://github.com/MetaMask/faq/issues/6#issuecomment-264900031
   return message.includes('User denied transaction signature')
 }
+
+export function getEtherscanHref({ txHash, address }, network) {
+  let origin = 'https://etherscan.io'
+  if (network !== 'mainnet') {
+    origin = `https://${network}.etherscan.io`
+  }
+
+  const pathname = address ? `/address/${address}` : `/tx/${txHash}`
+
+  return `${origin}${pathname}`
+}

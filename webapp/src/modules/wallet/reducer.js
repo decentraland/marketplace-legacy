@@ -13,6 +13,7 @@ import { loadingReducer } from 'modules/loading/reducer'
 
 const INITIAL_STATE = {
   data: {
+    network: null,
     address: null,
     balance: null,
     approvedBalance: null,
