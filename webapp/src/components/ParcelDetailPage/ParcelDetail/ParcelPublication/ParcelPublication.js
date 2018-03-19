@@ -21,7 +21,7 @@ export default class ParcelName extends React.PureComponent {
   }
 
   render() {
-    const { publication, isOwner, onBuy, isConnected } = this.props
+    const { publication, isOwner, onBuy } = this.props
     return (
       <Grid.Row className="ParcelPublication">
         <Grid.Column width={4}>

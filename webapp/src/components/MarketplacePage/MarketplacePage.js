@@ -7,8 +7,7 @@ import {
   Card,
   Dropdown,
   Pagination,
-  Loader,
-  Dimmer
+  Loader
 } from 'semantic-ui-react'
 import Publication from './Publication'
 
