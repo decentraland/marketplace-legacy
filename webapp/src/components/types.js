@@ -52,13 +52,14 @@ export const addressType = shape({
 })
 
 export const walletType = shape({
+  network: string, // TODO: Maybe use eth.getNetworks().map(name) to validate here
   address: string,
   balance: number,
   approvedBalance: number,
   isLandAuthorized: bool,
   approveManaTransactions: arrayOf(transactionType),
   authorizeLandTransactions: arrayOf(transactionType),
-  parcels: arrayOf(parcelType).isRequired
+  parcels: arrayOf(parcelType).isRequired,
 })
 
 export const toastType = shape({

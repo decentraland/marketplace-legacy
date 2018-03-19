@@ -1,10 +1,15 @@
 .Transaction {
   word-break: break-word;
   font-size: 15px;
+  cursor: pointer;
+}
+
+.Transaction:hover {
+  background-color: var(--dark-gray);
 }
 
 .Transaction .ui.loader {
-  left: 0;
+  left: 12px;
 }
 
 .Transaction .mini.circle {
@@ -12,7 +17,7 @@
   height: 8px;
   border-radius: 50px;
   top: 46%;
-  left: -2px;
+  left: 12px;
   position: absolute;
   background-color: var(--primary);
 }
@@ -25,6 +30,7 @@
   width: 64px;
   height: 64px;
   margin-right: 15px;
+  margin-left: 15px;
   float: left;
   border-radius: 10px;
   overflow: hidden;
