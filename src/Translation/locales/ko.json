@@ -19,6 +19,8 @@
     "cancel": "취소",
     "submit": "제출",
     "confirm": "확인",
+    "retry": "다시 해 보다",
+    "connect": "잇다",
     "authorized": "허가",
     "unauthorized": "무단",
     "wallet_address": "지갑 주소",
@@ -26,8 +28,7 @@
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "owned_by": "에게 소유 된",
-    "owned_by_link": "{address_link} 소유",
-    "retry": "다시 해 보다"
+    "owned_by_link": "{address_link} 소유"
   },
   "address": {
     "its_you": "너야"
@@ -114,8 +115,6 @@
     "approved_balance": "승인 된 잔액은 {approved_balance}입니다.",
     "needs_at_least": "이 토지를 사려면 적어도 {value}가 필요합니다.",
     "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
-    "should_approve":
-      "토지를 사기 전에 시장에서 MANA를 사용하도록 승인해야합니다.",
     "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
     "total_balance": "Your balance is {balance}"
   },
@@ -139,14 +138,14 @@
   "parcel_cancel": {
     "cancel_land": "토지 판매 취소",
     "currently_on_sale": "현재 {value}에 판매 중입니다.",
-    "about_to_cancel": "당신은이 판매를 취소하려고합니다."
+    "about_to_cancel": "당신은이 판매를 취소하려고합니다.",
+    "not_for_sale": "판매용이 아닙니다."
   },
   "activity": {
     "no_activity": "아직 활동이 없습니다.",
     "start": "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다.",
     "pending": "보류",
-    "history": "기록",
-    "completed": "Completed"
+    "completed": "완료 됨"
   },
   "transaction": {
     "approved":
@@ -201,7 +200,13 @@
     "roads": "도로",
     "plaza": "광장",
     "unowned": "소유자가 없는",
-    "loading": "로드 중"
+    "loading": "로드 중",
+    "on_sale": "판매 중"
+  },
+  "sign_in": {
+    "options":
+      "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다.",
+    "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오."
   },
   "footer": {
     "color_key": "색상 키",

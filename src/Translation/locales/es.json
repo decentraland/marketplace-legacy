@@ -132,8 +132,10 @@
     "please_authorize":
       "Tienes que ir a {settings_link} y autorizar al Mercado para operar LAND por tu cuenta antes de publicarla en venta.",
     "errors": {
-      "minimum_expiration": "La fecha mínima de expiración es un día",
-      "minimum_land": "El precio mínimo de LAND es {value} MANA"
+      "minimum_expiration": "La fecha mínima de expiracion es {date}",
+      "maximum_expiration": "La fecha máxima de expiración es {date}",
+      "minimum_land_price": "El precio mínimo de una LAND es {value} MANA",
+      "maximum_land_price": "El precio máximo de una LAND es {value} MANA"
     }
   },
   "parcel_cancel": {
