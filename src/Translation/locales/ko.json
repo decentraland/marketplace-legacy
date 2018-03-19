@@ -192,6 +192,9 @@
     "authorize":
       "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오."
   },
+  "derivation_path": {
+    "supported": "당분간 {경로}로 시작하는 경로 만 지원합니다."
+  },
   "color_key": {
     "title": "색상 키",
     "yours": "당신 토지",
