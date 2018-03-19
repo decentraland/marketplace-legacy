@@ -1,8 +1,10 @@
 {
   "languages": {
-    "en": "English",
-    "es": "Spanish",
-    "fr": "French"
+    "en": "Ingles",
+    "es": "Español",
+    "fr": "Frances",
+    "zh": "Chino",
+    "ko": "Coreano"
   },
   "global": {
     "atlas": "Atlas",
@@ -130,8 +132,10 @@
     "please_authorize":
       "Tienes que ir a {settings_link} y autorizar al Mercado para operar LAND por tu cuenta antes de publicarla en venta.",
     "errors": {
-      "minimum_expiration": "La fecha mínima de expiración es un día",
-      "minimum_land": "El precio mínimo de LAND es {value} MANA"
+      "minimum_expiration": "La fecha mínima de expiracion es {date}",
+      "maximum_expiration": "La fecha máxima de expiración es {date}",
+      "minimum_land_price": "El precio mínimo de una LAND es {value} MANA",
+      "maximum_land_price": "El precio máximo de una LAND es {value} MANA"
     }
   },
   "parcel_cancel": {
@@ -226,7 +230,7 @@
     "hero_title": "Elige tu ubicación ideal en Genesis City",
     "hero_subtitle": "Mercado de LAND de Decentraland. Sin comisiones.",
     "get_started": "Comenzar",
-    "newest_lands": "Nuevas LANDs",
+    "newest_lands": "Nuevas LAND",
     "view_more": "Ver Más"
   }
 }

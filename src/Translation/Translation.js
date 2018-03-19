@@ -4,6 +4,8 @@ import path from 'path'
 import { env, utils } from 'decentraland-commons'
 
 export class Translation {
+  static DEFAULT_LOCALE = 'en'
+
   constructor() {
     this.localesPath = env.get(
       'LOCALES_PATH',

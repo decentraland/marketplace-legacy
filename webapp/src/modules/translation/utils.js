@@ -37,7 +37,7 @@ export function getPreferredLocale() {
 export function getAvailableLocales() {
   // This is a hardcoded list that replicates the `Translation/locales` folder on the server
   // It saves us a request
-  return ['en', 'es', 'fr']
+  return ['en', 'es', 'fr', 'zh', 'ko']
 }
 
 export function setI18n(intl) {

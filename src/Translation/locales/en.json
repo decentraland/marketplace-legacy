@@ -2,7 +2,9 @@
   "languages": {
     "en": "English",
     "es": "Spanish",
-    "fr": "French"
+    "fr": "French",
+    "zh": "Chinese",
+    "ko": "Korean"
   },
   "global": {
     "atlas": "Atlas",
