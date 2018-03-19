@@ -352,7 +352,12 @@ export default class ParcelsMap extends React.Component {
     }
     this.removePopup()
     const leafletPopup = L.popup({ direction: 'top', autoPan: false })
-    leafletPopup.setLatLng(latlng).addTo(this.map)
+    leafletPopup.setLatLng(latlng)
+    // This check is not superflous -- setLatLng might move the map and triger a rebind
+    if (!this.map) {
+      return
+    }
+    leafletPopup.addTo(this.map)
     this.popup = leafletPopup
     this.renderPopup(x, y)
 
