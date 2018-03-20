@@ -161,7 +161,7 @@ function generateEthereumAddress() {
 }
 
 function generateEthereumTxHash() {
-  const seed = Math.floor(Math.random())
+  const seed = Math.random() * 1000000000
   const hash = eth.utils.sha3(seed)
   return hash.toString('hex').toLowerCase()
 }
