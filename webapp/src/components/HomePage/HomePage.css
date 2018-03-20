@@ -21,9 +21,11 @@
 }
 
 .HomePage .hero-text h1 {
+  text-align: center;
   color: white;
 }
 .HomePage .hero-text p {
+  text-align: center;
   color: var(--gray);
   margin-bottom: 30px;
 }
@@ -76,14 +78,20 @@
   margin-right: 25px;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 600px) {
   .HomePage .hero-text h1 {
     font-size: 20px;
+  }
+  .HomePage .hero-text p {
+    font-size: 12px;
   }
 }
 
 @media (max-width: 400px) {
   .HomePage .hero-text h1 {
     font-size: 18px;
+  }
+  .HomePage .hero-text p {
+    font-size: 12px;
   }
 }
