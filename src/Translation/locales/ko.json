@@ -37,10 +37,12 @@
     "my_land": "나의 토지"
   },
   "atlas": {
-    "owner": "소유자 : {소유자}",
+    "owner": "소유자 : {owner}",
     "no_owner": "소유자 없음",
     "your_parcel": "당신의 토지",
-    "on_sale": "판매 중 :"
+    "on_sale": "판매 중 :",
+    "loading": "로드 중",
+    "road": "도로"
   },
   "marketplace": {
     "empty": "죄송합니다. 여기에는 아무것도 없습니다.",
@@ -205,7 +207,8 @@
     "plaza": "광장",
     "unowned": "소유자가 없는",
     "loading": "로드 중",
-    "on_sale": "판매 중"
+    "on_sale": "판매 중",
+    "go_back": "돌아 가라."
   },
   "sign_in": {
     "options":

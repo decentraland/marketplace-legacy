@@ -40,7 +40,9 @@
     "owner": "所有者：{owner}",
     "no_owner": "没有所有者",
     "your_parcel": "您的地块",
-    "on_sale": "出售中："
+    "on_sale": "出售中：",
+    "loading": "载入中",
+    "road": "路"
   },
   "marketplace": {
     "empty": "噢......这里没有任何东西。",
@@ -147,7 +149,7 @@
     "completed": "已完成"
   },
   "transaction": {
-    "approved": "您已批准{mana}MANA供{虚拟市场}{marketplace_contract_link}使用",
+    "approved": "您授权{marketplace_contract_link}以您的名义操作MANA",
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
     "edit":
@@ -195,7 +197,8 @@
     "plaza": "广场",
     "unowned": "无主",
     "loading": "加载中",
-    "on_sale": "出售"
+    "on_sale": "出售",
+    "go_back": "回去"
   },
   "sign_in": {
     "options":

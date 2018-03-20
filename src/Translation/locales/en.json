@@ -40,7 +40,9 @@
     "owner": "Owner: {owner}",
     "no_owner": "No Owner",
     "your_parcel": "Your parcel",
-    "on_sale": "On Sale: "
+    "on_sale": "On Sale: ",
+    "loading": "Loading",
+    "road": "Road"
   },
   "marketplace": {
     "empty": "Oops... nothing found here.",
@@ -153,7 +155,7 @@
     "disapproved":
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "authorize":
-      "You have {action} the {marketplace_contract_link} to operate LAND on your behalf",
+      "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",
@@ -197,7 +199,8 @@
       "Authorize the {marketplace_contract_link} to operate LAND on your behalf"
   },
   "derivation_path": {
-    "supported": "We only support paths that start with {paths} for the time being"
+    "supported":
+      "We only support paths that start with {paths} for the time being"
   },
   "color_key": {
     "title": "Color key",
@@ -209,7 +212,8 @@
     "plaza": "Plaza",
     "unowned": "Unowned",
     "loading": "Loading",
-    "on_sale": "On sale"
+    "on_sale": "On sale",
+    "go_back": "Go back"
   },
   "sign_in": {
     "options":

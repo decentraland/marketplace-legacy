@@ -56,7 +56,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
   const parcel = parcels[id]
   if (!parcel) {
     return {
-      label: 'Loading...',
+      label: t('atlas.loading') + '...',
       description: null,
       color: 'white',
       backgroundColor:
@@ -68,7 +68,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
   if (isDistrict(parcel)) {
     if (isRoad(parcel.district_id)) {
       return {
-        label: 'Road',
+        label: t('atlas.road'),
         description: null,
         color: 'white',
         backgroundColor: COLORS.roads
