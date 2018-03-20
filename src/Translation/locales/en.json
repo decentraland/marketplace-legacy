@@ -76,6 +76,7 @@
   "parcel_detail": {
     "description": "Description",
     "empty_description": "This parcel has no description",
+    "view": "View on Atlas",
     "actions": {
       "edit": "Edit",
       "transfer": "Transfer",
