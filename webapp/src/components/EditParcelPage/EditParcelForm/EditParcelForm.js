@@ -39,12 +39,17 @@ export default class EditParcelForm extends React.PureComponent {
     this.props.onCancel()
   }
 
-  isFormValid() {
-    return !this.state.name || !this.state.description
+  hasChanged() {
+    const { data } = this.props.parcel
+
+    return (
+      this.state.name !== data.name ||
+      this.state.description !== data.description
+    )
   }
 
   handleSubmit = () => {
-    if (!this.isFormValid()) {
+    if (this.hasChanged()) {
       const { parcel, onSubmit } = this.props
       const { name, description } = this.state
       onSubmit({
@@ -72,7 +77,6 @@ export default class EditParcelForm extends React.PureComponent {
           <Input
             type="text"
             value={name}
-            required={true}
             onChange={this.handleNameChange}
             error={name.length > 50}
           />
@@ -82,7 +86,6 @@ export default class EditParcelForm extends React.PureComponent {
           <Input
             type="text"
             value={description}
-            required={true}
             onChange={this.handleDescriptionChange}
             error={name.length > 140}
           />
@@ -96,7 +99,7 @@ export default class EditParcelForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={this.isFormValid() || isTxIdle}
+            disabled={!this.hasChanged() || isTxIdle}
           >
             {t('global.submit')}
           </Button>
