@@ -40,7 +40,9 @@
     "owner": "Dueño: {owner}",
     "no_owner": "Sin Dueño",
     "your_parcel": "Tu parcela",
-    "on_sale": "En Venta: "
+    "on_sale": "En Venta: ",
+    "loading": "Cargando",
+    "road": "Carretera"
   },
   "marketplace": {
     "empty": "Oops... no encontramos nada aquí.",
@@ -201,7 +203,8 @@
       "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta"
   },
   "derivation_path": {
-    "supported": "Por el momento solo soportamos derivation paths que comienzan con {paths}"
+    "supported":
+      "Por el momento solo soportamos derivation paths que comienzan con {paths}"
   },
   "color_key": {
     "title": "Mapa de colores",
@@ -213,7 +216,8 @@
     "plaza": "Plaza",
     "unowned": "Sin dueño",
     "loading": "Cargando",
-    "on_sale": "En venta"
+    "on_sale": "En venta",
+    "go_back": "Volver"
   },
   "sign_in": {
     "options":

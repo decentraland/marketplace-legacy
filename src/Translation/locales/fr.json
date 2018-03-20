@@ -41,7 +41,9 @@
     "owner": "Propriétaire : {owner}",
     "no_owner": "Aucun propriétaire",
     "your_parcel": "Votre parcelle",
-    "on_sale": "A vendre: "
+    "on_sale": "A vendre: ",
+    "loading": "Chargement",
+    "road": "Route"
   },
   "marketplace": {
     "empty": "Oops... rien ne semble correspondre.",
@@ -205,7 +207,8 @@
       "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom."
   },
   "derivation_path": {
-    "supported": "Nous ne prenons en charge que les chemins commençant par {paths} pour le moment"
+    "supported":
+      "Nous ne prenons en charge que les chemins commençant par {paths} pour le moment"
   },
   "color_key": {
     "title": "Code couleur",
@@ -217,7 +220,8 @@
     "plaza": "Places",
     "unowned": "Libres",
     "loading": "Chargement",
-    "on_sale": "À vendre"
+    "on_sale": "À vendre",
+    "go_back": "Retourner"
   },
   "sign_in": {
     "options":
