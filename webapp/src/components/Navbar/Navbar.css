@@ -75,7 +75,7 @@
   position: relative;
   width: 43px;
   height: 33px;
-  margin-right: 20px !important;
+  margin-right: 10px !important;
   margin-bottom: 0px;
 }
 
@@ -108,6 +108,10 @@
   }
 
   .Navbar .navbar-header {
+    display: none;
+  }
+
+  .Navbar .navbar-account .Account .Mana {
     display: none;
   }
 }
