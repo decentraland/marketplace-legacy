@@ -10,6 +10,7 @@
   top: calc(0px - var(--navbar-height));
   left: 0px;
   right: 0px;
+  min-height: 200px;
 }
 
 .HomePage .hero-text {
@@ -36,8 +37,9 @@
   box-shadow: -20px -20px 41px 2px inset;
 }
 
-.HomePage .publications {
-  padding-top: calc(100vh - 460px);
+.HomePage .gap {
+  height: calc(100vh - 460px);
+  min-height: 125px;
 }
 
 .HomePage .publications-header {
@@ -72,4 +74,16 @@
   flex: none;
   width: 224px !important;
   margin-right: 25px;
+}
+
+@media (max-width: 540px) {
+  .HomePage .hero-text h1 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .HomePage .hero-text h1 {
+    font-size: 18px;
+  }
 }

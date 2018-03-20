@@ -26,6 +26,7 @@ export default class HomePage extends React.PureComponent {
           </Link>
         </div>
         <Container className="publications">
+          <div className="gap" />
           <div className="publications-header">
             <h3>{t('homepage.newest_lands')}</h3>
             <Link to={locations.marketplace}>
