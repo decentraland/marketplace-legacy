@@ -84,7 +84,7 @@ export default class Navbar extends React.PureComponent {
       <div className="Navbar" role="navigation">
         {this.renderLogoHeader()}
         <div className="navbar-menu">
-          <Menu secondary>
+          <Menu secondary stackable>
             <Menu.Item
               href={navigationPaths[NAVBAR_PAGES.atlas]}
               active={activePage === NAVBAR_PAGES.atlas}
