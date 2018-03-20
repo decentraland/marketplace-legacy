@@ -64,8 +64,10 @@ export class PublicationRequestFilters {
         isAllowed = ALLOWED_VALUES.sort_order.includes(value.toUpperCase())
         break
       case 'limit':
-      case 'offset':
         isAllowed = value > 0 && value < 100
+        break
+      case 'offset':
+        isAllowed = value > 0
         break
       default:
         isAllowed = false
