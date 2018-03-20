@@ -43,7 +43,7 @@ export function getOptionsFromRouter({ search }) {
     limit: PAGE_SIZE,
     offset: query.page ? (query.page - 1) * PAGE_SIZE : 0,
     sortBy: query.sort_by ? query.sort_by : 'created_at',
-    sortOrder: query.sort_order ? query.sort_order : 'asc'
+    sortOrder: query.sort_order ? query.sort_order : 'desc'
   }
 }
 
@@ -69,7 +69,7 @@ export function getOptionsFromSortType(type) {
     default:
       return {
         sortBy: 'created_at',
-        sortOrder: 'asc'
+        sortOrder: 'desc'
       }
   }
 }
