@@ -23,7 +23,7 @@ const mapDispatch = (dispatch, { location }) => ({
         limit: 20,
         offset: 0,
         sortBy: 'created_at',
-        sortOrder: 'asc'
+        sortOrder: 'desc'
       })
     ),
   onNavigate: url => dispatch(navigateTo(url))
