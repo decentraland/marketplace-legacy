@@ -1,5 +1,5 @@
 import { takeEvery, put, call, select } from 'redux-saga/effects'
-import { txUtils, utils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-commons'
 import {
   FETCH_TRANSACTION_REQUEST,
   WATCH_LOADING_TRANSACTIONS,
@@ -27,44 +27,40 @@ function* handleTransactionRequest(action = {}) {
   try {
     watchIndex[hash] = true
 
-    const { recepeit, ...tx } = yield call(() =>
-      txUtils.getConfirmedTransaction(hash, transaction.events)
-    )
-
-    const confirmedTx = utils.omit(tx, ['input', 's', 'r', 'v'])
-    confirmedTx.recepeit = utils.omit(recepeit, 'logsBloom')
+    yield call(() => txUtils.getConfirmedTransaction(hash, transaction.events))
 
     delete watchIndex[hash]
 
     yield put(
       fetchTransactionSuccess({
         ...transaction,
-        ...confirmedTx
+        status: TRANSACTION_STATUS.confirmed
       })
     )
   } catch (error) {
-    yield put(fetchTransactionFailure(transaction, error.message))
+    yield put(
+      fetchTransactionFailure(
+        {
+          ...transaction,
+          status: TRANSACTION_STATUS.failed
+        },
+        error.message
+      )
+    )
   }
 }
 
 function* handleWatchLoadingTransactions(action) {
   const transactionRequests = yield select(getLoading)
+
   const transactions = yield select(getData)
   const pendingTransactions = transactions.filter(
     transaction => transaction.status === TRANSACTION_STATUS.pending
   )
 
-  const pendingTxHashes = []
-  for (const action of transactionRequests) {
-    pendingTxHashes.push(action.hash)
-  }
-  for (const transaction of pendingTransactions) {
-    if (!pendingTxHashes.includes(transaction.hash)) {
-      pendingTxHashes.push(transaction.hash)
-    }
-  }
+  const allTransactions = transactionRequests.concat(pendingTransactions)
 
-  for (const hash of pendingTxHashes) {
+  for (const { hash } of allTransactions) {
     if (!watchIndex[hash]) {
       yield handleTransactionRequest({ hash })
     }
