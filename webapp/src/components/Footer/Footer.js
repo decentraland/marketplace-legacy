@@ -61,6 +61,7 @@ export default class Footer extends React.PureComponent {
         <div className="footer-column right">
           <span>
             <span className="copyright">{t('footer.copyright')}</span>
+            <span className="mini-copyright">{t('footer.mini_copyright')}</span>
             <LocalesDropdown
               defaultValue={locale}
               onChange={this.handleLocaleChange}

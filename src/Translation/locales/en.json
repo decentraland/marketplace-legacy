@@ -225,7 +225,8 @@
     "color_key": "Color Key",
     "privacy_policy": "Privacy Policy",
     "terms": "Terms & Conditions",
-    "copyright": "© 2018 Decentraland. All rights reserved."
+    "copyright": "© 2018 Decentraland. All rights reserved.",
+    "mini_copyright": "© 2018 Decentraland."
   },
   "homepage": {
     "hero_title": "Choose your ideal location in Genesis City",
