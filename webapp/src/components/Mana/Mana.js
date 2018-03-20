@@ -21,7 +21,7 @@ export default class Mana extends React.PureComponent {
   getLocalizedAmount() {
     const { amount } = this.props
 
-    if (amount) {
+    if (amount >= 0) {
       return amount.toLocaleString()
     }
   }
