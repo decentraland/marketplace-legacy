@@ -10,6 +10,7 @@
   top: calc(0px - var(--navbar-height));
   left: 0px;
   right: 0px;
+  min-height: 200px;
 }
 
 .HomePage .hero-text {
@@ -20,9 +21,11 @@
 }
 
 .HomePage .hero-text h1 {
+  text-align: center;
   color: white;
 }
 .HomePage .hero-text p {
+  text-align: center;
   color: var(--gray);
   margin-bottom: 30px;
 }
@@ -36,8 +39,9 @@
   box-shadow: -20px -20px 41px 2px inset;
 }
 
-.HomePage .publications {
-  padding-top: calc(100vh - 460px);
+.HomePage .gap {
+  height: calc(100vh - 460px);
+  min-height: 125px;
 }
 
 .HomePage .publications-header {
@@ -72,4 +76,22 @@
   flex: none;
   width: 224px !important;
   margin-right: 25px;
+}
+
+@media (max-width: 600px) {
+  .HomePage .hero-text h1 {
+    font-size: 20px;
+  }
+  .HomePage .hero-text p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .HomePage .hero-text h1 {
+    font-size: 18px;
+  }
+  .HomePage .hero-text p {
+    font-size: 12px;
+  }
 }

@@ -233,7 +233,8 @@
     "color_key": "Code Couleur",
     "privacy_policy": "Politique de Confidentialité",
     "terms": "Termes et Conditions",
-    "copyright": "© 2018 Decentraland. Tous droits reservés."
+    "copyright": "© 2018 Decentraland. Tous droits reservés.",
+    "mini_copyright": "© 2018 Decentraland."
   },
   "homepage": {
     "hero_title": "Choisissez votre emplacement idéal à Genesis City",

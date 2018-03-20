@@ -22,8 +22,8 @@
 
 .Navbar .navbar-icon {
   position: relative;
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   float: left;
 }
 
@@ -75,7 +75,7 @@
   position: relative;
   width: 43px;
   height: 33px;
-  margin-right: 20px !important;
+  margin-right: 10px !important;
   margin-bottom: 0px;
 }
 
@@ -108,6 +108,10 @@
   }
 
   .Navbar .navbar-header {
+    display: none;
+  }
+
+  .Navbar .navbar-account .Account .Mana {
     display: none;
   }
 }
