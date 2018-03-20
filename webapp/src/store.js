@@ -11,7 +11,10 @@ import { api } from 'lib/api'
 
 import { createTransactionMiddleware } from 'modules/transaction/middleware'
 import { createGoogleAnalyticsMiddleware } from 'modules/analytics/middleware'
-import { createStorageMiddleware } from 'modules/storage/middleware'
+import {
+  createMainStorageMiddleware,
+  createTransactionStorageMiddleware
+} from 'modules/storage/middleware'
 
 import { analyticsReduceer } from 'modules/analytics/reducer'
 import { rootReducer } from './reducer'
@@ -30,13 +33,13 @@ const loggerMiddleware = createLogger({
 })
 const transactionMiddleware = createTransactionMiddleware()
 const analyticsMiddleware = createGoogleAnalyticsMiddleware(analyticsReduceer)
-const storageMiddleware = createStorageMiddleware(
-  env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-marketplace')
-)
+const storageMiddleware = createMainStorageMiddleware()
+const translationsStorageMiddleware = createTransactionStorageMiddleware()
 
 const middleware = applyMiddleware(
   thunk.withExtraArgument(api),
   storageMiddleware,
+  translationsStorageMiddleware,
   historyMiddleware,
   sagasMiddleware,
   loggerMiddleware,
@@ -47,7 +50,9 @@ const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer)
 
 sagasMiddleware.run(rootSaga)
+
 storageMiddleware.load(store)
+translationsStorageMiddleware.load(store)
 
 export function dispatch(action) {
   if (typeof action === 'string') {
