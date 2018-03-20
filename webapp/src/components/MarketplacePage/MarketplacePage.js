@@ -83,7 +83,10 @@ export default class MarketplacePage extends React.PureComponent {
       return
     }
     const options = getOptionsFromSortType(data.value)
-    this.navigateTo(options)
+    this.navigateTo({
+      ...options,
+      page: 1
+    })
   }
 
   renderLoading() {

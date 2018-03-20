@@ -78,7 +78,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
       return {
         label: 'Genesis Plaza',
         description: null,
-        color: 'white',
+        color: 'black',
         backgroundColor: COLORS.plaza
       }
     }
