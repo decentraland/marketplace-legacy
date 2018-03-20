@@ -55,3 +55,9 @@
 .ProfilePage .label.active {
   background-color: var(--red) !important;
 }
+
+@media (max-width: 768px) {
+  .ProfilePage .profile-menu .menu.secondary .item {
+    border-color: transparent !important;
+  }
+}

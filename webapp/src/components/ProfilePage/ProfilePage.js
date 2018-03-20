@@ -161,7 +161,7 @@ export default class ProfilePage extends React.PureComponent {
     return (
       <div className="ProfilePage">
         <Container className="profile-menu">
-          <Menu pointing secondary>
+          <Menu pointing secondary stackable>
             <Menu.Item
               name={PROFILE_PAGE_TABS.parcels}
               active={this.isActive(PROFILE_PAGE_TABS.parcels)}
