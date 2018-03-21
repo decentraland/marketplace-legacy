@@ -9,7 +9,9 @@ import {
 } from 'modules/transaction/actions'
 import {
   CHANGE_LOCALE,
-  FETCH_TRANSLATIONS_SUCCESS
+  FETCH_TRANSLATIONS_REQUEST,
+  FETCH_TRANSLATIONS_SUCCESS,
+  FETCH_TRANSLATIONS_FAILURE
 } from 'modules/translation/actions'
 import { UPDATE_DERIVATION_PATH } from 'modules/wallet/actions'
 
@@ -29,7 +31,9 @@ export function createStorageMiddleware(storageKey) {
       FETCH_TRANSACTION_SUCCESS,
       FETCH_TRANSACTION_FAILURE,
       CHANGE_LOCALE,
+      FETCH_TRANSLATIONS_REQUEST,
       FETCH_TRANSLATIONS_SUCCESS,
+      FETCH_TRANSLATIONS_FAILURE,
       UPDATE_DERIVATION_PATH
     ]
   )
