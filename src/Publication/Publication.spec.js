@@ -35,7 +35,7 @@ describe('PublicationRequestFilters', function() {
       expect(filters.sanitize()).to.deep.equal({
         sort: {
           by: 'price',
-          order: 'desc'
+          order: 'ASC'
         },
         pagination: {
           limit: 33,
@@ -58,10 +58,10 @@ describe('PublicationRequestFilters', function() {
       expect(filters.sanitize()).to.deep.equal({
         sort: {
           by: 'created_at',
-          order: 'ASC'
+          order: 'DESC'
         },
         pagination: {
-          limit: 20,
+          limit: 100,
           offset: 0
         }
       })
