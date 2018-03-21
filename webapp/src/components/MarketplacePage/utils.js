@@ -40,7 +40,8 @@ export function getOptionsFromRouter({ search }) {
   const query = queryString.parse(search)
   return {
     limit: PAGE_SIZE,
-    offset: query.page ? (query.page - 1) * PAGE_SIZE : 0,
+    offset:
+      !isNaN(query.page) && query.page > 0 ? (query.page - 1) * PAGE_SIZE : 0,
     sortBy: query.sort_by ? query.sort_by : 'created_at',
     sortOrder: query.sort_order ? query.sort_order : 'desc'
   }
@@ -69,10 +70,18 @@ export function getOptionsFromSortType(type) {
 }
 
 export function getSortTypeFromOptions({ sortBy, sortOrder }) {
-  return Object.values(getSortTypes())
-    .map(sortType => ({ sortType, options: getOptionsFromSortType(sortType) }))
-    .find(
-      ({ sortType, options }) =>
-        sortBy === options.sortBy && sortOrder === options.sortOrder
-    ).sortType
+  try {
+    return Object.values(getSortTypes())
+      .map(sortType => ({
+        sortType,
+        options: getOptionsFromSortType(sortType)
+      }))
+      .find(
+        ({ sortType, options }) =>
+          sortBy === options.sortBy && sortOrder === options.sortOrder
+      ).sortType
+  } catch (error) {
+    const sortTypes = getSortTypes()
+    return sortTypes.NEWEST
+  }
 }
