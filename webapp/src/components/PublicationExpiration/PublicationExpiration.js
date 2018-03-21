@@ -23,7 +23,7 @@ export default class PublicationExpiration extends React.PureComponent {
       <span className="PublicationExpiration">
         {isExpired(publication)
           ? t('publication.expired_at', { time: expirationTimeInWords })
-          : !difference || difference >= MAX_PUBLICATION_EXPIRES
+          : isNaN(difference) || difference >= MAX_PUBLICATION_EXPIRES
             ? t('publication.expires_in_more_than_years', {
                 years: MAX_PUBLICATION_EXPIRES / 365
               })
