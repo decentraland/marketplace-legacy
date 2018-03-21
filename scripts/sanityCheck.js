@@ -38,14 +38,15 @@ export async function sanityCheck() {
   await processParcels(shouldFix)
 }
 
-async function marketplaceCheck(fix) {
+async function marketplaceCheck(shouldFix) {
   const marketplace = eth.getContract('Marketplace')
+
   const events = await getAllEvents(marketplace)
-  const filterParcels = getParcelIds(events)
+  const parcels = getEventParcels(events)
 
   const tasks = []
-  for (let d of filterParcels) {
-    tasks.push(checkParcel(d.parcelId, d.lastEvent, marketplace, fix))
+  for (let parcel of parcels) {
+    tasks.push(checkParcel(parcel.parcelId, parcel.lastEvent, marketplace, shouldFix))
   }
   console.log('Analyzing', tasks.length, 'cases of parcels')
   await Promise.all(tasks)
@@ -68,31 +69,34 @@ function getAllEvents(marketplace) {
   })
 }
 
-function getParcelIds(events) {
+function getEventParcels(events) {
   const results = {}
   for (let event of events) {
     const str = event.args.assetId
     if (!str) continue
-    if (event.removed && results[str]) continue
     results[str] = { parcelId: event.args.assetId, lastEvent: event }
   }
   return Object.values(results)
 }
 
-const NULL =
-  '0x0000000000000000000000000000000000000000000000000000000000000000'
+const NULL = '0x0000000000000000000000000000000000000000000000000000000000000000'
+const NULL_PARITY = '0x'
 
-async function checkParcel(parcelId, lastEvent, marketplace, fix) {
+function isNullHash(x) {
+  return x === NULL || x === NULL_PARITY
+}
+
+async function checkParcel(parcelId, lastEvent, marketplace, shouldFix) {
   const res = await decodeAssetId(parcelId)
-  const [x, y] = res.split(',')
+  const [x, y] = Parcel.splitId(res)
   const publication = await Publication.findInCoordinate(x, y)
-  const auction = await marketplace.instance.auctionByAssetId(parcelId)
+  const auction = await marketplace.auctionByAssetId(parcelId)
 
-  if (auction[0] !== NULL) {
+  if (!isNullHash(auction[0])) {
     // Check if the publication exists in db
     if (!publication.length) {
       console.log(x, y, 'missing publication in db')
-      if (fix) {
+      if (shouldFix) {
         await insertPublication(x, y, lastEvent)
         console.log(x, y, 'publication fixed')
       }
@@ -109,8 +113,8 @@ async function checkParcel(parcelId, lastEvent, marketplace, fix) {
         'vs in blockchain',
         auction[0]
       )
-      if (fix) {
-        await deletePublication(x, y)
+      if (shouldFix) {
+        await deletePublication(x, y, pub.owner, pub.tx_hash)
         await insertPublication(x, y, lastEvent)
         console.log(x, y, 'publication fixed')
       }
@@ -121,8 +125,8 @@ async function checkParcel(parcelId, lastEvent, marketplace, fix) {
     const pub = publication[0]
     if (pub.status === 'open') {
       console.log(x, y, 'open in db and null in blockchain')
-      if (fix) {
-        await deletePublication(x, y)
+      if (shouldFix) {
+        await deletePublication(x, y, pub.owner, pub.tx_hash)
         console.log(x, y, 'publication fixed')
       }
       return
@@ -130,11 +134,8 @@ async function checkParcel(parcelId, lastEvent, marketplace, fix) {
   }
 }
 
-function deletePublication(x, y) {
-  return Publication.delete({
-    x,
-    y
-  })
+function deletePublication(x, y, owner, tx_hash) {
+  return Publication.delete({ x, y, owner, tx_hash })
 }
 
 function insertPublication(x, y, eventData) {
@@ -165,7 +166,7 @@ function insertPublication(x, y, eventData) {
   })
 }
 
-async function processParcels(fix) {
+async function processParcels(shouldFix) {
   const parcels = await Parcel.find()
 
   log.info(`Processing ${parcels.length} parcels`)
@@ -203,7 +204,7 @@ async function processParcels(fix) {
       .map(e => `  ${e.x},${e.y}\n`)
       .join('\n  ')}`
   )
-  if (fix) {
+  if (shouldFix) {
     await Promise.all(errors.map(fixLandOwnership))
   }
 }
