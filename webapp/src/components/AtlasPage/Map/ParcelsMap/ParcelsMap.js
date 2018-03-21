@@ -25,6 +25,14 @@ const MAP_ID = 'map'
 
 L.Icon.Default.imagePath = 'https://cdnjs.com/ajax/libs/leaflet/1.0.3/images/'
 
+// I'm not proud of the following piece of code but
+// it will keep Rollbar from filling our inboxes:
+const original_onPanTransitionEnd = L.Map.prototype._onPanTransitionEnd
+L.Map.prototype._onPanTransitionEnd = function() {
+  if (!this._mapPane) return
+  return original_onPanTransitionEnd.apply(this, arguments)
+}
+
 export default class ParcelsMap extends React.Component {
   static propTypes = {
     wallet: walletType.isRequired,
