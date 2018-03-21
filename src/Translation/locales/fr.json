@@ -50,7 +50,6 @@
     "filter": {
       "newest": "Nouveau",
       "cheapest": "Moins chère",
-      "most_expensive": "Plus chère",
       "close_to_expire": "Près de l'expiration"
     }
   },

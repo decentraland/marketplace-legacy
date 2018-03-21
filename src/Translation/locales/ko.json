@@ -49,7 +49,6 @@
     "filter": {
       "newest": "최신",
       "cheapest": "가장 저렴한",
-      "most_expensive": "가장 비싼",
       "close_to_expire": "가장 빨리 만료되는"
     }
   },

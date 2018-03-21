@@ -1,24 +1,14 @@
 import { server } from 'decentraland-commons'
 
-const DEFAULT_VALUES = Object.freeze({
-  sort_by: 'created_at',
-  sort_order: 'ASC',
-  limit: 20,
-  offset: 0
-})
-
 const ALLOWED_VALUES = Object.freeze({
-  sort_by: ['price', 'expires_at', 'created_at'],
-  sort_order: ['ASC', 'DESC']
+  price: ['ASC'],
+  created_at: ['DESC'],
+  expires_at: ['ASC']
 })
 
 export class PublicationRequestFilters {
-  static getDefaultValues() {
-    return DEFAULT_VALUES
-  }
-
   static getAllowedValues() {
-    return DEFAULT_VALUES
+    return ALLOWED_VALUES
   }
 
   constructor(req) {
@@ -26,53 +16,27 @@ export class PublicationRequestFilters {
   }
 
   sanitize(req) {
+    let by = server.extractFromReq(this.req, 'sort_by')
+    let order = server.extractFromReq(this.req, 'sort_order')
+    let limit = server.extractFromReq(this.req, 'limit')
+    let offset = server.extractFromReq(this.req, 'offset')
+
+    by = by in ALLOWED_VALUES ? by : 'created_at'
+    order = ALLOWED_VALUES[by].includes(order.toUpperCase())
+      ? order
+      : ALLOWED_VALUES[by][0]
+    limit = Math.max(Math.min(100, limit), 0)
+    offset = Math.max(offset, 0)
+
     return {
       sort: {
-        by: this.get('sort_by'),
-        order: this.get('sort_order')
+        by,
+        order
       },
       pagination: {
-        limit: this.get('limit'),
-        offset: this.get('offset')
+        limit,
+        offset
       }
     }
-  }
-
-  get(propName) {
-    let value = DEFAULT_VALUES[propName]
-
-    try {
-      const reqValue = server.extractFromReq(this.req, propName)
-      if (this.isAllowed(propName, reqValue)) {
-        value = reqValue
-      }
-    } catch (error) {
-      // Keep default
-    }
-
-    return value
-  }
-
-  isAllowed(propName, value) {
-    let isAllowed = false
-
-    switch (propName) {
-      case 'sort_by':
-        isAllowed = ALLOWED_VALUES.sort_by.includes(value)
-        break
-      case 'sort_order':
-        isAllowed = ALLOWED_VALUES.sort_order.includes(value.toUpperCase())
-        break
-      case 'limit':
-        isAllowed = value > 0 && value < 100
-        break
-      case 'offset':
-        isAllowed = value > 0
-        break
-      default:
-        isAllowed = false
-    }
-
-    return isAllowed
   }
 }

@@ -49,7 +49,6 @@
     "filter": {
       "newest": "Newest",
       "cheapest": "Cheapest",
-      "most_expensive": "Most expensive",
       "close_to_expire": "Closest to expire"
     }
   },
