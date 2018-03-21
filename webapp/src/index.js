@@ -18,25 +18,36 @@ env.load()
 
 // TEMPORAL CODE
 // Trims down the stored local storage to avoid hitting the browser limit
-if (!window.localStorage.getItem('__clean__')) {
-  let state = window.localStorage.getItem('decentraland-marketplace')
-  state = JSON.parse(state)
+try {
+  if (!window.localStorage.getItem('__clean__')) {
+    const stateString = window.localStorage.getItem('decentraland-marketplace')
 
-  const { transaction } = state
+    if (stateString) {
+      const state = JSON.parse(stateString)
+      const transaction = state.transaction
 
-  if (transaction && transaction.data) {
-    transaction.data = transaction.data.map(tx => ({
-      hash: tx.hash,
-      payload: tx.payload,
-      timestamp: tx.timestamp,
-      from: tx.from,
-      actionType: tx.actionType,
-      status: tx.status
-    }))
+      if (transaction && transaction.data) {
+        transaction.data = transaction.data.map(tx => ({
+          hash: tx.hash,
+          payload: tx.payload,
+          timestamp: tx.timestamp,
+          from: tx.from,
+          actionType: tx.actionType,
+          status: tx.status
+        }))
+
+        window.localStorage.setItem(
+          'decentraland-marketplace',
+          JSON.stringify(state)
+        )
+      }
+    }
+
+    window.localStorage.removeItem('decentraland-marketplace-translations')
+    window.localStorage.setItem('__clean__', 1)
   }
-  window.localStorage.setItem('decentraland-marketplace', JSON.stringify(state))
-  window.localStorage.removeItem('decentraland-marketplace-translations')
-  window.localStorage.setItem('__clean__', 1)
+} catch (error) {
+  window.Rollbar.info('Failed to clean the user localstorage', error)
 }
 
 ReactDOM.render(
