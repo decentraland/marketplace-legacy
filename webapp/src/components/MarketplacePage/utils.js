@@ -10,7 +10,6 @@ export function getSortTypes() {
     SORT_TYPES = Object.freeze({
       NEWEST: t('marketplace.filter.newest'),
       CHEAPEST: t('marketplace.filter.cheapest'),
-      MOST_EXPENSIVE: t('marketplace.filter.most_expensive'),
       CLOSEST_TO_EXPIRE: t('marketplace.filter.close_to_expire')
     })
   }
@@ -54,11 +53,6 @@ export function getOptionsFromSortType(type) {
       return {
         sortBy: 'price',
         sortOrder: 'asc'
-      }
-    case sortTypes.MOST_EXPENSIVE:
-      return {
-        sortBy: 'price',
-        sortOrder: 'desc'
       }
     case sortTypes.CLOSEST_TO_EXPIRE:
       return {

@@ -49,7 +49,6 @@
     "filter": {
       "newest": "Más nuevas",
       "cheapest": "Más baratas",
-      "most_expensive": "Más caras",
       "close_to_expire": "Por terminar"
     }
   },

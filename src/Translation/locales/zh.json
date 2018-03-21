@@ -49,7 +49,6 @@
     "filter": {
       "newest": "最新出售",
       "cheapest": "最低价",
-      "most_expensive": "最高价",
       "close_to_expire": "最近到期"
     }
   },
