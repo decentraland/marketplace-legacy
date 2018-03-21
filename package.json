@@ -11,6 +11,7 @@
     "init-db": "./scripts/initDb.js",
     "migrate": "./migrations/migrate",
     "renew-blockchain-data": "./scripts/renewBlockchainData.js",
+    "sanity-check": "./scripts/sanityCheck.js",
     "seed": "./scripts/seed.js",
     "monitor-blockchain": "./scripts/monitor/index.js store",
     "build": "npm run lint && npm run test",
@@ -31,7 +32,7 @@
   "dependencies": {
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
-    "decentraland-commons": "^3.3.7",
+    "decentraland-commons": "^3.3.9",
     "express": "^4.16.2",
     "flat": "^4.0.0",
     "node-pg-migrate": "^2.23.0",
