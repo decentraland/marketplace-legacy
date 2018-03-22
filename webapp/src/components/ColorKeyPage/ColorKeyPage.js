@@ -51,9 +51,6 @@ export default function ColorKey() {
           </div>
         </div>
       </div>
-      <Link to={locations.parcelMapDetail(0, 0)}>
-        <Button>{t('color_key.go_back')}</Button>
-      </Link>
     </StaticPage>
   )
 }
