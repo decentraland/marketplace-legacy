@@ -1,12 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
-import { Button } from 'semantic-ui-react'
 
 import StaticPage from 'components/StaticPage'
 import { t } from 'modules/translation/utils'
-
-import { locations } from 'locations'
 
 import './ColorKeyPage.css'
 
@@ -51,9 +46,6 @@ export default function ColorKey() {
           </div>
         </div>
       </div>
-      <Link to={locations.parcelMapDetail(0, 0)}>
-        <Button>{t('color_key.go_back')}</Button>
-      </Link>
     </StaticPage>
   )
 }
