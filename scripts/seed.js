@@ -168,5 +168,5 @@ function generateEthereumTxHash() {
 
 db
   .connect()
-  .then(cli.runProgram([seed]))
+  .then(() => cli.runProgram([seed]))
   .catch(console.error)
