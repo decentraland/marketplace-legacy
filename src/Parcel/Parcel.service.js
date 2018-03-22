@@ -74,6 +74,13 @@ export class ParcelService {
     return await Promise.all(parcelPromises)
   }
 
+  blockchainOwner(parcel) {
+    const contract = this.getLANDRegistryContract()
+    const { x, y } = parcel
+
+    return contract.ownerOfLand(x, y)
+  }
+
   async isOwner(address, parcel) {
     let isOwner = false
 

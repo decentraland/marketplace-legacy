@@ -180,15 +180,14 @@ async function processParcels(shouldFix) {
     elements: parcels,
     callback: async newParcels => {
       for (let parcel of newParcels) {
-        if (parcel.owner) {
-          if (!await service.isOwner(parcel.owner, parcel)) {
-            errors.push(parcel)
-            log.error(
-              `Mismatch: owner of ${parcel.x}, ${parcel.y} is ${
-                parcel.owner
-              } on the DB`
-            )
-          }
+        const currentOwner = await service.blockchainOwner(parcel)
+        if (parcel.owner !== currentOwner) {
+          errors.push(parcel)
+          log.error(
+            `Mismatch: owner of ${parcel.x}, ${parcel.y} is ${
+              parcel.owner
+            } on the DB and ${currentOwner} in blockchain`
+          )
         }
       }
 
