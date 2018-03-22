@@ -74,21 +74,11 @@ export class ParcelService {
     return await Promise.all(parcelPromises)
   }
 
-  blockchainOwner(parcel) {
-    const contract = this.getLANDRegistryContract()
-    const { x, y } = parcel
-
-    return contract.ownerOfLand(x, y)
-  }
-
   async isOwner(address, parcel) {
     let isOwner = false
 
     try {
-      const contract = this.getLANDRegistryContract()
-      const { x, y } = parcel
-
-      const owner = await contract.ownerOfLand(x, y)
+      const owner = await this.getOwnerOfLand(parcel)
       isOwner = !Contract.isEmptyAddress(owner) && address === owner
     } catch (error) {
       log.warn(
@@ -106,9 +96,7 @@ export class ParcelService {
     let newParcels = []
 
     try {
-      const { x, y } = coordinates.splitPairs(parcels)
-      const contract = this.getLANDRegistryContract()
-      const addresses = await contract.ownerOfLandMany(x, y)
+      const addresses = await this.getOwnerOfLandMany(parcels)
 
       for (const [index, parcel] of parcels.entries()) {
         const address = addresses[index]
@@ -125,6 +113,19 @@ export class ParcelService {
     }
 
     return newParcels
+  }
+
+  async getOwnerOfLand(parcel) {
+    const contract = this.getLANDRegistryContract()
+    const { x, y } = parcel
+
+    return await contract.ownerOfLand(x, y)
+  }
+
+  async getOwnerOfLandMany(parcels) {
+    const { x, y } = coordinates.splitPairs(parcels)
+    const contract = this.getLANDRegistryContract()
+    return await contract.ownerOfLandMany(x, y)
   }
 
   toParcelObject(parcelArray) {

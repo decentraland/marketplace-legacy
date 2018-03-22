@@ -49,7 +49,7 @@ async function updateParcelsData(parcels) {
         newParcels = await service.addLandData(newParcels)
         newParcels = await service.addOwners(newParcels)
       } catch (error) {
-        log.info(`Error processing ${newParcels.length} parcels, skipping`)
+        log.info(`Error processing ${newParcels.length} parcels, will retry`)
         errors = errors.concat(newParcels)
         return
       }

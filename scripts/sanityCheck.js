@@ -9,33 +9,48 @@ import { asyncBatch } from '../src/lib/asyncBatch'
 import { loadEnv } from './utils'
 import { decodeAssetId } from './monitor/utils'
 
-const log = new Log('update')
+const log = new Log('sanity-check')
 
 let BATCH_SIZE
 
-export async function sanityCheck() {
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
+const sanityCheck = {
+  addCommands(program) {
+    program
+      .command('run')
+      .option('--fix', 'If present, the errors found will be fixed')
+      .option('--skip-parcels', 'Skip the parcel check')
+      .action(async options => {
+        const shouldFix = options.fix
+        const shouldSkipParcels = options.skipParcels
+        const totalChecks = shouldSkipParcels ? 1 : 2
 
-  const shouldFix = await cli.confirm('Fix errors?')
+        log.info('Connecting database')
+        await db.connect()
 
-  log.info('Connecting database')
-  await db.connect()
+        log.info('Connecting to Ethereum node')
+        await eth.connect({
+          contracts: [contracts.LANDRegistry, contracts.Marketplace],
+          providerUrl: env.get('RPC_URL')
+        })
 
-  log.info('Connecting to Ethereum node')
-  await eth.connect({
-    contracts: [contracts.LANDRegistry, contracts.Marketplace],
-    providerUrl: env.get('RPC_URL')
-  })
+        log.info(
+          `[Check 1/${totalChecks}]: Checking Marketplace against all events`
+        )
+        try {
+          await marketplaceCheck(shouldFix)
+        } catch (err) {
+          log.error(err, err.stack)
+        }
 
-  log.info('[Check 1/2]: Checking Marketplace sanity against all events')
-  try {
-    await marketplaceCheck(shouldFix)
-  } catch (err) {
-    console.log(err, err.stack)
+        if (!shouldSkipParcels) {
+          log.info(
+            `[Check 2/${totalChecks}]: Checking parcel ownership from -150,-150 to 150,150`
+          )
+          const parcels = await Parcel.find()
+          await processParcels(parcels, shouldFix)
+        }
+      })
   }
-
-  log.info('[Check 2/2]: Checking parcel ownership from -150,-150 to 150,150')
-  await processParcels(shouldFix)
 }
 
 async function marketplaceCheck(shouldFix) {
@@ -46,9 +61,11 @@ async function marketplaceCheck(shouldFix) {
 
   const tasks = []
   for (let parcel of parcels) {
-    tasks.push(checkParcel(parcel.parcelId, parcel.lastEvent, marketplace, shouldFix))
+    tasks.push(
+      checkParcel(parcel.parcelId, parcel.lastEvent, marketplace, shouldFix)
+    )
   }
-  console.log('Analyzing', tasks.length, 'cases of parcels')
+  log.info('Analyzing the case of', tasks.length, 'parcels')
   await Promise.all(tasks)
 }
 
@@ -79,7 +96,8 @@ function getEventParcels(events) {
   return Object.values(results)
 }
 
-const NULL = '0x0000000000000000000000000000000000000000000000000000000000000000'
+const NULL =
+  '0x0000000000000000000000000000000000000000000000000000000000000000'
 const NULL_PARITY = '0x'
 
 function isNullHash(x) {
@@ -95,19 +113,18 @@ async function checkParcel(parcelId, lastEvent, marketplace, shouldFix) {
   if (!isNullHash(auction[0])) {
     // Check if the publication exists in db
     if (!publication.length) {
-      console.log(x, y, 'missing publication in db')
+      log.info(x, y, 'missing publication in db')
       if (shouldFix) {
         await insertPublication(x, y, lastEvent)
-        console.log(x, y, 'publication fixed')
+        log.info(x, y, 'publication fixed')
       }
       return
     }
     // Check that id matches
     const pub = publication[0]
     if (pub.contract_id !== auction[0]) {
-      console.log(
-        x,
-        y,
+      log.info(
+        parcelId,
         'different id in db',
         pub.contract_id,
         'vs in blockchain',
@@ -116,18 +133,19 @@ async function checkParcel(parcelId, lastEvent, marketplace, shouldFix) {
       if (shouldFix) {
         await deletePublication(x, y, pub.owner, pub.tx_hash)
         await insertPublication(x, y, lastEvent)
-        console.log(x, y, 'publication fixed')
+        log.info(parcelId, 'publication fixed')
       }
       return
     }
   } else if (publication.length) {
     // Check for hanging publication in db
     const pub = publication[0]
-    if (pub.status === 'open') {
-      console.log(x, y, 'open in db and null in blockchain')
+    if (pub.status === Publication.STATUS.open) {
+      log.info(parcelId, 'open in db and null in blockchain')
+
       if (shouldFix) {
         await deletePublication(x, y, pub.owner, pub.tx_hash)
-        console.log(x, y, 'publication fixed')
+        log.info(parcelId, 'publication fixed')
       }
       return
     }
@@ -144,11 +162,11 @@ function insertPublication(x, y, eventData) {
   const contract_id = eventData.args.id
 
   if (event !== BlockchainEvent.EVENTS.publicationCreated) {
-    console.log('Error! Last event received is not AuctionCreated', eventData)
+    log.error('Error! Last event received is not AuctionCreated', eventData)
     return
   }
   if (!transactionHash) {
-    console.log('Error! Last event received is removed', eventData)
+    log.error('Error! Last event received is removed', eventData)
     return
   }
 
@@ -166,57 +184,63 @@ function insertPublication(x, y, eventData) {
   })
 }
 
-async function processParcels(shouldFix) {
-  const parcels = await Parcel.find()
-
+async function processParcels(parcels, shouldFix) {
   log.info(`Processing ${parcels.length} parcels`)
+  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   const service = new ParcelService()
 
-  const errors = []
+  let errors = []
+  let updates = []
   let processedCount = 0
 
   await asyncBatch({
     elements: parcels,
     callback: async newParcels => {
-      for (let parcel of newParcels) {
-        const currentOwner = await service.blockchainOwner(parcel)
-        if (parcel.owner !== currentOwner) {
-          errors.push(parcel)
+      let updatedParcels = newParcels.slice()
+
+      try {
+        updatedParcels = await service.addOwners(updatedParcels)
+        updatedParcels = await service.addLandData(updatedParcels)
+      } catch (error) {
+        log.info(`Error processing ${newParcels.length} parcels, skipping`)
+        errors = errors.concat(newParcels)
+        return
+      }
+
+      for (const [index, parcel] of newParcels.entries()) {
+        const currentOwner = updatedParcels[index].owner
+
+        if (isOwnerMissmatch(currentOwner, parcel)) {
           log.error(
-            `Mismatch: owner of ${parcel.x}, ${parcel.y} is ${
+            `Mismatch: owner of '${parcel.id}' is '${
               parcel.owner
-            } on the DB and ${currentOwner} in blockchain`
+            }' on the DB and '${currentOwner}' in blockchain`
           )
+
+          if (shouldFix) {
+            const { id, ...attributes } = parcel
+            updates.push(Parcel.update(attributes, { id }))
+          }
         }
       }
 
-      log.info(`Processing ${processedCount}/${parcels.length} parcels`)
-
       processedCount += newParcels.length
+
+      log.info(`Processed ${processedCount}/${parcels.length} parcels`)
     },
     batchSize: BATCH_SIZE
   })
 
-  log.info(
-    `Parcel ownership scan done, ${errors.length} errors found: \n${errors
-      .map(e => `  ${e.x},${e.y}\n`)
-      .join('\n  ')}`
-  )
-  if (shouldFix) {
-    await Promise.all(errors.map(fixLandOwnership))
+  await Promise.all(updates)
+
+  if (errors.length) {
+    return await processParcels(errors, shouldFix)
   }
 }
 
-async function fixLandOwnership({ x, y }) {
-  const service = new ParcelService()
-
-  let parcel = await Parcel.find({ x, y })
-  parcel = await service.addLandData(parcel)
-  parcel = await service.addOwners(parcel)
-  await Promise.all(
-    parcel.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
-  )
+function isOwnerMissmatch(currentOwner, parcel) {
+  return !!currentOwner && parcel.owner !== currentOwner
 }
 
 if (require.main === module) {
@@ -224,7 +248,6 @@ if (require.main === module) {
   BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
 
   Promise.resolve()
-    .then(sanityCheck)
-    .then(() => process.exit())
+    .then(() => cli.runProgram([sanityCheck]))
     .catch(error => console.error('An error occurred.\n', error))
 }
