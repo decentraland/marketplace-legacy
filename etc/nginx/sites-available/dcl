@@ -1,0 +1,34 @@
+server {
+    listen 443 ssl http2 default;
+    server_name api.market.decentraland.org;
+
+    ssl_certificate /etc/letsencrypt/live/api.market.decentraland.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.market.decentraland.org/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/api.market.decentraland.org/fullchain.pem;
+
+    add_header Access-Control-Allow-Origin "https://market.decentraland.org";
+
+    root /dev/null;
+    index index.html;
+
+    include snippets/ssl-params.conf;
+    include snippets/proxy-pass.conf;
+
+    location / {
+        proxy_pass http://mkt-app;
+        proxy_read_timeout 90;
+    }
+}
+
+server {
+    listen 80 default;
+    server_name api.market.decentraland.org;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
