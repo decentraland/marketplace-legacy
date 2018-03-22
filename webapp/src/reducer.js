@@ -10,7 +10,6 @@ import { transferReducer as transfer } from 'modules/transfer/reducer'
 import { translationReducer as translation } from 'modules/translation/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
-import { analyticsReduceer as analytics } from 'modules/analytics/reducer'
 import {
   storageReducer as storage,
   storageReducerWrapper
@@ -28,7 +27,6 @@ export const rootReducer = storageReducerWrapper(
     ui,
     wallet,
     router,
-    storage,
-    analytics
+    storage
   })
 )

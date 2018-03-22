@@ -24,7 +24,6 @@ import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 import TermsPage from 'components/TermsPage'
 
-import GoogleAnalytics from 'components/GoogleAnalytics'
 import Intercom from 'components/Intercom'
 
 import Modal from 'components/Modal'
@@ -62,7 +61,6 @@ export default class Routes extends React.Component {
         <Modal />
         <Toast />
         <Intercom />
-        <GoogleAnalytics />
       </Wallet>
     )
   }
