@@ -36,10 +36,17 @@ function* handleTransferRequest(action) {
       contract.transferLand(parcel.x, parcel.y, newOwner)
     )
 
-    const transfer = { txHash, oldOwner, newOwner, parcelId: parcel.id }
+    const transfer = {
+      txHash,
+      oldOwner,
+      newOwner,
+      parcelId: parcel.id,
+      x: parcel.x,
+      y: parcel.y
+    }
 
     yield put(push(locations.activity))
-    yield put(transferParcelSuccess(txHash, transfer, parcel))
+    yield put(transferParcelSuccess(txHash, transfer))
   } catch (error) {
     yield put(transferParcelFailure(error.message))
   }

@@ -10,10 +10,9 @@ import { createLogger } from 'redux-logger'
 import { api } from 'lib/api'
 
 import { createTransactionMiddleware } from 'modules/transaction/middleware'
-import { createGoogleAnalyticsMiddleware } from 'modules/analytics/middleware'
+import { createAnalyticsMiddleware } from 'modules/analytics/middleware'
 import { createStorageMiddleware } from 'modules/storage/middleware'
 
-import { analyticsReduceer } from 'modules/analytics/reducer'
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
 
@@ -29,7 +28,9 @@ const loggerMiddleware = createLogger({
   collapsed: () => true
 })
 const transactionMiddleware = createTransactionMiddleware()
-const analyticsMiddleware = createGoogleAnalyticsMiddleware(analyticsReduceer)
+const analyticsMiddleware = createAnalyticsMiddleware(
+  env.get('REACT_APP_SEGMENT_API_KEY')
+)
 const storageMiddleware = createStorageMiddleware(
   env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-marketplace')
 )

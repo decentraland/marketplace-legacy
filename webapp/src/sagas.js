@@ -1,5 +1,6 @@
 import { all } from 'redux-saga/effects'
 
+import { analyticsSaga } from 'modules/analytics/sagas'
 import { addressSaga } from 'modules/address/sagas'
 import { districtsSaga } from 'modules/districts/sagas'
 import { locationSaga } from 'modules/location/sagas'
@@ -13,6 +14,7 @@ import { walletSaga } from 'modules/wallet/sagas'
 
 export function* rootSaga() {
   yield all([
+    analyticsSaga(),
     addressSaga(),
     districtsSaga(),
     locationSaga(),

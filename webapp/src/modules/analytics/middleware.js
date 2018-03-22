@@ -1,22 +1,27 @@
-export function createAnalyticsMiddleware(sendEvent, reducer) {
-  if (!reducer) reducer = action => action
+import { track } from './utils'
+import './track'
 
-  return store => next => action => {
-    if (sendEvent) {
-      const event = reducer(store.getState(), action)
-
-      if (event != null) {
-        sendEvent(event)
-      }
-    }
-
-    return next(action)
-  }
+const disabledMiddleware = store => next => action => {
+  next(action)
 }
 
-export function createGoogleAnalyticsMiddleware(reducer) {
-  return createAnalyticsMiddleware(action => {
-    const { type, ...data } = action
-    window.gtag('event', type, data)
-  }, reducer)
+export function createAnalyticsMiddleware(apiKey) {
+  if (!apiKey) {
+    console.warn(
+      'Analytics: middleware disabled due to missing Segment API key'
+    )
+    return disabledMiddleware
+  }
+  if (!window.analytics) {
+    console.warn(
+      'Analytics: middleware disabled because `window.analytics` is not present'
+    )
+    return disabledMiddleware
+  }
+
+  window.analytics.load(apiKey)
+  return store => next => action => {
+    track(action)
+    next(action)
+  }
 }
