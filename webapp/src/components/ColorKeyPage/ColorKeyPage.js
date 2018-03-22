@@ -1,12 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
-import { Button } from 'semantic-ui-react'
 
 import StaticPage from 'components/StaticPage'
 import { t } from 'modules/translation/utils'
-
-import { locations } from 'locations'
 
 import './ColorKeyPage.css'
 
