@@ -5,7 +5,7 @@ import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
-import { asyncBatch } from '../src/lib/asyncBatch'
+import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 import { decodeAssetId } from './monitor/utils'
 

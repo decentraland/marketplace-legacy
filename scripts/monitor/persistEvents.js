@@ -1,8 +1,9 @@
 import { env, eth, txUtils, contracts, Log } from 'decentraland-commons'
-import { decodeAssetId, debounceEvent } from './utils'
+import { decodeAssetId } from './utils'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { isDuplicatedPKError } from '../../src/lib'
 
 const log = new Log('persistEvents')
 
@@ -44,13 +45,14 @@ export async function processEvent(event) {
       const { seller, priceInWei, expiresAt } = event.args
       const contract_id = event.args.id
 
-      const exists = await Publication.count({ tx_hash })
-      if (exists) {
-        log.info(`[${name}] Publication ${tx_hash} already exists`)
-        return
-      }
       if (!contract_id) {
         log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
+        return
+      }
+
+      const exists = await Publication.count({ tx_hash, contract_id })
+      if (exists) {
+        log.info(`[${name}] Publication ${tx_hash} already exists`)
         return
       }
       log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
@@ -62,18 +64,25 @@ export async function processEvent(event) {
         status: Publication.STATUS.open
       })
 
-      await Publication.insert({
-        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Publication.STATUS.open,
-        owner: seller.toLowerCase(),
-        buyer: null,
-        price: eth.utils.fromWei(priceInWei),
-        expires_at: new Date(parseInt(expiresAt, 10)),
-        tx_hash,
-        contract_id,
-        x,
-        y
-      })
+      try {
+        await Publication.insert({
+          tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+          status: Publication.STATUS.open,
+          owner: seller.toLowerCase(),
+          buyer: null,
+          price: eth.utils.fromWei(priceInWei),
+          expires_at: new Date(parseInt(expiresAt, 10)),
+          tx_hash,
+          contract_id,
+          x,
+          y
+        })
+      } catch (error) {
+        if (!isDuplicatedPKError(error)) throw error
+        log.info(
+          `[${name}] Publication of hash ${tx_hash} already exists and it's not open`
+        )
+      }
       break
     }
     case BlockchainEvent.EVENTS.publicationSuccessful: {
@@ -117,13 +126,10 @@ export async function processEvent(event) {
       try {
         const { data } = event.args
         const attributes = { data: contracts.LANDRegistry.decodeLandData(data) }
+        const attrsStr = JSON.stringify(attributes)
 
-        debounceEvent(parcelId, name, () => {
-          const attrsStr = JSON.stringify(attributes)
-          log.info(`[${name}] Updating "${parcelId}" with ${attrsStr}`)
-
-          Parcel.update(attributes, { id: parcelId })
-        })
+        log.info(`[${name}] Updating "${parcelId}" with ${attrsStr}`)
+        await Parcel.update(attributes, { id: parcelId })
       } catch (error) {
         log.info(`[${name}] Skipping badly formed data for "${parcelId}"`)
       }
@@ -132,12 +138,10 @@ export async function processEvent(event) {
     case BlockchainEvent.EVENTS.parcelTransfer: {
       const { to } = event.args
 
-      debounceEvent(parcelId, name, async () => {
-        log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
+      log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-        await Publication.cancelOlder(x, y, block_number)
-        await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
-      })
+      await Publication.cancelOlder(x, y, block_number)
+      await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
       break
     }
     default:

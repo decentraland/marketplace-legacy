@@ -2,6 +2,7 @@ import { eth, Contract, Log, contracts } from 'decentraland-commons'
 
 import { Parcel } from './Parcel'
 import { coordinates } from './coordinates'
+import { isDuplicatedPKError } from '../lib'
 
 const log = new Log('ParcelService')
 const { LANDRegistry } = contracts
@@ -141,10 +142,5 @@ export class ParcelService {
 }
 
 function skipDuplicateError(error) {
-  if (!isDuplicatedError(error)) throw new Error(error)
-}
-
-function isDuplicatedError(error) {
-  const duplicateErrorRegexp = /duplicate key value violates unique constraint ".+_pkey"/
-  return error && error.search && error.search(duplicateErrorRegexp) !== -1
+  if (!isDuplicatedPKError(error)) throw new Error(error)
 }
