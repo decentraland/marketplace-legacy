@@ -3,7 +3,7 @@ import { decodeAssetId } from './utils'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
-import { isDuplicatedPKError } from '../../src/lib'
+import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('persistEvents')
 
@@ -78,9 +78,9 @@ export async function processEvent(event) {
           y
         })
       } catch (error) {
-        if (!isDuplicatedPKError(error)) throw error
+        if (!isDuplicatedConstraintError(error)) throw error
         log.info(
-          `[${name}] Publication of hash ${tx_hash} already exists and it's not open`
+          `[${name}] Publication of hash ${tx_hash} and id ${contract_id} already exists and it's not open`
         )
       }
       break

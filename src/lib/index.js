@@ -1,2 +1,2 @@
 export * from './asyncBatch'
-export * from './isDuplicatedPKError'
+export * from './isDuplicatedConstraintError'

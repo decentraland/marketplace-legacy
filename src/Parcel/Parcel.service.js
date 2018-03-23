@@ -2,7 +2,7 @@ import { eth, Contract, Log, contracts } from 'decentraland-commons'
 
 import { Parcel } from './Parcel'
 import { coordinates } from './coordinates'
-import { isDuplicatedPKError } from '../lib'
+import { isDuplicatedConstraintError } from '../lib'
 
 const log = new Log('ParcelService')
 const { LANDRegistry } = contracts
@@ -142,5 +142,5 @@ export class ParcelService {
 }
 
 function skipDuplicateError(error) {
-  if (!isDuplicatedPKError(error)) throw new Error(error)
+  if (!isDuplicatedConstraintError(error)) throw new Error(error)
 }
