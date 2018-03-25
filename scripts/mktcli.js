@@ -1,3 +1,5 @@
+#!/usr/bin/env babel-node
+
 import { eth, Log, cli, contracts } from 'decentraland-commons'
 import { loadEnv } from './utils'
 import { decodeAssetId, encodeAssetId } from './monitor/utils'
