@@ -7,6 +7,11 @@ import { decodeAssetId, encodeAssetId } from './monitor/utils'
 const log = new Log('mktcli')
 
 const logError = err => log.error('ERR: ' + err.message)
+const parseCoords = coords =>
+  coords
+    .replace('(', '')
+    .replace(')', '')
+    .split(',')
 
 const main = {
   addCommands(program) {
@@ -25,10 +30,7 @@ const main = {
       if (!options.length) return
 
       try {
-        const [x, y] = options
-          .replace('(', '')
-          .replace(')', '')
-          .split(',')
+        const [x, y] = parseCoords(options)
         const value = await encodeAssetId(x, y)
         log.info(
           `(encode) coords:(${x},${y}) => str:${value.toString()} hex:${value.toString(
@@ -38,6 +40,15 @@ const main = {
       } catch (err) {
         logError(err)
       }
+    })
+
+    program.command('owner').action(async options => {
+      if (!options.length) return
+
+      const [x, y] = parseCoords(options)
+      const contract = eth.getContract('LANDRegistry')
+      const owner = await contract.ownerOfLand(x, y)
+      log.info(`(owner) coords:(${x},${y}) => ${owner}`)
     })
   }
 }
@@ -49,7 +60,7 @@ if (require.main === module) {
     .then(() => {
       log.debug('Connecting to Ethereum node')
       return eth.connect({
-        contracts: [contracts.LANDRegistry]
+        contracts: [contracts.LANDRegistry, contracts.Marketplace]
       })
     })
     .then(() => cli.runProgram([main]))
