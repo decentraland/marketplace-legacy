@@ -5,7 +5,7 @@ import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
-import { asyncBatch } from '../src/lib/asyncBatch'
+import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 import { decodeAssetId } from './monitor/utils'
 
@@ -49,6 +49,8 @@ const sanityCheck = {
           const parcels = await Parcel.find()
           await processParcels(parcels, shouldFix)
         }
+
+        process.exit()
       })
   }
 }
@@ -104,11 +106,11 @@ function isNullHash(x) {
   return x === NULL || x === NULL_PARITY
 }
 
-async function checkParcel(parcelId, lastEvent, marketplace, shouldFix) {
-  const res = await decodeAssetId(parcelId)
-  const [x, y] = Parcel.splitId(res)
+async function checkParcel(assetId, lastEvent, marketplace, shouldFix) {
+  const parcelId = await decodeAssetId(assetId)
+  const [x, y] = Parcel.splitId(parcelId)
   const publication = await Publication.findInCoordinate(x, y)
-  const auction = await marketplace.auctionByAssetId(parcelId)
+  const auction = await marketplace.auctionByAssetId(assetId)
 
   if (!isNullHash(auction[0])) {
     // Check if the publication exists in db
