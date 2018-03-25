@@ -19,8 +19,8 @@ const main = {
       if (!options.length) return
 
       try {
-        const value = await decodeAssetId(options)
-        log.info(`(decode) str:${options} => coords:(${value})`)
+        const coords = await decodeAssetId(options)
+        log.info(`(decode) str:${options} => coords:(${coords})`)
       } catch (err) {
         logError(err)
       }
@@ -31,9 +31,9 @@ const main = {
 
       try {
         const [x, y] = parseCoords(options)
-        const value = await encodeAssetId(x, y)
+        const assetId = await encodeAssetId(x, y)
         log.info(
-          `(encode) coords:(${x},${y}) => str:${value.toString()} hex:${value.toString(
+          `(encode) coords:(${x},${y}) => str:${assetId.toString()} hex:${assetId.toString(
             16
           )}`
         )
@@ -45,10 +45,28 @@ const main = {
     program.command('owner').action(async options => {
       if (!options.length) return
 
-      const [x, y] = parseCoords(options)
-      const contract = eth.getContract('LANDRegistry')
-      const owner = await contract.ownerOfLand(x, y)
-      log.info(`(owner) coords:(${x},${y}) => ${owner}`)
+      try {
+        const [x, y] = parseCoords(options)
+        const contract = eth.getContract('LANDRegistry')
+        const owner = await contract.ownerOfLand(x, y)
+        log.info(`(owner) coords:(${x},${y}) => ${owner}`)
+      } catch (err) {
+        logError(err)
+      }
+    })
+
+    program.command('publication').action(async options => {
+      if (!options.length) return
+
+      try {
+        const [x, y] = parseCoords(options)
+        const contract = eth.getContract('Marketplace')
+        const assetId = await encodeAssetId(x, y)
+        const publication = await contract.auctionByAssetId(assetId)
+        log.info(`(publication) coords:(${x},${y}) => ${publication}`)
+      } catch (err) {
+        logError(err)
+      }
     })
   }
 }
