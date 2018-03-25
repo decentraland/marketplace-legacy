@@ -23,3 +23,8 @@ export async function decodeAssetId(assetId) {
 
   return assetIdCache[assetId]
 }
+
+export function encodeAssetId(x, y) {
+  const contract = eth.getContract('LANDRegistry')
+  return contract.encodeTokenId(x, y)
+}
