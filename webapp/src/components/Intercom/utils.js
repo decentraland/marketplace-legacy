@@ -1,5 +1,5 @@
 import { env } from 'decentraland-commons'
-import { insertScript } from 'lib/utils'
+import { insertScript, isMobile } from 'lib/utils'
 
 const APP_ID = env.get('REACT_APP_INTERCOM_APP_ID', '')
 
@@ -40,7 +40,7 @@ const intercomUtils = {
 }
 
 function IntercomFn(...args) {
-  if (env.isDevelopment()) {
+  if (env.isDevelopment() || isMobile()) {
     return
   }
 

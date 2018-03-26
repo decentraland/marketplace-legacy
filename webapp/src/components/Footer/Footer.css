@@ -57,9 +57,12 @@
 }
 
 .Footer .language-dropdown {
-  z-index: 10000 !important;
   min-width: 150px !important;
   transform: scale(0.8) !important;
+}
+
+.Footer .ui.selection.language-dropdown.active {
+  z-index: 1040;
 }
 
 .Footer .mini-copyright {
