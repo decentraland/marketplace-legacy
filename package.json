@@ -37,12 +37,9 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "flat": "^4.0.0",
-    "mongodb": "^3.0.5",
     "node-pg-migrate": "^2.23.0",
-    "nodemailer": "^4.6.3",
     "pg": "^7.4.1",
     "rollbar": "^2.3.9",
-    "tunnel-ssh": "^4.1.4",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
@@ -63,8 +60,11 @@
     "inquirer": "^5.2.0",
     "mailchimp-api-v3": "^1.8.0",
     "mocha": "^4.0.1",
+    "mongodb": "^3.0.5",
+    "nodemailer": "^4.6.3",
     "nodemon": "^1.14.11",
     "prettier": "^1.10.2",
-    "sinon": "^4.2.1"
+    "sinon": "^4.2.1",
+    "tunnel-ssh": "^4.1.4"
   }
 }
