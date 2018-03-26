@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { WALLET_TYPES, txUtils } from 'decentraland-commons'
+import { wallets, txUtils } from 'decentraland-commons'
 
 import { Form, Checkbox } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
@@ -59,7 +59,7 @@ export default class SettingsForm extends React.PureComponent {
 
     return (
       <Form className={`SettingsForm ${isPending ? 'tx-pending' : ''}`}>
-        {walletType === WALLET_TYPES.ledger ? (
+        {walletType === wallets.WALLET_TYPES.ledger ? (
           <Form.Field>
             <DerivationPathDropdown
               defaultValue={walletDerivationPath}
