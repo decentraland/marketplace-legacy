@@ -13,6 +13,9 @@ const parseCoords = coords =>
     .replace(')', '')
     .split(',')
 
+const landRegistry = () => eth.getContract('LANDRegistry')
+const marketplace = () => eth.getContract('Marketplace')
+
 const main = {
   addCommands(program) {
     program.command('decode').action(async options => {
@@ -42,14 +45,27 @@ const main = {
       }
     })
 
-    program.command('owner').action(async options => {
+    program.command('land-owner').action(async options => {
       if (!options.length) return
 
       try {
         const [x, y] = parseCoords(options)
-        const contract = eth.getContract('LANDRegistry')
+        const contract = landRegistry()
         const owner = await contract.ownerOfLand(x, y)
-        log.info(`(owner) coords:(${x},${y}) => ${owner}`)
+        log.info(`(land-owner) coords:(${x},${y}) => ${owner}`)
+      } catch (err) {
+        logError(err)
+      }
+    })
+
+    program.command('land-data').action(async options => {
+      if (!options.length) return
+
+      try {
+        const [x, y] = parseCoords(options)
+        const contract = landRegistry()
+        const data = await contract.landData(x, y)
+        log.info(`(land-data) coords:(${x},${y}) => ${data}`)
       } catch (err) {
         logError(err)
       }
@@ -60,7 +76,7 @@ const main = {
 
       try {
         const [x, y] = parseCoords(options)
-        const contract = eth.getContract('Marketplace')
+        const contract = marketplace()
         const assetId = await encodeAssetId(x, y)
         const publication = await contract.auctionByAssetId(assetId)
         log.info(`(publication) coords:(${x},${y}) => ${publication}`)
