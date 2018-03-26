@@ -17,7 +17,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "date-fns": "^1.29.0",
-    "decentraland-commons": "^3.5.0",
+    "decentraland-commons": "3.6.0",
     "dotenv": "^5.0.1",
     "ethereum-blockies": "^0.1.1",
     "history": "^4.7.2",
