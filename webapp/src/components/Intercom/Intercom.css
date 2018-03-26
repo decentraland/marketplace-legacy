@@ -1,6 +1,11 @@
-
 #intercom-container .intercom-app.intercom-app-left-aligned .intercom-launcher-frame,
 #intercom-container .intercom-app.intercom-app-left-aligned .intercom-launcher-discovery-frame {
   left: 10px!important;
 }
 
+
+@media (max-width: 768px) {
+  #intercom-container {
+    display: none;
+  }
+}
