@@ -33,9 +33,15 @@
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
     "decentraland-commons": "^3.5.0",
+    "commander": "^2.15.1",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "flat": "^4.0.0",
+    "inquirer": "^5.1.0",
     "node-pg-migrate": "^2.23.0",
+    "nodemailer": "^4.6.3",
+    "pg": "^7.4.1",
+    "rollbar": "^2.3.9",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
