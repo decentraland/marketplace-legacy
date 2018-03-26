@@ -94,6 +94,9 @@ export const LeafletParcelGrid = L.Layer.extend({
   },
 
   reset: function() {
+    if (!this.map) {
+      return
+    }
     const size = this.map.getSize()
     this.canvas.width = size.x
     this.canvas.height = size.y
@@ -127,10 +130,16 @@ export const LeafletParcelGrid = L.Layer.extend({
   },
 
   moveHandler(event) {
+    if (!this.map) {
+      return
+    }
     this.renderTiles(event.target.getBounds())
   },
 
   zoomHandler(event) {
+    if (!this.map) {
+      return
+    }
     this.renderTiles(event.target.getBounds())
   },
 
@@ -139,22 +148,37 @@ export const LeafletParcelGrid = L.Layer.extend({
   },
 
   mousemoveHandler(e) {
+    if (!this.map) {
+      return
+    }
     this.options.onMouseMove(e.latlng)
   },
 
   mousedownHandler(e) {
+    if (!this.map) {
+      return
+    }
     this.options.onMouseDown(e.latlng)
   },
 
   mouseupHandler(e) {
+    if (!this.map) {
+      return
+    }
     this.options.onMouseUp(e.latlng)
   },
 
   clickHandler(e) {
+    if (!this.map) {
+      return
+    }
     this.options.onTileClick(e.latlng)
   },
 
   setupGrid(bounds) {
+    if (!this.map) {
+      return
+    }
     this.origin = this.map.project(bounds.getNorthWest())
     this.tileSize = this.options.tileSize
     this.setupSize()
@@ -162,6 +186,9 @@ export const LeafletParcelGrid = L.Layer.extend({
   },
 
   setupSize() {
+    if (!this.map) {
+      return
+    }
     this.rows = Math.ceil(this.map.getSize().x / this.tileSize) + 1
     this.cols = Math.ceil(this.map.getSize().y / this.tileSize) + 1
   },
