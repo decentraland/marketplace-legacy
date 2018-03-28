@@ -3,6 +3,7 @@
 import { eth, Contract, Log, cli, contracts } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
+import { Publication } from '../src/Publication'
 import { loadEnv, parseCLICoords } from './utils'
 import { decodeAssetId, encodeAssetId } from './monitor/utils'
 
@@ -23,6 +24,7 @@ const main = {
         } catch (err) {
           logError(err)
         }
+        process.exit()
       })
 
     program
@@ -43,6 +45,7 @@ const main = {
         } catch (err) {
           logError(err)
         }
+        process.exit()
       })
 
     program
@@ -65,6 +68,7 @@ const main = {
         } catch (err) {
           logError(err)
         }
+        process.exit()
       })
 
     program
@@ -81,6 +85,7 @@ const main = {
         } catch (err) {
           logError(err)
         }
+        process.exit()
       })
 
     program
@@ -91,13 +96,29 @@ const main = {
 
         try {
           const [x, y] = parseCLICoords(coord)
+
           const contract = eth.getContract('Marketplace')
           const assetId = await encodeAssetId(x, y)
           const publication = await contract.auctionByAssetId(assetId)
-          log.info(`(publication) coords:(${x},${y}) => ${publication}`)
+
+          const pubDb = (await Publication.findInCoordinate(x, y))[0]
+          const publicationDb = pubDb
+            ? [
+                pubDb.contract_id,
+                pubDb.owner,
+                pubDb.price,
+                pubDb.expires_at.getTime(),
+                pubDb.status
+              ].join(',')
+            : 'empty'
+
+          log.info(`(publication) coords:(${x},${y})`)
+          log.info(`blockchain => ${publication}`)
+          log.info(`db         => ${publicationDb}`)
         } catch (err) {
           logError(err)
         }
+        process.exit()
       })
   }
 }
