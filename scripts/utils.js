@@ -19,8 +19,8 @@ function parseCLICoords(coords) {
   return coords
     .replace('(', '')
     .replace(')', '')
-    .slice(/\s*,\s*/)
-    .trim()
+    .split(/\s*,\s*/)
+    .map(coord => parseInt(coord.trim(), 10))
 }
 
 module.exports = {

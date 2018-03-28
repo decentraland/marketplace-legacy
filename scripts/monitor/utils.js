@@ -4,8 +4,11 @@ import { eth } from 'decentraland-commons'
 const debounceCache = {
   // id: timeoutId
 }
-const assetIdCache = {
+const decodedAssetIds = {
   // assetId: tokenId
+}
+const encodedAssetIds = {
+  // [x,y]: assetId
 }
 
 export function debounceEvent(parcelId, eventName, callback, delay = 100) {
@@ -15,16 +18,22 @@ export function debounceEvent(parcelId, eventName, callback, delay = 100) {
 }
 
 export async function decodeAssetId(assetId) {
-  if (!assetIdCache[assetId]) {
+  if (!decodedAssetIds[assetId]) {
     const contract = eth.getContract('LANDRegistry')
     const tokenId = await contract.decodeTokenId(assetId)
-    assetIdCache[assetId] = tokenId.toString()
+    decodedAssetIds[assetId] = tokenId.toString()
   }
 
-  return assetIdCache[assetId]
+  return decodedAssetIds[assetId]
 }
 
-export function encodeAssetId(x, y) {
-  const contract = eth.getContract('LANDRegistry')
-  return contract.encodeTokenId(x, y)
+export async function encodeAssetId(x, y) {
+  const coord = `${x},${y}`
+
+  if (!encodedAssetIds[coord]) {
+    const contract = eth.getContract('LANDRegistry')
+    encodedAssetIds[coord] = await contract.encodeTokenId(x, y)
+  }
+
+  return encodedAssetIds[coord]
 }

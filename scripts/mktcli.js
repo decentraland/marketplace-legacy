@@ -1,8 +1,10 @@
 #!/usr/bin/env babel-node
 
-import { eth, Log, cli, contracts } from 'decentraland-commons'
-import { loadEnv } from './utils'
-import { decodeAssetId, encodeAssetId, parseCLICoords } from './monitor/utils'
+import { eth, Contract, Log, cli, contracts } from 'decentraland-commons'
+import { db } from '../src/database'
+import { Parcel } from '../src/Parcel'
+import { loadEnv, parseCLICoords } from './utils'
+import { decodeAssetId, encodeAssetId } from './monitor/utils'
 
 const log = new Log('mktcli')
 const logError = err => log.error('ERR: ' + err.message)
@@ -32,6 +34,7 @@ const main = {
         try {
           const [x, y] = parseCLICoords(coord)
           const assetId = await encodeAssetId(x, y)
+
           log.info(
             `(encode) coords:(${x},${y}) => str:${assetId.toString()} hex:${assetId.toString(
               16
@@ -51,7 +54,13 @@ const main = {
         try {
           const [x, y] = parseCLICoords(coord)
           const contract = eth.getContract('LANDRegistry')
-          const owner = await contract.ownerOfLand(x, y)
+          let owner = await contract.ownerOfLand(x, y)
+
+          if (Contract.isEmptyAddress(owner)) {
+            const parcel = await Parcel.findOne({ x, y })
+            if (parcel) owner = parcel.district_id
+          }
+
           log.info(`(land-owner) coords:(${x},${y}) => ${owner}`)
         } catch (err) {
           logError(err)
@@ -97,6 +106,10 @@ if (require.main === module) {
   loadEnv()
 
   Promise.resolve()
+    .then(() => {
+      log.debug('Connecting to Database')
+      return db.connect()
+    })
     .then(() => {
       log.debug('Connecting to Ethereum node')
       return eth.connect({

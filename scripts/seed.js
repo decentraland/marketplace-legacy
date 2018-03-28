@@ -166,7 +166,7 @@ function generateEthereumTxHash() {
   return hash.toString('hex').toLowerCase()
 }
 
-db
-  .connect()
+Promise.resolve()
+  .then(() => db.connect())
   .then(() => cli.runProgram([seed]))
   .catch(console.error)
