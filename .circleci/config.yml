@@ -121,8 +121,11 @@ jobs:
           - build-release-{{ .Revision }}
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
-          name: Deploy to S3 if tests pass and branch is release
-          command: ~/.local/bin/aws s3 sync webapp/build s3://market.decentraland.org/ --delete --acl public-read
+          name: Remove old assets => S3
+          command: ~/.local/bin/aws s3 rm s3://market.decentraland.org/static/ --recursive
+      - run:
+          name: Upload new assets => S3
+          command: ~/.local/bin/aws s3 cp webapp/build s3://market.decentraland.org/ --acl public-read --recursive
       - run:
           name: Invalidate Cloudfront cache
           command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E341512D71C4WA  --paths "/" "/*"
@@ -136,8 +139,11 @@ jobs:
           - build-staging-{{ .Revision }}
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
-          name: Deploy to S3 if tests pass and branch is staging
-          command: ~/.local/bin/aws s3 sync webapp/build s3://market.decentraland.today/ --delete --acl public-read
+          name: Remove old assets => S3
+          command: ~/.local/bin/aws s3 rm s3://market.decentraland.today/static/ --recursive
+      - run:
+          name: Upload new assets => S3
+          command: ~/.local/bin/aws s3 cp webapp/build s3://market.decentraland.today/ --acl public-read --recursive
       - run:
           name: Invalidate Cloudfront cache
           command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E7M8L196UB6QW  --paths "/" "/*"
@@ -151,8 +157,11 @@ jobs:
           - build-master-{{ .Revision }}
       - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
-          name: Deploy to S3 if tests pass and branch is staging
-          command: ~/.local/bin/aws s3 sync webapp/build s3://market.decentraland.zone/ --delete --acl public-read
+          name: Remove old assets => S3
+          command: ~/.local/bin/aws s3 rm s3://market.decentraland.zone/static/ --recursive
+      - run:
+          name: Upload new assets => S3
+          command: ~/.local/bin/aws s3 cp webapp/build s3://market.decentraland.zone/ --acl public-read --recursive
       - run:
           name: Invalidate Cloudfront cache
           command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2TNOPOOOQLC4U  --paths "/" "/*"
