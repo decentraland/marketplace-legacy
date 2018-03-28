@@ -1,12 +1,14 @@
 #!/usr/bin/env babel-node
 
 import { execSync } from 'child_process'
-import { Log } from 'decentraland-commons'
+import { env, Log } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
+import { asyncBatch } from '../src/lib'
 import { loadEnv, runpsql } from './utils'
 
+let BATCH_SIZE
 const log = new Log('addAuctionOwners')
 
 export async function addAuctionOwners() {
@@ -27,21 +29,33 @@ export async function addAuctionOwners() {
 }
 
 async function normalizeParcelStates() {
-  const parcelStates = await db.query('SELECT * FROM parcel_states')
+  let parcelStates = await db.query('SELECT * FROM parcel_states')
+  parcelStates = parcelStates.filter(parcel => parcel.address)
 
-  for (const parcelState of parcelStates) {
-    if (parcelState.address) {
-      log.info(`Updating ${parcelState.id} with ${parcelState.address}`)
-      await Parcel.update(
-        { id: parcelState.id },
-        { auction_owner: parcelState.address }
+  let count = 0
+
+  await asyncBatch({
+    elements: parcelStates,
+    callback: async parcelStatesBatch => {
+      count += parcelStatesBatch.length
+
+      log.info(`Updating ${count}/${parcelStates.length} parcels...`)
+
+      const updates = parcelStatesBatch.map(parcelState =>
+        Parcel.update(
+          { id: parcelState.id },
+          { auction_owner: parcelState.address }
+        )
       )
-    }
-  }
+      await Promise.all(updates)
+    },
+    batchSize: BATCH_SIZE
+  })
 }
 
 if (require.main === module) {
   loadEnv()
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 200), 10)
 
   Promise.resolve()
     .then(addAuctionOwners)
