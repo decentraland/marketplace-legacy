@@ -15,7 +15,16 @@ function getDirname() {
   return path.dirname(require.main.filename)
 }
 
+function parseCLICoords(coords) {
+  return coords
+    .replace('(', '')
+    .replace(')', '')
+    .split(/\s*,\s*/)
+    .map(coord => parseInt(coord.trim(), 10))
+}
+
 module.exports = {
   loadEnv,
-  resolve
+  resolve,
+  parseCLICoords
 }

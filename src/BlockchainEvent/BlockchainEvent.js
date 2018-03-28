@@ -26,4 +26,14 @@ export class BlockchainEvent extends Model {
       [blockNumber]
     )
   }
+
+  static findByAssetId(assetId) {
+    return this.db.query(
+      `SELECT *
+        FROM ${this.tableName}
+        WHERE args->>'assetId' = $1
+        ORDER BY block_number, log_index DESC`,
+      [assetId]
+    )
+  }
 }
