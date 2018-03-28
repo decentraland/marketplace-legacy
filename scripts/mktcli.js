@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { eth, Contract, Log, cli, contracts } from 'decentraland-commons'
+import { eth, Log, cli, contracts } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { Publication } from '../src/Publication'
@@ -57,14 +57,14 @@ const main = {
         try {
           const [x, y] = parseCLICoords(coord)
           const contract = eth.getContract('LANDRegistry')
-          let owner = await contract.ownerOfLand(x, y)
+          const owner = await contract.ownerOfLand(x, y)
 
-          if (Contract.isEmptyAddress(owner)) {
-            const parcel = await Parcel.findOne({ x, y })
-            if (parcel) owner = parcel.district_id
-          }
+          const parcel = await Parcel.findOne({ x, y })
+          const dbOwner = parcel ? parcel.owner || parcel.district_id : 'empty'
 
-          log.info(`(land-owner) coords:(${x},${y}) => ${owner}`)
+          log.info(`(land-owner) coords:(${x},${y})`)
+          log.info(`blockchain => ${owner}`)
+          log.info(`db         => ${dbOwner}`)
         } catch (err) {
           logError(err)
         }
