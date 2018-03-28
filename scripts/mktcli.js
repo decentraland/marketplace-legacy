@@ -4,6 +4,7 @@ import { eth, Log, cli, contracts } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { Publication } from '../src/Publication'
+import { BlockchainEvent } from '../src/BlockchainEvent'
 import { loadEnv, parseCLICoords } from './utils'
 import { decodeAssetId, encodeAssetId } from './monitor/utils'
 
@@ -124,6 +125,66 @@ const main = {
           log.info(`(publication) coords:(${x},${y})`)
           log.info(`blockchain => ${publication}`)
           log.info(`db         => ${publicationDb}`)
+        } catch (err) {
+          logError(err)
+        }
+        process.exit()
+      })
+
+    program
+      .command('blockchain-events <coord>')
+      .option('--show-table-header', 'Show the format for each row')
+      .option('--show-tx-hash', 'Show the transaction hash')
+      .description('Get chronological blockchain events of a (x,y) coordinate')
+      .action(async (coord, options) => {
+        if (!coord) return log.warn('You need to supply a coordinate')
+
+        try {
+          const [x, y] = parseCLICoords(coord)
+          const assetId = await encodeAssetId(x, y)
+
+          const events = await BlockchainEvent.findByAssetId(assetId.toString())
+          const eventLog = events.map(event => {
+            const { name, block_number, log_index, tx_hash, args } = event
+            let log = `${name} (${block_number},${log_index}): `
+
+            if (options.showTxHash) {
+              log = `[${tx_hash}] ${log}`
+              log = log.padEnd(101)
+            } else {
+              log = log.padEnd(32)
+            }
+
+            switch (name) {
+              case BlockchainEvent.EVENTS.publicationCreated:
+              case BlockchainEvent.EVENTS.publicationCancelled:
+                log += `with id ${args.id}`
+                break
+              case BlockchainEvent.EVENTS.publicationSuccessful:
+                log += `with id ${args.id} and winner ${args.winner}`
+                break
+              case BlockchainEvent.EVENTS.parcelUpdate:
+                log += `with data ${args.data}`
+                break
+              case BlockchainEvent.EVENTS.parcelTransfer:
+                log += `to ${args.to}`
+                break
+              default:
+                break
+            }
+
+            return log
+          })
+
+          if (options.showTableHeader) {
+            let header = 'Name (block_number,log_index):  desc'
+            if(options.showTxHash) header = '[tx_hash] ' + header
+
+            eventLog.unshift(header)
+          }
+
+          log.info(`(blockchain-events) coords:(${x},${y})`)
+          log.info('\n- ' + eventLog.join('\n- '))
         } catch (err) {
           logError(err)
         }
