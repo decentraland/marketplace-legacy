@@ -60,7 +60,7 @@ const main = {
           const owner = await contract.ownerOfLand(x, y)
 
           const parcel = await Parcel.findOne({ x, y })
-          const dbOwner = parcel ? parcel.owner || parcel.district_id : 'empty'
+          const dbOwner = parcel.owner || parcel.district_id || 'empty'
 
           log.info(`(land-owner) coords:(${x},${y})`)
           log.info(`blockchain => ${owner}`)
@@ -81,7 +81,16 @@ const main = {
           const [x, y] = parseCLICoords(coord)
           const contract = eth.getContract('LANDRegistry')
           const data = await contract.landData(x, y)
-          log.info(`(land-data) coords:(${x},${y}) => ${data}`)
+
+          const parcel = await Parcel.findOne({ x, y })
+          const dbData =
+            Object.keys(parcel.data) > 1
+              ? contracts.LANDRegistry.encodeLandData(parcel.data)
+              : 'empty'
+
+          log.info(`(land-data) coords:(${x},${y})`)
+          log.info(`blockchain => ${data}`)
+          log.info(`db         => ${dbData}`)
         } catch (err) {
           logError(err)
         }
