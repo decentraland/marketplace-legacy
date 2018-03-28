@@ -155,10 +155,7 @@ export default class BuyParcelPage extends React.PureComponent {
                           transform: 'translateY(5px)'
                         }}
                       >
-                        <Mana
-                          amount={parseFloat(publication.price, 10)}
-                          size={18}
-                        />
+                        <Mana amount={price} size={18} />
                       </span>
                     </React.Fragment>
                   ) : (

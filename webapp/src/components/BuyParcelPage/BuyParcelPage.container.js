@@ -18,9 +18,9 @@ const mapState = (state, ownProps) => {
   const publications = getPublications(state)
 
   return {
-    publication: findPublicationByCoordinates(publications, x, y),
     x,
     y,
+    publication: findPublicationByCoordinates(publications, x, y),
     isDisabled: isLoadingType(getLoading(state), BUY_REQUEST),
     wallet: getWallet(state),
     isConnected: isConnected(state),

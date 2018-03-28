@@ -36,6 +36,39 @@ export function fetchPublicationsFailure(error) {
   }
 }
 
+// Fetch Parcel Publications
+
+export const FETCH_PARCEL_PUBLICATIONS_REQUEST =
+  '[Request] Fetch Parcel Publications'
+export const FETCH_PARCEL_PUBLICATIONS_SUCCESS =
+  '[Success] Fetch Parcel Publications'
+export const FETCH_PARCEL_PUBLICATIONS_FAILURE =
+  '[Failure] Fetch Parcel Publications'
+
+export function fetchParcelPublicationsRequest(x, y) {
+  return {
+    type: FETCH_PARCEL_PUBLICATIONS_REQUEST,
+    x,
+    y
+  }
+}
+
+export function fetchParcelPublicationsSuccess(publications, x, y) {
+  return {
+    type: FETCH_PARCEL_PUBLICATIONS_SUCCESS,
+    publications,
+    x,
+    y
+  }
+}
+
+export function fetchParcelPublicationsFailure(error) {
+  return {
+    type: FETCH_PARCEL_PUBLICATIONS_FAILURE,
+    error
+  }
+}
+
 // Publish LAND
 
 export const PUBLISH_REQUEST = '[Request] Publish LAND'
