@@ -4,10 +4,14 @@ const path = require('path')
 const { env } = require('decentraland-commons')
 
 function loadEnv(envFilePath = '../src/.env') {
-  env.load({ path: resolve(envFilePath) })
+  env.load({ path: resolvePath(envFilePath) })
 }
 
-function resolve(destination) {
+function runpsql(filename) {
+  return `psql $CONNECTION_STRING -f ${resolvePath(filename)}`
+}
+
+function resolvePath(destination) {
   return path.resolve(getDirname(), destination)
 }
 
@@ -25,6 +29,7 @@ function parseCLICoords(coords) {
 
 module.exports = {
   loadEnv,
-  resolve,
+  runpsql,
+  resolvePath,
   parseCLICoords
 }

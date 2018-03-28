@@ -25,6 +25,10 @@ export class API {
     return this.request('get', '/parcels', { nw, se })
   }
 
+  fetchParcelPublications(x, y) {
+    return this.request('get', `/parcels/${x}/${y}/publications`, {})
+  }
+
   fetchAddressParcels(address) {
     return this.request('get', `/addresses/${address}/parcels`, {})
   }
@@ -64,7 +68,7 @@ export class API {
       }
     }
 
-    log.debug(`${method} ${path}`, options)
+    // log.debug(`${method} ${path}`, options)
 
     return httpClient
       .request(options)
