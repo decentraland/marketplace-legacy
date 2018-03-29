@@ -43,8 +43,8 @@ async function normalizeParcelStates() {
 
       const updates = parcelStatesBatch.map(parcelState =>
         Parcel.update(
-          { id: parcelState.id },
-          { auction_owner: parcelState.address }
+          { auction_owner: parcelState.address },
+          { id: parcelState.id }
         )
       )
       await Promise.all(updates)
@@ -56,6 +56,7 @@ async function normalizeParcelStates() {
 if (require.main === module) {
   loadEnv()
   BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 200), 10)
+  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()
     .then(addAuctionOwners)
