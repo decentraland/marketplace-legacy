@@ -136,7 +136,7 @@ export default class TransferParcelForm extends React.PureComponent {
 
           <br />
 
-          <div className="text-center">
+          <div>
             <Button type="button" onClick={this.handleCancel}>
               {t('global.cancel')}
             </Button>

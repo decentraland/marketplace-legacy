@@ -7,7 +7,8 @@ import {
   Card,
   Dropdown,
   Pagination,
-  Loader
+  Loader,
+  Label
 } from 'semantic-ui-react'
 import Publication from './Publication'
 
@@ -28,6 +29,7 @@ export default class MarketplacePage extends React.PureComponent {
     publications: PropTypes.arrayOf(publicationType),
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
     sortBy: PropTypes.string.isRequired,
     sortOrder: PropTypes.string.isRequired,
     onNavigate: PropTypes.func.isRequired,
@@ -117,18 +119,27 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   render() {
-    const { page, pages, isLoading, isEmpty, sortBy, sortOrder } = this.props
+    const {
+      total,
+      page,
+      pages,
+      isLoading,
+      isEmpty,
+      sortBy,
+      sortOrder
+    } = this.props
     const sortType = getSortTypeFromOptions({ sortBy, sortOrder })
 
     return (
       <div className="MarketplacePage">
         <Container>
           <Menu pointing secondary>
-            <Menu.Item
-              name={t('global.parcels')}
-              active
-              onClick={this.handleItemClick}
-            />
+            <Menu.Item active onClick={this.handleItemClick}>
+              {t('global.parcels')}
+              <Label className="active" size="tiny">
+                {total.toLocaleString()}
+              </Label>
+            </Menu.Item>
             <Menu.Menu position="right">
               <Menu.Item>
                 <Dropdown

@@ -24,6 +24,7 @@
     "authorized": "Autorizado",
     "unauthorized": "No autorizado",
     "wallet_address": "Dirección de billetera",
+    "balance": "Balance",
     "for": "para",
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
@@ -200,7 +201,8 @@
     "you_authorized":
       "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
     "authorize":
-      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta"
+      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "authorization": "Autorización"
   },
   "derivation_path": {
     "supported":

@@ -24,6 +24,7 @@
     "authorized": "Autorisé",
     "unauthorized": "Non autorisé",
     "wallet_address": "Adresse du porte-feuille",
+    "balance": "Balance",
     "for": "pour",
     "sign_in": "Se connecter",
     "sign_in_notice":
@@ -204,7 +205,8 @@
     "you_authorized":
       "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom.",
     "authorize":
-      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom."
+      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
+    "authorization": "Autorisation"
   },
   "derivation_path": {
     "supported":

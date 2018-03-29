@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Container, Header, Grid, Button } from 'semantic-ui-react'
-import ParcelName from 'components/ParcelName'
+import { Link } from 'react-router-dom'
 import Parcel from 'components/Parcel'
-
-import { formatMana } from 'lib/utils'
-import { t } from 'modules/translation/utils'
+import ParcelModal from 'components/ParcelModal'
+import { buildCoordinate } from 'lib/utils'
+import { t, t_html } from 'modules/translation/utils'
+import { locations } from 'locations'
 
 import './CancelSalePage.css'
 
@@ -24,6 +23,26 @@ export default class CancelSalePage extends React.PureComponent {
     onConfirm(publication)
   }
 
+  renderSubtitle = () => {
+    const { x, y, publication } = this.props
+    const parcel = (
+      <Link to={locations.parcelDetail(x, y)}>{buildCoordinate(x, y)}</Link>
+    )
+    return (
+      <React.Fragment>
+        {publication ? (
+          <React.Fragment>
+            {t_html('parcel_cancel.about_to_cancel', { parcel })}
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            {t_html('parcel_cancel.not_for_sale', { parcel })}
+          </React.Fragment>
+        )}
+      </React.Fragment>
+    )
+  }
+
   render() {
     const { x, y, publication, isDisabled, onCancel } = this.props
 
@@ -31,46 +50,15 @@ export default class CancelSalePage extends React.PureComponent {
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
           <div className="CancelSalePage">
-            <Container text textAlign="center">
-              <Header as="h2" size="huge" className="title">
-                {t('parcel_cancel.cancel_land')}
-              </Header>
-              <span className="subtitle">
-                <ParcelName parcel={parcel} />&nbsp;&nbsp;
-                {publication ? (
-                  <React.Fragment>
-                    {t('parcel_cancel.currently_on_sale', {
-                      value: formatMana(publication.price)
-                    })}
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    {t('parcel_cancel.not_for_sale')}
-                  </React.Fragment>
-                )}
-              </span>
-              {publication ? (
-                <span className="subtitle">
-                  {t('parcel_cancel.about_to_cancel')}
-                </span>
-              ) : null}
-            </Container>
-            <br />
-            <Container text>
-              <Grid.Column className="text-center">
-                <Button onClick={onCancel} type="button">
-                  {t('global.cancel')}
-                </Button>
-                <Button
-                  onClick={this.handleConfirm}
-                  type="button"
-                  negative
-                  disabled={isDisabled || !publication}
-                >
-                  {t('global.confirm')}
-                </Button>
-              </Grid.Column>
-            </Container>
+            <ParcelModal
+              x={x}
+              y={y}
+              title={t('parcel_cancel.cancel_land')}
+              subtitle={this.renderSubtitle()}
+              onCancel={onCancel}
+              onConfirm={this.handleConfirm}
+              isDisabled={isDisabled || !publication}
+            />
           </div>
         )}
       </Parcel>
