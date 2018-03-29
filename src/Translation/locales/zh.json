@@ -152,6 +152,7 @@
     "approved": "您授权{marketplace_contract_link}以您的名义操作MANA",
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
+    "transfer_mana": "您将{mana}个MANA转移到{address_link}",
     "edit":
       "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
     "transfer": "您已将{parcel_link}转让给{owner_link}",

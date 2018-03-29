@@ -10,14 +10,20 @@ import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import { formatDate, distanceInWordsToNow, buildCoordinate } from 'lib/utils'
+import {
+  formatDate,
+  formatMana,
+  distanceInWordsToNow,
+  buildCoordinate
+} from 'lib/utils'
 import { getMarketplaceAddress } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 import { getEtherscanHref } from 'modules/transaction/utils'
 
 import {
   APPROVE_MANA_SUCCESS,
-  AUTHORIZE_LAND_SUCCESS
+  AUTHORIZE_LAND_SUCCESS,
+  TRANSFER_MANA_SUCCESS
 } from 'modules/wallet/actions'
 import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
@@ -80,6 +86,15 @@ export default class Transaction extends React.PureComponent {
         return t_html('transaction.authorize', {
           action: action.toLowerCase(),
           marketplace_contract_link: this.renderMarketplaceLink()
+        })
+      }
+      case TRANSFER_MANA_SUCCESS: {
+        const { address, mana } = payload
+        return t_html('transaction.transfer_mana', {
+          mana: formatMana(mana, ''),
+          address_link: (
+            <Link to={locations.profilePage(address)}>{address}</Link>
+          )
         })
       }
       case EDIT_PARCEL_SUCCESS: {

@@ -156,6 +156,7 @@
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "authorize":
       "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
+    "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다.",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",

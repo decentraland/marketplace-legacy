@@ -156,6 +156,7 @@
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "authorize":
       "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
+    "transfer_mana": "You transfered {mana} MANA to {address_link}",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",

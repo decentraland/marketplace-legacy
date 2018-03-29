@@ -162,6 +162,7 @@
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "authorize":
       "Vous avez {action} la {marketplace_contract_link} à gérer les LANDs en votre nom",
+    "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}",
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
