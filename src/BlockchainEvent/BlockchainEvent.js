@@ -22,7 +22,7 @@ export class BlockchainEvent extends Model {
       `SELECT *
         FROM ${this.tableName}
         WHERE block_number >= $1
-        ORDER BY block_number, log_index ASC`,
+        ORDER BY block_number ASC, log_index ASC`,
       [blockNumber]
     )
   }
@@ -32,7 +32,7 @@ export class BlockchainEvent extends Model {
       `SELECT *
         FROM ${this.tableName}
         WHERE args->>'assetId' = $1
-        ORDER BY block_number, log_index DESC`,
+        ORDER BY block_number DESC, log_index DESC`,
       [assetId]
     )
   }
