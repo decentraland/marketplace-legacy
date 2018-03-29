@@ -9,7 +9,8 @@ import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import {
   APPROVE_MANA_SUCCESS,
-  AUTHORIZE_LAND_SUCCESS
+  AUTHORIZE_LAND_SUCCESS,
+  TRANSFER_MANA_SUCCESS
 } from 'modules/wallet/actions'
 import { FETCH_TRANSACTION_FAILURE } from 'modules/transaction/actions'
 
@@ -59,6 +60,11 @@ add(
   AUTHORIZE_LAND_SUCCESS,
   action => (action.isAuthorized ? 'Authorize LAND' : 'Unauthorize LAND')
 )
+
+add(TRANSFER_MANA_SUCCESS, 'Transfer mana', action => ({
+  mana: action.mana,
+  address: action.address
+}))
 
 add(
   FETCH_TRANSACTION_FAILURE,
