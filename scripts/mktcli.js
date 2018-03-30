@@ -178,6 +178,7 @@ const main = {
     program
       .command('replay <coord>')
       .option('--persist', 'Persist replay on the database')
+      .option('--clean', 'Clean publications before replaying')
       .description('Replay blockchain events in order')
       .action(
         asSafeAction(async (coord, options) => {
@@ -188,6 +189,10 @@ const main = {
 
           if (!options.persist) {
             mockModelDbOperations()
+          }
+
+          if (options.clean) {
+            await Publication.delete({ x, y })
           }
 
           for (let i = 0; i < events.length; i++) {
