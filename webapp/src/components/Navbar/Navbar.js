@@ -20,7 +20,8 @@ export default class Navbar extends React.PureComponent {
     activePage: PropTypes.oneOf(Object.values(NAVBAR_PAGES)),
     isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
-    activityBadge: PropTypes.number
+    activityBadge: PropTypes.number,
+    onBack: PropTypes.func
   }
 
   getNavigationPaths() {
@@ -56,6 +57,19 @@ export default class Navbar extends React.PureComponent {
     )
   }
 
+  renderModalPage() {
+    const { onBack } = this.props
+    return (
+      <div className="Navbar" role="navigation">
+        <div className="navbar-header navbar-modal">
+          <span className="navbar-back" onClick={onBack}>
+            <Icon name="chevron left" size="large" className="back" />
+          </span>
+        </div>
+      </div>
+    )
+  }
+
   renderLogoHeader() {
     const { isLoading } = this.props
     return (
@@ -73,11 +87,15 @@ export default class Navbar extends React.PureComponent {
   }
 
   render() {
-    const { wallet, activePage, isConnected, isStatic } = this.props
+    const { wallet, activePage, isConnected, isStatic, isModal } = this.props
     const navigationPaths = this.getNavigationPaths()
 
     if (isStatic) {
       return this.renderStaticPage()
+    }
+
+    if (isModal) {
+      return this.renderModalPage()
     }
 
     return (

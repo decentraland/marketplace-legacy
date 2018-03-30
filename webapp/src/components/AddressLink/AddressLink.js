@@ -16,6 +16,7 @@ export default class AddressLink extends React.Component {
     size: PropTypes.number,
     scale: PropTypes.number,
     hasTooltip: PropTypes.bool,
+    hasLink: PropTypes.bool,
     isUser: PropTypes.bool,
     className: PropTypes.string
   }
@@ -25,6 +26,7 @@ export default class AddressLink extends React.Component {
     size: 6,
     scale: 3,
     hasTooltip: true,
+    hasLink: true,
     className: ''
   }
 
@@ -35,9 +37,18 @@ export default class AddressLink extends React.Component {
       size,
       scale,
       hasTooltip,
+      hasLink,
       isUser,
       className
     } = this.props
+
+    if (address == null) {
+      return null
+    }
+
+    const blockie = (
+      <Blockie seed={address.toLowerCase()} size={size} scale={scale} />
+    )
 
     return (
       <div
@@ -49,10 +60,12 @@ export default class AddressLink extends React.Component {
             : null
         }
       >
-        {address && (
+        {hasLink ? (
           <Link to={link ? link : locations.profilePage(address)}>
-            <Blockie seed={address.toLowerCase()} size={size} scale={scale} />
+            {blockie}
           </Link>
+        ) : (
+          blockie
         )}
       </div>
     )

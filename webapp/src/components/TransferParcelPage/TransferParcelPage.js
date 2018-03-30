@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Container, Header, Grid, Message } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Container, Message } from 'semantic-ui-react'
 import Parcel from 'components/Parcel'
-import ParcelName from 'components/ParcelName'
+import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import { publicationType } from 'components/types'
-import { hasPublication } from 'lib/parcelUtils'
 import { t, t_html } from 'modules/translation/utils'
+import { hasPublication } from 'lib/parcelUtils'
+import { buildCoordinate } from 'lib/utils'
+import { locations } from 'locations'
 
 import TransferParcelForm from './TransferParcelForm'
 
@@ -28,6 +30,7 @@ export default class TransferParcelPage extends React.PureComponent {
   render() {
     const { x, y, isTxIdle, transferError, publications } = this.props
     const { onSubmit, onCancel, onCleanTransfer } = this.props
+
     return (
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
@@ -41,31 +44,29 @@ export default class TransferParcelPage extends React.PureComponent {
                 />
               </Container>
             ) : null}
-            <Container text textAlign="center">
-              <Header as="h2" size="huge" className="title">
-                {t('parcel_transfer.transfer_land')}
-              </Header>
-              <div className="subtitle">
-                {t_html('parcel_transfer.about_to_transfer', {
-                  parcel_name: <ParcelName parcel={parcel} />
-                })}
-                <br />
-              </div>
-            </Container>
-            <br />
-            <Container text>
-              <Grid.Column>
-                <TransferParcelForm
-                  parcel={parcel}
-                  isTxIdle={isTxIdle}
-                  transferError={transferError}
-                  onSubmit={onSubmit}
-                  onCancel={onCancel}
-                  onCleanTransfer={onCleanTransfer}
-                />
-                <TxStatus.Parcel parcel={parcel} />
-              </Grid.Column>
-            </Container>
+            <ParcelModal
+              x={x}
+              y={y}
+              title={t('parcel_transfer.transfer_land')}
+              subtitle={t_html('parcel_transfer.about_to_transfer', {
+                parcel_name: (
+                  <Link to={locations.parcelDetail(x, y)}>
+                    {buildCoordinate(x, y)}
+                  </Link>
+                )
+              })}
+              hasCustomFooter
+            >
+              <TransferParcelForm
+                parcel={parcel}
+                isTxIdle={isTxIdle}
+                transferError={transferError}
+                onSubmit={onSubmit}
+                onCancel={onCancel}
+                onCleanTransfer={onCleanTransfer}
+              />
+              <TxStatus.Parcel parcel={parcel} />
+            </ParcelModal>
           </div>
         )}
       </Parcel>

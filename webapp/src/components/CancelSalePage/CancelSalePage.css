@@ -1,15 +1,2 @@
-.CancelSalePage .subtitle {
-  color: white;
-  font-weight: 100;
-  font-size: 1.2em;
-  margin: 20px;
-  display: inline-block;
-}
-
-.CancelSalePage .subtitle + .subtitle {
-  margin-top: 0px;
-}
-
-.CancelSalePage button + button {
-  margin-left: 15px !important;
+.CancelSalePage {
 }

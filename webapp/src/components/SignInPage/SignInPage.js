@@ -46,7 +46,7 @@ export default class SignInPage extends React.PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Metamask
+                    MetaMask
                   </a>
                 ),
                 mist_link: (

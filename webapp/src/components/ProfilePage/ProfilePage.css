@@ -56,6 +56,23 @@
   background-color: var(--red) !important;
 }
 
+.ProfilePage .profile-header > div {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.ProfilePage .profile-header .AddressLink {
+  flex: none;
+}
+
+.ProfilePage .profile-header .profile-address {
+  color: white;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
 @media (max-width: 768px) {
   .ProfilePage .profile-menu .menu.secondary .item {
     border-color: transparent !important;

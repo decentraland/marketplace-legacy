@@ -17,6 +17,7 @@ import Contribution from './Contribution'
 import { parcelType, contributionType, publicationType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { buildUrl } from './utils'
+import { shortenAddress } from 'lib/utils'
 
 import './ProfilePage.css'
 
@@ -35,6 +36,7 @@ export default class ProfilePage extends React.PureComponent {
     isLoading: PropTypes.bool,
     isEmpty: PropTypes.bool,
     isOwner: PropTypes.bool,
+    isConnecting: PropTypes.bool,
     onNavigate: PropTypes.func.isRequired
   }
 
@@ -156,10 +158,19 @@ export default class ProfilePage extends React.PureComponent {
       parcels,
       contributions,
       publications,
-      isOwner
+      isOwner,
+      isConnecting
     } = this.props
     return (
       <div className="ProfilePage">
+        {isOwner || isConnecting ? null : (
+          <Container className="profile-header">
+            <div>
+              <AddressLink scale={16} address={address} hasTooltip={false} />
+              <span className="profile-address">{shortenAddress(address)}</span>
+            </div>
+          </Container>
+        )}
         <Container className="profile-menu">
           <Menu pointing secondary stackable>
             <Menu.Item
@@ -186,14 +197,6 @@ export default class ProfilePage extends React.PureComponent {
               {t('profile_page.on_sale')}
               {this.renderBadge(publications, PROFILE_PAGE_TABS.publications)}
             </Menu.Item>
-            {isOwner ? null : (
-              <Menu.Menu position="right">
-                <span className="profile-owner">
-                  <span>{t('global.owned_by')}</span>&nbsp;
-                  <AddressLink address={address} scale={4} />
-                </span>
-              </Menu.Menu>
-            )}
           </Menu>
         </Container>
         <Container className="profile-grid">

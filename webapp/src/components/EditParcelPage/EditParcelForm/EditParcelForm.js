@@ -92,7 +92,7 @@ export default class EditParcelForm extends React.PureComponent {
           <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
         <br />
-        <div className="text-center">
+        <div>
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>

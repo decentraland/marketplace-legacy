@@ -9,7 +9,7 @@
   color: var(--gray);
   box-shadow: 0 0px 0px 5px rgba(0, 0, 0, 0.5) !important;
   font-weight: 100 !important;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .ui.warning.message .content {
