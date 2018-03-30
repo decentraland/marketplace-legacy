@@ -2,7 +2,7 @@ export async function asyncBatch(options = {}) {
   let {
     elements = [],
     callback = () => {},
-    batchSize = elements.length / 0,
+    batchSize = elements.length / 2,
     retryAttempts = 0
   } = options
 
