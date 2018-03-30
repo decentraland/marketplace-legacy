@@ -28,19 +28,9 @@ export default class CancelSalePage extends React.PureComponent {
     const parcel = (
       <Link to={locations.parcelDetail(x, y)}>{buildCoordinate(x, y)}</Link>
     )
-    return (
-      <React.Fragment>
-        {publication ? (
-          <React.Fragment>
-            {t_html('parcel_cancel.about_to_cancel', { parcel })}
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {t_html('parcel_cancel.not_for_sale', { parcel })}
-          </React.Fragment>
-        )}
-      </React.Fragment>
-    )
+    return publication
+      ? t_html('parcel_cancel.about_to_cancel', { parcel })
+      : t_html('parcel_cancel.not_for_sale', { parcel })
   }
 
   render() {
