@@ -34,7 +34,7 @@ Promise.resolve()
         ],
         LANDRegistry: ['Update', 'Transfer']
       },
-      env.get('PROCESS_EVENTS_DELAY', 2500)
+      env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
     ).run()
   })
   .catch(error => {

@@ -60,7 +60,7 @@ async function checkParcels(parcels) {
     elements: parcels,
     callback: async (parcelsBatch, batchedCount) => {
       await Promise.all(parcelsBatch.map(parcel => checkParcel(parcel)))
-      process.stdout.write(`- ${batchedCount}/${parcels.length}\r`.padEnd(14))
+      process.stdout.write(`- ${batchedCount}/${parcels.length}   \r`)
     },
     batchSize: BATCH_SIZE,
     retryAttempts: 20
@@ -124,7 +124,7 @@ async function processParcels(parcels) {
       }
 
       process.stdout.write(
-        `- Processed ${batchedCount}/${parcels.length} parcels\r`.padEnd(42)
+        `- Processed ${batchedCount}/${parcels.length} parcels   \r`
       )
     },
     batchSize: BATCH_SIZE

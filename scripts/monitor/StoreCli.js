@@ -25,15 +25,18 @@ export class StoreCli extends Cli {
     }
   }
 
-  processStoredEvents = () => {
+  processStoredEvents = fromBlock => {
     if (this.isProcessRunning) {
-      return setTimeout(this.processStoredEvents, this.processDelay)
+      return setTimeout(
+        () => this.processStoredEvents(fromBlock),
+        this.processDelay
+      )
     }
     clearTimeout(this.processTimeout)
 
     this.processTimeout = setTimeout(() => {
       this.isProcessRunning = true
-      processEvents().then(() => (this.isProcessRunning = false))
+      processEvents(fromBlock).then(() => (this.isProcessRunning = false))
     }, this.processDelay)
   }
 
@@ -54,7 +57,7 @@ export class StoreCli extends Cli {
           await handler(logs)
         }
 
-        this.processStoredEvents()
+        this.processStoredEvents(options.fromBlock)
       }
     })
   }

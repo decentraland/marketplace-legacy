@@ -5,31 +5,29 @@ import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')
-const txHashCache = {
-  // hash: Bool
-}
 
-export async function processEvents() {
-  const allBlockchainEvents = await BlockchainEvent.find(null, {
-    block_number: 'ASC',
-    log_index: 'ASC'
-  })
+export async function processEvents(fromBlock) {
+  if (fromBlock === 'latest') {
+    fromBlock = await BlockchainEvent.getLastBlockNumber()
+  } else if (fromBlock == null) {
+    fromBlock = 0
+  }
+
+  const allBlockchainEvents = await BlockchainEvent.findFrom(fromBlock)
   const blockchainEvents = allBlockchainEvents.filter(
-    event => !txHashCache[event.tx_hash]
+    event => !eventCache.get(event)
   )
 
   if (blockchainEvents.length) {
     log.info(`Persisting ${blockchainEvents.length} events`)
 
     for (const event of blockchainEvents) {
-      txHashCache[event.tx_hash] = true
       await processEvent(event)
+      eventCache.set(event)
     }
   } else {
-    const lastEvent = allBlockchainEvents[allBlockchainEvents.length - 1]
-    const lastBlockNumber = lastEvent ? lastEvent.block_number : 0
-
-    log.info(`No new events to persist from block ${lastBlockNumber}`)
+    const lastBlockNumber = await BlockchainEvent.getLastBlockNumber()
+    log.info(`No new events to persist. Last DB block: ${lastBlockNumber}`)
   }
 }
 
@@ -149,4 +147,22 @@ export async function processEvent(event) {
   }
 
   return event
+}
+
+const eventCache = {
+  _values: {
+    // [hash+name]: value
+  },
+  get(event) {
+    return eventCache._values[eventCache.getKey(event)]
+  },
+  set(event) {
+    eventCache._values[eventCache.getKey(event)] = true
+  },
+  getKey(event) {
+    return event.tx_hash + event.name
+  },
+  size() {
+    return Object.keys(eventCache._values).length
+  }
 }
