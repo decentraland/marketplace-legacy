@@ -4,6 +4,9 @@ import { BlockchainEvent } from '../../../src/BlockchainEvent'
 const log = new Log('handlers')
 
 export async function store(eventData) {
+  if (eventData.length) {
+    return Promise.all(eventData.map(store))
+  }
   if (eventData.removed) return
 
   const { event, transactionHash, blockNumber, logIndex } = eventData
