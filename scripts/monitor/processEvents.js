@@ -1,36 +1,36 @@
-import { env, eth, txUtils, contracts, Log } from 'decentraland-commons'
+import { eth, txUtils, contracts, Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
-const log = new Log('persistEvents')
+const log = new Log('processEvents')
+const txHashCache = {
+  // hash: Bool
+}
 
-export async function persistEvents(lastBlockNumber = null, delay) {
-  delay = delay || env.get('PERSIST_EVENTS_DELAY', 2500)
-
-  if (lastBlockNumber === null || lastBlockNumber === 'latest') {
-    const lastBlockEvent = await BlockchainEvent.findLast()
-    lastBlockNumber = lastBlockEvent ? lastBlockEvent.block_number : 0
-  }
-
-  const blockchainEvents = await BlockchainEvent.findFrom(+lastBlockNumber + 1)
-  let i = 0
+export async function processEvents() {
+  const allBlockchainEvents = await BlockchainEvent.find(null, {
+    block_number: 'ASC',
+    log_index: 'ASC'
+  })
+  const blockchainEvents = allBlockchainEvents.filter(
+    event => !txHashCache[event.tx_hash]
+  )
 
   if (blockchainEvents.length) {
-    log.info(`Persisting events starting from block ${lastBlockNumber}`)
+    log.info(`Persisting ${blockchainEvents.length} events`)
 
-    for (; i < blockchainEvents.length; i++) {
-      log.info(`Processing ${i + 1}/${blockchainEvents.length} events`)
-      await processEvent(blockchainEvents[i])
+    for (const event of blockchainEvents) {
+      txHashCache[event.tx_hash] = true
+      await processEvent(event)
     }
-
-    lastBlockNumber = blockchainEvents[i - 1].block_number
   } else {
+    const lastEvent = allBlockchainEvents[allBlockchainEvents.length - 1]
+    const lastBlockNumber = lastEvent ? lastEvent.block_number : 0
+
     log.info(`No new events to persist from block ${lastBlockNumber}`)
   }
-
-  setTimeout(() => persistEvents(lastBlockNumber, delay), delay)
 }
 
 export async function processEvent(event) {
