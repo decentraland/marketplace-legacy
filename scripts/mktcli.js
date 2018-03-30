@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { eth, Log, cli, contracts } from 'decentraland-commons'
+import { env, eth, Log, cli, contracts } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { Publication } from '../src/Publication'
@@ -262,6 +262,7 @@ if (require.main === module) {
     .then(() => {
       log.debug('Connecting to Ethereum node')
       return eth.connect({
+        providerUrl: env.get('RPC_URL'),
         contracts: [contracts.LANDRegistry, contracts.Marketplace]
       })
     })
