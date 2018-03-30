@@ -6,7 +6,6 @@ import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
-import { encodeAssetId } from './monitor/utils'
 
 let BATCH_SIZE
 const log = new Log('addAssetId')
@@ -31,16 +30,15 @@ export async function addAuctionOwners() {
 }
 
 async function updateAssetIds(parcels) {
-  let count = 0
+  const contract = eth.getContract('LANDRegistry')
 
   await asyncBatch({
     elements: parcels,
-    callback: async parcelsBatch => {
-      count += parcelsBatch.length
-      log.info(`Updating ${count}/${parcels.length} parcels...`)
+    callback: async (parcelsBatch, batchedCount) => {
+      log.info(`Updating ${batchedCount}/${parcels.length} parcels...`)
 
       const updates = parcelsBatch.map(async parcel => {
-        const assetId = await encodeAssetId(parcel.x, parcel.y)
+        const assetId = await contract.encodeTokenId(parcel.x, parcel.y)
         return Parcel.update(
           { asset_id: assetId.toString() },
           { id: parcel.id }

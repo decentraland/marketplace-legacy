@@ -1,5 +1,4 @@
 import { env, eth, txUtils, contracts, Log } from 'decentraland-commons'
-import { decodeAssetId } from './utils'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
@@ -37,7 +36,7 @@ export async function persistEvents(lastBlockNumber = null, delay) {
 export async function processEvent(event) {
   const { tx_hash, block_number, name } = event
   const { assetId } = event.args
-  const parcelId = await decodeAssetId(assetId)
+  const parcelId = await Parcel.decodeAssetId(assetId)
   const [x, y] = Parcel.splitId(parcelId)
 
   switch (name) {

@@ -8,7 +8,6 @@ import { BlockchainEvent } from '../src/BlockchainEvent'
 import { mockModelDbOperations } from '../specs/utils'
 import { loadEnv, parseCLICoords } from './utils'
 import { processEvent } from './monitor/persistEvents'
-import { decodeAssetId, encodeAssetId } from './monitor/utils'
 
 const log = new Log('mktcli')
 
@@ -21,7 +20,9 @@ const main = {
         asSafeAction(async assetId => {
           if (!assetId) throw new Error('You need to supply an asset id')
 
-          const coords = await decodeAssetId(assetId)
+          const contract = eth.getContract('LANDRegistry')
+          const coords = await contract.decodeTokenId(assetId)
+
           log.info(`(decode) str:${assetId} => coords:(${coords})`)
         })
       )
@@ -32,7 +33,8 @@ const main = {
       .action(
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
-          const assetId = await encodeAssetId(x, y)
+          const contract = eth.getContract('LANDRegistry')
+          const assetId = await contract.encodeTokenId(x, y)
 
           log.info(
             `(encode) coords:(${x},${y}) => str:${assetId.toString()} hex:${assetId.toString(
@@ -84,9 +86,9 @@ const main = {
       .action(
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
+          const assetId = await Parcel.encodeAssetId(x, y)
 
           const contract = eth.getContract('Marketplace')
-          const assetId = await encodeAssetId(x, y)
           const publication = await contract.auctionByAssetId(assetId)
 
           const pubDb = (await Publication.findInCoordinate(x, y))[0]
@@ -122,9 +124,9 @@ const main = {
       .action(
         asSafeAction(async (coord, options) => {
           const [x, y] = parseCLICoords(coord)
-          const assetId = await encodeAssetId(x, y)
+          const assetId = await Parcel.encodeAssetId(x, y)
 
-          const events = await BlockchainEvent.findByAssetId(assetId.toString())
+          const events = await BlockchainEvent.findByAssetId(assetId)
           const eventLog = events.map(event => {
             const { name, block_number, log_index, tx_hash, args } = event
             let log = `${name} (${block_number},${log_index}): `
@@ -180,9 +182,8 @@ const main = {
       .action(
         asSafeAction(async (coord, options) => {
           const [x, y] = parseCLICoords(coord)
-          const assetId = await encodeAssetId(x, y)
-
-          const events = await BlockchainEvent.findByAssetId(assetId.toString())
+          const assetId = await Parcel.encodeAssetId(x, y)
+          const events = await BlockchainEvent.findByAssetId(assetId)
           events.reverse()
 
           if (!options.persist) {
@@ -262,8 +263,8 @@ if (require.main === module) {
     .then(() => {
       log.debug('Connecting to Ethereum node')
       return eth.connect({
-        providerUrl: env.get('RPC_URL'),
-        contracts: [contracts.LANDRegistry, contracts.Marketplace]
+        contracts: [contracts.LANDRegistry, contracts.Marketplace],
+        providerUrl: env.get('RPC_URL')
       })
     })
     .then(() => cli.runProgram([main]))

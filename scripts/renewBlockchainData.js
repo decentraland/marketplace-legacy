@@ -38,39 +38,26 @@ async function updateParcelsData(parcels) {
 
   const service = new ParcelService()
 
-  let errors = []
   let updates = []
-  let total = BATCH_SIZE
 
   await asyncBatch({
     elements: parcels,
-    callback: async newParcels => {
-      try {
-        newParcels = await service.addLandData(newParcels)
-        newParcels = await service.addOwners(newParcels)
-      } catch (error) {
-        log.info(`Error processing ${newParcels.length} parcels, will retry`)
-        errors = errors.concat(newParcels)
-        return
-      }
+    callback: async (newParcels, batchSize) => {
+      newParcels = await service.addLandData(newParcels)
+      newParcels = await service.addOwners(newParcels)
 
-      log.info(`Processing ${total}/${parcels.length - errors.length} parcels`)
+      log.info(`Processing ${batchSize}/${parcels.length} parcels`)
 
       updates = updates.concat(
         newParcels.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
       )
-
-      total += newParcels.length
     },
-    batchSize: BATCH_SIZE
+    batchSize: BATCH_SIZE,
+    retryAttempts: 20
   })
+
   log.info(`Waiting for the DB to finish for ${updates.length} updates`)
-
   await Promise.all(updates)
-
-  if (errors.length) {
-    return await updateParcelsData(errors)
-  }
 }
 
 if (require.main === module) {
