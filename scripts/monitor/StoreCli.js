@@ -23,8 +23,6 @@ export class StoreCli extends Cli {
       const eventNames = this.contractEvents[contractName]
       this.monitor(contractName, eventNames, options)
     }
-
-    this.processStoredEvents()
   }
 
   processStoredEvents = () => {
@@ -34,7 +32,6 @@ export class StoreCli extends Cli {
     clearTimeout(this.processTimeout)
 
     this.processTimeout = setTimeout(() => {
-      log.info('Firing up event persister')
       this.isProcessRunning = true
       processEvents().then(() => (this.isProcessRunning = false))
     }, this.processDelay)
