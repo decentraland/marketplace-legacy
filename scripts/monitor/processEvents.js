@@ -8,7 +8,7 @@ const log = new Log('processEvents')
 
 export async function processEvents(fromBlock) {
   if (fromBlock === 'latest') {
-    fromBlock = await BlockchainEvent.getLastBlockNumber()
+    fromBlock = await BlockchainEvent.findLastBlockNumber()
   } else if (fromBlock == null) {
     fromBlock = 0
   }
@@ -26,7 +26,7 @@ export async function processEvents(fromBlock) {
       eventCache.set(event)
     }
   } else {
-    const lastBlockNumber = await BlockchainEvent.getLastBlockNumber()
+    const lastBlockNumber = await BlockchainEvent.findLastBlockNumber()
     log.info(`No new events to persist. Last DB block: ${lastBlockNumber}`)
   }
 }
