@@ -10,7 +10,7 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
-import AddressLink from 'components/AddressLink'
+import AddressBlock from 'components/AddressBlock'
 import Publication from 'components/MarketplacePage/Publication'
 import Parcel from './Parcel'
 import Contribution from './Contribution'
@@ -166,7 +166,7 @@ export default class ProfilePage extends React.PureComponent {
         {isOwner || isConnecting ? null : (
           <Container className="profile-header">
             <div>
-              <AddressLink scale={16} address={address} hasTooltip={false} />
+              <AddressBlock scale={16} address={address} hasTooltip={false} />
               <span className="profile-address">{shortenAddress(address)}</span>
             </div>
           </Container>

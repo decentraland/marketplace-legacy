@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import AddressLink from 'components/AddressLink'
+import AddressBlock from 'components/AddressBlock'
 import { walletType } from 'components/types'
 import Mana from 'components/Mana'
 import { locations } from 'locations'
@@ -21,7 +21,7 @@ export default class Account extends React.PureComponent {
         <Link to={locations.settings}>
           <Mana amount={wallet.balance} />
         </Link>
-        <AddressLink
+        <AddressBlock
           scale={6}
           link={locations.settings}
           address={wallet.address}

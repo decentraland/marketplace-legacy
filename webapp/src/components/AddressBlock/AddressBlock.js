@@ -7,9 +7,9 @@ import Blockie from 'components/Blockie'
 import { shortenAddress } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
-import './AddressLink.css'
+import './AddressBlock.css'
 
-export default class AddressLink extends React.Component {
+export default class AddressBlock extends React.Component {
   static propTypes = {
     address: PropTypes.string.isRequired,
     link: PropTypes.string,
@@ -52,7 +52,7 @@ export default class AddressLink extends React.Component {
 
     return (
       <div
-        className={`AddressLink ${className}`}
+        className={`AddressBlock ${className}`}
         data-balloon-pos="up"
         data-balloon={
           hasTooltip

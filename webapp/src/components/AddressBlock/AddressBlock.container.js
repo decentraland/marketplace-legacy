@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getWallet } from 'modules/wallet/selectors'
 
-import AddressLink from './AddressLink'
+import AddressBlock from './AddressBlock'
 
 const mapState = (state, { address }) => {
   const wallet = getWallet(state)
@@ -12,4 +12,4 @@ const mapState = (state, { address }) => {
 
 const mapDispatch = dispatch => ({})
 
-export default connect(mapState, mapDispatch)(AddressLink)
+export default connect(mapState, mapDispatch)(AddressBlock)

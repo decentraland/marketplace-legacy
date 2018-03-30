@@ -42,7 +42,7 @@
   color: #aaa;
 }
 
-.ProfilePage .profile-owner .AddressLink {
+.ProfilePage .profile-owner .AddressBlock {
   height: 25px;
   margin-left: 5px;
 }
@@ -63,7 +63,7 @@
   justify-content: flex-start;
 }
 
-.ProfilePage .profile-header .AddressLink {
+.ProfilePage .profile-header .AddressBlock {
   flex: none;
 }
 

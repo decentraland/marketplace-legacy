@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import { Container, Loader } from 'semantic-ui-react'
-import AddressLink from 'components/AddressLink'
+import AddressBlock from 'components/AddressBlock'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
@@ -77,7 +77,7 @@ export default class SettingsPage extends React.PureComponent {
         <Container content>
           <div className="row">
             <div className="column">
-              <AddressLink
+              <AddressBlock
                 address={address}
                 hasTooltip={false}
                 hasLink={false}
