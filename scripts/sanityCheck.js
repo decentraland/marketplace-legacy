@@ -1,13 +1,11 @@
 #!/usr/bin/env babel-node
 
-import { Log, txUtils, env, eth, contracts, cli } from 'decentraland-commons'
+import { Log, env, eth, utils, contracts, cli } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { Publication } from '../src/Publication'
-import { BlockchainEvent } from '../src/BlockchainEvent'
 import { asyncBatch } from '../src/lib'
-import { loadEnv } from './utils'
-import { decodeAssetId } from './monitor/utils'
+import { parseCLICoords, loadEnv } from './utils'
 
 const log = new Log('sanity-check')
 
@@ -19,11 +17,8 @@ const sanityCheck = {
       .command('run')
       .option('--fix', 'If present, the errors found will be fixed')
       .option('--skip-parcels', 'Skip the parcel check')
+      .option('--check-parcel [parcelId]', 'Check a specific parcel')
       .action(async options => {
-        const shouldFix = options.fix
-        const shouldSkipParcels = options.skipParcels
-        const totalChecks = shouldSkipParcels ? 1 : 2
-
         log.info('Connecting database')
         await db.connect()
 
@@ -33,21 +28,26 @@ const sanityCheck = {
           providerUrl: env.get('RPC_URL')
         })
 
+        const shouldSkipParcels = options.skipParcels
+        const totalChecks = shouldSkipParcels ? 1 : 2
+        let conditions = null
+
+        if (options.checkParcel) {
+          const [x, y] = parseCLICoords(options.checkParcel)
+          conditions = { x, y }
+        }
+        const parcels = await Parcel.find(conditions)
+
         log.info(
           `[Check 1/${totalChecks}]: Checking Marketplace against all events`
         )
-        try {
-          await marketplaceCheck(shouldFix)
-        } catch (err) {
-          log.error(err, err.stack)
-        }
+        await checkParcels(parcels)
 
         if (!shouldSkipParcels) {
           log.info(
             `[Check 2/${totalChecks}]: Checking parcel ownership from -150,-150 to 150,150`
           )
-          const parcels = await Parcel.find()
-          await processParcels(parcels, shouldFix)
+          await processParcels(parcels)
         }
 
         process.exit()
@@ -55,47 +55,80 @@ const sanityCheck = {
   }
 }
 
-async function marketplaceCheck(shouldFix) {
-  const marketplace = eth.getContract('Marketplace')
-
-  const events = await getAllEvents(marketplace)
-  const parcels = getEventParcels(events)
-
-  const tasks = []
-  for (let parcel of parcels) {
-    tasks.push(
-      checkParcel(parcel.parcelId, parcel.lastEvent, marketplace, shouldFix)
-    )
-  }
-  log.info('Analyzing the case of', tasks.length, 'parcels')
-  await Promise.all(tasks)
-}
-
-function getAllEvents(marketplace) {
-  return new Promise((resolve, reject) => {
-    marketplace.instance
-      .allEvents({
-        fromBlock: 0,
-        toBlock: 'latest'
-      })
-      .get(function(error, events) {
-        if (error) {
-          return reject(error)
-        } else {
-          return resolve(events)
-        }
-      })
+async function checkParcels(parcels) {
+  await asyncBatch({
+    elements: parcels,
+    callback: async (parcelsBatch, batchedCount) => {
+      await Promise.all(parcelsBatch.map(parcel => checkParcel(parcel)))
+      process.stdout.write(`- ${batchedCount}/${parcels.length}   \r`)
+    },
+    batchSize: BATCH_SIZE,
+    retryAttempts: 20
   })
 }
 
-function getEventParcels(events) {
-  const results = {}
-  for (let event of events) {
-    const str = event.args.assetId
-    if (!str) continue
-    results[str] = { parcelId: event.args.assetId, lastEvent: event }
+async function checkParcel(parcel) {
+  if (!parcel) return
+
+  const { x, y, asset_id } = parcel
+  const marketplace = eth.getContract('Marketplace')
+  const publication = (await Publication.findInCoordinate(x, y))[0]
+  const auction = await marketplace.auctionByAssetId(asset_id)
+  const contractId = auction[0]
+
+  if (!isNullHash(contractId)) {
+    if (!publication) {
+      // Check if the publication exists in db
+      log.info(x, y, 'missing publication in db')
+    } else if (publication.contract_id !== contractId) {
+      // Check that id matches
+      log.info(
+        x,
+        y,
+        'different id in db',
+        publication.contract_id,
+        'vs in blockchain',
+        contractId
+      )
+    }
+  } else if (publication && publication.status === Publication.STATUS.open) {
+    // Check for hanging publication in db
+    log.info(x, y, 'open in db and null in blockchain')
   }
-  return Object.values(results)
+}
+
+async function processParcels(parcels) {
+  const service = new ParcelService()
+
+  await asyncBatch({
+    elements: parcels,
+    callback: async (parcelsBatch, batchedCount) => {
+      let updatedParcels = []
+
+      try {
+        updatedParcels = await service.addOwners(parcelsBatch)
+      } catch (error) {
+        log.info(`Error processing ${parcelsBatch.length} parcels, skipping`)
+        return
+      }
+
+      for (const [index, parcel] of parcelsBatch.entries()) {
+        const currentOwner = updatedParcels[index].owner
+
+        if (isOwnerMissmatch(currentOwner, parcel)) {
+          const { id, owner } = parcel
+          log.error(
+            `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
+          )
+        }
+      }
+
+      process.stdout.write(
+        `- Processed ${batchedCount}/${parcels.length} parcels   \r`
+      )
+    },
+    batchSize: BATCH_SIZE
+  })
 }
 
 const NULL =
@@ -106,148 +139,18 @@ function isNullHash(x) {
   return x === NULL || x === NULL_PARITY
 }
 
-async function checkParcel(assetId, lastEvent, marketplace, shouldFix) {
-  const parcelId = await decodeAssetId(assetId)
-  const [x, y] = Parcel.splitId(parcelId)
-  const publication = await Publication.findInCoordinate(x, y)
-  const auction = await marketplace.auctionByAssetId(assetId)
-
-  if (!isNullHash(auction[0])) {
-    // Check if the publication exists in db
-    if (!publication.length) {
-      log.info(x, y, 'missing publication in db')
-      if (shouldFix) {
-        await insertPublication(x, y, lastEvent)
-        log.info(x, y, 'publication fixed')
-      }
-      return
-    }
-    // Check that id matches
-    const pub = publication[0]
-    if (pub.contract_id !== auction[0]) {
-      log.info(
-        parcelId,
-        'different id in db',
-        pub.contract_id,
-        'vs in blockchain',
-        auction[0]
-      )
-      if (shouldFix) {
-        await deletePublication(x, y, pub.owner, pub.tx_hash)
-        await insertPublication(x, y, lastEvent)
-        log.info(parcelId, 'publication fixed')
-      }
-      return
-    }
-  } else if (publication.length) {
-    // Check for hanging publication in db
-    const pub = publication[0]
-    if (pub.status === Publication.STATUS.open) {
-      log.info(parcelId, 'open in db and null in blockchain')
-
-      if (shouldFix) {
-        await deletePublication(x, y, pub.owner, pub.tx_hash)
-        log.info(parcelId, 'publication fixed')
-      }
-      return
-    }
-  }
-}
-
-function deletePublication(x, y, owner, tx_hash) {
-  return Publication.delete({ x, y, owner, tx_hash })
-}
-
-function insertPublication(x, y, eventData) {
-  const { transactionHash, event } = eventData
-  const { seller, priceInWei, expiresAt } = eventData.args
-  const contract_id = eventData.args.id
-
-  if (event !== BlockchainEvent.EVENTS.publicationCreated) {
-    log.error('Error! Last event received is not AuctionCreated', eventData)
-    return
-  }
-  if (!transactionHash) {
-    log.error('Error! Last event received is removed', eventData)
-    return
-  }
-
-  return Publication.insert({
-    tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-    status: Publication.STATUS.open,
-    owner: seller.toLowerCase(),
-    buyer: null,
-    price: eth.utils.fromWei(priceInWei),
-    expires_at: new Date(parseInt(expiresAt, 10)),
-    tx_hash: transactionHash,
-    contract_id,
-    x,
-    y
-  })
-}
-
-async function processParcels(parcels, shouldFix) {
-  log.info(`Processing ${parcels.length} parcels`)
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
-
-  const service = new ParcelService()
-
-  let errors = []
-  let updates = []
-  let processedCount = 0
-
-  await asyncBatch({
-    elements: parcels,
-    callback: async newParcels => {
-      let updatedParcels = newParcels.slice()
-
-      try {
-        updatedParcels = await service.addOwners(updatedParcels)
-        updatedParcels = await service.addLandData(updatedParcels)
-      } catch (error) {
-        log.info(`Error processing ${newParcels.length} parcels, skipping`)
-        errors = errors.concat(newParcels)
-        return
-      }
-
-      for (const [index, parcel] of newParcels.entries()) {
-        const currentOwner = updatedParcels[index].owner
-
-        if (isOwnerMissmatch(currentOwner, parcel)) {
-          log.error(
-            `Mismatch: owner of '${parcel.id}' is '${
-              parcel.owner
-            }' on the DB and '${currentOwner}' in blockchain`
-          )
-
-          if (shouldFix) {
-            const { id, ...attributes } = parcel
-            updates.push(Parcel.update(attributes, { id }))
-          }
-        }
-      }
-
-      processedCount += newParcels.length
-
-      log.info(`Processed ${processedCount}/${parcels.length} parcels`)
-    },
-    batchSize: BATCH_SIZE
-  })
-
-  await Promise.all(updates)
-
-  if (errors.length) {
-    return await processParcels(errors, shouldFix)
-  }
-}
-
 function isOwnerMissmatch(currentOwner, parcel) {
   return !!currentOwner && parcel.owner !== currentOwner
 }
 
+//
+// Main
+
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
+
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 100), 10)
+  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()
     .then(() => cli.runProgram([sanityCheck]))

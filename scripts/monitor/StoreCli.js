@@ -1,14 +1,17 @@
 import { Log } from 'decentraland-commons'
 import { Cli } from './Cli'
 import { EventMonitor } from './EventMonitor'
-import { persistEvents } from './persistEvents'
+import { processEvents } from './processEvents'
 
 const log = new Log('StoreCli')
 
 export class StoreCli extends Cli {
-  constructor(handlers, contractEvents = {}) {
+  constructor(handlers, contractEvents = {}, processDelay) {
     super(handlers)
     this.contractEvents = contractEvents
+    this.processDelay = processDelay
+    this.processTimeout = null
+    this.isProcessRunning = false
   }
 
   addCommands(program) {
@@ -20,9 +23,21 @@ export class StoreCli extends Cli {
       const eventNames = this.contractEvents[contractName]
       this.monitor(contractName, eventNames, options)
     }
+  }
 
-    log.info('Firing up event persister')
-    persistEvents(options.fromBlock)
+  processStoredEvents = fromBlock => {
+    if (this.isProcessRunning) {
+      return setTimeout(
+        () => this.processStoredEvents(fromBlock),
+        this.processDelay
+      )
+    }
+    clearTimeout(this.processTimeout)
+
+    this.processTimeout = setTimeout(() => {
+      this.isProcessRunning = true
+      processEvents(fromBlock).then(() => (this.isProcessRunning = false))
+    }, this.processDelay)
   }
 
   monitor = (contractName, eventNames, options) => {
@@ -36,7 +51,13 @@ export class StoreCli extends Cli {
         log.error(`Error monitoring "${contractName}" for "${eventNames}"`)
         log.error(error)
       } else {
-        await handler(logs)
+        if (Array.isArray(logs)) {
+          await Promise.all(logs.map(log => handler(log)))
+        } else {
+          await handler(logs)
+        }
+
+        this.processStoredEvents(options.fromBlock)
       }
     })
   }

@@ -13,15 +13,19 @@ export class BlockchainEvent extends Model {
     parcelUpdate: 'Update'
   }
 
-  static findLast() {
-    return this.findOne(null, { block_number: 'DESC', log_index: 'DESC' })
+  static findLastBlockNumber() {
+    const { block_number } = this.findOne(null, {
+      block_number: 'DESC',
+      log_index: 'DESC'
+    })
+    return block_number
   }
 
   static findFrom(blockNumber) {
     return this.db.query(
       `SELECT *
         FROM ${this.tableName}
-        WHERE block_number >= $1
+        WHERE block_number > $1
         ORDER BY block_number ASC, log_index ASC`,
       [blockNumber]
     )

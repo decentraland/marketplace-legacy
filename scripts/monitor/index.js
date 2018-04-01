@@ -24,10 +24,18 @@ Promise.resolve()
   .then(() => {
     log.debug('Starting CLI')
 
-    return new StoreCli(handlers, {
-      Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
-      LANDRegistry: ['Update', 'Transfer']
-    }).run()
+    return new StoreCli(
+      handlers,
+      {
+        Marketplace: [
+          'AuctionCreated',
+          'AuctionSuccessful',
+          'AuctionCancelled'
+        ],
+        LANDRegistry: ['Update', 'Transfer']
+      },
+      env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
+    ).run()
   })
   .catch(error => {
     log.error(error)

@@ -9,6 +9,7 @@ export class Parcel extends Model {
     'id',
     'x',
     'y',
+    'asset_id',
     'auction_price',
     'owner',
     'data',
@@ -78,15 +79,27 @@ export class Parcel extends Model {
         FROM ${this.tableName} as par`
   }
 
-  static async getPrice(x, y) {
-    const result = await this.db.query(
-      `SELECT auction_price
+  static async encodeAssetId(x, y) {
+    const rows = await this.db.query(
+      `SELECT asset_id
         FROM ${this.tableName}
-        WHERE x = $1 AND y = $2`,
+        WHERE x = $1
+          AND y = $2
+        LIMIT 1`,
       [x, y]
     )
+    return rows.length ? rows[0].asset_id : null
+  }
 
-    return result.length ? result[0].auction_price : 0
+  static async decodeAssetId(assetId) {
+    const rows = await this.db.query(
+      `SELECT id
+        FROM ${this.tableName}
+        WHERE asset_id = $1
+        LIMIT 1`,
+      [assetId]
+    )
+    return rows.length ? rows[0].id : null
   }
 
   static async insert(parcel) {
