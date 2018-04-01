@@ -70,6 +70,7 @@ export async function processEvent(event) {
           price: eth.utils.fromWei(priceInWei),
           expires_at: new Date(parseInt(expiresAt, 10)),
           tx_hash,
+          block_number,
           contract_id,
           x,
           y
