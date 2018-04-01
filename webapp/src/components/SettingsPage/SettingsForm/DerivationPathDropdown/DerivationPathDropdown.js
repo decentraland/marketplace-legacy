@@ -6,9 +6,8 @@ const derivationOptions = [
   {
     text: "m/44'/60'/0'/0",
     description:
-      'Jaxx, Metamask, Exodus, imToken, TREZOR (ETH) & Digital Bitbox'
+      'Jaxx, Metamask, Exodus, imToken, Ledger & TREZOR (ETH) & Digital Bitbox'
   },
-  { text: "m/44'/60'/0'/0", description: 'Ledger (ETH)' },
   { text: "m/44'/60'/160720'/0'", description: 'Ledger (ETC)' },
   { text: "m/44'/61'/0'/0", description: 'TREZOR (ETC)' }
 ].map(opt => Object.assign(opt, { value: opt.text }))
