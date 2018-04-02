@@ -70,6 +70,10 @@ if [[ $CMD == 'down' ]]; then
     echo '[down] - The site is already under maintenance'
     exit 1
   fi
+  if [[ ! -f $ENTRY_POINT_APP ]]; then
+    echo '[down] - Maintenance landing page "'$ENTRY_POINT_APP'" not found'
+    exit 1
+  fi
   down
   refresh_cache
 elif [[ $CMD == 'up' ]]; then
