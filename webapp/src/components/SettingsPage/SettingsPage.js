@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
-import { Container, Grid, Header, Loader } from 'semantic-ui-react'
+import { Container, Loader } from 'semantic-ui-react'
+import AddressBlock from 'components/AddressBlock'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
@@ -56,6 +57,7 @@ export default class SettingsPage extends React.PureComponent {
     const { isLoading, isConnected, wallet } = this.props
     const {
       address,
+      balance,
       type,
       derivationPath,
       approvedBalance,
@@ -72,35 +74,42 @@ export default class SettingsPage extends React.PureComponent {
 
     return (
       <div className="SettingsPage">
-        <Container text>
-          <Header as="h1" size="huge" textAlign="center" className="title">
-            {t('global.settings')}
-          </Header>
-
-          <Grid.Column>
-            {isConnected ? (
-              <SettingsForm
+        <Container content>
+          <div className="row">
+            <div className="column">
+              <AddressBlock
                 address={address}
-                walletType={type}
-                walletDerivationPath={derivationPath}
-                onDerivationPathChange={this.handleDerivationPathChange}
-                manaApproved={approvedBalance}
-                approveTransaction={this.getApproveTransaction()}
-                onManaApprovedChange={this.handleManaApproval}
-                isLandAuthorized={isLandAuthorized}
-                authorizeTransaction={this.getAuthorizeTransaction()}
-                onLandAuthorizedChange={this.handleLandAuthorization}
+                hasTooltip={false}
+                hasLink={false}
+                scale={30}
               />
-            ) : (
-              <p className="sign-in">
-                {t_html('global.sign_in_notice', {
-                  sign_in_link: (
-                    <Link to={locations.signIn}>{t('global.sign_in')}</Link>
-                  )
-                })}
-              </p>
-            )}
-          </Grid.Column>
+            </div>
+            <div className="column">
+              {isConnected ? (
+                <SettingsForm
+                  address={address}
+                  balance={balance}
+                  walletType={type}
+                  walletDerivationPath={derivationPath}
+                  onDerivationPathChange={this.handleDerivationPathChange}
+                  manaApproved={approvedBalance}
+                  approveTransaction={this.getApproveTransaction()}
+                  onManaApprovedChange={this.handleManaApproval}
+                  isLandAuthorized={isLandAuthorized}
+                  authorizeTransaction={this.getAuthorizeTransaction()}
+                  onLandAuthorizedChange={this.handleLandAuthorization}
+                />
+              ) : (
+                <p className="sign-in">
+                  {t_html('global.sign_in_notice', {
+                    sign_in_link: (
+                      <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+                    )
+                  })}
+                </p>
+              )}
+            </div>
+          </div>
         </Container>
       </div>
     )

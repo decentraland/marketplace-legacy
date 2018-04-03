@@ -46,7 +46,7 @@ export default class Transaction extends React.PureComponent {
   renderMarketplaceLink() {
     return (
       <EtherscanLink address={getMarketplaceAddress()}>
-        Marketplace contract
+        Marketplace
       </EtherscanLink>
     )
   }

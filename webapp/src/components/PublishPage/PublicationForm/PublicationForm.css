@@ -1,5 +1,5 @@
-.PublicationForm .ui.button {
-  padding: 12px 42px;
+.PublicationForm {
+  min-width: 400px;
 }
 
 .PublicationForm .ui.button + .ui.button {

@@ -30,3 +30,7 @@
   background-color: var(--background) !important;
   opacity: 0.8 !important;
 }
+
+.MarketplacePage .ui.label.active {
+  background-color: var(--primary);
+}

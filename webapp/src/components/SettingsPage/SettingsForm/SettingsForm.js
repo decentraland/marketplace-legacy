@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { wallets, txUtils } from 'decentraland-commons'
-
+import Mana from 'components/Mana'
 import { Form, Checkbox } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
@@ -15,6 +15,7 @@ import './SettingsForm.css'
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
     address: PropTypes.string,
+    balance: PropTypes.number,
     walletType: PropTypes.string,
     walletDerivationPath: PropTypes.string,
     onDerivationPathChange: PropTypes.func,
@@ -41,6 +42,7 @@ export default class SettingsForm extends React.PureComponent {
   render() {
     const {
       address,
+      balance,
       walletType,
       walletDerivationPath,
       onDerivationPathChange,
@@ -68,63 +70,68 @@ export default class SettingsForm extends React.PureComponent {
           </Form.Field>
         ) : null}
 
-        <Form.Field
-          id="wallet-address"
-          control="input"
-          type="text"
-          label={t('global.wallet_address')}
-          disabled={true}
-          value={address}
-        />
-
         <Form.Field>
-          <Checkbox
-            checked={manaApproved > 0}
-            disabled={isApprovePending}
-            onChange={onManaApprovedChange}
-          />
-          <div className="authorize-detail">
-            {manaApproved > 0
-              ? t_html('settings.mana_approved', {
-                  marketplace_contract_link: this.renderMarketplaceLink()
-                })
-              : t_html('settings.approve_mana', {
-                  marketplace_contract_link: this.renderMarketplaceLink()
-                })}
-
-            {isApprovePending && (
-              <TxStatus.Text
-                txHash={approveTransaction.hash}
-                txStatus={approveTransaction.status}
-              />
-            )}
-          </div>
+          <label htmlFor="wallet-address">{t('global.wallet_address')}</label>
+          <label id="wallet-address">{address}</label>
         </Form.Field>
 
         <Form.Field>
-          <Checkbox
-            checked={isLandAuthorized}
-            disabled={isAuthorizePending}
-            onChange={onLandAuthorizedChange}
-          />
-
-          <div className="authorize-detail">
-            {isLandAuthorized
-              ? t_html('settings.you_authorized', {
-                  marketplace_contract_link: this.renderMarketplaceLink()
-                })
-              : t_html('settings.authorize', {
-                  marketplace_contract_link: this.renderMarketplaceLink()
-                })}
-
-            {isAuthorizePending && (
-              <TxStatus.Text
-                txHash={authorizeTransaction.hash}
-                txStatus={authorizeTransaction.status}
-              />
-            )}
-          </div>
+          <label htmlFor="mana-balance">{t('global.balance')}</label>
+          <span id="mana-balance">
+            <Mana amount={balance} unit="MANA" />
+          </span>
         </Form.Field>
+        <div className="authorization-checks">
+          <label>{t('settings.authorization')}</label>
+          <Form.Field>
+            <Checkbox
+              checked={manaApproved > 0}
+              disabled={isApprovePending}
+              onChange={onManaApprovedChange}
+            />
+            <div className="authorize-detail">
+              {manaApproved > 0
+                ? t_html('settings.mana_approved', {
+                    marketplace_contract_link: this.renderMarketplaceLink()
+                  })
+                : t_html('settings.approve_mana', {
+                    marketplace_contract_link: this.renderMarketplaceLink()
+                  })}
+
+              {isApprovePending && (
+                <TxStatus.Text
+                  txHash={approveTransaction.hash}
+                  txStatus={approveTransaction.status}
+                />
+              )}
+            </div>
+          </Form.Field>
+
+          <Form.Field>
+            <Checkbox
+              checked={isLandAuthorized}
+              disabled={isAuthorizePending}
+              onChange={onLandAuthorizedChange}
+            />
+
+            <div className="authorize-detail">
+              {isLandAuthorized
+                ? t_html('settings.you_authorized', {
+                    marketplace_contract_link: this.renderMarketplaceLink()
+                  })
+                : t_html('settings.authorize', {
+                    marketplace_contract_link: this.renderMarketplaceLink()
+                  })}
+
+              {isAuthorizePending && (
+                <TxStatus.Text
+                  txHash={authorizeTransaction.hash}
+                  txStatus={authorizeTransaction.status}
+                />
+              )}
+            </div>
+          </Form.Field>
+        </div>
       </Form>
     )
   }

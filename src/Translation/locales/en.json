@@ -24,6 +24,7 @@
     "authorized": "Authorized",
     "unauthorized": "Unauthorized",
     "wallet_address": "Wallet address",
+    "balance": "Balance",
     "for": "for",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
@@ -94,13 +95,13 @@
   },
   "parcel_edit": {
     "edit_land": "Edit LAND",
-    "set_name_and_desc": "Set a name and description for {parcel_name}",
+    "set_name_and_desc": "Set a name and description for {parcel_name}.",
     "name": "Name",
     "description": "Description"
   },
   "parcel_transfer": {
     "transfer_land": "Transfer LAND",
-    "about_to_transfer": "You're about to transfer {parcel_name}",
+    "about_to_transfer": "You're about to transfer {parcel_name}.",
     "irreversible":
       "Remember that transferring LAND is an irreversible operation.",
     "check_address": "Please check the address carefully",
@@ -112,7 +113,7 @@
   },
   "parcel_buy": {
     "buy_land": "Buy LAND",
-    "about_to_buy": "You are about to buy {parcel_name} {parcel_price}",
+    "about_to_buy": "You are about to buy {parcel_name} {parcel_price}.",
     "approved_balance": "Your approved balance is {approved_balance}",
     "needs_at_least": "You need at least {mana} in order to buy this LAND.",
     "didnt_approve": "You haven't authorized MANA usage",
@@ -122,7 +123,7 @@
   },
   "parcel_publish": {
     "list_land": "List LAND for sale",
-    "set_land_price": "Set a price and an expiration date for {parcel_name}",
+    "set_land_price": "Set a price and an expiration date for {parcel_name}.",
     "price": "Price",
     "price_placeholder": "Price in MANA for this LAND",
     "expiration": "Expiration",
@@ -138,10 +139,9 @@
     }
   },
   "parcel_cancel": {
-    "cancel_land": "Cancel LAND Sale",
-    "currently_on_sale": "is currently on sale for {value}.",
-    "about_to_cancel": "You are about to cancel this sale.",
-    "not_for_sale": "is not for sale."
+    "cancel_land": "Cancel Sale",
+    "about_to_cancel": "You are about to cancel the sale of {parcel}.",
+    "not_for_sale": "The parcel {parcel} is not for sale."
   },
   "activity": {
     "no_activity": "You have no activity yet.",
@@ -196,7 +196,8 @@
     "you_authorized":
       "You have authorized the {marketplace_contract_link} to operate LAND on your behalf",
     "authorize":
-      "Authorize the {marketplace_contract_link} to operate LAND on your behalf"
+      "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
+    "authorization": "Authorization"
   },
   "derivation_path": {
     "supported":
