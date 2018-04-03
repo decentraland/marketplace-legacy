@@ -202,6 +202,30 @@ export async function getPublication(req) {
   return publication
 }
 
+/**
+ * Returns the asset information by ID
+ * @param  {string} hexAssetId
+ * @return {object}
+ */
+app.get('/api/assets/:hexAssetId', server.handleRequest(getAssetId))
+
+export async function getAssetId(req) {
+  const hexAssetId = server.extractFromReq(req, 'hexAssetId')
+  const strAssetId = eth.utils.toBigNumber(hexAssetId).toString()
+  const parcel = await Parcel.findOne({ asset_id: strAssetId })
+
+  if (!parcel) {
+    throw new Error(`Could not find a valid asset for the ID "${strAssetId}"`)
+  }
+
+  const obj = utils.pick(parcel, ['id', 'owner', 'created_at', 'updated_at'])
+  obj.description = parcel.data.description
+  obj.name = parcel.data.name || `Parcel (${parcel.id})`
+  obj.img_url = `/api/parcels/${parcel.x}/${parcel.y}/preview`
+
+  return obj
+}
+
 /* Start the server only if run directly */
 if (require.main === module) {
   Promise.resolve()
