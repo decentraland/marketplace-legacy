@@ -74,7 +74,7 @@ export default class SettingsPage extends React.PureComponent {
 
     return (
       <div className="SettingsPage">
-        <Container content>
+        <Container>
           <div className="row">
             <div className="column">
               <AddressBlock

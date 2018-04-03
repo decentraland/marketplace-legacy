@@ -49,3 +49,10 @@
   font-size: 16px;
   margin-bottom: 1em;
 }
+
+.SettingsForm .mana {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}

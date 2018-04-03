@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { wallets, txUtils } from 'decentraland-commons'
 import Mana from 'components/Mana'
-import { Form, Checkbox } from 'semantic-ui-react'
+import { Form, Checkbox, Button } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
 import DerivationPathDropdown from './DerivationPathDropdown'
 
 import { getMarketplaceAddress } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
+import { locations } from 'locations'
 
 import './SettingsForm.css'
 
@@ -77,9 +79,16 @@ export default class SettingsForm extends React.PureComponent {
 
         <Form.Field>
           <label htmlFor="mana-balance">{t('global.balance')}</label>
-          <span id="mana-balance">
-            <Mana amount={balance} unit="MANA" />
-          </span>
+          <div className="mana">
+            <span id="mana-balance">
+              <Mana amount={balance} unit="MANA" />
+            </span>
+            <span className="mana-actions">
+              <Link to={locations.transferMana}>
+                <Button>Transfer</Button>
+              </Link>
+            </span>
+          </div>
         </Form.Field>
         <div className="authorization-checks">
           <label>{t('settings.authorization')}</label>
