@@ -39,6 +39,10 @@
   box-shadow: -20px -20px 41px 2px inset;
 }
 
+.HomePage .tutorial-link {
+  margin-top: 24px;
+}
+
 .HomePage .gap {
   height: calc(100vh - 460px);
   min-height: 125px;
