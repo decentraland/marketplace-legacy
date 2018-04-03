@@ -16,3 +16,23 @@
   text-align: center;
   margin-top: 50px;
 }
+
+.SettingsPage .row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.SettingsPage .column {
+  display: inline-block;
+  padding: 1em;
+}
+
+.SettingsPage form {
+  display: inline-block;
+}
+
+.SettingsPage .AddressBlock {
+  margin-right: 40px;
+  box-shadow: 0px 5px 15px 5px rgba(0, 0, 0, 0.3);
+}

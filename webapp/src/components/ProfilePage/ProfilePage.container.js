@@ -2,7 +2,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { PROFILE_PAGE_TABS } from 'locations'
 import { getLoading } from 'modules/address/selectors'
-import { getWallet } from 'modules/wallet/selectors'
+import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { navigateTo } from 'modules/location/actions'
@@ -59,7 +59,8 @@ const mapState = (state, { location, match }) => {
     pages,
     isLoading,
     isEmpty,
-    isOwner: wallet.address === address
+    isOwner: wallet.address === address,
+    isConnecting: isConnecting(state)
   }
 }
 

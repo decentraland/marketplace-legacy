@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { eth, Log } from 'decentraland-commons'
+import { env, eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
 import { StoreCli } from './StoreCli'
 import { db } from '../../src/database'
@@ -17,15 +17,25 @@ Promise.resolve()
   })
   .then(() => {
     log.debug('Connecting to Ethereum node')
-    return eth.connect()
+    return eth.connect({
+      providerUrl: env.get('RPC_URL')
+    })
   })
   .then(() => {
     log.debug('Starting CLI')
 
-    return new StoreCli(handlers, {
-      Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
-      LANDRegistry: ['Update', 'Transfer']
-    }).run()
+    return new StoreCli(
+      handlers,
+      {
+        Marketplace: [
+          'AuctionCreated',
+          'AuctionSuccessful',
+          'AuctionCancelled'
+        ],
+        LANDRegistry: ['Update', 'Transfer']
+      },
+      env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
+    ).run()
   })
   .catch(error => {
     log.error(error)

@@ -45,6 +45,7 @@
 .Transaction .transaction-icon {
   height: 100%;
   float: right;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {

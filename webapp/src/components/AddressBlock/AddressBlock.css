@@ -1,9 +1,9 @@
-.AddressLink {
+.AddressBlock {
   position: relative;
   display: inline-flex;
   flex: 1 0 auto;
 }
 
-.AddressLink .Blockie {
+.AddressBlock .Blockie {
   border-radius: 5px;
 }

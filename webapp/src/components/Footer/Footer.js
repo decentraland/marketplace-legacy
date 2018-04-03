@@ -36,6 +36,9 @@ export default class Footer extends React.PureComponent {
             <Link to="https://decentraland.org" target="_blank">
               {t('global.website')}
             </Link>
+            <Link to="https://docs.decentraland.org" target="_blank">
+              FAQ
+            </Link>
             <Link to={locations.colorKey}>{t('footer.color_key')}</Link>
             <Link to={locations.privacy}>{t('footer.privacy_policy')}</Link>
             <Link to={locations.terms}>{t('footer.terms')}</Link>

@@ -19,8 +19,10 @@ function getDirname() {
   return path.dirname(require.main.filename)
 }
 
-function parseCLICoords(coords) {
-  return coords
+function parseCLICoords(coord) {
+  if (!coord) throw new Error('You need to supply a coordinate')
+
+  return coord
     .replace('(', '')
     .replace(')', '')
     .split(/\s*,\s*/)

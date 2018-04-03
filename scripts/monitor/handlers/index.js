@@ -6,7 +6,7 @@ const log = new Log('handlers')
 export async function store(eventData) {
   if (eventData.removed) return
 
-  const { event, transactionHash, blockNumber, logIndex } = eventData
+  const { event, transactionHash, blockNumber, logIndex, args } = eventData
 
   const exists = await BlockchainEvent.count({
     tx_hash: transactionHash,
@@ -19,23 +19,22 @@ export async function store(eventData) {
   }
   log.info(`[${event}] Storing blockchain event ${transactionHash}`)
 
-  const args = Object.keys(eventData.args).reduce(
-    (memo, key) =>
-      Object.assign(memo, {
-        [key]: eventData.args[key].toString()
-      }),
-    {}
-  )
-
   await BlockchainEvent.insert({
     tx_hash: transactionHash,
     name: event,
     block_number: blockNumber,
     log_index: logIndex,
-    args
+    args: transformArgValuesToString(args)
   })
 
   return event
+}
+
+function transformArgValuesToString(args) {
+  return Object.keys(args).reduce((memo, key) => {
+    memo[key] = args[key].toString()
+    return memo
+  }, {})
 }
 
 export * from './HandlersIndex'

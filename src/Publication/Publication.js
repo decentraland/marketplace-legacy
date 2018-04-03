@@ -6,6 +6,7 @@ export class Publication extends Model {
   static columnNames = [
     'tx_hash',
     'tx_status',
+    'block_number',
     'status',
     'x',
     'y',

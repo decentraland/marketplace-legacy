@@ -24,6 +24,7 @@
     "authorized": "Autorizado",
     "unauthorized": "No autorizado",
     "wallet_address": "Dirección de billetera",
+    "balance": "Balance",
     "for": "para",
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
@@ -142,9 +143,8 @@
   },
   "parcel_cancel": {
     "cancel_land": "Cancelar la venta de LAND",
-    "currently_on_sale": "está actualmente en venta por {value}.",
-    "about_to_cancel": "Estas por cancelar esta venta.",
-    "not_for_sale": "no está para la venta."
+    "about_to_cancel": "Estás por cancelar la venta de {parcel}.",
+    "not_for_sale": "La parcela {parcel} no está en venta."
   },
   "activity": {
     "no_activity": "No tienes actividad por el momento.",
@@ -200,7 +200,8 @@
     "you_authorized":
       "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
     "authorize":
-      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta"
+      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "authorization": "Autorización"
   },
   "derivation_path": {
     "supported":
@@ -234,6 +235,7 @@
     "hero_title": "Elige tu ubicación ideal en Genesis City",
     "hero_subtitle": "Mercado de LAND de Decentraland. Sin comisiones.",
     "get_started": "Comenzar",
+    "watch_tutorial": "Mira el tutorial",
     "newest_lands": "Nuevas LAND",
     "view_more": "Ver Más"
   }

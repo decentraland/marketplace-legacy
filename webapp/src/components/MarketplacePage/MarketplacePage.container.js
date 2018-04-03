@@ -21,6 +21,7 @@ const mapState = (state, { location }) => {
     sortOrder,
     page,
     pages: Math.ceil(total / PAGE_SIZE),
+    total,
     isEmpty: publications.length === 0,
     publications,
     isLoading: isLoading(state)

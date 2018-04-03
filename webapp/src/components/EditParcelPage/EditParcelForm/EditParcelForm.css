@@ -1,5 +1,5 @@
-.EditParcelForm .ui.button {
-  padding: 12px 42px;
+.EditParcelForm {
+  min-width: 400px;
 }
 
 .EditParcelForm .ui.button + .ui.button {
