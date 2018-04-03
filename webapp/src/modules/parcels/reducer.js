@@ -16,6 +16,7 @@ import {
 } from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
+import { FETCH_PARCEL_PUBLICATIONS_SUCCESS } from 'modules/publication/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'lib/utils'
@@ -38,13 +39,14 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_PARCEL_SUCCESS: {
       const parcelId = action.parcel.id
+      const parcel = state.data[parcelId]
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
-          [parcelId]: cleanParcel(action.parcel, state.data)
+          [parcelId]: cleanParcel(action.parcel, parcel)
         }
       }
     }
@@ -97,6 +99,25 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           [parcel.id]: { ...parcel }
+        }
+      }
+    }
+    case FETCH_PARCEL_PUBLICATIONS_SUCCESS: {
+      const { x, y, publications } = action
+      const parcelId = buildCoordinate(x, y)
+      const parcel = state.data[parcelId]
+
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        data: {
+          ...state.data,
+          [parcelId]: {
+            ...parcel,
+            publication_tx_hash_history: publications.map(
+              publication => publication.tx_hash
+            )
+          }
         }
       }
     }
@@ -160,14 +181,20 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           // set publication_tx_hash
           const { x, y, tx_hash } = transaction.payload
           const parcelId = buildCoordinate(x, y)
+
           if (parcelId in state.data) {
+            const parcel = state.data[parcelId]
             return {
               ...state,
               data: {
                 ...state.data,
                 [parcelId]: {
-                  ...state.data[parcelId],
-                  publication_tx_hash: tx_hash
+                  ...parcel,
+                  publication_tx_hash: tx_hash,
+                  publication_tx_hash_history: [
+                    tx_hash,
+                    ...parcel.publication_tx_hash_history
+                  ]
                 }
               }
             }

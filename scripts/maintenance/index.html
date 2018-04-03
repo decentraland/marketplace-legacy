@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" class="gr__market_decentraland_org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <link rel="shortcut icon" href="https://market.decentraland.org/favicon.ico">
+  <title>Decentraland - LAND Marketplace</title>
+  <style type="text/css">
+    :root {
+      --primary: #ff4130;
+      --secondary: #00dbef;
+
+      --text: #ffffff;
+      --background: #1f2333;
+
+      --light-gray: #ededed;
+      --gray: #8f9199;
+      --dark-gray: #2e3447;
+
+      --light-green: #d1eee6;
+      --green: #30d7a9;
+      --dark-green: #2e7d32;
+
+      --light-red: #ff9990;
+      --red: #ff4130;
+      --dark-red: #9f1a10;
+
+      --yellow: #f2be24;
+
+      --orange: #ef6c00;
+
+      --light-blue: #00dbef;
+      --blue: #1976d2;
+
+      --purple: #3e396b;
+      --dark-purple: #5d5890;
+
+      --navbar-height: 94px;
+      --footer-height: 80px;
+
+      --font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 500;
+      line-height: 1.1;
+      color: inherit;
+    }
+
+    a,
+    .link {
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    a:hover,
+    .link:hover {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    #app {
+      height: 100%;
+    }
+
+    .fade {
+      opacity: 0;
+      -webkit-transition: opacity 0.15s linear;
+      -o-transition: opacity 0.15s linear;
+      transition: opacity 0.15s linear;
+    }
+    .fade.in {
+      opacity: 1;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .pull-left {
+      float: left;
+    }
+
+    @media (max-width: 767px) {
+      .hidden-xs {
+        display: none;
+      }
+    }
+
+    /* -----------------------------------------------------------------------
+      Form Elements */
+
+    label {
+      max-width: 100%;
+      margin-bottom: 5px;
+      font-weight: 400;
+      display: inline-block;
+    }
+
+    input[type='search'] {
+      box-sizing: border-box;
+    }
+
+    input[type='radio'],
+    input[type='checkbox'] {
+      margin: 5px 0 0;
+      margin-top: 1px \9;
+      line-height: normal;
+    }
+
+    input[type='file'] {
+      display: block;
+    }
+
+    input[type='range'] {
+      width: 100%;
+      display: block;
+    }
+
+    select[multiple],
+    select[size] {
+      height: auto;
+    }
+
+    input[type='file']:focus,
+    input[type='radio']:focus,
+    input[type='checkbox']:focus {
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px;
+    }
+
+    input[type='email'],
+    input[type='number'],
+    input[type='password'],
+    input[type='text'],
+    textarea {
+      border: 1px solid #eee;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 0.4px;
+      outline: none;
+    }
+
+    input[type='email']:focus,
+    input[type='number']:focus,
+    input[type='password']:focus,
+    input[type='text']:focus {
+      border-color: var(--primary);
+    }
+
+    input::-webkit-input-placeholder,
+    input[type='text']::-webkit-input-placeholder {
+      color: #9c9c9b;
+    }
+
+    button[disabled],
+    input[disabled] {
+      cursor: default;
+    }
+
+    button[disabled]:hover {
+      box-shadow: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* ------------
+      App */
+
+    #app {
+      background: linear-gradient(#1f2333, #0d0f17);
+    }
+
+    .Page {
+      height: calc(100% - var(--navbar-height));
+    }
+
+    .Page > div {
+      position: relative;
+      min-height: calc(100% - var(--footer-height));
+      padding-top: 30px;
+      padding-bottom: 30px;
+      background: linear-gradient(#1f2333, #0d0f17);
+    }
+
+    .StaticPage .content {
+      height: 75%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--text);
+    }
+
+    .StaticPageStreched .content {
+      margin: auto;
+      padding: 0 80px;
+      display: block;
+      text-align: left;
+    }
+
+    @media (max-width: 768px) {
+      .StaticPageStreched .content {
+        padding: 0 30px;
+      }
+    }
+
+    .StaticPage .content h2 {
+      margin-top: 0;
+      margin-bottom: 40px;
+      font-size: 28px;
+    }
+
+    .StaticPage .message {
+      height: 80%;
+      width: 100%;
+      max-width: 485px;
+      margin: auto;
+    }
+
+    .StaticPage .message p {
+      font-size: 16px;
+    }
+
+    .SignInPage h1 {
+      margin-top: 50px;
+    }
+
+    .SignInPage .sub {
+      color: var(--gray);
+    }
+
+    /* Footer */
+
+    .Footer {
+      height: var(--footer-height);
+      width: 100%;
+      font-size: 14px;
+      background-color: black;
+      display: flex;
+      flex-flow: row;
+    }
+
+    .Footer .social-icons a {
+      margin-right: 24px;
+      opacity: 0.5;
+      text-decoration: none;
+    }
+
+    .Footer .footer-column {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: space-evenly;
+      align-items: center;
+      flex: 1 0 auto;
+      padding: 0 20px 0px 85px;
+    }
+
+    .Footer .footer-column.left {
+      align-items: flex-start;
+    }
+
+    .Footer .footer-column.right {
+      align-items: flex-end;
+    }
+
+    .Footer .links {
+      opacity: 0.8;
+    }
+
+    .Footer .links a {
+      margin-right: 27px;
+      color: #8f919a;
+    }
+    .Footer .links a:last-child {
+      margin-right: 0;
+    }
+
+    .Footer .language {
+      margin-right: 27px;
+    }
+
+    .Footer .LocaleLink.active {
+      cursor: default;
+      color: var(--gray);
+    }
+
+    .Footer .copyright,
+    .Footer .mini-copyright {
+      color: var(--gray);
+      opacity: 0.5;
+    }
+
+    .Footer .language-dropdown {
+      min-width: 150px !important;
+      transform: scale(0.8) !important;
+    }
+
+    .Footer .ui.selection.language-dropdown.active {
+      z-index: 1040;
+    }
+
+    .Footer .mini-copyright {
+      display: none;
+    }
+
+    @media (max-width: 1080px) {
+      .Footer .copyright {
+        display: none;
+      }
+
+      .Footer .mini-copyright {
+        display: inline-block;
+      }
+    }
+
+    @media (max-width: 950px) {
+      .Footer {
+        flex-flow: column nowrap;
+      }
+
+      .Footer .footer-column {
+        align-items: center !important;
+      }
+
+      .Footer .social-icons {
+        display: none;
+      }
+
+      .Footer .footer-column.left {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .Footer .footer-column {
+        padding: 22px 20px;
+      }
+    }
+
+    /* Button */
+
+    .ui.button {
+      color: var(--primary);
+      margin: 0 auto;
+      padding: 10px 22px;
+      font-size: 16px;
+      border-radius: 50px;
+      line-height: 1.42857143;
+      border: 1px solid var(--red);
+      text-transform: uppercase;
+      background-color: transparent;
+      cursor: pointer;
+      font-weight: normal;
+      text-align: center;
+      vertical-align: middle;
+      background-image: none;
+      display: inline-block;
+    }
+
+    .ui.button.primary,
+    .ui.button.primary:focus,
+    .ui.button.primary:active {
+      background-color: var(--primary) !important;
+      color: #fff;
+      border: none;
+    }
+
+    .ui.button.primary:hover,
+    .ui.button.primary:focus,
+    .ui.button.primary:active {
+      box-shadow: 0 8px 30px var(--dark-red);
+    }
+
+    .ui.button:hover,
+    .ui.button:visited {
+      background-color: var(--primary);
+      color: #fff;
+    }
+
+    /* Icons */
+
+    .Icon {
+      background-position: 0 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      display: inline-block;
+    }
+
+    .Icon-decentraland {
+      width: 152px;
+      height: 152px;
+      background-image: url('https://market.decentraland.org/static/media/logo.b7751b3e.svg');
+    }
+
+    .Icon-twitter,
+    .Icon-rocketchat,
+    .Icon-github,
+    .Icon-reddit,
+    .Icon-facebook {
+      width: 16px;
+      height: 15px;
+      background-image: url('https://market.decentraland.org/static/media/social-icons.519eae4c.svg');
+    }
+
+    .Icon-twitter {
+      background-position: 0 0;
+    }
+    .Icon-rocketchat {
+      background-position: -40px 0;
+    }
+    .Icon-github {
+      background-position: -78px 0;
+    }
+    .Icon-reddit {
+      background-position: -114px 0;
+    }
+    .Icon-facebook {
+      background-position: -152px 0;
+    }
+
+    /* Navbar */
+
+    .Navbar {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      height: var(--navbar-height);
+      justify-content: center;
+      padding: 0px 40px;
+      background-color: var(--background);
+    }
+
+    @media (min-width: 500px) {
+      .Navbar {
+        min-width: 400px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .Navbar {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .Navbar {
+        padding: 0px 20px;
+      }
+    }
+  </style>
+</head>
+<body data-gr-c-s-loaded="true">
+  <div id="app">
+    <div class="Navbar" role="navigation"></div>
+    <div class="Page">
+      <div class="StaticPage SignInPage">
+        <div class="content">
+          <div class="message">
+            <i class="Icon Icon-decentraland"></i>
+            <h1>
+              Under site maintenance
+              <br/>
+              在网站维护
+            </h1>
+            <p class="sub">
+              We'll be right back!
+              <br/>
+              我们马上回来！
+              <br/>
+              :)
+            </p>
+<!--             <a href="/">
+              <button type="button" class="ui primary button" role="button">Refresh</button>
+            </a>
+ -->          </div>
+        </div>
+      </div>
+      <footer class="Footer">
+        <div class="footer-column left">
+          <div class="links">
+            <a target="_blank" href="https://blog.decentraland.org">Blog</a>
+            <a target="_blank" href="https://decentraland.org">Website</a>
+          </div>
+          <div class="social-icons">
+            <a target="_blank" href="https://twitter.com/decentraland/">
+              <i class=" Icon Icon-twitter"></i>
+            </a>
+            <a target="_blank" href="https://chat.decentraland.org/">
+              <i class=" Icon Icon-rocketchat"></i>
+            </a>
+            <a target="_blank" href="https://github.com/decentraland/">
+              <i class=" Icon Icon-github"></i>
+            </a>
+            <a target="_blank" href="https://reddit.com/r/decentraland/">
+              <i class=" Icon Icon-reddit"></i>
+            </a>
+            <a target="_blank" href="https://www.facebook.com/decentraland/">
+              <i class=" Icon Icon-facebook"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-column right"><span>
+          <span class="copyright">© 2018 Decentraland. All rights reserved.</span>
+          <span class="mini-copyright">© 2018 Decentraland.</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,7 +1,12 @@
 import { connect } from 'react-redux'
+import { goBack } from 'react-router-redux'
 
 import { getWallet } from 'modules/wallet/selectors'
-import { getLocation, isStaticPage } from 'modules/location/selectors'
+import {
+  getLocation,
+  isStaticPage,
+  isModalPage
+} from 'modules/location/selectors'
 import { getCenter } from 'modules/ui/selectors'
 import { isConnected } from 'modules/wallet/selectors'
 import { isLoading } from 'modules/ui/loading/selectors'
@@ -26,12 +31,14 @@ const mapState = state => {
     isStatic,
     isLoading: isLoading(state) || isLoadingParcels(state),
     isConnected: isConnected(state),
+    isModal: isModalPage(state),
     activityBadge: getPendingTransactions(state, wallet.address).length
   }
 }
 
 const mapDispatch = dispatch => ({
-  onNavigate: url => dispatch(navigateTo(url))
+  onNavigate: url => dispatch(navigateTo(url)),
+  onBack: () => dispatch(goBack())
 })
 
 export default connect(mapState, mapDispatch)(Navbar)

@@ -1,8 +1,8 @@
 import 'babel-polyfill'
 
 import chai from 'chai'
-
-import { env, utils } from 'decentraland-commons'
+import { env } from 'decentraland-commons'
+import { omitProps } from './utils'
 
 chai.use(require('chai-as-promised'))
 
@@ -30,17 +30,3 @@ chai.Assertion.addChainableMethod('equalRows', function(expectedRows) {
 
   return new chai.Assertion(expectedRows).to.deep.equal(actualRows)
 })
-
-function omitProps(obj, omittedProps) {
-  const newObj = utils.omit(obj, omittedProps)
-
-  for (const prop in newObj) {
-    const value = newObj[prop]
-
-    if (value !== null && typeof value === 'object') {
-      newObj[prop] = omitProps(value, omittedProps)
-    }
-  }
-
-  return newObj
-}

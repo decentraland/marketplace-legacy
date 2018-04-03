@@ -7,15 +7,16 @@ import Blockie from 'components/Blockie'
 import { shortenAddress } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
-import './AddressLink.css'
+import './AddressBlock.css'
 
-export default class AddressLink extends React.Component {
+export default class AddressBlock extends React.Component {
   static propTypes = {
     address: PropTypes.string.isRequired,
     link: PropTypes.string,
     size: PropTypes.number,
     scale: PropTypes.number,
     hasTooltip: PropTypes.bool,
+    hasLink: PropTypes.bool,
     isUser: PropTypes.bool,
     className: PropTypes.string
   }
@@ -25,6 +26,7 @@ export default class AddressLink extends React.Component {
     size: 6,
     scale: 3,
     hasTooltip: true,
+    hasLink: true,
     className: ''
   }
 
@@ -35,13 +37,22 @@ export default class AddressLink extends React.Component {
       size,
       scale,
       hasTooltip,
+      hasLink,
       isUser,
       className
     } = this.props
 
+    if (address == null) {
+      return null
+    }
+
+    const blockie = (
+      <Blockie seed={address.toLowerCase()} size={size} scale={scale} />
+    )
+
     return (
       <div
-        className={`AddressLink ${className}`}
+        className={`AddressBlock ${className}`}
         data-balloon-pos="up"
         data-balloon={
           hasTooltip
@@ -49,10 +60,12 @@ export default class AddressLink extends React.Component {
             : null
         }
       >
-        {address && (
+        {hasLink ? (
           <Link to={link ? link : locations.profilePage(address)}>
-            <Blockie seed={address.toLowerCase()} size={size} scale={scale} />
+            {blockie}
           </Link>
+        ) : (
+          blockie
         )}
       </div>
     )

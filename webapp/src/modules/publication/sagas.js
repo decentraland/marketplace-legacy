@@ -3,11 +3,14 @@ import { push } from 'react-router-redux'
 import { eth } from 'decentraland-commons'
 import {
   FETCH_PUBLICATIONS_REQUEST,
+  FETCH_PARCEL_PUBLICATIONS_REQUEST,
   PUBLISH_REQUEST,
   BUY_REQUEST,
   CANCEL_SALE_REQUEST,
   fetchPublicationsSuccess,
   fetchPublicationsFailure,
+  fetchParcelPublicationsSuccess,
+  fetchParcelPublicationsFailure,
   publishSuccess,
   publishFailure,
   buySuccess,
@@ -20,6 +23,10 @@ import { api } from 'lib/api'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
+  yield takeEvery(
+    FETCH_PARCEL_PUBLICATIONS_REQUEST,
+    handleParcelPublicationsRequest
+  )
   yield takeEvery(PUBLISH_REQUEST, handlePublishRequest)
   yield takeEvery(BUY_REQUEST, handleBuyRequest)
   yield takeEvery(CANCEL_SALE_REQUEST, handleCancelSaleRequest)
@@ -34,6 +41,17 @@ function* handlePublicationsRequest(action) {
     yield put(fetchPublicationsSuccess(publications, total))
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
+  }
+}
+
+function* handleParcelPublicationsRequest(action) {
+  try {
+    const { x, y } = action
+    const publications = yield call(() => api.fetchParcelPublications(x, y))
+
+    yield put(fetchParcelPublicationsSuccess(publications, x, y))
+  } catch (error) {
+    yield put(fetchParcelPublicationsFailure(error.message))
   }
 }
 
@@ -71,7 +89,6 @@ function* handleBuyRequest(action) {
     const landRegistryContract = eth.getContract('LANDRegistry')
 
     const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
-
     const txHash = yield call(() =>
       marketplaceContract.executeOrder(assetId, eth.utils.toWei(price))
     )
@@ -91,7 +108,6 @@ function* handleCancelSaleRequest(action) {
     const landRegistryContract = eth.getContract('LANDRegistry')
 
     const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
-
     const txHash = yield call(() => marketplaceContract.cancelOrder(assetId))
 
     yield put(cancelSaleSuccess(txHash, action.publication))

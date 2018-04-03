@@ -4,18 +4,18 @@
   align-items: center;
   height: var(--navbar-height);
   justify-content: center;
-  padding: 0px 40px;
+  padding: 0px 25px;
   background-color: var(--background);
 }
 
 .Navbar .navbar-header {
   position: absolute;
-  left: 40px;
+  left: 25px;
 }
 
 .Navbar .navbar-account {
   position: absolute;
-  right: 40px;
+  right: 25px;
   display: flex;
   align-items: center;
 }
@@ -25,14 +25,27 @@
   width: 56px;
   height: 56px;
   float: left;
+  background-color: #d7d1c7;
+  border-radius: 30px;
+}
+
+.Navbar .navbar-back {
+  color: white;
+  background-color: var(--dark-gray);
+  padding: 18px 14px;
+  border-radius: 36px;
+  width: 56px;
+  height: 56px;
+  display: block;
+  cursor: pointer;
 }
 
 .Navbar .navbar-icon .Icon-decentraland-loading {
-  width: 74px;
-  height: 74px;
+  width: 77px;
+  height: 77px;
   position: absolute;
-  top: -9px;
-  left: -9px;
+  top: -10px;
+  left: -11px;
 }
 
 .Navbar .navbar-logo > h1 {
@@ -44,8 +57,11 @@
 }
 
 .Navbar .navbar-logo .Icon-decentraland {
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
+  left: -1px;
+  top: -1px;
+  position: relative;
 }
 
 .Navbar .navbar-menu .item,
@@ -75,7 +91,7 @@
   position: relative;
   width: 43px;
   height: 33px;
-  margin-right: 10px !important;
+  margin-right: 30px !important;
   margin-bottom: 0px;
 }
 
@@ -107,7 +123,7 @@
     justify-content: flex-start;
   }
 
-  .Navbar .navbar-header {
+  .Navbar .navbar-header:not(.navbar-modal) {
     display: none;
   }
 

@@ -19,7 +19,7 @@
   color: var(--gray);
 }
 
-.ParcelOwner .AddressLink {
+.ParcelOwner .AddressBlock {
   height: 24px;
   margin-left: 10px;
 }

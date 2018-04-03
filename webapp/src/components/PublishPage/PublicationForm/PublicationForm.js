@@ -106,7 +106,7 @@ export default class PublicationForm extends React.PureComponent {
         x: parcel.x,
         y: parcel.y,
         expires_at: new Date(expiresAt).getTime(),
-        price
+        price: parseFloat(price, 10)
       })
     } else {
       this.setState({ formErrors })
@@ -169,7 +169,7 @@ export default class PublicationForm extends React.PureComponent {
           </Message>
         ) : null}
         <br />
-        <div className="text-center">
+        <div>
           <Button disabled={isPending} onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>

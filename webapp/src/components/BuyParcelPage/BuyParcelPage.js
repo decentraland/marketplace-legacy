@@ -1,20 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import {
-  Loader,
-  Container,
-  Header,
-  Grid,
-  Button,
-  Message
-} from 'semantic-ui-react'
-import ParcelName from 'components/ParcelName'
+import { Loader, Container, Header, Grid, Message } from 'semantic-ui-react'
+import ParcelModal from 'components/ParcelModal'
 import Parcel from 'components/Parcel'
 import Mana from 'components/Mana'
 import { walletType } from 'components/types'
 import { locations } from 'locations'
-import { formatMana } from 'lib/utils'
+import { formatMana, buildCoordinate } from 'lib/utils'
 import { t, t_html } from 'modules/translation/utils'
 
 import './BuyParcelPage.css'
@@ -139,55 +132,38 @@ export default class BuyParcelPage extends React.PureComponent {
         {(parcel, isOwner) => (
           <div className="BuyParcelPage">
             {this.renderMessage(isNotEnoughMana, isNotEnoughApproved)}
-            <Container text textAlign="center">
-              <Header as="h2" size="huge" className="title">
-                {t('parcel_buy.buy_land')}
-              </Header>
-              <span className="subtitle">
-                {t_html('parcel_buy.about_to_buy', {
-                  parcel_name: <ParcelName parcel={parcel} />,
-                  parcel_price: publication ? (
-                    <React.Fragment>
-                      &nbsp;{t('global.for')}&nbsp;&nbsp;
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          transform: 'translateY(5px)'
-                        }}
-                      >
-                        <Mana
-                          amount={parseFloat(publication.price, 10)}
-                          size={18}
-                        />
-                      </span>
-                    </React.Fragment>
-                  ) : (
-                    ''
-                  )
-                })}
-              </span>
-            </Container>
-            <br />
-            <Container text>
-              <Grid.Column className="text-center">
-                <Button onClick={onCancel} type="button">
-                  {t('global.cancel')}
-                </Button>
-                <Button
-                  onClick={this.handleConfirm}
-                  type="button"
-                  primary
-                  disabled={
-                    isDisabled ||
-                    isOwner ||
-                    isNotEnoughMana ||
-                    isNotEnoughApproved
-                  }
-                >
-                  {t('global.confirm')}
-                </Button>
-              </Grid.Column>
-            </Container>
+            <ParcelModal
+              x={x}
+              y={y}
+              title={t('parcel_buy.buy_land')}
+              subtitle={t_html('parcel_buy.about_to_buy', {
+                parcel_name: (
+                  <Link to={locations.parcelDetail(x, y)}>
+                    {buildCoordinate(x, y)}
+                  </Link>
+                ),
+                parcel_price: publication ? (
+                  <React.Fragment>
+                    &nbsp;{t('global.for')}&nbsp;&nbsp;
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        transform: 'translateY(3px)'
+                      }}
+                    >
+                      <Mana amount={publication.price} size={14} />
+                    </span>
+                  </React.Fragment>
+                ) : (
+                  ''
+                )
+              })}
+              onCancel={onCancel}
+              onConfirm={this.handleConfirm}
+              isDisabled={
+                isDisabled || isOwner || isNotEnoughMana || isNotEnoughApproved
+              }
+            />
           </div>
         )}
       </Parcel>

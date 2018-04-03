@@ -24,6 +24,7 @@
     "authorized": "Autorisé",
     "unauthorized": "Non autorisé",
     "wallet_address": "Adresse du porte-feuille",
+    "balance": "Balance",
     "for": "pour",
     "sign_in": "Se connecter",
     "sign_in_notice":
@@ -144,9 +145,8 @@
   },
   "parcel_cancel": {
     "cancel_land": "Annuler la vente de la LAND",
-    "currently_on_sale": "est actuellement en vente pour {value}.",
-    "about_to_cancel": "Vous êtes sur le point d'annuler cette vente.",
-    "not_for_sale": "n'est pas à vendre"
+    "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {parcel}.",
+    "not_for_sale": "La parcelle {parcel} n'est pas à vendre."
   },
   "activity": {
     "no_activity": "Vous n'avez pas encore d'activité.",
@@ -205,7 +205,8 @@
     "you_authorized":
       "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom.",
     "authorize":
-      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom."
+      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
+    "authorization": "Autorisation"
   },
   "derivation_path": {
     "supported":
@@ -239,6 +240,7 @@
     "hero_title": "Choisissez votre emplacement idéal à Genesis City",
     "hero_subtitle": "Marché décentralisé pour LAND. Zéro frais.",
     "get_started": "Commencer",
+    "watch_tutorial": "Regarder le tutoriel",
     "newest_lands": "Les plus récents LAND",
     "view_more": "Afficher plus"
   }

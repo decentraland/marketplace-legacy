@@ -1,7 +1,3 @@
-.SettingsForm {
-  margin: 30px 0;
-}
-
 .SettingsForm .tx-pending .authorize-detail {
   font-style: italic;
 }
@@ -11,23 +7,45 @@
 }
 
 .SettingsForm.form .field > label,
-.SettingsForm .ui.dropdown>.text {
+.SettingsForm .ui.dropdown > .text {
   font-size: 16px;
 }
 
 .SettingsForm.form .ui.checkbox {
-  margin-top: 5px;
+  margin-top: 1px;
   margin-right: 10px;
   float: left;
 }
 
 .SettingsForm .authorize-detail {
-  font-size: 18px;
-  margin-bottom: 0;
+  font-size: 16px;
   overflow: hidden;
+  display: inline;
 }
 
 .SettingsForm .TxStatusText {
   font-size: 16px;
   font-style: italic;
+}
+
+.SettingsForm .Mana {
+  font-size: 16px !important;
+  margin-top: 8px;
+}
+
+.SettingsForm #wallet-address {
+  color: white;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.SettingsForm .authorization-checks {
+  margin: 50px 0px;
+}
+
+.SettingsForm .authorization-checks label {
+  color: var(--gray);
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 1em;
 }

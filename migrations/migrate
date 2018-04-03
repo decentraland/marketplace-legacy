@@ -4,7 +4,7 @@ require('babel-polyfill')
 
 const { spawn } = require('child_process')
 const { env } = require('decentraland-commons')
-const { loadEnv, resolve } = require('../scripts/utils')
+const { loadEnv, resolvePath } = require('../scripts/utils')
 
 let CONNECTION_STRING = process.env.CONNECTION_STRING
 
@@ -19,7 +19,7 @@ if (!CONNECTION_STRING) {
 }
 
 const child = spawn(
-  resolve('./node-pg-migrate'),
+  resolvePath('./node-pg-migrate'),
   [
     '--database-url-var',
     'CONNECTION_STRING',

@@ -1,43 +1,40 @@
-import { env, eth, txUtils, contracts, Log } from 'decentraland-commons'
-import { decodeAssetId } from './utils'
+import { eth, txUtils, contracts, Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
-const log = new Log('persistEvents')
+const log = new Log('processEvents')
 
-export async function persistEvents(lastBlockNumber = null, delay) {
-  delay = delay || env.get('PERSIST_EVENTS_DELAY', 2500)
-
-  if (lastBlockNumber === null || lastBlockNumber === 'latest') {
-    const lastBlockEvent = await BlockchainEvent.findLast()
-    lastBlockNumber = lastBlockEvent ? lastBlockEvent.block_number : 0
+export async function processEvents(fromBlock) {
+  if (fromBlock === 'latest') {
+    fromBlock = await BlockchainEvent.findLastBlockNumber()
+  } else if (fromBlock == null) {
+    fromBlock = 0
   }
 
-  const blockchainEvents = await BlockchainEvent.findFrom(+lastBlockNumber + 1)
-  let i = 0
+  const allBlockchainEvents = await BlockchainEvent.findFrom(fromBlock)
+  const blockchainEvents = allBlockchainEvents.filter(
+    event => !eventCache.get(event)
+  )
 
   if (blockchainEvents.length) {
-    log.info(`Persisting events starting from block ${lastBlockNumber}`)
+    log.info(`Persisting ${blockchainEvents.length} events`)
 
-    for (; i < blockchainEvents.length; i++) {
-      log.info(`Processing ${i + 1}/${blockchainEvents.length} events`)
-      await processEvent(blockchainEvents[i])
+    for (const event of blockchainEvents) {
+      await processEvent(event)
+      eventCache.set(event)
     }
-
-    lastBlockNumber = blockchainEvents[i - 1].block_number
   } else {
-    log.info(`No new events to persist from block ${lastBlockNumber}`)
+    const lastBlockNumber = await BlockchainEvent.findLastBlockNumber()
+    log.info(`No new events to persist. Last DB block: ${lastBlockNumber}`)
   }
-
-  setTimeout(() => persistEvents(lastBlockNumber, delay), delay)
 }
 
 export async function processEvent(event) {
   const { tx_hash, block_number, name } = event
   const { assetId } = event.args
-  const parcelId = await decodeAssetId(assetId)
+  const parcelId = await Parcel.decodeAssetId(assetId)
   const [x, y] = Parcel.splitId(parcelId)
 
   switch (name) {
@@ -73,6 +70,7 @@ export async function processEvent(event) {
           price: eth.utils.fromWei(priceInWei),
           expires_at: new Date(parseInt(expiresAt, 10)),
           tx_hash,
+          block_number,
           contract_id,
           x,
           y
@@ -150,4 +148,22 @@ export async function processEvent(event) {
   }
 
   return event
+}
+
+const eventCache = {
+  _values: {
+    // [hash+name]: value
+  },
+  get(event) {
+    return eventCache._values[eventCache.getKey(event)]
+  },
+  set(event) {
+    eventCache._values[eventCache.getKey(event)] = true
+  },
+  getKey(event) {
+    return event.tx_hash + event.name
+  },
+  size() {
+    return Object.keys(eventCache._values).length
+  }
 }

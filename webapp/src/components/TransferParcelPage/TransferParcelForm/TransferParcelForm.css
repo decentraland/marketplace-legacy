@@ -1,9 +1,14 @@
-.TransferParcelForm .ui.button {
-  padding: 12px 42px;
-}
-
 .TransferParcelForm .ui.button + .ui.button {
   margin-left: 20px;
+}
+
+.TransferParcelForm .ui.input.address-input {
+  max-width: 450px !important;
+  display: block;
+}
+
+.TransferParcelForm .ui.input.address-input input {
+  width: 100% !important;
 }
 
 .TransferParcelForm .transfer-warning {

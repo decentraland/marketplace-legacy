@@ -8,10 +8,9 @@ import { Parcel } from '../src/Parcel'
 import { District } from '../src/District'
 import { Contribution } from '../src/Contribution'
 import { renewBlockchainData } from './renewBlockchainData'
-import { loadEnv, resolve } from './utils'
+import { loadEnv, runpsql } from './utils'
 
 const log = new Log('init')
-const runpsql = filename => `psql $CONNECTION_STRING -f ${resolve(filename)}`
 
 export async function initializeDatabase() {
   const shouldContinue = await cli.confirm(
@@ -74,6 +73,7 @@ async function normalizeParcelStates() {
       x: parcelState.x,
       y: parcelState.y,
       auction_price: parcelState.amount,
+      auction_owner: parcelState.address,
       district_id: parcelState.projectId,
       created_at: parcelState.createdAt,
       updated_at: parcelState.updatedAt

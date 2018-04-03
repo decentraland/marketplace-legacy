@@ -64,7 +64,9 @@ export default class ParcelDetail extends React.PureComponent {
         </Grid.Row>
         {isOwner ? (
           <Grid.Row>
-            <ParcelActions parcel={parcel} />
+            <Grid.Column>
+              <ParcelActions parcel={parcel} />
+            </Grid.Column>
           </Grid.Row>
         ) : null}
         {publication ? (

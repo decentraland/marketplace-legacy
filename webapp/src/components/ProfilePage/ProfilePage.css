@@ -42,7 +42,7 @@
   color: #aaa;
 }
 
-.ProfilePage .profile-owner .AddressLink {
+.ProfilePage .profile-owner .AddressBlock {
   height: 25px;
   margin-left: 5px;
 }
@@ -54,6 +54,23 @@
 
 .ProfilePage .label.active {
   background-color: var(--red) !important;
+}
+
+.ProfilePage .profile-header > div {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.ProfilePage .profile-header .AddressBlock {
+  flex: none;
+}
+
+.ProfilePage .profile-header .profile-address {
+  color: white;
+  font-size: 20px;
+  margin-left: 20px;
 }
 
 @media (max-width: 768px) {

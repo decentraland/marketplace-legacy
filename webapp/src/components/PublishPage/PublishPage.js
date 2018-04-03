@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
-import { Container, Header, Grid, Message } from 'semantic-ui-react'
+import { Container, Message } from 'semantic-ui-react'
 import PublicationForm from './PublicationForm'
-import ParcelName from 'components/ParcelName'
 import Parcel from 'components/Parcel'
+import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 
 import { publicationType, walletType } from 'components/types'
 import { isOpen } from 'modules/publication/utils'
 import { t, t_html } from 'modules/translation/utils'
 
-import { formatMana } from 'lib/utils'
+import { formatMana, buildCoordinate } from 'lib/utils'
 
 import './PublishPage.css'
 
@@ -66,30 +66,29 @@ export default class PublishPage extends React.PureComponent {
                 />
               </Container>
             ) : null}
-            <Container text textAlign="center">
-              <Header as="h2" size="huge" className="title">
-                {t('parcel_publish.list_land')}
-              </Header>
-              <span className="subtitle">
-                {t_html('parcel_publish.set_land_price', {
-                  parcel_name: <ParcelName parcel={parcel} />
-                })}
-              </span>
-            </Container>
-            <br />
-            <Container text>
-              <Grid.Column>
-                <PublicationForm
-                  parcel={parcel}
-                  publication={publication}
-                  isTxIdle={isTxIdle}
-                  onPublish={onPublish}
-                  onCancel={onCancel}
-                  isDisabled={!isLandAuthorized}
-                />
-                <TxStatus.Parcel parcel={parcel} />
-              </Grid.Column>
-            </Container>
+            <ParcelModal
+              x={x}
+              y={y}
+              title={t('parcel_publish.list_land')}
+              subtitle={t_html('parcel_publish.set_land_price', {
+                parcel_name: (
+                  <Link to={locations.parcelDetail(x, y)}>
+                    {buildCoordinate(x, y)}
+                  </Link>
+                )
+              })}
+              hasCustomFooter
+            >
+              <PublicationForm
+                parcel={parcel}
+                publication={publication}
+                isTxIdle={isTxIdle}
+                onPublish={onPublish}
+                onCancel={onCancel}
+                isDisabled={!isLandAuthorized}
+              />
+              <TxStatus.Parcel parcel={parcel} />
+            </ParcelModal>
           </div>
         )}
       </Parcel>

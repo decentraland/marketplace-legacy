@@ -65,7 +65,7 @@ export async function getParcels(req) {
   const se = server.extractFromReq(req, 'se')
   const parcels = await Parcel.inRange(nw, se)
 
-  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
+  return utils.mapOmit(parcels, ['asset_id', 'created_at', 'updated_at'])
 }
 
 /**
@@ -101,7 +101,7 @@ export async function getAddressParcels(req) {
   const address = server.extractFromReq(req, 'address')
   const parcels = await Parcel.findByOwner(address.toLowerCase())
 
-  return utils.mapOmit(parcels, ['created_at', 'updated_at'])
+  return utils.mapOmit(parcels, ['asset_id', 'created_at', 'updated_at'])
 }
 
 /**
