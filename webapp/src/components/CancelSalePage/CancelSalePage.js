@@ -7,8 +7,6 @@ import { buildCoordinate } from 'lib/utils'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 
-import './CancelSalePage.css'
-
 export default class CancelSalePage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,

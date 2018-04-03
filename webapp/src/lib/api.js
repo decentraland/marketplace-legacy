@@ -1,8 +1,7 @@
 import axios from 'axios'
 
-import { env, Log } from 'decentraland-commons'
+import { env } from 'decentraland-commons'
 
-const log = new Log('API')
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
 const FILTER_DEFAULTS = {
@@ -67,8 +66,6 @@ export class API {
         options.data = params
       }
     }
-
-    // log.debug(`${method} ${path}`, options)
 
     return httpClient
       .request(options)
