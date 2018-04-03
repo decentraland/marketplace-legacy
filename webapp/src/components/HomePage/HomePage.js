@@ -24,6 +24,9 @@ export default class HomePage extends React.PureComponent {
           <Link to={locations.parcelMapDetail(0, 0)}>
             <Button primary>{t('homepage.get_started')}</Button>
           </Link>
+          <a className="tutorial-link" href="https://youtu.be/uyuaN1OdOh4">
+            {t('homepage.watch_tutorial')}
+          </a>
         </div>
         <Container className="publications">
           <div className="gap" />
