@@ -5,7 +5,7 @@ import { Container } from 'semantic-ui-react'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
-import { districtType } from 'components/types'
+import { districtType, publicationType } from 'components/types'
 import { locations } from 'locations'
 import { t } from 'modules/translation/utils'
 
@@ -13,22 +13,43 @@ import './ParcelDetailPage.css'
 
 export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
-    error: PropTypes.string,
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
     districts: PropTypes.objectOf(districtType).isRequired,
+    publications: PropTypes.objectOf(publicationType),
+    onFetchParcelPublications: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
     onBuy: PropTypes.func.isRequired
+  }
+
+  componentWillMount() {
+    this.isAdditionalResourcesFetched = false
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
       return this.props.onError(nextProps.error)
     }
+
+    if (!nextProps.isLoading) {
+      this.fetchAdditionalParcelResources()
+    }
+  }
+
+  fetchAdditionalParcelResources() {
+    if (!this.isAdditionalResourcesFetched) {
+      const { x, y, onFetchParcelPublications } = this.props
+      onFetchParcelPublications(x, y)
+
+      this.isAdditionalResourcesFetched = true
+    }
   }
 
   render() {
     const { x, y, error, districts, publications, onBuy } = this.props
+
     if (error) {
       return null
     }

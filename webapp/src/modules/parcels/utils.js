@@ -1,8 +1,9 @@
 import { buildCoordinate } from 'lib/utils'
 
-export function cleanParcel(parcel, ...allParcels) {
+export function cleanParcel(parcel, prevParcel) {
   const { publication, ...rest } = parcel
   return {
+    ...prevParcel,
     ...rest,
     publication_tx_hash: publication ? publication.tx_hash : null
   }
@@ -12,7 +13,7 @@ export function toParcelObject(parcelsArray, prevParcels) {
   return connectParcels(
     parcelsArray,
     parcelsArray.reduce((map, parcel) => {
-      map[parcel.id] = cleanParcel(parcel, prevParcels, map)
+      map[parcel.id] = cleanParcel(parcel, prevParcels[parcel.id])
       return map
     }, {})
   )

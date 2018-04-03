@@ -11,6 +11,7 @@ export class Parcel extends Model {
     'y',
     'asset_id',
     'auction_price',
+    'auction_owner',
     'owner',
     'data',
     'district_id'
