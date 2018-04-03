@@ -215,7 +215,7 @@ export async function getAssetId(req) {
   const parcel = await Parcel.findOne({ asset_id: strAssetId })
 
   if (!parcel) {
-    throw new Error(`Could not find a valid asset for the ID "${strAssetId}"`)
+    throw new Error(`Could not find a valid asset for the ID "${hexAssetId}"`)
   }
 
   const obj = utils.pick(parcel, ['id', 'owner', 'created_at', 'updated_at'])
