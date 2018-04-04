@@ -208,6 +208,13 @@
       "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
     "authorization": "Autorisation"
   },
+  "transfer_mana": {
+    "title": "Transférer MANA",
+    "action": "Transférer",
+    "current_balance": "Votre solde actuel est {balance}",
+    "irreversible": "Chaque transfert de MANA est une opération irréversible.",
+    "own_address_warning": "C'est ta propre adresse!"
+  },
   "derivation_path": {
     "supported":
       "Nous ne prenons en charge que les chemins commençant par {paths} pour le moment"

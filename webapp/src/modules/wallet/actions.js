@@ -122,3 +122,7 @@ export function updateDerivationPath(derivationPath) {
     derivationPath
   }
 }
+
+// Clear error
+
+export const CLEAR_WALLET_ERROR = 'Clear Wallet Error'

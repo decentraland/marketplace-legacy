@@ -7,7 +7,9 @@ import {
   all,
   put
 } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
 import { eth } from 'decentraland-commons'
+import { locations } from 'locations'
 import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
@@ -127,9 +129,14 @@ function* handleTransferManaRequest(action) {
     const { address, mana } = action
     const manaTokenContract = eth.getContract('MANAToken')
 
-    const txHash = yield call(() => manaTokenContract.transfer(address, mana))
+    const manaWei = eth.utils.toWei(mana)
+
+    const txHash = yield call(() =>
+      manaTokenContract.transfer(address, manaWei)
+    )
 
     yield put(transferManaSuccess(txHash, address, mana))
+    yield put(push(locations.activity))
   } catch (error) {
     yield put(transferManaFailure(error.message))
   }

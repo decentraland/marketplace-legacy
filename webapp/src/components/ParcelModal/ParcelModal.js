@@ -7,13 +7,14 @@ import './ParcelModal.css'
 
 export default class ParcelModal extends React.PureComponent {
   static propTypes = {
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    x: PropTypes.number,
+    y: PropTypes.number,
     isDisabled: PropTypes.bool,
     hasCustomFooter: PropTypes.bool,
     cancelLabel: PropTypes.string,
     confirmLabel: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    preview: PropTypes.node
   }
 
   static defaultProps = {
@@ -35,15 +36,20 @@ export default class ParcelModal extends React.PureComponent {
       confirmLabel,
       onCancel,
       onConfirm,
+      preview,
       children
     } = this.props
 
     return (
       <div className="ParcelModal">
         <div className="modal-column">
-          <div className="modal-preview">
-            <ParcelPreview x={x} y={y} />
-          </div>
+          {preview ? (
+            preview
+          ) : (
+            <div className="modal-preview">
+              <ParcelPreview x={x} y={y} />
+            </div>
+          )}
         </div>
         <div className="modal-column">
           <div>

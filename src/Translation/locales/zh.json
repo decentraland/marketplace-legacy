@@ -187,6 +187,13 @@
     "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND",
     "authorization": "授权"
   },
+  "transfer_mana": {
+    "title": "转移MANA",
+    "action": "转让",
+    "current_balance": "您目前的余额是{balance}",
+    "irreversible": "请记住，转让MANA是一项不可逆转的行动。",
+    "own_address_warning": "这是你自己的地址！"
+  },
   "derivation_path": {
     "supported": "我们暂时只支持以{paths}开头的路径"
   },
