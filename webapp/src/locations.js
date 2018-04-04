@@ -27,10 +27,14 @@ export const locations = {
   transferLand: (x, y) => `/${x}/${y}/transfer`,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   transferMana: `/transfer-mana`,
 =======
   transferMana: `/settings/transfer`,
 >>>>>>> feat: added Transfer button on Settings page
+=======
+  transferMana: `/transfer-mana`,
+>>>>>>> feat: added UI
 
   parcel: '/:x/:y/detail',
   parcelDetail: (x, y) => `/${x}/${y}/detail`,
