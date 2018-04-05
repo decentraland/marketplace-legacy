@@ -129,29 +129,14 @@ function* handleTransferManaRequest(action) {
     const { address, mana } = action
     const manaTokenContract = eth.getContract('MANAToken')
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feat: added UI
     const manaWei = eth.utils.toWei(mana)
 
     const txHash = yield call(() =>
       manaTokenContract.transfer(address, manaWei)
     )
-<<<<<<< HEAD
 
     yield put(transferManaSuccess(txHash, address, mana))
     yield put(push(locations.activity))
-=======
-    const txHash = yield call(() => manaTokenContract.transfer(address, mana))
-
-    yield put(transferManaSuccess(txHash, address, mana))
->>>>>>> feat: transfer mana saga and activity
-=======
-
-    yield put(transferManaSuccess(txHash, address, mana))
-    yield put(push(locations.activity))
->>>>>>> feat: added UI
   } catch (error) {
     yield put(transferManaFailure(error.message))
   }
