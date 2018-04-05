@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { eth } from 'decentraland-commons'
 
-import { Button, Form, Input, Message } from 'semantic-ui-react'
+import { Button, Form, Input } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
