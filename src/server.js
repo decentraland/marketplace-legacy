@@ -140,9 +140,7 @@ app.get(
 
 export async function getAddressPublications(req) {
   const address = server.extractFromReq(req, 'address')
-  const publications = await Publication.findByOwner(address.toLowerCase())
-
-  return utils.mapOmit(publications, ['updated_at'])
+  return Publication.findByOwner(address.toLowerCase())
 }
 
 /**

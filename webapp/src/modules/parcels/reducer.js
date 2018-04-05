@@ -193,7 +193,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
                   publication_tx_hash: tx_hash,
                   publication_tx_hash_history: [
                     tx_hash,
-                    ...parcel.publication_tx_hash_history
+                    ...(parcel.publication_tx_hash_history || [])
                   ]
                 }
               }

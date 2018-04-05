@@ -35,6 +35,11 @@ export async function processEvent(event) {
   const { tx_hash, block_number, name } = event
   const { assetId } = event.args
   const parcelId = await Parcel.decodeAssetId(assetId)
+  if (!parcelId) {
+    // This only happens in dev, if there's a parcel in the DB that's outside of Genesis City
+    log.info(`parcelId for assetId "${assetId}" is null`)
+    return event
+  }
   const [x, y] = Parcel.splitId(parcelId)
 
   switch (name) {

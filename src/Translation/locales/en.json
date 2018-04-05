@@ -58,8 +58,8 @@
     "on_sale": "On Sale"
   },
   "publication": {
-    "expired_at": "Expired {time} ago",
-    "expires_in": "Expires in {time}",
+    "expired_at": "Expired {time}",
+    "expires_in": "Expires {time}",
     "expires_in_more_than_years": "Expires in over {years} years",
     "view": "View",
     "sold": "Sold",
