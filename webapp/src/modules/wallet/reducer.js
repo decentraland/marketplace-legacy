@@ -4,6 +4,7 @@ import {
   CONNECT_WALLET_FAILURE,
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
+  TRANSFER_MANA_SUCCESS,
   UPDATE_DERIVATION_PATH
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
@@ -70,13 +71,25 @@ export function walletReducer(state = INITIAL_STATE, action) {
               isLandAuthorized: transaction.payload.isAuthorized
             }
           }
+        case TRANSFER_MANA_SUCCESS: {
+          const mana = parseFloat(transaction.payload.mana, 10)
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              balance: state.data.balance - mana,
+              approvedBalance: state.data.approvedBalance - mana
+            }
+          }
+        }
         case BUY_SUCCESS: {
           const price = parseFloat(transaction.payload.price, 10)
           return {
             ...state,
             data: {
               ...state.data,
-              balance: state.data.balance - price
+              balance: state.data.balance - price,
+              approvedBalance: state.data.approvedBalance - price
             }
           }
         }

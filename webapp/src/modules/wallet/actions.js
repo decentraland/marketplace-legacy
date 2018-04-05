@@ -82,6 +82,36 @@ export function authorizeLandFailure(error) {
   }
 }
 
+// Approve MANA
+
+export const TRANSFER_MANA_REQUEST = '[Request] Transfer MANA'
+export const TRANSFER_MANA_SUCCESS = '[Success] Transfer MANA'
+export const TRANSFER_MANA_FAILURE = '[Failure] Transfer MANA'
+
+export function transferManaRequest(address, mana) {
+  return {
+    type: TRANSFER_MANA_REQUEST,
+    address,
+    mana
+  }
+}
+
+export function transferManaSuccess(txHash, address, mana) {
+  return {
+    type: TRANSFER_MANA_SUCCESS,
+    ...buildTransactionAction(txHash, { address, mana }),
+    address,
+    mana
+  }
+}
+
+export function transferManaFailure(error) {
+  return {
+    type: TRANSFER_MANA_FAILURE,
+    error
+  }
+}
+
 // Update derivation path
 
 export const UPDATE_DERIVATION_PATH = 'Update derivation path'
@@ -92,3 +122,7 @@ export function updateDerivationPath(derivationPath) {
     derivationPath
   }
 }
+
+// Clear error
+
+export const CLEAR_WALLET_ERROR = 'Clear Wallet Error'

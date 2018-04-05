@@ -19,6 +19,7 @@ import CancelSalePage from 'components/CancelSalePage'
 import ActivityPage from 'components/ActivityPage'
 import SettingsPage from 'components/SettingsPage'
 import SignInPage from 'components/SignInPage'
+import TransferManaPage from 'components/TransferManaPage'
 
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
@@ -49,6 +50,11 @@ export default class Routes extends React.Component {
         <Route exact path={locations.terms} component={TermsPage} />
         <Route exact path={locations.parcelMap} component={AtlasPage} />
         <Route exact path={locations.signIn} component={SignInPage} />
+        <Route
+          exact
+          path={locations.transferMana}
+          component={TransferManaPage}
+        />
         <Redirect to={locations.root} />
       </Switch>
     )

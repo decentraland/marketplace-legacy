@@ -7,11 +7,14 @@ import {
   all,
   put
 } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
 import { eth } from 'decentraland-commons'
+import { locations } from 'locations'
 import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
   AUTHORIZE_LAND_REQUEST,
+  TRANSFER_MANA_REQUEST,
   UPDATE_DERIVATION_PATH,
   connectWalletRequest,
   connectWalletSuccess,
@@ -19,7 +22,9 @@ import {
   approveManaSuccess,
   approveManaFailure,
   authorizeLandSuccess,
-  authorizeLandFailure
+  authorizeLandFailure,
+  transferManaSuccess,
+  transferManaFailure
 } from './actions'
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
@@ -32,6 +37,7 @@ export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
   yield takeLatest(APPROVE_MANA_REQUEST, handleApproveManaRequest)
   yield takeLatest(AUTHORIZE_LAND_REQUEST, handleAuthorizeLandRequest)
+  yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
   yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
 }
 
@@ -115,6 +121,24 @@ function* handleAuthorizeLandRequest(action) {
     yield put(authorizeLandSuccess(txHash, isAuthorized))
   } catch (error) {
     yield put(authorizeLandFailure(error.message))
+  }
+}
+
+function* handleTransferManaRequest(action) {
+  try {
+    const { address, mana } = action
+    const manaTokenContract = eth.getContract('MANAToken')
+
+    const manaWei = eth.utils.toWei(mana)
+
+    const txHash = yield call(() =>
+      manaTokenContract.transfer(address, manaWei)
+    )
+
+    yield put(transferManaSuccess(txHash, address, mana))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(transferManaFailure(error.message))
   }
 }
 

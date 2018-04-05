@@ -30,7 +30,7 @@ export default class Mana extends React.PureComponent {
   }
 
   render() {
-    const { size, scale, unit, disabled } = this.props
+    const { size, scale, unit, disabled, ...rest } = this.props
 
     const iconSize = Math.round(size * scale)
     const icon = this.props.icon || <Icon width={iconSize} height={iconSize} />
@@ -44,6 +44,7 @@ export default class Mana extends React.PureComponent {
         className={classes}
         style={style}
         title={amount ? `${amount} MANA` : ''}
+        {...rest}
       >
         {icon} {amount ? `${amount} ${unit}` : null}
       </span>

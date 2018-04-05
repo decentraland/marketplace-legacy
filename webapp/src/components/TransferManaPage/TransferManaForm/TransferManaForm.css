@@ -1,0 +1,25 @@
+.TransferManaForm {
+  min-width: 400px;
+}
+
+.TransferManaForm .ui.button + .ui.button {
+  margin-left: 20px;
+}
+
+.TransferManaForm .ui.input.address-input {
+  max-width: 450px !important;
+  display: block;
+}
+
+.TransferManaForm .ui.input.address-input input {
+  width: 100% !important;
+}
+
+.TransferManaForm .transfer-warning {
+  color: var(--gray);
+  font-style: italic;
+}
+
+.TransferManaForm .transfer-warning.error {
+  color: var(--red);
+}

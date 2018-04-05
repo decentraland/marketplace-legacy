@@ -88,7 +88,6 @@ export default class ActivityPage extends React.PureComponent {
     } else if (isEmpty) {
       content = this.renderEmpty()
     } else {
-      content = this.renderEmpty()
       content = this.renderTransactionLists()
     }
 

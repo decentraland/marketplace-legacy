@@ -156,6 +156,7 @@
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "authorize":
       "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
+    "transfer_mana": "You transfered {mana} MANA to {address_link}",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",
@@ -198,6 +199,14 @@
     "authorize":
       "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
     "authorization": "Authorization"
+  },
+  "transfer_mana": {
+    "title": "Transfer MANA",
+    "action": "Transfer",
+    "current_balance": "Your current balance is {balance}",
+    "irreversible":
+      "Remember that transferring MANA is an irreversible operation.",
+    "own_address_warning": "That's your own address!"
   },
   "derivation_path": {
     "supported":

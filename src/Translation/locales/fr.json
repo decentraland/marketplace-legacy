@@ -162,6 +162,7 @@
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "authorize":
       "Vous avez {action} la {marketplace_contract_link} à gérer les LANDs en votre nom",
+    "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}",
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
@@ -206,6 +207,13 @@
     "authorize":
       "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
     "authorization": "Autorisation"
+  },
+  "transfer_mana": {
+    "title": "Transférer MANA",
+    "action": "Transférer",
+    "current_balance": "Votre solde actuel est {balance}",
+    "irreversible": "Chaque transfert de MANA est une opération irréversible.",
+    "own_address_warning": "C'est ta propre adresse!"
   },
   "derivation_path": {
     "supported":

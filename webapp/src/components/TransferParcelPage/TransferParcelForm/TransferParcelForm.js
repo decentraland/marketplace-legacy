@@ -22,7 +22,7 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   static defaultProps = {
-    transferError: 'Error: bla'
+    transferError: null
   }
 
   constructor(props) {
@@ -79,78 +79,76 @@ export default class TransferParcelForm extends React.PureComponent {
     }`
 
     return (
-      <React.Fragment>
-        <Form
-          className="TransferParcelForm"
-          onSubmit={preventDefault(this.handleSubmit)}
-          error={!!transferError}
-        >
-          <Form.Field>
-            <label>{t('parcel_transfer.recipient_address')}</label>
-            <Input
-              id="address-input"
-              className={inputClassName}
-              type="text"
-              placeholder="0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
-              value={address}
-              onChange={this.handleAddressChange}
-              autoComplete="off"
-              autoFocus={true}
-            />
-            <span className="transfer-warning">
-              {t('parcel_transfer.irreversible')}
-            </span>
-            <br />
-            <span className="transfer-warning">
-              {t('parcel_transfer.check_address')}
-            </span>
-            <br />
-            {this.hasError() && (
-              <Message error onDismiss={this.handleClearFormErrors}>
-                {this.isExpectedError() ? (
-                  <React.Fragment>{transferError}</React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    {t('transfer_land.unknown_error')}
-                    <br />
-                    {t('transfer_land.error_persists', {
-                      community_chat_link: (
-                        <a
-                          href="https://chat.decentraland.org"
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          {t('global.community_chat')}
-                        </a>
-                      )
-                    })}
-                    <br />
-                    <div className="error-stack">{transferError}</div>
-                  </React.Fragment>
-                )}
-              </Message>
-            )}
-
-            <TxStatus.Idle isIdle={isTxIdle} />
-          </Form.Field>
-
+      <Form
+        className="TransferParcelForm"
+        onSubmit={preventDefault(this.handleSubmit)}
+        error={!!transferError}
+      >
+        <Form.Field>
+          <label>{t('parcel_transfer.recipient_address')}</label>
+          <Input
+            id="address-input"
+            className={inputClassName}
+            type="text"
+            placeholder="0x0f5d2fb29fb7d3cfee444a200298f468908cc942"
+            value={address}
+            onChange={this.handleAddressChange}
+            autoComplete="off"
+            autoFocus={true}
+          />
+          <span className="transfer-warning">
+            {t('parcel_transfer.irreversible')}
+          </span>
           <br />
+          <span className="transfer-warning">
+            {t('parcel_transfer.check_address')}
+          </span>
+          <br />
+          {this.hasError() && (
+            <Message error onDismiss={this.handleClearFormErrors}>
+              {this.isExpectedError() ? (
+                <React.Fragment>{transferError}</React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {t('transfer_land.unknown_error')}
+                  <br />
+                  {t('transfer_land.error_persists', {
+                    community_chat_link: (
+                      <a
+                        href="https://chat.decentraland.org"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {t('global.community_chat')}
+                      </a>
+                    )
+                  })}
+                  <br />
+                  <div className="error-stack">{transferError}</div>
+                </React.Fragment>
+              )}
+            </Message>
+          )}
 
-          <div>
-            <Button type="button" onClick={this.handleCancel}>
-              {t('global.cancel')}
-            </Button>
+          <TxStatus.Idle isIdle={isTxIdle} />
+        </Form.Field>
 
-            <Button
-              type="submit"
-              primary={true}
-              disabled={this.isEmptyAddress() || isTxIdle || hasPublication}
-            >
-              {t('global.submit')}
-            </Button>
-          </div>
-        </Form>
-      </React.Fragment>
+        <br />
+
+        <div>
+          <Button type="button" onClick={this.handleCancel}>
+            {t('global.cancel')}
+          </Button>
+
+          <Button
+            type="submit"
+            primary={true}
+            disabled={this.isEmptyAddress() || isTxIdle || hasPublication}
+          >
+            {t('global.submit')}
+          </Button>
+        </div>
+      </Form>
     )
   }
 }
