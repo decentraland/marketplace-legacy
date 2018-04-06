@@ -166,26 +166,31 @@ export default class ParcelDetail extends React.PureComponent {
               <ParcelOwner parcel={parcel} districts={districts} />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row className="parcel-detail-row">
-            {publication ? (
-              <React.Fragment>
-                <Grid.Column width={4}>
-                  <h3>{t('parcel_detail.publication.price')}</h3>
-                  <Mana amount={parseFloat(publication.price, 10)} size={20} />
-                </Grid.Column>
-                <Grid.Column width={4} className="time-left">
-                  <h3>{t('parcel_detail.publication.time_left')}</h3>
-                  <PublicationExpiration publication={publication} />
-                </Grid.Column>
-              </React.Fragment>
-            ) : null}
-            <Grid.Column
-              className="parcel-actions"
-              width={publication ? 8 : 16}
-            >
-              <ParcelActions parcel={parcel} isOwner={isOwner} />
-            </Grid.Column>
-          </Grid.Row>
+          {publication || isOwner ? (
+            <Grid.Row className="parcel-detail-row">
+              {publication ? (
+                <React.Fragment>
+                  <Grid.Column width={4}>
+                    <h3>{t('parcel_detail.publication.price')}</h3>
+                    <Mana
+                      amount={parseFloat(publication.price, 10)}
+                      size={20}
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={4} className="time-left">
+                    <h3>{t('parcel_detail.publication.time_left')}</h3>
+                    <PublicationExpiration publication={publication} />
+                  </Grid.Column>
+                </React.Fragment>
+              ) : null}
+              <Grid.Column
+                className="parcel-actions"
+                width={publication ? 8 : 16}
+              >
+                <ParcelActions parcel={parcel} isOwner={isOwner} />
+              </Grid.Column>
+            </Grid.Row>
+          ) : null}
         </Grid>
         {this.renderTransactionHistory()}
       </div>
