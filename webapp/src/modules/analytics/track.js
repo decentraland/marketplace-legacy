@@ -61,7 +61,7 @@ add(
   action => (action.isAuthorized ? 'Authorize LAND' : 'Unauthorize LAND')
 )
 
-add(TRANSFER_MANA_SUCCESS, 'Transfer mana', action => ({
+add(TRANSFER_MANA_SUCCESS, 'Transfer MANA', action => ({
   mana: action.mana,
   address: action.address
 }))
