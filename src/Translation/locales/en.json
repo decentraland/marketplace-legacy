@@ -58,8 +58,8 @@
     "on_sale": "On Sale"
   },
   "publication": {
-    "expired_at": "Expired {time} ago",
-    "expires_in": "Expires in {time}",
+    "expired_at": "Expired {time}",
+    "expires_in": "Expires {time}",
     "expires_in_more_than_years": "Expires in over {years} years",
     "view": "View",
     "sold": "Sold",
@@ -91,6 +91,16 @@
     "owner": {
       "part_of": "Part of {name}",
       "no_owner": "No Owner"
+    },
+    "history": {
+      "title": "Transaction History",
+      "event": "Event",
+      "price": "Price",
+      "when": "When",
+      "from": "From",
+      "to": "To",
+      "sold": "Sold",
+      "auction": "Auction"
     }
   },
   "parcel_edit": {

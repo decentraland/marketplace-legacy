@@ -25,7 +25,6 @@ export const locations = {
 
   transfer: '/:x/:y/transfer',
   transferLand: (x, y) => `/${x}/${y}/transfer`,
-
   transferMana: `/transfer-mana`,
 
   parcel: '/:x/:y/detail',

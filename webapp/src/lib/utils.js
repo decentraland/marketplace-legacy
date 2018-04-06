@@ -75,6 +75,7 @@ export function formatDate(date, format = 'MMMM Do, YYYY - hh:MMa') {
 
 export function distanceInWordsToNow(date) {
   return dateFnsDistanceInWordsToNow(date, {
+    addSuffix: true,
     locale: getCurrentLocale()
   })
 }

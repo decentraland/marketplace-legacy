@@ -91,6 +91,16 @@
     "owner": {
       "part_of": "{name}的一部分",
       "no_owner": "没有所有者"
+    },
+    "history": {
+      "title": "交易历史",
+      "event": "事件",
+      "price": "价钱",
+      "when": "什么时候",
+      "from": "从",
+      "to": "至",
+      "sold": "文塔",
+      "auction": "拍卖"
     }
   },
   "parcel_edit": {
