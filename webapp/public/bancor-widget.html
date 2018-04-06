@@ -1,0 +1,39 @@
+<div class='bancor-wrapper'>
+  <div id="bancor-wc"></div>
+</div>
+<script src="https://widget-convert.bancor.network/v1"></script>
+<script>
+  BancorConvertWidget.init({
+    "type": "1",
+    "baseCurrencyId": "5a2cfacad0129700019a7270",
+    "pairCurrencyId": "5937d635231e97001f744267",
+    "primaryColor": "#ff4130"
+  });
+  function kickPopup() {
+    const node = document.getElementById('bancor-wc-popup-open')
+    if (!node) {
+      BancorConvertWidget.showConvertPopup('buy')
+      setTimeout(kickPopup, 100)
+    }
+  }
+  kickPopup()
+</script>
+<style>
+  * {
+    font-family: sans-serif;
+  }
+
+  #bancor-wc-popup,
+  #bancor-wc-popup>div {
+    background-color: white;
+  }
+
+  #bancor-wc-popup>div>div {
+    box-shadow: none!important;
+  }
+
+  .bancor-wrapper {
+    height: 100%;
+    background-color: white;
+  }
+</style>

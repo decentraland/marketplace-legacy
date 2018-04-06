@@ -126,3 +126,29 @@ export function updateDerivationPath(derivationPath) {
 // Clear error
 
 export const CLEAR_WALLET_ERROR = 'Clear Wallet Error'
+
+// Buy MANA
+
+export const BUY_MANA_REQUEST = '[Request] Buy MANA'
+export const BUY_MANA_SUCCESS = '[Success] Buy MANA'
+export const BUY_MANA_FAILURE = '[Failure] Buy MANA'
+
+export function buyManaRequest() {
+  return {
+    type: BUY_MANA_REQUEST
+  }
+}
+
+export function buyManaSuccess(mana) {
+  return {
+    type: BUY_MANA_SUCCESS,
+    mana
+  }
+}
+
+export function buyManaFailure(error) {
+  return {
+    type: BUY_MANA_FAILURE,
+    error
+  }
+}

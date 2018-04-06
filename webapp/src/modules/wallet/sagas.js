@@ -8,13 +8,14 @@ import {
   put
 } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { eth } from 'decentraland-commons'
+import { eth, env } from 'decentraland-commons'
 import { locations } from 'locations'
 import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
   AUTHORIZE_LAND_REQUEST,
   TRANSFER_MANA_REQUEST,
+  BUY_MANA_REQUEST,
   UPDATE_DERIVATION_PATH,
   connectWalletRequest,
   connectWalletSuccess,
@@ -24,13 +25,15 @@ import {
   authorizeLandSuccess,
   authorizeLandFailure,
   transferManaSuccess,
-  transferManaFailure
+  transferManaFailure,
+  buyManaSuccess,
+  buyManaFailure
 } from './actions'
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
-
+import { openPopup } from 'lib/utils'
 import { connectEthereumWallet, getMarketplaceAddress } from './utils'
 
 export function* walletSaga() {
@@ -38,6 +41,7 @@ export function* walletSaga() {
   yield takeLatest(APPROVE_MANA_REQUEST, handleApproveManaRequest)
   yield takeLatest(AUTHORIZE_LAND_REQUEST, handleAuthorizeLandRequest)
   yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
+  yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
   yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
 }
 
@@ -139,6 +143,29 @@ function* handleTransferManaRequest(action) {
     yield put(push(locations.activity))
   } catch (error) {
     yield put(transferManaFailure(error.message))
+  }
+}
+
+function buyMana() {
+  return new Promise((resolve, reject) => {
+    window.onBuyManaSuccess = resolve
+    window.onBuyManaFailed = reject
+    openPopup(
+      env.get('REACT_APP_BANCOR_WIDGET_URL', '/bancor-widget.html'),
+      // TODO: localize thissssss 🇸🇿🇸🇳
+      'Buy MANA',
+      600,
+      650
+    )
+  })
+}
+
+function* handleBuyManaRequest(action) {
+  try {
+    const mana = yield call(() => buyMana())
+    yield put(buyManaSuccess(mana))
+  } catch (error) {
+    yield put(buyManaFailure(error.message))
   }
 }
 

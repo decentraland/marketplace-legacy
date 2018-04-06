@@ -33,6 +33,10 @@ export default class SettingsPage extends React.PureComponent {
     this.props.onAuthorizeLand(data.checked)
   }
 
+  handleBuyMana = (event, data) => {
+    this.props.onBuyMana()
+  }
+
   handleDerivationPathChange = derivationPath => {
     const { wallet } = this.props
 
@@ -98,6 +102,7 @@ export default class SettingsPage extends React.PureComponent {
                   isLandAuthorized={isLandAuthorized}
                   authorizeTransaction={this.getAuthorizeTransaction()}
                   onLandAuthorizedChange={this.handleLandAuthorization}
+                  onBuyMana={this.handleBuyMana}
                 />
               ) : (
                 <p className="sign-in">
