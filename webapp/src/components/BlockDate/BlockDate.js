@@ -44,10 +44,15 @@ export default class BlockDate extends React.PureComponent {
     const href = `https://${subdomain}etherscan.io/block/${block}`
     const text = timestamp
       ? distanceInWordsToNow(timestamp * 1000)
-      : `# ${block}`
+      : `#${block}`
 
     return (
-      <Link className={className} to={href} target={target}>
+      <Link
+        className={className}
+        to={href}
+        target={target}
+        title={`Block #${block}`}
+      >
         {text}
       </Link>
     )
