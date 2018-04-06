@@ -55,6 +55,7 @@ export default class ParcelDetail extends React.PureComponent {
           publication.y === parcel.y &&
           publication.status === PUBLICATION_STATUS.sold
       )
+      .sort((a, b) => (a.block_number > b.block_number ? -1 : 1))
     const hasAuctionData =
       parcel.auction_price != null && parcel.auction_owner != null
     const hasPublications = parcelPublications.length > 0
