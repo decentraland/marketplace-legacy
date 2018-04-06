@@ -91,6 +91,16 @@
     "owner": {
       "part_of": "Part of {name}",
       "no_owner": "No Owner"
+    },
+    "history": {
+      "title": "Transaction History",
+      "event": "Event",
+      "price": "Price",
+      "when": "When",
+      "from": "From",
+      "to": "To",
+      "sold": "Sold",
+      "auction": "Auction"
     }
   },
   "parcel_edit": {

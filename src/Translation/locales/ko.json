@@ -91,6 +91,16 @@
     "owner": {
       "part_of": "{name}의 일부",
       "no_owner": "소유자 없음"
+    },
+    "history": {
+      "title": "거래 내역",
+      "event": "행사",
+      "price": "가격",
+      "when": "언제",
+      "from": "에서",
+      "to": "에",
+      "sold": "판매",
+      "auction": "경매"
     }
   },
   "parcel_edit": {

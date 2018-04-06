@@ -69,22 +69,34 @@ export default class ParcelDetail extends React.PureComponent {
           <Grid className="transaction-history parcel-detail-row">
             <Grid.Row>
               <Grid.Column>
-                <h3>Transaction History</h3>
+                <h3>{t('parcel_detail.history.title')}</h3>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row className="transaction-history-header">
-              <Grid.Column width={2}>Event</Grid.Column>
-              <Grid.Column width={3}>Price</Grid.Column>
-              <Grid.Column width={3}>When</Grid.Column>
-              <Grid.Column width={4}>From</Grid.Column>
-              <Grid.Column width={4}>To</Grid.Column>
+              <Grid.Column width={2}>
+                {t('parcel_detail.history.event')}
+              </Grid.Column>
+              <Grid.Column width={3}>
+                {t('parcel_detail.history.price')}
+              </Grid.Column>
+              <Grid.Column width={3}>
+                {t('parcel_detail.history.when')}
+              </Grid.Column>
+              <Grid.Column width={4}>
+                {t('parcel_detail.history.from')}
+              </Grid.Column>
+              <Grid.Column width={4}>
+                {t('parcel_detail.history.to')}
+              </Grid.Column>
             </Grid.Row>
             {parcelPublications.map(publication => (
               <Grid.Row
                 key={publication.tx_hash}
                 className="transaction-history-entry"
               >
-                <Grid.Column width={2}>Sold</Grid.Column>
+                <Grid.Column width={2}>
+                  {t('parcel_detail.history.sold')}
+                </Grid.Column>
                 <Grid.Column width={3}>
                   <Mana amount={publication.price} />
                 </Grid.Column>
@@ -119,7 +131,9 @@ export default class ParcelDetail extends React.PureComponent {
             ))}
             {parcel.auction_price && parcel.auction_owner ? (
               <Grid.Row className="transaction-history-entry">
-                <Grid.Column width={2}>Auction</Grid.Column>
+                <Grid.Column width={2}>
+                  {t('parcel_detail.history.auction')}
+                </Grid.Column>
                 <Grid.Column width={3}>
                   <Mana amount={parcel.auction_price} />
                 </Grid.Column>

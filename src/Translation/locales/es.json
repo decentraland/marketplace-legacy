@@ -91,6 +91,16 @@
     "owner": {
       "part_of": "Parte de {name}",
       "no_owner": "Sin Dueño"
+    },
+    "history": {
+      "title": "Historial de Transacciones",
+      "event": "Evento",
+      "price": "Precio",
+      "when": "Cuando",
+      "from": "De",
+      "to": "A",
+      "sold": "Venta",
+      "auction": "Subasta"
     }
   },
   "parcel_edit": {
