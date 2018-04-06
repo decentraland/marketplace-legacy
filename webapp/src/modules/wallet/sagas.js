@@ -33,7 +33,6 @@ import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
-import { openPopup } from 'lib/utils'
 import { connectEthereumWallet, getMarketplaceAddress } from './utils'
 
 export function* walletSaga() {
@@ -150,13 +149,7 @@ function buyMana() {
   return new Promise((resolve, reject) => {
     window.onBuyManaSuccess = resolve
     window.onBuyManaFailed = reject
-    openPopup(
-      env.get('REACT_APP_BANCOR_WIDGET_URL', '/bancor-widget.html'),
-      // TODO: localize thissssss 🇸🇿🇸🇳
-      'Buy MANA',
-      600,
-      650
-    )
+    window.open(env.get('REACT_APP_BANCOR_WIDGET_URL', '/bancor-widget.html'))
   })
 }
 
