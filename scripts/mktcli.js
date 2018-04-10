@@ -242,7 +242,7 @@ function toPublicationLog(publication) {
         publication.contract_id,
         publication.owner,
         eth.utils.toWei(publication.price),
-        publication.expires_at.getTime(),
+        publication.expires_at,
         publication.status
       ].join(',')
     : 'empty'

@@ -69,15 +69,18 @@ export default class PublicationForm extends React.PureComponent {
 
     const formErrors = []
 
-    if (differenceInDays(expiresAt, new Date()) < MINIMUM_DAY_INTERVAL) {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    if (differenceInDays(expiresAt, today) < MINIMUM_DAY_INTERVAL) {
       formErrors.push(
         t('parcel_publish.errors.minimum_expiration', {
-          date: this.formatFutureDate(MINIMUM_DAY_INTERVAL)
+          date: this.formatFutureDate(MINIMUM_DAY_INTERVAL + 1)
         })
       )
     }
 
-    if (differenceInDays(expiresAt, new Date()) > MAXIMUM_DAY_INTERVAL) {
+    if (differenceInDays(expiresAt, today) > MAXIMUM_DAY_INTERVAL) {
       formErrors.push(
         t('parcel_publish.errors.maximum_expiration', {
           date: this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
@@ -85,7 +88,7 @@ export default class PublicationForm extends React.PureComponent {
       )
     }
 
-    if (price < MINIMUM_LAND_PRICE) {
+    if (price <= MINIMUM_LAND_PRICE) {
       formErrors.push(
         t('parcel_publish.errors.minimum_land_price', {
           value: formatMana(MINIMUM_LAND_PRICE, '')

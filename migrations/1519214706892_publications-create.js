@@ -18,7 +18,7 @@ exports.up = pgm => {
       address: { type: 'VARCHAR(42)', notNull: true },
       price: { type: 'DECIMAL', notNull: true },
       is_sold: { type: 'BOOLEAN', notNull: true, default: false },
-      expires_at: 'TIMESTAMP',
+      expires_at: 'BIGINT',
       created_at: { type: 'TIMESTAMP', notNull: true },
       updated_at: 'TIMESTAMP'
     },

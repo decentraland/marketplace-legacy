@@ -150,7 +150,6 @@
   },
   "parcel_cancel": {
     "cancel_land": "토지 판매 취소",
-    "currently_on_sale": "현재 {value}에 판매 중입니다.",
     "about_to_cancel": "{parcel}의 판매를 취소하려고합니다.",
     "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
   },

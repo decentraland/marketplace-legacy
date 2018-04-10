@@ -167,9 +167,9 @@
       "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "disapproved":
       "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "transfer_mana": "Has transferido {mana} MANA a {address_link}",
     "authorize":
       "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
+    "transfer_mana": "Has transferido {mana} MANA a {address_link}",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
     "transfer": "Has transferido {parcel_link} a {owner_link}",

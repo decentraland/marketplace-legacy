@@ -15,9 +15,10 @@ export default class PublicationExpiration extends React.PureComponent {
 
   render() {
     const { publication } = this.props
+    const expiresAt = parseInt(publication.expires_at, 10)
 
-    const difference = differenceInDays(publication.expires_at, new Date())
-    const expirationTimeInWords = distanceInWordsToNow(publication.expires_at)
+    const difference = differenceInDays(expiresAt, new Date())
+    const expirationTimeInWords = distanceInWordsToNow(expiresAt)
 
     return (
       <span className="PublicationExpiration">

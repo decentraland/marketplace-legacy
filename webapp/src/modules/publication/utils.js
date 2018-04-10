@@ -36,7 +36,7 @@ export function isOpen(publication) {
 }
 
 export function isExpired(publication) {
-  return new Date(publication.expires_at).getTime() < Date.now()
+  return parseInt(publication.expires_at, 10) < Date.now()
 }
 
 // From Publication.js on the server
