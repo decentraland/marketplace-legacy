@@ -3,6 +3,7 @@
 data
 postgres_data
 out
+newrelic_agent.log
 /package-lock.json
 /node_modules/
 
@@ -13,3 +14,4 @@ out
 /.idea/
 
 /webapp/.idea/
+
