@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { isMobile } from 'lib/utils'
 
 import { locations } from 'locations'
 import { Loader } from 'semantic-ui-react'
@@ -47,7 +48,7 @@ export default class MapComponent extends React.Component {
     this.bounds = [[minX, minY], [maxX, maxY]]
 
     this.baseZoom = 10
-    this.baseTileSize = 128
+    this.baseTileSize = isMobile() ? 32 : 128
 
     this.state = {
       zoom: this.baseZoom - 3

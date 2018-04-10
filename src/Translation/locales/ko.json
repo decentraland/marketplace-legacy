@@ -29,7 +29,8 @@
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "owned_by": "에게 소유 된",
-    "owned_by_link": "{address_link} 소유"
+    "owned_by_link": "{address_link} 소유",
+    "connecting": "연결 중"
   },
   "address": {
     "its_you": "너야"

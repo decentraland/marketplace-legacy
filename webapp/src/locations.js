@@ -50,10 +50,10 @@ export const PROFILE_PAGE_TABS = Object.freeze({
 })
 
 export const NAVBAR_PAGES = Object.freeze({
-  marketplace: 'marketplace',
-  activity: 'activity',
-  atlas: 'atlas',
-  profile: 'profile',
-  settings: 'settings',
-  signIn: 'signIn'
+  marketplace: 'Marketplace',
+  activity: 'Activity',
+  atlas: 'Atlas',
+  profile: 'My Land',
+  settings: 'Settings',
+  signIn: 'Sign In'
 })

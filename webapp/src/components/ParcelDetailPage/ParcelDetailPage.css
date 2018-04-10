@@ -89,14 +89,18 @@
   margin-right: 0.5em;
 }
 
-@media (max-width: 768px) {
-  .ParcelDetail .address-wrapper .short-address {
-    display: none;
-  }
+.ParcelDetail .mana-price-icon {
+  font-size: 1.5em;
 }
 
 .ParcelDetail .time-left .PublicationExpiration {
   font-size: 20px;
   display: block;
   color: var(--gray);
+}
+
+@media (max-width: 768px) {
+  .ParcelDetail .address-wrapper .short-address {
+    display: none;
+  }
 }

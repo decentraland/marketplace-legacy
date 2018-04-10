@@ -48,3 +48,9 @@
   float: right;
   margin-right: 20px;
 }
+
+@media (max-width: 768px) {
+  .leaflet-bottom .leaflet-control {
+    display: none;
+  }
+}

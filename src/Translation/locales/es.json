@@ -29,7 +29,8 @@
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "owned_by": "Controlada por",
-    "owned_by_link": "Controlada por {address_link}"
+    "owned_by_link": "Controlada por {address_link}",
+    "connecting": "Conectando"
   },
   "address": {
     "its_you": "Eres tú!"

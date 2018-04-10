@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Grid } from 'semantic-ui-react'
+import { Header, Grid, Responsive } from 'semantic-ui-react'
 import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
 import AddressBlock from 'components/AddressBlock'
@@ -64,100 +64,110 @@ export default class ParcelDetail extends React.PureComponent {
     }
 
     return (
-      <Grid.Row>
-        <Grid.Column>
-          <Grid className="transaction-history parcel-detail-row">
-            <Grid.Row>
-              <Grid.Column>
-                <h3>{t('parcel_detail.history.title')}</h3>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row className="transaction-history-header">
-              <Grid.Column width={2}>
-                {t('parcel_detail.history.event')}
-              </Grid.Column>
-              <Grid.Column width={3}>
-                {t('parcel_detail.history.price')}
-              </Grid.Column>
-              <Grid.Column width={3}>
-                {t('parcel_detail.history.when')}
-              </Grid.Column>
-              <Grid.Column width={4}>
-                {t('parcel_detail.history.from')}
-              </Grid.Column>
-              <Grid.Column width={4}>
-                {t('parcel_detail.history.to')}
-              </Grid.Column>
-            </Grid.Row>
-            {parcelPublications.map(publication => (
-              <Grid.Row
-                key={publication.tx_hash}
-                className="transaction-history-entry"
-              >
-                <Grid.Column width={2}>
-                  {t('parcel_detail.history.sold')}
-                </Grid.Column>
-                <Grid.Column width={3}>
-                  <Mana amount={publication.price} />
-                </Grid.Column>
-                <Grid.Column width={3}>
-                  <BlockDate block={publication.block_number} />
-                </Grid.Column>
-                <Grid.Column width={4}>
-                  <div className="address-wrapper">
-                    <AddressBlock
-                      address={publication.owner}
-                      scale={4}
-                      hasTooltip={false}
-                    />&nbsp;
-                    <span className="short-address" title={publication.owner}>
-                      {shortenAddress(publication.owner)}
-                    </span>
-                  </div>
-                </Grid.Column>
-                <Grid.Column width={4}>
-                  <div className="address-wrapper" title={publication.buyer}>
-                    <AddressBlock
-                      address={publication.buyer}
-                      scale={4}
-                      hasTooltip={false}
-                    />&nbsp;
-                    <span className="short-address">
-                      {shortenAddress(publication.buyer)}
-                    </span>
-                  </div>
+      <Responsive
+        as={Grid}
+        secondary
+        stackable
+        minWidth={Responsive.onlyTablet.minWidth}
+      >
+        <Grid.Row>
+          <Grid.Column>
+            <Grid className="transaction-history parcel-detail-row">
+              <Grid.Row>
+                <Grid.Column>
+                  <h3>{t('parcel_detail.history.title')}</h3>
                 </Grid.Column>
               </Grid.Row>
-            ))}
-            {parcel.auction_price && parcel.auction_owner ? (
-              <Grid.Row className="transaction-history-entry">
+              <Grid.Row className="transaction-history-header">
                 <Grid.Column width={2}>
-                  {t('parcel_detail.history.auction')}
+                  {t('parcel_detail.history.event')}
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <Mana amount={parcel.auction_price} />
+                  {t('parcel_detail.history.price')}
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  {distanceInWordsToNow('2018-01-31T00:00:00Z')}
+                  {t('parcel_detail.history.when')}
                 </Grid.Column>
-                <Grid.Column width={4}>Decentraland</Grid.Column>
                 <Grid.Column width={4}>
-                  <div className="address-wrapper" title={parcel.auction_owner}>
-                    <AddressBlock
-                      address={parcel.auction_owner}
-                      scale={4}
-                      hasTooltip={false}
-                    />&nbsp;
-                    <span className="short-address">
-                      {shortenAddress(parcel.auction_owner)}
-                    </span>
-                  </div>
+                  {t('parcel_detail.history.from')}
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  {t('parcel_detail.history.to')}
                 </Grid.Column>
               </Grid.Row>
-            ) : null}
-          </Grid>
-        </Grid.Column>
-      </Grid.Row>
+              {parcelPublications.map(publication => (
+                <Grid.Row
+                  key={publication.tx_hash}
+                  className="transaction-history-entry"
+                >
+                  <Grid.Column width={2}>
+                    {t('parcel_detail.history.sold')}
+                  </Grid.Column>
+                  <Grid.Column width={3}>
+                    <Mana amount={publication.price} />
+                  </Grid.Column>
+                  <Grid.Column width={3}>
+                    <BlockDate block={publication.block_number} />
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                    <div className="address-wrapper">
+                      <AddressBlock
+                        address={publication.owner}
+                        scale={4}
+                        hasTooltip={false}
+                      />&nbsp;
+                      <span className="short-address" title={publication.owner}>
+                        {shortenAddress(publication.owner)}
+                      </span>
+                    </div>
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                    <div className="address-wrapper" title={publication.buyer}>
+                      <AddressBlock
+                        address={publication.buyer}
+                        scale={4}
+                        hasTooltip={false}
+                      />&nbsp;
+                      <span className="short-address">
+                        {shortenAddress(publication.buyer)}
+                      </span>
+                    </div>
+                  </Grid.Column>
+                </Grid.Row>
+              ))}
+              {parcel.auction_price && parcel.auction_owner ? (
+                <Grid.Row className="transaction-history-entry">
+                  <Grid.Column width={2}>
+                    {t('parcel_detail.history.auction')}
+                  </Grid.Column>
+                  <Grid.Column width={3}>
+                    <Mana amount={parcel.auction_price} />
+                  </Grid.Column>
+                  <Grid.Column width={3}>
+                    {distanceInWordsToNow('2018-01-31T00:00:00Z')}
+                  </Grid.Column>
+                  <Grid.Column width={4}>Decentraland</Grid.Column>
+                  <Grid.Column width={4}>
+                    <div
+                      className="address-wrapper"
+                      title={parcel.auction_owner}
+                    >
+                      <AddressBlock
+                        address={parcel.auction_owner}
+                        scale={4}
+                        hasTooltip={false}
+                      />&nbsp;
+                      <span className="short-address">
+                        {shortenAddress(parcel.auction_owner)}
+                      </span>
+                    </div>
+                  </Grid.Column>
+                </Grid.Row>
+              ) : null}
+            </Grid>
+          </Grid.Column>
+        </Grid.Row>
+      </Responsive>
     )
   }
 
@@ -189,6 +199,7 @@ export default class ParcelDetail extends React.PureComponent {
                     <Mana
                       amount={parseFloat(publication.price, 10)}
                       size={20}
+                      className="mana-price-icon"
                     />
                   </Grid.Column>
                   <Grid.Column width={4} className="time-left">

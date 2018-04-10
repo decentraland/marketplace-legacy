@@ -30,7 +30,8 @@
     "sign_in_notice":
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "owned_by": "Controlé par",
-    "owned_by_link": "Controlé par {address_link}"
+    "owned_by_link": "Controlé par {address_link}",
+    "connecting": "Connexion"
   },
   "address": {
     "its_you": "C'est toi"

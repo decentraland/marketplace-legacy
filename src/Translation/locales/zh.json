@@ -24,12 +24,13 @@
     "authorized": "已授权",
     "unauthorized": "未授权",
     "wallet_address": "钱包地址",
-    "balance": "平衡",
+    "balance": "余额",
     "for": "对于",
     "sign_in": "登录",
     "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "owned_by": "拥有",
-    "owned_by_link": "{address_link} 소유"
+    "owned_by_link": "{address_link} 소유",
+    "connecting": "连"
   },
   "address": {
     "its_you": "是你"
