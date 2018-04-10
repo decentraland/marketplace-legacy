@@ -1,5 +1,3 @@
-import 'newrelic'
-
 import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
@@ -39,6 +37,9 @@ if (env.isDevelopment()) {
 
     next()
   })
+} else {
+  // This is not ideal, but adding newrelic to development is worst
+  require('newrelic')
 }
 
 /**
