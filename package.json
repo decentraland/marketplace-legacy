@@ -38,6 +38,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "flat": "^4.0.0",
+    "newrelic": "^3.3.0",
     "node-pg-migrate": "^2.23.0",
     "pg": "^7.4.1",
     "rollbar": "^2.3.9",
