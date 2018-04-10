@@ -64,12 +64,7 @@ export default class ParcelDetail extends React.PureComponent {
     }
 
     return (
-      <Responsive
-        as={Grid}
-        secondary
-        stackable
-        minWidth={Responsive.onlyTablet.minWidth}
-      >
+      <Responsive as={Grid} stackable minWidth={Responsive.onlyTablet.minWidth}>
         <Grid.Row>
           <Grid.Column>
             <Grid className="transaction-history parcel-detail-row">
