@@ -89,8 +89,9 @@ describe('PublicationService', function() {
     it('should filter the publications using the supplied filters', async function() {
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
-      const expires_at = new Date()
+      let expires_at = new Date()
       expires_at.setMonth(expires_at.getMonth() + 3)
+      expires_at = expires_at.getTime().toString()
 
       const soldPublication = {
         tx_hash: '0x1',
@@ -98,9 +99,9 @@ describe('PublicationService', function() {
         y: 0,
         price: 3,
         status: Publication.STATUS.sold,
+        expires_at,
         owner,
-        tx_status,
-        expires_at
+        tx_status
       }
       const publicationRows = [
         soldPublication,
@@ -125,7 +126,7 @@ describe('PublicationService', function() {
           price: '40',
           buyer: null,
           status: Publication.STATUS.open,
-          expires_at: {},
+          expires_at,
           owner,
           tx_status
         }

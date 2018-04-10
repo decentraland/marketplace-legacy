@@ -21,7 +21,7 @@ export class PublicationService {
           FROM ${Publication.tableName}
           WHERE status = $1
             AND tx_status = $2
-            AND expires_at >= now()
+            AND expires_at >= EXTRACT(epoch from now()) * 1000
           ORDER BY ${sort.by} ${sort.order}
           LIMIT ${pagination.limit} OFFSET ${pagination.offset}`,
         values
@@ -31,7 +31,7 @@ export class PublicationService {
           FROM ${Publication.tableName}
           WHERE status = $1
             AND tx_status = $2
-            AND expires_at >= now()`,
+            AND expires_at >= EXTRACT(epoch from now()) * 1000`,
         values
       )
     ])
