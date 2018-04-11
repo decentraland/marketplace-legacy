@@ -74,18 +74,7 @@ export default class DerivationPathDropdown extends React.PureComponent {
 
     return (
       <div className="DerivationPathDropdown">
-        <label>
-          Derivation path&nbsp;
-          <strong
-            data-balloon-pos="up"
-            data-balloon-length="xlarge"
-            data-balloon={t('derivation_path.supported', {
-              paths: SUPPORTED_STARTING_PATHS.join(', ')
-            })}
-          >
-            ?
-          </strong>
-        </label>
+        <label>Derivation path</label>
         <Dropdown
           {...this.props}
           onChange={this.handleOnChange}
