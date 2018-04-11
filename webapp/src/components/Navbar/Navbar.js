@@ -66,17 +66,13 @@ export default class Navbar extends React.PureComponent {
   }
 
   handleToggle = event => {
-    this.toggled = true
     this.setState({ toggle: !this.state.toggle })
     event.stopPropagation()
+    event.nativeEvent.stopImmediatePropagation()
   }
 
   handleDocumentClick = () => {
-    if (!this.toggled) {
-      this.setState({ toggle: false })
-    } else {
-      this.toggled = false
-    }
+    this.setState({ toggle: false })
   }
 
   renderStaticPage() {
