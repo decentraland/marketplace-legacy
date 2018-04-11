@@ -9,3 +9,10 @@
   padding-bottom: 30px;
   background: linear-gradient(#1f2333, #0d0f17);
 }
+
+@media (max-width: 768px) {
+  .Page > div {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
