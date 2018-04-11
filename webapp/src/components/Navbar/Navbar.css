@@ -130,14 +130,14 @@
 }
 
 .Navbar .sidebar {
-  background: linear-gradient(#1f2333, #0d0f17) !important;
+  background: var(--gradient) !important;
   z-index: 2000 !important;
   box-shadow: 0px 0px 0px 0px black !important;
   transition: box-shadow 0.3s ease-in-out;
 }
 
 .Navbar .sidebar.visible {
-  background: linear-gradient(#1f2333, #0d0f17) !important;
+  background: var(--gradient) !important;
   z-index: 2000 !important;
   box-shadow: 0px 0px 1500px 30px black !important;
 }

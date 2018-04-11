@@ -7,7 +7,7 @@
   min-height: calc(100% - var(--footer-height));
   padding-top: 30px;
   padding-bottom: 30px;
-  background: linear-gradient(#1f2333, #0d0f17);
+  background: var(--gradient);
 }
 
 @media (max-width: 768px) {

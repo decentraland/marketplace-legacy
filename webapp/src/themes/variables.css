@@ -4,6 +4,7 @@
 
   --text: #ffffff;
   --background: #1f2333;
+  --dark-background: #0d0f17;
   --error: #ffb208;
 
   --light-gray: #ededed;
@@ -34,4 +35,6 @@
 
   --font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --gradient: linear-gradient(var(--background), var(--dark-background));
 }
