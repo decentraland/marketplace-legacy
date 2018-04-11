@@ -40,7 +40,7 @@ export default class BlockDate extends React.PureComponent {
     const { network, block, target, className } = this.props
     const { timestamp } = this.state
 
-    const subdomain = network === 'mainnet' ? '' : network + '.'
+    const subdomain = network && network !== 'mainnet' ? network + '.' : ''
     const href = `https://${subdomain}etherscan.io/block/${block}`
     const text = timestamp
       ? distanceInWordsToNow(timestamp * 1000)
