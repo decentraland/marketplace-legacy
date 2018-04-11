@@ -103,4 +103,8 @@
   .ParcelDetail .address-wrapper .short-address {
     display: none;
   }
+
+  .ParcelDetailPage .parcel-owner-container {
+    text-align: left !important;
+  }
 }

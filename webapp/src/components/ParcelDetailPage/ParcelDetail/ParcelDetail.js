@@ -15,6 +15,8 @@ import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
+const auctionDate = distanceInWordsToNow('2018-01-31T00:00:00Z')
+
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
@@ -64,47 +66,49 @@ export default class ParcelDetail extends React.PureComponent {
     }
 
     return (
-      <Responsive as={Grid} stackable minWidth={Responsive.onlyTablet.minWidth}>
+      <Grid stackable>
         <Grid.Row>
           <Grid.Column>
-            <Grid className="transaction-history parcel-detail-row">
+            <Grid
+              className="transaction-history parcel-detail-row"
+              columns="equal"
+            >
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('parcel_detail.history.title')}</h3>
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row className="transaction-history-header">
-                <Grid.Column width={2}>
-                  {t('parcel_detail.history.event')}
-                </Grid.Column>
-                <Grid.Column width={3}>
-                  {t('parcel_detail.history.price')}
-                </Grid.Column>
-                <Grid.Column width={3}>
-                  {t('parcel_detail.history.when')}
-                </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column>{t('parcel_detail.history.price')}</Grid.Column>
+                <Grid.Column>{t('parcel_detail.history.when')}</Grid.Column>
+                <Responsive
+                  as={Grid.Column}
+                  minWidth={Responsive.onlyTablet.minWidth}
+                >
                   {t('parcel_detail.history.from')}
-                </Grid.Column>
-                <Grid.Column width={4}>
+                </Responsive>
+                <Responsive
+                  as={Grid.Column}
+                  minWidth={Responsive.onlyTablet.minWidth}
+                >
                   {t('parcel_detail.history.to')}
-                </Grid.Column>
+                </Responsive>
               </Grid.Row>
               {parcelPublications.map(publication => (
                 <Grid.Row
                   key={publication.tx_hash}
                   className="transaction-history-entry"
                 >
-                  <Grid.Column width={2}>
-                    {t('parcel_detail.history.sold')}
-                  </Grid.Column>
-                  <Grid.Column width={3}>
+                  <Grid.Column>
                     <Mana amount={publication.price} />
                   </Grid.Column>
-                  <Grid.Column width={3}>
+                  <Grid.Column>
                     <BlockDate block={publication.block_number} />
                   </Grid.Column>
-                  <Grid.Column width={4}>
+                  <Responsive
+                    as={Grid.Column}
+                    minWidth={Responsive.onlyTablet.minWidth}
+                  >
                     <div className="address-wrapper">
                       <AddressBlock
                         address={publication.owner}
@@ -115,8 +119,11 @@ export default class ParcelDetail extends React.PureComponent {
                         {shortenAddress(publication.owner)}
                       </span>
                     </div>
-                  </Grid.Column>
-                  <Grid.Column width={4}>
+                  </Responsive>
+                  <Responsive
+                    as={Grid.Column}
+                    minWidth={Responsive.onlyTablet.minWidth}
+                  >
                     <div className="address-wrapper" title={publication.buyer}>
                       <AddressBlock
                         address={publication.buyer}
@@ -127,22 +134,25 @@ export default class ParcelDetail extends React.PureComponent {
                         {shortenAddress(publication.buyer)}
                       </span>
                     </div>
-                  </Grid.Column>
+                  </Responsive>
                 </Grid.Row>
               ))}
               {parcel.auction_price && parcel.auction_owner ? (
                 <Grid.Row className="transaction-history-entry">
-                  <Grid.Column width={2}>
-                    {t('parcel_detail.history.auction')}
-                  </Grid.Column>
-                  <Grid.Column width={3}>
+                  <Grid.Column>
                     <Mana amount={parcel.auction_price} />
                   </Grid.Column>
-                  <Grid.Column width={3}>
-                    {distanceInWordsToNow('2018-01-31T00:00:00Z')}
-                  </Grid.Column>
-                  <Grid.Column width={4}>Decentraland</Grid.Column>
-                  <Grid.Column width={4}>
+                  <Grid.Column>{auctionDate}</Grid.Column>
+                  <Responsive
+                    as={Grid.Column}
+                    minWidth={Responsive.onlyTablet.minWidth}
+                  >
+                    {t('parcel_detail.history.auction')}
+                  </Responsive>
+                  <Responsive
+                    as={Grid.Column}
+                    minWidth={Responsive.onlyTablet.minWidth}
+                  >
                     <div
                       className="address-wrapper"
                       title={parcel.auction_owner}
@@ -156,13 +166,13 @@ export default class ParcelDetail extends React.PureComponent {
                         {shortenAddress(parcel.auction_owner)}
                       </span>
                     </div>
-                  </Grid.Column>
+                  </Responsive>
                 </Grid.Row>
               ) : null}
             </Grid>
           </Grid.Column>
         </Grid.Row>
-      </Responsive>
+      </Grid>
     )
   }
 
