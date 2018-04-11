@@ -112,27 +112,10 @@ export default class Navbar extends React.PureComponent {
     )
   }
 
-  render() {
-    const {
-      wallet,
-      activePage,
-      isConnected,
-      isConnecting,
-      isStatic,
-      isModal,
-      activityBadge
-    } = this.props
+  renderMenuItems() {
+    const { activePage, activityBadge, isConnected } = this.props
     const navigationPaths = this.getNavigationPaths()
-
-    if (isStatic) {
-      return this.renderStaticPage()
-    }
-
-    if (isModal) {
-      return this.renderModalPage()
-    }
-
-    const menuItems = (
+    return (
       <React.Fragment>
         <Responsive
           as={Menu.Item}
@@ -182,6 +165,26 @@ export default class Navbar extends React.PureComponent {
         ) : null}
       </React.Fragment>
     )
+  }
+
+  render() {
+    const {
+      wallet,
+      activePage,
+      isConnected,
+      isConnecting,
+      isStatic,
+      isModal
+    } = this.props
+    const navigationPaths = this.getNavigationPaths()
+
+    if (isStatic) {
+      return this.renderStaticPage()
+    }
+
+    if (isModal) {
+      return this.renderModalPage()
+    }
 
     return (
       <div className="Navbar" role="navigation">
@@ -193,7 +196,7 @@ export default class Navbar extends React.PureComponent {
             stackable
             minWidth={Responsive.onlyTablet.minWidth}
           >
-            {menuItems}
+            {this.renderMenuItems()}
           </Responsive>
           <Responsive
             {...Responsive.onlyMobile}
@@ -211,7 +214,7 @@ export default class Navbar extends React.PureComponent {
               visible={this.state.toggle}
               vertical
             >
-              {menuItems}
+              {this.renderMenuItems()}
             </Sidebar>
           </Responsive>
         </div>
