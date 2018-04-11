@@ -226,8 +226,7 @@
     "own_address_warning": "C'est ta propre adresse!"
   },
   "derivation_path": {
-    "supported":
-      "Nous ne prenons en charge que les chemins commençant par {paths} pour le moment"
+    "invalid": "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
   "color_key": {
     "title": "Code couleur",

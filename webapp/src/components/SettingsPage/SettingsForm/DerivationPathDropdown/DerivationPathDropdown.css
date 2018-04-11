@@ -1,0 +1,11 @@
+.DerivationPathDropdown .invalid-derivation-path {
+  top: 5px;
+  position: relative;
+  color: var(--error);
+}
+
+@media (max-width: 768px) {
+  .DerivationPathDropdown .ui.dropdown .menu > .item > .description {
+    display: none;
+  }
+}

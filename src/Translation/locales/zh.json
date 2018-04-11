@@ -204,7 +204,7 @@
     "own_address_warning": "这是你自己的地址！"
   },
   "derivation_path": {
-    "supported": "我们暂时只支持以{paths}开头的路径"
+    "invalid": "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "色彩标记",
