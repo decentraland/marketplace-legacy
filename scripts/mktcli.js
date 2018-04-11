@@ -81,6 +81,27 @@ const main = {
       )
 
     program
+      .command('land-assign <coord> <owner>')
+      .description('Assign a new parcel (x,y) to an account')
+      .action(
+        asSafeAction(async (coord, owner) => {
+          const [x, y] = parseCLICoords(coord)
+          const contract = eth.getContract('LANDRegistry')
+          const answers = await cli.prompt([
+            {
+              type: 'password',
+              name: 'password',
+              message: 'Write the account password to unlock:',
+              default: ''
+            }
+          ])
+          await eth.wallet.unlockAccount(answers['password'])
+          await contract.assignNewParcel(x, y, owner)
+          log.info(`(land-assign) coords:(${x},${y}) => owner: ${owner}`)
+        })
+      )
+
+    program
       .command('publication <coord>')
       .description('Get the current publication of a (x,y) coordinate')
       .action(
