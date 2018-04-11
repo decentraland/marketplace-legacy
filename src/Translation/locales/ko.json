@@ -217,7 +217,7 @@
     "own_address_warning": "그것은 당신의 자신의 주소입니다!"
   },
   "derivation_path": {
-    "supported": "당분간 {경로}로 시작하는 경로 만 지원합니다."
+    "invalid": "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
   },
   "color_key": {
     "title": "색상 키",

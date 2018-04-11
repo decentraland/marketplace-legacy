@@ -225,8 +225,7 @@
     "own_address_warning": "Esa es tu propia dirección!"
   },
   "derivation_path": {
-    "supported":
-      "Por el momento solo soportamos derivation paths que comienzan con {paths}"
+    "invalid": "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "Mapa de colores",

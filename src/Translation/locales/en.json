@@ -221,8 +221,7 @@
     "own_address_warning": "That's your own address!"
   },
   "derivation_path": {
-    "supported":
-      "We only support paths that start with {paths} for the time being"
+    "invalid": "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "Color key",
