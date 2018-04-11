@@ -1,7 +1,7 @@
 .DerivationPathDropdown .invalid-derivation-path {
   top: 5px;
   position: relative;
-  color: var(--light-red);
+  color: var(--error);
 }
 
 @media (max-width: 768px) {
