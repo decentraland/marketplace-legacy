@@ -34,3 +34,7 @@
 .MarketplacePage .ui.label.active {
   background-color: var(--primary);
 }
+
+.MarketplacePage .menu.right > .item {
+  padding-bottom: 0px !important;
+}
