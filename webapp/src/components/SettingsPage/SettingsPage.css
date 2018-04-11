@@ -41,4 +41,8 @@
   .SettingsPage .row {
     flex-flow: column nowrap;
   }
+
+  .blockie {
+    margin: 0 auto 50px;
+  }
 }
