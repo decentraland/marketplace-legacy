@@ -66,7 +66,7 @@ export default class SettingsForm extends React.PureComponent {
         {walletType === wallets.WALLET_TYPES.ledger ? (
           <Form.Field>
             <DerivationPathDropdown
-              defaultValue={walletDerivationPath}
+              value={walletDerivationPath}
               onChange={onDerivationPathChange}
             />
           </Form.Field>
