@@ -121,7 +121,8 @@
     "unknown_error":
       "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다.",
     "error_persists":
-      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오."
+      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
+    "placeholder": "예: {address}"
   },
   "parcel_buy": {
     "buy_land": "토지 구입",

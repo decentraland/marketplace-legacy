@@ -122,7 +122,8 @@
     "unknown_error":
       "Un problema desconocido ha ocurrido, los detalles se encuentran debajo.",
     "error_persists":
-      "Si el problema persiste, contáctate con nosotros en {community_chat_link}"
+      "Si el problema persiste, contáctate con nosotros en {community_chat_link}",
+    "placeholder": "Ejemplo: {address}"
   },
   "parcel_buy": {
     "buy_land": "Comprar LAND",

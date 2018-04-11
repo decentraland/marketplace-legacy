@@ -122,7 +122,8 @@
     "unknown_error":
       "Une erreur s'est produite, les détails se trouvent ci-dessous.",
     "error_persists":
-      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}"
+      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
+    "placeholder": "Exemple: {address}"
   },
   "parcel_buy": {
     "buy_land": "Acheter une LAND",

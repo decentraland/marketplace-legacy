@@ -119,7 +119,8 @@
     "recipient_address": "接收者地址",
     "unknown_error": "发生未知错误，详情如下。",
     "error_persists":
-      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系"
+      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
+    "placeholder": "例: {address}"
   },
   "parcel_buy": {
     "buy_land": "购买土地",
