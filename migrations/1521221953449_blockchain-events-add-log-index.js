@@ -15,7 +15,7 @@ exports.up = pgm => {
   pgm.addConstraint(
     tableName,
     'blockchain_events_pkey',
-    'PRIMARY KEY (tx_hash, name, log_index)'
+    'PRIMARY KEY (tx_hash, log_index)'
   )
 }
 
