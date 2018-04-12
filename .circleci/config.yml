@@ -1,19 +1,21 @@
 version: 2
 jobs:
-  build-release:
+  build:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:9.11.1
     working_directory: /tmp/marketplace
     steps:
       - checkout
-      - type: shell
-        name: Install System Dependencies
-        command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
+      - run:
+          name: Install system dependencies
+          command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "webapp/package.json" }}
           - v1-dependencies-
-      - run: cd webapp && npm install
+      - run: 
+          name: Install packages
+          command: cd webapp && npm install
       - save_cache:
           paths:
             - node_modules
@@ -23,175 +25,67 @@ jobs:
           command: cd webapp && npm run build
           environment:
             NODE_PATH: src/
-            NODE_ENV: production
-            REACT_APP_PROVIDER_URL: https://mainnet.infura.io/
-            REACT_APP_API_URL: https://api.market.decentraland.org
             REACT_APP_VERSION: 0.1
             REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
             REACT_APP_INTERCOM_APP_ID: z0h94kay
-            REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942
-            REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS: 0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d
-            REACT_APP_MARKETPLACE_CONTRACT_ADDRESS: 0xb3bca6f5052c7e24726b44da7403b56a8a1b98f8
             REACT_APP_SEGMENT_API_KEY: tSPRGKC4F9cqdf1VbPwH5ToqNyNXSn5d
       - save_cache:
           paths:
             - webapp/build
-          key: build-release-{{ .Revision }}
-  build-staging:
+          key: build-{{ .Branch }}-{{ .Revision }}
+  deploy:
     docker:
-      - image: circleci/node:7.10
-    working_directory: /tmp/marketplace
-    steps:
-      - checkout
-      - type: shell
-        name: Install System Dependencies
-        command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "webapp/package.json" }}
-          - v1-dependencies-
-      - run: cd webapp && npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "webapp/package.json" }}
-      - run:
-          name: Build
-          command: cd webapp && npm run build
-          environment:
-            NODE_PATH: src/
-            NODE_ENV: development
-            REACT_APP_PROVIDER_URL: https://ropsten.infura.io/
-            REACT_APP_API_URL: https://api.market.decentraland.today
-            REACT_APP_VERSION: 0.1
-            REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
-            REACT_APP_INTERCOM_APP_ID: z0h94kay
-            REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS: 0x2a8fd99c19271f4f04b1b7b9c4f7cf264b626edb
-            REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS: 0x7a73483784ab79257bb11b96fd62a2c3ae4fb75b
-            REACT_APP_MARKETPLACE_CONTRACT_ADDRESS: 0x80faa2b517b84a5aec1078d3600eab4c0b3aff56
-            REACT_APP_SEGMENT_API_KEY: HiNNHH80CETcqzfPBY4jJgJJlFAWbzNp
-      - save_cache:
-          paths:
-            - webapp/build
-          key: build-staging-{{ .Revision }}
-  build-master:
-    docker:
-      - image: circleci/node:7.10
-    working_directory: /tmp/marketplace
-    steps:
-      - checkout
-      - type: shell
-        name: Install System Dependencies
-        command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "webapp/package.json" }}
-          - v1-dependencies-
-      - run: cd webapp && npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "webapp/package.json" }}
-      - run:
-          name: Build
-          command: cd webapp && npm run build
-          environment:
-            NODE_PATH: src/
-            NODE_ENV: development
-            REACT_APP_PROVIDER_URL: https://ropsten.infura.io/
-            REACT_APP_API_URL: https://api.market.decentraland.zone
-            REACT_APP_VERSION: 0.1
-            REACT_APP_ROLLBAR_ACCESS_TOKEN: ad890a7699424114a771373ee60720ac
-            REACT_APP_INTERCOM_APP_ID: z0h94kay
-            REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS: 0x2a8fd99c19271f4f04b1b7b9c4f7cf264b626edb
-            REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS: 0x7a73483784ab79257bb11b96fd62a2c3ae4fb75b
-            REACT_APP_MARKETPLACE_CONTRACT_ADDRESS: 0x80faa2b517b84a5aec1078d3600eab4c0b3aff56
-            REACT_APP_SEGMENT_API_KEY: HiNNHH80CETcqzfPBY4jJgJJlFAWbzNp
-      - save_cache:
-          paths:
-            - webapp/build
-          key: build-master-{{ .Revision }}
-  deploy-release:
-    docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:9.11.1
     working_directory: /tmp/marketplace
     steps:
       - restore_cache:
           keys:
-          - build-release-{{ .Revision }}
-      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
+          - build-{{ .Branch }}-{{ .Revision }}
+      - run: 
+          name: Install system dependencies
+          command: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Remove old assets => S3
-          command: ~/.local/bin/aws s3 rm s3://market.decentraland.org/static/ --recursive
+          command: ~/.local/bin/aws s3 rm {{ .Environment.APP_S3_BUCKET }}static/ --recursive
       - run:
           name: Upload new assets => S3
-          command: ~/.local/bin/aws s3 cp webapp/build s3://market.decentraland.org/ --acl public-read --recursive
+          command: ~/.local/bin/aws s3 cp webapp/build {{ .Environment.APP_S3_BUCKET }} --acl public-read --recursive
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E341512D71C4WA  --paths "/" "/*"
-  deploy-staging:
-    docker:
-      - image: circleci/node:7.10
-    working_directory: /tmp/marketplace
-    steps:
-      - restore_cache:
-          keys:
-          - build-staging-{{ .Revision }}
-      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
-      - run:
-          name: Remove old assets => S3
-          command: ~/.local/bin/aws s3 rm s3://market.decentraland.today/static/ --recursive
-      - run:
-          name: Upload new assets => S3
-          command: ~/.local/bin/aws s3 cp webapp/build s3://market.decentraland.today/ --acl public-read --recursive
-      - run:
-          name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E7M8L196UB6QW  --paths "/" "/*"
-  deploy-master:
-    docker:
-      - image: circleci/node:7.10
-    working_directory: /tmp/marketplace
-    steps:
-      - restore_cache:
-          keys:
-          - build-master-{{ .Revision }}
-      - run: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
-      - run:
-          name: Remove old assets => S3
-          command: ~/.local/bin/aws s3 rm s3://market.decentraland.zone/static/ --recursive
-      - run:
-          name: Upload new assets => S3
-          command: ~/.local/bin/aws s3 cp webapp/build s3://market.decentraland.zone/ --acl public-read --recursive
-      - run:
-          name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id E2TNOPOOOQLC4U  --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id {{ .Environment.APP_CF_DISTRIBUTION }} --paths "/" "/*"
 
 workflows:
   version: 2
   build-deploy-release:
     jobs:
-      - build-release:
+      - build:
+          context: marketplace-prd
           filters:
             branches:
               only: release
-      - deploy-release:
+      - deploy:
+          context: marketplace-prd
           requires:
-            - build-release
+            - build
   build-deploy-staging:
     jobs:
-      - build-staging:
+      - build:
+          context: marketplace-stg
           filters:
             branches:
               only: staging
-      - deploy-staging:
+      - deploy:
+          context: marketplace-stg
           requires:
-            - build-staging
+            - build
   build-deploy-master:
     jobs:
-      - build-master:
+      - build:
+          context: marketplace-dev
           filters:
             branches:
               only: master
-      - deploy-master:
+      - deploy:
+          context: marketplace-dev
           requires:
-            - build-master
+            - build
