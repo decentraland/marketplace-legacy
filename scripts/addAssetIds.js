@@ -8,9 +8,9 @@ import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 
 let BATCH_SIZE
-const log = new Log('addAssetId')
+const log = new Log('addAssetIds')
 
-export async function addAuctionOwners() {
+export async function addAssetIds() {
   log.info('Connecting database')
   await db.connect()
 
@@ -20,16 +20,16 @@ export async function addAuctionOwners() {
     providerUrl: env.get('RPC_URL')
   })
 
-  let parcels = await Parcel.find()
-  parcels = parcels.filter(parcel => !parcel.asset_id) // avoid adding a new method to Parcel
-
+  const parcels = await Parcel.find()
   await updateAssetIds(parcels)
 
   log.info('All done!')
   process.exit()
 }
 
-async function updateAssetIds(parcels) {
+export async function updateAssetIds(parcels) {
+  parcels = parcels.filter(parcel => !parcel.asset_id) // avoid adding a new method to Parcel
+
   const contract = eth.getContract('LANDRegistry')
 
   await asyncBatch({
@@ -57,6 +57,6 @@ if (require.main === module) {
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()
-    .then(addAuctionOwners)
+    .then(addAssetIds)
     .catch(console.error)
 }

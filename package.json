@@ -13,7 +13,7 @@
     "renew-blockchain-data": "./scripts/renewBlockchainData.js",
     "sanity-check": "./scripts/sanityCheck.js run",
     "seed": "./scripts/seed.js",
-    "monitor-blockchain": "./scripts/monitor/index.js store",
+    "monitor-blockchain": "./scripts/monitor/program.js index",
     "cli": "./scripts/mktcli.js",
     "build": "npm run lint && npm run test",
     "start": "cd src && babel-node server.js",

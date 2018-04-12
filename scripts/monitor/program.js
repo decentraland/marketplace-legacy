@@ -2,7 +2,7 @@
 
 import { env, eth, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
-import { StoreCli } from './StoreCli'
+import { MonitorCli } from './MonitorCli'
 import { db } from '../../src/database'
 import { loadEnv } from '../../scripts/utils'
 
@@ -24,7 +24,7 @@ Promise.resolve()
   .then(() => {
     log.debug('Starting CLI')
 
-    return new StoreCli(
+    return new MonitorCli(
       handlers,
       {
         Marketplace: [

@@ -3,7 +3,7 @@ import { BlockchainEvent } from '../../../src/BlockchainEvent'
 
 const log = new Log('handlers')
 
-export async function store(eventData) {
+export async function index(eventData) {
   if (eventData.removed) return
 
   const { event, transactionHash, blockNumber, logIndex, args } = eventData
@@ -25,8 +25,6 @@ export async function store(eventData) {
     log_index: logIndex,
     args: transformArgValuesToString(args)
   })
-
-  return event
 }
 
 function transformArgValuesToString(args) {
