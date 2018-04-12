@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:9.11.1
+      - image: circleci/node:7.10
     working_directory: /tmp/marketplace
     steps:
       - checkout
@@ -35,7 +35,7 @@ jobs:
           key: build-{{ .Branch }}-{{ .Revision }}
   deploy:
     docker:
-      - image: circleci/node:9.11.1
+      - image: circleci/node:7.10
     working_directory: /tmp/marketplace
     steps:
       - restore_cache:
