@@ -60,12 +60,16 @@ export async function processEvent(event) {
       }
       log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
 
-      await Publication.delete({
-        x,
-        y,
-        owner: seller.toLowerCase(),
-        status: Publication.STATUS.open
-      })
+      const [block_time_created_at] = await Promise.all([
+        getBlockTime(event.block_number),
+
+        Publication.delete({
+          x,
+          y,
+          owner: seller.toLowerCase(),
+          status: Publication.STATUS.open
+        })
+      ])
 
       try {
         await Publication.insert({
@@ -77,6 +81,7 @@ export async function processEvent(event) {
           expires_at: expiresAt,
           tx_hash,
           block_number,
+          block_time_created_at,
           contract_id,
           x,
           y
@@ -100,15 +105,20 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
 
-      await Publication.update(
-        {
-          status: Publication.STATUS.sold,
-          buyer: winner.toLowerCase(),
-          price: eth.utils.fromWei(totalPrice)
-        },
-        { contract_id }
-      )
-      await Parcel.update({ owner: winner }, { id: parcelId })
+      const block_time_updated_at = await getBlockTime(event.block_number)
+
+      await Promise.all([
+        Publication.update(
+          {
+            status: Publication.STATUS.sold,
+            buyer: winner.toLowerCase(),
+            price: eth.utils.fromWei(totalPrice),
+            block_time_updated_at
+          },
+          { contract_id }
+        ),
+        Parcel.update({ owner: winner }, { id: parcelId })
+      ])
       break
     }
     case BlockchainEvent.EVENTS.publicationCancelled: {
@@ -120,8 +130,10 @@ export async function processEvent(event) {
       }
       log.info(`[${name}] Publication ${contract_id} cancelled`)
 
+      const block_time_updated_at = await getBlockTime(event.block_number)
+
       await Publication.update(
-        { status: Publication.STATUS.cancelled },
+        { status: Publication.STATUS.cancelled, block_time_updated_at },
         { contract_id }
       )
       break
@@ -144,8 +156,10 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-      await Publication.cancelOlder(x, y, block_number)
-      await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
+      await Promise.all([
+        Publication.cancelOlder(x, y, block_number),
+        Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
+      ])
       break
     }
     default:
@@ -154,6 +168,21 @@ export async function processEvent(event) {
   }
 
   return event
+}
+
+// TODO: Move to eth.commons
+function getBlockTime(blockNumber) {
+  const web3 = eth.wallet.getWeb3()
+
+  return new Promise((resolve, reject) => {
+    web3.eth.getBlock(blockNumber, (error, block) => {
+      if (error || !block) {
+        reject(error)
+      } else {
+        resolve(block.timestamp * 1000)
+      }
+    })
+  })
 }
 
 const eventCache = {

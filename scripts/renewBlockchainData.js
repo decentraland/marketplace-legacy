@@ -1,10 +1,11 @@
 #!/usr/bin/env babel-node
 
 import { eth, contracts } from 'decentraland-eth'
-import { Log, env } from 'decentraland-commons'
+import { Log, env, cli } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
+import { updateAssetIds } from './addAssetIds'
 import { loadEnv } from './utils'
 
 const log = new Log('update')
@@ -28,6 +29,14 @@ export async function renewBlockchainData() {
   log.info('Storing `parcels` data')
   const parcels = await Parcel.find()
   await updateParcelsData(parcels)
+
+  const shouldAddAssetIds = await cli.confirm(
+    'Do you want to add the parcel the asset ids?'
+  )
+
+  if (shouldAddAssetIds) {
+    await updateAssetIds(parcels)
+  }
 
   log.info('All done')
 }

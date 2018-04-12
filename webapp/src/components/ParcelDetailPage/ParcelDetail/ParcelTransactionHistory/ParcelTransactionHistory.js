@@ -93,7 +93,10 @@ export default class ParcelTransactionHistory extends React.PureComponent {
                     <Mana amount={publication.price} />
                   </Grid.Column>
                   <Grid.Column>
-                    <BlockDate block={publication.block_number} />
+                    <BlockDate
+                      blockNumber={publication.block_number}
+                      blockTime={publication.block_time_created_at}
+                    />
                   </Grid.Column>
                   <Responsive
                     as={Grid.Column}

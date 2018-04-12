@@ -1,24 +1,51 @@
-import { Log } from 'decentraland-commons'
-import { Cli } from './Cli'
+import { cli, Log } from 'decentraland-commons'
+import { HandlersIndex } from './handlers'
 import { EventMonitor } from './EventMonitor'
 import { processEvents } from './processEvents'
 
-const log = new Log('StoreCli')
+const log = new Log('MonitorCli')
 
-export class StoreCli extends Cli {
+export class MonitorCli {
   constructor(handlers, contractEvents = {}, processDelay) {
-    super(handlers)
+    this.handlers = new HandlersIndex(handlers)
+
     this.contractEvents = contractEvents
     this.processDelay = processDelay
     this.processTimeout = null
     this.isProcessRunning = false
   }
 
-  addCommands(program) {
-    this.defineCommand('store', program, this.store)
+  run() {
+    cli.runProgram([this])
   }
 
-  store = options => {
+  addCommands(program) {
+    program
+      .command('index')
+      .option(
+        '--args [args]',
+        'JSON string containing args to filter by. Defaults to {}'
+      )
+      .option(
+        '--from-block [fromBlock]',
+        'The number of the earliest block. Defaults to 0'
+      )
+      .option(
+        '--to-block [toBlock]',
+        'The number of the latest block. Defaults to `latest`'
+      )
+      .option(
+        '--address [address]',
+        'An address to only get logs from particular account(s).'
+      )
+      .option(
+        '-w, --watch',
+        'Keep watching the blockchain for new events after --to-block.'
+      )
+      .action(this.index)
+  }
+
+  index = options => {
     for (const contractName in this.contractEvents) {
       const eventNames = this.contractEvents[contractName]
       this.monitor(contractName, eventNames, options)
@@ -42,7 +69,7 @@ export class StoreCli extends Cli {
 
   monitor = (contractName, eventNames, options) => {
     const eventMonitor = new EventMonitor(contractName, eventNames)
-    const handler = this.handlers.get('store', contractName, eventNames)
+    const handler = this.handlers.get('index', contractName, eventNames)
 
     if (!handler) throw new Error('Could not find a valid handler')
 

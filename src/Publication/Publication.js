@@ -14,6 +14,8 @@ export class Publication extends Model {
     'buyer',
     'price',
     'expires_at',
+    'block_time_created_at',
+    'block_time_updated_at',
     'contract_id'
   ]
   static primaryKey = 'tx_hash'
@@ -40,13 +42,21 @@ export class Publication extends Model {
     return this.db.query(this.findByStatusSql(status))
   }
 
+  static findWithoutBlockTime() {
+    return this.db.query(
+      `SELECT *
+        FROM ${this.tableName}
+        WHERE block_confirmed_at`
+    )
+  }
+
   static findOpenSql(status) {
     if (!this.isValidStatus(status)) {
       throw new Error(`Trying to filter by invalid status '${status}'`)
     }
 
-    return `
-      SELECT * FROM ${this.tableName}
+    return `SELECT *
+        FROM ${this.tableName}
         WHERE status = '${status}'
         ORDER BY created_at DESC`
   }

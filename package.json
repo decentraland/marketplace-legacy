@@ -14,7 +14,7 @@
     "sanity-check": "./scripts/sanityCheck.js run",
     "seed": "./scripts/seed.js",
     "tag": "./scripts/tag.js",
-    "monitor-blockchain": "./scripts/monitor/index.js store",
+    "monitor-blockchain": "./scripts/monitor/program.js index",
     "cli": "./scripts/mktcli.js",
     "build": "npm run lint && npm run test",
     "build:ci": "npm run migrate up && npm run build",
