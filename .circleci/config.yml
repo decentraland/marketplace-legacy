@@ -46,13 +46,13 @@ jobs:
           command: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Remove old assets => S3
-          command: ~/.local/bin/aws s3 rm {{ .Environment.APP_S3_BUCKET }}static/ --recursive
+          command: ~/.local/bin/aws s3 rm ${APP_S3_BUCKET}static/ --recursive
       - run:
           name: Upload new assets => S3
-          command: ~/.local/bin/aws s3 cp webapp/build {{ .Environment.APP_S3_BUCKET }} --acl public-read --recursive
+          command: ~/.local/bin/aws s3 cp webapp/build ${APP_S3_BUCKET} --acl public-read --recursive
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id {{ .Environment.APP_CF_DISTRIBUTION }} --paths "/" "/*"
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id ${APP_CF_DISTRIBUTION} --paths "/" "/*"
 
 workflows:
   version: 2
