@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="gr__market_decentraland_org">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
@@ -89,6 +90,7 @@
       -o-transition: opacity 0.15s linear;
       transition: opacity 0.15s linear;
     }
+
     .fade.in {
       opacity: 1;
     }
@@ -190,19 +192,19 @@
       App */
 
     #app {
-      background: linear-gradient(#1f2333, #0d0f17);
+      background: var(--gradient)
     }
 
     .Page {
       height: calc(100% - var(--navbar-height));
     }
 
-    .Page > div {
+    .Page>div {
       position: relative;
       min-height: calc(100% - var(--footer-height));
       padding-top: 30px;
       padding-bottom: 30px;
-      background: linear-gradient(#1f2333, #0d0f17);
+      background: var(--gradient)
     }
 
     .StaticPage .content {
@@ -294,6 +296,7 @@
       margin-right: 27px;
       color: #8f919a;
     }
+
     .Footer .links a:last-child {
       margin-right: 0;
     }
@@ -428,15 +431,19 @@
     .Icon-twitter {
       background-position: 0 0;
     }
+
     .Icon-rocketchat {
       background-position: -40px 0;
     }
+
     .Icon-github {
       background-position: -78px 0;
     }
+
     .Icon-reddit {
       background-position: -114px 0;
     }
+
     .Icon-facebook {
       background-position: -152px 0;
     }
@@ -472,6 +479,7 @@
     }
   </style>
 </head>
+
 <body data-gr-c-s-loaded="true">
   <div id="app">
     <div class="Navbar" role="navigation"></div>
@@ -482,20 +490,18 @@
             <i class="Icon Icon-decentraland"></i>
             <h1>
               Under site maintenance
-              <br/>
-              在网站维护
+              <br/> 在网站维护
             </h1>
             <p class="sub">
               We'll be right back!
-              <br/>
-              我们马上回来！
-              <br/>
-              :)
+              <br/> 我们马上回来！
+              <br/> :)
             </p>
-<!--             <a href="/">
+            <!--             <a href="/">
               <button type="button" class="ui primary button" role="button">Refresh</button>
             </a>
- -->          </div>
+ -->
+          </div>
         </div>
       </div>
       <footer class="Footer">
@@ -522,13 +528,14 @@
             </a>
           </div>
         </div>
-        <div class="footer-column right"><span>
-          <span class="copyright">© 2018 Decentraland. All rights reserved.</span>
-          <span class="mini-copyright">© 2018 Decentraland.</span>
+        <div class="footer-column right">
+          <span>
+            <span class="copyright">© 2018 Decentraland. All rights reserved.</span>
+            <span class="mini-copyright">© 2018 Decentraland.</span>
         </div>
       </footer>
     </div>
   </div>
 </body>
-</html>
 
+</html>

@@ -37,6 +37,9 @@ if (env.isDevelopment()) {
 
     next()
   })
+} else {
+  // This is not ideal, but adding newrelic to development is worst
+  require('newrelic')
 }
 
 /**

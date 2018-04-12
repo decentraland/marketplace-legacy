@@ -112,6 +112,47 @@
   display: none;
 }
 
+.Navbar .hamburger {
+  color: var(--primary);
+  margin-right: 0.5em;
+}
+
+.Navbar .hamburger-wrapper {
+  font-family: var(--font-family);
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.Navbar .sidebar {
+  background: var(--gradient) !important;
+  z-index: 2000 !important;
+  box-shadow: 0px 0px 0px 0px black !important;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.Navbar .sidebar.visible {
+  background: var(--gradient) !important;
+  z-index: 2000 !important;
+  box-shadow: 0px 0px 1500px 30px black !important;
+}
+
+.Navbar .menu.vertical .item {
+  font-size: 2em !important;
+  text-transform: none !important;
+  background-color: transparent !important;
+}
+
+.Navbar .activity-badge-mobile {
+  background: var(--primary) !important;
+  margin-top: 5px !important;
+}
+
 @media (min-width: 500px) {
   .Navbar {
     min-width: 400px;
@@ -124,10 +165,6 @@
   }
 
   .Navbar .navbar-header:not(.navbar-modal) {
-    display: none;
-  }
-
-  .Navbar .navbar-account .Account .Mana {
     display: none;
   }
 }
@@ -149,4 +186,9 @@
     padding: 0.4em 0.7em !important;
     margin: 0 0.1em !important;
   }
+}
+
+.Navbar .navbar-menu .item.close-sidebar {
+  margin: 10px 10px 30px 0px !important;
+  cursor: pointer;
 }

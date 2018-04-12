@@ -31,7 +31,7 @@ export function isTransactionRejectedError(message) {
 
 export function getEtherscanHref({ txHash, address }, network) {
   let origin = 'https://etherscan.io'
-  if (network !== 'mainnet') {
+  if (network && network !== 'mainnet') {
     origin = `https://${network}.etherscan.io`
   }
 

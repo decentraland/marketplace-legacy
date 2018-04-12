@@ -80,7 +80,7 @@ export default class SettingsPage extends React.PureComponent {
       <div className="SettingsPage">
         <Container>
           <div className="row">
-            <div className="column">
+            <div className="column blockie">
               <AddressBlock
                 address={address}
                 hasTooltip={false}

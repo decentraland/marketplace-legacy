@@ -13,8 +13,8 @@ export class BlockchainEvent extends Model {
     parcelUpdate: 'Update'
   }
 
-  static findLastBlockNumber() {
-    const { block_number } = this.findOne(null, {
+  static async findLastBlockNumber() {
+    const { block_number } = await this.findOne(null, {
       block_number: 'DESC',
       log_index: 'DESC'
     })

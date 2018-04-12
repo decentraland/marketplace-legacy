@@ -73,7 +73,7 @@ export async function processEvent(event) {
           owner: seller.toLowerCase(),
           buyer: null,
           price: eth.utils.fromWei(priceInWei),
-          expires_at: new Date(parseInt(expiresAt, 10)),
+          expires_at: expiresAt,
           tx_hash,
           block_number,
           contract_id,

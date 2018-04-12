@@ -29,7 +29,8 @@
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "owned_by": "Controlada por",
-    "owned_by_link": "Controlada por {address_link}"
+    "owned_by_link": "Controlada por {address_link}",
+    "connecting": "Conectando"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -121,7 +122,8 @@
     "unknown_error":
       "Un problema desconocido ha ocurrido, los detalles se encuentran debajo.",
     "error_persists":
-      "Si el problema persiste, contáctate con nosotros en {community_chat_link}"
+      "Si el problema persiste, contáctate con nosotros en {community_chat_link}",
+    "placeholder": "Ejemplo: {address}"
   },
   "parcel_buy": {
     "buy_land": "Comprar LAND",
@@ -167,9 +169,9 @@
       "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "disapproved":
       "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "transfer_mana": "Has transferido {mana} MANA a {address_link}",
     "authorize":
       "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
+    "transfer_mana": "Has transferido {mana} MANA a {address_link}",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
     "transfer": "Has transferido {parcel_link} a {owner_link}",
@@ -223,8 +225,7 @@
     "own_address_warning": "Esa es tu propia dirección!"
   },
   "derivation_path": {
-    "supported":
-      "Por el momento solo soportamos derivation paths que comienzan con {paths}"
+    "invalid": "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "Mapa de colores",

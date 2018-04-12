@@ -50,15 +50,16 @@ export default class AddressBlock extends React.Component {
       <Blockie seed={address.toLowerCase()} size={size} scale={scale} />
     )
 
+    let tooltip = ''
+    if (hasTooltip) {
+      tooltip = isUser ? t('address.its_you') : shortenAddress(address)
+    }
+
     return (
       <div
         className={`AddressBlock ${className}`}
         data-balloon-pos="up"
-        data-balloon={
-          hasTooltip
-            ? isUser ? t('address.its_you') : shortenAddress(address)
-            : null
-        }
+        data-balloon={tooltip}
       >
         {hasLink ? (
           <Link to={link ? link : locations.profilePage(address)}>

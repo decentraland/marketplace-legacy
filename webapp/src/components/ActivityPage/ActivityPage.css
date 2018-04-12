@@ -25,3 +25,10 @@
 .ActivityPage .pending-transaction-list {
   margin-bottom: 30px;
 }
+
+@media (max-width: 768px) {
+  .ActivityPage {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}

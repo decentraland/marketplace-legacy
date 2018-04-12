@@ -35,7 +35,7 @@ export default class TermsModal extends React.PureComponent {
   }
 
   render() {
-    const { location: { pathname } } = this.props
+    const { pathname } = this.props.location
     if (
       pathname === locations.root ||
       pathname === locations.terms ||

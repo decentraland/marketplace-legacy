@@ -24,12 +24,13 @@
     "authorized": "已授权",
     "unauthorized": "未授权",
     "wallet_address": "钱包地址",
-    "balance": "平衡",
+    "balance": "余额",
     "for": "对于",
     "sign_in": "登录",
     "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "owned_by": "拥有",
-    "owned_by_link": "{address_link} 소유"
+    "owned_by_link": "{address_link} 소유",
+    "connecting": "连"
   },
   "address": {
     "its_you": "是你"
@@ -118,7 +119,8 @@
     "recipient_address": "接收者地址",
     "unknown_error": "发生未知错误，详情如下。",
     "error_persists":
-      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系"
+      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
+    "placeholder": "例: {address}"
   },
   "parcel_buy": {
     "buy_land": "购买土地",
@@ -149,7 +151,6 @@
   },
   "parcel_cancel": {
     "cancel_land": "取消土地出售",
-    "currently_on_sale": "目前正以价格{value}出售。",
     "about_to_cancel": "您即将取消{parcel}的销售。",
     "not_for_sale": "包裹{parcel}不出售。"
   },
@@ -205,7 +206,7 @@
     "own_address_warning": "这是你自己的地址！"
   },
   "derivation_path": {
-    "supported": "我们暂时只支持以{paths}开头的路径"
+    "invalid": "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "色彩标记",

@@ -30,7 +30,8 @@
     "sign_in_notice":
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "owned_by": "Controlé par",
-    "owned_by_link": "Controlé par {address_link}"
+    "owned_by_link": "Controlé par {address_link}",
+    "connecting": "Connexion"
   },
   "address": {
     "its_you": "C'est toi"
@@ -121,7 +122,8 @@
     "unknown_error":
       "Une erreur s'est produite, les détails se trouvent ci-dessous.",
     "error_persists":
-      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}"
+      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
+    "placeholder": "Exemple: {address}"
   },
   "parcel_buy": {
     "buy_land": "Acheter une LAND",
@@ -226,8 +228,7 @@
     "own_address_warning": "C'est ta propre adresse!"
   },
   "derivation_path": {
-    "supported":
-      "Nous ne prenons en charge que les chemins commençant par {paths} pour le moment"
+    "invalid": "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
   "color_key": {
     "title": "Code couleur",
