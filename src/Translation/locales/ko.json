@@ -29,7 +29,8 @@
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "owned_by": "에게 소유 된",
-    "owned_by_link": "{address_link} 소유"
+    "owned_by_link": "{address_link} 소유",
+    "connecting": "연결 중"
   },
   "address": {
     "its_you": "너야"
@@ -120,7 +121,8 @@
     "unknown_error":
       "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다.",
     "error_persists":
-      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오."
+      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
+    "placeholder": "예: {address}"
   },
   "parcel_buy": {
     "buy_land": "토지 구입",

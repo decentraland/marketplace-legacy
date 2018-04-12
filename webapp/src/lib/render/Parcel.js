@@ -1,4 +1,5 @@
 import { COLORS } from 'lib/parcelUtils'
+import { isMobile } from 'lib/utils'
 
 export const Parcel = {
   draw({
@@ -6,7 +7,7 @@ export const Parcel = {
     x,
     y,
     size = 10,
-    padding = 2,
+    padding = isMobile() ? 1 : 2,
     offset = 1,
     color = '#ff9990',
     connectedLeft,

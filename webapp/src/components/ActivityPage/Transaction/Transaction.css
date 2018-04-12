@@ -53,6 +53,9 @@
   .Transaction .mini.circle {
     display: none;
   }
+  .Transaction .transaction-avatar {
+    margin-left: 0px;
+  }
 }
 
 @media (min-width: 768px) {

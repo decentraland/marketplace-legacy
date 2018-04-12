@@ -8,6 +8,7 @@ export default class Mana extends React.PureComponent {
     amount: PropTypes.number,
     icon: PropTypes.node,
     unit: PropTypes.string,
+    className: PropTypes.string,
     size: PropTypes.number,
     scale: PropTypes.number,
     disabled: PropTypes.bool,
@@ -18,7 +19,8 @@ export default class Mana extends React.PureComponent {
     unit: '',
     size: 14,
     scale: 1.2,
-    disabled: false
+    disabled: false,
+    className: ''
   }
 
   getLocalizedAmount() {
@@ -30,19 +32,15 @@ export default class Mana extends React.PureComponent {
   }
 
   render() {
-    const { size, scale, unit, disabled, ...rest } = this.props
+    const { size, scale, unit, disabled, className, ...rest } = this.props
 
     const iconSize = Math.round(size * scale)
     const icon = this.props.icon || <Icon width={iconSize} height={iconSize} />
-    const style = {
-      fontSize: size
-    }
     const amount = this.getLocalizedAmount()
-    const classes = `Mana ` + (disabled ? ' disabled' : '')
+    const classes = `Mana ${className}` + (disabled ? ' disabled' : '')
     return (
       <span
         className={classes}
-        style={style}
         title={amount ? `${amount} MANA` : ''}
         {...rest}
       >

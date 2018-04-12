@@ -4,6 +4,7 @@
   flex-flow: row nowrap;
   align-items: center;
   font-weight: 200;
+  font-size: 1em;
 }
 
 .Mana .ManaIcon {

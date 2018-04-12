@@ -5,3 +5,7 @@
 .SignInPage .sign-in-options {
   color: var(--gray);
 }
+
+.StaticPage .message {
+  padding: 0 38px;
+}

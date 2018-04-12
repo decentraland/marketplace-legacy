@@ -200,5 +200,5 @@ button {
   App */
 
 #app {
-  background: linear-gradient(#1f2333, #0d0f17);
+  background: var(--gradient);
 }

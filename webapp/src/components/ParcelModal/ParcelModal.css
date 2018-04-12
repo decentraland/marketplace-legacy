@@ -51,4 +51,8 @@
     width: calc(100% - 4em);
     margin: 2em;
   }
+
+  .ParcelModal .modal-children {
+    margin: 0px 50px 0px 50px;
+  }
 }

@@ -24,12 +24,13 @@
     "authorized": "已授权",
     "unauthorized": "未授权",
     "wallet_address": "钱包地址",
-    "balance": "平衡",
+    "balance": "余额",
     "for": "对于",
     "sign_in": "登录",
     "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "owned_by": "拥有",
-    "owned_by_link": "{address_link} 소유"
+    "owned_by_link": "{address_link} 소유",
+    "connecting": "连"
   },
   "address": {
     "its_you": "是你"
@@ -118,7 +119,8 @@
     "recipient_address": "接收者地址",
     "unknown_error": "发生未知错误，详情如下。",
     "error_persists":
-      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系"
+      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
+    "placeholder": "例: {address}"
   },
   "parcel_buy": {
     "buy_land": "购买土地",

@@ -37,6 +37,8 @@
   color: white;
   font-size: 16px;
   margin-top: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .SettingsForm .authorization-checks {
