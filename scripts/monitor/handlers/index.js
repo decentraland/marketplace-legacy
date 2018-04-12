@@ -10,7 +10,6 @@ export async function store(eventData) {
 
   const exists = await BlockchainEvent.count({
     tx_hash: transactionHash,
-    name: event,
     log_index: logIndex
   })
   if (exists) {
