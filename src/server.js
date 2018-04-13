@@ -14,6 +14,7 @@ import {
   PublicationRequestFilters
 } from './Publication'
 import { Translation } from './Translation'
+import { DashboardService } from './Dashboard'
 
 env.load()
 
@@ -53,6 +54,17 @@ export async function getTranslations(req) {
   let locale = server.extractFromReq(req, 'locale')
   locale = locale.slice(0, 2) // We support base locales for now, like en, it, etc
   return await new Translation().fetch(locale)
+}
+
+/**
+ * Returns the translations for a given locale
+ * @param  {string} locale - locale name
+ * @return {array}
+ */
+app.get('/api/dashboard/stats', server.handleRequest(getDashboardStats))
+
+export async function getDashboardStats(req) {
+  return await new DashboardService().fetchStats()
 }
 
 /**

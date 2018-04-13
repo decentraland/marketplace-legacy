@@ -42,14 +42,6 @@ export class Publication extends Model {
     return this.db.query(this.findByStatusSql(status))
   }
 
-  static findWithoutBlockTime() {
-    return this.db.query(
-      `SELECT *
-        FROM ${this.tableName}
-        WHERE block_confirmed_at`
-    )
-  }
-
   static findOpenSql(status) {
     if (!this.isValidStatus(status)) {
       throw new Error(`Trying to filter by invalid status '${status}'`)

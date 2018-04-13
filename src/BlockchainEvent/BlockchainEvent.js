@@ -21,6 +21,18 @@ export class BlockchainEvent extends Model {
     return block_number
   }
 
+  static findLastest(limit = 10) {
+    const MAX_RESULT_COUNT = 10000
+
+    limit = parseInt(limit, 10) <= MAX_RESULT_COUNT ? limit : 10
+
+    return this.find(
+      null,
+      { block_number: 'DESC', log_index: 'DESC' },
+      `LIMIT ${limit}`
+    )
+  }
+
   static findFrom(blockNumber) {
     return this.db.query(
       `SELECT *
