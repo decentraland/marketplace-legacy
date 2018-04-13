@@ -2,6 +2,7 @@ import { cli, Log } from 'decentraland-commons'
 import { HandlersIndex } from './handlers'
 import { EventMonitor } from './EventMonitor'
 import { processEvents } from './processEvents'
+import { BlockchainEvent } from '../../src/BlockchainEvent'
 
 const log = new Log('MonitorCli')
 
@@ -67,11 +68,13 @@ export class MonitorCli {
     }, this.processDelay)
   }
 
-  monitor = (contractName, eventNames, options) => {
+  async monitor(contractName, eventNames, options) {
     const eventMonitor = new EventMonitor(contractName, eventNames)
     const handler = this.handlers.get('index', contractName, eventNames)
 
     if (!handler) throw new Error('Could not find a valid handler')
+
+    const fromBlock = await this.getFromBlock(options)
 
     eventMonitor.run(options, async (error, logs) => {
       if (error) {
@@ -84,8 +87,14 @@ export class MonitorCli {
           await handler(logs)
         }
 
-        this.processStoredEvents(options.fromBlock)
+        this.processStoredEvents(fromBlock)
       }
     })
+  }
+
+  async getFromBlock(options) {
+    return options.fromBlock === 'latest'
+      ? await BlockchainEvent.findLastBlockNumber()
+      : options.fromBlock
   }
 }
