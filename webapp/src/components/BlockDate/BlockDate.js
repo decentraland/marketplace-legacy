@@ -9,7 +9,7 @@ export default class BlockDate extends React.PureComponent {
   static propTypes = {
     network: PropTypes.string,
     blockNumber: PropTypes.number.isRequired,
-    blockTime: PropTypes.number,
+    blockTime: PropTypes.string,
     target: PropTypes.string,
     className: PropTypes.string
   }
@@ -29,7 +29,9 @@ export default class BlockDate extends React.PureComponent {
         target={target}
         title={`Block #${blockNumber}`}
       >
-        {blockTime ? distanceInWordsToNow(blockTime) : `#${blockNumber}`}
+        {blockTime
+          ? distanceInWordsToNow(parseInt(blockTime, 10))
+          : `#${blockNumber}`}
       </Link>
     )
   }
