@@ -50,7 +50,7 @@ export default class AddressBlock extends React.Component {
       <Blockie seed={address.toLowerCase()} size={size} scale={scale} />
     )
 
-    let tooltip = ''
+    let tooltip = null
     if (hasTooltip) {
       tooltip = isUser ? t('address.its_you') : shortenAddress(address)
     }
