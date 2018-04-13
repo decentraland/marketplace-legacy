@@ -7,13 +7,7 @@ import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')
 
-export async function processEvents(fromBlock) {
-  if (fromBlock === 'latest') {
-    fromBlock = await BlockchainEvent.findLastBlockNumber()
-  } else if (fromBlock == null) {
-    fromBlock = 0
-  }
-
+export async function processEvents(fromBlock = 0) {
   const allBlockchainEvents = await BlockchainEvent.findFrom(fromBlock)
   const blockchainEvents = allBlockchainEvents.filter(
     event => !eventCache.get(event)
