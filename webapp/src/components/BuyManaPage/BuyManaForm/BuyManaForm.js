@@ -117,7 +117,7 @@ export default class BuyManaForm extends React.PureComponent {
     const { defaultRate, rate } = this.state
     const price = this.getPrice()
     const slippage = getSlippage(defaultRate, rate)
-    // sometimes when you hit bancor with a big ass amount to convert it goes cray-cray
+    // sometimes when you hit bancor with a big ass amount it goes cray-cray
     return !isNaN(price) && !isNaN(slippage) && slippage !== Infinity
   }
 
