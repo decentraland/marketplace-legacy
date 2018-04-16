@@ -87,9 +87,12 @@ const main = {
         asSafeAction(async (coord, owner) => {
           const [x, y] = parseCLICoords(coord)
           const contract = eth.getContract('LANDRegistry')
+
           await unlockAccountWithPrompt()
-          await contract.assignNewParcel(x, y, owner)
+          const txHash = await contract.assignNewParcel(x, y, owner)
+
           log.info(`(land-assign) coords:(${x},${y}) => owner: ${owner}`)
+          log.info(`(land-assign) tx:${txHash}`)
         })
       )
 
@@ -137,9 +140,12 @@ const main = {
           const [x, y] = parseCLICoords(coord)
           const assetId = await Parcel.encodeAssetId(x, y)
           const contract = eth.getContract('Marketplace')
+
           await unlockAccountWithPrompt()
-          await contract.cancelOrder(assetId)
+          const txHash = await contract.cancelOrder(assetId)
+
           log.info(`(publication-cancel) coords:(${x},${y})`)
+          log.info(`(publication-cancel) tx:${txHash}`)
         })
       )
 
@@ -235,19 +241,55 @@ const main = {
       .action(
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
-          log.info('Deleting publications')
           await Publication.delete({ x, y })
+          log.info(
+            `(clean-publications) publications deleted. coords:(${x},${y})`
+          )
         })
       )
 
     program
       .command('truncate [tableNames...]')
       .description('Truncate DB tables')
-      .action(async tableNames => {
-        log.info(`Truncating ${tableNames.length} tables`)
-        await Promise.all(tableNames.map(tableName => db.truncate(tableName)))
-        process.exit()
-      })
+      .action(
+        asSafeAction(async tableNames => {
+          log.info(`(truncate) truncating ${tableNames.length} tables`)
+          await Promise.all(tableNames.map(tableName => db.truncate(tableName)))
+        })
+      )
+
+    program
+      .command('tx-status <txHash>')
+      .description(
+        'Fetch information about the transaction hash from the blockchain'
+      )
+      .option('--expand-events', 'Show arguments for each fired event')
+      .action(
+        asSafeAction(async (txHash, options) => {
+          const [tx, recepeit] = await Promise.all([
+            eth.fetchTxStatus(txHash),
+            eth.fetchTxReceipt(txHash)
+          ])
+
+          if (tx) {
+            log.info('(tx-status) tx\n', tx)
+
+            if (recepeit) {
+              log.info('(tx-status) recepeit\n', recepeit)
+
+              if (options.expandEvents) {
+                recepeit.logs.map(txLog =>
+                  log.info(txLog.name, '\n', txLog.events)
+                )
+              }
+            } else {
+              log.info('(tx-status) recepeit not found, maybe not mined yet')
+            }
+          } else {
+            log.info('(tx-status) tx not found')
+          }
+        })
+      )
   }
 }
 
