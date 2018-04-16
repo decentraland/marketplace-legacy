@@ -4,8 +4,7 @@ import { getWallet, isConnecting, isConnected } from 'modules/wallet/selectors'
 import {
   approveManaRequest,
   authorizeLandRequest,
-  updateDerivationPath,
-  buyManaRequest
+  updateDerivationPath
 } from 'modules/wallet/actions'
 import SettingsPage from './SettingsPage'
 
@@ -21,8 +20,7 @@ const mapDispatch = dispatch => ({
   onApproveMana: mana => dispatch(approveManaRequest(mana)),
   onAuthorizeLand: isAuthorized => dispatch(authorizeLandRequest(isAuthorized)),
   onUpdateDerivationPath: derivationPath =>
-    dispatch(updateDerivationPath(derivationPath)),
-  onBuyMana: () => dispatch(buyManaRequest())
+    dispatch(updateDerivationPath(derivationPath))
 })
 
 export default connect(mapState, mapDispatch)(SettingsPage)

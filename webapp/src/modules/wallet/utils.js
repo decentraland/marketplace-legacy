@@ -35,3 +35,8 @@ export function getMarketplaceAddress() {
   const marketplaceContract = eth.getContract('Marketplace')
   return marketplaceContract.address
 }
+
+export async function sendTransaction(tx) {
+  const web3 = eth.wallet.getWeb3()
+  return await utils.promisify(web3.eth.sendTransaction)(tx)
+}

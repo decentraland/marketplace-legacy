@@ -177,7 +177,8 @@
     "transfer": "Has transferido {parcel_link} a {owner_link}",
     "publish": "Has publicado {parcel_link}",
     "buy": "Has comprado {parcel_link}",
-    "cancel": "Has cancelado {publication_link} de {parcel_link}"
+    "cancel": "Has cancelado {publication_link} de {parcel_link}",
+    "buy_mana": "Has comprado {mana} MANA"
   },
   "transaction_status": {
     "see_activity":
@@ -224,8 +225,21 @@
       "Recuerda que transferir MANA es una operación irreversible.",
     "own_address_warning": "Esa es tu propia dirección!"
   },
+  "buy_mana": {
+    "title": "Convertir ETH en MANA",
+    "action": "Comprar Más",
+    "available_eth": "Disponible: {eth} ETH",
+    "receive": "Recibir",
+    "pay_with": "Pagar con",
+    "powered_by": "por {bancor_link}",
+    "rate": "Tasa",
+    "slippage": "Deslizamiento",
+    "not_enough": "No tienes suficiente ETH para pagar esto",
+    "amount_too_big": "Este monto es demaciado grande para la red de Bancor"
+  },
   "derivation_path": {
-    "invalid": "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
+    "invalid":
+      "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "Mapa de colores",

@@ -3,7 +3,8 @@ import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
   CONNECT_WALLET_REQUEST,
-  TRANSFER_MANA_REQUEST
+  TRANSFER_MANA_REQUEST,
+  BUY_MANA_REQUEST
 } from './actions'
 import { getAddresses } from 'modules/address/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
@@ -49,3 +50,6 @@ export const getWallet = createSelector(
 )
 export const isTransferManaTransactionIdle = state =>
   isLoadingType(getLoading(state), TRANSFER_MANA_REQUEST)
+
+export const isBuyManaTransactionIdle = state =>
+  isLoadingType(getLoading(state), BUY_MANA_REQUEST)

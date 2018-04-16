@@ -181,7 +181,8 @@
     "publish": "Vous avez publié l'offre {parcel_link}",
     "buy": "Vous avez acheté {parcel_link}",
     "cancel":
-      "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}"
+      "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
+    "buy_mana": "Vous avez acheté {mana} MANA"
   },
   "transaction_status": {
     "see_activity":
@@ -227,8 +228,21 @@
     "irreversible": "Chaque transfert de MANA est une opération irréversible.",
     "own_address_warning": "C'est ta propre adresse!"
   },
+  "buy_mana": {
+    "title": "Convertir de ETH à MANA",
+    "action": "Acheter plus",
+    "available_eth": "Disponible: {eth} ETH",
+    "receive": "Recevoir",
+    "pay_with": "Payer avec",
+    "powered_by": "par {bancor_link}",
+    "rate": "Taux",
+    "slippage": "Glissement",
+    "not_enough": "Vous n'avez pas assez d'ETH à payer pour cela",
+    "amount_too_big": "Ce montant est trop important pour le Bancor Network"
+  },
   "derivation_path": {
-    "invalid": "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
+    "invalid":
+      "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
   "color_key": {
     "title": "Code couleur",

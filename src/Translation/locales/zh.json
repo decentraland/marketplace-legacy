@@ -170,7 +170,8 @@
     "transfer": "您已将{parcel_link}转让给{owner_link}",
     "publish": "您发布了{parcel_link}地块",
     "buy": "您买入了{parcel_link}地块",
-    "cancel": "您取消了{parcel_link}上的{publication_link}"
+    "cancel": "您取消了{parcel_link}上的{publication_link}",
+    "buy_mana": "你已经买了{MANA} MANA"
   },
   "transaction_status": {
     "see_activity": "要查看您的交易记录，请访问您的{activity_link}。",
@@ -205,8 +206,21 @@
     "irreversible": "请记住，转让MANA是一项不可逆转的行动。",
     "own_address_warning": "这是你自己的地址！"
   },
+  "buy_mana": {
+    "title": "将ETH转换为MANA",
+    "action": "购买更多",
+    "available_eth": "可用：{eth} ETH",
+    "receive": "收到",
+    "pay_with": "付款",
+    "powered_by": "由{bancor_link}提供",
+    "rate": "率",
+    "slippage": "滑移",
+    "not_enough": "你没有足够的ETH来支付这个费用",
+    "amount_too_big": "Bancor Network的这个数额太大了"
+  },
   "derivation_path": {
-    "invalid": "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
+    "invalid":
+      "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "色彩标记",

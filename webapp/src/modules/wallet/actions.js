@@ -133,15 +133,18 @@ export const BUY_MANA_REQUEST = '[Request] Buy MANA'
 export const BUY_MANA_SUCCESS = '[Success] Buy MANA'
 export const BUY_MANA_FAILURE = '[Failure] Buy MANA'
 
-export function buyManaRequest() {
+export function buyManaRequest(mana, tx) {
   return {
-    type: BUY_MANA_REQUEST
+    type: BUY_MANA_REQUEST,
+    mana,
+    tx
   }
 }
 
-export function buyManaSuccess(mana) {
+export function buyManaSuccess(txHash, mana) {
   return {
     type: BUY_MANA_SUCCESS,
+    ...buildTransactionAction(txHash, { mana }),
     mana
   }
 }

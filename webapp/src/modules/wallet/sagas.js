@@ -8,7 +8,7 @@ import {
   put
 } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { eth, env } from 'decentraland-commons'
+import { eth } from 'decentraland-commons'
 import { locations } from 'locations'
 import {
   CONNECT_WALLET_REQUEST,
@@ -33,7 +33,11 @@ import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
-import { connectEthereumWallet, getMarketplaceAddress } from './utils'
+import {
+  connectEthereumWallet,
+  getMarketplaceAddress,
+  sendTransaction
+} from './utils'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
@@ -145,18 +149,12 @@ function* handleTransferManaRequest(action) {
   }
 }
 
-function buyMana() {
-  return new Promise((resolve, reject) => {
-    window.onBuyManaSuccess = resolve
-    window.onBuyManaFailed = reject
-    window.open(env.get('REACT_APP_BANCOR_WIDGET_URL', '/bancor-widget.html'))
-  })
-}
-
 function* handleBuyManaRequest(action) {
   try {
-    const mana = yield call(() => buyMana())
-    yield put(buyManaSuccess(mana))
+    const { mana, tx } = action
+    const txHash = yield call(() => sendTransaction(tx))
+    yield put(buyManaSuccess(txHash, mana))
+    yield put(push(locations.activity))
   } catch (error) {
     yield put(buyManaFailure(error.message))
   }

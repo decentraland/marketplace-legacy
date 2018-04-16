@@ -26,8 +26,7 @@ export default class SettingsForm extends React.PureComponent {
     onManaApprovedChange: PropTypes.func,
     isLandAuthorized: PropTypes.bool,
     authorizeTransaction: PropTypes.object,
-    onLandAuthorizedChange: PropTypes.func,
-    onBuyMana: PropTypes.func
+    onLandAuthorizedChange: PropTypes.func
   }
 
   static defaultProps = {
@@ -54,8 +53,7 @@ export default class SettingsForm extends React.PureComponent {
       onManaApprovedChange,
       isLandAuthorized,
       authorizeTransaction,
-      onLandAuthorizedChange,
-      onBuyMana
+      onLandAuthorizedChange
     } = this.props
 
     const isApprovePending = txUtils.isPending(approveTransaction)
@@ -86,9 +84,9 @@ export default class SettingsForm extends React.PureComponent {
               <Mana amount={balance} unit="MANA" />
             </span>
             <span className="mana-actions">
-              <Button onClick={onBuyMana} className="buy-more">
-                Buy More
-              </Button>
+              <Link to={locations.buyMana} replace>
+                <Button className="buy-more">{t('buy_mana.action')}</Button>
+              </Link>
               <Link to={locations.transferMana} replace>
                 <Button>{t('transfer_mana.action')}</Button>
               </Link>
