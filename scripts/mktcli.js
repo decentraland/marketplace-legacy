@@ -81,6 +81,19 @@ const main = {
       )
 
     program
+      .command('land-assign <coord> <owner>')
+      .description('Assign a new parcel (x,y) to an account')
+      .action(
+        asSafeAction(async (coord, owner) => {
+          const [x, y] = parseCLICoords(coord)
+          const contract = eth.getContract('LANDRegistry')
+          await unlockAccountWithPrompt()
+          await contract.assignNewParcel(x, y, owner)
+          log.info(`(land-assign) coords:(${x},${y}) => owner: ${owner}`)
+        })
+      )
+
+    program
       .command('publication <coord>')
       .description('Get the current publication of a (x,y) coordinate')
       .action(
@@ -113,6 +126,20 @@ const main = {
           for (const publication of publications) {
             log.info(toPublicationLog(publication))
           }
+        })
+      )
+
+    program
+      .command('publication-cancel <coord>')
+      .description('Cancel a publication (x,y)')
+      .action(
+        asSafeAction(async coord => {
+          const [x, y] = parseCLICoords(coord)
+          const assetId = await Parcel.encodeAssetId(x, y)
+          const contract = eth.getContract('Marketplace')
+          await unlockAccountWithPrompt()
+          await contract.cancelOrder(assetId)
+          log.info(`(publication-cancel) coords:(${x},${y})`)
         })
       )
 
@@ -252,6 +279,18 @@ function toDataLog(data) {
   return Object.keys(data) > 1
     ? contracts.LANDRegistry.encodeLandData(data)
     : 'empty'
+}
+
+async function unlockAccountWithPrompt() {
+  const answers = await cli.prompt([
+    {
+      type: 'password',
+      name: 'password',
+      message: 'Write the account password to unlock:',
+      default: ''
+    }
+  ])
+  await eth.wallet.unlockAccount(answers['password'])
 }
 
 //
