@@ -6,4 +6,15 @@
   .big-mana-icon {
     margin: 0 auto 50px;
   }
+
+  .TransferManaForm .footer {
+    display: flex;
+    flex-flow: column-reverse nowrap;
+  }
+
+  .TransferManaForm .footer .button {
+    margin-top: 1em;
+    margin-left: 0em !important;
+    width: 100%;
+  }
 }

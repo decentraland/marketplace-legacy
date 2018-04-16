@@ -49,4 +49,22 @@
   .SettingsPage .AddressBlock {
     margin-right: 0px;
   }
+
+  .SettingsPage .mana {
+    flex-flow: column nowrap;
+    align-items: flex-start;
+  }
+
+  .SettingsPage .mana .mana-actions {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    margin-top: 1em;
+  }
+
+  .SettingsPage .mana .mana-actions button {
+    margin-right: 0em;
+    margin-top: 1em;
+    width: 100%;
+  }
 }

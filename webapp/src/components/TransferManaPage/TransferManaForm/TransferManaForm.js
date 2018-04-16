@@ -129,7 +129,7 @@ export default class TransferManaForm extends React.PureComponent {
         <br />
         <TxStatus.Idle isIdle={isTxIdle} />
         <br />
-        <div>
+        <div className="footer">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>
