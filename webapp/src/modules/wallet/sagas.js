@@ -10,6 +10,7 @@ import {
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-commons'
 import { locations } from 'locations'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
@@ -17,6 +18,7 @@ import {
   TRANSFER_MANA_REQUEST,
   BUY_MANA_REQUEST,
   UPDATE_DERIVATION_PATH,
+  BUY_MANA_SUCCESS,
   connectWalletRequest,
   connectWalletSuccess,
   connectWalletFailure,
@@ -27,7 +29,8 @@ import {
   transferManaSuccess,
   transferManaFailure,
   buyManaSuccess,
-  buyManaFailure
+  buyManaFailure,
+  updateBalance
 } from './actions'
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
@@ -46,6 +49,7 @@ export function* walletSaga() {
   yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
   yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
   yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
+  yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
 }
 
 function* handleConnectWalletRequest(action = {}) {
@@ -163,4 +167,21 @@ function* handleBuyManaRequest(action) {
 function* handleUpdateDerivationPath(action) {
   eth.disconnect()
   yield put(connectWalletRequest())
+}
+
+function* handleTransactionSuccess(action) {
+  const { transaction } = action
+  switch (transaction.actionType) {
+    case BUY_MANA_SUCCESS: {
+      let address = yield call(() => eth.getAddress())
+      address = address.toLowerCase()
+      const manaTokenContract = eth.getContract('MANAToken')
+      const balance = yield call(() => manaTokenContract.balanceOf(address))
+      yield put(updateBalance(balance))
+      break
+    }
+    default:
+    // ..
+  }
+  yield null
 }

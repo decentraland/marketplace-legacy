@@ -155,3 +155,14 @@ export function buyManaFailure(error) {
     error
   }
 }
+
+// Update Balance
+
+export const UPDATE_BALANCE = 'Update Balance'
+
+export function updateBalance(balance) {
+  return {
+    type: UPDATE_BALANCE,
+    balance
+  }
+}

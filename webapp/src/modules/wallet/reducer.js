@@ -6,7 +6,7 @@ import {
   AUTHORIZE_LAND_SUCCESS,
   TRANSFER_MANA_SUCCESS,
   UPDATE_DERIVATION_PATH,
-  BUY_MANA_SUCCESS
+  UPDATE_BALANCE
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
@@ -94,16 +94,6 @@ export function walletReducer(state = INITIAL_STATE, action) {
             }
           }
         }
-        case BUY_MANA_SUCCESS: {
-          const { mana } = transaction.payload
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              balance: state.data.balance + mana
-            }
-          }
-        }
         default:
           return state
       }
@@ -114,6 +104,14 @@ export function walletReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           derivationPath: action.derivationPath
+        }
+      }
+    case UPDATE_BALANCE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          balance: action.balance
         }
       }
     case CHANGE_LOCALE:
