@@ -39,7 +39,7 @@ export async function fetchTransaction({ ethAmount, manaAmount, address }) {
   const ethAmountInWei = eth.utils.toWei(ethAmount)
   const manaAmountInWei = eth.utils.toWei(manaAmount * 0.98) // From Bancor docs: "We recommend setting this value to 2% under the expected return amount." (https://support.bancor.network/hc/en-us/articles/360001455772-Build-a-transaction-using-the-Convert-API)
   const url = 'https://api.bancor.network/0.1/currencies/convert'
-  const data = {
+  const body = {
     blockchainType: 'ethereum',
     fromCurrencyId: BANCOR_ETH_ID,
     toCurrencyId: BANCOR_MANA_ID,
@@ -47,8 +47,25 @@ export async function fetchTransaction({ ethAmount, manaAmount, address }) {
     minimumReturn: manaAmountInWei,
     ownerAddress: address
   }
-  const response = await axios.post(url, data)
-  return response.data.data[0]
+  const response = await axios.post(url, body)
+  const {
+    data,
+    from,
+    to,
+    gasLimit,
+    gasPrice,
+    nonce,
+    value
+  } = response.data.data[0]
+  return {
+    data,
+    from,
+    to,
+    gas: gasLimit, // WHY BANCOR, WHY??!?1
+    gasPrice,
+    nonce,
+    value
+  }
 }
 
 export function getSlippage(defaultRate, rate) {
