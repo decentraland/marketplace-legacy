@@ -53,40 +53,8 @@
   align-items: center;
 }
 
-.ParcelDetail .address-wrapper {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.ParcelDetail .transaction-history-header {
-  background-color: var(--darker-gray);
-  border-radius: 10px 10px 0px 0px;
-  text-transform: uppercase;
-  color: var(--gray);
-}
-
 .ParcelDetail h3 {
   font-family: var(--font-family) !important;
-}
-
-.ParcelDetail .transaction-history-entry {
-  background-color: var(--darker-gray);
-}
-
-.ParcelDetail .transaction-history-entry:last-child {
-  border-radius: 0px 0px 10px 10px;
-}
-
-.ParcelDetail .transaction-history-header,
-.ParcelDetail .transaction-history-entry {
-  margin: 0em 1em;
-}
-
-.ParcelDetail .address-wrapper .AddressBlock {
-  flex: none;
-  margin-right: 0.5em;
 }
 
 .ParcelDetail .mana-price-icon {
@@ -100,10 +68,6 @@
 }
 
 @media (max-width: 768px) {
-  .ParcelDetail .address-wrapper .short-address {
-    display: none;
-  }
-
   .ParcelDetailPage .parcel-owner-container {
     text-align: left !important;
   }
