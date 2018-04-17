@@ -93,6 +93,15 @@
       "part_of": "Parte de {name}",
       "no_owner": "Sin Dueño"
     },
+    "tags": {
+      "title": "Contexto",
+      "road": "Camino",
+      "plaza": "Plaza",
+      "district": "Distrito",
+      "adjacent": "Adyacente",
+      "proximity":
+        "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia"
+    },
     "history": {
       "title": "Historial de Transacciones",
       "event": "Evento",
@@ -225,7 +234,8 @@
     "own_address_warning": "Esa es tu propia dirección!"
   },
   "derivation_path": {
-    "invalid": "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
+    "invalid":
+      "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "Mapa de colores",

@@ -98,8 +98,8 @@
       "road": "Road",
       "plaza": "Plaza",
       "district": "District",
-      "no_distance": "Adjacent",
-      "distance": "{length} {length, plural, one {parcel} other {parcels}} away"
+      "adjacent": "Adjacent",
+      "proximity": "{distance} {distance, plural, one {parcel} other {parcels}} away"
     },
     "history": {
       "title": "Transaction History",

@@ -94,6 +94,15 @@
       "part_of": "Appartient à {name}",
       "no_owner": "Pas de propriétaire"
     },
+    "tags": {
+      "title": "Points forts",
+      "road": "Route",
+      "plaza": "Places",
+      "district": "Quartiers",
+      "adjacent": "Adjacent",
+      "proximity":
+        "{distance} {distance, plural, one {parcelle} other {parcelles}} loin"
+    },
     "history": {
       "title": "Historique des Transactions",
       "event": "Événement",
@@ -228,7 +237,8 @@
     "own_address_warning": "C'est ta propre adresse!"
   },
   "derivation_path": {
-    "invalid": "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
+    "invalid":
+      "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
   "color_key": {
     "title": "Code couleur",

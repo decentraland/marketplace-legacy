@@ -93,6 +93,14 @@
       "part_of": "{name}의 일부",
       "no_owner": "소유자 없음"
     },
+    "tags": {
+      "title": "하이라이트",
+      "road": "도로",
+      "plaza": "광장",
+      "district": "지구",
+      "adjacent": "인접한",
+      "proximity": "{distance} 개 분실물"
+    },
     "history": {
       "title": "거래 내역",
       "event": "행사",
@@ -217,7 +225,8 @@
     "own_address_warning": "그것은 당신의 자신의 주소입니다!"
   },
   "derivation_path": {
-    "invalid": "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
+    "invalid":
+      "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
   },
   "color_key": {
     "title": "색상 키",

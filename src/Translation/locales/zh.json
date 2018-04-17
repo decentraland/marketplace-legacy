@@ -93,6 +93,14 @@
       "part_of": "{name}的一部分",
       "no_owner": "没有所有者"
     },
+    "tags": {
+      "title": "强调",
+      "road": "路",
+      "plaza": "广场",
+      "district": "小区",
+      "adjacent": "邻",
+      "proximity": "{distance}包裹离开"
+    },
     "history": {
       "title": "交易历史",
       "event": "事件",
@@ -206,7 +214,8 @@
     "own_address_warning": "这是你自己的地址！"
   },
   "derivation_path": {
-    "invalid": "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
+    "invalid":
+      "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "色彩标记",
