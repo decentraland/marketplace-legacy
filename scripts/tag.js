@@ -39,9 +39,9 @@ export function tagParcel(parcel, landmarks) {
 
 export function tagProximity(parcel, landmarks) {
   const proximity = {
-    // plaza_distance: null,
-    // district_distance: null,
-    // road_distance: null
+    // plaza: null,
+    // district: null,
+    // road: null
   }
 
   for (const landmark of landmarks) {
@@ -56,7 +56,7 @@ export function tagProximity(parcel, landmarks) {
 
     if (!proximity[tag_name] || distance < proximity[tag_name].distance) {
       proximity[tag_name] = {
-        id: landmark.get('district_id'),
+        district_id: landmark.get('district_id'),
         distance
       }
     }
