@@ -29,13 +29,18 @@ export function isTransactionRejectedError(message) {
   return message.includes('User denied transaction signature')
 }
 
-export function getEtherscanHref({ txHash, address }, network) {
+export function getEtherscanHref({ txHash, address, blockNumber }, network) {
+  const pathname = address
+    ? `/address/${address}`
+    : blockNumber ? `/block/${blockNumber}` : `/tx/${txHash}`
+
+  return `${getEtherscanOrigin(network)}${pathname}`
+}
+
+export function getEtherscanOrigin(network) {
   let origin = 'https://etherscan.io'
   if (network && network !== 'mainnet') {
     origin = `https://${network}.etherscan.io`
   }
-
-  const pathname = address ? `/address/${address}` : `/tx/${txHash}`
-
-  return `${origin}${pathname}`
+  return origin
 }

@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { eth } from 'decentraland-commons'
+
 import { distanceInWordsToNow } from 'lib/utils'
+import { getEtherscanHref } from 'modules/transaction/utils'
 
 export default class BlockDate extends React.PureComponent {
   static propTypes = {
     network: PropTypes.string,
-    block: PropTypes.number.isRequired,
+    blockNumber: PropTypes.number.isRequired,
+    blockTime: PropTypes.string,
     target: PropTypes.string,
     className: PropTypes.string
   }
@@ -16,44 +18,20 @@ export default class BlockDate extends React.PureComponent {
     target: '_blank'
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      timestamp: null
-    }
-  }
-
-  async componentWillMount() {
-    try {
-      eth.wallet.getWeb3().eth.getBlock(this.props.block, (error, block) => {
-        if (block) {
-          const { timestamp } = block
-          this.setState({ timestamp })
-        }
-      })
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
-
   render() {
-    const { network, block, target, className } = this.props
-    const { timestamp } = this.state
-
-    const subdomain = network && network !== 'mainnet' ? network + '.' : ''
-    const href = `https://${subdomain}etherscan.io/block/${block}`
-    const text = timestamp
-      ? distanceInWordsToNow(timestamp * 1000)
-      : `#${block}`
+    const { network, blockNumber, blockTime, target, className } = this.props
+    const href = getEtherscanHref({ blockNumber }, network)
 
     return (
       <Link
         className={className}
         to={href}
         target={target}
-        title={`Block #${block}`}
+        title={`Block #${blockNumber}`}
       >
-        {text}
+        {blockTime
+          ? distanceInWordsToNow(parseInt(blockTime, 10))
+          : `#${blockNumber}`}
       </Link>
     )
   }

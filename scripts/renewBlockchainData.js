@@ -23,10 +23,6 @@ export async function renewBlockchainData() {
   })
 
   log.info('Storing `parcels` data')
-  await processParcels()
-}
-
-async function processParcels() {
   const parcels = await Parcel.find()
   await updateParcelsData(parcels)
 
@@ -45,6 +41,7 @@ async function updateParcelsData(parcels) {
     callback: async (newParcels, batchSize) => {
       newParcels = await service.addLandData(newParcels)
       newParcels = await service.addOwners(newParcels)
+      newParcels = await service.addAssetIds(newParcels)
 
       log.info(`Processing ${batchSize}/${parcels.length} parcels`)
 
