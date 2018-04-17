@@ -13,6 +13,7 @@
     "renew-blockchain-data": "./scripts/renewBlockchainData.js",
     "sanity-check": "./scripts/sanityCheck.js run",
     "seed": "./scripts/seed.js",
+    "tag": "./scripts/tag.js",
     "monitor-blockchain": "./scripts/monitor/index.js store",
     "cli": "./scripts/mktcli.js",
     "build": "npm run lint && npm run test",
