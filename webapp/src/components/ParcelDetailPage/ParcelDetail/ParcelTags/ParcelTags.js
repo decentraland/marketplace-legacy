@@ -15,20 +15,23 @@ export default class ParcelTags extends React.PureComponent {
     districts: PropTypes.objectOf(districtType)
   }
 
-  renderTag(tag, index) {
+  renderProximityTag(tag, index) {
     const name = isPlaza(tag.id)
       ? 'plaza'
       : isRoad(tag.id) ? 'road' : 'district'
 
     return (
       <div className="tag" key={tag.id}>
-        <Icon name={`${name}-tag`} />
+        <div className={`tag-icon tag-icon-${name}`}>
+          <Icon name={`${name}-icon`} />
+        </div>
+
         <div className="tag-information">
           <h4>{t(`parcel_detail.tags.${name}`)}</h4>
           <p>
-            {tag.length === 0
-              ? t('parcel_detail.tags.no_distance')
-              : t('parcel_detail.tags.distance', { length: tag.length })}
+            {tag.distance === 0
+              ? t('parcel_detail.tags.adjacent')
+              : t('parcel_detail.tags.proximity', { distance: tag.distance })}
           </p>
         </div>
       </div>
@@ -36,9 +39,9 @@ export default class ParcelTags extends React.PureComponent {
   }
 
   render() {
-    const { parcel } = this.props
+    const { proximity } = this.props.parcel.tags
 
-    if (!parcel.tags) {
+    if (!proximity) {
       return null
     }
 
@@ -47,7 +50,7 @@ export default class ParcelTags extends React.PureComponent {
         <Grid.Row>
           <Grid.Column>
             <h3>{t('parcel_detail.tags.title')}</h3>
-              {Object.values(parcel.tags).map(tag => this.renderTag(tag))}
+            {Object.values(proximity).map(tag => this.renderProximityTag(tag))}
           </Grid.Column>
         </Grid.Row>
       </Grid>
