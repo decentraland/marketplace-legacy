@@ -1,0 +1,9 @@
+
+.ParcelDescription .description {
+  color: var(--gray);
+}
+
+.ParcelDescription .description-empty {
+  color: #aaa;
+  font-style: italic;
+}

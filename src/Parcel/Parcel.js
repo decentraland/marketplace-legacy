@@ -2,6 +2,7 @@ import { Model } from 'decentraland-commons'
 
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
+import { District } from '../District'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
@@ -14,7 +15,8 @@ export class Parcel extends Model {
     'auction_owner',
     'owner',
     'data',
-    'district_id'
+    'district_id',
+    'tags'
   ]
 
   static buildId(x, y) {
@@ -42,7 +44,9 @@ export class Parcel extends Model {
     const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
 
     return await this.db.query(
-      `SELECT * FROM ${this.tableName} WHERE id IN (${inPlaceholders})`,
+      `SELECT *
+        FROM ${this.tableName}
+        WHERE id IN (${inPlaceholders})`,
       ids
     )
   }
@@ -52,6 +56,22 @@ export class Parcel extends Model {
       `${this.findParcelsWithOpenPublicationSql()}
         WHERE par.owner = $1`,
       [owner]
+    )
+  }
+
+  static async findOwneableParcels() {
+    return await this.db.query(
+      `SELECT *
+        FROM ${this.tableName}
+        WHERE district_id IS NULL`
+    )
+  }
+
+  static async findLandmarks() {
+    return await this.db.query(
+      `SELECT *
+        FROM ${this.tableName}
+        WHERE district_id IS NOT NULL`
     )
   }
 
@@ -108,5 +128,36 @@ export class Parcel extends Model {
     parcel.id = Parcel.buildId(x, y)
 
     return await super.insert(parcel)
+  }
+
+  isEqual(parcel) {
+    return (
+      this.attributes.id === parcel.attributes.id ||
+      (this.attributes.x === parcel.attributes.x &&
+        this.attributes.y === parcel.attributes.y)
+    )
+  }
+
+  distanceTo(parcel) {
+    // Chebyshev distance
+    return Math.max(
+      Math.abs(this.attributes.x - parcel.attributes.x),
+      Math.abs(this.attributes.y - parcel.attributes.y)
+    )
+  }
+
+  isWithinBoundingBox(parcel, size) {
+    return (
+      Math.abs(this.attributes.x - parcel.attributes.x) <= size &&
+      Math.abs(this.attributes.y - parcel.attributes.y) <= size
+    )
+  }
+
+  isPlaza() {
+    return District.isPlaza(this.attributes.district_id)
+  }
+
+  isRoad() {
+    return District.isRoad(this.attributes.district_id)
   }
 }

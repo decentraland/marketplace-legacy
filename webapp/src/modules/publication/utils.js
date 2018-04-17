@@ -19,6 +19,15 @@ export function findPublicationByCoordinates(publications, x, y) {
   )
 }
 
+export function findParcelPublications(parcel, publications, status) {
+  return Object.values(publications).filter(
+    publication =>
+      publication.x === parcel.x &&
+      publication.y === parcel.y &&
+      (!status || publication.status === status)
+  )
+}
+
 export function toPublicationObject(publicationsArray) {
   return publicationsArray.reduce((map, publication) => {
     map[publication.tx_hash] = publication

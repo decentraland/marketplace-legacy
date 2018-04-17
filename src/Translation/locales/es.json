@@ -94,6 +94,15 @@
       "part_of": "Parte de {name}",
       "no_owner": "Sin Dueño"
     },
+    "tags": {
+      "title": "Contexto",
+      "road": "Camino",
+      "plaza": "Plaza",
+      "district": "Distrito",
+      "adjacent": "Adyacente",
+      "proximity":
+        "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia"
+    },
     "history": {
       "title": "Historial de Transacciones",
       "event": "Evento",

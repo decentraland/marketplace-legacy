@@ -1,21 +1,17 @@
 import React from 'react'
+import { Header, Grid } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import { Header, Grid, Responsive } from 'semantic-ui-react'
 import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
-import AddressBlock from 'components/AddressBlock'
-import BlockDate from 'components/BlockDate'
 import PublicationExpiration from 'components/PublicationExpiration'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
+import ParcelTransactionHistory from './ParcelTransactionHistory'
+import ParcelTags from './ParcelTags'
 import { parcelType, districtType, publicationType } from 'components/types'
 import { hasPublication, getDistrict } from 'lib/parcelUtils'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
-import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 import { t } from 'modules/translation/utils'
-
-const auctionDate = distanceInWordsToNow('2018-01-31T00:00:00Z')
 
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
@@ -47,140 +43,12 @@ export default class ParcelDetail extends React.PureComponent {
     return null
   }
 
-  renderTransactionHistory() {
-    const { parcel, publications } = this.props
-    const parcelPublications = Object.keys(publications)
-      .map(tx_hash => publications[tx_hash])
-      .filter(
-        publication =>
-          publication.x === parcel.x &&
-          publication.y === parcel.y &&
-          publication.status === PUBLICATION_STATUS.sold
-      )
-      .sort((a, b) => (a.block_number > b.block_number ? -1 : 1))
-    const hasAuctionData =
-      parcel.auction_price != null && parcel.auction_owner != null
-    const hasPublications = parcelPublications.length > 0
-    if (!hasAuctionData && !hasPublications) {
-      return null
-    }
-
-    return (
-      <Grid stackable>
-        <Grid.Row>
-          <Grid.Column>
-            <Grid
-              className="transaction-history parcel-detail-row"
-              columns="equal"
-            >
-              <Grid.Row>
-                <Grid.Column>
-                  <h3>{t('parcel_detail.history.title')}</h3>
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row className="transaction-history-header">
-                <Grid.Column>{t('parcel_detail.history.price')}</Grid.Column>
-                <Grid.Column>{t('parcel_detail.history.when')}</Grid.Column>
-                <Responsive
-                  as={Grid.Column}
-                  minWidth={Responsive.onlyTablet.minWidth}
-                >
-                  {t('parcel_detail.history.from')}
-                </Responsive>
-                <Responsive
-                  as={Grid.Column}
-                  minWidth={Responsive.onlyTablet.minWidth}
-                >
-                  {t('parcel_detail.history.to')}
-                </Responsive>
-              </Grid.Row>
-              {parcelPublications.map(publication => (
-                <Grid.Row
-                  key={publication.tx_hash}
-                  className="transaction-history-entry"
-                >
-                  <Grid.Column>
-                    <Mana amount={publication.price} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <BlockDate block={publication.block_number} />
-                  </Grid.Column>
-                  <Responsive
-                    as={Grid.Column}
-                    minWidth={Responsive.onlyTablet.minWidth}
-                  >
-                    <div className="address-wrapper">
-                      <AddressBlock
-                        address={publication.owner}
-                        scale={4}
-                        hasTooltip={false}
-                      />&nbsp;
-                      <span className="short-address" title={publication.owner}>
-                        {shortenAddress(publication.owner)}
-                      </span>
-                    </div>
-                  </Responsive>
-                  <Responsive
-                    as={Grid.Column}
-                    minWidth={Responsive.onlyTablet.minWidth}
-                  >
-                    <div className="address-wrapper" title={publication.buyer}>
-                      <AddressBlock
-                        address={publication.buyer}
-                        scale={4}
-                        hasTooltip={false}
-                      />&nbsp;
-                      <span className="short-address">
-                        {shortenAddress(publication.buyer)}
-                      </span>
-                    </div>
-                  </Responsive>
-                </Grid.Row>
-              ))}
-              {parcel.auction_price && parcel.auction_owner ? (
-                <Grid.Row className="transaction-history-entry">
-                  <Grid.Column>
-                    <Mana amount={parcel.auction_price} />
-                  </Grid.Column>
-                  <Grid.Column>{auctionDate}</Grid.Column>
-                  <Responsive
-                    as={Grid.Column}
-                    minWidth={Responsive.onlyTablet.minWidth}
-                  >
-                    {t('parcel_detail.history.auction')}
-                  </Responsive>
-                  <Responsive
-                    as={Grid.Column}
-                    minWidth={Responsive.onlyTablet.minWidth}
-                  >
-                    <div
-                      className="address-wrapper"
-                      title={parcel.auction_owner}
-                    >
-                      <AddressBlock
-                        address={parcel.auction_owner}
-                        scale={4}
-                        hasTooltip={false}
-                      />&nbsp;
-                      <span className="short-address">
-                        {shortenAddress(parcel.auction_owner)}
-                      </span>
-                    </div>
-                  </Responsive>
-                </Grid.Row>
-              ) : null}
-            </Grid>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    )
-  }
-
   render() {
-    const { parcel, districts, isOwner } = this.props
+    const { parcel, districts, publications, isOwner } = this.props
 
     const description = this.getDescription()
     const publication = this.getPublication()
+
     return (
       <div className="ParcelDetail">
         <Grid columns={2} stackable>
@@ -214,7 +82,7 @@ export default class ParcelDetail extends React.PureComponent {
                 </React.Fragment>
               ) : null}
               <Grid.Column
-                className="parcel-actions"
+                className="parcel-actions-container"
                 width={publication ? 8 : 16}
               >
                 <ParcelActions parcel={parcel} isOwner={isOwner} />
@@ -222,7 +90,8 @@ export default class ParcelDetail extends React.PureComponent {
             </Grid.Row>
           ) : null}
         </Grid>
-        {this.renderTransactionHistory()}
+        <ParcelTags parcel={parcel} districts={districts} />
+        <ParcelTransactionHistory parcel={parcel} publications={publications} />
       </div>
     )
   }

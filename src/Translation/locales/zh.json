@@ -94,6 +94,14 @@
       "part_of": "{name}的一部分",
       "no_owner": "没有所有者"
     },
+    "tags": {
+      "title": "强调",
+      "road": "路",
+      "plaza": "广场",
+      "district": "小区",
+      "adjacent": "邻",
+      "proximity": "{distance}包裹离开"
+    },
     "history": {
       "title": "交易历史",
       "event": "事件",

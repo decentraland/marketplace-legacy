@@ -94,6 +94,14 @@
       "part_of": "Part of {name}",
       "no_owner": "No Owner"
     },
+    "tags": {
+      "title": "Highlights",
+      "road": "Road",
+      "plaza": "Plaza",
+      "district": "District",
+      "adjacent": "Adjacent",
+      "proximity": "{distance} {distance, plural, one {parcel} other {parcels}} away"
+    },
     "history": {
       "title": "Transaction History",
       "event": "Event",

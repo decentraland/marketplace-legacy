@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './ParcelDescription.css'
+
 export default class ParcelDescription extends React.PureComponent {
   static propTypes = {
     description: PropTypes.string
@@ -9,11 +11,10 @@ export default class ParcelDescription extends React.PureComponent {
   render() {
     const { description } = this.props
 
-    const className =
-      'parcel-description' + (description ? '' : ' parcel-description-empty')
+    const className = 'description' + (description ? '' : ' description-empty')
 
     return (
-      <div>
+      <div className="ParcelDescription">
         <p className={className}>{description}</p>
       </div>
     )
