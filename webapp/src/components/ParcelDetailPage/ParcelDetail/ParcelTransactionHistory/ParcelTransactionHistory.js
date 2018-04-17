@@ -50,7 +50,7 @@ export default class ParcelTransactionHistory extends React.PureComponent {
     const { parcel } = this.props
     const parcelPublications = this.getParcelPublications()
 
-    if (!this.hasAuctionData() && !parcelPublications.length <= 0) {
+    if (!this.hasAuctionData() && parcelPublications.length <= 0) {
       return null
     }
 
