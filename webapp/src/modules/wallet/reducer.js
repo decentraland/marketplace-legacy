@@ -5,7 +5,12 @@ import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
   TRANSFER_MANA_SUCCESS,
-  UPDATE_DERIVATION_PATH
+  UPDATE_DERIVATION_PATH,
+  UPDATE_BALANCE,
+  UPDATE_ETH_BALANCE,
+  BUY_MANA_REQUEST,
+  BUY_MANA_SUCCESS,
+  BUY_MANA_FAILURE
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
@@ -20,6 +25,7 @@ const INITIAL_STATE = {
     network: null,
     address: null,
     balance: null,
+    ethBalance: null,
     approvedBalance: null,
     isLandAuthorized: null,
     derivationPath: null,
@@ -31,6 +37,9 @@ const INITIAL_STATE = {
 
 export function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case BUY_MANA_REQUEST:
+    case BUY_MANA_FAILURE:
+    case BUY_MANA_SUCCESS:
     case CONNECT_WALLET_REQUEST:
       return {
         ...state,
@@ -103,6 +112,22 @@ export function walletReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           derivationPath: action.derivationPath
+        }
+      }
+    case UPDATE_BALANCE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          balance: action.balance
+        }
+      }
+    case UPDATE_ETH_BALANCE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ethBalance: action.ethBalance
         }
       }
     case CHANGE_LOCALE:

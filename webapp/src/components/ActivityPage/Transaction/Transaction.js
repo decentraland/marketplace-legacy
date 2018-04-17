@@ -23,7 +23,8 @@ import { getEtherscanHref } from 'modules/transaction/utils'
 import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
-  TRANSFER_MANA_SUCCESS
+  TRANSFER_MANA_SUCCESS,
+  BUY_MANA_SUCCESS
 } from 'modules/wallet/actions'
 import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
@@ -139,6 +140,13 @@ export default class Transaction extends React.PureComponent {
             <EtherscanLink txHash={tx_hash}>publication</EtherscanLink>
           ),
           parcel_link: this.renderParcelLink(x, y)
+        })
+      }
+      case BUY_MANA_SUCCESS: {
+        const { mana } = payload
+
+        return t_html('transaction.buy_mana', {
+          mana: formatMana(mana, '')
         })
       }
       default:

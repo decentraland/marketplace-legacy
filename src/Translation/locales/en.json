@@ -30,7 +30,8 @@
     "sign_in_notice": "You need to {sign_in_link} to access this page",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
-    "connecting": "Connecting"
+    "connecting": "Connecting",
+    "click_here": "Click here"
   },
   "address": {
     "its_you": "It's you"
@@ -128,6 +129,7 @@
     "about_to_buy": "You are about to buy {parcel_name} {parcel_price}.",
     "approved_balance": "Your approved balance is {approved_balance}",
     "needs_at_least": "You need at least {mana} in order to buy this LAND.",
+    "buy_mana": "{click_here} to buy some MANA.",
     "didnt_approve": "You haven't authorized MANA usage",
     "please_approve":
       "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
@@ -174,7 +176,8 @@
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "publish": "You published {parcel_link}",
     "buy": "You bought {parcel_link}",
-    "cancel": "You cancelled the {publication_link} on {parcel_link}"
+    "cancel": "You cancelled the {publication_link} on {parcel_link}",
+    "buy_mana": "You bought {mana} MANA"
   },
   "transaction_status": {
     "see_activity":
@@ -220,8 +223,21 @@
       "Remember that transferring MANA is an irreversible operation.",
     "own_address_warning": "That's your own address!"
   },
+  "buy_mana": {
+    "title": "Convert ETH to MANA",
+    "action": "Buy More",
+    "available_eth": "Available: {eth} ETH",
+    "receive": "Receive",
+    "pay_with": "Pay with",
+    "powered_by": "powered by {bancor_link}",
+    "rate": "Rate",
+    "slippage": "Slippage",
+    "not_enough": "You don't have enough ETH to pay for this",
+    "amount_too_big": "This amount is too big for the Bancor Network"
+  },
   "derivation_path": {
-    "invalid": "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
+    "invalid":
+      "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "Color key",

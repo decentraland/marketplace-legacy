@@ -126,3 +126,54 @@ export function updateDerivationPath(derivationPath) {
 // Clear error
 
 export const CLEAR_WALLET_ERROR = 'Clear Wallet Error'
+
+// Buy MANA
+
+export const BUY_MANA_REQUEST = '[Request] Buy MANA'
+export const BUY_MANA_SUCCESS = '[Success] Buy MANA'
+export const BUY_MANA_FAILURE = '[Failure] Buy MANA'
+
+export function buyManaRequest(mana, tx) {
+  return {
+    type: BUY_MANA_REQUEST,
+    mana,
+    tx
+  }
+}
+
+export function buyManaSuccess(txHash, mana) {
+  return {
+    type: BUY_MANA_SUCCESS,
+    ...buildTransactionAction(txHash, { mana }),
+    mana
+  }
+}
+
+export function buyManaFailure(error) {
+  return {
+    type: BUY_MANA_FAILURE,
+    error
+  }
+}
+
+// Update Balance
+
+export const UPDATE_BALANCE = 'Update Balance'
+
+export function updateBalance(balance) {
+  return {
+    type: UPDATE_BALANCE,
+    balance
+  }
+}
+
+// Update ETH Balance
+
+export const UPDATE_ETH_BALANCE = 'Update ETH Balance'
+
+export function updateEthBalance(ethBalance) {
+  return {
+    type: UPDATE_ETH_BALANCE,
+    ethBalance
+  }
+}

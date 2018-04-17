@@ -30,7 +30,8 @@
     "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유",
-    "connecting": "连"
+    "connecting": "连",
+    "click_here": "点击这里"
   },
   "address": {
     "its_you": "是你"
@@ -127,6 +128,7 @@
     "about_to_buy": "您即将购买{parcel_name}",
     "approved_balance": "您的已批准MANA余额为{approved_balance}",
     "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
+    "buy_mana": "{click_here}购买一些MANA。",
     "didnt_approve": "您没有批准使用MANA",
     "please_approve":
       "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
@@ -170,7 +172,8 @@
     "transfer": "您已将{parcel_link}转让给{owner_link}",
     "publish": "您发布了{parcel_link}地块",
     "buy": "您买入了{parcel_link}地块",
-    "cancel": "您取消了{parcel_link}上的{publication_link}"
+    "cancel": "您取消了{parcel_link}上的{publication_link}",
+    "buy_mana": "你已经买了{MANA} MANA"
   },
   "transaction_status": {
     "see_activity": "要查看您的交易记录，请访问您的{activity_link}。",
@@ -205,8 +208,21 @@
     "irreversible": "请记住，转让MANA是一项不可逆转的行动。",
     "own_address_warning": "这是你自己的地址！"
   },
+  "buy_mana": {
+    "title": "将ETH转换为MANA",
+    "action": "购买更多",
+    "available_eth": "可用：{eth} ETH",
+    "receive": "收到",
+    "pay_with": "付款",
+    "powered_by": "由{bancor_link}提供",
+    "rate": "率",
+    "slippage": "滑移",
+    "not_enough": "你没有足够的ETH来支付这个费用",
+    "amount_too_big": "Bancor Network的这个数额太大了"
+  },
   "derivation_path": {
-    "invalid": "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
+    "invalid":
+      "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "color_key": {
     "title": "色彩标记",

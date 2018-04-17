@@ -19,6 +19,7 @@ export const isModalPage = state => {
       case 'transfer':
       case 'settings':
       case 'transfer-mana':
+      case 'buy-mana':
         return true
       default:
         return false

@@ -1,0 +1,9 @@
+.big-mana-icon .Mana .ManaIcon {
+  margin-right: 0px;
+}
+
+@media (max-width: 768px) {
+  .big-mana-icon {
+    margin: 0 auto 50px;
+  }
+}

@@ -10,7 +10,8 @@ import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
-  TRANSFER_MANA_SUCCESS
+  TRANSFER_MANA_SUCCESS,
+  BUY_MANA_SUCCESS
 } from 'modules/wallet/actions'
 import { FETCH_TRANSACTION_FAILURE } from 'modules/transaction/actions'
 
@@ -64,6 +65,10 @@ add(
 add(TRANSFER_MANA_SUCCESS, 'Transfer MANA', action => ({
   mana: action.mana,
   address: action.address
+}))
+
+add(BUY_MANA_SUCCESS, 'Buy MANA', action => ({
+  mana: action.mana
 }))
 
 add(

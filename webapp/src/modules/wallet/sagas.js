@@ -10,12 +10,15 @@ import {
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-commons'
 import { locations } from 'locations'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
   AUTHORIZE_LAND_REQUEST,
   TRANSFER_MANA_REQUEST,
+  BUY_MANA_REQUEST,
   UPDATE_DERIVATION_PATH,
+  BUY_MANA_SUCCESS,
   connectWalletRequest,
   connectWalletSuccess,
   connectWalletFailure,
@@ -24,21 +27,31 @@ import {
   authorizeLandSuccess,
   authorizeLandFailure,
   transferManaSuccess,
-  transferManaFailure
+  transferManaFailure,
+  buyManaSuccess,
+  buyManaFailure,
+  updateBalance,
+  updateEthBalance
 } from './actions'
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
-
-import { connectEthereumWallet, getMarketplaceAddress } from './utils'
+import {
+  connectEthereumWallet,
+  getMarketplaceAddress,
+  sendTransaction,
+  fetchBalance
+} from './utils'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
   yield takeLatest(APPROVE_MANA_REQUEST, handleApproveManaRequest)
   yield takeLatest(AUTHORIZE_LAND_REQUEST, handleAuthorizeLandRequest)
   yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
+  yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
   yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
+  yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
 }
 
 function* handleConnectWalletRequest(action = {}) {
@@ -61,9 +74,16 @@ function* handleConnectWalletRequest(action = {}) {
     const landRegistryContract = eth.getContract('LANDRegistry')
     const marketplaceAddress = getMarketplaceAddress()
 
-    const [network, balance, approvedBalance, isLandAuthorized] = yield all([
+    const [
+      network,
+      balance,
+      ethBalance,
+      approvedBalance,
+      isLandAuthorized
+    ] = yield all([
       eth.getNetwork(),
       manaTokenContract.balanceOf(address),
+      fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
       landRegistryContract.isApprovedForAll(marketplaceAddress, address)
     ])
@@ -74,6 +94,7 @@ function* handleConnectWalletRequest(action = {}) {
       network: network.name,
       address,
       balance,
+      ethBalance,
       approvedBalance,
       isLandAuthorized,
       type,
@@ -142,7 +163,37 @@ function* handleTransferManaRequest(action) {
   }
 }
 
+function* handleBuyManaRequest(action) {
+  try {
+    const { mana, tx } = action
+    const txHash = yield call(() => sendTransaction(tx))
+    yield put(buyManaSuccess(txHash, mana))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(buyManaFailure(error.message))
+  }
+}
+
 function* handleUpdateDerivationPath(action) {
   eth.disconnect()
   yield put(connectWalletRequest())
+}
+
+function* handleTransactionSuccess(action) {
+  const { transaction } = action
+  switch (transaction.actionType) {
+    case BUY_MANA_SUCCESS: {
+      let address = yield call(() => eth.getAddress())
+      address = address.toLowerCase()
+      const manaTokenContract = eth.getContract('MANAToken')
+      const balance = yield call(() => manaTokenContract.balanceOf(address))
+      const ethBalance = yield call(() => fetchBalance(address))
+      yield put(updateBalance(balance))
+      yield put(updateEthBalance(ethBalance))
+      break
+    }
+    default:
+    // ..
+  }
+  yield null
 }

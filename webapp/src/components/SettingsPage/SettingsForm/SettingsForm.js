@@ -84,6 +84,9 @@ export default class SettingsForm extends React.PureComponent {
               <Mana amount={balance} unit="MANA" />
             </span>
             <span className="mana-actions">
+              <Link to={locations.buyMana} replace>
+                <Button className="buy-more">{t('buy_mana.action')}</Button>
+              </Link>
               <Link to={locations.transferMana} replace>
                 <Button>{t('transfer_mana.action')}</Button>
               </Link>

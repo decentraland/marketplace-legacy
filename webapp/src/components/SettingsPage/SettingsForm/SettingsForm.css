@@ -58,3 +58,7 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.SettingsForm .buy-more {
+  margin-right: 1.5em;
+}

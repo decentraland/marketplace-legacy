@@ -2,10 +2,6 @@
   margin-left: 20px;
 }
 
-.TransferManaForm .ui.input.address-input input {
-  width: 100% !important;
-}
-
 .TransferManaForm .transfer-warning {
   color: var(--gray);
   font-style: italic;
@@ -18,5 +14,11 @@
 @media (min-width: 768px) {
   .TransferManaForm {
     min-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .TransferManaForm .ui.button + .ui.button {
+    margin-left: 0px;
   }
 }
