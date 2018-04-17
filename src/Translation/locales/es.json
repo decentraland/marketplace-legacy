@@ -30,7 +30,8 @@
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "owned_by": "Controlada por",
     "owned_by_link": "Controlada por {address_link}",
-    "connecting": "Conectando"
+    "connecting": "Conectando",
+    "click_here": "Pincha aquí"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -130,6 +131,7 @@
     "about_to_buy": "Estas por comprar {parcel_name} {parcel_price}",
     "approved_balance": "Tu balance aprobado es {approved_balance}",
     "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
+    "buy_mana": "{click_here} para comprar MANA.",
     "didnt_approve": "No has autorizado el uso de MANA",
     "please_approve":
       "Por favor entra en {settings_link} y permite al contrato de Mercado a operar MANA por tu cuenta",

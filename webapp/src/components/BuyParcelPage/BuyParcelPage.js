@@ -81,9 +81,21 @@ export default class BuyParcelPage extends React.PureComponent {
             }
             content={
               isNotEnoughMana ? (
-                t('parcel_buy.needs_at_least', {
-                  mana: formatMana(publication.price)
-                })
+                <React.Fragment>
+                  <span>
+                    {t('parcel_buy.needs_at_least', {
+                      mana: formatMana(publication.price)
+                    })}
+                  </span>
+                  <br />
+                  {t_html('parcel_buy.buy_mana', {
+                    click_here: (
+                      <Link to={locations.buyMana}>
+                        {t('global.click_here')}
+                      </Link>
+                    )
+                  })}
+                </React.Fragment>
               ) : approvedBalance > 0 ? (
                 <React.Fragment>
                   <span>

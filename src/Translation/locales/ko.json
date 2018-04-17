@@ -30,7 +30,8 @@
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
-    "connecting": "연결 중"
+    "connecting": "연결 중",
+    "click_here": "여기를 클릭하십시오"
   },
   "address": {
     "its_you": "너야"
@@ -129,6 +130,7 @@
     "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
     "approved_balance": "승인 된 잔액은 {approved_balance}입니다.",
     "needs_at_least": "이 토지를 사려면 적어도 {value}가 필요합니다.",
+    "buy_mana": "MANA를 사기 위해 {click_here}.",
     "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
     "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
     "total_balance": "Your balance is {balance}"

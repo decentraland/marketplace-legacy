@@ -31,7 +31,8 @@
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
-    "connecting": "Connexion"
+    "connecting": "Connexion",
+    "click_here": "Cliquez ici"
   },
   "address": {
     "its_you": "C'est toi"
@@ -132,6 +133,7 @@
     "approved_balance": "Votre balance est de {approved_balance}",
     "needs_at_least":
       "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
+    "buy_mana": "{click_here} pour acheter du MANA.",
     "didnt_approve": "Vous n'avez pas de MANA validée",
     "please_approve":
       "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",

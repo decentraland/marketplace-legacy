@@ -30,7 +30,8 @@
     "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유",
-    "connecting": "连"
+    "connecting": "连",
+    "click_here": "点击这里"
   },
   "address": {
     "its_you": "是你"
@@ -127,6 +128,7 @@
     "about_to_buy": "您即将购买{parcel_name}",
     "approved_balance": "您的已批准MANA余额为{approved_balance}",
     "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
+    "buy_mana": "{click_here}购买一些MANA。",
     "didnt_approve": "您没有批准使用MANA",
     "please_approve":
       "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
