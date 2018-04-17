@@ -1,12 +1,6 @@
 import React from 'react'
 
-let index = 0
-
 class Icon extends React.PureComponent {
-  componentWillMount() {
-    index += 1
-  }
-
   render() {
     const { width, height } = this.props
 
@@ -19,10 +13,9 @@ class Icon extends React.PureComponent {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <desc>Created with Sketch.</desc>
         <defs>
           <polygon
-            id={`mana-path-${index}`}
+            id="mana-path-1"
             points="9 0 17.660254 5 17.660254 15 9 20 0.339745962 15 0.339745962 5"
           />
           <filter
@@ -31,7 +24,7 @@ class Icon extends React.PureComponent {
             width="220.0%"
             height="175.0%"
             filterUnits="objectBoundingBox"
-            id={`mana-filter-${index}`}
+            id="mana-filter-1"
           >
             <feOffset
               dx="0"
@@ -60,7 +53,7 @@ class Icon extends React.PureComponent {
             y1="1.72254642e-14%"
             x2="75.0767702%"
             y2="75.0767702%"
-            id={`mana-linearGradient-${index}`}
+            id="mana-linearGradient-1"
           >
             <stop stopColor="#00D7EB" offset="0%" />
             <stop stopColor="#3F4761" offset="100%" />
@@ -82,18 +75,14 @@ class Icon extends React.PureComponent {
                     transform="translate(10.000000, 10.000000) scale(-1, 1) rotate(90.000000) translate(-10.000000, -10.000000) translate(1.000000, 0.000000)"
                   >
                     <g id="Rectangle-2">
-                      <mask id={`mana-mask-${index}`} fill="white">
-                        <use xlinkHref={`#mana-path-${index}`} />
+                      <mask id="mana-mask-1" fill="white">
+                        <use xlinkHref="#mana-path-1" />
                       </mask>
-                      <use
-                        id="Mask"
-                        fill="#515870"
-                        xlinkHref={`#mana-path-${index}`}
-                      />
+                      <use id="Mask" fill="#515870" xlinkHref="#mana-path-1" />
                       <g
                         id="Group-14"
-                        filter={`url(#mana-filter-${index})`}
-                        mask={`url(#mana-mask-${index})`}
+                        filter="url(#mana-filter-1)"
+                        mask="url(#mana-mask-1)"
                         fill="#00D7EB"
                       >
                         <g
@@ -110,7 +99,7 @@ class Icon extends React.PureComponent {
                     </g>
                     <polygon
                       id="Polygon"
-                      fill={`url(#mana-linearGradient-${index})`}
+                      fill="url(#mana-linearGradient-1)"
                       points="9 5 13.330127 7.5 13.330127 12.5 9 15 4.66987298 12.5 4.66987298 7.5"
                     />
                   </g>

@@ -29,15 +29,6 @@
   margin-right: 0.5em;
 }
 
-.ParcelDetail .parcel-description {
-  color: var(--gray);
-}
-
-.ParcelDetail .parcel-description-empty {
-  color: #aaa;
-  font-style: italic;
-}
-
 .ParcelDetailPage .parcel-owner-container {
   text-align: right !important;
 }
@@ -46,7 +37,7 @@
   margin-bottom: 2em;
 }
 
-.ParcelDetail .parcel-actions {
+.ParcelDetail .parcel-actions-container {
   display: flex !important;
   flex-flow: row nowrap;
   justify-content: flex-end;

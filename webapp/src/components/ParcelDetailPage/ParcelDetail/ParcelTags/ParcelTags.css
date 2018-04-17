@@ -1,0 +1,29 @@
+.ParcelTags .tag {
+  margin-right: 48px;
+}
+
+.ParcelTags .Icon {
+  margin-right: 16px;
+}
+
+.ParcelTags .Icon,
+.ParcelTags .tag,
+.ParcelTags .tag-information {
+  float: left;
+}
+
+.ParcelTags .tag h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.ParcelTags .tag p {
+  color: var(--gray);
+}
+
+
+@media (max-width: 768px) {
+  .ParcelDetail .tag {
+    width: 100%;
+  }
+}

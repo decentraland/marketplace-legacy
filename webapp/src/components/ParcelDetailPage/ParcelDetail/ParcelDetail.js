@@ -8,6 +8,7 @@ import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
+import ParcelTags from './ParcelTags'
 import { parcelType, districtType, publicationType } from 'components/types'
 import { hasPublication, getDistrict } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
@@ -81,7 +82,7 @@ export default class ParcelDetail extends React.PureComponent {
                 </React.Fragment>
               ) : null}
               <Grid.Column
-                className="parcel-actions"
+                className="parcel-actions-container"
                 width={publication ? 8 : 16}
               >
                 <ParcelActions parcel={parcel} isOwner={isOwner} />
@@ -89,6 +90,7 @@ export default class ParcelDetail extends React.PureComponent {
             </Grid.Row>
           ) : null}
         </Grid>
+        <ParcelTags parcel={parcel} districts={districts} />
         <ParcelTransactionHistory parcel={parcel} publications={publications} />
       </div>
     )

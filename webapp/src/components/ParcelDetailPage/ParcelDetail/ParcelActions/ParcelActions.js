@@ -48,7 +48,7 @@ export default class ParcelActions extends React.PureComponent {
     }
     const { x, y } = parcel
     return (
-      <span className="ParcelActions">
+      <div className="ParcelActions">
         {isOwner ? (
           <React.Fragment>
             <Link to={locations.editLand(x, y)}>
@@ -86,7 +86,7 @@ export default class ParcelActions extends React.PureComponent {
             </Button>
           </Link>
         ) : null}
-      </span>
+      </div>
     )
   }
 }
