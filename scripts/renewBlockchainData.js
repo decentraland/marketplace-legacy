@@ -23,17 +23,13 @@ export async function renewBlockchainData() {
   })
 
   log.info('Storing `parcels` data')
-  await processParcels()
-}
-
-async function processParcels() {
   const parcels = await Parcel.find()
   await updateParcelsData(parcels)
 
   log.info('All done')
 }
 
-async function updateParcelsData(parcels) {
+export async function updateParcelsData(parcels) {
   log.info(`Processing ${parcels.length} parcels`)
 
   const service = new ParcelService()
