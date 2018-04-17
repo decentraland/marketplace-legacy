@@ -20,7 +20,7 @@ export default class ParcelTags extends React.PureComponent {
     return district ? district.name : null
   }
 
-  renderProximityTag(tag, index) {
+  renderProximityTag = (tag, index) => {
     let name = null
     let districtName = null
 
@@ -34,7 +34,7 @@ export default class ParcelTags extends React.PureComponent {
     }
 
     return (
-      <div className="tag" key={tag.district_id}>
+      <div className="tag" key={index}>
         <div
           className={`tag-icon tag-icon-${name}`}
           data-balloon-pos="up"
@@ -67,7 +67,7 @@ export default class ParcelTags extends React.PureComponent {
         <Grid.Row>
           <Grid.Column>
             <h3>{t('parcel_detail.tags.title')}</h3>
-            {Object.values(proximity).map(tag => this.renderProximityTag(tag))}
+            {Object.values(proximity).map(this.renderProximityTag)}
           </Grid.Column>
         </Grid.Row>
       </Grid>
