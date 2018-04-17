@@ -2,10 +2,6 @@
   margin-left: 20px;
 }
 
-.BuyManaForm .ui.input.address-input input {
-  width: 100% !important;
-}
-
 .BuyManaForm .transfer-warning {
   color: var(--gray);
   font-style: italic;
@@ -24,8 +20,8 @@
   color: var(--error);
 }
 
-.BuyManaForm .pay-with-input {
-  opacity: 1 !important;
+.BuyManaForm .ui.disabled.pay-with-input {
+  opacity: 1;
 }
 
 .BuyManaForm .external-link {
@@ -51,7 +47,10 @@
 
   .BuyManaForm .footer .button {
     margin-top: 1em;
-    margin-left: 0em !important;
     width: 100%;
+  }
+
+  .BuyManaForm .ui.button + .ui.button {
+    margin-left: 0;
   }
 }

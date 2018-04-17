@@ -1,5 +1,5 @@
-.big-mana-icon .ManaIcon {
-  margin-right: 0 !important;
+.big-mana-icon .Mana .ManaIcon {
+  margin-right: 0px;
 }
 
 @media (max-width: 768px) {
