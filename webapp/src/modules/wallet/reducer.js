@@ -7,6 +7,7 @@ import {
   TRANSFER_MANA_SUCCESS,
   UPDATE_DERIVATION_PATH,
   UPDATE_BALANCE,
+  UPDATE_ETH_BALANCE,
   BUY_MANA_REQUEST,
   BUY_MANA_SUCCESS,
   BUY_MANA_FAILURE
@@ -24,6 +25,7 @@ const INITIAL_STATE = {
     network: null,
     address: null,
     balance: null,
+    ethBalance: null,
     approvedBalance: null,
     isLandAuthorized: null,
     derivationPath: null,
@@ -118,6 +120,14 @@ export function walletReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           balance: action.balance
+        }
+      }
+    case UPDATE_ETH_BALANCE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ethBalance: action.ethBalance
         }
       }
     case CHANGE_LOCALE:

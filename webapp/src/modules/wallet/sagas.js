@@ -30,7 +30,8 @@ import {
   transferManaFailure,
   buyManaSuccess,
   buyManaFailure,
-  updateBalance
+  updateBalance,
+  updateEthBalance
 } from './actions'
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
@@ -39,7 +40,8 @@ import { watchLoadingTransactions } from 'modules/transaction/actions'
 import {
   connectEthereumWallet,
   getMarketplaceAddress,
-  sendTransaction
+  sendTransaction,
+  fetchBalance
 } from './utils'
 
 export function* walletSaga() {
@@ -72,9 +74,16 @@ function* handleConnectWalletRequest(action = {}) {
     const landRegistryContract = eth.getContract('LANDRegistry')
     const marketplaceAddress = getMarketplaceAddress()
 
-    const [network, balance, approvedBalance, isLandAuthorized] = yield all([
+    const [
+      network,
+      balance,
+      ethBalance,
+      approvedBalance,
+      isLandAuthorized
+    ] = yield all([
       eth.getNetwork(),
       manaTokenContract.balanceOf(address),
+      fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
       landRegistryContract.isApprovedForAll(marketplaceAddress, address)
     ])
@@ -85,6 +94,7 @@ function* handleConnectWalletRequest(action = {}) {
       network: network.name,
       address,
       balance,
+      ethBalance,
       approvedBalance,
       isLandAuthorized,
       type,
@@ -177,7 +187,9 @@ function* handleTransactionSuccess(action) {
       address = address.toLowerCase()
       const manaTokenContract = eth.getContract('MANAToken')
       const balance = yield call(() => manaTokenContract.balanceOf(address))
+      const ethBalance = yield call(() => fetchBalance(address))
       yield put(updateBalance(balance))
+      yield put(updateEthBalance(ethBalance))
       break
     }
     default:

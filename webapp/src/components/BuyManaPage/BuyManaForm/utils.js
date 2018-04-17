@@ -21,20 +21,6 @@ export async function fetchManaRate(amount) {
   return rate
 }
 
-export async function fetchBalance(address) {
-  return new Promise((resolve, reject) => {
-    eth.wallet
-      .getWeb3()
-      .eth.getBalance(
-        address,
-        (error, balance) =>
-          error
-            ? reject(error)
-            : resolve(eth.utils.fromWei(balance.toString(10)))
-      )
-  })
-}
-
 export async function fetchTransaction({ ethAmount, manaAmount, address }) {
   const ethAmountInWei = eth.utils.toWei(ethAmount)
   const manaAmountInWei = eth.utils.toWei(manaAmount * 0.98) // From Bancor docs: "We recommend setting this value to 2% under the expected return amount." (https://support.bancor.network/hc/en-us/articles/360001455772-Build-a-transaction-using-the-Convert-API)

@@ -8,7 +8,6 @@ import { t, t_html } from 'modules/translation/utils'
 import { walletType } from 'components/types'
 import { locations } from 'locations'
 import BuyManaForm from './BuyManaForm'
-import { fetchBalance } from './BuyManaForm/utils'
 import './BuyManaPage.css'
 
 export default class BuyManaPage extends React.PureComponent {
@@ -26,38 +25,6 @@ export default class BuyManaPage extends React.PureComponent {
     onSubmit: () => {}
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      balance: null
-    }
-  }
-
-  componentWillMount() {
-    const { wallet } = this.props
-    if (wallet.address) {
-      this.fetchBalance(wallet.address)
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { wallet } = this.props
-    if (wallet.address !== nextProps.wallet.address) {
-      this.fetchBalance(nextProps.wallet.address)
-    }
-  }
-
-  async fetchBalance(address) {
-    try {
-      const balance = await fetchBalance(address)
-      this.setState({ balance })
-      return balance
-    } catch (error) {
-      console.error('Could not get ETH balance', error.message)
-      return null
-    }
-  }
-
   renderLoading() {
     return <Loader active size="huge" />
   }
@@ -70,7 +37,6 @@ export default class BuyManaPage extends React.PureComponent {
 
   renderContent() {
     const { wallet, isTxIdle, onSubmit, onCancel } = this.props
-    const { balance } = this.state
     return (
       <ParcelModal
         preview={
@@ -80,12 +46,12 @@ export default class BuyManaPage extends React.PureComponent {
         }
         title={t('buy_mana.title')}
         subtitle={t('buy_mana.available_eth', {
-          eth: balance ? balance.toFixed(5) : 0
+          eth: wallet.ethBalance ? wallet.ethBalance.toFixed(5) : 0
         })}
         hasCustomFooter
       >
         <BuyManaForm
-          balance={balance}
+          balance={wallet.ethBalance}
           address={wallet.address}
           isTxIdle={isTxIdle}
           onSubmit={onSubmit}

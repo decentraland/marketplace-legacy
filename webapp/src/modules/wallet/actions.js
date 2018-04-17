@@ -166,3 +166,14 @@ export function updateBalance(balance) {
     balance
   }
 }
+
+// Update ETH Balance
+
+export const UPDATE_ETH_BALANCE = 'Update ETH Balance'
+
+export function updateEthBalance(ethBalance) {
+  return {
+    type: UPDATE_ETH_BALANCE,
+    ethBalance
+  }
+}
