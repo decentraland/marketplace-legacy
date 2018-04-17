@@ -30,30 +30,33 @@ export async function tagParcels() {
 }
 
 export function tagParcel(parcel, landmarks) {
-  const tag = {
-    plaza_distance: null,
-    district_distance: null,
-    road_distance: null
+  const tags = {
+    // plaza_distance: null,
+    // district_distance: null,
+    // road_distance: null
   }
 
   for (const landmark of landmarks) {
     if (!landmark.isWithinBoundingBox(parcel, BOUNDING_BOX_SIZE)) continue
 
     const distance = landmark.distanceTo(parcel)
+    const length = distance - 1 // So parcels next to eachother have a distance of 0
 
     const tag_name = landmark.isPlaza()
       ? 'plaza_distance'
       : landmark.isRoad() ? 'road_distance' : 'district_distance'
 
-    if (!tag[tag_name] || distance < tag[tag_name].length) {
-      tag[tag_name] = {
+    if (!tags[tag_name] || length < tags[tag_name].length) {
+      tags[tag_name] = {
         id: landmark.get('district_id'),
-        length: distance
+        length
       }
     }
   }
 
-  return Parcel.update({ tag: JSON.stringify(tag) }, { id: parcel.get('id') })
+  const dbTags = Object.keys(tags).length ? JSON.stringify(tags) : null
+
+  return Parcel.update({ tags: dbTags }, { id: parcel.get('id') })
 }
 
 function toParcelInstance(attributes) {
