@@ -6,7 +6,7 @@ exports.up = pgm => {
   pgm.addColumns(tableName, {
     tags: {
       type: 'JSON',
-      default: null
+      default: '{}'
     }
   })
 }
