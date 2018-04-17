@@ -4,7 +4,7 @@ exports.up = pgm => {
   const tableName = Parcel.tableName
 
   pgm.addColumns(tableName, {
-    tag: {
+    tags: {
       type: 'JSON',
       default: null
     }
