@@ -71,20 +71,22 @@
   background-image: url('../../images/exchange.svg');
 }
 
-.Icon-plaza-tag {
-  width: 48px;
-  height: 48px;
-  background-image: url('../../images/plaza-tag.svg');
+.Icon-plaza-icon {
+  width: 32px;
+  height: 20px;
+  background-image: url('../../images/plaza-icon.svg');
 }
-.Icon-road-tag {
-  width: 48px;
-  height: 48px;
-  background-image: url('../../images/road-tag.svg');
+
+.Icon-road-icon {
+  width: 24px;
+  height: 28px;
+  background-image: url('../../images/road-icon.svg');
 }
-.Icon-district-tag {
-  width: 48px;
-  height: 48px;
-  background-image: url('../../images/district-tag.svg');
+
+.Icon-district-icon {
+  width: 24px;
+  height: 32px;
+  background-image: url('../../images/district-icon.svg');
 }
 
 .Icon-twitter,
