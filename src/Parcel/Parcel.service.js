@@ -1,4 +1,5 @@
-import { eth, Contract, Log, contracts } from 'decentraland-commons'
+import { eth, Contract, contracts } from 'decentraland-eth'
+import { Log } from 'decentraland-commons'
 
 import { Parcel } from './Parcel'
 import { coordinates } from './coordinates'

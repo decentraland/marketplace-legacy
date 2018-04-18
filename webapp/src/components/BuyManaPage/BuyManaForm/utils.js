@@ -1,4 +1,4 @@
-import { eth } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 import axios from 'axios'
 
 export const BANCOR_ETH_ID = '5937d635231e97001f744267'

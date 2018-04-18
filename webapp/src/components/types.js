@@ -1,4 +1,4 @@
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 import {
   arrayOf,
   shape,

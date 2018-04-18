@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { eth } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 import { distanceInWordsToNow } from 'lib/utils'
 
 export default class BlockDate extends React.PureComponent {

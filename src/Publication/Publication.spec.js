@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 
 import { db } from '../database'
 import { Publication } from './Publication'

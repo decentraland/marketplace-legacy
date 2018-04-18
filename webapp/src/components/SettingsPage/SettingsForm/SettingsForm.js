@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { wallets, txUtils } from 'decentraland-commons'
+import { wallets, txUtils } from 'decentraland-eth'
 import Mana from 'components/Mana'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'

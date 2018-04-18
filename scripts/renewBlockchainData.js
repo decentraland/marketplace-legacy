@@ -1,6 +1,7 @@
 #!/usr/bin/env babel-node
 
-import { Log, env, eth, contracts } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'

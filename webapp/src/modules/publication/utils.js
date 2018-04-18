@@ -1,4 +1,4 @@
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 
 export function toPublicationsObject(publicationsArray) {
   return publicationsArray.reduce(

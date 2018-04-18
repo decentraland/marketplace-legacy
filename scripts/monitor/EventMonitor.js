@@ -1,11 +1,10 @@
-import { eth, contracts, Log } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
+import { Log } from 'decentraland-commons'
 
 const log = new Log('EventMonitor')
 
 export class EventMonitor {
   constructor(contractName, eventNames) {
-    this.setContract(contractName)
-
     this.contractName = contractName
     this.eventNames = eventNames
   }
@@ -47,24 +46,6 @@ export class EventMonitor {
       const event = this.getEvent(eventName)
       event[action]({ args: eventArgs, opts: eventOptions }, callback)
     }
-  }
-
-  /**
-   * Uses decentraland-common's eth and contracts objects to find and set the contract name supplied.
-   * It'll throw if it's not defined on the contracts object
-   * @param {string} contractName
-   */
-  setContract(contractName) {
-    const contract = contracts[contractName]
-
-    if (!contract) {
-      const validNames = Object.keys(contracts).join(', ')
-      throw new Error(
-        `Could not find contract, "${contractName}". Valid options are ${validNames}`
-      )
-    }
-
-    eth.setContracts([contract])
   }
 
   getEvent(eventName) {

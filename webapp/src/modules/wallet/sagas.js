@@ -8,7 +8,7 @@ import {
   put
 } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { eth } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 import { locations } from 'locations'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {

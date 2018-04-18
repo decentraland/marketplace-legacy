@@ -2,7 +2,8 @@ import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { server, env, eth, contracts, utils } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-eth'
+import { server, env, utils } from 'decentraland-commons'
 
 import { db } from './database'
 import { Parcel } from './Parcel'
@@ -219,7 +220,9 @@ function connectDatabase() {
 function connectEthereum() {
   return eth
     .connect({
-      contracts: [contracts.LANDRegistry],
+      contracts: [
+        new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
+      ],
       providerUrl: env.get('RPC_URL') // default to localhost
     })
     .catch(error =>

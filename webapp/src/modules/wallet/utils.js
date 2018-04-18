@@ -1,4 +1,5 @@
-import { env, eth, utils, contracts, wallets } from 'decentraland-commons'
+import { eth, contracts, wallets } from 'decentraland-eth'
+import { env, utils } from 'decentraland-commons'
 import { isMobile } from 'lib/utils'
 
 export async function connectEthereumWallet(options = {}, retries = 0) {

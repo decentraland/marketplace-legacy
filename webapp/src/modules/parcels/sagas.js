@@ -1,6 +1,6 @@
 import { takeEvery, select, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { eth, contracts } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-eth'
 import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCEL_REQUEST,

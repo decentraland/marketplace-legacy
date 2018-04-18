@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { eth } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 
 import { Button, Form, Input } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'

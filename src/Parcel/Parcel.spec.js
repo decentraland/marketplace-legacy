@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import { eth, txUtils } from 'decentraland-commons'
+import { eth, txUtils } from 'decentraland-eth'
 
 import { db } from '../database'
 import { Parcel } from './Parcel'
