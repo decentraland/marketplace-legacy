@@ -5,6 +5,7 @@ jobs:
       - image: circleci/node:9.11.1
     working_directory: /tmp/marketplace
     steps:
+      - setup_remote_docker
       - checkout
       - run:
           name: Install system dependencies
@@ -21,7 +22,12 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "webapp/package.json" }}
       - run:
-          name: Build
+          name: Build backend
+          command: npm run build:ci
+          environment:
+            CONNECTION_STRING: 'postgres://magiklander@localhost:5432/marketplace'
+      - run:
+          name: Build frontend
           command: cd webapp && npm run build
           environment:
             NODE_PATH: src/
@@ -89,3 +95,12 @@ workflows:
           context: marketplace-dev
           requires:
             - build
+  build-branch:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - master
+                - release
+                - staging
