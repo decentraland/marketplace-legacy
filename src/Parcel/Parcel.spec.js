@@ -28,7 +28,7 @@ describe('Parcel', function() {
   describe('.inRange', function() {
     beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
 
-    it('should return an array of parcel states which are on the supplied range', async function() {
+    it('should return an array of parcels which are on the supplied range', async function() {
       const range = await Parcel.inRange([2, 3], [5, 5])
       const coordinates = range.map(coord => `${coord.x},${coord.y}`)
 
@@ -59,7 +59,9 @@ describe('Parcel', function() {
         owner: '0xdeadbeef33',
         buyer: null,
         price: 1500,
-        expires_at: null
+        expires_at: null,
+        contract_id: '0xdeadbeef',
+        block_number: 1
       }
       await Publication.insert(publication)
 
@@ -73,6 +75,9 @@ describe('Parcel', function() {
           owner: null,
           data: null,
           district_id: null,
+          asset_id: null,
+          auction_owner: null,
+          tags: {},
           publication
         },
         {
@@ -82,6 +87,9 @@ describe('Parcel', function() {
           owner: null,
           data: null,
           district_id: null,
+          asset_id: null,
+          auction_owner: null,
+          tags: {},
           publication: null
         }
       ])

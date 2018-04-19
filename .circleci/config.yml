@@ -3,6 +3,10 @@ jobs:
   build:
     docker:
       - image: circleci/node:9.11.1
+      - image: circleci/postgres:9.6
+        environment:
+          POSTGRES_USER: marketplace
+          POSTGRES_DB: marketplace
     working_directory: /tmp/marketplace
     steps:
       - checkout
@@ -11,17 +15,33 @@ jobs:
           command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
       - restore_cache:
           keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: 
+          name: (backend) Install packages
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: (backend) Build
+          command: npm run build:ci
+          environment:
+            CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
+      - restore_cache:
+          keys:
           - v1-dependencies-{{ checksum "webapp/package.json" }}
           - v1-dependencies-
       - run: 
-          name: Install packages
+          name: (frontend) Install packages
           command: cd webapp && npm install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "webapp/package.json" }}
       - run:
-          name: Build
+          name: (frontend) Build
           command: cd webapp && npm run build
           environment:
             NODE_PATH: src/
@@ -89,3 +109,12 @@ workflows:
           context: marketplace-dev
           requires:
             - build
+  build-branch:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - master
+                - release
+                - staging

@@ -92,22 +92,55 @@ describe('PublicationService', function() {
       let expires_at = new Date()
       expires_at.setMonth(expires_at.getMonth() + 3)
       expires_at = expires_at.getTime().toString()
+      const block_number = 1
 
       const soldPublication = {
         tx_hash: '0x1',
+        contract_id: '0x1',
         x: 0,
         y: 0,
         price: 3,
         status: Publication.STATUS.sold,
         expires_at,
         owner,
-        tx_status
+        tx_status,
+        block_number
       }
       const publicationRows = [
         soldPublication,
-        { tx_hash: '0x2', x: 0, y: 1, price: 20, owner, tx_status, expires_at },
-        { tx_hash: '0x3', x: 1, y: 1, price: 50, owner, tx_status, expires_at },
-        { tx_hash: '0x4', x: 1, y: 2, price: 40, owner, tx_status, expires_at }
+        {
+          tx_hash: '0x2',
+          contract_id: '0x2',
+          x: 0,
+          y: 1,
+          price: 20,
+          expires_at,
+          owner,
+          tx_status,
+          block_number
+        },
+        {
+          tx_hash: '0x3',
+          contract_id: '0x3',
+          x: 1,
+          y: 1,
+          price: 50,
+          expires_at,
+          owner,
+          tx_status,
+          block_number
+        },
+        {
+          tx_hash: '0x4',
+          contract_id: '0x4',
+          x: 1,
+          y: 2,
+          price: 40,
+          expires_at,
+          owner,
+          tx_status,
+          block_number
+        }
       ]
       const inserts = publicationRows.map(publication =>
         Publication.insert(publication)
@@ -121,14 +154,16 @@ describe('PublicationService', function() {
       expect(publications).to.equalRows([
         {
           tx_hash: '0x4',
+          contract_id: '0x4',
           x: 1,
           y: 2,
-          price: '40',
+          price: 40,
           buyer: null,
           status: Publication.STATUS.open,
           expires_at,
           owner,
-          tx_status
+          tx_status,
+          block_number
         }
       ])
       expect(total).to.be.equal(3)
