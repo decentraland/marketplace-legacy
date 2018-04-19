@@ -5,8 +5,8 @@ import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Publication } from '../src/Publication'
+import { BlockTimestampService } from '../src/BlockTimestamp'
 import { asyncBatch } from '../src/lib'
-import { getBlockTime } from './monitor/processEvents'
 import { loadEnv } from './utils'
 
 let BATCH_SIZE
@@ -35,7 +35,7 @@ async function updateAllPublications() {
     const publications = await Publication.find()
     await updateBlockTimes(publications)
   } catch (error) {
-    log.error('Error, retrying')
+    log.error('Error, retrying', error.message)
     await utils.sleep(50)
     return updateAllPublications()
   }
@@ -52,7 +52,7 @@ async function updateBlockTimes(publications) {
       )
 
       const updates = publicationsBatch.map(async publication => {
-        const block_time_created_at = await getBlockTime(
+        const block_time_created_at = await new BlockTimestampService().getBlockTime(
           publication.block_number
         )
         return Publication.update(

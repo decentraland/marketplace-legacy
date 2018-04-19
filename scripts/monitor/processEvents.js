@@ -3,6 +3,7 @@ import { contracts, Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')
@@ -55,7 +56,7 @@ export async function processEvent(event) {
       log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
 
       const [block_time_created_at] = await Promise.all([
-        getBlockTime(event.block_number),
+        new BlockTimestampService().getBlockTime(event.block_number),
 
         Publication.delete({
           x,
@@ -99,7 +100,9 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
 
-      const block_time_updated_at = await getBlockTime(event.block_number)
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        event.block_number
+      )
 
       await Promise.all([
         Publication.update(
@@ -124,7 +127,9 @@ export async function processEvent(event) {
       }
       log.info(`[${name}] Publication ${contract_id} cancelled`)
 
-      const block_time_updated_at = await getBlockTime(event.block_number)
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        event.block_number
+      )
 
       await Publication.update(
         { status: Publication.STATUS.cancelled, block_time_updated_at },
@@ -162,21 +167,6 @@ export async function processEvent(event) {
   }
 
   return event
-}
-
-// TODO: Move to eth.commons
-export function getBlockTime(blockNumber) {
-  const web3 = eth.wallet.getWeb3()
-
-  return new Promise((resolve, reject) => {
-    web3.eth.getBlock(blockNumber, (error, block) => {
-      if (error || !block) {
-        reject(error)
-      } else {
-        resolve(block.timestamp * 1000)
-      }
-    })
-  })
 }
 
 const eventCache = {
