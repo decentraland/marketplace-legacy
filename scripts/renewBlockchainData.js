@@ -1,11 +1,10 @@
 #!/usr/bin/env babel-node
 
-import { eth, contracts } from 'decentraland-eth'
-import { Log, env, cli } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
-import { updateAssetIds } from './addAssetIds'
 import { loadEnv } from './utils'
 
 const log = new Log('update')
@@ -30,14 +29,6 @@ export async function renewBlockchainData() {
   const parcels = await Parcel.find()
   await updateParcelsData(parcels)
 
-  const shouldAddAssetIds = await cli.confirm(
-    'Do you want to add the parcel the asset ids?'
-  )
-
-  if (shouldAddAssetIds) {
-    await updateAssetIds(parcels)
-  }
-
   log.info('All done')
 }
 
@@ -53,6 +44,7 @@ export async function updateParcelsData(parcels) {
     callback: async (newParcels, batchSize) => {
       newParcels = await service.addLandData(newParcels)
       newParcels = await service.addOwners(newParcels)
+      newParcels = await service.addAssetIds(newParcels)
 
       log.info(`Processing ${batchSize}/${parcels.length} parcels`)
 

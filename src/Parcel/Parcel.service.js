@@ -117,6 +117,28 @@ export class ParcelService {
     return newParcels
   }
 
+  async addAssetIds(parcels) {
+    let newParcels = []
+
+    try {
+      const assetIdFetches = parcels.map(async parcel => ({
+        ...parcel,
+        asset_id: this.getAssetId(parcel).toString()
+      }))
+
+      newParcels = await Promise.all(assetIdFetches)
+    } catch (error) {
+      log.warn(
+        `An error occurred adding owners for ${
+          parcels.length
+        } parcels.\nError: ${error.message}`
+      )
+      throw error
+    }
+
+    return newParcels
+  }
+
   async getOwnerOfLand(parcel) {
     const contract = this.getLANDRegistryContract()
     const { x, y } = parcel
@@ -128,6 +150,11 @@ export class ParcelService {
     const { x, y } = coordinates.splitPairs(parcels)
     const contract = this.getLANDRegistryContract()
     return await contract.ownerOfLandMany(x, y)
+  }
+
+  async getAssetId(parcel) {
+    const contract = this.getLANDRegistryContract()
+    return await contract.encodeTokenId(parcel.x, parcel.y)
   }
 
   toParcelObject(parcelArray) {

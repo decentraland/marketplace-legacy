@@ -171,7 +171,7 @@ export async function processEvent(event) {
 }
 
 // TODO: Move to eth.commons
-function getBlockTime(blockNumber) {
+export function getBlockTime(blockNumber) {
   const web3 = eth.wallet.getWeb3()
 
   return new Promise((resolve, reject) => {
