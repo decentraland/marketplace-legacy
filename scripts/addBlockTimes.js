@@ -1,7 +1,7 @@
 #!/usr/bin/env babel-node
 
-import { eth, contracts } from 'decentraland-commons'
-import { env, Log } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-eth'
+import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Publication } from '../src/Publication'
@@ -18,15 +18,27 @@ export async function addBlockTimes() {
 
   log.info('Connecting to Ethereum node')
   await eth.connect({
-    contracts: [contracts.LANDRegistry],
-    providerUrl: env.get('RPC_URL')
+    contracts: [
+      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
+    ],
+    provider: env.get('RPC_URL')
   })
 
-  const publications = await Publication.find()
-  await updateBlockTimes(publications)
+  await updateAllPublications()
 
   log.info('All done!')
   process.exit()
+}
+
+async function updateAllPublications() {
+  try {
+    const publications = await Publication.find()
+    await updateBlockTimes(publications)
+  } catch (error) {
+    log.error('Error, retrying')
+    await utils.sleep(50)
+    return updateAllPublications()
+  }
 }
 
 async function updateBlockTimes(publications) {
