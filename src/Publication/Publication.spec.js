@@ -92,7 +92,6 @@ describe('PublicationService', function() {
       let expires_at = new Date()
       expires_at.setMonth(expires_at.getMonth() + 3)
       expires_at = expires_at.getTime().toString()
-      const contract_id = '0xdeadbeef'
       const block_number = 1
 
       const soldPublication = {
