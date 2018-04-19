@@ -6,13 +6,18 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
     const { MANAToken, LANDRegistry, Marketplace } = contracts
     const { LedgerWallet, NodeWallet } = wallets
-    const providerUrl = env.get('REACT_APP_PROVIDER_URL')
+    const { address, derivationPath } = options
 
     let connected = await eth.connect({
-      ...options,
-      providerUrl,
-      contracts: [MANAToken, LANDRegistry, Marketplace],
-      wallets: isMobile() ? [NodeWallet] : [LedgerWallet, NodeWallet]
+      provider: env.get('REACT_APP_PROVIDER_URL'),
+      contracts: [
+        new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
+        new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
+        new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS'))
+      ],
+      wallets: isMobile()
+        ? [new NodeWallet(address)]
+        : [new NodeWallet(address), new LedgerWallet(address, derivationPath)]
     })
     if (!connected) throw new Error('Could not connect to Ethereum')
   } catch (error) {
@@ -26,6 +31,10 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
     await utils.sleep(500)
     return connectEthereumWallet(options, retries + 1)
   }
+}
+
+export function isLedgerWallet(wallet) {
+  return wallet instanceof wallets.LedgerWallet
 }
 
 export function getManaToApprove() {

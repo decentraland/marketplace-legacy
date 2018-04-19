@@ -23,7 +23,7 @@ Promise.resolve()
         new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
         new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
       ],
-      providerUrl: env.get('RPC_URL')
+      provider: env.get('RPC_URL')
     })
   })
   .then(() => {

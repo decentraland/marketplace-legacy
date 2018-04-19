@@ -58,10 +58,11 @@ function* handleConnectWalletRequest(action = {}) {
   while (yield select(isStorageLoading)) yield delay(5)
   try {
     if (!eth.isConnected()) {
-      const { derivationPath } = yield select(getData)
+      const { address, derivationPath } = yield select(getData)
 
       yield call(() =>
         connectEthereumWallet({
+          address,
           derivationPath
         })
       )
@@ -88,17 +89,15 @@ function* handleConnectWalletRequest(action = {}) {
       landRegistryContract.isApprovedForAll(marketplaceAddress, address)
     ])
 
-    const { type, derivationPath } = eth.getWalletAttributes()
-
     const wallet = {
       network: network.name,
+      type: eth.wallet.type,
+      derivationPath: eth.wallet.derivationPath,
       address,
       balance,
       ethBalance,
       approvedBalance,
-      isLandAuthorized,
-      type,
-      derivationPath
+      isLandAuthorized
     }
     yield handleConnectWalletSuccess(address)
     yield put(connectWalletSuccess(wallet))

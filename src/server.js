@@ -223,7 +223,7 @@ function connectEthereum() {
       contracts: [
         new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
       ],
-      providerUrl: env.get('RPC_URL') // default to localhost
+      provider: env.get('RPC_URL') // default to localhost
     })
     .catch(error =>
       console.error(
