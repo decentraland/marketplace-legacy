@@ -11,7 +11,7 @@ exports.up = pgm => {
       y: { type: 'INT', notNull: true },
       price: 'TEXT',
       district_id: 'TEXT',
-      created_at: { type: 'TIMESTAMP', notNull: true},
+      created_at: { type: 'TIMESTAMP', notNull: true },
       updated_at: 'TIMESTAMP'
     },
     { ifNotExists: true }
