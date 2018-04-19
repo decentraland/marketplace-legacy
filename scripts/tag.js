@@ -52,7 +52,9 @@ export function tagProximity(parcel, landmarks) {
 
     const tag_name = landmark.isPlaza()
       ? 'plaza'
-      : landmark.isRoad() ? 'road' : 'district'
+      : landmark.isRoad()
+        ? 'road'
+        : 'district'
 
     if (!proximity[tag_name] || distance < proximity[tag_name].distance) {
       proximity[tag_name] = {
