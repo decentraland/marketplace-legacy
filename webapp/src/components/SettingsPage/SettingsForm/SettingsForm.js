@@ -65,7 +65,6 @@ export default class SettingsForm extends React.PureComponent {
       <Form className={`SettingsForm ${isPending ? 'tx-pending' : ''}`}>
         {isLedgerWallet ? (
           <Form.Field>
-            <h1>HELOO</h1>
             <DerivationPathDropdown
               value={walletDerivationPath}
               onChange={onDerivationPathChange}
