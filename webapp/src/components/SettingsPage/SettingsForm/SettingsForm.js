@@ -18,7 +18,7 @@ export default class SettingsForm extends React.PureComponent {
   static propTypes = {
     address: PropTypes.string,
     balance: PropTypes.number,
-    isLedgerWallet: PropTypes.boolean,
+    isLedgerWallet: PropTypes.bool,
     walletDerivationPath: PropTypes.string,
     onDerivationPathChange: PropTypes.func,
     manaApproved: PropTypes.number,
