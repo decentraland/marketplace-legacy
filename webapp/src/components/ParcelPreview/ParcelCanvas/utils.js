@@ -116,8 +116,8 @@ export function panzoom(target, cb) {
   // dispose
   return function dispose() {
     impetus.destroy()
-    pinch.dispose()
     pos.dispose()
+    pinch.removeAllListeners()
     target.removeEventListener('wheel', wheelListener)
     target.removeEventListener('mousedown', initListener)
     target.removeEventListener('touchstart', initListener)

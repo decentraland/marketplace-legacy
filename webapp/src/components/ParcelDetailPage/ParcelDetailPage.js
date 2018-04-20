@@ -57,16 +57,9 @@ export default class ParcelDetailPage extends React.PureComponent {
       <Parcel x={x} y={y}>
         {(parcel, isOwner) => (
           <div className="ParcelDetailPage">
-            <Link to={locations.parcelMapDetail(parcel.x, parcel.y, parcel.id)}>
-              <div className="parcel-preview" title={t('parcel_detail.view')}>
-                <ParcelPreview
-                  x={parcel.x}
-                  y={parcel.y}
-                  size={14}
-                  padding={2}
-                />
-              </div>
-            </Link>
+            <div className="parcel-preview" title={t('parcel_detail.view')}>
+              <ParcelPreview x={parcel.x} y={parcel.y} size={14} padding={2} />
+            </div>
             <Container>
               <ParcelDetail
                 parcel={parcel}
