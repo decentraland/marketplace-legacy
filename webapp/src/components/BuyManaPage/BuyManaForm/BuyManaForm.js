@@ -173,10 +173,12 @@ export default class BuyManaForm extends React.PureComponent {
             </Form.Field>
             <br />
             <span className="info">
-              {t('buy_mana.rate')}: 1 MANA = {formatMana(this.state.rate, 'ETH')}
+              {t('buy_mana.rate')}: 1 MANA ={' '}
+              {formatMana(this.state.rate, 'ETH')}
             </span>
             <span className="info">
-              {t('buy_mana.rate')}: {formatMana(1 / (this.state.rate || 1))} = 1 ETH
+              {t('buy_mana.rate')}: {formatMana(1 / (this.state.rate || 1))} = 1
+              ETH
             </span>
             <span className="info">
               {t('buy_mana.slippage')}&nbsp;<a
