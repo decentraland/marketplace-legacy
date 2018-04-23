@@ -64,6 +64,6 @@ function* handleAddressPublicationsRequest(action) {
 function* handleFetchAddress(action) {
   const { address } = action
   yield put(fetchAddressParcelsRequest(address))
-  yield put(fetchAddressPublicationsRequest(address))
+  yield put(fetchAddressPublicationsRequest(address)) // ⚡
   yield put(fetchAddressContributionsRequest(address))
 }

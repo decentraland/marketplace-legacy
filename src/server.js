@@ -82,6 +82,8 @@ export async function getParcels(req) {
       filters
     )
 
+    // TODO ADD STATUS
+
     // Invert keys, from { publication: { parcel } } to { parcel: { publication } }
     const publicationBlacklist = [...blacklist.publication, 'parcel']
     const parcels = publications.map(publication => ({

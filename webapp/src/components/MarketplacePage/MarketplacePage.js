@@ -10,7 +10,7 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
-import Publication from './Publication'
+import ParcelCard from 'components/ParcelCard'
 
 import { publicationType } from 'components/types'
 import { t } from 'modules/translation/utils'
@@ -108,7 +108,7 @@ export default class MarketplacePage extends React.PureComponent {
     return (
       <Card.Group stackable={true}>
         {publications.map((publication, index) => (
-          <Publication
+          <ParcelCard
             key={publication.tx_hash}
             publication={publication}
             debounce={index * 100}

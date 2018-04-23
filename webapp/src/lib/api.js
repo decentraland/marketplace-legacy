@@ -28,12 +28,12 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}/publications`, {})
   }
 
-  fetchAddressParcels(address) {
-    return this.request('get', `/addresses/${address}/parcels`, {})
+  fetchAddressParcels(address, status) {
+    return this.request('get', `/addresses/${address}/parcels`, { status })
   }
 
-  fetchAddressPublications(address) {
-    return this.request('get', `/addresses/${address}/publications`, {})
+  fetchAddressContributions(address) {
+    return this.request('get', `/addresses/${address}/contributions`, {})
   }
 
   fetchPublications(options = FILTER_DEFAULTS) {
@@ -47,10 +47,6 @@ export class API {
       `/publications?limit=${limit}&offset=${offset}&sort_by=${sortBy}&sort_order=${sortOrder}`,
       {}
     )
-  }
-
-  fetchAddressContributions(address) {
-    return this.request('get', `/addresses/${address}/contributions`, {})
   }
 
   request(method, path, params) {
