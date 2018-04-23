@@ -53,8 +53,24 @@ export class Parcel extends Model {
 
   static async findByOwner(owner) {
     return await this.db.query(
-      `${this.findParcelsWithOpenPublicationSql()}
-        WHERE par.owner = $1`,
+      `SELECT ${this.tableName}.*, (
+        ${Publication.findLastParcelPublicationJsonSql()}
+      ) as publication
+        FROM ${this.tableName}
+        WHERE owner = $1`,
+      [owner]
+    )
+  }
+
+  static async findByOwnerAndStatus(owner) {
+    return await this.db.query(
+      `SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
+        FROM ${this.tableName} as par
+        LEFT JOIN (
+          ${Publication.findPublicationsByStatusSql()}
+        ) as pub ON par.x = pub.x AND par.y = pub.y
+        WHERE par.owner = $1
+          AND pub.tx_hash IS NOT NULL`,
       [owner]
     )
   }
@@ -80,24 +96,14 @@ export class Parcel extends Model {
     const [maxx, maxy] = coordinates.toArray(max)
 
     return await this.db.query(
-      `${this.findParcelsWithOpenPublicationSql()}
-        WHERE par.x >= $1 AND par.y >= $2
-          AND par.x <= $3 AND par.y <= $4`,
+      `SELECT ${this.tableName}.*, (
+        ${Publication.findLastParcelPublicationJsonSql()}
+      ) as publication
+        FROM ${this.tableName}
+        WHERE x >= $1 AND y >= $2
+          AND x <= $3 AND y <= $4`,
       [minx, miny, maxx, maxy]
     )
-  }
-
-  static findParcelsWithOpenPublicationSql() {
-    return `SELECT par.*, (
-        SELECT row_to_json(pub.*)
-          FROM ${Publication.tableName} AS pub
-          WHERE pub.status = '${Publication.STATUS.open}'
-            AND pub.x = par.x
-            AND pub.y = par.y
-          ORDER BY pub.created_at DESC
-          LIMIT 1
-      ) as publication
-        FROM ${this.tableName} as par`
   }
 
   static async encodeAssetId(x, y) {

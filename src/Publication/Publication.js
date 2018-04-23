@@ -1,5 +1,6 @@
 import { Model } from 'decentraland-commons'
 import { BlockchainEvent } from '../BlockchainEvent'
+import { Parcel } from '../Parcel'
 
 export class Publication extends Model {
   static tableName = 'publications'
@@ -38,19 +39,32 @@ export class Publication extends Model {
     return this.find({ x, y }, { created_at: 'DESC' })
   }
 
-  static findByStatus(status) {
-    return this.db.query(this.findByStatusSql(status))
+  static findInCoordinateWithStatus(x, y, status) {
+    if (!this.isValidStatus(status)) {
+      throw new Error(`Invalid status '${status}'`)
+    }
+
+    return this.find({ x, y, status }, { created_at: 'DESC' })
   }
 
-  static findOpenSql(status) {
+  static findPublicationsByStatusSql(status = null) {
     if (!this.isValidStatus(status)) {
-      throw new Error(`Trying to filter by invalid status '${status}'`)
+      throw new Error(`Invalid status '${status}'`)
     }
 
     return `SELECT *
-        FROM ${this.tableName}
-        WHERE status = '${status}'
-        ORDER BY created_at DESC`
+      FROM ${this.tableName}
+      WHERE status = '${status}'
+      ORDER BY created_at DESC`
+  }
+
+  static findLastParcelPublicationJsonSql() {
+    return `SELECT row_to_json(${this.tableName}.*)
+      FROM ${this.tableName}
+      WHERE ${this.tableName}.x = ${Parcel.tableName}.x
+        AND ${this.tableName}.y = ${Parcel.tableName}.y
+      ORDER BY ${this.tableName}.created_at DESC
+      LIMIT 1`
   }
 
   static async cancelOlder(x, y, block_number) {
@@ -87,6 +101,7 @@ export class Publication extends Model {
     if (!this.isValidStatus(newStatus)) {
       throw new Error(`Trying to filter by invalid status '${newStatus}'`)
     }
+
     // 1 -> newStatus, 2 -> IN
     const inPlaceholders = txHashes.map((_, index) => `$${index + 2}`)
 

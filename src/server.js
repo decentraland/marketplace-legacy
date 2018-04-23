@@ -15,6 +15,7 @@ import {
   PublicationRequestFilters
 } from './Publication'
 import { Translation } from './Translation'
+import { blacklist } from './lib'
 
 env.load()
 
@@ -46,7 +47,7 @@ if (env.isDevelopment()) {
 /**
  * Returns the translations for a given locale
  * @param  {string} locale - locale name
- * @return {array}
+ * @return {array<Translation>}
  */
 app.get('/api/translations/:locale', server.handleRequest(getTranslations))
 
@@ -60,23 +61,44 @@ export async function getTranslations(req) {
  * Returns the parcels that land in between the supplied coordinates
  * @param  {string} nw - North west coordinate
  * @param  {string} sw - South west coordinate
- * @return {array}
+ * @param  {string} sort_by - Publication prop
+ * @param  {string} sort_order - asc or desc
+ * @param  {number} limit
+ * @param  {number} offset
+ * @return {array<Parcel>}
  */
 app.get('/api/parcels', server.handleRequest(getParcels))
 
 export async function getParcels(req) {
-  const nw = server.extractFromReq(req, 'nw')
-  const se = server.extractFromReq(req, 'se')
-  const parcels = await Parcel.inRange(nw, se)
+  try {
+    const nw = server.extractFromReq(req, 'nw')
+    const se = server.extractFromReq(req, 'se')
+    const parcels = await Parcel.inRange(nw, se)
 
-  return utils.mapOmit(parcels, ['asset_id', 'created_at', 'updated_at'])
+    return utils.mapOmit(parcels, blacklist.parcel)
+  } catch (error) {
+    const filters = new PublicationRequestFilters(req)
+    const { publications, total } = await new PublicationService().filter(
+      filters
+    )
+
+    // Invert keys, from { publication: { parcel } } to { parcel: { publication } }
+    const publicationBlacklist = [...blacklist.publication, 'parcel']
+    const parcels = publications.map(publication => ({
+      ...utils.omit(publication.parcel, blacklist.parcel),
+      publication: utils.omit(publication, publicationBlacklist)
+    }))
+
+    return { parcels, total }
+  }
 }
 
 /**
  * Returns the publications for a parcel
  * @param  {string} x
  * @param  {string} y
- * @return {array}
+ * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+ * @return {array<Publication>}
  */
 app.get(
   '/api/parcels/:x/:y/publications',
@@ -86,15 +108,24 @@ app.get(
 export async function getParcelPublications(req) {
   const x = server.extractFromReq(req, 'x')
   const y = server.extractFromReq(req, 'y')
-  const publications = await Publication.findInCoordinate(x, y)
 
-  return publications
+  let publications = []
+
+  try {
+    const status = server.extractFromReq(req, 'status')
+    publications = await Publication.findInCoordinateWithStatus(x, y, status)
+  } catch (error) {
+    publications = await Publication.findInCoordinate(x, y)
+  }
+
+  return utils.mapOmit(publications, blacklist.publication)
 }
 
 /**
  * Returns the parcels an address owns
- * @param  {string} address - Parcel owner
- * @return {array}
+ * @param  {string} address  - Parcel owner
+ * @param  {string} [status] - specify a publication status to retreive: [cancelled|sold|pending].
+ * @return {array<Parcel>}
  */
 app.get(
   '/api/addresses/:address/parcels',
@@ -102,16 +133,24 @@ app.get(
 )
 
 export async function getAddressParcels(req) {
-  const address = server.extractFromReq(req, 'address')
-  const parcels = await Parcel.findByOwner(address.toLowerCase())
+  const address = server.extractFromReq(req, 'address').toLowerCase()
 
-  return utils.mapOmit(parcels, ['asset_id', 'created_at', 'updated_at'])
+  let parcels = []
+
+  try {
+    const status = server.extractFromReq(req, 'status')
+    parcels = await Parcel.findByOwnerAndStatus(address, status)
+  } catch (error) {
+    parcels = await Parcel.findByOwner(address)
+  }
+
+  return utils.mapOmit(parcels, blacklist.parcel)
 }
 
 /**
  * Get the contributions for an address
  * @param  {string} address - District contributor
- * @return {array}
+ * @return {array<Contribution>}
  */
 app.get(
   '/api/addresses/:address/contributions',
@@ -124,84 +163,18 @@ export async function getAddressContributions(req) {
     address.toLowerCase()
   )
 
-  return utils.mapOmit(contributions, [
-    'message',
-    'signature',
-    'created_at',
-    'updated_at'
-  ])
-}
-
-/**
- * Returns the publications an address owns
- * @param  {string} address - Publication owner
- * @return {array}
- */
-app.get(
-  '/api/addresses/:address/publications',
-  server.handleRequest(getAddressPublications)
-)
-
-export async function getAddressPublications(req) {
-  const address = server.extractFromReq(req, 'address')
-  return Publication.findByOwner(address.toLowerCase())
+  return utils.mapOmit(contributions, blacklist.contribution)
 }
 
 /**
  * Returns all stored districts
- * @return {array}
+ * @return {array<District>}
  */
 app.get('/api/districts', server.handleRequest(getDistricts))
 
 export async function getDistricts() {
   const districts = await District.findEnabled()
-  return utils.mapOmit(districts, [
-    'disabled',
-    'address',
-    'parcel_ids',
-    'created_at',
-    'updated_at'
-  ])
-}
-
-/**
- * Returns all publications. Supports pagination and filtering
- * @param  {string} sort_by - Publication prop
- * @param  {string} sort_order - asc or desc
- * @param  {number} limit
- * @param  {number} offset
- * @return {array}
- */
-app.get('/api/publications', server.handleRequest(getPublications))
-
-export async function getPublications(req) {
-  const filters = new PublicationRequestFilters(req)
-  const { publications, total } = await new PublicationService().filter(filters)
-
-  return {
-    publications: utils.mapOmit(publications, ['updated_at']),
-    total
-  }
-}
-
-/**
- * Get a publication by transaction hash
- * @param  {string} txHash
- * @return {array}
- */
-app.get('/api/publications/:txHash', server.handleRequest(getPublication))
-
-export async function getPublication(req) {
-  const txHash = server.extractFromReq(req, 'txHash')
-  const publication = await Publication.findOne({ tx_hash: txHash })
-
-  if (!publication) {
-    throw new Error(
-      `Could not find a valid publication for the hash "${txHash}"`
-    )
-  }
-
-  return publication
+  return utils.mapOmit(districts, blacklist.district)
 }
 
 /* Start the server only if run directly */
