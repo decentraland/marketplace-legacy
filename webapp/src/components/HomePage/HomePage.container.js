@@ -21,9 +21,7 @@ const mapDispatch = (dispatch, { location }) => ({
     dispatch(
       fetchPublicationsRequest({
         limit: 20,
-        offset: 0,
-        sortBy: 'created_at',
-        sortOrder: 'desc'
+        offset: 0
       })
     ),
   onNavigate: url => dispatch(navigateTo(url))

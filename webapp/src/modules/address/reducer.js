@@ -61,18 +61,28 @@ export function addressReducer(state = INITIAL_STATE, action) {
           }
         }
       }
-    case FETCH_ADDRESS_PUBLICATIONS_SUCCESS:
+    case FETCH_ADDRESS_PUBLICATIONS_SUCCESS: {
+      const addressData = state.data[action.address] || {}
+      const { parcels, publications } = action
+
+      const parcel_ids = new Set([
+        ...addressData.parcel_ids,
+        ...toAddressParcelIds(parcels)
+      ])
+
       return {
         loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
           [action.address]: {
-            ...state.data[action.address],
-            publication_ids: toAddressPublicationIds(action.publications)
+            ...addressData,
+            publication_ids: toAddressPublicationIds(publications),
+            parcel_ids: Array.from(parcel_ids)
           }
         }
       }
+    }
     case FETCH_ADDRESS_CONTRIBUTIONS_FAILURE:
     case FETCH_ADDRESS_PUBLICATIONS_FAILURE:
     case FETCH_ADDRESS_PARCELS_FAILURE:

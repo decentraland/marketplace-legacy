@@ -62,12 +62,12 @@ export class Parcel extends Model {
     )
   }
 
-  static async findByOwnerAndStatus(owner) {
+  static async findByOwnerAndStatus(owner, status) {
     return await this.db.query(
       `SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
         FROM ${this.tableName} as par
         LEFT JOIN (
-          ${Publication.findPublicationsByStatusSql()}
+          ${Publication.findPublicationsByStatusSql(status)}
         ) as pub ON par.x = pub.x AND par.y = pub.y
         WHERE par.owner = $1
           AND pub.tx_hash IS NOT NULL`,

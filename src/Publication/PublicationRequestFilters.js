@@ -1,4 +1,5 @@
 import { server } from 'decentraland-commons'
+import { Publication } from './Publication'
 
 const ALLOWED_VALUES = Object.freeze({
   price: ['ASC'],
@@ -16,11 +17,15 @@ export class PublicationRequestFilters {
   }
 
   sanitize(req) {
+    let status = server.extractFromReq(this.req, 'status')
     let by = server.extractFromReq(this.req, 'sort_by')
     let order = server.extractFromReq(this.req, 'sort_order')
     let limit = server.extractFromReq(this.req, 'limit')
     let offset = server.extractFromReq(this.req, 'offset')
 
+    status = Publication.isValidStatus(status)
+      ? status
+      : Publication.STATUS.open
     by = by in ALLOWED_VALUES ? by : 'created_at'
     order = ALLOWED_VALUES[by].includes(order.toUpperCase())
       ? order
@@ -29,6 +34,7 @@ export class PublicationRequestFilters {
     offset = Math.max(offset, 0)
 
     return {
+      status,
       sort: {
         by,
         order

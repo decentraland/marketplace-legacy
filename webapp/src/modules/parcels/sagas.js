@@ -28,7 +28,7 @@ function* handleParcelsRequest(action) {
   try {
     const nw = buildCoordinate(action.nw.x, action.nw.y)
     const se = buildCoordinate(action.se.x, action.se.y)
-    const parcels = yield call(() => api.fetchParcels(nw, se))
+    const parcels = yield call(() => api.fetchParcelsInRange(nw, se))
 
     yield put(fetchParcelsSuccess(parcels))
   } catch (error) {

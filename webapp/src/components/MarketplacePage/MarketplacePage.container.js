@@ -10,7 +10,9 @@ import { getOptionsFromRouter, PAGE_SIZE } from './utils'
 import MarketplacePage from './MarketplacePage'
 
 const mapState = (state, { location }) => {
-  const { limit, offset, sortBy, sortOrder } = getOptionsFromRouter(location)
+  const { limit, offset, sortBy, sortOrder, status } = getOptionsFromRouter(
+    location
+  )
   const page = offset / PAGE_SIZE + 1
   const publications = getPublications(state)
   const total = getTotal(state)
@@ -19,6 +21,7 @@ const mapState = (state, { location }) => {
     offset,
     sortBy,
     sortOrder,
+    status,
     page,
     pages: Math.ceil(total / PAGE_SIZE),
     total,

@@ -32,6 +32,7 @@ export default class MarketplacePage extends React.PureComponent {
     total: PropTypes.number.isRequired,
     sortBy: PropTypes.string.isRequired,
     sortOrder: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
     onNavigate: PropTypes.func.isRequired,
     onFetchPublications: PropTypes.func.isRequired
   }

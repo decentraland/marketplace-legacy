@@ -24,6 +24,7 @@ describe('PublicationRequestFilters', function() {
     it('should return an object obtaining the data from the request', function() {
       const request = buildRequest({
         query: {
+          status: Publication.STATUS.sold,
           sort_by: 'price',
           sort_order: 'desc',
           limit: 33,
@@ -33,6 +34,7 @@ describe('PublicationRequestFilters', function() {
 
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
+        status: Publication.STATUS.sold,
         sort: {
           by: 'price',
           order: 'ASC'
@@ -47,6 +49,7 @@ describe('PublicationRequestFilters', function() {
     it('should only allow pre-determined values', function() {
       const request = buildRequest({
         query: {
+          status: '--SELECT * FROM publications;',
           sort_by: ';/**/DELETE * FROM publications;',
           sort_order: ';/**/;',
           limit: 10000,
@@ -56,6 +59,7 @@ describe('PublicationRequestFilters', function() {
 
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
+        status: Publication.STATUS.open,
         sort: {
           by: 'created_at',
           order: 'DESC'

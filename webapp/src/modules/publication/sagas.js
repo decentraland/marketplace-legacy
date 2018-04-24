@@ -33,12 +33,13 @@ export function* publicationSaga() {
 }
 
 function* handlePublicationsRequest(action) {
-  const { limit, offset, sortBy, sortOrder } = action
+  const { limit, offset, sortBy, sortOrder, status } = action
   try {
-    const { publications, total } = yield call(() =>
-      api.fetchPublications({ limit, offset, sortBy, sortOrder })
+    const { parcels, total } = yield call(() =>
+      api.fetchParcels({ limit, offset, sortBy, sortOrder, status })
     )
-    yield put(fetchPublicationsSuccess(publications, total))
+    const publications = parcels.map(parcel => parcel.publication)
+    yield put(fetchPublicationsSuccess(parcels, publications, total))
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
   }

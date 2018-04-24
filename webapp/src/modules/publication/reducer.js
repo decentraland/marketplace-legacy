@@ -1,4 +1,3 @@
-import { FETCH_ADDRESS_PUBLICATIONS_SUCCESS } from 'modules/address/actions'
 import {
   FETCH_PUBLICATIONS_REQUEST,
   FETCH_PUBLICATIONS_SUCCESS,
@@ -20,6 +19,7 @@ import {
   FETCH_PARCEL_SUCCESS,
   FETCH_PARCELS_SUCCESS
 } from 'modules/parcels/actions'
+import { getParcelPublications } from 'modules/parcels/utils'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
@@ -40,7 +40,6 @@ export function publicationReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action)
       }
     }
-    case FETCH_ADDRESS_PUBLICATIONS_SUCCESS:
     case FETCH_PARCEL_PUBLICATIONS_SUCCESS:
     case FETCH_PUBLICATIONS_SUCCESS: {
       return {
@@ -78,9 +77,8 @@ export function publicationReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_PARCELS_SUCCESS:
     case FETCH_ADDRESS_PARCELS_SUCCESS: {
-      const publications = action.parcels
-        .map(parcel => parcel.publication)
-        .filter(publication => publication != null)
+      const publications = getParcelPublications(action.parcels)
+
       if (publications.length > 0) {
         return {
           ...state,

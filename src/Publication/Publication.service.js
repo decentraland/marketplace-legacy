@@ -9,12 +9,9 @@ export class PublicationService {
   }
 
   async filter(filters) {
-    const { sort, pagination } = filters.sanitize()
+    const { status, sort, pagination } = filters.sanitize()
 
-    const values = [
-      Publication.STATUS.open,
-      txUtils.TRANSACTION_STATUS.confirmed
-    ]
+    const values = [status, txUtils.TRANSACTION_STATUS.confirmed]
 
     const [publications, counts] = await Promise.all([
       this.Publication.query(
@@ -24,7 +21,7 @@ export class PublicationService {
           WHERE status = $1
             AND tx_status = $2
             AND expires_at >= EXTRACT(epoch from now()) * 1000
-          ORDER BY ${sort.by} ${sort.order}
+          ORDER BY pub.${sort.by} ${sort.order}
           LIMIT ${pagination.limit} OFFSET ${pagination.offset}`,
         values
       ),

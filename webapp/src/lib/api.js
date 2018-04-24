@@ -1,6 +1,6 @@
 import axios from 'axios'
-
 import { env } from 'decentraland-commons'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
@@ -8,7 +8,8 @@ const FILTER_DEFAULTS = {
   limit: 20,
   offset: 0,
   sortBy: 'created_at',
-  sortOrder: 'asc'
+  sortOrder: 'asc',
+  status: PUBLICATION_STATUS.open
 }
 
 export class API {
@@ -16,19 +17,28 @@ export class API {
     return this.request('get', `/translations/${locale}`, {})
   }
 
-  fetchDistricts() {
-    return this.request('get', '/districts', {})
-  }
-
-  fetchParcels(nw, se) {
+  fetchParcelsInRange(nw, se) {
     return this.request('get', '/parcels', { nw, se })
   }
 
-  fetchParcelPublications(x, y) {
-    return this.request('get', `/parcels/${x}/${y}/publications`, {})
+  fetchParcels(options = FILTER_DEFAULTS) {
+    const { limit, offset, sortBy, sortOrder, status } = {
+      ...FILTER_DEFAULTS,
+      ...options
+    }
+
+    return this.request(
+      'get',
+      `/parcels?limit=${limit}&offset=${offset}&sort_by=${sortBy}&sort_order=${sortOrder}&status=${status}`,
+      {}
+    )
   }
 
-  fetchAddressParcels(address, status) {
+  fetchParcelPublications(x, y, status) {
+    return this.request('get', `/parcels/${x}/${y}/publications`, { status })
+  }
+
+  fetchAddressParcels(address, status = '') {
     return this.request('get', `/addresses/${address}/parcels`, { status })
   }
 
@@ -36,17 +46,8 @@ export class API {
     return this.request('get', `/addresses/${address}/contributions`, {})
   }
 
-  fetchPublications(options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder } = {
-      ...FILTER_DEFAULTS,
-      ...options
-    }
-
-    return this.request(
-      'get',
-      `/publications?limit=${limit}&offset=${offset}&sort_by=${sortBy}&sort_order=${sortOrder}`,
-      {}
-    )
+  fetchDistricts() {
+    return this.request('get', '/districts', {})
   }
 
   request(method, path, params) {

@@ -21,9 +21,10 @@ export function fetchPublicationsRequest({
   }
 }
 
-export function fetchPublicationsSuccess(publications, total) {
+export function fetchPublicationsSuccess(parcels, publications, total) {
   return {
     type: FETCH_PUBLICATIONS_SUCCESS,
+    parcels,
     publications,
     total
   }
