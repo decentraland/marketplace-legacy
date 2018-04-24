@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 
 import { locations } from 'locations'
 import { t, t_html } from 'modules/translation/utils'

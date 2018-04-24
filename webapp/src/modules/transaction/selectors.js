@@ -1,4 +1,5 @@
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
+
 const { TRANSACTION_STATUS } = txUtils
 
 export const getState = state => state.transaction

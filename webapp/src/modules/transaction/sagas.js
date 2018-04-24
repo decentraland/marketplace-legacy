@@ -1,5 +1,5 @@
 import { takeEvery, put, call, select } from 'redux-saga/effects'
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 import {
   FETCH_TRANSACTION_REQUEST,
   WATCH_LOADING_TRANSACTIONS,

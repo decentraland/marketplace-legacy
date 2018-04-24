@@ -8,7 +8,7 @@ import AddressBlock from 'components/AddressBlock'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
-import { getManaToApprove } from 'modules/wallet/utils'
+import { getManaToApprove, isLedgerWallet } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 
 import './SettingsPage.css'
@@ -58,7 +58,6 @@ export default class SettingsPage extends React.PureComponent {
     const {
       address,
       balance,
-      type,
       derivationPath,
       approvedBalance,
       isLandAuthorized
@@ -89,7 +88,7 @@ export default class SettingsPage extends React.PureComponent {
                 <SettingsForm
                   address={address}
                   balance={balance}
-                  walletType={type}
+                  isLedgerWallet={isLedgerWallet(wallet)}
                   walletDerivationPath={derivationPath}
                   onDerivationPathChange={this.handleDerivationPathChange}
                   manaApproved={approvedBalance}

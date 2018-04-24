@@ -1,6 +1,7 @@
 #!/usr/bin/env babel-node
 
-import { env, eth, Log } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-eth'
+import { env, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
 import { StoreCli } from './StoreCli'
 import { db } from '../../src/database'
@@ -18,7 +19,11 @@ Promise.resolve()
   .then(() => {
     log.debug('Connecting to Ethereum node')
     return eth.connect({
-      providerUrl: env.get('RPC_URL')
+      contracts: [
+        new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
+        new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
+      ],
+      provider: env.get('RPC_URL')
     })
   })
   .then(() => {

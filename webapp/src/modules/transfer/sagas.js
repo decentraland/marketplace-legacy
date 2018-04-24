@@ -1,6 +1,6 @@
 import { call, select, takeLatest, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { eth } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 import {
   TRANSFER_PARCEL_REQUEST,
   transferParcelSuccess,

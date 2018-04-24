@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { wallets, txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 import Mana from 'components/Mana'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
@@ -18,7 +18,7 @@ export default class SettingsForm extends React.PureComponent {
   static propTypes = {
     address: PropTypes.string,
     balance: PropTypes.number,
-    walletType: PropTypes.string,
+    isLedgerWallet: PropTypes.bool,
     walletDerivationPath: PropTypes.string,
     onDerivationPathChange: PropTypes.func,
     manaApproved: PropTypes.number,
@@ -45,7 +45,7 @@ export default class SettingsForm extends React.PureComponent {
     const {
       address,
       balance,
-      walletType,
+      isLedgerWallet,
       walletDerivationPath,
       onDerivationPathChange,
       manaApproved,
@@ -63,7 +63,7 @@ export default class SettingsForm extends React.PureComponent {
 
     return (
       <Form className={`SettingsForm ${isPending ? 'tx-pending' : ''}`}>
-        {walletType === wallets.WALLET_TYPES.ledger ? (
+        {isLedgerWallet ? (
           <Form.Field>
             <DerivationPathDropdown
               value={walletDerivationPath}

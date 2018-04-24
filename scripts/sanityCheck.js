@@ -1,6 +1,7 @@
 #!/usr/bin/env babel-node
 
-import { Log, env, eth, contracts, cli } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-eth'
+import { Log, env, cli } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { Publication } from '../src/Publication'
@@ -24,8 +25,13 @@ const sanityCheck = {
 
         log.info('Connecting to Ethereum node')
         await eth.connect({
-          contracts: [contracts.LANDRegistry, contracts.Marketplace],
-          providerUrl: env.get('RPC_URL')
+          contracts: [
+            new contracts.LANDRegistry(
+              env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
+            ),
+            new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
+          ],
+          provider: env.get('RPC_URL')
         })
 
         const shouldSkipParcels = options.skipParcels

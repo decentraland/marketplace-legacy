@@ -1,4 +1,4 @@
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 import {
   FETCH_TRANSACTION_REQUEST,
   FETCH_TRANSACTION_SUCCESS,

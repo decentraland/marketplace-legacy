@@ -1,4 +1,4 @@
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 import { Publication } from '../src/Publication'
 
 const tableName = Publication.tableName

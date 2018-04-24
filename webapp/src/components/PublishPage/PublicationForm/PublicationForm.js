@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
 

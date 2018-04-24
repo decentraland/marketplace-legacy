@@ -1,4 +1,4 @@
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 import { buildCoordinate } from 'lib/utils'
 
 export function isParcelPendingTransaction(parcel, tx) {

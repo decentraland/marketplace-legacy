@@ -1,6 +1,7 @@
 #!/usr/bin/env babel-node
 
-import { env, Log, eth, contracts } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-eth'
+import { env, Log } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
@@ -16,8 +17,10 @@ export async function addAuctionOwners() {
 
   log.info('Connecting to Ethereum node')
   await eth.connect({
-    contracts: [contracts.LANDRegistry],
-    providerUrl: env.get('RPC_URL')
+    contracts: [
+      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
+    ],
+    provider: env.get('RPC_URL')
   })
 
   let parcels = await Parcel.find()

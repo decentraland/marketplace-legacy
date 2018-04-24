@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { txUtils } from 'decentraland-commons'
+import { txUtils } from 'decentraland-eth'
 
 import ConfirmedIcon from './ConfirmedIcon'
 import FailedIcon from './FailedIcon'
