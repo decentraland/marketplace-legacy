@@ -89,10 +89,13 @@ describe('PublicationService', function() {
     it('should filter the publications using the supplied filters', async function() {
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+      const block_number = 1
+      const block_time_created_at = null
+      const block_time_updated_at = null
+
       let expires_at = new Date()
       expires_at.setMonth(expires_at.getMonth() + 3)
       expires_at = expires_at.getTime().toString()
-      const block_number = 1
 
       const soldPublication = {
         tx_hash: '0x1',
@@ -104,6 +107,8 @@ describe('PublicationService', function() {
         expires_at,
         owner,
         tx_status,
+        block_time_created_at,
+        block_time_updated_at,
         block_number
       }
       const publicationRows = [
@@ -117,6 +122,8 @@ describe('PublicationService', function() {
           expires_at,
           owner,
           tx_status,
+          block_time_created_at,
+          block_time_updated_at,
           block_number
         },
         {
@@ -128,6 +135,8 @@ describe('PublicationService', function() {
           expires_at,
           owner,
           tx_status,
+          block_time_created_at,
+          block_time_updated_at,
           block_number
         },
         {
@@ -139,6 +148,8 @@ describe('PublicationService', function() {
           expires_at,
           owner,
           tx_status,
+          block_time_created_at,
+          block_time_updated_at,
           block_number
         }
       ]
@@ -163,6 +174,8 @@ describe('PublicationService', function() {
           expires_at,
           owner,
           tx_status,
+          block_time_created_at,
+          block_time_updated_at,
           block_number
         }
       ])
