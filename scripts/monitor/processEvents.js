@@ -3,17 +3,12 @@ import { contracts, Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')
 
-export async function processEvents(fromBlock) {
-  if (fromBlock === 'latest') {
-    fromBlock = await BlockchainEvent.findLastBlockNumber()
-  } else if (fromBlock == null) {
-    fromBlock = 0
-  }
-
+export async function processEvents(fromBlock = 0) {
   const allBlockchainEvents = await BlockchainEvent.findFrom(fromBlock)
   const blockchainEvents = allBlockchainEvents.filter(
     event => !eventCache.get(event)
@@ -60,12 +55,16 @@ export async function processEvent(event) {
       }
       log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
 
-      await Publication.delete({
-        x,
-        y,
-        owner: seller.toLowerCase(),
-        status: Publication.STATUS.open
-      })
+      const [block_time_created_at] = await Promise.all([
+        new BlockTimestampService().getBlockTime(event.block_number),
+
+        Publication.delete({
+          x,
+          y,
+          owner: seller.toLowerCase(),
+          status: Publication.STATUS.open
+        })
+      ])
 
       try {
         await Publication.insert({
@@ -77,6 +76,7 @@ export async function processEvent(event) {
           expires_at: expiresAt,
           tx_hash,
           block_number,
+          block_time_created_at,
           contract_id,
           x,
           y
@@ -100,15 +100,22 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
 
-      await Publication.update(
-        {
-          status: Publication.STATUS.sold,
-          buyer: winner.toLowerCase(),
-          price: eth.utils.fromWei(totalPrice)
-        },
-        { contract_id }
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        event.block_number
       )
-      await Parcel.update({ owner: winner }, { id: parcelId })
+
+      await Promise.all([
+        Publication.update(
+          {
+            status: Publication.STATUS.sold,
+            buyer: winner.toLowerCase(),
+            price: eth.utils.fromWei(totalPrice),
+            block_time_updated_at
+          },
+          { contract_id }
+        ),
+        Parcel.update({ owner: winner }, { id: parcelId })
+      ])
       break
     }
     case BlockchainEvent.EVENTS.publicationCancelled: {
@@ -120,8 +127,12 @@ export async function processEvent(event) {
       }
       log.info(`[${name}] Publication ${contract_id} cancelled`)
 
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        event.block_number
+      )
+
       await Publication.update(
-        { status: Publication.STATUS.cancelled },
+        { status: Publication.STATUS.cancelled, block_time_updated_at },
         { contract_id }
       )
       break
@@ -144,8 +155,10 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-      await Publication.cancelOlder(x, y, block_number)
-      await Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
+      await Promise.all([
+        Publication.cancelOlder(x, y, block_number),
+        Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
+      ])
       break
     }
     default:

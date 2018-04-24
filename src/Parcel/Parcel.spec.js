@@ -61,6 +61,8 @@ describe('Parcel', function() {
         price: 1500,
         expires_at: null,
         contract_id: '0xdeadbeef',
+        block_time_created_at: null,
+        block_time_updated_at: null,
         block_number: 1
       }
       await Publication.insert(publication)

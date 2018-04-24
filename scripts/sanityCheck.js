@@ -16,7 +16,6 @@ const sanityCheck = {
   addCommands(program) {
     program
       .command('run')
-      .option('--fix', 'If present, the errors found will be fixed')
       .option('--skip-parcels', 'Skip the parcel check')
       .option('--check-parcel [parcelId]', 'Check a specific parcel')
       .action(async options => {
