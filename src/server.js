@@ -70,27 +70,30 @@ export async function getTranslations(req) {
 app.get('/api/parcels', server.handleRequest(getParcels))
 
 export async function getParcels(req) {
+  let parcels
+  let total
+
   try {
     const nw = server.extractFromReq(req, 'nw')
     const se = server.extractFromReq(req, 'se')
-    const parcels = await Parcel.inRange(nw, se)
+    const rangeParcels = await Parcel.inRange(nw, se)
 
-    return utils.mapOmit(parcels, blacklist.parcel)
+    parcels = utils.mapOmit(rangeParcels, blacklist.parcel)
+    total = parcels.length
   } catch (error) {
     const filters = new PublicationRequestFilters(req)
-    const { publications, total } = await new PublicationService().filter(
-      filters
-    )
+    const filterResult = await new PublicationService().filter(filters)
+    const publicationBlacklist = [...blacklist.publication, 'parcel']
 
     // Invert keys, from { publication: { parcel } } to { parcel: { publication } }
-    const publicationBlacklist = [...blacklist.publication, 'parcel']
-    const parcels = publications.map(publication => ({
+    parcels = filterResult.publications.map(publication => ({
       ...utils.omit(publication.parcel, blacklist.parcel),
       publication: utils.omit(publication, publicationBlacklist)
     }))
-
-    return { parcels, total }
+    total = filterResult.total
   }
+
+  return { parcels, total }
 }
 
 /**
@@ -175,6 +178,26 @@ app.get('/api/districts', server.handleRequest(getDistricts))
 export async function getDistricts() {
   const districts = await District.findEnabled()
   return utils.mapOmit(districts, blacklist.district)
+}
+
+/**
+ * Get a publication by transaction hash
+ * @param  {string} txHash
+ * @return {array}
+ */
+app.get('/api/publications/:txHash', server.handleRequest(getPublication))
+
+export async function getPublication(req) {
+  const txHash = server.extractFromReq(req, 'txHash')
+  const publication = await Publication.findOne({ tx_hash: txHash })
+
+  if (!publication) {
+    throw new Error(
+      `Could not find a valid publication for the hash "${txHash}"`
+    )
+  }
+
+  return publication
 }
 
 /* Start the server only if run directly */

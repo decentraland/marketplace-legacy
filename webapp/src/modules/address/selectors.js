@@ -14,33 +14,22 @@ export const getAddresses = createSelector(
   getData,
   getParcels,
   getDistricts,
-  getPublications,
-  (data, allParcels, districts, allPublications) =>
+  (data, allParcels, districts) =>
     Object.keys(data).reduce((map, address) => {
       const parcelIds = data[address].parcel_ids || []
       const [parcels, parcelsById] = pickAndMap(allParcels, parcelIds)
 
-      const allContributions = (data[address].contributions || []).map(
+      const contributions = (data[address].contributions || []).map(
         contribution => ({
           ...contribution,
           district: districts[contribution.district_id]
         })
       )
-      const contributionIds = allContributions.map(
-        (contribution, index) => index
-      )
-      const [contributions, contributionsById] = pickAndMap(
-        allContributions,
-        contributionIds
-      )
-      const publicationsIds = data[address].publication_ids || []
-      let [publications, publicationsById] = pickAndMap(
-        allPublications,
-        publicationsIds
-      )
 
       // filter only open publications
-      publications = publications.filter(publication => isOpen(publication))
+      const publishedParcels = parcels.filter(parcel =>
+        isOpen(parcel.publication)
+      )
 
       return {
         ...map,
@@ -49,9 +38,7 @@ export const getAddresses = createSelector(
           parcels,
           parcelsById,
           contributions,
-          contributionsById,
-          publications,
-          publicationsById
+          publishedParcels
         }
       }
     }, {})

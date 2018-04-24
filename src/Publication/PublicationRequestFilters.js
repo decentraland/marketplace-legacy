@@ -17,11 +17,11 @@ export class PublicationRequestFilters {
   }
 
   sanitize(req) {
-    let status = server.extractFromReq(this.req, 'status')
-    let by = server.extractFromReq(this.req, 'sort_by')
-    let order = server.extractFromReq(this.req, 'sort_order')
-    let limit = server.extractFromReq(this.req, 'limit')
-    let offset = server.extractFromReq(this.req, 'offset')
+    let status = this.getReqParam('status')
+    let by = this.getReqParam('sort_by')
+    let order = this.getReqParam('sort_order')
+    let limit = this.getReqParam('limit')
+    let offset = this.getReqParam('offset')
 
     status = Publication.isValidStatus(status)
       ? status
@@ -44,5 +44,9 @@ export class PublicationRequestFilters {
         offset
       }
     }
+  }
+
+  getReqParam(name) {
+    return server.extractFromReq(this.req, name)
   }
 }

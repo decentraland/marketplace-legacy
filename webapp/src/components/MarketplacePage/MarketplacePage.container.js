@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { isLoading } from 'modules/publication/selectors'
-import { getPublications, getTotal } from 'modules/ui/marketplace/selectors'
+import { getParcels, getTotal } from 'modules/ui/marketplace/selectors'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
 import { navigateTo } from 'modules/location/actions'
 
@@ -14,7 +14,7 @@ const mapState = (state, { location }) => {
     location
   )
   const page = offset / PAGE_SIZE + 1
-  const publications = getPublications(state)
+  const parcels = getParcels(state)
   const total = getTotal(state)
   return {
     limit,
@@ -25,8 +25,8 @@ const mapState = (state, { location }) => {
     page,
     pages: Math.ceil(total / PAGE_SIZE),
     total,
-    isEmpty: publications.length === 0,
-    publications,
+    isEmpty: parcels.length === 0,
+    parcels,
     isLoading: isLoading(state)
   }
 }

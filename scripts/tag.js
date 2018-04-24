@@ -39,9 +39,9 @@ export function tagParcel(parcel, landmarks) {
 
 export function tagProximity(parcel, landmarks) {
   const proximity = {
-    // plaza: null,
-    // district: null,
-    // road: null
+    // plaza: { district_id, distance },
+    // district: { district_id, distance },
+    // road: { district_id, distance }
   }
 
   for (const landmark of landmarks) {

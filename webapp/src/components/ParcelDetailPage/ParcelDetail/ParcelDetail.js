@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
 import PublicationExpiration from 'components/PublicationExpiration'
+import ParcelTags from 'components/ParcelTags'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
-import ParcelTags from './ParcelTags'
 import { parcelType, districtType, publicationType } from 'components/types'
 import { hasPublication, getDistrict } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
@@ -90,7 +90,18 @@ export default class ParcelDetail extends React.PureComponent {
             </Grid.Row>
           ) : null}
         </Grid>
-        <ParcelTags parcel={parcel} districts={districts} />
+
+        {parcel.tags ? (
+          <Grid stackable className="parcel-detail-row">
+            <Grid.Row>
+              <Grid.Column>
+                <h3>{t('parcel_detail.tags.title')}</h3>
+                <ParcelTags parcel={parcel} showDetails={true} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        ) : null}
+
         <ParcelTransactionHistory parcel={parcel} publications={publications} />
       </div>
     )

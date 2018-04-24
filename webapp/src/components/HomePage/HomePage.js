@@ -1,20 +1,28 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Button, Icon } from 'semantic-ui-react'
-import Publication from 'components/MarketplacePage/Publication'
+
+import { parcelType } from 'components/types'
+import ParcelCard from 'components/ParcelCard'
 import { locations } from 'locations'
 import { t } from 'modules/translation/utils'
 
 import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
+  static propTypes = {
+    parcels: PropTypes.arrayOf(parcelType)
+  }
+
   componentWillMount() {
     const { onFetchPublications } = this.props
     onFetchPublications()
   }
 
   render() {
-    const { publications } = this.props
+    const { parcels } = this.props
+
     return (
       <div className="HomePage">
         <div className="hero-image" />
@@ -39,11 +47,8 @@ export default class HomePage extends React.PureComponent {
             </Link>
           </div>
           <div className="publications-scroller">
-            {publications.map(publication => (
-              <Publication
-                key={publication.tx_hash}
-                publication={publication}
-              />
+            {parcels.map(parcel => (
+              <ParcelCard key={parcel.id} parcel={parcel} />
             ))}
           </div>
         </Container>

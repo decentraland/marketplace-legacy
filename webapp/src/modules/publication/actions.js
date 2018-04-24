@@ -10,14 +10,16 @@ export function fetchPublicationsRequest({
   limit,
   offset,
   sortBy,
-  sortOrder
+  sortOrder,
+  status
 } = {}) {
   return {
     type: FETCH_PUBLICATIONS_REQUEST,
     limit,
     offset,
     sortBy,
-    sortOrder
+    sortOrder,
+    status
   }
 }
 

@@ -36,24 +36,25 @@
   padding: 1em;
 }
 
-.ParcelCard .price {
-  display: flex;
-  margin: 0px;
-  font-weight: 700;
+.ParcelCard .description {
+  font-size: 15px;
+  margin-bottom: 5px;
+  color: var(--text);
 }
 
-.ParcelCard .price .amount {
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 80px;
+.ParcelCard .mana {
+  font-size: 14px;
+  top: 15px;
+  right: 15px;
+  position: absolute;
+  display: inline;
 }
 
 .ParcelCard .footer {
+  margin-top: 20px;
   display: flex;
   flex-direction: row nowrap;
   align-items: center;
-  justify-content: space-between;
 }
 
 .ParcelCard .footer:after {
@@ -61,13 +62,21 @@
 }
 
 .ParcelCard .coords {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  display: inline;
-  color: var(--gray);
+  padding: 2px 9px 2px 7px;
+  margin-right: 6px;
+  font-size: 11px;
+  border: 1px solid var(--gray);
+  color: var(--text);
+  border-radius: 4px;
+}
+
+.ParcelCard .coords .marker.icon {
+  font-size: 12px;
+  margin-right: 3px;
+  line-height: 0.9;
 }
 
 .ParcelCard:hover .coords {
   color: var(--red);
+  border-color: var(--red);
 }

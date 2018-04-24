@@ -27,11 +27,13 @@ export class API {
       ...options
     }
 
-    return this.request(
-      'get',
-      `/parcels?limit=${limit}&offset=${offset}&sort_by=${sortBy}&sort_order=${sortOrder}&status=${status}`,
-      {}
-    )
+    return this.request('get', '/parcels', {
+      limit,
+      offset,
+      sort_by: sortBy,
+      sort_order: sortOrder,
+      status
+    })
   }
 
   fetchParcelPublications(x, y, status) {

@@ -20,11 +20,11 @@ const mapState = (state, { location, match }) => {
 
   let parcels = []
   let contributions = []
-  let publications = []
+  let publishedParcels = []
   if (address in addresses) {
     parcels = addresses[address].parcels
     contributions = addresses[address].contributions
-    publications = addresses[address].publications
+    publishedParcels = addresses[address].publishedParcels
   }
 
   if (!Object.values(PROFILE_PAGE_TABS).includes(tab)) {
@@ -34,7 +34,7 @@ const mapState = (state, { location, match }) => {
   let pagination
   switch (tab) {
     case PROFILE_PAGE_TABS.publications: {
-      pagination = paginate(publications, page)
+      pagination = paginate(publishedParcels, page)
       break
     }
     case PROFILE_PAGE_TABS.contributions: {
@@ -52,7 +52,7 @@ const mapState = (state, { location, match }) => {
     address,
     parcels,
     contributions,
-    publications,
+    publishedParcels,
     grid,
     tab,
     page,
