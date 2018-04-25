@@ -22,10 +22,12 @@ export class API {
   }
 
   fetchParcels(options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder, status } = {
-      ...FILTER_DEFAULTS,
-      ...options
-    }
+    const filterOptions = Object.keys(options).reduce((base, key) => {
+      base[key] = options[key] == null ? FILTER_DEFAULTS[key] : options[key]
+      return base
+    }, {})
+
+    const { limit, offset, sortBy, sortOrder, status } = filterOptions
 
     return this.request('get', '/parcels', {
       limit,
