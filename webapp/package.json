@@ -9,7 +9,7 @@
     "lint": "./node_modules/eslint/bin/eslint.js src/",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix src/",
     "test": "CI=true react-scripts test --env=jsdom",
-    "prebuild": "npm run test",
+    "prebuild": "npm run test && ./node_modules/.bin/babel ./node_modules/decentraland-eth --out-dir ./node_modules/decentraland-eth",
     "build": "REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts build",
     "remotebuild": "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules react-scripts build",
     "eject": "react-scripts eject"
@@ -56,5 +56,8 @@
     "tinycolor2": "^1.4.1",
     "webpack": "^3.10.0",
     "webpack-dotenv-plugin": "^2.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
   }
 }
