@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 import { getParcels } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
-import { getPublications } from 'modules/publication/selectors'
 import { isOpen } from 'modules/publication/utils'
 import { pickAndMap } from './utils'
 

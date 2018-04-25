@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import { txUtils } from 'decentraland-eth'
 
 import { db } from '../database'
+import { ParcelService } from '../Parcel'
 import { Publication } from './Publication'
 import { PublicationService } from './Publication.service'
 import { PublicationRequestFilters } from './PublicationRequestFilters'
@@ -77,6 +78,7 @@ describe('PublicationService', function() {
   const filters = {
     sanitize() {
       return {
+        status: Publication.STATUS.open,
         sort: {
           by: 'price',
           order: 'desc'
@@ -93,6 +95,7 @@ describe('PublicationService', function() {
     it('should filter the publications using the supplied filters', async function() {
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+      const status = Publication.STATUS.open
       const block_number = 1
       const block_time_created_at = null
       const block_time_updated_at = null
@@ -126,6 +129,7 @@ describe('PublicationService', function() {
           expires_at,
           owner,
           tx_status,
+          status,
           block_time_created_at,
           block_time_updated_at,
           block_number
@@ -139,6 +143,7 @@ describe('PublicationService', function() {
           expires_at,
           owner,
           tx_status,
+          status,
           block_time_created_at,
           block_time_updated_at,
           block_number
@@ -152,6 +157,7 @@ describe('PublicationService', function() {
           expires_at,
           owner,
           tx_status,
+          status,
           block_time_created_at,
           block_time_updated_at,
           block_number
@@ -160,6 +166,7 @@ describe('PublicationService', function() {
       const inserts = publicationRows.map(publication =>
         Publication.insert(publication)
       )
+      inserts.push(new ParcelService().insertMatrix(0, 0, 3, 3))
       await Promise.all(inserts)
 
       const { publications, total } = await new PublicationService().filter(
@@ -180,7 +187,18 @@ describe('PublicationService', function() {
           tx_status,
           block_time_created_at,
           block_time_updated_at,
-          block_number
+          block_number,
+          parcel: {
+            x: 1,
+            y: 2,
+            auction_price: null,
+            district_id: null,
+            owner: null,
+            data: null,
+            asset_id: null,
+            auction_owner: null,
+            tags: {}
+          }
         }
       ])
       expect(total).to.be.equal(3)

@@ -15,7 +15,7 @@ export class PublicationService {
 
     const [publications, counts] = await Promise.all([
       this.Publication.query(
-        `SELECT *, row_to_json(par.*) as parcel
+        `SELECT pub.*, row_to_json(par.*) as parcel
           FROM ${Publication.tableName} as pub
           JOIN ${Parcel.tableName} as par ON par.x = pub.x AND par.y = pub.y
           WHERE status = $1

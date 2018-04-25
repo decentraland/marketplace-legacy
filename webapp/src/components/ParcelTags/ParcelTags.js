@@ -71,20 +71,7 @@ export default class ParcelTags extends React.PureComponent {
     if (!proximity) {
       return null
     }
-    // const proximity = {
-    //   district: {
-    //     district_id: '2f6bd57f-a78d-49fe-8378-afed2908e9da',
-    //     distance: 3
-    //   },
-    //   plaza: {
-    //     district_id: '55327350-d9f0-4cae-b0f3-8745a0431099',
-    //     distance: 8
-    //   },
-    //   road: {
-    //     district_id: 'f77140f9-c7b4-4787-89c9-9fa0e219b079',
-    //     distance: 1
-    //   }
-    // }
+
     return (
       <div className="ParcelTags">
         {Object.values(proximity).map(this.renderProximityTag)}
