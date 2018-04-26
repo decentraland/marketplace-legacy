@@ -94,7 +94,10 @@ export default class ParcelTransactionHistory extends React.PureComponent {
                   <Grid.Column>
                     <BlockDate
                       blockNumber={publication.block_number}
-                      blockTime={publication.block_time_created_at}
+                      blockTime={
+                        publication.block_time_updated_at ||
+                        publication.block_time_created_at
+                      }
                     />
                   </Grid.Column>
                   <Responsive
@@ -117,7 +120,9 @@ export default class ParcelTransactionHistory extends React.PureComponent {
                   <Grid.Column>
                     <Mana amount={parcel.auction_price} />
                   </Grid.Column>
-                  <Grid.Column>{distanceInWordsToNow(AUCTION_DATE)}</Grid.Column>
+                  <Grid.Column>
+                    {distanceInWordsToNow(AUCTION_DATE)}
+                  </Grid.Column>
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
