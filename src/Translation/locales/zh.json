@@ -95,12 +95,7 @@
       "no_owner": "没有所有者"
     },
     "tags": {
-      "title": "强调",
-      "road": "路",
-      "plaza": "广场",
-      "district": "小区",
-      "adjacent": "邻",
-      "proximity": "{distance}包裹离开"
+      "title": "强调"
     },
     "history": {
       "title": "交易历史",
@@ -112,6 +107,13 @@
       "sold": "文塔",
       "auction": "拍卖"
     }
+  },
+  "parcel_tags": {
+    "road": "路",
+    "plaza": "广场",
+    "district": "小区",
+    "adjacent": "邻",
+    "proximity": "{distance}包裹离开"
   },
   "parcel_edit": {
     "edit_land": "编辑土地",

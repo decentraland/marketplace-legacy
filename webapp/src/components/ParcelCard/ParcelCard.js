@@ -9,6 +9,7 @@ import ParcelPreview from 'components/ParcelPreview'
 import PublicationExpiration from 'components/PublicationExpiration'
 import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
+import { AUCTION_DATE } from 'lib/parcelUtils'
 import { formatDate, buildCoordinate } from 'lib/utils'
 
 import './ParcelCard.css'
@@ -27,8 +28,6 @@ export default class ParcelCard extends React.PureComponent {
     const { parcel, debounce } = this.props
     const { x, y, publication } = parcel
 
-    // TODO: Owned parcel not for sale => Bought on (...)
-
     return (
       <Card className="ParcelCard">
         <Link to={locations.parcelDetail(x, y)}>
@@ -46,7 +45,15 @@ export default class ParcelCard extends React.PureComponent {
                   <Mana amount={parseFloat(publication.price, 10)} />
                 </div>
               </React.Fragment>
-            ) : null}
+            ) : (
+              <Card.Meta>
+                Acquired at&nbsp;
+                {formatDate(
+                  parcel.last_transfered_at || AUCTION_DATE,
+                  'MMMM Do, YYYY'
+                )}
+              </Card.Meta>
+            )}
             <div className="footer">
               <div className="coords">
                 <Icon name="marker" />

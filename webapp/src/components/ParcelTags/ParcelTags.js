@@ -55,11 +55,11 @@ export default class ParcelTags extends React.PureComponent {
   renderTagDetails(name, distance) {
     return (
       <div className="tag-details">
-        <h4>{t(`parcel_detail.tags.${name}`)}</h4>
+        <h4>{t(`parcel_tags.${name}`)}</h4>
         <p>
           {distance === 0
-            ? t('parcel_detail.tags.adjacent')
-            : t('parcel_detail.tags.proximity', { distance })}
+            ? t('parcel_tags.adjacent')
+            : t('parcel_tags.proximity', { distance })}
         </p>
       </div>
     )

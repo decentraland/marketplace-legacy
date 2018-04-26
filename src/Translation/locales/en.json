@@ -95,12 +95,7 @@
       "no_owner": "No Owner"
     },
     "tags": {
-      "title": "Highlights",
-      "road": "Road",
-      "plaza": "Plaza",
-      "district": "District",
-      "adjacent": "Adjacent",
-      "proximity": "{distance} {distance, plural, one {parcel} other {parcels}} away"
+      "title": "Highlights"
     },
     "history": {
       "title": "Transaction History",
@@ -112,6 +107,15 @@
       "sold": "Sold",
       "auction": "Auction"
     }
+  },
+  "parcel_tags": {
+    "title": "Highlights",
+    "road": "Road",
+    "plaza": "Plaza",
+    "district": "District",
+    "adjacent": "Adjacent",
+    "proximity":
+      "{distance} {distance, plural, one {parcel} other {parcels}} away"
   },
   "parcel_edit": {
     "edit_land": "Edit LAND",
