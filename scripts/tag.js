@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { Log, env } from 'decentraland-commons'
+import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
@@ -31,7 +31,7 @@ export async function tagParcels() {
 
 export function tagParcel(parcel, landmarks) {
   const tags = {
-    proximity: tagProximity(parcel, landmarks)
+    ...tagProximity(parcel, landmarks)
   }
 
   return Parcel.update({ tags: JSON.stringify(tags) }, { id: parcel.get('id') })
@@ -62,7 +62,7 @@ export function tagProximity(parcel, landmarks) {
     }
   }
 
-  return Object.keys(proximity).length ? proximity : null
+  return utils.isEmptyObject(proximity) ? null : { proximity }
 }
 
 function toParcelInstance(attributes) {
