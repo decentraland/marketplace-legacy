@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { utils } from 'decentraland-commons'
 import { parcelType, districtType } from 'components/types'
 import { getDistrict, isDistrict } from 'lib/parcelUtils'
-import isEmpty from 'lodash/isEmpty'
 import AddressBlock from 'components/AddressBlock'
 import { t, t_html } from 'modules/translation/utils'
 
@@ -16,7 +16,7 @@ export default class ParcelOwner extends React.PureComponent {
 
   render() {
     const { districts, parcel } = this.props
-    if (!parcel || isEmpty(districts)) {
+    if (!parcel || utils.isEmpty(districts)) {
       return null
     }
     if (isDistrict(parcel)) {
