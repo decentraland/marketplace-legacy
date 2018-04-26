@@ -1,19 +1,16 @@
 #!/usr/bin/env babel-node
 
-import { eth, contracts } from 'decentraland-commons'
+import { eth, contracts } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 
+let BATCH_SIZE
 const log = new Log('update')
 
-const BATCH_SIZE = parseInt(env.get('RENEW_BATCH_SIZE', 1000), 10)
-
 export async function renewBlockchainData() {
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
-
   log.info('Connecting database')
   await db.connect()
 
@@ -62,6 +59,8 @@ export async function updateParcelsData(parcels) {
 
 if (require.main === module) {
   loadEnv()
+  const BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
+  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()
     .then(renewBlockchainData)
