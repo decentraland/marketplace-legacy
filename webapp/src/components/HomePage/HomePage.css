@@ -80,6 +80,7 @@
   flex: none;
   width: 224px !important;
   margin-right: 25px;
+  overflow: initial;
 }
 
 @media (max-width: 600px) {

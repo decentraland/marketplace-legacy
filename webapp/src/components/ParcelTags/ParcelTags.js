@@ -72,9 +72,11 @@ export default class ParcelTags extends React.PureComponent {
       return null
     }
 
+    const proximityTagKeys = Object.keys(proximity).sort()
+
     return (
       <div className="ParcelTags">
-        {Object.values(proximity).map(this.renderProximityTag)}
+        {proximityTagKeys.map(key => this.renderProximityTag(proximity[key]))}
       </div>
     )
   }
