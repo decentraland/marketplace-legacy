@@ -193,6 +193,7 @@ describe('PublicationService', function() {
             y: 2,
             auction_price: null,
             district_id: null,
+            last_transferred_at: null,
             owner: null,
             data: null,
             asset_id: null,
