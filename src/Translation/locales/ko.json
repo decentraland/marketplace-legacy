@@ -60,6 +60,7 @@
     "on_sale": "판매 중"
   },
   "publication": {
+    "acquired_at": "{date}에 인수 됨",
     "expired_at": "{time} 전 만료 됨",
     "expires_in": "{time}에 만료 됨",
     "expires_in_more_than_years": "{years} 년 만료 됨",

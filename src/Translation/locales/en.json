@@ -60,6 +60,7 @@
     "on_sale": "On Sale"
   },
   "publication": {
+    "acquired_at": "Acquired at {date}",
     "expired_at": "Expired {time}",
     "expires_in": "Expires {time}",
     "expires_in_more_than_years": "Expires in over {years} years",

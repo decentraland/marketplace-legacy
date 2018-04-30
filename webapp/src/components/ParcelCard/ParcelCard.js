@@ -11,6 +11,7 @@ import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
 import { AUCTION_DATE } from 'lib/parcelUtils'
 import { isOpen } from 'modules/publication/utils'
+import { t } from 'modules/translation/utils'
 import { formatDate, buildCoordinate } from 'lib/utils'
 
 import './ParcelCard.css'
@@ -48,11 +49,12 @@ export default class ParcelCard extends React.PureComponent {
               </React.Fragment>
             ) : (
               <Card.Meta>
-                Acquired at&nbsp;
-                {formatDate(
-                  parcel.last_transfered_at || AUCTION_DATE,
-                  'MMMM Do, YYYY'
-                )}
+                {t('publication.acquired_at', {
+                  date: formatDate(
+                    parcel.last_transfered_at || AUCTION_DATE,
+                    'MMMM Do, YYYY'
+                  )
+                })}
               </Card.Meta>
             )}
             <div className="footer">

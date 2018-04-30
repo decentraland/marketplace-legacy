@@ -60,6 +60,7 @@
     "on_sale": "出售"
   },
   "publication": {
+    "acquired_at": "在{date}收购",
     "expired_at": "已于{time}前过期",
     "expires_in": "将于{time}后到期",
     "expires_in_more_than_years": "超过{years}年",

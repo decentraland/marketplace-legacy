@@ -61,6 +61,7 @@
     "on_sale": "A vendre"
   },
   "publication": {
+    "acquired_at": "Acquis à {date}",
     "expired_at": "A expiré {time}",
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de 10 ans",
