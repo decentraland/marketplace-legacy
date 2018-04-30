@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { parcelType } from 'components/types'
+import { parcelType, coordsType } from 'components/types'
 import debounce from 'lodash.debounce'
 import { buildCoordinate } from 'lib/utils'
 import { COLORS, getParcelAttributes, inBounds } from 'lib/parcelUtils'
 import { Parcel, Selection } from 'lib/render'
 import { panzoom } from './utils'
+
+const PADDING = 4
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
@@ -16,6 +18,10 @@ export default class ParcelPreview extends React.PureComponent {
     width: PropTypes.number,
     height: PropTypes.number,
     parcels: PropTypes.objectOf(parcelType),
+    zoom: PropTypes.number,
+    minSize: PropTypes.number,
+    maxSize: PropTypes.number,
+    selected: PropTypes.oneOfType([PropTypes.arrayOf(coordsType), coordsType]),
     debounce: PropTypes.number
   }
 
@@ -26,17 +32,25 @@ export default class ParcelPreview extends React.PureComponent {
     padding: 2,
     width: 100,
     height: 100,
-    debounce: 400,
     zoom: 1,
     minSize: 5,
     maxSize: 40,
-    onFetchParcels: () => {}
+    selected: null,
+    onFetchParcels: () => {},
+    onClick: () => {},
+    onHover: () => {},
+    debounce: 400
   }
 
   constructor(props) {
     super(props)
-    const { x, y, zoom } = props
-    const initialState = { pan: { x: 0, y: 0 }, center: { x, y }, zoom }
+    const { x, y, size, zoom } = props
+    const initialState = {
+      pan: { x: 0, y: 0 },
+      center: { x, y },
+      size: zoom * size,
+      zoom
+    }
     this.state = this.getDimensions(props, initialState)
     this.oldState = this.state
     this.shouldRefreshMap = false
@@ -47,33 +61,20 @@ export default class ParcelPreview extends React.PureComponent {
     this.cache = {}
   }
 
-  getDimensions({ width, height, size, x, y }, { pan, zoom, center }) {
-    const zoomedSize = size * zoom
+  getDimensions({ width, height }, { pan, zoom, center, size }) {
     const dimensions = {
-      width: Math.ceil(width / zoomedSize + 2),
-      height: Math.ceil(height / zoomedSize + 2)
+      width: Math.ceil(width / size + PADDING),
+      height: Math.ceil(height / size + PADDING)
     }
     dimensions.nw = {
-      x:
-        center.x -
-        Math.ceil(dimensions.width / 2) +
-        Math.ceil(pan.x / zoomedSize),
-      y:
-        center.y -
-        Math.ceil(dimensions.height / 2) -
-        Math.ceil(pan.y / zoomedSize)
+      x: center.x - Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
+      y: center.y - Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
     }
     dimensions.se = {
-      x:
-        center.x +
-        Math.ceil(dimensions.width / 2) +
-        Math.ceil(pan.x / zoomedSize),
-      y:
-        center.y +
-        Math.ceil(dimensions.height / 2) -
-        Math.ceil(pan.y / zoomedSize)
+      x: center.x + Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
+      y: center.y + Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
     }
-    return { ...dimensions, pan, zoom, center }
+    return { ...dimensions, pan, zoom, center, size }
   }
 
   clearCache() {
@@ -151,6 +152,8 @@ export default class ParcelPreview extends React.PureComponent {
   componentDidMount() {
     this.renderMap()
     this.destroy = panzoom(this.canvas, this.handlePanZoom)
+    this.canvas.addEventListener('click', this.handleClick)
+    this.canvas.addEventListener('mousemove', this.handleMouseMove)
   }
 
   componentWillUnmount() {
@@ -164,32 +167,55 @@ export default class ParcelPreview extends React.PureComponent {
     const { pan, zoom } = this.state
     const maxZoom = maxSize / size
     const minZoom = minSize / size
-    let newZoom = zoom - dz * 0.01
+
+    const newPan = {
+      x: pan.x - dx,
+      y: pan.y - dy
+    }
+    const newZoom = Math.max(minZoom, Math.min(maxZoom, zoom - dz * 0.01))
+    const newSize = newZoom * size
+
     this.setState({
-      pan: {
-        x: pan.x - dx,
-        y: pan.y - dy
-      },
-      zoom: Math.max(minZoom, Math.min(maxZoom, newZoom))
+      pan: newPan,
+      zoom: newZoom,
+      size: newSize
     })
     this.renderMap()
     this.debouncedUpdateCenter()
   }
 
-  updateCenter = () => {
-    const { size } = this.props
-    const { pan, zoom, center } = this.state
-    const zoomedSize = size * zoom
+  mouseToCoords(x, y) {
+    const { nw, size, pan } = this.state
+    const half = PADDING / 2
+    const coordX = Math.ceil(half + nw.x + (x - pan.x) / size)
+    const coordY = Math.ceil(half + nw.y + (y - pan.y) / size)
+    return [coordX, coordY]
+  }
 
-    const panX = pan.x % zoomedSize
-    const panY = pan.y % zoomedSize
+  handleClick = event => {
+    console.log('click', this.mouseToCoords(event.layerX, event.layerY))
+  }
+
+  handleMouseMove = event => {
+    const [x, y] = this.mouseToCoords(event.layerX, event.layerY)
+    if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
+      this.hovered = { x, y }
+      console.log('hover', x, y)
+    }
+  }
+
+  updateCenter = () => {
+    const { pan, center, size } = this.state
+
+    const panX = pan.x % size
+    const panY = pan.y % size
     const newPan = {
       x: panX,
       y: panY
     }
     const newCenter = {
-      x: center.x + Math.floor((pan.x - panX) / zoomedSize),
-      y: center.y - Math.floor((pan.y - panY) / zoomedSize)
+      x: center.x + Math.floor((pan.x - panX) / size),
+      y: center.y - Math.floor((pan.y - panY) / size)
     }
 
     this.setState({
@@ -203,13 +229,18 @@ export default class ParcelPreview extends React.PureComponent {
       return '🦄'
     }
     const { width, height, padding, wallet, districts, parcels } = this.props
-    const { nw, se, pan, zoom, center } = this.state
+    let { selected } = this.props
+    const { nw, se, pan, size, center } = this.state
     const { x, y } = center
-    const size = this.props.size * zoom
     const ctx = this.canvas.getContext('2d')
     ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, width, height)
-    let selection = null
+
+    let selection = []
+    if (selected && !Array.isArray(selected)) {
+      selected = [selected]
+    }
+
     for (let px = nw.x; px < se.x; px++) {
       for (let py = nw.y; py < se.y; py++) {
         const cx = width / 2
@@ -231,10 +262,14 @@ export default class ParcelPreview extends React.PureComponent {
               parcels,
               districts
             ))
-        const isCenter = px === this.props.x && py === this.props.y
-        if (isCenter) {
-          selection = { x: rx, y: ry }
+
+        if (
+          selected &&
+          selected.some(coords => coords.x === px && coords.y === py)
+        ) {
+          selection.push({ x: rx, y: ry })
         }
+
         Parcel.draw({
           ctx,
           x: rx + size / 2,
@@ -248,11 +283,10 @@ export default class ParcelPreview extends React.PureComponent {
         })
       }
     }
-    if (selection) {
+    if (selection.length > 0) {
       Selection.draw({
         ctx,
-        x: selection.x,
-        y: selection.y,
+        selection,
         size: size
       })
     }

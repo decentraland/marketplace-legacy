@@ -1,0 +1,99 @@
+.leaflet-popup {
+  z-index: 800;
+  user-select: none;
+}
+
+.leaflet-popup a.leaflet-popup-close-button {
+  display: none;
+}
+
+.leaflet-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.leaflet-popup .leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  box-shadow: none;
+}
+
+.leaflet-popup .leaflet-popup-tip-container {
+  display: none;
+}
+
+.parcel-popup {
+  font-size: 14px;
+  color: #fff;
+  user-select: none;
+}
+
+.parcel-popup .header {
+  padding: 8px 8px;
+  text-align: center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: #fff;
+}
+
+.parcel-popup .header span {
+  opacity: 0.9;
+}
+
+.parcel-popup .header.genesis,
+.parcel-popup .header.roads {
+  color: #666;
+}
+
+.parcel-popup .body {
+  padding: 16px;
+}
+
+.parcel-popup .body .coordinates {
+  text-align: center;
+}
+
+.parcel-popup .header:first-letter,
+.parcel-popup .current-bid-status:first-letter {
+  text-transform: capitalize;
+}
+
+.parcel-popup .body a {
+  color: var(--primary);
+}
+
+.parcel-popup .body a:hover {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.parcel-popup .description {
+  color: #b2b2b2;
+}
+
+.parcel-popup .publication {
+  color: white;
+  display: flex;
+}
+
+.parcel-popup .publication .Mana {
+  margin-left: 10px;
+}
+
+.parcel-popup .body > div {
+  margin-bottom: 8px;
+}
+.parcel-popup .body > div:last-child {
+  margin-bottom: 0;
+}
+
+.text.description {
+  color: var(--light-gray);
+}
+
+.parcel-popup .on-sale {
+  font-weight: bold;
+  color: white;
+}
