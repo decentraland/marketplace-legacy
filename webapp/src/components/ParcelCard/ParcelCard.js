@@ -10,6 +10,7 @@ import PublicationExpiration from 'components/PublicationExpiration'
 import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
 import { AUCTION_DATE } from 'lib/parcelUtils'
+import { isOpen } from 'modules/publication/utils'
 import { formatDate, buildCoordinate } from 'lib/utils'
 
 import './ParcelCard.css'
@@ -21,7 +22,7 @@ export default class ParcelCard extends React.PureComponent {
   }
 
   getParcelName() {
-    return this.props.parcel.name || 'Parcel'
+    return this.props.parcel.data.name || 'Parcel'
   }
 
   render() {
@@ -36,7 +37,7 @@ export default class ParcelCard extends React.PureComponent {
           </div>
           <Card.Content className="body">
             <Card.Description>{this.getParcelName()}</Card.Description>
-            {publication ? (
+            {isOpen(publication) ? (
               <React.Fragment>
                 <Card.Meta title={formatDate(publication.expires_at)}>
                   <PublicationExpiration publication={publication} />
