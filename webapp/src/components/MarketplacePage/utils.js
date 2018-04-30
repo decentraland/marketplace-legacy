@@ -1,9 +1,7 @@
-import queryString from 'query-string'
 import { locations } from 'locations'
+import { Location } from 'lib/Location'
 import { t } from 'modules/translation/utils'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
-export const PAGE_SIZE = 12
 let SORT_TYPES = null // filled upon the first call to getSortTypes
 
 export function getSortTypes() {
@@ -22,31 +20,6 @@ export function getSortOptions() {
     text: type,
     value: type
   }))
-}
-
-export function buildUrl({ page, sortBy, sortOrder }) {
-  return `${locations.marketplace}?${queryString.stringify({
-    page,
-    sort_by: sortBy,
-    sort_order: sortOrder
-  })}`
-}
-
-export function getPageFromRouter({ search }) {
-  const query = queryString.parse(search)
-  return +query.page || 1
-}
-
-export function getOptionsFromRouter({ search }) {
-  const query = queryString.parse(search)
-  return {
-    limit: PAGE_SIZE,
-    offset:
-      !isNaN(query.page) && query.page > 0 ? (query.page - 1) * PAGE_SIZE : 0,
-    sortBy: query.sort_by ? query.sort_by : 'created_at',
-    sortOrder: query.sort_order ? query.sort_order : 'desc',
-    status: PUBLICATION_STATUS.open
-  }
 }
 
 export function getOptionsFromSortType(type) {
@@ -86,4 +59,21 @@ export function getSortTypeFromOptions({ sortBy, sortOrder }) {
     const sortTypes = getSortTypes()
     return sortTypes.NEWEST
   }
+}
+
+export function getOptionsFromRouter(location) {
+  return new Location(location).getOptionsFromRouter([
+    'limit',
+    'offset',
+    'sortBy',
+    'sortOrder'
+  ])
+}
+
+export function buildUrl({ page, sortBy, sortOrder }) {
+  return Location.buildUrl(locations.marketplace, {
+    page,
+    sort_by: sortBy,
+    sort_order: sortOrder
+  })
 }

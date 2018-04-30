@@ -4,8 +4,9 @@ import { isLoading } from 'modules/publication/selectors'
 import { getParcels, getTotal } from 'modules/ui/marketplace/selectors'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
 import { navigateTo } from 'modules/location/actions'
+import { Pagination } from 'lib/Pagination'
 
-import { getOptionsFromRouter, PAGE_SIZE } from './utils'
+import { getOptionsFromRouter } from './utils'
 
 import MarketplacePage from './MarketplacePage'
 
@@ -13,9 +14,12 @@ const mapState = (state, { location }) => {
   const { limit, offset, sortBy, sortOrder, status } = getOptionsFromRouter(
     location
   )
-  const page = offset / PAGE_SIZE + 1
   const parcels = getParcels(state)
   const total = getTotal(state)
+  const pagination = new Pagination(total)
+  const page = pagination.getCurrentPage(offset)
+  const pages = pagination.getPageCount()
+
   return {
     limit,
     offset,
@@ -23,10 +27,10 @@ const mapState = (state, { location }) => {
     sortOrder,
     status,
     page,
-    pages: Math.ceil(total / PAGE_SIZE),
+    pages,
     total,
-    isEmpty: parcels.length === 0,
     parcels,
+    isEmpty: parcels.length === 0,
     isLoading: isLoading(state)
   }
 }

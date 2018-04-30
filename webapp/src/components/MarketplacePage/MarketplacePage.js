@@ -157,7 +157,7 @@ export default class MarketplacePage extends React.PureComponent {
           {isLoading ? this.renderLoading() : null}
         </Container>
         <Container textAlign="center" className="pagination">
-          {isEmpty || pages <= 1 ? null : (
+          {!isEmpty && pages > 1 ? (
             <Pagination
               activePage={page}
               firstItem={null}
@@ -167,7 +167,7 @@ export default class MarketplacePage extends React.PureComponent {
               totalPages={pages}
               onPageChange={this.handlePageChange}
             />
-          )}
+          ): null}
         </Container>
       </div>
     )
