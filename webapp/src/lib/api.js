@@ -42,7 +42,7 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}/publications`, { status })
   }
 
-  fetchAddressParcels(address, status = '') {
+  fetchAddressParcels(address, status) {
     return this.request('get', `/addresses/${address}/parcels`, { status })
   }
 
