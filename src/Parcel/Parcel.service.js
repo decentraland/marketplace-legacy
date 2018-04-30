@@ -121,10 +121,13 @@ export class ParcelService {
     let newParcels = []
 
     try {
-      const assetIdFetches = parcels.map(async parcel => ({
-        ...parcel,
-        asset_id: this.getAssetId(parcel).toString()
-      }))
+      const assetIdFetches = parcels.map(async parcel => {
+        const assetId = await this.getAssetId(parcel)
+        return {
+          ...parcel,
+          asset_id: assetId.toString()
+        }
+      })
 
       newParcels = await Promise.all(assetIdFetches)
     } catch (error) {

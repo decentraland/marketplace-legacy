@@ -59,7 +59,7 @@ export async function updateParcelsData(parcels) {
 
 if (require.main === module) {
   loadEnv()
-  const BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()
