@@ -1,0 +1,12 @@
+.DashboardPage .empty {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  color: var(--gray);
+  font-size: 16px;
+}
+
+.DashboardPage .dimmer {
+  background-color: var(--background) !important;
+  opacity: 0.8 !important;
+}

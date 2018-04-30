@@ -15,22 +15,22 @@ export class DashboardService {
       landOwnersCount,
       activeUsersCount,
       totalLandTraded,
-      totalLandOnSale,
-      latestSaleTransactions
+      totalLandOnSale
+      // ,latestSaleTransactions
     ] = await Promise.all([
       this.countLandOwners(),
       this.countActiveUsers(),
       this.countTotalLandTraded(),
-      this.countTotalLandOnSale(),
-      this.findLatestSaleTransactions()
+      this.countTotalLandOnSale()
+      // this.findLatestSaleTransactions()
     ])
 
     return {
       landOwnersCount,
       activeUsersCount,
       totalLandTraded,
-      totalLandOnSale,
-      latestSaleTransactions
+      totalLandOnSale
+      // ,latestSaleTransactions
     }
   }
 

@@ -11,6 +11,8 @@ export const locations = {
 
   marketplace: '/marketplace',
 
+  dashboard: '/dashboard',
+
   sell: '/:x/:y/sell',
   sellLand: (x, y) => `/${x}/${y}/sell`,
 

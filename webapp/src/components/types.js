@@ -93,3 +93,12 @@ export const toastType = shape({
   message: string,
   delay: number
 })
+
+export const dashboardType = shape({
+  stats: shape({
+    landOwnersCount: number,
+    activeUsersCount: number,
+    totalLandTraded: number,
+    totalLandOnSale: number
+  })
+})
