@@ -94,10 +94,11 @@ export class Parcel extends Model {
   static async inRange(min, max) {
     const [minx, miny] = coordinates.toArray(min)
     const [maxx, maxy] = coordinates.toArray(max)
+    const status = Publication.STATUS.open
 
     return await this.db.query(
       `SELECT ${this.tableName}.*, (
-        ${Publication.findLastParcelPublicationJsonSql()}
+        ${Publication.findLastParcelPublicationJsonSql(status)}
       ) as publication
         FROM ${this.tableName}
         WHERE x >= $1 AND y >= $2
