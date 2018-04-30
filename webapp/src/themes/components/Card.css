@@ -5,6 +5,6 @@
   box-shadow: none !important;
 }
 
-.ui.card .meta {
-  color: var(--gray) !important;
+.ui.card .meta, .ui.cards>.card .meta {
+  color: var(--gray);
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Container, Card, Loader } from 'semantic-ui-react'
+import { Container, Grid, Card, Loader } from 'semantic-ui-react'
 
 import { dashboardStatsType, publicationType } from 'components/types'
 import { t } from 'modules/translation/utils'
@@ -40,11 +40,15 @@ export default class DashboardPage extends React.PureComponent {
 
   renderStats() {
     const { stats } = this.props
+
+    if (!stats) return null
+
     return (
-      <Card.Group stackable={true}>
-        <div>
-          <pre>{JSON.stringify(stats)}</pre>
-        </div>
+      <Card.Group className="DashboardStats" stackable={true} itemsPerRow={4}>
+        <Card meta="LAND owners" description={stats.landOwnersCount} />
+        <Card meta="Active users" description={stats.activeUsersCount} />
+        <Card meta="LAND traded" description={stats.totalLandTraded} />
+        <Card meta="LAND on sale" description={stats.totalLandOnSale} />
       </Card.Group>
     )
   }
@@ -66,10 +70,41 @@ export default class DashboardPage extends React.PureComponent {
     return (
       <div className="DashboardPage">
         <Container>
-          {isLoading ? this.renderLoading() : this.renderStats()}
-          {isPublicationsLoading
-            ? this.renderLoading()
-            : this.renderPublications()}
+          {isLoading && isPublicationsLoading ? (
+            this.renderLoading()
+          ) : (
+            <React.Fragment>
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column>
+                    <h3>Some numbers</h3>
+                  </Grid.Column>
+                </Grid.Row>
+
+                <Grid.Row>
+                  <Grid.Column>
+                    {isLoading ? this.renderLoading() : this.renderStats()}
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column>
+                    <h3>Latest Transactions</h3>
+                  </Grid.Column>
+                </Grid.Row>
+
+                <Grid.Row>
+                  <Grid.Column>
+                    {isPublicationsLoading
+                      ? this.renderLoading()
+                      : this.renderPublications()}
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </React.Fragment>
+          )}
         </Container>
       </div>
     )
