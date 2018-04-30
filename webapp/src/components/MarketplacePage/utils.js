@@ -66,7 +66,8 @@ export function getOptionsFromRouter(location) {
     'limit',
     'offset',
     'sortBy',
-    'sortOrder'
+    'sortOrder',
+    'status'
   ])
 }
 

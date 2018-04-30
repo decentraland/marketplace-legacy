@@ -41,8 +41,10 @@ export function* publicationSaga() {
 
 function* handlePublicationsRequest(action) {
   try {
-    const { publications, total } = yield call(() => fetchPublications(action))
-    yield put(fetchPublicationsSuccess(publications, total))
+    const { parcels, publications, total } = yield call(() =>
+      fetchPublications(action)
+    )
+    yield put(fetchPublicationsSuccess(parcels, publications, total))
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
   }
@@ -50,8 +52,10 @@ function* handlePublicationsRequest(action) {
 
 function* handleDashboardPublicationsRequest(action) {
   try {
-    const { publications, total } = yield call(() => fetchPublications(action))
-    yield put(fetchDashboardPublicationsSuccess(publications, total))
+    const { parcels, publications, total } = yield call(() =>
+      fetchPublications(action)
+    )
+    yield put(fetchDashboardPublicationsSuccess(parcels, publications, total))
   } catch (error) {
     yield put(fetchDashboardPublicationsFailure(error.message))
   }
@@ -136,5 +140,5 @@ function* fetchPublications(action) {
     api.fetchParcels({ limit, offset, sortBy, sortOrder, status })
   )
   const publications = parcels.map(parcel => parcel.publication)
-  return { publications, total }
+  return { parcels, publications, total }
 }
