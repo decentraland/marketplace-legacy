@@ -59,7 +59,7 @@ describe('Parcel', function() {
         owner: '0xdeadbeef33',
         buyer: null,
         price: 1500,
-        expires_at: null,
+        expires_at: new Date().getTime() * 1000,
         contract_id: '0xdeadbeef',
         block_time_created_at: null,
         block_time_updated_at: null,
