@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect'
-import { getPublications as getAllPublications } from 'modules/publication/selectors'
+import { getParcels as getAllParcels } from 'modules/parcels/selectors'
 
 export const getState = state => state.ui.marketplace
 export const getGrid = state => getState(state).grid
-export const getPublications = createSelector(
+export const getParcels = createSelector(
   getGrid,
-  getAllPublications,
-  (grid, publications) => grid.map(tx_hash => publications[tx_hash])
+  getAllParcels,
+  (grid, parcels) => grid.map(id => parcels[id])
 )
 export const getTotal = state => getState(state).total

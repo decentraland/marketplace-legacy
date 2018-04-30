@@ -15,10 +15,11 @@ export const FETCH_ADDRESS_PARCELS_REQUEST = '[Request] Fetch Address Parcels'
 export const FETCH_ADDRESS_PARCELS_SUCCESS = '[Success] Fetch Address Parcels'
 export const FETCH_ADDRESS_PARCELS_FAILURE = '[Failure] Fetch Address Parcels'
 
-export function fetchAddressParcelsRequest(address) {
+export function fetchAddressParcelsRequest(address, status) {
   return {
     type: FETCH_ADDRESS_PARCELS_REQUEST,
-    address
+    address,
+    status
   }
 }
 
@@ -86,10 +87,15 @@ export function fetchAddressPublicationsRequest(address) {
   }
 }
 
-export function fetchAddressPublicationsSuccess(address, publications) {
+export function fetchAddressPublicationsSuccess(
+  address,
+  parcels,
+  publications
+) {
   return {
     type: FETCH_ADDRESS_PUBLICATIONS_SUCCESS,
     address,
+    parcels,
     publications
   }
 }

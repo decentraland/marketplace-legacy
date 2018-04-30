@@ -60,6 +60,7 @@
     "on_sale": "En Venta"
   },
   "publication": {
+    "acquired_at": "Adquirida en {date}",
     "expired_at": "Expiró {time}",
     "expires_in": "Expira {time}",
     "expires_in_more_than_years": "Expira en más de {years} años",
@@ -95,13 +96,7 @@
       "no_owner": "Sin Dueño"
     },
     "tags": {
-      "title": "Contexto",
-      "road": "Camino",
-      "plaza": "Plaza",
-      "district": "Distrito",
-      "adjacent": "Adyacente",
-      "proximity":
-        "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia"
+      "title": "Contexto"
     },
     "history": {
       "title": "Historial de Transacciones",
@@ -113,6 +108,14 @@
       "sold": "Venta",
       "auction": "Subasta"
     }
+  },
+  "parcel_tags": {
+    "road": "Camino",
+    "plaza": "Plaza",
+    "district": "Distrito",
+    "adjacent": "Adyacente",
+    "proximity":
+      "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia"
   },
   "parcel_edit": {
     "edit_land": "Editar LAND",

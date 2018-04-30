@@ -8,6 +8,7 @@ import { getError, isLoading } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getPublications as getParcelPublications } from 'modules/publication/selectors'
 import { fetchParcelPublicationsRequest } from 'modules/publication/actions'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
@@ -24,7 +25,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = dispatch => ({
   onFetchParcelPublications: (x, y) =>
-    dispatch(fetchParcelPublicationsRequest(x, y)),
+    dispatch(fetchParcelPublicationsRequest(x, y, PUBLICATION_STATUS.open)),
   onError: error => dispatch(navigateTo(locations.root)),
   onBuy: parcel => dispatch(navigateTo(locations.buyLand(parcel.x, parcel.y)))
 })

@@ -70,7 +70,9 @@ export function formatMana(amount, unit = 'MANA') {
 }
 
 export function formatDate(date, format = 'MMMM Do, YYYY - hh:MMa') {
-  return dateFnsFormat(date, format)
+  return dateFnsFormat(date, format, {
+    locale: getCurrentLocale()
+  })
 }
 
 export function distanceInWordsToNow(date) {

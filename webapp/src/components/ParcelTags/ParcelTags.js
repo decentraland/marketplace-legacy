@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Grid } from 'semantic-ui-react'
 import { parcelType, districtType } from 'components/types'
-import Icon from 'components/Icon'
 import { getDistrict, isRoad, isPlaza } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
 
@@ -12,7 +10,15 @@ import './ParcelTags.css'
 export default class ParcelTags extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
-    districts: PropTypes.objectOf(districtType)
+    districts: PropTypes.objectOf(districtType),
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    showDetails: PropTypes.bool
+  }
+
+  static defaultProps = {
+    districts: {},
+    size: 'medium',
+    showDetails: false
   }
 
   getDistrictName(district_id) {
@@ -20,7 +26,8 @@ export default class ParcelTags extends React.PureComponent {
     return district ? district.name : null
   }
 
-  renderProximityTag = (tag, index) => {
+  renderProximityTag = (tag, key) => {
+    const { size, showDetails } = this.props
     let name = null
     let districtName = null
 
@@ -34,23 +41,26 @@ export default class ParcelTags extends React.PureComponent {
     }
 
     return (
-      <div className="tag" key={index}>
+      <div className={`tag ${size}`} key={key}>
         <div
           className={`tag-icon tag-icon-${name}`}
           data-balloon-pos="up"
           data-balloon={districtName}
-        >
-          <Icon name={`${name}-icon`} />
-        </div>
+        />
+        {showDetails ? this.renderTagDetails(name, tag.distance) : null}
+      </div>
+    )
+  }
 
-        <div className="tag-information">
-          <h4>{t(`parcel_detail.tags.${name}`)}</h4>
-          <p>
-            {tag.distance === 0
-              ? t('parcel_detail.tags.adjacent')
-              : t('parcel_detail.tags.proximity', { distance: tag.distance })}
-          </p>
-        </div>
+  renderTagDetails(name, distance) {
+    return (
+      <div className="tag-details">
+        <h4>{t(`parcel_tags.${name}`)}</h4>
+        <p>
+          {distance === 0
+            ? t('parcel_tags.adjacent')
+            : t('parcel_tags.proximity', { distance })}
+        </p>
       </div>
     )
   }
@@ -62,15 +72,14 @@ export default class ParcelTags extends React.PureComponent {
       return null
     }
 
+    const proximityTagKeys = Object.keys(proximity).sort()
+
     return (
-      <Grid stackable className="ParcelTags parcel-detail-row">
-        <Grid.Row>
-          <Grid.Column>
-            <h3>{t('parcel_detail.tags.title')}</h3>
-            {Object.values(proximity).map(this.renderProximityTag)}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="ParcelTags">
+        {proximityTagKeys.map(key =>
+          this.renderProximityTag(proximity[key], key)
+        )}
+      </div>
     )
   }
 }

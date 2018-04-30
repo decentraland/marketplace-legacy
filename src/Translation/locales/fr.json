@@ -61,6 +61,7 @@
     "on_sale": "A vendre"
   },
   "publication": {
+    "acquired_at": "Acquis à {date}",
     "expired_at": "A expiré {time}",
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de 10 ans",
@@ -96,13 +97,7 @@
       "no_owner": "Pas de propriétaire"
     },
     "tags": {
-      "title": "Points forts",
-      "road": "Route",
-      "plaza": "Places",
-      "district": "Quartiers",
-      "adjacent": "Adjacent",
-      "proximity":
-        "{distance} {distance, plural, one {parcelle} other {parcelles}} loin"
+      "title": "Points forts"
     },
     "history": {
       "title": "Historique des Transactions",
@@ -114,6 +109,14 @@
       "sold": "Vente",
       "auction": "Enchères"
     }
+  },
+  "parcel_tags": {
+    "road": "Route",
+    "plaza": "Places",
+    "district": "Quartiers",
+    "adjacent": "Adjacent",
+    "proximity":
+      "{distance} {distance, plural, one {parcelle} other {parcelles}} loin"
   },
   "parcel_edit": {
     "edit_land": "Editer les informations de ma LAND",

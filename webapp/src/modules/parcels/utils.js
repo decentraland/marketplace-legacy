@@ -19,6 +19,13 @@ export function toParcelObject(parcelsArray, prevParcels) {
   )
 }
 
+export function getParcelPublications(parcels) {
+  return parcels.reduce((pubs, parcel) => {
+    if (parcel.publication) pubs.push(parcel.publication)
+    return pubs
+  }, [])
+}
+
 export function connectParcels(array, parcels) {
   array.forEach(parcel => {
     const { x, y } = parcel

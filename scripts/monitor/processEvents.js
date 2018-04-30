@@ -56,7 +56,7 @@ export async function processEvent(event) {
       log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
 
       const [block_time_created_at] = await Promise.all([
-        new BlockTimestampService().getBlockTime(event.block_number),
+        new BlockTimestampService().getBlockTime(block_number),
 
         Publication.delete({
           x,
@@ -101,7 +101,7 @@ export async function processEvent(event) {
       log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
 
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        event.block_number
+        block_number
       )
 
       await Promise.all([
@@ -128,7 +128,7 @@ export async function processEvent(event) {
       log.info(`[${name}] Publication ${contract_id} cancelled`)
 
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        event.block_number
+        block_number
       )
 
       await Publication.update(
@@ -155,10 +155,14 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-      await Promise.all([
-        Publication.cancelOlder(x, y, block_number),
-        Parcel.update({ owner: to.toLowerCase() }, { id: parcelId })
+      const [last_transfered_at] = await Promise.all([
+        new BlockTimestampService().getBlockTime(block_number),
+        Publication.cancelOlder(x, y, block_number)
       ])
+      await Parcel.update(
+        { owner: to.toLowerCase(), last_transfered_at },
+        { id: parcelId }
+      )
       break
     }
     default:

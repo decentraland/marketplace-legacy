@@ -11,10 +11,9 @@ import {
   Label
 } from 'semantic-ui-react'
 import AddressBlock from 'components/AddressBlock'
-import Publication from 'components/MarketplacePage/Publication'
-import Parcel from './Parcel'
+import ParcelCard from 'components/ParcelCard'
 import Contribution from './Contribution'
-import { parcelType, contributionType, publicationType } from 'components/types'
+import { parcelType, contributionType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { buildUrl } from './utils'
 import { shortenAddress } from 'lib/utils'
@@ -26,9 +25,9 @@ export default class ProfilePage extends React.PureComponent {
     address: PropTypes.string,
     parcels: PropTypes.arrayOf(parcelType),
     contributions: PropTypes.arrayOf(contributionType),
-    publications: PropTypes.arrayOf(publicationType),
+    publishedParcels: PropTypes.arrayOf(parcelType),
     grid: PropTypes.arrayOf(
-      PropTypes.oneOfType([parcelType, contributionType, publicationType])
+      PropTypes.oneOfType([parcelType, contributionType])
     ),
     tab: PropTypes.string,
     page: PropTypes.number.isRequired,
@@ -68,28 +67,13 @@ export default class ProfilePage extends React.PureComponent {
     )
   }
 
-  renderPublications() {
-    const { publications } = this.props
-    return (
-      <Card.Group stackable={true}>
-        {publications.map((publication, index) => (
-          <Publication
-            key={publication.tx_hash}
-            publication={publication}
-            debounce={index * 100}
-          />
-        ))}
-      </Card.Group>
-    )
-  }
-
   renderGrid() {
     const { grid, tab } = this.props
     switch (tab) {
       case PROFILE_PAGE_TABS.parcels: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(parcel => <Parcel key={parcel.id} parcel={parcel} />)}
+            {grid.map(parcel => <ParcelCard key={parcel.id} parcel={parcel} />)}
           </Card.Group>
         )
       }
@@ -108,10 +92,10 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.publications: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(publication => (
-              <Publication
-                key={publication.tx_hash}
-                publication={publication}
+            {grid.map(parcel => (
+              <ParcelCard
+                key={parcel.id}
+                parcel={parcel}
                 isOwnerVisible={false}
               />
             ))}
@@ -157,10 +141,11 @@ export default class ProfilePage extends React.PureComponent {
       isEmpty,
       parcels,
       contributions,
-      publications,
+      publishedParcels,
       isOwner,
       isConnecting
     } = this.props
+
     return (
       <div className="ProfilePage">
         {isOwner || isConnecting ? null : (
@@ -195,7 +180,10 @@ export default class ProfilePage extends React.PureComponent {
               onClick={this.handleItemClick}
             >
               {t('profile_page.on_sale')}
-              {this.renderBadge(publications, PROFILE_PAGE_TABS.publications)}
+              {this.renderBadge(
+                publishedParcels,
+                PROFILE_PAGE_TABS.publications
+              )}
             </Menu.Item>
           </Menu>
         </Container>

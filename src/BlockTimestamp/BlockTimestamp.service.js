@@ -14,7 +14,7 @@ export class BlockTimestampService {
       this.insertTimestamp(blockNumber, timestamp)
     }
 
-    return timestamp * 1000
+    return timestamp
   }
 
   // TODO: Move to eth.commons

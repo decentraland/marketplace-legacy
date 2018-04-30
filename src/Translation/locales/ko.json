@@ -60,6 +60,7 @@
     "on_sale": "판매 중"
   },
   "publication": {
+    "acquired_at": "{date}에 인수 됨",
     "expired_at": "{time} 전 만료 됨",
     "expires_in": "{time}에 만료 됨",
     "expires_in_more_than_years": "{years} 년 만료 됨",
@@ -95,12 +96,7 @@
       "no_owner": "소유자 없음"
     },
     "tags": {
-      "title": "하이라이트",
-      "road": "도로",
-      "plaza": "광장",
-      "district": "지구",
-      "adjacent": "인접한",
-      "proximity": "{distance} 개 분실물"
+      "title": "하이라이트"
     },
     "history": {
       "title": "거래 내역",
@@ -112,6 +108,13 @@
       "sold": "판매",
       "auction": "경매"
     }
+  },
+  "parcel_tags": {
+    "road": "도로",
+    "plaza": "광장",
+    "district": "지구",
+    "adjacent": "인접한",
+    "proximity": "{distance} 개 분실물"
   },
   "parcel_edit": {
     "edit_land": "토지 편집",

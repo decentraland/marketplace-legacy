@@ -69,17 +69,18 @@
   flex-flow: row nowrap;
   align-items: flex-start;
   overflow-x: scroll;
-  height: 253px;
+  height: 294px;
 }
 
 .HomePage .publications-scroller .ui.card:first-child {
   margin-top: 1em;
 }
 
-.HomePage .publications-scroller .Publication {
+.HomePage .publications-scroller .ParcelCard {
   flex: none;
   width: 224px !important;
   margin-right: 25px;
+  overflow: initial;
 }
 
 @media (max-width: 600px) {

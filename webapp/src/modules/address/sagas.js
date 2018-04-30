@@ -14,6 +14,8 @@ import {
   fetchAddressPublicationsSuccess,
   fetchAddressPublicationsFailure
 } from './actions'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { getParcelPublications } from 'modules/parcels/utils'
 import { api } from 'lib/api'
 
 export function* addressSaga() {
@@ -52,10 +54,11 @@ function* handleAddressContributionsRequest(action) {
 }
 
 function* handleAddressPublicationsRequest(action) {
-  const { address } = action
+  const { address, status } = action
   try {
-    const publications = yield call(() => api.fetchAddressPublications(address))
-    yield put(fetchAddressPublicationsSuccess(address, publications))
+    const parcels = yield call(() => api.fetchAddressParcels(address, status))
+    const publications = getParcelPublications(parcels)
+    yield put(fetchAddressPublicationsSuccess(address, parcels, publications))
   } catch (error) {
     yield put(fetchAddressPublicationsFailure(address, error.message))
   }
@@ -63,7 +66,8 @@ function* handleAddressPublicationsRequest(action) {
 
 function* handleFetchAddress(action) {
   const { address } = action
+
   yield put(fetchAddressParcelsRequest(address))
-  yield put(fetchAddressPublicationsRequest(address))
+  yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
 }

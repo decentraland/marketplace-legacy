@@ -71,24 +71,6 @@
   background-image: url('../../images/exchange.svg');
 }
 
-.Icon-plaza-icon {
-  width: 32px;
-  height: 20px;
-  background-image: url('../../images/plaza-icon.svg');
-}
-
-.Icon-road-icon {
-  width: 24px;
-  height: 28px;
-  background-image: url('../../images/road-icon.svg');
-}
-
-.Icon-district-icon {
-  width: 24px;
-  height: 32px;
-  background-image: url('../../images/district-icon.svg');
-}
-
 .Icon-twitter,
 .Icon-rocketchat,
 .Icon-github,

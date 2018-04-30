@@ -1,5 +1,12 @@
 import { txUtils } from 'decentraland-eth'
 
+// From Publication.js on the server
+export const PUBLICATION_STATUS = Object.freeze({
+  open: 'open',
+  sold: 'sold',
+  cancelled: 'cancelled'
+})
+
 export function toPublicationsObject(publicationsArray) {
   return publicationsArray.reduce(
     (obj, publication) => ({
@@ -47,10 +54,3 @@ export function isOpen(publication) {
 export function isExpired(publication) {
   return parseInt(publication.expires_at, 10) < Date.now()
 }
-
-// From Publication.js on the server
-export const PUBLICATION_STATUS = Object.freeze({
-  open: 'open',
-  sold: 'sold',
-  cancelled: 'cancelled'
-})

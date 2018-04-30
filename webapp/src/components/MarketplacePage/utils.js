@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import { locations } from 'locations'
 import { t } from 'modules/translation/utils'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
 export const PAGE_SIZE = 12
 let SORT_TYPES = null // filled upon the first call to getSortTypes
@@ -43,7 +44,8 @@ export function getOptionsFromRouter({ search }) {
     offset:
       !isNaN(query.page) && query.page > 0 ? (query.page - 1) * PAGE_SIZE : 0,
     sortBy: query.sort_by ? query.sort_by : 'created_at',
-    sortOrder: query.sort_order ? query.sort_order : 'desc'
+    sortOrder: query.sort_order ? query.sort_order : 'desc',
+    status: PUBLICATION_STATUS.open
   }
 }
 

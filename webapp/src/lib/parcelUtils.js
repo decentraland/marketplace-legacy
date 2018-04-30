@@ -18,6 +18,8 @@ export const COLORS = Object.freeze({
   loadingOdd: '#181a29'
 })
 
+export const AUCTION_DATE = new Date('2018-01-31T00:00:00Z')
+
 export function getBounds() {
   return {
     minX: -150,

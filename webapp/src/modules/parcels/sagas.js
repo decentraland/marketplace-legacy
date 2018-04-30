@@ -28,7 +28,7 @@ function* handleParcelsRequest(action) {
   try {
     const nw = buildCoordinate(action.nw.x, action.nw.y)
     const se = buildCoordinate(action.se.x, action.se.y)
-    const parcels = yield call(() => api.fetchParcels(nw, se))
+    const { parcels } = yield call(() => api.fetchParcelsInRange(nw, se))
 
     yield put(fetchParcelsSuccess(parcels))
   } catch (error) {
@@ -47,7 +47,7 @@ function* handleParcelRequest(action) {
       throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
     }
 
-    const parcels = yield call(() => api.fetchParcels(nw, se))
+    const { parcels } = yield call(() => api.fetchParcelsInRange(nw, se))
     const parcel = parcels.find(p => p.id === parcelId)
 
     yield put(fetchParcelSuccess(x, y, parcel))

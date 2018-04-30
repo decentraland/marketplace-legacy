@@ -1,6 +1,6 @@
 import axios from 'axios'
-
 import { env } from 'decentraland-commons'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
@@ -8,7 +8,8 @@ const FILTER_DEFAULTS = {
   limit: 20,
   offset: 0,
   sortBy: 'created_at',
-  sortOrder: 'asc'
+  sortOrder: 'asc',
+  status: PUBLICATION_STATUS.open
 }
 
 export class API {
@@ -16,41 +17,41 @@ export class API {
     return this.request('get', `/translations/${locale}`, {})
   }
 
-  fetchDistricts() {
-    return this.request('get', '/districts', {})
-  }
-
-  fetchParcels(nw, se) {
+  fetchParcelsInRange(nw, se) {
     return this.request('get', '/parcels', { nw, se })
   }
 
-  fetchParcelPublications(x, y) {
-    return this.request('get', `/parcels/${x}/${y}/publications`, {})
+  fetchParcels(options = FILTER_DEFAULTS) {
+    const filterOptions = Object.keys(options).reduce((base, key) => {
+      base[key] = options[key] == null ? FILTER_DEFAULTS[key] : options[key]
+      return base
+    }, {})
+
+    const { limit, offset, sortBy, sortOrder, status } = filterOptions
+
+    return this.request('get', '/parcels', {
+      limit,
+      offset,
+      sort_by: sortBy,
+      sort_order: sortOrder,
+      status
+    })
   }
 
-  fetchAddressParcels(address) {
-    return this.request('get', `/addresses/${address}/parcels`, {})
+  fetchParcelPublications(x, y, status) {
+    return this.request('get', `/parcels/${x}/${y}/publications`, { status })
   }
 
-  fetchAddressPublications(address) {
-    return this.request('get', `/addresses/${address}/publications`, {})
-  }
-
-  fetchPublications(options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder } = {
-      ...FILTER_DEFAULTS,
-      ...options
-    }
-
-    return this.request(
-      'get',
-      `/publications?limit=${limit}&offset=${offset}&sort_by=${sortBy}&sort_order=${sortOrder}`,
-      {}
-    )
+  fetchAddressParcels(address, status) {
+    return this.request('get', `/addresses/${address}/parcels`, { status })
   }
 
   fetchAddressContributions(address) {
     return this.request('get', `/addresses/${address}/contributions`, {})
+  }
+
+  fetchDistricts() {
+    return this.request('get', '/districts', {})
   }
 
   request(method, path, params) {

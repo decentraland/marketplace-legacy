@@ -11,11 +11,10 @@ import {
   findParcelPublications
 } from 'modules/publication/utils'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
+import { AUCTION_DATE } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
 
 import './ParcelTransactionHistory.css'
-
-const AUCTION_DATE = distanceInWordsToNow('2018-01-31T00:00:00Z')
 
 export default class ParcelTransactionHistory extends React.PureComponent {
   static propTypes = {
@@ -95,7 +94,10 @@ export default class ParcelTransactionHistory extends React.PureComponent {
                   <Grid.Column>
                     <BlockDate
                       blockNumber={publication.block_number}
-                      blockTime={publication.block_time_created_at}
+                      blockTime={
+                        publication.block_time_updated_at ||
+                        publication.block_time_created_at
+                      }
                     />
                   </Grid.Column>
                   <Responsive
@@ -118,7 +120,9 @@ export default class ParcelTransactionHistory extends React.PureComponent {
                   <Grid.Column>
                     <Mana amount={parcel.auction_price} />
                   </Grid.Column>
-                  <Grid.Column>{AUCTION_DATE}</Grid.Column>
+                  <Grid.Column>
+                    {distanceInWordsToNow(AUCTION_DATE)}
+                  </Grid.Column>
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}

@@ -10,9 +10,9 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
-import Publication from './Publication'
+import ParcelCard from 'components/ParcelCard'
 
-import { publicationType } from 'components/types'
+import { parcelType } from 'components/types'
 import { t } from 'modules/translation/utils'
 
 import {
@@ -26,12 +26,13 @@ import './MarketplacePage.css'
 
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
-    publications: PropTypes.arrayOf(publicationType),
+    parcels: PropTypes.arrayOf(parcelType),
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
     sortBy: PropTypes.string.isRequired,
     sortOrder: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
     onNavigate: PropTypes.func.isRequired,
     onFetchPublications: PropTypes.func.isRequired
   }
@@ -104,15 +105,11 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   renderPublications() {
-    const { publications } = this.props
+    const { parcels } = this.props
     return (
       <Card.Group stackable={true}>
-        {publications.map((publication, index) => (
-          <Publication
-            key={publication.tx_hash}
-            publication={publication}
-            debounce={index * 100}
-          />
+        {parcels.map((parcel, index) => (
+          <ParcelCard key={parcel.id} parcel={parcel} debounce={index * 100} />
         ))}
       </Card.Group>
     )
