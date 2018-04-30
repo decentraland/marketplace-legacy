@@ -3,12 +3,15 @@ import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
 import {
   FETCH_PUBLICATIONS_REQUEST,
+  FETCH_DASHBOARD_PUBLICATIONS_REQUEST,
   FETCH_PARCEL_PUBLICATIONS_REQUEST,
   PUBLISH_REQUEST,
   BUY_REQUEST,
   CANCEL_SALE_REQUEST,
   fetchPublicationsSuccess,
   fetchPublicationsFailure,
+  fetchDashboardPublicationsSuccess,
+  fetchDashboardPublicationsFailure,
   fetchParcelPublicationsSuccess,
   fetchParcelPublicationsFailure,
   publishSuccess,
@@ -24,6 +27,10 @@ import { api } from 'lib/api'
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
   yield takeEvery(
+    FETCH_DASHBOARD_PUBLICATIONS_REQUEST,
+    handleDashboardPublicationsRequest
+  )
+  yield takeEvery(
     FETCH_PARCEL_PUBLICATIONS_REQUEST,
     handleParcelPublicationsRequest
   )
@@ -33,15 +40,20 @@ export function* publicationSaga() {
 }
 
 function* handlePublicationsRequest(action) {
-  const { limit, offset, sortBy, sortOrder, status } = action
   try {
-    const { parcels, total } = yield call(() =>
-      api.fetchParcels({ limit, offset, sortBy, sortOrder, status })
-    )
-    const publications = parcels.map(parcel => parcel.publication)
-    yield put(fetchPublicationsSuccess(parcels, publications, total))
+    const { publications, total } = yield call(() => fetchPublications(action))
+    yield put(fetchPublicationsSuccess(publications, total))
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
+  }
+}
+
+function* handleDashboardPublicationsRequest(action) {
+  try {
+    const { publications, total } = yield call(() => fetchPublications(action))
+    yield put(fetchDashboardPublicationsSuccess(publications, total))
+  } catch (error) {
+    yield put(fetchDashboardPublicationsFailure(error.message))
   }
 }
 
@@ -116,4 +128,13 @@ function* handleCancelSaleRequest(action) {
   } catch (error) {
     yield put(cancelSaleFailure(error.message))
   }
+}
+
+function* fetchPublications(action) {
+  const { limit, offset, sortBy, sortOrder, status } = action
+  const { parcels, total } = yield call(() =>
+    api.fetchParcels({ limit, offset, sortBy, sortOrder, status })
+  )
+  const publications = parcels.map(parcel => parcel.publication)
+  return { publications, total }
 }

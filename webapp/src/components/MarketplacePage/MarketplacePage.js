@@ -167,7 +167,7 @@ export default class MarketplacePage extends React.PureComponent {
               totalPages={pages}
               onPageChange={this.handlePageChange}
             />
-          ): null}
+          ) : null}
         </Container>
       </div>
     )
