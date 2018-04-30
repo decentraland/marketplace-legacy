@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import L from 'leaflet'
 import debounce from 'lodash.debounce'
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash.isequal'
 
 import { LeafletMapCoordinates } from 'lib/LeafletMapCoordinates'
 import { LeafletParcelGrid } from 'lib/LeafletParcelGrid'
