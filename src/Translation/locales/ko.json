@@ -9,6 +9,8 @@
   "global": {
     "atlas": "지도",
     "marketplace": "시장",
+    "dashboard": "계기반",
+    "profile": "나의 토지",
     "activity": "활동",
     "parcels": "필지",
     "contributions": "공헌",
@@ -35,9 +37,6 @@
   },
   "address": {
     "its_you": "너야"
-  },
-  "navbar": {
-    "my_land": "나의 토지"
   },
   "atlas": {
     "owner": "소유자 : {owner}",

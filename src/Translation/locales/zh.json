@@ -9,6 +9,8 @@
   "global": {
     "atlas": "地图",
     "marketplace": "虚拟物品市场",
+    "dashboard": "仪表板",
+    "profile": "我的虚拟土地",
     "activity": "活动",
     "parcels": "地块",
     "contributions": "小区份额",
@@ -35,9 +37,6 @@
   },
   "address": {
     "its_you": "是你"
-  },
-  "navbar": {
-    "my_land": "我的虚拟土地"
   },
   "atlas": {
     "owner": "所有者：{owner}",

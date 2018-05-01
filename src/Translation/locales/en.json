@@ -9,6 +9,8 @@
   "global": {
     "atlas": "Atlas",
     "marketplace": "Marketplace",
+    "dashboard": "Dashboard",
+    "profile": "My Land",
     "activity": "Activity",
     "parcels": "Parcels",
     "contributions": "Contributions",
@@ -35,9 +37,6 @@
   },
   "address": {
     "its_you": "It's you"
-  },
-  "navbar": {
-    "my_land": "My Land"
   },
   "atlas": {
     "owner": "Owner: {owner}",

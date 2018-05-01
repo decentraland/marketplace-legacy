@@ -4,6 +4,8 @@ export function getActivePage({ pathname, wallet }) {
   let currentPage = null
   if (pathname === locations.marketplace) {
     currentPage = NAVBAR_PAGES.marketplace
+  } else if (pathname === locations.dashboard) {
+    currentPage = NAVBAR_PAGES.dashboard
   } else if (
     wallet.address &&
     pathname.slice(0, 9) === '/address/' &&

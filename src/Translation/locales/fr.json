@@ -9,6 +9,8 @@
   "global": {
     "atlas": "Atlas",
     "marketplace": "Marché",
+    "dashboard": "Tableau de bord",
+    "profile": "Mes LANDs",
     "activity": "Activité",
     "parcels": "Parcelles",
     "contributions": "Contributions",
@@ -36,9 +38,6 @@
   },
   "address": {
     "its_you": "C'est toi"
-  },
-  "navbar": {
-    "my_land": "Mes LANDs"
   },
   "atlas": {
     "owner": "Propriétaire : {owner}",
