@@ -37,7 +37,7 @@ export function dashboardReducer(state = INITIAL_STATE, action) {
         ...state,
         data: {
           ...state.data,
-          grid: action.parcels.map(parcel => parcel.id),
+          grid: action.publications.map(publications => publications.tx_hash),
           total: action.total
         }
       }

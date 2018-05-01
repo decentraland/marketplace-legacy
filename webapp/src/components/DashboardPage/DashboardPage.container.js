@@ -2,7 +2,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import {
   getStats,
-  getParcels,
+  getPublications,
   isLoading,
   getError
 } from 'modules/dashboard/selectors'
@@ -19,7 +19,7 @@ const mapState = (state, { location }) => {
     isLoading: isLoading(state),
     isPublicationsLoading: isPublicationsLoading(state),
     error: getError(state),
-    parcels: getParcels(state)
+    publications: getPublications(state)
   }
 }
 

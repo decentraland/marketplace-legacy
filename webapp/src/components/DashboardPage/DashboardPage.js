@@ -5,17 +5,22 @@ import { Link } from 'react-router-dom'
 import { Container, Grid, Card, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { dashboardStatsType, parcelType } from 'components/types'
+import { dashboardStatsType, publicationType } from 'components/types'
 import ParcelPreview from 'components/ParcelPreview'
 import { t, t_html } from 'modules/translation/utils'
-import { formatMana, formatDate, distanceInWordsToNow } from 'lib/utils'
+import {
+  formatMana,
+  formatDate,
+  distanceInWordsToNow,
+  buildCoordinate
+} from 'lib/utils'
 
 import './DashboardPage.css'
 
 export default class DashboardPage extends React.PureComponent {
   static propTypes = {
     stats: dashboardStatsType,
-    parcels: PropTypes.arrayOf(parcelType)
+    publications: PropTypes.arrayOf(publicationType)
   }
 
   componentWillMount() {
@@ -70,54 +75,65 @@ export default class DashboardPage extends React.PureComponent {
   }
 
   renderPublications() {
-    const { parcels } = this.props
+    const { publications } = this.props
     return (
       <Card.Group
         className="DashboardPublications"
         stackable={true}
         itemsPerRow={2}
       >
-        {parcels.map(({ id, x, y, publication }, index) => (
-          <Card key={index}>
-            <Card.Content>
-              <ParcelPreview
-                x={x}
-                y={y}
-                debounce={index * 100}
-                width={144}
-                height={144}
-              />
-              <Card.Description>
-                {t_html('dashboard.transaction_description', {
-                  parcel_link: (
-                    <Link to={locations.parcelDetail(x, y)}>{id}</Link>
-                  ),
-                  seller_link: (
-                    <Link to={locations.profilePage(publication.owner)}>
-                      {publication.owner.slice(0, 6)}
-                    </Link>
-                  ),
-                  buyer_link: (
-                    <Link to={locations.profilePage(publication.buyer)}>
-                      {publication.buyer.slice(0, 6)}
-                    </Link>
-                  ),
-                  price: (
-                    <span className="price">
-                      {formatMana(publication.price)}
-                    </span>
-                  )
-                })}
-                <div
-                  className="date"
-                  title={formatDate(+publication.block_time_updated_at)}
-                >
-                  {distanceInWordsToNow(+publication.block_time_updated_at)}
-                </div>
-              </Card.Description>
-            </Card.Content>
-          </Card>
-        ))}
+        {publications.map(
+          (publication, index) =>
+            console.log(publication) || (
+              <Card key={index}>
+                <Card.Content>
+                  <span className="parcel-preview-container">
+                    <ParcelPreview
+                      x={publication.x}
+                      y={publication.y}
+                      debounce={index * 100}
+                      size={9}
+                    />
+                  </span>
+                  <Card.Description>
+                    {t_html('dashboard.transaction_description', {
+                      parcel_link: (
+                        <Link
+                          to={locations.parcelDetail(
+                            publication.x,
+                            publication.y
+                          )}
+                        >
+                          {buildCoordinate(publication.x, publication.y)}
+                        </Link>
+                      ),
+                      seller_link: (
+                        <Link to={locations.profilePage(publication.owner)}>
+                          {publication.owner.slice(0, 6)}
+                        </Link>
+                      ),
+                      buyer_link: (
+                        <Link to={locations.profilePage(publication.buyer)}>
+                          {publication.buyer.slice(0, 6)}
+                        </Link>
+                      ),
+                      price: (
+                        <span className="price">
+                          {formatMana(publication.price)}
+                        </span>
+                      )
+                    })}
+                    <div
+                      className="date"
+                      title={formatDate(+publication.block_time_updated_at)}
+                    >
+                      {distanceInWordsToNow(+publication.block_time_updated_at)}
+                    </div>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+            )
+        )}
       </Card.Group>
     )
   }
