@@ -6,18 +6,18 @@
   font-size: 16px;
 }
 
-.DashboardPage .dimmer {
-  background-color: var(--background) !important;
-  opacity: 0.8 !important;
+.DashboardPage .stats-grid, .DashboardPage .latest-transactions-grid {
+  margin-bottom: 64px;
 }
 
 .DashboardPage h3 {
   font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .DashboardPage h3,
-.DashboardPage .DashboardStats .ui.card .description,
-.DashboardPage .DashboardStats .ui.card .meta {
+.DashboardPage .ui.card .content .description,
+.DashboardPage .ui.card .content .meta {
   color: var(--text);
 }
 
@@ -29,4 +29,25 @@
   font-size: 19px;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.DashboardPage .DashboardPublications .ParcelCanvas {
+  width: 48px;
+  height: 48px;
+  margin-right: 20px;
+  float: left;
+}
+
+.DashboardPage .DashboardPublications .ui.card .content .description {
+  top: 2px;
+  position: relative;
+  display: inline;
+}
+
+.DashboardPage .DashboardPublications .price {
+  color: var(--light-blue);
+}
+
+.DashboardPage .DashboardPublications .date {
+  color: var(--gray);
 }

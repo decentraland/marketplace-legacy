@@ -55,6 +55,16 @@
       "close_to_expire": "Por terminar"
     }
   },
+  "dashboard": {
+    "stats_title": "Estadísticas",
+    "transactions_title": "Últimas transacciones",
+    "land_owners": "Dueños de LAND",
+    "active_users": "Usuarios activos",
+    "land_traded": "LAND intercambiada",
+    "land_on_sale": "LAND a la venta",
+    "transaction_description":
+      "LAND {parcel_link} vendida por {seller_link} a {buyer_link} por {price}"
+  },
   "profile_page": {
     "empty": "El usuario no tiene {content}",
     "on_sale": "En Venta"

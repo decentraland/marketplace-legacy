@@ -43,9 +43,13 @@ export function toPublicationObject(publicationsArray) {
 }
 
 export function isOpen(publication) {
+  return hasStatus(publication, PUBLICATION_STATUS.open)
+}
+
+export function hasStatus(publication, status) {
   return (
     publication &&
-    publication.status === PUBLICATION_STATUS.open &&
+    publication.status === status &&
     publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
     !isExpired(publication)
   )

@@ -55,6 +55,15 @@
       "close_to_expire": "Closest to expire"
     }
   },
+  "dashboard": {
+    "stats_title": "Some numbers",
+    "transactions_title": "Latest Transactions",
+    "land_owners": "LAND owners",
+    "active_users": "Active users",
+    "land_traded": "LAND traded",
+    "land_on_sale": "LAND on sale",
+    "transaction_description": "LAND {parcel_link} sold from {seller_link} to {buyer_link} for {price}"
+  },
   "profile_page": {
     "empty": "The user has no {content}",
     "on_sale": "On Sale"

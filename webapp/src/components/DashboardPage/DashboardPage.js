@@ -1,17 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import { Container, Grid, Card, Loader } from 'semantic-ui-react'
 
-import { dashboardStatsType, publicationType } from 'components/types'
-import { t } from 'modules/translation/utils'
+import { locations } from 'locations'
+import { dashboardStatsType, parcelType } from 'components/types'
+import ParcelPreview from 'components/ParcelPreview'
+import { t, t_html } from 'modules/translation/utils'
+import { formatMana, distanceInWordsToNow } from 'lib/utils'
 
 import './DashboardPage.css'
 
 export default class DashboardPage extends React.PureComponent {
   static propTypes = {
     stats: dashboardStatsType,
-    publications: PropTypes.arrayOf(publicationType)
+    parcels: PropTypes.arrayOf(parcelType)
   }
 
   componentWillMount() {
@@ -45,21 +49,76 @@ export default class DashboardPage extends React.PureComponent {
 
     return (
       <Card.Group className="DashboardStats" stackable={true} itemsPerRow={4}>
-        <Card meta="LAND owners" description={stats.landOwnersCount} />
-        <Card meta="Active users" description={stats.activeUsersCount} />
-        <Card meta="LAND traded" description={stats.totalLandTraded} />
-        <Card meta="LAND on sale" description={stats.totalLandOnSale} />
+        <Card
+          meta={t('dashboard.land_owners')}
+          description={stats.landOwnersCount}
+        />
+        <Card
+          meta={t('dashboard.active_users')}
+          description={stats.activeUsersCount}
+        />
+        <Card
+          meta={t('dashboard.land_traded')}
+          description={stats.totalLandTraded}
+        />
+        <Card
+          meta={t('dashboard.land_on_sale')}
+          description={stats.totalLandOnSale}
+        />
       </Card.Group>
     )
   }
 
   renderPublications() {
-    const { publications } = this.props
+    const { parcels } = this.props
     return (
-      <Card.Group stackable={true}>
-        <div>
-          <pre>{JSON.stringify(publications)}</pre>
-        </div>
+      <Card.Group
+        className="DashboardPublications"
+        stackable={true}
+        itemsPerRow={2}
+      >
+        {parcels.map((parcel, index) => (
+          <Card key={index}>
+            <Card.Content>
+              <ParcelPreview
+                x={parcel.x}
+                y={parcel.y}
+                debounce={index * 100}
+                width={144}
+                height={144}
+              />
+              <Card.Description>
+                {t_html('dashboard.transaction_description', {
+                  parcel_link: (
+                    <Link to={locations.parcelDetail(parcel.x, parcel.y)}>
+                      {parcel.id}
+                    </Link>
+                  ),
+                  seller_link: (
+                    <Link to={locations.profilePage(parcel.publication.owner)}>
+                      {parcel.publication.owner.slice(0, 6)}
+                    </Link>
+                  ),
+                  buyer_link: (
+                    <Link to={locations.profilePage(parcel.publication.buyer)}>
+                      {parcel.publication.buyer.slice(0, 6)}
+                    </Link>
+                  ),
+                  price: (
+                    <span className="price">
+                      {formatMana(parcel.publication.price)}
+                    </span>
+                  )
+                })}
+                <div className="date">
+                  {distanceInWordsToNow(
+                    parseInt(parcel.publication.block_time_updated_at)
+                  )}
+                </div>
+              </Card.Description>
+            </Card.Content>
+          </Card>
+        ))}
       </Card.Group>
     )
   }
@@ -74,10 +133,10 @@ export default class DashboardPage extends React.PureComponent {
             this.renderLoading()
           ) : (
             <React.Fragment>
-              <Grid>
+              <Grid className="stats-grid">
                 <Grid.Row>
                   <Grid.Column>
-                    <h3>Some numbers</h3>
+                    <h3>{t('dashboard.stats_title')}</h3>
                   </Grid.Column>
                 </Grid.Row>
 
@@ -88,10 +147,10 @@ export default class DashboardPage extends React.PureComponent {
                 </Grid.Row>
               </Grid>
 
-              <Grid>
+              <Grid className="latest-transactions-grid">
                 <Grid.Row>
                   <Grid.Column>
-                    <h3>Latest Transactions</h3>
+                    <h3>{t('dashboard.transactions_title')}</h3>
                   </Grid.Column>
                 </Grid.Row>
 

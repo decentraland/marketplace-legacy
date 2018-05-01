@@ -20,6 +20,7 @@ import {
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_PARCEL_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
+import { FETCH_DASHBOARD_PUBLICATIONS_SUCCESS } from 'modules/publication/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'lib/utils'
@@ -55,6 +56,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PUBLICATIONS_SUCCESS:
+    case FETCH_DASHBOARD_PUBLICATIONS_SUCCESS:
     case FETCH_PARCELS_SUCCESS: {
       return {
         ...state,

@@ -118,7 +118,6 @@ export default class MapComponent extends React.Component {
       wallet,
       parcels,
       districts,
-      publications,
       isReady,
       onSelect,
       marker
@@ -133,7 +132,6 @@ export default class MapComponent extends React.Component {
           wallet={wallet}
           parcels={parcels}
           districts={districts}
-          publications={publications}
           minZoom={this.baseZoom - 4}
           maxZoom={this.baseZoom}
           baseZoom={this.baseZoom}

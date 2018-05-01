@@ -2,7 +2,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import {
   getStats,
-  getPublications,
+  getParcels,
   isLoading,
   getError
 } from 'modules/dashboard/selectors'
@@ -19,7 +19,7 @@ const mapState = (state, { location }) => {
     isLoading: isLoading(state),
     isPublicationsLoading: isPublicationsLoading(state),
     error: getError(state),
-    publications: getPublications(state)
+    parcels: getParcels(state)
   }
 }
 
@@ -28,7 +28,7 @@ const mapDispatch = (dispatch, { location }) => ({
   onFetchDashboardPublications: () =>
     dispatch(
       fetchDashboardPublicationsRequest({
-        limit: 20,
+        limit: 10,
         offset: 0,
         sortBy: 'created_at',
         sortOrder: 'desc',

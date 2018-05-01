@@ -55,6 +55,15 @@
       "close_to_expire": "最近到期"
     }
   },
+  "dashboard": {
+    "stats_title": "一些数字",
+    "transactions_title": "最新交易",
+    "land_owners": "LAND所有者",
+    "active_users": "活跃用户",
+    "land_traded": "LAND交易",
+    "land_on_sale": "LAND发售",
+    "transaction_description": "购买{price_link}的LAND {parcel_link}购买{price}"
+  },
   "profile_page": {
     "empty": "用户没有{content}",
     "on_sale": "出售"

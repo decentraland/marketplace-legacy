@@ -85,20 +85,27 @@ export function fetchDashboardPublicationsRequest({
   limit,
   offset,
   sortBy,
-  sortOrder
+  sortOrder,
+  status
 }) {
   return {
     type: FETCH_DASHBOARD_PUBLICATIONS_REQUEST,
     limit,
     offset,
     sortBy,
-    sortOrder
+    sortOrder,
+    status
   }
 }
 
-export function fetchDashboardPublicationsSuccess(publications, total) {
+export function fetchDashboardPublicationsSuccess(
+  parcels,
+  publications,
+  total
+) {
   return {
     type: FETCH_DASHBOARD_PUBLICATIONS_SUCCESS,
+    parcels,
     publications,
     total
   }
