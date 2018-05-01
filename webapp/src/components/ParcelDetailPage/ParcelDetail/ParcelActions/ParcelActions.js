@@ -57,7 +57,7 @@ export default class ParcelActions extends React.PureComponent {
                 {t('parcel_detail.actions.transfer')}
               </Button>
             </Link>
-            {this.isOnSale() ? (
+            {isOnSale(parcel) ? (
               <Link to={locations.cancelSaleLand(x, y)}>
                 <Button size="tiny">
                   <Icon name="cancel" />
@@ -73,7 +73,7 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : this.isOnSale() ? (
+        ) : isOnSale(parcel) ? (
           <Link to={locations.buyLand(x, y)}>
             <Button primary size="large">
               {t('parcel_detail.publication.buy')}
