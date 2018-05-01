@@ -62,7 +62,7 @@
     "land_traded": "LAND traded",
     "land_on_sale": "LAND on sale",
     "transaction_description":
-      "LAND {parcel_link} sold from {seller_link} to {buyer_link} for {price}"
+      "Parcel {parcel_link} sold from {seller_link} to {buyer_link} for {price}"
   },
   "profile_page": {
     "empty": "The user has no {content}",

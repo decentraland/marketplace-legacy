@@ -61,7 +61,8 @@
     "active_users": "活跃用户",
     "land_traded": "LAND交易",
     "land_on_sale": "LAND发售",
-    "transaction_description": "购买{price_link}的LAND {parcel_link}购买{price}"
+    "transaction_description":
+      "从{seller_link}出售的parcel {parcel_link}到{buyer_link}获得{price}"
   },
   "profile_page": {
     "empty": "用户没有{content}",

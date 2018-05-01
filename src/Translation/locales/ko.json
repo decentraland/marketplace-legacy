@@ -62,7 +62,7 @@
     "land_traded": "활성 사용자",
     "land_on_sale": "LAND거래",
     "transaction_description":
-      "{price}에 대해 {seller_link}에서 {buyer_link}로 판매되는 LAND {parcel_link}"
+      "{price}에 대해 {seller_link}에서 {buyer_link} (으)로 판매 된 소포 {parcel_link}"
   },
   "profile_page": {
     "empty": "사용자에게는 {content}가 없습니다.",

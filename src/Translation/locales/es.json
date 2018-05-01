@@ -62,7 +62,7 @@
     "land_traded": "LAND intercambiada",
     "land_on_sale": "LAND a la venta",
     "transaction_description":
-      "LAND {parcel_link} vendida por {seller_link} a {buyer_link} por {price}"
+      "Parcela {parcel_link} vendida por {seller_link} a {buyer_link} por {price}"
   },
   "profile_page": {
     "empty": "El usuario no tiene {content}",
