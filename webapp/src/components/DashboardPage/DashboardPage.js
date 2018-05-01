@@ -8,7 +8,7 @@ import { locations } from 'locations'
 import { dashboardStatsType, parcelType } from 'components/types'
 import ParcelPreview from 'components/ParcelPreview'
 import { t, t_html } from 'modules/translation/utils'
-import { formatMana, distanceInWordsToNow } from 'lib/utils'
+import { formatMana, formatDate, distanceInWordsToNow } from 'lib/utils'
 
 import './DashboardPage.css'
 
@@ -77,12 +77,12 @@ export default class DashboardPage extends React.PureComponent {
         stackable={true}
         itemsPerRow={2}
       >
-        {parcels.map((parcel, index) => (
+        {parcels.map(({ id, x, y, publication }, index) => (
           <Card key={index}>
             <Card.Content>
               <ParcelPreview
-                x={parcel.x}
-                y={parcel.y}
+                x={x}
+                y={y}
                 debounce={index * 100}
                 width={144}
                 height={144}
@@ -90,30 +90,29 @@ export default class DashboardPage extends React.PureComponent {
               <Card.Description>
                 {t_html('dashboard.transaction_description', {
                   parcel_link: (
-                    <Link to={locations.parcelDetail(parcel.x, parcel.y)}>
-                      {parcel.id}
-                    </Link>
+                    <Link to={locations.parcelDetail(x, y)}>{id}</Link>
                   ),
                   seller_link: (
-                    <Link to={locations.profilePage(parcel.publication.owner)}>
-                      {parcel.publication.owner.slice(0, 6)}
+                    <Link to={locations.profilePage(publication.owner)}>
+                      {publication.owner.slice(0, 6)}
                     </Link>
                   ),
                   buyer_link: (
-                    <Link to={locations.profilePage(parcel.publication.buyer)}>
-                      {parcel.publication.buyer.slice(0, 6)}
+                    <Link to={locations.profilePage(publication.buyer)}>
+                      {publication.buyer.slice(0, 6)}
                     </Link>
                   ),
                   price: (
                     <span className="price">
-                      {formatMana(parcel.publication.price)}
+                      {formatMana(publication.price)}
                     </span>
                   )
                 })}
-                <div className="date">
-                  {distanceInWordsToNow(
-                    parseInt(parcel.publication.block_time_updated_at)
-                  )}
+                <div
+                  className="date"
+                  title={formatDate(+publication.block_time_updated_at)}
+                >
+                  {distanceInWordsToNow(+publication.block_time_updated_at)}
                 </div>
               </Card.Description>
             </Card.Content>
