@@ -82,58 +82,52 @@ export default class DashboardPage extends React.PureComponent {
         stackable={true}
         itemsPerRow={2}
       >
-        {publications.map(
-          (publication, index) =>
-            console.log(publication) || (
-              <Card key={index}>
-                <Card.Content>
-                  <span className="parcel-preview-container">
-                    <ParcelPreview
-                      x={publication.x}
-                      y={publication.y}
-                      debounce={index * 100}
-                      size={9}
-                    />
-                  </span>
-                  <Card.Description>
-                    {t_html('dashboard.transaction_description', {
-                      parcel_link: (
-                        <Link
-                          to={locations.parcelDetail(
-                            publication.x,
-                            publication.y
-                          )}
-                        >
-                          {buildCoordinate(publication.x, publication.y)}
-                        </Link>
-                      ),
-                      seller_link: (
-                        <Link to={locations.profilePage(publication.owner)}>
-                          {publication.owner.slice(0, 6)}
-                        </Link>
-                      ),
-                      buyer_link: (
-                        <Link to={locations.profilePage(publication.buyer)}>
-                          {publication.buyer.slice(0, 6)}
-                        </Link>
-                      ),
-                      price: (
-                        <span className="price">
-                          {formatMana(publication.price)}
-                        </span>
-                      )
-                    })}
-                    <div
-                      className="date"
-                      title={formatDate(+publication.block_time_updated_at)}
+        {publications.map((publication, index) => (
+          <Card key={index}>
+            <Card.Content>
+              <span className="parcel-preview-container">
+                <ParcelPreview
+                  x={publication.x}
+                  y={publication.y}
+                  debounce={index * 100}
+                  size={9}
+                />
+              </span>
+              <Card.Description>
+                {t_html('dashboard.transaction_description', {
+                  parcel_link: (
+                    <Link
+                      to={locations.parcelDetail(publication.x, publication.y)}
                     >
-                      {distanceInWordsToNow(+publication.block_time_updated_at)}
-                    </div>
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-            )
-        )}
+                      {buildCoordinate(publication.x, publication.y)}
+                    </Link>
+                  ),
+                  seller_link: (
+                    <Link to={locations.profilePage(publication.owner)}>
+                      {publication.owner.slice(0, 6)}
+                    </Link>
+                  ),
+                  buyer_link: (
+                    <Link to={locations.profilePage(publication.buyer)}>
+                      {publication.buyer.slice(0, 6)}
+                    </Link>
+                  ),
+                  price: (
+                    <span className="price">
+                      {formatMana(publication.price)}
+                    </span>
+                  )
+                })}
+                <div
+                  className="date"
+                  title={formatDate(+publication.block_time_updated_at)}
+                >
+                  {distanceInWordsToNow(+publication.block_time_updated_at)}
+                </div>
+              </Card.Description>
+            </Card.Content>
+          </Card>
+        ))}
       </Card.Group>
     )
   }
