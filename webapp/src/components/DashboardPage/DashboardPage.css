@@ -36,7 +36,8 @@
   top: 2px;
   left: calc(40px + 1em);
   position: relative;
-  display: inline;
+  display: inline-block;
+  max-width: calc(100% - 40px - 1em);
 }
 
 .DashboardPage .DashboardPublications .price {
