@@ -6,7 +6,8 @@
   font-size: 16px;
 }
 
-.DashboardPage .stats-grid, .DashboardPage .latest-transactions-grid {
+.DashboardPage .stats-grid,
+.DashboardPage .latest-transactions-grid {
   margin-bottom: 64px;
 }
 
@@ -31,15 +32,9 @@
   margin-top: 10px;
 }
 
-.DashboardPage .DashboardPublications .ParcelCanvas {
-  width: 48px;
-  height: 48px;
-  margin-right: 20px;
-  float: left;
-}
-
 .DashboardPage .DashboardPublications .ui.card .content .description {
   top: 2px;
+  left: calc(40px + 1em);
   position: relative;
   display: inline;
 }
@@ -50,4 +45,13 @@
 
 .DashboardPage .DashboardPublications .date {
   color: var(--gray);
+}
+
+.DashboardPage .parcel-preview-container {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 5px;
 }
