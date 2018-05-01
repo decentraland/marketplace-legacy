@@ -33,8 +33,8 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
   }
 }
 
-export function isLedgerWallet(wallet) {
-  return wallet instanceof wallets.LedgerWallet
+export function isLedgerWallet() {
+  return eth.wallet instanceof wallets.LedgerWallet
 }
 
 export function getManaToApprove() {

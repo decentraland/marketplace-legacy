@@ -88,7 +88,7 @@ export default class SettingsPage extends React.PureComponent {
                 <SettingsForm
                   address={address}
                   balance={balance}
-                  isLedgerWallet={isLedgerWallet(wallet)}
+                  isLedgerWallet={isLedgerWallet()}
                   walletDerivationPath={derivationPath}
                   onDerivationPathChange={this.handleDerivationPathChange}
                   manaApproved={approvedBalance}
