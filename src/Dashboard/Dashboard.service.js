@@ -61,17 +61,9 @@ export class DashboardService {
       `SELECT COUNT(owner) as count
         FROM ${this.Publication.tableName}
         WHERE status = $1
-        AND tx_status = $2
-        AND expires_at >= EXTRACT(epoch from now()) * 1000`,
+          AND tx_status = $2
+          AND expires_at >= EXTRACT(epoch from now()) * 1000`,
       [this.Publication.STATUS.open, txUtils.TRANSACTION_STATUS.confirmed]
-    )
-  }
-
-  async findLatestSaleTransactions() {
-    return await this.Publication.find(
-      { status: this.Publication.STATUS.sold },
-      { block_time_created_at: 'DESC' },
-      'LIMIT 10'
     )
   }
 

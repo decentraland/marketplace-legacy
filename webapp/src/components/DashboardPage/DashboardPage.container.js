@@ -30,7 +30,7 @@ const mapDispatch = (dispatch, { location }) => ({
       fetchDashboardPublicationsRequest({
         limit: 10,
         offset: 0,
-        sortBy: 'created_at',
+        sortBy: 'block_time_updated_at',
         sortOrder: 'desc',
         status: PUBLICATION_STATUS.sold
       })

@@ -4,6 +4,7 @@ import { Publication } from './Publication'
 const ALLOWED_VALUES = Object.freeze({
   price: ['ASC'],
   created_at: ['DESC'],
+  block_time_updated_at: ['DESC'],
   expires_at: ['ASC']
 })
 
