@@ -1,6 +1,21 @@
 import React from 'react'
 import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl'
 
+// Check the method: getAvailableLocales below to see which locales to add
+// Then, you'll need to add it to: addAvailableLocaleData and setCurrentLocale
+// This is annoying but better than bundling 200KB of locales
+import enIntlData from 'react-intl/locale-data/en'
+import esIntlData from 'react-intl/locale-data/es'
+import frIntlData from 'react-intl/locale-data/fr'
+import koIntlData from 'react-intl/locale-data/ko'
+import zhIntlData from 'react-intl/locale-data/zh'
+
+import enFnsData from 'date-fns/locale/en'
+import esFnsData from 'date-fns/locale/es'
+import frFnsData from 'date-fns/locale/fr'
+import koFnsData from 'date-fns/locale/ko'
+import zhFnsData from 'date-fns/locale/zh_cn'
+
 const DEFAULT_LOCALE = 'en'
 
 // cache
@@ -10,14 +25,15 @@ let currentLocale = null
 export const I18nProvider = IntlProvider
 
 export function addAvailableLocaleData() {
-  let localeData = []
-
-  for (const localeName of getAvailableLocales()) {
-    const data = require(`react-intl/locale-data/${localeName}`)
-    localeData = localeData.concat(data)
-  }
-
-  addLocaleData(localeData)
+  addLocaleData(
+    Array.prototype.concat(
+      enIntlData,
+      esIntlData,
+      frIntlData,
+      zhIntlData,
+      koIntlData
+    )
+  )
 }
 
 export function getPreferredLocale() {
@@ -48,16 +64,13 @@ export function setI18n(intl) {
 }
 
 export function setCurrentLocale(localeName) {
-  const locale =
-    {
-      en: 'en',
-      es: 'es',
-      fr: 'fr',
-      zh: 'zh_cn',
-      ko: 'ko'
-    }[localeName] || DEFAULT_LOCALE
-
-  currentLocale = require(`date-fns/locale/${locale}`)
+  currentLocale = {
+    en: enFnsData,
+    es: esFnsData,
+    fr: frFnsData,
+    zh: zhFnsData,
+    ko: koFnsData
+  }[localeName || DEFAULT_LOCALE]
 }
 
 export function getCurrentLocale(locale) {
