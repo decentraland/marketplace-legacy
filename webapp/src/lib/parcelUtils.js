@@ -127,7 +127,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
     }
   }
 
-  if (parcel.publication_tx_hash) {
+  if (isOnSale(parcel)) {
     return {
       label,
       description,
