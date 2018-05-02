@@ -4,12 +4,7 @@ import { isMobile } from 'lib/utils'
 
 import { locations } from 'locations'
 import { Loader } from 'semantic-ui-react'
-import {
-  walletType,
-  parcelType,
-  districtType,
-  publicationType
-} from 'components/types'
+import { walletType, parcelType, districtType } from 'components/types'
 import * as parcelUtils from 'lib/parcelUtils'
 
 import ParcelsMap from './ParcelsMap'
@@ -22,7 +17,6 @@ export default class MapComponent extends React.Component {
     wallet: walletType.isRequired,
     parcels: PropTypes.objectOf(parcelType).isRequired,
     districts: PropTypes.objectOf(districtType).isRequired,
-    publications: PropTypes.objectOf(publicationType).isRequired,
     center: PropTypes.shape({
       x: PropTypes.string,
       y: PropTypes.string
@@ -114,15 +108,7 @@ export default class MapComponent extends React.Component {
 
   render() {
     const { zoom } = this.state
-    const {
-      wallet,
-      parcels,
-      districts,
-      publications,
-      isReady,
-      onSelect,
-      marker
-    } = this.props
+    const { wallet, parcels, districts, isReady, onSelect, marker } = this.props
     const { x, y } = this.getCenter()
 
     return isReady ? (
@@ -133,7 +119,6 @@ export default class MapComponent extends React.Component {
           wallet={wallet}
           parcels={parcels}
           districts={districts}
-          publications={publications}
           minZoom={this.baseZoom - 4}
           maxZoom={this.baseZoom}
           baseZoom={this.baseZoom}

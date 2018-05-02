@@ -40,7 +40,7 @@
 }
 
 .Contribution .ui.header {
-  color: white !important;
+  color: var(--text) !important;
 }
 
 .Contribution .meta {

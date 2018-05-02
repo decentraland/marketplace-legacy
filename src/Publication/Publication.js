@@ -59,24 +59,12 @@ export class Publication extends Model {
       ORDER BY created_at DESC`
   }
 
-  static findLastParcelPublicationJsonSql(status) {
-    const whereClause = [
-      `pub.x = ${Parcel.tableName}.x`,
-      `pub.y = ${Parcel.tableName}.y`,
-      'pub.expires_at >= EXTRACT(epoch from now()) * 1000'
-    ]
-
-    if (status) {
-      if (this.isValidStatus(status)) {
-        whereClause.push(`status = '${status}'`)
-      } else {
-        throw new Error(`Invalid status '${status}'`)
-      }
-    }
-
+  static findLastParcelPublicationJsonSql() {
     return `SELECT row_to_json(pub.*)
       FROM ${this.tableName} as pub
-      WHERE ${whereClause.join(' AND ')}
+      WHERE pub.x = ${Parcel.tableName}.x
+        AND pub.y = ${Parcel.tableName}.y
+        AND pub.expires_at >= EXTRACT(epoch from now()) * 1000
       ORDER BY pub.created_at DESC
       LIMIT 1`
   }

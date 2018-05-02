@@ -12,7 +12,7 @@ import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
 import { parcelType, districtType, publicationType } from 'components/types'
-import { hasPublication, getDistrict } from 'lib/parcelUtils'
+import { getDistrict, isOnSale } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
 
 export default class ParcelDetail extends React.PureComponent {
@@ -38,11 +38,8 @@ export default class ParcelDetail extends React.PureComponent {
   }
 
   getPublication() {
-    const { parcel, publications } = this.props
-    if (hasPublication(parcel, publications)) {
-      return publications[parcel.publication_tx_hash]
-    }
-    return null
+    const { parcel } = this.props
+    return isOnSale(parcel) ? parcel.publication : null
   }
 
   render() {

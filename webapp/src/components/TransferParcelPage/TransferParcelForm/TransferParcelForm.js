@@ -5,6 +5,7 @@ import { Button, Form, Input, Message } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import { isTransactionRejectedError } from 'modules/transaction/utils'
+import { isOnSale } from 'lib/parcelUtils'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
@@ -15,7 +16,6 @@ export default class TransferParcelForm extends React.PureComponent {
     parcel: parcelType,
     isTxIdle: PropTypes.bool,
     transferError: PropTypes.string,
-    hasPublication: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCleanTransfer: PropTypes.func.isRequired
@@ -72,7 +72,7 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   render() {
-    const { isTxIdle, transferError, hasPublication } = this.props
+    const { parcel, isTxIdle, transferError } = this.props
     const { address } = this.state
     const inputClassName = `address-input ${
       transferError ? 'address-input-transferError' : ''
@@ -145,7 +145,7 @@ export default class TransferParcelForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={this.isEmptyAddress() || isTxIdle || hasPublication}
+            disabled={this.isEmptyAddress() || isOnSale(parcel) || isTxIdle}
           >
             {t('global.submit')}
           </Button>

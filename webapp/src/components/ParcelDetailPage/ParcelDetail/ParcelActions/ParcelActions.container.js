@@ -1,14 +1,9 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { locations } from 'locations'
-import { getPublications } from 'modules/publication/selectors'
 import ParcelActions from './ParcelActions'
 
-const mapState = (state, { parcel }) => {
-  return {
-    publications: getPublications(state)
-  }
-}
+const mapState = state => ({})
 
 const mapDispatch = dispatch => ({
   onTransfer: ({ x, y }) => dispatch(push(locations.transferLand(x, y))),

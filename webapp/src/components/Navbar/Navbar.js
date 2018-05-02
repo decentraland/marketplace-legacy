@@ -44,8 +44,9 @@ export default class Navbar extends React.PureComponent {
     const { wallet, center } = this.props
     return {
       [NAVBAR_PAGES.atlas]: locations.parcelMapDetail(center.x, center.y),
-      [NAVBAR_PAGES.profile]: locations.profilePage(wallet.address),
       [NAVBAR_PAGES.marketplace]: locations.marketplace,
+      [NAVBAR_PAGES.dashboard]: locations.dashboard,
+      [NAVBAR_PAGES.profile]: locations.profilePage(wallet.address),
       [NAVBAR_PAGES.activity]: locations.activity,
       [NAVBAR_PAGES.signIn]: locations.signIn
     }
@@ -124,29 +125,12 @@ export default class Navbar extends React.PureComponent {
         >
           <Icon name="close" />
         </Responsive>
-        <Menu.Item
-          href={navigationPaths[NAVBAR_PAGES.atlas]}
-          active={activePage === NAVBAR_PAGES.atlas}
-          onClick={this.handleItemClick}
-        >
-          {t('global.atlas')}
-        </Menu.Item>
-        <Menu.Item
-          href={navigationPaths[NAVBAR_PAGES.marketplace]}
-          active={activePage === NAVBAR_PAGES.marketplace}
-          onClick={this.handleItemClick}
-        >
-          {t('global.marketplace')}
-        </Menu.Item>
+        {this.renderMenuItem('atlas')}
+        {this.renderMenuItem('marketplace')}
+        {this.renderMenuItem('dashboard')}
         {isConnected ? (
           <React.Fragment>
-            <Menu.Item
-              href={navigationPaths[NAVBAR_PAGES.profile]}
-              active={activePage === NAVBAR_PAGES.profile}
-              onClick={this.handleItemClick}
-            >
-              {t('navbar.my_land')}
-            </Menu.Item>
+            {this.renderMenuItem('profile')}
             <Responsive
               as={Menu.Item}
               maxWidth={Responsive.onlyTablet.minWidth}
@@ -164,6 +148,21 @@ export default class Navbar extends React.PureComponent {
           </React.Fragment>
         ) : null}
       </React.Fragment>
+    )
+  }
+
+  renderMenuItem(key) {
+    const { activePage } = this.props
+    const navigationPaths = this.getNavigationPaths()
+
+    return (
+      <Menu.Item
+        href={navigationPaths[NAVBAR_PAGES[key]]}
+        active={activePage === NAVBAR_PAGES[key]}
+        onClick={this.handleItemClick}
+      >
+        {t(`global.${key}`)}
+      </Menu.Item>
     )
   }
 
