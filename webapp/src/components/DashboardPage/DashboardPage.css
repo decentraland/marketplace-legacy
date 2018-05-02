@@ -17,27 +17,30 @@
 }
 
 .DashboardPage h3,
-.DashboardPage .ui.card .content .description,
-.DashboardPage .ui.card .content .meta {
+.DashboardPage .ui.card .content .header {
   color: var(--text);
 }
 
-.DashboardPage .DashboardStats .ui.card .content .meta {
-  margin-bottom: 3px;
+.DashboardPage .ui.card .content .description {
+  color: var(--gray);
 }
 
-.DashboardPage .DashboardStats .ui.card .content .description {
+.DashboardPage .DashboardStats .ui.card .content {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  text-align: center;
+}
+
+.DashboardPage .DashboardStats .ui.card .content .header {
   font-size: 30px;
   font-weight: bold;
-  margin: 20px 0px 10px 0px;
 }
 
 .DashboardPage .DashboardPublications .ui.card .content .description {
   top: 2px;
-  left: calc(40px + 1em);
   position: relative;
-  display: inline-block;
-  max-width: calc(100% - 40px - 1em);
+  display: inline;
+  color: var(--text);
 }
 
 .DashboardPage .DashboardPublications .price {
@@ -51,8 +54,9 @@
 .DashboardPage .parcel-preview-container {
   width: 40px;
   height: 40px;
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
+  margin-right: 14px;
   border-radius: 5px;
+  float: left;
+  overflow: hidden;
+  display: inline-block;
 }

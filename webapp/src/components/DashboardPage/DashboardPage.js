@@ -55,20 +55,20 @@ export default class DashboardPage extends React.PureComponent {
     return (
       <Card.Group className="DashboardStats" stackable={true} itemsPerRow={4}>
         <Card
-          meta={t('dashboard.land_owners')}
-          description={stats.landOwnersCount.toLocaleString()}
+          header={stats.landOwnersCount.toLocaleString()}
+          description={t('dashboard.land_owners')}
         />
         <Card
-          meta={t('dashboard.active_users')}
-          description={stats.activeUsersCount.toLocaleString()}
+          header={stats.activeUsersCount.toLocaleString()}
+          description={t('dashboard.active_users')}
         />
         <Card
-          meta={t('dashboard.land_traded')}
-          description={stats.totalLandTraded.toLocaleString()}
+          header={stats.totalLandTraded.toLocaleString()}
+          description={t('dashboard.land_traded')}
         />
         <Card
-          meta={t('dashboard.land_on_sale')}
-          description={stats.totalLandOnSale.toLocaleString()}
+          header={stats.totalLandOnSale.toLocaleString()}
+          description={t('dashboard.land_on_sale')}
         />
       </Card.Group>
     )
