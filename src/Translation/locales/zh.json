@@ -207,7 +207,16 @@
     "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
     "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作LAND",
     "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND",
-    "authorization": "授权"
+    "authorization": "授权",
+    "you_approved_mortgage_mana":
+      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+    "approve_mortgage_mana":
+      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+    "you_approved_mortgage_rcn":
+      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+    "approve_mortgage_rcn":
+      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
+    "mortgage_contract": "Mortgage contract"
   },
   "transfer_mana": {
     "title": "转移MANA",
