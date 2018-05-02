@@ -1,3 +1,4 @@
+import { txUtils } from 'decentraland-eth'
 import { Model } from 'decentraland-commons'
 
 import { Parcel } from '../Parcel'
@@ -16,13 +17,11 @@ export class DashboardService {
       activeUsersCount,
       totalLandTraded,
       totalLandOnSale
-      // ,latestSaleTransactions
     ] = await Promise.all([
       this.countLandOwners(),
       this.countActiveUsers(),
       this.countTotalLandTraded(),
       this.countTotalLandOnSale()
-      // this.findLatestSaleTransactions()
     ])
 
     return {
@@ -30,7 +29,6 @@ export class DashboardService {
       activeUsersCount,
       totalLandTraded,
       totalLandOnSale
-      // ,latestSaleTransactions
     }
   }
 
@@ -51,7 +49,7 @@ export class DashboardService {
 
   async countTotalLandTraded() {
     return await this.count(
-      `SELECT COUNT(DISTINCT(owner)) as count
+      `SELECT COUNT(owner) as count
         FROM ${this.Publication.tableName}
         WHERE status = $1`,
       [this.Publication.STATUS.sold]
@@ -60,10 +58,12 @@ export class DashboardService {
 
   async countTotalLandOnSale() {
     return await this.count(
-      `SELECT COUNT(DISTINCT(owner)) as count
+      `SELECT COUNT(owner) as count
         FROM ${this.Publication.tableName}
-        WHERE status = $1`,
-      [this.Publication.STATUS.open]
+        WHERE status = $1
+        AND tx_status = $2
+        AND expires_at >= EXTRACT(epoch from now()) * 1000`,
+      [this.Publication.STATUS.open, txUtils.TRANSACTION_STATUS.confirmed]
     )
   }
 
