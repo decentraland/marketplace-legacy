@@ -39,6 +39,7 @@
     "decentraland-commons": "^4.0.1",
     "decentraland-eth": "^2.0.0",
     "dotenv": "^5.0.1",
+    "ethereumjs-abi": "^0.6.5",
     "express": "^4.16.2",
     "flat": "^4.0.0",
     "newrelic": "^3.3.0",
