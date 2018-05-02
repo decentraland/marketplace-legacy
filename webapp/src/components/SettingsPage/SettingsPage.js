@@ -41,6 +41,16 @@ export default class SettingsPage extends React.PureComponent {
     }
   }
 
+  handleMortgageForManaApproval = (event, data) => {
+    //TODO: change this handler for Mortgage Mana
+    this.props.onAuthorizeLand(data.checked)
+  }
+
+  handleMortgageForRCNApproval = (event, data) => {
+    //TODO: change this handler for Mortgage RCN
+    this.props.onAuthorizeLand(data.checked)
+  }
+
   getApproveTransaction() {
     // Transactions are ordered, the last one corresponds to the last sent
     const { approveManaTransactions } = this.props.wallet
@@ -53,6 +63,22 @@ export default class SettingsPage extends React.PureComponent {
     return authorizeLandTransactions[authorizeLandTransactions.length - 1]
   }
 
+  getApproveMortgageForManaTransaction() {
+    // Transactions are ordered, the last one corresponds to the last sent
+    const { approveMortgageForManaTransactions } = this.props.wallet
+    return approveMortgageForManaTransactions[
+      approveMortgageForManaTransactions.length - 1
+    ]
+  }
+
+  getApproveMortgageForRCNTransaction() {
+    // Transactions are ordered, the last one corresponds to the last sent
+    const { approveMortgageForRCNTransactions } = this.props.wallet
+    return approveMortgageForRCNTransactions[
+      approveMortgageForRCNTransactions.length - 1
+    ]
+  }
+
   render() {
     const { isLoading, isConnected, wallet } = this.props
     const {
@@ -60,7 +86,9 @@ export default class SettingsPage extends React.PureComponent {
       balance,
       derivationPath,
       approvedBalance,
-      isLandAuthorized
+      isLandAuthorized,
+      isMortgageApprovedForMana,
+      isMortgageApprovedForRCN
     } = wallet
 
     if (isLoading) {
@@ -97,6 +125,13 @@ export default class SettingsPage extends React.PureComponent {
                   isLandAuthorized={isLandAuthorized}
                   authorizeTransaction={this.getAuthorizeTransaction()}
                   onLandAuthorizedChange={this.handleLandAuthorization}
+                  isMortgageApprovedForMana={isMortgageApprovedForMana}
+                  isMortgageApprovedForRCN={isMortgageApprovedForRCN}
+                  onMortgageApprovedForManaChange={this.handleMortgageForManaApproval}
+                  onMortgageApprovedForRCNChange={this.handleMortgageForRCNApproval}
+                  approveMortgageForManaTransaction={this.getApproveMortgageForManaTransaction()}
+                  approveMortgageForRCNTransaction={this.getApproveMortgageForRCNTransaction()}
+
                 />
               ) : (
                 <p className="sign-in">

@@ -220,7 +220,16 @@
     "you_authorized": "{marketplace_contract_link}을(를) 승인했습니다.",
     "authorize":
       "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
-    "authorization": "권한 부여"
+    "authorization": "권한 부여",
+    "you_approved_mortgage_mana":
+      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+    "approve_mortgage_mana":
+      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+    "you_approved_mortgage_rcn":
+      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+    "approve_mortgage_rcn":
+      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
+    "mortgage_contract": "Mortgage contract"
   },
   "transfer_mana": {
     "title": "MANA 이전",

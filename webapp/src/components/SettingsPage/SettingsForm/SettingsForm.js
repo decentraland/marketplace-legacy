@@ -8,7 +8,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
 import DerivationPathDropdown from './DerivationPathDropdown'
 
-import { getMarketplaceAddress } from 'modules/wallet/utils'
+import { getMarketplaceAddress, getMortgageAddress } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 
@@ -26,7 +26,13 @@ export default class SettingsForm extends React.PureComponent {
     onManaApprovedChange: PropTypes.func,
     isLandAuthorized: PropTypes.bool,
     authorizeTransaction: PropTypes.object,
-    onLandAuthorizedChange: PropTypes.func
+    onLandAuthorizedChange: PropTypes.func,
+    isMortgageApprovedForMana: PropTypes.bool,
+    isMortgageApprovedForRCN: PropTypes.bool,
+    onMortgageApprovedForManaChange: PropTypes.func,
+    onMortgageApprovedForRCNChange: PropTypes.func,
+    approveMortgageForManaTransaction: PropTypes.object,
+    approveMortgageForRCNTransaction: PropTypes.object
   }
 
   static defaultProps = {
@@ -37,6 +43,14 @@ export default class SettingsForm extends React.PureComponent {
     return (
       <EtherscanLink address={getMarketplaceAddress()}>
         {t('settings.marketplace_contract')}
+      </EtherscanLink>
+    )
+  }
+
+  renderMortgageLink() {
+    return (
+      <EtherscanLink address={getMortgageAddress()}>
+        {t('settings.mortgage_contract')}
       </EtherscanLink>
     )
   }
@@ -53,13 +67,29 @@ export default class SettingsForm extends React.PureComponent {
       onManaApprovedChange,
       isLandAuthorized,
       authorizeTransaction,
-      onLandAuthorizedChange
+      onLandAuthorizedChange,
+      isMortgageApprovedForMana,
+      isMortgageApprovedForRCN,
+      onMortgageApprovedForManaChange,
+      onMortgageApprovedForRCNChange,
+      approveMortgageForManaTransaction,
+      approveMortgageForRCNTransaction
     } = this.props
 
     const isApprovePending = txUtils.isPending(approveTransaction)
     const isAuthorizePending = txUtils.isPending(authorizeTransaction)
+    const isMortgageApprovedForManaPending = txUtils.isPending(
+      approveMortgageForManaTransaction
+    )
+    const isMortgageApprovedForRCNPending = txUtils.isPending(
+      approveMortgageForRCNTransaction
+    )
 
-    const isPending = isApprovePending || isAuthorizePending
+    const isPending =
+      isApprovePending ||
+      isAuthorizePending ||
+      isMortgageApprovedForManaPending ||
+      isMortgageApprovedForRCNPending
 
     return (
       <Form className={`SettingsForm ${isPending ? 'tx-pending' : ''}`}>
@@ -139,6 +169,56 @@ export default class SettingsForm extends React.PureComponent {
                 <TxStatus.Text
                   txHash={authorizeTransaction.hash}
                   txStatus={authorizeTransaction.status}
+                />
+              )}
+            </div>
+          </Form.Field>
+
+          <Form.Field>
+            <Checkbox
+              checked={isMortgageApprovedForMana}
+              disabled={isMortgageApprovedForManaPending}
+              onChange={onMortgageApprovedForManaChange}
+            />
+
+            <div className="authorize-detail">
+              {isMortgageApprovedForMana
+                ? t_html('settings.you_approved_mortgage_mana', {
+                    mortgage_contract_link: this.renderMortgageLink()
+                  })
+                : t_html('settings.approve_mortgage_mana', {
+                    mortgage_contract_link: this.renderMortgageLink()
+                  })}
+
+              {isMortgageApprovedForManaPending && (
+                <TxStatus.Text
+                  txHash={approveMortgageForManaTransaction.hash}
+                  txStatus={approveMortgageForManaTransaction.status}
+                />
+              )}
+            </div>
+          </Form.Field>
+
+          <Form.Field>
+            <Checkbox
+              checked={isMortgageApprovedForRCN}
+              disabled={isMortgageApprovedForRCNPending}
+              onChange={onMortgageApprovedForRCNChange}
+            />
+
+            <div className="authorize-detail">
+              {isMortgageApprovedForRCN
+                ? t_html('settings.you_approved_mortgage_rcn', {
+                    mortgage_contract_link: this.renderMortgageLink()
+                  })
+                : t_html('settings.approve_mortgage_rcn', {
+                    mortgage_contract_link: this.renderMortgageLink()
+                  })}
+
+              {isMortgageApprovedForRCNPending && (
+                <TxStatus.Text
+                  txHash={approveMortgageForRCNTransaction.hash}
+                  txStatus={approveMortgageForRCNTransaction.status}
                 />
               )}
             </div>

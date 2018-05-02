@@ -233,7 +233,16 @@
       "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom.",
     "authorize":
       "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
-    "authorization": "Autorisation"
+    "authorization": "Autorisation",
+    "you_approved_mortgage_mana":
+      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+    "approve_mortgage_mana":
+      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+    "you_approved_mortgage_rcn":
+      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+    "approve_mortgage_rcn":
+      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
+    "mortgage_contract": "Mortgage contract"
   },
   "transfer_mana": {
     "title": "Transférer MANA",

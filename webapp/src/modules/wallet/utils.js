@@ -46,6 +46,13 @@ export function getMarketplaceAddress() {
   return marketplaceContract.address
 }
 
+export function getMortgageAddress() {
+  // TODO: instance mortagage contract (?)
+  return 'mortgageAddress'
+  //const mortgageContract = eth.getContract('Mortgage')
+  //return mortgageContract.address
+}
+
 export async function sendTransaction(tx) {
   const web3 = eth.wallet.getWeb3()
   return await utils.promisify(web3.eth.sendTransaction)(tx)

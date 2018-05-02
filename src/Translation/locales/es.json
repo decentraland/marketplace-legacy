@@ -229,7 +229,16 @@
       "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
     "authorize":
       "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
-    "authorization": "Autorización"
+    "authorization": "Autorización",
+    "you_approved_mortgage_mana":
+      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+    "approve_mortgage_mana":
+      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+    "you_approved_mortgage_rcn":
+      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+    "approve_mortgage_rcn":
+      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
+    "mortgage_contract": "Mortgage contract"
   },
   "transfer_mana": {
     "title": "Transferir MANA",
