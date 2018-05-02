@@ -127,11 +127,14 @@ export default class SettingsPage extends React.PureComponent {
                   onLandAuthorizedChange={this.handleLandAuthorization}
                   isMortgageApprovedForMana={isMortgageApprovedForMana}
                   isMortgageApprovedForRCN={isMortgageApprovedForRCN}
-                  onMortgageApprovedForManaChange={this.handleMortgageForManaApproval}
-                  onMortgageApprovedForRCNChange={this.handleMortgageForRCNApproval}
+                  onMortgageApprovedForManaChange={
+                    this.handleMortgageForManaApproval
+                  }
+                  onMortgageApprovedForRCNChange={
+                    this.handleMortgageForRCNApproval
+                  }
                   approveMortgageForManaTransaction={this.getApproveMortgageForManaTransaction()}
                   approveMortgageForRCNTransaction={this.getApproveMortgageForRCNTransaction()}
-
                 />
               ) : (
                 <p className="sign-in">
