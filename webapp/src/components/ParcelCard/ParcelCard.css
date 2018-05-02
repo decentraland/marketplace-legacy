@@ -40,6 +40,10 @@
   font-size: 15px;
   margin-bottom: 5px;
   color: var(--text);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 70%;
+  white-space: nowrap;
 }
 
 .ParcelCard .mana {

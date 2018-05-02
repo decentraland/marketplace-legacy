@@ -22,13 +22,11 @@ export default class ParcelCard extends React.PureComponent {
     debounce: PropTypes.number
   }
 
-  getParcelName() {
-    return this.props.parcel.data.name || 'Parcel'
-  }
-
   render() {
     const { parcel, debounce } = this.props
     const { x, y, publication } = parcel
+
+    const parcelName = this.props.parcel.data.name || 'Parcel'
 
     return (
       <Card className="ParcelCard">
@@ -37,7 +35,7 @@ export default class ParcelCard extends React.PureComponent {
             <ParcelPreview x={x} y={y} debounce={debounce} size={12} />
           </div>
           <Card.Content className="body">
-            <Card.Description>{this.getParcelName()}</Card.Description>
+            <Card.Description title={parcelName}>{parcelName}</Card.Description>
             {isOpen(publication) ? (
               <React.Fragment>
                 <Card.Meta title={formatDate(publication.expires_at)}>
