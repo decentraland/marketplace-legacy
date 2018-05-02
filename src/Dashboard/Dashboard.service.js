@@ -70,7 +70,7 @@ export class DashboardService {
   async findLatestSaleTransactions() {
     return await this.Publication.find(
       { status: this.Publication.STATUS.sold },
-      { created_at: 'DESC' },
+      { block_time_created_at: 'DESC' },
       'LIMIT 10'
     )
   }
