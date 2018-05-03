@@ -46,16 +46,16 @@
     "reselect": "^3.0.1",
     "semantic-ui-css": "^2.2.14",
     "semantic-ui-react": "^0.78.2",
-    "webpack": "^3.10.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "eslint": "4.10.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.5.1",
     "prettier": "^1.10.2",
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
     "source-map-explorer": "^1.5.0"
   }
 }
