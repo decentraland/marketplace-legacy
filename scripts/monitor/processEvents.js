@@ -155,12 +155,12 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-      const [last_transfered_at] = await Promise.all([
+      const [last_transferred_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
         Publication.cancelOlder(x, y, block_number)
       ])
       await Parcel.update(
-        { owner: to.toLowerCase(), last_transfered_at },
+        { owner: to.toLowerCase(), last_transferred_at },
         { id: parcelId }
       )
       break

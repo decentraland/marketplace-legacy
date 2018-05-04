@@ -49,7 +49,7 @@ export default class ParcelCard extends React.PureComponent {
               <Card.Meta>
                 {t('publication.acquired_at', {
                   date: formatDate(
-                    parcel.last_transfered_at || AUCTION_DATE,
+                    parcel.last_transferred_at || AUCTION_DATE,
                     'MMMM Do, YYYY'
                   )
                 })}

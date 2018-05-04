@@ -16,7 +16,8 @@ export class Parcel extends Model {
     'owner',
     'data',
     'district_id',
-    'tags'
+    'tags',
+    'last_transferred_at'
   ]
 
   static buildId(x, y) {
