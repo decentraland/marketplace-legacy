@@ -19,6 +19,8 @@ import {
   BUY_MANA_REQUEST,
   UPDATE_DERIVATION_PATH,
   BUY_MANA_SUCCESS,
+  APPROVE_MORTGAGE_FOR_MANA_REQUEST,
+  APPROVE_MORTGAGE_FOR_RCN_REQUEST,
   connectWalletRequest,
   connectWalletSuccess,
   connectWalletFailure,
@@ -31,7 +33,11 @@ import {
   buyManaSuccess,
   buyManaFailure,
   updateBalance,
-  updateEthBalance
+  updateEthBalance,
+  approveMortgageForManaSuccess,
+  approveMortgageForManaFailure,
+  approveMortgageForRCNSuccess,
+  approveMortgageForRCNFailure
 } from './actions'
 import { getData } from './selectors'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
@@ -40,6 +46,7 @@ import { watchLoadingTransactions } from 'modules/transaction/actions'
 import {
   connectEthereumWallet,
   getMarketplaceAddress,
+  getMortgageAddress,
   sendTransaction,
   fetchBalance
 } from './utils'
@@ -51,6 +58,14 @@ export function* walletSaga() {
   yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
   yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
   yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
+  yield takeLatest(
+    APPROVE_MORTGAGE_FOR_MANA_REQUEST,
+    handleApproveMortgageForManaRequest
+  )
+  yield takeLatest(
+    APPROVE_MORTGAGE_FOR_RCN_REQUEST,
+    handleApproveMortgageForRCNRequest
+  )
   yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
 }
 
@@ -73,22 +88,28 @@ function* handleConnectWalletRequest(action = {}) {
 
     const manaTokenContract = eth.getContract('MANAToken')
     const landRegistryContract = eth.getContract('LANDRegistry')
+    const rcnTokenContract = eth.getContract('RCNToken')
     const marketplaceAddress = getMarketplaceAddress()
+    const mortgageAddress = getMortgageAddress()
+
 
     const [
       network,
       balance,
       ethBalance,
       approvedBalance,
-      isLandAuthorized
+      isLandAuthorized,
+      isMortgageApprovedForMana,
+      isMortgageApprovedForRCN
     ] = yield all([
       eth.getNetwork(),
       manaTokenContract.balanceOf(address),
       fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
-      landRegistryContract.isApprovedForAll(marketplaceAddress, address)
+      landRegistryContract.isApprovedForAll(marketplaceAddress, address),
+      manaTokenContract.allowance(address, mortgageAddress),
+      rcnTokenContract.allowance(address, mortgageAddress)
     ])
-
     const wallet = {
       network: network.name,
       type: eth.wallet.type,
@@ -97,7 +118,9 @@ function* handleConnectWalletRequest(action = {}) {
       balance,
       ethBalance,
       approvedBalance,
-      isLandAuthorized
+      isLandAuthorized,
+      isMortgageApprovedForMana: isMortgageApprovedForMana > 0,
+      isMortgageApprovedForRCN: isMortgageApprovedForRCN > 0
     }
     yield handleConnectWalletSuccess(address)
     yield put(connectWalletSuccess(wallet))
@@ -195,4 +218,34 @@ function* handleTransactionSuccess(action) {
     // ..
   }
   yield null
+}
+
+function* handleApproveMortgageForManaRequest(action) {
+  try {
+    const mana = action.mana
+    const manaTokenContract = eth.getContract('MANAToken')
+
+    const txHash = yield call(() =>
+      manaTokenContract.approve(getMortgageAddress(), mana)
+    )
+
+    yield put(approveMortgageForManaSuccess(txHash, mana))
+  } catch (error) {
+    yield put(approveMortgageForManaFailure(error.message))
+  }
+}
+
+function* handleApproveMortgageForRCNRequest(action) {
+  try {
+    const rcn = action.rcn
+    const rcnTokenContract = eth.getContract('RCNToken')
+
+    const txHash = yield call(() =>
+      rcnTokenContract.approve(getMortgageAddress(), rcn)
+    )
+
+    yield put(approveMortgageForRCNSuccess(txHash, rcn))
+  } catch (error) {
+    yield put(approveMortgageForRCNFailure(error.message))
+  }
 }

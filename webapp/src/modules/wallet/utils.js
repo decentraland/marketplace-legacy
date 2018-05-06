@@ -4,7 +4,13 @@ import { isMobile } from 'lib/utils'
 
 export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
-    const { MANAToken, LANDRegistry, Marketplace } = contracts
+    const {
+      MANAToken,
+      LANDRegistry,
+      Marketplace,
+      Mortgage,
+      RCNToken
+    } = contracts
     const { LedgerWallet, NodeWallet } = wallets
     const { address, derivationPath } = options
 
@@ -13,7 +19,9 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       contracts: [
         new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
         new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
-        new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS'))
+        new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
+        new Mortgage(env.get('REACT_APP_MORTGAGE_CONTRACT_ADDRESS')),
+        new RCNToken(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
       ],
       wallets: isMobile()
         ? [new NodeWallet(address)]
@@ -41,16 +49,18 @@ export function getManaToApprove() {
   return Math.pow(2, 180)
 }
 
+export function getRCNToApprove() {
+  return Math.pow(2, 180)
+}
+
 export function getMarketplaceAddress() {
   const marketplaceContract = eth.getContract('Marketplace')
   return marketplaceContract.address
 }
 
 export function getMortgageAddress() {
-  // TODO: instance mortagage contract (?)
-  return 'mortgageAddress'
-  //const mortgageContract = eth.getContract('Mortgage')
-  //return mortgageContract.address
+  const mortgageContract = eth.getContract('Mortgage')
+  return mortgageContract.address
 }
 
 export async function sendTransaction(tx) {

@@ -16,7 +16,7 @@ import {
   distanceInWordsToNow,
   buildCoordinate
 } from 'lib/utils'
-import { getMarketplaceAddress } from 'modules/wallet/utils'
+import { getMarketplaceAddress, getMortgageAddress } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 import { getEtherscanHref } from 'modules/transaction/utils'
 
@@ -24,7 +24,9 @@ import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
   TRANSFER_MANA_SUCCESS,
-  BUY_MANA_SUCCESS
+  BUY_MANA_SUCCESS,
+  APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
+  APPROVE_MORTGAGE_FOR_RCN_SUCCESS
 } from 'modules/wallet/actions'
 import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
@@ -55,6 +57,12 @@ export default class Transaction extends React.PureComponent {
       <EtherscanLink address={getMarketplaceAddress()}>
         Marketplace
       </EtherscanLink>
+    )
+  }
+
+  renderMortgageLink() {
+    return (
+      <EtherscanLink address={getMortgageAddress()}>Mortgage</EtherscanLink>
     )
   }
 
@@ -147,6 +155,26 @@ export default class Transaction extends React.PureComponent {
 
         return t_html('transaction.buy_mana', {
           mana: formatMana(mana, '')
+        })
+      }
+
+      case APPROVE_MORTGAGE_FOR_MANA_SUCCESS: {
+        return t_html('transaction.mortgage_mana', {
+          action: (payload.mana > 0
+            ? t('global.authorized')
+            : t('global.unauthorized')
+          ).toLowerCase(),
+          mortgage_contract_link: this.renderMortgageLink()
+        })
+      }
+
+      case APPROVE_MORTGAGE_FOR_RCN_SUCCESS: {
+        return t_html('transaction.mortgage_rcn', {
+          action: (payload.rcn > 0
+            ? t('global.authorized')
+            : t('global.unauthorized')
+          ).toLowerCase(),
+          mortgage_contract_link: this.renderMortgageLink()
         })
       }
       default:

@@ -8,7 +8,11 @@ import AddressBlock from 'components/AddressBlock'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
-import { getManaToApprove, isLedgerWallet } from 'modules/wallet/utils'
+import {
+  getManaToApprove,
+  isLedgerWallet,
+  getRCNToApprove
+} from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 
 import './SettingsPage.css'
@@ -20,7 +24,9 @@ export default class SettingsPage extends React.PureComponent {
     isConnected: PropTypes.bool,
     onApproveMana: PropTypes.func,
     onAuthorizeLand: PropTypes.func,
-    onUpdateDerivationPath: PropTypes.func
+    onUpdateDerivationPath: PropTypes.func,
+    onAuthorizeMortgageForMana: PropTypes.func,
+    onAuthorizeMortgageForRCN: PropTypes.func
   }
 
   handleManaApproval = (event, data) => {
@@ -42,13 +48,13 @@ export default class SettingsPage extends React.PureComponent {
   }
 
   handleMortgageForManaApproval = (event, data) => {
-    //TODO: change this handler for Mortgage Mana
-    this.props.onAuthorizeLand(data.checked)
+    const manaToApprove = data.checked ? getManaToApprove() : 0
+    this.props.onAuthorizeMortgageForMana(manaToApprove)
   }
 
   handleMortgageForRCNApproval = (event, data) => {
-    //TODO: change this handler for Mortgage RCN
-    this.props.onAuthorizeLand(data.checked)
+    const rcnToApprove = data.checked ? getRCNToApprove() : 0
+    this.props.onAuthorizeMortgageForRCN(rcnToApprove)
   }
 
   getApproveTransaction() {
