@@ -6,7 +6,6 @@ import { locations } from 'locations'
 import { getWallet } from 'modules/wallet/selectors'
 import { getParcels } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
-import { getPublications } from 'modules/publication/selectors'
 import { changeRange, setLoading } from 'modules/ui/actions'
 import { navigateTo } from 'modules/location/actions'
 import { getMarker } from './utils'
@@ -16,14 +15,12 @@ const mapState = (state, { isReady, match, location }) => {
   const wallet = getWallet(state)
   const parcels = getParcels(state)
   const districts = getDistricts(state)
-  const publications = getPublications(state)
 
   return {
     isReady,
     center: match.params, // from withRouter
     parcels,
     districts,
-    publications,
     wallet,
     marker: getMarker(location)
   }

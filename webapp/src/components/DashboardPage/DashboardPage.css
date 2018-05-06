@@ -1,0 +1,62 @@
+.DashboardPage .empty {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  color: var(--gray);
+  font-size: 16px;
+}
+
+.DashboardPage .stats-grid,
+.DashboardPage .latest-transactions-grid {
+  margin-bottom: 64px;
+}
+
+.DashboardPage h3 {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.DashboardPage h3,
+.DashboardPage .ui.card .content .header {
+  color: var(--text);
+}
+
+.DashboardPage .ui.card .content .description {
+  color: var(--gray);
+}
+
+.DashboardPage .DashboardStats .ui.card .content {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  text-align: center;
+}
+
+.DashboardPage .DashboardStats .ui.card .content .header {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.DashboardPage .DashboardPublications .ui.card .content .description {
+  top: 2px;
+  position: relative;
+  display: inline;
+  color: var(--text);
+}
+
+.DashboardPage .DashboardPublications .price {
+  color: var(--light-blue);
+}
+
+.DashboardPage .DashboardPublications .date {
+  color: var(--gray);
+}
+
+.DashboardPage .parcel-preview-container {
+  width: 40px;
+  height: 40px;
+  margin-right: 14px;
+  border-radius: 5px;
+  float: left;
+  overflow: hidden;
+  display: inline-block;
+}

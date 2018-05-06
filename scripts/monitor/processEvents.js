@@ -1,5 +1,5 @@
-import { eth, txUtils } from 'decentraland-eth'
-import { contracts, Log } from 'decentraland-commons'
+import { contracts, eth, txUtils } from 'decentraland-eth'
+import { Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
@@ -155,12 +155,12 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-      const [last_transfered_at] = await Promise.all([
+      const [last_transferred_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
         Publication.cancelOlder(x, y, block_number)
       ])
       await Parcel.update(
-        { owner: to.toLowerCase(), last_transfered_at },
+        { owner: to.toLowerCase(), last_transferred_at },
         { id: parcelId }
       )
       break

@@ -9,6 +9,8 @@
   "global": {
     "atlas": "Atlas",
     "marketplace": "Mercado",
+    "dashboard": "Dashboard",
+    "profile": "Mi LAND",
     "activity": "Actividad",
     "parcels": "Parcelas",
     "contributions": "Contribuciones",
@@ -36,9 +38,6 @@
   "address": {
     "its_you": "Eres tú!"
   },
-  "navbar": {
-    "my_land": "Mi LAND"
-  },
   "atlas": {
     "owner": "Dueño: {owner}",
     "no_owner": "Sin Dueño",
@@ -54,6 +53,16 @@
       "cheapest": "Más baratas",
       "close_to_expire": "Por terminar"
     }
+  },
+  "dashboard": {
+    "stats_title": "Estadísticas",
+    "transactions_title": "Últimas transacciones",
+    "land_owners": "Dueños de LAND",
+    "active_users": "Usuarios activos",
+    "land_traded": "LAND intercambiada",
+    "land_on_sale": "LAND a la venta",
+    "transaction_description":
+      "Parcela {parcel_link} vendida por {seller_link} a {buyer_link} por {price}"
   },
   "profile_page": {
     "empty": "El usuario no tiene {content}",

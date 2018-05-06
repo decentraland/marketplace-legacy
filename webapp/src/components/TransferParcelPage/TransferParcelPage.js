@@ -5,9 +5,8 @@ import { Container, Message } from 'semantic-ui-react'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
-import { publicationType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
-import { hasPublication } from 'lib/parcelUtils'
+import { isOnSale } from 'lib/parcelUtils'
 import { buildCoordinate } from 'lib/utils'
 import { locations } from 'locations'
 
@@ -21,21 +20,20 @@ export default class TransferParcelPage extends React.PureComponent {
     y: PropTypes.number.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
     transferError: PropTypes.string,
-    publications: PropTypes.objectOf(publicationType),
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCleanTransfer: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, isTxIdle, transferError, publications } = this.props
+    const { x, y, isTxIdle, transferError } = this.props
     const { onSubmit, onCancel, onCleanTransfer } = this.props
 
     return (
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
           <div className="TransferParcelPage">
-            {hasPublication(parcel, publications) ? (
+            {isOnSale(parcel) ? (
               <Container text>
                 <Message
                   warning

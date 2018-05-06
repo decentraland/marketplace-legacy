@@ -9,6 +9,8 @@
   "global": {
     "atlas": "지도",
     "marketplace": "시장",
+    "dashboard": "계기반",
+    "profile": "나의 토지",
     "activity": "활동",
     "parcels": "필지",
     "contributions": "공헌",
@@ -36,9 +38,6 @@
   "address": {
     "its_you": "너야"
   },
-  "navbar": {
-    "my_land": "나의 토지"
-  },
   "atlas": {
     "owner": "소유자 : {owner}",
     "no_owner": "소유자 없음",
@@ -54,6 +53,16 @@
       "cheapest": "가장 저렴한",
       "close_to_expire": "가장 빨리 만료되는"
     }
+  },
+  "dashboard": {
+    "stats_title": "일부 숫자",
+    "transactions_title": "최근 거래",
+    "land_owners": "토지 소유자",
+    "active_users": "LAND소유자",
+    "land_traded": "활성 사용자",
+    "land_on_sale": "LAND거래",
+    "transaction_description":
+      "{price}에 대해 {seller_link}에서 {buyer_link} (으)로 판매 된 소포 {parcel_link}"
   },
   "profile_page": {
     "empty": "사용자에게는 {content}가 없습니다.",
