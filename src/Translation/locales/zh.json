@@ -184,7 +184,9 @@
     "publish": "您发布了{parcel_link}地块",
     "buy": "您买入了{parcel_link}地块",
     "cancel": "您取消了{parcel_link}上的{publication_link}",
-    "buy_mana": "你已经买了{MANA} MANA"
+    "buy_mana": "你已经买了{MANA} MANA",
+    "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf",
+    "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf"
   },
   "transaction_status": {
     "see_activity": "要查看您的交易记录，请访问您的{activity_link}。",

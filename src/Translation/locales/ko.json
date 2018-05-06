@@ -188,7 +188,9 @@
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
-    "buy_mana": "너는 {mana} MANA를 구입했다."
+    "buy_mana": "너는 {mana} MANA를 구입했다.",
+    "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf",
+    "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf"
   },
   "transaction_status": {
     "see_activity": "거래 내역을 보려면 {activity_link}을 방문하십시오.",

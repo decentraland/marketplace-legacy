@@ -192,7 +192,9 @@
     "publish": "Has publicado {parcel_link}",
     "buy": "Has comprado {parcel_link}",
     "cancel": "Has cancelado {publication_link} de {parcel_link}",
-    "buy_mana": "Has comprado {mana} MANA"
+    "buy_mana": "Has comprado {mana} MANA",
+    "mortgage_mana": "Has {action} al {mortgage_contract_link} para operar MANA por tu cuenta.",
+    "mortgage_rcn": "Has {action} al {mortgage_contract_link} para operar RCN por tu cuenta."
   },
   "transaction_status": {
     "see_activity":
