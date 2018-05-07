@@ -92,7 +92,6 @@ function* handleConnectWalletRequest(action = {}) {
     const marketplaceAddress = getMarketplaceAddress()
     const mortgageAddress = getMortgageAddress()
 
-
     const [
       network,
       balance,
