@@ -198,7 +198,9 @@
     "publish": "You published {parcel_link}",
     "buy": "You bought {parcel_link}",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
-    "buy_mana": "You bought {mana} MANA"
+    "buy_mana": "You bought {mana} MANA",
+    "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
+    "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf."
   },
   "transaction_status": {
     "see_activity":
@@ -234,7 +236,17 @@
       "You have authorized the {marketplace_contract_link} to operate LAND on your behalf",
     "authorize":
       "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
-    "authorization": "Authorization"
+    "authorization": "Authorization",
+    "you_approved_mortgage_mana":
+      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+    "approve_mortgage_mana":
+      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+    "you_approved_mortgage_rcn":
+      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+    "approve_mortgage_rcn":
+      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
+    "mortgage_contract":
+      "Mortgage contract"
   },
   "transfer_mana": {
     "title": "Transfer MANA",

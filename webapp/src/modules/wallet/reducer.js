@@ -10,7 +10,9 @@ import {
   UPDATE_ETH_BALANCE,
   BUY_MANA_REQUEST,
   BUY_MANA_SUCCESS,
-  BUY_MANA_FAILURE
+  BUY_MANA_FAILURE,
+  APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
+  APPROVE_MORTGAGE_FOR_RCN_SUCCESS
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
@@ -29,7 +31,9 @@ const INITIAL_STATE = {
     approvedBalance: null,
     isLandAuthorized: null,
     derivationPath: null,
-    locale: null
+    locale: null,
+    isMortgageApprovedForMana: null,
+    isMortgageApprovedForRCN: null
   },
   loading: [],
   error: null
@@ -102,6 +106,22 @@ export function walletReducer(state = INITIAL_STATE, action) {
             }
           }
         }
+        case APPROVE_MORTGAGE_FOR_MANA_SUCCESS:
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              isMortgageApprovedForMana: transaction.payload.mana > 0
+            }
+          }
+        case APPROVE_MORTGAGE_FOR_RCN_SUCCESS:
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              isMortgageApprovedForRCN: transaction.payload.rcn > 0
+            }
+          }
         default:
           return state
       }

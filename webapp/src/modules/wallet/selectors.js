@@ -4,7 +4,9 @@ import {
   AUTHORIZE_LAND_SUCCESS,
   CONNECT_WALLET_REQUEST,
   TRANSFER_MANA_REQUEST,
-  BUY_MANA_REQUEST
+  BUY_MANA_REQUEST,
+  APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
+  APPROVE_MORTGAGE_FOR_RCN_SUCCESS
 } from './actions'
 import { getAddresses } from 'modules/address/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
@@ -28,7 +30,26 @@ export const getWallet = createSelector(
     getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
   state =>
     getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
-  (wallet, addresses, approveManaTransactions, authorizeLandTransactions) => {
+  state =>
+    getTransactionsByType(
+      state,
+      getAddress(state),
+      APPROVE_MORTGAGE_FOR_MANA_SUCCESS
+    ),
+  state =>
+    getTransactionsByType(
+      state,
+      getAddress(state),
+      APPROVE_MORTGAGE_FOR_RCN_SUCCESS
+    ),
+  (
+    wallet,
+    addresses,
+    approveManaTransactions,
+    authorizeLandTransactions,
+    approveMortgageForManaTransactions,
+    approveMortgageForRCNTransactions
+  ) => {
     const address = addresses[wallet.address] || {}
     const {
       parcels = [],
@@ -44,7 +65,9 @@ export const getWallet = createSelector(
       contributions,
       contributionsById,
       approveManaTransactions,
-      authorizeLandTransactions
+      authorizeLandTransactions,
+      approveMortgageForManaTransactions,
+      approveMortgageForRCNTransactions
     }
   }
 )
