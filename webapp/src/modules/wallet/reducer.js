@@ -111,7 +111,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              isMortgageApprovedForMana: transaction.payload.isAuthorized
+              isMortgageApprovedForMana: transaction.payload.mana > 0
             }
           }
         case APPROVE_MORTGAGE_FOR_RCN_SUCCESS:
@@ -119,7 +119,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              isMortgageApprovedForRCN: transaction.payload.isAuthorized
+              isMortgageApprovedForRCN: transaction.payload.rcn > 0
             }
           }
         default:
