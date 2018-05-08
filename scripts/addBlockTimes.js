@@ -3,18 +3,17 @@
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env, utils } from 'decentraland-commons'
 
-import { db } from '../src/database'
+import { connectDatabase } from '../src/database'
 import { Publication } from '../src/Publication'
 import { BlockTimestampService } from '../src/BlockTimestamp'
 import { asyncBatch } from '../src/lib'
-import { loadEnv } from './utils'
 
-let BATCH_SIZE
+const BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
 const log = new Log('addBlockTimes')
 
 export async function addBlockTimes() {
   log.info('Connecting database')
-  await db.connect()
+  await connectDatabase()
 
   log.info('Connecting to Ethereum node')
   await eth.connect({
@@ -32,7 +31,9 @@ export async function addBlockTimes() {
 
 async function updateAllPublications() {
   try {
-    const publications = await Publication.find()
+    const publications = await Publication.findAll({
+      where: { block_time_created_at: null }
+    })
     await updateBlockTimes(publications)
   } catch (error) {
     log.error('Error, retrying', error.message)
@@ -42,8 +43,6 @@ async function updateAllPublications() {
 }
 
 async function updateBlockTimes(publications) {
-  publications = publications.filter(parcel => !parcel.block_time_created_at) // avoid adding a new method to Publication
-
   await asyncBatch({
     elements: publications,
     callback: async (publicationsBatch, batchedCount) => {
@@ -55,10 +54,7 @@ async function updateBlockTimes(publications) {
         const block_time_created_at = await new BlockTimestampService().getBlockTime(
           publication.block_number
         )
-        return Publication.update(
-          { block_time_created_at },
-          { tx_hash: publication.tx_hash }
-        )
+        return publication.update({ block_time_created_at })
       })
 
       await Promise.all(updates)
@@ -68,11 +64,7 @@ async function updateBlockTimes(publications) {
 }
 
 if (require.main === module) {
-  loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
-
-  Promise.resolve()
-    .then(addBlockTimes)
-    .catch(console.error)
+  addBlockTimes()
+    .catch(error => log.error(error))
+    .then(() => process.exit())
 }

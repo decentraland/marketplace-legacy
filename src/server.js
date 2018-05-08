@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import { eth, contracts } from 'decentraland-eth'
 import { server, env, utils } from 'decentraland-commons'
 
-import { db } from './database'
+import { connectDatabase } from './database'
 import { Parcel } from './Parcel'
 import { Contribution } from './Contribution'
 import { District } from './District'
@@ -17,8 +17,6 @@ import {
 import { Translation } from './Translation'
 import { DashboardService } from './Dashboard'
 import { blacklist } from './lib'
-
-env.load()
 
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
 
@@ -65,7 +63,7 @@ export async function getTranslations(req) {
 app.get('/api/dashboard/stats', server.handleRequest(getDashboardStats))
 
 export async function getDashboardStats(req) {
-  return await new DashboardService().fetchStats()
+  return await new DashboardService().getStats()
 }
 
 /**
@@ -200,7 +198,7 @@ app.get('/api/publications/:txHash', server.handleRequest(getPublication))
 
 export async function getPublication(req) {
   const txHash = server.extractFromReq(req, 'txHash')
-  const publication = await Publication.findOne({ tx_hash: txHash })
+  const publication = await Publication.findOne({ where: { tx_hash: txHash } })
 
   if (!publication) {
     throw new Error(
@@ -211,21 +209,12 @@ export async function getPublication(req) {
   return publication
 }
 
-/* Start the server only if run directly */
-if (require.main === module) {
-  Promise.resolve()
-    .then(connectDatabase)
-    .then(connectEthereum)
-    .then(listenOnServerPort)
-    .catch(console.error)
-}
+export async function serve() {
+  console.log('Connecting database')
+  await connectDatabase()
 
-function connectDatabase() {
-  return db.connect()
-}
-
-function connectEthereum() {
-  return eth
+  console.log('Connecting to Ethereum node')
+  await eth
     .connect({
       contracts: [
         new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
@@ -239,10 +228,13 @@ function connectEthereum() {
         `\nError: "${error.message}"\n`
       )
     )
-}
 
-function listenOnServerPort() {
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)
   )
+}
+
+/* Start the server only if run directly */
+if (require.main === module) {
+  serve().catch(console.error)
 }

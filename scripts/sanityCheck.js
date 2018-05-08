@@ -2,37 +2,22 @@
 
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env, cli } from 'decentraland-commons'
-import { db } from '../src/database'
+import { connectDatabase } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { Publication } from '../src/Publication'
 import { asyncBatch } from '../src/lib'
-import { parseCLICoords, loadEnv } from './utils'
+import { parseCLICoords } from './utils'
 
+const BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 100), 10)
 const log = new Log('sanity-check')
 
-let BATCH_SIZE
-
-const sanityCheck = {
+const sanityCheckProgram = {
   addCommands(program) {
     program
       .command('run')
       .option('--skip-parcels', 'Skip the parcel check')
       .option('--check-parcel [parcelId]', 'Check a specific parcel')
       .action(async options => {
-        log.info('Connecting database')
-        await db.connect()
-
-        log.info('Connecting to Ethereum node')
-        await eth.connect({
-          contracts: [
-            new contracts.LANDRegistry(
-              env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
-            ),
-            new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
-          ],
-          provider: env.get('RPC_URL')
-        })
-
         const shouldSkipParcels = options.skipParcels
         const totalChecks = shouldSkipParcels ? 1 : 2
         let conditions = null
@@ -41,7 +26,7 @@ const sanityCheck = {
           const [x, y] = parseCLICoords(options.checkParcel)
           conditions = { x, y }
         }
-        const parcels = await Parcel.find(conditions)
+        const parcels = await Parcel.findAll(conditions)
 
         log.info(
           `[Check 1/${totalChecks}]: Checking Marketplace against all events`
@@ -151,13 +136,22 @@ function isOwnerMissmatch(currentOwner, parcel) {
 //
 // Main
 
+async function sanityCheck() {
+  log.info('Connecting database')
+  await connectDatabase()
+
+  log.info('Connecting to Ethereum node')
+  await eth.connect({
+    contracts: [
+      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
+      new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
+    ],
+    provider: env.get('RPC_URL')
+  })
+
+  return cli.runProgram([sanityCheckProgram])
+}
+
 if (require.main === module) {
-  loadEnv()
-
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 100), 10)
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
-
-  Promise.resolve()
-    .then(() => cli.runProgram([sanityCheck]))
-    .catch(error => console.error('An error occurred.\n', error))
+  sanityCheck().catch(error => log.error(error))
 }

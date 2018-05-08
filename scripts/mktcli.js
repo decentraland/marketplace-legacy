@@ -2,17 +2,16 @@
 
 import { eth, contracts } from 'decentraland-eth'
 import { env, Log, cli } from 'decentraland-commons'
-import { db } from '../src/database'
+import { connectDatabase, truncateTable } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
-import { mockModelDbOperations } from '../specs/utils'
-import { loadEnv, parseCLICoords } from './utils'
+import { parseCLICoords } from './utils'
 import { processEvent } from './monitor/processEvents'
 
 const log = new Log('mktcli')
 
-const main = {
+const cliProgram = {
   addCommands(program) {
     program
       .command('decode <assetId>')
@@ -54,7 +53,7 @@ const main = {
           const contract = eth.getContract('LANDRegistry')
           const owner = await contract.ownerOfLand(x, y)
 
-          const parcel = await Parcel.findOne({ x, y })
+          const parcel = await Parcel.findOne({ where: { x, y } })
           const dbOwner = parcel.owner || parcel.district_id || 'empty'
 
           log.info(`(land-owner) coords:(${x},${y})`)
@@ -72,7 +71,7 @@ const main = {
           const contract = eth.getContract('LANDRegistry')
           const data = await contract.landData(x, y)
 
-          const parcel = await Parcel.findOne({ x, y })
+          const parcel = await Parcel.findOne({ where: { x, y } })
           const dbData = toDataLog(parcel.data)
 
           log.info(`(land-data) coords:(${x},${y})`)
@@ -211,7 +210,6 @@ const main = {
 
     program
       .command('replay <coord>')
-      .option('--persist', 'Persist replay on the database')
       .option('--clean', 'Clean publications before replaying')
       .description('Replay blockchain events in order')
       .action(
@@ -221,12 +219,8 @@ const main = {
           const events = await BlockchainEvent.findByAssetId(assetId)
           events.reverse()
 
-          if (!options.persist) {
-            mockModelDbOperations()
-          }
-
           if (options.clean) {
-            await Publication.delete({ x, y })
+            await Publication.destroy({ where: { x, y } })
           }
 
           for (let i = 0; i < events.length; i++) {
@@ -242,7 +236,7 @@ const main = {
       .action(
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
-          await Publication.delete({ x, y })
+          await Publication.destroy({ where: { x, y } })
           log.info(
             `(clean-publications) publications deleted. coords:(${x},${y})`
           )
@@ -255,7 +249,9 @@ const main = {
       .action(
         asSafeAction(async tableNames => {
           log.info(`(truncate) truncating ${tableNames.length} tables`)
-          await Promise.all(tableNames.map(tableName => db.truncate(tableName)))
+          await Promise.all(
+            tableNames.map(tableName => truncateTable(tableName))
+          )
         })
       )
 
@@ -336,30 +332,25 @@ async function unlockAccountWithPrompt() {
   await eth.wallet.unlockAccount(answers['password'])
 }
 
+export async function mktcli() {
+  log.debug('Connecting to Database')
+  await connectDatabase()
+
+  log.debug('Connecting to Ethereum node')
+  await eth.connect({
+    contracts: [
+      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
+      new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
+    ],
+    provider: env.get('RPC_URL')
+  })
+
+  return cli.runProgram([cliProgram])
+}
+
 //
 // Main
 
 if (require.main === module) {
-  loadEnv()
-
-  Promise.resolve()
-    .then(() => {
-      log.debug('Connecting to Database')
-      return db.connect()
-    })
-    .then(() => {
-      log.debug('Connecting to Ethereum node')
-      return eth.connect({
-        contracts: [
-          new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-          new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
-        ],
-        provider: env.get('RPC_URL')
-      })
-    })
-    .then(() => cli.runProgram([main]))
-    .catch(error => {
-      log.error(error)
-      process.exit()
-    })
+  mktcli().catch(error => log.error(error))
 }

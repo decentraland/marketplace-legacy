@@ -1,5 +1,5 @@
 import { cli, Log } from 'decentraland-commons'
-import { HandlersIndex } from './handlers'
+import { Handlers } from './handlers'
 import { EventMonitor } from './EventMonitor'
 import { processEvents } from './processEvents'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
@@ -8,7 +8,7 @@ const log = new Log('MonitorCli')
 
 export class MonitorCli {
   constructor(handlers, contractEvents = {}, processDelay) {
-    this.handlers = new HandlersIndex(handlers)
+    this.handlers = new Handlers(handlers)
 
     this.contractEvents = contractEvents
     this.processDelay = processDelay
@@ -22,7 +22,8 @@ export class MonitorCli {
 
   addCommands(program) {
     program
-      .command('index')
+      .command('collect')
+      .description('Stores data from the blockchain for the supplied events')
       .option(
         '--args [args]',
         'JSON string containing args to filter by. Defaults to {}'
@@ -43,10 +44,10 @@ export class MonitorCli {
         '-w, --watch',
         'Keep watching the blockchain for new events after --to-block.'
       )
-      .action(this.index)
+      .action(this.collect)
   }
 
-  index = options => {
+  collect = options => {
     for (const contractName in this.contractEvents) {
       const eventNames = this.contractEvents[contractName]
       this.monitor(contractName, eventNames, options)
@@ -70,7 +71,7 @@ export class MonitorCli {
 
   async monitor(contractName, eventNames, options) {
     const eventMonitor = new EventMonitor(contractName, eventNames)
-    const handler = this.handlers.get('index', contractName, eventNames)
+    const handler = this.handlers.get('collect', contractName, eventNames)
 
     if (!handler) throw new Error('Could not find a valid handler')
 

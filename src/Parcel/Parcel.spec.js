@@ -2,8 +2,8 @@ import { expect } from 'chai'
 import sinon from 'sinon'
 import { eth, txUtils } from 'decentraland-eth'
 
-import { db } from '../database'
-import { Parcel } from './Parcel'
+import { truncateTable } from '../database'
+import { Parcel } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
@@ -30,7 +30,7 @@ describe('Parcel', function() {
 
     it('should return an array of parcels which are on the supplied range', async function() {
       const range = await Parcel.inRange([2, 3], [5, 5])
-      const coordinates = range.map(coord => `${coord.x},${coord.y}`)
+      const coordinates = range.map(coord => `${coord.x},${coord.y}`).sort()
 
       expect(range.length).to.be.equal(12)
       expect(coordinates).to.be.deep.equal([
@@ -65,7 +65,7 @@ describe('Parcel', function() {
         block_time_updated_at: null,
         block_number: 1
       }
-      await Publication.insert(publication)
+      await Publication.create(publication)
 
       const range = await Parcel.inRange([3, 5], [4, 5])
 
@@ -102,7 +102,7 @@ describe('Parcel', function() {
 
   afterEach(() =>
     Promise.all(
-      [Parcel, Publication].map(Model => db.truncate(Model.tableName))
+      [Parcel, Publication].map(Model => truncateTable(Model.tableName))
     )
   )
 })
@@ -156,8 +156,8 @@ describe('ParcelService', function() {
 
   describe('#insertMatrix', function() {
     it('should call the `insert` method of parcel state for each element of the matrix', async function() {
-      const ParcelMock = { insert: () => Promise.resolve() }
-      const spy = sinon.spy(ParcelMock, 'insert')
+      const ParcelMock = { create: () => Promise.resolve() }
+      const spy = sinon.spy(ParcelMock, 'create')
 
       const service = new ParcelService()
       service.Parcel = ParcelMock

@@ -1,4 +1,4 @@
-import { db } from '../src/database'
+import { connectDatabase, closeDatabase } from '../src/database'
 
-before(() => db.connect())
-after(() => db.close())
+before(() => connectDatabase())
+after(() => closeDatabase())

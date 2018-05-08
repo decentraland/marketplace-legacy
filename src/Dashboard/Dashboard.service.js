@@ -1,17 +1,17 @@
 import { txUtils } from 'decentraland-eth'
-import { Model } from 'decentraland-commons'
 
+import { db, queryDatabase, Op } from '../database'
 import { Parcel } from '../Parcel'
-import { Publication } from '../Publication'
+import { Publication, PublicationQueryBuilder } from '../Publication'
 
 export class DashboardService {
   constructor() {
-    this.db = Model.db
+    this.db = db
     this.Parcel = Parcel
     this.Publication = Publication
   }
 
-  async fetchStats() {
+  async getStats() {
     const [
       landOwnersCount,
       activeUsersCount,
@@ -32,43 +32,43 @@ export class DashboardService {
     }
   }
 
-  async countLandOwners() {
-    return await this.count(
-      `SELECT COUNT(DISTINCT(owner)) as count
-        FROM ${this.Parcel.tableName}
-        WHERE owner IS NOT NULL`
-    )
+  countLandOwners() {
+    return this.Parcel.count({
+      distinct: true,
+      col: 'owner',
+      where: { owner: { [Op.ne]: null } }
+    })
   }
 
-  async countActiveUsers() {
-    return await this.count(
-      `SELECT COUNT(DISTINCT(owner)) as count
-        FROM ${this.Publication.tableName}`
-    )
+  countActiveUsers() {
+    return this.Publication.count({
+      distinct: true,
+      col: 'owner'
+    })
   }
 
-  async countTotalLandTraded() {
-    return await this.count(
-      `SELECT COUNT(owner) as count
-        FROM ${this.Publication.tableName}
-        WHERE status = $1`,
-      [this.Publication.STATUS.sold]
-    )
+  countTotalLandTraded() {
+    return this.Publication.count({
+      col: 'owner',
+      where: { status: this.Publication.STATUS.sold }
+    })
   }
 
-  async countTotalLandOnSale() {
-    return await this.count(
-      `SELECT COUNT(owner) as count
-        FROM ${this.Publication.tableName}
-        WHERE status = $1
-          AND tx_status = $2
-          AND expires_at >= EXTRACT(epoch from now()) * 1000`,
-      [this.Publication.STATUS.open, txUtils.TRANSACTION_STATUS.confirmed]
-    )
+  countTotalLandOnSale() {
+    const where = new PublicationQueryBuilder()
+      .assign({
+        status: this.Publication.STATUS.open,
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed
+      })
+      .isActive()
+      .build()
+
+    return this.Publication.count({ col: 'owner', where })
   }
 
-  async count(query, params = []) {
-    const rows = await this.db.query(query, params)
-    return rows.length ? parseInt(rows[0].count, 10) : 0
+  async count(query, options) {
+    const [result] = await queryDatabase(query, options)
+    const count = result[0].count
+    return parseInt(count, 10)
   }
 }

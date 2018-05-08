@@ -2,16 +2,15 @@
 
 import { Log, env, utils } from 'decentraland-commons'
 
-import { db } from '../src/database'
+import { connectDatabase } from '../src/database'
 import { Parcel } from '../src/Parcel'
-import { loadEnv } from './utils'
 
-let BOUNDING_BOX_SIZE
+const BOUNDING_BOX_SIZE = parseInt(env.get('BOUNDING_BOX_SIZE', 10), 10)
 const log = new Log('tag')
 
 export async function tag() {
   log.info('Connecting database')
-  await db.connect()
+  await connectDatabase()
 
   await tagParcels()
 
@@ -20,8 +19,8 @@ export async function tag() {
 }
 
 export async function tagParcels() {
-  const landmarks = (await Parcel.findLandmarks()).map(toParcelInstance)
-  const parcels = (await Parcel.findOwneableParcels()).map(toParcelInstance)
+  const landmarks = await Parcel.findLandmarks({ raw: false })
+  const parcels = await Parcel.findOwneableParcels({ raw: false })
 
   log.info(`Tagging ${parcels.length} parcels`)
   for (const parcel of parcels) {
@@ -33,8 +32,7 @@ export function tagParcel(parcel, landmarks) {
   const tags = {
     ...tagProximity(parcel, landmarks)
   }
-
-  return Parcel.update({ tags: JSON.stringify(tags) }, { id: parcel.get('id') })
+  return parcel.update({ tags: JSON.stringify(tags) })
 }
 
 export function tagProximity(parcel, landmarks) {
@@ -56,7 +54,7 @@ export function tagProximity(parcel, landmarks) {
 
     if (!proximity[tag_name] || distance < proximity[tag_name].distance) {
       proximity[tag_name] = {
-        district_id: landmark.get('district_id'),
+        district_id: landmark.district_id,
         distance
       }
     }
@@ -65,18 +63,8 @@ export function tagProximity(parcel, landmarks) {
   return utils.isEmptyObject(proximity) ? null : { proximity }
 }
 
-function toParcelInstance(attributes) {
-  return new Parcel(attributes)
-}
-
 if (require.main === module) {
-  loadEnv()
-  BOUNDING_BOX_SIZE = parseInt(env.get('BOUNDING_BOX_SIZE', 10), 10)
-  log.info(
-    `Using ${BOUNDING_BOX_SIZE} as bounding size, configurable via BOUNDING_BOX_SIZE`
-  )
-
-  Promise.resolve()
-    .then(tag)
-    .catch(console.error)
+  tag()
+    .catch(error => log.error(error))
+    .then(() => process.exit())
 }

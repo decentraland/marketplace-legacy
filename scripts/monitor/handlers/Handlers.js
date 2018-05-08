@@ -1,4 +1,4 @@
-export class HandlersIndex {
+export class Handlers {
   /**
    * @param  {object} handlers - Hash of functions to execute depending on the prop name
    */

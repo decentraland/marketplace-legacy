@@ -48,7 +48,9 @@ export async function processEvent(event) {
         return
       }
 
-      const exists = await Publication.count({ tx_hash, contract_id })
+      const exists = await Publication.count({
+        where: { tx_hash, contract_id }
+      })
       if (exists) {
         log.info(`[${name}] Publication ${tx_hash} already exists`)
         return
@@ -58,16 +60,18 @@ export async function processEvent(event) {
       const [block_time_created_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
 
-        Publication.delete({
-          x,
-          y,
-          owner: seller.toLowerCase(),
-          status: Publication.STATUS.open
+        Publication.destroy({
+          where: {
+            x,
+            y,
+            owner: seller.toLowerCase(),
+            status: Publication.STATUS.open
+          }
         })
       ])
 
       try {
-        await Publication.insert({
+        await Publication.create({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
           status: Publication.STATUS.open,
           owner: seller.toLowerCase(),
@@ -112,9 +116,9 @@ export async function processEvent(event) {
             price: eth.utils.fromWei(totalPrice),
             block_time_updated_at
           },
-          { contract_id }
+          { where: { contract_id } }
         ),
-        Parcel.update({ owner: winner }, { id: parcelId })
+        Parcel.update({ owner: winner }, { where: { id: parcelId } })
       ])
       break
     }
@@ -133,7 +137,7 @@ export async function processEvent(event) {
 
       await Publication.update(
         { status: Publication.STATUS.cancelled, block_time_updated_at },
-        { contract_id }
+        { where: { contract_id } }
       )
       break
     }
@@ -144,7 +148,7 @@ export async function processEvent(event) {
         const attrsStr = JSON.stringify(attributes)
 
         log.info(`[${name}] Updating "${parcelId}" with ${attrsStr}`)
-        await Parcel.update(attributes, { id: parcelId })
+        await Parcel.update(attributes, { where: { id: parcelId } })
       } catch (error) {
         log.info(`[${name}] Skipping badly formed data for "${parcelId}"`)
       }
@@ -161,7 +165,7 @@ export async function processEvent(event) {
       ])
       await Parcel.update(
         { owner: to.toLowerCase(), last_transferred_at },
-        { id: parcelId }
+        { where: { id: parcelId } }
       )
       break
     }

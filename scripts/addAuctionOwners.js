@@ -3,17 +3,17 @@
 import { execSync } from 'child_process'
 import { env, Log } from 'decentraland-commons'
 
-import { db } from '../src/database'
+import { queryDatabase, connectDatabase } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
-import { loadEnv, runpsql } from './utils'
+import { runpsql } from './utils'
 
-let BATCH_SIZE
+const BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 200), 10)
 const log = new Log('addAuctionOwners')
 
 export async function addAuctionOwners() {
   log.info('Connecting database')
-  await db.connect()
+  await connectDatabase()
 
   log.info('Restoring parcel_states')
   execSync(runpsql('../dumps/parcel_states.20180105.sql'))
@@ -29,7 +29,7 @@ export async function addAuctionOwners() {
 }
 
 async function normalizeParcelStates() {
-  let parcelStates = await db.query('SELECT * FROM parcel_states')
+  let parcelStates = await queryDatabase('SELECT * FROM parcel_states')
   parcelStates = parcelStates.filter(parcel => parcel.address)
 
   let count = 0
@@ -44,7 +44,7 @@ async function normalizeParcelStates() {
       const updates = parcelStatesBatch.map(parcelState =>
         Parcel.update(
           { auction_owner: parcelState.address },
-          { id: parcelState.id }
+          { where: { id: parcelState.id } }
         )
       )
       await Promise.all(updates)
@@ -54,11 +54,7 @@ async function normalizeParcelStates() {
 }
 
 if (require.main === module) {
-  loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 200), 10)
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
-
-  Promise.resolve()
-    .then(addAuctionOwners)
-    .catch(console.error)
+  addAuctionOwners()
+    .catch(error => log.error(error))
+    .then(() => process.exit())
 }

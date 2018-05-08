@@ -1,6 +1,8 @@
 import { txUtils } from 'decentraland-eth'
 
-import { Publication } from './Publication'
+import { Publication } from './Publication.model'
+import { PublicationQueryBuilder } from './Publication.querybuilder'
+import { QueryBuilder } from '../database'
 import { Parcel } from '../Parcel'
 
 export class PublicationService {
@@ -10,32 +12,32 @@ export class PublicationService {
 
   async filter(filters) {
     const { status, sort, pagination } = filters.sanitize()
+    const tx_status = txUtils.TRANSACTION_STATUS.confirmed
 
-    const values = [status, txUtils.TRANSACTION_STATUS.confirmed]
+    const where = new PublicationQueryBuilder()
+      .assign({ status, tx_status })
+      .isActive()
+      .build()
 
-    const [publications, counts] = await Promise.all([
-      this.Publication.query(
-        `SELECT pub.*, row_to_json(par.*) as parcel
-          FROM ${Publication.tableName} as pub
-          JOIN ${Parcel.tableName} as par ON par.x = pub.x AND par.y = pub.y
-          WHERE status = $1
-            AND tx_status = $2
-            AND expires_at >= EXTRACT(epoch from now()) * 1000
-          ORDER BY pub.${sort.by} ${sort.order}
-          LIMIT ${pagination.limit} OFFSET ${pagination.offset}`,
-        values
-      ),
-      this.Publication.query(
-        `SELECT COUNT(*)
-          FROM ${Publication.tableName}
-          WHERE status = $1
-            AND tx_status = $2
-            AND expires_at >= EXTRACT(epoch from now()) * 1000`,
-        values
-      )
+    const [publications, count] = await Promise.all([
+      this.Publication.findAll({
+        attributes: {
+          include: [QueryBuilder.buildRowToJsonAttribute(Parcel)]
+        },
+        where,
+        include: {
+          attributes: [],
+          model: Parcel
+        },
+        order: [[sort.by, sort.order]],
+        limit: pagination.limit,
+        offset: pagination.offset,
+        raw: true
+      }),
+      this.Publication.count({ where })
     ])
 
-    const total = parseInt(counts[0].count, 10)
+    const total = parseInt(count, 10)
 
     return {
       publications,
