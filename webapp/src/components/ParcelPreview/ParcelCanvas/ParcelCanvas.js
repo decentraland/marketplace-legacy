@@ -37,8 +37,15 @@ export default class ParcelPreview extends React.PureComponent {
     maxSize: 40,
     selected: null,
     onFetchParcels: () => {},
-    onClick: () => {},
-    onHover: () => {},
+    onClick: parcel => {
+      console.log('click', parcel)
+    },
+    onHover: parcel => {
+      console.log('hover', parcel)
+    },
+    onChange: viewport => {
+      console.log('change', ...Object.values(viewport))
+    },
     debounce: 400
   }
 
@@ -58,6 +65,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
     this.debouncedFetchParcels = debounce(this.props.onFetchParcels, 400)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
+    this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.cache = {}
   }
 
@@ -114,6 +122,7 @@ export default class ParcelPreview extends React.PureComponent {
       }
       this.oldState = newState
       this.setState(newState)
+      this.debouncedHandleChange()
     }
 
     // The dimensions of the canvas or the parcels data changed, so we need to repaint
@@ -162,6 +171,17 @@ export default class ParcelPreview extends React.PureComponent {
     }
   }
 
+  handleChange = () => {
+    const { onChange } = this.props
+    const { nw, se, center, zoom } = this.state
+    onChange({
+      nw,
+      se,
+      center,
+      zoom
+    })
+  }
+
   handlePanZoom = ({ target, type, dx, dy, dz, x, y, x0, y0 }) => {
     const { size, maxSize, minSize } = this.props
     const { pan, zoom } = this.state
@@ -193,14 +213,21 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   handleClick = event => {
-    console.log('click', this.mouseToCoords(event.layerX, event.layerY))
+    const [x, y] = this.mouseToCoords(event.layerX, event.layerY)
+    const parcelId = buildCoordinate(x, y)
+    const { onClick, parcels } = this.props
+    const parcel = parcels[parcelId]
+    onClick(parcel)
   }
 
   handleMouseMove = event => {
     const [x, y] = this.mouseToCoords(event.layerX, event.layerY)
     if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
       this.hovered = { x, y }
-      console.log('hover', x, y)
+      const parcelId = buildCoordinate(x, y)
+      const { onHover, parcels } = this.props
+      const parcel = parcels[parcelId]
+      onHover(parcel)
     }
   }
 
