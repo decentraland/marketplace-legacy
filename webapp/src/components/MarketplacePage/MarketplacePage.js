@@ -162,6 +162,8 @@ export default class MarketplacePage extends React.PureComponent {
               activePage={page}
               firstItem={null}
               lastItem={null}
+              prevItem={null}
+              nextItem={null}
               pointing
               secondary
               totalPages={pages}
