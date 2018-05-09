@@ -189,7 +189,14 @@ export default class Transaction extends React.PureComponent {
                 <Link
                   to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}
                 >
-                  <ParcelPreview x={x} y={y} width={64} height={64} size={15} />
+                  <ParcelPreview
+                    x={x}
+                    y={y}
+                    width={64}
+                    height={64}
+                    size={15}
+                    selected={{ x, y }}
+                  />
                 </Link>
               ) : (
                 <Mana size={64} scale={1} />

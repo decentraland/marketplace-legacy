@@ -27,8 +27,9 @@
 }
 
 .ParcelCard .preview {
-  height: 140px;
+  height: 132px;
   overflow: hidden;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .ParcelCard .body {
