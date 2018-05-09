@@ -267,19 +267,16 @@ const main = {
       .option('--expand-events', 'Show arguments for each fired event')
       .action(
         asSafeAction(async (txHash, options) => {
-          const [tx, recepeit] = await Promise.all([
-            eth.fetchTxStatus(txHash),
-            eth.fetchTxReceipt(txHash)
-          ])
+          const tx = await eth.utils.getTransaction(txHash)
 
           if (tx) {
             log.info('(tx-status) tx\n', tx)
 
-            if (recepeit) {
-              log.info('(tx-status) recepeit\n', recepeit)
+            if (tx.recepeit) {
+              log.info('(tx-status) recepeit\n', tx.recepeit)
 
               if (options.expandEvents) {
-                recepeit.logs.map(txLog =>
+                tx.recepeit.logs.map(txLog =>
                   log.info(txLog.name, '\n', txLog.events)
                 )
               }

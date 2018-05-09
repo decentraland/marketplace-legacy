@@ -36,7 +36,7 @@
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
     "decentraland-commons": "^4.0.1",
-    "decentraland-eth": "^2.0.0",
+    "decentraland-eth": "^2.1.0",
     "ethereumjs-abi": "^0.6.5",
     "express": "^4.16.2",
     "flat": "^4.0.0",
