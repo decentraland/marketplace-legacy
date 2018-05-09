@@ -1,0 +1,47 @@
+.ParcelCanvasWrapper {
+  position: relative;
+}
+
+.ParcelCanvas.clickable {
+  cursor: pointer;
+}
+
+.ParcelCanvas.draggable {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.ParcelCanvas.draggable:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.ParcelCanvasPopup {
+  position: absolute;
+  pointer-events: none;
+}
+
+.ParcelCanvasPopup .parcel-popup {
+  width: 100%;
+  margin-left: -50%;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.ParcelCanvasPopup.move-left .parcel-popup {
+  margin-left: -100%;
+}
+
+.ParcelCanvasPopup.move-right .parcel-popup {
+  margin-left: 0%;
+}
+
+.ParcelCanvasPopup.visible .parcel-popup {
+  opacity: 1;
+}
