@@ -16,7 +16,7 @@ export default class ParcelOwner extends React.PureComponent {
 
   render() {
     const { districts, parcel } = this.props
-    if (!parcel || utils.isEmpty(districts)) {
+    if (!parcel || utils.isEmptyObject(districts)) {
       return null
     }
     if (isDistrict(parcel)) {
