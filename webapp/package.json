@@ -30,7 +30,6 @@
     "ethereum-blockies": "^0.1.1",
     "history": "^4.7.2",
     "impetus": "^0.8.7",
-    "leaflet": "^1.3.0",
     "lodash.debounce": "^4.0.8",
     "mouse-wheel": "^1.2.0",
     "prettier": "^1.10.2",

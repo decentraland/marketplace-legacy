@@ -22,3 +22,12 @@ export function getActivePage({ pathname, wallet }) {
 
   return currentPage
 }
+
+export function getCenter(pathname) {
+  if (/^\/-?\d+\/-?\d+\/.*$/gi.test(pathname)) {
+    const [x, y] = pathname.split('/').slice(1)
+    return { x: parseInt(x, 10), y: parseInt(y, 10) }
+  }
+
+  return { x: 0, y: 0 }
+}

@@ -5,7 +5,6 @@ import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
 import { districtType, publicationType } from 'components/types'
-import { locations } from 'locations'
 import { t } from 'modules/translation/utils'
 
 import './ParcelDetailPage.css'

@@ -4,10 +4,14 @@
 
 .MapControls {
   position: absolute;
-  bottom: 180px;
+  bottom: 20px;
   right: 20px;
   display: flex;
   flex-flow: row nowrap;
+}
+
+.Minimap + .MapControls {
+  bottom: 180px;
 }
 
 .MapControls .control-button-group {

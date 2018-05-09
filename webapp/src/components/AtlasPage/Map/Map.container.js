@@ -3,34 +3,35 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 
 import { locations } from 'locations'
-import { getWallet } from 'modules/wallet/selectors'
 import { getParcels } from 'modules/parcels/selectors'
-import { getDistricts } from 'modules/districts/selectors'
-import { changeRange, setLoading } from 'modules/ui/actions'
-import { navigateTo } from 'modules/location/actions'
+import { isConnecting } from 'modules/wallet/selectors'
+import { setLoading } from 'modules/ui/actions'
 import { getMarker } from './utils'
 import MapComponent from './Map'
 
-const mapState = (state, { isReady, match, location }) => {
-  const wallet = getWallet(state)
+const mapState = (state, { match, location }) => {
   const parcels = getParcels(state)
-  const districts = getDistricts(state)
+  const marker = getMarker(location)
+  let selected = null
+
+  if (marker && marker in parcels) {
+    selected = parcels[marker]
+  }
 
   return {
-    isReady,
-    center: match.params, // from withRouter
-    parcels,
-    districts,
-    wallet,
-    marker: getMarker(location)
+    isLoading: isConnecting(state),
+    center: {
+      x: parseInt(match.params.x, 10),
+      y: parseInt(match.params.y, 10)
+    },
+    selected
   }
 }
 
 const mapDispatch = (dispatch, { location }) => ({
-  onNavigate: url => dispatch(navigateTo(url)),
   onLoading: () => dispatch(setLoading(true)),
-  onRangeChange: (center, nw, se) =>
-    setTimeout(() => dispatch(changeRange(center, nw, se)), 250),
+  onChange: (x, y, marker) =>
+    dispatch(push(locations.parcelMapDetail(x, y, marker))),
   onSelect: (x, y) => dispatch(push(locations.parcelDetail(x, y)))
 })
 
