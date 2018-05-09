@@ -1,5 +1,6 @@
 import React from 'react'
 import { Loader } from 'semantic-ui-react'
+import { isMobile } from 'lib/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
 
@@ -28,6 +29,7 @@ export default class MapComponent extends React.Component {
           showControls
           useCache={false}
           onClick={onSelect}
+          size={isMobile() ? 7 : 14}
           onChange={this.handleChange}
         />
       </div>
