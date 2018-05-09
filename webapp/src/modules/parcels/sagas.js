@@ -17,6 +17,7 @@ import { locations } from 'locations'
 import { api } from 'lib/api'
 import { buildCoordinate } from 'lib/utils'
 import { inBounds } from 'lib/parcelUtils'
+import { webworker } from 'lib/webworker'
 
 export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCELS_REQUEST, handleParcelsRequest)
@@ -29,8 +30,17 @@ function* handleParcelsRequest(action) {
     const nw = buildCoordinate(action.nw.x, action.nw.y)
     const se = buildCoordinate(action.se.x, action.se.y)
     const { parcels } = yield call(() => api.fetchParcelsInRange(nw, se))
+    const allParcels = yield select(getParcels)
 
-    yield put(fetchParcelsSuccess(parcels))
+    const result = yield call(() =>
+      webworker.postMessage({
+        type: 'FETCH_PARCELS_REQUEST',
+        parcels,
+        allParcels
+      })
+    )
+
+    yield put(fetchParcelsSuccess(result.parcels, result.publications))
   } catch (error) {
     yield put(fetchParcelsFailure(error.message))
   }
