@@ -14,7 +14,7 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   static defaultProps = {
-    size: 20
+    size: 14
   }
 
   render() {

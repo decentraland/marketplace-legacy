@@ -57,7 +57,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
           ...state.data,
           [action.address]: {
             ...state.data[action.address],
-            parcel_ids: toAddressParcelIds(action.parcels)
+            parcel_ids: Object.keys(action.parcels)
           }
         }
       }
@@ -66,7 +66,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
       const { parcels, publications } = action
 
       const parcel_ids = new Set([
-        ...addressData.parcel_ids,
+        ...(addressData.parcel_ids || []),
         ...toAddressParcelIds(parcels)
       ])
 

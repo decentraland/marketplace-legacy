@@ -23,11 +23,12 @@ export function fetchAddressParcelsRequest(address, status) {
   }
 }
 
-export function fetchAddressParcelsSuccess(address, parcels) {
+export function fetchAddressParcelsSuccess(address, parcels, publications) {
   return {
     type: FETCH_ADDRESS_PARCELS_SUCCESS,
     address,
-    parcels
+    parcels,
+    publications
   }
 }
 

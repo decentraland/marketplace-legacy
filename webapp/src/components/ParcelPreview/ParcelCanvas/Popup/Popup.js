@@ -3,10 +3,18 @@ import React from 'react'
 import Mana from 'components/Mana'
 import { t } from 'modules/translation/utils'
 
-import './ParcelPopup.css'
+import './Popup.css'
 
-export default function ParcelPopup(props) {
-  let { x, y, color, backgroundColor, label, description, publication } = props
+export default function Popup(props) {
+  const {
+    x,
+    y,
+    color,
+    backgroundColor,
+    label,
+    description,
+    publication
+  } = props
 
   return (
     <div className="parcel-popup">

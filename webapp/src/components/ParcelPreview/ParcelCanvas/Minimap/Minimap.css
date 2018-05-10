@@ -1,7 +1,7 @@
 .Minimap {
   width: 150px;
   height: 149px;
-  background: black url('../../../images/minimap.png');
+  background: black url('../../../../images/minimap.png');
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
@@ -23,4 +23,5 @@
   border: 1px solid white;
   background: rgba(0, 0, 0, 0.5);
   position: relative;
+  pointer-events: none;
 }

@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects'
+import { select, takeEvery, call, put } from 'redux-saga/effects'
 import {
   FETCH_ADDRESS,
   FETCH_ADDRESS_PARCELS_REQUEST,
@@ -16,7 +16,9 @@ import {
 } from './actions'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { getParcelPublications } from 'modules/parcels/utils'
+import { getParcels } from 'modules/parcels/selectors'
 import { api } from 'lib/api'
+import { webworker } from 'lib/webworker'
 
 export function* addressSaga() {
   yield takeEvery(FETCH_ADDRESS_PARCELS_REQUEST, handleAddressParcelsRequest)
@@ -35,7 +37,19 @@ function* handleAddressParcelsRequest(action) {
   const { address } = action
   try {
     const parcels = yield call(() => api.fetchAddressParcels(address))
-    yield put(fetchAddressParcelsSuccess(address, parcels))
+    const allParcels = yield select(getParcels)
+
+    const result = yield call(() =>
+      webworker.postMessage({
+        type: 'FETCH_ADDRESS_PARCELS_REQUEST',
+        parcels,
+        allParcels
+      })
+    )
+
+    yield put(
+      fetchAddressParcelsSuccess(address, result.parcels, result.publications)
+    )
   } catch (error) {
     yield put(fetchAddressParcelsFailure(address, error.message))
   }

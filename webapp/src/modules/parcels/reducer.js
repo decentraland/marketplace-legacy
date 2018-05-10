@@ -54,18 +54,21 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case FETCH_PUBLICATIONS_SUCCESS:
     case FETCH_PARCELS_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
-        data: {
-          ...state.data,
-          ...toParcelObject(action.parcels, state.data)
-        }
+        data: { ...state.data, ...action.parcels }
       }
     }
+    case FETCH_PUBLICATIONS_SUCCESS:
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: { ...state.data, ...toParcelObject(action.parcels, state.data) }
+      }
     case FETCH_PARCEL_FAILURE:
     case FETCH_PARCELS_FAILURE: {
       return {
@@ -79,7 +82,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         ...state,
         data: {
           ...state.data,
-          ...toParcelObject(action.parcels, state.data)
+          ...action.parcels
         }
       }
     }

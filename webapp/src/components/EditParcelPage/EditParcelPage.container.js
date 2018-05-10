@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { getParams } from 'modules/location/selectors'
+import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { isEditTransactionIdle } from 'modules/parcels/selectors'
 import { editParcelRequest } from 'modules/parcels/actions'
 import { locations } from 'locations'
@@ -9,9 +9,7 @@ import { locations } from 'locations'
 import EditParcelPage from './EditParcelPage'
 
 const mapState = (state, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
   return {
     x,
     y,
@@ -20,9 +18,7 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
   return {
     onSubmit: parcel => dispatch(editParcelRequest(parcel)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))

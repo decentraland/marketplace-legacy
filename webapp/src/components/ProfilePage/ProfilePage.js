@@ -197,10 +197,14 @@ export default class ProfilePage extends React.PureComponent {
               activePage={page}
               firstItem={null}
               lastItem={null}
+              prevItem={null}
+              nextItem={null}
               pointing
               secondary
               totalPages={pages}
               onPageChange={this.handlePageChange}
+              boundaryRange={1}
+              siblingRange={1}
             />
           )}
         </Container>

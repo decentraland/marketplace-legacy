@@ -1,55 +1,118 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { parcelType } from 'components/types'
+import Minimap from './Minimap'
+import Popup from './Popup'
+import Controls from './Controls'
+import {
+  walletType,
+  parcelType,
+  coordsType,
+  districtType,
+  publicationType
+} from 'components/types'
 import debounce from 'lodash.debounce'
-import { buildCoordinate } from 'lib/utils'
-import { COLORS, getParcelAttributes, inBounds } from 'lib/parcelUtils'
+import { buildCoordinate, isMobileWidth } from 'lib/utils'
+import {
+  COLORS,
+  getParcelAttributes,
+  inBounds,
+  getBounds
+} from 'lib/parcelUtils'
 import { Parcel, Selection } from 'lib/render'
+import { panzoom } from './utils'
+import './ParcelCanvas.css'
+
+const LOAD_PADDING = 4
+const POPUP_ROW_HEIGHT = 19
+const POPUP_HEIGHT = 67
+const POPUP_PADDING = 20
+const POPUP_DELAY = 400
+
+const { minX, minY, maxX, maxY } = getBounds()
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     size: PropTypes.number,
-    padding: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
+    wallet: walletType,
     parcels: PropTypes.objectOf(parcelType),
-    debounce: PropTypes.number
+    districts: PropTypes.objectOf(districtType),
+    publications: PropTypes.objectOf(publicationType),
+    zoom: PropTypes.number,
+    minSize: PropTypes.number,
+    maxSize: PropTypes.number,
+    selected: PropTypes.oneOfType([PropTypes.arrayOf(coordsType), coordsType]),
+    debounce: PropTypes.number,
+    isDraggable: PropTypes.bool,
+    showMinimap: PropTypes.bool,
+    showPopup: PropTypes.bool,
+    showControls: PropTypes.bool,
+    useCache: PropTypes.bool
   }
 
   static defaultProps = {
-    size: 20,
-    padding: 2,
+    x: 0,
+    y: 0,
+    size: 14,
     width: 100,
     height: 100,
-    debounce: 400
+    zoom: 1,
+    minSize: 7,
+    maxSize: 40,
+    selected: null,
+    onFetchParcels: () => {},
+    onClick: null,
+    onHover: (x, y, parcel) => {},
+    onChange: viewport => {},
+    debounce: 400,
+    isDraggable: false,
+    showMinimap: false,
+    showPopup: false,
+    showControls: false,
+    useCache: true
   }
 
   constructor(props) {
     super(props)
-    this.state = this.getDimensions(props)
+    const { x, y, size, zoom } = props
+    const initialState = {
+      pan: { x: 0, y: 0 },
+      center: { x, y },
+      size: zoom * size,
+      zoom,
+      popup: null
+    }
+    this.state = this.getDimensions(props, initialState)
     this.oldState = this.state
     this.shouldRefreshMap = false
     this.canvas = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
+    this.debouncedFetchParcels = debounce(this.props.onFetchParcels, 400)
+    this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
+    this.debouncedHandleChange = debounce(this.handleChange, 50)
+    this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
     this.cache = {}
+    this.popupTimeout = null
   }
 
-  getDimensions({ width, height, size, x, y }) {
+  getDimensions({ width, height }, { pan, zoom, center, size }) {
     const dimensions = {
-      width: Math.ceil(width / size + 2),
-      height: Math.ceil(height / size + 2)
+      width: Math.ceil(width / size + LOAD_PADDING),
+      height: Math.ceil(height / size + LOAD_PADDING)
     }
     dimensions.nw = {
-      x: x - Math.ceil(dimensions.width / 2),
-      y: y - Math.ceil(dimensions.height / 2)
+      x: center.x - Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
+      y: center.y - Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
     }
     dimensions.se = {
-      x: x + Math.ceil(dimensions.width / 2),
-      y: y + Math.ceil(dimensions.height / 2)
+      x: center.x + Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
+      y: center.y + Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
     }
-    return dimensions
+
+    return { ...dimensions, pan, zoom, center, size }
   }
 
   clearCache() {
@@ -57,32 +120,66 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { x, y, parcels, width, height, onFetchParcels } = this.props
-    const newState = this.getDimensions(nextProps)
+    if (nextProps.onFetchParcels !== this.props.onFetchParcels) {
+      this.debouncedFetchParcels = debounce(this.nextProps.onFetchParcels, 100)
+    }
+    if (nextProps.debounce !== this.props.debounce) {
+      this.debouncedRenderMap = debounce(this.renderMap, nextProps.debounce)
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const { x, y, parcels, useCache } = this.props
+
+    // the coords changed from props (controlled)
+    if (
+      (x !== nextProps.x || y !== nextProps.y) &&
+      (nextProps.x !== nextState.center.x || nextProps.y !== nextState.center.y)
+    ) {
+      nextState = {
+        ...nextState,
+        center: {
+          x: nextProps.x,
+          y: nextProps.y
+        },
+        pan: {
+          x: 0,
+          y: 0
+        }
+      }
+    }
+
+    const newState = this.getDimensions(nextProps, nextState)
+    const isViewportDifferent =
+      newState.width !== this.oldState.width ||
+      newState.height !== this.oldState.height ||
+      newState.nw.x !== this.oldState.nw.x ||
+      newState.nw.y !== this.oldState.nw.y ||
+      newState.se.x !== this.oldState.se.x ||
+      newState.se.y !== this.oldState.se.y
 
     // The coords or the amount of parcels changed, so we need to re-fetch and update state
     if (
       nextProps.x !== x ||
       nextProps.y !== y ||
       !this.oldState ||
-      newState.width !== this.oldState.width ||
-      newState.height !== this.oldState.height
+      isViewportDifferent
     ) {
       const { nw, se } = newState
-      if (!this.inStore(nw, se, nextProps.parcels)) {
-        onFetchParcels(nw, se)
+      if (!this.inStore(nw, se, nextProps.parcels) || !useCache) {
+        this.debouncedFetchParcels(nw, se)
       }
       this.oldState = newState
       this.setState(newState)
+      this.debouncedHandleChange()
     }
 
     // The dimensions of the canvas or the parcels data changed, so we need to repaint
     if (nextProps.parcels !== parcels) {
       this.clearCache()
-      this.shouldRefreshMap = true
-    } else if (nextProps.width !== width || nextProps.height !== height) {
-      this.shouldRefreshMap = true
     }
+
+    this.shouldRefreshMap = true
   }
 
   inStore(nw, se, parcels) {
@@ -111,87 +208,455 @@ export default class ParcelPreview extends React.PureComponent {
 
   componentDidMount() {
     this.renderMap()
+    const { isDraggable } = this.props
+    if (isDraggable) {
+      this.destroy = panzoom(this.canvas, this.handlePanZoom)
+    }
+    this.canvas.addEventListener('click', this.handleClick)
+    this.canvas.addEventListener('mousedown', this.handleMouseDown)
+    this.canvas.addEventListener('mousemove', this.handleMouseMove)
+    this.canvas.addEventListener('mouseout', this.handleMouseOut)
+    this.mounted = true
+  }
+
+  componentWillUnmount() {
+    if (this.destroy) {
+      this.destroy()
+    }
+    this.canvas.removeEventListener('click', this.handleClick)
+    this.canvas.removeEventListener('mousedown', this.handleMouseDown)
+    this.canvas.removeEventListener('mousemove', this.handleMouseMove)
+    this.canvas.removeEventListener('mouseout', this.handleMouseOut)
+    this.mounted = false
+  }
+
+  handleChange = () => {
+    const { onChange } = this.props
+    const { nw, se, center, zoom } = this.state
+    onChange({
+      nw,
+      se,
+      center,
+      zoom
+    })
+  }
+
+  handlePanZoom = ({ dx, dy, dz }) => {
+    const { size, maxSize, minSize } = this.props
+    const { pan, zoom } = this.state
+
+    const maxZoom = maxSize / size
+    const minZoom = minSize / size
+
+    const newPan = {
+      x: pan.x - dx,
+      y: pan.y - dy
+    }
+    const newZoom = Math.max(
+      minZoom,
+      Math.min(maxZoom, zoom - dz * this.getDzZoomModifier())
+    )
+    const newSize = newZoom * size
+
+    const halfWidth = (this.state.width - LOAD_PADDING) / 2
+    const halfHeight = (this.state.height - LOAD_PADDING) / 2
+
+    const boundaries = {
+      nw: {
+        x: minX - halfWidth,
+        y: maxY + halfHeight
+      },
+      se: {
+        x: maxX + halfWidth,
+        y: minY - halfHeight
+      }
+    }
+
+    const viewport = {
+      nw: {
+        x: this.state.center.x - halfWidth,
+        y: this.state.center.y + halfHeight
+      },
+      se: {
+        x: this.state.center.x + halfWidth,
+        y: this.state.center.y - halfHeight
+      }
+    }
+
+    if (viewport.nw.x + newPan.x / newSize < boundaries.nw.x) {
+      newPan.x = (boundaries.nw.x - viewport.nw.x) * newSize
+    }
+    if (viewport.nw.y - newPan.y / newSize > boundaries.nw.y) {
+      newPan.y = (viewport.nw.y - boundaries.nw.y) * newSize
+    }
+    if (viewport.se.x + newPan.x / newSize > boundaries.se.x) {
+      newPan.x = (boundaries.se.x - viewport.se.x) * newSize
+    }
+    if (viewport.se.y - newPan.y / newSize < boundaries.se.y) {
+      newPan.y = (viewport.se.y - boundaries.se.y) * newSize
+    }
+
+    this.setState({
+      pan: newPan,
+      zoom: newZoom,
+      size: newSize
+    })
+    this.renderMap()
+    this.debouncedUpdateCenter()
+  }
+
+  mouseToCoords(x, y) {
+    const { size, pan, center, width, height } = this.state
+
+    const panOffset = {
+      x: (x + pan.x) / size,
+      y: (y + pan.y) / size
+    }
+
+    const viewportOffset = {
+      x: (width - LOAD_PADDING - 0.5) / 2 - center.x,
+      y: (height - LOAD_PADDING) / 2 + center.y
+    }
+
+    const coordX = Math.round(panOffset.x - viewportOffset.x)
+    const coordY = Math.round(viewportOffset.y - panOffset.y)
+
+    return [coordX, coordY]
+  }
+
+  handleClick = event => {
+    const [x, y] = this.mouseToCoords(event.layerX, event.layerY)
+    if (inBounds(x, y)) {
+      const parcelId = buildCoordinate(x, y)
+      const { onClick, parcels } = this.props
+      const parcel = parcels[parcelId]
+      if (onClick && Date.now() - this.mousedownTimestamp < 200) {
+        onClick(x, y, parcel)
+      }
+    }
+  }
+
+  handleMouseDown = () => {
+    this.mousedownTimestamp = Date.now()
+  }
+
+  handleMouseMove = event => {
+    const { layerX, layerY } = event
+    const [x, y] = this.mouseToCoords(layerX, layerY)
+    if (!inBounds(x, y)) {
+      this.hidePopup()
+      return
+    }
+
+    if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
+      this.hovered = { x, y }
+      const parcelId = buildCoordinate(x, y)
+      const { onHover, parcels, showPopup } = this.props
+      const parcel = parcels[parcelId]
+
+      if (onHover) {
+        onHover(x, y, parcel)
+      }
+      if (showPopup) {
+        this.hidePopup()
+        this.popupTimeout = setTimeout(() => {
+          if (this.mounted) {
+            this.setState({
+              popup: {
+                x,
+                y,
+                top: layerY,
+                left: layerX,
+                visible: true
+              }
+            })
+          }
+        }, POPUP_DELAY)
+      }
+    }
+  }
+
+  handleMouseOut = () => {
+    this.hidePopup()
+  }
+
+  hidePopup = () => {
+    clearTimeout(this.popupTimeout)
+
+    if (this.state.popup) {
+      this.setState({
+        popup: { ...this.state.popup, visible: false }
+      })
+    }
+  }
+
+  updateCenter = () => {
+    const { pan, center, size } = this.state
+
+    const panX = pan.x % size
+    const panY = pan.y % size
+    const newPan = {
+      x: panX,
+      y: panY
+    }
+    const newCenter = {
+      x: center.x + Math.floor((pan.x - panX) / size),
+      y: center.y - Math.floor((pan.y - panY) / size)
+    }
+
+    this.setState({
+      pan: newPan,
+      center: newCenter
+    })
+  }
+
+  getParcelAttributes = (x, y) => {
+    const parcelId = buildCoordinate(x, y)
+
+    if (!this.cache[parcelId]) {
+      const { wallet, parcels, districts, publications } = this.props
+      const parcel = parcels[parcelId]
+      let publication = null
+
+      if (parcel) {
+        publication = publications[parcel.publication_tx_hash]
+        parcel.publication = publication
+      }
+
+      this.cache[parcelId] = {
+        id: parcelId,
+        publication,
+        connectedLeft: parcel ? parcel.connectedLeft : false,
+        connectedTop: parcel ? parcel.connectedTop : false,
+        connectedTopLeft: parcel ? parcel.connectedTopLeft : false,
+        ...getParcelAttributes(parcelId, x, y, wallet, parcels, districts)
+      }
+    }
+
+    return this.cache[parcelId]
+  }
+
+  getSelected() {
+    const { selected } = this.props
+    const safeSelected = []
+    if (selected && !Array.isArray(selected)) {
+      safeSelected.push(selected)
+    }
+    return safeSelected
   }
 
   renderMap() {
     if (!this.canvas) {
       return '🦄'
     }
-    const {
-      width,
-      height,
-      x,
-      y,
-      size,
-      padding,
-      wallet,
-      districts,
-      parcels
-    } = this.props
-    const { nw, se } = this.state
+    const { width, height } = this.props
+
+    const { nw, se, pan, size, center } = this.state
+    const { x, y } = center
     const ctx = this.canvas.getContext('2d')
     ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, width, height)
-    let markerCenter = null
+
+    const selection = []
+    const selected = this.getSelected()
+    const isSelected = (x, y) =>
+      selected.some(coords => coords.x === x && coords.y === y)
+
+    const cx = width / 2
+    const cy = height / 2
+
     for (let px = nw.x; px < se.x; px++) {
       for (let py = nw.y; py < se.y; py++) {
-        const cx = width / 2
-        const cy = height / 2
-        const offsetX = (x - px) * size
-        const offsetY = (py - y) * size
+        const offsetX = (x - px) * size + pan.x
+        const offsetY = (py - y) * size + pan.y
         const rx = cx - offsetX
         const ry = cy - offsetY
 
-        const parcelId = buildCoordinate(px, py)
-        const parcel = parcels[parcelId]
-        const { backgroundColor } = this.cache[parcelId]
-          ? this.cache[parcelId]
-          : (this.cache[parcelId] = getParcelAttributes(
-              parcelId,
-              px,
-              py,
-              wallet,
-              parcels,
-              districts
-            ))
-        const isCenter = px === x && py === y
-        if (isCenter) {
-          markerCenter = { x: rx, y: ry }
+        const {
+          backgroundColor,
+          connectedLeft,
+          connectedTop,
+          connectedTopLeft
+        } = this.getParcelAttributes(px, py)
+
+        if (isSelected(px, py)) {
+          selection.push({ x: rx, y: ry })
         }
+
         Parcel.draw({
           ctx,
           x: rx + size / 2,
           y: ry + size / 2,
           size,
-          padding,
+          padding: this.computeParcelPadding(),
           color: backgroundColor,
-          connectedLeft: parcel ? parcel.connectedLeft : false,
-          connectedTop: parcel ? parcel.connectedTop : false,
-          connectedTopLeft: parcel ? parcel.connectedTopLeft : false
+          connectedLeft,
+          connectedTop,
+          connectedTopLeft
         })
       }
     }
-    Selection.draw({
-      ctx,
-      x: markerCenter.x,
-      y: markerCenter.y,
-      size: size
-    })
+
+    if (selection.length > 0) {
+      Selection.draw({
+        ctx,
+        selection,
+        size
+      })
+    }
+  }
+
+  computeParcelPadding(size) {
+    return size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2
+  }
+
+  renderPopup() {
+    const { width } = this.props
+    const { popup } = this.state
+    if (!popup) return null
+
+    const { x, y, top, left, visible } = popup
+    if (!x && !y && !top && !left) return null
+
+    const {
+      color,
+      label,
+      backgroundColor,
+      description,
+      publication
+    } = this.getParcelAttributes(x, y)
+
+    let rows = 1
+    if (label) rows += 1
+    if (publication) rows += 1
+
+    const popupHeight = rows * POPUP_ROW_HEIGHT + POPUP_HEIGHT + POPUP_PADDING
+    const popupTop = popupHeight > top ? top + POPUP_PADDING : top - popupHeight
+
+    let popupClasses = 'ParcelCanvasPopup'
+    if (left > width * 0.8) {
+      popupClasses += ' move-left'
+    } else if (left < width * 0.2) {
+      popupClasses += ' move-right'
+    }
+    if (visible) {
+      popupClasses += ' visible'
+    }
+
+    return (
+      <div className={popupClasses} style={{ top: popupTop, left }}>
+        <Popup
+          x={x}
+          y={y}
+          color={color}
+          backgroundColor={backgroundColor}
+          label={label}
+          description={description}
+          publication={publication}
+        />
+      </div>
+    )
   }
 
   refCanvas = canvas => {
     this.canvas = canvas
   }
 
+  handleMinimapChange = (x, y) => {
+    this.setState({
+      center: { x, y }
+    })
+  }
+
+  handleTarget = () => {
+    const { x, y } = this.getSelected()[0]
+    this.setState({
+      center: { x, y }
+    })
+  }
+
+  handleZoomIn = () => {
+    this.handlePanZoom({
+      dx: 0,
+      dy: 0,
+      dz: -1 * this.getDz()
+    })
+  }
+
+  handleZoomOut = () => {
+    this.handlePanZoom({
+      dx: 0,
+      dy: 0,
+      dz: this.getDz()
+    })
+  }
+
+  getDz() {
+    const { zoom } = this.state
+    return Math.sqrt(zoom) * (this.isMobile() ? 100 : 50)
+  }
+
+  getDzZoomModifier() {
+    return this.isMobile() ? 0.005 : 0.01
+  }
+
+  isMobile() {
+    return isMobileWidth(this.props.width)
+  }
+
+  getCanvasClassName() {
+    const { isDraggable, onClick } = this.props
+
+    let classes = 'ParcelCanvas'
+    if (isDraggable) classes += ' draggable'
+    if (onClick) classes += ' clickable'
+
+    return classes
+  }
+
   render() {
-    const { width, height } = this.props
+    const {
+      width,
+      height,
+      showMinimap,
+      showPopup,
+      showControls,
+      minSize,
+      maxSize
+    } = this.props
+
+    const styles = { width, height }
+
     return (
-      <canvas
-        className="ParcelCanvas"
-        width={width}
-        height={height}
-        ref={this.refCanvas}
-      />
+      <div className="ParcelCanvasWrapper" style={styles}>
+        <canvas
+          className={this.getCanvasClassName()}
+          width={width}
+          height={height}
+          ref={this.refCanvas}
+        />
+        {this.isMobile() || !showPopup ? null : this.renderPopup()}
+        {this.isMobile() || !showMinimap ? null : (
+          <Minimap
+            width={this.state.width - LOAD_PADDING}
+            height={this.state.height - LOAD_PADDING}
+            center={this.state.center}
+            onChange={this.debouncedHandleMinimapChange}
+          />
+        )}
+        {!showControls ? null : (
+          <Controls
+            target={this.getSelected()[0]}
+            center={this.state.center}
+            size={this.state.size}
+            minSize={minSize}
+            maxSize={maxSize}
+            onTarget={this.handleTarget}
+            onZoomIn={this.handleZoomIn}
+            onZoomOut={this.handleZoomOut}
+          />
+        )}
+      </div>
     )
   }
 }

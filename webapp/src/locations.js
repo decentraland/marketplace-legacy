@@ -1,7 +1,7 @@
 export const locations = {
   root: '/',
 
-  profile: '/address/:address/:tab?',
+  profile: '/address/:address/:tab',
   profilePage: (address, tab = PROFILE_PAGE_TABS.parcels) =>
     `/address/${address}/${tab}`,
 

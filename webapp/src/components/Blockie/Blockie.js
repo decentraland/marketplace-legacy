@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import blockies from 'ethereum-blockies/blockies'
 
-export default class Blockie extends React.Component {
+export default class Blockie extends React.PureComponent {
   static propTypes = {
     seed: PropTypes.string.isRequired,
     color: PropTypes.string,

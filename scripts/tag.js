@@ -27,6 +27,11 @@ export async function tagParcels() {
   for (const parcel of parcels) {
     await tagParcel(parcel, landmarks)
   }
+
+  log.info(`Tagging ${landmarks.length} district parcels`)
+  for (const landmark of landmarks) {
+    await tagLandmark(landmark)
+  }
 }
 
 export function tagParcel(parcel, landmarks) {
@@ -63,6 +68,10 @@ export function tagProximity(parcel, landmarks) {
   }
 
   return utils.isEmptyObject(proximity) ? null : { proximity }
+}
+
+function tagLandmark(landmark) {
+  return Parcel.update({ tags: JSON.stringify({}) }, { id: landmark.get('id') })
 }
 
 function toParcelInstance(attributes) {
