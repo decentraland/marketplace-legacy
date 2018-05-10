@@ -41,7 +41,10 @@ export default class ParcelCard extends React.PureComponent {
             />
           </div>
           <Card.Content className="body">
-            <Card.Description title={parcelName}>{parcelName}</Card.Description>
+            <Card.Description title={parcelName}>
+              <span className="name">{parcelName}</span>
+              <Mana amount={parseFloat(publication.price, 10)} />
+            </Card.Description>
             {isOpen(publication) ? (
               <React.Fragment>
                 <Card.Meta
@@ -49,9 +52,6 @@ export default class ParcelCard extends React.PureComponent {
                 >
                   <PublicationExpiration publication={publication} />
                 </Card.Meta>
-                <div className="mana">
-                  <Mana amount={parseFloat(publication.price, 10)} />
-                </div>
               </React.Fragment>
             ) : (
               <Card.Meta>
