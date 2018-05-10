@@ -1,12 +1,16 @@
 import { txUtils } from 'decentraland-eth'
 import { Model } from 'decentraland-commons'
 
+import { BlockchainEvent } from '../BlockchainEvent'
+import { Contribution } from '../Contribution'
 import { Parcel } from '../Parcel'
 import { Publication } from '../Publication'
 
 export class DashboardService {
   constructor() {
     this.db = Model.db
+    this.BlockchainEvent = BlockchainEvent
+    this.Contribution = Contribution
     this.Parcel = Parcel
     this.Publication = Publication
   }
@@ -34,16 +38,32 @@ export class DashboardService {
 
   async countLandOwners() {
     return await this.count(
-      `SELECT COUNT(DISTINCT(owner)) as count
-        FROM ${this.Parcel.tableName}
-        WHERE owner IS NOT NULL`
+      `SELECT COUNT(DISTINCT(A.owner)) 
+        FROM (
+          SELECT owner 
+            FROM ${this.Parcel.tableName} 
+            WHERE owner IS NOT NULL 
+          UNION 
+          SELECT address AS owner 
+            FROM ${this.Contribution.tableName}
+        ) AS A`
     )
   }
 
   async countActiveUsers() {
+    const { parcelTransfer, parcelUpdate } = this.BlockchainEvent.EVENTS
+
     return await this.count(
-      `SELECT COUNT(DISTINCT(owner)) as count
-        FROM ${this.Publication.tableName}`
+      `SELECT COUNT(DISTINCT(A.address)) 
+        FROM (
+          SELECT owner as address 
+            FROM ${this.Publication.tableName} 
+          UNION 
+          SELECT args->>'from' AS address 
+            FROM ${this.BlockchainEvent.tableName} 
+            WHERE name IN ($1, $2)
+        ) AS A`,
+      [parcelTransfer, parcelUpdate]
     )
   }
 
