@@ -9,7 +9,6 @@
   "global": {
     "atlas": "Atlas",
     "marketplace": "Marché",
-    "dashboard": "Tableau de bord",
     "profile": "Mes LANDs",
     "activity": "Activité",
     "parcels": "Parcelles",
@@ -55,17 +54,6 @@
       "close_to_expire": "Près de l'expiration"
     }
   },
-  "dashboard": {
-    "stats_title": "Quelques chiffres",
-    "transactions_title": "Dernières transactions",
-    "land_owners": "Propriétaires de LAND",
-    "active_users": "Utilisateurs actifs",
-    "land_traded": "LAND échangé",
-    "land_on_sale": "LAND à vendre",
-    "transaction_description":
-      "Parcelle {parcel_link} vendu de {seller_link} à {buyer_link} pour {price}"
-  },
-
   "profile_page": {
     "empty": "L'utilisateur n'as pas de {content}",
     "on_sale": "A vendre"

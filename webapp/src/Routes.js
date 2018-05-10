@@ -10,7 +10,6 @@ import HomePage from 'components/HomePage'
 import AtlasPage from 'components/AtlasPage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import MarketplacePage from 'components/MarketplacePage'
-import DashboardPage from 'components/DashboardPage'
 import ProfilePage from 'components/ProfilePage'
 import PublishPage from 'components/PublishPage'
 import EditParcelPage from 'components/EditParcelPage'
@@ -39,7 +38,6 @@ export default class Routes extends React.Component {
         <Route exact path={locations.root} component={HomePage} />
         <Route exact path={locations.parcel} component={ParcelDetailPage} />
         <Route exact path={locations.marketplace} component={MarketplacePage} />
-        <Route exact path={locations.dashboard} component={DashboardPage} />
         <Route exact path={locations.profile} component={ProfilePage} />
         <Route exact path={locations.sell} component={PublishPage} />
         <Route exact path={locations.edit} component={EditParcelPage} />
