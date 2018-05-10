@@ -10,7 +10,8 @@ export class BlockchainEvent extends Model {
     publicationSuccessful: 'AuctionSuccessful',
     publicationCancelled: 'AuctionCancelled',
     parcelTransfer: 'Transfer',
-    parcelUpdate: 'Update'
+    parcelUpdate: 'Update',
+    newMortgage: 'NewMortgage'
   }
 
   static async findLastBlockNumber() {

@@ -42,7 +42,10 @@ export const locations = {
   terms: '/terms',
 
   error: '/error',
-  signIn: '/sign-in'
+  signIn: '/sign-in',
+
+  mortgage: '/:x/:y/mortgage',
+  buyLandByMortgage: (x, y) => `/${x}/${y}/mortgage`
 }
 
 export const STATIC_PAGES = [locations.root, locations.privacy, locations.terms]

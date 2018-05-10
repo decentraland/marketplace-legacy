@@ -8,8 +8,10 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       MANAToken,
       LANDRegistry,
       Marketplace,
-      Mortgage,
-      RCNToken
+      MortgageCreator,
+      MortgageManager,
+      RCNToken,
+      RCNEngine
     } = contracts
     const { LedgerWallet, NodeWallet } = wallets
     const { address, derivationPath } = options
@@ -20,8 +22,14 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
         new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
         new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
         new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
-        new Mortgage(env.get('REACT_APP_MORTGAGE_CONTRACT_ADDRESS')),
-        new RCNToken(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
+        new MortgageCreator(
+          env.get('REACT_APP_MORTGAGE_CREATOR_CONTRACT_ADDRESS')
+        ),
+        new MortgageManager(
+          env.get('REACT_APP_MORTGAGE_MANAGER_CONTRACT_ADDRESS')
+        ),
+        new RCNToken(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS')),
+        new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS'))
       ],
       wallets: isMobile()
         ? [new NodeWallet(address)]
@@ -58,9 +66,18 @@ export function getMarketplaceAddress() {
   return marketplaceContract.address
 }
 
-export function getMortgageAddress() {
-  const mortgageContract = eth.getContract('Mortgage')
-  return mortgageContract.address
+export function getMortgageCreatorAddress() {
+  const mortgageCreatorContract = eth.getContract('MortgageCreator')
+  return mortgageCreatorContract.address
+}
+
+export function getMortgageManagerAddress() {
+  const mortgageCreatorContract = eth.getContract('MortgageManager')
+  return mortgageCreatorContract.address
+}
+
+export function getKyberOracleAddress() {
+  return env.get('REACT_APP_KYBER_ORACLE_CONTRACT_ADDRESS')
 }
 
 export async function sendTransaction(tx) {

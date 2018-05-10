@@ -5,7 +5,7 @@ This module is composed of a few composable parts. The following is an explanati
 
 ### EventMonitor
 
-It handles contract events and has a unified API to get or watch them. It uses the contracts defined on [decentraland-commons](https://github.com/decentraland/commons) to obtain the events.
+It handles contract events and has a unified API to get or watch them. It uses the contracts defined on [decentraland-eth](https://github.com/decentraland/decentraland-eth) to obtain the events.
 
 ```javascript
 const eventMonitor = new EventMonitor('ContractName', ['InterestingEvent', ...])

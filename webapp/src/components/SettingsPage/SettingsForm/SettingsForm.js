@@ -8,7 +8,11 @@ import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
 import DerivationPathDropdown from './DerivationPathDropdown'
 
-import { getMarketplaceAddress, getMortgageAddress } from 'modules/wallet/utils'
+import {
+  getMarketplaceAddress,
+  getMortgageCreatorAddress,
+  getMortgageManagerAddress
+} from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 
@@ -47,9 +51,17 @@ export default class SettingsForm extends React.PureComponent {
     )
   }
 
-  renderMortgageLink() {
+  renderMortgageCreatorLink() {
     return (
-      <EtherscanLink address={getMortgageAddress()}>
+      <EtherscanLink address={getMortgageCreatorAddress()}>
+        {t('settings.mortgage_contract')}
+      </EtherscanLink>
+    )
+  }
+
+  renderMortgageManagerLink() {
+    return (
+      <EtherscanLink address={getMortgageManagerAddress()}>
         {t('settings.mortgage_contract')}
       </EtherscanLink>
     )
@@ -184,10 +196,10 @@ export default class SettingsForm extends React.PureComponent {
             <div className="authorize-detail">
               {isMortgageApprovedForMana
                 ? t_html('settings.you_approved_mortgage_mana', {
-                    mortgage_contract_link: this.renderMortgageLink()
+                    mortgage_contract_link: this.renderMortgageCreatorLink()
                   })
                 : t_html('settings.approve_mortgage_mana', {
-                    mortgage_contract_link: this.renderMortgageLink()
+                    mortgage_contract_link: this.renderMortgageCreatorLink()
                   })}
 
               {isMortgageApprovedForManaPending && (
@@ -209,10 +221,10 @@ export default class SettingsForm extends React.PureComponent {
             <div className="authorize-detail">
               {isMortgageApprovedForRCN
                 ? t_html('settings.you_approved_mortgage_rcn', {
-                    mortgage_contract_link: this.renderMortgageLink()
+                    mortgage_contract_link: this.renderMortgageManagerLink()
                   })
                 : t_html('settings.approve_mortgage_rcn', {
-                    mortgage_contract_link: this.renderMortgageLink()
+                    mortgage_contract_link: this.renderMortgageManagerLink()
                   })}
 
               {isMortgageApprovedForRCNPending && (

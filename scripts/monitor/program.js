@@ -21,7 +21,10 @@ Promise.resolve()
     return eth.connect({
       contracts: [
         new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-        new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
+        new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS')),
+        new contracts.MortgageCreator(
+          env.get('MORTGAGE_CREATOR_CONTRACT_ADDRESS')
+        )
       ],
       provider: env.get('RPC_URL')
     })
@@ -37,7 +40,8 @@ Promise.resolve()
           'AuctionSuccessful',
           'AuctionCancelled'
         ],
-        LANDRegistry: ['Update', 'Transfer']
+        LANDRegistry: ['Update', 'Transfer'],
+        MortgageCreator: ['NewMortgage']
       },
       env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
     ).run()

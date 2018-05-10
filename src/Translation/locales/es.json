@@ -33,7 +33,8 @@
     "owned_by": "Controlada por",
     "owned_by_link": "Controlada por {address_link}",
     "connecting": "Conectando",
-    "click_here": "Pincha aquí"
+    "click_here": "Pincha aquí",
+    "request": "Request"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -306,5 +307,20 @@
     "watch_tutorial": "Mira el tutorial",
     "newest_lands": "Nuevas LAND",
     "view_more": "Ver Más"
+  },
+  "mortgage": {
+    "request": "Requesting a Mortgage",
+    "oracle": "Oracle contract address",
+    "amount": "Mortgage total",
+    "duration": "Mortgage duration",
+    "duration_placeholder": "Duration date for the mortgage",
+    "payable": "Payable at",
+    "payable_placeholder": "Payable date for the mortgage",
+    "interest_rate": "Intereset rate",
+    "interest_rate_placeholder": "Interest rate",
+    "punitory_rate": "Punitory interest rate",
+    "punitory_rate_placeholder": "Punitory rate",
+    "expiration": "Request expiration",
+    "expiration_placeholder": "Expiration date for the mortgage"
   }
 }

@@ -33,7 +33,8 @@
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
     "connecting": "연결 중",
-    "click_here": "여기를 클릭하십시오"
+    "click_here": "여기를 클릭하십시오",
+    "request": "Request"
   },
   "address": {
     "its_you": "너야"
@@ -297,5 +298,20 @@
     "watch_tutorial": "튜토리얼보기",
     "newest_lands": "최신 랜드",
     "view_more": "더 보기"
+  },
+  "mortgage": {
+    "request": "Requesting a Mortgage",
+    "oracle": "Oracle contract address",
+    "amount": "Mortgage total",
+    "duration": "Mortgage duration",
+    "duration_placeholder": "Duration date for the mortgage",
+    "payable": "Payable at",
+    "payable_placeholder": "Payable date for the mortgage",
+    "interest_rate": "Intereset rate",
+    "interest_rate_placeholder": "Interest rate",
+    "punitory_rate": "Punitory interest rate",
+    "punitory_rate_placeholder": "Punitory rate",
+    "expiration": "Request expiration",
+    "expiration_placeholder": "Expiration date for the mortgage"
   }
 }

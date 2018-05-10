@@ -33,7 +33,8 @@
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유",
     "connecting": "连",
-    "click_here": "点击这里"
+    "click_here": "点击这里",
+    "request": "Request"
   },
   "address": {
     "its_you": "是你"
@@ -286,5 +287,20 @@
     "watch_tutorial": "观看教程",
     "newest_lands": "最新上架虚拟土地",
     "view_more": "查看更多"
+  },
+  "mortgage": {
+    "request": "Requesting a Mortgage",
+    "oracle": "Oracle contract address",
+    "amount": "Mortgage total",
+    "duration": "Mortgage duration",
+    "duration_placeholder": "Duration date for the mortgage",
+    "payable": "Payable at",
+    "payable_placeholder": "Payable date for the mortgage",
+    "interest_rate": "Intereset rate",
+    "interest_rate_placeholder": "Interest rate",
+    "punitory_rate": "Punitory interest rate",
+    "punitory_rate_placeholder": "Punitory rate",
+    "expiration": "Request expiration",
+    "expiration_placeholder": "Expiration date for the mortgage"
   }
 }

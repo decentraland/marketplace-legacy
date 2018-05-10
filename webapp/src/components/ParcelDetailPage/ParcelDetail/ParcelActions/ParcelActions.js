@@ -74,11 +74,18 @@ export default class ParcelActions extends React.PureComponent {
             )}
           </React.Fragment>
         ) : isOnSale(parcel) ? (
-          <Link to={locations.buyLand(x, y)}>
-            <Button primary size="large">
-              {t('parcel_detail.publication.buy')}
-            </Button>
-          </Link>
+          <React.Fragment>
+            <Link to={locations.buyLand(x, y)}>
+              <Button primary size="large">
+                {t('parcel_detail.publication.buy')}
+              </Button>
+            </Link>
+            <Link to={locations.buyLandByMortgage(x, y)}>
+              <Button primary size="large">
+                {t('parcel_detail.publication.mortgage')}
+              </Button>
+            </Link>
+          </React.Fragment>
         ) : null}
       </div>
     )

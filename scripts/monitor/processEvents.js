@@ -4,6 +4,7 @@ import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
+import { Mortgage } from '../../src/Mortgage'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')
@@ -29,8 +30,8 @@ export async function processEvents(fromBlock = 0) {
 
 export async function processEvent(event) {
   const { tx_hash, block_number, name } = event
-  const { assetId } = event.args
-  const parcelId = await Parcel.decodeAssetId(assetId)
+  const { assetId, landId } = event.args
+  const parcelId = await Parcel.decodeAssetId(assetId || landId) // TODO: uaf
   if (!parcelId) {
     // This only happens in dev, if there's a parcel in the DB that's outside of Genesis City
     log.info(`parcelId for assetId "${assetId}" is null`)
@@ -163,6 +164,56 @@ export async function processEvent(event) {
         { owner: to.toLowerCase(), last_transferred_at },
         { id: parcelId }
       )
+      break
+    }
+    case BlockchainEvent.EVENTS.newMortgage: {
+      const { borrower, loanId, mortgageId } = event.args
+      const contract_id = event.args.id
+      const rcnEngineContract = await eth.getContract('RCNEngine')
+      const [amount, duesIn] = Promise.all([
+        await rcnEngineContract.getAmount(loanId),
+        await rcnEngineContract.getDuesIn(loanId)
+      ])
+
+      if (!contract_id) {
+        log.info(`[${name}] Mortgage ${tx_hash} doesn't have an id`)
+        return
+      }
+
+      const exists = await Mortgage.count({ tx_hash, contract_id })
+      if (exists) {
+        log.info(`[${name}] Mortgage ${tx_hash} already exists`)
+        return
+      }
+      log.info(`[${name}] Creating Mortgage ${contract_id} for ${parcelId}`)
+
+      const [block_time_created_at] = await Promise.resolve(
+        new BlockTimestampService().getBlockTime(block_number)
+      )
+
+      try {
+        await Mortgage.insert({
+          tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+          status: Publication.STATUS.open,
+          lender: null,
+          amount: eth.utils.fromWei(amount),
+          dues_in: duesIn,
+          mortgage_id: mortgageId,
+          loan_id: loanId,
+          tx_hash,
+          block_number,
+          block_time_created_at,
+          contract_id,
+          x,
+          y,
+          borrower
+        })
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] Publication of hash ${tx_hash} and id ${contract_id} already exists and it's not open`
+        )
+      }
       break
     }
     default:
