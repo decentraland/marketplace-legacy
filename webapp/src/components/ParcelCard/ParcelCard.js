@@ -60,7 +60,7 @@ export default class ParcelCard extends React.PureComponent {
                     parcel.last_transferred_at
                       ? parseInt(parcel.last_transferred_at, 10)
                       : AUCTION_DATE,
-                    'MMMM Do, YYYY'
+                    'MMM Do, YYYY'
                   )
                 })}
               </Card.Meta>

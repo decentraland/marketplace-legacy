@@ -30,6 +30,10 @@ export default class Blockie extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.shouldRefresh
+  }
+
   componentDidUpdate() {
     if (this.shouldRefresh) {
       this.shouldRefresh = false

@@ -488,6 +488,7 @@ export default class ParcelPreview extends React.PureComponent {
         if (selected.some(coords => coords.x === px && coords.y === py)) {
           selection.push({ x: rx, y: ry })
         }
+
         Parcel.draw({
           ctx,
           x: rx + size / 2,

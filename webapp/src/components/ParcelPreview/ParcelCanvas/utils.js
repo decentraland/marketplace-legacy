@@ -1,6 +1,6 @@
-/* 
-  The following code was taken from https://github.com/dy/pan-zoom 
-  and modified a bit to allow disposing the event listeners 
+/*
+  The following code was taken from https://github.com/dy/pan-zoom
+  and modified a bit to allow disposing the event listeners
 */
 
 import * as Impetus from 'impetus'
