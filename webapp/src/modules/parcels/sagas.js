@@ -40,7 +40,7 @@ function* handleParcelsRequest(action) {
       })
     )
 
-    yield put(fetchParcelsSuccess(result.newParcelsData, result.publications))
+    yield put(fetchParcelsSuccess(result.parcels, result.publications))
   } catch (error) {
     yield put(fetchParcelsFailure(error.message))
   }

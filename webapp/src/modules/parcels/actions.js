@@ -14,10 +14,10 @@ export function fetchParcelsRequest(nw, se) {
   }
 }
 
-export function fetchParcelsSuccess(newParcelsData, publications) {
+export function fetchParcelsSuccess(parcels, publications) {
   return {
     type: FETCH_PARCELS_SUCCESS,
-    newParcelsData,
+    parcels,
     publications
   }
 }

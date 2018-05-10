@@ -59,7 +59,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
-        data: action.newParcelsData
+        data: { ...state.data, ...action.parcels }
       }
     }
     case FETCH_PUBLICATIONS_SUCCESS:

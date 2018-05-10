@@ -14,7 +14,6 @@ export function WebWorkerOnMessage() {
 
         result = {
           parcels: parcelObject,
-          newParcelsData: Object.assign({}, allParcels, parcelObject),
           publications
         }
         break
