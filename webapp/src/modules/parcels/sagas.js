@@ -12,7 +12,7 @@ import {
   editParcelSuccess,
   editParcelFailure
 } from './actions'
-import { getParcels } from './selectors'
+import { getData as getParcels } from './selectors'
 import { locations } from 'locations'
 import { api } from 'lib/api'
 import { buildCoordinate } from 'lib/utils'

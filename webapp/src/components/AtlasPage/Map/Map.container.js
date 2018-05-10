@@ -3,7 +3,8 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 
 import { locations } from 'locations'
-import { getParcels } from 'modules/parcels/selectors'
+import { getData as getParcels } from 'modules/parcels/selectors'
+import { getPublications } from 'modules/publication/selectors'
 import { isConnecting } from 'modules/wallet/selectors'
 import { setLoading } from 'modules/ui/actions'
 import { getMarker } from './utils'
@@ -14,8 +15,11 @@ const mapState = (state, { match, location }) => {
   const marker = getMarker(location)
   let selected = null
 
-  if (marker && marker in parcels) {
+  if (marker && parcels[marker]) {
+    const publications = getPublications(state)
+
     selected = parcels[marker]
+    selected.publication = publications[selected.publication_tx_hash]
   }
 
   return {

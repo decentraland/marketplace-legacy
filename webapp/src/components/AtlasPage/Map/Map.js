@@ -13,6 +13,7 @@ export default class MapComponent extends React.Component {
       onChange(center.x, center.y, selected ? selected.id : null)
     }
   }
+
   render() {
     const { selected, center, onSelect, isLoading } = this.props
     return isLoading ? (

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import blockies from 'ethereum-blockies/blockies'
 
-export default class Blockie extends React.Component {
+export default class Blockie extends React.PureComponent {
   static propTypes = {
     seed: PropTypes.string.isRequired,
     color: PropTypes.string,
@@ -28,10 +28,6 @@ export default class Blockie extends React.Component {
     if (this.props.seed !== nextProps.seed) {
       this.shouldRefresh = true
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.shouldRefresh
   }
 
   componentDidUpdate() {

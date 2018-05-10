@@ -9,6 +9,7 @@ import HomePage from './HomePage'
 const mapState = (state, { location }) => {
   const parcels = getParcels(state)
   const total = getTotal(state)
+
   return {
     parcels,
     total,

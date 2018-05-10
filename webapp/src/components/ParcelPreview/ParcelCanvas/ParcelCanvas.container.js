@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getWallet } from 'modules/wallet/selectors'
-import { getParcels } from 'modules/parcels/selectors'
+import { getData as getParcels } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { fetchParcelsRequest } from 'modules/parcels/actions'

@@ -414,35 +414,29 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   getParcelAttributes = (x, y) => {
-    const { wallet, parcels, districts, publications } = this.props
     const parcelId = buildCoordinate(x, y)
-    const parcel = parcels[parcelId]
-    let publication = null
-    if (
-      parcel &&
-      parcel.publication_tx_hash &&
-      parcel.publication_tx_hash in publications
-    ) {
-      publication = publications[parcel.publication_tx_hash]
+
+    if (!this.cache[parcelId]) {
+      const { wallet, parcels, districts, publications } = this.props
+      const parcel = parcels[parcelId]
+      let publication = null
+
+      if (parcel) {
+        publication = publications[parcel.publication_tx_hash]
+        parcel.publication = publication
+      }
+
+      this.cache[parcelId] = {
+        id: parcelId,
+        publication,
+        connectedLeft: parcel ? parcel.connectedLeft : false,
+        connectedTop: parcel ? parcel.connectedTop : false,
+        connectedTopLeft: parcel ? parcel.connectedTopLeft : false,
+        ...getParcelAttributes(parcelId, x, y, wallet, parcels, districts)
+      }
     }
+
     return this.cache[parcelId]
-      ? this.cache[parcelId]
-      : (this.cache[parcelId] = {
-          id: parcelId,
-          publication,
-          connectedLeft: parcel ? parcel.connectedLeft : false,
-          connectedTop: parcel ? parcel.connectedTop : false,
-          connectedTopLeft: parcel ? parcel.connectedTopLeft : false,
-          ...getParcelAttributes(
-            parcelId,
-            x,
-            y,
-            wallet,
-            parcels,
-            districts,
-            publications
-          )
-        })
   }
 
   getSelected() {
