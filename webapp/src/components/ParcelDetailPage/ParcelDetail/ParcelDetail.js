@@ -90,7 +90,7 @@ export default class ParcelDetail extends React.PureComponent {
           ) : null}
         </Grid>
 
-        {parcel.tags && !utils.isEmptyObject(parcel.tags) ? (
+        {utils.isEmptyObject(parcel.tags) ? null : (
           <Grid stackable className="parcel-detail-row">
             <Grid.Row>
               <Grid.Column>
@@ -99,7 +99,7 @@ export default class ParcelDetail extends React.PureComponent {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        ) : null}
+        )}
 
         <ParcelTransactionHistory parcel={parcel} publications={publications} />
       </div>

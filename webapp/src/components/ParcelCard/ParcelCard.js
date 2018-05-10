@@ -70,7 +70,7 @@ export default class ParcelCard extends React.PureComponent {
                 <Icon name="marker" />
                 <span className="coord">{buildCoordinate(x, y)}</span>
               </div>
-              {parcel.tags ? <ParcelTags parcel={parcel} size="small" /> : null}
+              <ParcelTags parcel={parcel} size="small" />
             </div>
           </Card.Content>
         </Link>

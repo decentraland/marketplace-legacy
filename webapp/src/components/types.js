@@ -30,7 +30,8 @@ export const parcelType = shape({
   address: string,
   x: number.isRequired,
   y: number.isRequired,
-  publication: publicationType
+  publication: publicationType,
+  tags: object
 })
 
 export const contributionType = shape({
