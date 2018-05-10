@@ -1,7 +1,10 @@
 export class WebWorkerFactory {
   static create(WebWorkerFunction) {
-    let code = WebWorkerFunction.toString()
-    code = code.substring(code.indexOf('{') + 1, code.lastIndexOf('}'))
+    const onmessage = WebWorkerFunction.toString().replace(
+      WebWorkerFunction.name,
+      'onmessage'
+    )
+    const code = `var onmessage = ${onmessage}`
 
     const blob = new window.Blob([code], { type: 'application/javascript' })
     const worker = new window.Worker(window.URL.createObjectURL(blob))
