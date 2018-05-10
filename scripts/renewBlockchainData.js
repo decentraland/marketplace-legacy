@@ -2,17 +2,16 @@
 
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
-import { db } from '../src/database'
+import { connectDatabase } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
-import { loadEnv } from './utils'
 
-let BATCH_SIZE
+const BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
 const log = new Log('update')
 
 export async function renewBlockchainData() {
   log.info('Connecting database')
-  await db.connect()
+  await connectDatabase()
 
   log.info('Connecting to Ethereum node')
   await eth.connect({
@@ -23,10 +22,11 @@ export async function renewBlockchainData() {
   })
 
   log.info('Storing `parcels` data')
-  const parcels = await Parcel.find()
+  const parcels = await Parcel.findAll()
   await updateParcelsData(parcels)
 
   log.info('All done')
+  process.exit()
 }
 
 export async function updateParcelsData(parcels) {
@@ -46,7 +46,9 @@ export async function updateParcelsData(parcels) {
       log.info(`Processing ${batchSize}/${parcels.length} parcels`)
 
       updates = updates.concat(
-        newParcels.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
+        newParcels.map(({ id, ...parcel }) =>
+          Parcel.update(parcel, { where: { id } })
+        )
       )
     },
     batchSize: BATCH_SIZE,
@@ -58,12 +60,7 @@ export async function updateParcelsData(parcels) {
 }
 
 if (require.main === module) {
-  loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
-
-  Promise.resolve()
-    .then(renewBlockchainData)
+  renewBlockchainData()
+    .catch(error => log.error(error))
     .then(() => process.exit())
-    .catch(error => console.error('An error occurred.\n', error))
 }

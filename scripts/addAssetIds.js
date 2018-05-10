@@ -3,17 +3,16 @@
 import { eth, contracts } from 'decentraland-eth'
 import { env, Log } from 'decentraland-commons'
 
-import { db } from '../src/database'
+import { connectDatabase } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
-import { loadEnv } from './utils'
 
-let BATCH_SIZE
+const BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
 const log = new Log('addAssetIds')
 
 export async function addAssetIds() {
   log.info('Connecting database')
-  await db.connect()
+  await connectDatabase()
 
   log.info('Connecting to Ethereum node')
   await eth.connect({
@@ -23,7 +22,9 @@ export async function addAssetIds() {
     provider: env.get('RPC_URL')
   })
 
-  const parcels = await Parcel.find()
+  const parcels = await Parcel.findAll({
+    where: { asset_id: null }
+  })
   await updateAssetIds(parcels)
 
   log.info('All done!')
@@ -31,8 +32,6 @@ export async function addAssetIds() {
 }
 
 export async function updateAssetIds(parcels) {
-  parcels = parcels.filter(parcel => !parcel.asset_id) // avoid adding a new method to Parcel
-
   const contract = eth.getContract('LANDRegistry')
 
   await asyncBatch({
@@ -42,10 +41,7 @@ export async function updateAssetIds(parcels) {
 
       const updates = parcelsBatch.map(async parcel => {
         const assetId = await contract.encodeTokenId(parcel.x, parcel.y)
-        return Parcel.update(
-          { asset_id: assetId.toString() },
-          { id: parcel.id }
-        )
+        return parcel.update({ asset_id: assetId.toString() })
       })
 
       await Promise.all(updates)
@@ -55,11 +51,7 @@ export async function updateAssetIds(parcels) {
 }
 
 if (require.main === module) {
-  loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
-  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
-
-  Promise.resolve()
-    .then(addAssetIds)
-    .catch(console.error)
+  addAssetIds()
+    .catch(error => log.error(error))
+    .then(() => process.exit())
 }

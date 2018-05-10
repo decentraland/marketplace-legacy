@@ -4,15 +4,12 @@ import { eth, txUtils } from 'decentraland-eth'
 import { Log, cli } from 'decentraland-commons'
 import faker from 'faker'
 
-import { loadEnv } from './utils'
-import { db } from '../src/database'
+import { connectDatabase } from '../src/database'
 import { Publication } from '../src/Publication'
 
 const log = new Log('seed')
 
-loadEnv()
-
-const seed = {
+const seedProgram = {
   addCommands(program) {
     program
       .command('generate <ModelName>')
@@ -55,7 +52,7 @@ const seed = {
             log.info(
               `Inserting ${JSON.stringify(row)} row into ${Model.tableName}`
             )
-            await Model.insert(row)
+            await Model.create(row)
 
             amount -= 1
           }
@@ -167,7 +164,13 @@ function generateEthereumTxHash() {
   return hash.toString('hex').toLowerCase()
 }
 
-Promise.resolve()
-  .then(() => db.connect())
-  .then(() => cli.runProgram([seed]))
-  .catch(console.error)
+export async function seed() {
+  log.info('Connecting database')
+  await connectDatabase()
+
+  return cli.runProgram([seedProgram])
+}
+
+if (require.main === module) {
+  seed().catch(error => log.error(error))
+}

@@ -1,7 +1,7 @@
 import { eth, Contract, contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 
-import { Parcel } from './Parcel'
+import { Parcel } from './Parcel.model'
 import { coordinates } from './coordinates'
 import { isDuplicatedConstraintError } from '../lib'
 
@@ -20,7 +20,7 @@ export class ParcelService {
       const inserts = []
 
       for (let y = minY; y <= maxY; y++) {
-        inserts.push(this.Parcel.insert({ x, y }).catch(skipDuplicateError))
+        inserts.push(this.Parcel.create({ x, y }).catch(skipDuplicateError))
       }
 
       await Promise.all(inserts)

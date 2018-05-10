@@ -1,6 +1,4 @@
 export function isDuplicatedConstraintError(error = {}) {
-  const errorMessage = typeof error === 'string' ? error : error.message
-  const duplicateErrorRegexp = /duplicate key value violates unique constraint ".+"/
-
-  return errorMessage.search(duplicateErrorRegexp) !== -1
+  const errorName = typeof error === 'string' ? error : error.name
+  return errorName === 'SequelizeUniqueConstraintError'
 }

@@ -3,31 +3,38 @@
 import { execSync } from 'child_process'
 import { Log, cli } from 'decentraland-commons'
 
-import { db } from '../src/database'
+import {
+  connectDatabase,
+  truncateTable,
+  queryDatabase,
+  QueryTypes
+} from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { District } from '../src/District'
 import { Contribution } from '../src/Contribution'
 import { updateParcelsData } from './renewBlockchainData'
 import { tagParcels } from './tag'
-import { loadEnv, runpsql } from './utils'
+import { runpsql } from './utils'
 
 const log = new Log('init')
 
-export async function initializeDatabase() {
+export async function initDb() {
   const shouldContinue = await cli.confirm(
     `Careful! this will DROP 'parcel_states', 'projects', 'district_entries'
 and reset the current 'parcels', 'districts', 'contributions' tables.
 Do you wish to continue?`
   )
-  if (!shouldContinue) return process.exit()
+  if (!shouldContinue) return
 
   log.info('Connecting database')
-  await db.connect()
+  await connectDatabase()
 
   log.info('Initializing state')
   execSync(runpsql('./drop.sql'))
   await Promise.all(
-    [Parcel, District, Contribution].map(Model => db.truncate(Model.tableName))
+    [Parcel, District, Contribution].map(Model =>
+      truncateTable(Model.tableName)
+    )
   )
 
   log.info('Restoring parcel_states')
@@ -51,11 +58,11 @@ Do you wish to continue?`
     'Do you want to update the database to the last data found on the blockchain?'
   )
   if (shouldUpdate) {
-    const parcels = await Parcel.find()
+    const parcels = await Parcel.findAll()
     await updateParcelsData(parcels)
   }
 
-  const shouldTag = await cli.confirm('Do you want to insert parcel tags?')
+  const shouldTag = await cli.confirm('Do you want to set parcel tags?')
   if (shouldTag) {
     await tagParcels()
   }
@@ -65,7 +72,7 @@ Do you wish to continue?`
 }
 
 async function normalizeParcelStates() {
-  const parcelStates = await db.query('SELECT * FROM parcel_states')
+  const parcelStates = await queryDatabase('SELECT * FROM parcel_states')
 
   log.info(
     `Normalizing ${
@@ -74,7 +81,7 @@ async function normalizeParcelStates() {
   )
 
   for (const parcelState of parcelStates) {
-    await Parcel.insert({
+    await Parcel.create({
       id: parcelState.id,
       x: parcelState.x,
       y: parcelState.y,
@@ -88,7 +95,7 @@ async function normalizeParcelStates() {
 }
 
 async function normalizeDistrictEntries() {
-  const districtEntries = await db.query('SELECT * FROM district_entries')
+  const districtEntries = await queryDatabase('SELECT * FROM district_entries')
 
   log.info(
     `Normalizing ${
@@ -97,7 +104,7 @@ async function normalizeDistrictEntries() {
   )
 
   for (const districtEntry of districtEntries) {
-    await Contribution.insert({
+    await Contribution.create({
       id: districtEntry.id,
       address: districtEntry.address.toLowerCase(),
       district_id: districtEntry.project_id,
@@ -110,14 +117,14 @@ async function normalizeDistrictEntries() {
 }
 
 async function normalizeProjects() {
-  const projects = await db.query('SELECT * FROM projects')
+  const projects = await queryDatabase('SELECT * FROM projects')
 
   log.info(
     `Normalizing ${projects.length} projects. This might take a while...`
   )
 
   for (const project of projects) {
-    await District.insert({
+    await District.create({
       id: project.id,
       name: project.name,
       description: project.desc,
@@ -132,20 +139,19 @@ async function normalizeProjects() {
     })
   }
 
-  return await District.db.query(`
-    UPDATE districts PJ
+  return await queryDatabase(
+    `UPDATE districts PJ
       SET parcel_ids = (
         SELECT ARRAY_AGG(P.id)
           FROM parcels P
           WHERE P.district_id = PJ.id
-      );
-  `)
+      );`,
+    { type: QueryTypes.UPDATE }
+  )
 }
 
 if (require.main === module) {
-  loadEnv()
-
-  Promise.resolve()
-    .then(initializeDatabase)
-    .catch(console.error)
+  initDb()
+    .catch(error => log.error(error))
+    .then(() => process.exit())
 }

@@ -1,19 +1,12 @@
 import { expect } from 'chai'
 import { txUtils } from 'decentraland-eth'
 
-import { db } from '../database'
-import { ParcelService } from '../Parcel'
-import { Publication } from './Publication'
+import { truncateTable, db, Op } from '../database'
+import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
+import { PublicationQueryBuilder } from './Publication.querybuilder'
 import { PublicationRequestFilters } from './PublicationRequestFilters'
-
-describe('Publication', function() {
-  describe('.primaryKey', function() {
-    it('should set the primary key to `tx_hash`', function() {
-      expect(Publication.primaryKey).to.equal('tx_hash')
-    })
-  })
-})
+import { Parcel, ParcelService } from '../Parcel'
 
 describe('PublicationRequestFilters', function() {
   const buildRequest = request => ({
@@ -164,7 +157,7 @@ describe('PublicationService', function() {
         }
       ]
       const inserts = publicationRows.map(publication =>
-        Publication.insert(publication)
+        Publication.create(publication)
       )
       inserts.push(new ParcelService().insertMatrix(0, 0, 3, 3))
       await Promise.all(inserts)
@@ -206,5 +199,22 @@ describe('PublicationService', function() {
     })
   })
 
-  afterEach(() => db.truncate(Publication.tableName))
+  afterEach(() =>
+    [Parcel, Publication].map(Model => truncateTable(Model.tableName))
+  )
+})
+
+describe('PublicationQueryBuilder', function() {
+  describe('#isActive', function() {
+    it('should check the epoch time for expiration', function() {
+      const queryBuilder = new PublicationQueryBuilder({
+        name: 'publication'
+      }).isActive()
+
+      expect(queryBuilder.build()).to.deep.equal({
+        name: 'publication',
+        expires_at: { [Op.gt]: db.literal('EXTRACT(epoch from now()) * 1000') }
+      })
+    })
+  })
 })
