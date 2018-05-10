@@ -27,7 +27,7 @@ export default class Controls extends React.PureComponent {
         {isTargetVisible ? (
           <div
             className={'control-button' + (isTargetDisabled ? ' disabled' : '')}
-            onClick={isTargetDisabled ? undefined : onTarget}
+            onClick={isTargetDisabled ? null : onTarget}
           >
             <Icon name="crosshairs" />
           </div>
@@ -35,7 +35,7 @@ export default class Controls extends React.PureComponent {
         <div className="control-button-group">
           <div
             className={'control-button' + (isZoomInDisabled ? ' disabled' : '')}
-            onClick={isZoomInDisabled ? undefined : onZoomIn}
+            onClick={isZoomInDisabled ? null : onZoomIn}
           >
             <Icon name="plus" />
           </div>
@@ -43,7 +43,7 @@ export default class Controls extends React.PureComponent {
             className={
               'control-button' + (isZoomOutDisabled ? ' disabled' : '')
             }
-            onClick={isZoomOutDisabled ? undefined : onZoomOut}
+            onClick={isZoomOutDisabled ? null : onZoomOut}
           >
             <Icon name="minus" />
           </div>

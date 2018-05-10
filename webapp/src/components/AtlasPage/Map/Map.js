@@ -14,6 +14,10 @@ export default class MapComponent extends React.Component {
     }
   }
 
+  getSize() {
+    return isMobile() ? 7 : 14
+  }
+
   render() {
     const { selected, center, onSelect, isLoading } = this.props
     return isLoading ? (
@@ -29,8 +33,8 @@ export default class MapComponent extends React.Component {
           showPopup
           showControls
           useCache={false}
+          size={this.getSize()}
           onClick={onSelect}
-          size={isMobile() ? 7 : 14}
           onChange={this.handleChange}
         />
       </div>

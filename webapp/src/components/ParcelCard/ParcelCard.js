@@ -27,6 +27,7 @@ export default class ParcelCard extends React.PureComponent {
     const { x, y, publication } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
+    const isPublicationOpen = isOpen(publication)
 
     return (
       <Card className="ParcelCard">
@@ -43,11 +44,12 @@ export default class ParcelCard extends React.PureComponent {
           <Card.Content className="body">
             <Card.Description title={parcelName}>
               <span className="name">{parcelName}</span>
-              {isOpen(publication) && (
+              {isPublicationOpen ? (
                 <Mana amount={parseFloat(publication.price, 10)} />
-              )}
+              ) : null}
             </Card.Description>
-            {isOpen(publication) ? (
+
+            {isPublicationOpen ? (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}

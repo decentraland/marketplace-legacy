@@ -11,7 +11,7 @@ import {
   publicationType
 } from 'components/types'
 import debounce from 'lodash.debounce'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate, isMobileWidth } from 'lib/utils'
 import {
   COLORS,
   getParcelAttributes,
@@ -26,6 +26,7 @@ const LOAD_PADDING = 4
 const POPUP_ROW_HEIGHT = 19
 const POPUP_HEIGHT = 67
 const POPUP_PADDING = 20
+const POPUP_DELAY = 400
 
 const { minX, minY, maxX, maxY } = getBounds()
 
@@ -253,7 +254,7 @@ export default class ParcelPreview extends React.PureComponent {
     }
     const newZoom = Math.max(
       minZoom,
-      Math.min(maxZoom, zoom - dz * (this.isMobile() ? 0.005 : 0.01))
+      Math.min(maxZoom, zoom - dz * this.getDzZoomModifier())
     )
     const newSize = newZoom * size
 
@@ -346,11 +347,13 @@ export default class ParcelPreview extends React.PureComponent {
       this.hidePopup()
       return
     }
+
     if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
       this.hovered = { x, y }
       const parcelId = buildCoordinate(x, y)
       const { onHover, parcels, showPopup } = this.props
       const parcel = parcels[parcelId]
+
       if (onHover) {
         onHover(x, y, parcel)
       }
@@ -368,7 +371,7 @@ export default class ParcelPreview extends React.PureComponent {
               }
             })
           }
-        }, 400)
+        }, POPUP_DELAY)
       }
     }
   }
@@ -378,19 +381,13 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   hidePopup = () => {
-    if (this.popupTimeout) {
-      clearTimeout(this.popupTimeout)
-    }
+    clearTimeout(this.popupTimeout)
+
     if (this.state.popup) {
       this.setState({
         popup: { ...this.state.popup, visible: false }
       })
     }
-  }
-
-  isMobile() {
-    const { width } = this.props
-    return width <= 768
   }
 
   updateCenter = () => {
@@ -462,11 +459,14 @@ export default class ParcelPreview extends React.PureComponent {
 
     const selection = []
     const selected = this.getSelected()
+    const isSelected = (x, y) =>
+      selected.some(coords => coords.x === x && coords.y === y)
+
+    const cx = width / 2
+    const cy = height / 2
 
     for (let px = nw.x; px < se.x; px++) {
       for (let py = nw.y; py < se.y; py++) {
-        const cx = width / 2
-        const cy = height / 2
         const offsetX = (x - px) * size + pan.x
         const offsetY = (py - y) * size + pan.y
         const rx = cx - offsetX
@@ -479,7 +479,7 @@ export default class ParcelPreview extends React.PureComponent {
           connectedTopLeft
         } = this.getParcelAttributes(px, py)
 
-        if (selected.some(coords => coords.x === px && coords.y === py)) {
+        if (isSelected(px, py)) {
           selection.push({ x: rx, y: ry })
         }
 
@@ -488,7 +488,7 @@ export default class ParcelPreview extends React.PureComponent {
           x: rx + size / 2,
           y: ry + size / 2,
           size,
-          padding: size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2,
+          padding: this.computeParcelPadding(),
           color: backgroundColor,
           connectedLeft,
           connectedTop,
@@ -496,25 +496,28 @@ export default class ParcelPreview extends React.PureComponent {
         })
       }
     }
+
     if (selection.length > 0) {
       Selection.draw({
         ctx,
         selection,
-        size: size
+        size
       })
     }
+  }
+
+  computeParcelPadding(size) {
+    return size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2
   }
 
   renderPopup() {
     const { width } = this.props
     const { popup } = this.state
-    if (!popup) {
-      return null
-    }
+    if (!popup) return null
+
     const { x, y, top, left, visible } = popup
-    if (!x && !y && !top && !left) {
-      return null
-    }
+    if (!x && !y && !top && !left) return null
+
     const {
       color,
       label,
@@ -524,15 +527,12 @@ export default class ParcelPreview extends React.PureComponent {
     } = this.getParcelAttributes(x, y)
 
     let rows = 1
-    if (label) {
-      rows++
-    }
-    if (publication) {
-      rows++
-    }
+    if (label) rows += 1
+    if (publication) rows += 1
 
     const popupHeight = rows * POPUP_ROW_HEIGHT + POPUP_HEIGHT + POPUP_PADDING
     const popupTop = popupHeight > top ? top + POPUP_PADDING : top - popupHeight
+
     let popupClasses = 'ParcelCanvasPopup'
     if (left > width * 0.8) {
       popupClasses += ' move-left'
@@ -576,49 +576,61 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   handleZoomIn = () => {
-    const { zoom } = this.state
     this.handlePanZoom({
       dx: 0,
       dy: 0,
-      dz: -zoom * (this.isMobile ? 100 : 50)
+      dz: -1 * this.getDz()
     })
   }
 
   handleZoomOut = () => {
-    const { zoom } = this.state
     this.handlePanZoom({
       dx: 0,
       dy: 0,
-      dz: Math.sqrt(zoom) * (this.isMobile ? 100 : 50)
+      dz: this.getDz()
     })
+  }
+
+  getDz() {
+    const { zoom } = this.state
+    return Math.sqrt(zoom) * (this.isMobile() ? 100 : 50)
+  }
+
+  getDzZoomModifier() {
+    return this.isMobile() ? 0.005 : 0.01
+  }
+
+  isMobile() {
+    return isMobileWidth(this.props.width)
+  }
+
+  getCanvasClassName() {
+    const { isDraggable, onClick } = this.props
+
+    let classes = 'ParcelCanvas'
+    if (isDraggable) classes += ' draggable'
+    if (onClick) classes += ' clickable'
+
+    return classes
   }
 
   render() {
     const {
       width,
       height,
-      isDraggable,
       showMinimap,
       showPopup,
       showControls,
-      onClick,
       minSize,
       maxSize
     } = this.props
 
     const styles = { width, height }
-    let classes = 'ParcelCanvas'
-    if (isDraggable) {
-      classes += ' draggable'
-    }
-    if (onClick) {
-      classes += ' clickable'
-    }
 
     return (
       <div className="ParcelCanvasWrapper" style={styles}>
         <canvas
-          className={classes}
+          className={this.getCanvasClassName()}
           width={width}
           height={height}
           ref={this.refCanvas}

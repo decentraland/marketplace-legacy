@@ -113,7 +113,6 @@ export function panzoom(target, cb) {
     })
   })
 
-  // dispose
   return function dispose() {
     impetus.destroy()
     pos.dispose()
