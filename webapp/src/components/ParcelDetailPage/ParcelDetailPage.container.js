@@ -2,7 +2,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { locations } from 'locations'
 
-import { getParams } from 'modules/location/selectors'
+import { getMatchParams } from 'modules/location/selectors'
 import { navigateTo } from 'modules/location/actions'
 import { getError, isLoading } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
@@ -12,7 +12,7 @@ import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
-  const { x, y } = getParams(ownProps)
+  const { x, y } = getMatchParams(ownProps)
   return {
     x,
     y,

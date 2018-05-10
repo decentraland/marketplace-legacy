@@ -43,7 +43,9 @@ export default class ParcelCard extends React.PureComponent {
           <Card.Content className="body">
             <Card.Description title={parcelName}>
               <span className="name">{parcelName}</span>
-              <Mana amount={parseFloat(publication.price, 10)} />
+              {isOpen(publication) && (
+                <Mana amount={parseFloat(publication.price, 10)} />
+              )}
             </Card.Description>
             {isOpen(publication) ? (
               <React.Fragment>

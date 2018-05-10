@@ -3,16 +3,14 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import { isTxIdle, getError } from 'modules/transfer/selectors'
-import { getParams } from 'modules/location/selectors'
+import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { transferParcelRequest, cleanTransfer } from 'modules/transfer/actions'
 import { locations } from 'locations'
 
 import TransferParcelPage from './TransferParcelPage'
 
 const mapState = (state, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
   return {
     x,
     y,
@@ -22,9 +20,7 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
   return {
     onSubmit: (parcel, address) =>
       dispatch(transferParcelRequest(parcel, address)),
