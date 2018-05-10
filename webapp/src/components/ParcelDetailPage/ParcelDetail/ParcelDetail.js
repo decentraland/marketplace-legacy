@@ -1,7 +1,6 @@
 import React from 'react'
 import { Header, Grid } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import { utils } from 'decentraland-commons'
 
 import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
@@ -90,7 +89,7 @@ export default class ParcelDetail extends React.PureComponent {
           ) : null}
         </Grid>
 
-        {utils.isEmptyObject(parcel.tags) ? null : (
+        {parcel.tags ? (
           <Grid stackable className="parcel-detail-row">
             <Grid.Row>
               <Grid.Column>
@@ -99,7 +98,7 @@ export default class ParcelDetail extends React.PureComponent {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        )}
+        ) : null}
 
         <ParcelTransactionHistory parcel={parcel} publications={publications} />
       </div>
