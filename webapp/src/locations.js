@@ -11,8 +11,6 @@ export const locations = {
 
   marketplace: '/marketplace',
 
-  dashboard: '/dashboard',
-
   sell: '/:x/:y/sell',
   sellLand: (x, y) => `/${x}/${y}/sell`,
 
@@ -56,7 +54,6 @@ export const PROFILE_PAGE_TABS = Object.freeze({
 export const NAVBAR_PAGES = Object.freeze({
   atlas: 'Atlas',
   marketplace: 'Marketplace',
-  dashboard: 'Dashboard',
   activity: 'Activity',
   profile: 'My Land',
   settings: 'Settings',

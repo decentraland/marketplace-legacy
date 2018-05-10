@@ -13,10 +13,6 @@ const FILTER_DEFAULTS = {
 }
 
 export class API {
-  fetchDashboardStats() {
-    return this.request('get', '/dashboard/stats', {})
-  }
-
   fetchTranslations(locale) {
     return this.request('get', `/translations/${locale}`, {})
   }
