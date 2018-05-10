@@ -51,6 +51,8 @@ export class DashboardService {
   }
 
   async countActiveUsers() {
+    const { parcelTransfer, parcelUpdate } = this.BlockchainEvent.EVENTS
+
     return await this.count(
       `SELECT COUNT(DISTINCT(A.address)) 
         FROM (
@@ -59,8 +61,9 @@ export class DashboardService {
           UNION 
           SELECT args->>'from' AS address 
             FROM ${this.BlockchainEvent.tableName} 
-            WHERE name IN ('Transfer', 'Update')
-        ) AS A`
+            WHERE name IN ($1, $2)
+        ) AS A`,
+      [parcelTransfer, parcelUpdate]
     )
   }
 
