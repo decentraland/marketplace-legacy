@@ -107,7 +107,7 @@ export default class MortgageForm extends React.PureComponent {
         duration: new Date(duration).getTime(),
         payableAt: new Date(payableAt).getTime(),
         expiresAt: new Date(expiresAt).getTime(),
-        amount,
+        amount: Number(amount),
         interestRate,
         punitoryRate,
         parcel

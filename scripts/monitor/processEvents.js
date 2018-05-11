@@ -170,40 +170,46 @@ export async function processEvent(event) {
       const { borrower, loanId, mortgageId } = event.args
       const contract_id = event.args.id
       const rcnEngineContract = await eth.getContract('RCNEngine')
-      const [amount, duesIn] = Promise.all([
-        await rcnEngineContract.getAmount(loanId),
-        await rcnEngineContract.getDuesIn(loanId)
+      const [amount, duesIn, expiresAt] = await Promise.all([
+        await rcnEngineContract.getAmount(eth.utils.toBigNumber(loanId)),
+        await rcnEngineContract.getDuesIn(eth.utils.toBigNumber(loanId)),
+        await rcnEngineContract.getExpirationRequest(
+          eth.utils.toBigNumber(loanId)
+        )
       ])
+      // TODO: remove this shit!
+      console.log(
+        loanId,
+        amount,
+        duesIn,
+        expiresAt,
+        amount.toNumber(),
+        duesIn.toNumber(),
+        expiresAt.toNumber()
+      )
 
-      if (!contract_id) {
-        log.info(`[${name}] Mortgage ${tx_hash} doesn't have an id`)
-        return
-      }
-
-      const exists = await Mortgage.count({ tx_hash, contract_id })
+      const exists = await Mortgage.count({ tx_hash })
       if (exists) {
         log.info(`[${name}] Mortgage ${tx_hash} already exists`)
         return
       }
-      log.info(`[${name}] Creating Mortgage ${contract_id} for ${parcelId}`)
+      log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
 
-      const [block_time_created_at] = await Promise.resolve(
+      const block_time_created_at = await Promise.resolve(
         new BlockTimestampService().getBlockTime(block_number)
       )
-
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: Publication.STATUS.open,
-          lender: null,
-          amount: eth.utils.fromWei(amount),
-          dues_in: duesIn,
-          mortgage_id: mortgageId,
-          loan_id: loanId,
-          tx_hash,
+          status: Mortgage.STATUS.open,
+          dues_in: duesIn.toNumber(),
+          expires_at: expiresAt.toNumber(),
+          mortgage_id: Number(mortgageId),
+          loan_id: Number(loanId),
           block_number,
           block_time_created_at,
-          contract_id,
+          amount: eth.utils.fromWei(amount),
+          tx_hash,
           x,
           y,
           borrower

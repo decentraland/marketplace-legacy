@@ -106,6 +106,10 @@ export class API {
   getUrl(path) {
     return `${URL}/api${path}`
   }
+
+  fetchParcelMortgages(borrower, x, y) {
+    return this.request('get', `/mortgages/${x}/${y}/${borrower}`)
+  }
 }
 
 export class AuthorizationError {

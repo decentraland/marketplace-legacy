@@ -33,14 +33,10 @@ exports.up = pgm => {
       loan_id: { type: 'INT', notNull: true },
       mortgage_id: { type: 'INT', notNull: true },
       amount: { type: 'FLOAT', notNull: true },
-      dues_in: 'BIGINT',
+      dues_in: { type: 'BIGINT', notNull: true },
+      expires_at: { type: 'BIGINT', notNull: true },
       block_time_created_at: { type: 'BIGINT' },
       block_time_updated_at: { type: 'BIGINT' },
-      contract_id: {
-        type: 'TEXT',
-        notNull: true,
-        unique: true
-      },
       created_at: { type: 'TIMESTAMP', notNull: true },
       updated_at: 'TIMESTAMP'
     },

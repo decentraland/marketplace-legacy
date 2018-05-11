@@ -1,6 +1,7 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects'
+import { take, takeLatest, call, put, select } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
+import { api } from 'lib/api'
 
 import {
   CREATE_MORTGAGE_REQUEST,
@@ -14,6 +15,18 @@ import { locations } from 'locations'
 
 export function* mortgageSaga() {
   yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
+  // yield take(CREATE_MORTGAGE_REQUEST, handleGetMortgageRequest)
+}
+
+function* handleGetMortgageRequest(action) {
+  try {
+    const { x, y } = action
+    const borrower = yield select(getAddress)
+    const mortgages = yield call(api.fetchParcelMortgages, x, y, borrower)
+    yield put(createMortgageSuccess(mortgages))
+  } catch (error) {
+    yield put(createMortgageFailure(error.message))
+  }
 }
 
 function* handleCreateMortgageRequest(action) {
@@ -41,17 +54,17 @@ function* handleCreateMortgageRequest(action) {
     const loanMetadata = getLoanMetadata()
 
     let loanParams = [
-      amount, // Amount requested
+      eth.utils.toWei(amount), // Amount requested
       toInterestRate(interestRate), // Anual interest
       toInterestRate(punitoryRate), // Anual punnitory interest
-      duration, // Duration of the loan, in seconds
-      payableAt, // Time when the payment of the loan starts
+      (duration - Date.now()) / 1000, // Duration of the loan, in seconds
+      (payableAt - Date.now()) / 1000, // Time when the payment of the loan starts
       expiresAt // Expiration timestamp of the request
     ]
 
     console.log(
-      duration, // Duration of the loan, in seconds
-      payableAt, // Time when the payment of the loan starts
+      (duration - Date.now()) / 1000, // Duration of the loan, in seconds
+      (payableAt - Date.now()) / 1000, // Time when the payment of the loan starts
       expiresAt // Expiration timestamp of the request
     )
     // Retrieve the loan signature
@@ -84,7 +97,14 @@ function* handleCreateMortgageRequest(action) {
         s // Signature of the loan
       )
     )
-
+    console.log(
+      loanParams, // Configuration of the loan request
+      loanMetadata, // Metadata of the loan
+      landId, // Id of the loan to buy
+      v, // Signature of the loan
+      r, // Signature of the loan
+      s // Signature of the loan
+    )
     yield put(createMortgageSuccess(mortgageReceipt, parcel))
     yield put(push(locations.activity))
   } catch (error) {

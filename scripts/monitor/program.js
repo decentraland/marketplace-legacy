@@ -24,6 +24,9 @@ Promise.resolve()
         new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS')),
         new contracts.MortgageCreator(
           env.get('MORTGAGE_CREATOR_CONTRACT_ADDRESS')
+        ),
+        new contracts.RCNEngine(
+          env.get('RCN_ENGINE_CONTRACT_ADDRESS')
         )
       ],
       provider: env.get('RPC_URL')

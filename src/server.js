@@ -16,6 +16,7 @@ import {
 } from './Publication'
 import { Translation } from './Translation'
 import { DashboardService } from './Dashboard'
+import { Mortgage } from './Mortgage'
 import { blacklist } from './lib'
 
 env.load()
@@ -209,6 +210,33 @@ export async function getPublication(req) {
   }
 
   return publication
+}
+
+/**
+ * Get a mortgages by borrower
+ * @param  {string} borrower
+ * @return {array}
+ */
+app.get(
+  '/api/mortgages/:borrower',
+  server.handleRequest(getMortgagesByBorrower)
+)
+
+export async function getMortgagesByBorrower(req) {
+  const borrower = server.extractFromReq(req, 'borrower')
+  return await Mortgage.findByBorrower(borrower)
+}
+
+app.get(
+  '/api/mortgages/:x/:y/:borrower',
+  server.handleRequest(getMortgagesInCoordinateByBorrower)
+)
+
+export async function getMortgagesInCoordinateByBorrower(req) {
+  const x = server.extractFromReq(req, 'x')
+  const y = server.extractFromReq(req, 'y')
+  const borrower = server.extractFromReq(req, 'borrower')
+  return await Mortgage.findInCoordinateByBorrower(x, y, borrower)
 }
 
 /* Start the server only if run directly */

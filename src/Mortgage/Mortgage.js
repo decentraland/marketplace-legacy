@@ -14,10 +14,10 @@ export class Mortgage extends Model {
     'loan_id',
     'mortgage_id',
     'amount',
+    'expires_at',
     'dues_in',
     'block_time_created_at',
-    'block_time_updated_at',
-    'contract_id'
+    'block_time_updated_at'
   ]
   static primaryKey = 'tx_hash'
 
@@ -31,12 +31,16 @@ export class Mortgage extends Model {
     return Object.values(this.STATUS).includes(status)
   }
 
-  static findByOwner(owner) {
-    return this.find({ owner })
+  static findByBorrower(borrower) {
+    return this.find({ borrower })
   }
 
   static findInCoordinate(x, y) {
     return this.find({ x, y }, { created_at: 'DESC' })
+  }
+
+  static findInCoordinateByBorrower(x, y, borrower) {
+    return this.find({ x, y, borrower }, { created_at: 'DESC' })
   }
 
   static findInCoordinateWithStatus(x, y, status) {
@@ -57,24 +61,5 @@ export class Mortgage extends Model {
       WHERE status = '${status}'
         AND expires_at >= EXTRACT(epoch from now()) * 1000
       ORDER BY created_at DESC`
-  }
-
-  static updateManyStatus(txHashes, newStatus) {
-    if (txHashes.length === 0) {
-      return []
-    }
-    if (!this.isValidStatus(newStatus)) {
-      throw new Error(`Trying to filter by invalid status '${newStatus}'`)
-    }
-
-    // 1 -> newStatus, 2 -> IN
-    const inPlaceholders = txHashes.map((_, index) => `$${index + 2}`)
-
-    return this.db.query(
-      `UPDATE ${this.tableName}
-        SET status = $1
-        WHERE tx_hash IN (${inPlaceholders})`,
-      [newStatus, ...txHashes]
-    )
   }
 }
