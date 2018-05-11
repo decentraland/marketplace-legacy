@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { eth, contracts } from 'decentraland-eth'
+import { eth, txUtils, contracts } from 'decentraland-eth'
 import { env, Log, cli } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
@@ -267,7 +267,7 @@ const main = {
       .option('--expand-events', 'Show arguments for each fired event')
       .action(
         asSafeAction(async (txHash, options) => {
-          const tx = await eth.utils.getTransaction(txHash)
+          const tx = await txUtils.getTransaction(txHash)
 
           if (tx) {
             log.info('(tx-status) tx\n', tx)
