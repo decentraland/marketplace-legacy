@@ -21,7 +21,8 @@ export default class ParcelDetailPage extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType),
     onFetchParcelPublications: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
-    onBuy: PropTypes.func.isRequired
+    onBuy: PropTypes.func.isRequired,
+    user: PropTypes.string
   }
 
   componentWillMount() {
@@ -48,7 +49,7 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { x, y, error, districts, publications, onBuy } = this.props
+    const { x, y, error, districts, publications, onBuy, user } = this.props
 
     if (error) {
       return null
@@ -74,6 +75,9 @@ export default class ParcelDetailPage extends React.PureComponent {
                 districts={districts}
                 publications={publications}
                 onBuy={onBuy}
+                mortgages={parcel.mortgages.filter(
+                  mortgage => mortgage.borrower === user
+                )}
               />
             </Container>
           </div>

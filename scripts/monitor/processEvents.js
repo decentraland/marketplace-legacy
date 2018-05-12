@@ -29,16 +29,57 @@ export async function processEvents(fromBlock = 0) {
 }
 
 export async function processEvent(event) {
-  const { tx_hash, block_number, name } = event
   const { assetId, landId } = event.args
-  const parcelId = await Parcel.decodeAssetId(assetId || landId) // TODO: uaf
+  if (!assetId && !landId) {
+    await processNoParcelRelatedEvents(event)
+  } else {
+    await processParcelRelatedEvents(assetId || landId, event)
+  }
+  return event
+}
+
+async function processNoParcelRelatedEvents(event) {
+  const { tx_hash, block_number, name } = event
+  switch (name) {
+    case BlockchainEvent.EVENTS.canceledMortgage: {
+      const { _id } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      try {
+        log.info(`[${name}] Cancelling Mortgage ${_id}`)
+        await Mortgage.update(
+          {
+            status: Mortgage.STATUS.cancelled,
+            block_time_updated_at
+          },
+          {
+            mortgage_id: _id
+          }
+        )
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
+        )
+      }
+      break
+    }
+    default:
+      log.info(`Don't know how to handle event ${event.name}`)
+      break
+  }
+}
+
+async function processParcelRelatedEvents(assetId, event) {
+  const { tx_hash, block_number, name } = event
+  const parcelId = await Parcel.decodeAssetId(assetId)
   if (!parcelId) {
     // This only happens in dev, if there's a parcel in the DB that's outside of Genesis City
     log.info(`parcelId for assetId "${assetId}" is null`)
     return event
   }
   const [x, y] = Parcel.splitId(parcelId)
-
   switch (name) {
     case BlockchainEvent.EVENTS.publicationCreated: {
       const { seller, priceInWei, expiresAt } = event.args
@@ -141,7 +182,9 @@ export async function processEvent(event) {
     case BlockchainEvent.EVENTS.parcelUpdate: {
       try {
         const { data } = event.args
-        const attributes = { data: contracts.LANDRegistry.decodeLandData(data) }
+        const attributes = {
+          data: contracts.LANDRegistry.decodeLandData(data)
+        }
         const attrsStr = JSON.stringify(attributes)
 
         log.info(`[${name}] Updating "${parcelId}" with ${attrsStr}`)
@@ -168,7 +211,6 @@ export async function processEvent(event) {
     }
     case BlockchainEvent.EVENTS.newMortgage: {
       const { borrower, loanId, mortgageId } = event.args
-      const contract_id = event.args.id
       const rcnEngineContract = await eth.getContract('RCNEngine')
       const [amount, duesIn, expiresAt] = await Promise.all([
         await rcnEngineContract.getAmount(eth.utils.toBigNumber(loanId)),
@@ -217,7 +259,7 @@ export async function processEvent(event) {
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
         log.info(
-          `[${name}] Publication of hash ${tx_hash} and id ${contract_id} already exists and it's not open`
+          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
         )
       }
       break
@@ -226,8 +268,6 @@ export async function processEvent(event) {
       log.info(`Don't know how to handle event ${event.name}`)
       break
   }
-
-  return event
 }
 
 const eventCache = {

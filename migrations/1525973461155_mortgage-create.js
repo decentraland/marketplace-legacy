@@ -44,6 +44,7 @@ exports.up = pgm => {
   )
 
   pgm.createIndex(tableName, 'tx_status')
+  pgm.createIndex(tableName, 'mortgage_id')
   pgm.createIndex(tableName, 'status')
   pgm.createIndex(tableName, 'borrower')
   pgm.createIndex(tableName, ['x', 'y'])
@@ -51,6 +52,7 @@ exports.up = pgm => {
 
 exports.down = pgm => {
   pgm.dropIndex(tableName, 'tx_status')
+  pgm.dropIndex(tableName, 'mortgage_id')
   pgm.dropIndex(tableName, 'status')
   pgm.dropIndex(tableName, 'borrower')
   pgm.dropIndex(tableName, ['x', 'y'])

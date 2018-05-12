@@ -3,6 +3,7 @@ import { Model } from 'decentraland-commons'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
 import { District } from '../District'
+import { Mortgage } from '../Mortgage'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
@@ -99,7 +100,9 @@ export class Parcel extends Model {
     return await this.db.query(
       `SELECT ${this.tableName}.*, (
         ${Publication.findLastParcelPublicationJsonSql()}
-      ) as publication
+      ) as publication, array(
+        ${Mortgage.findParcelMortgageJsonSql()}
+      ) as mortgages
         FROM ${this.tableName}
         WHERE x >= $1 AND y >= $2
           AND x <= $3 AND y <= $4`,

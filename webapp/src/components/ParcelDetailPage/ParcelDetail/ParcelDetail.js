@@ -11,6 +11,7 @@ import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
+import ParcelMortgage from './ParcelMortgage'
 import { parcelType, districtType, publicationType } from 'components/types'
 import { getDistrict, isOnSale } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
@@ -20,7 +21,8 @@ export default class ParcelDetail extends React.PureComponent {
     parcel: parcelType.isRequired,
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
-    onBuy: PropTypes.func.isRequired
+    onBuy: PropTypes.func.isRequired,
+    mortgages: PropTypes.array.isRequired,
   }
 
   getDescription() {
@@ -43,7 +45,7 @@ export default class ParcelDetail extends React.PureComponent {
   }
 
   render() {
-    const { parcel, districts, publications, isOwner } = this.props
+    const { parcel, districts, publications, isOwner, mortgages } = this.props
 
     const description = this.getDescription()
     const publication = this.getPublication()
@@ -89,6 +91,8 @@ export default class ParcelDetail extends React.PureComponent {
             </Grid.Row>
           ) : null}
         </Grid>
+
+        <ParcelMortgage mortgages={mortgages} />
 
         {utils.isEmptyObject(parcel.tags) ? null : (
           <Grid stackable className="parcel-detail-row">

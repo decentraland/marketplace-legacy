@@ -1,4 +1,5 @@
 import { Model } from 'decentraland-commons'
+import { Parcel } from '../Parcel'
 
 export class Mortgage extends Model {
   static tableName = 'mortgages'
@@ -61,5 +62,13 @@ export class Mortgage extends Model {
       WHERE status = '${status}'
         AND expires_at >= EXTRACT(epoch from now()) * 1000
       ORDER BY created_at DESC`
+  }
+
+  static findParcelMortgageJsonSql() {
+    return `SELECT  row_to_json(m.*)
+      FROM ${this.tableName} as m
+      WHERE m.x = ${Parcel.tableName}.x
+        AND m.y = ${Parcel.tableName}.y
+      ORDER BY m.created_at DESC`
   }
 }

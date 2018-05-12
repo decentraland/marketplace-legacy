@@ -7,6 +7,7 @@ import { navigateTo } from 'modules/location/actions'
 import { getError, isLoading } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getPublications as getParcelPublications } from 'modules/publication/selectors'
+import { getAddress } from 'modules/wallet/selectors'
 import { fetchParcelPublicationsRequest } from 'modules/publication/actions'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import ParcelDetailPage from './ParcelDetailPage'
@@ -19,7 +20,8 @@ const mapState = (state, ownProps) => {
     isLoading: isLoading(state),
     error: getError(state),
     districts: getDistricts(state),
-    publications: getParcelPublications(state)
+    publications: getParcelPublications(state),
+    user: getAddress(state)
   }
 }
 

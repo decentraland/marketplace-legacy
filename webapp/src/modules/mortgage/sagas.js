@@ -5,8 +5,11 @@ import { api } from 'lib/api'
 
 import {
   CREATE_MORTGAGE_REQUEST,
+  CANCEL_MORTGAGE_REQUEST,
   createMortgageSuccess,
-  createMortgageFailure
+  createMortgageFailure,
+  cancelMortgageFailure,
+  cancelMortgageSuccess
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { toInterestRate, getLoanMetadata } from './utils'
@@ -15,6 +18,7 @@ import { locations } from 'locations'
 
 export function* mortgageSaga() {
   yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
+  yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
   // yield take(CREATE_MORTGAGE_REQUEST, handleGetMortgageRequest)
 }
 
@@ -109,5 +113,21 @@ function* handleCreateMortgageRequest(action) {
     yield put(push(locations.activity))
   } catch (error) {
     yield put(createMortgageFailure(error.message))
+  }
+}
+
+function* handleCancelMortgageRequest(action) {
+  try {
+    const { mortgageId } = action
+    const mortgageManagerContract = eth.getContract('MortgageManager')
+
+    const mortgageCancelReceipt = yield call(() =>
+      mortgageManagerContract.cancelMortgage(mortgageId)
+    )
+
+    yield put(cancelMortgageSuccess(mortgageCancelReceipt, { x: 1, y: 1 }))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(cancelMortgageFailure(error.message))
   }
 }

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { EDIT_PARCEL_REQUEST } from './actions'
 import { getPublications as getAllPublications } from 'modules/publication/selectors'
+import { getAddress } from 'modules/wallet/selectors'
 import { buildCoordinate } from 'lib/utils'
 
 export const getState = state => state.parcels
@@ -34,3 +35,10 @@ export const getPublications = (x, y) =>
       tx_hash => publications[tx_hash]
     )
   })
+
+export const getMortgages = createSelector(
+  getData,
+  state => getAddress(state),
+  ({ mortgages }, address) =>
+    mortgages.filter(mortgage => mortgage.borrower === address)
+)

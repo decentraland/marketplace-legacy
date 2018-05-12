@@ -11,7 +11,8 @@ export class BlockchainEvent extends Model {
     publicationCancelled: 'AuctionCancelled',
     parcelTransfer: 'Transfer',
     parcelUpdate: 'Update',
-    newMortgage: 'NewMortgage'
+    newMortgage: 'NewMortgage',
+    canceledMortgage: 'CanceledMortgage'
   }
 
   static async findLastBlockNumber() {
