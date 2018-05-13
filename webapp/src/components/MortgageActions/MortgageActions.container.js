@@ -9,8 +9,14 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => ({
-  onCancel: () => dispatch(cancelMortgageRequest(ownProps.mortgage.mortgage_id))
+const mapDispatch = (dispatch, { mortgage }) => ({
+  onCancel: () =>
+    dispatch(
+      cancelMortgageRequest(mortgage.mortgage_id, {
+        x: mortgage.x,
+        y: mortgage.y
+      })
+    )
 })
 
 export default connect(mapState, mapDispatch)(MortgageActions)

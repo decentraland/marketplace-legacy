@@ -11,6 +11,7 @@ import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
 import { AUCTION_DATE } from 'lib/parcelUtils'
 import { isOpen } from 'modules/publication/utils'
+import { isOpen as isMortgageOpen } from 'modules/mortgage/utils'
 import { t } from 'modules/translation/utils'
 import { formatDate, buildCoordinate } from 'lib/utils'
 
@@ -19,11 +20,12 @@ import './ParcelCard.css'
 export default class ParcelCard extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    debounce: PropTypes.number
+    debounce: PropTypes.number,
+    showMortgage: PropTypes.bool
   }
 
   render() {
-    const { parcel, debounce } = this.props
+    const { parcel, debounce, showMortgage } = this.props
     const { x, y, publication } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
@@ -36,7 +38,7 @@ export default class ParcelCard extends React.PureComponent {
           </div>
           <Card.Content className="body">
             <Card.Description title={parcelName}>{parcelName}</Card.Description>
-            {isOpen(publication) ? (
+            {isOpen(publication) && (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
@@ -47,18 +49,31 @@ export default class ParcelCard extends React.PureComponent {
                   <Mana amount={parseFloat(publication.price, 10)} />
                 </div>
               </React.Fragment>
-            ) : (
-              <Card.Meta>
-                {t('publication.acquired_at', {
-                  date: formatDate(
-                    parcel.last_transferred_at
-                      ? parseInt(parcel.last_transferred_at, 10)
-                      : AUCTION_DATE,
-                    'MMMM Do, YYYY'
-                  )
-                })}
-              </Card.Meta>
             )}
+            {showMortgage &&
+              isMortgageOpen(parcel.mortgages[0]) && (
+                /* TODO: Revisit when states are defined */
+                <React.Fragment>
+                  <p
+                    className={`mortgage-status ${parcel.mortgages[0].status}`}
+                  >
+                    {parcel.mortgages[0].status}
+                  </p>
+                </React.Fragment>
+              )}
+            {!isOpen(publication) &&
+              !showMortgage && (
+                <Card.Meta>
+                  {t('publication.acquired_at', {
+                    date: formatDate(
+                      parcel.last_transferred_at
+                        ? parseInt(parcel.last_transferred_at, 10)
+                        : AUCTION_DATE,
+                      'MMMM Do, YYYY'
+                    )
+                  })}
+                </Card.Meta>
+              )}
             <div className="footer">
               <div className="coords">
                 <Icon name="marker" />

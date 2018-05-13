@@ -22,10 +22,12 @@ const mapState = (state, { location, match }) => {
   let parcels = []
   let contributions = []
   let publishedParcels = []
+  let mortgagedParcels = []
   if (address in addresses) {
     parcels = addresses[address].parcels
     contributions = addresses[address].contributions
     publishedParcels = addresses[address].publishedParcels
+    mortgagedParcels = addresses[address].mortgagedParcels
   }
 
   if (!Object.values(PROFILE_PAGE_TABS).includes(tab)) {
@@ -42,6 +44,10 @@ const mapState = (state, { location, match }) => {
       pagination = Pagination.paginate(contributions, page)
       break
     }
+    case PROFILE_PAGE_TABS.mortgages: {
+      pagination = Pagination.paginate(mortgagedParcels, page)
+      break
+    }
     case PROFILE_PAGE_TABS.parcels:
     default: {
       pagination = Pagination.paginate(parcels, page)
@@ -54,6 +60,7 @@ const mapState = (state, { location, match }) => {
     parcels,
     contributions,
     publishedParcels,
+    mortgagedParcels,
     grid,
     tab,
     page,

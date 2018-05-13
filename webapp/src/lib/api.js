@@ -107,8 +107,8 @@ export class API {
     return `${URL}/api${path}`
   }
 
-  fetchParcelMortgages(borrower, x, y) {
-    return this.request('get', `/mortgages/${x}/${y}/${borrower}`)
+  fetchParcelMortgages(borrower) {
+    return this.request('get', `/mortgages/${borrower}`)
   }
 }
 

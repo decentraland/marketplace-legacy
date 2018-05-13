@@ -36,6 +36,15 @@ export class Mortgage extends Model {
     return this.find({ borrower })
   }
 
+  static findByBorrowerSql() {
+    return `SELECT *
+      FROM ${this.tableName}
+      WHERE ${this.tableName}.borrower = ($1)
+        AND ${this.tableName}.x = ${Parcel.tableName}.x
+        AND ${this.tableName}.y = ${Parcel.tableName}.y
+    `
+  }
+
   static findInCoordinate(x, y) {
     return this.find({ x, y }, { created_at: 'DESC' })
   }

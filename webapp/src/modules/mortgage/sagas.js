@@ -1,4 +1,4 @@
-import { take, takeLatest, call, put, select } from 'redux-saga/effects'
+import { takeLatest, call, put, select } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
 import { api } from 'lib/api'
@@ -6,10 +6,13 @@ import { api } from 'lib/api'
 import {
   CREATE_MORTGAGE_REQUEST,
   CANCEL_MORTGAGE_REQUEST,
+  FETCH_MORTGAGES_REQUEST,
   createMortgageSuccess,
   createMortgageFailure,
   cancelMortgageFailure,
-  cancelMortgageSuccess
+  cancelMortgageSuccess,
+  fetchMortgageSuccess,
+  fetchMortgageFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { toInterestRate, getLoanMetadata } from './utils'
@@ -19,17 +22,16 @@ import { locations } from 'locations'
 export function* mortgageSaga() {
   yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
   yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
-  // yield take(CREATE_MORTGAGE_REQUEST, handleGetMortgageRequest)
+  yield takeLatest(FETCH_MORTGAGES_REQUEST, handleFetchMortgageRequest)
 }
 
-function* handleGetMortgageRequest(action) {
+function* handleFetchMortgageRequest(action) {
   try {
-    const { x, y } = action
-    const borrower = yield select(getAddress)
-    const mortgages = yield call(api.fetchParcelMortgages, x, y, borrower)
-    yield put(createMortgageSuccess(mortgages))
+    const { borrower } = action
+    const mortgages = yield call(() => api.fetchParcelMortgages(borrower))
+    yield put(fetchMortgageSuccess(mortgages))
   } catch (error) {
-    yield put(createMortgageFailure(error.message))
+    yield put(fetchMortgageFailure(error.message))
   }
 }
 
@@ -118,14 +120,15 @@ function* handleCreateMortgageRequest(action) {
 
 function* handleCancelMortgageRequest(action) {
   try {
-    const { mortgageId } = action
+    const { mortgageId, x, y } = action
+    console.log(x, y)
     const mortgageManagerContract = eth.getContract('MortgageManager')
 
     const mortgageCancelReceipt = yield call(() =>
       mortgageManagerContract.cancelMortgage(mortgageId)
     )
 
-    yield put(cancelMortgageSuccess(mortgageCancelReceipt, { x: 1, y: 1 }))
+    yield put(cancelMortgageSuccess(mortgageCancelReceipt, { x, y }))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(cancelMortgageFailure(error.message))

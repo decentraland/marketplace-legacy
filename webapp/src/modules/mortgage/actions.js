@@ -33,10 +33,12 @@ export const CANCEL_MORTGAGE_REQUEST = '[Request] Cancel Mortgage'
 export const CANCEL_MORTGAGE_SUCCESS = '[Success] Cancel Mortgage'
 export const CANCEL_MORTGAGE_FAILURE = '[Failure] Cancel Mortgage'
 
-export function cancelMortgageRequest(mortgageId) {
+export function cancelMortgageRequest(mortgageId, { x, y }) {
   return {
     type: CANCEL_MORTGAGE_REQUEST,
-    mortgageId
+    mortgageId,
+    x,
+    y
   }
 }
 
@@ -54,6 +56,31 @@ export function cancelMortgageSuccess(txHash, { x, y }) {
 export function cancelMortgageFailure(error) {
   return {
     type: CANCEL_MORTGAGE_FAILURE,
+    error
+  }
+}
+
+export const FETCH_MORTGAGES_REQUEST = '[Request] Fetch Mortgages'
+export const FETCH_MORTGAGES_SUCCESS = '[Success] Fetch Mortgages'
+export const FETCH_MORTGAGES_FAILURE = '[Failure] Fetch Mortgages'
+
+export function fetchMortgageRequest(borrower) {
+  return {
+    type: FETCH_MORTGAGES_REQUEST,
+    borrower
+  }
+}
+
+export function fetchMortgageSuccess(mortgages) {
+  return {
+    type: FETCH_MORTGAGES_SUCCESS,
+    payload: mortgages
+  }
+}
+
+export function fetchMortgageFailure(error) {
+  return {
+    type: FETCH_MORTGAGES_FAILURE,
     error
   }
 }

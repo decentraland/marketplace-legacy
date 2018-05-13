@@ -81,3 +81,12 @@ export function distanceInWordsToNow(date) {
     locale: getCurrentLocale()
   })
 }
+
+/**
+ * Returns if a date is expired
+ * @param {number} - expires_at
+ * @returns {boolean}
+ */
+export function isExpired(expires_at) {
+  return parseInt(expires_at, 10) < Date.now()
+}

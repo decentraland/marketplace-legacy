@@ -170,4 +170,15 @@ export class Parcel extends Model {
   isRoad() {
     return District.isRoad(this.attributes.district_id)
   }
+
+  static async parcelsMortgagesByBorrower(borrower) {
+    return await this.db.query(
+      `SELECT *, array(
+        ${Mortgage.findParcelMortgageJsonSql()}
+      ) as mortgages
+        FROM ${this.tableName}
+        WHERE EXISTS(${Mortgage.findByBorrowerSql()})`,
+      [borrower.toLowerCase()]
+    )
+  }
 }

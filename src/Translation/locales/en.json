@@ -34,7 +34,13 @@
     "owned_by_link": "Owned by {address_link}",
     "connecting": "Connecting",
     "click_here": "Click here",
-    "request": "Request"
+    "request": "Request",
+    "mortgage": "Mortgage",
+    "mortgages": "Mortgages",
+    "expired_at": "Expired {time}",
+    "expires_in": "Expires {time}",
+    "expires_in_more_than_years": "Expires in over {years} years",
+    "time_left": "Time left"
   },
   "address": {
     "its_you": "It's you"
@@ -203,7 +209,8 @@
     "buy_mana": "You bought {mana} MANA",
     "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
     "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
-    "create_mortgage": "You requested a mortgage for the parcel {parcel_link}"
+    "create_mortgage": "You requested a mortgage for the parcel {parcel_link}",
+    "cancel_mortgage": "You cancel a mortgage for the parcel {parcel_link}"
   },
   "transaction_status": {
     "see_activity":
@@ -321,6 +328,9 @@
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "expiration": "Request expiration",
-    "expiration_placeholder": "Expiration date for the mortgage"
+    "expiration_placeholder": "Expiration date for the mortgage",
+    "expires_in": "Expires in",
+    "requested": "Requested",
+    "cancel": "Cancel Mortgage"
   }
 }

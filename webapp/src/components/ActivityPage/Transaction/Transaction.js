@@ -39,8 +39,10 @@ import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS
 } from 'modules/publication/actions'
-import { CREATE_MORTGAGE_SUCCESS } from 'modules/mortgage/actions'
-
+import {
+  CREATE_MORTGAGE_SUCCESS,
+  CANCEL_MORTGAGE_SUCCESS
+} from 'modules/mortgage/actions'
 
 import './Transaction.css'
 
@@ -68,13 +70,17 @@ export default class Transaction extends React.PureComponent {
 
   renderMortgageCreatorLink() {
     return (
-      <EtherscanLink address={getMortgageCreatorAddress()}>Mortgage Creator</EtherscanLink>
+      <EtherscanLink address={getMortgageCreatorAddress()}>
+        Mortgage Creator
+      </EtherscanLink>
     )
   }
 
   renderMortgageManagerLink() {
     return (
-      <EtherscanLink address={getMortgageManagerAddress()}>Mortgage Manager</EtherscanLink>
+      <EtherscanLink address={getMortgageManagerAddress()}>
+        Mortgage Manager
+      </EtherscanLink>
     )
   }
 
@@ -196,6 +202,13 @@ export default class Transaction extends React.PureComponent {
           parcel_link: this.renderParcelLink(x, y)
         })
       }
+      case CANCEL_MORTGAGE_SUCCESS: {
+        const { x, y } = payload
+
+        return t_html('transaction.cancel_mortgage', {
+          parcel_link: this.renderParcelLink(x, y)
+        })
+      }
       default:
         return null
     }
@@ -215,7 +228,9 @@ export default class Transaction extends React.PureComponent {
       TRANSFER_PARCEL_SUCCESS,
       PUBLISH_SUCCESS,
       BUY_SUCCESS,
-      CANCEL_SALE_SUCCESS
+      CANCEL_SALE_SUCCESS,
+      CREATE_MORTGAGE_SUCCESS,
+      CANCEL_MORTGAGE_SUCCESS
     ].includes(tx.actionType)
 
     return (

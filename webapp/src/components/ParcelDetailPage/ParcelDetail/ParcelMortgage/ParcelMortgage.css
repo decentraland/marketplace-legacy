@@ -1,0 +1,8 @@
+.parcelMortgageDetail .open p{
+  color: var(--orange);
+  text-transform: capitalize;
+}
+
+.parcelMortgageDetail .mortgage-amount-icon{
+  font-size: 15px;
+}
