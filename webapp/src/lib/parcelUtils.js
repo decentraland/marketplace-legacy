@@ -7,6 +7,7 @@ export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 
 export const COLORS = Object.freeze({
   myParcels: '#ff9990',
+  myParcelsOnSale: '#ff4053',
   district: '#7773ff',
   contribution: '#4a27d4',
   roads: '#8188a3',
@@ -115,9 +116,12 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
       label,
       description,
       color: 'black',
-      backgroundColor: COLORS.myParcels
+      backgroundColor: isOnSale(parcel)
+        ? COLORS.myParcelsOnSale
+        : COLORS.myParcels
     }
   }
+
   if (!parcel.owner && !district) {
     return {
       label,
