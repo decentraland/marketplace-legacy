@@ -10,6 +10,7 @@ import { env } from 'decentraland-commons'
 
 import Routes from './Routes'
 import { store, history } from './store'
+import { localStorage } from './lib/localStorage'
 
 import './rollbar'
 import './index.css'
@@ -19,8 +20,8 @@ env.load()
 // TEMPORAL CODE
 // Trims down the stored local storage to avoid hitting the browser limit
 try {
-  if (!window.localStorage.getItem('__clean__')) {
-    const stateString = window.localStorage.getItem('decentraland-marketplace')
+  if (!localStorage.getItem('__clean__')) {
+    const stateString = localStorage.getItem('decentraland-marketplace')
 
     if (stateString) {
       const state = JSON.parse(stateString)
@@ -36,15 +37,12 @@ try {
           status: tx.status
         }))
 
-        window.localStorage.setItem(
-          'decentraland-marketplace',
-          JSON.stringify(state)
-        )
+        localStorage.setItem('decentraland-marketplace', JSON.stringify(state))
       }
     }
 
-    window.localStorage.removeItem('decentraland-marketplace-translations')
-    window.localStorage.setItem('__clean__', 1)
+    localStorage.removeItem('decentraland-marketplace-translations')
+    localStorage.setItem('__clean__', 1)
   }
 } catch (error) {
   window.Rollbar.info('Failed to clean the user localstorage', error)
