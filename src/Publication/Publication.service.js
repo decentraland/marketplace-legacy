@@ -10,7 +10,7 @@ export class PublicationService {
     this.Publication = Publication
   }
 
-  async filter(filters) {
+  async filter(filters, type) {
     const { status, sort, pagination } = filters.sanitize()
     const tx_status = txUtils.TRANSACTION_STATUS.confirmed
 
@@ -18,11 +18,10 @@ export class PublicationService {
       this.Publication.query(
         SQL`SELECT pub.*, row_to_json(par.*) as parcel
           FROM ${raw(Publication.tableName)} as pub
-          JOIN ${raw(
-            Parcel.tableName
-          )} as par ON par.x = pub.x AND par.y = pub.y
+          JOIN ${raw(Parcel.tableName)} as par ON par.asset_id = pub.asset_id
           WHERE status = ${status}
             AND tx_status = ${tx_status}
+            AND type = ${type}
             AND ${PublicationQueries.whereisActive()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
@@ -32,6 +31,7 @@ export class PublicationService {
           FROM ${raw(Publication.tableName)}
           WHERE status = ${status}
             AND tx_status = ${tx_status}
+            AND type = ${type}
             AND ${PublicationQueries.whereisActive()}`
       )
     ])

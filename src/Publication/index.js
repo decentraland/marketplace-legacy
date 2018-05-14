@@ -1,4 +1,5 @@
 export { Publication } from './Publication.model'
 export { PublicationService } from './Publication.service'
 export { PublicationQueries } from './Publication.queries'
+export { PublicationRoutes } from './Publication.routes'
 export { PublicationRequestFilters } from './PublicationRequestFilters'

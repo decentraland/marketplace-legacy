@@ -1,0 +1,85 @@
+import { server, utils } from 'decentraland-commons'
+import { Parcel } from './Parcel.model'
+import {
+  Publication,
+  PublicationRequestFilters,
+  PublicationService
+} from '../Publication'
+import { blacklist } from '../lib'
+
+export class ParcelRoutes {
+  constructor(app) {
+    this.app = app
+  }
+
+  mount() {
+    /**
+     * Returns the parcels in between the supplied coordinates
+     * Or filtered by the supplied params
+     * @param  {string} nw - North west coordinate
+     * @param  {string} sw - South west coordinate
+     * @param  {string} sort_by - Publication prop
+     * @param  {string} sort_order - asc or desc
+     * @param  {number} limit
+     * @param  {number} offset
+     * @return {array<Parcel>}
+     */
+    this.app.get('/api/parcels', server.handleRequest(this.getParcels))
+
+    /**
+     * Returns the parcels an address owns
+     * @param  {string} address  - Parcel owner
+     * @param  {string} [status] - specify a publication status to retreive: [cancelled|sold|pending].
+     * @return {array<Parcel>}
+     */
+    this.app.get(
+      '/api/addresses/:address/parcels',
+      server.handleRequest(this.getAddressParcels)
+    )
+  }
+
+  async getParcels(req) {
+    let parcels
+    let total
+
+    try {
+      const nw = server.extractFromReq(req, 'nw')
+      const se = server.extractFromReq(req, 'se')
+      const rangeParcels = await Parcel.inRange(nw, se)
+
+      parcels = utils.mapOmit(rangeParcels, blacklist.parcel)
+      total = parcels.length
+    } catch (error) {
+      const filters = new PublicationRequestFilters(req)
+      const filterResult = await new PublicationService().filter(
+        filters,
+        Publication.TYPES.parcel
+      )
+      const publicationBlacklist = [...blacklist.publication, 'parcel']
+
+      // Invert keys, from { publication: { parcel } } to { parcel: { publication } }
+      parcels = filterResult.publications.map(publication => ({
+        ...utils.omit(publication.parcel, blacklist.parcel),
+        publication: utils.omit(publication, publicationBlacklist)
+      }))
+      total = filterResult.total
+    }
+
+    return { parcels, total }
+  }
+
+  async getAddressParcels(req) {
+    const address = server.extractFromReq(req, 'address').toLowerCase()
+
+    let parcels = []
+
+    try {
+      const status = server.extractFromReq(req, 'status')
+      parcels = await Parcel.findByOwnerAndStatus(address, status)
+    } catch (error) {
+      parcels = await Parcel.findByOwner(address)
+    }
+
+    return utils.mapOmit(parcels, blacklist.parcel)
+  }
+}
