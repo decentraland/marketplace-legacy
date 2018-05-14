@@ -67,7 +67,7 @@ export class Parcel extends Model {
         FROM ${SQL.raw(this.tableName)} as par
         LEFT JOIN (
           ${PublicationQueries.findByStatusSql(status)}
-        ) as pub ON par.x = pub.x AND par.y = pub.y
+        ) as pub ON par.asset_id = pub.asset_id
         WHERE par.owner = ${owner}
           AND pub.tx_hash IS NOT NULL`
     )
