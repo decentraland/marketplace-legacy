@@ -3,8 +3,8 @@ import { SQL } from '../database'
 
 export class BlockchainEvent extends Model {
   static tableName = 'blockchain_events'
-  static columnNames = ['tx_hash', 'name', 'block_number', 'log_index', 'args']
   static primaryKey = 'tx_hash'
+  static columnNames = ['tx_hash', 'name', 'block_number', 'log_index', 'args']
 
   static EVENTS = {
     publicationCreated: 'AuctionCreated',

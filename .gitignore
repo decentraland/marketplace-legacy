@@ -12,3 +12,5 @@ newrelic_agent.log
 
 /webapp/.idea/
 
+*.todo
+*.TODO
