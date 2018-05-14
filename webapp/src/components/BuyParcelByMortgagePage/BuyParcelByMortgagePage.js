@@ -7,7 +7,7 @@ import Parcel from 'components/Parcel'
 import { walletType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate, formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
 import ParcelModal from 'components/ParcelModal'
 
@@ -16,12 +16,12 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     wallet: walletType,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    publication: PropTypes.object.isRequired,
     isDisabled: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    publication: PropTypes.object
   }
 
   renderLoading() {
@@ -70,40 +70,36 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y}>
-        {(parcel, isOwner) =>
-          isOwner ? (
-            <h2>{'NO OWNERS HERE'}</h2>
-          ) : (
-            <React.Fragment>
-              <ParcelModal
-                x={x}
-                y={y}
-                price={publication}
-                isLoading={isLoading}
-                title={t('mortgage.request')}
-                subtitle={t_html('mortgage.request_land', {
-                  parcel_name: (
-                    <Link to={locations.parcelDetail(x, y)}>
-                      {buildCoordinate(x, y)}
-                    </Link>
-                  ),
-                  parcel_price: publication.price
-                })}
-                hasCustomFooter
-              >
-                <MortgageForm
-                  parcel={parcel}
-                  publication={publication}
-                  isTxIdle={false}
-                  onPublish={onConfirm}
-                  onCancel={onCancel}
-                  isDisabled={false}
-                />
-              </ParcelModal>
-            </React.Fragment>
-          )
-        }
+      <Parcel x={x} y={y} notOwnerOnly>
+        {parcel => (
+          <React.Fragment>
+            <ParcelModal
+              x={x}
+              y={y}
+              price={publication}
+              isLoading={isLoading}
+              title={t('mortgage.request')}
+              subtitle={t_html('mortgage.request_land', {
+                parcel_name: (
+                  <Link to={locations.parcelDetail(x, y)}>
+                    {buildCoordinate(x, y)}
+                  </Link>
+                ),
+                parcel_price: formatMana(publication.price)
+              })}
+              hasCustomFooter
+            >
+              <MortgageForm
+                parcel={parcel}
+                publication={publication}
+                isTxIdle={false}
+                onPublish={onConfirm}
+                onCancel={onCancel}
+                isDisabled={false}
+              />
+            </ParcelModal>
+          </React.Fragment>
+        )}
       </Parcel>
     )
   }

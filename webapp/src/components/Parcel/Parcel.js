@@ -11,6 +11,7 @@ export default class Parcel extends React.PureComponent {
     isConnecting: PropTypes.bool,
     isLoading: PropTypes.bool,
     ownerOnly: PropTypes.bool,
+    notOwnerOnly: PropTypes.bool,
     onAccessDenied: PropTypes.func.isRequired,
     children: PropTypes.func.isRequired
   }
@@ -19,6 +20,7 @@ export default class Parcel extends React.PureComponent {
     isConnecting: false,
     isLoading: false,
     ownerOnly: false,
+    notOwnerOnly: false,
     parcel: null
   }
 
@@ -35,10 +37,20 @@ export default class Parcel extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isConnecting, ownerOnly, wallet } = nextProps
+    const {
+      isConnecting,
+      ownerOnly,
+      wallet,
+      notOwnerOnly,
+      onAccessDenied
+    } = nextProps
 
     if (!isConnecting && ownerOnly) {
       this.checkOwnership(wallet)
+    }
+
+    if (!isConnecting && notOwnerOnly && this.isOwner(wallet)) {
+      return onAccessDenied()
     }
   }
 

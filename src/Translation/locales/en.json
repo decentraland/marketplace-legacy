@@ -209,8 +209,8 @@
     "buy_mana": "You bought {mana} MANA",
     "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
     "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
-    "create_mortgage": "You requested a mortgage for the parcel {parcel_link}",
-    "cancel_mortgage": "You cancel a mortgage for the parcel {parcel_link}"
+    "create_mortgage": "You requested a Mortgage to buy the parcel {parcel_link}",
+    "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}"
   },
   "transaction_status": {
     "see_activity":
@@ -318,11 +318,12 @@
     "request": "Requesting a Mortgage",
     "request_land": "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
     "oracle": "Oracle contract address",
-    "amount": "Mortgage total",
-    "duration": "Mortgage duration",
-    "duration_placeholder": "Duration date for the mortgage",
+    "amount": "Amount",
+    "amount_placeholder": "Amount in MANA",
+    "duration": "Duration",
+    "duration_placeholder": "Duration in days",
     "payable": "Payable at",
-    "payable_placeholder": "Payable date for the mortgage",
+    "payable_placeholder": "Payable in days",
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "punitory_rate": "Punitory interest rate",
@@ -331,6 +332,15 @@
     "expiration_placeholder": "Expiration date for the mortgage",
     "expires_in": "Expires in",
     "requested": "Requested",
-    "cancel": "Cancel Mortgage"
+    "cancel": "Cancel Mortgage",
+    "errors" : {
+      "amount_minimum": "Amount should be greater than {amount}",
+      "parcel_price": "Amount required should be less than parcel price",
+      "minimum_duration": "Duration should be greater than {minimum} days",
+      "minimum_payable": "Payable at should be greater than {minimum} days",
+      "duration_gte_payable": "Duration should be greater or equal than payable at days",
+      "minimum_interest_rate": "Rate should be greater than {minimum}",
+      "maximum_interest_rate": "Rate should be lower than {maximum}"
+    }
   }
 }

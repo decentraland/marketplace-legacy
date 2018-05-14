@@ -57,7 +57,9 @@ export class Parcel extends Model {
     return await this.db.query(
       `SELECT ${this.tableName}.*, (
         ${Publication.findLastParcelPublicationJsonSql()}
-      ) as publication
+      ) as publication, array(
+        ${Mortgage.findParcelMortgageJsonSql()}
+      ) as mortgages
         FROM ${this.tableName}
         WHERE owner = $1`,
       [owner]

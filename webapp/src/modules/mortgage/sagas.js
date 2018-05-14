@@ -15,7 +15,7 @@ import {
   fetchMortgageFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
-import { toInterestRate, getLoanMetadata } from './utils'
+import { toInterestRate, getLoanMetadata, daysToSeconds } from './utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
 import { locations } from 'locations'
 
@@ -63,14 +63,14 @@ function* handleCreateMortgageRequest(action) {
       eth.utils.toWei(amount), // Amount requested
       toInterestRate(interestRate), // Anual interest
       toInterestRate(punitoryRate), // Anual punnitory interest
-      (duration - Date.now()) / 1000, // Duration of the loan, in seconds
-      (payableAt - Date.now()) / 1000, // Time when the payment of the loan starts
+      daysToSeconds(duration), // Duration of the loan, in seconds
+      daysToSeconds(payableAt), // Time when the payment of the loan starts
       expiresAt // Expiration timestamp of the request
     ]
 
     console.log(
-      (duration - Date.now()) / 1000, // Duration of the loan, in seconds
-      (payableAt - Date.now()) / 1000, // Time when the payment of the loan starts
+      daysToSeconds(duration), // Duration of the loan, in seconds
+      daysToSeconds(payableAt), // Time when the payment of the loan starts
       expiresAt // Expiration timestamp of the request
     )
     // Retrieve the loan signature

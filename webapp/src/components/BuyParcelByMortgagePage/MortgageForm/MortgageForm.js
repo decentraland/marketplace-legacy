@@ -5,22 +5,24 @@ import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
 
 import { Form, Button, Input, Message, Icon, Grid } from 'semantic-ui-react'
-import ManaIcon from '../../Mana/Icon'
 import TxStatus from 'components/TxStatus'
 
 import AddressBlock from 'components/AddressBlock'
 import { parcelType, publicationType } from 'components/types'
-import { preventDefault, formatDate, formatMana } from 'lib/utils'
+import { preventDefault, formatDate } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
 
 import './MortgageForm.css'
 
-// TODO: Shouldn't this live on the publication module?
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
-const MINIMUM_LAND_PRICE = 1
+const MINIMUM_MORTGAGE_AMOUNT = 1
+const MINIMUM_DURATION_DAYS = 30
+const MINIMUM_PAYABLE_DAYS = 30
+const MAXIMUM_INTEREST_RATE = 100
+const MINIMUM_INTEREST_RATE = 1
 
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
@@ -42,9 +44,9 @@ export default class MortgageForm extends React.PureComponent {
     super(props)
 
     this.state = {
-      amount: 0,
-      duration: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
-      payableAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
+      amount: '',
+      duration: '',
+      payableAt: '',
       expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
       interestRate: 0,
       punitoryRate: 0,
@@ -52,7 +54,14 @@ export default class MortgageForm extends React.PureComponent {
     }
   }
 
-  handleDateChange = (e, key) => {
+  handleChangeNumber = (e, key) => {
+    this.setState({
+      [key]: e.currentTarget.value ? parseInt(e.currentTarget.value, 10) : '',
+      formErrors: []
+    })
+  }
+
+  handleChangeDate = (e, key) => {
     this.setState({
       [key]: e.currentTarget.value,
       formErrors: []
@@ -63,15 +72,8 @@ export default class MortgageForm extends React.PureComponent {
     this.setState({ formErrors: [] })
   }
 
-  handleAmountChange = e => {
-    this.setState({
-      amount: e.currentTarget.value,
-      formErrors: []
-    })
-  }
-
   handlePublish = () => {
-    const { parcel, onPublish } = this.props
+    const { parcel, publication, onPublish } = this.props
     const {
       amount,
       duration,
@@ -86,18 +88,72 @@ export default class MortgageForm extends React.PureComponent {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
 
-    if (differenceInDays(expiresAt, today) < MINIMUM_DAY_INTERVAL) {
+    if (publication.price <= amount) {
+      formErrors.push(t('mortgage.errors.parcel_price'))
+    }
+
+    if (amount < MINIMUM_MORTGAGE_AMOUNT) {
       formErrors.push(
-        t('parcel_publish.errors.minimum_expiration', {
-          date: this.formatFutureDate(MINIMUM_DAY_INTERVAL + 1)
+        t('mortgage.errors.amount_minimum', {
+          amount: MINIMUM_MORTGAGE_AMOUNT
         })
       )
+    }
+
+    if (duration < MINIMUM_DURATION_DAYS) {
+      formErrors.push(
+        t('mortgage.errors.minimum_duration', {
+          minimum: MINIMUM_DURATION_DAYS
+        })
+      )
+    }
+
+    if (payableAt < MINIMUM_PAYABLE_DAYS) {
+      formErrors.push(
+        t('mortgage.errors.minimum_payable', {
+          minimum: MINIMUM_PAYABLE_DAYS
+        })
+      )
+    }
+
+    if (
+      interestRate < MINIMUM_INTEREST_RATE ||
+      punitoryRate < MINIMUM_INTEREST_RATE
+    ) {
+      formErrors.push(
+        t('mortgage.errors.minimum_interest_rate', {
+          minimum: MINIMUM_INTEREST_RATE
+        })
+      )
+    }
+
+    if (
+      interestRate > MAXIMUM_INTEREST_RATE ||
+      punitoryRate > MAXIMUM_INTEREST_RATE
+    ) {
+      formErrors.push(
+        t('mortgage.errors.maximum_interest_rate', {
+          maximum: MAXIMUM_INTEREST_RATE
+        })
+      )
+    }
+
+    if (payableAt > duration) {
+      formErrors.push(t('mortgage.errors.duration_gte_payable'))
     }
 
     if (differenceInDays(expiresAt, today) > MAXIMUM_DAY_INTERVAL) {
       formErrors.push(
         t('parcel_publish.errors.maximum_expiration', {
           date: this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
+        })
+      )
+    }
+
+    if (differenceInDays(expiresAt, today) < MINIMUM_DAY_INTERVAL) {
+      formErrors.push(
+        t('parcel_publish.errors.minimum_expiration', {
+          date: this.formatFutureDate(MINIMUM_DAY_INTERVAL + 1)
         })
       )
     }
@@ -167,10 +223,10 @@ export default class MortgageForm extends React.PureComponent {
                 <label>{t('mortgage.amount')}</label>
                 <Input
                   type="number"
-                  placeholder={t('parcel_publish.price_placeholder')}
+                  placeholder={t('mortgage.amount_placeholder')}
                   value={amount}
                   required={true}
-                  onChange={this.handleAmountChange}
+                  onChange={e => this.handleChangeNumber(e, 'amount')}
                 />
               </Form.Field>
             </Grid.Column>
@@ -178,11 +234,11 @@ export default class MortgageForm extends React.PureComponent {
               <Form.Field>
                 <label>{t('mortgage.duration')}</label>
                 <Input
-                  type="date"
+                  type="number"
                   placeholder={t('mortgage.duration_placeholder')}
                   value={duration}
                   required={true}
-                  onChange={e => this.handleDateChange(e, 'duration')}
+                  onChange={e => this.handleChangeNumber(e, 'duration')}
                 />
               </Form.Field>
             </Grid.Column>
@@ -190,11 +246,11 @@ export default class MortgageForm extends React.PureComponent {
               <Form.Field>
                 <label>{t('mortgage.payable')}</label>
                 <Input
-                  type="date"
+                  type="number"
                   placeholder={t('mortgage.payable_placeholder')}
                   value={payableAt}
                   required={true}
-                  onChange={e => this.handleDateChange(e, 'payableAt')}
+                  onChange={e => this.handleChangeNumber(e, 'payableAt')}
                 />
               </Form.Field>
             </Grid.Column>
@@ -208,9 +264,7 @@ export default class MortgageForm extends React.PureComponent {
                   placeholder={t('mortgage.interest_rate_placeholder')}
                   value={interestRate}
                   required={true}
-                  onChange={e =>
-                    this.setState({ interestRate: e.target.value })
-                  }
+                  onChange={e => this.handleChangeNumber(e, 'interestRate')}
                 />
               </Form.Field>
             </Grid.Column>
@@ -222,9 +276,7 @@ export default class MortgageForm extends React.PureComponent {
                   placeholder={t('mortgage.punitory_rate_placeholder')}
                   value={punitoryRate}
                   required={true}
-                  onChange={e =>
-                    this.setState({ punitoryRate: e.target.value })
-                  }
+                  onChange={e => this.handleChangeNumber(e, 'punitoryRate')}
                 />
               </Form.Field>
             </Grid.Column>
@@ -236,7 +288,7 @@ export default class MortgageForm extends React.PureComponent {
                   placeholder={t('mortgage.expiration_placeholder')}
                   value={expiresAt}
                   required={true}
-                  onChange={e => this.handleDateChange(e, 'expiresAt')}
+                  onChange={e => this.handleChangeDate(e, 'expiresAt')}
                 />
               </Form.Field>
             </Grid.Column>
