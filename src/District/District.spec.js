@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { db } from '../database'
-import { District } from './District'
+import { District } from './District.model'
 
 describe('District', function() {
   describe('.findEnabled', function() {
@@ -13,7 +13,7 @@ describe('District', function() {
       ])
 
       const districts = await District.findEnabled()
-      const districtNames = districts.map(district => district.name)
+      const districtNames = districts.map(district => district.name).sort()
 
       expect(districtNames).to.be.deep.equal(['Enabled 1', 'Enabled 2'])
     })

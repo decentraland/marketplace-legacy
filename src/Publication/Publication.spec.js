@@ -3,7 +3,7 @@ import { txUtils } from 'decentraland-eth'
 
 import { db } from '../database'
 import { ParcelService } from '../Parcel'
-import { Publication } from './Publication'
+import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
 import { PublicationRequestFilters } from './PublicationRequestFilters'
 
