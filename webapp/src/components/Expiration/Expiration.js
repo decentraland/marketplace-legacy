@@ -9,7 +9,8 @@ const MAX_EXPIRES = 10 * 365
 
 export default class Expiration extends React.PureComponent {
   static propTypes = {
-    expiresAt: PropTypes.number.isRequired
+    expiresAt: PropTypes.number.isRequired,
+    className: PropTypes.string
   }
   render() {
     const expiresAt = parseInt(this.props.expiresAt, 10)
@@ -17,7 +18,7 @@ export default class Expiration extends React.PureComponent {
     const expirationTimeInWords = distanceInWordsToNow(expiresAt)
 
     return (
-      <span>
+      <span className={this.props.className}>
         {isExpired(expiresAt)
           ? t('global.expired_at', { time: expirationTimeInWords })
           : isNaN(difference) || difference >= MAX_EXPIRES

@@ -6,7 +6,7 @@ import { locations } from 'locations'
 import { Icon, Card } from 'semantic-ui-react'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
-import PublicationExpiration from 'components/PublicationExpiration'
+import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
 import { AUCTION_DATE } from 'lib/parcelUtils'
@@ -43,7 +43,7 @@ export default class ParcelCard extends React.PureComponent {
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
                 >
-                  <PublicationExpiration publication={publication} />
+                  <Expiration expiresAt={parseInt(publication.expires_at, 10)} />
                 </Card.Meta>
                 <div className="mana">
                   <Mana amount={parseFloat(publication.price, 10)} />

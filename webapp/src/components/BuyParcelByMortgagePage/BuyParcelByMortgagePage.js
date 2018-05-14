@@ -70,36 +70,38 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} notOwnerOnly>
-        {parcel => (
-          <React.Fragment>
-            <ParcelModal
-              x={x}
-              y={y}
-              price={publication}
-              isLoading={isLoading}
-              title={t('mortgage.request')}
-              subtitle={t_html('mortgage.request_land', {
-                parcel_name: (
-                  <Link to={locations.parcelDetail(x, y)}>
-                    {buildCoordinate(x, y)}
-                  </Link>
-                ),
-                parcel_price: formatMana(publication.price)
-              })}
-              hasCustomFooter
-            >
-              <MortgageForm
-                parcel={parcel}
-                publication={publication}
-                isTxIdle={false}
-                onPublish={onConfirm}
-                onCancel={onCancel}
-                isDisabled={false}
-              />
-            </ParcelModal>
-          </React.Fragment>
-        )}
+      <Parcel x={x} y={y} notOwnerOnly withPublications>
+        {parcel =>
+          parcel.publication ? (
+            <React.Fragment>
+              <ParcelModal
+                x={x}
+                y={y}
+                price={publication.price}
+                isLoading={isLoading}
+                title={t('mortgage.request')}
+                subtitle={t_html('mortgage.request_land', {
+                  parcel_name: (
+                    <Link to={locations.parcelDetail(x, y)}>
+                      {buildCoordinate(x, y)}
+                    </Link>
+                  ),
+                  parcel_price: formatMana(publication.price)
+                })}
+                hasCustomFooter
+              >
+                <MortgageForm
+                  parcel={parcel}
+                  publication={publication}
+                  isTxIdle={false}
+                  onPublish={onConfirm}
+                  onCancel={onCancel}
+                  isDisabled={false}
+                />
+              </ParcelModal>
+            </React.Fragment>
+          ) : null
+        }
       </Parcel>
     )
   }

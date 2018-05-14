@@ -13,7 +13,8 @@ export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     onTransfer: PropTypes.func.isRequired,
-    isOwner: PropTypes.bool
+    isOwner: PropTypes.bool,
+    mortgages: PropTypes.array.isRequired
   }
 
   handleTransfer = () => {
@@ -36,7 +37,7 @@ export default class ParcelActions extends React.PureComponent {
   }
 
   render() {
-    const { parcel, isOwner } = this.props
+    const { parcel, isOwner, mortgages } = this.props
     if (!parcel) {
       return null
     }
@@ -73,7 +74,7 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : isOnSale(parcel) ? (
+        ) : isOnSale(parcel) && mortgages.length === 0 ? (
           <React.Fragment>
             <Link to={locations.buyLand(x, y)}>
               <Button primary size="large">

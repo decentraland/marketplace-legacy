@@ -76,7 +76,8 @@ export default class ParcelDetailPage extends React.PureComponent {
                 publications={publications}
                 onBuy={onBuy}
                 mortgages={parcel.mortgages.filter(
-                  mortgage => mortgage.borrower === user
+                  mortgage =>
+                    mortgage.borrower === user && mortgage.status === 'open'
                 )}
               />
             </Container>

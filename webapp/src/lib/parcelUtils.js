@@ -143,3 +143,4 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
     backgroundColor: COLORS.taken
   }
 }
+

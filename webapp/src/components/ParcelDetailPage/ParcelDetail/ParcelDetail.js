@@ -5,7 +5,7 @@ import { utils } from 'decentraland-commons'
 
 import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
-import PublicationExpiration from 'components/PublicationExpiration'
+import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
@@ -22,7 +22,7 @@ export default class ParcelDetail extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
-    mortgages: PropTypes.array.isRequired,
+    mortgages: PropTypes.array.isRequired
   }
 
   getDescription() {
@@ -78,7 +78,10 @@ export default class ParcelDetail extends React.PureComponent {
                   </Grid.Column>
                   <Grid.Column width={4} className="time-left">
                     <h3>{t('parcel_detail.publication.time_left')}</h3>
-                    <PublicationExpiration publication={publication} />
+                    <Expiration
+                      expiresAt={parseInt(publication.expires_at, 10)}
+                      className={'PublicationExpiration'}
+                    />
                   </Grid.Column>
                 </React.Fragment>
               ) : null}
@@ -86,7 +89,11 @@ export default class ParcelDetail extends React.PureComponent {
                 className="parcel-actions-container"
                 width={publication ? 8 : 16}
               >
-                <ParcelActions parcel={parcel} isOwner={isOwner} />
+                <ParcelActions
+                  parcel={parcel}
+                  mortgages={mortgages}
+                  isOwner={isOwner}
+                />
               </Grid.Column>
             </Grid.Row>
           ) : null}
