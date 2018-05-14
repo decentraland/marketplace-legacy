@@ -46,8 +46,11 @@ export default class PublicationForm extends React.PureComponent {
   }
 
   handlePriceChange = e => {
+    // Dots and commas are not allowed
+    const price = e.currentTarget.value.replace(/\.|,/g, '')
+
     this.setState({
-      price: e.currentTarget.value,
+      price,
       formErrors: []
     })
   }
