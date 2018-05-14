@@ -1,5 +1,5 @@
 import { cli, Log } from 'decentraland-commons'
-import { HandlersIndex } from './handlers'
+import { Handlers } from './handlers'
 import { EventMonitor } from './EventMonitor'
 import { processEvents } from './processEvents'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
@@ -8,7 +8,7 @@ const log = new Log('MonitorCli')
 
 export class MonitorCli {
   constructor(handlers, contractEvents = {}, processDelay) {
-    this.handlers = new HandlersIndex(handlers)
+    this.handlers = new Handlers(handlers)
 
     this.contractEvents = contractEvents
     this.processDelay = processDelay

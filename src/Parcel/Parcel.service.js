@@ -1,7 +1,7 @@
 import { eth, Contract, contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 
-import { Parcel } from './Parcel'
+import { Parcel } from './Parcel.model'
 import { coordinates } from './coordinates'
 import { isDuplicatedConstraintError } from '../lib'
 

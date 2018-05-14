@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import { eth, txUtils } from 'decentraland-eth'
 
 import { db } from '../database'
-import { Parcel } from './Parcel'
+import { Parcel } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
@@ -30,7 +30,7 @@ describe('Parcel', function() {
 
     it('should return an array of parcels which are on the supplied range', async function() {
       const range = await Parcel.inRange([2, 3], [5, 5])
-      const coordinates = range.map(coord => `${coord.x},${coord.y}`)
+      const coordinates = range.map(coord => `${coord.x},${coord.y}`).sort()
 
       expect(range.length).to.be.equal(12)
       expect(coordinates).to.be.deep.equal([

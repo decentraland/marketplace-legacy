@@ -1,1 +1,1 @@
-export { District } from './District'
+export { District } from './District.model'
