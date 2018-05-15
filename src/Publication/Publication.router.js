@@ -36,15 +36,14 @@ export class PublicationRouter {
   async getParcelPublications(req) {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
-    const id = Parcel.buildId(x, y)
-
+    const assetId = await Parcel.encodeAssetId(x, y)
     let publications = []
 
     try {
       const status = server.extractFromReq(req, 'status')
-      publications = await Publication.findByAssetIdWithStatus(id, status)
+      publications = await Publication.findByAssetIdWithStatus(assetId, status)
     } catch (error) {
-      publications = await Publication.findByAssetId(id)
+      publications = await Publication.findByAssetId(assetId)
     }
 
     return utils.mapOmit(publications, blacklist.publication)

@@ -5,7 +5,7 @@ import { Publication } from '../Publication'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
-export class StateRoutes {
+export class StateRouter {
   constructor(app) {
     this.app = app
   }
@@ -38,7 +38,7 @@ export class StateRoutes {
     // Force state type
     req.params.type = Publication.TYPES.state
 
-    const result = new AssetRouter().getAssets(req)
+    const result = await new AssetRouter().getAssets(req)
 
     const states = result.assets
     const total = result.total
