@@ -105,11 +105,11 @@ export default class ParcelPreview extends React.PureComponent {
     }
     dimensions.nw = {
       x: center.x - Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
-      y: center.y - Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
+      y: center.y + Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
     }
     dimensions.se = {
       x: center.x + Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
-      y: center.y + Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
+      y: center.y - Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
     }
 
     return { ...dimensions, pan, zoom, center, size }
@@ -187,7 +187,7 @@ export default class ParcelPreview extends React.PureComponent {
       return false
     }
     for (let x = nw.x; x < se.x; x++) {
-      for (let y = nw.y; y < se.y; y++) {
+      for (let y = se.y; y < nw.y; y++) {
         const parcelId = buildCoordinate(x, y)
         if (!parcels[parcelId] && inBounds(x, y)) {
           return false
@@ -466,7 +466,7 @@ export default class ParcelPreview extends React.PureComponent {
     const cy = height / 2
 
     for (let px = nw.x; px < se.x; px++) {
-      for (let py = nw.y; py < se.y; py++) {
+      for (let py = se.y; py < nw.y; py++) {
         const offsetX = (x - px) * size + pan.x
         const offsetY = (py - y) * size + pan.y
         const rx = cx - offsetX
