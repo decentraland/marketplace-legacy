@@ -1,10 +1,7 @@
-import { server, utils } from 'decentraland-commons'
-import {
-  Publication,
-  PublicationRequestFilters,
-  PublicationService
-} from '../Publication'
-import { blacklist } from '../lib'
+import { server } from 'decentraland-commons'
+
+import { Publication } from '../Publication'
+import { AssetRouter } from '../Asset'
 
 export class StateRoutes {
   constructor(app) {
@@ -14,6 +11,7 @@ export class StateRoutes {
   mount() {
     /**
      * Returns the states for the supplied params
+     * @param  {string} status - specify a publication status to retreive: [cancelled|sold|pending].
      * @param  {string} sort_by - Publication prop
      * @param  {string} sort_order - asc or desc
      * @param  {number} limit
@@ -24,22 +22,13 @@ export class StateRoutes {
   }
 
   async getStates(req) {
-    let states
-    let total
+    // Force state type
+    req.params.type = Publication.TYPES.state
 
-    const filters = new PublicationRequestFilters(req)
-    const filterResult = await new PublicationService().filter(
-      filters,
-      Publication.TYPES.state
-    )
-    const publicationBlacklist = [...blacklist.publication, 'parcel']
+    const result = new AssetRouter().filterAssets(req)
 
-    // Invert keys, from { publication: { state } } to { state: { publication } }
-    states = filterResult.publications.map(publication => ({
-      ...utils.omit(publication.state, blacklist.state),
-      publication: utils.omit(publication, publicationBlacklist)
-    }))
-    total = filterResult.total
+    const states = result.assets
+    const total = result.total
 
     return { states, total }
   }

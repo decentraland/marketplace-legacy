@@ -24,6 +24,7 @@ export class PublicationRequestFilters {
     let order = this.getReqParam('sort_order')
     let limit = this.getReqParam('limit')
     let offset = this.getReqParam('offset')
+    let type = this.getReqParam('type')
 
     status = Publication.isValidStatus(status)
       ? status
@@ -34,9 +35,11 @@ export class PublicationRequestFilters {
       : ALLOWED_VALUES[by][0]
     limit = Math.max(Math.min(100, limit), 0)
     offset = Math.max(offset, 0)
+    type = Publication.isValidType(type) ? type : Publication.TYPES.parcel
 
     return {
       status,
+      type,
       sort: {
         by,
         order

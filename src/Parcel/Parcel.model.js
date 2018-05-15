@@ -12,12 +12,13 @@ export class Parcel extends Model {
     'x',
     'y',
     'asset_id',
-    'auction_price',
-    'auction_owner',
     'owner',
     'data',
     'district_id',
+    'in_state',
     'tags',
+    'auction_price',
+    'auction_owner',
     'last_transferred_at'
   ]
 

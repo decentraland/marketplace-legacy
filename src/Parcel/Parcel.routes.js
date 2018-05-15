@@ -1,10 +1,8 @@
 import { server, utils } from 'decentraland-commons'
+
 import { Parcel } from './Parcel.model'
-import {
-  Publication,
-  PublicationRequestFilters,
-  PublicationService
-} from '../Publication'
+import { Publication } from '../Publication'
+import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
 export class ParcelRoutes {
@@ -18,6 +16,7 @@ export class ParcelRoutes {
      * Or filtered by the supplied params
      * @param  {string} nw - North west coordinate
      * @param  {string} sw - South west coordinate
+     * @param  {string} status - specify a publication status to retreive: [cancelled|sold|pending].
      * @param  {string} sort_by - Publication prop
      * @param  {string} sort_order - asc or desc
      * @param  {number} limit
@@ -50,19 +49,13 @@ export class ParcelRoutes {
       parcels = utils.mapOmit(rangeParcels, blacklist.parcel)
       total = parcels.length
     } catch (error) {
-      const filters = new PublicationRequestFilters(req)
-      const filterResult = await new PublicationService().filter(
-        filters,
-        Publication.TYPES.parcel
-      )
-      const publicationBlacklist = [...blacklist.publication, 'parcel']
+      // Force parcel type
+      req.params.type = Publication.TYPES.parcel
 
-      // Invert keys, from { publication: { parcel } } to { parcel: { publication } }
-      parcels = filterResult.publications.map(publication => ({
-        ...utils.omit(publication.parcel, blacklist.parcel),
-        publication: utils.omit(publication, publicationBlacklist)
-      }))
-      total = filterResult.total
+      const result = new AssetRouter().filterAssets(req)
+
+      parcels = result.assets
+      total = result.total
     }
 
     return { parcels, total }

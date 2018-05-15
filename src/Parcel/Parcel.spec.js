@@ -54,8 +54,8 @@ describe('Parcel', function() {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: Publication.STATUS.open,
-        x: 3,
-        y: 5,
+        type: Publication.TYPES.parcel,
+        asset_id: '3,5',
         owner: '0xdeadbeef33',
         buyer: null,
         price: 1500,
@@ -63,9 +63,11 @@ describe('Parcel', function() {
         contract_id: '0xdeadbeef',
         block_time_created_at: null,
         block_time_updated_at: null,
+        marketplace_id: '0x113322',
         block_number: 1
       }
       await Publication.insert(publication)
+      await Parcel.query('UPDATE parcels P SET asset_id = P.id') // mock asset_ids
 
       const range = await Parcel.inRange([3, 5], [4, 5])
 
@@ -73,12 +75,13 @@ describe('Parcel', function() {
         {
           x: 3,
           y: 5,
+          asset_id: '3,5',
           auction_price: null,
           owner: null,
           data: null,
           district_id: null,
+          in_state: false,
           last_transferred_at: null,
-          asset_id: null,
           auction_owner: null,
           tags: {},
           publication
@@ -86,12 +89,13 @@ describe('Parcel', function() {
         {
           x: 4,
           y: 5,
+          asset_id: '4,5',
           auction_price: null,
           owner: null,
           data: null,
           district_id: null,
+          in_state: false,
           last_transferred_at: null,
-          asset_id: null,
           auction_owner: null,
           tags: {},
           publication: null

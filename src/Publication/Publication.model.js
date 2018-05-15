@@ -29,8 +29,8 @@ export class Publication extends Model {
   })
 
   static TYPES = Object.freeze({
-    parcel: 'parcel',
-    state: 'state'
+    parcel: 'parcels',
+    state: 'states'
   })
 
   static isValidStatus(status) {
@@ -51,7 +51,7 @@ export class Publication extends Model {
 
   static findInCoordinateWithStatus(asset_id, status) {
     if (!this.isValidStatus(status)) {
-      throw new Error(`Invalid status '${status}'`)
+      throw new Error(`Invalid status "${status}"`)
     }
 
     return this.find({ asset_id, status }, { created_at: 'DESC' })
@@ -83,7 +83,7 @@ export class Publication extends Model {
       return []
     }
     if (!this.isValidStatus(newStatus)) {
-      throw new Error(`Trying to filter by invalid status '${newStatus}'`)
+      throw new Error(`Trying to filter by invalid status "${newStatus}"`)
     }
 
     return this.db.query(
