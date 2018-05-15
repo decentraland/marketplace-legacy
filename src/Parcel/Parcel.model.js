@@ -1,7 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { coordinates } from './coordinates'
-import { Publication, PublicationQueries } from '../Publication'
+import { PublicationQueries } from '../Publication'
 import { District } from '../District'
 import { SQL } from '../database'
 
