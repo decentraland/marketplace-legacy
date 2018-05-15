@@ -26,7 +26,10 @@ import {
   TRANSFER_MANA_SUCCESS,
   BUY_MANA_SUCCESS
 } from 'modules/wallet/actions'
-import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import {
+  EDIT_PARCEL_SUCCESS,
+  MANAGE_PARCEL_SUCCESS
+} from 'modules/parcels/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import {
   PUBLISH_SUCCESS,
@@ -108,6 +111,16 @@ export default class Transaction extends React.PureComponent {
           description: <i>{description}</i>
         })
       }
+      case MANAGE_PARCEL_SUCCESS: {
+        const { x, y, address } = payload
+        return t_html('transaction.manage', {
+          parcel_link: this.renderParcelLink(x, y),
+          address_link: (
+            <Link to={locations.profilePage(address)}>{address}</Link>
+          )
+        })
+      }
+
       case TRANSFER_PARCEL_SUCCESS: {
         const { x, y, newOwner } = payload
 
@@ -168,7 +181,8 @@ export default class Transaction extends React.PureComponent {
       TRANSFER_PARCEL_SUCCESS,
       PUBLISH_SUCCESS,
       BUY_SUCCESS,
-      CANCEL_SALE_SUCCESS
+      CANCEL_SALE_SUCCESS,
+      MANAGE_PARCEL_SUCCESS
     ].includes(tx.actionType)
 
     return (

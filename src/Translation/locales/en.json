@@ -32,7 +32,8 @@
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
     "connecting": "Connecting",
-    "click_here": "Click here"
+    "click_here": "Click here",
+    "loading": "Loading"
   },
   "address": {
     "its_you": "It's you"
@@ -81,6 +82,7 @@
     "actions": {
       "edit": "Edit",
       "transfer": "Transfer",
+      "manage": "Manage",
       "sell": "Sell",
       "cancel": "Cancel sale"
     },
@@ -134,6 +136,15 @@
       "If the problem persists, contact us at our {community_chat_link}",
     "placeholder": "Example: {address}"
   },
+  "parcel_manage": {
+    "manage_land": "Manage LAND",
+    "give_permission": "Give permission to update contents of {parcel_name}.",
+    "address_permission":
+      "This address will be able to update the contents of this parcel.",
+    "check_address": "Please check the address carefully",
+    "address": "Address",
+    "placeholder": "Example: {address}"
+  },
   "parcel_buy": {
     "buy_land": "Buy LAND",
     "about_to_buy": "You are about to buy {parcel_name} {parcel_price}.",
@@ -184,6 +195,8 @@
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",
+    "manage":
+      "You gave {address_link} permission to update the content of {parcel_link}",
     "publish": "You published {parcel_link}",
     "buy": "You bought {parcel_link}",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",

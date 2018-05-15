@@ -5,12 +5,15 @@ import {
   FETCH_PARCELS_REQUEST,
   FETCH_PARCEL_REQUEST,
   EDIT_PARCEL_REQUEST,
+  MANAGE_PARCEL_REQUEST,
   fetchParcelSuccess,
   fetchParcelFailure,
   fetchParcelsSuccess,
   fetchParcelsFailure,
   editParcelSuccess,
-  editParcelFailure
+  editParcelFailure,
+  manageParcelSuccess,
+  manageParcelFailure
 } from './actions'
 import { getData as getParcels } from './selectors'
 import { locations } from 'locations'
@@ -23,6 +26,7 @@ export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCELS_REQUEST, handleParcelsRequest)
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
   yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
+  yield takeEvery(MANAGE_PARCEL_REQUEST, handleManageParcelsRequest)
 }
 
 function* handleParcelsRequest(action) {
@@ -83,5 +87,27 @@ function* handleEditParcelsRequest(action) {
     const { x, y } = action.parcel
     const parcel = parcels[buildCoordinate(x, y)]
     yield put(editParcelFailure(parcel, error.message))
+  }
+}
+
+function* handleManageParcelsRequest(action) {
+  try {
+    const { parcel, address } = action
+    const { x, y } = parcel
+
+    const contract = eth.getContract('LANDRegistry')
+    // @cazala TODO: this line should be removed once the method setUpdateOperator accepts x,y instead of assetId
+    const assetId = yield call(() => contract.encodeTokenId(x, y))
+    const txHash = yield call(() =>
+      contract.setUpdateOperator(assetId, address)
+    )
+
+    yield put(manageParcelSuccess(txHash, parcel, address))
+    yield put(push(locations.activity))
+  } catch (error) {
+    const parcels = yield select(getParcels)
+    const { x, y } = action.parcel
+    const parcel = parcels[buildCoordinate(x, y)]
+    yield put(manageParcelFailure(parcel, action.address, error.message))
   }
 }

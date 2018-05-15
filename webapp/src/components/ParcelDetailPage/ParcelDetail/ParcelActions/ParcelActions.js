@@ -51,6 +51,12 @@ export default class ParcelActions extends React.PureComponent {
                 {t('parcel_detail.actions.edit')}
               </Button>
             </Link>
+            <Link to={locations.manageLand(x, y)}>
+              <Button size="tiny">
+                <Icon name="settings" />
+                {t('parcel_detail.actions.manage')}
+              </Button>
+            </Link>
             <Link to={locations.transferLand(x, y)}>
               <Button size="tiny">
                 <Icon name="exchange" />

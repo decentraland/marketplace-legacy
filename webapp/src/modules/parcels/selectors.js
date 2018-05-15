@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { EDIT_PARCEL_REQUEST } from './actions'
+import { EDIT_PARCEL_REQUEST, MANAGE_PARCEL_REQUEST } from './actions'
 import { getPublications as getAllPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'lib/utils'
 
@@ -11,6 +11,9 @@ export const getError = state => getState(state).error
 
 export const isEditTransactionIdle = state =>
   getLoading(state).some(action => action.type === EDIT_PARCEL_REQUEST)
+
+export const isManageTransactionIdle = state =>
+  getLoading(state).some(action => action.type === MANAGE_PARCEL_REQUEST)
 
 export const getParcels = createSelector(
   getData,

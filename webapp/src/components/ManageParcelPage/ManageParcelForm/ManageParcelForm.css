@@ -1,0 +1,17 @@
+.ManageParcelForm .ui.button + .ui.button {
+  margin-left: 20px;
+}
+
+.ManageParcelForm .ui.input.address-input {
+  max-width: 450px !important;
+  display: block;
+}
+
+.ManageParcelForm .ui.input.address-input input {
+  width: 100% !important;
+}
+
+.ManageParcelForm .transfer-warning {
+  color: var(--gray);
+  font-style: italic;
+}
