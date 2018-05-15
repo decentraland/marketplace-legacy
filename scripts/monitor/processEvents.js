@@ -219,16 +219,6 @@ async function processParcelRelatedEvents(assetId, event) {
           eth.utils.toBigNumber(loanId)
         )
       ])
-      // TODO: remove this shit!
-      console.log(
-        loanId,
-        amount,
-        duesIn,
-        expiresAt,
-        amount.toNumber(),
-        duesIn.toNumber(),
-        expiresAt.toNumber()
-      )
 
       const exists = await Mortgage.count({ tx_hash })
       if (exists) {

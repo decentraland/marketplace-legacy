@@ -4,7 +4,7 @@ import { isExpired } from 'lib/utils'
 // From Mortgage.js on the server
 export const MORTGAGES_STATUS = Object.freeze({
   open: 'open',
-  sold: 'sold',
+  claimed: 'claimed',
   cancelled: 'cancelled'
 })
 
@@ -32,5 +32,13 @@ export function hasStatus(mortgage, status) {
     mortgage.status === status &&
     mortgage.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
     !isExpired(mortgage)
+  )
+}
+
+export function getOpenMortgagesByBorrower(mortgages, borrower) {
+  return mortgages.filter(
+    mortgage =>
+      mortgage.borrower === borrower &&
+      mortgage.status !== MORTGAGES_STATUS.cancelled
   )
 }

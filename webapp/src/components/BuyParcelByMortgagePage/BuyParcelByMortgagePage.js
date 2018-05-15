@@ -37,7 +37,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
       <div>
         <Container text textAlign="center" className="BuyParcelPage">
           <Header as="h2" size="huge" className="title">
-            {t('parcel_buy.buy_land')}
+            {t('mortgage.request')}
           </Header>
           <p className="sign-in">
             {t_html('global.sign_in_notice', {

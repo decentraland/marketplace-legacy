@@ -34,7 +34,13 @@
     "owned_by_link": "{address_link} 소유",
     "connecting": "연결 중",
     "click_here": "여기를 클릭하십시오",
-    "request": "Request"
+    "request": "의뢰",
+    "mortgage": "저당",
+    "mortgages": "모기지",
+    "expired_at": "{time} 전 만료 됨",
+    "expires_in": "{time}에 만료 됨",
+    "expires_in_more_than_years": "{years} 년 만료 됨",
+    "time_left": "남은 시간"
   },
   "address": {
     "its_you": "너야"
@@ -71,9 +77,6 @@
   },
   "publication": {
     "acquired_at": "{date}에 인수 됨",
-    "expired_at": "{time} 전 만료 됨",
-    "expires_in": "{time}에 만료 됨",
-    "expires_in_more_than_years": "{years} 년 만료 됨",
     "view": "보기",
     "sold": "판매 됨",
     "canceled": "취소 됨"
@@ -98,8 +101,8 @@
     },
     "publication": {
       "price": "가격",
-      "time_left": "남은 시간",
-      "buy": "구매"
+      "buy": "구매",
+      "mortgage": "모기지 신청"
     },
     "owner": {
       "part_of": "{name}의 일부",
@@ -199,8 +202,12 @@
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
-    "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf",
-    "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf"
+    "mortgage_mana":
+      "혼자서 MANA를 운영하려면 {action}부터 {mortgage_contract_link}까지 있습니다. ",
+    "mortgage_rcn":
+      "혼자서 RCN를 운영하려면 {action}부터 {mortgage_contract_link}까지 있습니다.",
+    "create_mortgage": "소포 구입을 모기지에 요청했습니다 {parcel_link}",
+    "cancel_mortgage": "소포를 사기 위해 모기지를 취소합니다 {parcel_link}"
   },
   "transaction_status": {
     "see_activity": "거래 내역을 보려면 {activity_link}을 방문하십시오.",
@@ -234,14 +241,14 @@
       "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
     "authorization": "권한 부여",
     "you_approved_mortgage_mana":
-      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+      "{mortgage_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "approve_mortgage_mana":
-      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+      "{mortgage_contract_link}에 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
     "you_approved_mortgage_rcn":
-      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+      "{mortgage_contract_link}이 (가) RCN 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "approve_mortgage_rcn":
-      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
-    "mortgage_contract": "Mortgage contract"
+      "{mortgage_contract_link}에 귀하를 대신하여 RCN 운영하도록 승인하십시오.",
+    "mortgage_contract": "모기지 계약"
   },
   "transfer_mana": {
     "title": "MANA 이전",
@@ -301,17 +308,31 @@
   },
   "mortgage": {
     "request": "Requesting a Mortgage",
+    "request_land": "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
     "oracle": "Oracle contract address",
-    "amount": "Mortgage total",
-    "duration": "Mortgage duration",
-    "duration_placeholder": "Duration date for the mortgage",
+    "amount": "Amount",
+    "amount_placeholder": "Amount in MANA",
+    "duration": "Duration",
+    "duration_placeholder": "Duration in days",
     "payable": "Payable at",
-    "payable_placeholder": "Payable date for the mortgage",
-    "interest_rate": "Intereset rate",
+    "payable_placeholder": "Payable in days",
+    "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "expiration": "Request expiration",
-    "expiration_placeholder": "Expiration date for the mortgage"
+    "expiration_placeholder": "Expiration date for the mortgage",
+    "expires_in": "Expires in",
+    "requested": "Requested",
+    "cancel": "Cancel Mortgage",
+    "errors": {
+      "amount_minimum": "Amount should be greater than {amount}",
+      "parcel_price": "Amount required should be less than parcel price",
+      "minimum_duration": "Duration should be greater than {minimum} days",
+      "minimum_payable": "Payable at should be greater than {minimum} days",
+      "duration_gte_payable": "Duration should be greater or equal than payable at days",
+      "minimum_interest_rate": "Rate should be greater than {minimum}",
+      "maximum_interest_rate": "Rate should be lower than {maximum}"
+    }
   }
 }

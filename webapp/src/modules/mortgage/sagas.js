@@ -6,13 +6,13 @@ import { api } from 'lib/api'
 import {
   CREATE_MORTGAGE_REQUEST,
   CANCEL_MORTGAGE_REQUEST,
-  FETCH_MORTGAGES_REQUEST,
+  FETCH_MORTGAGED_PARCELS_REQUEST,
   createMortgageSuccess,
   createMortgageFailure,
   cancelMortgageFailure,
   cancelMortgageSuccess,
-  fetchMortgageSuccess,
-  fetchMortgageFailure
+  fetchMortgagedParcelsSuccess,
+  fetchMortgagedParcelsFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { toInterestRate, getLoanMetadata, daysToSeconds } from './utils'
@@ -22,16 +22,16 @@ import { locations } from 'locations'
 export function* mortgageSaga() {
   yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
   yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
-  yield takeLatest(FETCH_MORTGAGES_REQUEST, handleFetchMortgageRequest)
+  yield takeLatest(FETCH_MORTGAGED_PARCELS_REQUEST, handleFetchMortgageRequest)
 }
 
 function* handleFetchMortgageRequest(action) {
   try {
     const { borrower } = action
-    const mortgages = yield call(() => api.fetchParcelMortgages(borrower))
-    yield put(fetchMortgageSuccess(mortgages))
+    const parcels = yield call(() => api.fetchParcelMortgages(borrower))
+    yield put(fetchMortgagedParcelsSuccess(parcels))
   } catch (error) {
-    yield put(fetchMortgageFailure(error.message))
+    yield put(fetchMortgagedParcelsFailure(error.message))
   }
 }
 
@@ -68,11 +68,6 @@ function* handleCreateMortgageRequest(action) {
       expiresAt // Expiration timestamp of the request
     ]
 
-    console.log(
-      daysToSeconds(duration), // Duration of the loan, in seconds
-      daysToSeconds(payableAt), // Time when the payment of the loan starts
-      expiresAt // Expiration timestamp of the request
-    )
     // Retrieve the loan signature
     let loanIdentifier = yield call(() =>
       rcnEngineContract.buildIdentifier(
@@ -103,14 +98,7 @@ function* handleCreateMortgageRequest(action) {
         s // Signature of the loan
       )
     )
-    console.log(
-      loanParams, // Configuration of the loan request
-      loanMetadata, // Metadata of the loan
-      landId, // Id of the loan to buy
-      v, // Signature of the loan
-      r, // Signature of the loan
-      s // Signature of the loan
-    )
+
     yield put(createMortgageSuccess(mortgageReceipt, parcel))
     yield put(push(locations.activity))
   } catch (error) {
@@ -121,7 +109,6 @@ function* handleCreateMortgageRequest(action) {
 function* handleCancelMortgageRequest(action) {
   try {
     const { mortgageId, x, y } = action
-    console.log(x, y)
     const mortgageManagerContract = eth.getContract('MortgageManager')
 
     const mortgageCancelReceipt = yield call(() =>

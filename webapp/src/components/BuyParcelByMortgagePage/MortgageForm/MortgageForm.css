@@ -35,5 +35,8 @@
   background: transparent;
   color: #fff;
   padding-left: 0;
+  padding-bottom: 8px;
+  margin-left: 0;
   border-bottom: 2px solid var(--dark-gray);
+
 }

@@ -201,13 +201,7 @@ export default class MortgageForm extends React.PureComponent {
       >
         <Form.Field>
           <label>{t('mortgage.oracle')}</label>
-          <input
-            id="address-input"
-            className="address-input"
-            type="text"
-            value={getKyberOracleAddress()}
-            readOnly={true}
-          />
+          <p className="address-input">{'MANA <> BANCOR'}</p>
           <AddressBlock
             hasLink={false}
             isUser={false}

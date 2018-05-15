@@ -175,9 +175,9 @@ export class Parcel extends Model {
 
   static async parcelsMortgagesByBorrower(borrower) {
     return await this.db.query(
-      `SELECT *, array(
-        ${Mortgage.findParcelMortgageJsonSql()}
-      ) as mortgages
+      `SELECT *, (
+        ${Mortgage.findParcelMortgageJsonSql('LIMIT 1')}
+      ) as mortgage
         FROM ${this.tableName}
         WHERE EXISTS(${Mortgage.findByBorrowerSql()})`,
       [borrower.toLowerCase()]

@@ -77,9 +77,6 @@
   },
   "publication": {
     "acquired_at": "Acquired at {date}",
-    "expired_at": "Expired {time}",
-    "expires_in": "Expires {time}",
-    "expires_in_more_than_years": "Expires in over {years} years",
     "view": "View",
     "sold": "Sold",
     "canceled": "Canceled"
@@ -104,7 +101,6 @@
     },
     "publication": {
       "price": "Price",
-      "time_left": "Time Left",
       "buy": "Buy",
       "mortgage": "Request Mortgage"
     },
@@ -339,8 +335,8 @@
       "minimum_duration": "Duration should be greater than {minimum} days",
       "minimum_payable": "Payable at should be greater than {minimum} days",
       "duration_gte_payable": "Duration should be greater or equal than payable at days",
-      "minimum_interest_rate": "Rate should be greater than {minimum}",
-      "maximum_interest_rate": "Rate should be lower than {maximum}"
+      "minimum_interest_rate": "The rate should be greater than {minimum}",
+      "maximum_interest_rate": "The rate should be lower than {maximum}"
     }
   }
 }

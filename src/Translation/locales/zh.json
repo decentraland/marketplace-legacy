@@ -34,7 +34,13 @@
     "owned_by_link": "{address_link} 소유",
     "connecting": "连",
     "click_here": "点击这里",
-    "request": "Request"
+    "request": "要求",
+    "mortgage": "抵押",
+    "mortgages": "抵押贷款",
+    "expired_at": "已于{time}前过期",
+    "expires_in": "将于{time}后到期",
+    "expires_in_more_than_years": "超过{years}年",
+    "time_left": "剩下的时间"
   },
   "address": {
     "its_you": "是你"
@@ -71,9 +77,6 @@
   },
   "publication": {
     "acquired_at": "在{date}收购",
-    "expired_at": "已于{time}前过期",
-    "expires_in": "将于{time}后到期",
-    "expires_in_more_than_years": "超过{years}年",
     "view": "查看",
     "sold": "已售出",
     "canceled": "已取消"
@@ -98,8 +101,8 @@
     },
     "publication": {
       "price": "价格",
-      "time_left": "剩下的时间",
-      "buy": "购买"
+      "buy": "购买",
+      "mortgage": "请求抵押"
     },
     "owner": {
       "part_of": "{name}的一部分",
@@ -195,8 +198,10 @@
     "buy": "您买入了{parcel_link}地块",
     "cancel": "您取消了{parcel_link}上的{publication_link}",
     "buy_mana": "你已经买了{MANA} MANA",
-    "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf",
-    "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf"
+    "mortgage_mana": "您有{action} {mortgage_contract_link}来自行操作MANA",
+    "mortgage_rcn": "有{action} {mortgage_contract_link}来自行运行RCN",
+    "create_mortgage": "소포 구입을 모기지에 요청했습니다{parcel_link}",
+    "cancel_mortgage": "您取消抵押贷款以购买包裹{parcel_link}"
   },
   "transaction_status": {
     "see_activity": "要查看您的交易记录，请访问您的{activity_link}。",
@@ -224,14 +229,14 @@
     "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND",
     "authorization": "授权",
     "you_approved_mortgage_mana":
-      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+      "您已授权{mortgage_contract_link}以您的名义操作MANA",
     "approve_mortgage_mana":
-      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+      "授权{mortgage_contract_link}以您的名义操作MANA",
     "you_approved_mortgage_rcn":
-      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+      "您已授权{mortgage_contract_link}代表您运营RCN",
     "approve_mortgage_rcn":
-      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
-    "mortgage_contract": "Mortgage contract"
+      "授权{mortgage_contract_link}代表您操作RCN",
+    "mortgage_contract": "抵押合同"
   },
   "transfer_mana": {
     "title": "转移MANA",
@@ -290,17 +295,31 @@
   },
   "mortgage": {
     "request": "Requesting a Mortgage",
+    "request_land": "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
     "oracle": "Oracle contract address",
-    "amount": "Mortgage total",
-    "duration": "Mortgage duration",
-    "duration_placeholder": "Duration date for the mortgage",
+    "amount": "Amount",
+    "amount_placeholder": "Amount in MANA",
+    "duration": "Duration",
+    "duration_placeholder": "Duration in days",
     "payable": "Payable at",
-    "payable_placeholder": "Payable date for the mortgage",
-    "interest_rate": "Intereset rate",
+    "payable_placeholder": "Payable in days",
+    "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "expiration": "Request expiration",
-    "expiration_placeholder": "Expiration date for the mortgage"
+    "expiration_placeholder": "Expiration date for the mortgage",
+    "expires_in": "Expires in",
+    "requested": "Requested",
+    "cancel": "Cancel Mortgage",
+    "errors": {
+      "amount_minimum": "Amount should be greater than {amount}",
+      "parcel_price": "Amount required should be less than parcel price",
+      "minimum_duration": "Duration should be greater than {minimum} days",
+      "minimum_payable": "Payable at should be greater than {minimum} days",
+      "duration_gte_payable": "Duration should be greater or equal than payable at days",
+      "minimum_interest_rate": "Rate should be greater than {minimum}",
+      "maximum_interest_rate": "Rate should be lower than {maximum}"
+    }
   }
 }

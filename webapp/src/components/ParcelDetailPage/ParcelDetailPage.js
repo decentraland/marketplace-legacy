@@ -8,6 +8,7 @@ import Parcel from 'components/Parcel'
 import { districtType, publicationType } from 'components/types'
 import { locations } from 'locations'
 import { t } from 'modules/translation/utils'
+import { getOpenMortgagesByBorrower } from 'modules/mortgage/utils'
 
 import './ParcelDetailPage.css'
 
@@ -75,10 +76,7 @@ export default class ParcelDetailPage extends React.PureComponent {
                 districts={districts}
                 publications={publications}
                 onBuy={onBuy}
-                mortgages={parcel.mortgages.filter(
-                  mortgage =>
-                    mortgage.borrower === user && mortgage.status === 'open'
-                )}
+                mortgages={getOpenMortgagesByBorrower(parcel.mortgages, user)}
               />
             </Container>
           </div>

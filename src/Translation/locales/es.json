@@ -34,7 +34,13 @@
     "owned_by_link": "Controlada por {address_link}",
     "connecting": "Conectando",
     "click_here": "Pincha aquí",
-    "request": "Request"
+    "request": "Solicitar",
+    "mortgage": "Hipoteca",
+    "mortgages": "Hipotecas",
+    "expired_at": "Expiró {time}",
+    "expires_in": "Expira {time}",
+    "expires_in_more_than_years": "Expira en más de {years} años",
+    "time_left": "Tiempo disponible"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -71,9 +77,6 @@
   },
   "publication": {
     "acquired_at": "Adquirida en {date}",
-    "expired_at": "Expiró {time}",
-    "expires_in": "Expira {time}",
-    "expires_in_more_than_years": "Expira en más de {years} años",
     "view": "Ver",
     "sold": "Vendida",
     "canceled": "Cancelada"
@@ -98,8 +101,8 @@
     },
     "publication": {
       "price": "Precio",
-      "time_left": "Tiempo Disponible",
-      "buy": "Comprar"
+      "buy": "Comprar",
+      "mortgage": "Solicitar una hipoteca"
     },
     "owner": {
       "part_of": "Parte de {name}",
@@ -204,7 +207,9 @@
     "cancel": "Has cancelado {publication_link} de {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "mortgage_mana": "Has {action} al {mortgage_contract_link} para operar MANA por tu cuenta.",
-    "mortgage_rcn": "Has {action} al {mortgage_contract_link} para operar RCN por tu cuenta."
+    "mortgage_rcn": "Has {action} al {mortgage_contract_link} para operar RCN por tu cuenta.",
+    "create_mortgage": "Has solicitado una hipoteca para comprar la parcela {parcel_link}",
+    "cancel_mortgage": "Has cancelado la hipoteca para comprar la parcela {parcel_link}"
   },
   "transaction_status": {
     "see_activity":
@@ -243,14 +248,14 @@
       "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
     "authorization": "Autorización",
     "you_approved_mortgage_mana":
-      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+      "Has autorizado al {mortgage_contract_link} a operar MANA por tu cuenta",
     "approve_mortgage_mana":
-      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+      "Autorizar al {mortgage_contract_link} a operar MANA por tu cuenta",
     "you_approved_mortgage_rcn":
-      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+      "Has autorizado al {mortgage_contract_link} a operar RCN por tu cuenta",
     "approve_mortgage_rcn":
-      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
-    "mortgage_contract": "Mortgage contract"
+      "Autorizar al {mortgage_contract_link} a operar RCN por tu cuenta",
+    "mortgage_contract": "Contracto de hipoteca"
   },
   "transfer_mana": {
     "title": "Transferir MANA",
@@ -309,18 +314,32 @@
     "view_more": "Ver Más"
   },
   "mortgage": {
-    "request": "Requesting a Mortgage",
-    "oracle": "Oracle contract address",
-    "amount": "Mortgage total",
-    "duration": "Mortgage duration",
-    "duration_placeholder": "Duration date for the mortgage",
-    "payable": "Payable at",
-    "payable_placeholder": "Payable date for the mortgage",
-    "interest_rate": "Intereset rate",
-    "interest_rate_placeholder": "Interest rate",
-    "punitory_rate": "Punitory interest rate",
-    "punitory_rate_placeholder": "Punitory rate",
-    "expiration": "Request expiration",
-    "expiration_placeholder": "Expiration date for the mortgage"
+    "request": "Solicitar una hipoteca",
+    "request_land": "Estas por solicitar una hipoteca para la parcela valuada en {parcel_price}",
+    "oracle": "Contract de Oracle",
+    "amount": "Cantidad",
+    "amount_placeholder": "Cantidad en MANA",
+    "duration": "Duración",
+    "duration_placeholder": "Duración en días",
+    "payable": "Terminable en",
+    "payable_placeholder": "Terminable en días",
+    "interest_rate": "Tasa de interés",
+    "interest_rate_placeholder": "Tasa de interés",
+    "punitory_rate": "Interés punitorio",
+    "punitory_rate_placeholder": "Interés punitorio",
+    "expiration": "Fecha de expiración",
+    "expiration_placeholder": "Fecha de expiración para la solicitud",
+    "expires_in": "Termina en",
+    "requested": "Solicitado",
+    "cancel": "Cancelar hipoteca",
+    "errors": {
+      "amount_minimum": "La cantidad debe ser mayor a {amount}",
+      "parcel_price": "La cantidad debe ser menor al precio de la parcela",
+      "minimum_duration": "La duracoin debe ser mayor a {minimum} días",
+      "minimum_payable": "Terminable debe ser mayor a {minimum} días",
+      "duration_gte_payable": "La duracion debe ser mayor o igual a terminable",
+      "minimum_interest_rate": "El interés debe ser mayor a {minimum}",
+      "maximum_interest_rate": "El interés debe ser menor a {maximum}"
+    }
   }
 }

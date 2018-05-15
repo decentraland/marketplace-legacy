@@ -77,7 +77,7 @@ export default class ParcelDetail extends React.PureComponent {
                     />
                   </Grid.Column>
                   <Grid.Column width={4} className="time-left">
-                    <h3>{t('parcel_detail.publication.time_left')}</h3>
+                    <h3>{t('global.time_left')}</h3>
                     <Expiration
                       expiresAt={parseInt(publication.expires_at, 10)}
                       className={'PublicationExpiration'}

@@ -3,7 +3,6 @@ import { getParcels } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { isOpen } from 'modules/publication/utils'
 import { getParcels as getMortgagedParcels } from 'modules/mortgage/selectors'
-import { isOpen as isMortgageOpen } from 'modules/mortgage/utils'
 import { pickAndMap } from './utils'
 
 export const getState = state => state.address

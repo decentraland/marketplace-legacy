@@ -43,7 +43,9 @@ export default class ParcelCard extends React.PureComponent {
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
                 >
-                  <Expiration expiresAt={parseInt(publication.expires_at, 10)} />
+                  <Expiration
+                    expiresAt={parseInt(publication.expires_at, 10)}
+                  />
                 </Card.Meta>
                 <div className="mana">
                   <Mana amount={parseFloat(publication.price, 10)} />
@@ -51,13 +53,10 @@ export default class ParcelCard extends React.PureComponent {
               </React.Fragment>
             )}
             {showMortgage &&
-              isMortgageOpen(parcel.mortgages[0]) && (
-                /* TODO: Revisit when states are defined */
+              isMortgageOpen(parcel.mortgage) && (
                 <React.Fragment>
-                  <p
-                    className={`mortgage-status ${parcel.mortgages[0].status}`}
-                  >
-                    {parcel.mortgages[0].status}
+                  <p className={`mortgage-status ${parcel.mortgage.status}`}>
+                    {parcel.mortgage.status}
                   </p>
                 </React.Fragment>
               )}

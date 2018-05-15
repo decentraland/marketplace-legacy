@@ -60,27 +60,30 @@ export function cancelMortgageFailure(error) {
   }
 }
 
-export const FETCH_MORTGAGES_REQUEST = '[Request] Fetch Mortgages'
-export const FETCH_MORTGAGES_SUCCESS = '[Success] Fetch Mortgages'
-export const FETCH_MORTGAGES_FAILURE = '[Failure] Fetch Mortgages'
+export const FETCH_MORTGAGED_PARCELS_REQUEST =
+  '[Request] Fetch Mortgaged Parcels'
+export const FETCH_MORTGAGED_PARCELS_SUCCESS =
+  '[Success] Fetch Mortgaged Parcels'
+export const FETCH_MORTGAGED_PARCELS_FAILURE =
+  '[Failure] Fetch Mortgaged Parcels'
 
-export function fetchMortgageRequest(borrower) {
+export function fetchMortgagedParcelsRequest(borrower) {
   return {
-    type: FETCH_MORTGAGES_REQUEST,
+    type: FETCH_MORTGAGED_PARCELS_REQUEST,
     borrower
   }
 }
 
-export function fetchMortgageSuccess(mortgages) {
+export function fetchMortgagedParcelsSuccess(parcels) {
   return {
-    type: FETCH_MORTGAGES_SUCCESS,
-    payload: mortgages
+    type: FETCH_MORTGAGED_PARCELS_SUCCESS,
+    payload: parcels
   }
 }
 
-export function fetchMortgageFailure(error) {
+export function fetchMortgagedParcelsFailure(error) {
   return {
-    type: FETCH_MORTGAGES_FAILURE,
+    type: FETCH_MORTGAGED_PARCELS_FAILURE,
     error
   }
 }
