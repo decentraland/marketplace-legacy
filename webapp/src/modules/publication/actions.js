@@ -90,8 +90,7 @@ export function publishSuccess(txHash, publication) {
     type: PUBLISH_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
-      x: publication.x,
-      y: publication.y
+      asset_id: publication.asset_id
     }),
     publication
   }
@@ -122,8 +121,7 @@ export function buySuccess(txHash, publication) {
     type: BUY_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
-      x: publication.x,
-      y: publication.y,
+      asset_id: publication.asset_id,
       price: publication.price
     }),
     publication
@@ -155,8 +153,7 @@ export function cancelSaleSuccess(txHash, publication) {
     type: CANCEL_SALE_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
-      x: publication.x,
-      y: publication.y
+      asset_id: publication.asset_id
     }),
     publication
   }

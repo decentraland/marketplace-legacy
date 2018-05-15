@@ -56,16 +56,12 @@ function* handleParcelPublicationsRequest(action) {
 
 function* handlePublishRequest(action) {
   try {
-    const { x, y, price, expires_at } = action.publication
-
-    const marketplaceContract = eth.getContract('Marketplace')
-    const landRegistryContract = eth.getContract('LANDRegistry')
-
-    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
+    const { asset_id, price, expires_at } = action.publication
     const priceInWei = eth.utils.toWei(price)
 
+    const marketplaceContract = eth.getContract('Marketplace')
     const txHash = yield call(() =>
-      marketplaceContract.createOrder(assetId, priceInWei, expires_at)
+      marketplaceContract.createOrder(asset_id, priceInWei, expires_at)
     )
 
     const publication = {
@@ -82,14 +78,11 @@ function* handlePublishRequest(action) {
 
 function* handleBuyRequest(action) {
   try {
-    const { x, y, price } = action.publication
+    const { asset_id, price } = action.publication
 
     const marketplaceContract = eth.getContract('Marketplace')
-    const landRegistryContract = eth.getContract('LANDRegistry')
-
-    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
     const txHash = yield call(() =>
-      marketplaceContract.executeOrder(assetId, eth.utils.toWei(price))
+      marketplaceContract.executeOrder(asset_id, eth.utils.toWei(price))
     )
 
     yield put(buySuccess(txHash, action.publication))
@@ -101,13 +94,10 @@ function* handleBuyRequest(action) {
 
 function* handleCancelSaleRequest(action) {
   try {
-    const { x, y } = action.publication
+    const { asset_id } = action.publication
 
     const marketplaceContract = eth.getContract('Marketplace')
-    const landRegistryContract = eth.getContract('LANDRegistry')
-
-    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
-    const txHash = yield call(() => marketplaceContract.cancelOrder(assetId))
+    const txHash = yield call(() => marketplaceContract.cancelOrder(asset_id))
 
     yield put(cancelSaleSuccess(txHash, action.publication))
     yield put(push(locations.activity))
