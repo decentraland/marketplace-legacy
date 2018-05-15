@@ -25,8 +25,8 @@ export default class ParcelTransactionHistory extends React.PureComponent {
   getParcelPublications() {
     const { parcel, publications } = this.props
     return findParcelPublications(
-      parcel,
       publications,
+      parcel,
       PUBLICATION_STATUS.sold
     ).sort((a, b) => (a.block_number > b.block_number ? -1 : 1))
   }

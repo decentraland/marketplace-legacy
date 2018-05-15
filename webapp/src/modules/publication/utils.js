@@ -17,20 +17,10 @@ export function toPublicationsObject(publicationsArray) {
   )
 }
 
-export function findPublicationByCoordinates(publications, x, y) {
-  return Object.values(publications).find(
-    publication =>
-      publication.x === x &&
-      publication.y === y &&
-      publication.status === PUBLICATION_STATUS.open
-  )
-}
-
-export function findParcelPublications(parcel, publications, status) {
+export function findParcelPublications(publications, parcel, status) {
   return Object.values(publications).filter(
     publication =>
-      publication.x === parcel.x &&
-      publication.y === parcel.y &&
+      publication.asset_id === parcel.asset_id &&
       (!status || publication.status === status)
   )
 }

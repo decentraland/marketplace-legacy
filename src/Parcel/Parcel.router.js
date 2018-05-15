@@ -54,8 +54,6 @@ export class ParcelRouter {
 
       const result = await new AssetRouter().getAssets(req)
 
-      console.log(result)
-
       parcels = result.assets
       total = result.total
     }
