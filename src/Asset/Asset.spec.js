@@ -4,9 +4,9 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Parcel, ParcelService } from '../Parcel'
 import { Publication } from '../Publication'
-import { AssetService } from './Asset.service'
+import { Asset } from './Asset'
 
-describe('AssetService', function() {
+describe('Asset', function() {
   const filters = {
     sanitize() {
       return {
@@ -108,7 +108,7 @@ describe('AssetService', function() {
       await Parcel.query('UPDATE parcels P SET asset_id = P.id') // mock asset_ids
 
       // Filter
-      const { assets, total } = await new AssetService().filter(filters)
+      const { assets, total } = await new Asset(Parcel).filter(filters)
 
       expect(assets).to.equalRows([
         {

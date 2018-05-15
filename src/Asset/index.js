@@ -1,2 +1,2 @@
-export { AssetService } from './Asset.service'
+export { Asset } from './Asset'
 export { AssetRouter } from './Asset.router'

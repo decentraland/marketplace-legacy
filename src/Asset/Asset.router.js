@@ -1,7 +1,7 @@
 import { server, utils } from 'decentraland-commons'
 
-import { AssetService } from './Asset.service'
-import { PublicationRequestFilters } from '../Publication'
+import { Asset } from './Asset'
+import { PublicationRequestFilters, PublicationService } from '../Publication'
 import { blacklist } from '../lib'
 
 export class AssetRoutes {
@@ -25,7 +25,8 @@ export class AssetRoutes {
 
   async getAssets(req) {
     const filters = new PublicationRequestFilters(req)
-    const result = await new AssetService().filter(filters)
+    const Model = new PublicationService().getModelFromType(filters.getType())
+    const result = await new Asset(Model).filter(filters)
 
     return {
       assets: this.blacklistFilteredAssets(result.assets),

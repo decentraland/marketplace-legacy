@@ -1,6 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { coordinates } from './coordinates'
+import { Asset } from '../Asset'
 import { PublicationQueries } from '../Publication'
 import { District } from '../District'
 import { SQL } from '../database'
@@ -53,31 +54,17 @@ export class Parcel extends Model {
   }
 
   static async findByOwner(owner) {
-    return await this.db.query(
-      SQL`SELECT ${SQL.raw(this.tableName)}.*, (
-        ${PublicationQueries.findLastParcelPublicationJsonSql()}
-      ) as publication
-        FROM ${SQL.raw(this.tableName)}
-        WHERE owner = ${owner}`
-    )
+    return new Asset(this).findByOwner(owner)
   }
 
   static async findByOwnerAndStatus(owner, status) {
-    return await this.db.query(
-      SQL`SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
-        FROM ${SQL.raw(this.tableName)} as par
-        LEFT JOIN (
-          ${PublicationQueries.findByStatusSql(status)}
-        ) as pub ON par.asset_id = pub.asset_id
-        WHERE par.owner = ${owner}
-          AND pub.tx_hash IS NOT NULL`
-    )
+    return new Asset(this).findByOwnerAndStatus(owner, status)
   }
 
   static async findOwneableParcels() {
     return await this.db.query(
       `SELECT *
-        FROM ${this.tableName}
+        FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
     )
   }
@@ -85,7 +72,7 @@ export class Parcel extends Model {
   static async findLandmarks() {
     return await this.db.query(
       `SELECT *
-        FROM ${this.tableName}
+        FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
     )
   }

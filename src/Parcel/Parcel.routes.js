@@ -52,7 +52,7 @@ export class ParcelRoutes {
       // Force parcel type
       req.params.type = Publication.TYPES.parcel
 
-      const result = new AssetRouter().filterAssets(req)
+      const result = new AssetRouter().getAssets(req)
 
       parcels = result.assets
       total = result.total
