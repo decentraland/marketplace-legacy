@@ -6,12 +6,12 @@ import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { db } from './database'
-import { ParcelRoutes } from './Parcel'
-import { StateRoutes } from './State'
-import { DistrictRoutes } from './District'
-import { ContributionRoutes } from './Contribution'
-import { PublicationRoutes } from './Publication'
-import { TranslationRoutes } from './Translation'
+import { ParcelRouter } from './Parcel'
+import { StateRouter } from './State'
+import { DistrictRouter } from './District'
+import { ContributionRouter } from './Contribution'
+import { PublicationRouter } from './Publication'
+import { TranslationRouter } from './Translation'
 
 env.load()
 
@@ -40,12 +40,12 @@ if (env.isDevelopment()) {
   require('newrelic')
 }
 
-new TranslationRoutes(app).mount()
-new PublicationRoutes(app).mount()
-new ParcelRoutes(app).mount()
-new StateRoutes(app).mount()
-new DistrictRoutes(app).mount()
-new ContributionRoutes(app).mount()
+new TranslationRouter(app).mount()
+new PublicationRouter(app).mount()
+new ParcelRouter(app).mount()
+new StateRouter(app).mount()
+new DistrictRouter(app).mount()
+new ContributionRouter(app).mount()
 
 /* Start the server only if run directly */
 if (require.main === module) {

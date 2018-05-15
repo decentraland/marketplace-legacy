@@ -4,7 +4,7 @@ import { Asset } from './Asset'
 import { PublicationRequestFilters, PublicationService } from '../Publication'
 import { blacklist } from '../lib'
 
-export class AssetRoutes {
+export class AssetRouter {
   constructor(app) {
     this.app = app
   }
@@ -34,7 +34,7 @@ export class AssetRoutes {
     }
   }
 
-  async blacklistFilteredAssets(assets) {
+  blacklistFilteredAssets(assets) {
     return assets.map(({ publication, ...asset }) => ({
       ...utils.omit(asset, blacklist.asset),
       publication: utils.omit(publication, blacklist.publication)

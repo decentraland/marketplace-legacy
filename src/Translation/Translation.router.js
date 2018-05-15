@@ -1,7 +1,7 @@
 import { server } from 'decentraland-commons'
 import { Translation } from './Translation'
 
-export class TranslationRoutes {
+export class TranslationRouter {
   constructor(app) {
     this.app = app
   }

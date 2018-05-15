@@ -1,9 +1,10 @@
 import { server, utils } from 'decentraland-commons'
+
 import { Publication } from './Publication.model'
 import { Parcel } from '../Parcel'
 import { blacklist } from '../lib'
 
-export class PublicationRoutes {
+export class PublicationRouter {
   constructor(app) {
     this.app = app
   }

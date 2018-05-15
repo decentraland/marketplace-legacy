@@ -29,8 +29,8 @@ export class Publication extends Model {
   })
 
   static TYPES = Object.freeze({
-    parcel: 'parcels',
-    state: 'states'
+    parcel: 'parcel',
+    state: 'state'
   })
 
   static isValidStatus(status) {

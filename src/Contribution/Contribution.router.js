@@ -2,7 +2,7 @@ import { server, utils } from 'decentraland-commons'
 import { Contribution } from './Contribution.model'
 import { blacklist } from '../lib'
 
-export class ContributionRoutes {
+export class ContributionRouter {
   constructor(app) {
     this.app = app
   }

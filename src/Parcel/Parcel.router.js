@@ -5,7 +5,7 @@ import { Publication } from '../Publication'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
-export class ParcelRoutes {
+export class ParcelRouter {
   constructor(app) {
     this.app = app
   }
@@ -52,7 +52,9 @@ export class ParcelRoutes {
       // Force parcel type
       req.params.type = Publication.TYPES.parcel
 
-      const result = new AssetRouter().getAssets(req)
+      const result = await new AssetRouter().getAssets(req)
+
+      console.log(result)
 
       parcels = result.assets
       total = result.total

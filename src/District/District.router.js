@@ -2,7 +2,7 @@ import { server, utils } from 'decentraland-commons'
 import { District } from './District.model'
 import { blacklist } from '../lib'
 
-export class DistrictRoutes {
+export class DistrictRouter {
   constructor(app) {
     this.app = app
   }

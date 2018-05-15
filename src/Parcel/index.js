@@ -1,4 +1,4 @@
 export { Parcel } from './Parcel.model'
 export { ParcelService } from './Parcel.service'
-export { ParcelRoutes } from './Parcel.routes'
+export { ParcelRouter } from './Parcel.router'
 export { coordinates } from './coordinates'
