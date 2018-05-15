@@ -53,7 +53,7 @@ export class Parcel extends Model {
 
   static async findByOwner(owner) {
     return await this.db.query(
-      SQL`SELECT ${this.tableName}.*, (
+      SQL`SELECT ${SQL.raw(this.tableName)}.*, (
         ${PublicationQueries.findLastParcelPublicationJsonSql()}
       ) as publication
         FROM ${SQL.raw(this.tableName)}
