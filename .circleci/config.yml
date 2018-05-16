@@ -15,15 +15,15 @@ jobs:
           command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
       - restore_cache:
           keys:
-          - v2-dependencies-{{ checksum "package-lock.json" }}
-          - v2-dependencies-
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
       - run: 
           name: (backend) Install packages
           command: npm install
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "package-lock.json" }}
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: (backend) Build
           command: npm run build:ci
@@ -31,15 +31,15 @@ jobs:
             CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
       - restore_cache:
           keys:
-          - v2-dependencies-{{ checksum "webapp/package-lock.json" }}
-          - v2-dependencies-
+          - v1-dependencies-{{ checksum "webapp/package.json" }}
+          - v1-dependencies-
       - run: 
           name: (frontend) Install packages
           command: cd webapp && npm install
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "webapp/package-lock.json" }}
+          key: v1-dependencies-{{ checksum "webapp/package.json" }}
       - run:
           name: (frontend) Build
           command: cd webapp && npm run build
