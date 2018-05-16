@@ -14,3 +14,4 @@ newrelic_agent.log
 
 *.todo
 *.TODO
+*.js.map
