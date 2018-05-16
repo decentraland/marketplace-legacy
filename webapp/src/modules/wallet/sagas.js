@@ -94,7 +94,6 @@ function* handleConnectWalletRequest(action = {}) {
     const mortgageCreatorAddress = getMortgageCreatorAddress()
     const mortgageManagerAddress = getMortgageManagerAddress()
 
-
     const [
       network,
       balance,

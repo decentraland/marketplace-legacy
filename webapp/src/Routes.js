@@ -58,7 +58,11 @@ export default class Routes extends React.Component {
           component={TransferManaPage}
         />
         <Route exact path={locations.buyMana} component={BuyManaPage} />
-        <Route exact path={locations.mortgage} component={BuyParcelByMortgagePage} />
+        <Route
+          exact
+          path={locations.mortgage}
+          component={BuyParcelByMortgagePage}
+        />
         <Redirect to={locations.root} />
       </Switch>
     )

@@ -9,10 +9,9 @@ import { t } from 'modules/translation/utils'
 
 import './ParcelMortgage.css'
 
-
 export default class ParcelMortgage extends React.PureComponent {
   static propTypes = {
-    mortgages: PropTypes.array.isRequired,
+    mortgages: PropTypes.array.isRequired
   }
 
   render() {
@@ -36,7 +35,9 @@ export default class ParcelMortgage extends React.PureComponent {
             </Grid.Column>
             <Grid.Column width={4}>
               <h3>{t('global.time_left')}</h3>
-              <p><Expiration expiresAt={mortgage.expires_at} /></p>
+              <p>
+                <Expiration expiresAt={mortgage.expires_at} />
+              </p>
             </Grid.Column>
             <Grid.Column width={4}>
               <MortgageActions mortgage={mortgage} />

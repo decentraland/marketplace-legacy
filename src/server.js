@@ -15,7 +15,6 @@ import {
   PublicationRequestFilters
 } from './Publication'
 import { Translation } from './Translation'
-import { Mortgage } from './Mortgage'
 import { blacklist } from './lib'
 
 env.load()
