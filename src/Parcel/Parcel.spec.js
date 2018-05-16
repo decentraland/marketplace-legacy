@@ -210,7 +210,6 @@ describe('Parcel', function() {
 
       const range = await Parcel.parcelsMortgagesByBorrower('0xdeadbeef33')
       expect(range.length).to.be.equal(2)
-      console.log('aaaa', range)
       expect(range).to.equalRows([
         {
           x: 6,
