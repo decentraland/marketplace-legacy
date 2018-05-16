@@ -5,9 +5,12 @@ export function omitProps(obj, omittedProps) {
 
   for (const prop in newObj) {
     const value = newObj[prop]
-
     if (value !== null && typeof value === 'object') {
-      newObj[prop] = omitProps(value, omittedProps)
+      if (Array.isArray(value)) {
+        newObj[prop] = value.map(v => omitProps(v, omittedProps))
+      } else {
+        newObj[prop] = omitProps(value, omittedProps)
+      }
     }
   }
 

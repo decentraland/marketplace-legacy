@@ -7,6 +7,7 @@ import { Parcel } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
+import { Mortgage } from '../Mortgage'
 
 describe('Parcel', function() {
   describe('.buildId', function() {
@@ -68,7 +69,6 @@ describe('Parcel', function() {
       await Publication.insert(publication)
 
       const range = await Parcel.inRange([3, 5], [4, 5])
-
       expect(range).to.equalRows([
         {
           x: 3,
@@ -81,6 +81,7 @@ describe('Parcel', function() {
           asset_id: null,
           auction_owner: null,
           tags: {},
+          mortgages: [],
           publication
         },
         {
@@ -94,7 +95,148 @@ describe('Parcel', function() {
           asset_id: null,
           auction_owner: null,
           tags: {},
+          mortgages: [],
           publication: null
+        }
+      ])
+    })
+
+    it('should join the last mortgage request', async function() {
+      const mortgage = {
+        tx_hash: '0xdeadbeef',
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        status: Mortgage.STATUS.open,
+        loan_id: 1,
+        mortgage_id: 1,
+        x: 3,
+        y: 5,
+        borrower: '0xdeadbeef33',
+        lender: null,
+        dues_in: new Date().getTime() * 1000,
+        amount: 1500,
+        expires_at: new Date().getTime() * 1000,
+        block_time_created_at: null,
+        block_time_updated_at: null,
+        block_number: 1
+      }
+      await Mortgage.insert(mortgage)
+
+      const range = await Parcel.inRange([3, 5], [4, 5])
+
+      expect(range).to.equalRows([
+        {
+          x: 3,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          last_transferred_at: null,
+          asset_id: null,
+          auction_owner: null,
+          tags: {},
+          publication: null,
+          mortgages: [mortgage]
+        },
+        {
+          x: 4,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          last_transferred_at: null,
+          asset_id: null,
+          auction_owner: null,
+          tags: {},
+          publication: null,
+          mortgages: []
+        }
+      ])
+    })
+  })
+
+  describe('.parcelsMortgagesByBorrower', function() {
+    beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
+
+    it('should return parcels with mortgages open/claimed by borrower', async function() {
+      const mortgage = {
+        tx_hash: '1xdeadbeef',
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        status: Mortgage.STATUS.open,
+        loan_id: 0,
+        mortgage_id: 0,
+        x: 2,
+        y: 5,
+        borrower: '0xdeadbeef33',
+        lender: null,
+        dues_in: new Date().getTime() * 1000,
+        amount: 1500,
+        expires_at: new Date().getTime() * 1000,
+        block_time_created_at: null,
+        block_time_updated_at: null,
+        block_number: 1
+      }
+      const mortgage2 = Object.assign({}, mortgage, {
+        tx_hash: '2xdeadbeff',
+        loan_id: 2,
+        mortgage_id: 2,
+        borrower: '0xdeadbeef34'
+      })
+      const mortgage3 = Object.assign({}, mortgage, {
+        tx_hash: '3xdeadbdff',
+        x: 5,
+        y: 5,
+        loan_id: 3,
+        mortgage_id: 3,
+        status: Publication.STATUS.cancelled,
+        borrower: '0xdeadbeef33'
+      })
+      const mortgage4 = Object.assign({}, mortgage, {
+        tx_hash: '4xdeadbeff',
+        x: 6,
+        y: 5,
+        loan_id: 4,
+        mortgage_id: 4,
+        status: Mortgage.STATUS.claimed,
+        borrower: '0xdeadbeef33'
+      })
+      await Promise.all([
+        Mortgage.insert(mortgage),
+        Mortgage.insert(mortgage2),
+        Mortgage.insert(mortgage3),
+        Mortgage.insert(mortgage4)
+      ])
+
+      const range = await Parcel.parcelsMortgagesByBorrower('0xdeadbeef33')
+      expect(range.length).to.be.equal(2)
+      console.log('aaaa', range)
+      expect(range).to.equalRows([
+        {
+          x: 6,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          last_transferred_at: null,
+          asset_id: null,
+          auction_owner: null,
+          tags: {},
+          mortgage: mortgage4,
+        },
+        {
+          x: 2,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          last_transferred_at: null,
+          asset_id: null,
+          auction_owner: null,
+          tags: {},
+          mortgage: mortgage,
         }
       ])
     })
@@ -102,7 +244,7 @@ describe('Parcel', function() {
 
   afterEach(() =>
     Promise.all(
-      [Parcel, Publication].map(Model => db.truncate(Model.tableName))
+      [Parcel, Publication, Mortgage].map(Model => db.truncate(Model.tableName))
     ))
 })
 
