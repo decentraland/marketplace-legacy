@@ -17,7 +17,7 @@ jobs:
           keys:
           - v2-dependencies-{{ checksum "package-lock.json" }}
           - v2-dependencies-
-     - run:
+      - run:
           name: (frontend) Install packages
           command: cd webapp && npm install
       - save_cache:
@@ -37,9 +37,9 @@ jobs:
           paths:
             - webapp/build
           key: build-{{ .Branch }}-{{ .Revision }}
-      - run: 
+      - run:
           name: (backend) Install packages
-          command: npm install
+          command: cd .. && npm install
       - save_cache:
           paths:
             - node_modules
