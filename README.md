@@ -9,7 +9,7 @@
 The core technologies of the marketplace are:
 
 * [React](https://reactjs.org/) and [Redux](https://redux.js.org/) for the front end
-* [nodejs](https://nodejs.org/), [PostgreSQL](https://www.postgresql.org/)
+* [nodejs](https://nodejs.org/), [PostgreSQL](https://postgresapp.com/)
 * [Ethereum](https://www.ethereum.org/) nodes and a wallet to use on the browser ([Metamask](http://metamask.io/) for example).
 * [Babel](https://babeljs.io/) to transpile the code and [ESLint](https://eslint.org/) alongside [prettier](https://prettier.io/) to lint the code
 

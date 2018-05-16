@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { getParams } from 'modules/location/selectors'
+import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { getPublications, getLoading } from 'modules/publication/selectors'
 import { findPublicationByCoordinates } from 'modules/publication/utils'
 import { isLoadingType } from 'modules/loading/selectors'
@@ -14,9 +14,7 @@ import { locations } from 'locations'
 import CancelSalePage from './CancelSalePage'
 
 const mapState = (state, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
   const publications = getPublications(state)
 
   return {
@@ -28,9 +26,7 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
   return {
     onConfirm: publication => dispatch(cancelSaleRequest(publication)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))

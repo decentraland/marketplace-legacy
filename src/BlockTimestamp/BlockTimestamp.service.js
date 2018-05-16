@@ -1,6 +1,6 @@
 import { eth } from 'decentraland-eth'
 
-import { BlockTimestamp } from './BlockTimestamp'
+import { BlockTimestamp } from './BlockTimestamp.model'
 
 export class BlockTimestampService {
   constructor() {
@@ -17,7 +17,7 @@ export class BlockTimestampService {
     return timestamp
   }
 
-  // TODO: Move to eth.commons
+  // TODO: Move to decentraland-eth
   getBlockchainTimestamp(blockNumber) {
     const web3 = eth.wallet.getWeb3()
 
@@ -33,12 +33,12 @@ export class BlockTimestampService {
   }
 
   insertTimestamp(blockNumber, timestamp) {
-    // cache for later
+    // Cache for later
     return BlockTimestamp.insert({
       block_number: blockNumber,
       timestamp
     }).catch(() => {
-      /*Let it slide*/
+      // Don't do anything
     })
   }
 }

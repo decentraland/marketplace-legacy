@@ -47,7 +47,7 @@ export default class ParcelModal extends React.PureComponent {
             preview
           ) : (
             <div className="modal-preview">
-              <ParcelPreview x={x} y={y} />
+              <ParcelPreview x={x} y={y} selected={{ x, y }} size={20} />
             </div>
           )}
         </div>

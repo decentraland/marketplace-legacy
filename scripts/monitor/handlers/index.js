@@ -8,17 +8,9 @@ export async function index(eventData) {
 
   const { event, transactionHash, blockNumber, logIndex, args } = eventData
 
-  const exists = await BlockchainEvent.count({
-    tx_hash: transactionHash,
-    log_index: logIndex
-  })
-  if (exists) {
-    log.info(`[${event}] Blockchain event ${transactionHash} already exists`)
-    return
-  }
   log.info(`[${event}] Storing blockchain event ${transactionHash}`)
 
-  await BlockchainEvent.insert({
+  await BlockchainEvent.insertWithoutConflicts({
     tx_hash: transactionHash,
     name: event,
     block_number: blockNumber,
@@ -34,4 +26,4 @@ function transformArgValuesToString(args) {
   }, {})
 }
 
-export * from './HandlersIndex'
+export * from './Handlers'

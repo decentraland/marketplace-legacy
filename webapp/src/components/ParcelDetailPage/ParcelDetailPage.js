@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
 import { districtType, publicationType } from 'components/types'
-import { locations } from 'locations'
 import { t } from 'modules/translation/utils'
 import { getOpenMortgagesByBorrower } from 'modules/mortgage/utils'
 
@@ -23,7 +21,8 @@ export default class ParcelDetailPage extends React.PureComponent {
     onFetchParcelPublications: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
     onBuy: PropTypes.func.isRequired,
-    user: PropTypes.string
+    user: PropTypes.string,
+    onParcelClick: PropTypes.func.isRequired
   }
 
   componentWillMount() {
@@ -50,7 +49,16 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { x, y, error, districts, publications, onBuy, user } = this.props
+    const {
+      x,
+      y,
+      error,
+      districts,
+      publications,
+      onBuy,
+      onParcelClick,
+      user
+    } = this.props
 
     if (error) {
       return null
@@ -59,16 +67,18 @@ export default class ParcelDetailPage extends React.PureComponent {
       <Parcel x={x} y={y}>
         {(parcel, isOwner) => (
           <div className="ParcelDetailPage">
-            <Link to={locations.parcelMapDetail(parcel.x, parcel.y, parcel.id)}>
-              <div className="parcel-preview" title={t('parcel_detail.view')}>
-                <ParcelPreview
-                  x={parcel.x}
-                  y={parcel.y}
-                  size={14}
-                  padding={2}
-                />
-              </div>
-            </Link>
+            <div className="parcel-preview" title={t('parcel_detail.view')}>
+              <ParcelPreview
+                x={parcel.x}
+                y={parcel.y}
+                selected={parcel}
+                isDraggable
+                showMinimap
+                showPopup
+                showControls
+                onClick={onParcelClick}
+              />
+            </div>
             <Container>
               <ParcelDetail
                 parcel={parcel}

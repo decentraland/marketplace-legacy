@@ -1,6 +1,8 @@
 import { txUtils } from 'decentraland-eth'
 
-import { Publication } from './Publication'
+import { SQL, raw } from '../database'
+import { Publication } from './Publication.model'
+import { PublicationQueries } from './Publication.queries'
 import { Parcel } from '../Parcel'
 
 export class PublicationService {
@@ -10,36 +12,32 @@ export class PublicationService {
 
   async filter(filters) {
     const { status, sort, pagination } = filters.sanitize()
-
-    const values = [status, txUtils.TRANSACTION_STATUS.confirmed]
+    const tx_status = txUtils.TRANSACTION_STATUS.confirmed
 
     const [publications, counts] = await Promise.all([
       this.Publication.query(
-        `SELECT pub.*, row_to_json(par.*) as parcel
-          FROM ${Publication.tableName} as pub
-          JOIN ${Parcel.tableName} as par ON par.x = pub.x AND par.y = pub.y
-          WHERE status = $1
-            AND tx_status = $2
-            AND expires_at >= EXTRACT(epoch from now()) * 1000
-          ORDER BY pub.${sort.by} ${sort.order}
-          LIMIT ${pagination.limit} OFFSET ${pagination.offset}`,
-        values
+        SQL`SELECT pub.*, row_to_json(par.*) as parcel
+          FROM ${raw(Publication.tableName)} as pub
+          JOIN ${raw(
+            Parcel.tableName
+          )} as par ON par.x = pub.x AND par.y = pub.y
+          WHERE status = ${status}
+            AND tx_status = ${tx_status}
+            AND ${PublicationQueries.whereisActive()}
+          ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
+          LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
       this.Publication.query(
-        `SELECT COUNT(*)
-          FROM ${Publication.tableName}
-          WHERE status = $1
-            AND tx_status = $2
-            AND expires_at >= EXTRACT(epoch from now()) * 1000`,
-        values
+        SQL`SELECT COUNT(*)
+          FROM ${raw(Publication.tableName)}
+          WHERE status = ${status}
+            AND tx_status = ${tx_status}
+            AND ${PublicationQueries.whereisActive()}`
       )
     ])
 
     const total = parseInt(counts[0].count, 10)
 
-    return {
-      publications,
-      total
-    }
+    return { publications, total }
   }
 }

@@ -10,18 +10,19 @@ import {
   isLoading as isAddressLoading,
   getData as getAddresses
 } from 'modules/address/selectors'
-import { getParcels, getLoading } from 'modules/parcels/selectors'
+import { getData as getParcels, getLoading } from 'modules/parcels/selectors'
+import { getPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'lib/utils'
 
 import Parcel from './Parcel'
 
 const mapState = (state, { x, y }) => {
   const parcels = getParcels(state)
-  const parcel = parcels[buildCoordinate(x, y)]
-
   const wallet = getWallet(state)
   const addresses = getAddresses(state)
+
   let isConnecting = isWalletConnecting(state) || isAddressLoading(state)
+
   if (
     wallet &&
     wallet.address &&
@@ -34,6 +35,12 @@ const mapState = (state, { x, y }) => {
   const isLoading = getLoading(state).some(
     action => action.x === x && action.y === y
   )
+
+  const parcel = parcels[buildCoordinate(x, y)]
+  if (parcel) {
+    const publications = getPublications(state)
+    parcel.publication = publications[parcel.publication_tx_hash]
+  }
 
   return {
     wallet,

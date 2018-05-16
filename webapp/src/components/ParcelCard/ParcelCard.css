@@ -32,8 +32,9 @@
 }
 
 .ParcelCard .preview {
-  height: 140px;
+  height: 132px;
   overflow: hidden;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .ParcelCard .body {
@@ -45,18 +46,19 @@
   font-size: 15px;
   margin-bottom: 5px;
   color: var(--text);
+  overflow: hidden;
+  display: flex;
+}
+
+.ParcelCard .name {
+  margin-right: 8px;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 70%;
   white-space: nowrap;
 }
 
-.ParcelCard .mana {
-  font-size: 14px;
-  top: 15px;
-  right: 15px;
-  position: absolute;
-  display: inline;
+.ParcelCard .Mana {
+  margin-left: auto;
 }
 
 .ParcelCard .footer {

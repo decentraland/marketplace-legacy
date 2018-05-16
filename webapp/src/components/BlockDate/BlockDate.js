@@ -9,7 +9,7 @@ export default class BlockDate extends React.PureComponent {
   static propTypes = {
     network: PropTypes.string,
     blockNumber: PropTypes.number.isRequired,
-    blockTime: PropTypes.string,
+    blockTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     target: PropTypes.string,
     className: PropTypes.string
   }

@@ -30,7 +30,8 @@ export const parcelType = shape({
   address: string,
   x: number.isRequired,
   y: number.isRequired,
-  publication: publicationType
+  publication: publicationType,
+  tags: object
 })
 
 export const contributionType = shape({
@@ -92,11 +93,4 @@ export const toastType = shape({
   kind: oneOf(['info', 'success', 'error', 'warning']),
   message: string,
   delay: number
-})
-
-export const dashboardStatsType = shape({
-  landOwnersCount: number,
-  activeUsersCount: number,
-  totalLandTraded: number,
-  totalLandOnSale: number
 })

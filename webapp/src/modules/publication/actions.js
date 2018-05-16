@@ -72,52 +72,6 @@ export function fetchParcelPublicationsFailure(error) {
   }
 }
 
-// Fetch Dashboard Publications
-
-export const FETCH_DASHBOARD_PUBLICATIONS_REQUEST =
-  '[Request] Fetch Dashboard Publications'
-export const FETCH_DASHBOARD_PUBLICATIONS_SUCCESS =
-  '[Success] Fetch Dashboard Publications'
-export const FETCH_DASHBOARD_PUBLICATIONS_FAILURE =
-  '[Failure] Fetch Dashboard Publications'
-
-export function fetchDashboardPublicationsRequest({
-  limit,
-  offset,
-  sortBy,
-  sortOrder,
-  status
-}) {
-  return {
-    type: FETCH_DASHBOARD_PUBLICATIONS_REQUEST,
-    limit,
-    offset,
-    sortBy,
-    sortOrder,
-    status
-  }
-}
-
-export function fetchDashboardPublicationsSuccess(
-  parcels,
-  publications,
-  total
-) {
-  return {
-    type: FETCH_DASHBOARD_PUBLICATIONS_SUCCESS,
-    parcels,
-    publications,
-    total
-  }
-}
-
-export function fetchDashboardPublicationsFailure(error) {
-  return {
-    type: FETCH_DASHBOARD_PUBLICATIONS_FAILURE,
-    error
-  }
-}
-
 // Publish LAND
 
 export const PUBLISH_REQUEST = '[Request] Publish LAND'

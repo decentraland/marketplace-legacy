@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
 
 import { addressReducer as address } from 'modules/address/reducer'
-import { dashboardReducer as dashboard } from 'modules/dashboard/reducer'
 import { districtsReducer as districts } from 'modules/districts/reducer'
 import { parcelsReducer as parcels } from 'modules/parcels/reducer'
 import { publicationReducer as publication } from 'modules/publication/reducer'
@@ -20,7 +19,6 @@ import { mortgageReducer as mortgages } from 'modules/mortgage/reducer'
 export const rootReducer = storageReducerWrapper(
   combineReducers({
     address,
-    dashboard,
     districts,
     parcels,
     publication,

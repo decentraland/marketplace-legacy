@@ -15,7 +15,6 @@ import {
   PublicationRequestFilters
 } from './Publication'
 import { Translation } from './Translation'
-import { DashboardService } from './Dashboard'
 import { Mortgage } from './Mortgage'
 import { blacklist } from './lib'
 
@@ -57,16 +56,6 @@ export async function getTranslations(req) {
   let locale = server.extractFromReq(req, 'locale')
   locale = locale.slice(0, 2) // We support base locales for now, like en, it, etc
   return await new Translation().fetch(locale)
-}
-
-/**
- * Returns stats for the entire marketplace
- * @return {object}
- */
-app.get('/api/dashboard/stats', server.handleRequest(getDashboardStats))
-
-export async function getDashboardStats(req) {
-  return await new DashboardService().fetchStats()
 }
 
 /**
@@ -229,19 +218,15 @@ export async function getMortgagesByBorrower(req) {
 
 /* Start the server only if run directly */
 if (require.main === module) {
-  Promise.resolve()
-    .then(connectDatabase)
-    .then(connectEthereum)
-    .then(listenOnServerPort)
-    .catch(console.error)
+  startServer().catch(console.error)
 }
 
-function connectDatabase() {
-  return db.connect()
-}
+async function startServer() {
+  console.log('Connecting database')
+  await db.connect()
 
-function connectEthereum() {
-  return eth
+  console.log('Connecting to Ethereum node')
+  await eth
     .connect({
       contracts: [
         new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
@@ -255,9 +240,7 @@ function connectEthereum() {
         `\nError: "${error.message}"\n`
       )
     )
-}
 
-function listenOnServerPort() {
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)
   )

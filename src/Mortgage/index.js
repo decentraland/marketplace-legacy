@@ -1,1 +1,2 @@
-export { Mortgage } from './Mortgage'
+export { Mortgage } from './Mortgage.model'
+export { MortgageQueries } from './Mortgage.queries'

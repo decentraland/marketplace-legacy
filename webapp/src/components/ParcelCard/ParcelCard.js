@@ -29,16 +29,29 @@ export default class ParcelCard extends React.PureComponent {
     const { x, y, publication } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
+    const isPublicationOpen = isOpen(publication)
 
     return (
       <Card className="ParcelCard">
         <Link to={locations.parcelDetail(x, y)}>
           <div className="preview">
-            <ParcelPreview x={x} y={y} debounce={debounce} size={12} />
+            <ParcelPreview
+              x={x}
+              y={y}
+              debounce={debounce}
+              size={12}
+              selected={parcel}
+            />
           </div>
           <Card.Content className="body">
-            <Card.Description title={parcelName}>{parcelName}</Card.Description>
-            {isOpen(publication) && (
+            <Card.Description title={parcelName}>
+              <span className="name">{parcelName}</span>
+              {isPublicationOpen ? (
+                <Mana amount={parseFloat(publication.price, 10)} />
+              ) : null}
+            </Card.Description>
+
+            {isPublicationOpen ? (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
@@ -47,11 +60,20 @@ export default class ParcelCard extends React.PureComponent {
                     expiresAt={parseInt(publication.expires_at, 10)}
                   />
                 </Card.Meta>
-                <div className="mana">
-                  <Mana amount={parseFloat(publication.price, 10)} />
-                </div>
               </React.Fragment>
+            ) : (
+              <Card.Meta>
+                {t('publication.acquired_at', {
+                  date: formatDate(
+                    parcel.last_transferred_at
+                      ? parseInt(parcel.last_transferred_at, 10)
+                      : AUCTION_DATE,
+                    'MMM Do, YYYY'
+                  )
+                })}
+              </Card.Meta>
             )}
+
             {showMortgage &&
               isMortgageOpen(parcel.mortgage) && (
                 <React.Fragment>
@@ -78,7 +100,7 @@ export default class ParcelCard extends React.PureComponent {
                 <Icon name="marker" />
                 <span className="coord">{buildCoordinate(x, y)}</span>
               </div>
-              {parcel.tags ? <ParcelTags parcel={parcel} size="small" /> : null}
+              <ParcelTags parcel={parcel} size="small" />
             </div>
           </Card.Content>
         </Link>

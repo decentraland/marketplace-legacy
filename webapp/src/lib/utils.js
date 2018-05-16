@@ -39,19 +39,9 @@ export function insertScript({
   return script
 }
 
-export const requestAnimationFrame =
-  window.requestAnimationFrame ||
-  window.mozRequestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.msRequestAnimationFrame ||
-  (callback => setTimeout(callback, 1000 / 60))
-
-export const cancelAnimationFrame =
-  window.cancelAnimationFrame ||
-  window.mozCancelAnimationFrame ||
-  window.webkitCancelAnimationFrame ||
-  window.msCancelAnimationFrame ||
-  (id => clearTimeout(id))
+export function isMobileWidth(width = window.outerWidth) {
+  return width <= 768
+}
 
 export function isMobile() {
   // WARN: Super naive mobile device check.

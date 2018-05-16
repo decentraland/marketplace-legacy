@@ -1,18 +1,13 @@
 import { locations, NAVBAR_PAGES } from 'locations'
+import { isProfilePage, isAtlasPage } from 'modules/location/utils'
 
-export function getActivePage({ pathname, wallet }) {
+export function getActivePage({ pathname, address }) {
   let currentPage = null
   if (pathname === locations.marketplace) {
     currentPage = NAVBAR_PAGES.marketplace
-  } else if (pathname === locations.dashboard) {
-    currentPage = NAVBAR_PAGES.dashboard
-  } else if (
-    wallet.address &&
-    pathname.slice(0, 9) === '/address/' &&
-    pathname.slice(9, 51).toLowerCase() === wallet.address
-  ) {
+  } else if (isProfilePage(pathname, address)) {
     currentPage = NAVBAR_PAGES.profile
-  } else if (/^\/-?\d+\/-?\d+$/gi.test(pathname)) {
+  } else if (isAtlasPage(pathname)) {
     currentPage = NAVBAR_PAGES.atlas
   } else if (pathname === locations.activity) {
     currentPage = NAVBAR_PAGES.activity

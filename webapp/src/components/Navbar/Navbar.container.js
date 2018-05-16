@@ -7,13 +7,12 @@ import {
   isStaticPage,
   isModalPage
 } from 'modules/location/selectors'
-import { getCenter } from 'modules/ui/selectors'
 import { isConnected, isConnecting } from 'modules/wallet/selectors'
 import { isLoading } from 'modules/ui/loading/selectors'
 import { isLoading as isLoadingParcels } from 'modules/parcels/selectors'
 import { getPendingTransactions } from 'modules/transaction/selectors'
+import { getCenter } from 'modules/location/utils'
 import { navigateTo } from 'modules/location/actions'
-
 import { getActivePage } from './utils'
 
 import Navbar from './Navbar'
@@ -21,9 +20,12 @@ import Navbar from './Navbar'
 const mapState = state => {
   const wallet = getWallet(state)
   const { pathname } = getLocation(state)
-  const activePage = getActivePage({ wallet, pathname })
-  const center = getCenter(state)
+  const activePage = getActivePage({
+    pathname,
+    address: wallet && wallet.address
+  })
   const isStatic = isStaticPage(state)
+  const center = getCenter(pathname)
   return {
     activePage,
     wallet,

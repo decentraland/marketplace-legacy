@@ -45,7 +45,6 @@ export default class Navbar extends React.PureComponent {
     return {
       [NAVBAR_PAGES.atlas]: locations.parcelMapDetail(center.x, center.y),
       [NAVBAR_PAGES.marketplace]: locations.marketplace,
-      [NAVBAR_PAGES.dashboard]: locations.dashboard,
       [NAVBAR_PAGES.profile]: locations.profilePage(wallet.address),
       [NAVBAR_PAGES.activity]: locations.activity,
       [NAVBAR_PAGES.signIn]: locations.signIn
@@ -127,7 +126,6 @@ export default class Navbar extends React.PureComponent {
         </Responsive>
         {this.renderMenuItem('atlas')}
         {this.renderMenuItem('marketplace')}
-        {this.renderMenuItem('dashboard')}
         {isConnected ? (
           <React.Fragment>
             {this.renderMenuItem('profile')}

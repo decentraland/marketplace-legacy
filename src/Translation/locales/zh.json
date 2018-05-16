@@ -9,7 +9,6 @@
   "global": {
     "atlas": "地图",
     "marketplace": "虚拟物品市场",
-    "dashboard": "仪表板",
     "profile": "我的虚拟土地",
     "activity": "活动",
     "parcels": "地块",
@@ -60,16 +59,6 @@
       "cheapest": "最低价",
       "close_to_expire": "最近到期"
     }
-  },
-  "dashboard": {
-    "stats_title": "一些数字",
-    "transactions_title": "最新交易",
-    "land_owners": "LAND所有者",
-    "active_users": "活跃用户",
-    "land_traded": "LAND交易",
-    "land_on_sale": "LAND发售",
-    "transaction_description":
-      "从{seller_link}出售的parcel {parcel_link}到{buyer_link}获得{price}"
   },
   "profile_page": {
     "empty": "用户没有{content}",

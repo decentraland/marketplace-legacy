@@ -5,9 +5,6 @@ import {
   FETCH_PARCEL_PUBLICATIONS_REQUEST,
   FETCH_PARCEL_PUBLICATIONS_SUCCESS,
   FETCH_PARCEL_PUBLICATIONS_FAILURE,
-  FETCH_DASHBOARD_PUBLICATIONS_REQUEST,
-  FETCH_DASHBOARD_PUBLICATIONS_SUCCESS,
-  FETCH_DASHBOARD_PUBLICATIONS_FAILURE,
   PUBLISH_REQUEST,
   PUBLISH_SUCCESS,
   PUBLISH_FAILURE,
@@ -22,7 +19,6 @@ import {
   FETCH_PARCEL_SUCCESS,
   FETCH_PARCELS_SUCCESS
 } from 'modules/parcels/actions'
-import { getParcelPublications } from 'modules/parcels/utils'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
@@ -37,7 +33,6 @@ const INITIAL_STATE = {
 export function publicationReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_PARCEL_PUBLICATIONS_REQUEST:
-    case FETCH_DASHBOARD_PUBLICATIONS_REQUEST:
     case FETCH_PUBLICATIONS_REQUEST: {
       return {
         ...state,
@@ -45,7 +40,6 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PARCEL_PUBLICATIONS_SUCCESS:
-    case FETCH_DASHBOARD_PUBLICATIONS_SUCCESS:
     case FETCH_PUBLICATIONS_SUCCESS: {
       return {
         ...state,
@@ -58,7 +52,6 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PARCEL_PUBLICATIONS_FAILURE:
-    case FETCH_DASHBOARD_PUBLICATIONS_FAILURE:
     case FETCH_PUBLICATIONS_FAILURE: {
       return {
         ...state,
@@ -83,7 +76,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_PARCELS_SUCCESS:
     case FETCH_ADDRESS_PARCELS_SUCCESS: {
-      const publications = getParcelPublications(action.parcels)
+      const publications = action.publications
 
       if (publications.length > 0) {
         return {

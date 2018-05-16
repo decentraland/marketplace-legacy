@@ -8,16 +8,14 @@ import {
   CREATE_MORTGAGE_REQUEST
 } from 'modules/mortgage/actions'
 import { locations } from 'locations'
-import { getParams } from 'modules/location/selectors'
+import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { getPublications, getLoading } from 'modules/publication/selectors'
 import { findPublicationByCoordinates } from 'modules/publication/utils'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import { isLoadingType } from 'modules/loading/selectors'
 
 const mapState = (state, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
   const publications = getPublications(state)
 
   return {
@@ -32,9 +30,7 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const params = getParams(ownProps)
-  const x = parseInt(params.x, 10)
-  const y = parseInt(params.y, 10)
+  const { x, y } = getMatchParamsCoordinates(ownProps)
 
   return {
     onConfirm: params => dispatch(createMortgageRequest(params)),

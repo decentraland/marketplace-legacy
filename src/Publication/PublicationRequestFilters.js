@@ -1,5 +1,6 @@
 import { server } from 'decentraland-commons'
-import { Publication } from './Publication'
+
+import { Publication } from './Publication.model'
 
 const ALLOWED_VALUES = Object.freeze({
   price: ['ASC'],
