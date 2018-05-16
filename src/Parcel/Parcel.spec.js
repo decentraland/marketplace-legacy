@@ -222,7 +222,7 @@ describe('Parcel', function() {
           asset_id: null,
           auction_owner: null,
           tags: {},
-          mortgage: mortgage4,
+          mortgage: mortgage4
         },
         {
           x: 2,
@@ -235,7 +235,7 @@ describe('Parcel', function() {
           asset_id: null,
           auction_owner: null,
           tags: {},
-          mortgage: mortgage,
+          mortgage: mortgage
         }
       ])
     })
