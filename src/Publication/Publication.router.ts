@@ -2,13 +2,9 @@ import { server, utils } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
 import { Parcel } from '../Parcel'
-import { blacklist } from '../lib'
+import { blacklist, Router } from '../lib'
 
-export class PublicationRouter {
-  constructor(app) {
-    this.app = app
-  }
-
+export class PublicationRouter extends Router {
   mount() {
     /**
      * Returns the publications for a parcel
@@ -36,14 +32,15 @@ export class PublicationRouter {
   async getParcelPublications(req) {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
-    const assetId = await Parcel.encodeAssetId(x, y)
+    const id = Parcel.buildId(x, y)
+
     let publications = []
 
     try {
       const status = server.extractFromReq(req, 'status')
-      publications = await Publication.findByAssetIdWithStatus(assetId, status)
+      publications = await Publication.findByAssetIdWithStatus(id, status)
     } catch (error) {
-      publications = await Publication.findByAssetId(assetId)
+      publications = await Publication.findByAssetId(id)
     }
 
     return utils.mapOmit(publications, blacklist.publication)

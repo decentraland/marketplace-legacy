@@ -1,12 +1,16 @@
 import { Publication } from './Publication.model'
 import { Parcel } from '../Parcel'
-import { State } from '../State'
+import { Estate } from '../Estate'
 
 export class PublicationService {
+  Publication: typeof Publication
+  Parcel: typeof Parcel
+  Estate: typeof Estate
+
   constructor() {
     this.Publication = Publication
     this.Parcel = Parcel
-    this.State = State
+    this.Estate = Estate
   }
 
   getModelFromType(type) {
@@ -16,7 +20,7 @@ export class PublicationService {
 
     return {
       [this.Publication.TYPES.parcel]: this.Parcel,
-      [this.Publication.TYPES.state]: this.State
+      [this.Publication.TYPES.estate]: this.Estate
     }[type]
   }
 }

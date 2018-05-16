@@ -1,6 +1,14 @@
 import { server } from 'decentraland-commons'
+import * as express from 'express'
 
 import { Publication } from './Publication.model'
+
+export interface Filter {
+  status: string
+  type: string
+  sort: { by: string; order: string }
+  pagination: { limit: number; offset: number }
+}
 
 const ALLOWED_VALUES = Object.freeze({
   price: ['ASC'],
@@ -14,11 +22,13 @@ export class PublicationRequestFilters {
     return ALLOWED_VALUES
   }
 
+  req: express.Request
+
   constructor(req) {
     this.req = req
   }
 
-  sanitize(req) {
+  sanitize(): Filter {
     return {
       status: this.getStatus(),
       type: this.getType(),
@@ -27,19 +37,19 @@ export class PublicationRequestFilters {
     }
   }
 
-  getStatus() {
+  getStatus(): Filter['status'] {
     const status = this.getReqParam('status')
     return Publication.isValidStatus(status) ? status : Publication.STATUS.open
   }
 
-  getType() {
+  getType(): Filter['type'] {
     const type = this.getReqParam('type')
     return Publication.isValidType(type) ? type : Publication.TYPES.parcel
   }
 
-  getSort() {
+  getSort(): Filter['sort'] {
     let by = this.getReqParam('sort_by')
-    let order = this.getReqParam('sort_order')
+    const order = this.getReqParam('sort_order')
 
     by = by in ALLOWED_VALUES ? by : 'created_at'
 
@@ -51,9 +61,9 @@ export class PublicationRequestFilters {
     }
   }
 
-  getPagination() {
-    let limit = this.getReqParam('limit')
-    let offset = this.getReqParam('offset')
+  getPagination(): Filter['pagination'] {
+    const limit = parseInt(this.getReqParam('limit'), 10)
+    const offset = parseInt(this.getReqParam('offset'), 10)
 
     return {
       limit: Math.max(Math.min(100, limit), 0),

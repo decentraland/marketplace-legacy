@@ -1,11 +1,12 @@
 import { Publication } from './Publication.model'
 import { Parcel } from '../Parcel'
-import { SQL, raw } from '../database'
+import { SQL, raw, SQLStatement } from '../database'
 
 export const PublicationQueries = Object.freeze({
-  whereisActive: () => SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
+  whereisActive: (): SQLStatement =>
+    SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
 
-  findByStatusSql: (status = null) => {
+  findByStatusSql: (status: string = null): SQLStatement => {
     if (!Publication.isValidStatus(status)) {
       throw new Error(`Invalid status '${status}'`)
     }
@@ -17,10 +18,10 @@ export const PublicationQueries = Object.freeze({
       ORDER BY created_at DESC`
   },
 
-  findLastParcelPublicationJsonSql: () =>
+  findLastParcelPublicationJsonSql: (): SQLStatement =>
     SQL`SELECT row_to_json(pub.*)
       FROM ${raw(Publication.tableName)} as pub
-      WHERE pub.asset_id = ${raw(Parcel.tableName)}.asset_id
+      WHERE ${raw(Parcel.tableName)}.id = pub.asset_id
         AND ${PublicationQueries.whereisActive()}
       ORDER BY pub.created_at DESC
       LIMIT 1`

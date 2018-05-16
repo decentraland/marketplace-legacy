@@ -2,11 +2,11 @@
 // Modified to support nested sql statements and `raw`
 
 export class SQLStatement {
-  /**
-   * @param {string[]} queryParts
-   * @param {any[]} values
-   */
-  constructor(queryParts, values) {
+  queryParts: string[]
+  values: any[]
+  name: string
+
+  constructor(queryParts: TemplateStringsArray, values: any[]) {
     this.queryParts = queryParts.slice(0)
     this.values = []
 
@@ -19,8 +19,10 @@ export class SQLStatement {
       if (statement instanceof SQLStatement) {
         // handle nested sql statement
         if (statement.values.length > 0) {
-          const { left, middle, right } = this.splitNestedStatement(
-            statement,
+          const left = this.getLeftQueryPart(statement.queryParts, nestedIndex)
+          const middle = this.getMiddleQueryParts(statement.queryParts)
+          const right = this.getRightQueryPart(
+            statement.queryParts,
             nestedIndex
           )
 
@@ -43,26 +45,26 @@ export class SQLStatement {
     }
   }
 
-  splitNestedStatement({ queryParts }, index) {
-    const left = this.queryParts[index] + queryParts[0]
-    const middle = queryParts.slice(1, queryParts.length - 1)
-    const right = queryParts[queryParts.length - 1] + this.queryParts[index + 1]
+  getLeftQueryPart(queryParts: string[], index: number): string {
+    return this.queryParts[index] + queryParts[0]
+  }
 
-    return { left, middle, right }
+  getMiddleQueryParts(queryParts: string[]): string[] {
+    return queryParts.slice(1, queryParts.length - 1)
+  }
+
+  getRightQueryPart(queryParts: string[], index: number): string {
+    return queryParts[queryParts.length - 1] + this.queryParts[index + 1]
   }
 
   /** Returns the SQL Statement for node-postgres */
-  get text() {
+  get text(): string {
     return this.queryParts.reduce(
       (prev, curr, index) => prev + '$' + index + curr
     )
   }
 
-  /**
-   * @param {SQLStatement|string} statement
-   * @returns {this}
-   */
-  append(statement) {
+  append(statement: SQLStatement | string): SQLStatement {
     if (statement instanceof SQLStatement) {
       this.queryParts[this.queryParts.length - 1] += statement.queryParts[0]
       this.queryParts.push.apply(this.queryParts, statement.queryParts.slice(1))
@@ -75,34 +77,22 @@ export class SQLStatement {
     return this
   }
 
-  /**
-   * @param {string} name
-   * @returns {this}
-   */
-  setName(name) {
+  setName(name: string): SQLStatement {
     this.name = name
     return this
   }
 }
 
-/** Returns the SQL Statement for mysql */
-Object.defineProperty(SQLStatement.prototype, 'sql', {
-  enumerable: true,
-  get() {
-    return this.queryParts.join('?')
-  }
-})
-
-/**
- * @param {string[]} queryParts
- * @param {...any} values
- * @returns {SQLStatement}
- */
-export function SQL(queryParts, ...args) {
-  return new SQLStatement(queryParts, args)
+interface SQLInterface {
+  (queryParts: TemplateStringsArray | string[], ...args: any[]): SQLStatement
+  raw(value: any): SQLStatement
 }
 
-export function raw(value) {
+export const SQL: SQLInterface = function(queryParts, ...args) {
+  return new SQLStatement(queryParts, args)
+} as any
+
+export function raw(value: string): SQLStatement {
   return SQL([value])
 }
 

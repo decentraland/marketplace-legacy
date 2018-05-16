@@ -30,26 +30,26 @@ export class Publication extends Model {
 
   static TYPES = Object.freeze({
     parcel: 'parcel',
-    state: 'state'
+    estate: 'estate'
   })
 
-  static isValidStatus(status) {
+  static isValidStatus(status: string): boolean {
     return Object.values(this.STATUS).includes(status)
   }
 
-  static isValidType(type) {
+  static isValidType(type: string): boolean {
     return Object.values(this.TYPES).includes(type)
   }
 
-  static findByOwner(owner) {
+  static findByOwner(owner: string) {
     return this.find({ owner })
   }
 
-  static findByAssetId(asset_id) {
+  static findByAssetId(asset_id: string) {
     return this.find({ asset_id }, { created_at: 'DESC' })
   }
 
-  static findInCoordinateWithStatus(asset_id, status) {
+  static findByAssetIdWithStatus(asset_id: string, status: string) {
     if (!this.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }
@@ -57,7 +57,7 @@ export class Publication extends Model {
     return this.find({ asset_id, status }, { created_at: 'DESC' })
   }
 
-  static async cancelOlder(asset_id, block_number) {
+  static async cancelOlder(asset_id: string, block_number: number) {
     const name = BlockchainEvent.EVENTS.publicationCreated
     const status = this.STATUS.open
 
@@ -78,7 +78,7 @@ export class Publication extends Model {
     }
   }
 
-  static updateManyStatus(txHashes, newStatus) {
+  static updateManyStatus(txHashes: string[], newStatus: string) {
     if (txHashes.length === 0) {
       return []
     }

@@ -6,7 +6,6 @@ describe('SQL', () => {
   it('should work with a simple query', () => {
     const query = SQL`SELECT * FROM table`
 
-    expect(query.sql).to.equal('SELECT * FROM table')
     expect(query.text).to.equal('SELECT * FROM table')
     expect(query.values).to.deep.equal([])
   })
@@ -14,7 +13,6 @@ describe('SQL', () => {
   it('should work with a query with values', () => {
     const value = 1234
     const query = SQL`SELECT * FROM table WHERE column = ${value}`
-    expect(query.sql).to.equal('SELECT * FROM table WHERE column = ?')
     expect(query.text).to.equal('SELECT * FROM table WHERE column = $1')
     expect(query.values).to.deep.equal([value])
   })
@@ -23,31 +21,15 @@ describe('SQL', () => {
     const value1 = false
     const value2 = null
     const query = SQL`SELECT * FROM table WHERE column1 = ${value1} AND column2 = ${value2}`
-    expect(query.sql).to.equal(
-      'SELECT * FROM table WHERE column1 = ? AND column2 = ?'
-    )
     expect(query.text).to.equal(
       'SELECT * FROM table WHERE column1 = $1 AND column2 = $2'
     )
     expect(query.values).to.deep.equal([value1, value2])
   })
 
-  it('should expose "sql" as an enumerable property', done => {
-    const query = SQL`SELECT * FROM table`
-    for (const key in query) {
-      if (key === 'sql') {
-        return done()
-      }
-    }
-    return done('expected enumerable property "sql"')
-  })
-
   it('should work with nested queries', () => {
     const query1 = SQL`SELECT * FROM table WHERE column1 = ${1}`
     const query2 = SQL`SELECT * FROM (${query1}) query1 WHERE column2 = ${2}`
-    expect(query2.sql).to.equal(
-      'SELECT * FROM (SELECT * FROM table WHERE column1 = ?) query1 WHERE column2 = ?'
-    )
     expect(query2.text).to.equal(
       'SELECT * FROM (SELECT * FROM table WHERE column1 = $1) query1 WHERE column2 = $2'
     )
@@ -57,7 +39,6 @@ describe('SQL', () => {
   it('should work with parameterless nested queries', () => {
     const query1 = SQL`tableName`
     const query2 = SQL`SELECT * FROM ${query1}`
-    expect(query2.sql).to.equal('SELECT * FROM tableName')
     expect(query2.text).to.equal('SELECT * FROM tableName')
   })
 
@@ -66,7 +47,6 @@ describe('SQL', () => {
     let query2 = SQL`d=${4}, e=${5}`
     let query3 = SQL`foo`
     let query = SQL`a=${1}, ${query1}, ${query3}, ${query2}, f=${6}`
-    expect(query.sql).to.equal('a=?, b=?, c=?, foo, d=?, e=?, f=?')
     expect(query.text).to.equal('a=$1, b=$2, c=$3, foo, d=$4, e=$5, f=$6')
     expect(query.values).to.deep.equal([1, 2, 3, 4, 5, 6])
   })
@@ -83,9 +63,6 @@ describe('SQL', () => {
       const query = SQL`SELECT * FROM table WHERE column = ${value1}`.append(
         SQL` AND other_column = ${value2}`
       )
-      expect(query.sql).to.equal(
-        'SELECT * FROM table WHERE column = ? AND other_column = ?'
-      )
       expect(query.text).to.equal(
         'SELECT * FROM table WHERE column = $1 AND other_column = $2'
       )
@@ -96,9 +73,6 @@ describe('SQL', () => {
       const value = 1234
       const query = SQL`SELECT * FROM table WHERE column = ${value}`.append(
         ' ORDER BY other_column'
-      )
-      expect(query.sql).to.equal(
-        'SELECT * FROM table WHERE column = ? ORDER BY other_column'
       )
       expect(query.text).to.equal(
         'SELECT * FROM table WHERE column = $1 ORDER BY other_column'

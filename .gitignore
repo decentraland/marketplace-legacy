@@ -15,3 +15,9 @@ newrelic_agent.log
 *.todo
 *.TODO
 *.js.map
+
+# **/*.js
+src/Publication/*.js
+src/database/*.js
+src/utils/*.js
+src/lib/*.js
