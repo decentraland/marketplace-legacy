@@ -49,7 +49,7 @@ export class Publication extends Model {
     return this.find({ asset_id }, { created_at: 'DESC' })
   }
 
-  static findInCoordinateWithStatus(asset_id, status) {
+  static findByAssetIdWithStatus(asset_id, status) {
     if (!this.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }

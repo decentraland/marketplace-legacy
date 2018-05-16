@@ -22,3 +22,13 @@ exports.up = pgm => {
   })
   pgm.addIndex(tableName, 'asset_id')
 }
+
+exports.down = pgm => {
+  pgm.addColumns(tableName, {
+    x: { type: 'INT' },
+    y: { type: 'INT' }
+  })
+
+  pgm.dropColumns(tableName, ['type', 'asset_id', 'marketplace_id'])
+  pgm.dropIndex(tableName, 'asset_id', { ifExists: true })
+}

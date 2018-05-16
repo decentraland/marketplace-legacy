@@ -31,9 +31,8 @@ export async function processEvents(fromBlock = 0) {
 export async function processEvent(event) {
   const { tx_hash, block_number, name } = event
   const { assetId } = event.args
-
-  // TODO: This will no longer be a parcel in every event
   const parcelId = await Parcel.decodeAssetId(assetId)
+
   if (!parcelId) {
     // This only happens in dev, if there's a parcel in the DB that's outside of Genesis City
     log.info(`parcelId for assetId "${assetId}" is null`)
@@ -62,7 +61,7 @@ export async function processEvent(event) {
         new BlockTimestampService().getBlockTime(block_number),
 
         Publication.delete({
-          asset_id: assetId,
+          asset_id: parcelId,
           owner: seller.toLowerCase(),
           status: Publication.STATUS.open
         })
@@ -75,7 +74,7 @@ export async function processEvent(event) {
           owner: seller.toLowerCase(),
           buyer: null,
           price: eth.utils.fromWei(priceInWei),
-          asset_id: assetId,
+          asset_id: parcelId,
           expires_at: expiresAt,
           marketplace_id: marketplace.getId(),
           type: marketplace.getType(),
@@ -160,7 +159,7 @@ export async function processEvent(event) {
 
       const [last_transferred_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
-        Publication.cancelOlder(assetId, block_number)
+        Publication.cancelOlder(parcelId, block_number)
       ])
       await Parcel.update(
         { owner: to.toLowerCase(), last_transferred_at },

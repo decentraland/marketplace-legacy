@@ -67,7 +67,6 @@ describe('Parcel', function() {
         block_number: 1
       }
       await Publication.insert(publication)
-      await Parcel.query('UPDATE parcels P SET asset_id = P.id') // mock asset_ids
 
       const range = await Parcel.inRange([3, 5], [4, 5])
 
@@ -75,7 +74,7 @@ describe('Parcel', function() {
         {
           x: 3,
           y: 5,
-          asset_id: '3,5',
+          asset_id: null,
           auction_price: null,
           owner: null,
           data: null,
@@ -89,7 +88,7 @@ describe('Parcel', function() {
         {
           x: 4,
           y: 5,
-          asset_id: '4,5',
+          asset_id: null,
           auction_price: null,
           owner: null,
           data: null,

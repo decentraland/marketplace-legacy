@@ -105,7 +105,6 @@ describe('Asset', function() {
       )
       inserts.push(new ParcelService().insertMatrix(0, 0, 3, 3))
       await Promise.all(inserts)
-      await Parcel.query('UPDATE parcels P SET asset_id = P.id') // mock asset_ids
 
       // Filter
       const { assets, total } = await new Asset(Parcel).filter(filters)
@@ -114,7 +113,7 @@ describe('Asset', function() {
         {
           x: 1,
           y: 2,
-          asset_id: '1,2',
+          asset_id: null,
           auction_price: null,
           district_id: null,
           last_transferred_at: null,

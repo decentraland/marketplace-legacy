@@ -20,7 +20,7 @@ export const PublicationQueries = Object.freeze({
   findLastParcelPublicationJsonSql: () =>
     SQL`SELECT row_to_json(pub.*)
       FROM ${raw(Publication.tableName)} as pub
-      WHERE pub.asset_id = ${raw(Parcel.tableName)}.asset_id
+      WHERE ${raw(Parcel.tableName)}.id = pub.asset_id
         AND ${PublicationQueries.whereisActive()}
       ORDER BY pub.created_at DESC
       LIMIT 1`

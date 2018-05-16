@@ -18,11 +18,11 @@ export class Asset {
   }
 
   async findByOwnerAndStatus(owner, status) {
-    return await db.query(SQL`SELECT DISTINCT ON(asset.asset_id, pub.status) asset.*, row_to_json(pub.*) as publication
+    return await db.query(SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication
         FROM ${SQL.raw(this.tableName)} as asset
         LEFT JOIN (
           ${PublicationQueries.findByStatusSql(status)}
-        ) as pub ON asset.asset_id = pub.asset_id
+        ) as pub ON asset.id = pub.asset_id
         WHERE asset.owner = ${owner}
           AND pub.tx_hash IS NOT NULL`)
   }
@@ -35,7 +35,7 @@ export class Asset {
       db.query(
         SQL`SELECT model.*, row_to_json(pub.*) as publication
           FROM ${raw(Publication.tableName)} as pub
-          JOIN ${raw(this.tableName)} as model ON model.asset_id = pub.asset_id
+          JOIN ${raw(this.tableName)} as model ON model.id = pub.asset_id
           WHERE status = ${status}
             AND tx_status = ${tx_status}
             AND type = ${type}

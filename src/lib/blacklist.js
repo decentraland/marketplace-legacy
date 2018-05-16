@@ -1,6 +1,6 @@
 const timestamps = ['created_at', 'updated_at']
 
-const parcel = [...timestamps]
+const parcel = ['asset_id', ...timestamps]
 const state = [...timestamps]
 
 const asset = new Set(parcel.concat(state))

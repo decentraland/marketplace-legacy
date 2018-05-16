@@ -85,12 +85,12 @@ export function publishRequest(publication = {}) {
   }
 }
 
-export function publishSuccess(txHash, publication) {
+export function publishSuccess(txHash, publication, asset) {
   return {
     type: PUBLISH_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
-      asset_id: publication.asset_id
+      ...asset
     }),
     publication
   }
@@ -116,13 +116,13 @@ export function buyRequest(publication = {}) {
   }
 }
 
-export function buySuccess(txHash, publication) {
+export function buySuccess(txHash, publication, asset) {
   return {
     type: BUY_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
-      asset_id: publication.asset_id,
-      price: publication.price
+      price: publication.price,
+      ...asset
     }),
     publication
   }
@@ -148,12 +148,12 @@ export function cancelSaleRequest(publication = {}) {
   }
 }
 
-export function cancelSaleSuccess(txHash, publication) {
+export function cancelSaleSuccess(txHash, publication, asset) {
   return {
     type: CANCEL_SALE_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
-      asset_id: publication.asset_id
+      ...asset
     }),
     publication
   }

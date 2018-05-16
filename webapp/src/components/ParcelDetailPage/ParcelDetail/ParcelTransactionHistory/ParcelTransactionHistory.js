@@ -8,7 +8,7 @@ import Mana from 'components/Mana'
 import { parcelType, publicationType } from 'components/types'
 import {
   PUBLICATION_STATUS,
-  findParcelPublications
+  findAssetPublications
 } from 'modules/publication/utils'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 import { AUCTION_DATE } from 'lib/parcelUtils'
@@ -24,7 +24,7 @@ export default class ParcelTransactionHistory extends React.PureComponent {
 
   getParcelPublications() {
     const { parcel, publications } = this.props
-    return findParcelPublications(
+    return findAssetPublications(
       publications,
       parcel,
       PUBLICATION_STATUS.sold

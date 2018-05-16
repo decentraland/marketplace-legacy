@@ -6,8 +6,7 @@ exports.up = pgm => {
   pgm.createTable(
     tableName,
     {
-      address: { type: 'TEXT', primaryKey: true, notNull: true },
-      asset_id: { type: 'TEXT', unique: true, notNull: true },
+      id: { type: 'TEXT', primaryKey: true, notNull: true },
       owner: { type: 'TEXT', notNull: true },
       data: 'JSON',
       last_transferred_at: 'BIGINT',

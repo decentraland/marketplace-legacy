@@ -17,10 +17,10 @@ export function toPublicationsObject(publicationsArray) {
   )
 }
 
-export function findParcelPublications(publications, parcel, status) {
+export function findAssetPublications(publications, asset, status) {
   return Object.values(publications).filter(
     publication =>
-      publication.asset_id === parcel.asset_id &&
+      publication.asset_id === asset.id &&
       (!status || publication.status === status)
   )
 }
