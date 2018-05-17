@@ -19,6 +19,7 @@ import {
   cancelSaleFailure
 } from './actions'
 import { locations } from 'locations'
+import { splitCoordinate } from 'lib/utils'
 import { api } from 'lib/api'
 
 export function* publicationSaga() {
@@ -56,24 +57,23 @@ function* handleParcelPublicationsRequest(action) {
 
 function* handlePublishRequest(action) {
   try {
-    const { x, y, price, expires_at } = action.publication
+    const { id, price, expires_at } = action.publication
+    const priceInWei = eth.utils.toWei(price)
+    const asset = yield call(() => buildAsset(id))
 
     const marketplaceContract = eth.getContract('Marketplace')
-    const landRegistryContract = eth.getContract('LANDRegistry')
-
-    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
-    const priceInWei = eth.utils.toWei(price)
 
     const txHash = yield call(() =>
-      marketplaceContract.createOrder(assetId, priceInWei, expires_at)
+      marketplaceContract.createOrder(asset.id, priceInWei, expires_at)
     )
 
     const publication = {
       tx_hash: txHash,
+      asset_id: id,
       ...action.publication
     }
 
-    yield put(publishSuccess(txHash, publication))
+    yield put(publishSuccess(txHash, publication, asset))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(publishFailure(error.message))
@@ -82,17 +82,15 @@ function* handlePublishRequest(action) {
 
 function* handleBuyRequest(action) {
   try {
-    const { x, y, price } = action.publication
+    const { asset_id, price } = action.publication
+    const asset = yield call(() => buildAsset(asset_id))
 
     const marketplaceContract = eth.getContract('Marketplace')
-    const landRegistryContract = eth.getContract('LANDRegistry')
-
-    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
     const txHash = yield call(() =>
-      marketplaceContract.executeOrder(assetId, eth.utils.toWei(price))
+      marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
     )
 
-    yield put(buySuccess(txHash, action.publication))
+    yield put(buySuccess(txHash, action.publication, asset))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(buyFailure(error.message))
@@ -101,15 +99,13 @@ function* handleBuyRequest(action) {
 
 function* handleCancelSaleRequest(action) {
   try {
-    const { x, y } = action.publication
+    const { asset_id } = action.publication
+    const asset = yield call(() => buildAsset(asset_id))
 
     const marketplaceContract = eth.getContract('Marketplace')
-    const landRegistryContract = eth.getContract('LANDRegistry')
+    const txHash = yield call(() => marketplaceContract.cancelOrder(asset.id))
 
-    const assetId = yield call(() => landRegistryContract.encodeTokenId(x, y))
-    const txHash = yield call(() => marketplaceContract.cancelOrder(assetId))
-
-    yield put(cancelSaleSuccess(txHash, action.publication))
+    yield put(cancelSaleSuccess(txHash, action.publication, asset))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(cancelSaleFailure(error.message))
@@ -123,4 +119,22 @@ function* fetchPublications(action) {
   )
   const publications = parcels.map(parcel => parcel.publication)
   return { parcels, publications, total }
+}
+
+function* buildAsset(asset_id) {
+  // TODO: if publication.type === 'parcel' then split and encode
+  //  if publication.type === 'estate' then use_address
+
+  const [x, y] = splitCoordinate(asset_id)
+
+  const landRegistryContract = eth.getContract('LANDRegistry')
+  const blockchainId = yield call(() =>
+    landRegistryContract.encodeTokenId(x, y)
+  )
+
+  return {
+    id: blockchainId,
+    x: parseInt(x, 10),
+    y: parseInt(y, 10)
+  }
 }
