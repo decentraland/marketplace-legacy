@@ -346,7 +346,7 @@ describe('coordinates', function() {
 
   describe('.toArray', function() {
     it('should return an array composed from the supplied coordinates', function() {
-      expect(coordinates.toArray('1,  2')).to.deep.equal(['1', '2'])
+      expect(coordinates.toArray('1,  2')).to.deep.equal([1, 2])
     })
 
     it('should throw if the coordinates are invalid', function() {

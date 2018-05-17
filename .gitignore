@@ -19,6 +19,9 @@ newrelic_agent.log
 # **/*.js
 src/BlockchainEvent/*.js
 src/BlockchainTimestamp/*.js
+src/Contribution/*.js
+src/District/*.js
+src/Parcel/*.js
 src/MarketplaceEvent/*.js
 src/Publication/*.js
 src/Translation/*.js

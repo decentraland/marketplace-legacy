@@ -3,6 +3,8 @@ import { Model } from 'decentraland-commons'
 export interface BlockTimestampAttributes {
   block_number: number
   timestamp: number
+  created_at?: Date
+  updated_at?: Date
 }
 
 export class BlockTimestamp extends Model {

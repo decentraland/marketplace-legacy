@@ -1,7 +1,7 @@
 import { server } from 'decentraland-commons'
 import * as express from 'express'
 
-import { Translation } from './Translation'
+import { Translation, TranslationData } from './Translation'
 import { Router } from '../lib'
 
 export class TranslationRouter extends Router {
@@ -17,7 +17,7 @@ export class TranslationRouter extends Router {
     )
   }
 
-  async getTranslations(req: express.Request) {
+  async getTranslations(req: express.Request): Promise<TranslationData> {
     let locale = server.extractFromReq(req, 'locale')
     locale = locale.slice(0, 2) // We support base locales for now, like en, it, etc
     return await new Translation().fetch(locale)

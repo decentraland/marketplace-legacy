@@ -3,7 +3,7 @@ import * as path from 'path'
 import flat from 'flat'
 import { env, utils } from 'decentraland-commons'
 
-interface TranslationData {
+export interface TranslationData {
   [key: string]: string
 }
 

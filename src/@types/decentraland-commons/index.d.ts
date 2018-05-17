@@ -50,6 +50,16 @@ declare module 'decentraland-commons' {
   export const utils: Utils
   export const db: Db
 
+  export class Log {
+    constructor(name: string)
+
+    debug(...args: any[]): string
+    warn(...args: any[]): string
+    info(...args: any[]): string
+    error(...args: any[]): string
+    trace(...args: any[]): string
+  }
+
   export class Model {
     static tableName: string
     static columnNames: string[]
@@ -70,5 +80,7 @@ declare module 'decentraland-commons' {
 
     static insert<T>(row: T): Promise<T>
     static update(changes: QueryPart, conditions: QueryPart)
+
+    attributes: any
   }
 }
