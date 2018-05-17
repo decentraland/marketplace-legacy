@@ -78,7 +78,6 @@
   "parcel_detail": {
     "description": "Description",
     "empty_description": "Cette parcelle n'a pas de description",
-    "view": "Voir sur Atlas",
     "actions": {
       "edit": "Edition",
       "transfer": "Transferer",

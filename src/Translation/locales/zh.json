@@ -77,7 +77,6 @@
   "parcel_detail": {
     "description": "描述",
     "empty_description": "这个地块没有描述",
-    "view": "在地图集上查看",
     "actions": {
       "edit": "编辑",
       "transfer": "转让",
