@@ -1,7 +1,10 @@
 import { createSelector } from 'reselect'
 import { PUBLISH_REQUEST, PUBLISH_SUCCESS } from './actions'
+import { PUBLICATION_STATUS, findAssetPublications } from './utils'
+import { getData as getParcels } from 'modules/parcels/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
+import { buildCoordinate } from 'lib/utils'
 
 export const getState = state => state.publication
 export const getData = state => getState(state).data
@@ -34,3 +37,21 @@ export const getPublications = createSelector(
     }
   }
 )
+
+export const getPublicationByCoordinate = (state, x, y) => {
+  const parcels = getParcels(state)
+  const parcel = parcels[buildCoordinate(x, y)]
+  let publication = null
+
+  if (parcel) {
+    const publications = getData(state)
+    const parcelPublications = findAssetPublications(
+      publications,
+      parcel,
+      PUBLICATION_STATUS.open
+    )
+    publication = parcelPublications[0]
+  }
+
+  return publication
+}

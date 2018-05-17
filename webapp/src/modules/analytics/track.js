@@ -1,4 +1,3 @@
-import { buildCoordinate } from 'lib/utils'
 import { add } from './utils'
 import {
   BUY_SUCCESS,
@@ -16,24 +15,18 @@ import {
 import { FETCH_TRANSACTION_FAILURE } from 'modules/transaction/actions'
 
 add(BUY_SUCCESS, 'Buy', action => ({
-  assetId: buildCoordinate(action.publication.x, action.publication.y),
-  x: action.publication.x,
-  y: action.publication.y,
+  assetId: action.publication.asset_id,
   price: action.publication.price,
   seller: action.publication.owner
 }))
 
 add(PUBLISH_SUCCESS, 'Publish', action => ({
-  assetId: buildCoordinate(action.publication.x, action.publication.y),
-  x: action.publication.x,
-  y: action.publication.y,
+  assetId: action.publication.asset_id,
   price: action.publication.price
 }))
 
 add(CANCEL_SALE_SUCCESS, 'Cancel Sale', action => ({
-  assetId: buildCoordinate(action.publication.x, action.publication.y),
-  x: action.publication.x,
-  y: action.publication.y,
+  assetId: action.publication.asset_id,
   price: action.publication.price
 }))
 

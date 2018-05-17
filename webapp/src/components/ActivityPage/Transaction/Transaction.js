@@ -168,13 +168,14 @@ export default class Transaction extends React.PureComponent {
   }
 
   render() {
-    const { tx } = this.props
-    const { x, y } = tx.payload
     const text = this.renderText()
-
     if (!text) {
       return null
     }
+
+    const { tx } = this.props
+    let x = tx.payload.x
+    let y = tx.payload.y
 
     const isParcelTransaction = [
       EDIT_PARCEL_SUCCESS,
