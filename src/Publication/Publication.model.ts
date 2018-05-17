@@ -64,22 +64,22 @@ export class Publication extends Model {
     return this.find({ owner })
   }
 
-  static findByAssetId(asset_id: string): Promise<PublicationAttributes[]> {
-    return this.find({ asset_id }, { created_at: 'DESC' })
+  static findByAssetId(assetIdd: string): Promise<PublicationAttributes[]> {
+    return this.find({ assetIdd }, { created_at: 'DESC' })
   }
 
   static findByAssetIdWithStatus(
-    asset_id: string,
+    assetId: string,
     status: string
   ): Promise<PublicationAttributes[]> {
     if (!this.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }
 
-    return this.find({ asset_id, status }, { created_at: 'DESC' })
+    return this.find({ asset_id: assetId, status }, { created_at: 'DESC' })
   }
 
-  static async cancelOlder(asset_id: string, block_number: number) {
+  static async cancelOlder(assetId: string, blockNumber: number) {
     const name = BlockchainEvent.EVENTS.publicationCreated
     const status = this.STATUS.open
 
@@ -89,8 +89,8 @@ export class Publication extends Model {
         JOIN ${SQL.raw(
           BlockchainEvent.tableName
         )} b ON p.tx_hash = b.tx_hash AND name = ${name}
-        WHERE b.block_number < ${block_number}
-          AND p.asset_id = ${asset_id}
+        WHERE b.block_number < ${blockNumber}
+          AND p.asset_id = ${assetId}
           AND p.status = ${status}`
     )
     const txHashes = rows.map(row => row.tx_hash)

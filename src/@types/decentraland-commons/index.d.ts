@@ -31,7 +31,7 @@ declare module 'decentraland-commons' {
   }
   interface Db {
     postgres: {
-      connect(connectionString?: string): void
+      connect(connectionString?: string): Promise<void>
       query(queryString: string | QueryArgument, values?: any[]): Promise<any[]>
       truncate(tableName: string): Promise<void>
       close(): Promise<void>
@@ -65,9 +65,9 @@ declare module 'decentraland-commons' {
   }
 
   export class Model {
-    static tableName: string
-    static columnNames: string[]
-    static primaryKey: string
+    public static tableName: string
+    public static columnNames: string[]
+    public static primaryKey: string
 
     static db: Db['postgres']
 
@@ -85,6 +85,6 @@ declare module 'decentraland-commons' {
     static insert<T>(row: T): Promise<T>
     static update(changes: QueryPart, conditions: QueryPart)
 
-    attributes: any
+    public attributes: any
   }
 }

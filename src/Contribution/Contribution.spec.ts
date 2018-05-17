@@ -6,8 +6,8 @@ import { Contribution } from './Contribution.model'
 
 describe('Contribution', function() {
   describe('#findGroupedByAddress', function() {
-    const first_district_id = uuid.v4()
-    const second_district_id = uuid.v4()
+    const firstDistrictId = uuid.v4()
+    const secondDistrictId = uuid.v4()
     const address = '0x1'
 
     before(() => {
@@ -15,19 +15,19 @@ describe('Contribution', function() {
         Contribution.insert({
           address,
           land_count: 10,
-          district_id: first_district_id,
+          district_id: firstDistrictId,
           timestamp: Date.now().toString()
         }),
         Contribution.insert({
           address,
           land_count: 2,
-          district_id: first_district_id,
+          district_id: firstDistrictId,
           timestamp: Date.now().toString()
         }),
         Contribution.insert({
           address,
           land_count: 8,
-          district_id: second_district_id,
+          district_id: secondDistrictId,
           timestamp: Date.now().toString()
         }),
         Contribution.insert({
@@ -53,8 +53,8 @@ describe('Contribution', function() {
 
       expect(contributions.length).to.equal(2)
       expect(contributions).to.deep.equal([
-        { address, land_count: '8', district_id: second_district_id },
-        { address, land_count: '12', district_id: first_district_id }
+        { address, land_count: '8', district_id: secondDistrictId },
+        { address, land_count: '12', district_id: firstDistrictId }
       ])
     })
 

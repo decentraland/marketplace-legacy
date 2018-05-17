@@ -15,7 +15,7 @@ export class Asset {
   }
 
   async findByOwner(owner: string) {
-    return await db.query(SQL`SELECT ${SQL.raw(this.tableName)}.*, (
+    return db.query(SQL`SELECT ${SQL.raw(this.tableName)}.*, (
         ${PublicationQueries.findLastParcelPublicationJsonSql()}
       ) as publication
         FROM ${SQL.raw(this.tableName)}
@@ -23,7 +23,7 @@ export class Asset {
   }
 
   async findByOwnerAndStatus(owner: string, status: string) {
-    return await db.query(SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication
+    return db.query(SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication
         FROM ${SQL.raw(this.tableName)} as asset
         LEFT JOIN (
           ${PublicationQueries.findByStatusSql(status)}
@@ -38,7 +38,7 @@ export class Asset {
     filters: PublicationRequestFilters
   ): Promise<{ assets: any[]; total: number }> {
     const { status, type, sort, pagination } = filters.sanitize()
-    const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+    const txStatus = txUtils.TRANSACTION_STATUS.confirmed
 
     const [assets, total] = await Promise.all([
       db.query(
@@ -46,7 +46,7 @@ export class Asset {
           FROM ${raw(Publication.tableName)} as pub
           JOIN ${raw(this.tableName)} as model ON model.id = pub.asset_id
           WHERE status = ${status}
-            AND tx_status = ${tx_status}
+            AND tx_status = ${txStatus}
             AND type = ${type}
             AND ${PublicationQueries.whereisActive()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
@@ -62,12 +62,12 @@ export class Asset {
     filters: PublicationRequestFilters
   ): Promise<number> {
     const { status, type } = filters.sanitize()
-    const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+    const txStatus = txUtils.TRANSACTION_STATUS.confirmed
 
     const counts = await db.query(SQL`SELECT COUNT(*)
           FROM ${raw(Publication.tableName)}
           WHERE status = ${status}
-            AND tx_status = ${tx_status}
+            AND tx_status = ${txStatus}
             AND type = ${type}
             AND ${PublicationQueries.whereisActive()}`)
 

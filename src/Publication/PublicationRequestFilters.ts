@@ -18,14 +18,14 @@ const ALLOWED_VALUES = Object.freeze({
 })
 
 export class PublicationRequestFilters {
-  static getAllowedValues() {
-    return ALLOWED_VALUES
-  }
-
   req: express.Request
 
   constructor(req: express.Request) {
     this.req = req
+  }
+
+  static getAllowedValues() {
+    return ALLOWED_VALUES
   }
 
   sanitize(): Filter {

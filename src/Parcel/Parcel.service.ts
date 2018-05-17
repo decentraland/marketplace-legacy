@@ -54,7 +54,7 @@ export class ParcelService {
       return Object.assign({}, parcel, { data })
     })
 
-    return await Promise.all(parcelPromises)
+    return Promise.all(parcelPromises)
   }
 
   async isOwner(address: string, parcel: ParcelAttributes): Promise<boolean> {
@@ -127,18 +127,18 @@ export class ParcelService {
     const contract = this.getLANDRegistryContract()
     const { x, y } = parcel
 
-    return await contract.ownerOfLand(x, y)
+    return contract.ownerOfLand(x, y)
   }
 
   async getOwnerOfLandMany(parcels: ParcelAttributes[]): Promise<string[]> {
     const { x, y } = coordinates.splitPairs(parcels)
     const contract = this.getLANDRegistryContract()
-    return await contract.ownerOfLandMany(x, y)
+    return contract.ownerOfLandMany(x, y)
   }
 
   async getAssetId(parcel: ParcelAttributes): Promise<string> {
     const contract = this.getLANDRegistryContract()
-    return await contract.encodeTokenId(parcel.x, parcel.y)
+    return contract.encodeTokenId(parcel.x, parcel.y)
   }
 
   toParcelObject(

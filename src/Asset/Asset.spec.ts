@@ -25,30 +25,30 @@ describe('Asset', function() {
     it('should filter the published assets using the supplied filters', async function() {
       // Setup
       const owner = '0xasdf'
-      const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+      const txStatus = txUtils.TRANSACTION_STATUS.confirmed
       const status = Publication.STATUS.open
-      const block_number = 1
-      const block_time_created_at = null
-      const block_time_updated_at = null
-      const marketplace_id = '0xdeadbeef'
+      const blockNumber = 1
+      const blockTimeCreatedAt = null
+      const blockTimeUpdatedAt = null
+      const marketplaceId = '0xdeadbeef'
 
-      let expiresAt = new Date()
-      expiresAt.setMonth(expiresAt.getMonth() + 3)
-      const expires_at = expiresAt.getTime()
+      let expiresAtDate = new Date()
+      expiresAtDate.setMonth(expiresAtDate.getMonth() + 3)
+      const expiresAt = expiresAtDate.getTime()
 
       const soldPublication = {
         tx_hash: '0x1',
         contract_id: '0x1',
         asset_id: '0,0',
+        marketplace_id: marketplaceId,
         price: 3,
         status: Publication.STATUS.sold,
-        expires_at,
-        owner,
-        tx_status,
-        block_time_created_at,
-        block_time_updated_at,
-        marketplace_id,
-        block_number
+        tx_status: txStatus,
+        block_number: blockNumber,
+        block_time_created_at: blockTimeCreatedAt,
+        block_time_updated_at: blockTimeUpdatedAt,
+        expires_at: expiresAt,
+        owner
       }
       const publicationRows = [
         soldPublication,
@@ -56,43 +56,43 @@ describe('Asset', function() {
           tx_hash: '0x2',
           contract_id: '0x2',
           asset_id: '1,0',
+          marketplace_id: marketplaceId,
           price: 20,
-          expires_at,
+          tx_status: txStatus,
+          block_number: blockNumber,
+          expires_at: expiresAt,
+          block_time_created_at: blockTimeCreatedAt,
+          block_time_updated_at: blockTimeUpdatedAt,
           owner,
-          tx_status,
-          status,
-          block_time_created_at,
-          block_time_updated_at,
-          marketplace_id,
-          block_number
+          status
         },
         {
           tx_hash: '0x3',
           contract_id: '0x3',
           asset_id: '1,1',
+          marketplace_id: marketplaceId,
           price: 50,
-          expires_at,
+          tx_status: txStatus,
+          block_number: blockNumber,
+          block_time_created_at: blockTimeCreatedAt,
+          block_time_updated_at: blockTimeUpdatedAt,
+          expires_at: expiresAt,
           owner,
-          tx_status,
-          status,
-          block_time_created_at,
-          block_time_updated_at,
-          marketplace_id,
-          block_number
+          status
         },
         {
           tx_hash: '0x4',
           contract_id: '0x4',
           asset_id: '1,2',
+          marketplace_id: marketplaceId,
           price: 40,
-          expires_at,
+          tx_status: txStatus,
+          block_number: blockNumber,
+          block_time_created_at: blockTimeCreatedAt,
+          block_time_updated_at: blockTimeUpdatedAt,
+          expires_at: expiresAt,
           owner,
-          tx_status,
-          status,
-          block_time_created_at,
-          block_time_updated_at,
-          marketplace_id,
-          block_number
+          status
         }
       ]
 
@@ -127,13 +127,13 @@ describe('Asset', function() {
             status: Publication.STATUS.open,
             type: Publication.TYPES.parcel,
             asset_id: '1,2',
-            expires_at,
-            owner,
-            tx_status,
-            block_time_created_at,
-            block_time_updated_at,
-            marketplace_id,
-            block_number
+            marketplace_id: marketplaceId,
+            tx_status: txStatus,
+            block_number: blockNumber,
+            block_time_created_at: blockTimeCreatedAt,
+            block_time_updated_at: blockTimeUpdatedAt,
+            expires_at: expiresAt,
+            owner
           }
         }
       ])

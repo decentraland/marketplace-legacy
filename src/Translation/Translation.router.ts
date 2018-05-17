@@ -20,6 +20,6 @@ export class TranslationRouter extends Router {
   async getTranslations(req: express.Request): Promise<TranslationData> {
     let locale = server.extractFromReq(req, 'locale')
     locale = locale.slice(0, 2) // We support base locales for now, like en, it, etc
-    return await new Translation().fetch(locale)
+    return new Translation().fetch(locale)
   }
 }

@@ -21,8 +21,8 @@ describe('BlockchainEvent', function() {
         })
       ])
 
-      const block_number = await BlockchainEvent.findLastBlockNumber()
-      expect(block_number).to.be.equal('22')
+      const blockNumber = await BlockchainEvent.findLastBlockNumber()
+      expect(blockNumber).to.be.equal('22')
     })
 
     afterEach(() => db.truncate(BlockchainEvent.tableName))

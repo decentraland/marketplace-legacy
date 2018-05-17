@@ -13,7 +13,9 @@ export class BlockTimestampService {
     let timestamp = await BlockTimestamp.findTimestamp(blockNumber)
     if (!timestamp) {
       timestamp = await this.getBlockchainTimestamp(blockNumber)
-      this.insertTimestamp(blockNumber, timestamp)
+      this.insertTimestamp(blockNumber, timestamp).catch(() => {
+        // Don't do anything
+      })
     }
 
     return timestamp
@@ -39,8 +41,6 @@ export class BlockTimestampService {
     return BlockTimestamp.insert({
       block_number: blockNumber,
       timestamp
-    }).catch(() => {
-      // Don't do anything
     })
   }
 }

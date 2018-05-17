@@ -9,11 +9,14 @@
     "lint": "./node_modules/eslint/bin/eslint.js src/",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix src/",
     "test": "CI=true react-scripts test --env=jsdom",
-    "compile-deps": "npx babel-cli ./node_modules/decentraland-eth --out-dir ./node_modules/decentraland-eth && npx babel-cli ./node_modules/web3-provider-engine --out-dir ./node_modules/web3-provider-engine",
+    "compile-deps":
+      "npx babel-cli ./node_modules/decentraland-eth --out-dir ./node_modules/decentraland-eth && npx babel-cli ./node_modules/web3-provider-engine --out-dir ./node_modules/web3-provider-engine",
     "prebuild": "npm run test && npm run compile-deps",
     "analyze": "source-map-explorer build/static/js/main.*",
-    "build": "REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts build",
-    "remotebuild": "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules react-scripts build",
+    "build":
+      "REACT_APP_VERSION=$(git rev-parse --short HEAD) react-scripts build",
+    "remotebuild":
+      "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules react-scripts build",
     "eject": "react-scripts eject"
   },
   "dependencies": {

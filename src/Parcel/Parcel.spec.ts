@@ -129,7 +129,7 @@ describe('ParcelService', function() {
   ): ParcelAttributes {
     const attributes: ParcelAttributes = { x, y, ...parcelAttributes }
     if (hasId) {
-      attributes.id = Parcel.buildId(testParcel1.x, testParcel1.y)
+      attributes.id = Parcel.buildId(x, y)
     }
     return attributes
   }
@@ -242,7 +242,7 @@ describe('ParcelService', function() {
       sinon.stub(service, 'getLANDRegistryContract').returns(contract)
 
       const result = await service.isOwner(txUtils.DUMMY_TX_ID, testParcel1)
-      expect(result).to.be.true
+      expect(result).to.be.equal(true)
     })
 
     it('should return false if the parcel belongs to someone else', async function() {
@@ -255,8 +255,8 @@ describe('ParcelService', function() {
       )
       const wrongAddr = await service.isOwner('0xnothing', testParcel1)
 
-      expect(wrongAddr).to.be.false
-      expect(wrongParcel).to.be.false
+      expect(wrongAddr).to.be.equal(false)
+      expect(wrongParcel).to.be.equal(false)
     })
   })
 

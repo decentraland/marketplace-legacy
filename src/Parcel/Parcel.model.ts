@@ -39,8 +39,8 @@ export interface ParcelAttributes {
 }
 
 export class Parcel extends Model {
-  static tableName = 'parcels'
-  static columnNames = [
+  public static tableName = 'parcels'
+  public static columnNames = [
     'id',
     'x',
     'y',
@@ -50,10 +50,12 @@ export class Parcel extends Model {
     'in_state',
     'data',
     'tags',
+
     'auction_price',
     'auction_owner',
     'last_transferred_at'
   ]
+  public attributes: ParcelAttributes
 
   static buildId(x: SingleCoordinate, y: SingleCoordinate): string {
     if (x == null || y == null) {
@@ -69,14 +71,16 @@ export class Parcel extends Model {
     const coordinates = id.split(',')
 
     if (coordinates.length !== 2) {
-      throw new Error(`You need to supply a valid id to split. id = ${id}`)
+      throw new Error(
+        `You need to supply a valjalsjldkfjsldkfjsdlkfjsdlfjsdlkfjid id to split. id = ${id}`
+      )
     }
 
     return coordinates
   }
 
   static async findByOwner(owner: string): Promise<ParcelAttributes[]> {
-    return await new Asset(this).findByOwner(owner)
+    return new Asset(this).findByOwner(owner)
   }
 
   static async findByOwnerAndStatus(
@@ -87,7 +91,7 @@ export class Parcel extends Model {
   }
 
   static async findOwneableParcels(): Promise<ParcelAttributes[]> {
-    return await this.db.query(
+    return this.db.query(
       `SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
@@ -95,7 +99,7 @@ export class Parcel extends Model {
   }
 
   static async findLandmarks(): Promise<ParcelAttributes[]> {
-    return await this.db.query(
+    return this.db.query(
       `SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
@@ -109,7 +113,7 @@ export class Parcel extends Model {
     const [minx, maxy] = coordinates.toArray(min)
     const [maxx, miny] = coordinates.toArray(max)
 
-    return await this.db.query(
+    return this.db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastParcelPublicationJsonSql()}
       ) as publication
@@ -150,8 +154,6 @@ export class Parcel extends Model {
 
     return super.insert(parcel)
   }
-
-  attributes: ParcelAttributes
 
   isEqual(parcel: Parcel): boolean {
     return (

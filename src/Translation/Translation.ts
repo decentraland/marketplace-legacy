@@ -48,7 +48,7 @@ export class Translation {
   }
 
   async readFile(locale: string): Promise<string> {
-    return await utils.promisify(fs.readFile)(
+    return utils.promisify(fs.readFile)(
       path.resolve(this.localesPath, `${locale}.json`),
       'utf8'
     )
