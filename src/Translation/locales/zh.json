@@ -225,7 +225,8 @@
       "您已授权{mortgage_contract_link}代表您运营RCN",
     "approve_mortgage_rcn":
       "授权{mortgage_contract_link}代表您操作RCN",
-    "mortgage_contract": "抵押合同"
+    "mortgage_creator_contract": "抵押造物主合同",
+    "mortgage_manager_contract": "抵押管理人合同"
   },
   "transfer_mana": {
     "title": "转移MANA",

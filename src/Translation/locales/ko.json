@@ -237,7 +237,8 @@
       "{mortgage_contract_link}이 (가) RCN 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "approve_mortgage_rcn":
       "{mortgage_contract_link}에 귀하를 대신하여 RCN 운영하도록 승인하십시오.",
-    "mortgage_contract": "모기지 계약"
+    "mortgage_creator_contract": "모기지 크리에이터 계약",
+    "mortgage_manager_contract": "모기지 매니저 계약"
   },
   "transfer_mana": {
     "title": "MANA 이전",

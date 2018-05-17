@@ -252,7 +252,8 @@
       "Vous avez autorisé le {mortgage_contract_link} à gerer les RCN en votre nom.",
     "approve_mortgage_rcn":
       "Autorise le {mortgage_contract_link} à gerer les RCN en votre nom.",
-    "mortgage_contract": "Mortgage contract"
+    "mortgage_creator_contract": "Contrat de créancier hypothécaire",
+    "mortgage_manager_contract": "Contrat de gestionnaire d'hypothèques"
   },
   "transfer_mana": {
     "title": "Transférer MANA",

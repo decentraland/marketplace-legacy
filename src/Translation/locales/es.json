@@ -244,7 +244,8 @@
       "Has autorizado al {mortgage_contract_link} a operar RCN por tu cuenta",
     "approve_mortgage_rcn":
       "Autorizar al {mortgage_contract_link} a operar RCN por tu cuenta",
-    "mortgage_contract": "Contracto de hipoteca"
+    "mortgage_creator_contract": "Contrato de creación de hipoteca",
+    "mortgage_manager_contract": "Contrato de administracion de hipoteca"
   },
   "transfer_mana": {
     "title": "Transferir MANA",

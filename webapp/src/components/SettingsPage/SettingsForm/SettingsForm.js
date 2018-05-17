@@ -54,7 +54,7 @@ export default class SettingsForm extends React.PureComponent {
   renderMortgageCreatorLink() {
     return (
       <EtherscanLink address={getMortgageCreatorAddress()}>
-        {t('settings.mortgage_contract')}
+        {t('settings.mortgage_creator_contract')}
       </EtherscanLink>
     )
   }
@@ -62,7 +62,7 @@ export default class SettingsForm extends React.PureComponent {
   renderMortgageManagerLink() {
     return (
       <EtherscanLink address={getMortgageManagerAddress()}>
-        {t('settings.mortgage_contract')}
+        {t('settings.mortgage_manager_contract')}
       </EtherscanLink>
     )
   }

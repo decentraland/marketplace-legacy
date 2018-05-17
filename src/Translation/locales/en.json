@@ -240,8 +240,8 @@
       "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
     "approve_mortgage_rcn":
       "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
-    "mortgage_contract":
-      "Mortgage contract"
+    "mortgage_creator_contract": "Mortgage creator contract",
+    "mortgage_manager_contract": "Mortgage manager contract"
   },
   "transfer_mana": {
     "title": "Transfer MANA",

@@ -10,9 +10,15 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       Marketplace,
       MortgageCreator,
       MortgageManager,
-      RCNToken,
-      RCNEngine
+      RCNEngine,
+      ERC20Token
     } = contracts
+
+    const RCNToken = Object.create(
+      new ERC20Token(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
+    )
+    RCNToken.getContractName = () => 'RCNToken'
+
     const { LedgerWallet, NodeWallet } = wallets
     const { address, derivationPath } = options
 
@@ -28,8 +34,8 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
         new MortgageManager(
           env.get('REACT_APP_MORTGAGE_MANAGER_CONTRACT_ADDRESS')
         ),
-        new RCNToken(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS')),
-        new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS'))
+        new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS')),
+        RCNToken
       ],
       wallets: isMobile()
         ? [new NodeWallet(address)]
