@@ -34,32 +34,6 @@ export class ParcelService {
     }
   }
 
-  async getLandOf(address: string): Promise<ParcelAttributes[]> {
-    let parcels = []
-
-    try {
-      const contract = this.getLANDRegistryContract()
-      const [xCoords, yCoords] = await contract.landOf(address)
-
-      for (let i = 0; i < xCoords.length; i++) {
-        const x = xCoords[i].toNumber()
-        const y = yCoords[i].toNumber()
-        const id = this.Parcel.buildId(x, y)
-
-        parcels.push({ id, x, y })
-      }
-    } catch (error) {
-      log.warn(
-        `An error occurred getting the land of ${address}.\nError: ${
-          error.message
-        }`
-      )
-      throw error
-    }
-
-    return parcels
-  }
-
   async addLandData(parcels: ParcelAttributes[]): Promise<ParcelAttributes[]> {
     const contract = this.getLANDRegistryContract()
 

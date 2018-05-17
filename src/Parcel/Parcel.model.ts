@@ -21,7 +21,7 @@ export interface Tag {
   }
 }
 export interface ParcelAttributes {
-  id: string
+  id?: string
   x: number
   y: number
   asset_id: string

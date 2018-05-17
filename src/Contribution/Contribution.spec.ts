@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import uuid from 'uuid'
+import * as uuid from 'uuid'
 
 import { db } from '../database'
 import { Contribution } from './Contribution.model'

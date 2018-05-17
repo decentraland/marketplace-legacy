@@ -2,10 +2,10 @@ import { Model } from 'decentraland-commons'
 import { SQL } from '../database'
 
 export interface ContributionAttributes {
-  id: string
+  id?: string
   address: string
   district_id: string
-  land_count: number
+  land_count: string
   timestamp: number
   created_at?: Date
   updated_at?: Date

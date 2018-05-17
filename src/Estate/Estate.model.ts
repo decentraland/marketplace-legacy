@@ -5,7 +5,7 @@ import { ParcelAttributes } from '../Parcel'
 import { Publication } from '../Publication'
 
 export interface EstateAttributes {
-  id: string
+  id?: string
   owner: string
   data: ParcelAttributes['data']
   last_transfered_at: number

@@ -1,8 +1,8 @@
-import 'babel-polyfill'
+require('babel-polyfill')
 
-import chai from 'chai'
-import { env } from 'decentraland-commons'
-import { omitProps } from './utils'
+const chai = require('chai')
+const { env } = require('decentraland-commons')
+const { omitProps } = require('./utils')
 
 chai.use(require('chai-as-promised'))
 

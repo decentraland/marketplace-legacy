@@ -1,9 +1,9 @@
 import { expect } from 'chai'
-import sinon from 'sinon'
-import { eth, txUtils } from 'decentraland-eth'
+import * as sinon from 'sinon'
+import { txUtils } from 'decentraland-eth'
 
 import { db } from '../database'
-import { Parcel } from './Parcel.model'
+import { Parcel, ParcelAttributes } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
@@ -16,8 +16,8 @@ describe('Parcel', function() {
     })
 
     it('should throw if any coordinate is invalid', function() {
-      expect(() => Parcel.buildId(22)).to.throw(
-        'You need to supply both coordinates to be able to hash them. x = 22 y = undefined'
+      expect(() => Parcel.buildId(22, null)).to.throw(
+        'You need to supply both coordinates to be able to hash them. x = 22 y = null'
       )
       expect(() => Parcel.buildId(undefined, 'y coord')).to.throw(
         'You need to supply both coordinates to be able to hash them. x = undefined y = y coord'
@@ -111,19 +111,30 @@ describe('Parcel', function() {
 })
 
 describe('ParcelService', function() {
-  const testParcel1 = { x: 1, y: 2 }
-  const testParcel2 = { x: -7, y: 5 }
-
-  const testParcel1WithId = {
-    ...testParcel1,
-    id: Parcel.buildId(testParcel1.x, testParcel1.y)
+  const parcelAttributes = {
+    asset_id: '1.101e10',
+    owner: '0xdeadbeef',
+    district_id: null,
+    in_state: false,
+    data: { version: '0' },
+    tags: {},
+    auction_price: 1000,
+    auction_owner: '0x222111333',
+    last_transferred_at: 123123123
   }
-  const testParcel2WithId = {
-    ...testParcel2,
-    id: Parcel.buildId(testParcel2.x, testParcel2.y)
+  function getParcelAttributes(
+    x: number,
+    y: number,
+    hasId: boolean = false
+  ): ParcelAttributes {
+    const attributes: ParcelAttributes = { x, y, ...parcelAttributes }
+    if (hasId) {
+      attributes.id = Parcel.buildId(testParcel1.x, testParcel1.y)
+    }
+    return attributes
   }
-
-  const testAddress = '0xfede'
+  const testParcel1 = getParcelAttributes(1, 2)
+  const testParcel2 = getParcelAttributes(-7, 5)
 
   const contract = {
     ownerOfLand(x, y) {
@@ -141,14 +152,6 @@ describe('ParcelService', function() {
         ? '0,awesome name,super description,ipns:QmVP3WAkJRcc9AkS83r5fwaWAxpgtP7cpDupVWRos9qStY'
         : ''
     },
-    landOf(address) {
-      const result =
-        address === testAddress
-          ? [[testParcel1.x, testParcel2.x], [testParcel1.y, testParcel2.y]]
-          : [[], []]
-
-      return result.map(pair => pair.map(eth.utils.toBigNumber))
-    },
     isTestParcel(x, y) {
       return (
         (testParcel1.x === x && testParcel1.y === y) ||
@@ -159,40 +162,32 @@ describe('ParcelService', function() {
 
   describe('#insertMatrix', function() {
     it('should call the `insert` method of Parcel for each element of the matrix', async function() {
-      const ParcelMock = { insert: () => Promise.resolve() }
+      const ParcelMock = Object.create(Parcel)
+      ParcelMock.insert = () => Promise.resolve()
+
       const spy = sinon.spy(ParcelMock, 'insert')
 
       const service = new ParcelService()
       service.Parcel = ParcelMock
 
-      await service.insertMatrix(-1, -1, 1, 2)
+      await service.insertMatrix(0, 0, 1, 2)
 
-      expect(spy.callCount).to.be.equal(12)
-      expect(
-        spy.calledWithExactly(
-          sinon.match(
-            { x: -1, y: -1 },
-            { x: -1, y: 0 },
-            { x: -1, y: 1 },
-            { x: -1, y: 2 },
-            { x: 0, y: -1 },
-            { x: 0, y: 0 },
-            { x: 0, y: 1 },
-            { x: 0, y: 2 },
-            { x: 1, y: -1 },
-            { x: 1, y: 0 },
-            { x: 1, y: 1 },
-            { x: 1, y: 2 }
-          )
-        )
-      ).to.be.true
+      expect(spy.callCount).to.be.equal(6)
+      sinon.assert.calledWithExactly(spy, { x: 0, y: 0 })
+      sinon.assert.calledWithExactly(spy, { x: 0, y: 1 })
+      sinon.assert.calledWithExactly(spy, { x: 0, y: 2 })
+      sinon.assert.calledWithExactly(spy, { x: 1, y: 0 })
+      sinon.assert.calledWithExactly(spy, { x: 1, y: 1 })
+      sinon.assert.calledWithExactly(spy, { x: 1, y: 2 })
     })
 
     it('should skip already created parcels', function() {
       const error =
         'duplicate key value violates unique constraint "parcel_pkey"'
 
-      const ParcelMock = { insert: () => Promise.reject(error) }
+      const ParcelMock = Object.create(Parcel)
+      ParcelMock.insert = () => Promise.reject(error)
+
       const service = new ParcelService()
       service.Parcel = ParcelMock
 
@@ -222,9 +217,11 @@ describe('ParcelService', function() {
     })
 
     it('should return an object with only the CURRENT_DATA_VERSION as property if the getter or decoding fails', async function() {
-      const DataError = function() {
+      const DataError = function(message: string) {
         this.name = 'DataError'
+        this.message = message
       }
+
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns({
         landData: () => {
@@ -232,16 +229,10 @@ describe('ParcelService', function() {
         }
       })
 
-      const result = await service.addLandData([{ x: -22, y: 42 }])
-      expect(result).to.deep.equal([
-        {
-          x: -22,
-          y: 42,
-          data: {
-            version: 0
-          }
-        }
-      ])
+      const result = await service.addLandData([getParcelAttributes(-22, 42)])
+      const datas = result.map(parcel => parcel.data)
+
+      expect(datas).to.deep.equal([{ version: 0 }])
     })
   })
 
@@ -258,10 +249,10 @@ describe('ParcelService', function() {
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns(contract)
 
-      const wrongParcel = await service.isOwner(txUtils.DUMMY_TX_ID, {
-        x: 10,
-        y: -2
-      })
+      const wrongParcel = await service.isOwner(
+        txUtils.DUMMY_TX_ID,
+        getParcelAttributes(10, -2)
+      )
       const wrongAddr = await service.isOwner('0xnothing', testParcel1)
 
       expect(wrongAddr).to.be.false
@@ -274,25 +265,14 @@ describe('ParcelService', function() {
       const service = new ParcelService()
       sinon.stub(service, 'getLANDRegistryContract').returns(contract)
 
-      const parcels = [testParcel1, testParcel2, { x: 11, y: -2 }]
+      const parcels = [testParcel1, testParcel2, getParcelAttributes(11, -2)]
       const parcelsWithOwner = await service.addOwners(parcels)
 
       expect(parcelsWithOwner).to.deep.equal([
-        { ...testParcel1, owner: '0xdeadbeef' },
-        { ...testParcel2, owner: '0xdeadbeef' },
-        { x: 11, y: -2, owner: null }
+        { ...parcels[0], owner: '0xdeadbeef' },
+        { ...parcels[1], owner: '0xdeadbeef' },
+        { ...parcels[2], owner: null }
       ])
-    })
-  })
-
-  describe('#getLandOf', function() {
-    it('should return an array of {id, x, y} pairs from the lands the address owns', async function() {
-      const service = new ParcelService()
-      sinon.stub(service, 'getLANDRegistryContract').returns(contract)
-
-      const landPairs = await service.getLandOf(testAddress)
-
-      expect(landPairs).to.deep.equal([testParcel1WithId, testParcel2WithId])
     })
   })
 })

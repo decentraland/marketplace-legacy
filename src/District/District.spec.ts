@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import { db } from '../database'
 import { District } from './District.model'
 
-describe.only('District', function() {
+describe('District', function() {
   describe('.findEnabled', function() {
     it('should only return enabled districts', async function() {
       await Promise.all([

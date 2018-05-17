@@ -33,6 +33,7 @@ export class Asset {
   }
 
   // TODO: ParcelAttributes, StateAttributes return value
+  // TODO: Sanitizable interface
   async filter(
     filters: PublicationRequestFilters
   ): Promise<{ assets: any[]; total: number }> {

@@ -3,26 +3,23 @@ import { txUtils } from 'decentraland-eth'
 
 import { db } from '../database'
 import { Parcel, ParcelService } from '../Parcel'
-import { Publication } from '../Publication'
+import { Publication, PublicationRequestFilters } from '../Publication'
 import { Asset } from './Asset'
 
 describe('Asset', function() {
-  const filters = {
-    sanitize() {
-      return {
-        status: Publication.STATUS.open,
-        type: Publication.TYPES.parcel,
-        sort: {
-          by: 'price',
-          order: 'desc'
-        },
-        pagination: {
-          limit: 1,
-          offset: 1
-        }
-      }
+  const filters = new PublicationRequestFilters(null)
+  filters.sanitize = () => ({
+    status: Publication.STATUS.open,
+    type: Publication.TYPES.parcel,
+    sort: {
+      by: 'price',
+      order: 'desc'
+    },
+    pagination: {
+      limit: 1,
+      offset: 1
     }
-  }
+  })
 
   describe('#filter', function() {
     it('should filter the published assets using the supplied filters', async function() {
@@ -35,9 +32,9 @@ describe('Asset', function() {
       const block_time_updated_at = null
       const marketplace_id = '0xdeadbeef'
 
-      let expires_at = new Date()
-      expires_at.setMonth(expires_at.getMonth() + 3)
-      expires_at = expires_at.getTime()
+      let expiresAt = new Date()
+      expiresAt.setMonth(expiresAt.getMonth() + 3)
+      const expires_at = expiresAt.getTime()
 
       const soldPublication = {
         tx_hash: '0x1',
@@ -100,7 +97,7 @@ describe('Asset', function() {
       ]
 
       // Inserts
-      const inserts = publicationRows.map(publication =>
+      const inserts: Promise<any>[] = publicationRows.map(publication =>
         Publication.insert(publication)
       )
       inserts.push(new ParcelService().insertMatrix(0, 0, 3, 3))
@@ -145,6 +142,8 @@ describe('Asset', function() {
   })
 
   afterEach(() =>
-    [Parcel, Publication].map(Model => db.truncate(Model.tableName))
+    Promise.all(
+      [Parcel, Publication].map(Model => db.truncate(Model.tableName))
+    )
   )
 })

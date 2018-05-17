@@ -2,7 +2,7 @@ import { Model } from 'decentraland-commons'
 import * as uuid from 'uuid'
 
 export interface DistrictAttributes {
-  id: string
+  id?: string
   name: string
   description: string
   link: string
