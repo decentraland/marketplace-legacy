@@ -1,8 +1,9 @@
 import { server, utils } from 'decentraland-commons'
+import * as express from 'express'
 
-import { Publication } from './Publication.model'
+import { Publication, PublicationAttributes } from './Publication.model'
 import { Parcel } from '../Parcel'
-import { blacklist, Router } from '../lib'
+import { Router, blacklist } from '../lib'
 
 export class PublicationRouter extends Router {
   mount() {
@@ -29,7 +30,9 @@ export class PublicationRouter extends Router {
     )
   }
 
-  async getParcelPublications(req) {
+  async getParcelPublications(
+    req: express.Request
+  ): Promise<PublicationAttributes[]> {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
     const id = Parcel.buildId(x, y)
@@ -46,9 +49,11 @@ export class PublicationRouter extends Router {
     return utils.mapOmit(publications, blacklist.publication)
   }
 
-  async getPublication(req) {
+  async getPublication(req: express.Request): Promise<PublicationAttributes> {
     const txHash = server.extractFromReq(req, 'txHash')
-    const publication = await Publication.findOne({ tx_hash: txHash })
+    const publication = await Publication.findOne({
+      tx_hash: txHash
+    })
 
     if (!publication) {
       throw new Error(

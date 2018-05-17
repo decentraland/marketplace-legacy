@@ -1,14 +1,11 @@
 import { server, utils } from 'decentraland-commons'
+import * as express from 'express'
 
 import { Asset } from './Asset'
 import { PublicationRequestFilters, PublicationService } from '../Publication'
-import { blacklist } from '../lib'
+import { Router, blacklist } from '../lib'
 
-export class AssetRouter {
-  constructor(app) {
-    this.app = app
-  }
-
+export class AssetRouter extends Router {
   mount() {
     /**
      * Returns the assets filtered by the supplied params
@@ -23,7 +20,10 @@ export class AssetRouter {
     this.app.get('/api/assets', server.handleRequest(this.getAssets))
   }
 
-  async getAssets(req) {
+  // TODO: ParcelAttributes, EstateAttributes return value
+  async getAssets(
+    req: express.Request
+  ): Promise<{ assets: any[]; total: number }> {
     const filters = new PublicationRequestFilters(req)
     const Model = new PublicationService().getModelFromType(filters.getType())
     const result = await new Asset(Model).filter(filters)
@@ -34,6 +34,7 @@ export class AssetRouter {
     }
   }
 
+  // TODO: ParcelAttributes, EstateAttributes return value
   blacklistFilteredAssets(assets) {
     return assets.map(({ publication, ...asset }) => ({
       ...utils.omit(asset, blacklist.asset),

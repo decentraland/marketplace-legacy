@@ -24,7 +24,7 @@ export class PublicationRequestFilters {
 
   req: express.Request
 
-  constructor(req) {
+  constructor(req: express.Request) {
     this.req = req
   }
 

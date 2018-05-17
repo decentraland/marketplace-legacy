@@ -92,8 +92,8 @@ export const SQL: SQLInterface = function(queryParts, ...args) {
   return new SQLStatement(queryParts, args)
 } as any
 
-export function raw(value: string): SQLStatement {
-  return SQL([value])
+export function raw(value: string | number): SQLStatement {
+  return SQL([value.toString()])
 }
 
 SQL.raw = raw

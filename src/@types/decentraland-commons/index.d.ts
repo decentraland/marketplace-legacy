@@ -9,11 +9,14 @@ declare module 'decentraland-commons' {
     values: any[]
   }
   interface QueryPart {
-    [name: string]: string
+    [name: string]: any
+  }
+  interface Column {
+    [columnName: string]: any
   }
 
   interface Env {
-    get(name: string): string
+    get<T>(name: string, defaultValue?: T): string | T
   }
   interface Server {
     useRollbar(accessToken: string): void
@@ -28,6 +31,9 @@ declare module 'decentraland-commons' {
       query(queryString: string | QueryArgument, values?: any[]): Promise<any[]>
       truncate(tableName: string): Promise<void>
       close(): Promise<void>
+
+      toColumnFields(columns: Column): string[]
+      toValuePlaceholders(columns: Column, start?: number): string[]
     }
   }
   interface Utils {
@@ -61,5 +67,8 @@ declare module 'decentraland-commons' {
       primaryKeyOrCond: string | number | QueryPart,
       orderBy?: QueryPart
     ): Promise<any>
+
+    static insert<T>(row: T): Promise<T>
+    static update(changes: QueryPart, conditions: QueryPart)
   }
 }

@@ -2,6 +2,25 @@ import { Model } from 'decentraland-commons'
 import { BlockchainEvent } from '../BlockchainEvent'
 import { SQL } from '../database'
 
+export interface PublicationAttributes {
+  tx_hash: string
+  tx_status: string
+  asset_id: string
+  contract_id: string
+  marketplace_id: string
+  type: string
+  status: string
+  owner: string
+  buyer: string
+  price: number
+  block_number: number
+  expires_at: number
+  block_time_created_at: number
+  block_time_updated_at: number
+  created_at?: Date
+  updated_at?: Date
+}
+
 export class Publication extends Model {
   static tableName = 'publications'
   static primaryKey = 'tx_hash'
@@ -9,17 +28,17 @@ export class Publication extends Model {
     'tx_hash',
     'tx_status',
     'asset_id',
-    'type',
+    'contract_id',
     'marketplace_id',
-    'block_number',
+    'type',
     'status',
     'owner',
     'buyer',
     'price',
+    'block_number',
     'expires_at',
     'block_time_created_at',
-    'block_time_updated_at',
-    'contract_id'
+    'block_time_updated_at'
   ]
 
   static STATUS = Object.freeze({
@@ -41,15 +60,18 @@ export class Publication extends Model {
     return Object.values(this.TYPES).includes(type)
   }
 
-  static findByOwner(owner: string) {
+  static findByOwner(owner: string): Promise<PublicationAttributes[]> {
     return this.find({ owner })
   }
 
-  static findByAssetId(asset_id: string) {
+  static findByAssetId(asset_id: string): Promise<PublicationAttributes[]> {
     return this.find({ asset_id }, { created_at: 'DESC' })
   }
 
-  static findByAssetIdWithStatus(asset_id: string, status: string) {
+  static findByAssetIdWithStatus(
+    asset_id: string,
+    status: string
+  ): Promise<PublicationAttributes[]> {
     if (!this.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }

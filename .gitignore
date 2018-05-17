@@ -17,7 +17,11 @@ newrelic_agent.log
 *.js.map
 
 # **/*.js
+src/BlockchainEvent/*.js
+src/BlockchainTimestamp/*.js
+src/MarketplaceEvent/*.js
 src/Publication/*.js
+src/Translation/*.js
 src/database/*.js
 src/utils/*.js
 src/lib/*.js
