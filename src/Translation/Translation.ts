@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import flat from 'flat'
+import * as flat from 'flat'
 import { env, utils } from 'decentraland-commons'
 
 export interface TranslationData {

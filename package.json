@@ -6,10 +6,8 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
-    "test":
-      "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/**/*.spec.js",
-    "watch:test":
-      "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
+    "test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/**/*.spec.js",
+    "watch:test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
     "init-db": "./scripts/initDb.js",
     "migrate": "./migrations/migrate",
     "renew-blockchain-data": "./scripts/renewBlockchainData.js",
@@ -28,11 +26,16 @@
     "type": "git",
     "url": "https://github.com/decentraland/marketplace.git"
   },
-  "keywords": ["decentraland", "marketplace", "dapp"],
+  "keywords": [
+    "decentraland",
+    "marketplace",
+    "dapp"
+  ],
   "author": "Decentraland",
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.11.1",
+    "@types/flat": "0.0.28",
     "@types/uuid": "^3.4.3",
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",

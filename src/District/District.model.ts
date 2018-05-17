@@ -53,6 +53,6 @@ export class District extends Model {
   static insert<T>(row: T): Promise<T>
   static insert(district: DistrictAttributes): Promise<DistrictAttributes> {
     district.id = district.id || uuid.v4()
-    return Model.insert(district)
+    return super.insert(district)
   }
 }
