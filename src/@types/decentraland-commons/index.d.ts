@@ -16,7 +16,11 @@ declare module 'decentraland-commons' {
   }
 
   interface Env {
+    load(): void
     get<T>(name: string, defaultValue?: T): string | T
+    isDevelopment(): boolean
+    isProduction(): boolean
+    isTest(): boolean
   }
   interface Server {
     useRollbar(accessToken: string): void
@@ -27,7 +31,7 @@ declare module 'decentraland-commons' {
   }
   interface Db {
     postgres: {
-      connect(connectionString: string): void
+      connect(connectionString?: string): void
       query(queryString: string | QueryArgument, values?: any[]): Promise<any[]>
       truncate(tableName: string): Promise<void>
       close(): Promise<void>

@@ -1,6 +1,6 @@
 interface Blacklist {
   parcel: string[]
-  state: string[]
+  estate: string[]
   asset: string[]
   publication: string[]
   contribution: string[]

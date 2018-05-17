@@ -2,10 +2,11 @@ import { Model } from 'decentraland-commons'
 
 import { coordinates, SingleCoordinate, UnifiedCoordinate } from './coordinates'
 import { Asset } from '../Asset'
-import { PublicationQueries } from '../Publication'
+import { PublicationQueries, Publication } from '../Publication'
 import { District } from '../District'
 import { SQL } from '../database'
 
+// TODO: assets/parcel, assets/estate, assets/data
 export interface Data {
   version: string
   name?: string
@@ -32,6 +33,7 @@ export interface ParcelAttributes {
   auction_price: number
   auction_owner: string
   last_transferred_at: number
+  publication?: Publication
   created_at?: Date
   updated_at?: Date
 }
