@@ -7,7 +7,7 @@ import { env } from 'decentraland-commons'
 
 import { db } from './database'
 import { ParcelRouter } from './Parcel'
-import { StateRouter } from './State'
+import { EstateRouter } from './Estate'
 import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
 import { PublicationRouter } from './Publication'
@@ -43,7 +43,7 @@ if (env.isDevelopment()) {
 new TranslationRouter(app).mount()
 new PublicationRouter(app).mount()
 new ParcelRouter(app).mount()
-new StateRouter(app).mount()
+new EstateRouter(app).mount()
 new DistrictRouter(app).mount()
 new ContributionRouter(app).mount()
 

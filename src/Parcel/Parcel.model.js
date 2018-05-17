@@ -16,7 +16,7 @@ export class Parcel extends Model {
     'owner',
     'data',
     'district_id',
-    'in_state',
+    'in_estate',
     'tags',
     'auction_price',
     'auction_owner',

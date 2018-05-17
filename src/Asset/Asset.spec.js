@@ -121,7 +121,7 @@ describe('Asset', function() {
           data: null,
           auction_owner: null,
           tags: {},
-          in_state: false,
+          in_estate: false,
           publication: {
             tx_hash: '0x4',
             contract_id: '0x4',

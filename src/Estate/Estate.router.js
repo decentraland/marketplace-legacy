@@ -1,63 +1,63 @@
 import { server, utils } from 'decentraland-commons'
 
-import { State } from './State.model'
+import { Estate } from './Estate.model'
 import { Publication } from '../Publication'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
-export class StateRouter {
+export class EstateRouter {
   constructor(app) {
     this.app = app
   }
 
   mount() {
     /**
-     * Returns the states for the supplied params
+     * Returns the estates for the supplied params
      * @param  {string} status - specify a publication status to retreive: [cancelled|sold|pending].
      * @param  {string} sort_by - Publication prop
      * @param  {string} sort_order - asc or desc
      * @param  {number} limit
      * @param  {number} offset
-     * @return {array<State>}
+     * @return {array<Estate>}
      */
-    this.app.get('/api/states', server.handleRequest(this.getStates))
+    this.app.get('/api/estates', server.handleRequest(this.getEstates))
 
     /**
      * Returns the parcels an address owns
-     * @param  {string} address  - State owner
+     * @param  {string} address  - Estate owner
      * @param  {string} [status] - specify a publication status to retreive: [cancelled|sold|pending].
-     * @return {array<State>}
+     * @return {array<Estate>}
      */
     this.app.get(
-      '/api/addresses/:address/states',
-      server.handleRequest(this.getAddressStates)
+      '/api/addresses/:address/estates',
+      server.handleRequest(this.getAddressEstates)
     )
   }
 
-  async getStates(req) {
-    // Force state type
-    req.params.type = Publication.TYPES.state
+  async getEstates(req) {
+    // Force estate type
+    req.params.type = Publication.TYPES.estate
 
     const result = await new AssetRouter().getAssets(req)
 
-    const states = result.assets
+    const estates = result.assets
     const total = result.total
 
-    return { states, total }
+    return { estates, total }
   }
 
-  async getAddressStates(req) {
+  async getAddressEstates(req) {
     const address = server.extractFromReq(req, 'address').toLowerCase()
 
-    let states = []
+    let estates = []
 
     try {
       const status = server.extractFromReq(req, 'status')
-      states = await State.findByOwnerAndStatus(address, status)
+      estates = await Estate.findByOwnerAndStatus(address, status)
     } catch (error) {
-      states = await State.findByOwner(address)
+      estates = await Estate.findByOwner(address)
     }
 
-    return utils.mapOmit(states, blacklist.state)
+    return utils.mapOmit(estates, blacklist.estate)
   }
 }

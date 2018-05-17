@@ -30,7 +30,7 @@ export class Publication extends Model {
 
   static TYPES = Object.freeze({
     parcel: 'parcel',
-    state: 'state'
+    estate: 'estate'
   })
 
   static isValidStatus(status) {

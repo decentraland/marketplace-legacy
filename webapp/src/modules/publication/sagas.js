@@ -123,7 +123,7 @@ function* fetchPublications(action) {
 
 function* buildAsset(asset_id) {
   // TODO: if publication.type === 'parcel' then split and encode
-  //  if publication.type === 'state' then use_address
+  //  if publication.type === 'estate' then use_address
 
   const [x, y] = splitCoordinate(asset_id)
 

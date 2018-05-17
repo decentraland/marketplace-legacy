@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { Parcel } from '../Parcel'
-import { State } from '../State'
+import { Estate } from '../Estate'
 import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
 import { PublicationRequestFilters } from './PublicationRequestFilters'
@@ -25,7 +25,7 @@ describe('PublicationRequestFilters', function() {
       const request = buildRequest({
         query: {
           status: Publication.STATUS.sold,
-          type: Publication.TYPES.state,
+          type: Publication.TYPES.estate,
           sort_by: 'price',
           sort_order: 'desc',
           limit: 33,
@@ -36,7 +36,7 @@ describe('PublicationRequestFilters', function() {
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
         status: Publication.STATUS.sold,
-        type: Publication.TYPES.state,
+        type: Publication.TYPES.estate,
         sort: {
           by: 'price',
           order: 'ASC'
@@ -84,8 +84,8 @@ describe('PublicationService', function() {
       expect(service.getModelFromType(Publication.TYPES.parcel)).to.be.equal(
         Parcel
       )
-      expect(service.getModelFromType(Publication.TYPES.state)).to.be.equal(
-        State
+      expect(service.getModelFromType(Publication.TYPES.estate)).to.be.equal(
+        Estate
       )
     })
 

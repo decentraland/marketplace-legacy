@@ -4,6 +4,6 @@ exports.up = pgm => {
   const tableName = Parcel.tableName
 
   pgm.addColumns(tableName, {
-    in_state: { type: 'BOOLEAN', default: false, allowNull: false }
+    in_estate: { type: 'BOOLEAN', default: false, allowNull: false }
   })
 }

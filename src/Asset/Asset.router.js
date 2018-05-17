@@ -12,7 +12,7 @@ export class AssetRouter {
   mount() {
     /**
      * Returns the assets filtered by the supplied params
-     * @param  {string} type - specify a publication type to retreive: [parcel|state|...].
+     * @param  {string} type - specify a publication type to retreive: [parcel|estate|...].
      * @param  {string} status - specify a publication status to retreive: [cancelled|sold|pending].
      * @param  {string} sort_by - Publication prop
      * @param  {string} sort_order - asc or desc

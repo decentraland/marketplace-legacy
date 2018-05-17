@@ -1,13 +1,13 @@
 const timestamps = ['created_at', 'updated_at']
 
 const parcel = ['asset_id', ...timestamps]
-const state = [...timestamps]
+const estate = [...timestamps]
 
-const asset = new Set(parcel.concat(state))
+const asset = new Set(parcel.concat(estate))
 
 export const blacklist = Object.freeze({
   parcel,
-  state,
+  estate,
   asset: Array.from(asset),
   publication: ['asset_id', ...timestamps],
   contribution: ['message', 'signature', ...timestamps],

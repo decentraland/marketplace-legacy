@@ -2,8 +2,8 @@ import { Model } from 'decentraland-commons'
 
 import { Asset } from '../Asset'
 
-export class State extends Model {
-  static tableName = 'states'
+export class Estate extends Model {
+  static tableName = 'estates'
   static columnNames = ['id', 'owner', 'data', 'last_transferred_at']
 
   static async findByOwner(owner) {

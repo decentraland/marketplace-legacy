@@ -1,6 +1,6 @@
-import { State } from '../src/State'
+import { Estate } from '../src/Estate'
 
-const tableName = State.tableName
+const tableName = Estate.tableName
 
 exports.up = pgm => {
   pgm.createTable(

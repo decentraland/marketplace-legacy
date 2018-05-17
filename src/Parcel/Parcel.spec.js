@@ -79,7 +79,7 @@ describe('Parcel', function() {
           owner: null,
           data: null,
           district_id: null,
-          in_state: false,
+          in_estate: false,
           last_transferred_at: null,
           auction_owner: null,
           tags: {},
@@ -93,7 +93,7 @@ describe('Parcel', function() {
           owner: null,
           data: null,
           district_id: null,
-          in_state: false,
+          in_estate: false,
           last_transferred_at: null,
           auction_owner: null,
           tags: {},
@@ -158,7 +158,7 @@ describe('ParcelService', function() {
   }
 
   describe('#insertMatrix', function() {
-    it('should call the `insert` method of parcel state for each element of the matrix', async function() {
+    it('should call the `insert` method of Parcel for each element of the matrix', async function() {
       const ParcelMock = { insert: () => Promise.resolve() }
       const spy = sinon.spy(ParcelMock, 'insert')
 
@@ -190,7 +190,7 @@ describe('ParcelService', function() {
 
     it('should skip already created parcels', function() {
       const error =
-        'duplicate key value violates unique constraint "parcel_states_pkey"'
+        'duplicate key value violates unique constraint "parcel_pkey"'
 
       const ParcelMock = { insert: () => Promise.reject(error) }
       const service = new ParcelService()
