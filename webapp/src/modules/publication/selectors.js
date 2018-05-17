@@ -41,6 +41,7 @@ export const getPublications = createSelector(
 export const getPublicationByCoordinate = (state, x, y) => {
   const parcels = getParcels(state)
   const parcel = parcels[buildCoordinate(x, y)]
+  let publication = null
 
   if (parcel) {
     const publications = getData(state)
@@ -49,6 +50,8 @@ export const getPublicationByCoordinate = (state, x, y) => {
       parcel,
       PUBLICATION_STATUS.open
     )
-    return parcelPublications[0]
+    publication = parcelPublications[0]
   }
+
+  return publication
 }
