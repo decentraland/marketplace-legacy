@@ -18,6 +18,7 @@
     "website": "Website",
     "community_chat": "Community Chat",
     "cancel": "Cancel",
+    "continue": "Continue",
     "submit": "Submit",
     "confirm": "Confirm",
     "retry": "Retry",
@@ -134,6 +135,11 @@
     "error_persists":
       "If the problem persists, contact us at our {community_chat_link}",
     "placeholder": "Example: {address}"
+  },
+  "parcel_estate": {
+    "creation": {
+      "title": "Select the parcels for your new Estate"
+    }
   },
   "parcel_buy": {
     "buy_land": "Buy LAND",
