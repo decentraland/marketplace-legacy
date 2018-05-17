@@ -81,6 +81,7 @@
     "actions": {
       "edit": "Edit",
       "transfer": "Transfer",
+      "create_estate": "Create Estate",
       "sell": "Sell",
       "cancel": "Cancel sale"
     },

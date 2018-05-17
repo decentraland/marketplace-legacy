@@ -57,6 +57,11 @@ export default class ParcelActions extends React.PureComponent {
                 {t('parcel_detail.actions.transfer')}
               </Button>
             </Link>
+            <Link to={locations.createEstateLand(x, y)}>
+              <Button size="tiny">
+                {t('parcel_detail.actions.create_estate')}
+              </Button>
+            </Link>
             {isOnSale(parcel) ? (
               <Link to={locations.cancelSaleLand(x, y)}>
                 <Button size="tiny">
