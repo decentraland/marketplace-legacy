@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 require('babel-polyfill')
-
 const { spawn } = require('child_process')
 const { env } = require('decentraland-commons')
 const { loadEnv, resolvePath } = require('../scripts/utils')

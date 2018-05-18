@@ -1,4 +1,4 @@
-import { Publication } from '../src/Publication'
+const { Publication } = require('../src/Publication')
 
 exports.up = pgm => {
   const tableName = Publication.tableName

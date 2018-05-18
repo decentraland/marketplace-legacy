@@ -1,5 +1,5 @@
-import { Publication } from '../src/Publication'
-import { Parcel } from '../src/Parcel'
+const { Publication } = require('../src/Publication')
+const { Parcel } = require('../src/Asset')
 
 exports.up = pgm => {
   pgm.alterColumn(Publication.tableName, 'price', {

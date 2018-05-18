@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
 require('babel-polyfill')
-require('babel-core/register')
+// maybe ts-core/register here
 require('../node_modules/node-pg-migrate/bin/node-pg-migrate')

@@ -1,4 +1,4 @@
-import { Publication } from '../src/Publication'
+const { Publication } = require('../src/Publication')
 
 const tableName = Publication.tableName
 

@@ -1,4 +1,4 @@
-import { BlockTimestamp } from '../src/BlockTimestamp'
+const { BlockTimestamp } = require('../src/BlockTimestamp')
 
 const tableName = BlockTimestamp.tableName
 

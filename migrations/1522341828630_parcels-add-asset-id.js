@@ -1,4 +1,4 @@
-import { Parcel } from '../src/Parcel'
+const { Parcel } = require('../src/Asset')
 
 exports.up = pgm => {
   const tableName = Parcel.tableName
