@@ -28,7 +28,7 @@ export default class EstateActions extends React.PureComponent {
     return (
       <div className="EstateActions">
         <Button size="tiny" onClick={this.handleCancel}>{t('cancel')}</Button>
-        <Button size="tiny" onClick={this.handleContinue}>{t('continue')}</Button>
+        <Button size="tiny" disabled={parcels.length <= 1} onClick={this.handleContinue}>{t('continue')}</Button>
       </div>
     )
   }
