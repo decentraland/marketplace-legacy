@@ -34,7 +34,7 @@ class ToastMessage extends React.PureComponent {
   }
 
   componentDidMount() {
-    setTimeout(this.handleClose, this.props.delay)
+    window.setTimeout(this.handleClose, this.props.delay)
   }
 
   handleClose = e => {

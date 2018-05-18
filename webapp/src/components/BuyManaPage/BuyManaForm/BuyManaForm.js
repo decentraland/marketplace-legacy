@@ -40,7 +40,7 @@ export default class BuyManaForm extends React.PureComponent {
   componentDidMount() {
     this.fetchDefaultRate()
     this.clearInterval()
-    this.interval = setInterval(
+    this.interval = window.setInterval(
       () => this.fetchDefaultRate(),
       FETCH_PRICE_INTERVAL
     )
@@ -65,7 +65,7 @@ export default class BuyManaForm extends React.PureComponent {
 
   clearInterval() {
     if (this.interval) {
-      clearInterval(this.interval)
+      window.clearInterval(this.interval)
     }
     this.interval = null
   }

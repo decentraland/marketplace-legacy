@@ -359,7 +359,7 @@ export default class ParcelPreview extends React.PureComponent {
       }
       if (showPopup) {
         this.hidePopup()
-        this.popupTimeout = setTimeout(() => {
+        this.popupTimeout = window.setTimeout(() => {
           if (this.mounted) {
             this.setState({
               popup: {
@@ -381,7 +381,7 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   hidePopup = () => {
-    clearTimeout(this.popupTimeout)
+    window.clearTimeout(this.popupTimeout)
 
     if (this.state.popup) {
       this.setState({
