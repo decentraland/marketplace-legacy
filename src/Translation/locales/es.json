@@ -32,7 +32,9 @@
     "owned_by": "Controlada por",
     "owned_by_link": "Controlada por {address_link}",
     "connecting": "Conectando",
-    "click_here": "Pincha aquí"
+    "click_here": "Pincha aquí",
+    "loading": "Cargando",
+    "address_placeholder": "Ejemplo: {address}"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -79,6 +81,7 @@
     "empty_description": "Esta parcela no tiene descripción",
     "actions": {
       "edit": "Editar",
+      "permissions": "Permisos",
       "transfer": "Transferir",
       "sell": "Vender",
       "cancel": "Cancelar venta"
@@ -132,8 +135,16 @@
     "unknown_error":
       "Un problema desconocido ha ocurrido, los detalles se encuentran debajo.",
     "error_persists":
-      "Si el problema persiste, contáctate con nosotros en {community_chat_link}",
-    "placeholder": "Ejemplo: {address}"
+      "Si el problema persiste, contáctate con nosotros en {community_chat_link}"
+  },
+  "parcel_manage": {
+    "manage_land": "Gestionar LAND",
+    "give_permission":
+      "Otorga permisos para actualizar el contenido de {parcel_name}.",
+    "address_permission":
+      "Esta dirección tendrá permiso para actualizar el contendio de esta parcela",
+    "check_address": "Por favor revisa la dirección cuidadosamente",
+    "address": "Dirección del operador"
   },
   "parcel_buy": {
     "buy_land": "Comprar LAND",
@@ -186,6 +197,10 @@
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
     "transfer": "Has transferido {parcel_link} a {owner_link}",
+    "manage":
+      "Le has dado permiso a {address_link} para actualizar el contenido de {parcel_link}",
+    "manage_revoked":
+      "Le has quitado el permiso a {address_link} para actualizar el contenido de {parcel_link}",
     "publish": "Has publicado {parcel_link}",
     "buy": "Has comprado {parcel_link}",
     "cancel": "Has cancelado {publication_link} de {parcel_link}",

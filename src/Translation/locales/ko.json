@@ -32,7 +32,9 @@
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
     "connecting": "연결 중",
-    "click_here": "여기를 클릭하십시오"
+    "click_here": "여기를 클릭하십시오",
+    "loading": "로드 중",
+    "address_placeholder": "예 : {address}"
   },
   "address": {
     "its_you": "너야"
@@ -79,6 +81,7 @@
     "empty_description": "이 필지에는 설명이 없습니다",
     "actions": {
       "edit": "편집",
+      "permissions": "권한",
       "transfer": "이전",
       "sell": "판매",
       "cancel": "판매취소"
@@ -130,8 +133,15 @@
     "unknown_error":
       "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다.",
     "error_persists":
-      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
-    "placeholder": "예: {address}"
+      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오."
+  },
+  "parcel_manage": {
+    "manage_land": "LAND 관리",
+    "give_permission":
+      "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
+    "address_permission": "이 주소는이 소포의 내용을 업데이트 할 수 있습니다.",
+    "check_address": "주소를 신중히 확인하십시오.",
+    "address": "운영자 주소"
   },
   "parcel_buy": {
     "buy_land": "토지 구입",
@@ -182,6 +192,10 @@
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
+    "manage":
+      "귀하는 {address_link} 권한을 부여하여 {parcel_link}의 콘텐츠를 업데이트 할 수있었습니다.",
+    "manage_revoked":
+      "{address_link} 권한을 취소하여 {parcel_link}의 콘텐츠를 업데이트했습니다.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",

@@ -33,7 +33,9 @@
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
     "connecting": "Connexion",
-    "click_here": "Cliquez ici"
+    "click_here": "Cliquez ici",
+    "loading": "Chargement",
+    "address_placeholder": "Exemple: {adresse}"
   },
   "address": {
     "its_you": "C'est toi"
@@ -80,6 +82,7 @@
     "empty_description": "Cette parcelle n'a pas de description",
     "actions": {
       "edit": "Edition",
+      "permissions": "Autorisations",
       "transfer": "Transferer",
       "sell": "Vendre",
       "cancel": "Annuler la vente"
@@ -132,8 +135,16 @@
     "unknown_error":
       "Une erreur s'est produite, les détails se trouvent ci-dessous.",
     "error_persists":
-      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
-    "placeholder": "Exemple: {address}"
+      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}"
+  },
+  "parcel_manage": {
+    "manage_land": "Gérer  LAND",
+    "give_permission":
+      "Donnez la permission de mettre à jour le contenu de {nom_collège}.",
+    "address_permission":
+      "Cette adresse pourra mettre à jour le contenu de cette parcelle.",
+    "check_address": "S'il vous plaît vérifier l'adresse avec soin",
+    "address": "Adresse de l'opérateur"
   },
   "parcel_buy": {
     "buy_land": "Acheter une LAND",
@@ -189,6 +200,10 @@
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
+    "manage":
+      "Vous avez donné à {adresse_link} la permission de mettre à jour le contenu de {parcel_link}",
+    "manage_revoked":
+      "Vous avez révoqué l'autorisation {address_link} pour mettre à jour le contenu de {parcel_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "buy": "Vous avez acheté {parcel_link}",
     "cancel":

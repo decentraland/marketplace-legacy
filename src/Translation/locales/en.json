@@ -33,7 +33,8 @@
     "owned_by_link": "Owned by {address_link}",
     "connecting": "Connecting",
     "click_here": "Click here",
-    "loading": "Loading"
+    "loading": "Loading",
+    "address_placeholder": "Example: {address}"
   },
   "address": {
     "its_you": "It's you"
@@ -80,6 +81,7 @@
     "empty_description": "This parcel has no description",
     "actions": {
       "edit": "Edit",
+      "permissions": "Permissions",
       "transfer": "Transfer",
       "manage": "Manage",
       "sell": "Sell",
@@ -132,8 +134,7 @@
     "recipient_address": "Recipient address",
     "unknown_error": "An unknown error occurred, the details are below.",
     "error_persists":
-      "If the problem persists, contact us at our {community_chat_link}",
-    "placeholder": "Example: {address}"
+      "If the problem persists, contact us at our {community_chat_link}"
   },
   "parcel_manage": {
     "manage_land": "Manage LAND",
@@ -141,8 +142,7 @@
     "address_permission":
       "This address will be able to update the contents of this parcel.",
     "check_address": "Please check the address carefully",
-    "address": "Address",
-    "placeholder": "Example: {address}"
+    "address": "Operator address"
   },
   "parcel_buy": {
     "buy_land": "Buy LAND",
@@ -195,7 +195,9 @@
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "manage":
-      "You gave {address_link} permission to update the content of {parcel_link}",
+      "You gave {address_link} permission to update the contents of {parcel_link}",
+    "manage_revoked":
+      "You revoked {address_link} permission to update the contents of {parcel_link}",
     "publish": "You published {parcel_link}",
     "buy": "You bought {parcel_link}",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
