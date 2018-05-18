@@ -1,5 +1,13 @@
 import { buildCoordinate } from 'lib/utils'
 
+export function shouldConnect(parcelA, parcelB, prop) {
+  return (
+    parcelA[prop] != null &&
+    parcelB[prop] != null &&
+    parcelA[prop] === parcelB[prop]
+  )
+}
+
 export function cleanParcel(parcel, prevParcel) {
   const { publication, ...rest } = parcel
   return {
@@ -36,15 +44,15 @@ export function connectParcels(array, parcels) {
 
       parcels[parcel.id].connectedLeft =
         !parcels[leftId] ||
-        parcels[parcel.id].district_id === parcels[leftId].district_id
+        shouldConnect(parcels[parcel.id], parcels[leftId], 'district_id')
 
       parcels[parcel.id].connectedTop =
         !parcels[topId] ||
-        parcels[parcel.id].district_id === parcels[topId].district_id
+        shouldConnect(parcels[parcel.id], parcels[topId], 'district_id')
 
       parcels[parcel.id].connectedTopLeft =
         !parcels[topLeftId] ||
-        parcels[parcel.id].district_id === parcels[topLeftId].district_id
+        shouldConnect(parcels[parcel.id], parcels[topLeftId], 'district_id')
     }
   })
   return parcels

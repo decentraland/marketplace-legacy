@@ -29,6 +29,14 @@ export function WebWorkerOnMessage(event) {
   //
   // Utils
 
+  function shouldConnect(parcelA, parcelB, prop) {
+    return (
+      parcelA[prop] != null &&
+      parcelB[prop] != null &&
+      parcelA[prop] === parcelB[prop]
+    )
+  }
+
   function toParcelObject(parcelsArray, prevParcels) {
     return connectParcels(
       parcelsArray,
@@ -60,15 +68,15 @@ export function WebWorkerOnMessage(event) {
 
         prevParcel.connectedLeft =
           !prevParcels[leftId] ||
-          prevParcel.district_id === prevParcels[leftId].district_id
+          shouldConnect(prevParcel, prevParcels[leftId], 'district_id')
 
         prevParcel.connectedTop =
           !prevParcels[topId] ||
-          prevParcel.district_id === prevParcels[topId].district_id
+          shouldConnect(prevParcel, prevParcels[topId], 'district_id')
 
         prevParcel.connectedTopLeft =
           !prevParcels[topLeftId] ||
-          prevParcel.district_id === prevParcels[topLeftId].district_id
+          shouldConnect(prevParcel, prevParcels[topLeftId], 'district_id')
       }
     }
     return prevParcels
