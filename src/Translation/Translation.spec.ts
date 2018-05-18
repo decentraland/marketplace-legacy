@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-
 import { Translation } from './Translation'
 
 const DEFAULT_LOCALE = Translation.DEFAULT_LOCALE

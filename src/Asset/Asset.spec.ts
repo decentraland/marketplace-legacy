@@ -1,10 +1,9 @@
 import { expect } from 'chai'
 import { txUtils } from 'decentraland-eth'
-
-import { db } from '../database'
-import { Parcel, ParcelService } from '../Parcel'
 import { Publication, PublicationRequestFilters } from '../Publication'
+import { db } from '../database'
 import { Asset } from './Asset'
+import { Parcel, ParcelService } from './Parcel'
 
 describe('Asset', function() {
   const filters = new PublicationRequestFilters(null)

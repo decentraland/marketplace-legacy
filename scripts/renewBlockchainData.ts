@@ -2,10 +2,10 @@
 
 // TODO: Remove this
 require('babel-polyfill')
-import { eth, contracts } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
+import { contracts, eth } from 'decentraland-eth'
+import { Parcel, ParcelAttributes, ParcelService } from '../src/Asset'
 import { db } from '../src/database'
-import { Parcel, ParcelService, ParcelAttributes } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 

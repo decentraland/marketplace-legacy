@@ -3,9 +3,8 @@
 // TODO: Remove this
 require('babel-polyfill')
 import { Log, env, utils } from 'decentraland-commons'
-
+import { Parcel, Tag } from '../src/Asset'
 import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
 import { loadEnv } from './utils'
 
 let BOUNDING_BOX_SIZE: number
@@ -38,7 +37,7 @@ export async function tagParcels() {
 
 // TODO: Tag type
 export function tagParcel(parcel, landmarks) {
-  const tags = {
+  const tags: Tag = {
     ...tagProximity(parcel, landmarks)
   }
 

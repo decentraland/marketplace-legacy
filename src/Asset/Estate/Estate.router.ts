@@ -2,9 +2,9 @@ import { server, utils } from 'decentraland-commons'
 import * as express from 'express'
 
 import { Estate, EstateAttributes } from './Estate.model'
-import { Publication } from '../Publication'
-import { AssetRouter } from '../Asset'
-import { blacklist, Router } from '../lib'
+import { Publication } from '../../Publication'
+import { AssetRouter } from '../../Asset'
+import { blacklist, Router } from '../../lib'
 
 export class EstateRouter extends Router {
   mount() {

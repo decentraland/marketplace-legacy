@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-
 import { db } from '../database'
 import { BlockchainEvent } from './BlockchainEvent.model'
 

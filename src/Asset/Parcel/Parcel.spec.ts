@@ -1,12 +1,11 @@
 import { expect } from 'chai'
-import * as sinon from 'sinon'
 import { txUtils } from 'decentraland-eth'
-
-import { db } from '../database'
+import * as sinon from 'sinon'
+import { Publication } from '../../Publication'
+import { db } from '../../database'
 import { Parcel, ParcelAttributes } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
-import { Publication } from '../Publication'
 
 describe('Parcel', function() {
   describe('.buildId', function() {

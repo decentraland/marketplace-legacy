@@ -2,13 +2,13 @@
 
 // TODO: Remove this
 require('babel-polyfill')
-import { eth, contracts } from 'decentraland-eth'
-import { Log, env, cli } from 'decentraland-commons'
-import { db } from '../src/database'
-import { Parcel, ParcelService, ParcelAttributes } from '../src/Parcel'
+import { Log, cli, env } from 'decentraland-commons'
+import { contracts, eth } from 'decentraland-eth'
+import { Parcel, ParcelAttributes, ParcelService } from '../src/Asset'
 import { Publication } from '../src/Publication'
+import { db } from '../src/database'
 import { asyncBatch } from '../src/lib'
-import { parseCLICoords, loadEnv } from './utils'
+import { loadEnv, parseCLICoords } from './utils'
 
 let BATCH_SIZE: number
 const log = new Log('sanity-check')

@@ -1,5 +1,5 @@
-import { eth } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 
 const log = new Log('EventMonitor')
 

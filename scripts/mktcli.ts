@@ -2,15 +2,15 @@
 
 // TODO: Remove this
 require('babel-polyfill')
-import { eth, txUtils, contracts } from 'decentraland-eth'
-import { env, Log, cli } from 'decentraland-commons'
-import { db } from '../src/database'
-import { Parcel, ParcelAttributes } from '../src/Parcel'
-import { Publication } from '../src/Publication'
-import { BlockchainEvent } from '../src/BlockchainEvent'
+import { Log, cli, env } from 'decentraland-commons'
+import { contracts, eth, txUtils } from 'decentraland-eth'
 import { mockModelDbOperations } from '../specs/utils'
-import { loadEnv, parseCLICoords } from './utils'
+import { Parcel, ParcelAttributes } from '../src/Asset'
+import { BlockchainEvent } from '../src/BlockchainEvent'
+import { Publication } from '../src/Publication'
+import { db } from '../src/database'
 import { processEvent } from './monitor/processEvents'
+import { loadEnv, parseCLICoords } from './utils'
 
 const log = new Log('mktcli')
 

@@ -1,9 +1,12 @@
 import { Model } from 'decentraland-commons'
 import { txUtils } from 'decentraland-eth'
 
-import { Publication, PublicationQueries } from '../Publication'
+import {
+  Publication,
+  PublicationQueries,
+  PublicationRequestFilters
+} from '../Publication'
 import { db, SQL, raw } from '../database'
-import { PublicationRequestFilters } from '../Publication/PublicationRequestFilters'
 
 export class Asset {
   Model: Model

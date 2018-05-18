@@ -1,6 +1,5 @@
 import { server } from 'decentraland-commons'
 import * as express from 'express'
-
 import { Publication } from './Publication.model'
 
 export interface Filter {

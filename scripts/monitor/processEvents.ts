@@ -1,10 +1,10 @@
-import { contracts, eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
-import { Parcel } from '../../src/Parcel'
-import { Publication } from '../../src/Publication'
-import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { contracts, eth, txUtils } from 'decentraland-eth'
+import { Parcel } from '../../src/Asset'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
+import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'
+import { Publication } from '../../src/Publication'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')

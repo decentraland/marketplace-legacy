@@ -2,12 +2,12 @@
 
 // TODO: Remove this
 require('babel-polyfill')
-import { eth, contracts } from 'decentraland-eth'
-import { env, Log } from 'decentraland-commons'
-import * as handlers from './handlers'
-import { MonitorCli } from './MonitorCli'
-import { db } from '../../src/database'
+import { Log, env } from 'decentraland-commons'
+import { contracts, eth } from 'decentraland-eth'
 import { loadEnv } from '../../scripts/utils'
+import { db } from '../../src/database'
+import { MonitorCli } from './MonitorCli'
+import * as handlers from './handlers'
 
 const log = new Log('main')
 

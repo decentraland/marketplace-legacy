@@ -1,4 +1,4 @@
-const { Estate } = require('../src/Estate')
+const { Estate } = require('../src/Asset')
 
 const tableName = Estate.tableName
 

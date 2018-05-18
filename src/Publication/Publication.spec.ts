@@ -1,7 +1,5 @@
 import { expect } from 'chai'
-
-import { Parcel } from '../Parcel'
-import { Estate } from '../Estate'
+import { Estate, Parcel } from '../Asset'
 import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
 import { PublicationRequestFilters } from './PublicationRequestFilters'

@@ -2,9 +2,9 @@ import { server, utils } from 'decentraland-commons'
 import * as express from 'express'
 
 import { Parcel, ParcelAttributes } from './Parcel.model'
-import { Publication } from '../Publication'
-import { AssetRouter } from '../Asset'
-import { blacklist, Router } from '../lib'
+import { Publication } from '../../Publication'
+import { AssetRouter } from '../../Asset'
+import { blacklist, Router } from '../../lib'
 
 export class ParcelRouter extends Router {
   mount() {

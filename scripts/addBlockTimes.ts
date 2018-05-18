@@ -2,12 +2,11 @@
 
 // TODO: Remove this
 require('babel-polyfill')
-import { eth, contracts } from 'decentraland-eth'
 import { Log, env, utils } from 'decentraland-commons'
-
-import { db } from '../src/database'
-import { Publication, PublicationAttributes } from '../src/Publication'
+import { contracts, eth } from 'decentraland-eth'
 import { BlockTimestampService } from '../src/BlockTimestamp'
+import { Publication, PublicationAttributes } from '../src/Publication'
+import { db } from '../src/database'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 
