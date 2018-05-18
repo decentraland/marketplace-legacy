@@ -1,4 +1,4 @@
-import { Contribution } from '../src/Contribution'
+const { Contribution } = require('../src/Contribution')
 
 const tableName = Contribution.tableName
 

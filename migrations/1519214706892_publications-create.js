@@ -1,5 +1,5 @@
-import { txUtils } from 'decentraland-eth'
-import { Publication } from '../src/Publication'
+const { txUtils } = require('decentraland-eth')
+const { Publication } = require('../src/Publication')
 
 const tableName = Publication.tableName
 

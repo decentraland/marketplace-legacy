@@ -1,4 +1,4 @@
-import { Estate } from '../src/Estate'
+const { Estate } = require('../src/Estate')
 
 const tableName = Estate.tableName
 

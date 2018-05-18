@@ -1,4 +1,4 @@
-import { Parcel } from '../src/Parcel'
+const { Parcel } = require('../src/Parcel')
 
 const tableName = Parcel.tableName
 

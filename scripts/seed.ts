@@ -165,7 +165,8 @@ function generateEthereumAddress() {
 
 function generateEthereumTxHash() {
   const seed = Math.random() * 1000000000
-  const hash = eth.utils.sha3(seed)
+  // fix until we bump decentraland-eth
+  const hash = eth.utils.sha3(seed.toString(), null) as any
   return hash.toString('hex').toLowerCase()
 }
 

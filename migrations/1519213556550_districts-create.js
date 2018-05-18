@@ -1,4 +1,4 @@
-import { District } from '../src/District'
+const { District } = require('../src/District')
 
 const tableName = District.tableName
 

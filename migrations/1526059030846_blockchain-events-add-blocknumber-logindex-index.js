@@ -1,4 +1,4 @@
-import { BlockchainEvent } from '../src/BlockchainEvent'
+const { BlockchainEvent } = require('../src/BlockchainEvent')
 
 const tableName = BlockchainEvent.tableName
 
