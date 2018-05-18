@@ -36,7 +36,9 @@ export default class CreateEstatePage extends React.PureComponent {
     const isSelected = parcels.some(coords => coords.x === x && coords.y === y)
 
     if (isSelected) {
-      const newParcels = parcels.filter(coords => !(coords.x === x && coords.y === y))
+      const newParcels = parcels.filter(
+        coords => !(coords.x === x && coords.y === y)
+      )
       this.setState({ parcels: newParcels })
       return
     }

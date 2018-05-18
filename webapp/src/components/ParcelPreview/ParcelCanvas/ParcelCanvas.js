@@ -459,7 +459,9 @@ export default class ParcelPreview extends React.PureComponent {
     const selection = []
     const selected = this.getSelected()
     const isSelected = (x, y) =>
-      selected.some(coords => parseInt(coords.x, 10) === x && parseInt(coords.y, 10) === y)
+      selected.some(
+        coords => parseInt(coords.x, 10) === x && parseInt(coords.y, 10) === y
+      )
 
     const cx = width / 2
     const cy = height / 2
