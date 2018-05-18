@@ -438,11 +438,10 @@ export default class ParcelPreview extends React.PureComponent {
 
   getSelected() {
     const { selected } = this.props
-    const safeSelected = []
-    if (selected && !Array.isArray(selected)) {
-      safeSelected.push(selected)
+    if (Array.isArray(selected)) {
+      return selected
     }
-    return safeSelected
+    return [selected]
   }
 
   renderMap() {
@@ -460,7 +459,7 @@ export default class ParcelPreview extends React.PureComponent {
     const selection = []
     const selected = this.getSelected()
     const isSelected = (x, y) =>
-      selected.some(coords => coords.x === x && coords.y === y)
+      selected.some(coords => parseInt(coords.x, 10) === x && parseInt(coords.y, 10) === y)
 
     const cx = width / 2
     const cy = height / 2
