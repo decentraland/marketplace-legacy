@@ -17,9 +17,13 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const mapDispatch = dispatch => ({
-  onError: error => dispatch(navigateTo(locations.root)),
-  onParcelClick: (x, y) => dispatch(navigateTo(locations.parcelDetail(x, y)))
-})
+const mapDispatch = (dispatch, ownProps) => {
+  const { x, y } = getMatchParams(ownProps)
+  return {
+    onError: error => dispatch(navigateTo(locations.root)),
+    onCancel: () => dispatch(navigateTo(locations.parcelDetail(x, y))),
+    onEstateCreation: parcels => console.log(parcels)
+  }
+}
 
 export default withRouter(connect(mapState, mapDispatch)(CreateEstatePage))
