@@ -441,7 +441,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (Array.isArray(selected)) {
       return selected
     }
-    return [selected]
+    return selected ? [selected] : []
   }
 
   renderMap() {
