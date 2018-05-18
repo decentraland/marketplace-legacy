@@ -1,5 +1,7 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env ts-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { execSync } from 'child_process'
 import { env, Log } from 'decentraland-commons'
 
@@ -8,7 +10,7 @@ import { Parcel } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
 import { loadEnv, runpsql } from './utils'
 
-let BATCH_SIZE
+let BATCH_SIZE: number
 const log = new Log('addAuctionOwners')
 
 export async function addAuctionOwners() {
@@ -55,7 +57,7 @@ async function normalizeParcelStates() {
 
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 200), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', '200'), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

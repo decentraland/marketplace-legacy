@@ -1,14 +1,16 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env ts-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { eth, contracts } from 'decentraland-eth'
 import { env, Log } from 'decentraland-commons'
 
 import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
+import { Parcel, ParcelAttributes } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 
-let BATCH_SIZE
+let BATCH_SIZE: number
 const log = new Log('addAssetIds')
 
 export async function addAssetIds() {
@@ -23,7 +25,7 @@ export async function addAssetIds() {
     provider: env.get('RPC_URL')
   })
 
-  const parcels = await Parcel.find()
+  const parcels = await Parcel.find<ParcelAttributes>()
   await updateAssetIds(parcels)
 
   log.info('All done!')
@@ -35,7 +37,7 @@ export async function updateAssetIds(parcels) {
 
   const contract = eth.getContract('LANDRegistry')
 
-  await asyncBatch({
+  await asyncBatch<ParcelAttributes>({
     elements: parcels,
     callback: async (parcelsBatch, batchedCount) => {
       log.info(`Updating ${batchedCount}/${parcels.length} parcels...`)
@@ -56,7 +58,7 @@ export async function updateAssetIds(parcels) {
 
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', '300'), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

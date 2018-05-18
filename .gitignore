@@ -13,5 +13,8 @@ newrelic_agent.log
 *.todo
 *.TODO
 
+scripts/**/*.js.map
+scripts/**/*.js
+
 src/**/*.js.map
 src/**/*.js

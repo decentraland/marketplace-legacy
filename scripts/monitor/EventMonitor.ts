@@ -3,7 +3,18 @@ import { Log } from 'decentraland-commons'
 
 const log = new Log('EventMonitor')
 
+interface RunOptions {
+  watch: boolean
+  args: string
+  fromBlock: number | string
+  toBlock: number | string
+  address: string
+}
+
 export class EventMonitor {
+  contractName: string
+  eventNames: string[]
+
   constructor(contractName, eventNames) {
     this.contractName = contractName
     this.eventNames = eventNames
@@ -19,14 +30,15 @@ export class EventMonitor {
    * @param  {string} [options.address] - An address or a list of addresses to only get logs from particular account(s).
    * @param  {function} callback - Node style callback, receiving (error, eventLogs)
    */
-  run(options = {}, callback) {
+  run(options?: RunOptions, callback?) {
     const {
-      watch,
+      watch = false,
       args = '{}',
       fromBlock = 0,
       toBlock = 'latest',
       address = ''
-    } = options
+    } =
+      options || {}
 
     const action = watch ? 'watch' : 'getAll'
     const eventArgs = JSON.parse(args)

@@ -7,6 +7,12 @@ import { BlockchainEvent } from '../../src/BlockchainEvent'
 const log = new Log('MonitorCli')
 
 export class MonitorCli {
+  handlers: Handlers
+  contractEvents: { [key: string]: string[] }
+  processDelay: number
+  processTimeout: NodeJS.Timer
+  isProcessRunning: boolean
+
   constructor(handlers, contractEvents = {}, processDelay) {
     this.handlers = new Handlers(handlers)
 
@@ -49,7 +55,7 @@ export class MonitorCli {
   index = options => {
     for (const contractName in this.contractEvents) {
       const eventNames = this.contractEvents[contractName]
-      this.monitor(contractName, eventNames, options)
+      this.monitor(contractName, eventNames, options).catch(handleCatchError)
     }
   }
 
@@ -64,7 +70,10 @@ export class MonitorCli {
 
     this.processTimeout = setTimeout(() => {
       this.isProcessRunning = true
-      processEvents(fromBlock).then(() => (this.isProcessRunning = false))
+      processEvents(fromBlock).then(
+        () => (this.isProcessRunning = false),
+        handleCatchError
+      )
     }, this.processDelay)
   }
 
@@ -94,7 +103,11 @@ export class MonitorCli {
 
   async getFromBlock(options) {
     return options.fromBlock === 'latest'
-      ? await BlockchainEvent.findLastBlockNumber()
+      ? BlockchainEvent.findLastBlockNumber()
       : options.fromBlock
   }
+}
+
+function handleCatchError(error) {
+  log.error(error)
 }

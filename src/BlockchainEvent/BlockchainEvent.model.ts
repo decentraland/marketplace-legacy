@@ -45,11 +45,11 @@ export class BlockchainEvent extends Model {
   }
 
   static async findLastBlockNumber(): Promise<number> {
-    const { block_number } = await this.findOne(null, {
+    const event = await this.findOne<BlockchainEventAttributes>(null, {
       block_number: 'DESC',
       log_index: 'DESC'
     })
-    return block_number
+    return event.block_number
   }
 
   static findFrom(blockNumber: number) {

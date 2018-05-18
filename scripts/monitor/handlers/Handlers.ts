@@ -1,4 +1,6 @@
 export class Handlers {
+  handlers: { [key: string]: Function }
+
   /**
    * @param  {object} handlers - Hash of functions to execute depending on the prop name
    */
@@ -18,9 +20,13 @@ export class Handlers {
    * @param  {Array<string>} [actions=[]] - Possible actions
    * @return {function} handler
    */
-  get(operation, name, actions = []) {
-    const parts = [operation]
-    const slices = [{ start: 0 }]
+  get(
+    operation: string,
+    name: string,
+    actions: string[] = []
+  ): Function | void {
+    const parts: string[] = [operation]
+    const slices: { start: number; end?: number }[] = [{ start: 0 }]
 
     if (name) {
       parts.push(name)

@@ -1,5 +1,7 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env ts-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { execSync } from 'child_process'
 import { Log, cli } from 'decentraland-commons'
 
@@ -132,7 +134,7 @@ async function normalizeProjects() {
     })
   }
 
-  return await District.db.query(`
+  return District.db.query(`
     UPDATE districts PJ
       SET parcel_ids = (
         SELECT ARRAY_AGG(P.id)

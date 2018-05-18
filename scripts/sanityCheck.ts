@@ -1,16 +1,17 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env ts-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env, cli } from 'decentraland-commons'
 import { db } from '../src/database'
-import { Parcel, ParcelService } from '../src/Parcel'
+import { Parcel, ParcelService, ParcelAttributes } from '../src/Parcel'
 import { Publication } from '../src/Publication'
 import { asyncBatch } from '../src/lib'
 import { parseCLICoords, loadEnv } from './utils'
 
+let BATCH_SIZE: number
 const log = new Log('sanity-check')
-
-let BATCH_SIZE
 
 const sanityCheck = {
   addCommands(program) {
@@ -77,7 +78,8 @@ async function checkParcel(parcel) {
 
   const { x, y, asset_id } = parcel
   const marketplace = eth.getContract('Marketplace')
-  const publication = (await Publication.findInCoordinate(x, y))[0]
+  const assetId = await Parcel.encodeAssetId(x, y)
+  const publication = (await Publication.findByAssetId(assetId))[0]
   const auction = await marketplace.auctionByAssetId(asset_id)
   const contractId = auction[0]
 
@@ -105,7 +107,7 @@ async function checkParcel(parcel) {
 async function processParcels(parcels) {
   const service = new ParcelService()
 
-  await asyncBatch({
+  await asyncBatch<ParcelAttributes>({
     elements: parcels,
     callback: async (parcelsBatch, batchedCount) => {
       let updatedParcels = []
@@ -154,7 +156,7 @@ function isOwnerMissmatch(currentOwner, parcel) {
 if (require.main === module) {
   loadEnv()
 
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 100), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', '100'), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

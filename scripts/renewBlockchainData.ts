@@ -1,13 +1,15 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env node-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
 import { db } from '../src/database'
-import { Parcel, ParcelService } from '../src/Parcel'
+import { Parcel, ParcelService, ParcelAttributes } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 
-let BATCH_SIZE
+let BATCH_SIZE: number
 const log = new Log('update')
 
 export async function renewBlockchainData() {
@@ -36,7 +38,7 @@ export async function updateParcelsData(parcels) {
 
   let updates = []
 
-  await asyncBatch({
+  await asyncBatch<ParcelAttributes>({
     elements: parcels,
     callback: async (newParcels, batchSize) => {
       newParcels = await service.addLandData(newParcels)
@@ -59,7 +61,7 @@ export async function updateParcelsData(parcels) {
 
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', '1000'), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

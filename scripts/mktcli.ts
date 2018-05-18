@@ -1,9 +1,11 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env ts-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { eth, txUtils, contracts } from 'decentraland-eth'
 import { env, Log, cli } from 'decentraland-commons'
 import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
+import { Parcel, ParcelAttributes } from '../src/Parcel'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { mockModelDbOperations } from '../specs/utils'
@@ -54,7 +56,7 @@ const main = {
           const contract = eth.getContract('LANDRegistry')
           const owner = await contract.ownerOfLand(x, y)
 
-          const parcel = await Parcel.findOne({ x, y })
+          const parcel = await Parcel.findOne<ParcelAttributes>({ x, y })
           const dbOwner = parcel.owner || parcel.district_id || 'empty'
 
           log.info(`(land-owner) coords:(${x},${y})`)
@@ -72,7 +74,7 @@ const main = {
           const contract = eth.getContract('LANDRegistry')
           const data = await contract.landData(x, y)
 
-          const parcel = await Parcel.findOne({ x, y })
+          const parcel = await Parcel.findOne<ParcelAttributes>({ x, y })
           const dbData = toDataLog(parcel.data)
 
           log.info(`(land-data) coords:(${x},${y})`)
@@ -108,7 +110,7 @@ const main = {
           const contract = eth.getContract('Marketplace')
           const publication = await contract.auctionByAssetId(assetId)
 
-          const pubDb = (await Publication.findInCoordinate(x, y))[0]
+          const pubDb = (await Publication.findByAssetId(assetId))[0]
           const publicationDb = toPublicationLog(pubDb)
 
           log.info(`(publication) coords:(${x},${y})`)
@@ -123,7 +125,8 @@ const main = {
       .action(
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
-          const publications = await Publication.findInCoordinate(x, y)
+          const assetId = await Parcel.encodeAssetId(x, y)
+          const publications = await Publication.findByAssetId(assetId)
 
           log.info(`(publications) coords:(${x},${y})`)
 
@@ -304,19 +307,21 @@ function asSafeAction(callback) {
 }
 
 function toPublicationLog(publication) {
-  return publication
-    ? [
-        publication.contract_id,
-        publication.owner,
-        eth.utils.toWei(publication.price),
-        publication.expires_at,
-        publication.status
-      ].join(',')
-    : 'empty'
+  let log = 'empty'
+  if (publication) {
+    log = [
+      publication.contract_id,
+      publication.owner,
+      eth.utils.toWei(publication.price),
+      publication.expires_at,
+      publication.status
+    ].join(',')
+  }
+  return log
 }
 
-function toDataLog(data) {
-  return Object.keys(data) > 1
+function toDataLog(data: ParcelAttributes['data']) {
+  return Object.keys(data).length > 1
     ? contracts.LANDRegistry.encodeLandData(data)
     : 'empty'
 }

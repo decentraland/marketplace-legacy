@@ -8,6 +8,7 @@ import { MarketplaceEvent } from '../../src/MarketplaceEvent'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')
+let eventCache
 
 export async function processEvents(fromBlock = 0) {
   const allBlockchainEvents = await BlockchainEvent.findFrom(fromBlock)
@@ -29,7 +30,7 @@ export async function processEvents(fromBlock = 0) {
 }
 
 export async function processEvent(event) {
-  const { tx_hash, block_number, name } = event
+  const { tx_hash: txHash, block_number: blockNumber, name } = event
   const { assetId } = event.args
   const parcelId = await Parcel.decodeAssetId(assetId)
 
@@ -42,23 +43,23 @@ export async function processEvent(event) {
   switch (name) {
     case BlockchainEvent.EVENTS.publicationCreated: {
       const { seller, priceInWei, expiresAt } = event.args
-      const contract_id = event.args.id
+      const contractId = event.args.id
       const marketplace = new MarketplaceEvent(event)
 
-      if (!contract_id) {
-        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
-        return
+      if (!contractId) {
+        log.info(`[${name}] Publication ${txHash} doesn't have an id`)
+        return null
       }
 
-      const exists = await Publication.count({ tx_hash, contract_id })
+      const exists = await Publication.count({ tx_hash: txHash, contractId })
       if (exists) {
-        log.info(`[${name}] Publication ${tx_hash} already exists`)
-        return
+        log.info(`[${name}] Publication ${txHash} already exists`)
+        return null
       }
-      log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
+      log.info(`[${name}] Creating publication ${contractId} for ${parcelId}`)
 
-      const [block_time_created_at] = await Promise.all([
-        new BlockTimestampService().getBlockTime(block_number),
+      const [blockTimeCreatedAt] = await Promise.all([
+        new BlockTimestampService().getBlockTime(blockNumber),
 
         Publication.delete({
           asset_id: parcelId,
@@ -69,41 +70,41 @@ export async function processEvent(event) {
 
       try {
         await Publication.insert({
+          tx_hash: txHash,
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+          asset_id: parcelId,
+          marketplace_id: marketplace.getId(),
+          contract_id: contractId,
           status: Publication.STATUS.open,
           owner: seller.toLowerCase(),
           buyer: null,
           price: eth.utils.fromWei(priceInWei),
-          asset_id: parcelId,
           expires_at: expiresAt,
-          marketplace_id: marketplace.getId(),
           type: marketplace.getType(),
-          tx_hash,
-          block_number,
-          block_time_created_at,
-          contract_id
+          block_number: blockNumber,
+          block_time_created_at: blockTimeCreatedAt
         })
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
         log.info(
-          `[${name}] Publication of hash ${tx_hash} and id ${contract_id} already exists and it's not open`
+          `[${name}] Publication of hash ${txHash} and id ${contractId} already exists and it's not open`
         )
       }
       break
     }
     case BlockchainEvent.EVENTS.publicationSuccessful: {
       const { totalPrice, winner } = event.args
-      const contract_id = event.args.id
+      const contractId = event.args.id
 
-      if (!contract_id) {
-        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
-        return
+      if (!contractId) {
+        log.info(`[${name}] Publication ${txHash} doesn't have an id`)
+        return null
       }
 
-      log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
+      log.info(`[${name}] Publication ${contractId} sold to ${winner}`)
 
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
+      const blockTimeCreatedAt = await new BlockTimestampService().getBlockTime(
+        blockNumber
       )
 
       await Promise.all([
@@ -112,30 +113,33 @@ export async function processEvent(event) {
             status: Publication.STATUS.sold,
             buyer: winner.toLowerCase(),
             price: eth.utils.fromWei(totalPrice),
-            block_time_updated_at
+            block_time_updated_at: blockTimeCreatedAt
           },
-          { contract_id }
+          { contract_id: contractId }
         ),
         Parcel.update({ owner: winner }, { id: parcelId })
       ])
       break
     }
     case BlockchainEvent.EVENTS.publicationCancelled: {
-      const contract_id = event.args.id
+      const contractId = event.args.id
 
-      if (!contract_id) {
-        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
-        return
+      if (!contractId) {
+        log.info(`[${name}] Publication ${txHash} doesn't have an id`)
+        return null
       }
-      log.info(`[${name}] Publication ${contract_id} cancelled`)
+      log.info(`[${name}] Publication ${contractId} cancelled`)
 
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
+      const blockTimeCreatedAt = await new BlockTimestampService().getBlockTime(
+        blockNumber
       )
 
       await Publication.update(
-        { status: Publication.STATUS.cancelled, block_time_updated_at },
-        { contract_id }
+        {
+          status: Publication.STATUS.cancelled,
+          block_time_updated_at: blockTimeCreatedAt
+        },
+        { contract_id: contractId }
       )
       break
     }
@@ -157,12 +161,12 @@ export async function processEvent(event) {
 
       log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
 
-      const [last_transferred_at] = await Promise.all([
-        new BlockTimestampService().getBlockTime(block_number),
-        Publication.cancelOlder(parcelId, block_number)
+      const [lastTransferredAt] = await Promise.all([
+        new BlockTimestampService().getBlockTime(blockNumber),
+        Publication.cancelOlder(parcelId, blockNumber)
       ])
       await Parcel.update(
-        { owner: to.toLowerCase(), last_transferred_at },
+        { owner: to.toLowerCase(), last_transferred_at: lastTransferredAt },
         { id: parcelId }
       )
       break
@@ -175,7 +179,7 @@ export async function processEvent(event) {
   return event
 }
 
-const eventCache = {
+eventCache = {
   _values: {
     // [hash+name]: value
   },

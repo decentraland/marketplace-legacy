@@ -51,7 +51,7 @@ export class PublicationRouter extends Router {
 
   async getPublication(req: express.Request): Promise<PublicationAttributes> {
     const txHash = server.extractFromReq(req, 'txHash')
-    const publication = await Publication.findOne({
+    const publication = await Publication.findOne<PublicationAttributes>({
       tx_hash: txHash
     })
 

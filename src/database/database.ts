@@ -6,12 +6,15 @@ export const database: Db['postgres'] = {
     this.client = await db.postgres.connect(CONNECTION_STRING)
     return this
   },
+
   query(queryString, values) {
     return db.postgres.query(queryString, values)
   },
+
   truncate(tableName: string) {
     return db.postgres.truncate(tableName)
   },
+
   close() {
     return db.postgres.close()
   },
@@ -19,6 +22,7 @@ export const database: Db['postgres'] = {
   toColumnFields(columns) {
     return db.postgres.toColumnFields(columns)
   },
+
   toValuePlaceholders(columns, start?: number) {
     return db.postgres.toValuePlaceholders(columns, start)
   }

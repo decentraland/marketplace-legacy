@@ -1,12 +1,14 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env ts-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { loadEnv } from './utils'
 
-let BOUNDING_BOX_SIZE
+let BOUNDING_BOX_SIZE: number
 const log = new Log('tag')
 
 export async function tag() {
@@ -34,6 +36,7 @@ export async function tagParcels() {
   }
 }
 
+// TODO: Tag type
 export function tagParcel(parcel, landmarks) {
   const tags = {
     ...tagProximity(parcel, landmarks)
@@ -55,12 +58,12 @@ export function tagProximity(parcel, landmarks) {
     // We substract 1 so parcels next to eachother have a distance of 0
     const distance = landmark.distanceTo(parcel) - 1
 
-    const tag_name = landmark.isPlaza()
+    const tagName = landmark.isPlaza()
       ? 'plaza'
       : landmark.isRoad() ? 'road' : 'district'
 
-    if (!proximity[tag_name] || distance < proximity[tag_name].distance) {
-      proximity[tag_name] = {
+    if (!proximity[tagName] || distance < proximity[tagName].distance) {
+      proximity[tagName] = {
         district_id: landmark.get('district_id'),
         distance
       }
@@ -80,7 +83,7 @@ function toParcelInstance(attributes) {
 
 if (require.main === module) {
   loadEnv()
-  BOUNDING_BOX_SIZE = parseInt(env.get('BOUNDING_BOX_SIZE', 10), 10)
+  BOUNDING_BOX_SIZE = parseInt(env.get('BOUNDING_BOX_SIZE', '10'), 10)
   log.info(
     `Using ${BOUNDING_BOX_SIZE} as bounding size, configurable via BOUNDING_BOX_SIZE`
   )

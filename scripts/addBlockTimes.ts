@@ -1,15 +1,17 @@
-#!/usr/bin/env babel-node
+#!/usr/bin/env ts-node
 
+// TODO: Remove this
+require('babel-polyfill')
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
-import { Publication } from '../src/Publication'
+import { Publication, PublicationAttributes } from '../src/Publication'
 import { BlockTimestampService } from '../src/BlockTimestamp'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 
-let BATCH_SIZE
+let BATCH_SIZE: number
 const log = new Log('addBlockTimes')
 
 export async function addBlockTimes() {
@@ -44,7 +46,7 @@ async function updateAllPublications() {
 async function updateBlockTimes(publications) {
   publications = publications.filter(parcel => !parcel.block_time_created_at) // avoid adding a new method to Publication
 
-  await asyncBatch({
+  await asyncBatch<PublicationAttributes>({
     elements: publications,
     callback: async (publicationsBatch, batchedCount) => {
       log.info(
@@ -52,11 +54,11 @@ async function updateBlockTimes(publications) {
       )
 
       const updates = publicationsBatch.map(async publication => {
-        const block_time_created_at = await new BlockTimestampService().getBlockTime(
+        const blockTimeCreatedAt = await new BlockTimestampService().getBlockTime(
           publication.block_number
         )
         return Publication.update(
-          { block_time_created_at },
+          { block_time_created_at: blockTimeCreatedAt },
           { tx_hash: publication.tx_hash }
         )
       })
@@ -69,7 +71,7 @@ async function updateBlockTimes(publications) {
 
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', '300'), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

@@ -16,7 +16,7 @@ declare module 'decentraland-commons' {
   }
 
   interface Env {
-    load(): void
+    load(options?: { path?: string; values?: any }): void
     get<T>(name: string, defaultValue?: T): string | T
     isDevelopment(): boolean
     isProduction(): boolean
@@ -40,6 +40,11 @@ declare module 'decentraland-commons' {
       toValuePlaceholders(columns: Column, start?: number): string[]
     }
   }
+  interface Cli {
+    runProgram(clients: { addCommands: (program: any) => void }[])
+    confirm(text?: string, defaultAnswer?: boolean)
+    prompt(questions: any[])
+  }
   interface Utils {
     promisify<T = any>(fn)
     sleep(ms: number): Promise<void>
@@ -51,8 +56,9 @@ declare module 'decentraland-commons' {
 
   export const env: Env
   export const server: Server
-  export const utils: Utils
   export const db: Db
+  export const cli: Cli
+  export const utils: Utils
 
   export class Log {
     constructor(name: string)
@@ -75,16 +81,29 @@ declare module 'decentraland-commons' {
       conditions?: QueryPart,
       orderBy?: QueryPart,
       extra?: string
-    ): Promise<any[]>
+    ): Promise<any>
+    static find<T>(
+      conditions?: QueryPart,
+      orderBy?: QueryPart,
+      extra?: string
+    ): Promise<T[]>
 
     static findOne(
       primaryKeyOrCond: string | number | QueryPart,
       orderBy?: QueryPart
     ): Promise<any>
+    static findOne<T>(
+      primaryKeyOrCond: string | number | QueryPart,
+      orderBy?: QueryPart
+    ): Promise<T>
 
+    static count(conditions: QueryPart): Promise<number>
     static insert<T>(row: T): Promise<T>
     static update(changes: QueryPart, conditions: QueryPart)
+    static delete(conditions: QueryPart)
 
     public attributes: any
+
+    constructor(attributes?: any)
   }
 }

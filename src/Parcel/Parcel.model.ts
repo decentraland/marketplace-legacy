@@ -92,7 +92,7 @@ export class Parcel extends Model {
 
   static async findOwneableParcels(): Promise<ParcelAttributes[]> {
     return this.db.query(
-      `SELECT *
+      SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
     )
@@ -100,7 +100,7 @@ export class Parcel extends Model {
 
   static async findLandmarks(): Promise<ParcelAttributes[]> {
     return this.db.query(
-      `SELECT *
+      SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
     )
