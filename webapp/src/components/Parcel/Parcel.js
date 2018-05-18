@@ -43,8 +43,8 @@ export default class Parcel extends React.PureComponent {
   }
 
   checkOwnership(wallet) {
-    const { onAccessDenied } = this.props
-    if (!this.isNavigatingAway && !this.isOwner(wallet)) {
+    const { onAccessDenied, parcel } = this.props
+    if (!this.isNavigatingAway && !isOwner(wallet, parcel.x, parcel.y)) {
       this.isNavigatingAway = true
       return onAccessDenied()
     }
