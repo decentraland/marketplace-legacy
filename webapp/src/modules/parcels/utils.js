@@ -49,3 +49,8 @@ export function connectParcels(array, parcels) {
   })
   return parcels
 }
+
+export function isOwner(wallet, x, y) {
+  const parcelId = buildCoordinate(x, y)
+  return !!wallet.parcelsById[parcelId]
+}

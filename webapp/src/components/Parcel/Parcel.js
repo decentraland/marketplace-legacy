@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 import { walletType, parcelType } from 'components/types'
-import { buildCoordinate } from 'lib/utils'
+import { isOwner } from 'modules/parcels/utils'
 
 export default class Parcel extends React.PureComponent {
   static propTypes = {
@@ -50,12 +50,6 @@ export default class Parcel extends React.PureComponent {
     }
   }
 
-  isOwner(wallet) {
-    const { x, y } = this.props
-    const parcelId = buildCoordinate(x, y)
-    return !!wallet.parcelsById[parcelId]
-  }
-
   render() {
     const { parcel, wallet, isConnecting, children } = this.props
     if (isConnecting || this.isNavigatingAway || !parcel) {
@@ -65,6 +59,6 @@ export default class Parcel extends React.PureComponent {
         </div>
       )
     }
-    return children(parcel, this.isOwner(wallet))
+    return children(parcel, isOwner(wallet, parcel.x, parcel.y), wallet)
   }
 }
