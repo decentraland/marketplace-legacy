@@ -77,7 +77,7 @@ async function checkParcel(parcel) {
 
   const { x, y, asset_id } = parcel
   const marketplace = eth.getContract('Marketplace')
-  const publication = (await Publication.findInCoordinate(x, y))[0]
+  const publication = (await Publication.findByAssetId(asset_id))[0]
   const auction = await marketplace.auctionByAssetId(asset_id)
   const contractId = auction[0]
 
