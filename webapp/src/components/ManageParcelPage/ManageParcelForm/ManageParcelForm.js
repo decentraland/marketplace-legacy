@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { eth } from 'decentraland-eth'
 import { Button, Form, Loader } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
@@ -26,7 +27,8 @@ export default class ManageParcelForm extends React.PureComponent {
       address: '',
       loading: false,
       editing: false,
-      revoked: false
+      revoked: false,
+      dirty: false
     }
   }
 
@@ -42,11 +44,11 @@ export default class ManageParcelForm extends React.PureComponent {
   }
 
   handleAddressChange = address => {
-    this.setState({ address })
+    this.setState({ address, dirty: true })
   }
 
   handleRevoke = () => {
-    this.setState({ revoked: true })
+    this.setState({ revoked: true, dirty: true })
   }
 
   handleChange = () => {
@@ -101,10 +103,10 @@ export default class ManageParcelForm extends React.PureComponent {
                 onClick={this.handleChange}
                 type="button"
               >
-                Change
+                {t('global.change')}
               </Button>
               <Button size="tiny" className="link" onClick={this.handleRevoke}>
-                Revoke
+                {t('global.revoke')}
               </Button>
             </div>
           )}
@@ -137,8 +139,9 @@ export default class ManageParcelForm extends React.PureComponent {
 
   render() {
     const { isTxIdle } = this.props
+    const { address, loading, dirty } = this.state
 
-    if (this.state.loading) {
+    if (loading) {
       return this.renderLoading()
     }
 
@@ -164,7 +167,13 @@ export default class ManageParcelForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={this.isEmptyAddress() || isTxIdle || this.state.loading}
+            disabled={
+              this.isEmptyAddress() ||
+              isTxIdle ||
+              loading ||
+              !dirty ||
+              !eth.utils.isValidAddress(address)
+            }
           >
             {t('global.submit')}
           </Button>

@@ -34,7 +34,9 @@
     "connecting": "连",
     "click_here": "点击这里",
     "loading": "载入中",
-    "address_placeholder": "例如：{address}"
+    "address_placeholder": "例如：{address}",
+    "change": "更改",
+    "revoke": "撤消"
   },
   "address": {
     "its_you": "是你"

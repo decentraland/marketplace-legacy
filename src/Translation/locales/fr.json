@@ -35,7 +35,9 @@
     "connecting": "Connexion",
     "click_here": "Cliquez ici",
     "loading": "Chargement",
-    "address_placeholder": "Exemple: {adresse}"
+    "address_placeholder": "Exemple: {adresse}",
+    "change": "Changement",
+    "revoke": "Révoquer"
   },
   "address": {
     "its_you": "C'est toi"

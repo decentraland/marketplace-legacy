@@ -34,7 +34,9 @@
     "connecting": "연결 중",
     "click_here": "여기를 클릭하십시오",
     "loading": "로드 중",
-    "address_placeholder": "예 : {address}"
+    "address_placeholder": "예 : {address}",
+    "change": "변화",
+    "revoke": "취소"
   },
   "address": {
     "its_you": "너야"

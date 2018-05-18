@@ -34,7 +34,9 @@
     "connecting": "Conectando",
     "click_here": "Pincha aquí",
     "loading": "Cargando",
-    "address_placeholder": "Ejemplo: {address}"
+    "address_placeholder": "Ejemplo: {address}",
+    "change": "Cambiar",
+    "revoke": "Revocar"
   },
   "address": {
     "its_you": "Eres tú!"
