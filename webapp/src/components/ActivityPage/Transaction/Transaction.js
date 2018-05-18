@@ -112,13 +112,16 @@ export default class Transaction extends React.PureComponent {
         })
       }
       case MANAGE_PARCEL_SUCCESS: {
-        const { x, y, address } = payload
-        return t_html('transaction.manage', {
-          parcel_link: this.renderParcelLink(x, y),
-          address_link: (
-            <Link to={locations.profilePage(address)}>{address}</Link>
-          )
-        })
+        const { x, y, address, revoked } = payload
+        return t_html(
+          revoked ? 'transaction.manage_revoked' : 'transaction.manage',
+          {
+            parcel_link: this.renderParcelLink(x, y),
+            address_link: (
+              <Link to={locations.profilePage(address)}>{address}</Link>
+            )
+          }
+        )
       }
 
       case TRANSFER_PARCEL_SUCCESS: {

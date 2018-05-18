@@ -15,3 +15,38 @@
   color: var(--gray);
   font-style: italic;
 }
+
+.ManageParcelForm .address-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 5px;
+}
+
+.ManageParcelForm .address-input {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.ManageParcelForm .address-wrapper .AddressBlock {
+  flex: none;
+  margin-right: 10px;
+}
+
+.ManageParcelForm .address-label {
+  color: white;
+}
+
+.ManageParcelForm .address-input.revoked .address-label {
+  color: var(--gray);
+  text-decoration: line-through;
+}
+
+.loader-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100px;
+}

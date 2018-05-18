@@ -21,8 +21,8 @@ const mapState = (state, ownProps) => {
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
   return {
-    onSubmit: (parcel, address) =>
-      dispatch(manageParcelRequest(parcel, address)),
+    onSubmit: (parcel, address, revoked) =>
+      dispatch(manageParcelRequest(parcel, address, revoked)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
   }
 }

@@ -1,0 +1,15 @@
+.AddressInput,
+.AddressInput > div {
+  position: relative;
+}
+
+.AddressInput label {
+  color: var(--gray);
+  font-weight: 400;
+}
+
+.AddressInput .address-input-blockie {
+  position: absolute;
+  top: 14px;
+  right: 5px;
+}
