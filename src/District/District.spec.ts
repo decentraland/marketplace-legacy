@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-
 import { db } from '../database'
 import { District } from './District.model'
 

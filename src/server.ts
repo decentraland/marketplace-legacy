@@ -1,18 +1,14 @@
 import 'babel-polyfill'
-
-import * as express from 'express'
 import * as bodyParser from 'body-parser'
-
-import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
-
-import { db } from './database'
-import { ParcelRouter } from './Parcel'
-import { EstateRouter } from './Estate'
-import { DistrictRouter } from './District'
+import { contracts, eth } from 'decentraland-eth'
+import * as express from 'express'
+import { EstateRouter, ParcelRouter } from './Asset'
 import { ContributionRouter } from './Contribution'
+import { DistrictRouter } from './District'
 import { PublicationRouter } from './Publication'
 import { TranslationRouter } from './Translation'
+import { db } from './database'
 
 env.load()
 

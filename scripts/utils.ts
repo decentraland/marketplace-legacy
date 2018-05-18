@@ -1,5 +1,5 @@
-import * as path from 'path'
 import { env } from 'decentraland-commons'
+import * as path from 'path'
 
 export function loadEnv(envFilePath: string = '../src/.env') {
   env.load({ path: resolvePath(envFilePath) })

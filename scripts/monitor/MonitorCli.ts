@@ -1,8 +1,8 @@
-import { cli, Log } from 'decentraland-commons'
-import { Handlers } from './handlers'
-import { EventMonitor } from './EventMonitor'
-import { processEvents } from './processEvents'
+import { Log, cli } from 'decentraland-commons'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { EventMonitor } from './EventMonitor'
+import { Handlers } from './handlers'
+import { processEvents } from './processEvents'
 
 const log = new Log('MonitorCli')
 

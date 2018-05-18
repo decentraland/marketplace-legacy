@@ -64,8 +64,8 @@ export class Publication extends Model {
     return this.find({ owner })
   }
 
-  static findByAssetId(assetIdd: string): Promise<PublicationAttributes[]> {
-    return this.find({ assetIdd }, { created_at: 'DESC' })
+  static findByAssetId(assetId: string): Promise<PublicationAttributes[]> {
+    return this.find({ asset_id: assetId }, { created_at: 'DESC' })
   }
 
   static findByAssetIdWithStatus(

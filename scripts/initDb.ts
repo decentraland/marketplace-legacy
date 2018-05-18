@@ -4,11 +4,10 @@
 require('babel-polyfill')
 import { execSync } from 'child_process'
 import { Log, cli } from 'decentraland-commons'
-
-import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
-import { District } from '../src/District'
+import { Parcel } from '../src/Asset'
 import { Contribution } from '../src/Contribution'
+import { District } from '../src/District'
+import { db } from '../src/database'
 import { updateParcelsData } from './renewBlockchainData'
 import { tagParcels } from './tag'
 import { loadEnv, runpsql } from './utils'

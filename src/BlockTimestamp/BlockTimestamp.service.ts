@@ -1,5 +1,4 @@
 import { eth } from 'decentraland-eth'
-
 import { BlockTimestamp } from './BlockTimestamp.model'
 
 export class BlockTimestampService {

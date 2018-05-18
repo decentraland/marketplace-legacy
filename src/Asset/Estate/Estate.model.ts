@@ -1,8 +1,7 @@
 import { Model } from 'decentraland-commons'
-
+import { Publication } from '../../Publication'
 import { Asset } from '../Asset'
 import { ParcelAttributes } from '../Parcel'
-import { Publication } from '../Publication'
 
 export interface EstateAttributes {
   id?: string

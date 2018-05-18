@@ -3,10 +3,9 @@
 // TODO: Remove this
 require('babel-polyfill')
 import { execSync } from 'child_process'
-import { env, Log } from 'decentraland-commons'
-
+import { Log, env } from 'decentraland-commons'
+import { Parcel } from '../src/Asset'
 import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
 import { loadEnv, runpsql } from './utils'
 

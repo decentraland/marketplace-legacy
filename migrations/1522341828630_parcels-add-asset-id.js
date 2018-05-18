@@ -1,4 +1,4 @@
-const { Parcel } = require('../src/Parcel')
+const { Parcel } = require('../src/Asset')
 
 exports.up = pgm => {
   const tableName = Parcel.tableName

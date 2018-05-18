@@ -1,25 +1,12 @@
 import { Model } from 'decentraland-commons'
-
-import { coordinates, SingleCoordinate, UnifiedCoordinate } from './coordinates'
+import { District } from '../../District'
+import { Publication, PublicationQueries } from '../../Publication'
+import { SQL } from '../../database'
 import { Asset } from '../Asset'
-import { PublicationQueries, Publication } from '../Publication'
-import { District } from '../District'
-import { SQL } from '../database'
+import { Data } from '../Data'
+import { Tag } from '../Tag'
+import { SingleCoordinate, UnifiedCoordinate, coordinates } from './coordinates'
 
-// TODO: assets/parcel, assets/estate, assets/data
-export interface Data {
-  version: string
-  name?: string
-  description?: string
-  metadata?: string
-}
-export interface Tag {
-  proximity?: {
-    plaza?: { district_id: string; distance: number }
-    district?: { district_id: string; distance: number }
-    road?: { district_id: string; distance: number }
-  }
-}
 export interface ParcelAttributes {
   id?: string
   x: number

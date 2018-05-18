@@ -1,6 +1,5 @@
+import { Estate, Parcel } from '../Asset'
 import { Publication } from './Publication.model'
-import { Parcel } from '../Parcel'
-import { Estate } from '../Estate'
 
 export class PublicationService {
   Publication: typeof Publication

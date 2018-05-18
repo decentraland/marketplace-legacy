@@ -7,9 +7,8 @@
     "lint": "tslint -p tsconfig.json --fix",
     "lint:fix": "tslint -p tsconfig.json",
     "pretest": "npm run build:tsc",
-    "test": "npx mocha -r specs/specs_setup.js specs/setup.js src/**/*.spec.js",
-    "watch:test":
-      "npm run watch:build:tsc && npx mocha -r specs/specs_setup.js specs/setup.js src/**/*.spec.js --watch",
+    "test": "npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js",
+    "watch:test": "npm run watch:build:tsc && npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js --watch",
     "init-db": "./scripts/initDb.ts",
     "renew-blockchain-data": "./scripts/renewBlockchainData.ts",
     "sanity-check": "./scripts/sanityCheck.ts run",
@@ -30,7 +29,11 @@
     "type": "git",
     "url": "https://github.com/decentraland/marketplace.git"
   },
-  "keywords": ["decentraland", "marketplace", "dapp"],
+  "keywords": [
+    "decentraland",
+    "marketplace",
+    "dapp"
+  ],
   "author": "Decentraland",
   "license": "ISC",
   "dependencies": {
@@ -49,6 +52,8 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/chai-as-promised": "^7.1.0",
     "@types/faker": "^4.1.2",
     "@types/mocha": "^5.2.0",
     "@types/sinon": "^4.3.3",
@@ -64,6 +69,7 @@
     "sinon": "^5.0.3",
     "ts-node": "^6.0.3",
     "tslint": "^5.10.0",
+    "tslint-language-service": "^0.9.9",
     "tslint-plugin-prettier": "^1.3.0",
     "typescript": "^2.8.3"
   }

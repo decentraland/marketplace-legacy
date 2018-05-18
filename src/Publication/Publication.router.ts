@@ -2,7 +2,7 @@ import { server, utils } from 'decentraland-commons'
 import * as express from 'express'
 
 import { Publication, PublicationAttributes } from './Publication.model'
-import { Parcel } from '../Parcel'
+import { Parcel } from '../Asset'
 import { Router, blacklist } from '../lib'
 
 export class PublicationRouter extends Router {

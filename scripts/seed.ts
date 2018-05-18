@@ -2,13 +2,12 @@
 
 // TODO: Remove this
 require('babel-polyfill')
-import { eth, txUtils } from 'decentraland-eth'
 import { Log, cli } from 'decentraland-commons'
+import { eth, txUtils } from 'decentraland-eth'
 import * as faker from 'faker'
-
-import { loadEnv } from './utils'
-import { db } from '../src/database'
 import { Publication } from '../src/Publication'
+import { db } from '../src/database'
+import { loadEnv } from './utils'
 
 const log = new Log('seed')
 
