@@ -20,8 +20,8 @@ export default class CreateEstatePage extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    const x = parseInt(this.props.x)
-    const y = parseInt(this.props.y)
+    const x = parseInt(this.props.x, 10)
+    const y = parseInt(this.props.y, 10)
     this.state = {
       parcels: [{ x, y }]
     }
