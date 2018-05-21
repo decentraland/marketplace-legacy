@@ -24,6 +24,17 @@ export default class EstateModal extends React.PureComponent {
     onConfirm: () => {}
   }
 
+  calculateZoomAndCenter() {
+    const { parcels } = this.props
+    const xs = [...new Set(parcels.map(coords => coords.x).sort())]
+    const ys = [...new Set(parcels.map(coords => coords.y).sort())]
+    const x = xs[parseInt(xs.length / 2)]
+    const y = ys[parseInt(ys.length / 2)]
+    const center = { x, y }
+    const zoom = 1 / (xs.length + ys.length) * 7.5
+    return { center, zoom }
+  }
+
   render() {
     const {
       parcels,
@@ -39,7 +50,7 @@ export default class EstateModal extends React.PureComponent {
       preview
     } = this.props
 
-    const center = parcels[0]
+    const { center, zoom } = this.calculateZoomAndCenter()
 
     return (
       <div className="EstateModal">
@@ -51,6 +62,7 @@ export default class EstateModal extends React.PureComponent {
               <ParcelPreview
                 x={center.x}
                 y={center.y}
+                zoom={zoom}
                 selected={parcels}
                 size={20}
               />
