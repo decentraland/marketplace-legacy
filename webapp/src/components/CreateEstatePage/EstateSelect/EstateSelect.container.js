@@ -21,7 +21,7 @@ const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParams(ownProps)
   return {
     onError: error => dispatch(navigateTo(locations.root)),
-    onCancel: () => dispatch(navigateTo(locations.parcelDetail(x, y))),
+    onCancel: () => dispatch(navigateTo(locations.parcelDetail(x, y)))
   }
 }
 

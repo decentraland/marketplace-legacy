@@ -1,7 +1,7 @@
 import {
   CREATE_ESTATE_REQUEST,
   CREATE_ESTATE_SUCCESS,
-  CREATE_ESTATE_FAILURE,
+  CREATE_ESTATE_FAILURE
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
 

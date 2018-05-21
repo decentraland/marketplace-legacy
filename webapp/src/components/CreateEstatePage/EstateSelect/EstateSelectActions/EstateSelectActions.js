@@ -28,11 +28,7 @@ export default class EstateSelectActions extends React.PureComponent {
                 <Button size="tiny" onClick={onCancel}>
                   {t('cancel')}
                 </Button>
-                <Button
-                  size="tiny"
-                  disabled={disabled}
-                  onClick={onContinue}
-                >
+                <Button size="tiny" disabled={disabled} onClick={onContinue}>
                   {t('continue')}
                 </Button>
               </div>

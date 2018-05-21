@@ -2,7 +2,7 @@ import { takeEvery, put } from 'redux-saga/effects'
 import {
   CREATE_ESTATE_REQUEST,
   createEstateSuccess,
-  createEstateFailure,
+  createEstateFailure
 } from './actions'
 import { inBounds } from 'lib/parcelUtils'
 
@@ -19,7 +19,7 @@ function validateCoords(x, y) {
 function* handleCreateEstateRequest(action) {
   const { estate } = action
   try {
-    estate.parcels.forEach(coords => validateCoords);
+    estate.parcels.forEach(coords => validateCoords)
     // call estate contract
 
     yield put(createEstateSuccess('randomTxHash', estate))
