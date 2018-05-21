@@ -3,7 +3,8 @@
     "completed": "Terminé",
     "no_activity": "Vous n'avez pas encore d'activité.",
     "pending": "En attente",
-    "start": "Vous pouvez commencer en validant de la MANA sur votre {settings_link}"
+    "start":
+      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}"
   },
   "address": {
     "its_you": "C'est toi"
@@ -44,7 +45,8 @@
     "proposal": "Proposition"
   },
   "derivation_path": {
-    "invalid": "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
+    "invalid":
+      "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
   "footer": {
     "color_key": "Code Couleur",
@@ -75,7 +77,8 @@
     "retry": "Recommencez",
     "settings": "Paramètres",
     "sign_in": "Se connecter",
-    "sign_in_notice": "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
+    "sign_in_notice":
+      "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "submit": "Envoyer",
     "unauthorized": "Non autorisé",
     "wallet_address": "Adresse du porte-feuille",
@@ -110,13 +113,16 @@
     "view": "Vue"
   },
   "parcel_buy": {
-    "about_to_buy": "Vous êtes sur le point d'acheter {parcel_name} {parcel_price}",
+    "about_to_buy":
+      "Vous êtes sur le point d'acheter {parcel_name} {parcel_price}",
     "approved_balance": "Votre balance est de {approved_balance}",
     "buy_land": "Acheter une LAND",
     "buy_mana": "{click_here} pour acheter du MANA.",
     "didnt_approve": "Vous n'avez pas de MANA validée",
-    "needs_at_least": "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
-    "please_approve": "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",
+    "needs_at_least":
+      "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
+    "please_approve":
+      "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",
     "total_balance": "Votre solde est {solde}"
   },
   "parcel_cancel": {
@@ -174,28 +180,34 @@
     "expiration": "Expiration",
     "expiration_placeholder": "Date d'expiration pour cette publication",
     "list_land": "Lister les LANDs à vendre",
-    "please_authorize": "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
+    "please_authorize":
+      "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
     "price": "Prix",
     "price_placeholder": "Prix en MANA pour cette LAND",
-    "set_land_price": "Indiquer un prix et une date d'expiration pour {parcel_name}"
+    "set_land_price":
+      "Indiquer un prix et une date d'expiration pour {parcel_name}"
   },
   "parcel_tags": {
     "adjacent": "Adjacent",
     "district": "Quartiers",
     "plaza": "Places",
-    "proximity": "{distance} {distance, plural, one {parcelle} other {parcelles}} loin",
+    "proximity":
+      "{distance} {distance, plural, one {parcelle} other {parcelles}} loin",
     "road": "Route"
   },
   "parcel_transfer": {
     "about_to_transfer": "Vous êtes sur le point de transferer {parcel_name}",
-    "cant_transfer": "Cette LAND ne peut être transferée car elle est en vente.",
+    "cant_transfer":
+      "Cette LAND ne peut être transferée car elle est en vente.",
     "check_address": "Merci de vérifier l'addresse soigneusement.",
-    "error_persists": "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
+    "error_persists":
+      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
     "irreversible": "Chaque transfert de LAND est une opération irréversible.",
     "placeholder": "Exemple: {address}",
     "recipient_address": "Adresse du destinataire",
     "transfer_land": "Transférer une LAND",
-    "unknown_error": "Une erreur s'est produite, les détails se trouvent ci-dessous."
+    "unknown_error":
+      "Une erreur s'est produite, les détails se trouvent ci-dessous."
   },
   "profile_page": {
     "empty": "L'utilisateur n'as pas de {content}",
@@ -211,30 +223,44 @@
     "view": "Vue"
   },
   "settings": {
-    "approve_mana": "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
-    "approve_mana_check": "Cocher pour autoriser la place de marché à gérer votre MANA.",
+    "approve_mana":
+      "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
+    "approve_mana_check":
+      "Cocher pour autoriser la place de marché à gérer votre MANA.",
     "authorization": "Autorisation",
-    "authorize": "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
-    "authorize_land_check": "Cocher pour autoriser la place de marché à gérer vos LANDs.",
-    "disapprove_mana_check": "Décocher cette case enlève le droit à la place de marché de gérer votre MANA.",
-    "mana_approved": "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
+    "authorize":
+      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
+    "authorize_land_check":
+      "Cocher pour autoriser la place de marché à gérer vos LANDs.",
+    "disapprove_mana_check":
+      "Décocher cette case enlève le droit à la place de marché de gérer votre MANA.",
+    "mana_approved":
+      "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
     "marketplace_contract": "Contrat de la place de marché",
     "pending_tx": "Vous avez une transaction en attente",
-    "unauthorize_land_check": "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
-    "you_authorized": "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom."
+    "unauthorize_land_check":
+      "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
+    "you_authorized":
+      "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom."
   },
   "sign_in": {
     "account_unlocked": "Assurez-vous que votre compte est déverrouillé",
-    "options": "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace."
+    "options":
+      "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace."
   },
   "transaction": {
-    "approved": "Vous avez autorisé {mana} à être utilisé par {marketplace_contract_link}",
-    "authorize": "Vous avez {action} la {marketplace_contract_link} à gérer les LANDs en votre nom",
+    "approved":
+      "Vous avez autorisé {mana} à être utilisé par {marketplace_contract_link}",
+    "authorize":
+      "Vous avez {action} la {marketplace_contract_link} à gérer les LANDs en votre nom",
     "buy": "Vous avez acheté {parcel_link}",
     "buy_mana": "Vous avez acheté {mana} MANA",
-    "cancel": "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
-    "disapproved": "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
-    "edit": "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
+    "cancel":
+      "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
+    "disapproved":
+      "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
+    "edit":
+      "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"
@@ -244,11 +270,14 @@
       "please_confirm": "Veuillez confirmer la transaction"
     },
     "parcel": {
-      "still_pending": "{parcel_name} a toujours {transactions_count} {transactions_count, plural, one {transaction} other {transactions}} en attente."
+      "still_pending":
+        "{parcel_name} a toujours {transactions_count} {transactions_count, plural, one {transaction} other {transactions}} en attente."
     },
-    "see_activity": "Pour consulter plus en détail l'historique de vos transactions, consultez votre {activity_link}.",
+    "see_activity":
+      "Pour consulter plus en détail l'historique de vos transactions, consultez votre {activity_link}.",
     "text": {
-      "failed": "Votre transaction a échoué, vous pouvez essayer d'en envoyer une nouvelle.",
+      "failed":
+        "Votre transaction a échoué, vous pouvez essayer d'en envoyer une nouvelle.",
       "pending": "La transaction est en attente d'être confirmée."
     }
   },
