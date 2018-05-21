@@ -1,10 +1,57 @@
 {
-  "languages": {
-    "en": "영어",
-    "es": "스페인 사람",
-    "fr": "프랑스 국민",
-    "zh": "중국말",
-    "ko": "한국어"
+  "activity": {
+    "no_activity": "아직 활동이 없습니다.",
+    "start": "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다.",
+    "pending": "보류",
+    "completed": "완료 됨"
+  },
+  "address": {
+    "its_you": "너야"
+  },
+  "atlas": {
+    "owner": "소유자 : {owner}",
+    "no_owner": "소유자 없음",
+    "your_parcel": "당신의 토지",
+    "on_sale": "판매 중 :",
+    "loading": "로드 중",
+    "road": "도로"
+  },
+  "buy_mana": {
+    "title": "ETH을 MANA로 변환",
+    "action": "더 사",
+    "available_eth": "사용 가능 : {eth} ETH",
+    "receive": "받다",
+    "pay_with": "지불",
+    "powered_by": "작성자 : {bancor_link}",
+    "rate": "율",
+    "slippage": "미끄러짐",
+    "not_enough": "당신은 이것에 대해 지불 할 ETH가 충분하지 않습니다.",
+    "amount_too_big": "이 금액은 Bancor Network에 비해 너무 큽니다."
+  },
+  "color_key": {
+    "title": "색상 키",
+    "yours": "당신 토지",
+    "taken": "점유된",
+    "district": "지구",
+    "contribution": "공헌",
+    "roads": "도로",
+    "plaza": "광장",
+    "unowned": "소유자가 없는",
+    "loading": "로드 중",
+    "on_sale": "판매 중"
+  },
+  "contribution": {
+    "proposal": "제안"
+  },
+  "derivation_path": {
+    "invalid": "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
+  },
+  "footer": {
+    "color_key": "색상 키",
+    "privacy_policy": "개인 정보 정책",
+    "terms": "이용 약관",
+    "copyright": "© 2018 Decentraland. 판권 소유.",
+    "mini_copyright": "© 2018 Decentraland."
   },
   "global": {
     "atlas": "지도",
@@ -34,16 +81,20 @@
     "connecting": "연결 중",
     "click_here": "여기를 클릭하십시오"
   },
-  "address": {
-    "its_you": "너야"
+  "homepage": {
+    "hero_title": "제네시스 시티에서 가장 이상적인 위치를 선택하시기 바랍니다.",
+    "hero_subtitle": "랜드를 위한 탈중앙화된 마켓. 수수료 없음.",
+    "get_started": "시작하기",
+    "watch_tutorial": "튜토리얼보기",
+    "newest_lands": "최신 랜드",
+    "view_more": "더 보기"
   },
-  "atlas": {
-    "owner": "소유자 : {owner}",
-    "no_owner": "소유자 없음",
-    "your_parcel": "당신의 토지",
-    "on_sale": "판매 중 :",
-    "loading": "로드 중",
-    "road": "도로"
+  "languages": {
+    "en": "영어",
+    "es": "스페인 사람",
+    "fr": "프랑스 국민",
+    "zh": "중국말",
+    "ko": "한국어"
   },
   "marketplace": {
     "empty": "죄송합니다. 여기에는 아무것도 없습니다.",
@@ -53,26 +104,25 @@
       "close_to_expire": "가장 빨리 만료되는"
     }
   },
-  "profile_page": {
-    "empty": "사용자에게는 {content}가 없습니다.",
-    "on_sale": "판매 중"
-  },
-  "publication": {
-    "acquired_at": "{date}에 인수 됨",
-    "expired_at": "{time} 전 만료 됨",
-    "expires_in": "{time}에 만료 됨",
-    "expires_in_more_than_years": "{years} 년 만료 됨",
-    "view": "보기",
-    "sold": "판매 됨",
-    "canceled": "취소 됨"
-  },
-  "contribution": {
-    "proposal": "제안"
-  },
   "parcel": {
     "view": "보기",
     "no_name": "이름 없음",
     "no_description": "설명 없음"
+  },
+  "parcel_buy": {
+    "buy_land": "토지 구입",
+    "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
+    "approved_balance": "승인 된 잔액은 {approved_balance}입니다.",
+    "needs_at_least": "이 토지를 사려면 적어도 {value}가 필요합니다.",
+    "buy_mana": "MANA를 사기 위해 {click_here}.",
+    "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
+    "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
+    "total_balance": "Your balance is {balance}"
+  },
+  "parcel_cancel": {
+    "cancel_land": "토지 판매 취소",
+    "about_to_cancel": "{parcel}의 판매를 취소하려고합니다.",
+    "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
   },
   "parcel_detail": {
     "description": "설명",
@@ -107,42 +157,11 @@
       "auction": "경매"
     }
   },
-  "parcel_tags": {
-    "road": "도로",
-    "plaza": "광장",
-    "district": "지구",
-    "adjacent": "인접한",
-    "proximity": "{distance} 개 분실물"
-  },
   "parcel_edit": {
     "edit_land": "토지 편집",
     "set_name_and_desc": "{parcel_name}의 이름 및 설명 설정",
     "name": "이름",
     "description": "설명"
-  },
-  "parcel_transfer": {
-    "transfer_land": "토지 이전",
-    "about_to_transfer": "{parcel_name}을(를) 이전하려고합니다.",
-    "irreversible":
-      "토지를 이전하는 것은 돌이킬 수 없는 작업이라는 것을 기억하십시오.",
-    "check_address": "신중하게 주소를 확인하십시오",
-    "cant_transfer": "이 토지는 판매 중이므로 이전 할 수 없습니다.",
-    "recipient_address": "수신자 주소",
-    "unknown_error":
-      "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다.",
-    "error_persists":
-      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
-    "placeholder": "예: {address}"
-  },
-  "parcel_buy": {
-    "buy_land": "토지 구입",
-    "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
-    "approved_balance": "승인 된 잔액은 {approved_balance}입니다.",
-    "needs_at_least": "이 토지를 사려면 적어도 {value}가 필요합니다.",
-    "buy_mana": "MANA를 사기 위해 {click_here}.",
-    "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
-    "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
-    "total_balance": "Your balance is {balance}"
   },
   "parcel_publish": {
     "list_land": "판매용 토지 목록",
@@ -152,8 +171,7 @@
     "expiration": "만료",
     "expiration_placeholder": "이 게시물의 만료일",
     "already_sold": "이 토지는 이미 {value}에 판매 중입니다.",
-    "please_authorize":
-      "{settings_link}로 이동하여 판매용으로 등록하기 전에 마켓 플레이스에서 토지를 대신 사용하도록 승인해야합니다.",
+    "please_authorize": "{settings_link}로 이동하여 판매용으로 등록하기 전에 마켓 플레이스에서 토지를 대신 사용하도록 승인해야합니다.",
     "errors": {
       "minimum_expiration": "최소 만료일은 하루입니다.",
       "maximum_expiration": "최대 만료일은 {date}입니다.",
@@ -161,27 +179,60 @@
       "maximum_land_price": "최대 LAND 가격은 {value} MANA입니다."
     }
   },
-  "parcel_cancel": {
-    "cancel_land": "토지 판매 취소",
-    "about_to_cancel": "{parcel}의 판매를 취소하려고합니다.",
-    "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
+  "parcel_tags": {
+    "road": "도로",
+    "plaza": "광장",
+    "district": "지구",
+    "adjacent": "인접한",
+    "proximity": "{distance} 개 분실물"
   },
-  "activity": {
-    "no_activity": "아직 활동이 없습니다.",
-    "start": "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다.",
-    "pending": "보류",
-    "completed": "완료 됨"
+  "parcel_transfer": {
+    "transfer_land": "토지 이전",
+    "about_to_transfer": "{parcel_name}을(를) 이전하려고합니다.",
+    "irreversible": "토지를 이전하는 것은 돌이킬 수 없는 작업이라는 것을 기억하십시오.",
+    "check_address": "신중하게 주소를 확인하십시오",
+    "cant_transfer": "이 토지는 판매 중이므로 이전 할 수 없습니다.",
+    "recipient_address": "수신자 주소",
+    "unknown_error": "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다.",
+    "error_persists": "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
+    "placeholder": "예: {address}"
+  },
+  "profile_page": {
+    "empty": "사용자에게는 {content}가 없습니다.",
+    "on_sale": "판매 중"
+  },
+  "publication": {
+    "acquired_at": "{date}에 인수 됨",
+    "expired_at": "{time} 전 만료 됨",
+    "expires_in": "{time}에 만료 됨",
+    "expires_in_more_than_years": "{years} 년 만료 됨",
+    "view": "보기",
+    "sold": "판매 됨",
+    "canceled": "취소 됨"
+  },
+  "settings": {
+    "pending_tx": "보류중인 거래가 있습니다.",
+    "disapprove_mana_check": "선택 해제하면 마켓 플레이스 계약에 대한 MANA 사용 권한이 승인되지 않음",
+    "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
+    "mana_approved": "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
+    "approve_mana": "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
+    "marketplace_contract": "시장 계약",
+    "unauthorize_land_check": "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",
+    "authorize_land_check": "선택하면 시장 계약에 대한 토지 사용을 허가합니다",
+    "you_authorized": "{marketplace_contract_link}을(를) 승인했습니다.",
+    "authorize": "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
+    "authorization": "권한 부여"
+  },
+  "sign_in": {
+    "options": "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다.",
+    "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오."
   },
   "transaction": {
-    "approved":
-      "{marketplace_contract_link} 이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "disapproved":
-      "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
-    "authorize":
-      "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
+    "approved": "{marketplace_contract_link} 이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
+    "disapproved": "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
+    "authorize": "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다.",
-    "edit":
-      "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
+    "edit": "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
@@ -195,85 +246,17 @@
       "failed": "거래가 실패했습니다. 새 거래를 보낼 수 있습니다."
     },
     "parcel": {
-      "still_pending":
-        "{parcel_name}에 아직 {transactions_count} 개의 거래가 보류 중입니다."
+      "still_pending": "{parcel_name}에 아직 {transactions_count} 개의 거래가 보류 중입니다."
     },
     "idle": {
       "please_confirm": "Please confirm the transaction"
     }
   },
-  "settings": {
-    "pending_tx": "보류중인 거래가 있습니다.",
-    "disapprove_mana_check":
-      "선택 해제하면 마켓 플레이스 계약에 대한 MANA 사용 권한이 승인되지 않음",
-    "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
-    "mana_approved":
-      "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "approve_mana":
-      "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
-    "marketplace_contract": "시장 계약",
-    "unauthorize_land_check":
-      "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",
-    "authorize_land_check": "선택하면 시장 계약에 대한 토지 사용을 허가합니다",
-    "you_authorized": "{marketplace_contract_link}을(를) 승인했습니다.",
-    "authorize":
-      "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
-    "authorization": "권한 부여"
-  },
   "transfer_mana": {
     "title": "MANA 이전",
     "action": "이전",
     "current_balance": "현재 잔액은 {balance}입니다.",
-    "irreversible":
-      "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
+    "irreversible": "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
     "own_address_warning": "그것은 당신의 자신의 주소입니다!"
-  },
-  "buy_mana": {
-    "title": "ETH을 MANA로 변환",
-    "action": "더 사",
-    "available_eth": "사용 가능 : {eth} ETH",
-    "receive": "받다",
-    "pay_with": "지불",
-    "powered_by": "작성자 : {bancor_link}",
-    "rate": "율",
-    "slippage": "미끄러짐",
-    "not_enough": "당신은 이것에 대해 지불 할 ETH가 충분하지 않습니다.",
-    "amount_too_big": "이 금액은 Bancor Network에 비해 너무 큽니다."
-  },
-  "derivation_path": {
-    "invalid":
-      "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
-  },
-  "color_key": {
-    "title": "색상 키",
-    "yours": "당신 토지",
-    "taken": "점유된",
-    "district": "지구",
-    "contribution": "공헌",
-    "roads": "도로",
-    "plaza": "광장",
-    "unowned": "소유자가 없는",
-    "loading": "로드 중",
-    "on_sale": "판매 중"
-  },
-  "sign_in": {
-    "options":
-      "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다.",
-    "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오."
-  },
-  "footer": {
-    "color_key": "색상 키",
-    "privacy_policy": "개인 정보 정책",
-    "terms": "이용 약관",
-    "copyright": "© 2018 Decentraland. 판권 소유.",
-    "mini_copyright": "© 2018 Decentraland."
-  },
-  "homepage": {
-    "hero_title": "제네시스 시티에서 가장 이상적인 위치를 선택하시기 바랍니다.",
-    "hero_subtitle": "랜드를 위한 탈중앙화된 마켓. 수수료 없음.",
-    "get_started": "시작하기",
-    "watch_tutorial": "튜토리얼보기",
-    "newest_lands": "최신 랜드",
-    "view_more": "더 보기"
   }
 }

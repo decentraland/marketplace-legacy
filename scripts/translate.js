@@ -2,12 +2,12 @@
 import axios from 'axios'
 import fs from 'fs'
 import { unflatten } from 'flat'
-import { utils } from 'decentraland-commons'
+import { Log, utils } from 'decentraland-commons'
 import merge from 'lodash/merge'
 import { loadEnv } from './utils'
-
-//import axios from 'axios'
 import { Translation } from '../src/Translation'
+
+const log = new Log('translate')
 
 async function main() {
   const DEFAULT_LOCALE = Translation.DEFAULT_LOCALE
@@ -34,35 +34,51 @@ async function main() {
             missing[locale] = {}
           }
           missing[locale][key] = translated
-          console.log(`${locale}(${key}): ${defaultText} -> ${translated}`)
+          log.info(`${locale}(${key}): ${defaultText} -> ${translated}`)
         }
       }
     }
   }
   missing = unflatten(missing)
-  console.log(
-    '\n\nAdded the following translations:\n\n',
-    JSON.stringify(missing, null, 2)
+  log.info(
+    'Added the following translations:\n\n',
+    JSON.stringify(missing, null, 2),
+    '\n'
   )
-  const locales = Object.keys(missing)
-  for (const locale of locales) {
+  for (const locale of availableLocales) {
     const localePath = require('path').resolve(
       __dirname,
       `../src/Translation/locales/${locale}.json`
     )
     const currentTranslations = require(localePath)
-    const updatedTranslations = merge(currentTranslations, missing[locale])
+    const updatedTranslations = merge(
+      currentTranslations,
+      missing[locale] || {}
+    )
+    const orderedTranslations = sortObject(updatedTranslations)
     await utils.promisify(fs.writeFile)(
       localePath,
-      JSON.stringify(updatedTranslations, null, 2),
+      JSON.stringify(orderedTranslations, null, 2),
       'utf8'
     )
   }
-  console.log('\ndone!')
+  log.info('done!')
 }
 
 function isCapitalized(text = '') {
   return text[0] === text[0].toUpperCase()
+}
+
+function sortObject(unordered) {
+  const ordered = {}
+  const keys = Object.keys(unordered).sort()
+  for (const key of keys) {
+    if (unordered[key] != null && typeof unordered[key] === 'object') {
+      ordered[key] = sortObject(unordered[key])
+    }
+    ordered[key] = unordered[key]
+  }
+  return ordered
 }
 
 async function translate(lang, text) {
