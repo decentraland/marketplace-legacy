@@ -1,21 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container } from 'semantic-ui-react'
-import ParcelPreview from 'components/ParcelPreview'
-import CreateEstate from './CreateEstate'
-import Parcel from 'components/Parcel'
-import { t } from 'modules/translation/utils'
-import { isOwner } from 'modules/parcels/utils'
 
-import './CreateEstatePage.css'
+import EstateSelect from './EstateSelect'
+import EstateModal from './EstateModal'
 
 export default class CreateEstatePage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
-    error: PropTypes.string,
-    onCancel: PropTypes.func.isRequired,
-    onEstateCreation: PropTypes.func.isRequired
+    onEstateCreation: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -23,62 +16,43 @@ export default class CreateEstatePage extends React.PureComponent {
     const x = parseInt(this.props.x, 10)
     const y = parseInt(this.props.y, 10)
     this.state = {
-      parcels: [{ x, y }]
+      estate: {
+        parcels: [{ x, y }]
+      },
+      isSelecting: true
     }
   }
 
-  handleParcelClick = wallet => (x, y) => {
-    if (!isOwner(wallet, x, y)) {
-      return
-    }
+  handleSwitch = () => {
+    this.setState({ isSelecting: !this.state.isSelecting })
+  }
 
-    const { parcels } = this.state
-    const isSelected = parcels.some(coords => coords.x === x && coords.y === y)
+  handleChangeParcels = parcels => {
+    this.setState({ estate: { parcels } })
+  }
 
-    if (isSelected) {
-      const newParcels = parcels.filter(
-        coords => !(coords.x === x && coords.y === y)
-      )
-      this.setState({ parcels: newParcels })
-      return
-    }
-
-    this.setState({ parcels: [...parcels, { x, y }] })
-    return
+  handleSubmit = () => {
+    this.props.onEstateCreation(this.state.estate)
   }
 
   render() {
-    const { x, y, error, onCancel, onEstateCreation } = this.props
-    const { parcels } = this.state
-    if (error) {
-      return null
-    }
-    return (
-      <Parcel x={x} y={y}>
-        {(parcel, isOwner, wallet) => (
-          <div className="CreateDetailPage">
-            <div className="parcel-preview" title={t('parcel_detail.view')}>
-              <ParcelPreview
-                x={parcel.x}
-                y={parcel.y}
-                selected={parcels}
-                isDraggable
-                showMinimap
-                showPopup
-                showControls
-                onClick={this.handleParcelClick(wallet)}
-              />
-            </div>
-            <Container>
-              <CreateEstate
-                onCancel={onCancel}
-                onEstateCreation={onEstateCreation}
-                parcels={parcels}
-              />
-            </Container>
-          </div>
-        )}
-      </Parcel>
-    )
+    return this.state.isSelecting ? (
+      <React.Fragment>
+        <EstateSelect
+          value={this.state.estate.parcels}
+          onContinue={this.handleSwitch}
+          onChange={this.handleChangeParcels}
+        />
+      </React.Fragment>
+    ) : (
+        <React.Fragment>
+          <EstateModal
+            value={this.state.estate}
+            onReturn={this.handleSwitch}
+            onChange={this.handleChange}
+            onSubmit={this.handleSubmit}
+          />
+        </React.Fragment>
+      )
   }
 }
