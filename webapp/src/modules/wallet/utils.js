@@ -22,7 +22,7 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
     const { LedgerWallet, NodeWallet } = wallets
     const { address, derivationPath } = options
 
-    let connected = await eth.connect({
+    await eth.connect({
       provider: env.get('REACT_APP_PROVIDER_URL'),
       contracts: [
         new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
@@ -39,18 +39,22 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       ],
       wallets: isMobile()
         ? [new NodeWallet(address)]
-        : [new NodeWallet(address), new LedgerWallet(address, derivationPath)]
+        : [
+            retries < 3
+              ? new NodeWallet(address)
+              : new LedgerWallet(address, derivationPath)
+          ]
     })
-    if (!connected) throw new Error('Could not connect to Ethereum')
+    eth.wallet.getAccount() // throws on empty accounts
   } catch (error) {
-    if (retries >= 3) {
+    if (retries >= 6) {
       console.warn(
         `Error trying to connect to Ethereum for the ${retries}th time`,
         error
       )
       throw error
     }
-    await utils.sleep(500)
+    await utils.sleep(250)
     return connectEthereumWallet(options, retries + 1)
   }
 }
