@@ -55,8 +55,8 @@ describe('Parcel', function() {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: Publication.STATUS.open,
-        x: 3,
-        y: 5,
+        type: Publication.TYPES.parcel,
+        asset_id: '3,5',
         owner: '0xdeadbeef33',
         buyer: null,
         price: 1500,
@@ -64,6 +64,7 @@ describe('Parcel', function() {
         contract_id: '0xdeadbeef',
         block_time_created_at: null,
         block_time_updated_at: null,
+        marketplace_id: '0x113322',
         block_number: 1
       }
       await Publication.insert(publication)
@@ -73,12 +74,13 @@ describe('Parcel', function() {
         {
           x: 3,
           y: 5,
+          asset_id: null,
           auction_price: null,
           owner: null,
           data: null,
           district_id: null,
+          in_estate: false,
           last_transferred_at: null,
-          asset_id: null,
           auction_owner: null,
           tags: {},
           publication
@@ -86,12 +88,13 @@ describe('Parcel', function() {
         {
           x: 4,
           y: 5,
+          asset_id: null,
           auction_price: null,
           owner: null,
           data: null,
           district_id: null,
+          in_estate: false,
           last_transferred_at: null,
-          asset_id: null,
           auction_owner: null,
           tags: {},
           publication: null
@@ -165,6 +168,7 @@ describe('Parcel', function() {
           district_id: null,
           last_transferred_at: null,
           auction_owner: null,
+          in_estate: false,
           tags: {}
         },
         {
@@ -177,6 +181,7 @@ describe('Parcel', function() {
           district_id: null,
           last_transferred_at: null,
           auction_owner: null,
+          in_estate: false,
           tags: {}
         }
       ])
@@ -237,7 +242,7 @@ describe('ParcelService', function() {
   }
 
   describe('#insertMatrix', function() {
-    it('should call the `insert` method of parcel state for each element of the matrix', async function() {
+    it('should call the `insert` method of Parcel for each element of the matrix', async function() {
       const ParcelMock = { insert: () => Promise.resolve() }
       const spy = sinon.spy(ParcelMock, 'insert')
 
@@ -269,7 +274,7 @@ describe('ParcelService', function() {
 
     it('should skip already created parcels', function() {
       const error =
-        'duplicate key value violates unique constraint "parcel_states_pkey"'
+        'duplicate key value violates unique constraint "parcel_pkey"'
 
       const ParcelMock = { insert: () => Promise.reject(error) }
       const service = new ParcelService()

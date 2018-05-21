@@ -5,6 +5,7 @@ import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Mortgage } from '../../src/Mortgage'
+import { MarketplaceEvent } from '../../src/MarketplaceEvent'
 import { isDuplicatedConstraintError } from '../../src/lib'
 
 const log = new Log('processEvents')
@@ -74,6 +75,7 @@ async function processNoParcelRelatedEvents(event) {
 async function processParcelRelatedEvents(assetId, event) {
   const { tx_hash, block_number, name } = event
   const parcelId = await Parcel.decodeAssetId(assetId)
+
   if (!parcelId) {
     // This only happens in dev, if there's a parcel in the DB that's outside of Genesis City
     log.info(`parcelId for assetId "${assetId}" is null`)
@@ -84,6 +86,7 @@ async function processParcelRelatedEvents(assetId, event) {
     case BlockchainEvent.EVENTS.publicationCreated: {
       const { seller, priceInWei, expiresAt } = event.args
       const contract_id = event.args.id
+      const marketplace = new MarketplaceEvent(event)
 
       if (!contract_id) {
         log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
@@ -101,8 +104,7 @@ async function processParcelRelatedEvents(assetId, event) {
         new BlockTimestampService().getBlockTime(block_number),
 
         Publication.delete({
-          x,
-          y,
+          asset_id: parcelId,
           owner: seller.toLowerCase(),
           status: Publication.STATUS.open
         })
@@ -115,13 +117,14 @@ async function processParcelRelatedEvents(assetId, event) {
           owner: seller.toLowerCase(),
           buyer: null,
           price: eth.utils.fromWei(priceInWei),
+          asset_id: parcelId,
           expires_at: expiresAt,
+          marketplace_id: marketplace.getId(),
+          type: marketplace.getType(),
           tx_hash,
           block_number,
           block_time_created_at,
-          contract_id,
-          x,
-          y
+          contract_id
         })
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -201,7 +204,7 @@ async function processParcelRelatedEvents(assetId, event) {
 
       const [last_transferred_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
-        Publication.cancelOlder(x, y, block_number)
+        Publication.cancelOlder(parcelId, block_number)
       ])
       await Parcel.update(
         { owner: to.toLowerCase(), last_transferred_at },

@@ -9,7 +9,6 @@ import {
 } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
-import { locations } from 'locations'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
   CONNECT_WALLET_REQUEST,
@@ -40,6 +39,7 @@ import {
   approveMortgageForRCNFailure
 } from './actions'
 import { getData } from './selectors'
+import { locations } from 'locations'
 import { isLoading as isStorageLoading } from 'modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'

@@ -109,8 +109,7 @@ export default class PublicationForm extends React.PureComponent {
 
     if (formErrors.length === 0) {
       onPublish({
-        x: parcel.x,
-        y: parcel.y,
+        id: parcel.id,
         expires_at: new Date(expiresAt).getTime(),
         price: parseFloat(price)
       })

@@ -25,8 +25,8 @@ const mapState = (state, { match, location }) => {
   return {
     isLoading: isConnecting(state),
     center: {
-      x: parseInt(match.params.x, 10),
-      y: parseInt(match.params.y, 10)
+      x: parseInt(match.params.x, 10) || 0,
+      y: parseInt(match.params.y, 10) || 0
     },
     selected
   }

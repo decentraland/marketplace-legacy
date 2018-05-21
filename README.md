@@ -51,3 +51,7 @@ To keep your database up to date, you'll need to run `npm run migrate up` each t
 ## Seed
 
 If you need some test data to test the marketplace, you can use the seed for quick features. Run `npm run seed generate MODEL_NAME -- --amount NUMBER`, (which will look something like this `npm run seed generate Publication -- --amount 2`) and follow the prompts
+
+## Translate
+
+You can translate automatically from English to the other locales by running the command `npm run translate`, this command will compare all the other locales to `en.json` and if it finds any missing translation it will use Google Translate to add it to the corresponding locale.
