@@ -55,7 +55,7 @@ Do you wish to continue?`
     await updateParcelsData(parcels)
   }
 
-  const shouldTag = await cli.confirm('Do you want to insert parcel tags?')
+  const shouldTag = await cli.confirm('Do you want to set parcel tags?')
   if (shouldTag) {
     await tagParcels()
   }

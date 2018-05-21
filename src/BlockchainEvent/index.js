@@ -1,1 +1,1 @@
-export { BlockchainEvent } from './BlockchainEvent'
+export { BlockchainEvent } from './BlockchainEvent.model'

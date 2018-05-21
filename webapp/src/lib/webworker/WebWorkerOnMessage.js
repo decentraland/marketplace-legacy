@@ -21,9 +21,10 @@ export function WebWorkerOnMessage(event) {
       break
   }
 
-  self.postMessage(
-    Object.assign({ type: action.type, timestamp: action.timestamp }, result)
-  )
+  result.type = action.type
+  result.timestamp = action.timestamp
+
+  self.postMessage(result)
 
   //
   // Utils

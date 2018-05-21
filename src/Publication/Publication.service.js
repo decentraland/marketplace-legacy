@@ -1,45 +1,22 @@
-import { txUtils } from 'decentraland-eth'
-
-import { Publication } from './Publication'
+import { Publication } from './Publication.model'
 import { Parcel } from '../Parcel'
+import { Estate } from '../Estate'
 
 export class PublicationService {
   constructor() {
     this.Publication = Publication
+    this.Parcel = Parcel
+    this.Estate = Estate
   }
 
-  async filter(filters) {
-    const { status, sort, pagination } = filters.sanitize()
-
-    const values = [status, txUtils.TRANSACTION_STATUS.confirmed]
-
-    const [publications, counts] = await Promise.all([
-      this.Publication.query(
-        `SELECT pub.*, row_to_json(par.*) as parcel
-          FROM ${Publication.tableName} as pub
-          JOIN ${Parcel.tableName} as par ON par.x = pub.x AND par.y = pub.y
-          WHERE status = $1
-            AND tx_status = $2
-            AND expires_at >= EXTRACT(epoch from now()) * 1000
-          ORDER BY pub.${sort.by} ${sort.order}
-          LIMIT ${pagination.limit} OFFSET ${pagination.offset}`,
-        values
-      ),
-      this.Publication.query(
-        `SELECT COUNT(*)
-          FROM ${Publication.tableName}
-          WHERE status = $1
-            AND tx_status = $2
-            AND expires_at >= EXTRACT(epoch from now()) * 1000`,
-        values
-      )
-    ])
-
-    const total = parseInt(counts[0].count, 10)
+  getModelFromType(type) {
+    if (!this.Publication.isValidType(type)) {
+      throw new Error(`Invalid publication type "${type}"`)
+    }
 
     return {
-      publications,
-      total
-    }
+      [this.Publication.TYPES.parcel]: this.Parcel,
+      [this.Publication.TYPES.estate]: this.Estate
+    }[type]
   }
 }

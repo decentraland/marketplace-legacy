@@ -1,8 +1,10 @@
 import { Model } from 'decentraland-commons'
 
 import { coordinates } from './coordinates'
-import { Publication } from '../Publication'
+import { Asset } from '../Asset'
+import { PublicationQueries } from '../Publication'
 import { District } from '../District'
+import { SQL } from '../database'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
@@ -11,12 +13,13 @@ export class Parcel extends Model {
     'x',
     'y',
     'asset_id',
-    'auction_price',
-    'auction_owner',
     'owner',
     'data',
     'district_id',
+    'in_estate',
     'tags',
+    'auction_price',
+    'auction_owner',
     'last_transferred_at'
   ]
 
@@ -42,44 +45,26 @@ export class Parcel extends Model {
 
   static async findInIds(ids) {
     if (ids.length === 0) return []
-    const inPlaceholders = ids.map((id, index) => `$${index + 1}`)
 
     return await this.db.query(
-      `SELECT *
-        FROM ${this.tableName}
-        WHERE id IN (${inPlaceholders})`,
-      ids
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE id = ANY(${ids})`
     )
   }
 
   static async findByOwner(owner) {
-    return await this.db.query(
-      `SELECT ${this.tableName}.*, (
-        ${Publication.findLastParcelPublicationJsonSql()}
-      ) as publication
-        FROM ${this.tableName}
-        WHERE owner = $1`,
-      [owner]
-    )
+    return new Asset(this).findByOwner(owner)
   }
 
   static async findByOwnerAndStatus(owner, status) {
-    return await this.db.query(
-      `SELECT DISTINCT ON(par.id, pub.status) par.*, row_to_json(pub.*) as publication
-        FROM ${this.tableName} as par
-        LEFT JOIN (
-          ${Publication.findPublicationsByStatusSql(status)}
-        ) as pub ON par.x = pub.x AND par.y = pub.y
-        WHERE par.owner = $1
-          AND pub.tx_hash IS NOT NULL`,
-      [owner]
-    )
+    return new Asset(this).findByOwnerAndStatus(owner, status)
   }
 
   static async findOwneableParcels() {
     return await this.db.query(
       `SELECT *
-        FROM ${this.tableName}
+        FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
     )
   }
@@ -87,45 +72,42 @@ export class Parcel extends Model {
   static async findLandmarks() {
     return await this.db.query(
       `SELECT *
-        FROM ${this.tableName}
+        FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
     )
   }
 
   static async inRange(min, max) {
-    const [minx, miny] = coordinates.toArray(min)
-    const [maxx, maxy] = coordinates.toArray(max)
+    const [minx, maxy] = coordinates.toArray(min)
+    const [maxx, miny] = coordinates.toArray(max)
 
     return await this.db.query(
-      `SELECT ${this.tableName}.*, (
-        ${Publication.findLastParcelPublicationJsonSql()}
+      SQL`SELECT *, (
+        ${PublicationQueries.findLastParcelPublicationJsonSql()}
       ) as publication
-        FROM ${this.tableName}
-        WHERE x >= $1 AND y >= $2
-          AND x <= $3 AND y <= $4`,
-      [minx, miny, maxx, maxy]
+        FROM ${SQL.raw(this.tableName)}
+        WHERE x BETWEEN ${minx} AND ${maxx}
+          AND y BETWEEN ${miny} AND ${maxy}`
     )
   }
 
   static async encodeAssetId(x, y) {
     const rows = await this.db.query(
-      `SELECT asset_id
-        FROM ${this.tableName}
-        WHERE x = $1
-          AND y = $2
-        LIMIT 1`,
-      [x, y]
+      SQL`SELECT asset_id
+        FROM ${SQL.raw(this.tableName)}
+        WHERE x = ${x}
+          AND y = ${y}
+        LIMIT 1`
     )
     return rows.length ? rows[0].asset_id : null
   }
 
   static async decodeAssetId(assetId) {
     const rows = await this.db.query(
-      `SELECT id
-        FROM ${this.tableName}
-        WHERE asset_id = $1
-        LIMIT 1`,
-      [assetId]
+      SQL`SELECT id
+        FROM ${SQL.raw(this.tableName)}
+        WHERE asset_id = ${assetId}
+        LIMIT 1`
     )
     return rows.length ? rows[0].id : null
   }
