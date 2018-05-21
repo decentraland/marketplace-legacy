@@ -1,4 +1,5 @@
 import { buildTransactionAction } from 'modules/transaction/utils'
+import { splitCoordinate } from 'lib/utils'
 
 export const CREATE_MORTGAGE_REQUEST = '[Request] Create Mortgage'
 export const CREATE_MORTGAGE_SUCCESS = '[Success] Create Mortgage'
@@ -33,22 +34,22 @@ export const CANCEL_MORTGAGE_REQUEST = '[Request] Cancel Mortgage'
 export const CANCEL_MORTGAGE_SUCCESS = '[Success] Cancel Mortgage'
 export const CANCEL_MORTGAGE_FAILURE = '[Failure] Cancel Mortgage'
 
-export function cancelMortgageRequest(mortgageId, asset) {
+export function cancelMortgageRequest(mortgageId, assetId) {
   return {
     type: CANCEL_MORTGAGE_REQUEST,
     mortgageId,
-    x: asset.x,
-    y: asset.y
+    assetId
   }
 }
 
-export function cancelMortgageSuccess(txHash, asset) {
+export function cancelMortgageSuccess(txHash, assetId) {
+  const { x, y } = splitCoordinate(assetId)
   return {
     type: CANCEL_MORTGAGE_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: txHash,
-      x: asset.x,
-      y: asset.y
+      x,
+      y
     })
   }
 }

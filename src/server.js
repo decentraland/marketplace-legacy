@@ -250,7 +250,7 @@ export async function getActiveMortgagesInCoordinate(req) {
 
   let mortgages = []
   if (status === 'active') {
-    mortgages = await Mortgage.findActivesInCoordinate(x, y)
+    mortgages = await Mortgage.findActivesInCoordinate(Parcel.buildId(x, y))
   }
   return mortgages
 }

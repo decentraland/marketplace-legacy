@@ -243,8 +243,8 @@ async function processParcelRelatedEvents(assetId, event) {
           block_time_created_at,
           amount: eth.utils.fromWei(amount),
           tx_hash,
-          x,
-          y,
+          asset_id: Parcel.buildId(x, y),
+          type: 'parcel', // TODO: should replace with constant
           borrower
         })
       } catch (error) {

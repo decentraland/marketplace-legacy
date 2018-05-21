@@ -118,14 +118,14 @@ function* handleCreateMortgageRequest(action) {
 
 function* handleCancelMortgageRequest(action) {
   try {
-    const { mortgageId, x, y } = action
+    const { mortgageId, assetId } = action
     const mortgageManagerContract = eth.getContract('MortgageManager')
 
     const mortgageCancelReceipt = yield call(() =>
       mortgageManagerContract.cancelMortgage(mortgageId)
     )
 
-    yield put(cancelMortgageSuccess(mortgageCancelReceipt, { x, y }))
+    yield put(cancelMortgageSuccess(mortgageCancelReceipt, assetId))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(cancelMortgageFailure(error.message))

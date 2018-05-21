@@ -26,8 +26,8 @@ exports.up = pgm => {
         default: Mortgage.STATUS.open,
         check: `status IN (${mortgageStatus})`
       },
-      x: { type: 'INT', notNull: true },
-      y: { type: 'INT', notNull: true },
+      asset_id: { type: 'TEXT', notNull: true },
+      type: 'TEXT',
       borrower: { type: 'VARCHAR(42)', notNull: true },
       lender: { type: 'VARCHAR(42)' },
       loan_id: { type: 'INT', notNull: true },
@@ -47,7 +47,7 @@ exports.up = pgm => {
   pgm.createIndex(tableName, 'mortgage_id')
   pgm.createIndex(tableName, 'status')
   pgm.createIndex(tableName, 'borrower')
-  pgm.createIndex(tableName, ['x', 'y'])
+  pgm.createIndex(tableName, 'asset_id')
 }
 
 exports.down = pgm => {
@@ -55,7 +55,7 @@ exports.down = pgm => {
   pgm.dropIndex(tableName, 'mortgage_id')
   pgm.dropIndex(tableName, 'status')
   pgm.dropIndex(tableName, 'borrower')
-  pgm.dropIndex(tableName, ['x', 'y'])
+  pgm.dropIndex(tableName, 'asset_id')
 
   pgm.dropTable(tableName)
 }

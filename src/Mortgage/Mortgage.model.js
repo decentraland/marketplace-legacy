@@ -1,6 +1,5 @@
 import { Model } from 'decentraland-commons'
 import { SQL, raw } from '../database'
-import { BlockchainEvent } from "../BlockchainEvent";
 
 export class Mortgage extends Model {
   static tableName = 'mortgages'
@@ -9,8 +8,8 @@ export class Mortgage extends Model {
     'tx_status',
     'block_number',
     'status',
-    'x',
-    'y',
+    'asset_id',
+    'type',
     'borrower',
     'lender',
     'loan_id',
@@ -38,10 +37,10 @@ export class Mortgage extends Model {
     )
   }
 
-  static findActivesInCoordinate(x, y) {
+  static findActivesInCoordinate(assetId) {
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)}
-        WHERE x = ${x} AND y = ${y}
+        WHERE asset_id = ${assetId}
           AND status != '${raw(this.STATUS.cancelled)}'
           ORDER BY created_at DESC`
     )

@@ -49,7 +49,7 @@ export async function updateParcelsData(parcels) {
       )
     },
     batchSize: BATCH_SIZE,
-    retryAttempts: 200
+    retryAttempts: 20
   })
 
   log.info(`Waiting for the DB to finish for ${updates.length} updates`)

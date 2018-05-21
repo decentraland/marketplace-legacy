@@ -48,7 +48,7 @@ export const getMortgagedParcels = createSelector(
   getMappedMortgages,
   (borrower, parcels, mortgages) =>
     getActiveMortgagesByBorrower(mortgages, borrower).map(mortgage => ({
-      ...parcels[buildCoordinate(mortgage.x, mortgage.y)],
+      ...parcels[mortgage.asset_id],
       mortgage
     }))
 )

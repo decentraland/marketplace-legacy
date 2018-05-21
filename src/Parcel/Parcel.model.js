@@ -165,8 +165,7 @@ export class Parcel extends Model {
 
   static async findWithLastActiveMortgageByBorrower(borrower) {
     return await this.db.query(
-      SQL`SELECT *, 
-        (${MortgageQueries.findLastByBorrowerSql(borrower)}) as mortgage
+      SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
     )

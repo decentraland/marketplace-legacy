@@ -81,7 +81,6 @@ describe('Parcel', function() {
           asset_id: null,
           auction_owner: null,
           tags: {},
-          mortgages: [],
           publication
         },
         {
@@ -95,68 +94,13 @@ describe('Parcel', function() {
           asset_id: null,
           auction_owner: null,
           tags: {},
-          mortgages: [],
           publication: null
-        }
-      ])
-    })
-
-    it('should join the last mortgage request', async function() {
-      const mortgage = {
-        tx_hash: '0xdeadbeef',
-        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Mortgage.STATUS.open,
-        loan_id: 1,
-        mortgage_id: 1,
-        x: 3,
-        y: 5,
-        borrower: '0xdeadbeef33',
-        lender: null,
-        is_due_at: new Date().getTime() * 1000,
-        amount: 1500,
-        expires_at: new Date().getTime() * 1000,
-        block_time_created_at: null,
-        block_time_updated_at: null,
-        block_number: 1
-      }
-      await Mortgage.insert(mortgage)
-
-      const range = await Parcel.inRange([3, 5], [4, 5])
-
-      expect(range).to.equalRows([
-        {
-          x: 3,
-          y: 5,
-          auction_price: null,
-          owner: null,
-          data: null,
-          district_id: null,
-          last_transferred_at: null,
-          asset_id: null,
-          auction_owner: null,
-          tags: {},
-          publication: null,
-          mortgages: [mortgage]
-        },
-        {
-          x: 4,
-          y: 5,
-          auction_price: null,
-          owner: null,
-          data: null,
-          district_id: null,
-          last_transferred_at: null,
-          asset_id: null,
-          auction_owner: null,
-          tags: {},
-          publication: null,
-          mortgages: []
         }
       ])
     })
   })
 
-  describe('.parcelsMortgagesByBorrower', function() {
+  describe('.findWithLastActiveMortgageByBorrower', function() {
     beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
 
     it('should return parcels with mortgages open/claimed by borrower', async function() {
@@ -166,8 +110,8 @@ describe('Parcel', function() {
         status: Mortgage.STATUS.open,
         loan_id: 0,
         mortgage_id: 0,
-        x: 2,
-        y: 5,
+        asset_id: Parcel.buildId(2, 5),
+        type: 'parcel', // TODO: change with constant
         borrower: '0xdeadbeef33',
         lender: null,
         is_due_at: new Date().getTime() * 1000,
@@ -185,17 +129,15 @@ describe('Parcel', function() {
       })
       const mortgage3 = Object.assign({}, mortgage, {
         tx_hash: '3xdeadbdff',
-        x: 5,
-        y: 5,
+        asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Publication.STATUS.cancelled,
+        status: Mortgage.STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
         tx_hash: '4xdeadbeff',
-        x: 6,
-        y: 5,
+        asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
         status: Mortgage.STATUS.claimed,
@@ -208,23 +150,13 @@ describe('Parcel', function() {
         Mortgage.insert(mortgage4)
       ])
 
-      const range = await Parcel.parcelsMortgagesByBorrower('0xdeadbeef33')
+      const range = await Parcel.findWithLastActiveMortgageByBorrower(
+        '0xdeadbeef33'
+      )
       expect(range.length).to.be.equal(2)
       expect(range).to.equalRows([
         {
-          x: 6,
-          y: 5,
-          auction_price: null,
-          owner: null,
-          data: null,
-          district_id: null,
-          last_transferred_at: null,
           asset_id: null,
-          auction_owner: null,
-          tags: {},
-          mortgage: mortgage4
-        },
-        {
           x: 2,
           y: 5,
           auction_price: null,
@@ -232,10 +164,20 @@ describe('Parcel', function() {
           data: null,
           district_id: null,
           last_transferred_at: null,
-          asset_id: null,
           auction_owner: null,
-          tags: {},
-          mortgage: mortgage
+          tags: {}
+        },
+        {
+          asset_id: null,
+          x: 6,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          last_transferred_at: null,
+          auction_owner: null,
+          tags: {}
         }
       ])
     })

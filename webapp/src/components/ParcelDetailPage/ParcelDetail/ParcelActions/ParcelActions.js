@@ -38,7 +38,7 @@ export default class ParcelActions extends React.PureComponent {
   }
 
   render() {
-    const { parcel, isOwner, mortgages, isLoading} = this.props
+    const { parcel, isOwner, mortgages, isLoading } = this.props
     if (!parcel || isLoading) {
       return null
     }
