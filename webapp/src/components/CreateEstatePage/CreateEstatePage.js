@@ -46,7 +46,7 @@ export default class CreateEstatePage extends React.PureComponent {
 
   render() {
     const { isSelecting, estate } = this.state
-    console.log(estate)
+
     return isSelecting ? (
       <React.Fragment>
         <EstateSelect

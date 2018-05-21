@@ -16,8 +16,6 @@ export default class EditEstate extends React.PureComponent {
 
   render() {
     const { onSubmit, onChange, onCancel, value: estate } = this.props
-    console.log('esto es edit estate')
-    console.log(estate)
 
     return (
       <div className="EditEstate">
