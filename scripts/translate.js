@@ -2,11 +2,12 @@
 import axios from 'axios'
 import fs from 'fs'
 import { unflatten } from 'flat'
-import { Log, utils } from 'decentraland-commons'
+import { env, Log, utils } from 'decentraland-commons'
 import merge from 'lodash/merge'
 import { loadEnv } from './utils'
 import { Translation } from '../src/Translation'
 
+let BATCH_SIZE = 10
 const log = new Log('translate')
 
 async function main() {
@@ -21,21 +22,30 @@ async function main() {
   for (const locale of availableLocales) {
     if (locale !== DEFAULT_LOCALE) {
       const translations = await translation.fetch(locale)
+      let requests = []
       for (const key of mainKeys) {
         if (key in translations) {
           // all good
         } else {
           const defaultText = mainTranslations[key]
-          let translated = await translate(locale, defaultText)
-          if (isCapitalized(defaultText) && !isCapitalized(translated)) {
-            translated = translated[0].toUpperCase() + translated.slice(1)
+          requests.push(
+            translate(locale, defaultText).then(text => ({
+              locale,
+              key,
+              text,
+              defaultText
+            }))
+          )
+
+          if (requests.length > BATCH_SIZE) {
+            await processBatch(requests, missing)
+            requests = []
           }
-          if (!missing[locale]) {
-            missing[locale] = {}
-          }
-          missing[locale][key] = translated
-          log.info(`${locale}(${key}): ${defaultText} -> ${translated}`)
         }
+      }
+      if (requests.length > 0) {
+        await processBatch(requests, missing)
+        requests = []
       }
     }
   }
@@ -65,8 +75,26 @@ async function main() {
   log.info('done!')
 }
 
+async function processBatch(requests, missing) {
+  const translated = await Promise.all(requests)
+  translated.forEach(({ locale, key, text, defaultText }) => {
+    if (isCapitalized(defaultText) && !isCapitalized(text)) {
+      text = capitalize(text)
+    }
+    if (!missing[locale]) {
+      missing[locale] = {}
+    }
+    missing[locale][key] = text
+    log.info(`${locale}(${key}): ${defaultText} -> ${text}`)
+  })
+}
+
 function isCapitalized(text = '') {
   return text[0] === text[0].toUpperCase()
+}
+
+function capitalize(text) {
+  return text[0].toUpperCase() + text.slice(1)
 }
 
 function sortObject(unordered) {
@@ -109,7 +137,8 @@ async function translate(lang, text) {
 
 if (require.main === module) {
   loadEnv()
-
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 10), 10)
+  log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
   Promise.resolve()
     .then(main)
     .catch(console.error)
