@@ -75,8 +75,9 @@ function sortObject(unordered) {
   for (const key of keys) {
     if (unordered[key] != null && typeof unordered[key] === 'object') {
       ordered[key] = sortObject(unordered[key])
+    } else {
+      ordered[key] = unordered[key]
     }
-    ordered[key] = unordered[key]
   }
   return ordered
 }
