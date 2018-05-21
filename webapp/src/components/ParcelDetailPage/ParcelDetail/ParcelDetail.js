@@ -22,7 +22,7 @@ export default class ParcelDetail extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
-    mortgages: PropTypes.array.isRequired
+    mortgages: PropTypes.array
   }
 
   getDescription() {
@@ -71,7 +71,7 @@ export default class ParcelDetail extends React.PureComponent {
                   <Grid.Column width={4}>
                     <h3>{t('parcel_detail.publication.price')}</h3>
                     <Mana
-                      amount={parseFloat(publication.price, 10)}
+                      amount={parseFloat(publication.price)}
                       size={20}
                       className="mana-price-icon"
                     />

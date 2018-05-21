@@ -9,6 +9,7 @@ import { db } from './database'
 import { Parcel } from './Parcel'
 import { Contribution } from './Contribution'
 import { District } from './District'
+import { Mortgage } from './Mortgage'
 import {
   Publication,
   PublicationService,
@@ -201,18 +202,57 @@ export async function getPublication(req) {
 }
 
 /**
- * Get a mortgages by borrower
- * @param  {string} borrower
- * @return {array}
+ * Get parcels with mortgages by borrower
+ * @param  {string} address
+ * @return {array<Parcel>}
  */
 app.get(
-  '/api/mortgages/:borrower',
+  '/api/parcels/:address/mortgages',
+  server.handleRequest(getMortgagedParcelsByBorrower)
+)
+
+export async function getMortgagedParcelsByBorrower(req) {
+  const borrower = server.extractFromReq(req, 'address')
+  const parcels = await Parcel.findWithLastActiveMortgageByBorrower(borrower)
+  return utils.mapOmit(parcels, blacklist.parcel)
+}
+
+/**
+ * Get mortgages by borrower
+ * @param  {string} address
+ * @return {array<Mortgage>}
+ */
+app.get(
+  '/api/addresses/:address/mortgages',
   server.handleRequest(getMortgagesByBorrower)
 )
 
 export async function getMortgagesByBorrower(req) {
-  const borrower = server.extractFromReq(req, 'borrower')
-  return await Parcel.parcelsMortgagesByBorrower(borrower)
+  const borrower = server.extractFromReq(req, 'address')
+  return await Mortgage.findActivesByBorrower(borrower)
+}
+
+/**
+ * Get mortgages by coordinates
+ * @param  {string} x
+ * @param  {string} y
+ * @return {array<Mortgage>}
+ */
+app.get(
+  '/api/parcels/:x/:y/mortgages',
+  server.handleRequest(getActiveMortgagesInCoordinate)
+)
+
+export async function getActiveMortgagesInCoordinate(req) {
+  const x = server.extractFromReq(req, 'x')
+  const y = server.extractFromReq(req, 'y')
+  const status = server.extractFromReq(req, 'status')
+
+  let mortgages = []
+  if (status === 'active') {
+    mortgages = await Mortgage.findActivesInCoordinate(x, y)
+  }
+  return mortgages
 }
 
 /* Start the server only if run directly */

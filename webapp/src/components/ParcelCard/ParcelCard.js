@@ -10,10 +10,10 @@ import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
 import { AUCTION_DATE } from 'lib/parcelUtils'
-import { isOpen } from 'modules/publication/utils'
-import { isOpen as isMortgageOpen } from 'modules/mortgage/utils'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
 import { t } from 'modules/translation/utils'
-import { formatDate, buildCoordinate } from 'lib/utils'
+import { formatDate, buildCoordinate, isOpen } from 'lib/utils'
 
 import './ParcelCard.css'
 
@@ -29,7 +29,7 @@ export default class ParcelCard extends React.PureComponent {
     const { x, y, publication } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
-    const isPublicationOpen = isOpen(publication)
+    const isPublicationOpen = isOpen(publication, PUBLICATION_STATUS.open)
 
     return (
       <Card className="ParcelCard">
@@ -47,7 +47,7 @@ export default class ParcelCard extends React.PureComponent {
             <Card.Description title={parcelName}>
               <span className="name">{parcelName}</span>
               {isPublicationOpen ? (
-                <Mana amount={parseFloat(publication.price, 10)} />
+                <Mana amount={parseFloat(publication.price)} />
               ) : null}
             </Card.Description>
 
@@ -75,14 +75,14 @@ export default class ParcelCard extends React.PureComponent {
             )}
 
             {showMortgage &&
-              isMortgageOpen(parcel.mortgage) && (
+              isOpen(parcel.mortgage, MORTGAGE_STATUS.open) && (
                 <React.Fragment>
                   <p className={`mortgage-status ${parcel.mortgage.status}`}>
                     {parcel.mortgage.status}
                   </p>
                 </React.Fragment>
               )}
-            {!isOpen(publication) &&
+            {!isOpen(publication, PUBLICATION_STATUS.open) &&
               !showMortgage && (
                 <Card.Meta>
                   {t('publication.acquired_at', {

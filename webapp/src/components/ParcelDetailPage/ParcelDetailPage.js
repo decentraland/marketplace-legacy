@@ -6,7 +6,6 @@ import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
 import { districtType, publicationType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import { getOpenMortgagesByBorrower } from 'modules/mortgage/utils'
 
 import './ParcelDetailPage.css'
 
@@ -18,7 +17,9 @@ export default class ParcelDetailPage extends React.PureComponent {
     error: PropTypes.string,
     districts: PropTypes.objectOf(districtType).isRequired,
     publications: PropTypes.objectOf(publicationType),
+    mortgages: PropTypes.array,
     onFetchParcelPublications: PropTypes.func.isRequired,
+    onFetchActiveParcelMortgages: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
     onBuy: PropTypes.func.isRequired,
     user: PropTypes.string,
@@ -41,7 +42,14 @@ export default class ParcelDetailPage extends React.PureComponent {
 
   fetchAdditionalParcelResources() {
     if (!this.isAdditionalResourcesFetched) {
-      const { x, y, onFetchParcelPublications } = this.props
+      const {
+        x,
+        y,
+        onFetchParcelPublications,
+        onFetchActiveParcelMortgages
+      } = this.props
+
+      onFetchActiveParcelMortgages(x, y)
       onFetchParcelPublications(x, y)
 
       this.isAdditionalResourcesFetched = true
@@ -57,7 +65,7 @@ export default class ParcelDetailPage extends React.PureComponent {
       publications,
       onBuy,
       onParcelClick,
-      user
+      mortgages
     } = this.props
 
     if (error) {
@@ -86,7 +94,7 @@ export default class ParcelDetailPage extends React.PureComponent {
                 districts={districts}
                 publications={publications}
                 onBuy={onBuy}
-                mortgages={getOpenMortgagesByBorrower(parcel.mortgages, user)}
+                mortgages={mortgages}
               />
             </Container>
           </div>

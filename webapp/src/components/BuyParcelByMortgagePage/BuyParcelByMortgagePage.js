@@ -70,7 +70,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} notOwnerOnly withPublications>
+      <Parcel x={x} y={y} ownerNotAllowed withPublications>
         {parcel =>
           parcel.publication ? (
             <React.Fragment>

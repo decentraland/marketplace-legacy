@@ -85,7 +85,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
             }
           }
         case TRANSFER_MANA_SUCCESS: {
-          const mana = parseFloat(transaction.payload.mana, 10)
+          const mana = parseFloat(transaction.payload.mana)
           return {
             ...state,
             data: {
@@ -96,7 +96,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
           }
         }
         case BUY_SUCCESS: {
-          const price = parseFloat(transaction.payload.price, 10)
+          const price = parseFloat(transaction.payload.price)
           return {
             ...state,
             data: {

@@ -1,4 +1,6 @@
 import { Model } from 'decentraland-commons'
+import { SQL, raw } from '../database'
+import { BlockchainEvent } from "../BlockchainEvent";
 
 export class Mortgage extends Model {
   static tableName = 'mortgages'
@@ -15,7 +17,7 @@ export class Mortgage extends Model {
     'mortgage_id',
     'amount',
     'expires_at',
-    'dues_in',
+    'is_due_at',
     'block_time_created_at',
     'block_time_updated_at'
   ]
@@ -26,4 +28,22 @@ export class Mortgage extends Model {
     claimed: 'claimed',
     cancelled: 'cancelled'
   })
+
+  static findActivesByBorrower(borrower) {
+    return this.db.query(
+      SQL`SELECT * FROM ${raw(this.tableName)}
+        WHERE borrower = ${borrower}
+          AND status != '${raw(this.STATUS.cancelled)}'
+          ORDER BY created_at DESC`
+    )
+  }
+
+  static findActivesInCoordinate(x, y) {
+    return this.db.query(
+      SQL`SELECT * FROM ${raw(this.tableName)}
+        WHERE x = ${x} AND y = ${y}
+          AND status != '${raw(this.STATUS.cancelled)}'
+          ORDER BY created_at DESC`
+    )
+  }
 }

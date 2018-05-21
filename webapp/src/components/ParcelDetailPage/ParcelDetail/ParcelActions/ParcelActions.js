@@ -14,7 +14,8 @@ export default class ParcelActions extends React.PureComponent {
     parcel: parcelType.isRequired,
     onTransfer: PropTypes.func.isRequired,
     isOwner: PropTypes.bool,
-    mortgages: PropTypes.array.isRequired
+    mortgages: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool.isRequired
   }
 
   handleTransfer = () => {
@@ -37,8 +38,8 @@ export default class ParcelActions extends React.PureComponent {
   }
 
   render() {
-    const { parcel, isOwner, mortgages } = this.props
-    if (!parcel) {
+    const { parcel, isOwner, mortgages, isLoading} = this.props
+    if (!parcel || isLoading) {
       return null
     }
     const { x, y } = parcel

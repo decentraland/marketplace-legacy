@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects'
+import { takeLatest, call, put, select, all } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
 import { api } from 'lib/api'
@@ -7,12 +7,15 @@ import {
   CREATE_MORTGAGE_REQUEST,
   CANCEL_MORTGAGE_REQUEST,
   FETCH_MORTGAGED_PARCELS_REQUEST,
+  FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
   createMortgageSuccess,
   createMortgageFailure,
   cancelMortgageFailure,
   cancelMortgageSuccess,
   fetchMortgagedParcelsSuccess,
-  fetchMortgagedParcelsFailure
+  fetchMortgagedParcelsFailure,
+  fetchActiveParcelMortgagesSuccess,
+  fetchActiveParcelMortgagesFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { toInterestRate, getLoanMetadata, daysToSeconds } from './utils'
@@ -23,13 +26,20 @@ export function* mortgageSaga() {
   yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
   yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
   yield takeLatest(FETCH_MORTGAGED_PARCELS_REQUEST, handleFetchMortgageRequest)
+  yield takeLatest(
+    FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
+    handleFetchActiveParcelMortgagesRequest
+  )
 }
 
 function* handleFetchMortgageRequest(action) {
   try {
     const { borrower } = action
-    const parcels = yield call(() => api.fetchParcelMortgages(borrower))
-    yield put(fetchMortgagedParcelsSuccess(parcels))
+    const [parcels, mortgages] = yield all([
+      call(() => api.fetchMortgagedParcels(borrower)),
+      call(() => api.fetchMortgagesByBorrower(borrower))
+    ])
+    yield put(fetchMortgagedParcelsSuccess(parcels, mortgages))
   } catch (error) {
     yield put(fetchMortgagedParcelsFailure(error.message))
   }
@@ -119,5 +129,15 @@ function* handleCancelMortgageRequest(action) {
     yield put(push(locations.activity))
   } catch (error) {
     yield put(cancelMortgageFailure(error.message))
+  }
+}
+
+function* handleFetchActiveParcelMortgagesRequest(action) {
+  try {
+    const { x, y } = action
+    const mortgages = yield call(() => api.fetchActiveMortgages(x, y, 'active'))
+    yield put(fetchActiveParcelMortgagesSuccess(mortgages, x, y))
+  } catch (error) {
+    yield put(fetchActiveParcelMortgagesFailure(error.message))
   }
 }

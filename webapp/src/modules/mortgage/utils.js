@@ -1,8 +1,7 @@
-import { eth, txUtils } from 'decentraland-eth'
-import { isExpired } from 'lib/utils'
+import { eth } from 'decentraland-eth'
 
 // From Mortgage.js on the server
-export const MORTGAGES_STATUS = Object.freeze({
+export const MORTGAGE_STATUS = Object.freeze({
   open: 'open',
   claimed: 'claimed',
   cancelled: 'cancelled'
@@ -22,23 +21,11 @@ export function getLoanMetadata() {
   return `#mortgage #required-cosigner:${mortgageManagerContract.address}`
 }
 
-export function isOpen(publication) {
-  return hasStatus(publication, MORTGAGES_STATUS.open)
-}
-
-export function hasStatus(mortgage, status) {
-  return (
-    mortgage &&
-    mortgage.status === status &&
-    mortgage.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
-    !isExpired(mortgage)
-  )
-}
-
-export function getOpenMortgagesByBorrower(mortgages, borrower) {
+export function getActiveMortgagesByBorrower(mortgages, borrower) {
   return mortgages.filter(
     mortgage =>
+      mortgage &&
       mortgage.borrower === borrower &&
-      mortgage.status !== MORTGAGES_STATUS.cancelled
+      mortgage.status !== MORTGAGE_STATUS.cancelled
   )
 }

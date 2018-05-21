@@ -14,7 +14,7 @@ import {
   storageReducer as storage,
   storageReducerWrapper
 } from 'modules/storage/reducer'
-import { mortgageReducer as mortgages } from 'modules/mortgage/reducer'
+import mortgages from 'modules/mortgage/reducer'
 
 export const rootReducer = storageReducerWrapper(
   combineReducers({

@@ -56,9 +56,7 @@ export class Parcel extends Model {
     return await this.db.query(
       SQL`SELECT ${SQL.raw(this.tableName)}.*, (
         ${PublicationQueries.findLastParcelPublicationJsonSql()}
-      ) as publication, array(
-          ${MortgageQueries.findParcelMortgageJsonSql()}
-        ) as mortgages
+      ) as publication
         FROM ${SQL.raw(this.tableName)}
         WHERE owner = ${owner}`
     )
@@ -99,9 +97,7 @@ export class Parcel extends Model {
     return await this.db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastParcelPublicationJsonSql()}
-      ) as publication, ARRAY(
-        ${MortgageQueries.findParcelMortgageJsonSql()}
-      ) as mortgages
+      ) as publication
         FROM ${SQL.raw(this.tableName)}
         WHERE x BETWEEN ${minx} AND ${maxx}
           AND y BETWEEN ${miny} AND ${maxy}`
@@ -167,12 +163,12 @@ export class Parcel extends Model {
     return District.isRoad(this.attributes.district_id)
   }
 
-  static async parcelsMortgagesByBorrower(borrower) {
+  static async findWithLastActiveMortgageByBorrower(borrower) {
     return await this.db.query(
       SQL`SELECT *, 
-        (${MortgageQueries.findByBorrowerSql(borrower)}) as mortgage
+        (${MortgageQueries.findLastByBorrowerSql(borrower)}) as mortgage
         FROM ${SQL.raw(this.tableName)}
-        WHERE EXISTS(${MortgageQueries.findByBorrowerSql(borrower)})`
+        WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
     )
   }
 }

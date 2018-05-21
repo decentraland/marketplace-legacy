@@ -1,5 +1,5 @@
-import { shortenAddress } from 'lib/utils'
-import { isOpen } from 'modules/publication/utils'
+import { shortenAddress, isOpen } from 'lib/utils'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { t } from 'modules/translation/utils'
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
@@ -53,7 +53,7 @@ export function getDistrict(parcel, districts = {}) {
 }
 
 export function isOnSale(parcel) {
-  return parcel != null && isOpen(parcel.publication)
+  return parcel != null && isOpen(parcel.publication, PUBLICATION_STATUS.open)
 }
 
 export function getParcelAttributes(id, x, y, wallet, parcels, districts) {

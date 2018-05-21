@@ -3,7 +3,7 @@ import { Parcel } from '../Parcel'
 import { SQL, raw } from '../database'
 
 export const MortgageQueries = Object.freeze({
-  findByBorrowerSql: borrower =>
+  findLastByBorrowerSql: borrower =>
     SQL`SELECT row_to_json(m.*)
       FROM ${raw(Mortgage.tableName)} as m
       WHERE borrower = ${borrower}

@@ -211,6 +211,14 @@ async function processParcelRelatedEvents(assetId, event) {
     }
     case BlockchainEvent.EVENTS.newMortgage: {
       const { borrower, loanId, mortgageId } = event.args
+
+      const exists = await Mortgage.count({ tx_hash })
+      if (exists) {
+        log.info(`[${name}] Mortgage ${tx_hash} already exists`)
+        return
+      }
+      log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
+
       const rcnEngineContract = await eth.getContract('RCNEngine')
       const [amount, duesIn, expiresAt] = await Promise.all([
         await rcnEngineContract.getAmount(eth.utils.toBigNumber(loanId)),
@@ -220,13 +228,6 @@ async function processParcelRelatedEvents(assetId, event) {
         )
       ])
 
-      const exists = await Mortgage.count({ tx_hash })
-      if (exists) {
-        log.info(`[${name}] Mortgage ${tx_hash} already exists`)
-        return
-      }
-      log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
-
       const block_time_created_at = await Promise.resolve(
         new BlockTimestampService().getBlockTime(block_number)
       )
@@ -234,7 +235,7 @@ async function processParcelRelatedEvents(assetId, event) {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
           status: Mortgage.STATUS.open,
-          dues_in: duesIn.toNumber(),
+          is_due_at: duesIn.toNumber(),
           expires_at: expiresAt.toNumber(),
           mortgage_id: Number(mortgageId),
           loan_id: Number(loanId),

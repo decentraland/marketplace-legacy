@@ -11,13 +11,13 @@ export function createMortgageRequest(params) {
   }
 }
 
-export function createMortgageSuccess(txHash, { x, y }) {
+export function createMortgageSuccess(txHash, asset) {
   return {
     type: CREATE_MORTGAGE_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: txHash,
-      x,
-      y
+      x: asset.x,
+      y: asset.y
     })
   }
 }
@@ -33,22 +33,22 @@ export const CANCEL_MORTGAGE_REQUEST = '[Request] Cancel Mortgage'
 export const CANCEL_MORTGAGE_SUCCESS = '[Success] Cancel Mortgage'
 export const CANCEL_MORTGAGE_FAILURE = '[Failure] Cancel Mortgage'
 
-export function cancelMortgageRequest(mortgageId, { x, y }) {
+export function cancelMortgageRequest(mortgageId, asset) {
   return {
     type: CANCEL_MORTGAGE_REQUEST,
     mortgageId,
-    x,
-    y
+    x: asset.x,
+    y: asset.y
   }
 }
 
-export function cancelMortgageSuccess(txHash, { x, y }) {
+export function cancelMortgageSuccess(txHash, asset) {
   return {
     type: CANCEL_MORTGAGE_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: txHash,
-      x,
-      y
+      x: asset.x,
+      y: asset.y
     })
   }
 }
@@ -74,16 +74,48 @@ export function fetchMortgagedParcelsRequest(borrower) {
   }
 }
 
-export function fetchMortgagedParcelsSuccess(parcels) {
+export function fetchMortgagedParcelsSuccess(parcels, mortgages) {
   return {
     type: FETCH_MORTGAGED_PARCELS_SUCCESS,
-    payload: parcels
+    parcels,
+    mortgages
   }
 }
 
 export function fetchMortgagedParcelsFailure(error) {
   return {
     type: FETCH_MORTGAGED_PARCELS_FAILURE,
+    error
+  }
+}
+
+export const FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST =
+  '[Request] Fetch active parcel mortgages'
+export const FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS =
+  '[Success] Fetch active parcel mortgages'
+export const FETCH_ACTIVE_PARCEL_MORTGAGES_FAILURE =
+  '[Failure] Fetch active parcel mortgages'
+
+export function fetchActiveParcelMortgagesRequest(x, y) {
+  return {
+    type: FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
+    x,
+    y
+  }
+}
+
+export function fetchActiveParcelMortgagesSuccess(mortgages, x, y) {
+  return {
+    type: FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
+    mortgages,
+    x,
+    y
+  }
+}
+
+export function fetchActiveParcelMortgagesFailure(error) {
+  return {
+    type: FETCH_ACTIVE_PARCEL_MORTGAGES_FAILURE,
     error
   }
 }

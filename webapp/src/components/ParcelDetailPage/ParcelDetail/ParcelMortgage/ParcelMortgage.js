@@ -27,7 +27,7 @@ export default class ParcelMortgage extends React.PureComponent {
             <Grid.Column width={4}>
               <h3>{t('mortgage.requested')}</h3>
               <Mana
-                amount={parseFloat(mortgage.amount, 10)}
+                amount={parseFloat(mortgage.amount)}
                 size={20}
                 scale={1}
                 className="mortgage-amount-icon"
@@ -36,7 +36,7 @@ export default class ParcelMortgage extends React.PureComponent {
             <Grid.Column width={4}>
               <h3>{t('global.time_left')}</h3>
               <p>
-                <Expiration expiresAt={mortgage.expires_at} />
+                <Expiration expiresAt={parseInt(mortgage.expires_at, 10)} />
               </p>
             </Grid.Column>
             <Grid.Column width={4}>
