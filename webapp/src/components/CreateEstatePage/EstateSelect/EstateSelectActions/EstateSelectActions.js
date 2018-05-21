@@ -21,7 +21,7 @@ export default class EstateSelectActions extends React.PureComponent {
         <Grid>
           <Grid.Row className="parcel-detail-row">
             <Grid.Column width={8}>
-              <h3>{t('parcel_estate.creation.title')}</h3>
+              <h3>{t('estate_select.selection')}</h3>
             </Grid.Column>
             <Grid.Column className="parcel-actions-container" width={8}>
               <div className="EstateActions">

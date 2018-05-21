@@ -7,17 +7,19 @@ import EstateSelectActions from './EstateSelectActions'
 import Parcel from 'components/Parcel'
 import { t } from 'modules/translation/utils'
 import { isOwner } from 'modules/parcels/utils'
+import { coordsType } from 'components/types';
 
 import './EstateSelect.css'
 
 export default class EstateSelect extends React.PureComponent {
   static propTypes = {
-    x: PropTypes.string.isRequired,
-    y: PropTypes.string.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
     error: PropTypes.string,
     onCancel: PropTypes.func.isRequired,
     onContinue: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.arrayOf(coordsType).isRequired
   }
 
   handleParcelClick = wallet => (x, y) => {
