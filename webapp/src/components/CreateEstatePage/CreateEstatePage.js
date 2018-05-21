@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import EstateSelect from './EstateSelect'
-import EstateModal from './EstateModal'
+import EditEstate from './EditEstate'
 
 export default class CreateEstatePage extends React.PureComponent {
   static propTypes = {
@@ -17,6 +17,10 @@ export default class CreateEstatePage extends React.PureComponent {
     const y = parseInt(this.props.y, 10)
     this.state = {
       estate: {
+        data: {
+          name: '',
+          description: ''
+        },
         parcels: [{ x, y }]
       },
       isSelecting: true
@@ -28,7 +32,12 @@ export default class CreateEstatePage extends React.PureComponent {
   }
 
   handleChangeParcels = parcels => {
-    this.setState({ estate: { parcels } })
+    const { estate } = this.state
+    this.setState({ estate: { ...estate, parcels } })
+  }
+
+  handleChange = estate => {
+    this.setState({ estate })
   }
 
   handleSubmit = () => {
@@ -36,19 +45,21 @@ export default class CreateEstatePage extends React.PureComponent {
   }
 
   render() {
-    return this.state.isSelecting ? (
+    const { isSelecting, estate } = this.state
+    console.log(estate)
+    return isSelecting ? (
       <React.Fragment>
         <EstateSelect
-          value={this.state.estate.parcels}
+          value={estate.parcels}
           onContinue={this.handleSwitch}
           onChange={this.handleChangeParcels}
         />
       </React.Fragment>
     ) : (
       <React.Fragment>
-        <EstateModal
-          value={this.state.estate}
-          onReturn={this.handleSwitch}
+        <EditEstate
+          value={estate}
+          onCancel={this.handleSwitch}
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
         />

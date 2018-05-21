@@ -7,7 +7,7 @@ import EstateSelectActions from './EstateSelectActions'
 import Parcel from 'components/Parcel'
 import { t } from 'modules/translation/utils'
 import { isOwner } from 'modules/parcels/utils'
-import { coordsType } from 'components/types';
+import { coordsType } from 'components/types'
 
 import './EstateSelect.css'
 
