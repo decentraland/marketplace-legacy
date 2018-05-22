@@ -33,6 +33,7 @@ async function main() {
             replacedKeys[key] = str
             return key
           }) // replace real keys to dummy
+
           requests.push(
             translate(locale, textToTranslate).then(text => ({
               locale,
