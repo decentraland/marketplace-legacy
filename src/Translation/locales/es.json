@@ -56,6 +56,7 @@
   },
   "global": {
     "activity": "Actividad",
+    "address_placeholder": "Ejemplo: {address}",
     "atlas": "Atlas",
     "authorized": "Autorizado",
     "balance": "Balance",
@@ -177,7 +178,7 @@
     "check_address": "Por favor, compruebe la dirección con cuidado",
     "give_permission":
       "Dar permiso para actualizar el contenido de {parcel_name}.",
-    "manage_land": "Administrar TIERRA"
+    "manage_land": "Administrar LAND"
   },
   "parcel_publish": {
     "already_sold": "Esta LAND ya se encuentra en venta a {value}",

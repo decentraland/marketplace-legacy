@@ -57,6 +57,7 @@
   },
   "global": {
     "activity": "Activité",
+    "address_placeholder": "Exemple: {address}",
     "atlas": "Atlas",
     "authorized": "Autorisé",
     "balance": "Balance",
