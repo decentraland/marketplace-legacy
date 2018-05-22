@@ -67,9 +67,9 @@
     "connect": "잇다",
     "connecting": "连",
     "contributions": "小区份额",
-    "expired_at": "过期的{time}",
-    "expires_in": "到期时间{time}",
-    "expires_in_more_than_years": "超过{年}年",
+    "expired_at": "已过期{time}",
+    "expires_in": "到期{time}",
+    "expires_in_more_than_years": "超过{years}年到期",
     "for": "对于",
     "marketplace": "虚拟物品市场",
     "mortgage": "抵押",
@@ -119,12 +119,12 @@
     "duration": "持续时间",
     "duration_placeholder": "持续时间以天计",
     "errors": {
-      "amount_minimum": "金额应该大于{金额}",
+      "amount_minimum": "金额应该大于{amount}",
       "duration_gte_payable": "持续时间应该大于或等于在天付款",
-      "maximum_interest_rate": "费率应该低于{最大值}",
-      "minimum_duration": "持续时间应该大于{最短}天",
-      "minimum_interest_rate": "费率应该大于{最小值}",
-      "minimum_payable": "应付时间应该大于{最短}天",
+      "maximum_interest_rate": "费率应低于{maximum}",
+      "minimum_duration": "持续时间应该大于{minimum}天",
+      "minimum_interest_rate": "费率应该大于{minimum}",
+      "minimum_payable": "应付时间应大于{minimum}天",
       "parcel_price": "所需金额应低于包裹价格"
     },
     "expiration": "请求到期",
@@ -175,7 +175,6 @@
       "auction": "拍卖",
       "event": "事件",
       "from": "从",
-      "mortgage": "请求抵押",
       "price": "价钱",
       "sold": "文塔",
       "title": "交易历史",
@@ -188,6 +187,7 @@
     },
     "publication": {
       "buy": "购买",
+      "mortgage": "请求抵押",
       "price": "价格",
       "time_left": "剩下的时间"
     },
@@ -254,8 +254,8 @@
   "settings": {
     "approve_mana": "授权{marketplace_contract_link}以您的名义操作MANA",
     "approve_mana_check": "检查授权MANA使用到市场合同",
-    "approve_mortgage_mana": "授权{mortgage_contract_link}以您的名义操作MANA",
-    "approve_mortgage_rcn": "授权{mortgage_contract_link}代表您操作RCN",
+    "approve_mortgage_mana": "授权{mortgage_contract_link}代表您操作MANA",
+    "approve_mortgage_rcn": "授权{mortgage_contract_link}代表您运行RCN",
     "authorization": "授权",
     "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND",
     "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
@@ -267,7 +267,7 @@
     "pending_tx": "您有待处理的交易",
     "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
     "you_approved_mortgage_mana":
-      "您已授权{mortgage_contract_link}以您的名义操作MANA",
+      "您已授权{mortgage_contract_link}代表您操作MANA",
     "you_approved_mortgage_rcn":
       "您已授权{mortgage_contract_link}代表您运营RCN",
     "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作LAND"
@@ -283,12 +283,12 @@
     "buy": "您买入了{parcel_link}地块",
     "buy_mana": "你已经买了{MANA} MANA",
     "cancel": "您取消了{parcel_link}上的{publication_link}",
-    "cancel_mortgage": "您取消抵押贷款以购买parcel {parcel_link}",
-    "create_mortgage": "您要求抵押贷款购买parcel {parcel_link}",
+    "cancel_mortgage": "您取消抵押贷款以购买包裹{parcel_link}",
+    "create_mortgage": "您要求抵押贷款购买包裹{parcel_link}",
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "edit":
       "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
-    "mortgage_mana": "您{action} {mortgage_contract_link}以您的名义操作MANA。",
+    "mortgage_mana": "你{action} {mortgage_contract_link}代表你操作MANA。",
     "mortgage_rcn": "您{action} {mortgage_contract_link}代表您运营RCN。",
     "publish": "您发布了{parcel_link}地块",
     "transfer": "您已将{parcel_link}转让给{owner_link}",

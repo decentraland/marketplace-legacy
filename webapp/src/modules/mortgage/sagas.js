@@ -2,6 +2,7 @@ import { takeLatest, call, put, select, all } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
 import { api } from 'lib/api'
+import { MORTGAGE_STATUS } from './utils'
 
 import {
   CREATE_MORTGAGE_REQUEST,
@@ -37,7 +38,12 @@ function* handleFetchMortgageRequest(action) {
     const { borrower } = action
     const [parcels, mortgages] = yield all([
       call(() => api.fetchMortgagedParcels(borrower)),
-      call(() => api.fetchMortgagesByBorrower(borrower))
+      call(() =>
+        api.fetchMortgagesByBorrower(borrower, [
+          MORTGAGE_STATUS.open,
+          MORTGAGE_STATUS.claimed
+        ])
+      )
     ])
     yield put(fetchMortgagedParcelsSuccess(parcels, mortgages))
   } catch (error) {
@@ -135,7 +141,9 @@ function* handleCancelMortgageRequest(action) {
 function* handleFetchActiveParcelMortgagesRequest(action) {
   try {
     const { x, y } = action
-    const mortgages = yield call(() => api.fetchActiveMortgages(x, y, 'active'))
+    const mortgages = yield call(() =>
+      api.fetchMortgages(x, y, [MORTGAGE_STATUS.open, MORTGAGE_STATUS.claimed])
+    )
     yield put(fetchActiveParcelMortgagesSuccess(mortgages, x, y))
   } catch (error) {
     yield put(fetchActiveParcelMortgagesFailure(error.message))

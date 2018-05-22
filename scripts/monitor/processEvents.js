@@ -6,7 +6,7 @@ import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Mortgage } from '../../src/Mortgage'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'
-import { isDuplicatedConstraintError } from '../../src/lib'
+import { isDuplicatedConstraintError } from '../../src/database'
 
 const log = new Log('processEvents')
 

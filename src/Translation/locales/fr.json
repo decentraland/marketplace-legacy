@@ -68,9 +68,9 @@
     "connect": "Connection",
     "connecting": "Connexion",
     "contributions": "Contributions",
-    "expired_at": "Temps expiré}",
-    "expires_in": "Expire {heure}",
-    "expires_in_more_than_years": "Expire dans plus de {ans} ans",
+    "expired_at": "Expiré {time}",
+    "expires_in": "Expire {time}",
+    "expires_in_more_than_years": "Expire dans plus de {years} ans",
     "for": "pour",
     "marketplace": "Marché",
     "mortgage": "Hypothèque",
@@ -126,7 +126,7 @@
         "La durée devrait être supérieure ou égale à payable à des jours",
       "maximum_interest_rate": "Le taux devrait être inférieur à {maximum}",
       "minimum_duration": "La durée devrait être supérieure à {minimum} jours",
-      "minimum_interest_rate": "Le taux doit être supérieur à {minimum}",
+      "minimum_interest_rate": "Le taux devrait être supérieur à {minimum}",
       "minimum_payable": "Payable à doit être supérieur à {minimum} jours",
       "parcel_price":
         "Le montant requis devrait être inférieur au prix du colis"
@@ -143,7 +143,7 @@
     "punitory_rate_placeholder": "Taux punitif",
     "request": "Demander une hypothèque",
     "request_land":
-      "Vous êtes sur le point de demander une hypothèque pour {parcel_name} évaluée dans {parcel_price}",
+      "Vous êtes sur le point de demander un prêt hypothécaire pour {parcel_name} évalué dans {parcel_price}",
     "requested": "Demandé"
   },
   "parcel": {
@@ -182,7 +182,6 @@
       "auction": "Enchères",
       "event": "Événement",
       "from": "De",
-      "mortgage": "Demander une hypothèque",
       "price": "Prix",
       "sold": "Vente",
       "title": "Historique des Transactions",
@@ -195,6 +194,7 @@
     },
     "publication": {
       "buy": "Acheter",
+      "mortgage": "Demander une hypothèque",
       "price": "Prix",
       "time_left": "Temps restant"
     },
@@ -268,9 +268,9 @@
     "approve_mana_check":
       "Cocher pour autoriser la place de marché à gérer votre MANA.",
     "approve_mortgage_mana":
-      "Autoriser le {mortgage_contract_link} à exploiter MANA en votre nom",
+      "Autoriser le {mortgage_contract_link} à faire fonctionner MANA en votre nom",
     "approve_mortgage_rcn":
-      "Autoriser le {mortgage_contract_link} à exploiter RCN en votre nom",
+      "Autoriser le {mortgage_contract_link} à faire fonctionner RCN en votre nom",
     "authorization": "Autorisation",
     "authorize":
       "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
@@ -316,9 +316,9 @@
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "mortgage_mana":
-      "Vous {actionnez} sur le {mortgage_contract_link} pour exploiter MANA en votre nom.",
+      "Vous {action} gérez le {mortgage_contract_link} pour exploiter MANA en votre nom.",
     "mortgage_rcn":
-      "Vous {actionnez} sur le {mortgage_contract_link} pour exploiter RCN en votre nom.",
+      "Vous {action} le {mortgage_contract_link} pour exploiter RCN en votre nom.",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"

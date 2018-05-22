@@ -24,15 +24,21 @@ async function main() {
       const translations = await translation.fetch(locale)
       let requests = []
       for (const key of mainKeys) {
-        if (key in translations) {
-          // all good
-        } else {
+        const hasTranslation = key in translations
+        if (!hasTranslation) {
           const defaultText = mainTranslations[key]
+          const replacedKeys = {}
+          const textToTranslate = defaultText.replace(/{(.+?)}/g, (_, str) => {
+            const key = `{${Object.keys(replacedKeys).length + 1}}`
+            replacedKeys[key] = `{${str}}` // replace real keys to dummy
+            return key
+          })
           requests.push(
-            translate(locale, defaultText).then(text => ({
+            translate(locale, textToTranslate).then(text => ({
               locale,
               key,
               text,
+              replacedKeys,
               defaultText
             }))
           )
@@ -77,7 +83,10 @@ async function main() {
 
 async function processBatch(requests, missing) {
   const translated = await Promise.all(requests)
-  translated.forEach(({ locale, key, text, defaultText }) => {
+  translated.forEach(({ locale, key, text, replacedKeys, defaultText }) => {
+    Object.keys(replacedKeys).forEach(key => {
+      text = text.replace(key, replacedKeys[key]) // replace dummy keys with real
+    })
     if (isCapitalized(defaultText) && !isCapitalized(text)) {
       text = capitalize(text)
     }

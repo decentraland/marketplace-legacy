@@ -177,7 +177,6 @@
       "auction": "Auction",
       "event": "Event",
       "from": "From",
-      "mortgage": "Request Mortgage",
       "price": "Price",
       "sold": "Sold",
       "title": "Transaction History",
@@ -190,8 +189,8 @@
     },
     "publication": {
       "buy": "Buy",
-      "price": "Price",
-      "time_left": "Time Left"
+      "mortgage": "Request Mortgage",
+      "price": "Price"
     },
     "tags": {
       "title": "Highlights"

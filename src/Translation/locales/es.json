@@ -67,9 +67,9 @@
     "connect": "Conexión",
     "connecting": "Conectando",
     "contributions": "Contribuciones",
-    "expired_at": "Tiempo expirado}",
-    "expires_in": "Vence {time}",
-    "expires_in_more_than_years": "Caduca en más de {años} años",
+    "expired_at": "Caducado {time}",
+    "expires_in": "Caduca {time}",
+    "expires_in_more_than_years": "Caduca en más de {years} años",
     "for": "para",
     "marketplace": "Mercado",
     "mortgage": "Hipoteca",
@@ -119,13 +119,13 @@
     "duration": "Duración",
     "duration_placeholder": "Duración en días",
     "errors": {
-      "amount_minimum": "La cantidad debe ser mayor que {cantidad}",
+      "amount_minimum": "La cantidad debe ser mayor que {amount}",
       "duration_gte_payable":
         "La duración debe ser mayor o igual que la paga en días",
-      "maximum_interest_rate": "La tasa debe ser inferior a {máximo}",
-      "minimum_duration": "La duración debe ser mayor a {mínimo} días",
-      "minimum_interest_rate": "La tasa debe ser mayor que {mínimo}",
-      "minimum_payable": "Pagable a debe ser mayor a {mínimo} días",
+      "maximum_interest_rate": "La tasa debe ser inferior a {maximum}",
+      "minimum_duration": "La duración debe ser mayor a {minimum} días",
+      "minimum_interest_rate": "La tasa debe ser mayor que {minimum}",
+      "minimum_payable": "Pagable en debe ser mayor que {minimum} días",
       "parcel_price":
         "La cantidad requerida debe ser menor que el precio del paquete"
     },
@@ -141,7 +141,7 @@
     "punitory_rate_placeholder": "Tasa punitiva",
     "request": "Solicitar una hipoteca",
     "request_land":
-      "Está a punto de solicitar una hipoteca para {parcel_name} valorado en {parcel_price}",
+      "Está a punto de solicitar una hipoteca por {parcel_name} valorada en {parcel_price}",
     "requested": "Pedido"
   },
   "parcel": {
@@ -178,7 +178,6 @@
       "auction": "Subasta",
       "event": "Evento",
       "from": "De",
-      "mortgage": "Solicitar hipoteca",
       "price": "Precio",
       "sold": "Venta",
       "title": "Historial de Transacciones",
@@ -191,6 +190,7 @@
     },
     "publication": {
       "buy": "Comprar",
+      "mortgage": "Solicitar hipoteca",
       "price": "Precio",
       "time_left": "Tiempo Disponible"
     },
@@ -265,9 +265,9 @@
     "approve_mana_check":
       "Marcando autoriza el uso de MANA al contrato de Mercado",
     "approve_mortgage_mana":
-      "Autorice el {mortgage_contract_link} para operar MANA en su nombre",
+      "Autorice a {mortgage_contract_link} para operar MANA en su nombre",
     "approve_mortgage_rcn":
-      "Autorice el {mortgage_contract_link} para operar RCN en su nombre",
+      "Autorice el {mortgage_contract_link} ​​para operar RCN en su nombre",
     "authorization": "Autorización",
     "authorize":
       "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
@@ -284,9 +284,9 @@
     "unauthorize_land_check":
       "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
     "you_approved_mortgage_mana":
-      "Usted ha autorizado el {mortgage_contract_link} para operar MANA en su nombre",
+      "Usted ha autorizado el {mortgage_contract_link} ​​para operar MANA en su nombre",
     "you_approved_mortgage_rcn":
-      "Usted ha autorizado el {mortgage_contract_link} para operar RCN en su nombre",
+      "Usted ha autorizado {mortgage_contract_link} para operar RCN en su nombre",
     "you_authorized":
       "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta"
   },
@@ -312,9 +312,9 @@
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
     "mortgage_mana":
-      "Usted {acción} el {mortgage_contract_link} para operar MANA en su nombre.",
+      "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre.",
     "mortgage_rcn":
-      "Usted {acción} el {mortgage_contract_link} para operar RCN en su nombre.",
+      "Usted {action} el {mortgage_contract_link} para operar RCN en su nombre.",
     "publish": "Has publicado {parcel_link}",
     "transfer": "Has transferido {parcel_link} a {owner_link}",
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"

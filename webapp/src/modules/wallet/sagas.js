@@ -100,8 +100,8 @@ function* handleConnectWalletRequest(action = {}) {
       ethBalance,
       approvedBalance,
       isLandAuthorized,
-      isMortgageApprovedForMana,
-      isMortgageApprovedForRCN
+      mortgageManaAllowance,
+      mortgageRCNAllowance
     ] = yield all([
       eth.getNetwork(),
       manaTokenContract.balanceOf(address),
@@ -120,8 +120,8 @@ function* handleConnectWalletRequest(action = {}) {
       ethBalance,
       approvedBalance,
       isLandAuthorized,
-      isMortgageApprovedForMana: isMortgageApprovedForMana > 0,
-      isMortgageApprovedForRCN: isMortgageApprovedForRCN > 0
+      isMortgageApprovedForMana: mortgageManaAllowance > 0,
+      isMortgageApprovedForRCN: mortgageRCNAllowance > 0
     }
     yield handleConnectWalletSuccess(address)
     yield put(connectWalletSuccess(wallet))

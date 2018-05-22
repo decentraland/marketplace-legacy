@@ -3,8 +3,7 @@ import { EDIT_PARCEL_REQUEST, FETCH_PARCEL_REQUEST } from './actions'
 import { getPublications as getAllPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'lib/utils'
 import { isLoadingType } from 'modules/loading/selectors'
-import { getMappedMortgages } from 'modules/mortgage/selectors'
-// import { getAddress } from 'modules/wallet/selectors'
+import { getMortgagesArray } from 'modules/mortgage/selectors'
 import { getActiveMortgagesByBorrower } from 'modules/mortgage/utils'
 
 export const getState = state => state.parcels
@@ -45,7 +44,7 @@ export const getPublications = (x, y) =>
 export const getMortgagedParcels = createSelector(
   state => state.wallet.data.address,
   getParcels,
-  getMappedMortgages,
+  getMortgagesArray,
   (borrower, parcels, mortgages) =>
     getActiveMortgagesByBorrower(mortgages, borrower).map(mortgage => ({
       ...parcels[mortgage.asset_id],

@@ -1,5 +1,6 @@
 import { Model } from 'decentraland-commons'
-import { SQL, raw } from '../database'
+
+import { SQL, raw, getInStatus } from '../database'
 
 export class Mortgage extends Model {
   static tableName = 'mortgages'
@@ -28,20 +29,20 @@ export class Mortgage extends Model {
     cancelled: 'cancelled'
   })
 
-  static findActivesByBorrower(borrower) {
+  static findByBorrower(borrower, status) {
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)}
         WHERE borrower = ${borrower}
-          AND status != '${raw(this.STATUS.cancelled)}'
+          AND status IN (${raw(getInStatus(status, this.STATUS))})
           ORDER BY created_at DESC`
     )
   }
 
-  static findActivesInCoordinate(assetId) {
+  static findInCoordinate(assetId, status) {
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)}
         WHERE asset_id = ${assetId}
-          AND status != '${raw(this.STATUS.cancelled)}'
+          AND status IN(${raw(getInStatus(status, this.STATUS))})
           ORDER BY created_at DESC`
     )
   }

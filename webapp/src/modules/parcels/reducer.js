@@ -156,7 +156,11 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         data: action.parcels.reduce(
           (parcels, parcel) => ({
             ...parcels,
-            [buildCoordinate(parcel.x, parcel.y)]: parcel
+            [buildCoordinate(parcel.x, parcel.y)]: Object.assign(
+              {},
+              parcels[buildCoordinate(parcel.x, parcel.y)],
+              parcel
+            )
           }),
           state.data
         )

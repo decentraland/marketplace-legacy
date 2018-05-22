@@ -23,6 +23,7 @@ export class MortgageRouter {
     /**
      * Get mortgages by borrower
      * @param  {string} address
+     * @param  {string} status - specify a mortgage status to retreive: [cancelled|open|claimed].
      * @return {array<Mortgage>}
      */
     this.app.get(
@@ -34,11 +35,12 @@ export class MortgageRouter {
      * Get mortgages by coordinates
      * @param  {string} x
      * @param  {string} y
+     * @param  {string} status - specify a mortgage status to retreive: [cancelled|open|claimed].
      * @return {array<Mortgage>}
      */
     this.app.get(
       '/api/parcels/:x/:y/mortgages',
-      server.handleRequest(this.getActiveMortgagesInCoordinate)
+      server.handleRequest(this.getMortgagesInCoordinate)
     )
   }
 
@@ -50,18 +52,15 @@ export class MortgageRouter {
 
   async getMortgagesByBorrower(req) {
     const borrower = server.extractFromReq(req, 'address')
-    return await Mortgage.findActivesByBorrower(borrower)
+    const status = server.extractFromReq(req, 'status')
+    return await Mortgage.findByBorrower(borrower, status)
   }
 
-  async getActiveMortgagesInCoordinate(req) {
+  async getMortgagesInCoordinate(req) {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
     const status = server.extractFromReq(req, 'status')
 
-    let mortgages = []
-    if (status === 'active') {
-      mortgages = await Mortgage.findActivesInCoordinate(Parcel.buildId(x, y))
-    }
-    return mortgages
+    return await Mortgage.findInCoordinate(Parcel.buildId(x, y), status)
   }
 }

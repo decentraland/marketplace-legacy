@@ -68,8 +68,8 @@
     "connecting": "연결 중",
     "contributions": "공헌",
     "expired_at": "만료 됨 {time}",
-    "expires_in": "{time} 만료",
-    "expires_in_more_than_years": "{years} 년 만료 됨",
+    "expires_in": "만료 {time}",
+    "expires_in_more_than_years": "{years} 년 이상 만료 됨",
     "for": "에 대한",
     "marketplace": "시장",
     "mortgage": "저당",
@@ -140,7 +140,7 @@
     "punitory_rate_placeholder": "처벌 비율",
     "request": "모기지 신청",
     "request_land":
-      "{parcel_name}의 가치가있는 {parcel_name}의 모기지를 요청하려고합니다.",
+      "{parcel_name}에 대한 모기지를 {parcel_price}에 요청하려고합니다.",
     "requested": "요청 됨"
   },
   "parcel": {
@@ -176,7 +176,6 @@
       "auction": "경매",
       "event": "행사",
       "from": "에서",
-      "mortgage": "모기지 신청",
       "price": "가격",
       "sold": "판매",
       "title": "거래 내역",
@@ -189,6 +188,7 @@
     },
     "publication": {
       "buy": "구매",
+      "mortgage": "모기지 신청",
       "price": "가격",
       "time_left": "남은 시간"
     },
@@ -259,9 +259,9 @@
       "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
     "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
     "approve_mortgage_mana":
-      "{mortgage_contract_link}에 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
+      "{mortgage_contract_link}이 (가) 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
     "approve_mortgage_rcn":
-      "{mortgage_contract_link}에 귀하를 대신하여 RCN을 운영하도록 승인하십시오.",
+      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인하십시오.",
     "authorization": "권한 부여",
     "authorize":
       "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
@@ -295,18 +295,16 @@
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
-    "cancel_mortgage":
-      "소포 {parcel_link}을 (를) 구매하기 위해 모기지를 취소합니다.",
-    "create_mortgage":
-      "귀하는 저당 {parcel_link}을 구입하라고 모기지에 요청했습니다.",
+    "cancel_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 취소합니다.",
+    "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
     "disapproved":
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
     "mortgage_mana":
-      "귀하를 대신하여 MANA를 운영하기위한 {행동} {mortgage_contract_link}",
+      "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}.",
     "mortgage_rcn":
-      "귀하를 대신하여 RCN을 운영하기위한 {행동} {mortgage_contract_link}",
+      "{action} 귀하를 대신하여 RCN을 운영하는 {mortgage_contract_link}.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."
