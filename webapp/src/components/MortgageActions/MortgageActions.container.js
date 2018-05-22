@@ -12,9 +12,7 @@ const mapState = (state, ownProps) => {
 const mapDispatch = (dispatch, { mortgage }) => ({
   onCancel: () =>
     dispatch(
-      cancelMortgageRequest(mortgage.mortgage_id, {
-        assetId: mortgage.asset_id
-      })
+      cancelMortgageRequest(mortgage.mortgage_id, mortgage.asset_id)
     )
 })
 
