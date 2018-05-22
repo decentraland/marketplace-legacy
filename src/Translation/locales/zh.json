@@ -129,7 +129,6 @@
     },
     "expiration": "请求到期",
     "expiration_placeholder": "抵押的到期日期",
-    "expires_in": "过期日期在",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "oracle": "Oracle合同地址",
@@ -188,8 +187,7 @@
     "publication": {
       "buy": "购买",
       "mortgage": "请求抵押",
-      "price": "价格",
-      "time_left": "剩下的时间"
+      "price": "价格"
     },
     "tags": {
       "title": "强调"
@@ -245,9 +243,6 @@
   "publication": {
     "acquired_at": "在{date}收购",
     "canceled": "已取消",
-    "expired_at": "已于{time}前过期",
-    "expires_in": "将于{time}后到期",
-    "expires_in_more_than_years": "超过{years}年",
     "sold": "已售出",
     "view": "查看"
   },

@@ -130,7 +130,6 @@
     },
     "expiration": "만료 요청",
     "expiration_placeholder": "모기지 만기일",
-    "expires_in": "만료",
     "interest_rate": "이자율",
     "interest_rate_placeholder": "이자율",
     "oracle": "오라클 계약 주소",
@@ -189,8 +188,7 @@
     "publication": {
       "buy": "구매",
       "mortgage": "모기지 신청",
-      "price": "가격",
-      "time_left": "남은 시간"
+      "price": "가격"
     },
     "tags": {
       "title": "하이라이트"
@@ -248,9 +246,6 @@
   "publication": {
     "acquired_at": "{date}에 인수 됨",
     "canceled": "취소 됨",
-    "expired_at": "{time} 전 만료 됨",
-    "expires_in": "{time}에 만료 됨",
-    "expires_in_more_than_years": "{years} 년 만료 됨",
     "sold": "판매 됨",
     "view": "보기"
   },

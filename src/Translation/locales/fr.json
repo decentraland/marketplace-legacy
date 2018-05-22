@@ -133,7 +133,6 @@
     },
     "expiration": "Demande d'expiration",
     "expiration_placeholder": "Date d'expiration de l'hypothèque",
-    "expires_in": "Expire dans",
     "interest_rate": "Taux d'intérêt",
     "interest_rate_placeholder": "Taux d'intérêt",
     "oracle": "Adresse du contrat Oracle",
@@ -195,8 +194,7 @@
     "publication": {
       "buy": "Acheter",
       "mortgage": "Demander une hypothèque",
-      "price": "Prix",
-      "time_left": "Temps restant"
+      "price": "Prix"
     },
     "tags": {
       "title": "Points forts"
@@ -256,9 +254,6 @@
   "publication": {
     "acquired_at": "Acquis à {date}",
     "canceled": "Annulé",
-    "expired_at": "A expiré {time}",
-    "expires_in": "Expire {time}",
-    "expires_in_more_than_years": "Expire dans plus de 10 ans",
     "sold": "Vendu",
     "view": "Vue"
   },

@@ -9,7 +9,7 @@ describe('Mortgage', function() {
   afterEach(() =>
     Promise.all([Mortgage].map(Model => db.truncate(Model.tableName))))
 
-  describe('.findActivesByBorrower', async () => {
+  describe('.findByBorrower', async () => {
     it('should get actives mortgages by borrower', async () => {
       const expires_at = new Date().getTime() * 1000
       const is_due_at = new Date().getTime() * 1000
@@ -58,7 +58,10 @@ describe('Mortgage', function() {
         Mortgage.insert(mortgage3),
         Mortgage.insert(mortgage4)
       ])
-      const mortgages = await Mortgage.findActivesByBorrower('0xdeadbeef33')
+      const mortgages = await Mortgage.findByBorrower(
+        '0xdeadbeef33',
+        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
+      )
       expect(mortgages).to.equalRows([
         {
           ...mortgage4,
@@ -119,12 +122,15 @@ describe('Mortgage', function() {
         Mortgage.insert(mortgage3),
         Mortgage.insert(mortgage4)
       ])
-      const mortgages = await Mortgage.findActivesByBorrower('0xdeadbeef33122')
+      const mortgages = await Mortgage.findByBorrower(
+        '0xdeadbeef33122',
+        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
+      )
       expect(mortgages).to.equalRows([])
     })
   })
 
-  describe('.findActivesInCoordinate', async () => {
+  describe('.findInCoordinate', async () => {
     it('should get actives mortgages by coordinate', async () => {
       const expires_at = new Date().getTime() * 1000
       const is_due_at = new Date().getTime() * 1000
@@ -166,8 +172,9 @@ describe('Mortgage', function() {
         Mortgage.insert(mortgage2),
         Mortgage.insert(mortgage3)
       ])
-      const mortgages = await Mortgage.findActivesInCoordinate(
-        Parcel.buildId(10, 10)
+      const mortgages = await Mortgage.findInCoordinate(
+        Parcel.buildId(10, 10),
+        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
       )
       expect(mortgages).to.equalRows([
         {
@@ -229,8 +236,9 @@ describe('Mortgage', function() {
         Mortgage.insert(mortgage3),
         Mortgage.insert(mortgage4)
       ])
-      const mortgages = await Mortgage.findActivesInCoordinate(
-        Parcel.buildId(20, 20)
+      const mortgages = await Mortgage.findInCoordinate(
+        Parcel.buildId(20, 20),
+        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
       )
       expect(mortgages).to.equalRows([])
     })

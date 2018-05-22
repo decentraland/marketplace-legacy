@@ -131,7 +131,6 @@
     },
     "expiration": "Solicitud de caducidad",
     "expiration_placeholder": "Fecha de vencimiento de la hipoteca",
-    "expires_in": "Expira en",
     "interest_rate": "Tasa de interés",
     "interest_rate_placeholder": "Tasa de interés",
     "oracle": "Dirección del contrato de Oracle",
@@ -191,8 +190,7 @@
     "publication": {
       "buy": "Comprar",
       "mortgage": "Solicitar hipoteca",
-      "price": "Precio",
-      "time_left": "Tiempo Disponible"
+      "price": "Precio"
     },
     "tags": {
       "title": "Contexto"
@@ -253,9 +251,6 @@
   "publication": {
     "acquired_at": "Adquirida en {date}",
     "canceled": "Cancelada",
-    "expired_at": "Expiró {time}",
-    "expires_in": "Expira {time}",
-    "expires_in_more_than_years": "Expira en más de {years} años",
     "sold": "Vendida",
     "view": "Ver"
   },

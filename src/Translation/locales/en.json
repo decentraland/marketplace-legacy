@@ -130,7 +130,6 @@
     },
     "expiration": "Request expiration",
     "expiration_placeholder": "Expiration date for the mortgage",
-    "expires_in": "Expires in",
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "oracle": "Oracle contract address",
@@ -248,9 +247,6 @@
   "publication": {
     "acquired_at": "Acquired at {date}",
     "canceled": "Canceled",
-    "expired_at": "Expired {time}",
-    "expires_in": "Expires {time}",
-    "expires_in_more_than_years": "Expires in over {years} years",
     "sold": "Sold",
     "view": "View"
   },
