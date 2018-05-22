@@ -36,7 +36,8 @@
     "loading": "Loading",
     "address_placeholder": "Example: {address}",
     "change": "Change",
-    "revoke": "Revoke"
+    "revoke": "Revoke",
+    "undo": "Undo"
   },
   "address": {
     "its_you": "It's you"

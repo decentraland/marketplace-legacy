@@ -8,6 +8,32 @@
   font-weight: 400;
 }
 
+.ui.form .field .AddressInput .ui.input.address-input,
+.AddressInput .ui.input.address-input {
+  display: block;
+}
+
+.ui.form .field .AddressInput .ui.input.address-input > input,
+.AddressInput .ui.input.address-input > input,
+.ui.form .field .AddressInput .ui.input.address-input > input:hover,
+.AddressInput .ui.input.address-input > input:hover {
+  width: calc(100% - 35px);
+  border-bottom: none;
+  padding-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui.form .field .AddressInput .ui.input.address-input,
+.AddressInput .ui.input.address-input {
+  border-bottom: 2px solid var(--dark-gray);
+}
+
+.ui.form .field .AddressInput .ui.input.error.address-input,
+.AddressInput .ui.input.error.address-input {
+  border-bottom: 2px solid var(--red);
+}
+
 .AddressInput .address-input-blockie {
   position: absolute;
   top: 14px;

@@ -54,7 +54,15 @@ export default class ManageParcelForm extends React.PureComponent {
   handleChange = () => {
     this.setState({
       address: '',
-      editing: false
+      editing: false,
+      revoked: false
+    })
+  }
+
+  handleUndo = () => {
+    this.setState({
+      revoked: false,
+      dirty: false
     })
   }
 
@@ -95,7 +103,18 @@ export default class ManageParcelForm extends React.PureComponent {
             />
             <span className="address-label">{shortenAddress(address)}</span>
           </div>
-          {revoked ? null : (
+          {revoked ? (
+            <div className="address-actions">
+              <Button
+                size="tiny"
+                className="link"
+                onClick={this.handleUndo}
+                type="button"
+              >
+                {t('global.undo')}
+              </Button>
+            </div>
+          ) : (
             <div className="address-actions">
               <Button
                 size="tiny"
@@ -105,7 +124,12 @@ export default class ManageParcelForm extends React.PureComponent {
               >
                 {t('global.change')}
               </Button>
-              <Button size="tiny" className="link" onClick={this.handleRevoke}>
+              <Button
+                size="tiny"
+                className="link"
+                onClick={this.handleRevoke}
+                type="button"
+              >
                 {t('global.revoke')}
               </Button>
             </div>

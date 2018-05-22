@@ -9,10 +9,15 @@ import './AddressInput.css'
 
 export default class AddressInput extends React.PureComponent {
   static propTypes = {
-    label: PropTypes.label,
+    id: PropTypes.string,
+    label: PropTypes.string,
     address: PropTypes.string,
     onChange: PropTypes.func,
     disabled: PropTypes.bool
+  }
+
+  static defaultProps = {
+    id: 'address-input'
   }
 
   handleAddressChange = event => {
@@ -24,13 +29,14 @@ export default class AddressInput extends React.PureComponent {
   }
 
   render() {
-    const { label, address, disabled } = this.props
+    const { id, label, address, disabled } = this.props
+    const hasError = !!address && !eth.utils.isValidAddress(address)
     return (
       <div className="AddressInput">
         {label && <label>{label}</label>}
         <div>
           <Input
-            id="address-input"
+            id={id}
             className="address-input"
             type="text"
             placeholder={t('global.address_placeholder', {
@@ -41,7 +47,7 @@ export default class AddressInput extends React.PureComponent {
             autoComplete="off"
             autoFocus={true}
             disabled={disabled}
-            error={address && !eth.utils.isValidAddress(address)}
+            error={hasError}
           />
           {address && (
             <AddressBlock

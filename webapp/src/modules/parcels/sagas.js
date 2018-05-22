@@ -91,9 +91,9 @@ function* handleEditParcelsRequest(action) {
 }
 
 function* handleManageParcelsRequest(action) {
+  const { x, y } = action.parcel
   try {
     const { parcel, address, revoked } = action
-    const { x, y } = parcel
 
     const contract = eth.getContract('LANDRegistry')
     // @cazala TODO: this line should be removed once the method setUpdateOperator accepts x,y instead of assetId
@@ -106,7 +106,6 @@ function* handleManageParcelsRequest(action) {
     yield put(push(locations.activity))
   } catch (error) {
     const parcels = yield select(getParcels)
-    const { x, y } = action.parcel
     const parcel = parcels[buildCoordinate(x, y)]
     yield put(
       manageParcelFailure(parcel, action.address, action.revoked, error.message)

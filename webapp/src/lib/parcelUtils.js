@@ -160,8 +160,8 @@ export async function getUpdateOperator(x, y) {
     ) {
       return address
     }
-    return null
   } catch (error) {
-    return null
+    // 🌈
   }
+  return null
 }
