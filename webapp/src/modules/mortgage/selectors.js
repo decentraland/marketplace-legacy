@@ -14,9 +14,7 @@ export const getMortgages = state => getData(state).mortgages
 export const isFetchingParcelMortgages = state =>
   isLoadingType(getLoading(state), FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST)
 
-export const getMortgagesArray = createSelector(
-  getMortgages,
-  mortgages =>
+export const getMortgagesArray = createSelector(getMortgages, mortgages =>
   Object.keys(mortgages).map(key => mortgages[key])
 )
 
