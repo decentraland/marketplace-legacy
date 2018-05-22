@@ -75,9 +75,9 @@ async function checkParcels(parcels) {
 async function checkParcel(parcel) {
   if (!parcel) return
 
-  const { x, y, asset_id } = parcel
+  const { id, x, y, asset_id } = parcel
   const marketplace = eth.getContract('Marketplace')
-  const publication = (await Publication.findByAssetId(asset_id))[0]
+  const publication = (await Publication.findByAssetId(id))[0]
   const auction = await marketplace.auctionByAssetId(asset_id)
   const contractId = auction[0]
 
