@@ -1,57 +1,205 @@
 {
-  "languages": {
-    "en": "英语",
-    "es": "西班牙语",
-    "fr": "法国",
-    "zh": "中文",
-    "ko": "朝鲜的"
-  },
-  "global": {
-    "atlas": "地图",
-    "marketplace": "虚拟物品市场",
-    "profile": "我的虚拟土地",
-    "activity": "活动",
-    "parcels": "地块",
-    "contributions": "小区份额",
-    "settings": "设置",
-    "blog": "博客",
-    "website": "网站",
-    "community_chat": "社区聊天",
-    "cancel": "取消",
-    "submit": "提交",
-    "confirm": "确认",
-    "retry": "다시 해 보다",
-    "connect": "잇다",
-    "authorized": "已授权",
-    "unauthorized": "未授权",
-    "wallet_address": "钱包地址",
-    "balance": "余额",
-    "for": "对于",
-    "sign_in": "登录",
-    "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
-    "owned_by": "拥有",
-    "owned_by_link": "{address_link} 소유",
-    "connecting": "连",
-    "click_here": "点击这里"
+  "activity": {
+    "completed": "已完成",
+    "no_activity": "您还没有活动。",
+    "pending": "待定",
+    "start": "您可以先在您的设置页面{settings_link}上批准一些MANA"
   },
   "address": {
     "its_you": "是你"
   },
   "atlas": {
-    "owner": "所有者：{owner}",
-    "no_owner": "没有所有者",
-    "your_parcel": "您的地块",
-    "on_sale": "出售中：",
     "loading": "载入中",
-    "road": "路"
+    "no_owner": "没有所有者",
+    "on_sale": "出售中：",
+    "owner": "所有者：{owner}",
+    "road": "路",
+    "your_parcel": "您的地块"
+  },
+  "buy_mana": {
+    "action": "购买更多",
+    "amount_too_big": "Bancor Network的这个数额太大了",
+    "available_eth": "可用：{eth} ETH",
+    "not_enough": "你没有足够的ETH来支付这个费用",
+    "pay_with": "付款",
+    "powered_by": "由{bancor_link}提供",
+    "rate": "率",
+    "receive": "收到",
+    "slippage": "滑移",
+    "title": "将ETH转换为MANA"
+  },
+  "color_key": {
+    "contribution": "小区份额",
+    "district": "小区",
+    "loading": "加载中",
+    "on_sale": "出售",
+    "plaza": "广场",
+    "roads": "道路",
+    "taken": "已被占有",
+    "title": "色彩标记",
+    "unowned": "无主",
+    "yours": "您的土地"
+  },
+  "contribution": {
+    "proposal": "提案"
+  },
+  "derivation_path": {
+    "invalid":
+      "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
+  },
+  "footer": {
+    "color_key": "色彩标记",
+    "copyright": "© 2018 Decentraland。保留所有权利。",
+    "mini_copyright": "© 2018 Decentraland.",
+    "privacy_policy": "隐私政策",
+    "terms": "条款和条件"
+  },
+  "global": {
+    "activity": "活动",
+    "atlas": "地图",
+    "authorized": "已授权",
+    "balance": "余额",
+    "blog": "博客",
+    "cancel": "取消",
+    "click_here": "点击这里",
+    "community_chat": "社区聊天",
+    "confirm": "确认",
+    "connect": "잇다",
+    "connecting": "连",
+    "contributions": "小区份额",
+    "for": "对于",
+    "marketplace": "虚拟物品市场",
+    "owned_by": "拥有",
+    "owned_by_link": "{address_link} 소유",
+    "parcels": "地块",
+    "profile": "我的虚拟土地",
+    "retry": "다시 해 보다",
+    "settings": "设置",
+    "sign_in": "登录",
+    "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
+    "submit": "提交",
+    "unauthorized": "未授权",
+    "wallet_address": "钱包地址",
+    "website": "网站"
+  },
+  "homepage": {
+    "get_started": "现在就开始",
+    "hero_subtitle": "去中心化虚拟土地市场。免交易费。",
+    "hero_title": "在\"创世纪城\"中挑选你的梦想领地",
+    "newest_lands": "最新上架虚拟土地",
+    "view_more": "查看更多",
+    "watch_tutorial": "观看教程"
+  },
+  "languages": {
+    "en": "英语",
+    "es": "西班牙语",
+    "fr": "法国",
+    "ko": "朝鲜的",
+    "zh": "中文"
   },
   "marketplace": {
     "empty": "噢......这里没有任何东西。",
     "filter": {
-      "newest": "最新出售",
       "cheapest": "最低价",
-      "close_to_expire": "最近到期"
+      "close_to_expire": "最近到期",
+      "newest": "最新出售"
     }
+  },
+  "parcel": {
+    "no_description": "没有说明",
+    "no_name": "无名",
+    "view": "查看"
+  },
+  "parcel_buy": {
+    "about_to_buy": "您即将购买{parcel_name}",
+    "approved_balance": "您的已批准MANA余额为{approved_balance}",
+    "buy_land": "购买土地",
+    "buy_mana": "{click_here}购买一些MANA。",
+    "didnt_approve": "您没有批准使用MANA",
+    "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
+    "please_approve":
+      "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
+    "total_balance": "您的余额是{balance}"
+  },
+  "parcel_cancel": {
+    "about_to_cancel": "您即将取消{parcel}的销售。",
+    "cancel_land": "取消土地出售",
+    "not_for_sale": "包裹{parcel}不出售。"
+  },
+  "parcel_detail": {
+    "actions": {
+      "cancel": "取消出售",
+      "edit": "编辑",
+      "sell": "出售",
+      "transfer": "转让"
+    },
+    "description": "描述",
+    "empty_description": "这个地块没有描述",
+    "history": {
+      "auction": "拍卖",
+      "event": "事件",
+      "from": "从",
+      "price": "价钱",
+      "sold": "文塔",
+      "title": "交易历史",
+      "to": "至",
+      "when": "什么时候"
+    },
+    "owner": {
+      "no_owner": "没有所有者",
+      "part_of": "{name}的一部分"
+    },
+    "publication": {
+      "buy": "购买",
+      "price": "价格",
+      "time_left": "剩下的时间"
+    },
+    "tags": {
+      "title": "强调"
+    },
+    "view": "在地图集上查看"
+  },
+  "parcel_edit": {
+    "description": "描述",
+    "edit_land": "编辑土地",
+    "name": "名称",
+    "set_name_and_desc": "为{parcel_name}设置名称和描述"
+  },
+  "parcel_publish": {
+    "already_sold": "这块虚拟土地已以{value}价格在出售中",
+    "errors": {
+      "maximum_expiration": "最大到期日期是{date}",
+      "maximum_land_price": "最大的LAND价格是{值} MANA",
+      "minimum_expiration": "最短有效期限为一天",
+      "minimum_land_price": "最低的土地价格是{value} MANA"
+    },
+    "expiration": "到期时间",
+    "expiration_placeholder": "此块上架待售土地的到期时间",
+    "list_land": "待售虚拟土地上架",
+    "please_authorize":
+      "您需要前往设置页面{settings_link}并授权虚拟市场以您的名义操作土地交易，然后才能将其上架出售。",
+    "price": "价格",
+    "price_placeholder": "此虚拟地块以MANA结算的价格",
+    "set_land_price": "为{parcel_name}设置价格和到期日期"
+  },
+  "parcel_tags": {
+    "adjacent": "邻",
+    "district": "小区",
+    "plaza": "广场",
+    "proximity": "{distance}包裹离开",
+    "road": "路"
+  },
+  "parcel_transfer": {
+    "about_to_transfer": "您即将转让{parcel_name}",
+    "cant_transfer": "这块土地正在出售中，不能转让。",
+    "check_address": "请仔细检查地址",
+    "error_persists":
+      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
+    "irreversible": "请注意，转让土地操作是不可逆的。",
+    "placeholder": "例: {address}",
+    "recipient_address": "接收者地址",
+    "transfer_land": "转让土地",
+    "unknown_error": "发生未知错误，详情如下。"
   },
   "profile_page": {
     "empty": "用户没有{content}",
@@ -59,210 +207,62 @@
   },
   "publication": {
     "acquired_at": "在{date}收购",
+    "canceled": "已取消",
     "expired_at": "已于{time}前过期",
     "expires_in": "将于{time}后到期",
     "expires_in_more_than_years": "超过{years}年",
-    "view": "查看",
     "sold": "已售出",
-    "canceled": "已取消"
+    "view": "查看"
   },
-  "contribution": {
-    "proposal": "提案"
+  "settings": {
+    "approve_mana": "授权{marketplace_contract_link}以您的名义操作MANA",
+    "approve_mana_check": "检查授权MANA使用到市场合同",
+    "authorization": "授权",
+    "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND",
+    "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
+    "disapprove_mana_check": "取消选中不授权市场合同的MANA使用",
+    "mana_approved": "您已授权{marketplace_contract_link}以您的名义操作MANA",
+    "marketplace_contract": "虚拟市场合约",
+    "pending_tx": "您有待处理的交易",
+    "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
+    "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作LAND"
   },
-  "parcel": {
-    "view": "查看",
-    "no_name": "无名",
-    "no_description": "没有说明"
-  },
-  "parcel_detail": {
-    "description": "描述",
-    "empty_description": "这个地块没有描述",
-    "view": "在地图集上查看",
-    "actions": {
-      "edit": "编辑",
-      "transfer": "转让",
-      "sell": "出售",
-      "cancel": "取消出售"
-    },
-    "publication": {
-      "price": "价格",
-      "time_left": "剩下的时间",
-      "buy": "购买"
-    },
-    "owner": {
-      "part_of": "{name}的一部分",
-      "no_owner": "没有所有者"
-    },
-    "tags": {
-      "title": "强调"
-    },
-    "history": {
-      "title": "交易历史",
-      "event": "事件",
-      "price": "价钱",
-      "when": "什么时候",
-      "from": "从",
-      "to": "至",
-      "sold": "文塔",
-      "auction": "拍卖"
-    }
-  },
-  "parcel_tags": {
-    "road": "路",
-    "plaza": "广场",
-    "district": "小区",
-    "adjacent": "邻",
-    "proximity": "{distance}包裹离开"
-  },
-  "parcel_edit": {
-    "edit_land": "编辑土地",
-    "set_name_and_desc": "为{parcel_name}设置名称和描述",
-    "name": "名称",
-    "description": "描述"
-  },
-  "parcel_transfer": {
-    "transfer_land": "转让土地",
-    "about_to_transfer": "您即将转让{parcel_name}",
-    "irreversible": "请注意，转让土地操作是不可逆的。",
-    "check_address": "请仔细检查地址",
-    "cant_transfer": "这块土地正在出售中，不能转让。",
-    "recipient_address": "接收者地址",
-    "unknown_error": "发生未知错误，详情如下。",
-    "error_persists":
-      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
-    "placeholder": "例: {address}"
-  },
-  "parcel_buy": {
-    "buy_land": "购买土地",
-    "about_to_buy": "您即将购买{parcel_name}",
-    "approved_balance": "您的已批准MANA余额为{approved_balance}",
-    "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
-    "buy_mana": "{click_here}购买一些MANA。",
-    "didnt_approve": "您没有批准使用MANA",
-    "please_approve":
-      "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
-    "total_balance": "您的余额是{balance}"
-  },
-  "parcel_publish": {
-    "list_land": "待售虚拟土地上架",
-    "set_land_price": "为{parcel_name}设置价格和到期日期",
-    "price": "价格",
-    "price_placeholder": "此虚拟地块以MANA结算的价格",
-    "expiration": "到期时间",
-    "expiration_placeholder": "此块上架待售土地的到期时间",
-    "already_sold": "这块虚拟土地已以{value}价格在出售中",
-    "please_authorize":
-      "您需要前往设置页面{settings_link}并授权虚拟市场以您的名义操作土地交易，然后才能将其上架出售。",
-    "errors": {
-      "minimum_expiration": "最短有效期限为一天",
-      "maximum_expiration": "最大到期日期是{date}",
-      "minimum_land_price": "最低的土地价格是{value} MANA",
-      "maximum_land_price": "最大的LAND价格是{值} MANA"
-    }
-  },
-  "parcel_cancel": {
-    "cancel_land": "取消土地出售",
-    "about_to_cancel": "您即将取消{parcel}的销售。",
-    "not_for_sale": "包裹{parcel}不出售。"
-  },
-  "activity": {
-    "no_activity": "您还没有活动。",
-    "start": "您可以先在您的设置页面{settings_link}上批准一些MANA",
-    "pending": "待定",
-    "completed": "已完成"
+  "sign_in": {
+    "account_unlocked": "确保您的帐户已解锁",
+    "options":
+      "首先，你需要一个安全的地方来保存你的土地。您可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。"
   },
   "transaction": {
     "approved": "您授权{marketplace_contract_link}以您的名义操作MANA",
-    "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
-    "transfer_mana": "您将{mana}个MANA转移到{address_link}",
+    "buy": "您买入了{parcel_link}地块",
+    "buy_mana": "你已经买了{MANA} MANA",
+    "cancel": "您取消了{parcel_link}上的{publication_link}",
+    "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "edit":
       "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
-    "transfer": "您已将{parcel_link}转让给{owner_link}",
     "publish": "您发布了{parcel_link}地块",
-    "buy": "您买入了{parcel_link}地块",
-    "cancel": "您取消了{parcel_link}上的{publication_link}",
-    "buy_mana": "你已经买了{MANA} MANA"
+    "transfer": "您已将{parcel_link}转让给{owner_link}",
+    "transfer_mana": "您将{mana}个MANA转移到{address_link}"
   },
   "transaction_status": {
-    "see_activity": "要查看您的交易记录，请访问您的{activity_link}。",
-    "text": {
-      "pending": "交易正在等待确认。",
-      "failed": "您的交易失败，您可以尝试发送新的交易。"
+    "idle": {
+      "please_confirm": "请确认交易"
     },
     "parcel": {
       "still_pending": "{parcel_name}仍然有{transactions_count}个待处理的交易。"
     },
-    "idle": {
-      "please_confirm": "请确认交易"
+    "see_activity": "要查看您的交易记录，请访问您的{activity_link}。",
+    "text": {
+      "failed": "您的交易失败，您可以尝试发送新的交易。",
+      "pending": "交易正在等待确认。"
     }
   },
-  "settings": {
-    "pending_tx": "您有待处理的交易",
-    "disapprove_mana_check": "取消选中不授权市场合同的MANA使用",
-    "approve_mana_check": "检查授权MANA使用到市场合同",
-    "mana_approved": "您已授权{marketplace_contract_link}以您的名义操作MANA",
-    "approve_mana": "授权{marketplace_contract_link}以您的名义操作MANA",
-    "marketplace_contract": "虚拟市场合约",
-    "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
-    "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
-    "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作LAND",
-    "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND",
-    "authorization": "授权"
-  },
   "transfer_mana": {
-    "title": "转移MANA",
     "action": "转让",
     "current_balance": "您目前的余额是{balance}",
     "irreversible": "请记住，转让MANA是一项不可逆转的行动。",
-    "own_address_warning": "这是你自己的地址！"
-  },
-  "buy_mana": {
-    "title": "将ETH转换为MANA",
-    "action": "购买更多",
-    "available_eth": "可用：{eth} ETH",
-    "receive": "收到",
-    "pay_with": "付款",
-    "powered_by": "由{bancor_link}提供",
-    "rate": "率",
-    "slippage": "滑移",
-    "not_enough": "你没有足够的ETH来支付这个费用",
-    "amount_too_big": "Bancor Network的这个数额太大了"
-  },
-  "derivation_path": {
-    "invalid":
-      "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
-  },
-  "color_key": {
-    "title": "色彩标记",
-    "yours": "您的土地",
-    "taken": "已被占有",
-    "district": "小区",
-    "contribution": "小区份额",
-    "roads": "道路",
-    "plaza": "广场",
-    "unowned": "无主",
-    "loading": "加载中",
-    "on_sale": "出售"
-  },
-  "sign_in": {
-    "options":
-      "首先，你需要一个安全的地方来保存你的土地。您可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。",
-    "account_unlocked": "确保您的帐户已解锁"
-  },
-  "footer": {
-    "color_key": "色彩标记",
-    "privacy_policy": "隐私政策",
-    "terms": "条款和条件",
-    "copyright": "© 2018 Decentraland。保留所有权利。",
-    "mini_copyright": "© 2018 Decentraland."
-  },
-  "homepage": {
-    "hero_title": "在\"创世纪城\"中挑选你的梦想领地",
-    "hero_subtitle": "去中心化虚拟土地市场。免交易费。",
-    "get_started": "现在就开始",
-    "watch_tutorial": "观看教程",
-    "newest_lands": "最新上架虚拟土地",
-    "view_more": "查看更多"
+    "own_address_warning": "这是你自己的地址！",
+    "title": "转移MANA"
   }
 }
