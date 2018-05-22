@@ -28,11 +28,12 @@ async function main() {
         if (!hasTranslation) {
           const defaultText = mainTranslations[key]
           const replacedKeys = {}
-          const textToTranslate = defaultText.replace(/{(.+?)}/g, (_, str) => {
+          const textToTranslate = defaultText.replace(/{(.+?)}/g, str => {
             const key = `{${Object.keys(replacedKeys).length + 1}}`
-            replacedKeys[key] = `{${str}}` // replace real keys to dummy
+            replacedKeys[key] = str
             return key
-          })
+          }) // replace real keys to dummy
+
           requests.push(
             translate(locale, textToTranslate).then(text => ({
               locale,
