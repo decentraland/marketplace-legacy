@@ -14,7 +14,11 @@ function validateCoords(x, y) {
 
 // delete when estate contract returns an address
 function randomString(length) {
-  return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
+  return Math.round(
+    Math.pow(36, length + 1) - Math.random() * Math.pow(36, length)
+  )
+    .toString(36)
+    .slice(1)
 }
 
 function* handleCreateEstateRequest(action) {
@@ -23,7 +27,9 @@ function* handleCreateEstateRequest(action) {
     estate.parcels.forEach(coords => validateCoords)
     // call estate contract
     const contractAddress = randomString(42)
-    yield put(createEstateSuccess('randomTxHash', { ...estate, id: contractAddress }))
+    yield put(
+      createEstateSuccess('randomTxHash', { ...estate, id: contractAddress })
+    )
   } catch (error) {
     console.warn(error)
     yield put(createEstateFailure(estate, error.message))

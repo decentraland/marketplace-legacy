@@ -56,14 +56,14 @@ export default class CreateEstatePage extends React.PureComponent {
         />
       </React.Fragment>
     ) : (
-        <React.Fragment>
-          <EditEstate
-            value={estate}
-            onCancel={this.handleSwitch}
-            onChange={this.handleChange}
-            onSubmit={this.handleSubmit}
-          />
-        </React.Fragment>
-      )
+      <React.Fragment>
+        <EditEstate
+          value={estate}
+          onCancel={this.handleSwitch}
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+        />
+      </React.Fragment>
+    )
   }
 }

@@ -48,10 +48,7 @@ export default class EditEstateForm extends React.PureComponent {
     const { data } = this.props.value
     const { name, description } = this.state.initialEstate
 
-    return (
-      name !== data.name ||
-      description !== data.description
-    )
+    return name !== data.name || description !== data.description
   }
 
   render() {
@@ -59,10 +56,7 @@ export default class EditEstateForm extends React.PureComponent {
     const { name, description } = estate.data
 
     return (
-      <Form
-        className="EditEstateForm"
-        onSubmit={preventDefault(onSubmit)}
-      >
+      <Form className="EditEstateForm" onSubmit={preventDefault(onSubmit)}>
         <Form.Field>
           <label>{t('estate_edit.name')}</label>
           <Input

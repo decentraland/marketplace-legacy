@@ -4,7 +4,7 @@ import { locations } from 'locations'
 
 import { getMatchParams } from 'modules/location/selectors'
 import { navigateTo } from 'modules/location/actions'
-import { createEstateRequest } from 'modules/estates/actions';
+import { createEstateRequest } from 'modules/estates/actions'
 import { getError, isLoading } from 'modules/parcels/selectors'
 import CreateEstatePage from './CreateEstatePage'
 
