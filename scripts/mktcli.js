@@ -108,7 +108,7 @@ const main = {
           const contract = eth.getContract('Marketplace')
           const publication = await contract.auctionByAssetId(assetId)
 
-          const pubDb = (await Publication.findInCoordinate(x, y))[0]
+          const pubDb = (await Publication.findByAssetId(assetId))[0]
           const publicationDb = toPublicationLog(pubDb)
 
           log.info(`(publication) coords:(${x},${y})`)
@@ -123,7 +123,8 @@ const main = {
       .action(
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
-          const publications = await Publication.findInCoordinate(x, y)
+          const assetId = await Parcel.encodeAssetId(x, y)
+          const publications = await Publication.findByAssetId(assetId)
 
           log.info(`(publications) coords:(${x},${y})`)
 

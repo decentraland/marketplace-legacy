@@ -1,62 +1,228 @@
 {
-  "languages": {
-    "en": "Anglais",
-    "es": "Espanol",
-    "fr": "Français",
-    "zh": "Chinois",
-    "ko": "Coréen"
-  },
-  "global": {
-    "atlas": "Atlas",
-    "marketplace": "Marché",
-    "profile": "Mes LANDs",
-    "activity": "Activité",
-    "parcels": "Parcelles",
-    "contributions": "Contributions",
-    "settings": "Paramètres",
-    "blog": "Blog",
-    "website": "Site",
-    "community_chat": "Chat",
-    "cancel": "Annuler",
-    "submit": "Envoyer",
-    "confirm": "Confirmer",
-    "retry": "Recommencez",
-    "connect": "Connection",
-    "authorized": "Autorisé",
-    "unauthorized": "Non autorisé",
-    "wallet_address": "Adresse du porte-feuille",
-    "balance": "Balance",
-    "for": "pour",
-    "sign_in": "Se connecter",
-    "sign_in_notice":
-      "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
-    "owned_by": "Controlé par",
-    "owned_by_link": "Controlé par {address_link}",
-    "connecting": "Connexion",
-    "click_here": "Cliquez ici",
-    "loading": "Chargement",
-    "address_placeholder": "Exemple: {adresse}",
-    "change": "Changement",
-    "revoke": "Révoquer"
+  "activity": {
+    "completed": "Terminé",
+    "no_activity": "Vous n'avez pas encore d'activité.",
+    "pending": "En attente",
+    "start":
+      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}"
   },
   "address": {
     "its_you": "C'est toi"
   },
   "atlas": {
-    "owner": "Propriétaire : {owner}",
-    "no_owner": "Aucun propriétaire",
-    "your_parcel": "Votre parcelle",
-    "on_sale": "A vendre: ",
     "loading": "Chargement",
-    "road": "Route"
+    "no_owner": "Aucun propriétaire",
+    "on_sale": "A vendre: ",
+    "owner": "Propriétaire : {owner}",
+    "road": "Route",
+    "your_parcel": "Votre parcelle"
+  },
+  "buy_mana": {
+    "action": "Acheter plus",
+    "amount_too_big": "Ce montant est trop important pour le Bancor Network",
+    "available_eth": "Disponible: {eth} ETH",
+    "not_enough": "Vous n'avez pas assez d'ETH à payer pour cela",
+    "pay_with": "Payer avec",
+    "powered_by": "par {bancor_link}",
+    "rate": "Taux",
+    "receive": "Recevoir",
+    "slippage": "Glissement",
+    "title": "Convertir de ETH à MANA"
+  },
+  "color_key": {
+    "contribution": "Contribution",
+    "district": "Quartiers",
+    "loading": "Chargement",
+    "on_sale": "À vendre",
+    "plaza": "Places",
+    "roads": "Routes",
+    "taken": "Prises",
+    "title": "Code couleur",
+    "unowned": "Libres",
+    "yours": "Les votres"
+  },
+  "contribution": {
+    "proposal": "Proposition"
+  },
+  "derivation_path": {
+    "invalid":
+      "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
+  },
+  "footer": {
+    "color_key": "Code Couleur",
+    "copyright": "© 2018 Decentraland. Tous droits reservés.",
+    "mini_copyright": "© 2018 Decentraland.",
+    "privacy_policy": "Politique de Confidentialité",
+    "terms": "Termes et Conditions"
+  },
+  "global": {
+    "activity": "Activité",
+    "address_placeholder": "Exemple 1}",
+    "atlas": "Atlas",
+    "authorized": "Autorisé",
+    "balance": "Balance",
+    "blog": "Blog",
+    "cancel": "Annuler",
+    "change": "Changement",
+    "click_here": "Cliquez ici",
+    "community_chat": "Chat communautaire",
+    "community_xchat": "Chat",
+    "confirm": "Confirmer",
+    "connect": "Connection",
+    "connecting": "Connexion",
+    "contributions": "Contributions",
+    "for": "pour",
+    "loading": "Chargement",
+    "marketplace": "Marché",
+    "owned_by": "Controlé par",
+    "owned_by_link": "Controlé par {address_link}",
+    "parcels": "Parcelles",
+    "profile": "Mes LANDs",
+    "retry": "Recommencez",
+    "revoke": "Révoquer",
+    "settings": "Paramètres",
+    "sign_in": "Se connecter",
+    "sign_in_notice":
+      "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
+    "submit": "Envoyer",
+    "unauthorized": "Non autorisé",
+    "undo": "Annuler",
+    "wallet_address": "Adresse du porte-feuille",
+    "website": "Site"
+  },
+  "homepage": {
+    "get_started": "Commencer",
+    "hero_subtitle": "Marché décentralisé pour LAND. Zéro frais.",
+    "hero_title": "Choisissez votre emplacement idéal à Genesis City",
+    "newest_lands": "Les plus récents LAND",
+    "view_more": "Afficher plus",
+    "watch_tutorial": "Regarder le tutoriel"
+  },
+  "languages": {
+    "en": "Anglais",
+    "es": "Espanol",
+    "fr": "Français",
+    "ko": "Coréen",
+    "zh": "Chinois"
   },
   "marketplace": {
     "empty": "Oops... rien ne semble correspondre.",
     "filter": {
-      "newest": "Nouveau",
       "cheapest": "Moins chère",
-      "close_to_expire": "Près de l'expiration"
+      "close_to_expire": "Près de l'expiration",
+      "newest": "Nouveau"
     }
+  },
+  "parcel": {
+    "no_description": "Sans description",
+    "no_name": "Sans nom",
+    "view": "Vue"
+  },
+  "parcel_buy": {
+    "about_to_buy":
+      "Vous êtes sur le point d'acheter {parcel_name} {parcel_price}",
+    "approved_balance": "Votre balance est de {approved_balance}",
+    "buy_land": "Acheter une LAND",
+    "buy_mana": "{click_here} pour acheter du MANA.",
+    "didnt_approve": "Vous n'avez pas de MANA validée",
+    "needs_at_least":
+      "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
+    "please_approve":
+      "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",
+    "total_balance": "Votre solde est {solde}"
+  },
+  "parcel_cancel": {
+    "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {parcel}.",
+    "cancel_land": "Annuler la vente de la LAND",
+    "not_for_sale": "La parcelle {parcel} n'est pas à vendre."
+  },
+  "parcel_detail": {
+    "actions": {
+      "cancel": "Annuler la vente",
+      "edit": "Edition",
+      "permissions": "Autorisations",
+      "sell": "Vendre",
+      "transfer": "Transferer"
+    },
+    "description": "Description",
+    "empty_description": "Cette parcelle n'a pas de description",
+    "history": {
+      "auction": "Enchères",
+      "event": "Événement",
+      "from": "De",
+      "price": "Prix",
+      "sold": "Vente",
+      "title": "Historique des Transactions",
+      "to": "À",
+      "when": "Quand"
+    },
+    "owner": {
+      "no_owner": "Pas de propriétaire",
+      "part_of": "Appartient à {name}"
+    },
+    "publication": {
+      "buy": "Acheter",
+      "price": "Prix",
+      "time_left": "Temps restant"
+    },
+    "tags": {
+      "title": "Points forts"
+    },
+    "view": "Voir sur Atlas"
+  },
+  "parcel_edit": {
+    "description": "Description",
+    "edit_land": "Editer les informations de ma LAND",
+    "name": "Nom",
+    "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}"
+  },
+  "parcel_manage": {
+    "address": "Adresse de l'opérateur",
+    "address_permission":
+      "Cette adresse pourra mettre à jour le contenu de cette parcelle.",
+    "check_address": "S'il vous plaît vérifier l'adresse avec soin",
+    "give_permission": "Autoriser la mise à jour du contenu de {parcel_name}",
+    "manage_land": "Gérer les terres"
+  },
+  "parcel_publish": {
+    "already_sold": "Cette LAND est déjà en vente pour {value}",
+    "errors": {
+      "maximum_expiration": "La date d'expiration maximale est {date}",
+      "maximum_land_price": "Le prix maximale d'une LAND est de {value} MANA",
+      "minimum_expiration": "La date d'expiration minimale est {date}",
+      "minimum_land_price": "Le prix minimum d'une LAND est de {value} MANA"
+    },
+    "expiration": "Expiration",
+    "expiration_placeholder": "Date d'expiration pour cette publication",
+    "list_land": "Lister les LANDs à vendre",
+    "please_authorize":
+      "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
+    "price": "Prix",
+    "price_placeholder": "Prix en MANA pour cette LAND",
+    "set_land_price":
+      "Indiquer un prix et une date d'expiration pour {parcel_name}"
+  },
+  "parcel_tags": {
+    "adjacent": "Adjacent",
+    "district": "Quartiers",
+    "plaza": "Places",
+    "proximity":
+      "{distance} {distance, plural, one {parcelle} other {parcelles}} loin",
+    "road": "Route"
+  },
+  "parcel_transfer": {
+    "about_to_transfer": "Vous êtes sur le point de transferer {parcel_name}",
+    "cant_transfer":
+      "Cette LAND ne peut être transferée car elle est en vente.",
+    "check_address": "Merci de vérifier l'addresse soigneusement.",
+    "error_persists":
+      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
+    "irreversible": "Chaque transfert de LAND est une opération irréversible.",
+    "placeholder": "Exemple: {address}",
+    "recipient_address": "Adresse du destinataire",
+    "transfer_land": "Transférer une LAND",
+    "unknown_error":
+      "Une erreur s'est produite, les détails se trouvent ci-dessous."
   },
   "profile_page": {
     "empty": "L'utilisateur n'as pas de {content}",
@@ -64,244 +230,81 @@
   },
   "publication": {
     "acquired_at": "Acquis à {date}",
+    "canceled": "Annulé",
     "expired_at": "A expiré {time}",
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de 10 ans",
-    "view": "Vue",
     "sold": "Vendu",
-    "canceled": "Annulé"
+    "view": "Vue"
   },
-  "contribution": {
-    "proposal": "Proposition"
+  "settings": {
+    "approve_mana":
+      "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
+    "approve_mana_check":
+      "Cocher pour autoriser la place de marché à gérer votre MANA.",
+    "authorization": "Autorisation",
+    "authorize":
+      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
+    "authorize_land_check":
+      "Cocher pour autoriser la place de marché à gérer vos LANDs.",
+    "disapprove_mana_check":
+      "Décocher cette case enlève le droit à la place de marché de gérer votre MANA.",
+    "mana_approved":
+      "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
+    "marketplace_contract": "Contrat de la place de marché",
+    "pending_tx": "Vous avez une transaction en attente",
+    "unauthorize_land_check":
+      "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
+    "you_authorized":
+      "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom."
   },
-  "parcel": {
-    "view": "Vue",
-    "no_name": "Sans nom",
-    "no_description": "Sans description"
-  },
-  "parcel_detail": {
-    "description": "Description",
-    "empty_description": "Cette parcelle n'a pas de description",
-    "actions": {
-      "edit": "Edition",
-      "permissions": "Autorisations",
-      "transfer": "Transferer",
-      "sell": "Vendre",
-      "cancel": "Annuler la vente"
-    },
-    "publication": {
-      "price": "Prix",
-      "time_left": "Temps restant",
-      "buy": "Acheter"
-    },
-    "owner": {
-      "part_of": "Appartient à {name}",
-      "no_owner": "Pas de propriétaire"
-    },
-    "tags": {
-      "title": "Points forts"
-    },
-    "history": {
-      "title": "Historique des Transactions",
-      "event": "Événement",
-      "price": "Prix",
-      "when": "Quand",
-      "from": "De",
-      "to": "À",
-      "sold": "Vente",
-      "auction": "Enchères"
-    }
-  },
-  "parcel_tags": {
-    "road": "Route",
-    "plaza": "Places",
-    "district": "Quartiers",
-    "adjacent": "Adjacent",
-    "proximity":
-      "{distance} {distance, plural, one {parcelle} other {parcelles}} loin"
-  },
-  "parcel_edit": {
-    "edit_land": "Editer les informations de ma LAND",
-    "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}",
-    "name": "Nom",
-    "description": "Description"
-  },
-  "parcel_transfer": {
-    "transfer_land": "Transférer une LAND",
-    "about_to_transfer": "Vous êtes sur le point de transferer {parcel_name}",
-    "irreversible": "Chaque transfert de LAND est une opération irréversible.",
-    "check_address": "Merci de vérifier l'addresse soigneusement.",
-    "cant_transfer":
-      "Cette LAND ne peut être transferée car elle est en vente.",
-    "recipient_address": "Adresse du destinataire",
-    "unknown_error":
-      "Une erreur s'est produite, les détails se trouvent ci-dessous.",
-    "error_persists":
-      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}"
-  },
-  "parcel_manage": {
-    "manage_land": "Gérer  LAND",
-    "give_permission":
-      "Donnez la permission de mettre à jour le contenu de {nom_collège}.",
-    "address_permission":
-      "Cette adresse pourra mettre à jour le contenu de cette parcelle.",
-    "check_address": "S'il vous plaît vérifier l'adresse avec soin",
-    "address": "Adresse de l'opérateur"
-  },
-  "parcel_buy": {
-    "buy_land": "Acheter une LAND",
-    "about_to_buy":
-      "Vous êtes sur le point d'acheter {parcel_name} {parcel_price}",
-    "approved_balance": "Votre balance est de {approved_balance}",
-    "needs_at_least":
-      "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
-    "buy_mana": "{click_here} pour acheter du MANA.",
-    "didnt_approve": "Vous n'avez pas de MANA validée",
-    "please_approve":
-      "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",
-    "total_balance": "Votre solde est {solde}"
-  },
-  "parcel_publish": {
-    "list_land": "Lister les LANDs à vendre",
-    "set_land_price":
-      "Indiquer un prix et une date d'expiration pour {parcel_name}",
-    "price": "Prix",
-    "price_placeholder": "Prix en MANA pour cette LAND",
-    "expiration": "Expiration",
-    "expiration_placeholder": "Date d'expiration pour cette publication",
-    "already_sold": "Cette LAND est déjà en vente pour {value}",
-    "please_authorize":
-      "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
-    "errors": {
-      "minimum_expiration": "La date d'expiration minimale est {date}",
-      "maximum_expiration": "La date d'expiration maximale est {date}",
-      "minimum_land_price": "Le prix minimum d'une LAND est de {value} MANA",
-      "maximum_land_price": "Le prix maximale d'une LAND est de {value} MANA"
-    }
-  },
-  "parcel_cancel": {
-    "cancel_land": "Annuler la vente de la LAND",
-    "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {parcel}.",
-    "not_for_sale": "La parcelle {parcel} n'est pas à vendre."
-  },
-  "activity": {
-    "no_activity": "Vous n'avez pas encore d'activité.",
-    "start":
-      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}",
-    "pending": "En attente",
-    "completed": "Terminé"
+  "sign_in": {
+    "account_unlocked": "Assurez-vous que votre compte est déverrouillé",
+    "options":
+      "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace."
   },
   "transaction": {
     "approved":
       "Vous avez autorisé {mana} à être utilisé par {marketplace_contract_link}",
-    "disapproved":
-      "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "authorize":
       "Vous avez {action} la {marketplace_contract_link} à gérer les LANDs en votre nom",
-    "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}",
-    "edit":
-      "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
-    "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
-    "manage":
-      "Vous avez donné à {adresse_link} la permission de mettre à jour le contenu de {parcel_link}",
-    "manage_revoked":
-      "Vous avez révoqué l'autorisation {address_link} pour mettre à jour le contenu de {parcel_link}",
-    "publish": "Vous avez publié l'offre {parcel_link}",
     "buy": "Vous avez acheté {parcel_link}",
+    "buy_mana": "Vous avez acheté {mana} MANA",
     "cancel":
       "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
-    "buy_mana": "Vous avez acheté {mana} MANA"
+    "disapproved":
+      "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
+    "edit":
+      "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
+    "manage":
+      "Vous avez donné {address_link} la permission de mettre à jour le contenu de {parcel_link}",
+    "manage_revoked":
+      "Vous avez révoqué {address_link} l'autorisation de mettre à jour le contenu de {parcel_link}",
+    "publish": "Vous avez publié l'offre {parcel_link}",
+    "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
+    "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"
   },
   "transaction_status": {
-    "see_activity":
-      "Pour consulter plus en détail l'historique de vos transactions, consultez votre {activity_link}.",
-    "text": {
-      "pending": "La transaction est en attente d'être confirmée.",
-      "failed":
-        "Votre transaction a échoué, vous pouvez essayer d'en envoyer une nouvelle."
+    "idle": {
+      "please_confirm": "Veuillez confirmer la transaction"
     },
     "parcel": {
       "still_pending":
         "{parcel_name} a toujours {transactions_count} {transactions_count, plural, one {transaction} other {transactions}} en attente."
     },
-    "idle": {
-      "please_confirm": "Veuillez confirmer la transaction"
+    "see_activity":
+      "Pour consulter plus en détail l'historique de vos transactions, consultez votre {activity_link}.",
+    "text": {
+      "failed":
+        "Votre transaction a échoué, vous pouvez essayer d'en envoyer une nouvelle.",
+      "pending": "La transaction est en attente d'être confirmée."
     }
   },
-  "settings": {
-    "pending_tx": "Vous avez une transaction en attente",
-    "disapprove_mana_check":
-      "Décocher cette case enlève le droit à la place de marché de gérer votre MANA.",
-    "approve_mana_check":
-      "Cocher pour autoriser la place de marché à gérer votre MANA.",
-    "mana_approved":
-      "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
-    "approve_mana":
-      "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
-    "marketplace_contract": "Contrat de la place de marché",
-    "unauthorize_land_check":
-      "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
-    "authorize_land_check":
-      "Cocher pour autoriser la place de marché à gérer vos LANDs.",
-    "you_authorized":
-      "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom.",
-    "authorize":
-      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
-    "authorization": "Autorisation"
-  },
   "transfer_mana": {
-    "title": "Transférer MANA",
     "action": "Transférer",
     "current_balance": "Votre solde actuel est {balance}",
     "irreversible": "Chaque transfert de MANA est une opération irréversible.",
-    "own_address_warning": "C'est ta propre adresse!"
-  },
-  "buy_mana": {
-    "title": "Convertir de ETH à MANA",
-    "action": "Acheter plus",
-    "available_eth": "Disponible: {eth} ETH",
-    "receive": "Recevoir",
-    "pay_with": "Payer avec",
-    "powered_by": "par {bancor_link}",
-    "rate": "Taux",
-    "slippage": "Glissement",
-    "not_enough": "Vous n'avez pas assez d'ETH à payer pour cela",
-    "amount_too_big": "Ce montant est trop important pour le Bancor Network"
-  },
-  "derivation_path": {
-    "invalid":
-      "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
-  },
-  "color_key": {
-    "title": "Code couleur",
-    "yours": "Les votres",
-    "taken": "Prises",
-    "district": "Quartiers",
-    "contribution": "Contribution",
-    "roads": "Routes",
-    "plaza": "Places",
-    "unowned": "Libres",
-    "loading": "Chargement",
-    "on_sale": "À vendre"
-  },
-  "sign_in": {
-    "options":
-      "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace.",
-    "account_unlocked": "Assurez-vous que votre compte est déverrouillé"
-  },
-  "footer": {
-    "color_key": "Code Couleur",
-    "privacy_policy": "Politique de Confidentialité",
-    "terms": "Termes et Conditions",
-    "copyright": "© 2018 Decentraland. Tous droits reservés.",
-    "mini_copyright": "© 2018 Decentraland."
-  },
-  "homepage": {
-    "hero_title": "Choisissez votre emplacement idéal à Genesis City",
-    "hero_subtitle": "Marché décentralisé pour LAND. Zéro frais.",
-    "get_started": "Commencer",
-    "watch_tutorial": "Regarder le tutoriel",
-    "newest_lands": "Les plus récents LAND",
-    "view_more": "Afficher plus"
+    "own_address_warning": "C'est ta propre adresse!",
+    "title": "Transférer MANA"
   }
 }
