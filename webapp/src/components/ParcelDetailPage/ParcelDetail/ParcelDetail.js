@@ -5,12 +5,13 @@ import { utils } from 'decentraland-commons'
 
 import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
-import PublicationExpiration from 'components/PublicationExpiration'
+import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
+import ParcelMortgage from './ParcelMortgage'
 import { parcelType, districtType, publicationType } from 'components/types'
 import { getDistrict, isOnSale } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
@@ -20,7 +21,8 @@ export default class ParcelDetail extends React.PureComponent {
     parcel: parcelType.isRequired,
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
-    onBuy: PropTypes.func.isRequired
+    onBuy: PropTypes.func.isRequired,
+    mortgages: PropTypes.array
   }
 
   getDescription() {
@@ -43,7 +45,7 @@ export default class ParcelDetail extends React.PureComponent {
   }
 
   render() {
-    const { parcel, districts, publications, isOwner } = this.props
+    const { parcel, districts, publications, isOwner, mortgages } = this.props
 
     const description = this.getDescription()
     const publication = this.getPublication()
@@ -69,14 +71,17 @@ export default class ParcelDetail extends React.PureComponent {
                   <Grid.Column width={4}>
                     <h3>{t('parcel_detail.publication.price')}</h3>
                     <Mana
-                      amount={parseFloat(publication.price, 10)}
+                      amount={parseFloat(publication.price)}
                       size={20}
                       className="mana-price-icon"
                     />
                   </Grid.Column>
                   <Grid.Column width={4} className="time-left">
-                    <h3>{t('parcel_detail.publication.time_left')}</h3>
-                    <PublicationExpiration publication={publication} />
+                    <h3>{t('global.time_left')}</h3>
+                    <Expiration
+                      expiresAt={parseInt(publication.expires_at, 10)}
+                      className={'PublicationExpiration'}
+                    />
                   </Grid.Column>
                 </React.Fragment>
               ) : null}
@@ -84,11 +89,17 @@ export default class ParcelDetail extends React.PureComponent {
                 className="parcel-actions-container"
                 width={publication ? 8 : 16}
               >
-                <ParcelActions parcel={parcel} isOwner={isOwner} />
+                <ParcelActions
+                  parcel={parcel}
+                  mortgages={mortgages}
+                  isOwner={isOwner}
+                />
               </Grid.Column>
             </Grid.Row>
           ) : null}
         </Grid>
+
+        <ParcelMortgage mortgages={mortgages} />
 
         {utils.isEmptyObject(parcel.tags) ? null : (
           <Grid stackable className="parcel-detail-row">

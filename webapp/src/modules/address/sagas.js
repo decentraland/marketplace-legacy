@@ -14,6 +14,7 @@ import {
   fetchAddressPublicationsSuccess,
   fetchAddressPublicationsFailure
 } from './actions'
+import { fetchMortgagedParcelsRequest } from 'modules/mortgage/actions'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { getParcelPublications } from 'modules/parcels/utils'
 import { getParcels } from 'modules/parcels/selectors'
@@ -84,4 +85,5 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
+  yield put(fetchMortgagedParcelsRequest(address))
 }

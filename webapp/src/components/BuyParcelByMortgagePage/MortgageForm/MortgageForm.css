@@ -1,0 +1,42 @@
+.MortgageForm {
+  min-width: 400px;
+}
+
+.MortgageForm .ui.button + .ui.button {
+  margin-left: 20px;
+}
+
+.MortgageFormGrid {
+  display: block !important;
+}
+
+.mortgageAmount {
+  display: flex;
+  margin-top: 14px;
+}
+
+.MortgageForm p {
+  letter-spacing: .5px;
+  margin-left: 5px;
+  color: #fff;
+}
+
+.MortgageForm .field {
+  position: relative;
+}
+
+.MortgageForm .AddressBlock {
+  position: absolute;
+  right: 0px;
+  bottom: 10px;
+}
+
+.ui.form.MortgageForm .address-input {
+  background: transparent;
+  color: #fff;
+  padding-left: 0;
+  padding-bottom: 8px;
+  margin-left: 0;
+  border-bottom: 2px solid var(--dark-gray);
+
+}

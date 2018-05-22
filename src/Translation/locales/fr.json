@@ -68,18 +68,25 @@
     "connect": "Connection",
     "connecting": "Connexion",
     "contributions": "Contributions",
+    "expired_at": "Expiré {time}",
+    "expires_in": "Expire {time}",
+    "expires_in_more_than_years": "Expire dans plus de {years} ans",
     "for": "pour",
     "marketplace": "Marché",
+    "mortgage": "Hypothèque",
+    "mortgages": "Hypothèques",
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
+    "request": "Demande",
     "retry": "Recommencez",
     "settings": "Paramètres",
     "sign_in": "Se connecter",
     "sign_in_notice":
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "submit": "Envoyer",
+    "time_left": "Temps restant",
     "unauthorized": "Non autorisé",
     "wallet_address": "Adresse du porte-feuille",
     "website": "Site"
@@ -106,6 +113,37 @@
       "close_to_expire": "Près de l'expiration",
       "newest": "Nouveau"
     }
+  },
+  "mortgage": {
+    "amount": "Montant",
+    "amount_placeholder": "Montant à MANA",
+    "cancel": "Annuler l'hypothèque",
+    "duration": "Durée",
+    "duration_placeholder": "Durée en jours",
+    "errors": {
+      "amount_minimum": "Le montant doit être supérieur à {amount}",
+      "duration_gte_payable":
+        "La durée devrait être supérieure ou égale à payable à des jours",
+      "maximum_interest_rate": "Le taux devrait être inférieur à {maximum}",
+      "minimum_duration": "La durée devrait être supérieure à {minimum} jours",
+      "minimum_interest_rate": "Le taux devrait être supérieur à {minimum}",
+      "minimum_payable": "Payable à doit être supérieur à {minimum} jours",
+      "parcel_price":
+        "Le montant requis devrait être inférieur au prix du colis"
+    },
+    "expiration": "Demande d'expiration",
+    "expiration_placeholder": "Date d'expiration de l'hypothèque",
+    "interest_rate": "Taux d'intérêt",
+    "interest_rate_placeholder": "Taux d'intérêt",
+    "oracle": "Adresse du contrat Oracle",
+    "payable": "Payable à",
+    "payable_placeholder": "Payable en jours",
+    "punitory_rate": "Taux d'intérêt punitif",
+    "punitory_rate_placeholder": "Taux punitif",
+    "request": "Demander une hypothèque",
+    "request_land":
+      "Vous êtes sur le point de demander un prêt hypothécaire pour {parcel_name} évalué dans {parcel_price}",
+    "requested": "Demandé"
   },
   "parcel": {
     "no_description": "Sans description",
@@ -155,8 +193,8 @@
     },
     "publication": {
       "buy": "Acheter",
-      "price": "Prix",
-      "time_left": "Temps restant"
+      "mortgage": "Demander une hypothèque",
+      "price": "Prix"
     },
     "tags": {
       "title": "Points forts"
@@ -216,9 +254,6 @@
   "publication": {
     "acquired_at": "Acquis à {date}",
     "canceled": "Annulé",
-    "expired_at": "A expiré {time}",
-    "expires_in": "Expire {time}",
-    "expires_in_more_than_years": "Expire dans plus de 10 ans",
     "sold": "Vendu",
     "view": "Vue"
   },
@@ -227,6 +262,10 @@
       "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
     "approve_mana_check":
       "Cocher pour autoriser la place de marché à gérer votre MANA.",
+    "approve_mortgage_mana":
+      "Autoriser le {mortgage_contract_link} à faire fonctionner MANA en votre nom",
+    "approve_mortgage_rcn":
+      "Autoriser le {mortgage_contract_link} à faire fonctionner RCN en votre nom",
     "authorization": "Autorisation",
     "authorize":
       "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
@@ -237,9 +276,15 @@
     "mana_approved":
       "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
     "marketplace_contract": "Contrat de la place de marché",
+    "mortgage_creator_contract": "Contrat de créancier hypothécaire",
+    "mortgage_manager_contract": "Contrat de gestionnaire d'hypothèques",
     "pending_tx": "Vous avez une transaction en attente",
     "unauthorize_land_check":
       "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
+    "you_approved_mortgage_mana":
+      "Vous avez autorisé le {mortgage_contract_link} à exploiter MANA en votre nom",
+    "you_approved_mortgage_rcn":
+      "Vous avez autorisé le {mortgage_contract_link} à exploiter RCN en votre nom",
     "you_authorized":
       "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom."
   },
@@ -257,10 +302,18 @@
     "buy_mana": "Vous avez acheté {mana} MANA",
     "cancel":
       "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
+    "cancel_mortgage":
+      "Vous annulez une hypothèque pour acheter le colis {parcel_link}",
+    "create_mortgage":
+      "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
     "disapproved":
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
+    "mortgage_mana":
+      "Vous {action} gérez le {mortgage_contract_link} pour exploiter MANA en votre nom.",
+    "mortgage_rcn":
+      "Vous {action} le {mortgage_contract_link} pour exploiter RCN en votre nom.",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"

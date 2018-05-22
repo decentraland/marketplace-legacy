@@ -8,7 +8,11 @@ import AddressBlock from 'components/AddressBlock'
 import SettingsForm from './SettingsForm'
 
 import { walletType } from 'components/types'
-import { getManaToApprove, isLedgerWallet } from 'modules/wallet/utils'
+import {
+  getManaToApprove,
+  isLedgerWallet,
+  getRCNToApprove
+} from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 
 import './SettingsPage.css'
@@ -20,7 +24,9 @@ export default class SettingsPage extends React.PureComponent {
     isConnected: PropTypes.bool,
     onApproveMana: PropTypes.func,
     onAuthorizeLand: PropTypes.func,
-    onUpdateDerivationPath: PropTypes.func
+    onUpdateDerivationPath: PropTypes.func,
+    onAuthorizeMortgageForMana: PropTypes.func,
+    onAuthorizeMortgageForRCN: PropTypes.func
   }
 
   handleManaApproval = (event, data) => {
@@ -41,6 +47,16 @@ export default class SettingsPage extends React.PureComponent {
     }
   }
 
+  handleMortgageForManaApproval = (event, data) => {
+    const manaToApprove = data.checked ? getManaToApprove() : 0
+    this.props.onAuthorizeMortgageForMana(manaToApprove)
+  }
+
+  handleMortgageForRCNApproval = (event, data) => {
+    const rcnToApprove = data.checked ? getRCNToApprove() : 0
+    this.props.onAuthorizeMortgageForRCN(rcnToApprove)
+  }
+
   getApproveTransaction() {
     // Transactions are ordered, the last one corresponds to the last sent
     const { approveManaTransactions } = this.props.wallet
@@ -53,6 +69,22 @@ export default class SettingsPage extends React.PureComponent {
     return authorizeLandTransactions[authorizeLandTransactions.length - 1]
   }
 
+  getApproveMortgageForManaTransaction() {
+    // Transactions are ordered, the last one corresponds to the last sent
+    const { approveMortgageForManaTransactions } = this.props.wallet
+    return approveMortgageForManaTransactions[
+      approveMortgageForManaTransactions.length - 1
+    ]
+  }
+
+  getApproveMortgageForRCNTransaction() {
+    // Transactions are ordered, the last one corresponds to the last sent
+    const { approveMortgageForRCNTransactions } = this.props.wallet
+    return approveMortgageForRCNTransactions[
+      approveMortgageForRCNTransactions.length - 1
+    ]
+  }
+
   render() {
     const { isLoading, isConnected, wallet } = this.props
     const {
@@ -60,7 +92,9 @@ export default class SettingsPage extends React.PureComponent {
       balance,
       derivationPath,
       approvedBalance,
-      isLandAuthorized
+      isLandAuthorized,
+      isMortgageApprovedForMana,
+      isMortgageApprovedForRCN
     } = wallet
 
     if (isLoading) {
@@ -97,6 +131,16 @@ export default class SettingsPage extends React.PureComponent {
                   isLandAuthorized={isLandAuthorized}
                   authorizeTransaction={this.getAuthorizeTransaction()}
                   onLandAuthorizedChange={this.handleLandAuthorization}
+                  isMortgageApprovedForMana={isMortgageApprovedForMana}
+                  isMortgageApprovedForRCN={isMortgageApprovedForRCN}
+                  onMortgageApprovedForManaChange={
+                    this.handleMortgageForManaApproval
+                  }
+                  onMortgageApprovedForRCNChange={
+                    this.handleMortgageForRCNApproval
+                  }
+                  approveMortgageForManaTransaction={this.getApproveMortgageForManaTransaction()}
+                  approveMortgageForRCNTransaction={this.getApproveMortgageForRCNTransaction()}
                 />
               ) : (
                 <p className="sign-in">

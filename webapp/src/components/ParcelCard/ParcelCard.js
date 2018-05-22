@@ -6,28 +6,30 @@ import { locations } from 'locations'
 import { Icon, Card } from 'semantic-ui-react'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
-import PublicationExpiration from 'components/PublicationExpiration'
+import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
 import { AUCTION_DATE } from 'lib/parcelUtils'
-import { isOpen } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
 import { t } from 'modules/translation/utils'
-import { formatDate, buildCoordinate } from 'lib/utils'
+import { formatDate, buildCoordinate, isOpen } from 'lib/utils'
 
 import './ParcelCard.css'
 
 export default class ParcelCard extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    debounce: PropTypes.number
+    debounce: PropTypes.number,
+    showMortgage: PropTypes.bool
   }
 
   render() {
-    const { parcel, debounce } = this.props
+    const { parcel, debounce, showMortgage } = this.props
     const { x, y, publication } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
-    const isPublicationOpen = isOpen(publication)
+    const isPublicationOpen = isOpen(publication, PUBLICATION_STATUS.open)
 
     return (
       <Card className="ParcelCard">
@@ -45,7 +47,7 @@ export default class ParcelCard extends React.PureComponent {
             <Card.Description title={parcelName}>
               <span className="name">{parcelName}</span>
               {isPublicationOpen ? (
-                <Mana amount={parseFloat(publication.price, 10)} />
+                <Mana amount={parseFloat(publication.price)} />
               ) : null}
             </Card.Description>
 
@@ -54,7 +56,9 @@ export default class ParcelCard extends React.PureComponent {
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
                 >
-                  <PublicationExpiration publication={publication} />
+                  <Expiration
+                    expiresAt={parseInt(publication.expires_at, 10)}
+                  />
                 </Card.Meta>
               </React.Fragment>
             ) : (
@@ -69,6 +73,28 @@ export default class ParcelCard extends React.PureComponent {
                 })}
               </Card.Meta>
             )}
+
+            {showMortgage &&
+              isOpen(parcel.mortgage, MORTGAGE_STATUS.open) && (
+                <React.Fragment>
+                  <p className={`mortgage-status ${parcel.mortgage.status}`}>
+                    {parcel.mortgage.status}
+                  </p>
+                </React.Fragment>
+              )}
+            {!isOpen(publication, PUBLICATION_STATUS.open) &&
+              !showMortgage && (
+                <Card.Meta>
+                  {t('publication.acquired_at', {
+                    date: formatDate(
+                      parcel.last_transferred_at
+                        ? parseInt(parcel.last_transferred_at, 10)
+                        : AUCTION_DATE,
+                      'MMMM Do, YYYY'
+                    )
+                  })}
+                </Card.Meta>
+              )}
             <div className="footer">
               <div className="coords">
                 <Icon name="marker" />

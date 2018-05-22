@@ -16,7 +16,11 @@ import {
   distanceInWordsToNow,
   buildCoordinate
 } from 'lib/utils'
-import { getMarketplaceAddress } from 'modules/wallet/utils'
+import {
+  getMarketplaceAddress,
+  getMortgageCreatorAddress,
+  getMortgageManagerAddress
+} from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
 import { getEtherscanHref } from 'modules/transaction/utils'
 
@@ -24,7 +28,9 @@ import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
   TRANSFER_MANA_SUCCESS,
-  BUY_MANA_SUCCESS
+  BUY_MANA_SUCCESS,
+  APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
+  APPROVE_MORTGAGE_FOR_RCN_SUCCESS
 } from 'modules/wallet/actions'
 import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
@@ -33,6 +39,10 @@ import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS
 } from 'modules/publication/actions'
+import {
+  CREATE_MORTGAGE_SUCCESS,
+  CANCEL_MORTGAGE_SUCCESS
+} from 'modules/mortgage/actions'
 
 import './Transaction.css'
 
@@ -54,6 +64,22 @@ export default class Transaction extends React.PureComponent {
     return (
       <EtherscanLink address={getMarketplaceAddress()}>
         Marketplace
+      </EtherscanLink>
+    )
+  }
+
+  renderMortgageCreatorLink() {
+    return (
+      <EtherscanLink address={getMortgageCreatorAddress()}>
+        Mortgage Creator
+      </EtherscanLink>
+    )
+  }
+
+  renderMortgageManagerLink() {
+    return (
+      <EtherscanLink address={getMortgageManagerAddress()}>
+        Mortgage Manager
       </EtherscanLink>
     )
   }
@@ -149,6 +175,40 @@ export default class Transaction extends React.PureComponent {
           mana: formatMana(mana, '')
         })
       }
+
+      case APPROVE_MORTGAGE_FOR_MANA_SUCCESS: {
+        return t_html('transaction.mortgage_mana', {
+          action: (payload.mana > 0
+            ? t('global.authorized')
+            : t('global.unauthorized')
+          ).toLowerCase(),
+          mortgage_contract_link: this.renderMortgageCreatorLink()
+        })
+      }
+
+      case APPROVE_MORTGAGE_FOR_RCN_SUCCESS: {
+        return t_html('transaction.mortgage_rcn', {
+          action: (payload.rcn > 0
+            ? t('global.authorized')
+            : t('global.unauthorized')
+          ).toLowerCase(),
+          mortgage_contract_link: this.renderMortgageManagerLink()
+        })
+      }
+      case CREATE_MORTGAGE_SUCCESS: {
+        const { x, y } = payload
+
+        return t_html('transaction.create_mortgage', {
+          parcel_link: this.renderParcelLink(x, y)
+        })
+      }
+      case CANCEL_MORTGAGE_SUCCESS: {
+        const { x, y } = payload
+
+        return t_html('transaction.cancel_mortgage', {
+          parcel_link: this.renderParcelLink(x, y)
+        })
+      }
       default:
         return null
     }
@@ -169,7 +229,9 @@ export default class Transaction extends React.PureComponent {
       TRANSFER_PARCEL_SUCCESS,
       PUBLISH_SUCCESS,
       BUY_SUCCESS,
-      CANCEL_SALE_SUCCESS
+      CANCEL_SALE_SUCCESS,
+      CREATE_MORTGAGE_SUCCESS,
+      CANCEL_MORTGAGE_SUCCESS
     ].includes(tx.actionType)
 
     return (

@@ -1,7 +1,10 @@
 import { createSelector } from 'reselect'
-import { EDIT_PARCEL_REQUEST } from './actions'
+import { EDIT_PARCEL_REQUEST, FETCH_PARCEL_REQUEST } from './actions'
 import { getPublications as getAllPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'lib/utils'
+import { isLoadingType } from 'modules/loading/selectors'
+import { getMortgagesArray } from 'modules/mortgage/selectors'
+import { getActiveMortgagesByBorrower } from 'modules/mortgage/utils'
 
 export const getState = state => state.parcels
 export const getData = state => getState(state).data
@@ -11,6 +14,9 @@ export const getError = state => getState(state).error
 
 export const isEditTransactionIdle = state =>
   getLoading(state).some(action => action.type === EDIT_PARCEL_REQUEST)
+
+export const isFetchingParcel = state =>
+  isLoadingType(getLoading(state), FETCH_PARCEL_REQUEST)
 
 export const getParcels = createSelector(
   getData,
@@ -34,3 +40,14 @@ export const getPublications = (x, y) =>
       tx_hash => publications[tx_hash]
     )
   })
+
+export const getMortgagedParcels = createSelector(
+  state => state.wallet.data.address,
+  getParcels,
+  getMortgagesArray,
+  (borrower, parcels, mortgages) =>
+    getActiveMortgagesByBorrower(mortgages, borrower).map(mortgage => ({
+      ...parcels[mortgage.asset_id],
+      mortgage
+    }))
+)

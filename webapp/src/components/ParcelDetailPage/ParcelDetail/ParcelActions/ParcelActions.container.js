@@ -2,8 +2,12 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { locations } from 'locations'
 import ParcelActions from './ParcelActions'
+import { isFetchingParcel } from 'modules/parcels/selectors'
+import { isFetchingParcelMortgages } from 'modules/mortgage/selectors'
 
-const mapState = state => ({})
+const mapState = state => ({
+  isLoading: isFetchingParcel(state) || isFetchingParcelMortgages(state)
+})
 
 const mapDispatch = dispatch => ({
   onTransfer: ({ x, y }) => dispatch(push(locations.transferLand(x, y))),

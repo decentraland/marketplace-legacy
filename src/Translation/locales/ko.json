@@ -67,17 +67,24 @@
     "connect": "잇다",
     "connecting": "연결 중",
     "contributions": "공헌",
+    "expired_at": "만료 됨 {time}",
+    "expires_in": "만료 {time}",
+    "expires_in_more_than_years": "{years} 년 이상 만료 됨",
     "for": "에 대한",
     "marketplace": "시장",
+    "mortgage": "저당",
+    "mortgages": "모기지",
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
     "parcels": "필지",
     "profile": "나의 토지",
+    "request": "의뢰",
     "retry": "다시 해 보다",
     "settings": "설정",
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "submit": "제출",
+    "time_left": "남은 시간",
     "unauthorized": "무단",
     "wallet_address": "지갑 주소",
     "website": "웹 사이트"
@@ -104,6 +111,36 @@
       "close_to_expire": "가장 빨리 만료되는",
       "newest": "최신"
     }
+  },
+  "mortgage": {
+    "amount": "양",
+    "amount_placeholder": "MANA의 금액",
+    "cancel": "모기지 취소",
+    "duration": "지속",
+    "duration_placeholder": "기간 (일)",
+    "errors": {
+      "amount_minimum": "금액은 {amount}보다 커야합니다.",
+      "duration_gte_payable":
+        "기간은 며칠에 지불 가능한 것보다 크거나 같아야합니다.",
+      "maximum_interest_rate": "비율은 {maximum}보다 낮아야합니다.",
+      "minimum_duration": "기간은 {minimum} 일 이상이어야합니다.",
+      "minimum_interest_rate": "비율은 {minimum}보다 커야합니다.",
+      "minimum_payable": "지불 가능 시간은 {minimum} 일 이상이어야합니다.",
+      "parcel_price": "필요한 금액은 소포 가격보다 적어야합니다."
+    },
+    "expiration": "만료 요청",
+    "expiration_placeholder": "모기지 만기일",
+    "interest_rate": "이자율",
+    "interest_rate_placeholder": "이자율",
+    "oracle": "오라클 계약 주소",
+    "payable": "지불 할 곳 :",
+    "payable_placeholder": "일 단위로 지불 가능",
+    "punitory_rate": "도살장 이자율",
+    "punitory_rate_placeholder": "처벌 비율",
+    "request": "모기지 신청",
+    "request_land":
+      "{parcel_name}에 대한 모기지를 {parcel_price}에 요청하려고합니다.",
+    "requested": "요청 됨"
   },
   "parcel": {
     "no_description": "설명 없음",
@@ -150,8 +187,8 @@
     },
     "publication": {
       "buy": "구매",
-      "price": "가격",
-      "time_left": "남은 시간"
+      "mortgage": "모기지 신청",
+      "price": "가격"
     },
     "tags": {
       "title": "하이라이트"
@@ -209,9 +246,6 @@
   "publication": {
     "acquired_at": "{date}에 인수 됨",
     "canceled": "취소 됨",
-    "expired_at": "{time} 전 만료 됨",
-    "expires_in": "{time}에 만료 됨",
-    "expires_in_more_than_years": "{years} 년 만료 됨",
     "sold": "판매 됨",
     "view": "보기"
   },
@@ -219,6 +253,10 @@
     "approve_mana":
       "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
     "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
+    "approve_mortgage_mana":
+      "{mortgage_contract_link}이 (가) 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
+    "approve_mortgage_rcn":
+      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인하십시오.",
     "authorization": "권한 부여",
     "authorize":
       "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
@@ -228,9 +266,15 @@
     "mana_approved":
       "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "marketplace_contract": "시장 계약",
+    "mortgage_creator_contract": "모기지 크리에이터 계약",
+    "mortgage_manager_contract": "모기지 매니저 계약",
     "pending_tx": "보류중인 거래가 있습니다.",
     "unauthorize_land_check":
       "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",
+    "you_approved_mortgage_mana":
+      "{mortgage_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
+    "you_approved_mortgage_rcn":
+      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인했습니다.",
     "you_authorized": "{marketplace_contract_link}을(를) 승인했습니다."
   },
   "sign_in": {
@@ -246,10 +290,16 @@
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
+    "cancel_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 취소합니다.",
+    "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
     "disapproved":
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
+    "mortgage_mana":
+      "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}.",
+    "mortgage_rcn":
+      "{action} 귀하를 대신하여 RCN을 운영하는 {mortgage_contract_link}.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."

@@ -4,3 +4,15 @@ export function isDuplicatedConstraintError(error = {}) {
 
   return errorMessage.search(duplicateErrorRegexp) !== -1
 }
+
+export function getInStatus(status, defaultStatuses) {
+  if (!status) {
+    return Object.keys(defaultStatuses)
+      .map(key => `'${defaultStatuses[key]}'}`)
+      .join(',')
+  }
+  return status
+    .split(',')
+    .map(s => `'${s}'`)
+    .join(',')
+}
