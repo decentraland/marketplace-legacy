@@ -22,8 +22,59 @@ export default class EstateSelect extends React.PureComponent {
     value: PropTypes.arrayOf(coordsType).isRequired
   }
 
+  isNeighbour = (x, y) => coords => {
+    return (
+      (coords.x === x && (coords.y + 1 === y || coords.y - 1 === y)) ||
+      (coords.y === y && (coords.x + 1 === x || coords.x - 1 === x))
+    )
+  }
+
+  hasNeighbour = (x, y) => {
+    const { value: parcels } = this.props
+    return parcels.some(this.isNeighbour(x, y))
+  }
+
+  getNeighbours = (x, y, parcels = this.props.parcels) => {
+    return parcels.filter(this.isNeighbour(x, y))
+  }
+
+  areConnected = (parcels, alreadyTraveled = [], remaining = [...parcels]) => {
+    if (alreadyTraveled.length === parcels.length) {
+      return true
+    }
+
+    if (remaining.length === 0) {
+      return false
+    }
+
+    let actual = remaining.pop()
+
+    const neighbours = this.getNeighbours(actual.x, actual.y, parcels).filter(
+      coords => {
+        return (
+          parcels.some(
+            coords2 => coords.x === coords2.x && coords.y === coords2.y
+          ) &&
+          !alreadyTraveled.some(
+            coords2 => coords.x === coords2.x && coords.y === coords2.y
+          )
+        )
+      }
+    )
+
+    return this.areConnected(
+      parcels,
+      [...alreadyTraveled, ...neighbours],
+      remaining
+    )
+  }
+
   handleParcelClick = wallet => (x, y) => {
     if (!isOwner(wallet, x, y)) {
+      return
+    }
+
+    if (!this.hasNeighbour(x, y)) {
       return
     }
 
@@ -34,6 +85,11 @@ export default class EstateSelect extends React.PureComponent {
       const newParcels = parcels.filter(
         coords => !(coords.x === x && coords.y === y)
       )
+
+      if (!this.areConnected(newParcels) && newParcels.length > 1) {
+        return
+      }
+
       onChange(newParcels)
       return
     }
