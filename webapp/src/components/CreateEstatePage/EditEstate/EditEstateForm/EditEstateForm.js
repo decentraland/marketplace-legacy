@@ -16,56 +16,52 @@ export default class EditEstateForm extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    const { data } = this.props.value
+    const { value: estate } = this.props
     this.state = {
-      name: data.name || '',
-      description: data.description || ''
+      initialEstate: estate
     }
   }
 
   handleNameChange = event => {
-    this.setState({ name: event.target.value })
+    const { value: estate, onChange } = this.props
+    onChange({
+      ...estate,
+      data: {
+        ...estate.data,
+        name: event.target.value
+      }
+    })
   }
 
   handleDescriptionChange = event => {
-    this.setState({ description: event.target.value })
-  }
-
-  handleCancel = () => {
-    this.props.onCancel()
+    const { value: estate, onChange } = this.props
+    onChange({
+      ...estate,
+      data: {
+        ...estate.data,
+        description: event.target.value
+      }
+    })
   }
 
   hasChanged() {
     const { data } = this.props.value
+    const { name, description } = this.state.initialEstate
 
     return (
-      this.state.name !== data.name ||
-      this.state.description !== data.description
+      name !== data.name ||
+      description !== data.description
     )
   }
 
-  handleSubmit = () => {
-    if (this.hasChanged()) {
-      const { value: estate, onSubmit } = this.props
-      const { name, description } = this.state
-      onSubmit({
-        ...estate,
-        data: {
-          ...estate.data,
-          name,
-          description
-        }
-      })
-    }
-  }
-
   render() {
-    const { name, description } = this.state
+    const { onCancel, onSubmit, value: estate } = this.props
+    const { name, description } = estate.data
 
     return (
       <Form
         className="EditEstateForm"
-        onSubmit={preventDefault(this.handleSubmit)}
+        onSubmit={preventDefault(onSubmit)}
       >
         <Form.Field>
           <label>{t('estate_edit.name')}</label>
@@ -87,7 +83,7 @@ export default class EditEstateForm extends React.PureComponent {
         </Form.Field>
         <br />
         <div>
-          <Button type="button" onClick={this.handleCancel}>
+          <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>
           <Button type="submit" primary={true} disabled={!this.hasChanged()}>

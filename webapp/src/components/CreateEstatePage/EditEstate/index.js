@@ -1,3 +1,3 @@
-import EditEstate from './EditEstate.container'
+import EditEstate from './EditEstate'
 
 export default EditEstate

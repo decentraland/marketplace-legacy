@@ -8,7 +8,7 @@ export default class CreateEstatePage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
-    onEstateCreation: PropTypes.func.isRequired
+    createEstate: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -37,11 +37,11 @@ export default class CreateEstatePage extends React.PureComponent {
   }
 
   handleChange = estate => {
-    this.setState({ estate })
+    this.setState({ ...this.state, estate })
   }
 
   handleSubmit = () => {
-    this.props.onEstateCreation(this.state.estate)
+    this.props.createEstate(this.state.estate)
   }
 
   render() {
@@ -56,14 +56,14 @@ export default class CreateEstatePage extends React.PureComponent {
         />
       </React.Fragment>
     ) : (
-      <React.Fragment>
-        <EditEstate
-          value={estate}
-          onCancel={this.handleSwitch}
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        />
-      </React.Fragment>
-    )
+        <React.Fragment>
+          <EditEstate
+            value={estate}
+            onCancel={this.handleSwitch}
+            onChange={this.handleChange}
+            onSubmit={this.handleSubmit}
+          />
+        </React.Fragment>
+      )
   }
 }

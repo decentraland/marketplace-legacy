@@ -4,6 +4,7 @@ import { locations } from 'locations'
 
 import { getMatchParams } from 'modules/location/selectors'
 import { navigateTo } from 'modules/location/actions'
+import { createEstateRequest } from 'modules/estates/actions';
 import { getError, isLoading } from 'modules/parcels/selectors'
 import CreateEstatePage from './CreateEstatePage'
 
@@ -22,7 +23,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     onError: error => dispatch(navigateTo(locations.root)),
     onCancel: () => dispatch(navigateTo(locations.parcelDetail(x, y))),
-    onEstateCreation: parcels => console.log(parcels)
+    createEstate: estate => dispatch(createEstateRequest(estate))
   }
 }
 

@@ -20,12 +20,14 @@ export function estatesReducer(state = INITIAL_STATE, action) {
       }
     }
     case CREATE_ESTATE_SUCCESS: {
+      const { estate } = action
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
         data: {
-          ...state.data
+          ...state.data,
+          [estate.id]: { ...estate }
         }
       }
     }
@@ -35,5 +37,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action)
       }
     }
+    default:
+      return state
   }
 }
