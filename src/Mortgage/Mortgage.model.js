@@ -1,6 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { SQL, raw, getInStatus } from '../database'
+import { MortgageQueries } from './Mortgage.queries'
 
 export class Mortgage extends Model {
   static tableName = 'mortgages'
@@ -26,24 +27,45 @@ export class Mortgage extends Model {
   static STATUS = Object.freeze({
     open: 'open',
     claimed: 'claimed',
-    cancelled: 'cancelled'
+    cancelled: 'cancelled',
+    started: 'started'
   })
 
-  static findByBorrower(borrower, status) {
+  static findByBorrower(
+    borrower,
+    status,
+    checkIfParcelHasOpenPublication = true
+  ) {
+    const existPublication = checkIfParcelHasOpenPublication
+      ? MortgageQueries.existPublication
+      : ''
+
+    console.log(existPublication)
     return this.db.query(
-      SQL`SELECT * FROM ${raw(this.tableName)}
+      SQL`SELECT * FROM ${raw(this.tableName)} as m
         WHERE borrower = ${borrower}
-          AND status IN (${raw(getInStatus(status, this.STATUS))})
-          ORDER BY created_at DESC`
+          AND status IN (${raw(getInStatus(status, this.STATUS))})${raw(
+        existPublication
+      )}
+        ORDER BY created_at DESC`
     )
   }
 
-  static findInCoordinate(assetId, status) {
+  static findInCoordinate(
+    assetId,
+    status,
+    checkIfParcelHasOpenPublication = true
+  ) {
+    const existPublication = checkIfParcelHasOpenPublication
+      ? MortgageQueries.existPublication
+      : ''
     return this.db.query(
-      SQL`SELECT * FROM ${raw(this.tableName)}
+      SQL`SELECT * FROM ${raw(this.tableName)} as m
         WHERE asset_id = ${assetId}
-          AND status IN(${raw(getInStatus(status, this.STATUS))})
-          ORDER BY created_at DESC`
+          AND status IN(${raw(getInStatus(status, this.STATUS))})${raw(
+        existPublication
+      )}
+        ORDER BY created_at DESC`
     )
   }
 }

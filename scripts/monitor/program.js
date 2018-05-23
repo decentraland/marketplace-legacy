@@ -46,7 +46,12 @@ Promise.resolve()
         ],
         LANDRegistry: ['Update', 'Transfer'],
         MortgageCreator: ['NewMortgage'],
-        MortgageManager: ['CanceledMortgage']
+        MortgageManager: [
+          'CanceledMortgage',
+          'StartedMortgage',
+          'PaidMortgage',
+          'DefaultedMortgage'
+        ]
       },
       env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
     ).run()

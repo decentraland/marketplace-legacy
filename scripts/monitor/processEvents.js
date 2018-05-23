@@ -66,6 +66,30 @@ async function processNoParcelRelatedEvents(event) {
       }
       break
     }
+    case BlockchainEvent.EVENTS.startedMortgage: {
+      const { _id } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      try {
+        log.info(`[${name}] Starting Mortgage ${_id}`)
+        await Mortgage.update(
+          {
+            status: Mortgage.STATUS.started,
+            block_time_updated_at
+          },
+          {
+            mortgage_id: _id
+          }
+        )
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
+        )
+      }
+      break
+    }
     default:
       log.info(`Don't know how to handle event ${event.name}`)
       break
