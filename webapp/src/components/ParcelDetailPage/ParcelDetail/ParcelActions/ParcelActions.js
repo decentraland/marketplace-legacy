@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
+import { env } from 'decentraland-commons'
+
 import { parcelType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { isOnSale } from 'lib/parcelUtils'
@@ -56,11 +58,13 @@ export default class ParcelActions extends React.PureComponent {
                 {t('parcel_detail.publication.buy')}
               </Button>
             </Link>
-            <Link to={locations.buyLandByMortgage(x, y)}>
-              <Button primary size="large">
-                {t('parcel_detail.publication.mortgage')}
-              </Button>
-            </Link>
+            {env.isDevelopment() && (
+              <Link to={locations.buyLandByMortgage(x, y)}>
+                <Button primary size="large">
+                  {t('parcel_detail.publication.mortgage')}
+                </Button>
+              </Link>
+            ) /* Mortgage Feature */}
           </React.Fragment>
         ) : null}
       </div>

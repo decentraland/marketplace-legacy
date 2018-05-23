@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container } from 'semantic-ui-react'
+import { env } from 'decentraland-commons'
+
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
@@ -48,7 +50,7 @@ export default class ParcelDetailPage extends React.PureComponent {
         onFetchActiveParcelMortgages
       } = this.props
 
-      onFetchActiveParcelMortgages(x, y)
+      env.isDevelopment() && onFetchActiveParcelMortgages(x, y) // Mortgage Feature
       onFetchParcelPublications(x, y)
 
       this.isAdditionalResourcesFetched = true

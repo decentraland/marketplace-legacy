@@ -1,4 +1,6 @@
 import { select, takeEvery, call, put } from 'redux-saga/effects'
+import { env } from 'decentraland-commons'
+
 import {
   FETCH_ADDRESS,
   FETCH_ADDRESS_PARCELS_REQUEST,
@@ -85,5 +87,8 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
-  yield put(fetchMortgagedParcelsRequest(address))
+  if (env.isDevelopment()) {
+    // Mortgage Feature
+    yield put(fetchMortgagedParcelsRequest(address))
+  }
 }

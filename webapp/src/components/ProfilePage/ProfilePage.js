@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { env } from 'decentraland-commons'
 
 import { PROFILE_PAGE_TABS } from 'locations'
 import {
@@ -200,14 +201,19 @@ export default class ProfilePage extends React.PureComponent {
                 PROFILE_PAGE_TABS.publications
               )}
             </Menu.Item>
-            <Menu.Item
-              name={PROFILE_PAGE_TABS.mortgages}
-              active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
-              onClick={this.handleItemClick}
-            >
-              {t('global.mortgages')}
-              {this.renderBadge(mortgagedParcels, PROFILE_PAGE_TABS.mortgages)}
-            </Menu.Item>
+            {env.isDevelopment() && (
+              <Menu.Item
+                name={PROFILE_PAGE_TABS.mortgages}
+                active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
+                onClick={this.handleItemClick}
+              >
+                {t('global.mortgages')}
+                {this.renderBadge(
+                  mortgagedParcels,
+                  PROFILE_PAGE_TABS.mortgages
+                )}
+              </Menu.Item>
+            ) /* Mortgage Feature */}
           </Menu>
         </Container>
         <Container className="profile-grid">

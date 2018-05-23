@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
+import { env } from 'decentraland-commons'
+
 import Mana from 'components/Mana'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
@@ -186,55 +188,59 @@ export default class SettingsForm extends React.PureComponent {
             </div>
           </Form.Field>
 
-          <Form.Field>
-            <Checkbox
-              checked={isMortgageApprovedForMana}
-              disabled={isMortgageApprovedForManaPending}
-              onChange={onMortgageApprovedForManaChange}
-            />
-
-            <div className="authorize-detail">
-              {isMortgageApprovedForMana
-                ? t_html('settings.you_approved_mortgage_mana', {
-                    mortgage_contract_link: this.renderMortgageCreatorLink()
-                  })
-                : t_html('settings.approve_mortgage_mana', {
-                    mortgage_contract_link: this.renderMortgageCreatorLink()
-                  })}
-
-              {isMortgageApprovedForManaPending && (
-                <TxStatus.Text
-                  txHash={approveMortgageForManaTransaction.hash}
-                  txStatus={approveMortgageForManaTransaction.status}
+          {env.isDevelopment() && (
+            <React.Fragment>
+              <Form.Field>
+                <Checkbox
+                  checked={isMortgageApprovedForMana}
+                  disabled={isMortgageApprovedForManaPending}
+                  onChange={onMortgageApprovedForManaChange}
                 />
-              )}
-            </div>
-          </Form.Field>
 
-          <Form.Field>
-            <Checkbox
-              checked={isMortgageApprovedForRCN}
-              disabled={isMortgageApprovedForRCNPending}
-              onChange={onMortgageApprovedForRCNChange}
-            />
+                <div className="authorize-detail">
+                  {isMortgageApprovedForMana
+                    ? t_html('settings.you_approved_mortgage_mana', {
+                        mortgage_contract_link: this.renderMortgageCreatorLink()
+                      })
+                    : t_html('settings.approve_mortgage_mana', {
+                        mortgage_contract_link: this.renderMortgageCreatorLink()
+                      })}
 
-            <div className="authorize-detail">
-              {isMortgageApprovedForRCN
-                ? t_html('settings.you_approved_mortgage_rcn', {
-                    mortgage_contract_link: this.renderMortgageManagerLink()
-                  })
-                : t_html('settings.approve_mortgage_rcn', {
-                    mortgage_contract_link: this.renderMortgageManagerLink()
-                  })}
+                  {isMortgageApprovedForManaPending && (
+                    <TxStatus.Text
+                      txHash={approveMortgageForManaTransaction.hash}
+                      txStatus={approveMortgageForManaTransaction.status}
+                    />
+                  )}
+                </div>
+              </Form.Field>
 
-              {isMortgageApprovedForRCNPending && (
-                <TxStatus.Text
-                  txHash={approveMortgageForRCNTransaction.hash}
-                  txStatus={approveMortgageForRCNTransaction.status}
+              <Form.Field>
+                <Checkbox
+                  checked={isMortgageApprovedForRCN}
+                  disabled={isMortgageApprovedForRCNPending}
+                  onChange={onMortgageApprovedForRCNChange}
                 />
-              )}
-            </div>
-          </Form.Field>
+
+                <div className="authorize-detail">
+                  {isMortgageApprovedForRCN
+                    ? t_html('settings.you_approved_mortgage_rcn', {
+                        mortgage_contract_link: this.renderMortgageManagerLink()
+                      })
+                    : t_html('settings.approve_mortgage_rcn', {
+                        mortgage_contract_link: this.renderMortgageManagerLink()
+                      })}
+
+                  {isMortgageApprovedForRCNPending && (
+                    <TxStatus.Text
+                      txHash={approveMortgageForRCNTransaction.hash}
+                      txStatus={approveMortgageForRCNTransaction.status}
+                    />
+                  )}
+                </div>
+              </Form.Field>
+            </React.Fragment>
+          ) /* Mortgage Feature */}
         </div>
       </Form>
     )
