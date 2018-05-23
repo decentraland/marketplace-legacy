@@ -56,11 +56,13 @@
   },
   "global": {
     "activity": "活动",
+    "address_placeholder": "例如：{address}",
     "atlas": "地图",
     "authorized": "已授权",
     "balance": "余额",
     "blog": "博客",
     "cancel": "取消",
+    "change": "更改",
     "click_here": "点击这里",
     "community_chat": "社区聊天",
     "confirm": "确认",
@@ -68,17 +70,20 @@
     "connecting": "连",
     "contributions": "小区份额",
     "for": "对于",
+    "loading": "载入中",
     "marketplace": "虚拟物品市场",
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유",
     "parcels": "地块",
     "profile": "我的虚拟土地",
     "retry": "다시 해 보다",
+    "revoke": "撤消",
     "settings": "设置",
     "sign_in": "登录",
     "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "submit": "提交",
     "unauthorized": "未授权",
+    "undo": "解开",
     "wallet_address": "钱包地址",
     "website": "网站"
   },
@@ -130,6 +135,7 @@
     "actions": {
       "cancel": "取消出售",
       "edit": "编辑",
+      "permissions": "权限",
       "sell": "出售",
       "transfer": "转让"
     },
@@ -164,6 +170,13 @@
     "edit_land": "编辑土地",
     "name": "名称",
     "set_name_and_desc": "为{parcel_name}设置名称和描述"
+  },
+  "parcel_manage": {
+    "address": "运营商地址",
+    "address_permission": "这个地址将能够更新这个包裹的内容。",
+    "check_address": "请仔细检查地址",
+    "give_permission": "授予更新{parcel_name}的内容的权限。",
+    "manage_land": "管理LAND"
   },
   "parcel_publish": {
     "already_sold": "这块虚拟土地已以{value}价格在出售中",
@@ -241,6 +254,8 @@
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "edit":
       "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
+    "manage": "您授予{address_link}更新{parcel_link}的内容的权限",
+    "manage_revoked": "您撤销了{address_link}更新{parcel_link}内容的权限",
     "publish": "您发布了{parcel_link}地块",
     "transfer": "您已将{parcel_link}转让给{owner_link}",
     "transfer_mana": "您将{mana}个MANA转移到{address_link}"

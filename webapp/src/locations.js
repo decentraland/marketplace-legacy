@@ -23,6 +23,9 @@ export const locations = {
   edit: '/:x/:y/edit',
   editLand: (x, y) => `/${x}/${y}/edit`,
 
+  manage: '/:x/:y/manage',
+  manageLand: (x, y) => `/${x}/${y}/manage`,
+
   transfer: '/:x/:y/transfer',
   transferLand: (x, y) => `/${x}/${y}/transfer`,
 

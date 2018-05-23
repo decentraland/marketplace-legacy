@@ -56,11 +56,13 @@
   },
   "global": {
     "activity": "Actividad",
+    "address_placeholder": "Ejemplo: {address}",
     "atlas": "Atlas",
     "authorized": "Autorizado",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancelar",
+    "change": "Cambio",
     "click_here": "Pincha aquí",
     "community_chat": "Chat de la comunidad",
     "confirm": "Confirmar",
@@ -68,17 +70,20 @@
     "connecting": "Conectando",
     "contributions": "Contribuciones",
     "for": "para",
+    "loading": "Cargando",
     "marketplace": "Mercado",
     "owned_by": "Controlada por",
     "owned_by_link": "Controlada por {address_link}",
     "parcels": "Parcelas",
     "profile": "Mi LAND",
     "retry": "Reintentar",
+    "revoke": "Revocar",
     "settings": "Configuración",
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "submit": "Enviar",
     "unauthorized": "No autorizado",
+    "undo": "Deshacer",
     "wallet_address": "Dirección de billetera",
     "website": "Website"
   },
@@ -130,6 +135,7 @@
     "actions": {
       "cancel": "Cancelar venta",
       "edit": "Editar",
+      "permissions": "Permisos",
       "sell": "Vender",
       "transfer": "Transferir"
     },
@@ -164,6 +170,15 @@
     "edit_land": "Editar LAND",
     "name": "Nombre",
     "set_name_and_desc": "Configura un nombre y descripción para {parcel_name}"
+  },
+  "parcel_manage": {
+    "address": "Dirección del operador",
+    "address_permission":
+      "Esta dirección podrá actualizar el contenido de este paquete.",
+    "check_address": "Por favor, compruebe la dirección con cuidado",
+    "give_permission":
+      "Dar permiso para actualizar el contenido de {parcel_name}.",
+    "manage_land": "Administrar LAND"
   },
   "parcel_publish": {
     "already_sold": "Esta LAND ya se encuentra en venta a {value}",
@@ -257,6 +272,10 @@
       "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
+    "manage":
+      "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
+    "manage_revoked":
+      "Ha revocado el permiso {address_link} para actualizar el contenido de {parcel_link}",
     "publish": "Has publicado {parcel_link}",
     "transfer": "Has transferido {parcel_link} a {owner_link}",
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"

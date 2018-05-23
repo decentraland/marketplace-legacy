@@ -5,7 +5,10 @@ import {
   CANCEL_SALE_SUCCESS
 } from 'modules/publication/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
-import { EDIT_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import {
+  EDIT_PARCEL_SUCCESS,
+  MANAGE_PARCEL_SUCCESS
+} from 'modules/parcels/actions'
 import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
@@ -69,3 +72,10 @@ add(
   'Transaction Failed',
   action => action.transaction
 )
+
+add(MANAGE_PARCEL_SUCCESS, 'Manage LAND Permissions', action => ({
+  x: action.parcel.x,
+  y: action.parcel.y,
+  address: action.address,
+  revoked: action.revoked
+}))

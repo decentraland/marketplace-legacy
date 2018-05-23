@@ -56,3 +56,9 @@
     margin: 0px 50px 0px 50px;
   }
 }
+
+@media (min-width: 768px) {
+  .ParcelModal .modal-children {
+    min-width: 420px;
+  }
+}
