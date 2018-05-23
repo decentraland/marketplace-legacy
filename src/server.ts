@@ -1,3 +1,4 @@
+// TODO: Remove this
 import 'babel-polyfill'
 import * as bodyParser from 'body-parser'
 import { env } from 'decentraland-commons'
