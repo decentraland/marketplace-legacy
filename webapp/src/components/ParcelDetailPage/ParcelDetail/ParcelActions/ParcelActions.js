@@ -12,12 +12,14 @@ import './ParcelActions.css'
 export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
-    isOwner: PropTypes.bool
+    isOwner: PropTypes.bool,
+    mortgages: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool.isRequired
   }
 
   render() {
-    const { parcel, isOwner } = this.props
-    if (!parcel) {
+    const { parcel, isOwner, mortgages, isLoading } = this.props
+    if (!parcel || isLoading) {
       return null
     }
     const { x, y } = parcel
@@ -47,12 +49,19 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : isOnSale(parcel) ? (
-          <Link to={locations.buyLand(x, y)}>
-            <Button primary size="large">
-              {t('parcel_detail.publication.buy')}
-            </Button>
-          </Link>
+        ) : isOnSale(parcel) && mortgages.length === 0 ? (
+          <React.Fragment>
+            <Link to={locations.buyLand(x, y)}>
+              <Button primary size="large">
+                {t('parcel_detail.publication.buy')}
+              </Button>
+            </Link>
+            <Link to={locations.buyLandByMortgage(x, y)}>
+              <Button primary size="large">
+                {t('parcel_detail.publication.mortgage')}
+              </Button>
+            </Link>
+          </React.Fragment>
         ) : null}
       </div>
     )

@@ -2,7 +2,8 @@ import React from 'react'
 
 import Mana from 'components/Mana'
 import { t } from 'modules/translation/utils'
-import { isOpen } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { isOpen } from 'lib/utils'
 
 import './Popup.css'
 
@@ -31,10 +32,10 @@ export default function Popup(props) {
         {description ? (
           <div className="text description">{description}</div>
         ) : null}
-        {isOpen(publication) ? (
+        {isOpen(publication, PUBLICATION_STATUS.open) ? (
           <div className="text publication">
             {t('atlas.on_sale')}
-            <Mana amount={parseFloat(publication.price, 10)} />
+            <Mana amount={parseFloat(publication.price)} />
           </div>
         ) : null}
       </div>

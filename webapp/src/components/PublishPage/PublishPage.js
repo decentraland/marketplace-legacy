@@ -10,10 +10,10 @@ import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 
 import { publicationType, walletType } from 'components/types'
-import { isOpen } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { t, t_html } from 'modules/translation/utils'
 
-import { formatMana, buildCoordinate } from 'lib/utils'
+import { formatMana, buildCoordinate, isOpen } from 'lib/utils'
 
 import './PublishPage.css'
 
@@ -43,7 +43,7 @@ export default class PublishPage extends React.PureComponent {
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
           <div className="PublishPage">
-            {isOpen(publication) ? (
+            {isOpen(publication, PUBLICATION_STATUS.open) ? (
               <Container text>
                 <Message
                   warning
