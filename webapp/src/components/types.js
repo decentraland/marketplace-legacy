@@ -24,14 +24,26 @@ export const publicationType = shape({
   expires_at: oneOfType([number, string])
 })
 
+export const coordsType = shape({
+  x: number,
+  y: number
+})
+
 export const parcelType = shape({
   id: string.isRequired,
   district_id: string,
-  address: string,
+  owner: string,
+  isOnEstate: bool,
   x: number.isRequired,
   y: number.isRequired,
   publication: publicationType,
   tags: object
+})
+
+export const estateType = shape({
+  id: string,
+  owner: string,
+  parcels: arrayOf(coordsType).isRequired
 })
 
 export const contributionType = shape({
@@ -81,11 +93,6 @@ export const transferType = shape({
   oldOwner: string,
   newOwner: string,
   parcelId: string
-})
-
-export const coordsType = shape({
-  x: number,
-  y: number
 })
 
 export const toastType = shape({
