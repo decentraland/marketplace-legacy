@@ -75,21 +75,20 @@ async function checkParcels(parcels) {
 async function checkParcel(parcel) {
   if (!parcel) return
 
-  const { x, y, asset_id } = parcel
+  const { id, asset_id } = parcel
   const marketplace = eth.getContract('Marketplace')
-  const publication = (await Publication.findByAssetId(asset_id))[0]
+  const publication = (await Publication.findByAssetId(id))[0]
   const auction = await marketplace.auctionByAssetId(asset_id)
   const contractId = auction[0]
 
   if (!isNullHash(contractId)) {
     if (!publication) {
       // Check if the publication exists in db
-      log.info(x, y, 'missing publication in db')
+      log.info(id, 'missing publication in db')
     } else if (publication.contract_id !== contractId) {
       // Check that id matches
       log.info(
-        x,
-        y,
+        id,
         'different id in db',
         publication.contract_id,
         'vs in blockchain',
@@ -98,7 +97,7 @@ async function checkParcel(parcel) {
     }
   } else if (publication && publication.status === Publication.STATUS.open) {
     // Check for hanging publication in db
-    log.info(x, y, 'open in db and null in blockchain')
+    log.info(id, 'open in db and null in blockchain')
   }
 }
 
