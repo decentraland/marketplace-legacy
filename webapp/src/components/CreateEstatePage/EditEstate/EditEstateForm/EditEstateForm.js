@@ -4,12 +4,13 @@ import PropTypes from 'prop-types'
 import { Button, Form, Input } from 'semantic-ui-react'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
+import { estateType } from 'components/types'
 
 import './EditEstateForm.css'
 
 export default class EditEstateForm extends React.PureComponent {
   static propTypes = {
-    value: PropTypes.object.isRequired,
+    value: estateType.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
