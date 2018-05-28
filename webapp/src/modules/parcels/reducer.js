@@ -24,6 +24,10 @@ import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'lib/utils'
 import { cleanParcel, toParcelObject } from './utils'
+import {
+  FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
+  FETCH_MORTGAGED_PARCELS_SUCCESS
+} from '../mortgage/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -127,6 +131,39 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             )
           }
         }
+      }
+    }
+    case FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS: {
+      const { x, y, mortgages } = action
+      const parcelId = buildCoordinate(x, y)
+      const parcel = state.data[parcelId]
+
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        data: {
+          ...state.data,
+          [parcelId]: {
+            ...parcel,
+            mortgages_tx_hashes: mortgages.map(mortgage => mortgage.tx_hash)
+          }
+        }
+      }
+    }
+    case FETCH_MORTGAGED_PARCELS_SUCCESS: {
+      return {
+        ...state,
+        data: action.parcels.reduce(
+          (parcels, parcel) => ({
+            ...parcels,
+            [buildCoordinate(parcel.x, parcel.y)]: Object.assign(
+              {},
+              parcels[buildCoordinate(parcel.x, parcel.y)],
+              parcel
+            )
+          }),
+          state.data
+        )
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {

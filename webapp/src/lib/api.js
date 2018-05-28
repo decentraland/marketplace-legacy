@@ -54,6 +54,22 @@ export class API {
     return this.request('get', '/districts', {})
   }
 
+  fetchMortgagedParcels(borrower) {
+    return this.request('get', `/parcels/${borrower}/mortgages/`)
+  }
+
+  fetchMortgagesByBorrower(borrower, status) {
+    return this.request('get', `/addresses/${borrower}/mortgages/`, {
+      status: status.join(',')
+    })
+  }
+
+  fetchMortgages(x, y, status) {
+    return this.request('get', `/parcels/${x}/${y}/mortgages`, {
+      status: status.join(',')
+    })
+  }
+
   request(method, path, params) {
     let options = {
       method,

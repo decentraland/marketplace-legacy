@@ -82,7 +82,7 @@ export function authorizeLandFailure(error) {
   }
 }
 
-// Approve MANA
+// Transfer MANA
 
 export const TRANSFER_MANA_REQUEST = '[Request] Transfer MANA'
 export const TRANSFER_MANA_SUCCESS = '[Success] Transfer MANA'
@@ -175,5 +175,67 @@ export function updateEthBalance(ethBalance) {
   return {
     type: UPDATE_ETH_BALANCE,
     ethBalance
+  }
+}
+
+// Approve Mortgage for MANA
+
+export const APPROVE_MORTGAGE_FOR_MANA_REQUEST =
+  '[Request] Approve Mortgage for MANA'
+export const APPROVE_MORTGAGE_FOR_MANA_SUCCESS =
+  '[Success] Approve Mortgage for MANA'
+export const APPROVE_MORTGAGE_FOR_MANA_FAILURE =
+  '[Failure] Approve Mortgage for MANA'
+
+export function approveMortgageForManaRequest(mana) {
+  return {
+    type: APPROVE_MORTGAGE_FOR_MANA_REQUEST,
+    mana
+  }
+}
+
+export function approveMortgageForManaSuccess(txHash, mana) {
+  return {
+    type: APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
+    ...buildTransactionAction(txHash, { mana }),
+    mana
+  }
+}
+
+export function approveMortgageForManaFailure(error) {
+  return {
+    type: APPROVE_MORTGAGE_FOR_MANA_FAILURE,
+    error
+  }
+}
+
+// Approve Mortgage for RCN
+
+export const APPROVE_MORTGAGE_FOR_RCN_REQUEST =
+  '[Request] Approve Mortgage for RCN'
+export const APPROVE_MORTGAGE_FOR_RCN_SUCCESS =
+  '[Success] Approve Mortgage for RCN'
+export const APPROVE_MORTGAGE_FOR_RCN_FAILURE =
+  '[Failure] Approve Mortgage for RCN'
+
+export function approveMortgageForRCNRequest(rcn) {
+  return {
+    type: APPROVE_MORTGAGE_FOR_RCN_REQUEST,
+    rcn
+  }
+}
+
+export function approveMortgageForRCNSuccess(txHash, rcn) {
+  return {
+    type: APPROVE_MORTGAGE_FOR_RCN_SUCCESS,
+    ...buildTransactionAction(txHash, { rcn }),
+    rcn
+  }
+}
+
+export function approveMortgageForRCNFailure(error) {
+  return {
+    type: APPROVE_MORTGAGE_FOR_RCN_FAILURE,
+    error
   }
 }

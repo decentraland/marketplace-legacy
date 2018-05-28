@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container } from 'semantic-ui-react'
+import { env } from 'decentraland-commons'
+
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
@@ -16,9 +18,12 @@ export default class ParcelDetailPage extends React.PureComponent {
     error: PropTypes.string,
     districts: PropTypes.objectOf(districtType).isRequired,
     publications: PropTypes.objectOf(publicationType),
+    mortgages: PropTypes.array,
     onFetchParcelPublications: PropTypes.func.isRequired,
+    onFetchActiveParcelMortgages: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
     onBuy: PropTypes.func.isRequired,
+    user: PropTypes.string,
     onParcelClick: PropTypes.func.isRequired
   }
 
@@ -38,7 +43,17 @@ export default class ParcelDetailPage extends React.PureComponent {
 
   fetchAdditionalParcelResources() {
     if (!this.isAdditionalResourcesFetched) {
-      const { x, y, onFetchParcelPublications } = this.props
+      const {
+        x,
+        y,
+        onFetchParcelPublications,
+        onFetchActiveParcelMortgages
+      } = this.props
+
+      if (env.isDevelopment()) {
+        // Mortgage Feature
+        onFetchActiveParcelMortgages(x, y)
+      }
       onFetchParcelPublications(x, y)
 
       this.isAdditionalResourcesFetched = true
@@ -53,7 +68,8 @@ export default class ParcelDetailPage extends React.PureComponent {
       districts,
       publications,
       onBuy,
-      onParcelClick
+      onParcelClick,
+      mortgages
     } = this.props
 
     if (error) {
@@ -82,6 +98,7 @@ export default class ParcelDetailPage extends React.PureComponent {
                 districts={districts}
                 publications={publications}
                 onBuy={onBuy}
+                mortgages={mortgages}
               />
             </Container>
           </div>

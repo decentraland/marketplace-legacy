@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { env } from 'decentraland-commons'
 
 import { locations } from 'locations'
 
@@ -22,6 +23,7 @@ import SettingsPage from 'components/SettingsPage'
 import SignInPage from 'components/SignInPage'
 import TransferManaPage from 'components/TransferManaPage'
 import BuyManaPage from 'components/BuyManaPage'
+import BuyParcelByMortgagePage from 'components/BuyParcelByMortgagePage'
 
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
@@ -59,6 +61,13 @@ export default class Routes extends React.Component {
           component={TransferManaPage}
         />
         <Route exact path={locations.buyMana} component={BuyManaPage} />
+        {env.isDevelopment() && (
+          <Route
+            exact
+            path={locations.mortgage}
+            component={BuyParcelByMortgagePage}
+          />
+        ) /* Mortgage Feature */}
         <Redirect to={locations.root} />
       </Switch>
     )

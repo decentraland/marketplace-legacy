@@ -6,6 +6,7 @@ import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { db } from './database'
+import { MortgageRouter } from './Mortgage'
 import { ParcelRouter } from './Parcel'
 import { EstateRouter } from './Estate'
 import { DistrictRouter } from './District'
@@ -46,6 +47,7 @@ new ParcelRouter(app).mount()
 new EstateRouter(app).mount()
 new DistrictRouter(app).mount()
 new ContributionRouter(app).mount()
+new MortgageRouter(app).mount()
 
 /* Start the server only if run directly */
 if (require.main === module) {

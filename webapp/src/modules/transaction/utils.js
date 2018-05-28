@@ -32,7 +32,9 @@ export function isTransactionRejectedError(message) {
 export function getEtherscanHref({ txHash, address, blockNumber }, network) {
   const pathname = address
     ? `/address/${address}`
-    : blockNumber ? `/block/${blockNumber}` : `/tx/${txHash}`
+    : blockNumber
+      ? `/block/${blockNumber}`
+      : `/tx/${txHash}`
 
   return `${getEtherscanOrigin(network)}${pathname}`
 }

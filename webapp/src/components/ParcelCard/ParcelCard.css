@@ -2,6 +2,11 @@
   width: calc(100% - 14px) !important;
 }
 
+.ParcelCard .mortgage-status.open{
+  text-transform: capitalize;
+  color: var(--orange);
+}
+
 @media (min-width: 480px) {
   .ParcelCard {
     width: calc(50% - 14px) !important;
