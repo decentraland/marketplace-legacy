@@ -24,6 +24,7 @@ import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'lib/utils'
 import { cleanParcel, toParcelObject } from './utils'
+import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -211,6 +212,25 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
         default:
           return state
+      }
+    }
+    case CREATE_ESTATE_SUCCESS: {
+      const { parcels, id: owner } = action.estate
+      const newData = {}
+      parcels.forEach(({ x, y }) => {
+        const parcelId = buildCoordinate(x, y)
+        newData[parcelId] = {
+          ...state.data[parcelId],
+          owner,
+          isOnEstate: true
+        }
+      })
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...newData
+        }
       }
     }
     default:

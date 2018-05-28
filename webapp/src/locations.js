@@ -54,7 +54,8 @@ export const STATIC_PAGES = [locations.root, locations.privacy, locations.terms]
 export const PROFILE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',
   contributions: 'contributions',
-  publications: 'publications'
+  publications: 'publications',
+  estates: 'estates'
 })
 
 export const NAVBAR_PAGES = Object.freeze({

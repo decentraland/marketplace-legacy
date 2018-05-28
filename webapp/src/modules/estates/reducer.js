@@ -27,7 +27,9 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         error: null,
         data: {
           ...state.data,
-          [estate.id]: { ...estate }
+          [estate.id]: {
+            ...estate
+          }
         }
       }
     }

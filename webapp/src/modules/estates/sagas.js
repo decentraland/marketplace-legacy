@@ -1,10 +1,14 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery, put, select } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
+
 import {
   CREATE_ESTATE_REQUEST,
   createEstateSuccess,
   createEstateFailure
 } from './actions'
 import { inBounds } from 'lib/parcelUtils'
+import { getParcels } from 'modules/parcels/selectors'
+import { locations } from 'locations'
 
 function validateCoords(x, y) {
   if (!inBounds(x, y)) {
@@ -27,9 +31,20 @@ function* handleCreateEstateRequest(action) {
     estate.parcels.forEach(coords => validateCoords)
     // call estate contract
     const contractAddress = randomString(42)
+    const txHash = randomString(42)
+    const allParcels = yield select(getParcels)
+    const { owner } = allParcels[
+      `${estate.parcels[0].x},${estate.parcels[0].y}`
+    ]
+
     yield put(
-      createEstateSuccess('randomTxHash', { ...estate, id: contractAddress })
+      createEstateSuccess(txHash, {
+        ...estate,
+        id: contractAddress,
+        owner
+      })
     )
+    yield put(push(locations.activity))
   } catch (error) {
     console.warn(error)
     yield put(createEstateFailure(estate, error.message))

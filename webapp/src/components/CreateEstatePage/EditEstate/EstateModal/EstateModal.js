@@ -5,6 +5,7 @@ import ParcelPreview from 'components/ParcelPreview'
 import { coordsType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import './EstateModal.css'
+import { calculateZoomAndCenter } from 'modules/estates/utils'
 
 export default class EstateModal extends React.PureComponent {
   static propTypes = {
@@ -24,17 +25,6 @@ export default class EstateModal extends React.PureComponent {
     onConfirm: () => {}
   }
 
-  calculateZoomAndCenter() {
-    const { parcels } = this.props
-    const xs = [...new Set(parcels.map(coords => coords.x).sort())]
-    const ys = [...new Set(parcels.map(coords => coords.y).sort())]
-    const x = xs[parseInt(xs.length / 2, 10)]
-    const y = ys[parseInt(ys.length / 2, 10)]
-    const center = { x, y }
-    const zoom = 1 / (xs.length + ys.length) * 7.5
-    return { center, zoom }
-  }
-
   render() {
     const {
       parcels,
@@ -50,7 +40,7 @@ export default class EstateModal extends React.PureComponent {
       preview
     } = this.props
 
-    const { center, zoom } = this.calculateZoomAndCenter()
+    const { center, zoom } = calculateZoomAndCenter(parcels)
 
     return (
       <div className="EstateModal">

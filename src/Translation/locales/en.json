@@ -75,6 +75,8 @@
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
     "parcels": "Parcels",
+    "estate": "Estate",
+    "estates": "Estates",
     "profile": "My Land",
     "retry": "Retry",
     "revoke": "Revoke",
@@ -257,15 +259,10 @@
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
-<<<<<<< HEAD
-    "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
-=======
     "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "manage": "You gave {address_link} permission to update the contents of {parcel_link}",
     "manage_revoked": "You revoked {address_link} permission to update the contents of {parcel_link}",
->>>>>>> master
     "publish": "You published {parcel_link}",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"

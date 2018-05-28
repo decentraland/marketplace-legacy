@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
+import { getEstates } from 'modules/estates/selectors'
 import { isOpen } from 'modules/publication/utils'
 import { pickAndMap } from './utils'
 
@@ -15,10 +16,14 @@ export const getAddresses = createSelector(
   getDistricts,
   getParcels,
   getPublications,
-  (data, districts, allParcels, publications) =>
+  getEstates,
+  (data, districts, allParcels, publications, allEstates) =>
     Object.keys(data).reduce((map, address) => {
       const parcelIds = data[address].parcel_ids || []
       const [parcels, parcelsById] = pickAndMap(allParcels, parcelIds)
+
+      const estatesIds = data[address].estate_ids || []
+      const [estates, estatesById] = pickAndMap(allEstates, estatesIds)
 
       const contributions = (data[address].contributions || []).map(
         contribution => ({
@@ -38,6 +43,8 @@ export const getAddresses = createSelector(
           ...data[address],
           parcels,
           parcelsById,
+          estates,
+          estatesById,
           contributions,
           publishedParcels
         }
