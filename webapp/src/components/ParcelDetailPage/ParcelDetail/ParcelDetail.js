@@ -59,7 +59,11 @@ export default class ParcelDetail extends React.PureComponent {
               <ParcelDescription description={description} />
             </Grid.Column>
             <Grid.Column className="parcel-owner-container">
-              <ParcelOwner parcel={parcel} districts={districts} />
+              <ParcelOwner
+                parcel={parcel}
+                districts={districts}
+                isOwner={isOwner}
+              />
             </Grid.Column>
           </Grid.Row>
           {publication || isOwner ? (

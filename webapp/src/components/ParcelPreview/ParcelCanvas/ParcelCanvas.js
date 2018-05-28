@@ -129,25 +129,26 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const { x, y, parcels, useCache } = this.props
+    const { x, y, parcels, useCache, selected } = this.props
 
+    // @cazala: i'm commenting this out cos it makes the parcel detail lagg when you click on parcel in the map
     // the coords changed from props (controlled)
-    if (
-      (x !== nextProps.x || y !== nextProps.y) &&
-      (nextProps.x !== nextState.center.x || nextProps.y !== nextState.center.y)
-    ) {
-      nextState = {
-        ...nextState,
-        center: {
-          x: nextProps.x,
-          y: nextProps.y
-        },
-        pan: {
-          x: 0,
-          y: 0
-        }
-      }
-    }
+    // if (
+    //   (x !== nextProps.x || y !== nextProps.y) &&
+    //   (nextProps.x !== nextState.center.x || nextProps.y !== nextState.center.y)
+    // ) {
+    //   nextState = {
+    //     ...nextState,
+    //     center: {
+    //       x: nextProps.x,
+    //       y: nextProps.y
+    //     },
+    //     pan: {
+    //       x: 0,
+    //       y: 0
+    //     }
+    //   }
+    // }
 
     const newState = this.getDimensions(nextProps, nextState)
     const isViewportDifferent =
@@ -179,7 +180,9 @@ export default class ParcelPreview extends React.PureComponent {
       this.clearCache()
     }
 
-    this.shouldRefreshMap = true
+    if (selected !== nextProps.selected) {
+      this.shouldRefreshMap = true
+    }
   }
 
   inStore(nw, se, parcels) {
@@ -201,6 +204,8 @@ export default class ParcelPreview extends React.PureComponent {
   componentDidUpdate() {
     if (this.shouldRefreshMap) {
       this.shouldRefreshMap = false
+      this.renderMap()
+    } else {
       this.debouncedRenderMap()
     }
     this.oldState = this.state

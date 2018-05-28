@@ -15,6 +15,7 @@ import PublishPage from 'components/PublishPage'
 import EditParcelPage from 'components/EditParcelPage'
 import TransferParcelPage from 'components/TransferParcelPage'
 import CreateEstatePage from 'components/CreateEstatePage'
+import ManageParcelPage from 'components/ManageParcelPage'
 import BuyParcelPage from 'components/BuyParcelPage'
 import CancelSalePage from 'components/CancelSalePage'
 import ActivityPage from 'components/ActivityPage'
@@ -48,6 +49,7 @@ export default class Routes extends React.Component {
           path={locations.createEstate}
           component={CreateEstatePage}
         />
+        <Route exact path={locations.manage} component={ManageParcelPage} />
         <Route exact path={locations.buy} component={BuyParcelPage} />
         <Route exact path={locations.cancelSale} component={CancelSalePage} />
         <Route exact path={locations.activity} component={ActivityPage} />

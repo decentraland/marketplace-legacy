@@ -56,11 +56,13 @@
   },
   "global": {
     "activity": "활동",
+    "address_placeholder": "예 : {address}",
     "atlas": "지도",
     "authorized": "허가",
     "balance": "밸런스",
     "blog": "블로그",
     "cancel": "취소",
+    "change": "변화",
     "click_here": "여기를 클릭하십시오",
     "community_chat": "커뮤니티 채팅",
     "confirm": "확인",
@@ -68,17 +70,20 @@
     "connecting": "연결 중",
     "contributions": "공헌",
     "for": "에 대한",
+    "loading": "로드 중",
     "marketplace": "시장",
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
     "parcels": "필지",
     "profile": "나의 토지",
     "retry": "다시 해 보다",
+    "revoke": "취소",
     "settings": "설정",
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "submit": "제출",
     "unauthorized": "무단",
+    "undo": "끄르다",
     "wallet_address": "지갑 주소",
     "website": "웹 사이트"
   },
@@ -129,6 +134,7 @@
     "actions": {
       "cancel": "판매취소",
       "edit": "편집",
+      "permissions": "권한",
       "sell": "판매",
       "transfer": "이전"
     },
@@ -163,6 +169,14 @@
     "edit_land": "토지 편집",
     "name": "이름",
     "set_name_and_desc": "{parcel_name}의 이름 및 설명 설정"
+  },
+  "parcel_manage": {
+    "address": "운영자 주소",
+    "address_permission": "이 주소는이 소포의 내용을 업데이트 할 수 있습니다.",
+    "check_address": "주소를 신중히 확인하십시오.",
+    "give_permission":
+      "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
+    "manage_land": "토지 관리"
   },
   "parcel_publish": {
     "already_sold": "이 토지는 이미 {value}에 판매 중입니다.",
@@ -250,6 +264,10 @@
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
+    "manage":
+      "{address_link}에게 {parcel_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다.",
+    "manage_revoked":
+      "{parcel_link}의 내용을 업데이트 할 권한을 취소했습니다 (1).",
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."

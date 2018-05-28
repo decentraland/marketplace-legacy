@@ -10,6 +10,11 @@ import { Translation } from '../src/Translation'
 let BATCH_SIZE = 10
 const log = new Log('translate')
 
+const nonTranslatable = ['Decentraland', 'LAND', 'MANA']
+
+const TRANSLATION_KEY = 'tk'
+const NON_TRANSLATABLE_KEY = 'nt'
+
 async function main() {
   const DEFAULT_LOCALE = Translation.DEFAULT_LOCALE
   const translation = new Translation()
@@ -28,11 +33,20 @@ async function main() {
         if (!hasTranslation) {
           const defaultText = mainTranslations[key]
           const replacedKeys = {}
-          const textToTranslate = defaultText.replace(/{(.+?)}/g, (_, str) => {
-            const key = `{${Object.keys(replacedKeys).length + 1}}`
-            replacedKeys[key] = `{${str}}` // replace real keys to dummy
+          // replace real keys to placeholders
+          let textToTranslate = defaultText.replace(/{(.+?)}/g, str => {
+            const key = `${TRANSLATION_KEY}${Object.keys(replacedKeys).length}`
+            replacedKeys[key] = str
             return key
           })
+          // replace non-translatable words to placeholders
+          nonTranslatable.forEach((word, index) => {
+            textToTranslate = textToTranslate.replace(
+              new RegExp(word, 'g'),
+              `${NON_TRANSLATABLE_KEY}${index}`
+            )
+          })
+
           requests.push(
             translate(locale, textToTranslate).then(text => ({
               locale,
@@ -84,8 +98,16 @@ async function main() {
 async function processBatch(requests, missing) {
   const translated = await Promise.all(requests)
   translated.forEach(({ locale, key, text, replacedKeys, defaultText }) => {
+    // restore real keys
     Object.keys(replacedKeys).forEach(key => {
-      text = text.replace(key, replacedKeys[key]) // replace dummy keys with real
+      text = text.replace(key, replacedKeys[key])
+    })
+    // restore non-translatable words
+    nonTranslatable.forEach((word, index) => {
+      text = text.replace(
+        new RegExp(`${NON_TRANSLATABLE_KEY}${index}`, 'g'),
+        nonTranslatable[index]
+      )
     })
     if (isCapitalized(defaultText) && !isCapitalized(text)) {
       text = capitalize(text)

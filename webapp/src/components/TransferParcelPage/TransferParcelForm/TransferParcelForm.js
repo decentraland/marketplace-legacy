@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Form, Input, Message } from 'semantic-ui-react'
+import { Button, Form, Message } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
+import AddressInput from 'components/AddressInput'
 import { isTransactionRejectedError } from 'modules/transaction/utils'
 import { isOnSale } from 'lib/parcelUtils'
 import { preventDefault } from 'lib/utils'
@@ -33,15 +34,10 @@ export default class TransferParcelForm extends React.PureComponent {
     }
   }
 
-  handleAddressChange = e => {
+  handleAddressChange = address => {
     const { transferError } = this.props
-    const { address } = this.state
-    const newAddress = e.currentTarget.value
-
-    if (address !== newAddress.toLowerCase()) {
-      if (transferError) this.handleClearFormErrors()
-      this.setState({ address: newAddress })
-    }
+    if (transferError) this.handleClearFormErrors()
+    this.setState({ address })
   }
 
   handleSubmit = () => {
@@ -74,9 +70,6 @@ export default class TransferParcelForm extends React.PureComponent {
   render() {
     const { parcel, isTxIdle, transferError } = this.props
     const { address } = this.state
-    const inputClassName = `address-input ${
-      transferError ? 'address-input-transferError' : ''
-    }`
 
     return (
       <Form
@@ -85,18 +78,10 @@ export default class TransferParcelForm extends React.PureComponent {
         error={!!transferError}
       >
         <Form.Field>
-          <label>{t('parcel_transfer.recipient_address')}</label>
-          <Input
-            id="address-input"
-            className={inputClassName}
-            type="text"
-            placeholder={t('parcel_transfer.placeholder', {
-              address: '0x0f5d2fb29fb7d3cfee444a200298f468908cc942'
-            })}
-            value={address}
+          <AddressInput
+            label={t('parcel_transfer.recipient_address')}
+            address={address}
             onChange={this.handleAddressChange}
-            autoComplete="off"
-            autoFocus={true}
           />
           <span className="transfer-warning">
             {t('parcel_transfer.irreversible')}

@@ -57,30 +57,36 @@
   },
   "global": {
     "activity": "Activité",
+    "address_placeholder": "Exemple: {address}",
     "atlas": "Atlas",
     "authorized": "Autorisé",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Annuler",
+    "change": "Changement",
     "click_here": "Cliquez ici",
-    "community_chat": "Chat",
+    "community_chat": "Chat communautaire",
+    "community_xchat": "Chat",
     "confirm": "Confirmer",
     "connect": "Connection",
     "connecting": "Connexion",
     "contributions": "Contributions",
     "for": "pour",
+    "loading": "Chargement",
     "marketplace": "Marché",
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
     "retry": "Recommencez",
+    "revoke": "Révoquer",
     "settings": "Paramètres",
     "sign_in": "Se connecter",
     "sign_in_notice":
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "submit": "Envoyer",
     "unauthorized": "Non autorisé",
+    "undo": "Annuler",
     "wallet_address": "Adresse du porte-feuille",
     "website": "Site"
   },
@@ -134,6 +140,7 @@
     "actions": {
       "cancel": "Annuler la vente",
       "edit": "Edition",
+      "permissions": "Autorisations",
       "sell": "Vendre",
       "transfer": "Transferer"
     },
@@ -168,6 +175,14 @@
     "edit_land": "Editer les informations de ma LAND",
     "name": "Nom",
     "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}"
+  },
+  "parcel_manage": {
+    "address": "Adresse de l'opérateur",
+    "address_permission":
+      "Cette adresse pourra mettre à jour le contenu de cette parcelle.",
+    "check_address": "S'il vous plaît vérifier l'adresse avec soin",
+    "give_permission": "Autoriser la mise à jour du contenu de {parcel_name}",
+    "manage_land": "Gérer les terres"
   },
   "parcel_publish": {
     "already_sold": "Cette LAND est déjà en vente pour {value}",
@@ -261,6 +276,10 @@
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
+    "manage":
+      "Vous avez donné {address_link} la permission de mettre à jour le contenu de {parcel_link}",
+    "manage_revoked":
+      "Vous avez révoqué {address_link} l'autorisation de mettre à jour le contenu de {parcel_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"

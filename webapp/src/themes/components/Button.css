@@ -35,3 +35,16 @@
   background-color: var(--primary);
   color: #fff;
 }
+
+.ui.button.link {
+  border: none;
+  padding: 0px;
+  font-weight: bold;
+}
+
+.ui.button.link:hover,
+.ui.button.link:focus,
+.ui.button.link:active {
+  color: var(--primary);
+  background: transparent;
+}

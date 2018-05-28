@@ -75,14 +75,3 @@
 .ParcelTags .tag-details {
   margin-left: 16px;
 }
-
-@media (max-width: 768px) {
-  .ParcelDetail .tag {
-    margin-bottom: 24px;
-    width: 100%;
-  }
-
-  .ParcelDetail .tag:bottom-child {
-    margin-bottom: 0;
-  }
-}

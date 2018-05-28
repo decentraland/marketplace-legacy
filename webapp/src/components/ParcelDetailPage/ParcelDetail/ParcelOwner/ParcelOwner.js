@@ -1,24 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { utils } from 'decentraland-commons'
+import { Button, Icon } from 'semantic-ui-react'
 import { parcelType, districtType } from 'components/types'
 import { getDistrict, isDistrict } from 'lib/parcelUtils'
 import AddressBlock from 'components/AddressBlock'
 import { t, t_html } from 'modules/translation/utils'
+import { locations } from 'locations'
 
 import './ParcelOwner.css'
 
 export default class ParcelOwner extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
+    isOwner: PropTypes.bool.isRequired,
     districts: PropTypes.objectOf(districtType).isRequired
   }
 
   render() {
-    const { districts, parcel } = this.props
+    const { districts, parcel, isOwner } = this.props
     if (!parcel || utils.isEmptyObject(districts)) {
       return null
     }
+
+    if (isOwner) {
+      return (
+        <span className="ParcelOwner is-owner">
+          <Button size="tiny" className="link">
+            <Icon name="pencil" />
+            <Link to={locations.editLand(parcel.x, parcel.y)}>
+              {t('parcel_detail.actions.edit')}
+            </Link>
+          </Button>
+          <Button size="tiny" className="link">
+            <Icon name="add user" />
+            <Link to={locations.manageLand(parcel.x, parcel.y)}>
+              {t('parcel_detail.actions.permissions')}
+            </Link>
+          </Button>
+        </span>
+      )
+    }
+
     if (isDistrict(parcel)) {
       const district = getDistrict(parcel, districts)
       if (!district) return

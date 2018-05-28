@@ -55,11 +55,13 @@
   },
   "global": {
     "activity": "Activity",
+    "address_placeholder": "Example: {address}",
     "atlas": "Atlas",
     "authorized": "Authorized",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancel",
+    "change": "Change",
     "click_here": "Click here",
     "community_chat": "Community Chat",
     "continue": "Continue",
@@ -68,17 +70,20 @@
     "connecting": "Connecting",
     "contributions": "Contributions",
     "for": "for",
+    "loading": "Loading",
     "marketplace": "Marketplace",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
     "parcels": "Parcels",
     "profile": "My Land",
     "retry": "Retry",
+    "revoke": "Revoke",
     "settings": "Settings",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
     "submit": "Submit",
     "unauthorized": "Unauthorized",
+    "undo": "Undo",
     "wallet_address": "Wallet address",
     "website": "Website"
   },
@@ -130,6 +135,7 @@
       "cancel": "Cancel sale",
       "edit": "Edit",
       "create_estate": "Create Estate",
+      "permissions": "Permissions",
       "sell": "Sell",
       "transfer": "Transfer"
     },
@@ -164,6 +170,13 @@
     "edit_land": "Edit LAND",
     "name": "Name",
     "set_name_and_desc": "Set a name and description for {parcel_name}."
+  },
+  "parcel_manage": {
+    "address": "Operator address",
+    "address_permission": "This address will be able to update the contents of this parcel.",
+    "check_address": "Please check the address carefully",
+    "give_permission": "Give permission to update contents of {parcel_name}.",
+    "manage_land": "Manage LAND"
   },
   "parcel_publish": {
     "already_sold": "This LAND is already on sale for {value}",
@@ -244,8 +257,15 @@
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
+<<<<<<< HEAD
     "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+=======
+    "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+    "manage": "You gave {address_link} permission to update the contents of {parcel_link}",
+    "manage_revoked": "You revoked {address_link} permission to update the contents of {parcel_link}",
+>>>>>>> master
     "publish": "You published {parcel_link}",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"

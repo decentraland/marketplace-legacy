@@ -93,3 +93,43 @@ export function fetchParcelFailure(x, y, error) {
     error
   }
 }
+
+// Manage Parcel
+
+export const MANAGE_PARCEL_REQUEST = '[Request] Manage Parcel'
+export const MANAGE_PARCEL_SUCCESS = '[Success] Manage Parcel'
+export const MANAGE_PARCEL_FAILURE = '[Failure] Manage Parcel'
+
+export function manageParcelRequest(parcel, address, revoked) {
+  return {
+    type: MANAGE_PARCEL_REQUEST,
+    parcel,
+    address,
+    revoked
+  }
+}
+
+export function manageParcelSuccess(txHash, parcel, address, revoked) {
+  return {
+    type: MANAGE_PARCEL_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      x: parcel.x,
+      y: parcel.y,
+      address,
+      revoked
+    }),
+    parcel,
+    address,
+    revoked
+  }
+}
+
+export function manageParcelFailure(parcel, address, revoked, error) {
+  return {
+    type: MANAGE_PARCEL_FAILURE,
+    parcel,
+    address,
+    revoked,
+    error
+  }
+}

@@ -1,9 +1,14 @@
-.ParcelOwner.is-address {
+.ParcelOwner.is-address,
+.ParcelOwner.is-owner {
   display: inline-flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-end;
   color: var(--gray);
+}
+
+.ParcelOwner.is-owner .button + .button {
+  margin-left: 30px;
 }
 
 .ParcelOwner.is-district {

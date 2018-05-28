@@ -1,3 +1,4 @@
+import { eth, Contract } from 'decentraland-eth'
 import { shortenAddress } from 'lib/utils'
 import { isOpen } from 'modules/publication/utils'
 import { t } from 'modules/translation/utils'
@@ -146,4 +147,21 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
     color: 'white',
     backgroundColor: COLORS.taken
   }
+}
+
+export async function getUpdateOperator(x, y) {
+  try {
+    const contract = eth.getContract('LANDRegistry')
+    const assetId = await contract.encodeTokenId(x, y)
+    const address = await contract.updateOperator(assetId)
+    if (
+      eth.utils.isValidAddress(address) &&
+      !Contract.isEmptyAddress(address)
+    ) {
+      return address
+    }
+  } catch (error) {
+    // 🌈
+  }
+  return null
 }
