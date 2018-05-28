@@ -50,7 +50,10 @@ export default class ParcelDetailPage extends React.PureComponent {
         onFetchActiveParcelMortgages
       } = this.props
 
-      env.isDevelopment() && onFetchActiveParcelMortgages(x, y) // Mortgage Feature
+      if (env.isDevelopment()) {
+        // Mortgage Feature
+        onFetchActiveParcelMortgages(x, y)
+      }
       onFetchParcelPublications(x, y)
 
       this.isAdditionalResourcesFetched = true
