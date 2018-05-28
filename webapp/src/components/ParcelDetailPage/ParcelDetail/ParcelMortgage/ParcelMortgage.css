@@ -3,6 +3,16 @@
   text-transform: capitalize;
 }
 
+.parcelMortgageDetail .started p{
+  color: var(--light-blue);
+  text-transform: capitalize;
+}
+
+.parcelMortgageDetail .defaulted p{
+  color: var(--primary);
+  text-transform: capitalize;
+}
+
 .parcelMortgageDetail .mortgage-amount-icon{
   font-size: 15px;
 }

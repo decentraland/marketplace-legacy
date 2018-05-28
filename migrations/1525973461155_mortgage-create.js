@@ -23,8 +23,8 @@ exports.up = pgm => {
       status: {
         type: 'TEXT',
         notNull: true,
-        default: Mortgage.STATUS.open,
-        check: `status IN (${mortgageStatus})`
+        default: Mortgage.STATUS.open
+        // check: `status IN (${mortgageStatus})`
       },
       asset_id: { type: 'TEXT', notNull: true },
       type: 'TEXT',

@@ -41,7 +41,7 @@ function* handleFetchMortgageRequest(action) {
       call(() =>
         api.fetchMortgagesByBorrower(borrower, [
           MORTGAGE_STATUS.open,
-          MORTGAGE_STATUS.claimed
+          MORTGAGE_STATUS.started
         ])
       )
     ])
@@ -142,7 +142,7 @@ function* handleFetchActiveParcelMortgagesRequest(action) {
   try {
     const { x, y } = action
     const mortgages = yield call(() =>
-      api.fetchMortgages(x, y, [MORTGAGE_STATUS.open, MORTGAGE_STATUS.claimed])
+      api.fetchMortgages(x, y, [MORTGAGE_STATUS.open, MORTGAGE_STATUS.started])
     )
     yield put(fetchActiveParcelMortgagesSuccess(mortgages, x, y))
   } catch (error) {

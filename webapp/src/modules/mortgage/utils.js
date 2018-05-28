@@ -4,6 +4,8 @@ import { eth } from 'decentraland-eth'
 export const MORTGAGE_STATUS = Object.freeze({
   open: 'open',
   claimed: 'claimed',
+  started: 'started',
+  defaulted: 'defaulted',
   cancelled: 'cancelled'
 })
 

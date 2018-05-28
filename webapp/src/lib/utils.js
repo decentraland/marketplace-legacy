@@ -101,7 +101,7 @@ export function isOpen(obj, status) {
 export function hasStatus(obj, status) {
   return (
     obj &&
-    obj.status === status &&
+    status.includes(obj.status) &&
     obj.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
     !isExpired(obj)
   )

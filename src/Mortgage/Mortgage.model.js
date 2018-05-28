@@ -19,6 +19,8 @@ export class Mortgage extends Model {
     'amount',
     'expires_at',
     'is_due_at',
+    'payable_at',
+    'started_at',
     'block_time_created_at',
     'block_time_updated_at'
   ]
@@ -39,8 +41,6 @@ export class Mortgage extends Model {
     const existPublication = checkIfParcelHasOpenPublication
       ? MortgageQueries.existPublication
       : ''
-
-    console.log(existPublication)
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)} as m
         WHERE borrower = ${borrower}

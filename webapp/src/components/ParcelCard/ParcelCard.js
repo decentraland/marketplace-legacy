@@ -13,7 +13,7 @@ import { AUCTION_DATE } from 'lib/parcelUtils'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
 import { t } from 'modules/translation/utils'
-import { formatDate, buildCoordinate, isOpen } from 'lib/utils'
+import { formatDate, buildCoordinate, hasStatus } from 'lib/utils'
 
 import './ParcelCard.css'
 
@@ -29,7 +29,7 @@ export default class ParcelCard extends React.PureComponent {
     const { x, y, publication } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
-    const isPublicationOpen = isOpen(publication, PUBLICATION_STATUS.open)
+    const isPublicationOpen = hasStatus(publication, [PUBLICATION_STATUS.open])
 
     return (
       <Card className="ParcelCard">
@@ -75,14 +75,14 @@ export default class ParcelCard extends React.PureComponent {
             )}
 
             {showMortgage &&
-              isOpen(parcel.mortgage, MORTGAGE_STATUS.open) && (
+              hasStatus(parcel.mortgage, [MORTGAGE_STATUS.open, MORTGAGE_STATUS.started]) && (
                 <React.Fragment>
                   <p className={`mortgage-status ${parcel.mortgage.status}`}>
                     {parcel.mortgage.status}
                   </p>
                 </React.Fragment>
               )}
-            {!isOpen(publication, PUBLICATION_STATUS.open) &&
+            {!hasStatus(publication, [PUBLICATION_STATUS.open]) &&
               !showMortgage && (
                 <Card.Meta>
                   {t('publication.acquired_at', {
