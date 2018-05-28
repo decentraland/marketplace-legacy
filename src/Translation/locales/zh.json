@@ -289,7 +289,7 @@
     "approved": "您授权{marketplace_contract_link}以您的名义操作MANA",
     "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
     "buy": "您买入了{parcel_link}地块",
-    "buy_mana": "你已经买了{MANA} MANA",
+    "buy_mana": "你已经买了{mana} MANA",
     "cancel": "您取消了{parcel_link}上的{publication_link}",
     "cancel_mortgage": "您取消抵押贷款以购买包裹{parcel_link}",
     "create_mortgage": "您要求抵押贷款购买包裹{parcel_link}",
