@@ -21,7 +21,7 @@ export default class EditEstate extends React.PureComponent {
     return (
       <div className="EditEstate">
         <EstateModal
-          parcels={estate.parcels}
+          parcels={estate.data.parcels}
           title={t('estate_edit.edit_estate')}
           subtitle={t('estate_edit.subtitle')}
           hasCustomFooter

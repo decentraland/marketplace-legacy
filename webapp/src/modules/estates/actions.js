@@ -18,7 +18,7 @@ export function createEstateSuccess(txHash, estate) {
     type: CREATE_ESTATE_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: estate.tx_hash,
-      parcels: estate.parcels
+      parcels: estate.data.parcels
     }),
     estate
   }

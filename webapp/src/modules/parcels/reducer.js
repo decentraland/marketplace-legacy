@@ -252,9 +252,9 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case CREATE_ESTATE_SUCCESS: {
-      const { parcels, id: owner } = action.estate
+      const { data, id: owner } = action.estate
       const newData = {}
-      parcels.forEach(({ x, y }) => {
+      data.parcels.forEach(({ x, y }) => {
         const parcelId = buildCoordinate(x, y)
         newData[parcelId] = {
           ...state.data[parcelId],

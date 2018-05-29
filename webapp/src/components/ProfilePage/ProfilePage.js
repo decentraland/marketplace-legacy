@@ -44,8 +44,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { onFetchAddress } = this.props
-    onFetchAddress()
+    this.props.onFetchAddress()
   }
 
   handlePageChange = (event, data) => {

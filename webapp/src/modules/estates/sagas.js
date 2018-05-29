@@ -32,13 +32,13 @@ function randomString(length) {
 function* handleCreateEstateRequest(action) {
   const { estate } = action
   try {
-    estate.parcels.forEach(coords => validateCoords)
+    estate.data.parcels.forEach(coords => validateCoords)
     // call estate contract
     const contractAddress = randomString(42)
     const txHash = randomString(42)
     const allParcels = yield select(getParcels)
     const { owner } = allParcels[
-      `${estate.parcels[0].x},${estate.parcels[0].y}`
+      `${estate.data.parcels[0].x},${estate.data.parcels[0].y}`
     ]
 
     yield put(

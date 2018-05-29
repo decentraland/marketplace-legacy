@@ -17,7 +17,7 @@ export default class EstateCard extends React.PureComponent {
 
   render() {
     const { estate, debounce } = this.props
-    const { center, zoom } = calculateZoomAndCenter(estate.parcels)
+    const { center, zoom } = calculateZoomAndCenter(estate.data.parcels)
     const { x, y } = center
 
     const estateName = estate.data.name || t('global.estate')
@@ -31,7 +31,7 @@ export default class EstateCard extends React.PureComponent {
             zoom={zoom}
             debounce={debounce}
             size={12}
-            selected={estate.parcels}
+            selected={estate.data.parcels}
           />
         </div>
         <Card.Content className="body">
