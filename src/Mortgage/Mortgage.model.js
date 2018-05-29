@@ -33,38 +33,24 @@ export class Mortgage extends Model {
     started: 'started'
   })
 
-  static findByBorrower(
-    borrower,
-    status,
-    checkIfParcelHasOpenPublication = true
-  ) {
-    const existPublication = checkIfParcelHasOpenPublication
-      ? MortgageQueries.existPublication
-      : ''
+  static findByBorrower(borrower, status) {
     return this.db.query(
-      SQL`SELECT * FROM ${raw(this.tableName)} as m
+      SQL`SELECT * FROM ${raw(this.tableName)} as m, COALESCE(${raw(
+        MortgageQueries.existPublication
+      )}, 0) as hasOpenPublication
         WHERE borrower = ${borrower}
-          AND status IN (${raw(getInStatus(status, this.STATUS))})${raw(
-        existPublication
-      )}
+          AND status IN (${raw(getInStatus(status, this.STATUS))})
         ORDER BY created_at DESC`
     )
   }
 
-  static findInCoordinate(
-    assetId,
-    status,
-    checkIfParcelHasOpenPublication = true
-  ) {
-    const existPublication = checkIfParcelHasOpenPublication
-      ? MortgageQueries.existPublication
-      : ''
+  static findInCoordinate(assetId, status) {
     return this.db.query(
-      SQL`SELECT * FROM ${raw(this.tableName)} as m
+      SQL`SELECT * FROM ${raw(this.tableName)} as m, COALESCE(${raw(
+        MortgageQueries.existPublication
+      )}, 0) as has_open_publication
         WHERE asset_id = ${assetId}
-          AND status IN(${raw(getInStatus(status, this.STATUS))})${raw(
-        existPublication
-      )}
+          AND status IN(${raw(getInStatus(status, this.STATUS))})
         ORDER BY created_at DESC`
     )
   }

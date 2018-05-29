@@ -17,9 +17,10 @@ export const MortgageQueries = Object.freeze({
         )
       ORDER BY m.created_at DESC LIMIT 1`,
 
-  existPublication: ` AND EXISTS (
-            SELECT * FROM ${Publication.tableName} as p
-            WHERE m.asset_id = p.asset_id 
-            AND p.status = '${Publication.STATUS.open}'
-          )`
+  existPublication: `(SELECT 1 
+    FROM ${Publication.tableName} as p
+      WHERE m.asset_id = p.asset_id 
+      AND p.status = '${Publication.STATUS.open}' LIMIT 1)
+    `
 })
+
