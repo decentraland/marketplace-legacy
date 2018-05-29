@@ -19,6 +19,7 @@ import { buildUrl } from './utils'
 import { shortenAddress } from 'lib/utils'
 
 import './ProfilePage.css'
+import EstateCard from 'components/EstateCard'
 
 export default class ProfilePage extends React.PureComponent {
   static propTypes = {
@@ -106,13 +107,7 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.estates: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(estate => (
-              <ParcelCard
-                key={estate.parcels[0]}
-                parcel={estate.parcel[0]}
-                isOwnerVisible={false}
-              />
-            ))}
+            {grid.map(estate => <EstateCard key={estate.id} estate={estate} />)}
           </Card.Group>
         )
       }

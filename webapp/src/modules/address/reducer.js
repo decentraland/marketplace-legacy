@@ -138,14 +138,22 @@ export function addressReducer(state = INITIAL_STATE, action) {
       }
     }
     case CREATE_ESTATE_SUCCESS: {
-      const { id, owner } = action.estate
+      const { id, owner, parcels } = action.estate
+      const parcelIds = new Set(parcels.map(({ x, y }) => `${x},${y}`))
+
       return {
         ...state,
         data: {
           ...state.data,
           [owner]: {
             ...state.data[owner],
-            estate_ids: [...state.data[owner].estate_ids, id]
+            parcel_ids: [
+              ...state.data[owner].parcel_ids.filter(x => parcelIds.has(x))
+            ],
+            // Until Estates fetch
+            estate_ids: state.data[owner].estates_ids
+              ? [...state.data[owner].estates_ids, id]
+              : [id]
           }
         }
       }
