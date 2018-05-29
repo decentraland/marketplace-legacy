@@ -1,43 +1,48 @@
-.EstateCard {
+.ParcelCard {
   width: calc(100% - 14px) !important;
 }
 
+.ParcelCard .mortgage-status.open{
+  text-transform: capitalize;
+  color: var(--orange);
+}
+
 @media (min-width: 480px) {
-  .EstateCard {
+  .ParcelCard {
     width: calc(50% - 14px) !important;
   }
 }
 
 @media (min-width: 768px) {
-  .EstateCard {
+  .ParcelCard {
     width: calc(33% - 14px) !important;
   }
 }
 
 @media (min-width: 992px) {
-  .EstateCard {
+  .ParcelCard {
     width: calc(25% - 14px) !important;
   }
 }
 
-.EstateCard .publication-owner {
+.ParcelCard .publication-owner {
   position: absolute;
   right: 12px;
   top: 12px;
 }
 
-.EstateCard .preview {
+.ParcelCard .preview {
   height: 132px;
   overflow: hidden;
   border-radius: 5px 5px 0px 0px;
 }
 
-.EstateCard .body {
+.ParcelCard .body {
   position: relative;
   padding: 1em;
 }
 
-.EstateCard .description {
+.ParcelCard .description {
   font-size: 15px;
   margin-bottom: 5px;
   color: var(--text);
@@ -45,29 +50,29 @@
   display: flex;
 }
 
-.EstateCard .name {
+.ParcelCard .name {
   margin-right: 8px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.EstateCard .Mana {
+.ParcelCard .Mana {
   margin-left: auto;
 }
 
-.EstateCard .footer {
+.ParcelCard .footer {
   margin-top: 20px;
   display: flex;
   flex-direction: row nowrap;
   align-items: center;
 }
 
-.EstateCard .footer:after {
+.ParcelCard .footer:after {
   display: none;
 }
 
-.EstateCard .coords {
+.ParcelCard .coords {
   padding: 2px 9px 2px 7px;
   margin-right: 6px;
   font-size: 11px;
@@ -76,13 +81,13 @@
   border-radius: 4px;
 }
 
-.EstateCard .coords .marker.icon {
+.ParcelCard .coords .marker.icon {
   font-size: 12px;
   margin-right: 3px;
   line-height: 0.9;
 }
 
-.EstateCard:hover .coords {
+.ParcelCard:hover .coords {
   color: var(--red);
   border-color: var(--red);
 }

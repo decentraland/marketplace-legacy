@@ -40,10 +40,10 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       wallets: isMobile()
         ? [new NodeWallet(address)]
         : [
-          retries < 3
-            ? new NodeWallet(address)
-            : new LedgerWallet(address, derivationPath)
-        ]
+            retries < 3
+              ? new NodeWallet(address)
+              : new LedgerWallet(address, derivationPath)
+          ]
     })
     eth.wallet.getAccount() // throws on empty accounts
   } catch (error) {

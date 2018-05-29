@@ -259,6 +259,10 @@
     "sold": "Sold",
     "view": "View"
   },
+  "estate": {
+    "acquired_at": "Acquired at {date}",
+    "created_at": "Created at {date}"
+  },
   "estate_select": {
     "selection": "Select the parcels for your new Estate"
   },

@@ -43,7 +43,8 @@ export const parcelType = shape({
 export const estateType = shape({
   id: string,
   owner: string,
-  data: object
+  data: object,
+  parcels: arrayOf(parcelType)
 })
 
 export const contributionType = shape({

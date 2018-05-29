@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { parcelType, districtType } from 'components/types'
+import { parcelType, districtType, estateType } from 'components/types'
 import { getDistrict, isRoad, isPlaza } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
 
@@ -9,7 +9,8 @@ import './ParcelTags.css'
 
 export default class ParcelTags extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType.isRequired,
+    parcel: parcelType,
+    estate: estateType,
     districts: PropTypes.objectOf(districtType),
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     showDetails: PropTypes.bool
@@ -19,6 +20,10 @@ export default class ParcelTags extends React.PureComponent {
     districts: {},
     size: 'medium',
     showDetails: false
+  }
+
+  isParcel() {
+    return this.props.parcel
   }
 
   getDistrictName(district_id) {
@@ -65,8 +70,16 @@ export default class ParcelTags extends React.PureComponent {
     )
   }
 
+  getTags() {
+    if (this.isParcel()) {
+      return this.props.parcel.tags
+    }
+
+    return this.props.estate.parcels[0].tags
+  }
+
   render() {
-    const { proximity } = this.props.parcel.tags
+    const { proximity } = this.getTags()
 
     if (!proximity) {
       return null

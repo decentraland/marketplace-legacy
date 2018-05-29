@@ -6,8 +6,10 @@ import ParcelPreview from 'components/ParcelPreview'
 import { estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { calculateZoomAndCenter } from 'modules/estates/utils'
+import { formatDate } from 'lib/utils'
 
-import './EstateCard.css'
+import './ParcelCard.css'
+import ParcelTags from 'components/ParcelTags'
 
 export default class EstateCard extends React.PureComponent {
   static propTypes = {
@@ -38,6 +40,26 @@ export default class EstateCard extends React.PureComponent {
           <Card.Description title={estateName}>
             <span className="name">{estateName}</span>
           </Card.Description>
+
+          <Card.Meta>
+            {estate.last_transferred_at
+              ? t('estate.last_transferred_at', {
+                  date: formatDate(
+                    parseInt(estate.last_transferred_at, 10),
+                    'MMMM Do, YYYY'
+                  )
+                })
+              : t('estate.created_at', {
+                  date: formatDate(
+                    parseInt(estate.created_at, 10),
+                    'MMMM Do, YYYY'
+                  )
+                })}
+          </Card.Meta>
+
+          <div className="footer">
+            <ParcelTags estate={estate} size="small" />
+          </div>
         </Card.Content>
       </Card>
     )

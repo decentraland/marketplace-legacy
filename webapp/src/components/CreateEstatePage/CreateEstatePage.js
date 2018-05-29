@@ -21,7 +21,7 @@ export default class CreateEstatePage extends React.PureComponent {
           name: '',
           description: '',
           parcels: [{ x, y }]
-        },
+        }
       },
       isSelecting: true
     }
@@ -35,7 +35,8 @@ export default class CreateEstatePage extends React.PureComponent {
     const { estate } = this.state
     this.setState({
       estate: {
-        ...estate, data: {
+        ...estate,
+        data: {
           ...estate.data,
           parcels
         }
@@ -63,14 +64,14 @@ export default class CreateEstatePage extends React.PureComponent {
         />
       </React.Fragment>
     ) : (
-        <React.Fragment>
-          <EditEstate
-            value={estate}
-            onCancel={this.handleSwitch}
-            onChange={this.handleChange}
-            onSubmit={this.handleSubmit}
-          />
-        </React.Fragment>
-      )
+      <React.Fragment>
+        <EditEstate
+          value={estate}
+          onCancel={this.handleSwitch}
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+        />
+      </React.Fragment>
+    )
   }
 }
