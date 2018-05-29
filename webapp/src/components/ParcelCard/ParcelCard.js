@@ -51,7 +51,7 @@ export default class ParcelCard extends React.PureComponent {
               ) : null}
             </Card.Description>
 
-            {isPublicationOpen ? (
+            {isPublicationOpen && (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
@@ -61,7 +61,9 @@ export default class ParcelCard extends React.PureComponent {
                   />
                 </Card.Meta>
               </React.Fragment>
-            ) : (
+            )}
+
+            {isPublicationOpen && !showMortgage && (
               <Card.Meta>
                 {t('publication.acquired_at', {
                   date: formatDate(
