@@ -33,7 +33,7 @@ export const parcelType = shape({
   id: string.isRequired,
   district_id: string,
   owner: string,
-  isOnEstate: bool,
+  is_estate: bool,
   x: number.isRequired,
   y: number.isRequired,
   publication: publicationType,

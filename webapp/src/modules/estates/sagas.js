@@ -1,14 +1,18 @@
-import { takeEvery, put, select } from 'redux-saga/effects'
+import { takeEvery, put, select, call } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 
 import {
   CREATE_ESTATE_REQUEST,
   createEstateSuccess,
-  createEstateFailure
+  createEstateFailure,
+  FETCH_ESTATE_REQUEST,
+  fetchEstateSuccess,
+  fetchEstateFailure
 } from './actions'
 import { inBounds } from 'lib/parcelUtils'
 import { getParcels } from 'modules/parcels/selectors'
 import { locations } from 'locations'
+import { api } from 'lib/api'
 
 function validateCoords(x, y) {
   if (!inBounds(x, y)) {
@@ -51,6 +55,19 @@ function* handleCreateEstateRequest(action) {
   }
 }
 
+function* handleEstateRequest(action) {
+  const { id } = action
+  try {
+    const { estates } = yield call(() => api.fetchEstates())
+    const estate = estates.find(e => e.id === id)
+    yield put(fetchEstateSuccess(id, estate))
+  } catch (error) {
+    console.warn(error)
+    yield put(fetchEstateFailure(id, error.message))
+  }
+}
+
 export function* estateSaga() {
   yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
+  yield takeEvery(FETCH_ESTATE_REQUEST, handleEstateRequest)
 }

@@ -7,7 +7,10 @@ import {
   FETCH_ADDRESS_CONTRIBUTIONS_FAILURE,
   FETCH_ADDRESS_PUBLICATIONS_REQUEST,
   FETCH_ADDRESS_PUBLICATIONS_SUCCESS,
-  FETCH_ADDRESS_PUBLICATIONS_FAILURE
+  FETCH_ADDRESS_PUBLICATIONS_FAILURE,
+  FETCH_ADDRESS_ESTATES_REQUEST,
+  FETCH_ADDRESS_ESTATES_SUCCESS,
+  FETCH_ADDRESS_ESTATES_FAILURE
 } from './actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
@@ -20,7 +23,8 @@ import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
 const EMPTY_ADDRESS = {
   contributions: [],
   parcel_ids: [],
-  publication_ids: []
+  publication_ids: [],
+  estate_ids: []
 }
 
 const INITIAL_STATE = {
@@ -34,6 +38,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
     case FETCH_ADDRESS_PARCELS_REQUEST:
     case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
     case FETCH_ADDRESS_PUBLICATIONS_REQUEST:
+    case FETCH_ADDRESS_ESTATES_REQUEST:
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
@@ -62,6 +67,19 @@ export function addressReducer(state = INITIAL_STATE, action) {
           }
         }
       }
+    case FETCH_ADDRESS_ESTATES_SUCCESS: {
+      return {
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          [action.address]: {
+            ...state.data[action.address],
+            estates_ids: Object.keys(action.estates)
+          }
+        }
+      }
+    }
     case FETCH_ADDRESS_PUBLICATIONS_SUCCESS: {
       const addressData = state.data[action.address] || {}
       const { parcels, publications } = action
@@ -87,6 +105,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
     case FETCH_ADDRESS_CONTRIBUTIONS_FAILURE:
     case FETCH_ADDRESS_PUBLICATIONS_FAILURE:
     case FETCH_ADDRESS_PARCELS_FAILURE:
+    case FETCH_ADDRESS_ESTATES_FAILURE:
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -148,7 +167,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
           [owner]: {
             ...state.data[owner],
             parcel_ids: [
-              ...state.data[owner].parcel_ids.filter(x => parcelIds.has(x))
+              ...state.data[owner].parcel_ids.filter(x => !parcelIds.has(x))
             ],
             // Until Estates fetch
             estate_ids: state.data[owner].estates_ids

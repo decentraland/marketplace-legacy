@@ -222,7 +222,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         newData[parcelId] = {
           ...state.data[parcelId],
           owner,
-          isOnEstate: true
+          is_estate: true
         }
       })
       return {

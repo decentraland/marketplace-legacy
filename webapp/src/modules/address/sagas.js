@@ -4,6 +4,7 @@ import {
   FETCH_ADDRESS_PARCELS_REQUEST,
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
   FETCH_ADDRESS_PUBLICATIONS_REQUEST,
+  FETCH_ADDRESS_ESTATES_REQUEST,
   fetchAddressParcelsRequest,
   fetchAddressParcelsSuccess,
   fetchAddressParcelsFailure,
@@ -12,13 +13,17 @@ import {
   fetchAddressContributionsFailure,
   fetchAddressPublicationsRequest,
   fetchAddressPublicationsSuccess,
-  fetchAddressPublicationsFailure
+  fetchAddressPublicationsFailure,
+  fetchAddressEstatesSuccess,
+  fetchAddressEstatesFailure,
+  fetchAddressEstatesRequest
 } from './actions'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { getParcelPublications } from 'modules/parcels/utils'
 import { getParcels } from 'modules/parcels/selectors'
 import { api } from 'lib/api'
 import { webworker } from 'lib/webworker'
+import { getEstates } from 'modules/estates/selectors'
 
 export function* addressSaga() {
   yield takeEvery(FETCH_ADDRESS_PARCELS_REQUEST, handleAddressParcelsRequest)
@@ -30,6 +35,7 @@ export function* addressSaga() {
     FETCH_ADDRESS_PUBLICATIONS_REQUEST,
     handleAddressPublicationsRequest
   )
+  yield takeEvery(FETCH_ADDRESS_ESTATES_REQUEST, handleAddressEstatesRequest)
   yield takeEvery(FETCH_ADDRESS, handleFetchAddress)
 }
 
@@ -52,6 +58,26 @@ function* handleAddressParcelsRequest(action) {
     )
   } catch (error) {
     yield put(fetchAddressParcelsFailure(address, error.message))
+  }
+}
+
+function* handleAddressEstatesRequest(action) {
+  const { address } = action
+  try {
+    const estates = yield call(() => api.fetchAddressEstates(address))
+    const allEstates = yield select(getEstates)
+
+    const result = yield call(() =>
+      webworker.postMessage({
+        type: 'FETCH_ADDRESS_ESTATES_REQUEST',
+        estates,
+        allEstates
+      })
+    )
+
+    yield put(fetchAddressEstatesSuccess(address, result.estates))
+  } catch (error) {
+    yield put(fetchAddressEstatesFailure(address, error.message))
   }
 }
 
@@ -84,4 +110,5 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
+  yield put(fetchAddressEstatesRequest(address))
 }

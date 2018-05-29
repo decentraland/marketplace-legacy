@@ -30,3 +30,32 @@ export function createEstateFailure(error) {
     error
   }
 }
+
+// Fetch Estate
+
+export const FETCH_ESTATE_REQUEST = '[Request] Fetch Estate'
+export const FETCH_ESTATE_SUCCESS = '[Success] Fetch Estate'
+export const FETCH_ESTATE_FAILURE = '[Failure] Fetch Estate'
+
+export function fetchEstateRequest(id) {
+  return {
+    type: FETCH_ESTATE_REQUEST,
+    id
+  }
+}
+
+export function fetchEstateSuccess(id, estate) {
+  return {
+    type: FETCH_ESTATE_SUCCESS,
+    id,
+    estate
+  }
+}
+
+export function fetchEstateFailure(id, error) {
+  return {
+    type: FETCH_ESTATE_FAILURE,
+    id,
+    error
+  }
+}
