@@ -145,5 +145,6 @@ describe('Asset', function() {
   })
 
   afterEach(() =>
-    [Parcel, Publication].map(Model => db.truncate(Model.tableName)))
+    [Parcel, Publication].map(Model => db.truncate(Model.tableName))
+  )
 })

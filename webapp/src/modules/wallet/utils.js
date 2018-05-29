@@ -40,10 +40,10 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       wallets: isMobile()
         ? [new NodeWallet(address)]
         : [
-            retries < 3
-              ? new NodeWallet(address)
-              : new LedgerWallet(address, derivationPath)
-          ]
+          retries < 3
+            ? new NodeWallet(address)
+            : new LedgerWallet(address, derivationPath)
+        ]
     })
     eth.wallet.getAccount() // throws on empty accounts
   } catch (error) {
@@ -92,7 +92,7 @@ export function getKyberOracleAddress() {
 
 export async function sendTransaction(tx) {
   const web3 = eth.wallet.getWeb3()
-  return await utils.promisify(web3.eth.sendTransaction)(tx)
+  return utils.promisify(web3.eth.sendTransaction)(tx)
 }
 
 export async function fetchBalance(address) {
