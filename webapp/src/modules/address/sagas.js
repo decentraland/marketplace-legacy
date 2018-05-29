@@ -26,7 +26,7 @@ import { getParcelPublications } from 'modules/parcels/utils'
 import { getParcels } from 'modules/parcels/selectors'
 import { api } from 'lib/api'
 import { webworker } from 'lib/webworker'
-import { getEstates } from 'modules/estates/selectors'
+import { toEstateObject } from 'modules/estates/utils'
 
 export function* addressSaga() {
   yield takeEvery(FETCH_ADDRESS_PARCELS_REQUEST, handleAddressParcelsRequest)
@@ -67,18 +67,10 @@ function* handleAddressParcelsRequest(action) {
 function* handleAddressEstatesRequest(action) {
   const { address } = action
   try {
-    const estates = yield call(() => api.fetchAddressEstates(address))
-    const allEstates = yield select(getEstates)
+    const response = yield call(() => api.fetchAddressEstates(address))
+    const estates = toEstateObject(response)
 
-    const result = yield call(() =>
-      webworker.postMessage({
-        type: 'FETCH_ADDRESS_ESTATES_REQUEST',
-        estates,
-        allEstates
-      })
-    )
-
-    yield put(fetchAddressEstatesSuccess(address, result.estates))
+    yield put(fetchAddressEstatesSuccess(address, estates))
   } catch (error) {
     yield put(fetchAddressEstatesFailure(address, error.message))
   }

@@ -7,6 +7,7 @@ import {
   FETCH_ESTATE_SUCCESS
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
+import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions';
 
 const INITIAL_STATE = {
   data: {},
@@ -57,6 +58,16 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
       }
     }
+    case FETCH_ADDRESS_ESTATES_SUCCESS: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...action.estates
+        }
+      }
+    }
+
     default:
       return state
   }

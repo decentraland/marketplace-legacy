@@ -7,3 +7,11 @@ export const calculateZoomAndCenter = parcels => {
   const zoom = 1 / (xs.length + ys.length) * 7.5
   return { center, zoom }
 }
+
+export const toEstateObject = estatesArray => {
+  const estate = {}
+  estatesArray.forEach(e => {
+    estate[e.id] = e
+  })
+  return estate
+}
