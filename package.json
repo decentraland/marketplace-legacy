@@ -6,17 +6,14 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
-    "test":
-      "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/**/*.spec.js",
-    "watch:test":
-      "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
+    "test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/**/*.spec.js",
+    "watch:test": "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
     "init-db": "./scripts/initDb.js",
     "migrate": "./migrations/migrate",
     "renew-blockchain-data": "./scripts/renewBlockchainData.js",
     "sanity-check": "./scripts/sanityCheck.js run",
     "seed": "./scripts/seed.js",
-    "translate":
-      "./scripts/translate.js && prettier ./src/Translation/locales/*.json --write",
+    "translate": "./scripts/translate.js && prettier ./src/Translation/locales/*.json --write",
     "tag": "./scripts/tag.js",
     "monitor-blockchain": "./scripts/monitor/program.js index",
     "cli": "./scripts/mktcli.js",
@@ -29,7 +26,11 @@
     "type": "git",
     "url": "https://github.com/decentraland/marketplace.git"
   },
-  "keywords": ["decentraland", "marketplace", "dapp"],
+  "keywords": [
+    "decentraland",
+    "marketplace",
+    "dapp"
+  ],
   "author": "Decentraland",
   "license": "ISC",
   "dependencies": {
@@ -37,7 +38,7 @@
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
     "decentraland-commons": "^4.0.1",
-    "decentraland-eth": "^2.1.0",
+    "decentraland-eth": "^3.1.0",
     "ethereumjs-abi": "^0.6.5",
     "express": "^4.16.2",
     "flat": "^4.0.0",
@@ -63,7 +64,7 @@
     "inquirer": "^5.2.0",
     "mocha": "^4.0.1",
     "nodemon": "^1.14.11",
-    "prettier": "^1.10.2",
+    "prettier": "^1.12.1",
     "sinon": "^5.0.3"
   }
 }

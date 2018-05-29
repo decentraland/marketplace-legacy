@@ -1,9 +1,13 @@
 import { createSelector } from 'reselect'
-import { getData as getParcels } from 'modules/parcels/selectors'
+import {
+  getData as getParcels,
+  getMortgagedParcels
+} from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
-import { isOpen } from 'modules/publication/utils'
+import { isOpen } from 'lib/utils'
 import { pickAndMap } from './utils'
 
 export const getState = state => state.address
@@ -17,7 +21,8 @@ export const getAddresses = createSelector(
   getParcels,
   getPublications,
   getEstates,
-  (data, districts, allParcels, publications, allEstates) =>
+  getMortgagedParcels,
+  (data, districts, allParcels, publications, allEstates, mortgagedParcels) =>
     Object.keys(data).reduce((map, address) => {
       const parcelIds = data[address].parcel_ids || []
       const [parcels, parcelsById] = pickAndMap(allParcels, parcelIds)
@@ -34,7 +39,10 @@ export const getAddresses = createSelector(
 
       // filter only open publications
       const publishedParcels = parcels.filter(parcel =>
-        isOpen(publications[parcel.publication_tx_hash])
+        isOpen(
+          publications[parcel.publication_tx_hash],
+          PUBLICATION_STATUS.open
+        )
       )
 
       return {
@@ -46,7 +54,8 @@ export const getAddresses = createSelector(
           estates,
           estatesById,
           contributions,
-          publishedParcels
+          publishedParcels,
+          mortgagedParcels
         }
       }
     }, {})

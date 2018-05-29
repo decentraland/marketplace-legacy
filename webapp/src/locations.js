@@ -46,7 +46,10 @@ export const locations = {
   terms: '/terms',
 
   error: '/error',
-  signIn: '/sign-in'
+  signIn: '/sign-in',
+
+  mortgage: '/:x/:y/mortgage',
+  buyLandByMortgage: (x, y) => `/${x}/${y}/mortgage`
 }
 
 export const STATIC_PAGES = [locations.root, locations.privacy, locations.terms]
@@ -55,7 +58,8 @@ export const PROFILE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',
   contributions: 'contributions',
   publications: 'publications',
-  estates: 'estates'
+  estates: 'estates',
+  mortgages: 'mortgages'
 })
 
 export const NAVBAR_PAGES = Object.freeze({

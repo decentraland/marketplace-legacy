@@ -36,3 +36,9 @@
 .ParcelName.no-name .marker.icon {
   margin-left: -0.2em !important;
 }
+
+@media (max-width: 767px) {
+  .ParcelName {
+    display: block;
+  }
+}

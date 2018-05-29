@@ -11,6 +11,7 @@ import { transferSaga } from 'modules/transfer/sagas'
 import { translationSaga } from 'modules/translation/sagas'
 import { walletSaga } from 'modules/wallet/sagas'
 import { estateSaga } from 'modules/estates/sagas'
+import { mortgageSaga } from 'modules/mortgage/sagas'
 
 export function* rootSaga() {
   yield all([
@@ -24,6 +25,7 @@ export function* rootSaga() {
     transferSaga(),
     translationSaga(),
     walletSaga(),
-    estateSaga()
+    estateSaga(),
+    mortgageSaga()
   ])
 }

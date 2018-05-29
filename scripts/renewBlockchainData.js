@@ -35,7 +35,6 @@ export async function updateParcelsData(parcels) {
   const service = new ParcelService()
 
   let updates = []
-
   await asyncBatch({
     elements: parcels,
     callback: async (newParcels, batchSize) => {

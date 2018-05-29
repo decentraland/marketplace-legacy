@@ -7,6 +7,7 @@ import { Parcel } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
+import { Mortgage } from '../Mortgage'
 
 describe('Parcel', function() {
   describe('.buildId', function() {
@@ -69,7 +70,6 @@ describe('Parcel', function() {
       await Publication.insert(publication)
 
       const range = await Parcel.inRange([3, 5], [4, 5])
-
       expect(range).to.equalRows([
         {
           x: 3,
@@ -103,11 +103,95 @@ describe('Parcel', function() {
     })
   })
 
+  describe('.findWithLastActiveMortgageByBorrower', function() {
+    beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
+
+    it('should return parcels with mortgages open/claimed by borrower', async function() {
+      const mortgage = {
+        tx_hash: '1xdeadbeef',
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        status: Mortgage.STATUS.open,
+        loan_id: 0,
+        mortgage_id: 0,
+        asset_id: Parcel.buildId(2, 5),
+        type: 'parcel', // TODO: change with constant
+        borrower: '0xdeadbeef33',
+        lender: null,
+        is_due_at: new Date().getTime() * 1000,
+        amount: 1500,
+        expires_at: new Date().getTime() * 1000,
+        block_time_created_at: null,
+        block_time_updated_at: null,
+        block_number: 1
+      }
+      const mortgage2 = Object.assign({}, mortgage, {
+        tx_hash: '2xdeadbeff',
+        loan_id: 2,
+        mortgage_id: 2,
+        borrower: '0xdeadbeef34'
+      })
+      const mortgage3 = Object.assign({}, mortgage, {
+        tx_hash: '3xdeadbdff',
+        asset_id: Parcel.buildId(5, 5),
+        loan_id: 3,
+        mortgage_id: 3,
+        status: Mortgage.STATUS.cancelled,
+        borrower: '0xdeadbeef33'
+      })
+      const mortgage4 = Object.assign({}, mortgage, {
+        tx_hash: '4xdeadbeff',
+        asset_id: Parcel.buildId(6, 5),
+        loan_id: 4,
+        mortgage_id: 4,
+        status: Mortgage.STATUS.claimed,
+        borrower: '0xdeadbeef33'
+      })
+      await Promise.all([
+        Mortgage.insert(mortgage),
+        Mortgage.insert(mortgage2),
+        Mortgage.insert(mortgage3),
+        Mortgage.insert(mortgage4)
+      ])
+
+      const range = await Parcel.findWithLastActiveMortgageByBorrower(
+        '0xdeadbeef33'
+      )
+      expect(range.length).to.be.equal(2)
+      expect(range).to.equalRows([
+        {
+          asset_id: null,
+          x: 2,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          last_transferred_at: null,
+          auction_owner: null,
+          in_estate: false,
+          tags: {}
+        },
+        {
+          asset_id: null,
+          x: 6,
+          y: 5,
+          auction_price: null,
+          owner: null,
+          data: null,
+          district_id: null,
+          last_transferred_at: null,
+          auction_owner: null,
+          in_estate: false,
+          tags: {}
+        }
+      ])
+    })
+  })
+
   afterEach(() =>
     Promise.all(
-      [Parcel, Publication].map(Model => db.truncate(Model.tableName))
-    )
-  )
+      [Parcel, Publication, Mortgage].map(Model => db.truncate(Model.tableName))
+    ))
 })
 
 describe('ParcelService', function() {

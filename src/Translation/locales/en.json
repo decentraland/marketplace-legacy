@@ -69,21 +69,28 @@
     "connect": "Connect",
     "connecting": "Connecting",
     "contributions": "Contributions",
+    "expired_at": "Expired {time}",
+    "expires_in": "Expires {time}",
+    "expires_in_more_than_years": "Expires in over {years} years",
     "for": "for",
     "loading": "Loading",
     "marketplace": "Marketplace",
+    "mortgage": "Mortgage",
+    "mortgages": "Mortgages",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
     "parcels": "Parcels",
     "estate": "Estate",
     "estates": "Estates",
     "profile": "My Land",
+    "request": "Request",
     "retry": "Retry",
     "revoke": "Revoke",
     "settings": "Settings",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
     "submit": "Submit",
+    "time_left": "Time left",
     "unauthorized": "Unauthorized",
     "undo": "Undo",
     "wallet_address": "Wallet address",
@@ -111,6 +118,34 @@
       "close_to_expire": "Closest to expire",
       "newest": "Newest"
     }
+  },
+  "mortgage": {
+    "amount": "Amount",
+    "amount_placeholder": "Amount in MANA",
+    "cancel": "Cancel Mortgage",
+    "duration": "Duration",
+    "duration_placeholder": "Duration in days",
+    "errors": {
+      "amount_minimum": "Amount should be greater than {amount}",
+      "duration_gte_payable": "Duration should be greater or equal than payable at days",
+      "maximum_interest_rate": "The rate should be lower than {maximum}",
+      "minimum_duration": "Duration should be greater than {minimum} days",
+      "minimum_interest_rate": "The rate should be greater than {minimum}",
+      "minimum_payable": "Payable at should be greater than {minimum} days",
+      "parcel_price": "Amount required should be less than parcel price"
+    },
+    "expiration": "Request expiration",
+    "expiration_placeholder": "Expiration date for the mortgage",
+    "interest_rate": "Interest rate",
+    "interest_rate_placeholder": "Interest rate",
+    "oracle": "Oracle contract address",
+    "payable": "Payable at",
+    "payable_placeholder": "Payable in days",
+    "punitory_rate": "Punitory interest rate",
+    "punitory_rate_placeholder": "Punitory rate",
+    "request": "Requesting a Mortgage",
+    "request_land": "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
+    "requested": "Requested"
   },
   "parcel": {
     "no_description": "No description",
@@ -159,8 +194,8 @@
     },
     "publication": {
       "buy": "Buy",
-      "price": "Price",
-      "time_left": "Time Left"
+      "mortgage": "Request Mortgage",
+      "price": "Price"
     },
     "tags": {
       "title": "Highlights"
@@ -221,9 +256,6 @@
   "publication": {
     "acquired_at": "Acquired at {date}",
     "canceled": "Canceled",
-    "expired_at": "Expired {time}",
-    "expires_in": "Expires {time}",
-    "expires_in_more_than_years": "Expires in over {years} years",
     "sold": "Sold",
     "view": "View"
   },
@@ -239,14 +271,20 @@
   "settings": {
     "approve_mana": "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
     "approve_mana_check": "Checking authorizes MANA usage to the Marketplace contract",
+    "approve_mortgage_mana": "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+    "approve_mortgage_rcn": "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
     "authorization": "Authorization",
     "authorize": "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
     "authorize_land_check": "Checking authorizes LAND usage to the Marketplace contract",
     "disapprove_mana_check": "Unchecking unauthorizes MANA usage for the Marketplace contract",
     "mana_approved": "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
     "marketplace_contract": "Marketplace contract",
+    "mortgage_creator_contract": "Mortgage creator contract",
+    "mortgage_manager_contract": "Mortgage manager contract",
     "pending_tx": "You have a pending transaction",
     "unauthorize_land_check": "Unchecking unauthorizes LAND usage for the Marketplace contract",
+    "you_approved_mortgage_mana": "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+    "you_approved_mortgage_rcn": "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
     "you_authorized": "You have authorized the {marketplace_contract_link} to operate LAND on your behalf"
   },
   "sign_in": {
@@ -259,10 +297,14 @@
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
+    "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
+    "create_mortgage": "You requested a Mortgage to buy the parcel {parcel_link}",
     "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "manage": "You gave {address_link} permission to update the contents of {parcel_link}",
     "manage_revoked": "You revoked {address_link} permission to update the contents of {parcel_link}",
+    "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
+    "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
     "publish": "You published {parcel_link}",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"

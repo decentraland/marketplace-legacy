@@ -69,19 +69,26 @@
     "connect": "잇다",
     "connecting": "连",
     "contributions": "小区份额",
+    "expired_at": "已过期{time}",
+    "expires_in": "到期{time}",
+    "expires_in_more_than_years": "超过{years}年到期",
     "for": "对于",
     "loading": "载入中",
     "marketplace": "虚拟物品市场",
+    "mortgage": "抵押",
+    "mortgages": "抵押贷款",
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유",
     "parcels": "地块",
     "profile": "我的虚拟土地",
+    "request": "请求",
     "retry": "다시 해 보다",
     "revoke": "撤消",
     "settings": "设置",
     "sign_in": "登录",
     "sign_in_notice": "您需要{sign_in_link}才能访问此页面",
     "submit": "提交",
+    "time_left": "剩下的时间",
     "unauthorized": "未授权",
     "undo": "解开",
     "wallet_address": "钱包地址",
@@ -109,6 +116,34 @@
       "close_to_expire": "最近到期",
       "newest": "最新出售"
     }
+  },
+  "mortgage": {
+    "amount": "量",
+    "amount_placeholder": "MANA中的金额",
+    "cancel": "取消抵押",
+    "duration": "持续时间",
+    "duration_placeholder": "持续时间以天计",
+    "errors": {
+      "amount_minimum": "金额应该大于{amount}",
+      "duration_gte_payable": "持续时间应该大于或等于在天付款",
+      "maximum_interest_rate": "费率应低于{maximum}",
+      "minimum_duration": "持续时间应该大于{minimum}天",
+      "minimum_interest_rate": "费率应该大于{minimum}",
+      "minimum_payable": "应付时间应大于{minimum}天",
+      "parcel_price": "所需金额应低于包裹价格"
+    },
+    "expiration": "请求到期",
+    "expiration_placeholder": "抵押的到期日期",
+    "interest_rate": "利率",
+    "interest_rate_placeholder": "利率",
+    "oracle": "Oracle合同地址",
+    "payable": "应付",
+    "payable_placeholder": "应付天数",
+    "punitory_rate": "惩罚性利率",
+    "punitory_rate_placeholder": "惩罚率",
+    "request": "要求抵押",
+    "request_land": "您即将为{parcel_price}中的{parcel_name}申请抵押贷款",
+    "requested": "要求"
   },
   "parcel": {
     "no_description": "没有说明",
@@ -157,8 +192,8 @@
     },
     "publication": {
       "buy": "购买",
-      "price": "价格",
-      "time_left": "剩下的时间"
+      "mortgage": "请求抵押",
+      "price": "价格"
     },
     "tags": {
       "title": "强调"
@@ -221,23 +256,28 @@
   "publication": {
     "acquired_at": "在{date}收购",
     "canceled": "已取消",
-    "expired_at": "已于{time}前过期",
-    "expires_in": "将于{time}后到期",
-    "expires_in_more_than_years": "超过{years}年",
     "sold": "已售出",
     "view": "查看"
   },
   "settings": {
     "approve_mana": "授权{marketplace_contract_link}以您的名义操作MANA",
     "approve_mana_check": "检查授权MANA使用到市场合同",
+    "approve_mortgage_mana": "授权{mortgage_contract_link}代表您操作MANA",
+    "approve_mortgage_rcn": "授权{mortgage_contract_link}代表您运行RCN",
     "authorization": "授权",
     "authorize": "授权{marketplace_contract_link}在您的行为中操作LAND",
     "authorize_land_check": "勾选并授权虚拟市场合约的土地使用",
     "disapprove_mana_check": "取消选中不授权市场合同的MANA使用",
     "mana_approved": "您已授权{marketplace_contract_link}以您的名义操作MANA",
     "marketplace_contract": "虚拟市场合约",
+    "mortgage_creator_contract": "抵押贷款创建者合同",
+    "mortgage_manager_contract": "抵押经理合同",
     "pending_tx": "您有待处理的交易",
     "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
+    "you_approved_mortgage_mana":
+      "您已授权{mortgage_contract_link}代表您操作MANA",
+    "you_approved_mortgage_rcn":
+      "您已授权{mortgage_contract_link}代表您运营RCN",
     "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作LAND"
   },
   "sign_in": {
@@ -249,13 +289,17 @@
     "approved": "您授权{marketplace_contract_link}以您的名义操作MANA",
     "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
     "buy": "您买入了{parcel_link}地块",
-    "buy_mana": "你已经买了{MANA} MANA",
+    "buy_mana": "你已经买了{mana} MANA",
     "cancel": "您取消了{parcel_link}上的{publication_link}",
+    "cancel_mortgage": "您取消抵押贷款以购买包裹{parcel_link}",
+    "create_mortgage": "您要求抵押贷款购买包裹{parcel_link}",
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "edit":
       "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
     "manage": "您授予{address_link}更新{parcel_link}的内容的权限",
     "manage_revoked": "您撤销了{address_link}更新{parcel_link}内容的权限",
+    "mortgage_mana": "你{action} {mortgage_contract_link}代表你操作MANA。",
+    "mortgage_rcn": "您{action} {mortgage_contract_link}代表您运营RCN。",
     "publish": "您发布了{parcel_link}地块",
     "transfer": "您已将{parcel_link}转让给{owner_link}",
     "transfer_mana": "您将{mana}个MANA转移到{address_link}"

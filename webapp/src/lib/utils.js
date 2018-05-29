@@ -1,5 +1,6 @@
 import dateFnsFormat from 'date-fns/format'
 import dateFnsDistanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import { txUtils } from 'decentraland-eth'
 
 import { getCurrentLocale } from 'modules/translation/utils'
 
@@ -55,7 +56,7 @@ export function isMobile() {
 }
 
 export function formatMana(amount, unit = 'MANA') {
-  const amountNumber = parseFloat(amount, 10)
+  const amountNumber = parseFloat(amount)
   return `${amountNumber.toLocaleString()} ${unit}`.trim()
 }
 
@@ -70,4 +71,38 @@ export function distanceInWordsToNow(date) {
     addSuffix: true,
     locale: getCurrentLocale()
   })
+}
+
+/**
+ * Returns if a date is expired
+ * @param {number} - expires_at
+ * @returns {boolean}
+ */
+export function isExpired(expires_at) {
+  return parseInt(expires_at, 10) < Date.now()
+}
+
+/**
+ * Returns if object is Open
+ * @param {object} - obj with status & tx_status fields
+ * @param  {string} - status
+ * @returns {boolean}
+ */
+export function isOpen(obj, status) {
+  return hasStatus(obj, status)
+}
+
+/**
+ * Returns if object has status
+ * @param {object} - obj with status & tx_status fields
+ * @param  {string} - status
+ * @returns {boolean}
+ */
+export function hasStatus(obj, status) {
+  return (
+    obj &&
+    obj.status === status &&
+    obj.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
+    !isExpired(obj)
+  )
 }
