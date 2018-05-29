@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { env } from 'decentraland-commons'
 
+import { isFeatureEnabled } from 'lib/featureUtils'
 import { PROFILE_PAGE_TABS } from 'locations'
 import {
   Menu,
@@ -201,7 +201,7 @@ export default class ProfilePage extends React.PureComponent {
                 PROFILE_PAGE_TABS.publications
               )}
             </Menu.Item>
-            {env.isDevelopment() && (
+            {isFeatureEnabled('MORTGAGES') && (
               <Menu.Item
                 name={PROFILE_PAGE_TABS.mortgages}
                 active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
