@@ -10,8 +10,8 @@ import EstateSelect from './EstateSelect'
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParams(ownProps)
   return {
-    x,
-    y,
+    x: parseInt(x, 10),
+    y: parseInt(y, 10),
     isLoading: isLoading(state),
     error: getError(state)
   }
