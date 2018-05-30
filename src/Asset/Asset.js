@@ -2,7 +2,6 @@ import { txUtils } from 'decentraland-eth'
 
 import { Publication, PublicationQueries } from '../Publication'
 import { db, SQL, raw } from '../database'
-import { getFindByOwnerQuery } from './utils'
 
 export class Asset {
   constructor(Model) {
@@ -11,7 +10,11 @@ export class Asset {
   }
 
   async findByOwner(owner) {
-    return db.query(await getFindByOwnerQuery(owner, this.tableName))
+    return db.query(SQL`SELECT ${SQL.raw(this.tableName)}.*, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+      ) as publication
+        FROM ${SQL.raw(this.tableName)}
+        WHERE owner = ${owner}`)
   }
 
   async findByOwnerAndStatus(owner, status) {
