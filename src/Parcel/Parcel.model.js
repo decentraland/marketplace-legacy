@@ -78,8 +78,10 @@ export class Parcel extends Model {
   }
 
   static async inRange(min, max) {
-    const [minx, maxy] = coordinates.toArray(min)
-    const [maxx, miny] = coordinates.toArray(max)
+    const [minx, maxy] =
+      typeof min === 'string' ? coordinates.toArray(min) : [min.x, min.y]
+    const [maxx, miny] =
+      typeof max === 'string' ? coordinates.toArray(max) : [max.x, max.y]
 
     return await this.db.query(
       SQL`SELECT *, (

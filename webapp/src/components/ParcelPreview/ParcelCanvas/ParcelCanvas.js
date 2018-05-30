@@ -19,6 +19,7 @@ import {
   getBounds
 } from 'lib/parcelUtils'
 import { Parcel, Selection } from 'lib/render'
+import { Viewport } from 'shared/map'
 import { panzoom } from './utils'
 import './ParcelCanvas.css'
 
@@ -99,19 +100,14 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   getDimensions({ width, height }, { pan, zoom, center, size }) {
-    const dimensions = {
-      width: Math.ceil(width / size + LOAD_PADDING),
-      height: Math.ceil(height / size + LOAD_PADDING)
-    }
-    dimensions.nw = {
-      x: center.x - Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
-      y: center.y + Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
-    }
-    dimensions.se = {
-      x: center.x + Math.ceil(dimensions.width / 2) + Math.ceil(pan.x / size),
-      y: center.y - Math.ceil(dimensions.height / 2) - Math.ceil(pan.y / size)
-    }
-
+    const dimensions = Viewport.getDimensions({
+      width,
+      height,
+      center,
+      pan,
+      size,
+      padding: LOAD_PADDING
+    })
     return { ...dimensions, pan, zoom, center, size }
   }
 

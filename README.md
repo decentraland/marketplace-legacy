@@ -39,6 +39,10 @@ If you don't want to install `babel-node` globally, you can use [npx](https://ww
 * **Adding the .env files**<br /> Create an `.env` file on the [`/webapp`](https://github.com/decentraland/marketplace/tree/master/webapp) folder and fill it following the `.env.example` file found there. You will need to specify `NODE_PATH` to be `src/`, `REACT_APP_API_URL` to be `http://localhost:5000` (unless you changed the default server configuration, if so point to the right `host:port`) and `REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS` to Ropsten's MANAToken address: `0x2a8fd99c19271f4f04b1b7b9c4f7cf264b626edb`.
 * **Running the front-end**<br /> You will need to first have the server running (see above). After that just jump into the webapp folder `$ cd webapp` and start the local development `$ npm start`
 
+### Shared code
+
+There's a `/shared` directory where some of the logic shared between backend and frontend lives (i.e. everything related to rendering the map). We have symlinks that point to this directory from the `src` directories of the server and the UI (`src/shared` and `webapp/src/shared`). This symlinks have been versioned in this repo, but if for some reason they don't work (Windows?) you will need to recreate them in order to `npm start` or `npm build` this project.
+
 ### Tests
 
 To run the backend tests simply run `npm run test` or `npm run watch:test`. You'll need to create your own `.env` file for the `/specs` file mimicking the `.env.example` file that's in there. We do this so you can for example use a dedicated database `CONNECTION_STRING="postgres://localhost:5432/marketplace_test"`.

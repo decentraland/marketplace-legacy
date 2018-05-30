@@ -53,11 +53,29 @@ export function getDistrict(parcel, districts = {}) {
   return parcel && districts[parcel.district_id]
 }
 
-export function isOnSale(parcel) {
-  return parcel != null && isOpen(parcel.publication)
+export function isOnSale(parcel, publications) {
+  if (!parcel) {
+    return false
+  }
+  let publication
+  if (parcel.publication_tx_hash) {
+    publication = publications[parcel.publication_tx_hash]
+  }
+  if (!publication) {
+    return false
+  }
+  return isOpen(publication)
 }
 
-export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
+export function getParcelAttributes(
+  id,
+  x,
+  y,
+  wallet,
+  parcels,
+  districts,
+  publications
+) {
   const parcel = parcels[id]
   if (!parcel) {
     return {
@@ -117,7 +135,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
       label,
       description,
       color: 'black',
-      backgroundColor: isOnSale(parcel)
+      backgroundColor: isOnSale(parcel, publications)
         ? COLORS.myParcelsOnSale
         : COLORS.myParcels
     }
@@ -132,7 +150,7 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
     }
   }
 
-  if (isOnSale(parcel)) {
+  if (isOnSale(parcel, publications)) {
     return {
       label,
       description,

@@ -1,10 +1,12 @@
 import { buildCoordinate } from 'lib/utils'
 
-export function shouldConnect(parcelA, parcelB, prop) {
-  return (
-    parcelA[prop] != null &&
-    parcelB[prop] != null &&
-    parcelA[prop] === parcelB[prop]
+export function toParcelObject(parcelsArray, prevParcels) {
+  return connectParcels(
+    parcelsArray,
+    parcelsArray.reduce((map, parcel) => {
+      map[parcel.id] = cleanParcel(parcel, prevParcels[parcel.id])
+      return map
+    }, {})
   )
 }
 
@@ -17,23 +19,6 @@ export function cleanParcel(parcel, prevParcel) {
   }
 }
 
-export function toParcelObject(parcelsArray, prevParcels) {
-  return connectParcels(
-    parcelsArray,
-    parcelsArray.reduce((map, parcel) => {
-      map[parcel.id] = cleanParcel(parcel, prevParcels[parcel.id])
-      return map
-    }, {})
-  )
-}
-
-export function getParcelPublications(parcels) {
-  return parcels.reduce((pubs, parcel) => {
-    if (parcel.publication) pubs.push(parcel.publication)
-    return pubs
-  }, [])
-}
-
 export function connectParcels(array, parcels) {
   array.forEach(parcel => {
     const { x, y } = parcel
@@ -44,16 +29,31 @@ export function connectParcels(array, parcels) {
 
       parcels[parcel.id].connectedLeft =
         !parcels[leftId] ||
-        shouldConnect(parcels[parcel.id], parcels[leftId], 'district_id')
+        isSameValue(parcels[parcel.id], parcels[leftId], 'district_id')
 
       parcels[parcel.id].connectedTop =
         !parcels[topId] ||
-        shouldConnect(parcels[parcel.id], parcels[topId], 'district_id')
+        isSameValue(parcels[parcel.id], parcels[topId], 'district_id')
 
       parcels[parcel.id].connectedTopLeft =
         !parcels[topLeftId] ||
-        shouldConnect(parcels[parcel.id], parcels[topLeftId], 'district_id')
+        isSameValue(parcels[parcel.id], parcels[topLeftId], 'district_id')
     }
   })
   return parcels
+}
+
+export function isSameValue(parcelA, parcelB, prop) {
+  return (
+    parcelA[prop] != null &&
+    parcelB[prop] != null &&
+    parcelA[prop] === parcelB[prop]
+  )
+}
+
+export function getParcelPublications(parcels) {
+  return parcels.reduce((pubs, parcel) => {
+    if (parcel.publication) pubs.push(parcel.publication)
+    return pubs
+  }, [])
 }
