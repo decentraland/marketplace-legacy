@@ -21,12 +21,18 @@ export function getLoanMetadata() {
   return `#mortgage #required-cosigner:${mortgageManagerContract.address}`
 }
 
-export function getActiveMortgagesByBorrower(mortgages, borrower) {
+export function getActiveMortgages(mortgages) {
   return mortgages.filter(
     mortgage => mortgage &&
-      mortgage.borrower === borrower &&
       ((mortgage.status === MORTGAGE_STATUS.pending &&
         mortgage.is_publication_open === 1) ||
         mortgage.status === MORTGAGE_STATUS.ongoing)
+  )
+}
+
+export function getActiveMortgagesByBorrower(mortgages, borrower) {
+  return getActiveMortgages(mortgages).filter(
+    mortgage => mortgage &&
+      mortgage.borrower === borrower
   )
 }

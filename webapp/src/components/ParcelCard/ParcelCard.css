@@ -6,11 +6,11 @@
   text-transform: capitalize;
 }
 
-.ParcelCard .Mortgage.STATUS.pending{
+.ParcelCard .Mortgage.pending{
   color: var(--orange);
 }
 
-.ParcelCard .mortgage-status.started{
+.ParcelCard .mortgage-status.ongoing{
   color: var(--light-blue);
 }
 

@@ -1,9 +1,9 @@
-.parcelMortgageDetail .open p {
+.parcelMortgageDetail .pending p {
   color: var(--orange);
   text-transform: capitalize;
 }
 
-.parcelMortgageDetail .started p{
+.parcelMortgageDetail .ongoing p{
   color: var(--light-blue);
   text-transform: capitalize;
 }
