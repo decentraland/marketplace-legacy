@@ -84,7 +84,7 @@ export class Parcel extends Model {
 
     return this.db.query(
       SQL`SELECT *, (
-        ${PublicationQueries.findLastParcelPublicationJsonSql()}
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
       ) as publication
         FROM ${SQL.raw(this.tableName)}
         WHERE x BETWEEN ${minx} AND ${maxx}
