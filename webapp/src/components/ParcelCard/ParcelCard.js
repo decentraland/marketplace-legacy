@@ -51,7 +51,7 @@ export default class ParcelCard extends React.PureComponent {
               ) : null}
             </Card.Description>
 
-            {isPublicationOpen ? (
+            {isPublicationOpen && (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
@@ -61,18 +61,21 @@ export default class ParcelCard extends React.PureComponent {
                   />
                 </Card.Meta>
               </React.Fragment>
-            ) : (
-              <Card.Meta>
-                {t('publication.acquired_at', {
-                  date: formatDate(
-                    parcel.last_transferred_at
-                      ? parseInt(parcel.last_transferred_at, 10)
-                      : AUCTION_DATE,
-                    'MMM Do, YYYY'
-                  )
-                })}
-              </Card.Meta>
             )}
+
+            {isPublicationOpen &&
+              !showMortgage && (
+                <Card.Meta>
+                  {t('publication.acquired_at', {
+                    date: formatDate(
+                      parcel.last_transferred_at
+                        ? parseInt(parcel.last_transferred_at, 10)
+                        : AUCTION_DATE,
+                      'MMM Do, YYYY'
+                    )
+                  })}
+                </Card.Meta>
+              )}
 
             {showMortgage &&
               isOpen(parcel.mortgage, MORTGAGE_STATUS.open) && (
