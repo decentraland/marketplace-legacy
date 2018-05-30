@@ -13,6 +13,7 @@ import { inBounds } from 'lib/parcelUtils'
 import { getParcels } from 'modules/parcels/selectors'
 import { locations } from 'locations'
 import { api } from 'lib/api'
+import { buildCoordinate } from 'lib/utils';
 
 function validateCoords(x, y) {
   if (!inBounds(x, y)) {
@@ -37,9 +38,8 @@ function* handleCreateEstateRequest(action) {
     const contractAddress = randomString(42)
     const txHash = randomString(42)
     const allParcels = yield select(getParcels)
-    const { owner } = allParcels[
-      `${estate.data.parcels[0].x},${estate.data.parcels[0].y}`
-    ]
+    const [parcel] = estate.data.parcels
+    const { owner } = allParcels[buildCoordinate(parcel.x, parcel.y)]
 
     yield put(
       createEstateSuccess(txHash, {

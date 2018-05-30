@@ -7,8 +7,7 @@ import { Parcel } from '../Parcel'
 
 describe('Mortgage', function() {
   afterEach(() =>
-    Promise.all([Mortgage].map(Model => db.truncate(Model.tableName)))
-  )
+    Promise.all([Mortgage].map(Model => db.truncate(Model.tableName))))
 
   describe('.findByBorrower', async () => {
     it('should get actives mortgages by borrower', async () => {

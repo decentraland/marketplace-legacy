@@ -191,8 +191,7 @@ describe('Parcel', function() {
   afterEach(() =>
     Promise.all(
       [Parcel, Publication, Mortgage].map(Model => db.truncate(Model.tableName))
-    )
-  )
+    ))
 })
 
 describe('ParcelService', function() {

@@ -75,7 +75,26 @@ export default class ParcelTags extends React.PureComponent {
       return this.props.parcel.tags
     }
 
-    return this.props.estate.parcels[0].tags
+    const { parcels } = this.props.estate
+    const proximities = parcels
+      .map(parcel => parcel.tags.proximity)
+      .filter(prox => prox)
+    const proximity = proximities.reduce((finalProximity, actualProximity) => {
+      Object.keys(actualProximity).forEach(key => {
+        if (!finalProximity[key]) {
+          finalProximity[key] = actualProximity[key]
+          return
+        }
+
+        if (finalProximity[key].distance > actualProximity[key].distance) {
+          finalProximity[key] = actualProximity[key]
+          return
+        }
+      })
+      return finalProximity
+    }, {})
+
+    return { proximity }
   }
 
   render() {

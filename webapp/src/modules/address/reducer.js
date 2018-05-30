@@ -158,7 +158,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
     }
     case CREATE_ESTATE_SUCCESS: {
       const { id, owner, data } = action.estate
-      const parcelIds = new Set(data.parcels.map(({ x, y }) => `${x},${y}`))
+      const parcelIds = new Set(data.parcels.map(({ x, y }) => buildCoordinate(x, y)))
 
       return {
         ...state,

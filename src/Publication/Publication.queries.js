@@ -1,5 +1,4 @@
 import { Publication } from './Publication.model'
-import { Parcel } from '../Parcel'
 import { SQL, raw } from '../database'
 
 export const PublicationQueries = Object.freeze({
