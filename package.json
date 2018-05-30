@@ -39,7 +39,7 @@
     "body-parser": "^1.18.2",
     "canvas": "^2.0.0-alpha.12",
     "decentraland-commons": "^4.0.1",
-    "decentraland-eth": "^2.1.0",
+    "decentraland-eth": "^3.1.0",
     "ethereumjs-abi": "^0.6.5",
     "express": "^4.16.2",
     "flat": "^4.0.0",
@@ -65,7 +65,7 @@
     "inquirer": "^5.2.0",
     "mocha": "^4.0.1",
     "nodemon": "^1.14.11",
-    "prettier": "^1.10.2",
+    "prettier": "^1.12.1",
     "sinon": "^5.0.3"
   }
 }

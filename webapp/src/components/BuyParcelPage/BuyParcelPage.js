@@ -134,14 +134,14 @@ export default class BuyParcelPage extends React.PureComponent {
     const { wallet, x, y, publication, isDisabled, onCancel } = this.props
     const { balance, approvedBalance } = wallet
 
-    const price = publication ? parseFloat(publication.price, 10) : 0
+    const price = publication ? parseFloat(publication.price) : 0
 
     const isNotEnoughMana = balance < price
     const isNotEnoughApproved = approvedBalance < price
 
     return (
-      <Parcel x={x} y={y}>
-        {(parcel, isOwner) => (
+      <Parcel x={x} y={y} ownerNotAllowed>
+        {parcel => (
           <div className="BuyParcelPage">
             {this.renderMessage(isNotEnoughMana, isNotEnoughApproved)}
             <ParcelModal
@@ -172,9 +172,7 @@ export default class BuyParcelPage extends React.PureComponent {
               })}
               onCancel={onCancel}
               onConfirm={this.handleConfirm}
-              isDisabled={
-                isDisabled || isOwner || isNotEnoughMana || isNotEnoughApproved
-              }
+              isDisabled={isDisabled || isNotEnoughMana || isNotEnoughApproved}
             />
           </div>
         )}

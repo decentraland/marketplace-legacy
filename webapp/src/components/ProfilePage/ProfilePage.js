@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { isFeatureEnabled } from 'lib/featureUtils'
 import { PROFILE_PAGE_TABS } from 'locations'
 import {
   Menu,
@@ -26,6 +27,7 @@ export default class ProfilePage extends React.PureComponent {
     parcels: PropTypes.arrayOf(parcelType),
     contributions: PropTypes.arrayOf(contributionType),
     publishedParcels: PropTypes.arrayOf(parcelType),
+    mortgagedParcels: PropTypes.arrayOf(parcelType),
     grid: PropTypes.arrayOf(
       PropTypes.oneOfType([parcelType, contributionType])
     ),
@@ -102,6 +104,20 @@ export default class ProfilePage extends React.PureComponent {
           </Card.Group>
         )
       }
+      case PROFILE_PAGE_TABS.mortgages: {
+        return (
+          <Card.Group stackable={true}>
+            {grid.map(parcel => (
+              <ParcelCard
+                key={parcel.id}
+                parcel={parcel}
+                isOwnerVisible={false}
+                showMortgage={true}
+              />
+            ))}
+          </Card.Group>
+        )
+      }
       default:
         return null
     }
@@ -142,10 +158,10 @@ export default class ProfilePage extends React.PureComponent {
       parcels,
       contributions,
       publishedParcels,
+      mortgagedParcels,
       isOwner,
       isConnecting
     } = this.props
-
     return (
       <div className="ProfilePage">
         {isOwner || isConnecting ? null : (
@@ -185,6 +201,19 @@ export default class ProfilePage extends React.PureComponent {
                 PROFILE_PAGE_TABS.publications
               )}
             </Menu.Item>
+            {isFeatureEnabled('MORTGAGES') && (
+              <Menu.Item
+                name={PROFILE_PAGE_TABS.mortgages}
+                active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
+                onClick={this.handleItemClick}
+              >
+                {t('global.mortgages')}
+                {this.renderBadge(
+                  mortgagedParcels,
+                  PROFILE_PAGE_TABS.mortgages
+                )}
+              </Menu.Item>
+            ) /* Mortgage Feature */}
           </Menu>
         </Container>
         <Container className="profile-grid">
