@@ -14,11 +14,11 @@ export default class MortgageActions extends React.PureComponent {
     const { mortgage, onCancel } = this.props
 
     switch (mortgage.status) {
-      case MORTGAGE_STATUS.open:
+      case MORTGAGE_STATUS.pending:
         return <Button size="tiny" onClick={onCancel}>
             {t('mortgage.cancel')}
           </Button>
-      case MORTGAGE_STATUS.started:
+      case MORTGAGE_STATUS.ongoing:
       case MORTGAGE_STATUS.defaulted:
         return <Button size="tiny">
           {t('mortgage.pay')}

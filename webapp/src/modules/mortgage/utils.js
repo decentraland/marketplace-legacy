@@ -2,11 +2,9 @@ import { eth } from 'decentraland-eth'
 
 // From Mortgage.js on the server
 export const MORTGAGE_STATUS = Object.freeze({
-  open: 'open',
-  claimed: 'claimed',
-  started: 'started',
-  defaulted: 'defaulted',
-  cancelled: 'cancelled'
+  pending: 'pending',
+  ongoing: 'ongoing',
+  paid: 'paid',
 })
 
 // Interest in seconds
@@ -25,9 +23,10 @@ export function getLoanMetadata() {
 
 export function getActiveMortgagesByBorrower(mortgages, borrower) {
   return mortgages.filter(
-    mortgage =>
-      mortgage &&
+    mortgage => mortgage &&
       mortgage.borrower === borrower &&
-      mortgage.status !== MORTGAGE_STATUS.cancelled
+      ((mortgage.status === MORTGAGE_STATUS.pending &&
+        mortgage.is_publication_open === 1) ||
+        mortgage.status === MORTGAGE_STATUS.ongoing)
   )
 }

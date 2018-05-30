@@ -26,11 +26,11 @@ export default class ParcelMortgage extends React.PureComponent {
 
           return (
             <Grid.Row key={mortgage.mortgage_id}>
-              <Grid.Column width={4} className={mortgage.status}>
+              <Grid.Column width={2} className={mortgage.status}>
                 <h3>{t('global.mortgage')}</h3>
                 <p>{mortgage.status}</p>
               </Grid.Column>
-              <Grid.Column width={4}>
+              <Grid.Column width={3}>
                 <h3>{t('mortgage.requested')}</h3>
                 <Mana
                   amount={parseFloat(mortgage.amount)}
@@ -39,18 +39,18 @@ export default class ParcelMortgage extends React.PureComponent {
                   className="mortgage-amount-icon"
                 />
               </Grid.Column>
-              {mortgage.status === MORTGAGE_STATUS.open && (
-                <Grid.Column width={4}>
+              {mortgage.status === MORTGAGE_STATUS.pending && (
+                <Grid.Column width={3}>
                   <h3>{t('global.time_left')}</h3>
                   <p>
                     <Expiration expiresAt={parseInt(mortgage.expires_at, 10)} />
                   </p>
                 </Grid.Column>
               )}
-              {mortgage.status === MORTGAGE_STATUS.started && (
+              {mortgage.status === MORTGAGE_STATUS.ongoing && (
                 <React.Fragment>
-                  <Grid.Column width={4}>
-                    <h3>{t('global.amount_paid')}</h3>
+                  <Grid.Column width={3}>
+                    <h3>{t('mortgage.amount_paid')}</h3>
                     <Mana
                       amount={parseFloat(mortgage.amount_paid || 0)}
                       size={20}
@@ -58,28 +58,31 @@ export default class ParcelMortgage extends React.PureComponent {
                       className="mortgage-amount-icon"
                     />
                   </Grid.Column>
-                  <Grid.Column width={4}>
-                    <h3>{t('global.payable_at')}</h3>
+                  <Grid.Column width={3}>
+                    <h3>{t('mortgage.payable')}</h3>
                     <p>
                       <Expiration
                         expiresAt={parseInt(
-                          startTime + mortgage.payable_at,
+                          (startTime + mortgage.payable_at * 1) * 1000,
                           10
                         )}
                       />
                     </p>
                   </Grid.Column>
-                  <Grid.Column width={4}>
-                    <h3>{t('global.duration')}</h3>
+                  <Grid.Column width={3}>
+                    <h3>{t('global.time_left')}</h3>
                     <p>
                       <Expiration
-                        expiresAt={parseInt((startTime + (mortgage.is_due_at * 1)) * 1000, 10)}
+                        expiresAt={parseInt(
+                          (startTime + mortgage.is_due_at * 1) * 1000,
+                          10
+                        )}
                       />
                     </p>
                   </Grid.Column>
                 </React.Fragment>
               )}
-              <Grid.Column width={4}>
+              <Grid.Column width={2}>
                 <MortgageActions mortgage={mortgage} />
               </Grid.Column>
             </Grid.Row>

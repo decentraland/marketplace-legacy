@@ -1,6 +1,7 @@
 import { Publication } from './Publication.model'
 import { Parcel } from '../Parcel'
 import { Estate } from '../Estate'
+import { ASSET_TYPE } from '../Asset'
 
 export class PublicationService {
   constructor() {
@@ -15,8 +16,8 @@ export class PublicationService {
     }
 
     return {
-      [this.Publication.TYPES.parcel]: this.Parcel,
-      [this.Publication.TYPES.estate]: this.Estate
+      [ASSET_TYPE.parcel]: this.Parcel,
+      [ASSET_TYPE.estate]: this.Estate
     }[type]
   }
 }

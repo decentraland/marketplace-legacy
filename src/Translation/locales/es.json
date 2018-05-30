@@ -44,8 +44,7 @@
     "proposal": "propuesta"
   },
   "derivation_path": {
-    "invalid":
-      "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
+    "invalid": "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
   "footer": {
     "color_key": "Mapa de Colores",
@@ -119,33 +118,32 @@
   },
   "mortgage": {
     "amount": "Cantidad",
+    "amount_paid": "Monto a la izquierda para pagar",
     "amount_placeholder": "Monto en MANA",
     "cancel": "Cancelar hipoteca",
     "duration": "Duración",
     "duration_placeholder": "Duración en días",
     "errors": {
       "amount_minimum": "La cantidad debe ser mayor que {amount}",
-      "duration_gte_payable":
-        "La duración debe ser mayor o igual que la paga en días",
+      "duration_gte_payable": "La duración debe ser mayor o igual que la paga en días",
       "maximum_interest_rate": "La tasa debe ser inferior a {maximum}",
       "minimum_duration": "La duración debe ser mayor a {minimum} días",
       "minimum_interest_rate": "La tasa debe ser mayor que {minimum}",
       "minimum_payable": "Pagable en debe ser mayor que {minimum} días",
-      "parcel_price":
-        "La cantidad requerida debe ser menor que el precio del paquete"
+      "parcel_price": "La cantidad requerida debe ser menor que el precio del paquete"
     },
     "expiration": "Solicitud de caducidad",
     "expiration_placeholder": "Fecha de vencimiento de la hipoteca",
     "interest_rate": "Tasa de interés",
     "interest_rate_placeholder": "Tasa de interés",
     "oracle": "Dirección del contrato de Oracle",
+    "pay": "Paga",
     "payable": "Pagadero a",
     "payable_placeholder": "Pagable en días",
     "punitory_rate": "Tasa de interés punitiva",
     "punitory_rate_placeholder": "Tasa punitiva",
     "request": "Solicitar una hipoteca",
-    "request_land":
-      "Está a punto de solicitar una hipoteca por {parcel_name} valorada en {parcel_price}",
+    "request_land": "Está a punto de solicitar una hipoteca por {parcel_name} valorada en {parcel_price}",
     "requested": "Pedido"
   },
   "parcel": {
@@ -160,8 +158,7 @@
     "buy_mana": "{click_here} para comprar MANA.",
     "didnt_approve": "No has autorizado el uso de MANA",
     "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
-    "please_approve":
-      "Por favor entra en {settings_link} y permite al contrato de Mercado a operar MANA por tu cuenta",
+    "please_approve": "Por favor entra en {settings_link} y permite al contrato de Mercado a operar MANA por tu cuenta",
     "total_balance": "Tu balance es {balance}"
   },
   "parcel_cancel": {
@@ -211,11 +208,9 @@
   },
   "parcel_manage": {
     "address": "Dirección del operador",
-    "address_permission":
-      "Esta dirección podrá actualizar el contenido de este paquete.",
+    "address_permission": "Esta dirección podrá actualizar el contenido de este paquete.",
     "check_address": "Por favor, compruebe la dirección con cuidado",
-    "give_permission":
-      "Dar permiso para actualizar el contenido de {parcel_name}.",
+    "give_permission": "Dar permiso para actualizar el contenido de {parcel_name}.",
     "manage_land": "Administrar LAND"
   },
   "parcel_publish": {
@@ -229,35 +224,28 @@
     "expiration": "Expiración",
     "expiration_placeholder": "Fecha de expiración para esta publicación",
     "list_land": "Publicar LAND para la venta",
-    "please_authorize":
-      "Tienes que ir a {settings_link} y autorizar al Mercado para operar LAND por tu cuenta antes de publicarla en venta.",
+    "please_authorize": "Tienes que ir a {settings_link} y autorizar al Mercado para operar LAND por tu cuenta antes de publicarla en venta.",
     "price": "Precio",
     "price_placeholder": "Precio en MANA para esta LAND",
-    "set_land_price":
-      "Configura un precio y fecha de expiración para {parcel_name}"
+    "set_land_price": "Configura un precio y fecha de expiración para {parcel_name}"
   },
   "parcel_tags": {
     "adjacent": "Adyacente",
     "district": "Distrito",
     "plaza": "Plaza",
-    "proximity":
-      "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia",
+    "proximity": "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia",
     "road": "Camino"
   },
   "parcel_transfer": {
     "about_to_transfer": "Estas por transferir {parcel_name}",
-    "cant_transfer":
-      "Esta LAND no puede ser transferida porque se encuentra en venta.",
+    "cant_transfer": "Esta LAND no puede ser transferida porque se encuentra en venta.",
     "check_address": "Por favor revisa la dirección cuidadosamente",
-    "error_persists":
-      "Si el problema persiste, contáctate con nosotros en {community_chat_link}",
-    "irreversible":
-      "Recuerda que transferir LAND es una operación irreversible.",
+    "error_persists": "Si el problema persiste, contáctate con nosotros en {community_chat_link}",
+    "irreversible": "Recuerda que transferir LAND es una operación irreversible.",
     "placeholder": "Ejemplo: {address}",
     "recipient_address": "Dirección de destino",
     "transfer_land": "Transferir LAND",
-    "unknown_error":
-      "Un problema desconocido ha ocurrido, los detalles se encuentran debajo."
+    "unknown_error": "Un problema desconocido ha ocurrido, los detalles se encuentran debajo."
   },
   "profile_page": {
     "empty": "El usuario no tiene {content}",
@@ -270,65 +258,42 @@
     "view": "Ver"
   },
   "settings": {
-    "approve_mana":
-      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
-    "approve_mana_check":
-      "Marcando autoriza el uso de MANA al contrato de Mercado",
-    "approve_mortgage_mana":
-      "Autorice a {mortgage_contract_link} para operar MANA en su nombre",
-    "approve_mortgage_rcn":
-      "Autorice el {mortgage_contract_link} ​​para operar RCN en su nombre",
+    "approve_mana": "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "approve_mana_check": "Marcando autoriza el uso de MANA al contrato de Mercado",
+    "approve_mortgage_mana": "Autorice a {mortgage_contract_link} para operar MANA en su nombre",
+    "approve_mortgage_rcn": "Autorice el {mortgage_contract_link} ​​para operar RCN en su nombre",
     "authorization": "Autorización",
-    "authorize":
-      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
-    "authorize_land_check":
-      "Marcando autoriza el uso de LAND al contrato de Mercado",
-    "disapprove_mana_check":
-      "Desmarcando desautoriza el uso de MANA al contrato de Mercado",
-    "mana_approved":
-      "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "authorize": "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
+    "authorize_land_check": "Marcando autoriza el uso de LAND al contrato de Mercado",
+    "disapprove_mana_check": "Desmarcando desautoriza el uso de MANA al contrato de Mercado",
+    "mana_approved": "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
     "marketplace_contract": "Contrato de Mercado",
     "mortgage_creator_contract": "Contrato de creador hipotecario",
     "mortgage_manager_contract": "Contrato de administrador hipotecario",
     "pending_tx": "Tienes una transacción pendiente",
-    "unauthorize_land_check":
-      "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
-    "you_approved_mortgage_mana":
-      "Usted ha autorizado el {mortgage_contract_link} ​​para operar MANA en su nombre",
-    "you_approved_mortgage_rcn":
-      "Usted ha autorizado {mortgage_contract_link} para operar RCN en su nombre",
-    "you_authorized":
-      "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta"
+    "unauthorize_land_check": "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
+    "you_approved_mortgage_mana": "Usted ha autorizado el {mortgage_contract_link} ​​para operar MANA en su nombre",
+    "you_approved_mortgage_rcn": "Usted ha autorizado {mortgage_contract_link} para operar RCN en su nombre",
+    "you_authorized": "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta"
   },
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
-    "options":
-      "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}."
+    "options": "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}."
   },
   "transaction": {
-    "approved":
-      "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "authorize":
-      "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
+    "approved": "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
+    "authorize": "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "cancel": "Has cancelado {publication_link} de {parcel_link}",
-    "cancel_mortgage":
-      "Usted cancela una hipoteca para comprar el paquete {parcel_link}",
-    "create_mortgage":
-      "Solicitó una hipoteca para comprar el paquete {parcel_link}",
-    "disapproved":
-      "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "edit":
-      "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
-    "manage":
-      "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
-    "manage_revoked":
-      "Ha revocado el permiso {address_link} para actualizar el contenido de {parcel_link}",
-    "mortgage_mana":
-      "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre.",
-    "mortgage_rcn":
-      "Usted {action} el {mortgage_contract_link} para operar RCN en su nombre.",
+    "cancel_mortgage": "Usted cancela una hipoteca para comprar el paquete {parcel_link}",
+    "create_mortgage": "Solicitó una hipoteca para comprar el paquete {parcel_link}",
+    "disapproved": "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
+    "edit": "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
+    "manage": "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
+    "manage_revoked": "Ha revocado el permiso {address_link} para actualizar el contenido de {parcel_link}",
+    "mortgage_mana": "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre.",
+    "mortgage_rcn": "Usted {action} el {mortgage_contract_link} para operar RCN en su nombre.",
     "publish": "Has publicado {parcel_link}",
     "transfer": "Has transferido {parcel_link} a {owner_link}",
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"
@@ -338,22 +303,18 @@
       "please_confirm": "Por favor confirma la transacción"
     },
     "parcel": {
-      "still_pending":
-        "{parcel_name} todavía tiene {transactions_count} {transactions_count, plural, one {transacción pendiente} other {transacciones pendientes}}."
+      "still_pending": "{parcel_name} todavía tiene {transactions_count} {transactions_count, plural, one {transacción pendiente} other {transacciones pendientes}}."
     },
-    "see_activity":
-      "Para ver el historial de transacciones, visita tu {activity_link}.",
+    "see_activity": "Para ver el historial de transacciones, visita tu {activity_link}.",
     "text": {
-      "failed":
-        "Tu transacción ha fallado, puedes intentar enviándola nuevamente.",
+      "failed": "Tu transacción ha fallado, puedes intentar enviándola nuevamente.",
       "pending": "Tu transacción está esperando ser confirmada."
     }
   },
   "transfer_mana": {
     "action": "Transferir",
     "current_balance": "Tu balance actual es {balance}",
-    "irreversible":
-      "Recuerda que transferir MANA es una operación irreversible.",
+    "irreversible": "Recuerda que transferir MANA es una operación irreversible.",
     "own_address_warning": "Esa es tu propia dirección!",
     "title": "Transferir MANA"
   }

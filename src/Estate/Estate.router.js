@@ -1,7 +1,7 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Estate } from './Estate.model'
-import { Publication } from '../Publication'
+import { Asset } from '../Asset'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
@@ -36,7 +36,7 @@ export class EstateRouter {
 
   async getEstates(req) {
     // Force estate type
-    req.params.type = Publication.TYPES.estate
+    req.params.type = ASSET_TYPE.estate
 
     const result = await new AssetRouter().getAssets(req)
 

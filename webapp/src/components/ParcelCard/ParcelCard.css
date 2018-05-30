@@ -2,9 +2,16 @@
   width: calc(100% - 14px) !important;
 }
 
-.ParcelCard .mortgage-status.open{
+.ParcelCard .mortgage-status{
   text-transform: capitalize;
+}
+
+.ParcelCard .Mortgage.STATUS.pending{
   color: var(--orange);
+}
+
+.ParcelCard .mortgage-status.started{
+  color: var(--light-blue);
 }
 
 @media (min-width: 480px) {

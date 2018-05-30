@@ -27,17 +27,19 @@ export class Mortgage extends Model {
   static primaryKey = 'tx_hash'
 
   static STATUS = Object.freeze({
-    open: 'open',
-    claimed: 'claimed',
-    cancelled: 'cancelled',
-    started: 'started'
+    pending: 'pending',
+    canceled: 'canceled',
+    ongoing: 'ongoing',
+    paid: 'paid',
+    defaulted: 'defaulted',
+    claimed: 'claimed'
   })
 
   static findByBorrower(borrower, status) {
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)} as m, COALESCE(${raw(
         MortgageQueries.existPublication
-      )}, 0) as hasOpenPublication
+      )}, 0) as is_publication_open
         WHERE borrower = ${borrower}
           AND status IN (${raw(getInStatus(status, this.STATUS))})
         ORDER BY created_at DESC`
@@ -48,7 +50,7 @@ export class Mortgage extends Model {
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)} as m, COALESCE(${raw(
         MortgageQueries.existPublication
-      )}, 0) as has_open_publication
+      )}, 0) as is_publication_open
         WHERE asset_id = ${assetId}
           AND status IN(${raw(getInStatus(status, this.STATUS))})
         ORDER BY created_at DESC`

@@ -51,7 +51,7 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Cancelling Mortgage ${_id}`)
         await Mortgage.update(
           {
-            status: Mortgage.STATUS.cancelled,
+            status: Mortgage.STATUS.canceled,
             block_time_updated_at
           },
           {
@@ -75,7 +75,7 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Starting Mortgage ${_id}`)
         await Mortgage.update(
           {
-            status: Mortgage.STATUS.started,
+            status: Mortgage.STATUS.ongoing,
             block_time_updated_at
           },
           {
@@ -262,7 +262,7 @@ async function processParcelRelatedEvents(assetId, event) {
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: Mortgage.STATUS.open,
+          status: Mortgage.STATUS.pending,
           is_due_at: duesIn.toNumber(),
           payable_at: payableAt.toNumber(),
           expires_at: expiresAt.toNumber(),

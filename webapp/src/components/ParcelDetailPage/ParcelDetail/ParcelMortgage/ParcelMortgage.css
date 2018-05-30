@@ -1,15 +1,10 @@
-.parcelMortgageDetail .open p{
-  color: var(--error);
+.parcelMortgageDetail .open p {
+  color: var(--orange);
   text-transform: capitalize;
 }
 
 .parcelMortgageDetail .started p{
   color: var(--light-blue);
-  text-transform: capitalize;
-}
-
-.parcelMortgageDetail .defaulted p{
-  color: var(--primary);
   text-transform: capitalize;
 }
 

@@ -75,7 +75,7 @@ export default class ParcelCard extends React.PureComponent {
             )}
 
             {showMortgage &&
-              hasStatus(parcel.mortgage, [MORTGAGE_STATUS.open, MORTGAGE_STATUS.started]) && (
+              hasStatus(parcel.mortgage, [MORTGAGE_STATUS.pending, MORTGAGE_STATUS.ongoing]) && (
                 <React.Fragment>
                   <p className={`mortgage-status ${parcel.mortgage.status}`}>
                     {parcel.mortgage.status}

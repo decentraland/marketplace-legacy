@@ -44,8 +44,7 @@
     "proposal": "제안"
   },
   "derivation_path": {
-    "invalid":
-      "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
+    "invalid": "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
   },
   "footer": {
     "color_key": "색상 키",
@@ -119,14 +118,14 @@
   },
   "mortgage": {
     "amount": "양",
+    "amount_paid": "지불 할 금액 남음",
     "amount_placeholder": "MANA의 금액",
     "cancel": "모기지 취소",
     "duration": "지속",
     "duration_placeholder": "기간 (일)",
     "errors": {
       "amount_minimum": "금액은 {amount}보다 커야합니다.",
-      "duration_gte_payable":
-        "기간은 며칠에 지불 가능한 것보다 크거나 같아야합니다.",
+      "duration_gte_payable": "기간은 며칠에 지불 가능한 것보다 크거나 같아야합니다.",
       "maximum_interest_rate": "비율은 {maximum}보다 낮아야합니다.",
       "minimum_duration": "기간은 {minimum} 일 이상이어야합니다.",
       "minimum_interest_rate": "비율은 {minimum}보다 커야합니다.",
@@ -138,13 +137,13 @@
     "interest_rate": "이자율",
     "interest_rate_placeholder": "이자율",
     "oracle": "오라클 계약 주소",
+    "pay": "지불",
     "payable": "지불 할 곳 :",
     "payable_placeholder": "일 단위로 지불 가능",
     "punitory_rate": "도살장 이자율",
     "punitory_rate_placeholder": "처벌 비율",
     "request": "모기지 신청",
-    "request_land":
-      "{parcel_name}에 대한 모기지를 {parcel_price}에 요청하려고합니다.",
+    "request_land": "{parcel_name}에 대한 모기지를 {parcel_price}에 요청하려고합니다.",
     "requested": "요청 됨"
   },
   "parcel": {
@@ -211,8 +210,7 @@
     "address": "운영자 주소",
     "address_permission": "이 주소는이 소포의 내용을 업데이트 할 수 있습니다.",
     "check_address": "주소를 신중히 확인하십시오.",
-    "give_permission":
-      "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
+    "give_permission": "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
     "manage_land": "토지 관리"
   },
   "parcel_publish": {
@@ -226,8 +224,7 @@
     "expiration": "만료",
     "expiration_placeholder": "이 게시물의 만료일",
     "list_land": "판매용 토지 목록",
-    "please_authorize":
-      "{settings_link}로 이동하여 판매용으로 등록하기 전에 마켓 플레이스에서 토지를 대신 사용하도록 승인해야합니다.",
+    "please_authorize": "{settings_link}로 이동하여 판매용으로 등록하기 전에 마켓 플레이스에서 토지를 대신 사용하도록 승인해야합니다.",
     "price": "가격",
     "price_placeholder": "이 토지의 MANA 가격",
     "set_land_price": "{parcel_name}의 가격 및 만료일 설정"
@@ -243,15 +240,12 @@
     "about_to_transfer": "{parcel_name}을(를) 이전하려고합니다.",
     "cant_transfer": "이 토지는 판매 중이므로 이전 할 수 없습니다.",
     "check_address": "신중하게 주소를 확인하십시오",
-    "error_persists":
-      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
-    "irreversible":
-      "토지를 이전하는 것은 돌이킬 수 없는 작업이라는 것을 기억하십시오.",
+    "error_persists": "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
+    "irreversible": "토지를 이전하는 것은 돌이킬 수 없는 작업이라는 것을 기억하십시오.",
     "placeholder": "예: {address}",
     "recipient_address": "수신자 주소",
     "transfer_land": "토지 이전",
-    "unknown_error":
-      "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다."
+    "unknown_error": "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다."
   },
   "profile_page": {
     "empty": "사용자에게는 {content}가 없습니다.",
@@ -264,60 +258,42 @@
     "view": "보기"
   },
   "settings": {
-    "approve_mana":
-      "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
+    "approve_mana": "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
     "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
-    "approve_mortgage_mana":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
-    "approve_mortgage_rcn":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인하십시오.",
+    "approve_mortgage_mana": "{mortgage_contract_link}이 (가) 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
+    "approve_mortgage_rcn": "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인하십시오.",
     "authorization": "권한 부여",
-    "authorize":
-      "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
+    "authorize": "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
     "authorize_land_check": "선택하면 시장 계약에 대한 토지 사용을 허가합니다",
-    "disapprove_mana_check":
-      "선택 해제하면 마켓 플레이스 계약에 대한 MANA 사용 권한이 승인되지 않음",
-    "mana_approved":
-      "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
+    "disapprove_mana_check": "선택 해제하면 마켓 플레이스 계약에 대한 MANA 사용 권한이 승인되지 않음",
+    "mana_approved": "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "marketplace_contract": "시장 계약",
     "mortgage_creator_contract": "모기지 크리에이터 계약",
     "mortgage_manager_contract": "모기지 매니저 계약",
     "pending_tx": "보류중인 거래가 있습니다.",
-    "unauthorize_land_check":
-      "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",
-    "you_approved_mortgage_mana":
-      "{mortgage_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "you_approved_mortgage_rcn":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인했습니다.",
+    "unauthorize_land_check": "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",
+    "you_approved_mortgage_mana": "{mortgage_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
+    "you_approved_mortgage_rcn": "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인했습니다.",
     "you_authorized": "{marketplace_contract_link}을(를) 승인했습니다."
   },
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",
-    "options":
-      "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다."
+    "options": "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다."
   },
   "transaction": {
-    "approved":
-      "{marketplace_contract_link} 이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "authorize":
-      "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
+    "approved": "{marketplace_contract_link} 이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
+    "authorize": "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
     "cancel_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 취소합니다.",
     "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
-    "disapproved":
-      "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
-    "edit":
-      "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
-    "manage":
-      "{address_link}에게 {parcel_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다.",
-    "manage_revoked":
-      "{parcel_link}의 내용을 업데이트 할 권한을 취소했습니다 (1).",
-    "mortgage_mana":
-      "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}.",
-    "mortgage_rcn":
-      "{action} 귀하를 대신하여 RCN을 운영하는 {mortgage_contract_link}.",
+    "disapproved": "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
+    "edit": "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
+    "manage": "{address_link}에게 {parcel_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다.",
+    "manage_revoked": "{parcel_link}의 내용을 업데이트 할 권한을 취소했습니다 (1).",
+    "mortgage_mana": "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}.",
+    "mortgage_rcn": "{action} 귀하를 대신하여 RCN을 운영하는 {mortgage_contract_link}.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."
@@ -327,8 +303,7 @@
       "please_confirm": "Please confirm the transaction"
     },
     "parcel": {
-      "still_pending":
-        "{parcel_name}에 아직 {transactions_count} 개의 거래가 보류 중입니다."
+      "still_pending": "{parcel_name}에 아직 {transactions_count} 개의 거래가 보류 중입니다."
     },
     "see_activity": "거래 내역을 보려면 {activity_link}을 방문하십시오.",
     "text": {
@@ -339,8 +314,7 @@
   "transfer_mana": {
     "action": "이전",
     "current_balance": "현재 잔액은 {balance}입니다.",
-    "irreversible":
-      "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
+    "irreversible": "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
     "own_address_warning": "그것은 당신의 자신의 주소입니다!",
     "title": "MANA 이전"
   }
