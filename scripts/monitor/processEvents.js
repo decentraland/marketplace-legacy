@@ -7,6 +7,7 @@ import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Mortgage } from '../../src/Mortgage'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'
 import { isDuplicatedConstraintError } from '../../src/database'
+import { ASSET_TYPE } from '../../src/Asset'
 
 const log = new Log('processEvents')
 
@@ -273,7 +274,7 @@ async function processParcelRelatedEvents(assetId, event) {
           amount: eth.utils.fromWei(amount),
           tx_hash,
           asset_id: Parcel.buildId(x, y),
-          type: 'parcel', // TODO: should replace with constant
+          type: ASSET_TYPE.parcel,
           borrower
         })
       } catch (error) {
