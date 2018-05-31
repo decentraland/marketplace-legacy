@@ -10,7 +10,7 @@ import { t } from 'modules/translation/utils'
 import { calculateZoomAndCenter } from 'modules/estates/utils'
 import { formatDate } from 'lib/utils'
 
-import './ParcelCard.css'
+import './EstateCard.css'
 
 export default class EstateCard extends React.PureComponent {
   static propTypes = {
@@ -26,7 +26,7 @@ export default class EstateCard extends React.PureComponent {
     const estateName = estate.data.name || t('global.estate')
 
     return (
-      <Card className="ParcelCard">
+      <Card className="EstateCard">
         <div className="preview">
           <ParcelPreview
             x={x}
