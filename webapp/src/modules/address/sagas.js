@@ -105,7 +105,10 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
-  yield put(fetchAddressEstatesRequest(address))
+  if (isFeatureEnabled('ESTATES')) {
+    // Estate Feature
+    yield put(fetchAddressEstatesRequest(address))
+  }
   if (isFeatureEnabled('MORTGAGES')) {
     // Mortgage Feature
     yield put(fetchMortgagedParcelsRequest(address))
