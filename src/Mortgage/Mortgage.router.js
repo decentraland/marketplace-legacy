@@ -53,7 +53,7 @@ export class MortgageRouter {
   async getMortgagesByBorrower(req) {
     const borrower = server.extractFromReq(req, 'address')
     const status = server.extractFromReq(req, 'status')
-    return await Mortgage.findByBorrower(borrower, status)
+    return Mortgage.findByBorrower(borrower, status)
   }
 
   async getMortgagesInCoordinate(req) {
@@ -61,6 +61,6 @@ export class MortgageRouter {
     const y = server.extractFromReq(req, 'y')
     const status = server.extractFromReq(req, 'status')
 
-    return await Mortgage.findInCoordinate(Parcel.buildId(x, y), status)
+    return Mortgage.findInCoordinate(Parcel.buildId(x, y), status)
   }
 }

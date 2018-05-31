@@ -91,6 +91,30 @@ async function processNoParcelRelatedEvents(event) {
       }
       break
     }
+    case BlockchainEvent.EVENTS.partialPayment: {
+      const { _index, _amount } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      try {
+        log.info(`[${name}] Partial Pay Mortgage ${_index}`) // TODO: get mortgage ID
+        await Mortgage.update(
+          {
+            amount_paid: _amount,
+            block_time_updated_at
+          },
+          {
+            loan_id: _index
+          }
+        )
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
+        )
+      }
+      break
+    }
     default:
       log.info(`Don't know how to handle event ${event.name}`)
       break

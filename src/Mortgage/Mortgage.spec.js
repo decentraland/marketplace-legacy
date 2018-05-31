@@ -5,6 +5,7 @@ import { db } from '../database'
 import { Mortgage } from '../Mortgage'
 import { Parcel } from '../Parcel'
 import { ASSET_TYPE } from '../Asset'
+import { Publication } from '../Publication'
 
 describe('Mortgage', function() {
   const expires_at = new Date().getTime() * 1000
@@ -12,7 +13,7 @@ describe('Mortgage', function() {
   const payable_at = 1000
   let mortgage = {}
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mortgage = {
       tx_hash: '1xdeadbeef',
       tx_status: txUtils.TRANSACTION_STATUS.confirmed,
@@ -29,14 +30,15 @@ describe('Mortgage', function() {
       started_at: null,
       amount_paid: 0,
       block_number: 1,
-      is_publication_open: 0,
       is_due_at,
       payable_at,
       expires_at
     }
   })
   afterEach(() =>
-    Promise.all([Mortgage].map(Model => db.truncate(Model.tableName))))
+    Promise.all(
+      [Mortgage, Publication].map(Model => db.truncate(Model.tableName))
+    ))
 
   describe('.findByBorrower', async () => {
     it('should get actives mortgages by borrower', async () => {
@@ -72,7 +74,6 @@ describe('Mortgage', function() {
         '0xdeadbeef33',
         `${Mortgage.STATUS.pending},${Mortgage.STATUS.ongoing}`
       )
-      console.log(mortgages)
       expect(mortgages).to.equalRows([
         {
           ...mortgage4,

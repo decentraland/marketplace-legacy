@@ -205,7 +205,8 @@ describe('Parcel', function() {
           last_transferred_at: null,
           auction_owner: null,
           in_estate: false,
-          tags: {}
+          tags: {},
+          publication
         },
         {
           asset_id: null,
@@ -218,7 +219,8 @@ describe('Parcel', function() {
           last_transferred_at: null,
           auction_owner: null,
           in_estate: false,
-          tags: {}
+          tags: {},
+          publication: publication2
         }
       ])
     })

@@ -34,6 +34,8 @@ export const getParcels = createSelector(
       parcels[parcelId] = {
         ...parcel,
         publication: publications[parcel.publication_tx_hash]
+          ? publications[parcel.publication_tx_hash]
+          : parcel.publication
       }
       return parcels
     }, {})
@@ -51,10 +53,11 @@ export const getPublications = (x, y) =>
 export const getMortgagedParcels = createSelector(
   getParcels,
   getMortgagesArray,
-  (parcels, mortgages) =>
-    getActiveMortgages(mortgages, parcels)
-    .map(mortgage => ({
+  (parcels, mortgages) => {
+    console.log(mortgages, parcels, getActiveMortgages(mortgages, parcels))
+    return getActiveMortgages(mortgages, parcels).map(mortgage => ({
       ...parcels[mortgage.asset_id],
       mortgage
     }))
+  }
 )
