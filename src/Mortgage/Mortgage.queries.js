@@ -14,11 +14,5 @@ export const MortgageQueries = Object.freeze({
           SELECT * FROM ${raw(Publication.tableName)} as p
           WHERE m.asset_id = p.asset_id
         )
-      ORDER BY m.created_at DESC LIMIT 1`,
-
-  existPublication: `(SELECT 1 
-    FROM ${Publication.tableName} as p
-      WHERE m.asset_id = p.asset_id 
-      AND p.status = '${Publication.STATUS.open}' LIMIT 1)
-    `
+      ORDER BY m.created_at DESC LIMIT 1`
 })

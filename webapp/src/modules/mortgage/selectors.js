@@ -29,6 +29,10 @@ export const getParcelMortgages = (x, y) =>
         parcel && parcel.mortgages_tx_hashes
           ? parcel.mortgages_tx_hashes.map(tx => allMortgages[tx])
           : []
-      return getActiveMortgagesByBorrower(mortgages, userAddress)
+      return getActiveMortgagesByBorrower(
+        mortgages,
+        parcels,
+        userAddress
+      )
     }
   )

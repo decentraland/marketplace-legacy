@@ -1,7 +1,6 @@
 import { Model } from 'decentraland-commons'
 
 import { SQL, raw, getInStatus } from '../database'
-import { MortgageQueries } from './Mortgage.queries'
 
 export class Mortgage extends Model {
   static tableName = 'mortgages'
@@ -37,9 +36,7 @@ export class Mortgage extends Model {
 
   static findByBorrower(borrower, status) {
     return this.db.query(
-      SQL`SELECT * FROM ${raw(this.tableName)} as m, COALESCE(${raw(
-        MortgageQueries.existPublication
-      )}, 0) as is_publication_open
+      SQL`SELECT * FROM ${raw(this.tableName)} as m
         WHERE borrower = ${borrower}
           AND status IN (${raw(getInStatus(status, this.STATUS))})
         ORDER BY created_at DESC`
@@ -48,9 +45,7 @@ export class Mortgage extends Model {
 
   static findInCoordinate(assetId, status) {
     return this.db.query(
-      SQL`SELECT * FROM ${raw(this.tableName)} as m, COALESCE(${raw(
-        MortgageQueries.existPublication
-      )}, 0) as is_publication_open
+      SQL`SELECT * FROM ${raw(this.tableName)} as m
         WHERE asset_id = ${assetId}
           AND status IN(${raw(getInStatus(status, this.STATUS))})
         ORDER BY created_at DESC`

@@ -1,4 +1,6 @@
 import { eth } from 'decentraland-eth'
+import { isOpen, hasStatus } from 'lib/utils'
+import { PUBLICATION_STATUS } from 'modules/publication/utils'
 
 // From Mortgage.js on the server
 export const MORTGAGE_STATUS = Object.freeze({
@@ -6,6 +8,12 @@ export const MORTGAGE_STATUS = Object.freeze({
   ongoing: 'ongoing',
   paid: 'paid'
 })
+
+export const isPending = mortgage =>
+  hasStatus(mortgage, [MORTGAGE_STATUS.pending])
+export const isOngoing = mortgage =>
+  hasStatus(mortgage, [MORTGAGE_STATUS.ongoing])
+export const isPaid = mortgage => hasStatus(mortgage, [MORTGAGE_STATUS.paid])
 
 // Interest in seconds
 export function toInterestRate(r) {
@@ -21,18 +29,33 @@ export function getLoanMetadata() {
   return `#mortgage #required-cosigner:${mortgageManagerContract.address}`
 }
 
-export function getActiveMortgages(mortgages) {
-  return mortgages.filter(
-    mortgage =>
+/**
+ * Returns mortgages active -> pending status require an open publication
+ * @param {array} - mortgages
+ * @param  {array} - parcels
+ * @returns {array} - mortgages
+ */
+export function getActiveMortgages(mortgages, parcels) {
+  return mortgages.filter(mortgage => {
+    const parcel = parcels[mortgage.asset_id]
+    return (
       mortgage &&
-      ((mortgage.status === MORTGAGE_STATUS.pending &&
-        mortgage.is_publication_open === 1) ||
-        mortgage.status === MORTGAGE_STATUS.ongoing)
-  )
+      parcel &&
+      ((isOpen(mortgage, MORTGAGE_STATUS.pending) &&
+        isOpen(parcel.publication, PUBLICATION_STATUS.open)) ||
+        hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid]))
+    )
+  })
 }
 
-export function getActiveMortgagesByBorrower(mortgages, borrower) {
-  return getActiveMortgages(mortgages).filter(
+/**
+ * filter actibe mortgages by borrower
+ * @param {object} - obj with status & tx_status fields
+ * @param  {array} - parcels
+ * @returns {array} - mortgages
+ */
+export function getActiveMortgagesByBorrower(mortgages, parcels, borrower) {
+  return getActiveMortgages(mortgages, parcels).filter(
     mortgage => mortgage && mortgage.borrower === borrower
   )
 }

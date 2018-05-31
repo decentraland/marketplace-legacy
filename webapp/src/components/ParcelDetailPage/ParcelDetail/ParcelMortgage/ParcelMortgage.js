@@ -8,7 +8,7 @@ import Expiration from 'components/Expiration'
 import { t } from 'modules/translation/utils'
 
 import './ParcelMortgage.css'
-import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
+import { isPending, isOngoing } from 'modules/mortgage/utils'
 
 export default class ParcelMortgage extends React.PureComponent {
   static propTypes = {
@@ -31,15 +31,23 @@ export default class ParcelMortgage extends React.PureComponent {
                 <p>{mortgage.status}</p>
               </Grid.Column>
               <Grid.Column width={3}>
-                <h3>{t('mortgage.requested')}</h3>
+                <h3>
+                  {isPending(mortgage)
+                    ? t('mortgage.requested')
+                    : t('mortgage.amount_paid')}
+                </h3>
                 <Mana
-                  amount={parseFloat(mortgage.amount)}
+                  amount={
+                    isPending(mortgage)
+                      ? parseFloat(mortgage.amount)
+                      : parseFloat(mortgage.amount - mortgage.amount_paid)
+                  }
                   size={20}
                   scale={1}
                   className="mortgage-amount-icon"
                 />
               </Grid.Column>
-              {mortgage.status === MORTGAGE_STATUS.pending && (
+              {isPending(mortgage) && (
                 <Grid.Column width={3}>
                   <h3>{t('global.time_left')}</h3>
                   <p>
@@ -47,17 +55,8 @@ export default class ParcelMortgage extends React.PureComponent {
                   </p>
                 </Grid.Column>
               )}
-              {mortgage.status === MORTGAGE_STATUS.ongoing && (
+              {isOngoing(mortgage) && (
                 <React.Fragment>
-                  <Grid.Column width={3}>
-                    <h3>{t('mortgage.amount_paid')}</h3>
-                    <Mana
-                      amount={parseFloat(mortgage.amount_paid || 0)}
-                      size={20}
-                      scale={1}
-                      className="mortgage-amount-icon"
-                    />
-                  </Grid.Column>
                   <Grid.Column width={3}>
                     <h3>{t('mortgage.payable')}</h3>
                     <p>
