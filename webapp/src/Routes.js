@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { env } from 'decentraland-commons'
 
+import { isFeatureEnabled } from 'lib/featureUtils'
 import { locations } from 'locations'
 
 import Wallet from 'components/Wallet'
@@ -61,7 +61,7 @@ export default class Routes extends React.Component {
           component={TransferManaPage}
         />
         <Route exact path={locations.buyMana} component={BuyManaPage} />
-        {env.isDevelopment() && (
+        {isFeatureEnabled('MORTGAGES') && (
           <Route
             exact
             path={locations.mortgage}

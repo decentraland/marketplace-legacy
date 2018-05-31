@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
-import { env } from 'decentraland-commons'
 
+import { isFeatureEnabled } from 'lib/featureUtils'
 import Mana from 'components/Mana'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
 import EtherscanLink from 'components/EtherscanLink'
@@ -188,7 +188,7 @@ export default class SettingsForm extends React.PureComponent {
             </div>
           </Form.Field>
 
-          {env.isDevelopment() && (
+          {isFeatureEnabled('MORTGAGES') && (
             <React.Fragment>
               <Form.Field>
                 <Checkbox

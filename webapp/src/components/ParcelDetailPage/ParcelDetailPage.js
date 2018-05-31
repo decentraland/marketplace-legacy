@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container } from 'semantic-ui-react'
-import { env } from 'decentraland-commons'
 
+import { isFeatureEnabled } from 'lib/featureUtils'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
@@ -50,7 +50,10 @@ export default class ParcelDetailPage extends React.PureComponent {
         onFetchActiveParcelMortgages
       } = this.props
 
-      env.isDevelopment() && onFetchActiveParcelMortgages(x, y) // Mortgage Feature
+      if (isFeatureEnabled('MORTGAGES')) {
+        // Mortgage Feature
+        onFetchActiveParcelMortgages(x, y)
+      }
       onFetchParcelPublications(x, y)
 
       this.isAdditionalResourcesFetched = true

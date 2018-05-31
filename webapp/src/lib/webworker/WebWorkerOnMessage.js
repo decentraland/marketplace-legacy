@@ -83,18 +83,26 @@ export function WebWorkerOnMessage(event) {
   }
 
   function cleanParcel(parcel, prevParcel) {
-    const rest = {}
     const publication = parcel.publication
+    const rest = extend(parcel, prevParcel)
 
-    for (const key in parcel) {
-      if (key !== 'publications') {
-        rest[key] = parcel[key]
-      }
+    delete rest.publications
+    rest.publication_tx_hash = publication ? publication.tx_hash : null
+
+    return rest
+  }
+
+  function extend(base, extras) {
+    const result = {}
+
+    for (const key in base) {
+      result[key] = base[key]
+    }
+    for (const key in extras) {
+      result[key] = extras[key]
     }
 
-    return Object.assign({}, prevParcel, rest, {
-      publication_tx_hash: publication ? publication.tx_hash : null
-    })
+    return result
   }
 
   function buildCoordinate(x, y) {

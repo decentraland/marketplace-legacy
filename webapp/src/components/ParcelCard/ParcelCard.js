@@ -14,7 +14,6 @@ import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
 import { t } from 'modules/translation/utils'
 import { formatDate, buildCoordinate, hasStatus } from 'lib/utils'
-
 import './ParcelCard.css'
 
 export default class ParcelCard extends React.PureComponent {
@@ -30,6 +29,10 @@ export default class ParcelCard extends React.PureComponent {
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
     const isPublicationOpen = hasStatus(publication, [PUBLICATION_STATUS.open])
+    const isMortgageActive = hasStatus(parcel.mortgage, [
+      MORTGAGE_STATUS.pending,
+      MORTGAGE_STATUS.ongoing
+    ])
 
     return (
       <Card className="ParcelCard">
@@ -51,7 +54,7 @@ export default class ParcelCard extends React.PureComponent {
               ) : null}
             </Card.Description>
 
-            {isPublicationOpen ? (
+            {isPublicationOpen && (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
@@ -61,28 +64,9 @@ export default class ParcelCard extends React.PureComponent {
                   />
                 </Card.Meta>
               </React.Fragment>
-            ) : (
-              <Card.Meta>
-                {t('publication.acquired_at', {
-                  date: formatDate(
-                    parcel.last_transferred_at
-                      ? parseInt(parcel.last_transferred_at, 10)
-                      : AUCTION_DATE,
-                    'MMM Do, YYYY'
-                  )
-                })}
-              </Card.Meta>
             )}
 
-            {showMortgage &&
-              hasStatus(parcel.mortgage, [MORTGAGE_STATUS.pending, MORTGAGE_STATUS.ongoing]) && (
-                <React.Fragment>
-                  <p className={`mortgage-status ${parcel.mortgage.status}`}>
-                    {parcel.mortgage.status}
-                  </p>
-                </React.Fragment>
-              )}
-            {!hasStatus(publication, [PUBLICATION_STATUS.open]) &&
+            {!isPublicationOpen &&
               !showMortgage && (
                 <Card.Meta>
                   {t('publication.acquired_at', {
@@ -94,6 +78,15 @@ export default class ParcelCard extends React.PureComponent {
                     )
                   })}
                 </Card.Meta>
+              )}
+
+            {showMortgage &&
+              isMortgageActive && (
+                <React.Fragment>
+                  <p className={`mortgage-status ${parcel.mortgage.status}`}>
+                    {parcel.mortgage.status}
+                  </p>
+                </React.Fragment>
               )}
             <div className="footer">
               <div className="coords">
