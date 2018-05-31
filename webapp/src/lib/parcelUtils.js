@@ -2,6 +2,7 @@ import { eth, Contract } from 'decentraland-eth'
 import { shortenAddress, isOpen } from 'lib/utils'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { t } from 'modules/translation/utils'
+import { getParcelEstate, getEstateConnections } from 'modules/estates/utils'
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
@@ -57,7 +58,15 @@ export function isOnSale(parcel) {
   return parcel != null && isOpen(parcel.publication, PUBLICATION_STATUS.open)
 }
 
-export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
+export function getParcelAttributes(
+  id,
+  x,
+  y,
+  wallet,
+  parcels,
+  districts,
+  estates
+) {
   const parcel = parcels[id]
   if (!parcel) {
     return {
@@ -100,6 +109,21 @@ export function getParcelAttributes(id, x, y, wallet, parcels, districts) {
       description: null,
       color: 'white',
       backgroundColor: COLORS.district
+    }
+  }
+
+  const estate = getParcelEstate(estates, parcel)
+  if (estate) {
+    return {
+      label: estate.data.name,
+      description:
+        estate.owner === wallet.address
+          ? t('atlas.your_estate')
+          : t('atlas.owner', { owner: shortenAddress(estate.owner) }),
+      color: 'black',
+      backgroundColor:
+        estate.owner === wallet.address ? COLORS.myParcels : COLORS.taken,
+      ...getEstateConnections(parcel, estate)
     }
   }
 

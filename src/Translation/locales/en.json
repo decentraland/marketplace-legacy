@@ -14,7 +14,8 @@
     "on_sale": "On Sale: ",
     "owner": "Owner: {owner}",
     "road": "Road",
-    "your_parcel": "Your parcel"
+    "your_parcel": "Your parcel",
+    "your_estate": "Your estate"
   },
   "buy_mana": {
     "action": "Buy More",

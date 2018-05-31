@@ -419,7 +419,7 @@ export default class ParcelPreview extends React.PureComponent {
     const parcelId = buildCoordinate(x, y)
 
     if (!this.cache[parcelId]) {
-      const { wallet, parcels, districts, publications } = this.props
+      const { wallet, parcels, districts, publications, estates } = this.props
       const parcel = parcels[parcelId]
       let publication = null
 
@@ -434,7 +434,15 @@ export default class ParcelPreview extends React.PureComponent {
         connectedLeft: parcel ? parcel.connectedLeft : false,
         connectedTop: parcel ? parcel.connectedTop : false,
         connectedTopLeft: parcel ? parcel.connectedTopLeft : false,
-        ...getParcelAttributes(parcelId, x, y, wallet, parcels, districts)
+        ...getParcelAttributes(
+          parcelId,
+          x,
+          y,
+          wallet,
+          parcels,
+          districts,
+          estates
+        )
       }
     }
 
