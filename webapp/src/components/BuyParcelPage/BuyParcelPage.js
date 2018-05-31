@@ -100,7 +100,7 @@ export default class BuyParcelPage extends React.PureComponent {
                 <React.Fragment>
                   <span>
                     {t('parcel_buy.needs_at_least', {
-                      value: formatMana(publication.price)
+                      mana: formatMana(publication.price)
                     })}
                   </span>
                   <br />
