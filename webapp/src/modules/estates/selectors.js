@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { getParcels } from 'modules/parcels/selectors'
-import { buildCoordinate } from 'lib/utils';
+import { buildCoordinate } from 'lib/utils'
 
 export const getState = state => state.estates
 export const getData = state => getState(state).data

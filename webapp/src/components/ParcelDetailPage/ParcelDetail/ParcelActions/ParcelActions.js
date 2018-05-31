@@ -50,13 +50,13 @@ export default class ParcelActions extends React.PureComponent {
                 </Button>
               </Link>
             ) : (
-                <Link to={locations.sellLand(x, y)}>
-                  <Button size="tiny" primary>
-                    <Icon name="tag" />
-                    {t('parcel_detail.actions.sell')}
-                  </Button>
-                </Link>
-              )}
+              <Link to={locations.sellLand(x, y)}>
+                <Button size="tiny" primary>
+                  <Icon name="tag" />
+                  {t('parcel_detail.actions.sell')}
+                </Button>
+              </Link>
+            )}
           </React.Fragment>
         ) : isOnSale(parcel) && mortgages.length === 0 ? (
           <React.Fragment>

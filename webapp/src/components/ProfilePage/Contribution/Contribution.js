@@ -51,10 +51,10 @@ export default class Contribution extends React.PureComponent {
               <LandAmount value={contribution.land_count} />
             </React.Fragment>
           ) : (
-              <div className="text-center">
-                <Icon name="circle notched" size="big" loading />
-              </div>
-            )}
+            <div className="text-center">
+              <Icon name="circle notched" size="big" loading />
+            </div>
+          )}
         </Card.Content>
       </Card>
     )

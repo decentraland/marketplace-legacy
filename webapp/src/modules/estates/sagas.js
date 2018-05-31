@@ -13,7 +13,7 @@ import { inBounds } from 'lib/parcelUtils'
 import { getParcels } from 'modules/parcels/selectors'
 import { locations } from 'locations'
 import { api } from 'lib/api'
-import { buildCoordinate } from 'lib/utils';
+import { buildCoordinate } from 'lib/utils'
 
 function validateCoords(x, y) {
   if (!inBounds(x, y)) {
