@@ -53,23 +53,8 @@ export function getDistrict(parcel, districts = {}) {
   return parcel && districts[parcel.district_id]
 }
 
-<<<<<<< HEAD
-export function isOnSale(parcel, publications) {
-  if (!parcel) {
-    return false
-  }
-  let publication
-  if (parcel.publication_tx_hash) {
-    publication = publications[parcel.publication_tx_hash]
-  }
-  if (!publication) {
-    return false
-  }
-  return isOpen(publication)
-=======
 export function isOnSale(parcel) {
   return parcel != null && isOpen(parcel.publication, PUBLICATION_STATUS.open)
->>>>>>> 760c2355a80b046397d4e4dc663fce56edb7c177
 }
 
 export function getParcelAttributes(
