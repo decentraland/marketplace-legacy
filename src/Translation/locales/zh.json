@@ -172,7 +172,7 @@
     "buy_land": "购买土地",
     "buy_mana": "{click_here}购买一些MANA。",
     "didnt_approve": "您没有批准使用MANA",
-    "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
+    "needs_at_least": "为了购买这块土地，您至少需要{mana}MANA。",
     "please_approve":
       "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
     "total_balance": "您的余额是{balance}"
