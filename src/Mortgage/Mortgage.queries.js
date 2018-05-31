@@ -22,4 +22,3 @@ export const MortgageQueries = Object.freeze({
       AND p.status = '${Publication.STATUS.open}' LIMIT 1)
     `
 })
-

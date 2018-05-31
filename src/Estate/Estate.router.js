@@ -1,7 +1,7 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Estate } from './Estate.model'
-import { Asset } from '../Asset'
+import { ASSET_TYPE } from '../Asset'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
