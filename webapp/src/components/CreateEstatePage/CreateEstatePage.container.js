@@ -12,17 +12,13 @@ const mapState = (state, ownProps) => {
   const { x, y } = getMatchParams(ownProps)
   return {
     x,
-    y,
-    isLoading: isLoading(state),
-    error: getError(state)
+    y
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParams(ownProps)
   return {
-    onError: error => dispatch(navigateTo(locations.root)),
-    onCancel: () => dispatch(navigateTo(locations.parcelDetail(x, y))),
     createEstate: estate => dispatch(createEstateRequest(estate))
   }
 }
