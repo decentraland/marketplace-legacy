@@ -8,10 +8,11 @@ const mortgageStatus = Object.values(Mortgage.STATUS)
 exports.up = pgm => {
   pgm.addColumns(tableName, {
     started_at: { type: 'TIMESTAMP' },
-    amount_paid: { type: 'FLOAT', notNull: true, default: 0 },
+    amount_pending: { type: 'FLOAT', notNull: true },
     payable_at: { type: 'BIGINT', notNull: true }
   })
 
+  pgm.createIndex(tableName, 'loan_id')
   // Remove checking status by db
   pgm.dropConstraint(tableName, 'mortgages_status_check')
 }
@@ -19,9 +20,11 @@ exports.up = pgm => {
 exports.down = pgm => {
   pgm.dropColumns(tableName, {
     started_at: { type: 'TIMESTAMP' },
-    amount_paid: { type: 'FLOAT' },
+    amount_pending: { type: 'FLOAT' },
     payable_at: { type: 'BIGINT' }
   })
+
+  pgm.dropIndex(tableName, 'loan_id')
 
   pgm.addConstraint(
     tableName,
