@@ -10,16 +10,16 @@ export class Asset {
   }
 
   async findByOwner(owner) {
-    return db.query(SQL`SELECT ${SQL.raw(this.tableName)}.*, (
+    return db.query(SQL`SELECT ${raw(this.tableName)}.*, (
         ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
       ) as publication
-        FROM ${SQL.raw(this.tableName)}
+        FROM ${raw(this.tableName)}
         WHERE owner = ${owner}`)
   }
 
   async findByOwnerAndStatus(owner, status) {
     return db.query(SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication
-        FROM ${SQL.raw(this.tableName)} as asset
+        FROM ${raw(this.tableName)} as asset
         LEFT JOIN (
           ${PublicationQueries.findByStatusSql(status)}
         ) as pub ON asset.id = pub.asset_id
