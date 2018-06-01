@@ -137,6 +137,8 @@
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "oracle": "Oracle合同地址",
+    "outstanding_amount": "杰出的金额",
+    "pay": "工资",
     "payable": "应付",
     "payable_placeholder": "应付天数",
     "punitory_rate": "惩罚性利率",

@@ -34,13 +34,13 @@ export default class ParcelMortgage extends React.PureComponent {
                 <h3>
                   {isPending(mortgage)
                     ? t('mortgage.requested')
-                    : t('mortgage.amount_paid')}
+                    : t('mortgage.outstanding_amount')}
                 </h3>
                 <Mana
                   amount={
                     isPending(mortgage)
                       ? parseFloat(mortgage.amount)
-                      : parseFloat(mortgage.amount - mortgage.amount_paid)
+                      : parseFloat(mortgage.outstanding_amount)
                   }
                   size={20}
                   scale={1}

@@ -141,6 +141,8 @@
     "interest_rate": "Taux d'intérêt",
     "interest_rate_placeholder": "Taux d'intérêt",
     "oracle": "Adresse du contrat Oracle",
+    "outstanding_amount": "Encours",
+    "pay": "Payer",
     "payable": "Payable à",
     "payable_placeholder": "Payable en jours",
     "punitory_rate": "Taux d'intérêt punitif",

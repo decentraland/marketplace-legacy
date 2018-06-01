@@ -100,7 +100,7 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Partial Pay Mortgage ${_index}`) // TODO: get mortgage ID
         await Mortgage.update(
           {
-            amount_paid: _amount,
+            outstanding_amount: _amount,
             block_time_updated_at
           },
           {
@@ -296,6 +296,7 @@ async function processParcelRelatedEvents(assetId, event) {
           block_number,
           block_time_created_at,
           amount: eth.utils.fromWei(amount),
+          outstanding_amount: eth.utils.fromWei(amount),
           tx_hash,
           asset_id: Parcel.buildId(x, y),
           type: ASSET_TYPE.parcel,

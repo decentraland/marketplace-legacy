@@ -8,7 +8,7 @@ const mortgageStatus = Object.values(Mortgage.STATUS)
 exports.up = pgm => {
   pgm.addColumns(tableName, {
     started_at: { type: 'TIMESTAMP' },
-    amount_pending: { type: 'FLOAT', notNull: true },
+    outstanding_amount: { type: 'FLOAT', notNull: true },
     payable_at: { type: 'BIGINT', notNull: true }
   })
 
@@ -20,7 +20,7 @@ exports.up = pgm => {
 exports.down = pgm => {
   pgm.dropColumns(tableName, {
     started_at: { type: 'TIMESTAMP' },
-    amount_pending: { type: 'FLOAT' },
+    outstanding_amount: { type: 'FLOAT' },
     payable_at: { type: 'BIGINT' }
   })
 

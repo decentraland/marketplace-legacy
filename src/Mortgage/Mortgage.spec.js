@@ -28,7 +28,7 @@ describe('Mortgage', function() {
       block_time_created_at: null,
       block_time_updated_at: null,
       started_at: null,
-      amount_paid: 0,
+      outstanding_amount: 1500,
       block_number: 1,
       is_due_at,
       payable_at,
