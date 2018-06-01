@@ -9,6 +9,7 @@ import {
   CANCEL_MORTGAGE_REQUEST,
   FETCH_MORTGAGED_PARCELS_REQUEST,
   FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
+  PAY_MORTGAGE_REQUEST,
   createMortgageSuccess,
   createMortgageFailure,
   cancelMortgageFailure,
@@ -16,7 +17,9 @@ import {
   fetchMortgagedParcelsSuccess,
   fetchMortgagedParcelsFailure,
   fetchActiveParcelMortgagesSuccess,
-  fetchActiveParcelMortgagesFailure
+  fetchActiveParcelMortgagesFailure,
+  payMortgageSuccess,
+  payMortgageFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { toInterestRate, getLoanMetadata, daysToSeconds } from './utils'
@@ -27,6 +30,7 @@ export function* mortgageSaga() {
   yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
   yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
   yield takeLatest(FETCH_MORTGAGED_PARCELS_REQUEST, handleFetchMortgageRequest)
+  yield takeLatest(PAY_MORTGAGE_REQUEST, handlePayMortgageRequest)
   yield takeLatest(
     FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
     handleFetchActiveParcelMortgagesRequest
@@ -150,5 +154,24 @@ function* handleFetchActiveParcelMortgagesRequest(action) {
     yield put(fetchActiveParcelMortgagesSuccess(mortgages, x, y))
   } catch (error) {
     yield put(fetchActiveParcelMortgagesFailure(error.message))
+  }
+}
+
+function* handlePayMortgageRequest(action) {
+  try {
+    const { loanId } = action
+    const borrower = yield select(getAddress)
+    const kyberOrcaleAddress = getKyberOracleAddress()
+
+    const rcnEngineContract = eth.getContract('RCNEngine')
+
+    const payMortgageReceipt = yield call(() =>
+      rcnEngineContract.pay(loanId, eth.utils.toWei(100), borrower, kyberOrcaleAddress)
+    )
+
+    yield put(payMortgageSuccess(payMortgageReceipt))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(payMortgageFailure(error.message))
   }
 }

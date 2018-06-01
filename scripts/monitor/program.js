@@ -52,7 +52,7 @@ Promise.resolve()
           'PaidMortgage',
           'DefaultedMortgage'
         ],
-        RCNEngine: ['PartialPayment']
+        RCNEngine: ['PartialPayment', 'TotalPayment']
       },
       env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
     ).run()

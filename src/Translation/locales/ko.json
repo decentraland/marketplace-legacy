@@ -157,7 +157,7 @@
     "buy_land": "토지 구입",
     "buy_mana": "MANA를 사기 위해 {click_here}.",
     "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
-    "needs_at_least": "이 토지를 사려면 적어도 {value}가 필요합니다.",
+    "needs_at_least": "이 토지를 사려면 적어도 {mana}가 필요합니다.",
     "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
     "total_balance": "Your balance is {balance}"
   },

@@ -96,11 +96,41 @@ async function processNoParcelRelatedEvents(event) {
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
+      console.log(_index, _amount)
       try {
-        log.info(`[${name}] Partial Pay Mortgage ${_index}`) // TODO: get mortgage ID
+        log.info(`[${name}] Partial Payment for loan ${_index}`) // TODO: get mortgage ID
+        const rcnEngineContract = await eth.getContract('RCNEngine')
+        const pendingAmount = await rcnEngineContract.getRawPendingAmount(
+          _index
+        )
         await Mortgage.update(
           {
-            amount_paid: _amount,
+            pending_amount: eth.utils.fromWei(pendingAmount),
+            block_time_updated_at
+          },
+          {
+            loan_id: _index
+          }
+        )
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
+        )
+      }
+      break
+    }
+    case BlockchainEvent.EVENTS.totalPayment: {
+      const { _index } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      try {
+        log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
+        await Mortgage.update(
+          {
+            status: Mortgage.STATUS.paid,
+            pending_amount: 0,
             block_time_updated_at
           },
           {
@@ -272,13 +302,20 @@ async function processParcelRelatedEvents(assetId, event) {
       log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
 
       const rcnEngineContract = await eth.getContract('RCNEngine')
-      const [amount, duesIn, expiresAt, payableAt] = await Promise.all([
+      const [
+        amount,
+        duesIn,
+        expiresAt,
+        payableAt,
+        pendingAmount
+      ] = await Promise.all([
         await rcnEngineContract.getAmount(eth.utils.toBigNumber(loanId)),
         await rcnEngineContract.getDuesIn(eth.utils.toBigNumber(loanId)),
         await rcnEngineContract.getExpirationRequest(
           eth.utils.toBigNumber(loanId)
         ),
-        await rcnEngineContract.getCancelableAt(eth.utils.toBigNumber(loanId))
+        await rcnEngineContract.getCancelableAt(eth.utils.toBigNumber(loanId)),
+        await rcnEngineContract.getRawPendingAmount(_index)
       ])
 
       const block_time_created_at = await Promise.resolve(
@@ -296,6 +333,7 @@ async function processParcelRelatedEvents(assetId, event) {
           block_number,
           block_time_created_at,
           amount: eth.utils.fromWei(amount),
+          pending_amount: eth.utils.fromWei(pendingAmount),
           tx_hash,
           asset_id: Parcel.buildId(x, y),
           type: ASSET_TYPE.parcel,

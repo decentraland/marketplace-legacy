@@ -8,10 +8,11 @@ import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
 export default class MortgageActions extends React.PureComponent {
   static propTypes = {
     mortgage: PropTypes.object.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    onPay: PropTypes.func.isRequired
   }
   render() {
-    const { mortgage, onCancel } = this.props
+    const { mortgage, onCancel, onPay } = this.props
 
     switch (mortgage.status) {
       case MORTGAGE_STATUS.pending:
@@ -22,7 +23,11 @@ export default class MortgageActions extends React.PureComponent {
         )
       case MORTGAGE_STATUS.ongoing:
       case MORTGAGE_STATUS.defaulted:
-        return <Button size="tiny">{t('mortgage.pay')}</Button>
+        return (
+          <Button size="tiny" onClick={onPay}>
+            {t('mortgage.pay')}
+          </Button>
+        )
       default:
         return null
     }

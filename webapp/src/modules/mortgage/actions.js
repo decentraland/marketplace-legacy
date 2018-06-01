@@ -120,3 +120,28 @@ export function fetchActiveParcelMortgagesFailure(error) {
     error
   }
 }
+
+export const PAY_MORTGAGE_REQUEST = '[Request] Pay mortgage'
+export const PAY_MORTGAGE_SUCCESS = '[Success] Pay mortgages'
+export const PAY_MORTGAGE_FAILURE = '[Failure] Pay mortgages'
+
+export function payMortgageRequest(loanId) {
+  return {
+    type: PAY_MORTGAGE_REQUEST,
+    loanId
+  }
+}
+
+export function payMortgageSuccess(txHash) {
+  return {
+    type: PAY_MORTGAGE_SUCCESS,
+    txHash
+  }
+}
+
+export function payMortgageFailure(error) {
+  return {
+    type: PAY_MORTGAGE_FAILURE,
+    error
+  }
+}

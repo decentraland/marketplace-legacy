@@ -17,7 +17,8 @@ export class BlockchainEvent extends Model {
     startedMortgage: 'StartedMortgage',
     paidMortgage: 'PaidMortgage',
     defaultedMortgage: 'DefaultedMortgage',
-    partialPayment: 'PartialPayment,'
+    partialPayment: 'PartialPayment',
+    totalPayment: 'TotalPayment'
   }
 
   static async insertWithoutConflicts(blockchainEvent) {
