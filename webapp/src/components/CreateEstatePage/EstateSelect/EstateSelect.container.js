@@ -4,7 +4,7 @@ import { locations } from 'locations'
 
 import { getMatchParams } from 'modules/location/selectors'
 import { navigateTo } from 'modules/location/actions'
-import { getError, isLoading } from 'modules/parcels/selectors'
+import { getError } from 'modules/parcels/selectors'
 import EstateSelect from './EstateSelect'
 
 const mapState = (state, ownProps) => {
@@ -12,7 +12,6 @@ const mapState = (state, ownProps) => {
   return {
     x: parseInt(x, 10),
     y: parseInt(y, 10),
-    isLoading: isLoading(state),
     error: getError(state)
   }
 }
