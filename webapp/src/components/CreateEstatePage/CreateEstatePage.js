@@ -35,7 +35,6 @@ export default class CreateEstatePage extends React.PureComponent {
     const { estate } = this.state
     this.setState({
       estate: {
-        ...estate,
         data: {
           ...estate.data,
           parcels
