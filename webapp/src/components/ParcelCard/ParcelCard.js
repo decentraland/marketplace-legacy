@@ -10,10 +10,10 @@ import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
 import { parcelType } from 'components/types'
 import { AUCTION_DATE } from 'lib/parcelUtils'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
-import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
+import { isPublicationOpen } from 'modules/publication/utils'
+import { isMortgageActive } from 'modules/mortgage/utils'
 import { t } from 'modules/translation/utils'
-import { formatDate, buildCoordinate, isOpen, hasStatus } from 'lib/utils'
+import { formatDate, buildCoordinate } from 'lib/utils'
 import './ParcelCard.css'
 
 export default class ParcelCard extends React.PureComponent {
@@ -28,12 +28,6 @@ export default class ParcelCard extends React.PureComponent {
     const { x, y, publication } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
-    const isPublicationOpen = isOpen(publication, PUBLICATION_STATUS.open)
-    const isMortgageActive = hasStatus(parcel.mortgage, [
-      MORTGAGE_STATUS.pending,
-      MORTGAGE_STATUS.ongoing,
-      MORTGAGE_STATUS.paid
-    ])
 
     return (
       <Card className="ParcelCard">
@@ -50,12 +44,12 @@ export default class ParcelCard extends React.PureComponent {
           <Card.Content className="body">
             <Card.Description title={parcelName}>
               <span className="name">{parcelName}</span>
-              {isPublicationOpen ? (
+              {isPublicationOpen(publication) ? (
                 <Mana amount={parseFloat(publication.price)} />
               ) : null}
             </Card.Description>
 
-            {isPublicationOpen && (
+            {isPublicationOpen(publication) && (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
@@ -67,7 +61,7 @@ export default class ParcelCard extends React.PureComponent {
               </React.Fragment>
             )}
 
-            {!isPublicationOpen &&
+            {!isPublicationOpen(publication) &&
               !showMortgage && (
                 <Card.Meta>
                   {t('publication.acquired_at', {
@@ -82,7 +76,7 @@ export default class ParcelCard extends React.PureComponent {
               )}
 
             {showMortgage &&
-              isMortgageActive && (
+              isMortgageActive(parcel.mortgage, parcel) && (
                 <React.Fragment>
                   <p className={`mortgage-status ${parcel.mortgage.status}`}>
                     {parcel.mortgage.status}

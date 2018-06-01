@@ -9,11 +9,12 @@ export const MORTGAGE_STATUS = Object.freeze({
   paid: 'paid'
 })
 
-export const isPending = mortgage =>
-  hasStatus(mortgage, [MORTGAGE_STATUS.pending])
-export const isOngoing = mortgage =>
+export const isMortgagePending = mortgage =>
+  isOpen(mortgage, MORTGAGE_STATUS.pending)
+export const isMortgageOngoing = mortgage =>
   hasStatus(mortgage, [MORTGAGE_STATUS.ongoing])
-export const isPaid = mortgage => hasStatus(mortgage, [MORTGAGE_STATUS.paid])
+export const isMortgagePaid = mortgage =>
+  hasStatus(mortgage, [MORTGAGE_STATUS.paid])
 
 // Interest in seconds
 export function toInterestRate(r) {
@@ -29,6 +30,16 @@ export function getLoanMetadata() {
   return `#mortgage #required-cosigner:${mortgageManagerContract.address}`
 }
 
+export function isMortgageActive(mortgage, parcel) {
+  return (
+    mortgage &
+      parcel &
+      (isMortgagePending &&
+        isOpen(parcel.publication, PUBLICATION_STATUS.open)) ||
+    hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid])
+  )
+}
+
 /**
  * Returns mortgages active -> pending status require an open publication
  * @param {array} - mortgages
@@ -38,13 +49,7 @@ export function getLoanMetadata() {
 export function getActiveMortgages(mortgages, parcels) {
   return mortgages.filter(mortgage => {
     const parcel = parcels[mortgage.asset_id]
-    return (
-      mortgage &&
-      parcel &&
-      ((isOpen(mortgage, MORTGAGE_STATUS.pending) &&
-        isOpen(parcel.publication, PUBLICATION_STATUS.open)) ||
-        hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid]))
-    )
+    return isMortgageActive(mortgage, parcel)
   })
 }
 
