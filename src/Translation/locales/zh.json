@@ -44,7 +44,8 @@
     "proposal": "提案"
   },
   "derivation_path": {
-    "invalid": "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
+    "invalid":
+      "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "footer": {
     "color_key": "色彩标记",
@@ -118,7 +119,6 @@
   },
   "mortgage": {
     "amount": "量",
-    "amount_paid": "剩余金额支付",
     "amount_placeholder": "MANA中的金额",
     "cancel": "取消抵押",
     "duration": "持续时间",
@@ -137,7 +137,6 @@
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "oracle": "Oracle合同地址",
-    "pay": "工资",
     "payable": "应付",
     "payable_placeholder": "应付天数",
     "punitory_rate": "惩罚性利率",
@@ -157,8 +156,9 @@
     "buy_land": "购买土地",
     "buy_mana": "{click_here}购买一些MANA。",
     "didnt_approve": "您没有批准使用MANA",
-    "needs_at_least": "为了购买这块土地，您至少需要{value}MANA。",
-    "please_approve": "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
+    "needs_at_least": "为了购买这块土地，您至少需要{mana}MANA。",
+    "please_approve":
+      "请前往{settings_link}，让Marketplace合约以您的名义操作MANA",
     "total_balance": "您的余额是{balance}"
   },
   "parcel_cancel": {
@@ -224,7 +224,8 @@
     "expiration": "到期时间",
     "expiration_placeholder": "此块上架待售土地的到期时间",
     "list_land": "待售虚拟土地上架",
-    "please_authorize": "您需要前往设置页面{settings_link}并授权虚拟市场以您的名义操作土地交易，然后才能将其上架出售。",
+    "please_authorize":
+      "您需要前往设置页面{settings_link}并授权虚拟市场以您的名义操作土地交易，然后才能将其上架出售。",
     "price": "价格",
     "price_placeholder": "此虚拟地块以MANA结算的价格",
     "set_land_price": "为{parcel_name}设置价格和到期日期"
@@ -240,7 +241,8 @@
     "about_to_transfer": "您即将转让{parcel_name}",
     "cant_transfer": "这块土地正在出售中，不能转让。",
     "check_address": "请仔细检查地址",
-    "error_persists": "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
+    "error_persists":
+      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
     "irreversible": "请注意，转让土地操作是不可逆的。",
     "placeholder": "例: {address}",
     "recipient_address": "接收者地址",
@@ -272,24 +274,28 @@
     "mortgage_manager_contract": "抵押经理合同",
     "pending_tx": "您有待处理的交易",
     "unauthorize_land_check": "取消勾选取消授权市场合约的虚拟土地使用",
-    "you_approved_mortgage_mana": "您已授权{mortgage_contract_link}代表您操作MANA",
-    "you_approved_mortgage_rcn": "您已授权{mortgage_contract_link}代表您运营RCN",
+    "you_approved_mortgage_mana":
+      "您已授权{mortgage_contract_link}代表您操作MANA",
+    "you_approved_mortgage_rcn":
+      "您已授权{mortgage_contract_link}代表您运营RCN",
     "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作LAND"
   },
   "sign_in": {
     "account_unlocked": "确保您的帐户已解锁",
-    "options": "首先，你需要一个安全的地方来保存你的土地。您可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。"
+    "options":
+      "首先，你需要一个安全的地方来保存你的土地。您可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。"
   },
   "transaction": {
     "approved": "您授权{marketplace_contract_link}以您的名义操作MANA",
     "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
     "buy": "您买入了{parcel_link}地块",
-    "buy_mana": "你已经买了{MANA} MANA",
+    "buy_mana": "你已经买了{mana} MANA",
     "cancel": "您取消了{parcel_link}上的{publication_link}",
     "cancel_mortgage": "您取消抵押贷款以购买包裹{parcel_link}",
     "create_mortgage": "您要求抵押贷款购买包裹{parcel_link}",
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
-    "edit": "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
+    "edit":
+      "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
     "manage": "您授予{address_link}更新{parcel_link}的内容的权限",
     "manage_revoked": "您撤销了{address_link}更新{parcel_link}内容的权限",
     "mortgage_mana": "你{action} {mortgage_contract_link}代表你操作MANA。",
