@@ -35,6 +35,7 @@ export function* publicationSaga() {
 
 function* handlePublicationsRequest(action) {
   try {
+    console.log(action)
     const { parcels, publications, total } = yield call(() =>
       fetchPublications(action)
     )

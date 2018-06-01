@@ -100,12 +100,12 @@ async function processNoParcelRelatedEvents(event) {
       try {
         log.info(`[${name}] Partial Payment for loan ${_index}`) // TODO: get mortgage ID
         const rcnEngineContract = await eth.getContract('RCNEngine')
-        const pendingAmount = await rcnEngineContract.getRawPendingAmount(
+        const outstandingAmount = await rcnEngineContract.getRawPendingAmount(
           _index
         )
         await Mortgage.update(
           {
-            pending_amount: eth.utils.fromWei(pendingAmount),
+            outstanding_amount: eth.utils.fromWei(outstandingAmount),
             block_time_updated_at
           },
           {
@@ -130,7 +130,7 @@ async function processNoParcelRelatedEvents(event) {
         await Mortgage.update(
           {
             status: Mortgage.STATUS.paid,
-            pending_amount: 0,
+            outstanding_amount: 0,
             block_time_updated_at
           },
           {
@@ -307,7 +307,7 @@ async function processParcelRelatedEvents(assetId, event) {
         duesIn,
         expiresAt,
         payableAt,
-        pendingAmount
+        outstandingAmount
       ] = await Promise.all([
         await rcnEngineContract.getAmount(eth.utils.toBigNumber(loanId)),
         await rcnEngineContract.getDuesIn(eth.utils.toBigNumber(loanId)),
@@ -315,7 +315,7 @@ async function processParcelRelatedEvents(assetId, event) {
           eth.utils.toBigNumber(loanId)
         ),
         await rcnEngineContract.getCancelableAt(eth.utils.toBigNumber(loanId)),
-        await rcnEngineContract.getRawPendingAmount(_index)
+        await rcnEngineContract.getRawPendingAmount(loanId)
       ])
 
       const block_time_created_at = await Promise.resolve(
@@ -333,7 +333,7 @@ async function processParcelRelatedEvents(assetId, event) {
           block_number,
           block_time_created_at,
           amount: eth.utils.fromWei(amount),
-          pending_amount: eth.utils.fromWei(pendingAmount),
+          outstanding_amount: eth.utils.fromWei(outstandingAmount),
           tx_hash,
           asset_id: Parcel.buildId(x, y),
           type: ASSET_TYPE.parcel,

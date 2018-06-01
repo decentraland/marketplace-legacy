@@ -8,7 +8,7 @@ import Expiration from 'components/Expiration'
 import { t } from 'modules/translation/utils'
 
 import './ParcelMortgage.css'
-import { isPending, isOngoing } from 'modules/mortgage/utils'
+import { isMortgagePending, isMortgageOngoing } from 'modules/mortgage/utils'
 
 export default class ParcelMortgage extends React.PureComponent {
   static propTypes = {
@@ -32,22 +32,22 @@ export default class ParcelMortgage extends React.PureComponent {
               </Grid.Column>
               <Grid.Column width={3}>
                 <h3>
-                  {isPending(mortgage)
+                  {isMortgagePending(mortgage)
                     ? t('mortgage.requested')
-                    : t('mortgage.amount_paid')}
+                    : t('mortgage.outstanding_amount')}
                 </h3>
                 <Mana
                   amount={
-                    isPending(mortgage)
+                    isMortgagePending(mortgage)
                       ? parseFloat(mortgage.amount)
-                      : parseFloat(mortgage.amount - mortgage.amount_paid)
+                      : parseFloat(mortgage.outstanding_amount)
                   }
                   size={20}
                   scale={1}
                   className="mortgage-amount-icon"
                 />
               </Grid.Column>
-              {isPending(mortgage) && (
+              {isMortgagePending(mortgage) && (
                 <Grid.Column width={3}>
                   <h3>{t('global.time_left')}</h3>
                   <p>
@@ -55,7 +55,7 @@ export default class ParcelMortgage extends React.PureComponent {
                   </p>
                 </Grid.Column>
               )}
-              {isOngoing(mortgage) && (
+              {isMortgageOngoing(mortgage) && (
                 <React.Fragment>
                   <Grid.Column width={3}>
                     <h3>{t('mortgage.payable')}</h3>

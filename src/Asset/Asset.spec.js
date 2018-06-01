@@ -4,7 +4,7 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Parcel, ParcelService } from '../Parcel'
 import { Publication } from '../Publication'
-import { TYPE as ASSET_TYPE } from './type'
+import { TYPE as ASSET_TYPE } from './Type'
 import { Asset } from './Asset'
 
 describe('Asset', function() {
