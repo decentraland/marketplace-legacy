@@ -8,6 +8,7 @@ import Parcel from 'components/Parcel'
 import { t } from 'modules/translation/utils'
 import { isOwner } from 'modules/parcels/utils'
 import { coordsType } from 'components/types'
+import { match, isEqual } from 'lib/utils'
 
 import './EstateSelect.css'
 
@@ -52,12 +53,7 @@ export default class EstateSelect extends React.PureComponent {
     const neighbours = this.getNeighbours(actual.x, actual.y, parcels).filter(
       coords => {
         return (
-          parcels.some(
-            coords2 => coords.x === coords2.x && coords.y === coords2.y
-          ) &&
-          !alreadyTraveled.some(
-            coords2 => coords.x === coords2.x && coords.y === coords2.y
-          )
+          parcels.some(match(coords)) && !alreadyTraveled.some(match(coords))
         )
       }
     )
@@ -79,19 +75,16 @@ export default class EstateSelect extends React.PureComponent {
     }
 
     const { value: parcels, onChange } = this.props
-    const isSelected = parcels.some(coords => coords.x === x && coords.y === y)
+    const isSelected = parcels.some(match({ x, y }))
 
     if (isSelected) {
-      const newParcels = parcels.filter(
-        coords => !(coords.x === x && coords.y === y)
-      )
+      const newParcels = parcels.filter(coords => !isEqual(coords, { x, y }))
 
       if (!this.areConnected(newParcels) && newParcels.length > 1) {
         return
       }
 
-      onChange(newParcels)
-      return
+      return onChange(newParcels)
     }
 
     onChange([...parcels, { x, y }])

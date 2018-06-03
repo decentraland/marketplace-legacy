@@ -12,6 +12,14 @@ export function splitCoordinate(id) {
   return id ? id.split(',') : [0, 0]
 }
 
+export function isEqual(p1, p2) {
+  return p1.x === p2.x && p1.y === p2.y
+}
+
+export function match(coords) {
+  return coords2 => isEqual(coords, coords2)
+}
+
 export function isValidName(name) {
   return name <= 50
 }
