@@ -23,7 +23,7 @@ export default class ParcelTags extends React.PureComponent {
   }
 
   isParcel() {
-    return this.props.parcel
+    return !!this.props.parcel
   }
 
   getDistrictName(district_id) {
