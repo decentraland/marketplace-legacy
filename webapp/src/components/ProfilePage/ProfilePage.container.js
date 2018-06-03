@@ -28,7 +28,7 @@ const mapState = (state, { location, match }) => {
     parcels = addresses[address].parcels
     contributions = addresses[address].contributions
     publishedParcels = addresses[address].publishedParcels
-    estates = addresses[address].estates.filter(e => e.data.parcels.length > 0)
+    estates = addresses[address].estates
     mortgagedParcels = addresses[address].mortgagedParcels
   }
 

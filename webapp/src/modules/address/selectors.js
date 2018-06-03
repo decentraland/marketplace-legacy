@@ -51,7 +51,7 @@ export const getAddresses = createSelector(
           ...data[address],
           parcels,
           parcelsById,
-          estates,
+          estates: estates.filter(e => e.data.parcels.length > 0),
           estatesById,
           contributions,
           publishedParcels,
