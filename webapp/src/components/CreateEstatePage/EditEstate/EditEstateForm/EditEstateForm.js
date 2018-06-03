@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Form, Input } from 'semantic-ui-react'
-import { preventDefault } from 'lib/utils'
+import { preventDefault, isValidName, isValidDescription } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 import { estateType } from 'components/types'
 
@@ -64,7 +64,7 @@ export default class EditEstateForm extends React.PureComponent {
             type="text"
             value={name}
             onChange={this.handleNameChange}
-            error={name.length > 50}
+            error={!isValidName}
           />
         </Form.Field>
         <Form.Field>
@@ -73,7 +73,7 @@ export default class EditEstateForm extends React.PureComponent {
             type="text"
             value={description}
             onChange={this.handleDescriptionChange}
-            error={name.length > 140}
+            error={!isValidDescription}
           />
         </Form.Field>
         <br />

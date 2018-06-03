@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Button, Form, Input } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
-import { preventDefault } from 'lib/utils'
+import { preventDefault, isValidName, isValidDescription } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
 import './EditParcelForm.css'
@@ -78,7 +78,7 @@ export default class EditParcelForm extends React.PureComponent {
             type="text"
             value={name}
             onChange={this.handleNameChange}
-            error={name.length > 50}
+            error={!isValidName}
           />
         </Form.Field>
         <Form.Field>
@@ -87,7 +87,7 @@ export default class EditParcelForm extends React.PureComponent {
             type="text"
             value={description}
             onChange={this.handleDescriptionChange}
-            error={name.length > 140}
+            error={!isValidDescription}
           />
           <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
