@@ -95,7 +95,6 @@ export default class EstateSelect extends React.PureComponent {
     }
 
     onChange([...parcels, { x, y }])
-    return
   }
 
   render() {
