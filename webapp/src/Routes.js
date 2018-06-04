@@ -6,6 +6,9 @@ import { locations } from 'locations'
 
 import Wallet from 'components/Wallet'
 import Page from 'components/Page'
+import Intercom from 'components/Intercom'
+import Modal from 'components/Modal'
+import Toast from 'components/Toast'
 
 import HomePage from 'components/HomePage'
 import AtlasPage from 'components/AtlasPage'
@@ -25,15 +28,10 @@ import SignInPage from 'components/SignInPage'
 import TransferManaPage from 'components/TransferManaPage'
 import BuyManaPage from 'components/BuyManaPage'
 import BuyParcelByMortgagePage from 'components/BuyParcelByMortgagePage'
-
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 import TermsPage from 'components/TermsPage'
-
-import Intercom from 'components/Intercom'
-
-import Modal from 'components/Modal'
-import Toast from 'components/Toast'
+import EstateDetailPage from 'components/EstateDetailPage'
 
 export default class Routes extends React.Component {
   renderRoutes() {
@@ -47,11 +45,14 @@ export default class Routes extends React.Component {
         <Route exact path={locations.edit} component={EditParcelPage} />
         <Route exact path={locations.transfer} component={TransferParcelPage} />
         {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.createEstate}
-            component={CreateEstatePage}
-          />
+          <React.Fragment>
+            <Route
+              exact
+              path={locations.createEstate}
+              component={CreateEstatePage}
+            />
+            <Route exact path={locations.estate} component={EstateDetailPage} />
+          </React.Fragment>
         ) /* Estate Feature */}
         <Route exact path={locations.manage} component={ManageParcelPage} />
         <Route exact path={locations.buy} component={BuyParcelPage} />

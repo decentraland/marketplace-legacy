@@ -32,6 +32,9 @@ export const locations = {
   createEstate: '/:x/:y/create-estate',
   createEstateLand: (x, y) => `/${x}/${y}/create-estate`,
 
+  estate: '/estate/:id/detail',
+  estateDetail: id => `/estate/${id}/detail`,
+
   buyMana: `/buy-mana`,
   transferMana: `/transfer-mana`,
 
