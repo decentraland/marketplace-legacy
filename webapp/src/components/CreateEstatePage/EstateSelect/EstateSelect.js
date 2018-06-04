@@ -23,6 +23,7 @@ export default class EstateSelect extends React.PureComponent {
     value: PropTypes.arrayOf(coordsType).isRequired
   }
 
+  // TODO move all this functions to an estate util file
   isNeighbour = (x, y) => coords => {
     return (
       (coords.x === x && (coords.y + 1 === y || coords.y - 1 === y)) ||
