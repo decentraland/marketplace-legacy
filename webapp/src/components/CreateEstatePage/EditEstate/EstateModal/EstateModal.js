@@ -4,8 +4,9 @@ import { Button, Grid, Header } from 'semantic-ui-react'
 import ParcelPreview from 'components/ParcelPreview'
 import { coordsType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import './EstateModal.css'
 import { calculateZoomAndCenter } from 'modules/estates/utils'
+
+import './EstateModal.css'
 
 export default class EstateModal extends React.PureComponent {
   static propTypes = {

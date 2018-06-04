@@ -15,13 +15,18 @@ import { locations } from 'locations'
 import { api } from 'lib/api'
 import { buildCoordinate } from 'lib/utils'
 
+export function* estateSaga() {
+  yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
+  yield takeEvery(FETCH_ESTATE_REQUEST, handleEstateRequest)
+}
+
 function validateCoords(x, y) {
   if (!inBounds(x, y)) {
     throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
   }
 }
 
-// delete when estate contract returns an address
+// TODO delete when estate contract returns an address
 function randomString(length) {
   return Math.round(
     Math.pow(36, length + 1) - Math.random() * Math.pow(36, length)
@@ -65,9 +70,4 @@ function* handleEstateRequest(action) {
     console.warn(error)
     yield put(fetchEstateFailure(id, error.message))
   }
-}
-
-export function* estateSaga() {
-  yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
-  yield takeEvery(FETCH_ESTATE_REQUEST, handleEstateRequest)
 }

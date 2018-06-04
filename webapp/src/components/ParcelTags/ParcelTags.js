@@ -23,7 +23,7 @@ export default class ParcelTags extends React.PureComponent {
   }
 
   isParcel() {
-    return this.props.parcel
+    return !!this.props.parcel
   }
 
   getDistrictName(district_id) {
@@ -70,11 +70,11 @@ export default class ParcelTags extends React.PureComponent {
     )
   }
 
-  getTags() {
-    if (this.isParcel()) {
-      return this.props.parcel.tags
-    }
+  getParcelTags() {
+    return this.props.parcel.tags
+  }
 
+  getEstateTags() {
     const { parcels } = this.props.estate
     const proximities = parcels
       .map(parcel => parcel.tags.proximity)
@@ -95,6 +95,14 @@ export default class ParcelTags extends React.PureComponent {
     }, {})
 
     return { proximity }
+  }
+
+  getTags() {
+    if (this.isParcel()) {
+      return this.getParcelTags()
+    }
+
+    return this.getEstateTags()
   }
 
   render() {

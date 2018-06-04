@@ -168,9 +168,9 @@ export function addressReducer(state = INITIAL_STATE, action) {
           ...state.data,
           [owner]: {
             ...state.data[owner],
-            parcel_ids: [
-              ...state.data[owner].parcel_ids.filter(x => !parcelIds.has(x))
-            ],
+            parcel_ids: state.data[owner].parcel_ids.filter(
+              x => !parcelIds.has(x)
+            ),
             estate_ids: [...state.data[owner].estate_ids, id]
           }
         }
