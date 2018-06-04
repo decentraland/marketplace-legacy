@@ -8,7 +8,7 @@ import Parcel from 'components/Parcel'
 import { t } from 'modules/translation/utils'
 import { isOwner } from 'modules/parcels/utils'
 import { coordsType } from 'components/types'
-import { match, isEqual } from 'lib/utils'
+import { match, isEqual, isParcel } from 'lib/utils'
 
 import './EstateSelect.css'
 
@@ -66,7 +66,13 @@ export default class EstateSelect extends React.PureComponent {
     )
   }
 
-  handleParcelClick = wallet => (x, y) => {
+  handleParcelClick = wallet => asset => {
+    if (!isParcel(asset)) {
+      return
+    }
+
+    const { x, y } = asset
+
     if (!isOwner(wallet, x, y)) {
       return
     }

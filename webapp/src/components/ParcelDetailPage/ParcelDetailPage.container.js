@@ -11,6 +11,7 @@ import { fetchActiveParcelMortgagesRequest } from 'modules/mortgage/actions'
 import { getParcelMortgagesFactory } from 'modules/mortgage/selectors'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import ParcelDetailPage from './ParcelDetailPage'
+import { getAssetLocation } from 'lib/utils'
 
 const mapState = (state, ownProps) => {
   // Instanciate selectors
@@ -37,7 +38,7 @@ const mapDispatch = dispatch => ({
     dispatch(fetchParcelPublicationsRequest(x, y, PUBLICATION_STATUS.open)),
   onError: () => dispatch(navigateTo(locations.root)),
   onBuy: parcel => dispatch(navigateTo(locations.buyLand(parcel.x, parcel.y))),
-  onParcelClick: (x, y) => dispatch(navigateTo(locations.parcelDetail(x, y))),
+  onParcelClick: asset => dispatch(navigateTo(getAssetLocation(asset))),
   onFetchActiveParcelMortgages: (x, y) =>
     dispatch(fetchActiveParcelMortgagesRequest(x, y))
 })

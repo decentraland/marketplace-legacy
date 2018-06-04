@@ -3,6 +3,7 @@ import dateFnsDistanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import { txUtils } from 'decentraland-eth'
 
 import { getCurrentLocale } from 'modules/translation/utils'
+import { locations } from 'locations'
 
 export function buildCoordinate(x, y) {
   return `${x},${y}`
@@ -26,6 +27,16 @@ export function isValidName(name) {
 
 export function isValidDescription(description) {
   return description <= 140
+}
+
+export function isParcel(asset) {
+  return !!asset.x
+}
+
+export function getAssetLocation(asset) {
+  return isParcel(asset)
+    ? locations.parcelDetail(asset.x, asset.y)
+    : locations.estateDetail(asset.id)
 }
 
 export function preventDefault(fn) {
