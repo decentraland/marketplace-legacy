@@ -47,20 +47,20 @@ export function isMortgageActive(mortgage, parcel) {
  * @returns {array} - mortgages
  */
 export function getActiveMortgages(mortgages, parcels) {
-  return mortgages.filter(mortgage => {
+  return mortgages ? mortgages.filter(mortgage => {
     const parcel = parcels[mortgage.asset_id]
     return isMortgageActive(mortgage, parcel)
-  })
+  }) : []
 }
 
 /**
  * filter actibe mortgages by borrower
  * @param {object} - obj with status & tx_status fields
  * @param  {array} - parcels
- * @returns {array} - mortgages
+ * @returns {object} - mortgage
  */
 export function getActiveMortgagesByBorrower(mortgages, parcels, borrower) {
-  return getActiveMortgages(mortgages, parcels).filter(
+  return getActiveMortgages(mortgages, parcels).find(
     mortgage => mortgage && mortgage.borrower === borrower
   )
 }

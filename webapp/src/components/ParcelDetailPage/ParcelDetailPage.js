@@ -18,7 +18,7 @@ export default class ParcelDetailPage extends React.PureComponent {
     error: PropTypes.string,
     districts: PropTypes.objectOf(districtType).isRequired,
     publications: PropTypes.objectOf(publicationType),
-    mortgages: PropTypes.array,
+    mortgage: PropTypes.object, // TODO: mortgageType
     onFetchParcelPublications: PropTypes.func.isRequired,
     onFetchActiveParcelMortgages: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
@@ -69,7 +69,7 @@ export default class ParcelDetailPage extends React.PureComponent {
       publications,
       onBuy,
       onParcelClick,
-      mortgages
+      mortgage
     } = this.props
 
     if (error) {
@@ -98,7 +98,7 @@ export default class ParcelDetailPage extends React.PureComponent {
                 districts={districts}
                 publications={publications}
                 onBuy={onBuy}
-                mortgages={mortgages}
+                mortgage={mortgage}
               />
             </Container>
           </div>

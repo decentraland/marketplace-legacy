@@ -15,12 +15,12 @@ export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool,
-    mortgages: PropTypes.array.isRequired,
+    mortgage: PropTypes.array.isRequired,
     isLoading: PropTypes.bool.isRequired
   }
 
   render() {
-    const { parcel, isOwner, mortgages, isLoading } = this.props
+    const { parcel, isOwner, mortgage, isLoading } = this.props
     if (!parcel || isLoading) {
       return null
     }
@@ -51,7 +51,7 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : isOnSale(parcel) && mortgages.length === 0 ? (
+        ) : isOnSale(parcel) && mortgage ? (
           <React.Fragment>
             <Link to={locations.buyLand(x, y)}>
               <Button primary size="large">

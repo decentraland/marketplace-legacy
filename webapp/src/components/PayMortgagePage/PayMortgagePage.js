@@ -8,20 +8,32 @@ import { walletType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 import { buildCoordinate, formatMana } from 'lib/utils'
-import { isPublicationOpen } from 'modules/publication/utils'
-import MortgageForm from './MortgageForm'
+import PayMortgageForm from './PayMortgageForm'
 import ParcelModal from 'components/ParcelModal'
+import { isMortgageOngoing } from 'modules/mortgage/utils'
 
-export default class BuyParcelByMortgagePage extends React.PureComponent {
+export default class PayMortgagePage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    isDisabled: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
-    onConfirm: PropTypes.func.isRequired,
+    mortgage: PropTypes.object, //TODO mortgageType
+    onFetchMortgage: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+  }
+
+  componentDidMount() {
+    this.isAdditionalResourcesFetched = false
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.isLoading && !this.isAdditionalResourcesFetched) {
+      this.props.onFetchMortgage()
+      this.isAdditionalResourcesFetched = true
+    }
   }
 
   renderLoading() {
@@ -37,7 +49,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
       <div>
         <Container text textAlign="center" className="BuyParcelPage">
           <Header as="h2" size="huge" className="title">
-            {t('mortgage.request')}
+            {t('mortgage.partial_payment')}
           </Header>
           <p className="sign-in">
             {t_html('global.sign_in_notice', {
@@ -55,47 +67,39 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     const {
       x,
       y,
+      mortgage,
       isLoading,
-      isConnected,
-      onConfirm,
+      wallet,
+      onSubmit,
       onCancel
     } = this.props
-    if (isLoading) {
-      return this.renderLoading()
-    }
-
-    if (!isConnected) {
-      return this.renderNotConnected()
-    }
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed withPublications>
+      <Parcel x={x} y={y} ownerNotAllowed>
         {parcel =>
-          isPublicationOpen(parcel.publication) ? (
+          isMortgageOngoing(mortgage) ? (
             <React.Fragment>
               <ParcelModal
                 x={x}
                 y={y}
-                price={parcel.publication.price}
                 isLoading={isLoading}
-                title={t('mortgage.request')}
-                subtitle={t_html('mortgage.request_land', {
+                title={t('mortgage.partial_payment')}
+                subtitle={t_html('mortgage.partial_payment_desc', {
                   parcel_name: (
                     <Link to={locations.parcelDetail(x, y)}>
                       {buildCoordinate(x, y)}
                     </Link>
                   ),
-                  parcel_price: formatMana(parcel.publication.price)
+                  outstanding_amount: formatMana(mortgage.outstanding_amount)
                 })}
                 hasCustomFooter
               >
-                <MortgageForm
-                  parcel={parcel}
-                  publication={parcel.publication}
+                <PayMortgageForm
+                  balance={wallet.balance}
+                  mortgage={mortgage}
                   isTxIdle={false}
-                  onPublish={onConfirm}
+                  onSubmit={onSubmit}
                   onCancel={onCancel}
-                  isDisabled={false}
                 />
               </ParcelModal>
             </React.Fragment>

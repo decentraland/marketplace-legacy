@@ -2,27 +2,30 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import BuyParcelByMortgagePage from './BuyParcelByMortgagePage'
+import PayMortgagePage from './PayMortgagePage'
 import {
-  createMortgageRequest,
-  CREATE_MORTGAGE_REQUEST
+  payMortgageRequest,
+  fetchActiveParcelMortgagesRequest,
 } from 'modules/mortgage/actions'
 import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
-import { getLoading } from 'modules/publication/selectors'
-import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
-import { isLoadingType } from 'modules/loading/selectors'
+import {
+  getParcelMortgage,
+} from 'modules/mortgage/selectors'
+import { isLoading } from 'modules/parcels/selectors'
+import { getWallet, isConnected } from 'modules/wallet/selectors'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
-
+  const getMortgage = getParcelMortgage(x, y)
   return {
     x,
     y,
-    isDisabled: isLoadingType(getLoading(state), CREATE_MORTGAGE_REQUEST),
     wallet: getWallet(state),
     isConnected: isConnected(state),
-    isLoading: isConnecting(state)
+    isLoading:
+      isLoading(state),
+    mortgage: getMortgage(state)
   }
 }
 
@@ -30,11 +33,10 @@ const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
 
   return {
-    onConfirm: params => dispatch(createMortgageRequest(params)),
+    onFetchMortgage: () => dispatch(fetchActiveParcelMortgagesRequest(x, y)),
+    onSubmit: params => dispatch(payMortgageRequest(params)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
   }
 }
 
-export default withRouter(
-  connect(mapState, mapDispatch)(BuyParcelByMortgagePage)
-)
+export default withRouter(connect(mapState, mapDispatch)(PayMortgagePage))

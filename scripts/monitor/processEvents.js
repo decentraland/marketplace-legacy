@@ -98,9 +98,9 @@ async function processNoParcelRelatedEvents(event) {
       )
       console.log(_index, _amount)
       try {
-        log.info(`[${name}] Partial Payment for loan ${_index}`) // TODO: get mortgage ID
+        log.info(`[${name}] Partial Payment for loan ${_index}`)
         const rcnEngineContract = await eth.getContract('RCNEngine')
-        const outstandingAmount = await rcnEngineContract.getRawPendingAmount(
+        const outstandingAmount = await rcnEngineContract.getPendingAmount(
           _index
         )
         await Mortgage.update(
@@ -315,7 +315,7 @@ async function processParcelRelatedEvents(assetId, event) {
           eth.utils.toBigNumber(loanId)
         ),
         await rcnEngineContract.getCancelableAt(eth.utils.toBigNumber(loanId)),
-        await rcnEngineContract.getRawPendingAmount(loanId)
+        await rcnEngineContract.getPendingAmount(loanId)
       ])
 
       const block_time_created_at = await Promise.resolve(

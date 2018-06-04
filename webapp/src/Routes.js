@@ -24,6 +24,7 @@ import SignInPage from 'components/SignInPage'
 import TransferManaPage from 'components/TransferManaPage'
 import BuyManaPage from 'components/BuyManaPage'
 import BuyParcelByMortgagePage from 'components/BuyParcelByMortgagePage'
+import PayMortgagePage from 'components/PayMortgagePage'
 
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
@@ -62,11 +63,18 @@ export default class Routes extends React.Component {
         />
         <Route exact path={locations.buyMana} component={BuyManaPage} />
         {isFeatureEnabled('MORTGAGES') && (
-          <Route
-            exact
-            path={locations.mortgage}
-            component={BuyParcelByMortgagePage}
-          />
+          <React.Fragment>
+            <Route
+              exact
+              path={locations.mortgage}
+              component={BuyParcelByMortgagePage}
+            />
+            <Route
+              exact
+              path={locations.payMortgagePath}
+              component={PayMortgagePage}
+            />
+          </React.Fragment>
         ) /* Mortgage Feature */}
         <Redirect to={locations.root} />
       </Switch>

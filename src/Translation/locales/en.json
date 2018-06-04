@@ -139,6 +139,9 @@
     "interest_rate_placeholder": "Interest rate",
     "oracle": "Oracle contract address",
     "outstanding_amount": "Outstanding amount",
+    "partial_payment": "Partial payment",
+    "partial_payment_desc":
+      "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount} MANA",
     "pay": "Pay",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",

@@ -22,7 +22,7 @@ export default class ParcelDetail extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
-    mortgages: PropTypes.array
+    mortgage: PropTypes.object
   }
 
   getDescription() {
@@ -45,7 +45,7 @@ export default class ParcelDetail extends React.PureComponent {
   }
 
   render() {
-    const { parcel, districts, publications, isOwner, mortgages } = this.props
+    const { parcel, districts, publications, isOwner, mortgage } = this.props
 
     const description = this.getDescription()
     const publication = this.getPublication()
@@ -95,7 +95,7 @@ export default class ParcelDetail extends React.PureComponent {
               >
                 <ParcelActions
                   parcel={parcel}
-                  mortgages={mortgages}
+                  mortgage={mortgage}
                   isOwner={isOwner}
                 />
               </Grid.Column>
@@ -103,7 +103,7 @@ export default class ParcelDetail extends React.PureComponent {
           ) : null}
         </Grid>
 
-        <ParcelMortgage mortgages={mortgages} />
+        {mortgage && <ParcelMortgage mortgage={mortgage} />}
 
         {utils.isEmptyObject(parcel.tags) ? null : (
           <Grid stackable className="parcel-detail-row">

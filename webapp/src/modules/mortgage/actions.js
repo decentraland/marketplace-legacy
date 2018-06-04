@@ -125,10 +125,11 @@ export const PAY_MORTGAGE_REQUEST = '[Request] Pay mortgage'
 export const PAY_MORTGAGE_SUCCESS = '[Success] Pay mortgages'
 export const PAY_MORTGAGE_FAILURE = '[Failure] Pay mortgages'
 
-export function payMortgageRequest(loanId) {
+export function payMortgageRequest({loanId, amount}) {
   return {
     type: PAY_MORTGAGE_REQUEST,
-    loanId
+    loanId,
+    amount
   }
 }
 

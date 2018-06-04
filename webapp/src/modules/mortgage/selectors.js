@@ -18,7 +18,7 @@ export const getMortgagesArray = createSelector(getMortgages, mortgages =>
   Object.keys(mortgages).map(key => mortgages[key])
 )
 
-export const getParcelMortgages = (x, y) =>
+export const getParcelMortgage = (x, y) =>
   createSelector(
     getAddress,
     getParcels,
@@ -28,7 +28,7 @@ export const getParcelMortgages = (x, y) =>
       const mortgages =
         parcel && parcel.mortgages_tx_hashes
           ? parcel.mortgages_tx_hashes.map(tx => allMortgages[tx])
-          : []
+          : null
       return getActiveMortgagesByBorrower(mortgages, parcels, userAddress)
     }
   )
