@@ -166,7 +166,7 @@
       "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
     "please_approve":
       "Veuillez accéder à {settings_link} et autoriser le contrat Marketplace à déplacer MANA en votre nom.",
-    "total_balance": "Votre solde est {solde}"
+    "total_balance": "Votre solde est {balance}"
   },
   "parcel_cancel": {
     "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {parcel}.",
