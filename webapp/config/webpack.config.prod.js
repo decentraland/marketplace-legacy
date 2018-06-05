@@ -146,7 +146,15 @@ module.exports = {
               paths.appSrc,
               paths.appShared,
               path.resolve(paths.appNodeModules, 'decentraland-eth'),
-              path.resolve(paths.appNodeModules, 'web3-provider-engine')
+              path.resolve(paths.appNodeModules, 'web3-provider-engine'),
+              path.resolve(
+                paths.appNodeModules,
+                '../../node_modules/decentraland-eth'
+              ),
+              path.resolve(
+                paths.appNodeModules,
+                '../../node_modules/web3-provider-engine'
+              )
             ],
             loader: require.resolve('babel-loader'),
             options: {
