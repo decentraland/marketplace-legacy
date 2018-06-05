@@ -92,32 +92,26 @@ async function processNoParcelRelatedEvents(event) {
       break
     }
     case BlockchainEvent.EVENTS.partialPayment: {
-      const { _index, _amount } = event.args
+      const { _index } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
-      console.log(_index, _amount)
-      try {
-        log.info(`[${name}] Partial Payment for loan ${_index}`)
-        const rcnEngineContract = await eth.getContract('RCNEngine')
-        const outstandingAmount = await rcnEngineContract.getPendingAmount(
-          _index
-        )
-        await Mortgage.update(
-          {
-            outstanding_amount: eth.utils.fromWei(outstandingAmount),
-            block_time_updated_at
-          },
-          {
-            loan_id: _index
-          }
-        )
-      } catch (error) {
-        if (!isDuplicatedConstraintError(error)) throw error
-        log.info(
-          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
-        )
-      }
+      log.info(`[${name}] Partial Payment for loan ${_index}`)
+
+      const rcnEngineContract = await eth.getContract('RCNEngine')
+      const outstandingAmount = await rcnEngineContract.getPendingAmount(
+        eth.utils.toBigNumber(_index)
+      )
+
+      await Mortgage.update(
+        {
+          outstanding_amount: eth.utils.fromWei(outstandingAmount),
+          block_time_updated_at
+        },
+        {
+          loan_id: _index
+        }
+      )
       break
     }
     case BlockchainEvent.EVENTS.totalPayment: {
@@ -125,24 +119,17 @@ async function processNoParcelRelatedEvents(event) {
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
-      try {
-        log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
-        await Mortgage.update(
-          {
-            status: Mortgage.STATUS.paid,
-            outstanding_amount: 0,
-            block_time_updated_at
-          },
-          {
-            loan_id: _index
-          }
-        )
-      } catch (error) {
-        if (!isDuplicatedConstraintError(error)) throw error
-        log.info(
-          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
-        )
-      }
+      log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
+      await Mortgage.update(
+        {
+          status: Mortgage.STATUS.paid,
+          outstanding_amount: 0,
+          block_time_updated_at
+        },
+        {
+          loan_id: _index
+        }
+      )
       break
     }
     default:
@@ -315,7 +302,7 @@ async function processParcelRelatedEvents(assetId, event) {
           eth.utils.toBigNumber(loanId)
         ),
         await rcnEngineContract.getCancelableAt(eth.utils.toBigNumber(loanId)),
-        await rcnEngineContract.getPendingAmount(loanId)
+        await rcnEngineContract.getPendingAmount(eth.utils.toBigNumber(loanId))
       ])
 
       const block_time_created_at = await Promise.resolve(

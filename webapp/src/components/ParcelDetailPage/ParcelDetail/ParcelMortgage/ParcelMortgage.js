@@ -1,18 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Grid } from 'semantic-ui-react'
 
 import Mana from 'components/Mana'
 import MortgageActions from 'components/MortgageActions'
 import Expiration from 'components/Expiration'
 import { t } from 'modules/translation/utils'
+import { mortgageType } from 'components/types'
+import { isMortgagePending, isMortgageOngoing } from 'modules/mortgage/utils'
 
 import './ParcelMortgage.css'
-import { isMortgagePending, isMortgageOngoing } from 'modules/mortgage/utils'
 
 export default class ParcelMortgage extends React.PureComponent {
   static propTypes = {
-    mortgage: PropTypes.object.isRequired
+    mortgage: mortgageType
   }
 
   render() {

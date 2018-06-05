@@ -21,7 +21,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
   }
 
   renderLoading() {
@@ -52,14 +52,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
   }
 
   render() {
-    const {
-      x,
-      y,
-      isLoading,
-      isConnected,
-      onConfirm,
-      onCancel
-    } = this.props
+    const { x, y, isLoading, isConnected, onConfirm, onCancel } = this.props
     if (isLoading) {
       return this.renderLoading()
     }

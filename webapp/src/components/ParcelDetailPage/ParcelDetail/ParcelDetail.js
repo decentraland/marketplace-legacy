@@ -12,7 +12,12 @@ import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
 import ParcelMortgage from './ParcelMortgage'
-import { parcelType, districtType, publicationType } from 'components/types'
+import {
+  parcelType,
+  districtType,
+  publicationType,
+  mortgageType
+} from 'components/types'
 import { getDistrict, isOnSale } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
 
@@ -22,7 +27,7 @@ export default class ParcelDetail extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
-    mortgage: PropTypes.object
+    mortgage: mortgageType
   }
 
   getDescription() {

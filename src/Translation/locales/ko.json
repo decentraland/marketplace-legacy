@@ -139,6 +139,9 @@
     "interest_rate_placeholder": "이자율",
     "oracle": "오라클 계약 주소",
     "outstanding_amount": "미납금",
+    "partial_payment": "부분 지불",
+    "partial_payment_desc":
+      "당신은 토지 {parcel_name}를 구입하기 위해 모기지에 대한 부분적인 지불을하려고합니다",
     "pay": "지불",
     "payable": "지불 할 곳 :",
     "payable_placeholder": "일 단위로 지불 가능",
@@ -320,6 +323,8 @@
       "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}.",
     "mortgage_rcn":
       "{action} 귀하를 대신하여 RCN을 운영하는 {mortgage_contract_link}.",
+    "pay_mortgage":
+      "소포 {parcel_link}을 구입하기 위해 모기지에 대해 {amount}의 부분 지불을했습니다.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
     "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."

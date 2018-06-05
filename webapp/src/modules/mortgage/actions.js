@@ -43,7 +43,7 @@ export function cancelMortgageRequest(mortgageId, assetId) {
 }
 
 export function cancelMortgageSuccess(txHash, assetId) {
-  const { x, y } = splitCoordinate(assetId)
+  const { x, y } = splitCoordinate(assetId) //TODO: check this
   return {
     type: CANCEL_MORTGAGE_SUCCESS,
     ...buildTransactionAction(txHash, {
@@ -125,18 +125,25 @@ export const PAY_MORTGAGE_REQUEST = '[Request] Pay mortgage'
 export const PAY_MORTGAGE_SUCCESS = '[Success] Pay mortgages'
 export const PAY_MORTGAGE_FAILURE = '[Failure] Pay mortgages'
 
-export function payMortgageRequest({loanId, amount}) {
+export function payMortgageRequest({ loanId, assetId, amount }) {
   return {
     type: PAY_MORTGAGE_REQUEST,
     loanId,
+    assetId,
     amount
   }
 }
 
-export function payMortgageSuccess(txHash) {
+export function payMortgageSuccess(txHash, assetId, amount) {
+  const [x, y] = splitCoordinate(assetId)
   return {
     type: PAY_MORTGAGE_SUCCESS,
-    txHash
+    ...buildTransactionAction(txHash, {
+      tx_hash: txHash,
+      x: parseInt(x, 10),
+      y: parseInt(y, 10),
+      amount
+    })
   }
 }
 

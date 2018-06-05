@@ -138,6 +138,8 @@
     "interest_rate_placeholder": "利率",
     "oracle": "Oracle合同地址",
     "outstanding_amount": "杰出的金额",
+    "partial_payment": "部分付款",
+    "partial_payment_desc": "你即将支付部分抵押贷款购买土地{parcel_name}",
     "pay": "工资",
     "payable": "应付",
     "payable_placeholder": "应付天数",
@@ -302,6 +304,7 @@
     "manage_revoked": "您撤销了{address_link}更新{parcel_link}内容的权限",
     "mortgage_mana": "你{action} {mortgage_contract_link}代表你操作MANA。",
     "mortgage_rcn": "您{action} {mortgage_contract_link}代表您运营RCN。",
+    "pay_mortgage": "您为抵押购买{parcel_link}包的部分支付{amount}",
     "publish": "您发布了{parcel_link}地块",
     "transfer": "您已将{parcel_link}转让给{owner_link}",
     "transfer_mana": "您将{mana}个MANA转移到{address_link}"

@@ -6,7 +6,7 @@ import { isFeatureEnabled } from 'lib/featureUtils'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelDetail from './ParcelDetail'
 import Parcel from 'components/Parcel'
-import { districtType, publicationType } from 'components/types'
+import { districtType, publicationType, mortgageType } from 'components/types'
 
 import './ParcelDetailPage.css'
 
@@ -18,7 +18,7 @@ export default class ParcelDetailPage extends React.PureComponent {
     error: PropTypes.string,
     districts: PropTypes.objectOf(districtType).isRequired,
     publications: PropTypes.objectOf(publicationType),
-    mortgage: PropTypes.object, // TODO: mortgageType
+    mortgage: mortgageType,
     onFetchParcelPublications: PropTypes.func.isRequired,
     onFetchActiveParcelMortgages: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,

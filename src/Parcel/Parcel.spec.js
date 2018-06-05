@@ -149,7 +149,7 @@ describe('Parcel', function() {
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
-        type: 'parcel', // TODO: change with constant
+        type: ASSET_TYPE.parcel,
         borrower: '0xdeadbeef33',
         lender: null,
         is_due_at: 10000,

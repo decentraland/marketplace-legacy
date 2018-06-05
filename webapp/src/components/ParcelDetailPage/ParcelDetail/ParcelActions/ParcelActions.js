@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
 
 import { isFeatureEnabled } from 'lib/featureUtils'
-import { parcelType } from 'components/types'
+import { parcelType, mortgageType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { isOnSale } from 'lib/parcelUtils'
 import { locations } from 'locations'
@@ -15,7 +15,7 @@ export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool,
-    mortgage: PropTypes.array.isRequired,
+    mortgage: mortgageType,
     isLoading: PropTypes.bool.isRequired
   }
 
@@ -51,7 +51,7 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : isOnSale(parcel) && mortgage ? (
+        ) : isOnSale(parcel) && !mortgage ? (
           <React.Fragment>
             <Link to={locations.buyLand(x, y)}>
               <Button primary size="large">

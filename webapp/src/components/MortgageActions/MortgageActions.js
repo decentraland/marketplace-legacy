@@ -4,10 +4,11 @@ import { Button } from 'semantic-ui-react'
 
 import { t } from 'modules/translation/utils'
 import { MORTGAGE_STATUS } from 'modules/mortgage/utils'
+import { mortgageType } from 'components/types'
 
 export default class MortgageActions extends React.PureComponent {
   static propTypes = {
-    mortgage: PropTypes.object.isRequired,
+    mortgage: mortgageType,
     onCancel: PropTypes.func.isRequired,
     onPay: PropTypes.func.isRequired
   }

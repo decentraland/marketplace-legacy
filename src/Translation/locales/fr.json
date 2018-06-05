@@ -142,6 +142,9 @@
     "interest_rate_placeholder": "Taux d'intérêt",
     "oracle": "Adresse du contrat Oracle",
     "outstanding_amount": "Encours",
+    "partial_payment": "Paiement partiel",
+    "partial_payment_desc":
+      "Vous êtes sur le point de faire un paiement partiel pour l'hypothèque pour acheter le terrain {parcel_name}",
     "pay": "Payer",
     "payable": "Payable à",
     "payable_placeholder": "Payable en jours",
@@ -334,6 +337,8 @@
       "Vous {action} gérez le {mortgage_contract_link} pour exploiter MANA en votre nom.",
     "mortgage_rcn":
       "Vous {action} le {mortgage_contract_link} pour exploiter RCN en votre nom.",
+    "pay_mortgage":
+      "Vous avez effectué un paiement partiel de {amount} MANA pour l'hypothèque pour acheter le colis {parcel_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"

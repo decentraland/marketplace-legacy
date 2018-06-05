@@ -2,19 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Form, Input } from 'semantic-ui-react'
-import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
+import { mortgageType } from 'components/types'
 
 import './PayMortgageForm.css'
 
 export default class PayMortgageForm extends React.PureComponent {
   static propTypes = {
     balance: PropTypes.number,
-    isTxIdle: PropTypes.bool,
-    mortgage: PropTypes.object.isRequired, //TODO: mortgageType
+    mortgage: mortgageType,
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    isDisabled: PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -42,20 +42,20 @@ export default class PayMortgageForm extends React.PureComponent {
 
   handleSubmit = () => {
     const {
-      mortgage: { loan_id },
+      mortgage: { loan_id, asset_id },
       onSubmit
     } = this.props
     const { amount } = this.state
-    onSubmit({ loanId: loan_id, amount })
+    onSubmit({ loanId: loan_id, assetId: asset_id, amount })
   }
 
   render() {
-    const { isTxIdle, onCancel } = this.props
+    const { onCancel, isDisabled } = this.props
     const { amount } = this.state
 
     return (
       <Form
-        className="TransferManaForm"
+        className="MortgageForm"
         onSubmit={preventDefault(this.handleSubmit)}
       >
         <Form.Field>
@@ -72,14 +72,12 @@ export default class PayMortgageForm extends React.PureComponent {
           />
         </Form.Field>
         <br />
-        <TxStatus.Idle isIdle={isTxIdle} />
-        <br />
         <div className="footer">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>
 
-          <Button type="submit" primary={true}>
+          <Button type="submit" primary={true} disabled={isDisabled}>
             {t('global.submit')}
           </Button>
         </div>

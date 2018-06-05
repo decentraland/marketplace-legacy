@@ -141,7 +141,7 @@
     "outstanding_amount": "Outstanding amount",
     "partial_payment": "Partial payment",
     "partial_payment_desc":
-      "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount} MANA",
+      "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount}",
     "pay": "Pay",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",
@@ -328,6 +328,8 @@
       "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
     "mortgage_rcn":
       "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
+    "pay_mortgage":
+      "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
     "publish": "You published {parcel_link}",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"

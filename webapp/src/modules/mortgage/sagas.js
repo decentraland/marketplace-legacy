@@ -159,17 +159,22 @@ function* handleFetchActiveParcelMortgagesRequest(action) {
 
 function* handlePayMortgageRequest(action) {
   try {
-    const { loanId, amount } = action
+    const { loanId, amount, assetId } = action
     const borrower = yield select(getAddress)
     const kyberOrcaleAddress = getKyberOracleAddress()
 
     const rcnEngineContract = eth.getContract('RCNEngine')
 
     const payMortgageReceipt = yield call(() =>
-      rcnEngineContract.pay(loanId, eth.utils.toWei(amount), borrower, kyberOrcaleAddress)
+      rcnEngineContract.pay(
+        loanId,
+        eth.utils.toWei(amount),
+        borrower,
+        kyberOrcaleAddress
+      )
     )
 
-    yield put(payMortgageSuccess(payMortgageReceipt))
+    yield put(payMortgageSuccess(payMortgageReceipt, assetId, amount))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(payMortgageFailure(error.message))

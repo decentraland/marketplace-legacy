@@ -5,15 +5,16 @@ import { push } from 'react-router-redux'
 import PayMortgagePage from './PayMortgagePage'
 import {
   payMortgageRequest,
-  fetchActiveParcelMortgagesRequest,
+  fetchActiveParcelMortgagesRequest
 } from 'modules/mortgage/actions'
 import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import {
   getParcelMortgage,
+  isFetchingParcelMortgages
 } from 'modules/mortgage/selectors'
 import { isLoading } from 'modules/parcels/selectors'
-import { getWallet, isConnected } from 'modules/wallet/selectors'
+import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
@@ -23,8 +24,9 @@ const mapState = (state, ownProps) => {
     y,
     wallet: getWallet(state),
     isConnected: isConnected(state),
-    isLoading:
-      isLoading(state),
+    isConnecting: isConnecting(state),
+    isFetchingMortgages: isFetchingParcelMortgages(state),
+    isLoading: isLoading(state),
     mortgage: getMortgage(state)
   }
 }
