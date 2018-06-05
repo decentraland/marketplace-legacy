@@ -30,7 +30,7 @@ describe('Parcel', function() {
     beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
 
     it('should return an array of parcels which are on the supplied range', async function() {
-      const range = await Parcel.inRange([2, 5], [5, 3])
+      const range = await Parcel.inRange({ x: 2, y: 5 }, { x: 5, y: 3 })
       const coordinates = range.map(coord => `${coord.x},${coord.y}`).sort()
 
       expect(range.length).to.be.equal(12)
@@ -69,7 +69,7 @@ describe('Parcel', function() {
       }
       await Publication.insert(publication)
 
-      const range = await Parcel.inRange([3, 5], [4, 5])
+      const range = await Parcel.inRange({ x: 3, y: 5 }, { x: 4, y: 5 })
       expect(range).to.equalRows([
         {
           x: 3,
