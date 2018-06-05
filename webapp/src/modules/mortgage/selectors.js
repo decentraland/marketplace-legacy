@@ -10,6 +10,7 @@ import { buildCoordinate } from 'lib/utils'
 export const getState = state => state.mortgages
 export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
+export const getError = state => getState(state).error
 export const getMortgages = state => getData(state).mortgages
 export const isFetchingParcelMortgages = state =>
   isLoadingType(getLoading(state), FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST)

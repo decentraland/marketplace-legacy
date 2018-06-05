@@ -12,6 +12,7 @@ import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { getLoading } from 'modules/publication/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import { isLoadingType } from 'modules/loading/selectors'
+import { getError as getMortgageError } from 'modules/mortgage/selectors'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
@@ -22,7 +23,8 @@ const mapState = (state, ownProps) => {
     isDisabled: isLoadingType(getLoading(state), CREATE_MORTGAGE_REQUEST),
     wallet: getWallet(state),
     isConnected: isConnected(state),
-    isLoading: isConnecting(state)
+    isLoading: isConnecting(state),
+    error: getMortgageError(state)
   }
 }
 
