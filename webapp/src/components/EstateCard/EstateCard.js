@@ -44,18 +44,18 @@ export default class EstateCard extends React.PureComponent {
 
           <Card.Meta>
             {estate.last_transferred_at
-              ? t('estate.last_transferred_at', {
-                  date: formatDate(
-                    parseInt(estate.last_transferred_at, 10),
-                    'MMMM Do, YYYY'
-                  )
-                })
-              : t('estate.created_at', {
-                  date: formatDate(
-                    parseInt(estate.created_at, 10),
-                    'MMMM Do, YYYY'
-                  )
-                })}
+              ? t('global.acquired_at', {
+                date: formatDate(
+                  parseInt(estate.last_transferred_at, 10),
+                  'MMMM Do, YYYY'
+                )
+              })
+              : t('global.created_at', {
+                date: formatDate(
+                  parseInt(estate.created_at, 10),
+                  'MMMM Do, YYYY'
+                )
+              })}
           </Card.Meta>
 
           <div className="footer">
