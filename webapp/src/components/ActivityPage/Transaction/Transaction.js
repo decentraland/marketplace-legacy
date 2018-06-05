@@ -45,7 +45,8 @@ import {
 import {
   CREATE_MORTGAGE_SUCCESS,
   CANCEL_MORTGAGE_SUCCESS,
-  PAY_MORTGAGE_SUCCESS
+  PAY_MORTGAGE_SUCCESS,
+  CLAIM_MORTGAGE_RESOLUTION_SUCCESS
 } from 'modules/mortgage/actions'
 
 import './Transaction.css'
@@ -232,6 +233,13 @@ export default class Transaction extends React.PureComponent {
         return t_html('transaction.pay_mortgage', {
           parcel_link: this.renderParcelLink(x, y),
           amount
+        })
+      }
+      case CLAIM_MORTGAGE_RESOLUTION_SUCCESS: {
+        const { x, y } = payload
+
+        return t_html('transaction.claim_mortgage_resolution', {
+          parcel_link: this.renderParcelLink(x, y)
         })
       }
       default:

@@ -122,8 +122,8 @@ export function fetchActiveParcelMortgagesFailure(error) {
 }
 
 export const PAY_MORTGAGE_REQUEST = '[Request] Pay mortgage'
-export const PAY_MORTGAGE_SUCCESS = '[Success] Pay mortgages'
-export const PAY_MORTGAGE_FAILURE = '[Failure] Pay mortgages'
+export const PAY_MORTGAGE_SUCCESS = '[Success] Pay mortgage'
+export const PAY_MORTGAGE_FAILURE = '[Failure] Pay mortgage'
 
 export function payMortgageRequest({ loanId, assetId, amount }) {
   return {
@@ -150,6 +150,38 @@ export function payMortgageSuccess(txHash, assetId, amount) {
 export function payMortgageFailure(error) {
   return {
     type: PAY_MORTGAGE_FAILURE,
+    error
+  }
+}
+
+
+export const CLAIM_MORTGAGE_RESOLUTION_REQUEST = '[Request] Claim mortgage resolution'
+export const CLAIM_MORTGAGE_RESOLUTION_SUCCESS = '[Success] Claim mortgage resolution'
+export const CLAIM_MORTGAGE_RESOLUTION_FAILURE = '[Failure] Claim mortgage resolution'
+
+export function claimMortgageResolutionRequest(loanId, assetId) {
+  return {
+    type: CLAIM_MORTGAGE_RESOLUTION_REQUEST,
+    loanId,
+    assetId
+  }
+}
+
+export function claimMortgageResolutionSuccess(txHash, assetId) {
+  const [x, y] = splitCoordinate(assetId)
+  return {
+    type: CLAIM_MORTGAGE_RESOLUTION_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      tx_hash: txHash,
+      x: parseInt(x, 10),
+      y: parseInt(y, 10),
+    })
+  }
+}
+
+export function claimMortgageResolutionFailure(error) {
+  return {
+    type: CLAIM_MORTGAGE_RESOLUTION_FAILURE,
     error
   }
 }

@@ -10,6 +10,7 @@ import {
   FETCH_MORTGAGED_PARCELS_REQUEST,
   FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
   PAY_MORTGAGE_REQUEST,
+  CLAIM_MORTGAGE_RESOLUTION_REQUEST,
   createMortgageSuccess,
   createMortgageFailure,
   cancelMortgageFailure,
@@ -19,11 +20,16 @@ import {
   fetchActiveParcelMortgagesSuccess,
   fetchActiveParcelMortgagesFailure,
   payMortgageSuccess,
-  payMortgageFailure
+  payMortgageFailure,
+  claimMortgageResolutionSuccess,
+  claimMortgageResolutionFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { toInterestRate, getLoanMetadata, daysToSeconds } from './utils'
-import { getKyberOracleAddress } from 'modules/wallet/utils'
+import {
+  getKyberOracleAddress,
+  getRCNEngineAddress
+} from 'modules/wallet/utils'
 import { locations } from 'locations'
 
 export function* mortgageSaga() {
@@ -35,6 +41,10 @@ export function* mortgageSaga() {
     FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
     handleFetchActiveParcelMortgagesRequest
   )
+  yield takeLatest(
+    CLAIM_MORTGAGE_RESOLUTION_REQUEST,
+    handleClaimMortgageResolutionRequest
+  )
 }
 
 function* handleFetchMortgageRequest(action) {
@@ -45,7 +55,8 @@ function* handleFetchMortgageRequest(action) {
       call(() =>
         api.fetchMortgagesByBorrower(borrower, [
           MORTGAGE_STATUS.pending,
-          MORTGAGE_STATUS.ongoing
+          MORTGAGE_STATUS.ongoing,
+          MORTGAGE_STATUS.paid
         ])
       )
     ])
@@ -148,7 +159,8 @@ function* handleFetchActiveParcelMortgagesRequest(action) {
     const mortgages = yield call(() =>
       api.fetchMortgages(x, y, [
         MORTGAGE_STATUS.pending,
-        MORTGAGE_STATUS.ongoing
+        MORTGAGE_STATUS.ongoing,
+        MORTGAGE_STATUS.paid
       ])
     )
     yield put(fetchActiveParcelMortgagesSuccess(mortgages, x, y))
@@ -178,5 +190,25 @@ function* handlePayMortgageRequest(action) {
     yield put(push(locations.activity))
   } catch (error) {
     yield put(payMortgageFailure(error.message))
+  }
+}
+
+function* handleClaimMortgageResolutionRequest(action) {
+  try {
+    const { loanId, assetId } = action
+    const rcnEngineAddress = getRCNEngineAddress()
+
+    const mortgageManagerContract = eth.getContract('MortgageManager')
+
+    const claimMortgageResolutionReceipt = yield call(() =>
+      mortgageManagerContract.claim(rcnEngineAddress, loanId, [])
+    )
+
+    yield put(
+      claimMortgageResolutionSuccess(claimMortgageResolutionReceipt, assetId)
+    )
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(claimMortgageResolutionFailure(error.message))
   }
 }

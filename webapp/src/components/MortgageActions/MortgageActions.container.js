@@ -2,7 +2,10 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import MortgageActions from './MortgageActions'
-import { cancelMortgageRequest } from 'modules/mortgage/actions'
+import {
+  cancelMortgageRequest,
+  claimMortgageResolutionRequest
+} from 'modules/mortgage/actions'
 import { locations } from 'locations'
 import { splitCoordinate } from 'lib/utils'
 
@@ -19,7 +22,11 @@ const mapDispatch = (dispatch, { mortgage }) => {
     onCancel: () =>
       dispatch(cancelMortgageRequest(mortgage.mortgage_id, mortgage.asset_id)),
     onPay: () =>
-      dispatch(push(locations.payMortgage(coordinates[0], coordinates[1])))
+      dispatch(push(locations.payMortgage(coordinates[0], coordinates[1]))),
+    onClaim: () =>
+      dispatch(
+        claimMortgageResolutionRequest(mortgage.loan_id, mortgage.asset_id)
+      )
   }
 }
 

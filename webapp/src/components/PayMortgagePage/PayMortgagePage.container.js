@@ -19,7 +19,7 @@ import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
   const getMortgage = getParcelMortgage(x, y)
-  return {
+  return state => ({
     x,
     y,
     wallet: getWallet(state),
@@ -28,7 +28,7 @@ const mapState = (state, ownProps) => {
     isFetchingMortgages: isFetchingParcelMortgages(state),
     isLoading: isLoading(state),
     mortgage: getMortgage(state)
-  }
+  })
 }
 
 const mapDispatch = (dispatch, ownProps) => {

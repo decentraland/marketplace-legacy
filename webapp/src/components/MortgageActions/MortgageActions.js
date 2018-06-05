@@ -10,10 +10,11 @@ export default class MortgageActions extends React.PureComponent {
   static propTypes = {
     mortgage: mortgageType,
     onCancel: PropTypes.func.isRequired,
-    onPay: PropTypes.func.isRequired
+    onPay: PropTypes.func.isRequired,
+    onClaim: PropTypes.func.isRequired
   }
   render() {
-    const { mortgage, onCancel, onPay } = this.props
+    const { mortgage, onCancel, onPay, onClaim } = this.props
 
     switch (mortgage.status) {
       case MORTGAGE_STATUS.pending:
@@ -27,6 +28,12 @@ export default class MortgageActions extends React.PureComponent {
         return (
           <Button size="tiny" onClick={onPay}>
             {t('mortgage.pay')}
+          </Button>
+        )
+      case MORTGAGE_STATUS.paid:
+        return (
+          <Button size="tiny" onClick={onClaim}>
+            {t('mortgage.claim')}
           </Button>
         )
       default:

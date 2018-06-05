@@ -86,6 +86,11 @@ export function getMortgageManagerAddress() {
   return mortgageCreatorContract.address
 }
 
+export function getRCNEngineAddress() {
+  const rcnEngineContract = eth.getContract('RCNEngine')
+  return rcnEngineContract.address
+}
+
 export function getKyberOracleAddress() {
   return env.get('REACT_APP_KYBER_ORACLE_CONTRACT_ADDRESS')
 }

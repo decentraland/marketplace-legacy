@@ -92,7 +92,7 @@ async function processNoParcelRelatedEvents(event) {
       break
     }
     case BlockchainEvent.EVENTS.partialPayment: {
-      const { _index } = event.args
+      const { _index, _amount } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
@@ -102,7 +102,17 @@ async function processNoParcelRelatedEvents(event) {
       const outstandingAmount = await rcnEngineContract.getPendingAmount(
         eth.utils.toBigNumber(_index)
       )
+      const amount = await rcnEngineContract.getAmount(
+        eth.utils.toBigNumber(_index)
+      )
 
+      console.log(
+        'amount: ',
+        _amount,
+        eth.utils.fromWei(outstandingAmount),
+        outstandingAmount,
+        amount
+      )
       await Mortgage.update(
         {
           outstanding_amount: eth.utils.fromWei(outstandingAmount),
@@ -128,6 +138,40 @@ async function processNoParcelRelatedEvents(event) {
         },
         {
           loan_id: _index
+        }
+      )
+      break
+    }
+    case BlockchainEvent.EVENTS.paidMortgage: {
+      const { _id } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      log.info(`[${name}] Claimed Mortgage ${_id}`)
+      await Mortgage.update(
+        {
+          status: Mortgage.STATUS.claimed,
+          block_time_updated_at
+        },
+        {
+          mortgage_id: _id
+        }
+      )
+      break
+    }
+    case BlockchainEvent.EVENTS.defaultedMortgage: {
+      const { _id } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      log.info(`[${name}] Defaulted Mortgage ${_id}`)
+      await Mortgage.update(
+        {
+          status: Mortgage.STATUS.defaulted,
+          block_time_updated_at
+        },
+        {
+          mortgage_id: _id
         }
       )
       break

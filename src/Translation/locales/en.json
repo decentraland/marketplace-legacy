@@ -121,6 +121,7 @@
     "amount": "Amount",
     "amount_placeholder": "Amount in MANA",
     "cancel": "Cancel Mortgage",
+    "claim": "Claim parcel",
     "duration": "Duration",
     "duration_placeholder": "Duration in days",
     "errors": {
@@ -314,6 +315,7 @@
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
+    "claim_mortgage_resolution": "You claimed {parcel_link}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
     "disapproved":

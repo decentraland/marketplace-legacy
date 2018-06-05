@@ -14,17 +14,15 @@ import ParcelDetailPage from './ParcelDetailPage'
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParams(ownProps)
   const getMortgage = getParcelMortgage(x, y)
-  return state => {
-    return {
-      x,
-      y,
-      isLoading: isLoading(state),
-      error: getError(state),
-      districts: getDistricts(state),
-      publications: getParcelPublications(state),
-      mortgage: getMortgage(state)
-    }
-  }
+  return state => ({
+    x,
+    y,
+    isLoading: isLoading(state),
+    error: getError(state),
+    districts: getDistricts(state),
+    publications: getParcelPublications(state),
+    mortgage: getMortgage(state)
+  })
 }
 
 const mapDispatch = dispatch => ({
