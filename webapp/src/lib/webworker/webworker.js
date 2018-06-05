@@ -18,8 +18,6 @@ const WebWorkerDependencies = [
   buildCoordinate
 ]
 
-// const WebWorkerDependencies = []
-
 export const webworker = WebWorkerFactory.create(
   WebWorkerOnMessage,
   WebWorkerDependencies
