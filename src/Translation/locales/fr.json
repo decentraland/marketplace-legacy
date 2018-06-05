@@ -70,6 +70,7 @@
     "terms": "Termes et Conditions"
   },
   "global": {
+    "acquired_at": "Acquis à {date}",
     "activity": "Activité",
     "address_placeholder": "Exemple: {address}",
     "atlas": "Atlas",
@@ -85,6 +86,7 @@
     "connecting": "Connexion",
     "continue": "Continuer",
     "contributions": "Contributions",
+    "created_at": "Créé à {date}",
     "estate": "Biens",
     "estates": "Estates",
     "expired_at": "Expiré {time}",

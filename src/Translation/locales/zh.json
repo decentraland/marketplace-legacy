@@ -68,6 +68,7 @@
     "terms": "条款和条件"
   },
   "global": {
+    "acquired_at": "在{date}获得",
     "activity": "活动",
     "address_placeholder": "例如：{address}",
     "atlas": "地图",
@@ -83,6 +84,7 @@
     "connecting": "连",
     "continue": "继续",
     "contributions": "小区份额",
+    "created_at": "创建于{date}",
     "estate": "房地产",
     "estates": "庄园",
     "expired_at": "已过期{time}",

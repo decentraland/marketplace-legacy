@@ -68,6 +68,7 @@
     "terms": "이용 약관"
   },
   "global": {
+    "acquired_at": "TK0에서 획득",
     "activity": "활동",
     "address_placeholder": "예 : {address}",
     "atlas": "지도",
@@ -83,6 +84,7 @@
     "connecting": "연결 중",
     "continue": "잇다",
     "contributions": "공헌",
+    "created_at": "만든 {date}",
     "estate": "재산",
     "estates": "부동산",
     "expired_at": "만료 됨 {time}",
