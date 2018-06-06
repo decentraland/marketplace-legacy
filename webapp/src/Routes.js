@@ -45,14 +45,15 @@ export default class Routes extends React.Component {
         <Route exact path={locations.edit} component={EditParcelPage} />
         <Route exact path={locations.transfer} component={TransferParcelPage} />
         {isFeatureEnabled('ESTATES') && (
-          <React.Fragment>
-            <Route
-              exact
-              path={locations.createEstate}
-              component={CreateEstatePage}
-            />
-            <Route exact path={locations.estate} component={EstateDetailPage} />
-          </React.Fragment>
+          <Route
+            exact
+            path={locations.createEstate}
+            component={CreateEstatePage}
+          />
+        ) /* Estate Feature */}
+
+        {isFeatureEnabled('ESTATES') && (
+          <Route exact path={locations.estate} component={EstateDetailPage} />
         ) /* Estate Feature */}
         <Route exact path={locations.manage} component={ManageParcelPage} />
         <Route exact path={locations.buy} component={BuyParcelPage} />
