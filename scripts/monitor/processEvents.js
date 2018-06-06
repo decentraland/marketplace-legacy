@@ -271,14 +271,13 @@ async function processParcelRelatedEvents(assetId, event) {
       }
       log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
 
+      const LoanIdBN = eth.utils.toBigNumber(loanId)
       const rcnEngineContract = await eth.getContract('RCNEngine')
       const [amount, duesIn, expiresAt, payableAt] = await Promise.all([
-        await rcnEngineContract.getAmount(eth.utils.toBigNumber(loanId)),
-        await rcnEngineContract.getDuesIn(eth.utils.toBigNumber(loanId)),
-        await rcnEngineContract.getExpirationRequest(
-          eth.utils.toBigNumber(loanId)
-        ),
-        await rcnEngineContract.getCancelableAt(eth.utils.toBigNumber(loanId))
+        await rcnEngineContract.getAmount(LoanIdBN),
+        await rcnEngineContract.getDuesIn(LoanIdBN),
+        await rcnEngineContract.getExpirationRequest(LoanIdBN),
+        await rcnEngineContract.getCancelableAt(LoanIdBN)
       ])
 
       const block_time_created_at = await Promise.resolve(

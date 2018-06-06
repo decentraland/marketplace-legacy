@@ -32,11 +32,11 @@ export function getLoanMetadata() {
 
 export function isMortgageActive(mortgage, parcel) {
   return (
-    mortgage &
-      parcel &
-      (isMortgagePending &&
-        isOpen(parcel.publication, PUBLICATION_STATUS.open)) ||
-    hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid])
+    mortgage &&
+    parcel &&
+    ((isMortgagePending(mortgage) &&
+      isOpen(parcel.publication, PUBLICATION_STATUS.open)) ||
+      hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid]))
   )
 }
 

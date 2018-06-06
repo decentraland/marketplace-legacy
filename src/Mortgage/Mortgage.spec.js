@@ -21,7 +21,7 @@ describe('Mortgage', function() {
       loan_id: 0,
       mortgage_id: 0,
       asset_id: Parcel.buildId(2, 5),
-      type: ASSET_TYPE.parcel, // TODO: change with constant
+      type: ASSET_TYPE.parcel,
       borrower: '0xdeadbeef33',
       lender: null,
       amount: 1500,
