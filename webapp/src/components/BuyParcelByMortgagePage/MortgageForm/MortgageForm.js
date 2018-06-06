@@ -290,21 +290,13 @@ export default class MortgageForm extends React.PureComponent {
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}
           </Message>
         ) : null}
-        {error && (
-          <Message error>
-            {<div>{error}</div>}
-          </Message>
-        )}
+        {error && <Message error>{<div>{error}</div>}</Message>}
         <br />
         <div>
           <Button disabled={isPending} onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
-          <Button
-            type="submit"
-            primary={true}
-            disabled={isPending}
-          >
+          <Button type="submit" primary={true} disabled={isPending}>
             {t('global.request')}
           </Button>
         </div>

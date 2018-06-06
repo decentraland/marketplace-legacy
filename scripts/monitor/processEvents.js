@@ -92,7 +92,7 @@ async function processNoParcelRelatedEvents(event) {
       break
     }
     case BlockchainEvent.EVENTS.partialPayment: {
-      const { _index, _amount } = event.args
+      const { _index } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
@@ -102,17 +102,7 @@ async function processNoParcelRelatedEvents(event) {
       const outstandingAmount = await rcnEngineContract.getPendingAmount(
         eth.utils.toBigNumber(_index)
       )
-      const amount = await rcnEngineContract.getAmount(
-        eth.utils.toBigNumber(_index)
-      )
 
-      console.log(
-        'amount: ',
-        _amount,
-        eth.utils.fromWei(outstandingAmount),
-        outstandingAmount,
-        amount
-      )
       await Mortgage.update(
         {
           outstanding_amount: eth.utils.fromWei(outstandingAmount),

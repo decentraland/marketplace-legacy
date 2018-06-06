@@ -154,10 +154,12 @@ export function payMortgageFailure(error) {
   }
 }
 
-
-export const CLAIM_MORTGAGE_RESOLUTION_REQUEST = '[Request] Claim mortgage resolution'
-export const CLAIM_MORTGAGE_RESOLUTION_SUCCESS = '[Success] Claim mortgage resolution'
-export const CLAIM_MORTGAGE_RESOLUTION_FAILURE = '[Failure] Claim mortgage resolution'
+export const CLAIM_MORTGAGE_RESOLUTION_REQUEST =
+  '[Request] Claim mortgage resolution'
+export const CLAIM_MORTGAGE_RESOLUTION_SUCCESS =
+  '[Success] Claim mortgage resolution'
+export const CLAIM_MORTGAGE_RESOLUTION_FAILURE =
+  '[Failure] Claim mortgage resolution'
 
 export function claimMortgageResolutionRequest(loanId, assetId) {
   return {
@@ -174,7 +176,7 @@ export function claimMortgageResolutionSuccess(txHash, assetId) {
     ...buildTransactionAction(txHash, {
       tx_hash: txHash,
       x: parseInt(x, 10),
-      y: parseInt(y, 10),
+      y: parseInt(y, 10)
     })
   }
 }
