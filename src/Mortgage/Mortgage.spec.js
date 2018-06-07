@@ -13,7 +13,7 @@ describe('Mortgage', function() {
   const payable_at = 1000
   let mortgage = {}
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mortgage = {
       tx_hash: '1xdeadbeef',
       tx_status: txUtils.TRANSACTION_STATUS.confirmed,
