@@ -47,6 +47,16 @@
     "invalid":
       "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
+  "estate_edit": {
+    "description": "描述",
+    "edit_estate": "编辑地产",
+    "name": "名称",
+    "subtitle": "设置名称和说明，并编辑您遗产的包裹。"
+  },
+  "estate_select": {
+    "description": "从{x}，{y}开始选择相邻的地块",
+    "selection": "选择你的新房地产的包裹"
+  },
   "footer": {
     "color_key": "色彩标记",
     "copyright": "© 2018 Decentraland。保留所有权利。",
@@ -55,6 +65,7 @@
     "terms": "条款和条件"
   },
   "global": {
+    "acquired_at": "在{date}获得",
     "activity": "活动",
     "address_placeholder": "例如：{address}",
     "atlas": "地图",
@@ -68,7 +79,11 @@
     "confirm": "确认",
     "connect": "잇다",
     "connecting": "连",
+    "continue": "继续",
     "contributions": "小区份额",
+    "created_at": "创建于{date}",
+    "estate": "房地产",
+    "estates": "庄园",
     "expired_at": "已过期{time}",
     "expires_in": "到期{time}",
     "expires_in_more_than_years": "超过{years}年到期",
@@ -171,6 +186,7 @@
   "parcel_detail": {
     "actions": {
       "cancel": "取消出售",
+      "create_estate": "创建庄园",
       "edit": "编辑",
       "permissions": "权限",
       "sell": "出售",
@@ -256,7 +272,6 @@
     "on_sale": "出售"
   },
   "publication": {
-    "acquired_at": "在{date}收购",
     "canceled": "已取消",
     "sold": "已售出",
     "view": "查看"

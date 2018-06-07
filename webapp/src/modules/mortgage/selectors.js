@@ -18,7 +18,7 @@ export const getMortgagesArray = createSelector(getMortgages, mortgages =>
   Object.keys(mortgages).map(key => mortgages[key])
 )
 
-export const getParcelMortgages = (x, y) =>
+export const getParcelMortgagesFactory = (x, y) =>
   createSelector(
     getAddress,
     getParcels,

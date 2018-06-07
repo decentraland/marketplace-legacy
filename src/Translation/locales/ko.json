@@ -47,6 +47,16 @@
     "invalid":
       "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
   },
+  "estate_edit": {
+    "description": "기술",
+    "edit_estate": "부동산 편집",
+    "name": "이름",
+    "subtitle": "이름과 설명을 설정하고 재산에 대한 소포를 편집하십시오."
+  },
+  "estate_select": {
+    "description": "{x}, {y}에서 시작하여 인접한 소포를 선택하십시오.",
+    "selection": "새 부동산에 대한 소포를 선택하십시오."
+  },
   "footer": {
     "color_key": "색상 키",
     "copyright": "© 2018 Decentraland. 판권 소유.",
@@ -55,6 +65,7 @@
     "terms": "이용 약관"
   },
   "global": {
+    "acquired_at": "TK0에서 획득",
     "activity": "활동",
     "address_placeholder": "예 : {address}",
     "atlas": "지도",
@@ -68,7 +79,11 @@
     "confirm": "확인",
     "connect": "잇다",
     "connecting": "연결 중",
+    "continue": "잇다",
     "contributions": "공헌",
+    "created_at": "만든 {date}",
+    "estate": "재산",
+    "estates": "부동산",
     "expired_at": "만료 됨 {time}",
     "expires_in": "만료 {time}",
     "expires_in_more_than_years": "{years} 년 이상 만료 됨",
@@ -172,6 +187,7 @@
   "parcel_detail": {
     "actions": {
       "cancel": "판매취소",
+      "create_estate": "부동산 만들기",
       "edit": "편집",
       "permissions": "권한",
       "sell": "판매",
@@ -260,7 +276,6 @@
     "on_sale": "판매 중"
   },
   "publication": {
-    "acquired_at": "{date}에 인수 됨",
     "canceled": "취소 됨",
     "sold": "판매 됨",
     "view": "보기"

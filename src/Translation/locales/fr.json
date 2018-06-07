@@ -48,6 +48,17 @@
     "invalid":
       "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
+  "estate_edit": {
+    "description": "La description",
+    "edit_estate": "Modifier le domaine",
+    "name": "Prénom",
+    "subtitle":
+      "Définissez un nom et une description et modifiez les parcelles de votre succession."
+  },
+  "estate_select": {
+    "description": "Sélectionnez les parcelles adjacentes à partir de {x}, {y}",
+    "selection": "Sélectionnez les parcelles pour votre nouveau domaine"
+  },
   "footer": {
     "color_key": "Code Couleur",
     "copyright": "© 2018 Decentraland. Tous droits reservés.",
@@ -56,6 +67,7 @@
     "terms": "Termes et Conditions"
   },
   "global": {
+    "acquired_at": "Acquis à {date}",
     "activity": "Activité",
     "address_placeholder": "Exemple: {address}",
     "atlas": "Atlas",
@@ -69,7 +81,11 @@
     "confirm": "Confirmer",
     "connect": "Connection",
     "connecting": "Connexion",
+    "continue": "Continuer",
     "contributions": "Contributions",
+    "created_at": "Créé à {date}",
+    "estate": "Biens",
+    "estates": "Estates",
     "expired_at": "Expiré {time}",
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de {years} ans",
@@ -178,6 +194,7 @@
   "parcel_detail": {
     "actions": {
       "cancel": "Annuler la vente",
+      "create_estate": "Créer un domaine",
       "edit": "Edition",
       "permissions": "Autorisations",
       "sell": "Vendre",
@@ -268,7 +285,6 @@
     "on_sale": "A vendre"
   },
   "publication": {
-    "acquired_at": "Acquis à {date}",
     "canceled": "Annulé",
     "sold": "Vendu",
     "view": "Vue"

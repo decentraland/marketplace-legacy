@@ -1,5 +1,4 @@
 import { Publication } from './Publication.model'
-import { Parcel } from '../Parcel'
 import { SQL, raw } from '../database'
 
 export const PublicationQueries = Object.freeze({
@@ -17,10 +16,10 @@ export const PublicationQueries = Object.freeze({
       ORDER BY created_at DESC`
   },
 
-  findLastParcelPublicationJsonSql: () =>
+  findLastAssetPublicationJsonSql: assetTableName =>
     SQL`SELECT row_to_json(pub.*)
       FROM ${raw(Publication.tableName)} as pub
-      WHERE ${raw(Parcel.tableName)}.id = pub.asset_id
+      WHERE ${raw(assetTableName)}.id = pub.asset_id
         AND ${PublicationQueries.whereisActive()}
       ORDER BY pub.created_at DESC
       LIMIT 1`

@@ -47,6 +47,17 @@
     "invalid":
       "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
+  "estate_edit": {
+    "description": "Descripción",
+    "edit_estate": "Editar propiedad",
+    "name": "Nombre",
+    "subtitle":
+      "Establezca un nombre y una descripción, y edite las parcelas de su propiedad."
+  },
+  "estate_select": {
+    "description": "Seleccione parcelas adyacentes a partir de {x}, {y}",
+    "selection": "Seleccione las parcelas para su nueva propiedad"
+  },
   "footer": {
     "color_key": "Mapa de Colores",
     "copyright": "© 2018 Decentraland. Todos los derechos reservados.",
@@ -55,6 +66,7 @@
     "terms": "Términos & Condiciones"
   },
   "global": {
+    "acquired_at": "Adquirido en {date}",
     "activity": "Actividad",
     "address_placeholder": "Ejemplo: {address}",
     "atlas": "Atlas",
@@ -68,7 +80,11 @@
     "confirm": "Confirmar",
     "connect": "Conexión",
     "connecting": "Conectando",
+    "continue": "Continuar",
     "contributions": "Contribuciones",
+    "created_at": "Creado en {date}",
+    "estate": "Propiedad",
+    "estates": "Propiedades",
     "expired_at": "Caducado {time}",
     "expires_in": "Caduca {time}",
     "expires_in_more_than_years": "Caduca en más de {years} años",
@@ -174,6 +190,7 @@
   "parcel_detail": {
     "actions": {
       "cancel": "Cancelar venta",
+      "create_estate": "Crear Propiedad",
       "edit": "Editar",
       "permissions": "Permisos",
       "sell": "Vender",
@@ -266,7 +283,6 @@
     "on_sale": "En Venta"
   },
   "publication": {
-    "acquired_at": "Adquirida en {date}",
     "canceled": "Cancelada",
     "sold": "Vendida",
     "view": "Ver"
