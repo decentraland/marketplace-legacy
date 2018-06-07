@@ -1,7 +1,7 @@
 #!/usr/bin/env babel-node
 import axios from 'axios'
 import fs from 'fs'
-import { unflatten } from 'flat'
+import flat, { unflatten } from 'flat'
 import { env, Log, utils } from 'decentraland-commons'
 import merge from 'lodash/merge'
 import { loadEnv } from './utils'
@@ -80,9 +80,19 @@ async function main() {
       __dirname,
       `../src/Translation/locales/${locale}.json`
     )
-    const currentTranslations = require(localePath)
+    const currentTranslations = flat(require(localePath))
+    // remove obsolete keys
+    const translations = await translation.fetch(DEFAULT_LOCALE)
+    let cleanedTranslations = Object.keys(await translation.fetch(locale))
+      .filter(key => key in translations)
+      .reduce((acc, key) => {
+        acc[key] = currentTranslations[key]
+        return acc
+      }, {})
+    cleanedTranslations = unflatten(cleanedTranslations)
+
     const updatedTranslations = merge(
-      currentTranslations,
+      cleanedTranslations,
       missing[locale] || {}
     )
     const orderedTranslations = sortObject(updatedTranslations)
