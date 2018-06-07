@@ -1,0 +1,65 @@
+.Page > .EstateDetailPage {
+  padding-top: 0;
+}
+
+.EstateDetailPage {
+  color: var(--text);
+}
+
+.EstateDetailPage > .Loading {
+  font-size: 10px;
+  top: 35%;
+}
+
+.EstateDetailPage .title {
+  margin-top: 20px;
+  margin-bottom: 30px !important;
+}
+
+.EstateDetailPage .parcel-preview {
+  height: 400px;
+}
+
+.EstateDetailPage .ParcelDetail {
+  padding-top: 35px;
+  font-size: 15px;
+}
+
+.ParcelDetail .ParcelName .name {
+  margin-right: 0.5em;
+}
+
+.EstateDetailPage .parcel-owner-container {
+  text-align: right !important;
+}
+
+.ParcelDetail .parcel-detail-row {
+  margin-bottom: 2em;
+}
+
+.ParcelDetail .parcel-actions-container {
+  display: flex !important;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.ParcelDetail h3 {
+  font-family: var(--font-family) !important;
+}
+
+.ParcelDetail .mana-price-icon {
+  font-size: 1.5em;
+}
+
+.ParcelDetail .time-left .PublicationExpiration {
+  font-size: 20px;
+  display: block;
+  color: var(--gray);
+}
+
+@media (max-width: 768px) {
+  .EstateDetailPage .parcel-owner-container {
+    text-align: left !important;
+  }
+}

@@ -21,6 +21,7 @@ import {
 import { Parcel, Selection } from 'lib/render'
 import { panzoom } from './utils'
 import './ParcelCanvas.css'
+import { getParcelEstate } from 'modules/estates/utils'
 
 const LOAD_PADDING = 4
 const POPUP_ROW_HEIGHT = 19
@@ -331,13 +332,18 @@ export default class ParcelPreview extends React.PureComponent {
 
   handleClick = event => {
     const [x, y] = this.mouseToCoords(event.layerX, event.layerY)
-    if (inBounds(x, y)) {
-      const parcelId = buildCoordinate(x, y)
-      const { onClick, parcels } = this.props
-      const parcel = parcels[parcelId]
-      if (onClick && Date.now() - this.mousedownTimestamp < 200) {
-        onClick(x, y, parcel)
-      }
+    if (!inBounds(x, y)) {
+      return
+    }
+
+    const parcelId = buildCoordinate(x, y)
+    const { onClick, parcels, estates } = this.props
+    const parcel = parcels[parcelId]
+    const estate = getParcelEstate(estates, parcel)
+    const asset = estate ? estate : parcel
+
+    if (onClick && Date.now() - this.mousedownTimestamp < 200) {
+      onClick(asset)
     }
   }
 
@@ -419,7 +425,7 @@ export default class ParcelPreview extends React.PureComponent {
     const parcelId = buildCoordinate(x, y)
 
     if (!this.cache[parcelId]) {
-      const { wallet, parcels, districts, publications } = this.props
+      const { wallet, parcels, districts, publications, estates } = this.props
       const parcel = parcels[parcelId]
       let publication = null
 
@@ -434,7 +440,15 @@ export default class ParcelPreview extends React.PureComponent {
         connectedLeft: parcel ? parcel.connectedLeft : false,
         connectedTop: parcel ? parcel.connectedTop : false,
         connectedTopLeft: parcel ? parcel.connectedTopLeft : false,
-        ...getParcelAttributes(parcelId, x, y, wallet, parcels, districts)
+        ...getParcelAttributes(
+          parcelId,
+          x,
+          y,
+          wallet,
+          parcels,
+          districts,
+          estates
+        )
       }
     }
 
