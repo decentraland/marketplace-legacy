@@ -5,7 +5,7 @@ import { Button, Form, Loader } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
-import { getUpdateOperator } from 'lib/parcelUtils'
+import { getUpdateOperator } from 'modules/wallet/utils'
 import { preventDefault, shortenAddress } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 

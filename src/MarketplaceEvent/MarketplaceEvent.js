@@ -1,5 +1,5 @@
 import { env } from 'decentraland-commons'
-import { Publication } from '../Publication'
+import { PUBLICATION_TYPES } from '../shared/publication'
 
 export class MarketplaceEvent {
   constructor(event) {
@@ -13,6 +13,6 @@ export class MarketplaceEvent {
 
   getType() {
     // TODO: makeshift method, check pending
-    return Publication.TYPES.parcel
+    return PUBLICATION_TYPES.parcel
   }
 }

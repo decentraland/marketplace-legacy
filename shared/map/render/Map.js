@@ -2,12 +2,19 @@ import { Selection, Parcel } from '.'
 import { buildCoordinate, COLORS, getColor } from '../../parcel'
 
 export class Map {
-  static draw({ ctx, width, height, size, pan, nw, se, parcels, selected }) {
-    const center = {
-      x: nw.x + (se.x - nw.x) / 2,
-      y: se.y + (nw.y - se.y) / 2
-    }
-
+  static draw({
+    ctx,
+    width,
+    height,
+    size,
+    pan,
+    nw,
+    se,
+    center,
+    parcels,
+    publications,
+    selected
+  }) {
     ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, width, height)
 
@@ -24,7 +31,7 @@ export class Map {
         const rx = cx - offsetX
         const ry = cy - offsetY
         const id = buildCoordinate(px, py)
-        const color = getColor(id, px, py, parcels)
+        const color = getColor(id, px, py, parcels, publications)
         const parcel = parcels[id]
 
         const connectedLeft = parcel ? parcel.connectedLeft : false

@@ -1,6 +1,5 @@
 import { eth } from 'decentraland-eth'
 
-// From Mortgage.js on the server
 export const MORTGAGE_STATUS = Object.freeze({
   open: 'open',
   claimed: 'claimed',

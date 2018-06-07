@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import Minimap from './Minimap'
@@ -11,15 +13,16 @@ import {
   publicationType
 } from 'components/types'
 import debounce from 'lodash.debounce'
-import { buildCoordinate, isMobileWidth } from 'lib/utils'
+import { isMobileWidth } from 'lib/utils'
+import { Map as MapRenderer } from 'shared/map/render'
+import { Bounds, Viewport } from 'shared/map'
 import {
+  getColor,
+  buildCoordinate,
   COLORS,
-  getParcelAttributes,
-  inBounds,
-  getBounds
-} from 'lib/parcelUtils'
-import { Parcel, Selection } from 'lib/render'
-import { Viewport } from 'shared/map'
+  getOpenPublication
+} from 'shared/parcel'
+import { getLabel, getTextColor, getDescription } from './utils'
 import { panzoom } from './utils'
 import './ParcelCanvas.css'
 
@@ -29,7 +32,7 @@ const POPUP_HEIGHT = 67
 const POPUP_PADDING = 20
 const POPUP_DELAY = 400
 
-const { minX, minY, maxX, maxY } = getBounds()
+const { minX, minY, maxX, maxY } = Bounds.getBounds()
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
@@ -188,7 +191,7 @@ export default class ParcelPreview extends React.PureComponent {
     for (let x = nw.x; x < se.x; x++) {
       for (let y = se.y; y < nw.y; y++) {
         const parcelId = buildCoordinate(x, y)
-        if (!parcels[parcelId] && inBounds(x, y)) {
+        if (!parcels[parcelId] && Bounds.inBounds(x, y)) {
           return false
         }
       }
@@ -327,7 +330,7 @@ export default class ParcelPreview extends React.PureComponent {
 
   handleClick = event => {
     const [x, y] = this.mouseToCoords(event.layerX, event.layerY)
-    if (inBounds(x, y)) {
+    if (Bounds.inBounds(x, y)) {
       const parcelId = buildCoordinate(x, y)
       const { onClick, parcels } = this.props
       const parcel = parcels[parcelId]
@@ -344,7 +347,7 @@ export default class ParcelPreview extends React.PureComponent {
   handleMouseMove = event => {
     const { layerX, layerY } = event
     const [x, y] = this.mouseToCoords(layerX, layerY)
-    if (!inBounds(x, y)) {
+    if (!Bounds.inBounds(x, y)) {
       this.hidePopup()
       return
     }
@@ -417,20 +420,45 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.cache[parcelId]) {
       const { wallet, parcels, districts, publications } = this.props
       const parcel = parcels[parcelId]
-      let publication = null
+      const publication = getOpenPublication(parcel, publications)
 
-      if (parcel) {
-        publication = publications[parcel.publication_tx_hash]
-        parcel.publication = publication
-      }
+      const color = getTextColor(parcelId, x, y, parcels, publications, wallet)
+      const backgroundColor = getColor(
+        parcelId,
+        x,
+        y,
+        parcels,
+        publications,
+        wallet
+      )
+      const label = getLabel(
+        parcelId,
+        x,
+        y,
+        parcels,
+        publications,
+        wallet,
+        districts
+      )
+      const description = getDescription(
+        parcelId,
+        x,
+        y,
+        parcels,
+        publications,
+        wallet
+      )
 
       this.cache[parcelId] = {
         id: parcelId,
         publication,
-        connectedLeft: parcel ? parcel.connectedLeft : false,
-        connectedTop: parcel ? parcel.connectedTop : false,
-        connectedTopLeft: parcel ? parcel.connectedTopLeft : false,
-        ...getParcelAttributes(parcelId, x, y, wallet, parcels, districts)
+        connectedLeft: !!(parcel && parcel.connectedLeft),
+        connectedTop: !!(parcel && parcel.connectedTop),
+        connectedTopLeft: !!(parcel && parcel.connectedTopLeft),
+        color,
+        backgroundColor,
+        label,
+        description
       }
     }
 
@@ -450,61 +478,25 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height } = this.props
+    const { width, height, parcels, publications } = this.props
 
     const { nw, se, pan, size, center } = this.state
     const { x, y } = center
     const ctx = this.canvas.getContext('2d')
-    ctx.fillStyle = COLORS.background
-    ctx.fillRect(0, 0, width, height)
 
-    const selection = []
-    const selected = this.getSelected()
-    const isSelected = (x, y) =>
-      selected.some(coords => coords.x === x && coords.y === y)
-
-    const cx = width / 2
-    const cy = height / 2
-
-    for (let px = nw.x; px < se.x; px++) {
-      for (let py = se.y; py < nw.y; py++) {
-        const offsetX = (x - px) * size + pan.x
-        const offsetY = (py - y) * size + pan.y
-        const rx = cx - offsetX
-        const ry = cy - offsetY
-
-        const {
-          backgroundColor,
-          connectedLeft,
-          connectedTop,
-          connectedTopLeft
-        } = this.getParcelAttributes(px, py)
-
-        if (isSelected(px, py)) {
-          selection.push({ x: rx, y: ry })
-        }
-
-        Parcel.draw({
-          ctx,
-          x: rx + size / 2,
-          y: ry + size / 2,
-          size,
-          padding: this.computeParcelPadding(),
-          color: backgroundColor,
-          connectedLeft,
-          connectedTop,
-          connectedTopLeft
-        })
-      }
-    }
-
-    if (selection.length > 0) {
-      Selection.draw({
-        ctx,
-        selection,
-        size
-      })
-    }
+    MapRenderer.draw({
+      ctx,
+      width,
+      height,
+      size,
+      pan,
+      nw,
+      se,
+      center,
+      parcels,
+      publications,
+      selected: this.getSelected()
+    })
   }
 
   computeParcelPadding(size) {

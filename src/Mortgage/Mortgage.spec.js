@@ -4,6 +4,7 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Mortgage } from '../Mortgage'
 import { Parcel } from '../Parcel'
+import { MORTGAGE_STATUS } from '../shared/mortgage'
 
 describe('Mortgage', function() {
   afterEach(() =>
@@ -16,7 +17,7 @@ describe('Mortgage', function() {
       const mortgage = {
         tx_hash: '1xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Mortgage.STATUS.open,
+        status: MORTGAGE_STATUS.open,
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
@@ -41,7 +42,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.cancelled,
+        status: MORTGAGE_STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -49,7 +50,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.claimed,
+        status: MORTGAGE_STATUS.claimed,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -60,7 +61,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findByBorrower(
         '0xdeadbeef33',
-        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
+        `${MORTGAGE_STATUS.open},${MORTGAGE_STATUS.claimed}`
       )
       expect(mortgages).to.equalRows([
         {
@@ -80,7 +81,7 @@ describe('Mortgage', function() {
       const mortgage = {
         tx_hash: '1xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Mortgage.STATUS.open,
+        status: MORTGAGE_STATUS.open,
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
@@ -105,7 +106,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.cancelled,
+        status: MORTGAGE_STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -113,7 +114,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.claimed,
+        status: MORTGAGE_STATUS.claimed,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -124,7 +125,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findByBorrower(
         '0xdeadbeef33122',
-        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
+        `${MORTGAGE_STATUS.open},${MORTGAGE_STATUS.claimed}`
       )
       expect(mortgages).to.equalRows([])
     })
@@ -137,7 +138,7 @@ describe('Mortgage', function() {
       const mortgage = {
         tx_hash: '1xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Mortgage.STATUS.open,
+        status: MORTGAGE_STATUS.open,
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(10, 10),
@@ -156,7 +157,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(10, 10),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.claimed,
+        status: MORTGAGE_STATUS.claimed,
         borrower: '0xdeadbeefab'
       })
       const mortgage3 = Object.assign({}, mortgage, {
@@ -164,7 +165,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(11, 11),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.claimed,
+        status: MORTGAGE_STATUS.claimed,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -174,7 +175,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findInCoordinate(
         Parcel.buildId(10, 10),
-        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
+        `${MORTGAGE_STATUS.open},${MORTGAGE_STATUS.claimed}`
       )
       expect(mortgages).to.equalRows([
         {
@@ -194,7 +195,7 @@ describe('Mortgage', function() {
       const mortgage = {
         tx_hash: '1xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Mortgage.STATUS.open,
+        status: MORTGAGE_STATUS.open,
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
@@ -219,7 +220,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.cancelled,
+        status: MORTGAGE_STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -227,7 +228,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.claimed,
+        status: MORTGAGE_STATUS.claimed,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -238,7 +239,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findInCoordinate(
         Parcel.buildId(20, 20),
-        `${Mortgage.STATUS.open},${Mortgage.STATUS.claimed}`
+        `${MORTGAGE_STATUS.open},${MORTGAGE_STATUS.claimed}`
       )
       expect(mortgages).to.equalRows([])
     })

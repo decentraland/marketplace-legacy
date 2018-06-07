@@ -9,7 +9,7 @@ import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 
 import './EditParcelPage.css'
-import { buildCoordinate } from '../../lib/utils'
+import { buildCoordinate } from 'shared/parcel'
 
 export default class EditParcelPage extends React.PureComponent {
   static propTypes = {

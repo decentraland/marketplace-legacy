@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'shared/publication'
 import { PAGE_SIZE } from './Pagination'
 
 export class Location {

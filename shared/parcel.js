@@ -3,6 +3,8 @@ import { isOpen } from './publication'
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 
+export const AUCTION_DATE = new Date('2018-01-31T00:00:00Z')
+
 export const TYPE = Object.freeze({
   myParcels: 'MY_PARCEL_TYPE',
   myParcelsOnSale: 'MY_PARCEL_ON_SALE_TYPE',
@@ -56,11 +58,21 @@ export function getDistrict(parcel, districts = {}) {
   return parcel && districts[parcel.district_id]
 }
 
-export function isOnSale(parcel) {
-  return parcel != null && isOpen(parcel.publication)
+export function getOpenPublication(parcel, publications) {
+  if (parcel && publications && parcel.publication_tx_hash in publications) {
+    const publication = publications[parcel.publication_tx_hash]
+    if (isOpen(publication)) {
+      return publication
+    }
+  }
+  return null
 }
 
-export function getType(id, x, y, parcels, wallet) {
+export function isOnSale(parcel, publications) {
+  return getOpenPublication(parcel, publications) != null
+}
+
+export function getType(id, x, y, parcels, publications, wallet) {
   const parcel = parcels[id]
   if (!parcel) {
     return TYPE.loading
@@ -80,26 +92,27 @@ export function getType(id, x, y, parcels, wallet) {
   }
 
   if (wallet && wallet.parcelsById[parcel.id]) {
-    return isOnSale(parcel) ? TYPE.myParcelsOnSale : TYPE.myParcels
+    return isOnSale(parcel, publications)
+      ? TYPE.myParcelsOnSale
+      : TYPE.myParcels
   }
 
   if (!parcel.owner && !parcel.district_id) {
     return TYPE.unowned
   }
 
-  if (isOnSale(parcel)) {
+  if (isOnSale(parcel, publications)) {
     return TYPE.onSale
   }
 
   return TYPE.taken
 }
 
-export function getColor(id, x, y, parcels, wallet) {
-  const type = getType(id, x, y, parcels, wallet)
+export function getColor(id, x, y, parcels, publications, wallet) {
+  const type = getType(id, x, y, parcels, publications, wallet)
   switch (type) {
     case TYPE.loading: {
       const isEven = (x + y) % 2 === 0
-      console.log(x, y, isEven)
       return isEven ? COLORS.loadingEven : COLORS.loadingOdd
     }
     case TYPE.myParcels:
@@ -126,31 +139,10 @@ export function getColor(id, x, y, parcels, wallet) {
   }
 }
 
-export function getTextColor(id, x, y, wallet, parcels) {
-  const type = getType(id, x, y, wallet, parcels)
-  switch (type) {
-    case TYPE.loading:
-    case TYPE.district:
-    case TYPE.contribution:
-    case TYPE.roads:
-    case TYPE.taken:
-    case TYPE.unowned:
-    case TYPE.background:
-      return 'white'
-
-    case TYPE.myParcels:
-    case TYPE.myParcelsOnSale:
-    case TYPE.plaza:
-    case TYPE.onSale:
-    default:
-      return 'black'
-  }
-}
-
 export function toParcelObject(
   parcelsArray,
   prevParcels = [],
-  normalize = false
+  normalize = true
 ) {
   return connectParcels(
     parcelsArray,
@@ -164,12 +156,17 @@ export function toParcelObject(
 }
 
 export function normalizeParcel(parcel, prevParcel = {}) {
-  const { publication, ...rest } = parcel
-  return {
-    ...prevParcel,
-    ...rest,
-    publication_tx_hash: publication ? publication.tx_hash : null
-  }
+  const normalizedParcel = Object.assign(
+    { publication_tx_hash_history: [] },
+    prevParcel,
+    parcel
+  )
+  const publication = normalizedParcel.publication
+  delete normalizedParcel.publication
+  normalizedParcel.publication_tx_hash = publication
+    ? publication.tx_hash
+    : null
+  return normalizedParcel
 }
 
 export function connectParcels(array, parcels) {

@@ -122,3 +122,81 @@ export function panzoom(target, cb) {
     target.removeEventListener('touchstart', initListener)
   }
 }
+
+import { t } from 'modules/translation/utils'
+import { TYPE, getType } from 'shared/parcel'
+import { shortenAddress } from 'lib/utils'
+
+export function getLabel(id, x, y, parcels, publications, wallet, districts) {
+  const type = getType(id, x, y, parcels, publications, wallet)
+  const parcel = parcels[id]
+  switch (type) {
+    case TYPE.loading:
+      return t('atlas.loading') + '...'
+    case TYPE.district:
+    case TYPE.contribution: {
+      const district = districts[parcel.district_id]
+      return district ? district.name : 'District'
+    }
+    case TYPE.plaza:
+      return 'Genesis Plaza'
+    case TYPE.roads:
+      return t('atlas.road')
+    case TYPE.myParcels:
+    case TYPE.myParcelsOnSale:
+    case TYPE.taken:
+    case TYPE.onSale: {
+      return parcel.data.name || null
+    }
+    case TYPE.unowned:
+    case TYPE.background:
+    default:
+      return null
+  }
+}
+
+export function getDescription(id, x, y, parcels, publications, wallet) {
+  const type = getType(id, x, y, parcels, publications, wallet)
+  const parcel = parcels[id]
+  switch (type) {
+    case TYPE.loading:
+    case TYPE.district:
+    case TYPE.contribution:
+    case TYPE.plaza:
+    case TYPE.roads:
+      return null
+    case TYPE.unowned:
+      return t('atlas.no_owner')
+    case TYPE.myParcels:
+    case TYPE.myParcelsOnSale:
+      return t('atlas.your_parcel')
+    case TYPE.taken:
+    case TYPE.onSale: {
+      return t('atlas.owner', { owner: shortenAddress(parcel.owner) })
+    }
+    case TYPE.background:
+    default:
+      return null
+  }
+}
+
+export function getTextColor(id, x, y, parcels, publications, wallet) {
+  const type = getType(id, x, y, parcels, publications, wallet)
+  switch (type) {
+    case TYPE.loading:
+    case TYPE.district:
+    case TYPE.contribution:
+    case TYPE.roads:
+    case TYPE.taken:
+    case TYPE.unowned:
+    case TYPE.background:
+      return 'white'
+
+    case TYPE.myParcels:
+    case TYPE.myParcelsOnSale:
+    case TYPE.plaza:
+    case TYPE.onSale:
+    default:
+      return 'black'
+  }
+}

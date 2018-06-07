@@ -7,7 +7,12 @@ import { Map as MapRenderer } from '../shared/map/render'
 import { Parcel } from '../Parcel'
 import { blacklist } from '../lib'
 import { Viewport } from '../shared/map'
-import { toParcelObject, splitCoordinate } from '../../shared/parcel'
+import {
+  toParcelObject,
+  splitCoordinate,
+  getParcelPublications
+} from '../../shared/parcel'
+import { toPublicationObject } from '../../shared/publication'
 
 import { Bounds } from '../shared/map'
 
@@ -24,7 +29,10 @@ export class MapRouter {
 
   mount() {
     this.app.get('/api/map.png', this.handleRequest(this.getMapPNG))
-    this.app.get('/api/:x/:y/map.png', this.handleRequest(this.getParcelPNG))
+    this.app.get(
+      '/api/parcels/:x/:y/map.png',
+      this.handleRequest(this.getParcelPNG)
+    )
     // TODO: add an endpoint for Estates someday 🏌🏼‍
   }
 
@@ -44,19 +52,23 @@ export class MapRouter {
   }
 
   async getParcelPNG(req, res) {
-    const { x, y, width, height, size } = this.sanitize(req)
+    const { x, y, width, height, size, showPublications } = this.sanitize(req)
     const center = { x, y }
     const mapOptions = {
       width,
       height,
       size,
       center,
-      selected: [center]
+      selected: [center],
+      showPublications
     }
     return this.sendPNG(res, mapOptions)
   }
 
-  async sendPNG(res, { width, height, size, center, selected }) {
+  async sendPNG(
+    res,
+    { width, height, size, center, selected, showPublications }
+  ) {
     const { nw, se, area } = Viewport.getDimensions({
       width,
       height,
@@ -78,7 +90,9 @@ export class MapRouter {
         size,
         nw,
         se,
-        selected
+        center,
+        selected,
+        showPublications
       })
       res.type('png')
       stream.pipe(res)
@@ -88,15 +102,24 @@ export class MapRouter {
     }
   }
 
-  async getParcels(nw, se) {
-    let parcels = await Parcel.inRange(nw, se)
-    parcels = utils.mapOmit(parcels, blacklist.parcel)
-    parcels = toParcelObject(parcels)
-    return parcels
+  async getParcelsAndPublications(nw, se) {
+    const parcelRange = await Parcel.inRange(nw, se)
+    const parcels = toParcelObject(utils.mapOmit(parcelRange, blacklist.parcel))
+    const publications = toPublicationObject(getParcelPublications(parcelRange))
+    return [parcels, publications]
   }
 
-  async getStream({ width, height, size, nw, se, selected }) {
-    const parcels = await this.getParcels(nw, se)
+  async getStream({
+    width,
+    height,
+    size,
+    nw,
+    se,
+    center,
+    selected,
+    showPublications
+  }) {
+    const [parcels, publications] = await this.getParcelsAndPublications(nw, se)
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
     MapRenderer.draw({
@@ -106,7 +129,9 @@ export class MapRouter {
       size,
       nw,
       se,
+      center,
       parcels,
+      publications: showPublications ? publications : {},
       selected
     })
     return canvas.pngStream()
@@ -120,7 +145,8 @@ export class MapRouter {
       height: this.getNumber(req, 'height', 32, 1024, 500),
       size: this.getNumber(req, 'size', 5, 40, 10),
       center: this.getCoords(req, 'center', { x: 0, y: 0 }),
-      selected: this.getCoordsArray(req, 'selected', [])
+      selected: this.getCoordsArray(req, 'selected', []),
+      showPublications: this.getBoolean(req, 'publications', false)
     }
   }
 
@@ -186,5 +212,21 @@ export class MapRouter {
       )
     }
     return coordsArray
+  }
+
+  getBoolean(req, name, defaultValue) {
+    let param
+    try {
+      param = server.extractFromReq(req, name)
+    } catch (error) {
+      return defaultValue
+    }
+    const value = param === 'true' ? true : param === 'false' ? false : null
+    if (value === null) {
+      throw new Error(
+        `Invalid param "${name}" should be a boolean but got "${param}".`
+      )
+    }
+    return value
   }
 }

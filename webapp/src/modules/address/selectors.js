@@ -4,9 +4,8 @@ import {
   getMortgagedParcels
 } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { getDistricts } from 'modules/districts/selectors'
-import { isOpen } from 'lib/utils'
+import { isOpen } from 'shared/publication'
 import { pickAndMap } from './utils'
 
 export const getState = state => state.address
@@ -34,10 +33,7 @@ export const getAddresses = createSelector(
 
       // filter only open publications
       const publishedParcels = parcels.filter(parcel =>
-        isOpen(
-          publications[parcel.publication_tx_hash],
-          PUBLICATION_STATUS.open
-        )
+        isOpen(publications[parcel.publication_tx_hash])
       )
 
       return {

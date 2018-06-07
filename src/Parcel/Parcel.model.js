@@ -83,15 +83,13 @@ export class Parcel extends Model {
       typeof min === 'string' ? coordinates.toArray(min) : [min.x, min.y]
     const [maxx, miny] =
       typeof max === 'string' ? coordinates.toArray(max) : [max.x, max.y]
-
-    return await this.db.query(
-      SQL`SELECT *, (
-        ${PublicationQueries.findLastParcelPublicationJsonSql()}
-      ) as publication
-        FROM ${SQL.raw(this.tableName)}
-        WHERE x BETWEEN ${minx} AND ${maxx}
-          AND y BETWEEN ${miny} AND ${maxy}`
-    )
+    const query = SQL`SELECT *, (
+      ${PublicationQueries.findLastParcelPublicationJsonSql()}
+    ) as publication
+      FROM ${SQL.raw(this.tableName)}
+      WHERE x BETWEEN ${+minx} AND ${+maxx}
+        AND y BETWEEN ${+miny} AND ${+maxy}`
+    return await this.db.query(query)
   }
 
   static async encodeAssetId(x, y) {

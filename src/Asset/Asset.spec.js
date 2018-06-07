@@ -4,14 +4,15 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Parcel, ParcelService } from '../Parcel'
 import { Publication } from '../Publication'
+import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../shared/publication'
 import { Asset } from './Asset'
 
 describe('Asset', function() {
   const filters = {
     sanitize() {
       return {
-        status: Publication.STATUS.open,
-        type: Publication.TYPES.parcel,
+        status: PUBLICATION_STATUS.open,
+        type: PUBLICATION_TYPES.parcel,
         sort: {
           by: 'price',
           order: 'desc'
@@ -29,7 +30,7 @@ describe('Asset', function() {
       // Setup
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
-      const status = Publication.STATUS.open
+      const status = PUBLICATION_STATUS.open
       const block_number = 1
       const block_time_created_at = null
       const block_time_updated_at = null
@@ -44,7 +45,7 @@ describe('Asset', function() {
         contract_id: '0x1',
         asset_id: '0,0',
         price: 3,
-        status: Publication.STATUS.sold,
+        status: PUBLICATION_STATUS.sold,
         expires_at,
         owner,
         tx_status,
@@ -127,8 +128,8 @@ describe('Asset', function() {
             contract_id: '0x4',
             price: 40,
             buyer: null,
-            status: Publication.STATUS.open,
-            type: Publication.TYPES.parcel,
+            status: PUBLICATION_STATUS.open,
+            type: PUBLICATION_TYPES.parcel,
             asset_id: '1,2',
             expires_at,
             owner,

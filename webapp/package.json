@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "NODE_ENV=development node scripts/start.js",
     "pretest": "npm run lint",
     "lint": "./node_modules/eslint/bin/eslint.js src/",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix src/",

@@ -5,10 +5,10 @@ import {
   MANAGE_PARCEL_REQUEST
 } from './actions'
 import { getPublications as getAllPublications } from 'modules/publication/selectors'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
 import { isLoadingType } from 'modules/loading/selectors'
 import { getMortgagesArray } from 'modules/mortgage/selectors'
-import { getActiveMortgagesByBorrower } from 'modules/mortgage/utils'
+import { getActiveMortgagesByBorrower } from 'shared/mortgage'
 
 export const getState = state => state.parcels
 export const getData = state => getState(state).data
@@ -25,22 +25,8 @@ export const isManageTransactionIdle = state =>
 export const isFetchingParcel = state =>
   isLoadingType(getLoading(state), FETCH_PARCEL_REQUEST)
 
-export const getParcels = createSelector(
-  getData,
-  getAllPublications,
-  (allParcels, publications) =>
-    Object.keys(allParcels).reduce((parcels, parcelId) => {
-      const parcel = allParcels[parcelId]
-      parcels[parcelId] = {
-        ...parcel,
-        publication: publications[parcel.publication_tx_hash]
-      }
-      return parcels
-    }, {})
-)
-
 export const getPublications = (x, y) =>
-  createSelector(getParcels, getAllPublications, (parcels, publications) => {
+  createSelector(getData, getAllPublications, (parcels, publications) => {
     const parcel = parcels[buildCoordinate(x, y)]
 
     return parcel.publication_tx_hash_history.map(
@@ -50,7 +36,7 @@ export const getPublications = (x, y) =>
 
 export const getMortgagedParcels = createSelector(
   state => state.wallet.data.address,
-  getParcels,
+  getData,
   getMortgagesArray,
   (borrower, parcels, mortgages) =>
     getActiveMortgagesByBorrower(mortgages, borrower).map(mortgage => ({

@@ -10,7 +10,6 @@ export function WebWorkerOnMessage(event) {
       const { parcels, allParcels } = action
       const parcelObject = toParcelObject(parcels, allParcels)
       const publications = getParcelPublications(parcels)
-
       result = {
         parcels: parcelObject,
         publications

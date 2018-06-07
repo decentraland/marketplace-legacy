@@ -1,13 +1,41 @@
-import { txUtils } from 'decentraland-eth'
+import { hasStatus } from './asset'
 
-export function isOpen(publication, status) {
-  return (
-    publication &&
-    publication.status === status &&
-    publication.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
-    !isExpired(publication)
+export const PUBLICATION_STATUS = Object.freeze({
+  open: 'open',
+  sold: 'sold',
+  cancelled: 'cancelled'
+})
+
+export const PUBLICATION_TYPES = Object.freeze({
+  parcel: 'parcel',
+  estate: 'estate'
+})
+
+export function isOpen(publication) {
+  return hasStatus(publication, PUBLICATION_STATUS.open)
+}
+
+export function toPublicationsObject(publicationsArray) {
+  return publicationsArray.reduce(
+    (obj, publication) => ({
+      ...obj,
+      [publication.tx_hash]: publication
+    }),
+    {}
   )
 }
-export function isExpired(publication) {
-  return parseInt(publication.expires_at, 10) < Date.now()
+
+export function findAssetPublications(publications, asset, status) {
+  return Object.values(publications).filter(
+    publication =>
+      publication.asset_id === asset.id &&
+      (!status || publication.status === status)
+  )
+}
+
+export function toPublicationObject(publicationsArray) {
+  return publicationsArray.reduce((map, publication) => {
+    map[publication.tx_hash] = publication
+    return map
+  }, {})
 }
