@@ -79,6 +79,7 @@
     "mortgages": "Hipotecas",
     "owned_by": "Controlada por",
     "owned_by_link": "Controlada por {address_link}",
+    "paid_at": "Pagada el",
     "parcels": "Parcelas",
     "profile": "Mi LAND",
     "request": "Solicitud",
@@ -121,6 +122,7 @@
     "amount": "Cantidad",
     "amount_placeholder": "Monto en MANA",
     "cancel": "Cancelar hipoteca",
+    "claim": "Reclamo de paquete",
     "duration": "Duración",
     "duration_placeholder": "Duración en días",
     "errors": {
@@ -320,6 +322,7 @@
     "cancel": "Has cancelado {publication_link} de {parcel_link}",
     "cancel_mortgage":
       "Usted cancela una hipoteca para comprar el paquete {parcel_link}",
+    "claim_mortgage_resolution": "Usted afirmó {parcel_link}",
     "create_mortgage":
       "Solicitó una hipoteca para comprar el paquete {parcel_link}",
     "disapproved":

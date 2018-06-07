@@ -79,6 +79,7 @@
     "mortgages": "모기지",
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
+    "paid_at": "유료",
     "parcels": "필지",
     "profile": "나의 토지",
     "request": "의뢰",
@@ -121,6 +122,7 @@
     "amount": "양",
     "amount_placeholder": "MANA의 금액",
     "cancel": "모기지 취소",
+    "claim": "소유권 주장 소포",
     "duration": "지속",
     "duration_placeholder": "기간 (일)",
     "errors": {
@@ -310,6 +312,7 @@
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
     "cancel_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 취소합니다.",
+    "claim_mortgage_resolution": "당신은 {parcel_link}을 주장했습니다.",
     "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
     "disapproved":
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",

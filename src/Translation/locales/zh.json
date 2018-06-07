@@ -79,6 +79,7 @@
     "mortgages": "抵押贷款",
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유",
+    "paid_at": "付费",
     "parcels": "地块",
     "profile": "我的虚拟土地",
     "request": "请求",
@@ -121,6 +122,7 @@
     "amount": "量",
     "amount_placeholder": "MANA中的金额",
     "cancel": "取消抵押",
+    "claim": "声明包裹",
     "duration": "持续时间",
     "duration_placeholder": "持续时间以天计",
     "errors": {
@@ -296,6 +298,7 @@
     "buy_mana": "你已经买了{mana} MANA",
     "cancel": "您取消了{parcel_link}上的{publication_link}",
     "cancel_mortgage": "您取消抵押贷款以购买包裹{parcel_link}",
+    "claim_mortgage_resolution": "你声称{parcel_link}",
     "create_mortgage": "您要求抵押贷款购买包裹{parcel_link}",
     "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "edit":

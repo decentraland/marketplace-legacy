@@ -80,6 +80,7 @@
     "mortgages": "Hypothèques",
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
+    "paid_at": "Payé à",
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
     "request": "Demande",
@@ -123,6 +124,7 @@
     "amount": "Montant",
     "amount_placeholder": "Montant à MANA",
     "cancel": "Annuler l'hypothèque",
+    "claim": "Demande de colis",
     "duration": "Durée",
     "duration_placeholder": "Durée en jours",
     "errors": {
@@ -323,6 +325,7 @@
       "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
     "cancel_mortgage":
       "Vous annulez une hypothèque pour acheter le colis {parcel_link}",
+    "claim_mortgage_resolution": "Vous avez réclamé {parcel_link}",
     "create_mortgage":
       "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
     "disapproved":

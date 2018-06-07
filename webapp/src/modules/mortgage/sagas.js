@@ -177,12 +177,7 @@ function* handlePayMortgageRequest(action) {
     const rcnEngineContract = eth.getContract('RCNEngine')
 
     const payMortgageReceipt = yield call(() =>
-      rcnEngineContract.pay(
-        loanId,
-        eth.utils.toWei(amount),
-        borrower,
-        []
-      )
+      rcnEngineContract.pay(loanId, eth.utils.toWei(amount), borrower, [])
     )
 
     yield put(payMortgageSuccess(payMortgageReceipt, assetId, amount))

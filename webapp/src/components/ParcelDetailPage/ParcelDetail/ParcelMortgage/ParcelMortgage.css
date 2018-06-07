@@ -4,6 +4,9 @@
   text-align: center;
 }
 
+.ParcelMortgageDetail .row{
+  align-items: center;
+}
 
 .ParcelMortgageDetail.paid{
   border: solid 2px transparent;

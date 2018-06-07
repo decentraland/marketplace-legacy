@@ -6,7 +6,11 @@ import MortgageActions from 'components/MortgageActions'
 import Expiration from 'components/Expiration'
 import { t } from 'modules/translation/utils'
 import { mortgageType } from 'components/types'
-import { isMortgagePending, isMortgageOngoing } from 'modules/mortgage/utils'
+import {
+  isMortgagePending,
+  isMortgageOngoing,
+  isMortgagePaid
+} from 'modules/mortgage/utils'
 
 import './ParcelMortgage.css'
 
@@ -57,7 +61,7 @@ export default class ParcelMortgage extends React.PureComponent {
                 <p>
                   <Expiration
                     expiresAt={parseInt(
-                      (startTime + mortgage.payable_at * 1) * 1000,
+                      (startTime + parseInt(mortgage.payable_at, 10)) * 1000,
                       10
                     )}
                   />
@@ -68,13 +72,27 @@ export default class ParcelMortgage extends React.PureComponent {
                 <p>
                   <Expiration
                     expiresAt={parseInt(
-                      (startTime + mortgage.is_due_at * 1) * 1000,
+                      (startTime + parseInt(mortgage.is_due_at, 10)) * 1000,
                       10
                     )}
                   />
                 </p>
               </Grid.Column>
             </React.Fragment>
+          )}
+          {isMortgagePaid(mortgage) && (
+            <Grid.Column width={3}>
+              <h3>{t('global.paid_at')}</h3>
+              <p>
+                <Expiration
+                  expiresAt={parseInt(
+                    (startTime + parseInt(mortgage.block_time_updated_at, 10)) *
+                      1000,
+                    10
+                  )}
+                />
+              </p>
+            </Grid.Column>
           )}
           <Grid.Column width={3} className={'cta'}>
             <MortgageActions mortgage={mortgage} />

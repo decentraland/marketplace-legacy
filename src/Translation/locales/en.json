@@ -79,6 +79,7 @@
     "mortgages": "Mortgages",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
+    "paid_at": "Paid at",
     "parcels": "Parcels",
     "profile": "My Land",
     "request": "Request",
