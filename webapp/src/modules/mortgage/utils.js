@@ -61,7 +61,7 @@ export function getActiveMortgages(mortgages, parcels) {
  * @param  {array} - parcels
  * @returns {object} - mortgage
  */
-export function getActiveMortgagesByBorrower(mortgages, parcels, borrower) {
+export function getActiveMortgageByBorrower(mortgages, parcels, borrower) {
   return getActiveMortgages(mortgages, parcels).find(
     mortgage => mortgage && mortgage.borrower === borrower
   )

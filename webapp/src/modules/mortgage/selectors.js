@@ -4,7 +4,7 @@ import { FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST } from './actions'
 import { isLoadingType } from 'modules/loading/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getParcels } from 'modules/parcels/selectors'
-import { getActiveMortgagesByBorrower } from 'modules/mortgage/utils'
+import { getActiveMortgageByBorrower } from 'modules/mortgage/utils'
 import { buildCoordinate } from 'lib/utils'
 
 export const getState = state => state.mortgages
@@ -19,7 +19,7 @@ export const getMortgagesArray = createSelector(getMortgages, mortgages =>
   Object.keys(mortgages).map(key => mortgages[key])
 )
 
-export const getParcelMortgagesFactory = (x, y) =>
+export const getParcelMortgageFactory = (x, y) =>
   createSelector(
     getAddress,
     getParcels,
@@ -29,7 +29,7 @@ export const getParcelMortgagesFactory = (x, y) =>
       const mortgages =
         parcel && parcel.mortgages_tx_hashes
           ? parcel.mortgages_tx_hashes.map(tx => allMortgages[tx])
-          : null
-      return getActiveMortgagesByBorrower(mortgages, parcels, userAddress)
+          : []
+      return getActiveMortgageByBorrower(mortgages, parcels, userAddress)
     }
   )

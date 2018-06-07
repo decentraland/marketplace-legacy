@@ -8,27 +8,24 @@ import { getDistricts } from 'modules/districts/selectors'
 import { getPublications as getParcelPublications } from 'modules/publication/selectors'
 import { fetchParcelPublicationsRequest } from 'modules/publication/actions'
 import { fetchActiveParcelMortgagesRequest } from 'modules/mortgage/actions'
-import { getParcelMortgagesFactory } from 'modules/mortgage/selectors'
+import { getParcelMortgageFactory } from 'modules/mortgage/selectors'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
   // Instanciate selectors
   const { x, y } = getMatchParams(ownProps)
-  const getParcelMortgages = getParcelMortgagesFactory(x, y)
+  const getParcelMortgage = getParcelMortgageFactory(x, y)
   // Return mapStateToProps function
-  return (state, ownProps) => {
-    const { x, y } = getMatchParams(ownProps)
-    return {
-      x,
-      y,
-      isLoading: isLoading(state),
-      error: getError(state),
-      districts: getDistricts(state),
-      publications: getParcelPublications(state),
-      mortgages: getParcelMortgages(state)
-    }
-  }
+  return state => ({
+    x,
+    y,
+    isLoading: isLoading(state),
+    error: getError(state),
+    districts: getDistricts(state),
+    publications: getParcelPublications(state),
+    mortgage: getParcelMortgage(state)
+  })
 }
 
 const mapDispatch = dispatch => ({
