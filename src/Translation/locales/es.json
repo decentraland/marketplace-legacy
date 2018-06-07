@@ -59,6 +59,7 @@
       "Establezca un nombre y una descripción, y edite las parcelas de su propiedad."
   },
   "estate_select": {
+    "description": "Seleccione parcelas adyacentes a partir de {x}, {y}",
     "selection": "Seleccione las parcelas para su nueva propiedad"
   },
   "footer": {

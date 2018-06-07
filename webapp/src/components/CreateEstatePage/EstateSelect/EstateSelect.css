@@ -1,32 +1,29 @@
-.Page > .CreateDetailPage {
+.Page > .EstateSelect {
   padding-top: 0;
 }
 
-.CreateDetailPage {
+.EstateSelect {
   color: var(--text);
 }
 
-.CreateDetailPage > .Loading {
+.EstateSelect > .Loading {
   font-size: 10px;
   top: 35%;
 }
 
-.CreateDetailPage .title {
-  margin-top: 20px;
-  margin-bottom: 30px !important;
+.EstateSelect .description {
+  color: var(--gray);
 }
 
-.CreateDetailPage .parcel-preview {
+.EstateSelect .parcel-preview {
   height: 400px;
 }
 
-.CreateDetailPage .ParcelDetail {
-  padding-top: 35px;
+.EstateSelect .estate-selection {
+  margin: 30px 0;
   font-size: 15px;
 }
 
-@media (max-width: 768px) {
-  .CreateDetailPage .parcel-owner-container {
-    text-align: left !important;
-  }
+.EstateSelect .EstateActions {
+  text-align: right;
 }

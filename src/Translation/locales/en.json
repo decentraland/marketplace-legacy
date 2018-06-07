@@ -55,6 +55,7 @@
       "Set a name and description, and edit the parcels for your estate."
   },
   "estate_select": {
+    "description": "Select adjacent parcels beginning from {x},{y}",
     "selection": "Select the parcels for your new Estate"
   },
   "footer": {

@@ -58,6 +58,7 @@
     "subtitle": "设置名称和说明，并编辑您遗产的包裹。"
   },
   "estate_select": {
+    "description": "从{x}，{y}开始选择相邻的地块",
     "selection": "选择你的新房地产的包裹"
   },
   "footer": {

@@ -60,6 +60,7 @@
       "Définissez un nom et une description et modifiez les parcelles de votre succession."
   },
   "estate_select": {
+    "description": "Sélectionnez les parcelles adjacentes à partir de {x}, {y}",
     "selection": "Sélectionnez les parcelles pour votre nouveau domaine"
   },
   "footer": {
