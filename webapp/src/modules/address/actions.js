@@ -108,3 +108,32 @@ export function fetchAddressPublicationsFailure(address, error) {
     error
   }
 }
+
+// Fetch Address Estates
+
+export const FETCH_ADDRESS_ESTATES_REQUEST = '[Request] Fetch Address Estates'
+export const FETCH_ADDRESS_ESTATES_SUCCESS = '[Success] Fetch Address Estates'
+export const FETCH_ADDRESS_ESTATES_FAILURE = '[Failure] Fetch Address Estates'
+
+export function fetchAddressEstatesRequest(address) {
+  return {
+    type: FETCH_ADDRESS_ESTATES_REQUEST,
+    address
+  }
+}
+
+export function fetchAddressEstatesSuccess(address, estates) {
+  return {
+    type: FETCH_ADDRESS_ESTATES_SUCCESS,
+    address,
+    estates
+  }
+}
+
+export function fetchAddressEstatesFailure(address, error) {
+  return {
+    type: FETCH_ADDRESS_ESTATES_FAILURE,
+    address,
+    error
+  }
+}

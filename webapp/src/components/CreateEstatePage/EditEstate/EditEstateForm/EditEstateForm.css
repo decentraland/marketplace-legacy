@@ -1,0 +1,7 @@
+.EditEstateForm {
+  min-width: 400px;
+}
+
+.EditEstateForm .ui.button + .ui.button {
+  margin-left: 20px;
+}

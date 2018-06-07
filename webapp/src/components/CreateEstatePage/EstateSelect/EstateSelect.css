@@ -1,0 +1,29 @@
+.Page > .EstateSelect {
+  padding-top: 0;
+}
+
+.EstateSelect {
+  color: var(--text);
+}
+
+.EstateSelect > .Loading {
+  font-size: 10px;
+  top: 35%;
+}
+
+.EstateSelect .description {
+  color: var(--gray);
+}
+
+.EstateSelect .parcel-preview {
+  height: 400px;
+}
+
+.EstateSelect .estate-selection {
+  margin: 30px 0;
+  font-size: 15px;
+}
+
+.EstateSelect .EstateActions {
+  text-align: right;
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Header, Button, Icon } from 'semantic-ui-react'
 import { contributionType } from 'components/types'
 import { t } from 'modules/translation/utils'
+import LandAmount from 'components/LandAmount'
 
 import './Contribution.css'
 
@@ -47,10 +48,7 @@ export default class Contribution extends React.PureComponent {
             <React.Fragment>
               <Header size="medium">{contribution.district.name}</Header>
               <Card.Meta>{contribution.district.description}</Card.Meta>
-              <span className="land-count">
-                <i className="land-icon" />
-                <span>{contribution.land_count} LAND</span>
-              </span>
+              <LandAmount value={contribution.land_count} />
             </React.Fragment>
           ) : (
             <div className="text-center">
