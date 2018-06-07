@@ -6,15 +6,15 @@ import EditEstate from './EditEstate'
 
 export default class CreateEstatePage extends React.PureComponent {
   static propTypes = {
-    x: PropTypes.string.isRequired,
-    y: PropTypes.string.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
     createEstate: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
-    const x = parseInt(this.props.x, 10)
-    const y = parseInt(this.props.y, 10)
+
+    const { x, y } = this.props
     this.state = {
       estate: {
         data: {
@@ -58,13 +58,13 @@ export default class CreateEstatePage extends React.PureComponent {
       <React.Fragment>
         {isSelecting ? (
           <EstateSelect
-            value={estate.data.parcels}
+            parcels={estate.data.parcels}
             onContinue={this.handleSwitch}
             onChange={this.handleChangeParcels}
           />
         ) : (
           <EditEstate
-            value={estate}
+            estate={estate}
             onCancel={this.handleSwitch}
             onChange={this.handleChange}
             onSubmit={this.handleSubmit}

@@ -60,6 +60,7 @@
       "Définissez un nom et une description et modifiez les parcelles de votre succession."
   },
   "estate_select": {
+    "description": "Sélectionnez les parcelles adjacentes à partir de {x}, {y}",
     "selection": "Sélectionnez les parcelles pour votre nouveau domaine"
   },
   "footer": {
@@ -70,6 +71,7 @@
     "terms": "Termes et Conditions"
   },
   "global": {
+    "acquired_at": "Acquis à {date}",
     "activity": "Activité",
     "address_placeholder": "Exemple: {address}",
     "atlas": "Atlas",
@@ -85,6 +87,7 @@
     "connecting": "Connexion",
     "continue": "Continuer",
     "contributions": "Contributions",
+    "created_at": "Créé à {date}",
     "estate": "Biens",
     "estates": "Estates",
     "expired_at": "Expiré {time}",

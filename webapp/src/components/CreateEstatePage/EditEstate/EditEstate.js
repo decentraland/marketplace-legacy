@@ -9,14 +9,14 @@ import './EditEstate.css'
 
 export default class EditEstate extends React.PureComponent {
   static propTypes = {
+    estate: estateType.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    value: estateType.isRequired
+    onChange: PropTypes.func.isRequired
   }
 
   render() {
-    const { onSubmit, onChange, onCancel, value: estate } = this.props
+    const { onSubmit, onChange, onCancel, estate } = this.props
 
     return (
       <div className="EditEstate">
@@ -27,7 +27,7 @@ export default class EditEstate extends React.PureComponent {
           hasCustomFooter
         >
           <EditEstateForm
-            value={estate}
+            estate={estate}
             onSubmit={onSubmit}
             onCancel={onCancel}
             onChange={onChange}

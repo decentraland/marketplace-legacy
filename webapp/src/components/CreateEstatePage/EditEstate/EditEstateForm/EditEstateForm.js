@@ -10,50 +10,50 @@ import './EditEstateForm.css'
 
 export default class EditEstateForm extends React.PureComponent {
   static propTypes = {
-    value: estateType.isRequired,
+    estate: estateType.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
-    const { value: estate } = this.props
+    const { estate } = this.props
     this.state = {
       initialEstate: estate
     }
   }
 
   handleNameChange = event => {
-    const { value: estate, onChange } = this.props
+    const { estate, onChange } = this.props
     onChange({
       ...estate,
       data: {
         ...estate.data,
-        name: event.target.value
+        name: event.target.estate
       }
     })
   }
 
   handleDescriptionChange = event => {
-    const { value: estate, onChange } = this.props
+    const { estate, onChange } = this.props
     onChange({
       ...estate,
       data: {
         ...estate.data,
-        description: event.target.value
+        description: event.target.estate
       }
     })
   }
 
   hasChanged() {
-    const { data } = this.props.value
+    const { data } = this.props.estate
     const { name, description } = this.state.initialEstate
 
     return name !== data.name || description !== data.description
   }
 
   render() {
-    const { onCancel, onSubmit, value: estate } = this.props
+    const { onCancel, onSubmit, estate } = this.props
     const { name, description } = estate.data
 
     return (

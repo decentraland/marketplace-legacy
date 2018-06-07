@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container } from 'semantic-ui-react'
+import { Grid, Container } from 'semantic-ui-react'
 
 import ParcelPreview from 'components/ParcelPreview'
 import EstateSelectActions from './EstateSelectActions'
@@ -8,7 +8,7 @@ import Parcel from 'components/Parcel'
 import { t } from 'modules/translation/utils'
 import { isOwner } from 'modules/parcels/utils'
 import { coordsType } from 'components/types'
-import { match, isEqual, isParcel } from 'lib/utils'
+import { getCoordsMatcher, isEqualCoords } from 'lib/utils'
 
 import './EstateSelect.css'
 
@@ -16,11 +16,11 @@ export default class EstateSelect extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    parcels: PropTypes.arrayOf(coordsType).isRequired,
     error: PropTypes.string,
     onCancel: PropTypes.func.isRequired,
     onContinue: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    value: PropTypes.arrayOf(coordsType).isRequired
+    onChange: PropTypes.func.isRequired
   }
 
   // TODO move all this functions to an estate util file
@@ -32,7 +32,7 @@ export default class EstateSelect extends React.PureComponent {
   }
 
   hasNeighbour = (x, y) => {
-    const { value: parcels } = this.props
+    const { parcels } = this.props
     return parcels.some(this.isNeighbour(x, y))
   }
 
@@ -54,7 +54,8 @@ export default class EstateSelect extends React.PureComponent {
     const neighbours = this.getNeighbours(actual.x, actual.y, parcels).filter(
       coords => {
         return (
-          parcels.some(match(coords)) && !alreadyTraveled.some(match(coords))
+          parcels.some(getCoordsMatcher(coords)) &&
+          !alreadyTraveled.some(getCoordsMatcher(coords))
         )
       }
     )
@@ -66,13 +67,7 @@ export default class EstateSelect extends React.PureComponent {
     )
   }
 
-  handleParcelClick = wallet => asset => {
-    if (!isParcel(asset)) {
-      return
-    }
-
-    const { x, y } = asset
-
+  handleParcelClick = wallet => (x, y) => {
     if (!isOwner(wallet, x, y)) {
       return
     }
@@ -81,11 +76,13 @@ export default class EstateSelect extends React.PureComponent {
       return
     }
 
-    const { value: parcels, onChange } = this.props
-    const isSelected = parcels.some(match({ x, y }))
+    const { parcels, onChange } = this.props
+    const isSelected = parcels.some(getCoordsMatcher({ x, y }))
 
     if (isSelected) {
-      const newParcels = parcels.filter(coords => !isEqual(coords, { x, y }))
+      const newParcels = parcels.filter(
+        coords => !isEqualCoords(coords, { x, y })
+      )
 
       if (!this.areConnected(newParcels) && newParcels.length > 1) {
         return
@@ -98,14 +95,14 @@ export default class EstateSelect extends React.PureComponent {
   }
 
   render() {
-    const { x, y, error, onCancel, onContinue, value: parcels } = this.props
+    const { x, y, error, onCancel, onContinue, parcels } = this.props
     if (error) {
       return null
     }
     return (
       <Parcel x={x} y={y}>
         {(parcel, isOwner, wallet) => (
-          <div className="CreateDetailPage">
+          <div className="EstateSelect">
             <div className="parcel-preview" title={t('parcel_detail.view')}>
               <ParcelPreview
                 x={parcel.x}
@@ -119,11 +116,23 @@ export default class EstateSelect extends React.PureComponent {
               />
             </div>
             <Container>
-              <EstateSelectActions
-                onCancel={onCancel}
-                onContinue={onContinue}
-                disabled={parcels.length <= 1}
-              />
+              <Grid className="estate-selection">
+                <Grid.Row>
+                  <Grid.Column width={8}>
+                    <h3>{t('estate_select.selection')}</h3>
+                    <p className="description">
+                      {t('estate_select.description', { x, y })}
+                    </p>
+                  </Grid.Column>
+                  <Grid.Column className="parcel-actions-container" width={8}>
+                    <EstateSelectActions
+                      onCancel={onCancel}
+                      onContinue={onContinue}
+                      disabled={parcels.length <= 1}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </Container>
           </div>
         )}

@@ -14,8 +14,7 @@
     "on_sale": "On Sale: ",
     "owner": "Owner: {owner}",
     "road": "Road",
-    "your_parcel": "Your parcel",
-    "your_estate": "Your estate"
+    "your_parcel": "Your parcel"
   },
   "buy_mana": {
     "action": "Buy More",
@@ -48,10 +47,6 @@
     "invalid":
       "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
-  "estate": {
-    "acquired_at": "Acquired at {date}",
-    "created_at": "Created at {date}"
-  },
   "estate_edit": {
     "description": "Description",
     "edit_estate": "Edit Estate",
@@ -60,6 +55,7 @@
       "Set a name and description, and edit the parcels for your estate."
   },
   "estate_select": {
+    "description": "Select adjacent parcels beginning from {x},{y}",
     "selection": "Select the parcels for your new Estate"
   },
   "footer": {
@@ -70,6 +66,7 @@
     "terms": "Terms & Conditions"
   },
   "global": {
+    "acquired_at": "Acquired at {date}",
     "activity": "Activity",
     "address_placeholder": "Example: {address}",
     "atlas": "Atlas",
@@ -85,6 +82,7 @@
     "connecting": "Connecting",
     "continue": "Continue",
     "contributions": "Contributions",
+    "created_at": "Created at {date}",
     "estate": "Estate",
     "estates": "Estates",
     "expired_at": "Expired {time}",
@@ -278,7 +276,6 @@
     "on_sale": "On Sale"
   },
   "publication": {
-    "acquired_at": "Acquired at {date}",
     "canceled": "Canceled",
     "sold": "Sold",
     "view": "View"

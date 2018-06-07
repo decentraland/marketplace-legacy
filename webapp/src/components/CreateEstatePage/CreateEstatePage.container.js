@@ -8,8 +8,8 @@ import CreateEstatePage from './CreateEstatePage'
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParams(ownProps)
   return {
-    x,
-    y
+    x: parseInt(x, 10),
+    y: parseInt(y, 10)
   }
 }
 

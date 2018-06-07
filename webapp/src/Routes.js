@@ -51,7 +51,6 @@ export default class Routes extends React.Component {
             component={CreateEstatePage}
           />
         ) /* Estate Feature */}
-
         {isFeatureEnabled('ESTATES') && (
           <Route exact path={locations.estate} component={EstateDetailPage} />
         ) /* Estate Feature */}
