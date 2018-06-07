@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import { WebWorkerFactory } from './WebWorkerFactory'
 import { WebWorkerOnMessage } from './WebWorkerOnMessage'
 import {
