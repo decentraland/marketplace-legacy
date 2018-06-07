@@ -12,6 +12,13 @@ const FILTER_DEFAULTS = {
   status: PUBLICATION_STATUS.open
 }
 
+const getFilterOptions = options => {
+  return Object.keys(options).reduce((base, key) => {
+    base[key] = options[key] == null ? FILTER_DEFAULTS[key] : options[key]
+    return base
+  }, {})
+}
+
 export class API {
   fetchTranslations(locale) {
     return this.request('get', `/translations/${locale}`, {})
@@ -22,12 +29,9 @@ export class API {
   }
 
   fetchParcels(options = FILTER_DEFAULTS) {
-    const filterOptions = Object.keys(options).reduce((base, key) => {
-      base[key] = options[key] == null ? FILTER_DEFAULTS[key] : options[key]
-      return base
-    }, {})
-
-    const { limit, offset, sortBy, sortOrder, status } = filterOptions
+    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
+      options
+    )
 
     return this.request('get', '/parcels', {
       limit,
@@ -48,6 +52,24 @@ export class API {
 
   fetchAddressContributions(address) {
     return this.request('get', `/addresses/${address}/contributions`, {})
+  }
+
+  fetchAddressEstates(address) {
+    return this.request('get', `/addresses/${address}/estates`, {})
+  }
+
+  fetchEstates(options = FILTER_DEFAULTS) {
+    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
+      options
+    )
+
+    return this.request('get', '/estates', {
+      limit,
+      offset,
+      sort_by: sortBy,
+      sort_order: sortOrder,
+      status
+    })
   }
 
   fetchDistricts() {

@@ -140,8 +140,11 @@ describe('Parcel', function() {
         marketplace_id: '0x113322',
         block_number: 1
       }
-      await Publication.insert(publication)
-      await Publication.insert(publication2)
+      await Promise.all([
+        Publication.insert(publication),
+        Publication.insert(publication2)
+      ])
+
       const mortgage = {
         tx_hash: '1xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,

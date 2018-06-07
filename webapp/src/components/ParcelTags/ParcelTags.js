@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { parcelType, districtType } from 'components/types'
+import { parcelType, districtType, estateType } from 'components/types'
 import { getDistrict, isRoad, isPlaza } from 'lib/parcelUtils'
 import { t } from 'modules/translation/utils'
 
@@ -9,7 +9,8 @@ import './ParcelTags.css'
 
 export default class ParcelTags extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType.isRequired,
+    parcel: parcelType,
+    estate: estateType,
     districts: PropTypes.objectOf(districtType),
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     showDetails: PropTypes.bool
@@ -19,6 +20,10 @@ export default class ParcelTags extends React.PureComponent {
     districts: {},
     size: 'medium',
     showDetails: false
+  }
+
+  isParcel() {
+    return !!this.props.parcel
   }
 
   getDistrictName(district_id) {
@@ -65,8 +70,43 @@ export default class ParcelTags extends React.PureComponent {
     )
   }
 
+  getParcelTags() {
+    return this.props.parcel.tags
+  }
+
+  getEstateTags() {
+    const { parcels } = this.props.estate
+    const proximities = parcels
+      .map(parcel => parcel.tags.proximity)
+      .filter(prox => prox)
+    const proximity = proximities.reduce((finalProximity, actualProximity) => {
+      Object.keys(actualProximity).forEach(key => {
+        if (!finalProximity[key]) {
+          finalProximity[key] = actualProximity[key]
+          return
+        }
+
+        if (finalProximity[key].distance > actualProximity[key].distance) {
+          finalProximity[key] = actualProximity[key]
+          return
+        }
+      })
+      return finalProximity
+    }, {})
+
+    return { proximity }
+  }
+
+  getTags() {
+    if (this.isParcel()) {
+      return this.getParcelTags()
+    }
+
+    return this.getEstateTags()
+  }
+
   render() {
-    const { proximity } = this.props.parcel.tags
+    const { proximity } = this.getTags()
 
     if (!proximity) {
       return null

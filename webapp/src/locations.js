@@ -29,6 +29,9 @@ export const locations = {
   transfer: '/:x/:y/transfer',
   transferLand: (x, y) => `/${x}/${y}/transfer`,
 
+  createEstate: '/:x/:y/create-estate',
+  createEstateLand: (x, y) => `/${x}/${y}/create-estate`,
+
   buyMana: `/buy-mana`,
   transferMana: `/transfer-mana`,
 
@@ -57,6 +60,7 @@ export const PROFILE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',
   contributions: 'contributions',
   publications: 'publications',
+  estates: 'estates',
   mortgages: 'mortgages'
 })
 

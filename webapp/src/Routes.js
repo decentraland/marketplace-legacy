@@ -15,6 +15,7 @@ import ProfilePage from 'components/ProfilePage'
 import PublishPage from 'components/PublishPage'
 import EditParcelPage from 'components/EditParcelPage'
 import TransferParcelPage from 'components/TransferParcelPage'
+import CreateEstatePage from 'components/CreateEstatePage'
 import ManageParcelPage from 'components/ManageParcelPage'
 import BuyParcelPage from 'components/BuyParcelPage'
 import CancelSalePage from 'components/CancelSalePage'
@@ -46,6 +47,13 @@ export default class Routes extends React.Component {
         <Route exact path={locations.sell} component={PublishPage} />
         <Route exact path={locations.edit} component={EditParcelPage} />
         <Route exact path={locations.transfer} component={TransferParcelPage} />
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.createEstate}
+            component={CreateEstatePage}
+          />
+        ) /* Estate Feature */}
         <Route exact path={locations.manage} component={ManageParcelPage} />
         <Route exact path={locations.buy} component={BuyParcelPage} />
         <Route exact path={locations.cancelSale} component={CancelSalePage} />

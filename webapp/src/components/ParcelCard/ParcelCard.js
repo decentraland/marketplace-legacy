@@ -64,7 +64,7 @@ export default class ParcelCard extends React.PureComponent {
             {!isPublicationOpen(publication) &&
               !showMortgage && (
                 <Card.Meta>
-                  {t('publication.acquired_at', {
+                  {t('global.acquired_at', {
                     date: formatDate(
                       parcel.last_transferred_at
                         ? parseInt(parcel.last_transferred_at, 10)
