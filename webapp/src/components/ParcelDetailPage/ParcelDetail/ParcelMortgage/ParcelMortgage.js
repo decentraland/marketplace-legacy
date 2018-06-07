@@ -19,13 +19,13 @@ export default class ParcelMortgage extends React.PureComponent {
     const { mortgage } = this.props
     const startTime = Math.round(new Date(mortgage.started_at).getTime() / 1000)
     return (
-      <Grid className="parcelMortgageDetail">
+      <Grid className="ParcelMortgageDetail">
         <Grid.Row>
           <Grid.Column width={2} className={mortgage.status}>
             <h3>{t('global.mortgage')}</h3>
             <p>{mortgage.status}</p>
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={2}>
             <h3>
               {isMortgagePending(mortgage)
                 ? t('mortgage.requested')
@@ -38,12 +38,12 @@ export default class ParcelMortgage extends React.PureComponent {
                   : parseFloat(mortgage.outstanding_amount)
               }
               size={20}
-              scale={1}
+              scale={1.2}
               className="mortgage-amount-icon"
             />
           </Grid.Column>
           {isMortgagePending(mortgage) && (
-            <Grid.Column width={3}>
+            <Grid.Column width={3} className={'expires-at'}>
               <h3>{t('global.time_left')}</h3>
               <p>
                 <Expiration expiresAt={parseInt(mortgage.expires_at, 10)} />
@@ -76,7 +76,7 @@ export default class ParcelMortgage extends React.PureComponent {
               </Grid.Column>
             </React.Fragment>
           )}
-          <Grid.Column width={2}>
+          <Grid.Column width={3} className={'cta'}>
             <MortgageActions mortgage={mortgage} />
           </Grid.Column>
         </Grid.Row>

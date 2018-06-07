@@ -173,7 +173,6 @@ function* handlePayMortgageRequest(action) {
   try {
     const { loanId, amount, assetId } = action
     const borrower = yield select(getAddress)
-    const kyberOrcaleAddress = getKyberOracleAddress()
 
     const rcnEngineContract = eth.getContract('RCNEngine')
 
@@ -182,7 +181,7 @@ function* handlePayMortgageRequest(action) {
         loanId,
         eth.utils.toWei(amount),
         borrower,
-        kyberOrcaleAddress
+        []
       )
     )
 
