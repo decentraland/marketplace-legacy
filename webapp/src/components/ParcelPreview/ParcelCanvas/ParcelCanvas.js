@@ -467,11 +467,10 @@ export default class ParcelPreview extends React.PureComponent {
 
   getSelected() {
     const { selected } = this.props
-    const safeSelected = []
-    if (selected && !Array.isArray(selected)) {
-      safeSelected.push(selected)
+    if (Array.isArray(selected)) {
+      return selected
     }
-    return safeSelected
+    return selected ? [selected] : []
   }
 
   renderMap() {

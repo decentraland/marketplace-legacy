@@ -12,7 +12,7 @@ import {
 } from 'modules/address/selectors'
 import { getData as getParcels, getLoading } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate, getCoordsMatcher } from 'shared/parcel'
 
 import Parcel from './Parcel'
 
@@ -32,9 +32,7 @@ const mapState = (state, { x, y }) => {
     isConnecting = false
   }
 
-  const isLoading = getLoading(state).some(
-    action => action.x === x && action.y === y
-  )
+  const isLoading = getLoading(state).some(getCoordsMatcher({ x, y }))
 
   let publication = null
   let parcel = parcels[buildCoordinate(x, y)]

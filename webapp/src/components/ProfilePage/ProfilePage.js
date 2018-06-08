@@ -14,17 +14,19 @@ import {
 import AddressBlock from 'components/AddressBlock'
 import ParcelCard from 'components/ParcelCard'
 import Contribution from './Contribution'
-import { parcelType, contributionType } from 'components/types'
+import { parcelType, contributionType, estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { buildUrl } from './utils'
 import { shortenAddress } from 'lib/utils'
 
 import './ProfilePage.css'
+import EstateCard from 'components/EstateCard'
 
 export default class ProfilePage extends React.PureComponent {
   static propTypes = {
     address: PropTypes.string,
     parcels: PropTypes.arrayOf(parcelType),
+    estates: PropTypes.arrayOf(estateType),
     contributions: PropTypes.arrayOf(contributionType),
     publishedParcels: PropTypes.arrayOf(parcelType),
     mortgagedParcels: PropTypes.arrayOf(parcelType),
@@ -42,8 +44,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { onFetchAddress } = this.props
-    onFetchAddress()
+    this.props.onFetchAddress()
   }
 
   handlePageChange = (event, data) => {
@@ -104,6 +105,13 @@ export default class ProfilePage extends React.PureComponent {
           </Card.Group>
         )
       }
+      case PROFILE_PAGE_TABS.estates: {
+        return (
+          <Card.Group stackable={true}>
+            {grid.map(estate => <EstateCard key={estate.id} estate={estate} />)}
+          </Card.Group>
+        )
+      }
       case PROFILE_PAGE_TABS.mortgages: {
         return (
           <Card.Group stackable={true}>
@@ -158,6 +166,7 @@ export default class ProfilePage extends React.PureComponent {
       parcels,
       contributions,
       publishedParcels,
+      estates,
       mortgagedParcels,
       isOwner,
       isConnecting
@@ -201,6 +210,16 @@ export default class ProfilePage extends React.PureComponent {
                 PROFILE_PAGE_TABS.publications
               )}
             </Menu.Item>
+            {isFeatureEnabled('ESTATES') && (
+              <Menu.Item
+                name={PROFILE_PAGE_TABS.estates}
+                active={this.isActive(PROFILE_PAGE_TABS.estates)}
+                onClick={this.handleItemClick}
+              >
+                {t('global.estates')}
+                {this.renderBadge(estates, PROFILE_PAGE_TABS.estates)}
+              </Menu.Item>
+            ) /* Estate Feature */}
             {isFeatureEnabled('MORTGAGES') && (
               <Menu.Item
                 name={PROFILE_PAGE_TABS.mortgages}

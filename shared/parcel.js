@@ -207,3 +207,24 @@ export function getParcelPublications(parcels) {
     return pubs
   }, [])
 }
+
+export function isOwner(wallet, x, y) {
+  const parcelId = buildCoordinate(x, y)
+  return !!wallet.parcelsById[parcelId]
+}
+
+export function isEqualCoords(p1, p2) {
+  return p1.x === p2.x && p1.y === p2.y
+}
+
+export function getCoordsMatcher(coords) {
+  return coords2 => isEqualCoords(coords, coords2)
+}
+
+export function isValidName(name) {
+  return name <= 50
+}
+
+export function isValidDescription(description) {
+  return description <= 140
+}

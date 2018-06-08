@@ -6,6 +6,7 @@ import {
   FETCH_ADDRESS_PARCELS_REQUEST,
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
   FETCH_ADDRESS_PUBLICATIONS_REQUEST,
+  FETCH_ADDRESS_ESTATES_REQUEST,
   fetchAddressParcelsRequest,
   fetchAddressParcelsSuccess,
   fetchAddressParcelsFailure,
@@ -14,7 +15,10 @@ import {
   fetchAddressContributionsFailure,
   fetchAddressPublicationsRequest,
   fetchAddressPublicationsSuccess,
-  fetchAddressPublicationsFailure
+  fetchAddressPublicationsFailure,
+  fetchAddressEstatesSuccess,
+  fetchAddressEstatesFailure,
+  fetchAddressEstatesRequest
 } from './actions'
 import { fetchMortgagedParcelsRequest } from 'modules/mortgage/actions'
 import { PUBLICATION_STATUS } from 'shared/publication'
@@ -22,6 +26,7 @@ import { getData as getParcels } from 'modules/parcels/selectors'
 import { getParcelPublications } from 'shared/parcel'
 import { api } from 'lib/api'
 import { webworker } from 'lib/webworker'
+import { toEstateObject } from 'modules/estates/utils'
 
 export function* addressSaga() {
   yield takeEvery(FETCH_ADDRESS_PARCELS_REQUEST, handleAddressParcelsRequest)
@@ -33,6 +38,7 @@ export function* addressSaga() {
     FETCH_ADDRESS_PUBLICATIONS_REQUEST,
     handleAddressPublicationsRequest
   )
+  yield takeEvery(FETCH_ADDRESS_ESTATES_REQUEST, handleAddressEstatesRequest)
   yield takeEvery(FETCH_ADDRESS, handleFetchAddress)
 }
 
@@ -55,6 +61,18 @@ function* handleAddressParcelsRequest(action) {
     )
   } catch (error) {
     yield put(fetchAddressParcelsFailure(address, error.message))
+  }
+}
+
+function* handleAddressEstatesRequest(action) {
+  const { address } = action
+  try {
+    const response = yield call(() => api.fetchAddressEstates(address))
+    const estates = toEstateObject(response)
+
+    yield put(fetchAddressEstatesSuccess(address, estates))
+  } catch (error) {
+    yield put(fetchAddressEstatesFailure(address, error.message))
   }
 }
 
@@ -87,6 +105,10 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
+  if (isFeatureEnabled('ESTATES')) {
+    // Estate Feature
+    yield put(fetchAddressEstatesRequest(address))
+  }
   if (isFeatureEnabled('MORTGAGES')) {
     // Mortgage Feature
     yield put(fetchMortgagedParcelsRequest(address))

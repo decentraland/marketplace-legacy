@@ -1,0 +1,62 @@
+.EstateCard {
+  width: calc(100% - 14px) !important;
+}
+
+@media (min-width: 480px) {
+  .EstateCard {
+    width: calc(50% - 14px) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .EstateCard {
+    width: calc(33% - 14px) !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .EstateCard {
+    width: calc(25% - 14px) !important;
+  }
+}
+
+.EstateCard .preview {
+  height: 132px;
+  overflow: hidden;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.EstateCard .body {
+  position: relative;
+  padding: 1em;
+}
+
+.EstateCard .description {
+  font-size: 15px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  display: flex;
+}
+
+.EstateCard .name {
+  margin-right: 8px;
+  text-overflow: ellipsis;
+  color: var(--text);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.EstateCard .LandAmount {
+  margin-left: auto;
+}
+
+.EstateCard .footer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row nowrap;
+  align-items: center;
+}
+
+.EstateCard .footer:after {
+  display: none;
+}

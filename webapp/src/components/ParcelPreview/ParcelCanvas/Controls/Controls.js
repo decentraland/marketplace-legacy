@@ -1,5 +1,7 @@
 import React from 'react'
 import { Icon } from 'semantic-ui-react'
+import { isEqualCoords } from 'shared/parcel'
+
 import './Controls.css'
 
 export default class Controls extends React.PureComponent {
@@ -16,8 +18,7 @@ export default class Controls extends React.PureComponent {
     } = this.props
 
     const isTargetVisible = !!target
-    const isTargetDisabled =
-      target && center.x === target.x && center.y === target.y
+    const isTargetDisabled = target && isEqualCoords(center, target)
 
     const isZoomInDisabled = size === maxSize
     const isZoomOutDisabled = size === minSize

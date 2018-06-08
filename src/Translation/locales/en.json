@@ -47,6 +47,17 @@
     "invalid":
       "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
+  "estate_edit": {
+    "description": "Description",
+    "edit_estate": "Edit Estate",
+    "name": "Name",
+    "subtitle":
+      "Set a name and description, and edit the parcels for your estate."
+  },
+  "estate_select": {
+    "description": "Select adjacent parcels beginning from {x},{y}",
+    "selection": "Select the parcels for your new Estate"
+  },
   "footer": {
     "color_key": "Color Key",
     "copyright": "© 2018 Decentraland. All rights reserved.",
@@ -55,6 +66,7 @@
     "terms": "Terms & Conditions"
   },
   "global": {
+    "acquired_at": "Acquired at {date}",
     "activity": "Activity",
     "address_placeholder": "Example: {address}",
     "atlas": "Atlas",
@@ -68,7 +80,11 @@
     "confirm": "Confirm",
     "connect": "Connect",
     "connecting": "Connecting",
+    "continue": "Continue",
     "contributions": "Contributions",
+    "created_at": "Created at {date}",
+    "estate": "Estate",
+    "estates": "Estates",
     "expired_at": "Expired {time}",
     "expires_in": "Expires {time}",
     "expires_in_more_than_years": "Expires in over {years} years",
@@ -171,6 +187,7 @@
   "parcel_detail": {
     "actions": {
       "cancel": "Cancel sale",
+      "create_estate": "Create Estate",
       "edit": "Edit",
       "permissions": "Permissions",
       "sell": "Sell",
@@ -259,7 +276,6 @@
     "on_sale": "On Sale"
   },
   "publication": {
-    "acquired_at": "Acquired at {date}",
     "canceled": "Canceled",
     "sold": "Sold",
     "view": "View"

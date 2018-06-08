@@ -1,0 +1,19 @@
+.LandAmount {
+  bottom: 10px;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: var(--red) !important;
+  display: flex;
+  align-items: center;
+}
+
+.LandAmount .land-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  background-color: var(--light-red);
+  border: 1px solid var(--red);
+  box-shadow: 0px 0px 10px 1px var(--red);
+}

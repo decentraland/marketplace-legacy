@@ -92,7 +92,7 @@ export function getKyberOracleAddress() {
 
 export async function sendTransaction(tx) {
   const web3 = eth.wallet.getWeb3()
-  return await utils.promisify(web3.eth.sendTransaction)(tx)
+  return utils.promisify(web3.eth.sendTransaction)(tx)
 }
 
 export async function fetchBalance(address) {

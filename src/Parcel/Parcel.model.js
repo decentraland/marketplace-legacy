@@ -47,7 +47,7 @@ export class Parcel extends Model {
   static async findInIds(ids) {
     if (ids.length === 0) return []
 
-    return await this.db.query(
+    return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE id = ANY(${ids})`
@@ -63,7 +63,7 @@ export class Parcel extends Model {
   }
 
   static async findOwneableParcels() {
-    return await this.db.query(
+    return this.db.query(
       `SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
@@ -71,7 +71,7 @@ export class Parcel extends Model {
   }
 
   static async findLandmarks() {
-    return await this.db.query(
+    return this.db.query(
       `SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
@@ -83,13 +83,12 @@ export class Parcel extends Model {
       typeof min === 'string' ? coordinates.toArray(min) : [min.x, min.y]
     const [maxx, miny] =
       typeof max === 'string' ? coordinates.toArray(max) : [max.x, max.y]
-    const query = SQL`SELECT *, (
-      ${PublicationQueries.findLastParcelPublicationJsonSql()}
+    return this.db.query(SQL`SELECT *, (
+      ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
     ) as publication
       FROM ${SQL.raw(this.tableName)}
-      WHERE x BETWEEN ${+minx} AND ${+maxx}
-        AND y BETWEEN ${+miny} AND ${+maxy}`
-    return await this.db.query(query)
+      WHERE x BETWEEN ${minx} AND ${maxx}
+        AND y BETWEEN ${miny} AND ${maxy}`)
   }
 
   static async encodeAssetId(x, y) {
@@ -117,7 +116,7 @@ export class Parcel extends Model {
     const { x, y } = parcel
     parcel.id = Parcel.buildId(x, y)
 
-    return await super.insert(parcel)
+    return super.insert(parcel)
   }
 
   isEqual(parcel) {
@@ -152,7 +151,7 @@ export class Parcel extends Model {
   }
 
   static async findWithLastActiveMortgageByBorrower(borrower) {
-    return await this.db.query(
+    return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`

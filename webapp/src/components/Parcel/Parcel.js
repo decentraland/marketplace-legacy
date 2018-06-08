@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 import { walletType, parcelType, publicationType } from 'components/types'
 import { isOpen } from 'shared/publication'
-import { buildCoordinate } from 'shared/parcel'
+import { isOwner } from 'shared/parcel'
 
 export default class Parcel extends React.PureComponent {
   static propTypes = {
@@ -53,7 +53,8 @@ export default class Parcel extends React.PureComponent {
       publication
     } = nextProps
 
-    const ownerIsNotAllowed = ownerNotAllowed && this.isOwner(wallet)
+    const ownerIsNotAllowed =
+      ownerNotAllowed && isOwner(wallet, parcel.x, parcel.y)
     const parcelShouldBeOnSale =
       withPublications && parcel && !isOpen(publication)
 
@@ -69,17 +70,11 @@ export default class Parcel extends React.PureComponent {
   }
 
   checkOwnership(wallet) {
-    const { onAccessDenied } = this.props
-    if (!this.isNavigatingAway && !this.isOwner(wallet)) {
+    const { onAccessDenied, parcel } = this.props
+    if (!this.isNavigatingAway && !isOwner(wallet, parcel.x, parcel.y)) {
       this.isNavigatingAway = true
       return onAccessDenied()
     }
-  }
-
-  isOwner(wallet) {
-    const { x, y } = this.props
-    const parcelId = buildCoordinate(x, y)
-    return !!wallet.parcelsById[parcelId]
   }
 
   render() {
@@ -91,6 +86,6 @@ export default class Parcel extends React.PureComponent {
         </div>
       )
     }
-    return children(parcel, this.isOwner(wallet))
+    return children(parcel, isOwner(wallet, parcel.x, parcel.y), wallet)
   }
 }
