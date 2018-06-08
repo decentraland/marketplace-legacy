@@ -2,6 +2,9 @@ import { combineReducers } from 'redux'
 import { loadingReducer } from 'modules/loading/reducer'
 
 import {
+  CREATE_MORTGAGE_REQUEST,
+  CREATE_MORTGAGE_SUCCESS,
+  CREATE_MORTGAGE_FAILURE,
   FETCH_MORTGAGED_PARCELS_REQUEST,
   FETCH_MORTGAGED_PARCELS_SUCCESS,
   FETCH_MORTGAGED_PARCELS_FAILURE,
@@ -36,6 +39,9 @@ export function data(state = INITIAL_DATA_STATE, action) {
 
 export function loading(state = [], action) {
   switch (action.type) {
+    case CREATE_MORTGAGE_REQUEST:
+    case CREATE_MORTGAGE_SUCCESS:
+    case CREATE_MORTGAGE_FAILURE:
     case FETCH_MORTGAGED_PARCELS_SUCCESS:
     case FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS:
     case FETCH_ACTIVE_PARCEL_MORTGAGES_FAILURE:

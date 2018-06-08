@@ -31,7 +31,6 @@ export default class MortgageForm extends React.PureComponent {
     publication: publicationType,
     parcel: parcelType,
     isTxIdle: PropTypes.bool,
-    isDisabled: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
@@ -179,7 +178,7 @@ export default class MortgageForm extends React.PureComponent {
   }
 
   render() {
-    const { publication, isTxIdle, isDisabled, onCancel } = this.props
+    const { publication, isTxIdle, onCancel } = this.props
     const {
       amount,
       payableAt,
@@ -310,11 +309,7 @@ export default class MortgageForm extends React.PureComponent {
           <Button disabled={isPending} onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
-          <Button
-            type="submit"
-            primary={true}
-            disabled={isPending || isTxIdle || isDisabled}
-          >
+          <Button type="submit" primary={true} disabled={isPending || isTxIdle}>
             {t('global.request')}
           </Button>
         </div>

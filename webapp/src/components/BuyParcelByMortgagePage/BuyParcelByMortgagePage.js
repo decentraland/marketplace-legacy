@@ -16,7 +16,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     wallet: walletType,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    isDisabled: PropTypes.bool.isRequired,
+    isTxIdle: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
@@ -56,6 +56,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
       x,
       y,
       publication,
+      isTxIdle,
       isLoading,
       isConnected,
       onConfirm,
@@ -93,10 +94,9 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                 <MortgageForm
                   parcel={parcel}
                   publication={publication}
-                  isTxIdle={false}
+                  isTxIdle={isTxIdle}
                   onPublish={onConfirm}
                   onCancel={onCancel}
-                  isDisabled={false}
                 />
               </ParcelModal>
             </React.Fragment>
