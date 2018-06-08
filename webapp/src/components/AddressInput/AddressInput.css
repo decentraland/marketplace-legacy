@@ -10,7 +10,12 @@
 
 .ui.form .field .AddressInput .ui.input.address-input,
 .AddressInput .ui.input.address-input {
-  display: block;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .ui.form .field .AddressInput .ui.input.address-input > input,
