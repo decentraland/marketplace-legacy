@@ -9,7 +9,7 @@ export const blacklist = Object.freeze({
   parcel,
   estate,
   asset: Array.from(asset),
-  publication: ['asset_id', ...timestamps],
+  publication: [...timestamps],
   contribution: ['message', 'signature', ...timestamps],
   district: ['disabled', 'address', 'parcel_ids', ...timestamps]
 })
