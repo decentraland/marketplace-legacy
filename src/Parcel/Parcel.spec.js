@@ -152,7 +152,7 @@ describe('Parcel', function() {
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
-        type: 'parcel', // TODO: change with constant
+        type: ASSET_TYPE.parcel,
         borrower: '0xdeadbeef33',
         lender: null,
         is_due_at: 10000,
@@ -175,7 +175,7 @@ describe('Parcel', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.canceled,
+        status: Mortgage.STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {

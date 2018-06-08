@@ -43,7 +43,7 @@ export async function processEvent(event) {
 async function processNoParcelRelatedEvents(event) {
   const { tx_hash, block_number, name } = event
   switch (name) {
-    case BlockchainEvent.EVENTS.canceledMortgage: {
+    case BlockchainEvent.EVENTS.cancelledMortgage: {
       const { _id } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -52,12 +52,10 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Cancelling Mortgage ${_id}`)
         await Mortgage.update(
           {
-            status: Mortgage.STATUS.canceled,
+            status: Mortgage.STATUS.cancelled,
             block_time_updated_at
           },
-          {
-            mortgage_id: _id
-          }
+          { mortgage_id: _id }
         )
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -79,9 +77,7 @@ async function processNoParcelRelatedEvents(event) {
             status: Mortgage.STATUS.ongoing,
             block_time_updated_at
           },
-          {
-            mortgage_id: _id
-          }
+          { mortgage_id: _id }
         )
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -103,9 +99,7 @@ async function processNoParcelRelatedEvents(event) {
             outstanding_amount: _amount,
             block_time_updated_at
           },
-          {
-            loan_id: _index
-          }
+          { loan_id: _index }
         )
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -272,7 +266,7 @@ async function processParcelRelatedEvents(assetId, event) {
       log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
 
       const LoanIdBN = eth.utils.toBigNumber(loanId)
-      const rcnEngineContract = await eth.getContract('RCNEngine')
+      const rcnEngineContract = eth.getContract('RCNEngine')
       const [amount, duesIn, expiresAt, payableAt] = await Promise.all([
         await rcnEngineContract.getAmount(LoanIdBN),
         await rcnEngineContract.getDuesIn(LoanIdBN),

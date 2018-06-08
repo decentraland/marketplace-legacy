@@ -31,13 +31,17 @@ export function getLoanMetadata() {
 }
 
 export function isMortgageActive(mortgage, parcel) {
-  return (
-    mortgage &&
-    parcel &&
-    ((isMortgagePending(mortgage) &&
-      isOpen(parcel.publication, PUBLICATION_STATUS.open)) ||
-      hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid]))
-  )
+  if (mortgage && parcel) {
+    const isPending =
+      isMortgagePending(mortgage) &&
+      isOpen(parcel.publication, PUBLICATION_STATUS.open)
+
+    return (
+      isPending ||
+      hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid])
+    )
+  }
+  return false
 }
 
 /**
@@ -46,7 +50,7 @@ export function isMortgageActive(mortgage, parcel) {
  * @param  {array} - parcels
  * @returns {array} - mortgages
  */
-export function getActiveMortgages(mortgages, parcels) {
+export function getActiveMortgages(mortgages = [], parcels) {
   return mortgages.filter(mortgage => {
     const parcel = parcels[mortgage.asset_id]
     return isMortgageActive(mortgage, parcel)
@@ -59,7 +63,11 @@ export function getActiveMortgages(mortgages, parcels) {
  * @param  {array} - parcels
  * @returns {array} - mortgages
  */
-export function getActiveMortgagesByBorrower(mortgages, parcels, borrower) {
+export function getActiveMortgagesByBorrower(
+  mortgages = [],
+  parcels,
+  borrower
+) {
   return getActiveMortgages(mortgages, parcels).filter(
     mortgage => mortgage && mortgage.borrower === borrower
   )
