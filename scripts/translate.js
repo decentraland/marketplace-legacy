@@ -21,15 +21,17 @@ async function main() {
 
   const mainTranslations = await translation.fetch(DEFAULT_LOCALE)
   const availableLocales = await translation.getAvailableLocales()
+  const translations = []
+  translations[DEFAULT_LOCALE] = mainTranslations
 
   const mainKeys = Object.keys(mainTranslations)
   let missing = {}
   for (const locale of availableLocales) {
     if (locale !== DEFAULT_LOCALE) {
-      const translations = await translation.fetch(locale)
+      translations[locale] = await translation.fetch(locale)
       let requests = []
       for (const key of mainKeys) {
-        const hasTranslation = key in translations
+        const hasTranslation = key in translations[locale]
         if (!hasTranslation) {
           const defaultText = mainTranslations[key]
           const replacedKeys = {}
@@ -82,9 +84,8 @@ async function main() {
     )
     const currentTranslations = flat(require(localePath))
     // remove obsolete keys
-    const translations = await translation.fetch(DEFAULT_LOCALE)
-    let cleanedTranslations = Object.keys(await translation.fetch(locale))
-      .filter(key => key in translations)
+    let cleanedTranslations = Object.keys(translations[locale])
+      .filter(key => key in mainTranslations)
       .reduce((acc, key) => {
         acc[key] = currentTranslations[key]
         return acc
