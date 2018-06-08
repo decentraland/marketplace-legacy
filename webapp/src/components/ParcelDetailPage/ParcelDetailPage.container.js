@@ -17,15 +17,18 @@ const mapState = (state, ownProps) => {
   const { x, y } = getMatchParams(ownProps)
   const getParcelMortgage = getParcelMortgageFactory(x, y)
   // Return mapStateToProps function
-  return state => ({
-    x,
-    y,
-    isLoading: isLoading(state),
-    error: getError(state),
-    districts: getDistricts(state),
-    publications: getParcelPublications(state),
-    mortgage: getParcelMortgage(state)
-  })
+  return (state, ownProps) => {
+    const { x, y } = getMatchParams(ownProps)
+    return {
+      x,
+      y,
+      isLoading: isLoading(state),
+      error: getError(state),
+      districts: getDistricts(state),
+      publications: getParcelPublications(state),
+      mortgage: getParcelMortgage(state)
+    }
+  }
 }
 
 const mapDispatch = dispatch => ({
