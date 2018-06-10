@@ -48,10 +48,6 @@
     "invalid":
       "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
-  "estate": {
-    "acquired_at": "Acquis à {date}",
-    "created_at": "Créé à {date}"
-  },
   "estate_edit": {
     "description": "La description",
     "edit_estate": "Modifier le domaine",
@@ -161,6 +157,8 @@
     "interest_rate": "Taux d'intérêt",
     "interest_rate_placeholder": "Taux d'intérêt",
     "oracle": "Adresse du contrat Oracle",
+    "outstanding_amount": "Encours",
+    "pay": "Payer",
     "payable": "Payable à",
     "payable_placeholder": "Payable en jours",
     "punitory_rate": "Taux d'intérêt punitif",
@@ -287,8 +285,6 @@
     "on_sale": "A vendre"
   },
   "publication": {
-    "acquired_at": "Acquis à {date}",
-    "canceled": "Annulé",
     "sold": "Vendu",
     "view": "Vue"
   },

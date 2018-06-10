@@ -47,10 +47,6 @@
     "invalid":
       "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
-  "estate": {
-    "acquired_at": "在{date}获得",
-    "created_at": "创建于{date}"
-  },
   "estate_edit": {
     "description": "描述",
     "edit_estate": "编辑地产",
@@ -156,6 +152,8 @@
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "oracle": "Oracle合同地址",
+    "outstanding_amount": "杰出的金额",
+    "pay": "工资",
     "payable": "应付",
     "payable_placeholder": "应付天数",
     "punitory_rate": "惩罚性利率",
@@ -274,8 +272,6 @@
     "on_sale": "出售"
   },
   "publication": {
-    "acquired_at": "在{date}收购",
-    "canceled": "已取消",
     "sold": "已售出",
     "view": "查看"
   },

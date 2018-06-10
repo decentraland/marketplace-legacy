@@ -1,5 +1,10 @@
-.parcelMortgageDetail .open p{
-  color: var(--error);
+.parcelMortgageDetail .pending p {
+  color: var(--orange);
+  text-transform: capitalize;
+}
+
+.parcelMortgageDetail .ongoing p{
+  color: var(--light-blue);
   text-transform: capitalize;
 }
 

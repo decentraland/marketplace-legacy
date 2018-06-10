@@ -1,5 +1,6 @@
 import { Model } from 'decentraland-commons'
 import { BlockchainEvent } from '../BlockchainEvent'
+import { ASSET_TYPE } from '../Asset'
 import { SQL } from '../database'
 
 export class Publication extends Model {
@@ -28,17 +29,12 @@ export class Publication extends Model {
     cancelled: 'cancelled'
   })
 
-  static TYPES = Object.freeze({
-    parcel: 'parcel',
-    estate: 'estate'
-  })
-
   static isValidStatus(status) {
     return Object.values(this.STATUS).includes(status)
   }
 
   static isValidType(type) {
-    return Object.values(this.TYPES).includes(type)
+    return Object.values(ASSET_TYPE).includes(type)
   }
 
   static findByOwner(owner) {

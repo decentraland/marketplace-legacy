@@ -7,6 +7,7 @@ import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Mortgage } from '../../src/Mortgage'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'
 import { isDuplicatedConstraintError } from '../../src/database'
+import { ASSET_TYPE } from '../../src/Asset'
 
 const log = new Log('processEvents')
 
@@ -42,7 +43,7 @@ export async function processEvent(event) {
 async function processNoParcelRelatedEvents(event) {
   const { tx_hash, block_number, name } = event
   switch (name) {
-    case BlockchainEvent.EVENTS.canceledMortgage: {
+    case BlockchainEvent.EVENTS.cancelledMortgage: {
       const { _id } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -54,9 +55,51 @@ async function processNoParcelRelatedEvents(event) {
             status: Mortgage.STATUS.cancelled,
             block_time_updated_at
           },
+          { mortgage_id: _id }
+        )
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
+        )
+      }
+      break
+    }
+    case BlockchainEvent.EVENTS.startedMortgage: {
+      const { _id } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      try {
+        log.info(`[${name}] Starting Mortgage ${_id}`)
+        await Mortgage.update(
           {
-            mortgage_id: _id
-          }
+            status: Mortgage.STATUS.ongoing,
+            block_time_updated_at
+          },
+          { mortgage_id: _id }
+        )
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] Mortgage of hash ${tx_hash} already exists and it's not open`
+        )
+      }
+      break
+    }
+    case BlockchainEvent.EVENTS.partialPayment: {
+      const { _index, _amount } = event.args
+      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
+        block_number
+      )
+      try {
+        log.info(`[${name}] Partial Pay Mortgage ${_index}`) // TODO: get mortgage ID
+        await Mortgage.update(
+          {
+            outstanding_amount: _amount,
+            block_time_updated_at
+          },
+          { loan_id: _index }
         )
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -222,13 +265,13 @@ async function processParcelRelatedEvents(assetId, event) {
       }
       log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
 
-      const rcnEngineContract = await eth.getContract('RCNEngine')
-      const [amount, duesIn, expiresAt] = await Promise.all([
-        await rcnEngineContract.getAmount(eth.utils.toBigNumber(loanId)),
-        await rcnEngineContract.getDuesIn(eth.utils.toBigNumber(loanId)),
-        await rcnEngineContract.getExpirationRequest(
-          eth.utils.toBigNumber(loanId)
-        )
+      const LoanIdBN = eth.utils.toBigNumber(loanId)
+      const rcnEngineContract = eth.getContract('RCNEngine')
+      const [amount, duesIn, expiresAt, payableAt] = await Promise.all([
+        await rcnEngineContract.getAmount(LoanIdBN),
+        await rcnEngineContract.getDuesIn(LoanIdBN),
+        await rcnEngineContract.getExpirationRequest(LoanIdBN),
+        await rcnEngineContract.getCancelableAt(LoanIdBN)
       ])
 
       const block_time_created_at = await Promise.resolve(
@@ -237,17 +280,19 @@ async function processParcelRelatedEvents(assetId, event) {
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: Mortgage.STATUS.open,
+          status: Mortgage.STATUS.pending,
           is_due_at: duesIn.toNumber(),
+          payable_at: payableAt.toNumber(),
           expires_at: expiresAt.toNumber(),
           mortgage_id: parseInt(mortgageId, 10),
           loan_id: parseInt(loanId, 10),
           block_number,
           block_time_created_at,
           amount: eth.utils.fromWei(amount),
+          outstanding_amount: eth.utils.fromWei(amount),
           tx_hash,
           asset_id: Parcel.buildId(x, y),
-          type: 'parcel', // TODO: should replace with constant
+          type: ASSET_TYPE.parcel,
           borrower
         })
       } catch (error) {

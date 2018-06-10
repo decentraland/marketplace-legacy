@@ -18,15 +18,21 @@ export class Mortgage extends Model {
     'amount',
     'expires_at',
     'is_due_at',
+    'payable_at',
+    'started_at',
+    'outstanding_amount',
     'block_time_created_at',
     'block_time_updated_at'
   ]
   static primaryKey = 'tx_hash'
 
   static STATUS = Object.freeze({
-    open: 'open',
-    claimed: 'claimed',
-    cancelled: 'cancelled'
+    pending: 'pending',
+    cancelled: 'cancelled',
+    ongoing: 'ongoing',
+    paid: 'paid',
+    defaulted: 'defaulted',
+    claimed: 'claimed'
   })
 
   static findByBorrower(borrower, status) {
@@ -34,7 +40,7 @@ export class Mortgage extends Model {
       SQL`SELECT * FROM ${raw(this.tableName)}
         WHERE borrower = ${borrower}
           AND status IN (${raw(getInStatus(status, this.STATUS))})
-          ORDER BY created_at DESC`
+        ORDER BY created_at DESC`
     )
   }
 
@@ -43,7 +49,7 @@ export class Mortgage extends Model {
       SQL`SELECT * FROM ${raw(this.tableName)}
         WHERE asset_id = ${assetId}
           AND status IN(${raw(getInStatus(status, this.STATUS))})
-          ORDER BY created_at DESC`
+        ORDER BY created_at DESC`
     )
   }
 }

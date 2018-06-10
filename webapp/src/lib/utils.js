@@ -99,26 +99,25 @@ export function isExpired(expires_at) {
 }
 
 /**
- * Returns if object is Open
+ * Returns if object is Open and not expired
  * @param {object} - obj with status & tx_status fields
  * @param  {string} - status
  * @returns {boolean}
  */
 export function isOpen(obj, status) {
-  return hasStatus(obj, status)
+  return hasStatus(obj, status) && !isExpired(obj.expires_at)
 }
 
 /**
  * Returns if object has status
  * @param {object} - obj with status & tx_status fields
- * @param  {string} - status
+ * @param  {array | string} - status
  * @returns {boolean}
  */
 export function hasStatus(obj, status) {
   return (
     obj &&
-    obj.status === status &&
-    obj.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
-    !isExpired(obj)
+    status.includes(obj.status) &&
+    obj.tx_status === txUtils.TRANSACTION_STATUS.confirmed
   )
 }

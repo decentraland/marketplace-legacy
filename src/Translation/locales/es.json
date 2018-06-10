@@ -47,10 +47,6 @@
     "invalid":
       "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
-  "estate": {
-    "acquired_at": "Adquirido en {date}",
-    "created_at": "Creado en {date}"
-  },
   "estate_edit": {
     "description": "Descripción",
     "edit_estate": "Editar propiedad",
@@ -159,6 +155,8 @@
     "interest_rate": "Tasa de interés",
     "interest_rate_placeholder": "Tasa de interés",
     "oracle": "Dirección del contrato de Oracle",
+    "outstanding_amount": "Monto pendiente",
+    "pay": "Paga",
     "payable": "Pagadero a",
     "payable_placeholder": "Pagable en días",
     "punitory_rate": "Tasa de interés punitiva",
@@ -285,8 +283,6 @@
     "on_sale": "En Venta"
   },
   "publication": {
-    "acquired_at": "Adquirida en {date}",
-    "canceled": "Cancelada",
     "sold": "Vendida",
     "view": "Ver"
   },

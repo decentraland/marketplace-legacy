@@ -154,6 +154,8 @@
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "oracle": "Oracle contract address",
+    "outstanding_amount": "Outstanding amount",
+    "pay": "Pay",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",
     "punitory_rate": "Punitory interest rate",
@@ -276,7 +278,6 @@
     "on_sale": "On Sale"
   },
   "publication": {
-    "canceled": "Canceled",
     "sold": "Sold",
     "view": "View"
   },

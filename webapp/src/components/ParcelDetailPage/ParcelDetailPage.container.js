@@ -11,7 +11,6 @@ import { fetchActiveParcelMortgagesRequest } from 'modules/mortgage/actions'
 import { getParcelMortgagesFactory } from 'modules/mortgage/selectors'
 import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import ParcelDetailPage from './ParcelDetailPage'
-
 const mapState = (state, ownProps) => {
   // Instanciate selectors
   const { x, y } = getMatchParams(ownProps)

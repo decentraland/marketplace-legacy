@@ -43,7 +43,7 @@ export function cancelMortgageRequest(mortgageId, assetId) {
 }
 
 export function cancelMortgageSuccess(txHash, assetId) {
-  const { x, y } = splitCoordinate(assetId)
+  const [x, y] = splitCoordinate(assetId)
   return {
     type: CANCEL_MORTGAGE_SUCCESS,
     ...buildTransactionAction(txHash, {

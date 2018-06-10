@@ -45,17 +45,21 @@ export const getAddresses = createSelector(
         )
       )
 
+      const mortgagedParcelsByAddress = mortgagedParcels.filter(
+        parcel => parcel.mortgage.borrower === address
+      )
+
       return {
         ...map,
         [address]: {
           ...data[address],
+          mortgagedParcels: mortgagedParcelsByAddress,
           parcels,
           parcelsById,
           estates: estates.filter(e => e.data.parcels.length > 0),
           estatesById,
           contributions,
-          publishedParcels,
-          mortgagedParcels
+          publishedParcels
         }
       }
     }, {})

@@ -8,6 +8,7 @@ import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
 import { Mortgage } from '../Mortgage'
+import { ASSET_TYPE } from '../Asset'
 
 describe('Parcel', function() {
   describe('.buildId', function() {
@@ -55,7 +56,7 @@ describe('Parcel', function() {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: Publication.STATUS.open,
-        type: Publication.TYPES.parcel,
+        type: ASSET_TYPE.parcel,
         asset_id: '3,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -106,19 +107,58 @@ describe('Parcel', function() {
   describe('.findWithLastActiveMortgageByBorrower', function() {
     beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
 
-    it('should return parcels with mortgages open/claimed by borrower', async function() {
+    it('should return parcels with mortgages by borrower', async function() {
+      const publication = {
+        tx_hash: '0xdeadbeef',
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        status: Publication.STATUS.open,
+        type: ASSET_TYPE.parcel,
+        asset_id: '2,5',
+        owner: '0xdeadbeef33',
+        buyer: null,
+        price: 1500,
+        expires_at: new Date().getTime() * 1000,
+        contract_id: '0xdeadbeef',
+        block_time_created_at: null,
+        block_time_updated_at: null,
+        marketplace_id: '0x113322',
+        block_number: 1
+      }
+      const publication2 = {
+        tx_hash: '0xdeadabeef',
+        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        status: Publication.STATUS.open,
+        type: ASSET_TYPE.parcel,
+        asset_id: '6,5',
+        owner: '0xdeadbeef33',
+        buyer: null,
+        price: 1500,
+        expires_at: new Date().getTime() * 1000,
+        contract_id: '0xdseadbeef',
+        block_time_created_at: null,
+        block_time_updated_at: null,
+        marketplace_id: '0x113322',
+        block_number: 1
+      }
+      await Promise.all([
+        Publication.insert(publication),
+        Publication.insert(publication2)
+      ])
+
       const mortgage = {
         tx_hash: '1xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Mortgage.STATUS.open,
+        status: Mortgage.STATUS.pending,
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
-        type: 'parcel', // TODO: change with constant
+        type: ASSET_TYPE.parcel,
         borrower: '0xdeadbeef33',
         lender: null,
-        is_due_at: new Date().getTime() * 1000,
+        is_due_at: 10000,
+        payable_at: 1000,
         amount: 1500,
+        outstanding_amount: 1500,
         expires_at: new Date().getTime() * 1000,
         block_time_created_at: null,
         block_time_updated_at: null,
@@ -143,7 +183,7 @@ describe('Parcel', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.claimed,
+        status: Mortgage.STATUS.ongoing,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -169,7 +209,8 @@ describe('Parcel', function() {
           last_transferred_at: null,
           auction_owner: null,
           in_estate: false,
-          tags: {}
+          tags: {},
+          publication
         },
         {
           asset_id: null,
@@ -182,7 +223,8 @@ describe('Parcel', function() {
           last_transferred_at: null,
           auction_owner: null,
           in_estate: false,
-          tags: {}
+          tags: {},
+          publication: publication2
         }
       ])
     })

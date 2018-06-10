@@ -1,6 +1,7 @@
 import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
+import { ASSET_TYPE } from '../Asset'
 
 const ALLOWED_VALUES = Object.freeze({
   price: ['ASC'],
@@ -34,7 +35,7 @@ export class PublicationRequestFilters {
 
   getType() {
     const type = this.getReqParam('type')
-    return Publication.isValidType(type) ? type : Publication.TYPES.parcel
+    return Publication.isValidType(type) ? type : ASSET_TYPE.parcel
   }
 
   getSort() {

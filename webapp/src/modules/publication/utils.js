@@ -1,3 +1,5 @@
+import { isOpen } from 'lib/utils'
+
 // From Publication.js on the server
 export const PUBLICATION_STATUS = Object.freeze({
   open: 'open',
@@ -29,3 +31,6 @@ export function toPublicationObject(publicationsArray) {
     return map
   }, {})
 }
+
+export const isPublicationOpen = publication =>
+  isOpen(publication, PUBLICATION_STATUS.open)

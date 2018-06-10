@@ -9,10 +9,8 @@ import {
 } from 'modules/mortgage/actions'
 import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
-import {
-  getPublicationByCoordinate,
-  getLoading
-} from 'modules/publication/selectors'
+import { getLoading } from 'modules/mortgage/selectors'
+import { getPublicationByCoordinate } from 'modules/publication/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import { isLoadingType } from 'modules/loading/selectors'
 
@@ -23,7 +21,7 @@ const mapState = (state, ownProps) => {
     x,
     y,
     publication: getPublicationByCoordinate(state, x, y),
-    isDisabled: isLoadingType(getLoading(state), CREATE_MORTGAGE_REQUEST),
+    isTxIdle: isLoadingType(getLoading(state), CREATE_MORTGAGE_REQUEST),
     wallet: getWallet(state),
     isConnected: isConnected(state),
     isLoading: isConnecting(state)
