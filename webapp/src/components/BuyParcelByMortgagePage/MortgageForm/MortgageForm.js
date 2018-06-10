@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
-import { txUtils } from 'decentraland-eth'
 import { Form, Button, Input, Message, Grid } from 'semantic-ui-react'
 
+import TxStatus from 'components/TxStatus'
 import AddressBlock from 'components/AddressBlock'
 import { parcelType, publicationType } from 'components/types'
 import { preventDefault, formatDate } from 'lib/utils'
@@ -18,7 +18,7 @@ const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
 const MINIMUM_MORTGAGE_AMOUNT = 1
 const MINIMUM_DURATION_DAYS = 30
-const MINIMUM_PAYABLE_DAYS = 30
+const MINIMUM_PAYABLE_DAYS = 0
 const MAXIMUM_INTEREST_RATE = 100
 const MINIMUM_INTEREST_RATE = 1
 
@@ -29,6 +29,7 @@ export default class MortgageForm extends React.PureComponent {
     publication: publicationType,
     parcel: parcelType,
     error: PropTypes.string,
+    isTxIdle: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
@@ -176,7 +177,7 @@ export default class MortgageForm extends React.PureComponent {
   }
 
   render() {
-    const { publication, onCancel, error } = this.props
+    const { onCancel, isTxIdle, error } = this.props
     const {
       amount,
       payableAt,
@@ -186,9 +187,6 @@ export default class MortgageForm extends React.PureComponent {
       punitoryRate,
       formErrors
     } = this.state
-
-    const isPending =
-      publication.tx_status === txUtils.TRANSACTION_STATUS.pending
 
     return (
       <Form
@@ -285,6 +283,7 @@ export default class MortgageForm extends React.PureComponent {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        <TxStatus.Idle isIdle={isTxIdle} />
         {formErrors.length > 0 ? (
           <Message error onDismiss={this.handleClearFormErrors}>
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}
@@ -293,10 +292,10 @@ export default class MortgageForm extends React.PureComponent {
         {error && <Message error>{<div>{error}</div>}</Message>}
         <br />
         <div>
-          <Button disabled={isPending} onClick={onCancel} type="button">
+          <Button onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
-          <Button type="submit" primary={true} disabled={isPending}>
+          <Button type="submit" primary={true} disabled={isTxIdle}>
             {t('global.request')}
           </Button>
         </div>

@@ -28,7 +28,7 @@ export class Mortgage extends Model {
 
   static STATUS = Object.freeze({
     pending: 'pending',
-    canceled: 'canceled',
+    cancelled: 'cancelled',
     ongoing: 'ongoing',
     paid: 'paid',
     defaulted: 'defaulted',

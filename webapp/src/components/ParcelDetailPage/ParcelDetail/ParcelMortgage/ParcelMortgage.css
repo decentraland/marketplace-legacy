@@ -4,7 +4,7 @@
   text-align: center;
 }
 
-.ParcelMortgageDetail .row{
+.ParcelMortgageDetail.ui.grid>.row{
   align-items: center;
 }
 

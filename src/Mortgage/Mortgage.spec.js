@@ -53,7 +53,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.canceled,
+        status: Mortgage.STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -102,7 +102,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.canceled,
+        status: Mortgage.STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -183,7 +183,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.canceled,
+        status: Mortgage.STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {

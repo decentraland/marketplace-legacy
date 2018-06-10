@@ -5,13 +5,14 @@ import { Button, Form, Input } from 'semantic-ui-react'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 import { mortgageType } from 'components/types'
-
+import TxStatus from 'components/TxStatus'
 import './PayMortgageForm.css'
 
 export default class PayMortgageForm extends React.PureComponent {
   static propTypes = {
     balance: PropTypes.number,
     mortgage: mortgageType,
+    isTxIdle: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     isDisabled: PropTypes.bool.isRequired
@@ -50,7 +51,7 @@ export default class PayMortgageForm extends React.PureComponent {
   }
 
   render() {
-    const { onCancel, isDisabled } = this.props
+    const { isTxIdle, onCancel, isDisabled } = this.props
     const { amount } = this.state
 
     return (
@@ -71,6 +72,8 @@ export default class PayMortgageForm extends React.PureComponent {
             autoFocus={true}
           />
         </Form.Field>
+        <br />
+        <TxStatus.Idle isIdle={isTxIdle} />
         <br />
         <div className="footer">
           <Button type="button" onClick={onCancel}>

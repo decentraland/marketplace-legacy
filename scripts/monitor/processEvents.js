@@ -55,9 +55,7 @@ async function processNoParcelRelatedEvents(event) {
             status: Mortgage.STATUS.canceled,
             block_time_updated_at
           },
-          {
-            mortgage_id: _id
-          }
+          { mortgage_id: _id }
         )
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -79,9 +77,7 @@ async function processNoParcelRelatedEvents(event) {
             status: Mortgage.STATUS.ongoing,
             block_time_updated_at
           },
-          {
-            mortgage_id: _id
-          }
+          { mortgage_id: _id }
         )
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -98,7 +94,7 @@ async function processNoParcelRelatedEvents(event) {
       )
       log.info(`[${name}] Partial Payment for loan ${_index}`)
 
-      const rcnEngineContract = await eth.getContract('RCNEngine')
+      const rcnEngineContract = eth.getContract('RCNEngine')
       const outstandingAmount = await rcnEngineContract.getPendingAmount(
         eth.utils.toBigNumber(_index)
       )
@@ -108,9 +104,7 @@ async function processNoParcelRelatedEvents(event) {
           outstanding_amount: eth.utils.fromWei(outstandingAmount),
           block_time_updated_at
         },
-        {
-          loan_id: _index
-        }
+        { loan_id: _index }
       )
       break
     }
@@ -126,9 +120,7 @@ async function processNoParcelRelatedEvents(event) {
           outstanding_amount: 0,
           block_time_updated_at
         },
-        {
-          loan_id: _index
-        }
+        { loan_id: _index }
       )
       break
     }
@@ -143,9 +135,7 @@ async function processNoParcelRelatedEvents(event) {
           status: Mortgage.STATUS.claimed,
           block_time_updated_at
         },
-        {
-          mortgage_id: _id
-        }
+        { mortgage_id: _id }
       )
       break
     }
@@ -160,9 +150,7 @@ async function processNoParcelRelatedEvents(event) {
           status: Mortgage.STATUS.defaulted,
           block_time_updated_at
         },
-        {
-          mortgage_id: _id
-        }
+        { mortgage_id: _id }
       )
       break
     }

@@ -24,6 +24,7 @@ export default class PayMortgagePage extends React.PureComponent {
     isConnected: PropTypes.bool.isRequired,
     isFetchingMortgages: PropTypes.bool.isRequired,
     mortgage: mortgageType,
+    isTxIdle: PropTypes.bool.isRequired,
     onFetchMortgage: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
@@ -70,7 +71,8 @@ export default class PayMortgagePage extends React.PureComponent {
       isFetchingMortgages,
       wallet,
       onSubmit,
-      onCancel
+      onCancel,
+      isTxIdle
     } = this.props
 
     if (!isConnecting && !isConnected) {
@@ -104,6 +106,7 @@ export default class PayMortgagePage extends React.PureComponent {
                 mortgage={mortgage}
                 onSubmit={onSubmit}
                 onCancel={onCancel}
+                isTxIdle={isTxIdle}
                 isDisabled={!isMortgageOngoing(mortgage)}
               />
             </ParcelModal>

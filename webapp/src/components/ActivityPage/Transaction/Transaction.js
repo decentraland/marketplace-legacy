@@ -266,7 +266,8 @@ export default class Transaction extends React.PureComponent {
       MANAGE_PARCEL_SUCCESS,
       CREATE_MORTGAGE_SUCCESS,
       CANCEL_MORTGAGE_SUCCESS,
-      PAY_MORTGAGE_SUCCESS
+      PAY_MORTGAGE_SUCCESS,
+      CLAIM_MORTGAGE_RESOLUTION_SUCCESS
     ].includes(tx.actionType)
 
     return (

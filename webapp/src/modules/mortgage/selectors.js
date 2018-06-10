@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
 
-import { FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST } from './actions'
+import {
+  FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
+  CREATE_MORTGAGE_REQUEST,
+  PAY_MORTGAGE_REQUEST
+} from './actions'
 import { isLoadingType } from 'modules/loading/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getParcels } from 'modules/parcels/selectors'
@@ -14,7 +18,10 @@ export const getError = state => getState(state).error
 export const getMortgages = state => getData(state).mortgages
 export const isFetchingParcelMortgages = state =>
   isLoadingType(getLoading(state), FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST)
-
+export const isRequestingMortgageTransactionIdle = state =>
+  isLoadingType(getLoading(state), CREATE_MORTGAGE_REQUEST)
+export const isPayingMortgageTransactionIdle = state =>
+  isLoadingType(getLoading(state), PAY_MORTGAGE_REQUEST)
 export const getMortgagesArray = createSelector(getMortgages, mortgages =>
   Object.keys(mortgages).map(key => mortgages[key])
 )

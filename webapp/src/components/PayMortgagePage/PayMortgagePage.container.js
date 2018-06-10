@@ -11,7 +11,8 @@ import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import {
   getParcelMortgageFactory,
-  isFetchingParcelMortgages
+  isFetchingParcelMortgages,
+  isPayingMortgageTransactionIdle
 } from 'modules/mortgage/selectors'
 import { isLoading } from 'modules/parcels/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
@@ -27,7 +28,8 @@ const mapState = (state, ownProps) => {
     isConnecting: isConnecting(state),
     isFetchingMortgages: isFetchingParcelMortgages(state),
     isLoading: isLoading(state),
-    mortgage: getMortgage(state)
+    mortgage: getMortgage(state),
+    isTxIdle: isPayingMortgageTransactionIdle(state)
   })
 }
 
