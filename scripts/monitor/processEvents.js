@@ -43,7 +43,7 @@ export async function processEvent(event) {
 async function processNoParcelRelatedEvents(event) {
   const { tx_hash, block_number, name } = event
   switch (name) {
-    case BlockchainEvent.EVENTS.canceledMortgage: {
+    case BlockchainEvent.EVENTS.cancelledMortgage: {
       const { _id } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -52,7 +52,7 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Cancelling Mortgage ${_id}`)
         await Mortgage.update(
           {
-            status: Mortgage.STATUS.canceled,
+            status: Mortgage.STATUS.cancelled,
             block_time_updated_at
           },
           { mortgage_id: _id }
