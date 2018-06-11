@@ -10,6 +10,7 @@ import { getAddress } from 'modules/wallet/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getActiveMortgageByBorrower } from 'shared/mortgage'
 import { buildCoordinate } from 'shared/parcel'
+import { getPublications } from 'modules/publication/selectors'
 
 export const getState = state => state.mortgages
 export const getData = state => getState(state).data
@@ -31,12 +32,19 @@ export const getParcelMortgageFactory = (x, y) =>
     getAddress,
     getParcels,
     getMortgages,
-    (userAddress, parcels, allMortgages) => {
+    getPublications,
+    (userAddress, parcels, allMortgages, publications) => {
       const parcel = parcels[buildCoordinate(x, y)]
       const mortgages =
         parcel && parcel.mortgages_tx_hashes
           ? parcel.mortgages_tx_hashes.map(tx => allMortgages[tx])
           : []
-      return getActiveMortgageByBorrower(mortgages, parcels, userAddress)
+
+      return getActiveMortgageByBorrower(
+        mortgages,
+        parcels,
+        publications,
+        userAddress
+      )
     }
   )

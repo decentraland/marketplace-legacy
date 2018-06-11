@@ -1,6 +1,7 @@
 import { takeLatest, call, put, select, all } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
+
 import { api } from 'lib/api'
 import {
   CREATE_MORTGAGE_REQUEST,
@@ -23,6 +24,7 @@ import {
   claimMortgageResolutionFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
+import { getParcelPublications, normalizeParcel } from 'shared/parcel'
 
 import {
   MORTGAGE_STATUS,
@@ -64,7 +66,14 @@ function* handleFetchMortgageRequest(action) {
         ])
       )
     ])
-    yield put(fetchMortgagedParcelsSuccess(parcels, mortgages))
+
+    yield put(
+      fetchMortgagedParcelsSuccess(
+        parcels.map(normalizeParcel),
+        mortgages,
+        getParcelPublications(parcels)
+      )
+    )
   } catch (error) {
     yield put(fetchMortgagedParcelsFailure(error.message))
   }

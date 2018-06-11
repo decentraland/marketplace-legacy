@@ -4,8 +4,11 @@ import { PUBLICATION_STATUS } from './publication'
 
 export const MORTGAGE_STATUS = Object.freeze({
   pending: 'pending',
+  cancelled: 'cancelled',
   ongoing: 'ongoing',
-  paid: 'paid'
+  paid: 'paid',
+  defaulted: 'defaulted',
+  claimed: 'claimed'
 })
 
 export const isMortgagePending = mortgage =>
@@ -29,11 +32,12 @@ export function getLoanMetadata() {
   return `#mortgage #required-cosigner:${mortgageManagerContract.address}`
 }
 
-export function isMortgageActive(mortgage, parcel) {
+export function isMortgageActive(mortgage, parcel, publications) {
   if (mortgage && parcel) {
+    const publication = publications[parcel.publication_tx_hash]
     const isPending =
       isMortgagePending(mortgage) &&
-      isOpen(parcel.publication, PUBLICATION_STATUS.open)
+      hasStatus(publication, PUBLICATION_STATUS.open)
 
     return (
       isPending ||
@@ -49,10 +53,10 @@ export function isMortgageActive(mortgage, parcel) {
  * @param  {array} - parcels
  * @returns {array} - mortgages
  */
-export function getActiveMortgages(mortgages = [], parcels) {
+export function getActiveMortgages(mortgages = [], parcels = {}, publications) {
   return mortgages.filter(mortgage => {
     const parcel = parcels[mortgage.asset_id]
-    return isMortgageActive(mortgage, parcel)
+    return isMortgageActive(mortgage, parcel, publications)
   })
 }
 
@@ -62,8 +66,13 @@ export function getActiveMortgages(mortgages = [], parcels) {
  * @param  {array} - parcels
  * @returns {object} - mortgage
  */
-export function getActiveMortgageByBorrower(mortgages = [], parcels, borrower) {
-  return getActiveMortgages(mortgages, parcels).find(
+export function getActiveMortgageByBorrower(
+  mortgages = [],
+  parcels = {},
+  publications = {},
+  borrower
+) {
+  return getActiveMortgages(mortgages, parcels, publications).find(
     mortgage => mortgage && mortgage.borrower === borrower
   )
 }

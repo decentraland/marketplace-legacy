@@ -11,10 +11,6 @@ export const PUBLICATION_TYPES = Object.freeze({
   estate: 'estate'
 })
 
-export function isOpen(publication) {
-  return hasStatus(publication, PUBLICATION_STATUS.open)
-}
-
 export function toPublicationsObject(publicationsArray) {
   return publicationsArray.reduce(
     (obj, publication) => ({
@@ -39,6 +35,3 @@ export function toPublicationObject(publicationsArray) {
     return map
   }, {})
 }
-
-export const isPublicationOpen = publication =>
-  isOpen(publication, PUBLICATION_STATUS.open)

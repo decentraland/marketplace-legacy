@@ -75,11 +75,12 @@ export function fetchMortgagedParcelsRequest(borrower) {
   }
 }
 
-export function fetchMortgagedParcelsSuccess(parcels, mortgages) {
+export function fetchMortgagedParcelsSuccess(parcels, mortgages, publications) {
   return {
     type: FETCH_MORTGAGED_PARCELS_SUCCESS,
     parcels,
-    mortgages
+    mortgages,
+    publications
   }
 }
 
