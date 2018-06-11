@@ -33,7 +33,7 @@ export function isMortgageActive(mortgage, parcel) {
   if (mortgage && parcel) {
     const isPending =
       isMortgagePending(mortgage) &&
-      isOpen(parcel.publication, PUBLICATION_STATUS.open)
+      hasStatus(parcel.publication, PUBLICATION_STATUS.open)
 
     return (
       isPending ||
