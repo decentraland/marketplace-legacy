@@ -6,12 +6,9 @@ import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
 import { parcelType, publicationType } from 'components/types'
-import {
-  PUBLICATION_STATUS,
-  findAssetPublications
-} from 'modules/publication/utils'
+import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
-import { AUCTION_DATE } from 'lib/parcelUtils'
+import { AUCTION_DATE } from 'shared/parcel'
 import { t } from 'modules/translation/utils'
 
 import './ParcelTransactionHistory.css'

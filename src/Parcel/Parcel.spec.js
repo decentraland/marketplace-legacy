@@ -8,6 +8,8 @@ import { ParcelService } from './Parcel.service'
 import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
 import { Mortgage } from '../Mortgage'
+import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../../shared/publication'
+import { MORTGAGE_STATUS } from '../../shared/mortgage'
 
 describe('Parcel', function() {
   describe('.buildId', function() {
@@ -30,7 +32,7 @@ describe('Parcel', function() {
     beforeEach(() => new ParcelService().insertMatrix(0, 0, 10, 10))
 
     it('should return an array of parcels which are on the supplied range', async function() {
-      const range = await Parcel.inRange([2, 5], [5, 3])
+      const range = await Parcel.inRange({ x: 2, y: 5 }, { x: 5, y: 3 })
       const coordinates = range.map(coord => `${coord.x},${coord.y}`).sort()
 
       expect(range.length).to.be.equal(12)
@@ -54,8 +56,8 @@ describe('Parcel', function() {
       const publication = {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Publication.STATUS.open,
-        type: Publication.TYPES.parcel,
+        status: PUBLICATION_STATUS.open,
+        type: PUBLICATION_TYPES.parcel,
         asset_id: '3,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -69,7 +71,7 @@ describe('Parcel', function() {
       }
       await Publication.insert(publication)
 
-      const range = await Parcel.inRange([3, 5], [4, 5])
+      const range = await Parcel.inRange({ x: 3, y: 5 }, { x: 4, y: 5 })
       expect(range).to.equalRows([
         {
           x: 3,
@@ -110,7 +112,7 @@ describe('Parcel', function() {
       const mortgage = {
         tx_hash: '1xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-        status: Mortgage.STATUS.open,
+        status: MORTGAGE_STATUS.open,
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
@@ -135,7 +137,7 @@ describe('Parcel', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.cancelled,
+        status: MORTGAGE_STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -143,7 +145,7 @@ describe('Parcel', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.claimed,
+        status: MORTGAGE_STATUS.claimed,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([

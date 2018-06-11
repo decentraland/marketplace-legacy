@@ -5,6 +5,7 @@ import { Estate } from '../Estate'
 import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
 import { PublicationRequestFilters } from './PublicationRequestFilters'
+import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../shared/publication'
 
 describe('Publication', function() {
   describe('.primaryKey', function() {
@@ -24,8 +25,8 @@ describe('PublicationRequestFilters', function() {
     it('should return an object obtaining the data from the request', function() {
       const request = buildRequest({
         query: {
-          status: Publication.STATUS.sold,
-          type: Publication.TYPES.estate,
+          status: PUBLICATION_STATUS.sold,
+          type: PUBLICATION_TYPES.estate,
           sort_by: 'price',
           sort_order: 'desc',
           limit: 33,
@@ -35,8 +36,8 @@ describe('PublicationRequestFilters', function() {
 
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
-        status: Publication.STATUS.sold,
-        type: Publication.TYPES.estate,
+        status: PUBLICATION_STATUS.sold,
+        type: PUBLICATION_TYPES.estate,
         sort: {
           by: 'price',
           order: 'ASC'
@@ -62,8 +63,8 @@ describe('PublicationRequestFilters', function() {
 
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
-        status: Publication.STATUS.open,
-        type: Publication.TYPES.parcel,
+        status: PUBLICATION_STATUS.open,
+        type: PUBLICATION_TYPES.parcel,
         sort: {
           by: 'created_at',
           order: 'DESC'
@@ -81,10 +82,10 @@ describe('PublicationService', function() {
   describe('#getModelByType', function() {
     it('should return the model class for the supplied type', function() {
       const service = new PublicationService()
-      expect(service.getModelFromType(Publication.TYPES.parcel)).to.be.equal(
+      expect(service.getModelFromType(PUBLICATION_TYPES.parcel)).to.be.equal(
         Parcel
       )
-      expect(service.getModelFromType(Publication.TYPES.estate)).to.be.equal(
+      expect(service.getModelFromType(PUBLICATION_TYPES.estate)).to.be.equal(
         Estate
       )
     })

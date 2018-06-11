@@ -9,7 +9,7 @@ import {
   oneOf,
   oneOfType
 } from 'prop-types'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'shared/publication'
 
 export const publicationType = shape({
   tx_hash: string,

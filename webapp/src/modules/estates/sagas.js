@@ -9,11 +9,11 @@ import {
   fetchEstateSuccess,
   fetchEstateFailure
 } from './actions'
-import { inBounds } from 'lib/parcelUtils'
-import { getParcels } from 'modules/parcels/selectors'
+import { getData as getParcels } from 'modules/parcels/selectors'
 import { locations } from 'locations'
 import { api } from 'lib/api'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
+import { Bounds } from 'shared/map'
 
 export function* estateSaga() {
   yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
@@ -21,7 +21,7 @@ export function* estateSaga() {
 }
 
 function validateCoords(x, y) {
-  if (!inBounds(x, y)) {
+  if (!Bounds.inBounds(x, y)) {
     throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
   }
 }

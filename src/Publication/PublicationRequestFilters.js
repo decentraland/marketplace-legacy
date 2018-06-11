@@ -1,6 +1,7 @@
 import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
+import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../../shared/publication'
 
 const ALLOWED_VALUES = Object.freeze({
   price: ['ASC'],
@@ -29,12 +30,12 @@ export class PublicationRequestFilters {
 
   getStatus() {
     const status = this.getReqParam('status')
-    return Publication.isValidStatus(status) ? status : Publication.STATUS.open
+    return Publication.isValidStatus(status) ? status : PUBLICATION_STATUS.open
   }
 
   getType() {
     const type = this.getReqParam('type')
-    return Publication.isValidType(type) ? type : Publication.TYPES.parcel
+    return Publication.isValidType(type) ? type : PUBLICATION_TYPES.parcel
   }
 
   getSort() {

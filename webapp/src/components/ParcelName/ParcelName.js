@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
 import { locations } from 'locations'
 import { parcelType, districtType } from 'components/types'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
 
 import './ParcelName.css'
 

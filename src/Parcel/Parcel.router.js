@@ -1,7 +1,7 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
-import { Publication } from '../Publication'
+import { PUBLICATION_TYPES } from '../shared/publication'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
@@ -50,7 +50,7 @@ export class ParcelRouter {
       total = parcels.length
     } catch (error) {
       // Force parcel type
-      req.params.type = Publication.TYPES.parcel
+      req.params.type = PUBLICATION_TYPES.parcel
 
       const result = await new AssetRouter().getAssets(req)
 

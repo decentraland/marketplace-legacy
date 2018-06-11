@@ -18,8 +18,8 @@ import {
 import { getData as getParcels } from './selectors'
 import { locations } from 'locations'
 import { api } from 'lib/api'
-import { buildCoordinate } from 'lib/utils'
-import { inBounds } from 'lib/parcelUtils'
+import { buildCoordinate } from 'shared/parcel'
+import { Bounds } from 'shared/map'
 import { webworker } from 'lib/webworker'
 
 export function* parcelsSaga() {
@@ -57,7 +57,7 @@ function* handleParcelRequest(action) {
     const nw = parcelId
     const se = parcelId
 
-    if (!inBounds(x, y)) {
+    if (!Bounds.inBounds(x, y)) {
       throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
     }
 

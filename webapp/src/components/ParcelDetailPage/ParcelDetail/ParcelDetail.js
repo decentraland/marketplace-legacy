@@ -13,7 +13,7 @@ import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
 import ParcelMortgage from './ParcelMortgage'
 import { parcelType, districtType, publicationType } from 'components/types'
-import { getDistrict, isOnSale } from 'lib/parcelUtils'
+import { getDistrict, getOpenPublication } from 'shared/parcel'
 import { t } from 'modules/translation/utils'
 
 export default class ParcelDetail extends React.PureComponent {
@@ -39,16 +39,11 @@ export default class ParcelDetail extends React.PureComponent {
     return null
   }
 
-  getPublication() {
-    const { parcel } = this.props
-    return isOnSale(parcel) ? parcel.publication : null
-  }
-
   render() {
     const { parcel, districts, publications, isOwner, mortgages } = this.props
 
     const description = this.getDescription()
-    const publication = this.getPublication()
+    const publication = getOpenPublication(parcel, publications)
 
     return (
       <div className="ParcelDetail">
@@ -95,6 +90,7 @@ export default class ParcelDetail extends React.PureComponent {
               >
                 <ParcelActions
                   parcel={parcel}
+                  publications={publications}
                   mortgages={mortgages}
                   isOwner={isOwner}
                 />

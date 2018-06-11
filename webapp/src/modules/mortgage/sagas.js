@@ -2,8 +2,6 @@ import { takeLatest, call, put, select, all } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
 import { api } from 'lib/api'
-import { MORTGAGE_STATUS } from './utils'
-
 import {
   CREATE_MORTGAGE_REQUEST,
   CANCEL_MORTGAGE_REQUEST,
@@ -19,7 +17,12 @@ import {
   fetchActiveParcelMortgagesFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
-import { toInterestRate, getLoanMetadata, daysToSeconds } from './utils'
+import {
+  MORTGAGE_STATUS,
+  toInterestRate,
+  getLoanMetadata,
+  daysToSeconds
+} from 'shared/mortgage'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
 import { locations } from 'locations'
 

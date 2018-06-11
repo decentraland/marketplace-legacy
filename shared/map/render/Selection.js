@@ -1,5 +1,5 @@
-export const Selection = {
-  draw({
+export class Selection {
+  static draw({
     ctx,
     x,
     y,

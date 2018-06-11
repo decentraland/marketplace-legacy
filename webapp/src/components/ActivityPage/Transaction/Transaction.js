@@ -10,12 +10,8 @@ import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import {
-  formatDate,
-  formatMana,
-  distanceInWordsToNow,
-  buildCoordinate
-} from 'lib/utils'
+import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
 import {
   getMarketplaceAddress,
   getMortgageCreatorAddress,

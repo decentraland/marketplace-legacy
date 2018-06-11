@@ -1,6 +1,7 @@
 import { Mortgage } from './Mortgage.model'
 import { Parcel } from '../Parcel'
 import { SQL, raw } from '../database'
+import { MORTGAGE_STATUS } from '../shared/mortgage'
 
 export const MortgageQueries = Object.freeze({
   findLastByBorrowerSql: borrower =>
@@ -8,7 +9,7 @@ export const MortgageQueries = Object.freeze({
       FROM ${raw(Mortgage.tableName)} as m
       WHERE borrower = ${borrower}
         AND m.asset_id = ${raw(Parcel.tableName)}.id
-        AND m.status != ${Mortgage.STATUS.cancelled}
+        AND m.status != ${MORTGAGE_STATUS.cancelled}
       ORDER BY m.created_at DESC LIMIT 1`,
 
   findParcelMortgageJsonSql: () =>

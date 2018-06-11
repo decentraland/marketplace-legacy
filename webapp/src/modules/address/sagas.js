@@ -21,9 +21,9 @@ import {
   fetchAddressEstatesRequest
 } from './actions'
 import { fetchMortgagedParcelsRequest } from 'modules/mortgage/actions'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
-import { getParcelPublications } from 'modules/parcels/utils'
-import { getParcels } from 'modules/parcels/selectors'
+import { PUBLICATION_STATUS } from 'shared/publication'
+import { getData as getParcels } from 'modules/parcels/selectors'
+import { getParcelPublications } from 'shared/parcel'
 import { api } from 'lib/api'
 import { webworker } from 'lib/webworker'
 import { toEstateObject } from 'modules/estates/utils'

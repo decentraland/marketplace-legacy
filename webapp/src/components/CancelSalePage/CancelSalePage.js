@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 

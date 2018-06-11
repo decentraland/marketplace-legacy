@@ -13,6 +13,7 @@ import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
 import { PublicationRouter } from './Publication'
 import { TranslationRouter } from './Translation'
+import { MapRouter } from './Map'
 
 env.load()
 
@@ -47,6 +48,7 @@ new ParcelRouter(app).mount()
 new EstateRouter(app).mount()
 new DistrictRouter(app).mount()
 new ContributionRouter(app).mount()
+new MapRouter(app).mount()
 new MortgageRouter(app).mount()
 
 /* Start the server only if run directly */

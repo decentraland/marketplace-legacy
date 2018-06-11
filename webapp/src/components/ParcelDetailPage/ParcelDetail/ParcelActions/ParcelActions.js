@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
 
 import { isFeatureEnabled } from 'lib/featureUtils'
-import { parcelType } from 'components/types'
+import { parcelType, publicationType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import { isOnSale } from 'lib/parcelUtils'
+import { isOnSale } from 'shared/parcel'
 import { locations } from 'locations'
 
 import './ParcelActions.css'
@@ -15,12 +15,13 @@ export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     mortgages: PropTypes.array.isRequired,
     isLoading: PropTypes.bool.isRequired
   }
 
   render() {
-    const { parcel, isOwner, mortgages, isLoading } = this.props
+    const { parcel, isOwner, mortgages, isLoading, publications } = this.props
     if (!parcel || isLoading) {
       return null
     }
@@ -35,6 +36,7 @@ export default class ParcelActions extends React.PureComponent {
                 {t('parcel_detail.actions.transfer')}
               </Button>
             </Link>
+
             {isFeatureEnabled('ESTATES') && (
               <Link to={locations.createEstateLand(x, y)}>
                 <Button size="tiny">
@@ -42,7 +44,7 @@ export default class ParcelActions extends React.PureComponent {
                 </Button>
               </Link>
             ) /* Estate Feature */}
-            {isOnSale(parcel) ? (
+            {isOnSale(parcel, publications) ? (
               <Link to={locations.cancelSaleLand(x, y)}>
                 <Button size="tiny" primary>
                   <Icon name="cancel" />
@@ -58,7 +60,7 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : isOnSale(parcel) && mortgages.length === 0 ? (
+        ) : isOnSale(parcel, publications) && mortgages.length === 0 ? (
           <React.Fragment>
             <Link to={locations.buyLand(x, y)}>
               <Button primary size="large">

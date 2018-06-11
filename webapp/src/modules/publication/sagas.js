@@ -19,7 +19,7 @@ import {
   cancelSaleFailure
 } from './actions'
 import { locations } from 'locations'
-import { splitCoordinate } from 'lib/utils'
+import { splitCoordinate } from 'shared/parcel'
 import { api } from 'lib/api'
 
 export function* publicationSaga() {
