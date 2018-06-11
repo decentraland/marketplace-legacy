@@ -4,6 +4,7 @@ import { buildCoordinate } from 'lib/utils'
 
 export const getState = state => state.estates
 export const getData = state => getState(state).data
+export const isLoading = state => getState(state).loading.length > 0
 
 export const getEstates = createSelector(
   getData,
