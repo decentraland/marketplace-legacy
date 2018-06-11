@@ -5,7 +5,11 @@ import { Log, env, cli } from 'decentraland-commons'
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { Publication } from '../src/Publication'
+import { BlockchainEvent } from '../src/BlockchainEvent'
 import { asyncBatch } from '../src/lib'
+import { processEvent } from './monitor/processEvents'
+import { MonitorCli } from './monitor/MonitorCli'
+import { main as indexMissingEvents } from './monitor/program'
 import { parseCLICoords, loadEnv } from './utils'
 
 const log = new Log('sanity-check')
@@ -18,6 +22,7 @@ const sanityCheck = {
       .command('run')
       .option('--skip-parcels', 'Skip the parcel check')
       .option('--check-parcel [parcelId]', 'Check a specific parcel')
+      .option('--self-heal', 'Try to fix found errors')
       .action(async options => {
         log.info('Connecting database')
         await db.connect()
@@ -43,16 +48,27 @@ const sanityCheck = {
         }
         const parcels = await Parcel.find(conditions)
 
-        log.info(
-          `[Check 1/${totalChecks}]: Checking Marketplace against all events`
-        )
-        await checkParcels(parcels)
+        log.info(`[Check 1/${totalChecks}]: Checking Marketplace publications`)
+        let inconsistencies = await getInconsistentPublishedParcels(parcels)
 
         if (!shouldSkipParcels) {
           log.info(
             `[Check 2/${totalChecks}]: Checking parcel ownership from -150,-150 to 150,150`
           )
-          await processParcels(parcels)
+
+          const inconsistentParcels = await getInconsistentParcels(parcels)
+          inconsistencies.concat(inconsistentParcels)
+        }
+
+        if (options.selfHeal) {
+          if (inconsistencies.length) {
+            log.info(`Attempting to heal ${inconsistencies.length} parcels`)
+            log.info('Retreiving missing events')
+
+            await indexMissingEvents(
+              (...args) => new SanityMonitorCli(inconsistencies, ...args)
+            )
+          }
         }
 
         process.exit()
@@ -60,20 +76,31 @@ const sanityCheck = {
   }
 }
 
-async function checkParcels(parcels) {
+async function getInconsistentPublishedParcels(parcels) {
+  const faultyParcels = []
+
   await asyncBatch({
     elements: parcels,
     callback: async (parcelsBatch, batchedCount) => {
-      await Promise.all(parcelsBatch.map(parcel => checkParcel(parcel)))
+      for (const parcel of parcelsBatch) {
+        const sanityErrors = await getPublicationInconsistencies(parcel)
+        if (sanityErrors) {
+          log.info(sanityErrors)
+          faultyParcels.push(parcel)
+        }
+      }
       process.stdout.write(`- ${batchedCount}/${parcels.length}   \r`)
     },
     batchSize: BATCH_SIZE,
     retryAttempts: 20
   })
+
+  console.log('Errors', faultyParcels)
+  return faultyParcels
 }
 
-async function checkParcel(parcel) {
-  if (!parcel) return
+async function getPublicationInconsistencies(parcel) {
+  if (!parcel) return ''
 
   const { id, asset_id } = parcel
   const marketplace = eth.getContract('Marketplace')
@@ -81,28 +108,32 @@ async function checkParcel(parcel) {
   const auction = await marketplace.auctionByAssetId(asset_id)
   const contractId = auction[0]
 
+  let errors = ''
+
   if (!isNullHash(contractId)) {
     if (!publication) {
       // Check if the publication exists in db
-      log.info(id, 'missing publication in db')
+      errors = `${id} missing publication in db`
     } else if (publication.contract_id !== contractId) {
       // Check that id matches
-      log.info(
-        id,
-        'different id in db',
+      errors = [
+        `${id} different id in db`,
         publication.contract_id,
         'vs in blockchain',
         contractId
-      )
+      ].join(' ')
     }
   } else if (publication && publication.status === Publication.STATUS.open) {
     // Check for hanging publication in db
-    log.info(id, 'open in db and null in blockchain')
+    errors = `${id} open in db and null in blockchain`
   }
+
+  return errors
 }
 
-async function processParcels(parcels) {
+async function getInconsistentParcels(parcels) {
   const service = new ParcelService()
+  const faultyParcels = []
 
   await asyncBatch({
     elements: parcels,
@@ -124,6 +155,7 @@ async function processParcels(parcels) {
           log.error(
             `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
           )
+          faultyParcels.push(parcel)
         }
       }
 
@@ -133,13 +165,52 @@ async function processParcels(parcels) {
     },
     batchSize: BATCH_SIZE
   })
+
+  return faultyParcels
 }
 
-const NULL =
-  '0x0000000000000000000000000000000000000000000000000000000000000000'
-const NULL_PARITY = '0x'
+class SanityMonitorCli extends MonitorCli {
+  constructor(inconsistencies, ...args) {
+    super(...args)
+    this.inconsistencies = inconsistencies
+  }
+
+  monitor(contractName, eventNames, options) {
+    options.watch = false
+    return super.monitor(contractName, eventNames, options)
+  }
+
+  async processEvents() {
+    log.info('Replaying events for inconsistent parcels')
+
+    const inconsistentAssetIds = new Set(
+      this.inconsistencies.map(parcel => parcel.asset_id)
+    )
+    for (const assetId of inconsistentAssetIds) {
+      await this.replayEvents(assetId)
+    }
+
+    log.info('All done!')
+    process.exit()
+  }
+
+  async replayEvents(assetId) {
+    const events = await BlockchainEvent.findByAssetId(assetId)
+    events.reverse()
+
+    for (let i = 0; i < events.length; i++) {
+      log.info(
+        `[${assetId} - ${i + 1}/${events.length}] Processing ${events[i].name}`
+      )
+      await processEvent(events[i])
+    }
+  }
+}
 
 function isNullHash(x) {
+  const NULL =
+    '0x0000000000000000000000000000000000000000000000000000000000000000'
+  const NULL_PARITY = '0x'
   return x === NULL || x === NULL_PARITY
 }
 

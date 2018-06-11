@@ -43,6 +43,10 @@ export class MonitorCli {
         '-w, --watch',
         'Keep watching the blockchain for new events after --to-block.'
       )
+      .option(
+        '--skip-process',
+        'Only restore the stored events, without processing each one'
+      )
       .action(this.index)
   }
 
@@ -64,8 +68,12 @@ export class MonitorCli {
 
     this.processTimeout = setTimeout(() => {
       this.isProcessRunning = true
-      processEvents(fromBlock).then(() => (this.isProcessRunning = false))
+      this.processEvents(fromBlock).then(() => (this.isProcessRunning = false))
     }, this.processDelay)
+  }
+
+  processEvents(fromBlock) {
+    return processEvents(fromBlock)
   }
 
   async monitor(contractName, eventNames, options) {
@@ -87,7 +95,9 @@ export class MonitorCli {
           await handler(logs)
         }
 
-        this.processStoredEvents(fromBlock)
+        if (!options.skipProcess) {
+          this.processStoredEvents(fromBlock)
+        }
       }
     })
   }
