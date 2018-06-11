@@ -34,7 +34,8 @@ import {
 } from 'shared/mortgage'
 import {
   getKyberOracleAddress,
-  getRCNEngineAddress
+  getRCNEngineAddress,
+  getMortgageManagerAddress
 } from 'modules/wallet/utils'
 import { locations } from 'locations'
 
@@ -95,13 +96,14 @@ function* handleCreateMortgageRequest(action) {
     const mortgageCreatorContract = eth.getContract('MortgageCreator')
     const landRegistryContract = eth.getContract('LANDRegistry')
     const kyberOrcaleAddress = getKyberOracleAddress()
+    const mortgageManagerAddress = getMortgageManagerAddress()
     const manaCurrency = eth.utils.fromAscii('MANA')
 
     const landId = yield call(() =>
       landRegistryContract.encodeTokenId(parcel.x, parcel.y)
     )
     const borrower = yield select(getAddress)
-    const loanMetadata = getLoanMetadata()
+    const loanMetadata = getLoanMetadata(mortgageManagerAddress)
 
     let loanParams = [
       eth.utils.toWei(amount), // Amount requested

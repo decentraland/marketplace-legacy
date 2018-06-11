@@ -1,4 +1,3 @@
-import { eth } from 'decentraland-eth'
 import { hasStatus } from './asset'
 import { PUBLICATION_STATUS } from './publication'
 
@@ -27,9 +26,8 @@ export function daysToSeconds(days) {
   return Math.ceil(days) * 24 * 60 * 60
 }
 
-export function getLoanMetadata() {
-  const mortgageManagerContract = eth.getContract('MortgageManager')
-  return `#mortgage #required-cosigner:${mortgageManagerContract.address}`
+export function getLoanMetadata(mortgageManagerAddress) {
+  return `#mortgage #required-cosigner:${mortgageManagerAddress}`
 }
 
 export function isMortgageActive(mortgage, parcel, publications) {
