@@ -48,10 +48,6 @@
     "invalid":
       "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
-  "estate": {
-    "acquired_at": "Acquis à {date}",
-    "created_at": "Créé à {date}"
-  },
   "estate_edit": {
     "description": "La description",
     "edit_estate": "Modifier le domaine",
@@ -287,7 +283,6 @@
     "on_sale": "A vendre"
   },
   "publication": {
-    "acquired_at": "Acquis à {date}",
     "canceled": "Annulé",
     "sold": "Vendu",
     "view": "Vue"

@@ -47,10 +47,6 @@
     "invalid":
       "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
-  "estate": {
-    "acquired_at": "Adquirido en {date}",
-    "created_at": "Creado en {date}"
-  },
   "estate_edit": {
     "description": "Descripción",
     "edit_estate": "Editar propiedad",
@@ -285,7 +281,6 @@
     "on_sale": "En Venta"
   },
   "publication": {
-    "acquired_at": "Adquirida en {date}",
     "canceled": "Cancelada",
     "sold": "Vendida",
     "view": "Ver"
