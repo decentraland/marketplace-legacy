@@ -40,7 +40,7 @@ export function getAssetLocation(asset) {
 }
 
 export function preventDefault(fn) {
-  return function (event) {
+  return function(event) {
     if (event) {
       event.preventDefault()
     }
