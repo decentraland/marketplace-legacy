@@ -1,7 +1,7 @@
 #!/usr/bin/env babel-node
 import axios from 'axios'
 import fs from 'fs'
-import { unflatten } from 'flat'
+import flat, { unflatten } from 'flat'
 import { env, Log, utils } from 'decentraland-commons'
 import merge from 'lodash/merge'
 import { loadEnv } from './utils'
@@ -21,15 +21,17 @@ async function main() {
 
   const mainTranslations = await translation.fetch(DEFAULT_LOCALE)
   const availableLocales = await translation.getAvailableLocales()
+  const translations = []
+  translations[DEFAULT_LOCALE] = mainTranslations
 
   const mainKeys = Object.keys(mainTranslations)
   let missing = {}
   for (const locale of availableLocales) {
     if (locale !== DEFAULT_LOCALE) {
-      const translations = await translation.fetch(locale)
+      translations[locale] = await translation.fetch(locale)
       let requests = []
       for (const key of mainKeys) {
-        const hasTranslation = key in translations
+        const hasTranslation = key in translations[locale]
         if (!hasTranslation) {
           const defaultText = mainTranslations[key]
           const replacedKeys = {}
@@ -80,9 +82,18 @@ async function main() {
       __dirname,
       `../src/Translation/locales/${locale}.json`
     )
-    const currentTranslations = require(localePath)
+    const currentTranslations = flat(require(localePath))
+    // remove obsolete keys
+    let cleanedTranslations = Object.keys(translations[locale])
+      .filter(key => key in mainTranslations)
+      .reduce((acc, key) => {
+        acc[key] = currentTranslations[key]
+        return acc
+      }, {})
+    cleanedTranslations = unflatten(cleanedTranslations)
+
     const updatedTranslations = merge(
-      currentTranslations,
+      cleanedTranslations,
       missing[locale] || {}
     )
     const orderedTranslations = sortObject(updatedTranslations)
