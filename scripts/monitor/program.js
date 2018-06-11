@@ -47,7 +47,7 @@ Promise.resolve()
         LANDRegistry: ['Update', 'Transfer'],
         MortgageCreator: ['NewMortgage'],
         MortgageManager: [
-          'canceledMortgage',
+          'CanceledMortgage',
           'StartedMortgage',
           'PaidMortgage',
           'DefaultedMortgage'

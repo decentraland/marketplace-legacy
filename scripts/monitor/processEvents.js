@@ -95,7 +95,8 @@ async function processNoParcelRelatedEvents(event) {
       log.info(`[${name}] Partial Payment for loan ${_index}`)
 
       const rcnEngineContract = eth.getContract('RCNEngine')
-      const outstandingAmount = await rcnEngineContract.getPendingAmount(
+      const outstandingAmount = await rcnEngineContract.sendCall(
+        'getPendingAmount',
         eth.utils.toBigNumber(_index)
       )
 
@@ -323,7 +324,7 @@ async function processParcelRelatedEvents(assetId, event) {
         await rcnEngineContract.getDuesIn(LoanIdBN),
         await rcnEngineContract.getExpirationRequest(LoanIdBN),
         await rcnEngineContract.getCancelableAt(LoanIdBN),
-        await rcnEngineContract.getPendingAmount(LoanIdBN)
+        await rcnEngineContract.sendCall('getPendingAmount', LoanIdBN)
       ])
 
       const block_time_created_at = await Promise.resolve(

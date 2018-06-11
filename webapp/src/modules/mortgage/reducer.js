@@ -56,6 +56,7 @@ export function loading(state = [], action) {
     case FETCH_MORTGAGED_PARCELS_REQUEST:
     case PAY_MORTGAGE_REQUEST:
     case PAY_MORTGAGE_FAILURE:
+    case PAY_MORTGAGE_SUCCESS:
     case FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST: {
       return loadingReducer(state, action)
     }
