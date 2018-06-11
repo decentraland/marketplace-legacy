@@ -7,7 +7,7 @@ import {
   claimMortgageResolutionRequest
 } from 'modules/mortgage/actions'
 import { locations } from 'locations'
-import { splitCoordinate } from 'lib/utils'
+import { splitCoordinate } from 'shared/parcel'
 
 const mapState = (state, ownProps) => {
   const { mortgage } = ownProps

@@ -17,7 +17,7 @@ import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { toAddressParcelIds, toAddressPublicationIds } from './utils'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
 import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
 
 const EMPTY_ADDRESS = {

@@ -1,13 +1,12 @@
-import { COLORS } from 'lib/parcelUtils'
-import { isMobile } from 'lib/utils'
+import { COLORS } from '../../parcel'
 
-export const Parcel = {
-  draw({
+export class Parcel {
+  static draw({
     ctx,
     x,
     y,
     size = 10,
-    padding = isMobile() ? 1 : 2,
+    padding = 2,
     offset = 1,
     color = '#ff9990',
     connectedLeft,

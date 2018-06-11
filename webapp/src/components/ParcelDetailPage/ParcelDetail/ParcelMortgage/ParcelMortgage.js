@@ -10,7 +10,7 @@ import {
   isMortgagePending,
   isMortgageOngoing,
   isMortgagePaid
-} from 'modules/mortgage/utils'
+} from 'shared/mortgage'
 
 import './ParcelMortgage.css'
 

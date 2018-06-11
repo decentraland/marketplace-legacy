@@ -1,11 +1,12 @@
 import { expect } from 'chai'
 
-import { ASSET_TYPE } from '../Asset'
 import { Parcel } from '../Parcel'
 import { Estate } from '../Estate'
 import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
 import { PublicationRequestFilters } from './PublicationRequestFilters'
+import { ASSET_TYPE } from '../shared/asset'
+import { PUBLICATION_STATUS } from '../shared/publication'
 
 describe('Publication', function() {
   describe('.primaryKey', function() {
@@ -25,7 +26,7 @@ describe('PublicationRequestFilters', function() {
     it('should return an object obtaining the data from the request', function() {
       const request = buildRequest({
         query: {
-          status: Publication.STATUS.sold,
+          status: PUBLICATION_STATUS.sold,
           type: ASSET_TYPE.estate,
           sort_by: 'price',
           sort_order: 'desc',
@@ -36,7 +37,7 @@ describe('PublicationRequestFilters', function() {
 
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
-        status: Publication.STATUS.sold,
+        status: PUBLICATION_STATUS.sold,
         type: ASSET_TYPE.estate,
         sort: {
           by: 'price',
@@ -63,7 +64,7 @@ describe('PublicationRequestFilters', function() {
 
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
-        status: Publication.STATUS.open,
+        status: PUBLICATION_STATUS.open,
         type: ASSET_TYPE.parcel,
         sort: {
           by: 'created_at',

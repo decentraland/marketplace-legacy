@@ -7,10 +7,11 @@ import Parcel from 'components/Parcel'
 import { walletType, mortgageType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
-import { buildCoordinate, formatMana } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
+import { isMortgageOngoing } from 'shared/mortgage'
+import { formatMana } from 'lib/utils'
 import PayMortgageForm from './PayMortgageForm'
 import ParcelModal from 'components/ParcelModal'
-import { isMortgageOngoing } from 'modules/mortgage/utils'
 
 import './PayMortgagePage.css'
 

@@ -22,7 +22,7 @@ import {
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { toPublicationsObject, PUBLICATION_STATUS } from './utils'
+import { toPublicationsObject, PUBLICATION_STATUS } from 'shared/publication'
 
 const INITIAL_STATE = {
   data: {},

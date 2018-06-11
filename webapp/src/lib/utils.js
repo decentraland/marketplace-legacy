@@ -1,32 +1,7 @@
 import dateFnsFormat from 'date-fns/format'
 import dateFnsDistanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-import { txUtils } from 'decentraland-eth'
 
 import { getCurrentLocale } from 'modules/translation/utils'
-
-export function buildCoordinate(x, y) {
-  return `${x},${y}`
-}
-
-export function splitCoordinate(id) {
-  return id ? id.split(',') : [0, 0]
-}
-
-export function isEqualCoords(p1, p2) {
-  return p1.x === p2.x && p1.y === p2.y
-}
-
-export function getCoordsMatcher(coords) {
-  return coords2 => isEqualCoords(coords, coords2)
-}
-
-export function isValidName(name) {
-  return name <= 50
-}
-
-export function isValidDescription(description) {
-  return description <= 140
-}
 
 export function preventDefault(fn) {
   return function(event) {
@@ -87,37 +62,4 @@ export function distanceInWordsToNow(date) {
     addSuffix: true,
     locale: getCurrentLocale()
   })
-}
-
-/**
- * Returns if a date is expired
- * @param {number} - expires_at
- * @returns {boolean}
- */
-export function isExpired(expires_at) {
-  return parseInt(expires_at, 10) < Date.now()
-}
-
-/**
- * Returns if object is Open and not expired
- * @param {object} - obj with status & tx_status fields
- * @param  {string} - status
- * @returns {boolean}
- */
-export function isOpen(obj, status) {
-  return hasStatus(obj, status) && !isExpired(obj.expires_at)
-}
-
-/**
- * Returns if object has status
- * @param {object} - obj with status & tx_status fields
- * @param  {array | string} - status
- * @returns {boolean}
- */
-export function hasStatus(obj, status) {
-  return (
-    obj &&
-    status.includes(obj.status) &&
-    obj.tx_status === txUtils.TRANSACTION_STATUS.confirmed
-  )
 }

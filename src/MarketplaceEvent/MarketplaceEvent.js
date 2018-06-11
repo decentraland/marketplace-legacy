@@ -1,5 +1,6 @@
 import { env } from 'decentraland-commons'
-import { ASSET_TYPE } from '../Asset'
+
+import { ASSET_TYPE } from '../shared/asset'
 
 export class MarketplaceEvent {
   constructor(event) {

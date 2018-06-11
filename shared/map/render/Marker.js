@@ -1,5 +1,5 @@
-export const Marker = {
-  draw({
+export class Marker {
+  static draw({
     ctx,
     x,
     y,

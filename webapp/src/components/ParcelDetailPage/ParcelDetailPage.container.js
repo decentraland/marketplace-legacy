@@ -5,11 +5,11 @@ import { getMatchParams } from 'modules/location/selectors'
 import { navigateTo } from 'modules/location/actions'
 import { getError, isLoading } from 'modules/parcels/selectors'
 import { getDistricts } from 'modules/districts/selectors'
-import { getPublications as getParcelPublications } from 'modules/publication/selectors'
+import { getPublications } from 'modules/publication/selectors'
 import { fetchParcelPublicationsRequest } from 'modules/publication/actions'
 import { fetchActiveParcelMortgagesRequest } from 'modules/mortgage/actions'
 import { getParcelMortgageFactory } from 'modules/mortgage/selectors'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'shared/publication'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
@@ -25,7 +25,7 @@ const mapState = (state, ownProps) => {
       isLoading: isLoading(state),
       error: getError(state),
       districts: getDistricts(state),
-      publications: getParcelPublications(state),
+      publications: getPublications(state),
       mortgage: getParcelMortgage(state)
     }
   }

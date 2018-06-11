@@ -79,17 +79,16 @@ export class Parcel extends Model {
   }
 
   static async inRange(min, max) {
-    const [minx, maxy] = coordinates.toArray(min)
-    const [maxx, miny] = coordinates.toArray(max)
-
-    return this.db.query(
-      SQL`SELECT *, (
-        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-      ) as publication
-        FROM ${SQL.raw(this.tableName)}
-        WHERE x BETWEEN ${minx} AND ${maxx}
-          AND y BETWEEN ${miny} AND ${maxy}`
-    )
+    const [minx, maxy] =
+      typeof min === 'string' ? coordinates.toArray(min) : [min.x, min.y]
+    const [maxx, miny] =
+      typeof max === 'string' ? coordinates.toArray(max) : [max.x, max.y]
+    return this.db.query(SQL`SELECT *, (
+      ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+    ) as publication
+      FROM ${SQL.raw(this.tableName)}
+      WHERE x BETWEEN ${minx} AND ${maxx}
+        AND y BETWEEN ${miny} AND ${maxy}`)
   }
 
   static async encodeAssetId(x, y) {

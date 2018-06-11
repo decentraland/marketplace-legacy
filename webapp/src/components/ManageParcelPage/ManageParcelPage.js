@@ -5,7 +5,7 @@ import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import { t, t_html } from 'modules/translation/utils'
-import { buildCoordinate } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
 import { locations } from 'locations'
 
 import ManageParcelForm from './ManageParcelForm'

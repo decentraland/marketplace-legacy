@@ -7,9 +7,9 @@ import {
 } from './actions'
 import { isLoadingType } from 'modules/loading/selectors'
 import { getAddress } from 'modules/wallet/selectors'
-import { getParcels } from 'modules/parcels/selectors'
-import { getActiveMortgageByBorrower } from 'modules/mortgage/utils'
-import { buildCoordinate } from 'lib/utils'
+import { getData as getParcels } from 'modules/parcels/selectors'
+import { getActiveMortgageByBorrower } from 'shared/mortgage'
+import { buildCoordinate } from 'shared/parcel'
 
 export const getState = state => state.mortgages
 export const getData = state => getState(state).data

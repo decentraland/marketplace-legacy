@@ -1,4 +1,4 @@
-import { eth, contracts, wallets } from 'decentraland-eth'
+import { eth, contracts, wallets, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
 import { isMobile } from 'lib/utils'
 
@@ -105,4 +105,21 @@ export async function fetchBalance(address) {
   const balanceInWei = await utils.promisify(web3.eth.getBalance)(address)
   const balance = eth.utils.fromWei(balanceInWei.toString(10))
   return balance
+}
+
+export async function getUpdateOperator(x, y) {
+  try {
+    const contract = eth.getContract('LANDRegistry')
+    const assetId = await contract.encodeTokenId(x, y)
+    const address = await contract.updateOperator(assetId)
+    if (
+      eth.utils.isValidAddress(address) &&
+      !Contract.isEmptyAddress(address)
+    ) {
+      return address
+    }
+  } catch (error) {
+    // 🌈
+  }
+  return null
 }

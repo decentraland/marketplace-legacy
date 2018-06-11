@@ -1,7 +1,8 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
-import { AssetRouter, ASSET_TYPE } from '../Asset'
+import { ASSET_TYPE } from '../shared/asset'
+import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
 export class ParcelRouter {

@@ -6,9 +6,8 @@ import ParcelPreview from 'components/ParcelPreview'
 import EstateSelectActions from './EstateSelectActions'
 import Parcel from 'components/Parcel'
 import { t } from 'modules/translation/utils'
-import { isOwner } from 'modules/parcels/utils'
 import { coordsType } from 'components/types'
-import { getCoordsMatcher, isEqualCoords } from 'lib/utils'
+import { getCoordsMatcher, isEqualCoords, isOwner } from 'shared/parcel'
 
 import './EstateSelect.css'
 

@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Form, Message } from 'semantic-ui-react'
-import { parcelType } from 'components/types'
+import { parcelType, publicationType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
 import { isTransactionRejectedError } from 'modules/transaction/utils'
-import { isOnSale } from 'lib/parcelUtils'
+import { isOnSale } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
@@ -15,6 +15,7 @@ import './TransferParcelForm.css'
 export default class TransferParcelForm extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     isTxIdle: PropTypes.bool,
     transferError: PropTypes.string,
     onSubmit: PropTypes.func.isRequired,
@@ -68,7 +69,7 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   render() {
-    const { parcel, isTxIdle, transferError } = this.props
+    const { parcel, isTxIdle, transferError, publications } = this.props
     const { address } = this.state
 
     return (
@@ -130,7 +131,11 @@ export default class TransferParcelForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={this.isEmptyAddress() || isOnSale(parcel) || isTxIdle}
+            disabled={
+              this.isEmptyAddress() ||
+              isOnSale(parcel, publications) ||
+              isTxIdle
+            }
           >
             {t('global.submit')}
           </Button>

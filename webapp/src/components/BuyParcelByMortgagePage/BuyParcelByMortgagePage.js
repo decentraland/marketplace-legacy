@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom'
 import { Loader, Container, Header } from 'semantic-ui-react'
 
 import Parcel from 'components/Parcel'
-import { walletType } from 'components/types'
+import { walletType, publicationType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
-import { buildCoordinate, formatMana } from 'lib/utils'
-import { isPublicationOpen } from 'modules/publication/utils'
+import { isOpen } from 'shared/publication'
+import { buildCoordinate } from 'shared/parcel'
+import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
 import ParcelModal from 'components/ParcelModal'
 
 export default class BuyParcelByMortgagePage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
+    publication: publicationType,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     error: PropTypes.string,
@@ -56,6 +58,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     const {
       x,
       y,
+      publication,
       isTxIdle,
       isLoading,
       isConnected,
@@ -74,7 +77,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     return (
       <Parcel x={x} y={y} ownerNotAllowed withPublications>
         {parcel =>
-          isPublicationOpen(parcel.publication) ? (
+          isOpen(publication) ? (
             <React.Fragment>
               <ParcelModal
                 x={x}

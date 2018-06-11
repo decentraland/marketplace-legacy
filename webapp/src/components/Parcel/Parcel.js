@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
-import { walletType, parcelType } from 'components/types'
-import { isOwner } from 'modules/parcels/utils'
+import { walletType, parcelType, publicationType } from 'components/types'
+import { isOpen } from 'shared/publication'
+import { isOwner } from 'shared/parcel'
 
 export default class Parcel extends React.PureComponent {
   static propTypes = {
     wallet: walletType.isRequired,
     parcel: parcelType,
+    publication: publicationType,
     isConnecting: PropTypes.bool,
     isLoading: PropTypes.bool,
     ownerOnly: PropTypes.bool,
@@ -23,7 +25,8 @@ export default class Parcel extends React.PureComponent {
     ownerOnly: false,
     ownerNotAllowed: false,
     withPublications: false,
-    parcel: null
+    parcel: null,
+    publication: null
   }
 
   constructor(props) {
@@ -46,13 +49,14 @@ export default class Parcel extends React.PureComponent {
       ownerNotAllowed,
       withPublications,
       onAccessDenied,
-      parcel
+      parcel,
+      publication
     } = nextProps
 
     const ownerIsNotAllowed =
       ownerNotAllowed && parcel && isOwner(wallet, parcel.x, parcel.y)
     const parcelShouldBeOnSale =
-      withPublications && parcel && !parcel.publication
+      withPublications && parcel && !isOpen(publication)
 
     if (!isConnecting) {
       if (ownerOnly) {

@@ -4,8 +4,9 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Mortgage } from '../Mortgage'
 import { Parcel } from '../Parcel'
-import { ASSET_TYPE } from '../Asset'
 import { Publication } from '../Publication'
+import { ASSET_TYPE } from '../shared/asset'
+import { MORTGAGE_STATUS } from '../shared/mortgage'
 
 describe('Mortgage', function() {
   const expires_at = new Date().getTime() * 1000
@@ -17,7 +18,7 @@ describe('Mortgage', function() {
     mortgage = {
       tx_hash: '1xdeadbeef',
       tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-      status: Mortgage.STATUS.pending,
+      status: MORTGAGE_STATUS.pending,
       loan_id: 0,
       mortgage_id: 0,
       asset_id: Parcel.buildId(2, 5),
@@ -53,7 +54,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.cancelled,
+        status: MORTGAGE_STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -61,7 +62,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.ongoing,
+        status: MORTGAGE_STATUS.ongoing,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -72,7 +73,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findByBorrower(
         '0xdeadbeef33',
-        `${Mortgage.STATUS.pending},${Mortgage.STATUS.ongoing}`
+        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
       )
       expect(mortgages).to.equalRows([
         {
@@ -102,7 +103,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.cancelled,
+        status: MORTGAGE_STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -110,7 +111,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.ongoing,
+        status: MORTGAGE_STATUS.ongoing,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -121,7 +122,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findByBorrower(
         '0xdeadbeef33122',
-        `${Mortgage.STATUS.pending},${Mortgage.STATUS.ongoing}`
+        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
       )
       expect(mortgages).to.equalRows([])
     })
@@ -134,7 +135,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(10, 10),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.ongoing,
+        status: MORTGAGE_STATUS.ongoing,
         borrower: '0xdeadbeef33'
       })
       const mortgage3 = Object.assign({}, mortgage, {
@@ -142,7 +143,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(10, 10),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.ongoing,
+        status: MORTGAGE_STATUS.ongoing,
         borrower: '0xdeadbeefab'
       })
       await Promise.all([
@@ -152,7 +153,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findInCoordinate(
         Parcel.buildId(10, 10),
-        `${Mortgage.STATUS.pending},${Mortgage.STATUS.ongoing}`
+        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
       )
 
       expect(mortgages).to.equalRows([
@@ -183,7 +184,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(5, 5),
         loan_id: 3,
         mortgage_id: 3,
-        status: Mortgage.STATUS.cancelled,
+        status: MORTGAGE_STATUS.cancelled,
         borrower: '0xdeadbeef33'
       })
       const mortgage4 = Object.assign({}, mortgage, {
@@ -191,7 +192,7 @@ describe('Mortgage', function() {
         asset_id: Parcel.buildId(6, 5),
         loan_id: 4,
         mortgage_id: 4,
-        status: Mortgage.STATUS.ongoing,
+        status: MORTGAGE_STATUS.ongoing,
         borrower: '0xdeadbeef33'
       })
       await Promise.all([
@@ -202,7 +203,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findInCoordinate(
         Parcel.buildId(20, 20),
-        `${Mortgage.STATUS.pending},${Mortgage.STATUS.ongoing}`
+        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
       )
       expect(mortgages).to.equalRows([])
     })
