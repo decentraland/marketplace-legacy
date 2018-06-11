@@ -48,7 +48,7 @@ export default class Contribution extends React.PureComponent {
             <React.Fragment>
               <Header size="medium">{contribution.district.name}</Header>
               <Card.Meta>{contribution.district.description}</Card.Meta>
-              <LandAmount value={contribution.land_count} />
+              <LandAmount value={parseInt(contribution.land_count, 10)} />
             </React.Fragment>
           ) : (
             <div className="text-center">
