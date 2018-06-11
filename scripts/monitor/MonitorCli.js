@@ -47,6 +47,7 @@ export class MonitorCli {
         '--skip-process',
         'Only restore the stored events, without processing each one'
       )
+      .allowUnknownOption()
       .action(this.index)
   }
 

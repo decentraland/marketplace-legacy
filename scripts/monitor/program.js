@@ -9,9 +9,9 @@ import { loadEnv } from '../../scripts/utils'
 
 const log = new Log('main')
 
-loadEnv('../../src/.env')
-
-async function main(getNewMonitor = (...args) => new MonitorCli(...args)) {
+export async function main(
+  getNewMonitor = (...args) => new MonitorCli(...args)
+) {
   log.debug('Connecting to database')
   await db.connect()
 
@@ -46,6 +46,8 @@ async function main(getNewMonitor = (...args) => new MonitorCli(...args)) {
 }
 
 if (require.main === module) {
+  loadEnv('../../src/.env')
+
   main().catch(error => {
     log.error(error)
     process.exit()

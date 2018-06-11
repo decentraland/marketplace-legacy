@@ -22,7 +22,10 @@ const sanityCheck = {
       .command('run')
       .option('--skip-parcels', 'Skip the parcel check')
       .option('--check-parcel [parcelId]', 'Check a specific parcel')
-      .option('--self-heal', 'Try to fix found errors')
+      .option(
+        '--self-heal',
+        'Try to fix found errors. Supports all flags supported by the monitor, except watch'
+      )
       .action(async options => {
         log.info('Connecting database')
         await db.connect()
@@ -57,7 +60,7 @@ const sanityCheck = {
           )
 
           const inconsistentParcels = await getInconsistentParcels(parcels)
-          inconsistencies.concat(inconsistentParcels)
+          inconsistencies = inconsistencies.concat(inconsistentParcels)
         }
 
         if (options.selfHeal) {
@@ -65,37 +68,48 @@ const sanityCheck = {
             log.info(`Attempting to heal ${inconsistencies.length} parcels`)
             log.info('Retreiving missing events')
 
+            // Hack: change the command name so we can keep the flags but run the monitor
+            process.argv = process.argv.map(
+              arg => (arg === 'run' ? 'index' : arg)
+            )
+
             await indexMissingEvents(
               (...args) => new SanityMonitorCli(inconsistencies, ...args)
             )
           }
         }
-
-        process.exit()
       })
   }
 }
 
-async function getInconsistentPublishedParcels(parcels) {
+async function getInconsistentPublishedParcels(allParcels) {
   const faultyParcels = []
 
   await asyncBatch({
-    elements: parcels,
+    elements: allParcels,
     callback: async (parcelsBatch, batchedCount) => {
-      for (const parcel of parcelsBatch) {
-        const sanityErrors = await getPublicationInconsistencies(parcel)
-        if (sanityErrors) {
-          log.info(sanityErrors)
+      const parcels = await Promise.all(
+        parcelsBatch.map(async parcel => ({
+          ...parcel,
+          sanityError: await getPublicationInconsistencies(parcel)
+        }))
+      )
+
+      for (const parcel of parcels) {
+        if (parcel.sanityError) {
+          log.info(parcel.sanityError)
           faultyParcels.push(parcel)
         }
       }
-      process.stdout.write(`- ${batchedCount}/${parcels.length}   \r`)
+
+      process.stdout.write(
+        `- Checked ${batchedCount}/${allParcels.length} parcel publications \r`
+      )
     },
     batchSize: BATCH_SIZE,
     retryAttempts: 20
   })
 
-  console.log('Errors', faultyParcels)
   return faultyParcels
 }
 
@@ -160,7 +174,7 @@ async function getInconsistentParcels(parcels) {
       }
 
       process.stdout.write(
-        `- Processed ${batchedCount}/${parcels.length} parcels   \r`
+        `- Checked ${batchedCount}/${parcels.length} parcels   \r`
       )
     },
     batchSize: BATCH_SIZE
@@ -183,24 +197,25 @@ class SanityMonitorCli extends MonitorCli {
   async processEvents() {
     log.info('Replaying events for inconsistent parcels')
 
-    const inconsistentAssetIds = new Set(
-      this.inconsistencies.map(parcel => parcel.asset_id)
+    const inconsistentciesCache = this.inconsistencies.reduce(
+      (cache, parcel) => ({ ...cache, [parcel.id]: parcel }),
+      {}
     )
-    for (const assetId of inconsistentAssetIds) {
-      await this.replayEvents(assetId)
+    for (const id in inconsistentciesCache) {
+      await this.replayEvents(inconsistentciesCache[id])
     }
 
     log.info('All done!')
     process.exit()
   }
 
-  async replayEvents(assetId) {
-    const events = await BlockchainEvent.findByAssetId(assetId)
+  async replayEvents(parcel) {
+    const events = await BlockchainEvent.findByAssetId(parcel.asset_id)
     events.reverse()
 
     for (let i = 0; i < events.length; i++) {
       log.info(
-        `[${assetId} - ${i + 1}/${events.length}] Processing ${events[i].name}`
+        `[${parcel.id}] Processing ${i + 1}/${events.length} ${events[i].name}`
       )
       await processEvent(events[i])
     }
