@@ -17,12 +17,11 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, { mortgage }) => {
-  const coordinates = splitCoordinate(mortgage.asset_id)
+  const [x, y] = splitCoordinate(mortgage.asset_id)
   return {
     onCancel: () =>
       dispatch(cancelMortgageRequest(mortgage.mortgage_id, mortgage.asset_id)),
-    onPay: () =>
-      dispatch(push(locations.payMortgage(coordinates[0], coordinates[1]))),
+    onPay: () => dispatch(push(locations.payMortgage(x, y))),
     onClaim: () =>
       dispatch(
         claimMortgageResolutionRequest(mortgage.loan_id, mortgage.asset_id)

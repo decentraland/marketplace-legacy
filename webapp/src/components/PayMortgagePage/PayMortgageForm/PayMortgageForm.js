@@ -42,10 +42,8 @@ export default class PayMortgageForm extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    const {
-      mortgage: { loan_id, asset_id },
-      onSubmit
-    } = this.props
+    const { mortgage, onSubmit } = this.props
+    const { loan_id, asset_id } = mortgage
     const { amount } = this.state
     onSubmit({ loanId: loan_id, assetId: asset_id, amount })
   }
