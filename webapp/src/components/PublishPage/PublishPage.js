@@ -8,7 +8,7 @@ import PublicationForm from './PublicationForm'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
-
+import ParcelName from 'components/ParcelName'
 import { publicationType, walletType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { isOpen } from 'shared/asset'
@@ -87,7 +87,10 @@ export default class PublishPage extends React.PureComponent {
                 onCancel={onCancel}
                 isDisabled={!isLandAuthorized}
               />
-              <TxStatus.Parcel parcel={parcel} />
+              <TxStatus.Asset
+                parcel={parcel}
+                name={<ParcelName parcel={parcel} />}
+              />
             </ParcelModal>
           </div>
         )}
