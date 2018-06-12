@@ -1,0 +1,7 @@
+.TxStatusAsset.ui.message {
+  margin: 30px 0;
+}
+
+.TxStatusAsset .ui.header.ParcelName {
+  display: inline-block;
+}

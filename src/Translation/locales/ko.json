@@ -163,6 +163,7 @@
     "pay": "지불",
     "payable": "지불 할 곳 :",
     "payable_placeholder": "일 단위로 지불 가능",
+    "pending_tx": "모기지",
     "punitory_rate": "도살장 이자율",
     "punitory_rate_placeholder": "처벌 비율",
     "request": "모기지 신청",
