@@ -77,6 +77,8 @@ const sanityCheck = {
               (...args) => new SanityMonitorCli(inconsistencies, ...args)
             )
           }
+        } else {
+          process.exit()
         }
       })
   }
