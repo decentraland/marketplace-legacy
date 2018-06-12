@@ -23,6 +23,7 @@ import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { toPublicationsObject, PUBLICATION_STATUS } from 'shared/publication'
+import { FETCH_MORTGAGED_PARCELS_SUCCESS } from 'modules/mortgage/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -74,10 +75,10 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       }
       return state
     }
+    case FETCH_MORTGAGED_PARCELS_SUCCESS:
     case FETCH_PARCELS_SUCCESS:
     case FETCH_ADDRESS_PARCELS_SUCCESS: {
       const publications = action.publications
-
       if (publications.length > 0) {
         return {
           ...state,

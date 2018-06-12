@@ -45,14 +45,13 @@
   },
   "derivation_path": {
     "invalid":
-      "钱包路径设置错误，您的钱包路径格式应该为 44'/60|61'/x'/n"
+      "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "estate_edit": {
     "description": "描述",
     "edit_estate": "编辑地产",
     "name": "名称",
-    "subtitle":
-      "设置名称和说明，及地产的相关地块。"
+    "subtitle": "设置名称和说明，及地产的相关地块。"
   },
   "estate_select": {
     "description": "在{x}，{y}处选择相邻的地块",
@@ -94,7 +93,8 @@
     "mortgage": "抵押",
     "mortgages": "抵押",
     "owned_by": "拥有",
-    "owned_by_link": "由 {address_link} 拥有",
+    "owned_by_link": "{address_link} 소유",
+    "paid_at": "付费",
     "parcels": "地块",
     "profile": "我的虚拟土地",
     "request": "请求",
@@ -137,12 +137,12 @@
     "amount": "金额",
     "amount_placeholder": "MANA 金额",
     "cancel": "取消抵押",
+    "claim": "声明包裹",
     "duration": "持续时间",
     "duration_placeholder": "持续时间以天计",
     "errors": {
       "amount_minimum": "金额应该大于 {amount}",
-      "duration_gte_payable":
-        "持续时间应该大于或等于付款期限",
+      "duration_gte_payable": "持续时间应该大于或等于付款期限",
       "maximum_interest_rate": "费率应低于 {maximum}",
       "minimum_duration": "持续时间应该大于 {minimum} 天",
       "minimum_interest_rate": "费率应该大于 {minimum}",
@@ -153,9 +153,14 @@
     "expiration_placeholder": "抵押到期日期",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
-    "oracle": "预言机的合约地址",
+    "oracle": "Oracle合同地址",
+    "outstanding_amount": "杰出的金额",
+    "partial_payment": "部分付款",
+    "partial_payment_desc": "你即将支付部分抵押贷款购买土地{parcel_name}",
+    "pay": "工资",
     "payable": "应付",
     "payable_placeholder": "应付天数",
+    "pending_tx": "按揭",
     "punitory_rate": "惩罚性利率",
     "punitory_rate_placeholder": "惩罚性利率",
     "request": "申请抵押",
@@ -175,8 +180,7 @@
     "buy_mana": "{click_here}购买一些 MANA。",
     "didnt_approve": "您没有批准使用 MANA",
     "needs_at_least": "为了购买这块土地，您至少需要 {mana} MANA。",
-    "please_approve":
-      "请前往{settings_link}，允许虚拟市场以您的名义使用 MANA",
+    "please_approve": "请前往{settings_link}，允许虚拟市场以您的名义使用 MANA",
     "total_balance": "您的余额是 {balance}"
   },
   "parcel_cancel": {
@@ -227,8 +231,7 @@
   },
   "parcel_manage": {
     "address": "运营商地址",
-    "address_permission":
-      "此地址将有权更新地块的内容。",
+    "address_permission": "此地址将有权更新地块的内容。",
     "check_address": "请仔细检查地址",
     "give_permission": "授权更新 {parcel_name} 上的内容。",
     "manage_land": "地块管理"
@@ -254,8 +257,7 @@
     "adjacent": "路边",
     "district": "小区",
     "plaza": "广场",
-    "proximity":
-      "距离 {distance} 个地块",
+    "proximity": "距离 {distance} 个地块",
     "road": "路"
   },
   "parcel_transfer": {
@@ -264,8 +266,7 @@
     "check_address": "请仔细检查地址",
     "error_persists":
       "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
-    "irreversible":
-      "请注意，转让土地的操作无法撤消。",
+    "irreversible": "请注意，转让土地的操作无法撤消。",
     "placeholder": "例: {address}",
     "recipient_address": "接收者地址",
     "transfer_land": "转让土地",
@@ -276,40 +277,29 @@
     "on_sale": "出售"
   },
   "publication": {
-    "canceled": "已取消",
     "sold": "已售出",
     "view": "查看"
   },
   "settings": {
-    "approve_mana":
-      "授权{marketplace_contract_link}以您的名义操作 MANA",
-    "approve_mana_check":
-      "检查虚拟市场合约使用 MANA 的授权",
-    "approve_mortgage_mana":
-      "授权{mortgage_contract_link}代您操作 MANA",
-    "approve_mortgage_rcn":
-      "授权{mortgage_contract_link}代您操作 RCN",
+    "approve_mana": "授权{marketplace_contract_link}以您的名义操作 MANA",
+    "approve_mana_check": "检查虚拟市场合约使用 MANA 的授权",
+    "approve_mortgage_mana": "授权{mortgage_contract_link}代您操作 MANA",
+    "approve_mortgage_rcn": "授权{mortgage_contract_link}代您操作 RCN",
     "authorization": "授权",
-    "authorize":
-      "授权{marketplace_contract_link}代您操作土地",
-    "authorize_land_check":
-      "勾选并授权虚拟市场合约使用土地",
-    "disapprove_mana_check":
-      "取消选中不授权虚拟市场合约使用 MANA",
-    "mana_approved":
-      "您已授权{marketplace_contract_link}以您的名义操作 MANA",
+    "authorize": "授权{marketplace_contract_link}代您操作土地",
+    "authorize_land_check": "勾选并授权虚拟市场合约使用土地",
+    "disapprove_mana_check": "取消选中不授权虚拟市场合约使用 MANA",
+    "mana_approved": "您已授权{marketplace_contract_link}以您的名义操作 MANA",
     "marketplace_contract": "虚拟市场合约",
     "mortgage_creator_contract": "抵押创建者合约",
     "mortgage_manager_contract": "抵押管理合约",
     "pending_tx": "您有待处理的交易",
-    "unauthorize_land_check":
-      "取消勾选取消授权市场合约使用虚拟土地",
+    "unauthorize_land_check": "取消勾选取消授权市场合约使用虚拟土地",
     "you_approved_mortgage_mana":
       "您已授权{mortgage_contract_link}代表您操作 MANA",
     "you_approved_mortgage_rcn":
       "您已授权{mortgage_contract_link}代表您运营 RCN",
-    "you_authorized":
-      "您已授权{marketplace_contract_link}以您的名义操作土地"
+    "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作土地"
   },
   "sign_in": {
     "account_unlocked": "确保您的帐户已解锁",
@@ -317,28 +307,22 @@
       "首先，您需要使用钱包来安全地管理地块。可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。"
   },
   "transaction": {
-    "approved":
-      "您授权{marketplace_contract_link} 以您的名义操作 MANA",
-    "authorize":
-      "您{action} {marketplace_contract_link} 以您的名义操作 LAND",
-    "buy": "您购买了 {parcel_link} 地块",
-    "buy_mana": "您已经买了 {mana} MANA",
-    "cancel": "您取消了 {parcel_link} 上的 {publication_link}",
-    "cancel_mortgage": "您取消了购买地块 {parcel_link} 的抵押",
-    "create_mortgage":
-      "您要求抵押以购买地块 {parcel_link}",
-    "disapproved":
-      "您未授权{marketplace_contract_link}以您的名义操作 MANA",
+    "approved": "您授权{marketplace_contract_link}以您的名义操作MANA",
+    "authorize": "您有{action} {marketplace_contract_link}以您的名义操作LAND",
+    "buy": "您买入了{parcel_link}地块",
+    "buy_mana": "你已经买了{mana} MANA",
+    "cancel": "您取消了{parcel_link}上的{publication_link}",
+    "cancel_mortgage": "您取消抵押贷款以购买包裹{parcel_link}",
+    "claim_mortgage_resolution": "你声称{parcel_link}",
+    "create_mortgage": "您要求抵押贷款购买包裹{parcel_link}",
+    "disapproved": "您未经授权{marketplace_contract_link}以您的名义操作MANA",
     "edit":
-      "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
-    "manage":
-      "您授权{address_link}更新{parcel_link}上的内容",
-    "manage_revoked":
-      "您撤销了允许{address_link}更新{parcel_link}内容的授权",
-    "mortgage_mana":
-      "您{action} {mortgage_contract_link}代表您操作 MANA。",
-    "mortgage_rcn":
-      "您{action} {mortgage_contract_link}代表您运营 RCN。",
+      "您已为{parcel_link}地块编辑了名称\"{name}\"和描述\"{description}\"",
+    "manage": "您授予{address_link}更新{parcel_link}的内容的权限",
+    "manage_revoked": "您撤销了{address_link}更新{parcel_link}内容的权限",
+    "mortgage_mana": "你{action} {mortgage_contract_link}代表你操作MANA。",
+    "mortgage_rcn": "您{action} {mortgage_contract_link}代表您运营RCN。",
+    "pay_mortgage": "您为抵押购买{parcel_link}包的部分支付{amount}",
     "publish": "您发布了{parcel_link}地块",
     "transfer": "您已将{parcel_link}转让给{owner_link}",
     "transfer_mana": "{mana} 个 MANA 已转帐至{address_link}"
@@ -351,8 +335,7 @@
       "still_pending":
         "{parcel_name} 仍然有 {transactions_count} 个待处理的交易。"
     },
-    "see_activity":
-      "要查看您的交易记录，请访问 {activity_link}。",
+    "see_activity": "要查看您的交易记录，请访问 {activity_link}。",
     "text": {
       "failed": "交易失败，您可以发起新的交易重试。",
       "pending": "交易正在等待确认。"
@@ -361,8 +344,7 @@
   "transfer_mana": {
     "action": "转帐",
     "current_balance": "您目前的余额是 {balance}",
-    "irreversible":
-      "注意，MANA 转帐不能回退或撤消。",
+    "irreversible": "注意，MANA 转帐不能回退或撤消。",
     "own_address_warning": "这是您自己的地址！",
     "title": "MANA 转帐"
   }

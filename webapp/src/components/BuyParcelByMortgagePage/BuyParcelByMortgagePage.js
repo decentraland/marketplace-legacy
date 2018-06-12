@@ -4,25 +4,30 @@ import { Link } from 'react-router-dom'
 import { Loader, Container, Header } from 'semantic-ui-react'
 
 import Parcel from 'components/Parcel'
-import { walletType } from 'components/types'
+import { walletType, publicationType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
+import { isOpen } from 'shared/asset'
+import { PUBLICATION_STATUS } from 'shared/publication'
 import { buildCoordinate } from 'shared/parcel'
 import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
 import ParcelModal from 'components/ParcelModal'
+import TxStatus from 'components/TxStatus'
+import ParcelName from 'components/ParcelName'
 
 export default class BuyParcelByMortgagePage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
+    publication: publicationType,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    isDisabled: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    isTxIdle: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    publication: PropTypes.object
+    onCancel: PropTypes.func.isRequired
   }
 
   renderLoading() {
@@ -57,10 +62,12 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
       x,
       y,
       publication,
+      isTxIdle,
       isLoading,
       isConnected,
       onConfirm,
-      onCancel
+      onCancel,
+      error
     } = this.props
     if (isLoading) {
       return this.renderLoading()
@@ -73,12 +80,12 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     return (
       <Parcel x={x} y={y} ownerNotAllowed withPublications>
         {parcel =>
-          parcel.publication ? (
+          isOpen(publication, PUBLICATION_STATUS.open) ? (
             <React.Fragment>
               <ParcelModal
                 x={x}
                 y={y}
-                price={publication.price}
+                price={parcel.publication.price}
                 isLoading={isLoading}
                 title={t('mortgage.request')}
                 subtitle={t_html('mortgage.request_land', {
@@ -87,17 +94,26 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                       {buildCoordinate(x, y)}
                     </Link>
                   ),
-                  parcel_price: formatMana(publication.price)
+                  parcel_price: formatMana(parcel.publication.price)
                 })}
                 hasCustomFooter
               >
                 <MortgageForm
                   parcel={parcel}
-                  publication={publication}
-                  isTxIdle={false}
+                  publication={parcel.publication}
                   onPublish={onConfirm}
                   onCancel={onCancel}
-                  isDisabled={false}
+                  error={error}
+                  isTxIdle={isTxIdle}
+                />
+                <TxStatus.Asset
+                  parcel={parcel}
+                  name={
+                    <span>
+                      {`${t('mortgage.pending_tx')} `}
+                      <ParcelName parcel={parcel} />
+                    </span>
+                  }
                 />
               </ParcelModal>
             </React.Fragment>
