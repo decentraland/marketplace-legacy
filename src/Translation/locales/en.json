@@ -14,8 +14,8 @@
     "on_sale": "On Sale: ",
     "owner": "Owner: {owner}",
     "road": "Road",
-    "your_parcel": "Your parcel",
-    "your_estate": "Your estate"
+    "your_estate": "Your estate",
+    "your_parcel": "Your parcel"
   },
   "buy_mana": {
     "action": "Buy More",
@@ -45,13 +45,15 @@
     "proposal": "proposal"
   },
   "derivation_path": {
-    "invalid": "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
+    "invalid":
+      "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
   "estate_edit": {
     "description": "Description",
     "edit_estate": "Edit Estate",
     "name": "Name",
-    "subtitle": "Set a name and description, and edit the parcels for your estate."
+    "subtitle":
+      "Set a name and description, and edit the parcels for your estate."
   },
   "estate_select": {
     "description": "Select adjacent parcels beginning from {x},{y}",
@@ -140,7 +142,8 @@
     "duration_placeholder": "Duration in days",
     "errors": {
       "amount_minimum": "Amount should be greater than {amount}",
-      "duration_gte_payable": "Duration should be greater or equal than payable at days",
+      "duration_gte_payable":
+        "Duration should be greater or equal than payable at days",
       "maximum_interest_rate": "The rate should be lower than {maximum}",
       "minimum_duration": "Duration should be greater than {minimum} days",
       "minimum_interest_rate": "The rate should be greater than {minimum}",
@@ -157,7 +160,8 @@
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "request": "Requesting a Mortgage",
-    "request_land": "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
+    "request_land":
+      "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
     "requested": "Requested"
   },
   "parcel": {
@@ -172,7 +176,8 @@
     "buy_mana": "{click_here} to buy some MANA.",
     "didnt_approve": "You haven't authorized MANA usage",
     "needs_at_least": "You need at least {mana} in order to buy this LAND.",
-    "please_approve": "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
+    "please_approve":
+      "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
     "total_balance": "Your balance is {balance}"
   },
   "parcel_cancel": {
@@ -223,7 +228,8 @@
   },
   "parcel_manage": {
     "address": "Operator address",
-    "address_permission": "This address will be able to update the contents of this parcel.",
+    "address_permission":
+      "This address will be able to update the contents of this parcel.",
     "check_address": "Please check the address carefully",
     "give_permission": "Give permission to update contents of {parcel_name}.",
     "manage_land": "Manage LAND"
@@ -239,7 +245,8 @@
     "expiration": "Expiration",
     "expiration_placeholder": "Expiration date for this publication",
     "list_land": "List LAND for sale",
-    "please_authorize": "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
+    "please_authorize":
+      "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
     "price": "Price",
     "price_placeholder": "Price in MANA for this LAND",
     "set_land_price": "Set a price and an expiration date for {parcel_name}."
@@ -248,15 +255,18 @@
     "adjacent": "Adjacent",
     "district": "District",
     "plaza": "Plaza",
-    "proximity": "{distance} {distance, plural, one {parcel} other {parcels}} away",
+    "proximity":
+      "{distance} {distance, plural, one {parcel} other {parcels}} away",
     "road": "Road"
   },
   "parcel_transfer": {
     "about_to_transfer": "You're about to transfer {parcel_name}.",
     "cant_transfer": "This LAND can't be transferred because it's on sale.",
     "check_address": "Please check the address carefully",
-    "error_persists": "If the problem persists, contact us at our {community_chat_link}",
-    "irreversible": "Remember that transferring LAND is an irreversible operation.",
+    "error_persists":
+      "If the problem persists, contact us at our {community_chat_link}",
+    "irreversible":
+      "Remember that transferring LAND is an irreversible operation.",
     "placeholder": "Example: {address}",
     "recipient_address": "Recipient address",
     "transfer_land": "Transfer LAND",
@@ -272,42 +282,64 @@
     "view": "View"
   },
   "settings": {
-    "approve_mana": "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
-    "approve_mana_check": "Checking authorizes MANA usage to the Marketplace contract",
-    "approve_mortgage_mana": "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
-    "approve_mortgage_rcn": "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
+    "approve_mana":
+      "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
+    "approve_mana_check":
+      "Checking authorizes MANA usage to the Marketplace contract",
+    "approve_mortgage_mana":
+      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+    "approve_mortgage_rcn":
+      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
     "authorization": "Authorization",
-    "authorize": "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
-    "authorize_land_check": "Checking authorizes LAND usage to the Marketplace contract",
-    "disapprove_mana_check": "Unchecking unauthorizes MANA usage for the Marketplace contract",
-    "mana_approved": "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "authorize":
+      "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
+    "authorize_land_check":
+      "Checking authorizes LAND usage to the Marketplace contract",
+    "disapprove_mana_check":
+      "Unchecking unauthorizes MANA usage for the Marketplace contract",
+    "mana_approved":
+      "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
     "marketplace_contract": "Marketplace contract",
     "mortgage_creator_contract": "Mortgage creator contract",
     "mortgage_manager_contract": "Mortgage manager contract",
     "pending_tx": "You have a pending transaction",
-    "unauthorize_land_check": "Unchecking unauthorizes LAND usage for the Marketplace contract",
-    "you_approved_mortgage_mana": "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
-    "you_approved_mortgage_rcn": "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
-    "you_authorized": "You have authorized the {marketplace_contract_link} to operate LAND on your behalf"
+    "unauthorize_land_check":
+      "Unchecking unauthorizes LAND usage for the Marketplace contract",
+    "you_approved_mortgage_mana":
+      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+    "you_approved_mortgage_rcn":
+      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+    "you_authorized":
+      "You have authorized the {marketplace_contract_link} to operate LAND on your behalf"
   },
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",
-    "options": "First off you’ll need a safe place to keep all your land. You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}."
+    "options":
+      "First off you’ll need a safe place to keep all your land. You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}."
   },
   "transaction": {
-    "approved": "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "authorize": "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
+    "approved":
+      "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "authorize":
+      "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
-    "create_mortgage": "You requested a Mortgage to buy the parcel {parcel_link}",
-    "disapproved": "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "edit": "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
-    "manage": "You gave {address_link} permission to update the contents of {parcel_link}",
-    "manage_revoked": "You revoked {address_link} permission to update the contents of {parcel_link}",
-    "mortgage_mana": "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
-    "mortgage_rcn": "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
+    "create_mortgage":
+      "You requested a Mortgage to buy the parcel {parcel_link}",
+    "disapproved":
+      "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "edit":
+      "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+    "manage":
+      "You gave {address_link} permission to update the contents of {parcel_link}",
+    "manage_revoked":
+      "You revoked {address_link} permission to update the contents of {parcel_link}",
+    "mortgage_mana":
+      "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
+    "mortgage_rcn":
+      "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
     "publish": "You published {parcel_link}",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"
@@ -317,9 +349,11 @@
       "please_confirm": "Please confirm the transaction"
     },
     "parcel": {
-      "still_pending": "{parcel_name} still has {transactions_count} pending {transactions_count, plural, one {transaction} other {transactions}}"
+      "still_pending":
+        "{parcel_name} still has {transactions_count} pending {transactions_count, plural, one {transaction} other {transactions}}"
     },
-    "see_activity": "To see your transaction history, visit your {activity_link}.",
+    "see_activity":
+      "To see your transaction history, visit your {activity_link}.",
     "text": {
       "failed": "Your transaction failed, you can try sending a new one.",
       "pending": "The transaction is waiting to be confirmed."
@@ -328,7 +362,8 @@
   "transfer_mana": {
     "action": "Transfer",
     "current_balance": "Your current balance is {balance}",
-    "irreversible": "Remember that transferring MANA is an irreversible operation.",
+    "irreversible":
+      "Remember that transferring MANA is an irreversible operation.",
     "own_address_warning": "That's your own address!",
     "title": "Transfer MANA"
   }
