@@ -179,3 +179,11 @@ export function getType(asset, publications, wallet) {
 
   return TYPE.taken
 }
+
+export function isValidName(name) {
+  return name <= 50
+}
+
+export function isValidDescription(description) {
+  return description <= 140
+}

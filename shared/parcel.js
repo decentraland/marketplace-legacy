@@ -88,11 +88,3 @@ export function isEqualCoords(p1, p2) {
 export function getCoordsMatcher(coords) {
   return coords2 => isEqualCoords(coords, coords2)
 }
-
-export function isValidName(name) {
-  return name <= 50
-}
-
-export function isValidDescription(description) {
-  return description <= 140
-}

@@ -5,7 +5,7 @@ import { Button, Form, Input } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
-import { isValidName, isValidDescription } from 'shared/parcel'
+import { isValidName, isValidDescription } from 'shared/asset'
 import { t } from 'modules/translation/utils'
 
 import './EditParcelForm.css'

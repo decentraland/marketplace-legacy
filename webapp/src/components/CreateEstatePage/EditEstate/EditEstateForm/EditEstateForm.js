@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Form, Input } from 'semantic-ui-react'
-import { isValidName, isValidDescription } from 'shared/parcel'
+import { isValidName, isValidDescription } from 'shared/asset'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 import { estateType } from 'components/types'
