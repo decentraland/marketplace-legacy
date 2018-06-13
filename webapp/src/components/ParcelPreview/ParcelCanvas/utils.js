@@ -9,9 +9,7 @@ import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
 import { t } from 'modules/translation/utils'
 import { TYPE } from 'shared/asset'
-import { isParcel } from 'shared/parcel'
 import { shortenAddress } from 'lib/utils'
-import { getEstateConnections } from 'modules/estates/utils'
 
 export function panzoom(target, cb) {
   if (target instanceof Function) {
@@ -204,22 +202,10 @@ export function getTextColor(type) {
   }
 }
 
-export function getConnections(x, y, asset) {
-  if (!asset) {
-    return {
-      connectedLeft: false,
-      connectedTop: false,
-      connectedTopLeft: false
-    }
+export function getConnections(asset) {
+  return {
+    connectedLeft: !!(asset && asset.connectedLeft),
+    connectedTop: !!(asset && asset.connectedTop),
+    connectedTopLeft: !!(asset && asset.connectedTopLeft)
   }
-
-  if (isParcel(asset)) {
-    return {
-      connectedLeft: !!asset.connectedLeft,
-      connectedTop: !!asset.connectedTop,
-      connectedTopLeft: !!asset.connectedTopLeft
-    }
-  }
-
-  return getEstateConnections(x, y, asset)
 }

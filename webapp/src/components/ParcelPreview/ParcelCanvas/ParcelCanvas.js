@@ -14,7 +14,12 @@ import {
 } from 'components/types'
 import debounce from 'lodash.debounce'
 import { isMobileWidth } from 'lib/utils'
-import { getAsset, getType, getColorByType, getOpenPublication } from 'shared/asset'
+import {
+  getAsset,
+  getType,
+  getColorByType,
+  getOpenPublication
+} from 'shared/asset'
 import { Map as MapRenderer } from 'shared/map/render'
 import { Bounds, Viewport } from 'shared/map'
 import { buildCoordinate } from 'shared/parcel'
@@ -64,10 +69,10 @@ export default class ParcelPreview extends React.PureComponent {
     minSize: 7,
     maxSize: 40,
     selected: null,
-    onFetchParcels: () => { },
+    onFetchParcels: () => {},
     onClick: null,
-    onHover: (x, y, parcel) => { },
-    onChange: viewport => { },
+    onHover: (x, y, parcel) => {},
+    onChange: viewport => {},
     debounce: 400,
     isDraggable: false,
     showMinimap: false,
@@ -423,7 +428,7 @@ export default class ParcelPreview extends React.PureComponent {
     const label = getLabel(type, asset, districts)
     const description = getDescription(type, asset)
     const backgroundColor = getColorByType(type, x, y)
-    const connections = getConnections(x, y, asset)
+    const connections = getConnections(asset)
 
     const result = {
       id: parcelId,

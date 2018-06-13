@@ -44,26 +44,28 @@ export function normalizeParcel(parcel, prevParcel = {}) {
 
 export function connectParcels(array, parcels) {
   array.forEach(parcel => {
-    const { x, y } = parcel
-    if (parcels[parcel.id].district_id != null) {
+    const { id, x, y } = parcel
+    if (parcels[id].in_estate || parcels[id].district_id != null) {
       const leftId = buildCoordinate(x - 1, y)
       const topId = buildCoordinate(x, y + 1)
       const topLeftId = buildCoordinate(x - 1, y + 1)
 
-      parcels[parcel.id].connectedLeft =
-        !parcels[leftId] ||
-        isSameValue(parcels[parcel.id], parcels[leftId], 'district_id')
-
-      parcels[parcel.id].connectedTop =
-        !parcels[topId] ||
-        isSameValue(parcels[parcel.id], parcels[topId], 'district_id')
-
-      parcels[parcel.id].connectedTopLeft =
-        !parcels[topLeftId] ||
-        isSameValue(parcels[parcel.id], parcels[topLeftId], 'district_id')
+      parcels[id].connectedLeft = areConnected(parcels, id, leftId)
+      parcels[id].connectedTop = areConnected(parcels, id, topId)
+      parcels[id].connectedTopLeft = areConnected(parcels, id, topLeftId)
     }
   })
   return parcels
+}
+
+export function areConnected(parcels, parcelId, sideId) {
+  const parcel = parcels[parcelId]
+  const sideParcel = parcels[sideId]
+  return (
+    !sideParcel ||
+    isSameValue(parcel, sideParcel, 'district_id') ||
+    (parcel.in_estate && isSameValue(parcel, sideParcel, 'owner'))
+  )
 }
 
 export function isSameValue(parcelA, parcelB, prop) {

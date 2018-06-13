@@ -11,7 +11,7 @@ import {
   toParcelObject,
   splitCoordinate,
   getParcelPublications
-} from 'shared/parcel'
+} from '../../shared/parcel'
 import { toPublicationObject } from '../../shared/publication'
 
 import { Bounds } from '../shared/map'
