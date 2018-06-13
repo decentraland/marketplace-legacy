@@ -1,5 +1,5 @@
 import { Selection, Parcel } from '.'
-import { COLORS, getColor } from '../../asset'
+import { COLORS, getColor, getAsset } from '../../asset'
 import { buildCoordinate } from '../../parcel'
 
 export class Map {
@@ -14,7 +14,9 @@ export class Map {
     center,
     parcels,
     publications,
-    selected
+    selected,
+    wallet,
+    estates
   }) {
     ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, width, height)
@@ -33,7 +35,8 @@ export class Map {
         const ry = cy - offsetY
         const id = buildCoordinate(px, py)
         const parcel = parcels[id]
-        const color = getColor(px, py, parcel, publications)
+        const asset = getAsset(id, parcels, estates)
+        const color = getColor(px, py, asset, publications, wallet)
 
         const connectedLeft = parcel ? parcel.connectedLeft : false
         const connectedTop = parcel ? parcel.connectedTop : false
