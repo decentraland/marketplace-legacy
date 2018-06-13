@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { getWallet } from 'modules/wallet/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
+import { getEstates } from 'modules/estates/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { fetchParcelsRequest } from 'modules/parcels/actions'
@@ -11,6 +12,7 @@ export const mapState = state => {
   return {
     wallet: getWallet(state),
     parcels: getParcels(state),
+    estates: getEstates(state),
     districts: getDistricts(state),
     publications: getPublications(state)
   }

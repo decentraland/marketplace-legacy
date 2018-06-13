@@ -124,18 +124,18 @@ export function panzoom(target, cb) {
 }
 
 import { t } from 'modules/translation/utils'
-import { TYPE, getType } from 'shared/parcel'
+import { TYPE } from 'shared/asset'
+import { isParcel } from 'shared/parcel'
 import { shortenAddress } from 'lib/utils'
+import { getEstateConnections } from 'modules/estates/utils'
 
-export function getLabel(id, x, y, parcels, publications, wallet, districts) {
-  const type = getType(id, x, y, parcels, publications, wallet)
-  const parcel = parcels[id]
+export function getLabel(type, asset, districts) {
   switch (type) {
     case TYPE.loading:
       return t('atlas.loading') + '...'
     case TYPE.district:
     case TYPE.contribution: {
-      const district = districts[parcel.district_id]
+      const district = districts[asset.district_id]
       return district ? district.name : 'District'
     }
     case TYPE.plaza:
@@ -144,9 +144,11 @@ export function getLabel(id, x, y, parcels, publications, wallet, districts) {
       return t('atlas.road')
     case TYPE.myParcels:
     case TYPE.myParcelsOnSale:
+    case TYPE.myEstates:
+    case TYPE.myEstatesOnSale:
     case TYPE.taken:
     case TYPE.onSale: {
-      return parcel.data.name || null
+      return asset.data.name || null
     }
     case TYPE.unowned:
     case TYPE.background:
@@ -155,9 +157,7 @@ export function getLabel(id, x, y, parcels, publications, wallet, districts) {
   }
 }
 
-export function getDescription(id, x, y, parcels, publications, wallet) {
-  const type = getType(id, x, y, parcels, publications, wallet)
-  const parcel = parcels[id]
+export function getDescription(type, asset) {
   switch (type) {
     case TYPE.loading:
     case TYPE.district:
@@ -170,9 +170,12 @@ export function getDescription(id, x, y, parcels, publications, wallet) {
     case TYPE.myParcels:
     case TYPE.myParcelsOnSale:
       return t('atlas.your_parcel')
+    case TYPE.myEstates:
+    case TYPE.myEstatesOnSale:
+      return t('atlas.your_estate')
     case TYPE.taken:
     case TYPE.onSale: {
-      return t('atlas.owner', { owner: shortenAddress(parcel.owner) })
+      return t('atlas.owner', { owner: shortenAddress(asset.owner) })
     }
     case TYPE.background:
     default:
@@ -180,8 +183,7 @@ export function getDescription(id, x, y, parcels, publications, wallet) {
   }
 }
 
-export function getTextColor(id, x, y, parcels, publications, wallet) {
-  const type = getType(id, x, y, parcels, publications, wallet)
+export function getTextColor(type) {
   switch (type) {
     case TYPE.loading:
     case TYPE.district:
@@ -194,9 +196,31 @@ export function getTextColor(id, x, y, parcels, publications, wallet) {
 
     case TYPE.myParcels:
     case TYPE.myParcelsOnSale:
+    case TYPE.myEstates:
+    case TYPE.myEstatesOnSale:
     case TYPE.plaza:
     case TYPE.onSale:
     default:
       return 'black'
   }
+}
+
+export function getConnections(x, y, asset) {
+  if (!asset) {
+    return {
+      connectedLeft: false,
+      connectedTop: false,
+      connectedTopLeft: false
+    }
+  }
+
+  if (isParcel(asset)) {
+    return {
+      connectedLeft: !!asset.connectedLeft,
+      connectedTop: !!asset.connectedTop,
+      connectedTopLeft: !!asset.connectedTopLeft
+    }
+  }
+
+  return getEstateConnections(x, y, asset)
 }

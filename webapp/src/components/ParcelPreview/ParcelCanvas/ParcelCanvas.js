@@ -14,16 +14,13 @@ import {
 } from 'components/types'
 import debounce from 'lodash.debounce'
 import { isMobileWidth } from 'lib/utils'
+import { getAsset, getType, getColorByType, getOpenPublication } from 'shared/asset'
 import { Map as MapRenderer } from 'shared/map/render'
 import { Bounds, Viewport } from 'shared/map'
-import {
-  getColor,
-  buildCoordinate,
-  COLORS,
-  getOpenPublication
-} from 'shared/parcel'
-import { getLabel, getTextColor, getDescription } from './utils'
+import { buildCoordinate } from 'shared/parcel'
+import { getLabel, getTextColor, getDescription, getConnections } from './utils'
 import { panzoom } from './utils'
+
 import './ParcelCanvas.css'
 
 const LOAD_PADDING = 4
@@ -67,10 +64,10 @@ export default class ParcelPreview extends React.PureComponent {
     minSize: 7,
     maxSize: 40,
     selected: null,
-    onFetchParcels: () => {},
+    onFetchParcels: () => { },
     onClick: null,
-    onHover: (x, y, parcel) => {},
-    onChange: viewport => {},
+    onHover: (x, y, parcel) => { },
+    onChange: viewport => { },
     debounce: 400,
     isDraggable: false,
     showMinimap: false,
@@ -417,52 +414,29 @@ export default class ParcelPreview extends React.PureComponent {
   getParcelAttributes = (x, y) => {
     const parcelId = buildCoordinate(x, y)
 
-    if (!this.cache[parcelId]) {
-      const { wallet, parcels, districts, publications } = this.props
-      const parcel = parcels[parcelId]
-      const publication = getOpenPublication(parcel, publications)
+    const { wallet, parcels, districts, publications, estates } = this.props
+    const asset = getAsset(parcelId, parcels, estates)
+    const publication = getOpenPublication(asset, publications)
 
-      const color = getTextColor(parcelId, x, y, parcels, publications, wallet)
-      const backgroundColor = getColor(
-        parcelId,
-        x,
-        y,
-        parcels,
-        publications,
-        wallet
-      )
-      const label = getLabel(
-        parcelId,
-        x,
-        y,
-        parcels,
-        publications,
-        wallet,
-        districts
-      )
-      const description = getDescription(
-        parcelId,
-        x,
-        y,
-        parcels,
-        publications,
-        wallet
-      )
+    const type = getType(asset, publications, wallet)
+    const color = getTextColor(type)
+    const label = getLabel(type, asset, districts)
+    const description = getDescription(type, asset)
+    const backgroundColor = getColorByType(type, x, y)
+    const connections = getConnections(x, y, asset)
 
-      this.cache[parcelId] = {
-        id: parcelId,
-        publication,
-        connectedLeft: !!(parcel && parcel.connectedLeft),
-        connectedTop: !!(parcel && parcel.connectedTop),
-        connectedTopLeft: !!(parcel && parcel.connectedTopLeft),
-        color,
-        backgroundColor,
-        label,
-        description
-      }
+    const result = {
+      id: parcelId,
+      publication,
+      color,
+      label,
+      description,
+      backgroundColor,
+      ...connections
     }
 
-    return this.cache[parcelId]
+    this.cache[parcelId] = asset
+    return result
   }
 
   getSelected() {

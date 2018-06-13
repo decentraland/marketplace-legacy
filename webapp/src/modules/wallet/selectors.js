@@ -54,6 +54,8 @@ export const getWallet = createSelector(
     const {
       parcels = [],
       parcelsById = {},
+      estates = [],
+      estatesById = {},
       contributions = [],
       contributionsById = {}
     } = address
@@ -62,6 +64,8 @@ export const getWallet = createSelector(
       ...wallet,
       parcels,
       parcelsById,
+      estates,
+      estatesById,
       contributions,
       contributionsById,
       approveManaTransactions,

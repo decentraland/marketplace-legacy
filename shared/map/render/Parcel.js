@@ -1,4 +1,4 @@
-import { COLORS } from '../../parcel'
+import { COLORS } from '../../asset'
 
 export class Parcel {
   static draw({
