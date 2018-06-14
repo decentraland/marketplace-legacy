@@ -1,5 +1,3 @@
-import { eth } from 'decentraland-eth'
-
 export const MORTGAGE_STATUS = Object.freeze({
   open: 'open',
   claimed: 'claimed',
@@ -15,9 +13,8 @@ export function daysToSeconds(days) {
   return Math.ceil(days) * 24 * 60 * 60
 }
 
-export function getLoanMetadata() {
-  const mortgageManagerContract = eth.getContract('MortgageManager')
-  return `#mortgage #required-cosigner:${mortgageManagerContract.address}`
+export function getLoanMetadata(mortgageManagerContractAddress) {
+  return `#mortgage #required-cosigner:${mortgageManagerContractAddress}`
 }
 
 export function getActiveMortgagesByBorrower(mortgages, borrower) {
