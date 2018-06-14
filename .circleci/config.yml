@@ -15,18 +15,17 @@ jobs:
           command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
       - restore_cache:
           keys:
-          - v2-dependencies-{{ checksum "package-lock.json" }}
-          - v2-dependencies-
+          - frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
       - run:
           name: (frontend) Install packages
           command: cd webapp && npm install
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "webapp/package-lock.json" }}
+          key: frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
       - run:
           name: (frontend) Build
-          command: cd webapp && npm run build
+          command: npm run build
           environment:
             NODE_PATH: src/
             REACT_APP_VERSION: 0.1
@@ -37,22 +36,22 @@ jobs:
           paths:
             - webapp/build
           key: build-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          keys:
+          - backend-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: (backend) Install packages
           command: cd .. && npm install
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "package-lock.json" }}
+          key: backend-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: (backend) Build
           command: npm run build:ci
           environment:
             CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
-      - restore_cache:
-          keys:
-          - v2-dependencies-{{ checksum "webapp/package-lock.json" }}
-          - v2-dependencies-
+
   deploy:
     docker:
       - image: circleci/node:9.11.1
