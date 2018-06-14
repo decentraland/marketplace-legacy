@@ -25,7 +25,7 @@ jobs:
           key: frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
       - run:
           name: (frontend) Build
-          command: npm run build
+          command: cd webapp && npm run build
           environment:
             NODE_PATH: src/
             REACT_APP_VERSION: 0.1
