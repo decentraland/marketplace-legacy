@@ -12,6 +12,8 @@
     "analyze": "source-map-explorer build/static/js/main.*",
     "build":
       "NODE_ENV=production REACT_APP_VERSION=$(git rev-parse --short HEAD) node scripts/build.js",
+    "postbuild":
+      "export bundle_path=`ls ./build/static/js/*.js` && uglifyjs $bundle_path --compress --mangle reserved=['toParcelObject','normalizeParcel','connectParcels','isSameValue','getParcelPublications','buildCoordinate']  --output $bundle_path",
     "remotebuild":
       "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules node scripts/build.js"
   },
@@ -91,7 +93,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "source-map-explorer": "^1.5.0"
+    "source-map-explorer": "^1.5.0",
+    "uglify-es": "^3.3.9"
   },
   "jest": {
     "collectCoverageFrom": ["src/**/*.{js,jsx,mjs}"],
