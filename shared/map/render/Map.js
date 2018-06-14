@@ -13,7 +13,8 @@ export class Map {
     center,
     parcels,
     publications,
-    selected
+    selected,
+    wallet
   }) {
     ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, width, height)
@@ -31,7 +32,7 @@ export class Map {
         const rx = cx - offsetX
         const ry = cy - offsetY
         const id = buildCoordinate(px, py)
-        const color = getColor(id, px, py, parcels, publications)
+        const color = getColor(id, px, py, parcels, publications, wallet)
         const parcel = parcels[id]
 
         const connectedLeft = parcel ? parcel.connectedLeft : false

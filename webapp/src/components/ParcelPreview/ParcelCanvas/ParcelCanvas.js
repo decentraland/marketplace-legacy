@@ -477,7 +477,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height, parcels, publications } = this.props
+    const { width, height, parcels, publications, wallet } = this.props
 
     const { nw, se, pan, size, center } = this.state
     const { x, y } = center
@@ -494,7 +494,8 @@ export default class ParcelPreview extends React.PureComponent {
       center,
       parcels,
       publications,
-      selected: this.getSelected()
+      selected: this.getSelected(),
+      wallet
     })
   }
 
