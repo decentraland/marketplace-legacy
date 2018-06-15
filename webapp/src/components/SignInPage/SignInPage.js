@@ -37,7 +37,7 @@ export default class SignInPage extends React.PureComponent {
         ) : (
           <div className="message">
             <WalletIcon />
-            <h1>Get Started</h1>
+            <h1>{t('sign_in.get_started')}</h1>
             <p className="sign-in-options">
               {t_html('sign_in.options', {
                 metamask_link: (

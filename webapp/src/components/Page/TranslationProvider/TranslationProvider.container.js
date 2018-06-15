@@ -8,7 +8,6 @@ import TranslationProvider from './TranslationProvider'
 
 const mapState = state => {
   const locale = getLocale(state) || getPreferredLocale()
-
   const translations = getData(state)[locale]
 
   return {
