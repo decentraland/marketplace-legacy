@@ -10,14 +10,6 @@ export const calculateZoomAndCenter = parcels => {
   return { center, zoom }
 }
 
-export const toEstateObject = estatesArray => {
-  const estate = {}
-  estatesArray.forEach(e => {
-    estate[e.id] = e
-  })
-  return estate
-}
-
 export const getEstateConnections = (x, y, estate) => {
   const leftId = buildCoordinate(x - 1, y)
   const topId = buildCoordinate(x, y + 1)

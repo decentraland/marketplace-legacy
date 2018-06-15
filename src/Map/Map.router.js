@@ -1,25 +1,21 @@
 import { server, utils } from 'decentraland-commons'
+import { createCanvas } from 'canvas'
 
-const { createCanvas } = require('canvas')
-
-import { Map as MapRenderer } from '../shared/map/render'
-
-import { Parcel } from '../Parcel'
-import { blacklist } from '../lib'
-import { Viewport } from '../shared/map'
 import {
   toParcelObject,
   splitCoordinate,
   getParcelPublications
 } from '../../shared/parcel'
+import { toEstateObject } from '../../shared/estate'
+import { Viewport, Bounds } from '../../shared/map'
+import { Map as MapRenderer } from '../../shared/map/render'
 import { toPublicationObject } from '../../shared/publication'
-
-import { Bounds } from '../shared/map'
+import { Parcel } from '../Parcel'
+import { blacklist } from '../lib'
+import { EstateService } from '../Estate'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
-
 const MAX_AREA = 15000
-
 const areCoordsValid = coords => !isNaN(coords.x) && !isNaN(coords.y)
 
 export class MapRouter {
@@ -76,6 +72,7 @@ export class MapRouter {
       size,
       padding: 1
     })
+
     if (area > MAX_AREA) {
       res.status(400)
       res.send(
@@ -83,6 +80,7 @@ export class MapRouter {
       )
       return
     }
+
     try {
       const stream = await this.getStream({
         width,
@@ -102,11 +100,13 @@ export class MapRouter {
     }
   }
 
-  async getParcelsAndPublications(nw, se) {
+  async getAssetsAndPublications(nw, se) {
     const parcelRange = await Parcel.inRange(nw, se)
     const parcels = toParcelObject(utils.mapOmit(parcelRange, blacklist.parcel))
+    const estatesRange = await EstateService.getByParcels(parcelRange)
+    const estates = toEstateObject(estatesRange)
     const publications = toPublicationObject(getParcelPublications(parcelRange))
-    return [parcels, publications]
+    return [parcels, estates, publications]
   }
 
   async getStream({
@@ -119,7 +119,11 @@ export class MapRouter {
     selected,
     showPublications
   }) {
-    const [parcels, publications] = await this.getParcelsAndPublications(nw, se)
+    const [
+      parcels,
+      estates,
+      publications
+    ] = await this.getAssetsAndPublications(nw, se)
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
     MapRenderer.draw({
@@ -131,6 +135,7 @@ export class MapRouter {
       se,
       center,
       parcels,
+      estates,
       publications: showPublications ? publications : {},
       selected
     })
