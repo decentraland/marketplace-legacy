@@ -47,14 +47,14 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
     })
     eth.wallet.getAccount() // throws on empty accounts
   } catch (error) {
-    if (retries >= 6) {
+    if (retries >= 5) {
       console.warn(
         `Error trying to connect to Ethereum for the ${retries}th time`,
         error
       )
       throw error
     }
-    await utils.sleep(250)
+    await utils.sleep(125)
     return connectEthereumWallet(options, retries + 1)
   }
 }
