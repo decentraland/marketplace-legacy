@@ -13,7 +13,7 @@ import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
 import ParcelMortgage from './ParcelMortgage'
 import { parcelType, districtType, publicationType } from 'components/types'
-import { getDistrict, getOpenPublication } from 'shared/parcel'
+import { getDistrict, getOpenPublication } from 'shared/asset'
 import { t } from 'modules/translation/utils'
 
 export default class ParcelDetail extends React.PureComponent {

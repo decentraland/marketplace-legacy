@@ -6,7 +6,7 @@ import { parcelType, publicationType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
 import { isTransactionRejectedError } from 'modules/transaction/utils'
-import { isOnSale } from 'shared/parcel'
+import { isOnSale } from 'shared/asset'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 

@@ -6,7 +6,7 @@ import { Button, Icon } from 'semantic-ui-react'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { parcelType, publicationType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import { isOnSale } from 'shared/parcel'
+import { isOnSale } from 'shared/asset'
 import { locations } from 'locations'
 
 import './ParcelActions.css'
