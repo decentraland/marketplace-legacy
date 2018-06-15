@@ -18,7 +18,11 @@ export default class TranslationProvider extends React.PureComponent {
   }
 
   componentWillMount() {
+    const { locale, onFetchTranslations } = this.props
     addAvailableLocaleData()
+    if (locale) {
+      onFetchTranslations(locale)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
