@@ -4,7 +4,7 @@ import { getData as getParcels } from 'modules/parcels/selectors'
 import { getEstates } from 'modules/estates/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getPublications } from 'modules/publication/selectors'
-import { fetchParcelsRequest } from 'modules/parcels/actions'
+import { fetchMapRequest } from 'modules/map/actions'
 
 import ParcelCanvas from './ParcelCanvas'
 
@@ -19,7 +19,7 @@ export const mapState = state => {
 }
 
 export const mapDispatch = dispatch => ({
-  onFetchParcels: (nw, se) => dispatch(fetchParcelsRequest(nw, se))
+  onFetchMap: (nw, se) => dispatch(fetchMapRequest(nw, se))
 })
 
 export default connect(mapState, mapDispatch)(ParcelCanvas)

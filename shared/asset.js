@@ -1,5 +1,3 @@
-import { txUtils } from 'decentraland-eth'
-
 import { isOpen } from './publication'
 import { getEstateByParcel, isEstate } from './estate'
 
@@ -44,7 +42,7 @@ export function hasStatus(obj, status) {
   return (
     obj &&
     obj.status === status &&
-    obj.tx_status === txUtils.TRANSACTION_STATUS.confirmed &&
+    obj.tx_status === 'confirmed' &&
     !isExpired(obj.expires_at)
   )
 }

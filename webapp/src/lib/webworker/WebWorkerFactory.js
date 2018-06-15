@@ -1,13 +1,10 @@
 export class WebWorkerFactory {
   static create(WebWorkerFunction, dependencies = []) {
-    const onmessage = WebWorkerFunction.toString().replace(
-      WebWorkerFunction.name,
-      'onmessage'
-    )
-    const code = dependencies.reduce(
-      (code, dependency) => `${code}\n${dependency.toString()}`,
-      `var onmessage = ${onmessage}`
-    )
+    const code =
+      dependencies.reduce(
+        (code, [name, dependency]) => `${code}var ${name} = ${dependency}\n`,
+        ''
+      ) + `var onmessage = ${WebWorkerFunction}`
     const blob = new window.Blob([code], { type: 'application/javascript' })
     const worker = new window.Worker(window.URL.createObjectURL(blob))
     return new WebWorker(worker)

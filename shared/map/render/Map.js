@@ -13,10 +13,10 @@ export class Map {
     se,
     center,
     parcels,
+    estates,
     publications,
     selected,
-    wallet,
-    estates
+    wallet
   }) {
     ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, width, height)

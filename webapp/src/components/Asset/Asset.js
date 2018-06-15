@@ -77,8 +77,19 @@ export default class Asset extends React.PureComponent {
   }
 
   render() {
-    const { value, wallet, isConnecting, children } = this.props
-    return isConnecting || this.isNavigatingAway || !value ? (
+    const {
+      value,
+      wallet,
+      isConnecting,
+      children,
+      ownerOnly,
+      ownerNotAllowed
+    } = this.props
+    const shouldBeConnected = ownerOnly || ownerNotAllowed
+
+    return (shouldBeConnected && isConnecting) ||
+      this.isNavigatingAway ||
+      !value ? (
       <div>
         <Loader active size="massive" />
       </div>

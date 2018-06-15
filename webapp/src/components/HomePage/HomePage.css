@@ -6,7 +6,7 @@
 .HomePage .hero-text,
 .HomePage .hero-image {
   position: absolute;
-  height: calc(100vh - 400px);
+  height: calc(100vh - 440px);
   top: calc(0px - var(--navbar-height));
   left: 0px;
   right: 0px;
@@ -44,7 +44,7 @@
 }
 
 .HomePage .gap {
-  height: calc(100vh - 460px);
+  height: calc(100vh - 500px);
   min-height: 125px;
 }
 
@@ -72,15 +72,13 @@
   height: 294px;
 }
 
-.HomePage .publications-scroller .ui.card:first-child {
-  margin-top: 1em;
-}
-
 .HomePage .publications-scroller .ParcelCard {
   flex: none;
   width: 224px !important;
   margin-right: 25px;
   overflow: initial;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 @media (max-width: 600px) {
