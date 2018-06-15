@@ -8,6 +8,7 @@ import {
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
+import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -55,6 +56,15 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           [id]: estate
+        }
+      }
+    }
+    case FETCH_MAP_SUCCESS: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...action.assets.estates
         }
       }
     }

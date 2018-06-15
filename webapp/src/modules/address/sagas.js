@@ -1,5 +1,8 @@
 import { select, takeEvery, call, put } from 'redux-saga/effects'
 
+import { PUBLICATION_STATUS } from 'shared/publication'
+import { getParcelPublications } from 'shared/parcel'
+import { toEstateObject } from 'shared/estate'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   FETCH_ADDRESS,
@@ -21,12 +24,9 @@ import {
   fetchAddressEstatesRequest
 } from './actions'
 import { fetchMortgagedParcelsRequest } from 'modules/mortgage/actions'
-import { PUBLICATION_STATUS } from 'shared/publication'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import { getParcelPublications } from 'shared/parcel'
 import { api } from 'lib/api'
 import { webworker } from 'lib/webworker'
-import { toEstateObject } from 'modules/estates/utils'
 
 export function* addressSaga() {
   yield takeEvery(FETCH_ADDRESS_PARCELS_REQUEST, handleAddressParcelsRequest)
