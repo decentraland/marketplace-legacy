@@ -4,7 +4,7 @@ import { Button, Grid, Header } from 'semantic-ui-react'
 import ParcelPreview from 'components/ParcelPreview'
 import { coordsType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import { calculateZoomAndCenter } from 'modules/estates/utils'
+import { calculateZoomAndCenter } from 'shared/estate'
 
 import './EstateModal.css'
 
