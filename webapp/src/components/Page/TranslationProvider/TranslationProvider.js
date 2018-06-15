@@ -17,11 +17,6 @@ export default class TranslationProvider extends React.PureComponent {
     children: null
   }
 
-  constructor(props) {
-    super(props)
-    this.completedFirstFetch = false
-  }
-
   componentWillMount() {
     addAvailableLocaleData()
   }
@@ -29,9 +24,8 @@ export default class TranslationProvider extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     const { locale } = nextProps
 
-    if (!this.completedFirstFetch || this.props.locale !== locale) {
+    if (this.props.locale !== locale) {
       this.props.onFetchTranslations(locale)
-      this.completedFirstFetch = true
     }
   }
 
