@@ -9,6 +9,15 @@ export class Asset {
     this.tableName = Model.tableName
   }
 
+  async findById(id) {
+    const assets = await db.query(SQL`SELECT ${raw(this.tableName)}.*, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+      ) as publication
+        FROM ${raw(this.tableName)}
+        WHERE id = ${id}`)
+    return assets[0]
+  }
+
   findByIds(ids) {
     if (ids.length === 0) return []
 
