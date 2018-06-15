@@ -7,7 +7,7 @@ import { getPreferredLocale } from 'modules/translation/utils'
 import TranslationProvider from './TranslationProvider'
 
 const mapState = state => {
-  let locale = getLocale(state) || getPreferredLocale()
+  const locale = getLocale(state) || getPreferredLocale()
 
   const translations = getData(state)[locale]
 
