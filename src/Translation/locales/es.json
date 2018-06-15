@@ -318,6 +318,7 @@
   },
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
+    "get_started": "Empezar",
     "options":
       "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}."
   },
