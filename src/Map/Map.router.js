@@ -6,13 +6,13 @@ import {
   splitCoordinate,
   getParcelPublications
 } from '../shared/parcel'
-import { toEstateObject } from '../shared/estate'
+import { toEstateObject, calculateZoomAndCenter } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject, PUBLICATION_TYPES } from '../shared/publication'
 import { AssetRouter } from '../Asset'
 import { Parcel } from '../Parcel'
-import { EstateService } from '../Estate'
+import { Estate, EstateService } from '../Estate'
 import { blacklist } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
@@ -30,7 +30,10 @@ export class MapRouter {
       '/api/parcels/:x/:y/map.png',
       this.handleRequest(this.getParcelPNG)
     )
-    // TODO: add an endpoint for Estates someday 🏌🏼‍
+    this.app.get(
+      '/api/estates/:id/map.png',
+      this.handleRequest(this.getEstatePNG)
+    )
     this.app.get('/api/map', server.handleRequest(this.getMap))
   }
 
@@ -58,6 +61,27 @@ export class MapRouter {
       size,
       center,
       selected: [center],
+      showPublications
+    }
+    return this.sendPNG(res, mapOptions)
+  }
+
+  async getEstatePNG(req, res) {
+    const { id, width, height, size, showPublications } = this.sanitize(req)
+    const estate = await Estate.findById(id)
+
+    if (!estate) {
+      throw new Error(`The estate with id "${id}" doesn't exist.`)
+    }
+
+    const { parcels } = estate.data
+    const { center } = calculateZoomAndCenter(parcels)
+    const mapOptions = {
+      width,
+      height,
+      size,
+      center,
+      selected: parcels,
       showPublications
     }
     return this.sendPNG(res, mapOptions)
@@ -172,6 +196,7 @@ export class MapRouter {
     return {
       x: this.getNumber(req, 'x', minX, maxX, 0),
       y: this.getNumber(req, 'y', minY, maxY, 0),
+      id: this.getId(req, 'id'),
       width: this.getNumber(req, 'width', 32, 1024, 500),
       height: this.getNumber(req, 'height', 32, 1024, 500),
       size: this.getNumber(req, 'size', 5, 40, 10),
@@ -259,5 +284,15 @@ export class MapRouter {
       )
     }
     return value
+  }
+
+  getId(req, name) {
+    let param
+    try {
+      param = server.extractFromReq(req, name)
+    } catch (error) {
+      throw new Error(`Invalid param "${name}" should be a string address.`)
+    }
+    return param
   }
 }
