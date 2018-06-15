@@ -5,14 +5,15 @@ import {
   toParcelObject,
   splitCoordinate,
   getParcelPublications
-} from '../../shared/parcel'
-import { toEstateObject } from '../../shared/estate'
-import { Viewport, Bounds } from '../../shared/map'
-import { Map as MapRenderer } from '../../shared/map/render'
-import { toPublicationObject } from '../../shared/publication'
+} from '../shared/parcel'
+import { toEstateObject } from '../shared/estate'
+import { Viewport, Bounds } from '../shared/map'
+import { Map as MapRenderer } from '../shared/map/render'
+import { toPublicationObject, PUBLICATION_TYPES } from '../shared/publication'
+import { AssetRouter } from '../Asset'
 import { Parcel } from '../Parcel'
-import { blacklist } from '../lib'
 import { EstateService } from '../Estate'
+import { blacklist } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
@@ -30,6 +31,7 @@ export class MapRouter {
       this.handleRequest(this.getParcelPNG)
     )
     // TODO: add an endpoint for Estates someday 🏌🏼‍
+    this.app.get('/api/map', server.handleRequest(this.getMap))
   }
 
   handleRequest(callback) {
@@ -59,6 +61,27 @@ export class MapRouter {
       showPublications
     }
     return this.sendPNG(res, mapOptions)
+  }
+
+  async getMap(req) {
+    try {
+      const nw = server.extractFromReq(req, 'nw')
+      const se = server.extractFromReq(req, 'se')
+
+      const parcelsRange = await Parcel.inRange(nw, se)
+      const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
+      const estates = await EstateService.getByParcels(parcels)
+
+      const assets = { parcels, estates }
+      const total = parcels.length + estates.length
+      console.log(assets.estates)
+      return { assets, total }
+    } catch (error) {
+      // Force parcel type
+      req.params.type = PUBLICATION_TYPES.parcel
+      const { assets, total } = await new AssetRouter().getAssets(req)
+      return { assets, total }
+    }
   }
 
   async sendPNG(
@@ -101,8 +124,11 @@ export class MapRouter {
   }
 
   async getAssetsAndPublications(nw, se) {
-    const parcelRange = await Parcel.inRange(nw, se)
-    const parcels = toParcelObject(utils.mapOmit(parcelRange, blacklist.parcel))
+    const parcelRange = utils.mapOmit(
+      await Parcel.inRange(nw, se),
+      blacklist.parcel
+    )
+    const parcels = toParcelObject(parcelRange)
     const estatesRange = await EstateService.getByParcels(parcelRange)
     const estates = toEstateObject(estatesRange)
     const publications = toPublicationObject(getParcelPublications(parcelRange))
