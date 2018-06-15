@@ -22,10 +22,10 @@ export default class TranslationProvider extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { locale, onFetchTranslations } = nextProps
+    const { locale } = nextProps
 
     if (this.props.locale !== locale) {
-      onFetchTranslations(locale)
+      this.props.onFetchTranslations(locale)
     }
   }
 

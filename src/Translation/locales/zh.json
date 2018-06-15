@@ -297,6 +297,7 @@
   },
   "sign_in": {
     "account_unlocked": "确保您的帐户已解锁",
+    "get_started": "开始使用",
     "options":
       "首先，您需要使用钱包来安全地管理地块。可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。"
   },

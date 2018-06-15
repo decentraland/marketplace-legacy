@@ -77,8 +77,20 @@ export default class Parcel extends React.PureComponent {
   }
 
   render() {
-    const { parcel, wallet, isConnecting, children } = this.props
-    if (isConnecting || this.isNavigatingAway || !parcel) {
+    const {
+      parcel,
+      wallet,
+      isConnecting,
+      children,
+      ownerOnly,
+      ownerNotAllowed
+    } = this.props
+    const shouldBeConnected = ownerOnly || ownerNotAllowed
+    if (
+      (shouldBeConnected && isConnecting) ||
+      this.isNavigatingAway ||
+      !parcel
+    ) {
       return (
         <div>
           <Loader active size="massive" />

@@ -321,6 +321,7 @@
   },
   "sign_in": {
     "account_unlocked": "Assurez-vous que votre compte est déverrouillé",
+    "get_started": "Commencer",
     "options":
       "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace."
   },
