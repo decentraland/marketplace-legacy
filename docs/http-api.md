@@ -92,7 +92,6 @@ Returns all the districts in Genesis City
       "parcel_count": "10005",
       "center": "106,105"
     }
-    //...
   ]
 }
 ```
@@ -292,9 +291,8 @@ Returns a list of parcels, paginated, sorted, and filtered according to the quer
           "marketplace_id": "0xdeadbeeffaceb00c"
         }
       }
-      //..
     ],
-    "total": 100
+    "total": 2
   }
 }
 ```
