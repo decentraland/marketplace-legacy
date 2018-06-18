@@ -1,13 +1,15 @@
-function getLocalStorage() {
+export function hasLocalStorage() {
   try {
     const localStorage = window.localStorage
     const val = 'val'
     localStorage.setItem(val, val)
     localStorage.removeItem(val)
-    return localStorage
+    return true
   } catch (e) {
-    return { getItem: () => {}, setItem: () => {}, removeItem: () => {} }
+    return false
   }
 }
 
-export const localStorage = getLocalStorage()
+export const localStorage = hasLocalStorage()
+  ? window.localStorage
+  : { getItem: () => {}, setItem: () => {}, removeItem: () => {} }
