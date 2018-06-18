@@ -7,6 +7,7 @@ import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Mortgage } from '../../src/Mortgage'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'
 import { isDuplicatedConstraintError } from '../../src/database'
+import { MORTGAGE_STATUS } from '../../shared/mortgage'
 
 const log = new Log('processEvents')
 
@@ -51,7 +52,7 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Cancelling Mortgage ${_id}`)
         await Mortgage.update(
           {
-            status: Mortgage.STATUS.cancelled,
+            status: MORTGAGE_STATUS.cancelled,
             block_time_updated_at
           },
           {
@@ -237,7 +238,7 @@ async function processParcelRelatedEvents(assetId, event) {
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: Mortgage.STATUS.open,
+          status: MORTGAGE_STATUS.open,
           is_due_at: duesIn.toNumber(),
           expires_at: expiresAt.toNumber(),
           mortgage_id: parseInt(mortgageId, 10),
