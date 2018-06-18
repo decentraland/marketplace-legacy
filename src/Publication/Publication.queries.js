@@ -3,6 +3,8 @@ import { SQL, raw } from '../database'
 
 export const PublicationQueries = Object.freeze({
   whereisActive: () => SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
+  andHasStatus: status =>
+    status != null ? SQL`AND status = ${status}` : SQL``,
 
   findByStatusSql: (status = null) => {
     if (!Publication.isValidStatus(status)) {
