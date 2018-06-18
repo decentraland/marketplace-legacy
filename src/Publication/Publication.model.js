@@ -1,6 +1,7 @@
 import { Model } from 'decentraland-commons'
 import { BlockchainEvent } from '../BlockchainEvent'
 import { SQL } from '../database'
+import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../shared/publication'
 
 export class Publication extends Model {
   static tableName = 'publications'
@@ -22,23 +23,12 @@ export class Publication extends Model {
     'contract_id'
   ]
 
-  static STATUS = Object.freeze({
-    open: 'open',
-    sold: 'sold',
-    cancelled: 'cancelled'
-  })
-
-  static TYPES = Object.freeze({
-    parcel: 'parcel',
-    estate: 'estate'
-  })
-
   static isValidStatus(status) {
-    return Object.values(this.STATUS).includes(status)
+    return Object.values(PUBLICATION_STATUS).includes(status)
   }
 
   static isValidType(type) {
-    return Object.values(this.TYPES).includes(type)
+    return Object.values(PUBLICATION_TYPES).includes(type)
   }
 
   static findByOwner(owner) {
@@ -59,7 +49,7 @@ export class Publication extends Model {
 
   static async cancelOlder(asset_id, block_number) {
     const name = BlockchainEvent.EVENTS.publicationCreated
-    const status = this.STATUS.open
+    const status = PUBLICATION_STATUS.open
 
     const rows = await this.db.query(
       SQL`SELECT p.tx_hash
@@ -74,7 +64,7 @@ export class Publication extends Model {
     const txHashes = rows.map(row => row.tx_hash)
 
     if (txHashes.length) {
-      await this.updateManyStatus(txHashes, this.STATUS.cancelled)
+      await this.updateManyStatus(txHashes, PUBLICATION_STATUS.cancelled)
     }
   }
 
