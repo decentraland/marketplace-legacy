@@ -6,14 +6,14 @@ Base URL: `https://api.decentraland.org/v1`
 
 ## Table of Content
 
-* [Contributions](https://github.decentraland.org/marketplace/blob/master/docs/http-api.md#contributions)
-* [Districts](https://github.decentraland.org/marketplace/blob/master/docs/http-api.md#districts)
-* [Estates](https://github.decentraland.org/marketplace/blob/master/docs/http-api.md#estates)
+* [Contributions](#contributions)
+* [Districts](#districts)
+* [Estates](#estates)
 * TODO: Mortgages
-* [Map](https://github.decentraland.org/marketplace/blob/master/docs/http-api.md#map)
-* [Parcels](https://github.decentraland.org/marketplace/blob/master/docs/http-api.md#parcels)
-* [Publications](https://github.decentraland.org/marketplace/blob/master/docs/http-api.md#publications)
-* [Translations](https://github.decentraland.org/marketplace/blob/master/docs/http-api.md#translations)
+* [Map](#map)
+* [Parcels](#parcels)
+* [Publications](#publications)
+* [Translations](#translations)
 
 ---
 
