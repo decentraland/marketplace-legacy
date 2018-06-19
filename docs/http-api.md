@@ -1,6 +1,8 @@
 # Decentraland HTTP API
 
-Base URL: `https://api.decentraland.org/v1`
+Base URL:  `https://api.decentraland.org/`
+
+Specify version: `https://api.decentraland.org/v1`
 
 ---
 
@@ -139,7 +141,7 @@ Returns all the Estates that belong to a given address
 ## Map
 
 ```
-GET /api/map.png
+GET /map.png
 ```
 
 ### Description
@@ -168,7 +170,7 @@ Too many parcels. You are trying to render 42436 parcels and the maximum allowed
 ### Request Example:
 
 ```
-GET /api/map.png?width=500&height=500&size=10&center=20,21&selected=20,20;20,21;20,22;20,23;19,21;21,21
+GET /map.png?width=500&height=500&size=10&center=20,21&selected=20,20;20,21;20,22;20,23;19,21;21,21
 ```
 
 ### Result:
@@ -178,7 +180,7 @@ GET /api/map.png?width=500&height=500&size=10&center=20,21&selected=20,20;20,21;
 ---
 
 ```
-GET /api/parcels/:x/:y/map.png
+GET /parcels/:x/:y/map.png
 ```
 
 ### Description
@@ -212,7 +214,7 @@ Too many parcels. You are trying to render 42436 parcels and the maximum allowed
 ### Request Example:
 
 ```
-GET /api/parcels/-36/-125/map.png?height=500&width=500&size=10&publications=true
+GET /parcels/-36/-125/map.png?height=500&width=500&size=10&publications=true
 ```
 
 ### Result:
