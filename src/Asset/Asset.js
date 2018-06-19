@@ -38,7 +38,7 @@ export class Asset {
       WHERE tx_status = ${tx_status}
         AND type = ${type}
         AND ${PublicationQueries.whereisActive()}
-        ${PublicationQueries.andHasStatus(status)}
+        AND ${PublicationQueries.hasStatus(status)}
       ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
       LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
