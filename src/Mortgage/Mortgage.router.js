@@ -16,7 +16,7 @@ export class MortgageRouter {
      * @return {array<Parcel>}
      */
     this.app.get(
-      '/api/parcels/:address/mortgages',
+      '/parcels/:address/mortgages',
       server.handleRequest(this.getMortgagedParcelsByBorrower)
     )
 
@@ -27,7 +27,7 @@ export class MortgageRouter {
      * @return {array<Mortgage>}
      */
     this.app.get(
-      '/api/addresses/:address/mortgages',
+      '/addresses/:address/mortgages',
       server.handleRequest(this.getMortgagesByBorrower)
     )
 
@@ -39,7 +39,7 @@ export class MortgageRouter {
      * @return {array<Mortgage>}
      */
     this.app.get(
-      '/api/parcels/:x/:y/mortgages',
+      '/parcels/:x/:y/mortgages',
       server.handleRequest(this.getMortgagesInCoordinate)
     )
   }

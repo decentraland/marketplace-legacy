@@ -1,8 +1,6 @@
 import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
-
-import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { db } from './database'
@@ -59,22 +57,6 @@ if (require.main === module) {
 async function startServer() {
   console.log('Connecting database')
   await db.connect()
-
-  console.log('Connecting to Ethereum node')
-  await eth
-    .connect({
-      contracts: [
-        new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
-      ],
-      provider: env.get('RPC_URL') // default to localhost
-    })
-    .catch(error =>
-      console.error(
-        '\nCould not connect to the Ethereum node. Some endpoints may not work correctly.',
-        '\nMake sure you have a node running on port 8545.',
-        `\nError: "${error.message}"\n`
-      )
-    )
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)

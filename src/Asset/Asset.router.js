@@ -20,7 +20,7 @@ export class AssetRouter {
      * @param  {number} offset
      * @return {array<Asset>}
      */
-    this.app.get('/api/assets', server.handleRequest(this.getAssets))
+    this.app.get('/assets', server.handleRequest(this.getAssets))
   }
 
   async getAssets(req) {

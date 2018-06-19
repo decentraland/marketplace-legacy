@@ -7,6 +7,8 @@ import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Mortgage } from '../../src/Mortgage'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'
 import { isDuplicatedConstraintError } from '../../src/database'
+import { MORTGAGE_STATUS } from '../../shared/mortgage'
+import { PUBLICATION_STATUS } from '../../shared/publication'
 
 const log = new Log('processEvents')
 
@@ -51,7 +53,7 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Cancelling Mortgage ${_id}`)
         await Mortgage.update(
           {
-            status: Mortgage.STATUS.cancelled,
+            status: MORTGAGE_STATUS.cancelled,
             block_time_updated_at
           },
           {
@@ -106,14 +108,14 @@ async function processParcelRelatedEvents(assetId, event) {
         Publication.delete({
           asset_id: parcelId,
           owner: seller.toLowerCase(),
-          status: Publication.STATUS.open
+          status: PUBLICATION_STATUS.open
         })
       ])
 
       try {
         await Publication.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: Publication.STATUS.open,
+          status: PUBLICATION_STATUS.open,
           owner: seller.toLowerCase(),
           buyer: null,
           price: eth.utils.fromWei(priceInWei),
@@ -152,7 +154,7 @@ async function processParcelRelatedEvents(assetId, event) {
       await Promise.all([
         Publication.update(
           {
-            status: Publication.STATUS.sold,
+            status: PUBLICATION_STATUS.sold,
             buyer: winner.toLowerCase(),
             price: eth.utils.fromWei(totalPrice),
             block_time_updated_at
@@ -177,7 +179,7 @@ async function processParcelRelatedEvents(assetId, event) {
       )
 
       await Publication.update(
-        { status: Publication.STATUS.cancelled, block_time_updated_at },
+        { status: PUBLICATION_STATUS.cancelled, block_time_updated_at },
         { contract_id }
       )
       break
@@ -237,7 +239,7 @@ async function processParcelRelatedEvents(assetId, event) {
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: Mortgage.STATUS.open,
+          status: MORTGAGE_STATUS.open,
           is_due_at: duesIn.toNumber(),
           expires_at: expiresAt.toNumber(),
           mortgage_id: parseInt(mortgageId, 10),
