@@ -313,6 +313,7 @@
     "buy_mana": "您已经买了 {mana} MANA",
     "cancel": "您取消了 {parcel_link} 上的 {publication_link}",
     "cancel_mortgage": "您取消了购买地块 {parcel_link} 的抵押",
+    "claim_mortgage_resolution": "你声称{parcel_link}",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
     "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
