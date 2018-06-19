@@ -76,7 +76,7 @@ async function processNoParcelRelatedEvents(event) {
         log.info(`[${name}] Starting Mortgage ${_id}`)
         await Mortgage.update(
           {
-            status: Mortgage.STATUS.ongoing,
+            status: MORTGAGE_STATUS.ongoing,
             block_time_updated_at
           },
           { mortgage_id: _id }
@@ -119,7 +119,7 @@ async function processNoParcelRelatedEvents(event) {
       log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
       await Mortgage.update(
         {
-          status: Mortgage.STATUS.paid,
+          status: MORTGAGE_STATUS.paid,
           outstanding_amount: 0,
           block_time_updated_at
         },
@@ -135,7 +135,7 @@ async function processNoParcelRelatedEvents(event) {
       log.info(`[${name}] Claimed Mortgage ${_id}`)
       await Mortgage.update(
         {
-          status: Mortgage.STATUS.claimed,
+          status: MORTGAGE_STATUS.claimed,
           block_time_updated_at
         },
         { mortgage_id: _id }
@@ -150,7 +150,7 @@ async function processNoParcelRelatedEvents(event) {
       log.info(`[${name}] Defaulted Mortgage ${_id}`)
       await Mortgage.update(
         {
-          status: Mortgage.STATUS.defaulted,
+          status: MORTGAGE_STATUS.defaulted,
           block_time_updated_at
         },
         { mortgage_id: _id }
