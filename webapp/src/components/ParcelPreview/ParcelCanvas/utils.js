@@ -7,6 +7,9 @@ import * as Impetus from 'impetus'
 import * as wheel from 'mouse-wheel'
 import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
+import { t } from 'modules/translation/utils'
+import { TYPE, getType } from 'shared/parcel'
+import { shortenAddress } from 'lib/utils'
 
 export function panzoom(target, cb) {
   if (target instanceof Function) {
@@ -122,10 +125,6 @@ export function panzoom(target, cb) {
     target.removeEventListener('touchstart', initListener)
   }
 }
-
-import { t } from 'modules/translation/utils'
-import { TYPE, getType } from 'shared/parcel'
-import { shortenAddress } from 'lib/utils'
 
 export function getLabel(id, x, y, parcels, publications, wallet, districts) {
   const type = getType(id, x, y, parcels, publications, wallet)

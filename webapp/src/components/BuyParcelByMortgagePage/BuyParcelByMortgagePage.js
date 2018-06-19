@@ -7,8 +7,7 @@ import Parcel from 'components/Parcel'
 import { walletType, publicationType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
-import { isOpen } from 'shared/asset'
-import { PUBLICATION_STATUS } from 'shared/publication'
+import { isOpen } from 'shared/publication'
 import { buildCoordinate } from 'shared/parcel'
 import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
@@ -78,7 +77,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     return (
       <Parcel x={x} y={y} ownerNotAllowed withPublications>
         {parcel =>
-          isOpen(publication, PUBLICATION_STATUS.open) ? (
+          isOpen(publication) ? (
             <React.Fragment>
               <ParcelModal
                 x={x}

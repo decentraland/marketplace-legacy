@@ -1,5 +1,4 @@
 import React from 'react'
-import { Loader } from 'semantic-ui-react'
 import { isMobile } from 'lib/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
@@ -19,10 +18,8 @@ export default class MapComponent extends React.Component {
   }
 
   render() {
-    const { selected, center, onSelect, isLoading } = this.props
-    return isLoading ? (
-      <Loader active size="massive" />
-    ) : (
+    const { selected, center, onSelect } = this.props
+    return (
       <div className="map-container">
         <ParcelPreview
           x={center.x}

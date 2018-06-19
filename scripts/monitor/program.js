@@ -9,55 +9,53 @@ import { loadEnv } from '../../scripts/utils'
 
 const log = new Log('main')
 
-loadEnv('../../src/.env')
+export async function main(
+  getNewMonitor = (...args) => new MonitorCli(...args)
+) {
+  log.debug('Connecting to database')
+  await db.connect()
 
-Promise.resolve()
-  .then(() => {
-    log.debug('Connecting to database')
-    return db.connect()
+  log.debug('Connecting to Ethereum node')
+  await eth.connect({
+    contracts: [
+      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
+      new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS')),
+      new contracts.MortgageCreator(
+        env.get('MORTGAGE_CREATOR_CONTRACT_ADDRESS')
+      ),
+      new contracts.RCNEngine(env.get('RCN_ENGINE_CONTRACT_ADDRESS')),
+      new contracts.MortgageManager(
+        env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
+      )
+    ],
+    provider: env.get('RPC_URL')
   })
-  .then(() => {
-    log.debug('Connecting to Ethereum node')
-    return eth.connect({
-      contracts: [
-        new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-        new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS')),
-        new contracts.MortgageCreator(
-          env.get('MORTGAGE_CREATOR_CONTRACT_ADDRESS')
-        ),
-        new contracts.RCNEngine(env.get('RCN_ENGINE_CONTRACT_ADDRESS')),
-        new contracts.MortgageManager(
-          env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
-        )
+
+  log.debug('Starting CLI')
+  const monitor = getNewMonitor(
+    handlers,
+    {
+      Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
+      LANDRegistry: ['Update', 'Transfer'],
+      MortgageCreator: ['NewMortgage'],
+      MortgageManager: [
+        'CanceledMortgage',
+        'StartedMortgage',
+        'PaidMortgage',
+        'DefaultedMortgage'
       ],
-      provider: env.get('RPC_URL')
-    })
-  })
-  .then(() => {
-    log.debug('Starting CLI')
+      RCNEngine: ['PartialPayment', 'TotalPayment']
+    },
+    env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
+  )
+  await monitor.run()
+}
 
-    return new MonitorCli(
-      handlers,
-      {
-        Marketplace: [
-          'AuctionCreated',
-          'AuctionSuccessful',
-          'AuctionCancelled'
-        ],
-        LANDRegistry: ['Update', 'Transfer'],
-        MortgageCreator: ['NewMortgage'],
-        MortgageManager: [
-          'CanceledMortgage',
-          'StartedMortgage',
-          'PaidMortgage',
-          'DefaultedMortgage'
-        ],
-        RCNEngine: ['PartialPayment', 'TotalPayment']
-      },
-      env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
-    ).run()
-  })
-  .catch(error => {
+if (require.main === module) {
+  loadEnv('../../src/.env')
+
+  main().catch(error => {
     log.error(error)
     process.exit()
   })
+}

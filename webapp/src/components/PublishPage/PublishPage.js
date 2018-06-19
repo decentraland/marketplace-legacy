@@ -11,7 +11,7 @@ import TxStatus from 'components/TxStatus'
 
 import { publicationType, walletType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
-import { isOpen } from 'shared/asset'
+import { isOpen } from 'shared/publication'
 import { buildCoordinate } from 'shared/parcel'
 import { formatMana } from 'lib/utils'
 

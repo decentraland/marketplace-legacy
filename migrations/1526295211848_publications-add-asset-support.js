@@ -1,5 +1,5 @@
 import { Publication } from '../src/Publication'
-import { ASSET_TYPE } from '../src/Asset'
+import { PUBLICATION_TYPES } from '../shared/publication'
 
 const tableName = Publication.tableName
 
@@ -9,7 +9,7 @@ exports.up = pgm => {
   pgm.addColumns(tableName, {
     type: {
       type: 'TEXT',
-      default: ASSET_TYPE.parcel,
+      default: PUBLICATION_TYPES.parcel,
       notNull: true
     },
     asset_id: {

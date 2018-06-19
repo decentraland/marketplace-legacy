@@ -1,5 +1,5 @@
-import { hasStatus } from './asset'
-import { PUBLICATION_STATUS } from './publication'
+import { hasStatus } from './utils'
+import { isOpen } from './publication'
 
 export const MORTGAGE_STATUS = Object.freeze({
   pending: 'pending',
@@ -13,9 +13,9 @@ export const MORTGAGE_STATUS = Object.freeze({
 export const isMortgagePending = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.pending)
 export const isMortgageOngoing = mortgage =>
-  hasStatus(mortgage, [MORTGAGE_STATUS.ongoing])
+  hasStatus(mortgage, MORTGAGE_STATUS.ongoing)
 export const isMortgagePaid = mortgage =>
-  hasStatus(mortgage, [MORTGAGE_STATUS.paid])
+  hasStatus(mortgage, MORTGAGE_STATUS.paid)
 
 // Interest in seconds
 export function toInterestRate(r) {
@@ -33,14 +33,8 @@ export function getLoanMetadata(mortgageManagerAddress) {
 export function isMortgageActive(mortgage, parcel, publications) {
   if (mortgage && parcel) {
     const publication = publications[parcel.publication_tx_hash]
-    const isPending =
-      isMortgagePending(mortgage) &&
-      hasStatus(publication, PUBLICATION_STATUS.open)
-
-    return (
-      isPending ||
-      hasStatus(mortgage, [MORTGAGE_STATUS.ongoing, MORTGAGE_STATUS.paid])
-    )
+    const isPending = isMortgagePending(mortgage) && isOpen(publication)
+    return isPending || isMortgageOngoing(mortgage) || isMortgagePaid(mortgage)
   }
   return false
 }
@@ -51,7 +45,11 @@ export function isMortgageActive(mortgage, parcel, publications) {
  * @param  {array} - parcels
  * @returns {array} - mortgages
  */
-export function getActiveMortgages(mortgages = [], parcels = {}, publications) {
+export function getActiveMortgages(
+  mortgages = [],
+  parcels = {},
+  publications = {}
+) {
   return mortgages.filter(mortgage => {
     const parcel = parcels[mortgage.asset_id]
     return isMortgageActive(mortgage, parcel, publications)

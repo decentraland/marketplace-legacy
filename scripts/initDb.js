@@ -7,7 +7,7 @@ import { db } from '../src/database'
 import { Parcel } from '../src/Parcel'
 import { District } from '../src/District'
 import { Contribution } from '../src/Contribution'
-import { updateParcelsData } from './renewBlockchainData'
+import { renewBlockchainData } from './renewBlockchainData'
 import { tagParcels } from './tag'
 import { loadEnv, runpsql } from './utils'
 
@@ -50,9 +50,9 @@ Do you wish to continue?`
   const shouldUpdate = await cli.confirm(
     'Do you want to update the database to the last data found on the blockchain?'
   )
+
   if (shouldUpdate) {
-    const parcels = await Parcel.find()
-    await updateParcelsData(parcels)
+    await renewBlockchainData()
   }
 
   const shouldTag = await cli.confirm('Do you want to set parcel tags?')

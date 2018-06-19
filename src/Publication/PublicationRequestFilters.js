@@ -1,19 +1,29 @@
 import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
-import { ASSET_TYPE } from '../shared/asset'
-import { PUBLICATION_STATUS } from '../shared/publication'
+import { PUBLICATION_TYPES, PUBLICATION_STATUS } from '../shared/publication'
 
-const ALLOWED_VALUES = Object.freeze({
+export const ALLOWED_SORT_VALUES = Object.freeze({
   price: ['ASC'],
   created_at: ['DESC'],
   block_time_updated_at: ['DESC'],
   expires_at: ['ASC']
 })
+export const DEFAULT_STATUS = PUBLICATION_STATUS.open
+export const DEFAULT_TYPE = PUBLICATION_TYPES.parcel
+export const DEFAULT_SORT_VALUE = 'created_at'
+export const DEFAULT_SORT = {
+  by: DEFAULT_SORT_VALUE,
+  order: ALLOWED_SORT_VALUES[DEFAULT_SORT_VALUE][0]
+}
+export const DEFAULT_PAGINATION = {
+  offset: 0,
+  limit: 20
+}
 
 export class PublicationRequestFilters {
   static getAllowedValues() {
-    return ALLOWED_VALUES
+    return ALLOWED_SORT_VALUES
   }
 
   constructor(req) {
@@ -22,10 +32,18 @@ export class PublicationRequestFilters {
 
   sanitize(req) {
     return {
-      status: this.getStatus(),
-      type: this.getType(),
-      sort: this.getSort(),
-      pagination: this.getPagination()
+      status: this.getOrDefault(this.getStatus, null),
+      type: this.getOrDefault(this.getType, DEFAULT_TYPE),
+      sort: this.getOrDefault(this.getSort, DEFAULT_SORT),
+      pagination: this.getOrDefault(this.getPagination, DEFAULT_PAGINATION)
+    }
+  }
+
+  getOrDefault(getter, defaultValue) {
+    try {
+      return getter.call(this)
+    } catch (error) {
+      return defaultValue
     }
   }
 
@@ -36,20 +54,20 @@ export class PublicationRequestFilters {
 
   getType() {
     const type = this.getReqParam('type')
-    return Publication.isValidType(type) ? type : ASSET_TYPE.parcel
+    return Publication.isValidType(type) ? type : PUBLICATION_TYPES.parcel
   }
 
   getSort() {
     let by = this.getReqParam('sort_by')
     let order = this.getReqParam('sort_order')
 
-    by = by in ALLOWED_VALUES ? by : 'created_at'
+    by = by in ALLOWED_SORT_VALUES ? by : DEFAULT_SORT.by
 
     return {
       by,
-      order: ALLOWED_VALUES[by].includes(order.toUpperCase())
+      order: ALLOWED_SORT_VALUES[by].includes(order.toUpperCase())
         ? order
-        : ALLOWED_VALUES[by][0]
+        : ALLOWED_SORT_VALUES[by][0]
     }
   }
 

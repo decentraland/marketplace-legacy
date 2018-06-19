@@ -30,18 +30,17 @@ export class Asset {
   async filter(filters) {
     const { status, type, sort, pagination } = filters.sanitize()
     const tx_status = txUtils.TRANSACTION_STATUS.confirmed
-
     const [assets, total] = await Promise.all([
       db.query(
         SQL`SELECT model.*, row_to_json(pub.*) as publication
-          FROM ${raw(Publication.tableName)} as pub
-          JOIN ${raw(this.tableName)} as model ON model.id = pub.asset_id
-          WHERE status = ${status}
-            AND tx_status = ${tx_status}
-            AND type = ${type}
-            AND ${PublicationQueries.whereisActive()}
-          ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
-          LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
+      FROM ${raw(Publication.tableName)} as pub
+      JOIN ${raw(this.tableName)} as model ON model.id = pub.asset_id
+      WHERE tx_status = ${tx_status}
+        AND type = ${type}
+        AND ${PublicationQueries.whereisActive()}
+        AND ${PublicationQueries.hasStatus(status)}
+      ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
+      LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
       this.countAssetPublications(filters, type)
     ])

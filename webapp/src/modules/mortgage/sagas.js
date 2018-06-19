@@ -96,14 +96,13 @@ function* handleCreateMortgageRequest(action) {
     const mortgageCreatorContract = eth.getContract('MortgageCreator')
     const landRegistryContract = eth.getContract('LANDRegistry')
     const kyberOrcaleAddress = getKyberOracleAddress()
-    const mortgageManagerAddress = getMortgageManagerAddress()
     const manaCurrency = eth.utils.fromAscii('MANA')
 
     const landId = yield call(() =>
       landRegistryContract.encodeTokenId(parcel.x, parcel.y)
     )
     const borrower = yield select(getAddress)
-    const loanMetadata = getLoanMetadata(mortgageManagerAddress)
+    const loanMetadata = getLoanMetadata(getMortgageManagerAddress())
 
     let loanParams = [
       eth.utils.toWei(amount), // Amount requested

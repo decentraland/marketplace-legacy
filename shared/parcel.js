@@ -1,5 +1,4 @@
-import { isOpen } from './asset'
-import { PUBLICATION_STATUS } from './publication'
+import { isOpen } from './publication'
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
@@ -62,7 +61,7 @@ export function getDistrict(parcel, districts = {}) {
 export function getOpenPublication(parcel, publications) {
   if (parcel && publications && parcel.publication_tx_hash in publications) {
     const publication = publications[parcel.publication_tx_hash]
-    if (isOpen(publication, PUBLICATION_STATUS.open)) {
+    if (isOpen(publication)) {
       return publication
     }
   }

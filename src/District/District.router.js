@@ -12,7 +12,7 @@ export class DistrictRouter {
      * Returns all stored districts
      * @return {array<District>}
      */
-    this.app.get('/api/districts', server.handleRequest(this.getDistricts))
+    this.app.get('/districts', server.handleRequest(this.getDistricts))
   }
 
   async getDistricts() {

@@ -23,7 +23,7 @@ export class ParcelRouter {
      * @param  {number} offset
      * @return {array<Parcel>}
      */
-    this.app.get('/api/parcels', server.handleRequest(this.getParcels))
+    this.app.get('/parcels', server.handleRequest(this.getParcels))
 
     /**
      * Returns the parcels an address owns
@@ -32,7 +32,7 @@ export class ParcelRouter {
      * @return {array<Parcel>}
      */
     this.app.get(
-      '/api/addresses/:address/parcels',
+      '/addresses/:address/parcels',
       server.handleRequest(this.getAddressParcels)
     )
   }

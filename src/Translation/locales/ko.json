@@ -314,6 +314,7 @@
   },
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",
+    "get_started": "시작하다",
     "options":
       "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다."
   },
