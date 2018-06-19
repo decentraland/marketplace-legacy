@@ -58,7 +58,7 @@ Returns all the contributions to districts for a given address
 }
 ```
 
----
+## Districts
 
 ```
 GET /districts
