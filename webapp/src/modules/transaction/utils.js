@@ -1,3 +1,6 @@
+import { txUtils } from 'decentraland-eth'
+
+const { TRANSACTION_STATUS } = txUtils
 // Special flag used to determine transaction hashes to be monitored
 const TRANSACTION_ACTION_FLAG = 'watch_tx'
 
@@ -45,4 +48,10 @@ export function getEtherscanOrigin(network) {
     origin = `https://${network}.etherscan.io`
   }
   return origin
+}
+
+export function getTransactionHistoryFrom(transactions, address) {
+  return transactions.filter(
+    item => item.from === address && item.status !== TRANSACTION_STATUS.pending
+  )
 }

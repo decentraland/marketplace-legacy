@@ -26,6 +26,10 @@
   margin-bottom: 30px;
 }
 
+.ActivityPage .clear-button {
+  text-align: right !important;
+}
+
 @media (max-width: 768px) {
   .ActivityPage {
     padding-left: 1em;

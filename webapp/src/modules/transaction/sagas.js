@@ -4,7 +4,9 @@ import {
   FETCH_TRANSACTION_REQUEST,
   WATCH_LOADING_TRANSACTIONS,
   fetchTransactionSuccess,
-  fetchTransactionFailure
+  fetchTransactionFailure,
+  CLEAR_TRANSACTION_REQUEST,
+  clearTransactionsSuccess
 } from './actions'
 import { getData, getLoading } from './selectors'
 
@@ -13,6 +15,7 @@ const { TRANSACTION_STATUS } = txUtils
 export function* transactionSaga() {
   yield takeEvery(FETCH_TRANSACTION_REQUEST, handleTransactionRequest)
   yield takeEvery(WATCH_LOADING_TRANSACTIONS, handleWatchLoadingTransactions)
+  yield takeEvery(CLEAR_TRANSACTION_REQUEST, handleClearRequest)
 }
 
 const watchIndex = {
@@ -65,4 +68,8 @@ function* handleWatchLoadingTransactions(action) {
       yield handleTransactionRequest({ hash })
     }
   }
+}
+
+function* handleClearRequest(action) {
+  yield put(clearTransactionsSuccess(action))
 }

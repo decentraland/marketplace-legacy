@@ -1,4 +1,5 @@
 import { txUtils } from 'decentraland-eth'
+import { getTransactionHistoryFrom } from 'modules/transaction/utils'
 
 const { TRANSACTION_STATUS } = txUtils
 
@@ -10,9 +11,7 @@ export const getPendingTransactions = (state, address) =>
   getTransactionsByStatus(state, address, TRANSACTION_STATUS.pending)
 
 export const getTransactionHistory = (state, address) =>
-  getData(state).filter(
-    item => item.from === address && item.status !== TRANSACTION_STATUS.pending
-  )
+  getTransactionHistoryFrom(getData(state), address)
 
 export const getTransactionsByType = (state, address, type) =>
   getData(state).filter(

@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Container, Loader, Button } from 'semantic-ui-react'
 
-import { locations } from 'locations'
-import { Container, Loader } from 'semantic-ui-react'
 import Transaction from './Transaction'
-
+import { locations } from 'locations'
 import { transactionType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 
@@ -78,7 +77,7 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   render() {
-    const { isEmpty, isLoading, isConnected } = this.props
+    const { isEmpty, isLoading, isConnected, onClear, address } = this.props
 
     let content = null
     if (isLoading) {
@@ -93,7 +92,19 @@ export default class ActivityPage extends React.PureComponent {
 
     return (
       <div>
-        <Container className="ActivityPage">{content}</Container>
+        <Container className="ActivityPage">
+          <div className="clear-button">
+            <Button
+              size="tiny"
+              className="link"
+              onClick={() => onClear(address)}
+            >
+              {t('global.clear')}
+            </Button>
+          </div>
+
+          {content}
+        </Container>
       </div>
     )
   }

@@ -2,10 +2,11 @@ import { txUtils } from 'decentraland-eth'
 import {
   FETCH_TRANSACTION_REQUEST,
   FETCH_TRANSACTION_SUCCESS,
-  FETCH_TRANSACTION_FAILURE
+  FETCH_TRANSACTION_FAILURE,
+  CLEAR_TRANSACTION_REQUEST
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { getTransactionFromAction } from './utils'
+import { getTransactionFromAction, getTransactionHistoryFrom } from './utils'
 
 const { TRANSACTION_STATUS } = txUtils
 
@@ -65,6 +66,17 @@ export function transactionReducer(state = INITIAL_STATE, action) {
                   error: action.error
                 }
               : transaction
+        )
+      }
+    }
+    case CLEAR_TRANSACTION_REQUEST: {
+      const txToDelete = new Set(
+        getTransactionHistoryFrom(state.data, action.address).map(tx => tx.hash)
+      )
+      return {
+        ...state,
+        data: state.data.filter(
+          transaction => !txToDelete.has(transaction.hash)
         )
       }
     }
