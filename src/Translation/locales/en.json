@@ -4,7 +4,7 @@
     "completed": "Completed",
     "no_activity": "You have no activity yet.",
     "pending": "Pending",
-    "start": "Your able to start trading at the {marketplace}!"
+    "start": "You are able to start trading at the {marketplace}!"
   },
   "address": {
     "its_you": "It's you"
