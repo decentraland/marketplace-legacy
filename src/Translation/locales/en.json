@@ -75,6 +75,7 @@
     "blog": "Blog",
     "cancel": "Cancel",
     "change": "Change",
+    "clear": "Clear history",
     "click_here": "Click here",
     "community_chat": "Community Chat",
     "confirm": "Confirm",
@@ -108,8 +109,7 @@
     "unauthorized": "Unauthorized",
     "undo": "Undo",
     "wallet_address": "Wallet address",
-    "website": "Website",
-    "clear": "Clear"
+    "website": "Website"
   },
   "homepage": {
     "get_started": "Get Started",
