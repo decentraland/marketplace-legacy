@@ -31,7 +31,7 @@ export class MapRouter {
       this.handleRequest(this.getParcelPNG)
     )
     // TODO: add an endpoint for Estates someday 🏌🏼‍
-    this.app.get('/api/map', server.handleRequest(this.getMap))
+    this.app.get('/map', server.handleRequest(this.getMap))
   }
 
   handleRequest(callback) {
