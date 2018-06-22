@@ -18,7 +18,7 @@ import {
   publicationType,
   mortgageType
 } from 'components/types'
-import { getDistrict, getOpenPublication } from 'shared/parcel'
+import { getDistrict, getOpenPublication } from 'shared/asset'
 import { t } from 'modules/translation/utils'
 
 export default class ParcelDetail extends React.PureComponent {
