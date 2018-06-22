@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types'
 import { locations } from 'locations'
 import { Button, Loader } from 'semantic-ui-react'
 import StaticPage from 'components/StaticPage'
+import { isMobile } from 'lib/utils'
 import { t, t_html } from 'modules/translation/utils'
 
 import WalletIcon from './WalletIcon'
@@ -39,35 +40,57 @@ export default class SignInPage extends React.PureComponent {
             <WalletIcon />
             <h1>{t('sign_in.get_started')}</h1>
             <p className="sign-in-options">
-              {t_html('sign_in.options', {
-                metamask_link: (
-                  <a
-                    href="https://metamask.io"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    MetaMask
-                  </a>
-                ),
-                mist_link: (
-                  <a
-                    href="https://github.com/ethereum/mist"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Mist
-                  </a>
-                ),
-                ledger_nano_link: (
-                  <a
-                    href="https://www.ledgerwallet.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Ledger Nano S
-                  </a>
-                )
-              })}
+              {t('sign_in.intro')}{' '}
+              {isMobile()
+                ? t_html('sign_in.options.mobile', {
+                    toshi_link: (
+                      <a
+                        href="https://www.toshi.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Toshi
+                      </a>
+                    ),
+                    imtoken_link: (
+                      <a
+                        href="https://token.im"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        imToken
+                      </a>
+                    )
+                  })
+                : t_html('sign_in.options.desktop', {
+                    metamask_link: (
+                      <a
+                        href="https://metamask.io"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        MetaMask
+                      </a>
+                    ),
+                    mist_link: (
+                      <a
+                        href="https://github.com/ethereum/mist"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Mist
+                      </a>
+                    ),
+                    ledger_nano_link: (
+                      <a
+                        href="https://www.ledgerwallet.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Ledger Nano S
+                      </a>
+                    )
+                  })}
             </p>
             <br />
             <Button type="button" primary onClick={this.handleRetry}>
