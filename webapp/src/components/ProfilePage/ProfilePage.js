@@ -65,7 +65,11 @@ export default class ProfilePage extends React.PureComponent {
     const { tab } = this.props
     return (
       <div className="empty">
-        <p>{t('profile_page.empty', { content: tab })}</p>
+        <p>
+          {t('profile_page.empty', {
+            content: t(`global.${tab}`).toLowerCase()
+          })}
+        </p>
       </div>
     )
   }
