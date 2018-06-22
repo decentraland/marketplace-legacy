@@ -22,7 +22,6 @@ export class Publication extends Model {
     'block_time_updated_at',
     'contract_id'
   ]
-
   static isValidStatus(status) {
     return Object.values(PUBLICATION_STATUS).includes(status)
   }

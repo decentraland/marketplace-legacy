@@ -3,18 +3,13 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import BuyParcelByMortgagePage from './BuyParcelByMortgagePage'
-import {
-  createMortgageRequest,
-  CREATE_MORTGAGE_REQUEST
-} from 'modules/mortgage/actions'
+import { createMortgageRequest } from 'modules/mortgage/actions'
 import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
-import {
-  getPublicationByCoordinate,
-  getLoading
-} from 'modules/publication/selectors'
+import { isRequestingMortgageTransactionIdle } from 'modules/mortgage/selectors'
+import { getPublicationByCoordinate } from 'modules/publication/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
-import { isLoadingType } from 'modules/loading/selectors'
+import { getError as getMortgageError } from 'modules/mortgage/selectors'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
@@ -23,10 +18,11 @@ const mapState = (state, ownProps) => {
     x,
     y,
     publication: getPublicationByCoordinate(state, x, y),
-    isDisabled: isLoadingType(getLoading(state), CREATE_MORTGAGE_REQUEST),
+    isTxIdle: isRequestingMortgageTransactionIdle(state),
     wallet: getWallet(state),
     isConnected: isConnected(state),
-    isLoading: isConnecting(state)
+    isLoading: isConnecting(state),
+    error: getMortgageError(state)
   }
 }
 

@@ -96,6 +96,7 @@
     "mortgages": "Hypothèques",
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
+    "paid_at": "Payé à",
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
     "request": "Demande",
@@ -139,6 +140,7 @@
     "amount": "Montant",
     "amount_placeholder": "Montant à MANA",
     "cancel": "Annuler l'hypothèque",
+    "claim": "Demande de colis",
     "duration": "Durée",
     "duration_placeholder": "Durée en jours",
     "errors": {
@@ -157,6 +159,11 @@
     "interest_rate": "Taux d'intérêt",
     "interest_rate_placeholder": "Taux d'intérêt",
     "oracle": "Adresse du contrat Oracle",
+    "outstanding_amount": "Encours",
+    "partial_payment": "Paiement partiel",
+    "partial_payment_desc":
+      "Vous êtes sur le point de faire un paiement partiel pour l'hypothèque pour acheter le terrain {parcel_name}",
+    "pay": "Payer",
     "payable": "Payable à",
     "payable_placeholder": "Payable en jours",
     "punitory_rate": "Taux d'intérêt punitif",
@@ -283,7 +290,6 @@
     "on_sale": "A vendre"
   },
   "publication": {
-    "canceled": "Annulé",
     "sold": "Vendu",
     "view": "Vue"
   },
@@ -335,6 +341,7 @@
       "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
     "cancel_mortgage":
       "Vous annulez une hypothèque pour acheter le colis {parcel_link}",
+    "claim_mortgage_resolution": "Vous avez réclamé {parcel_link}",
     "create_mortgage":
       "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
     "disapproved":
@@ -349,6 +356,8 @@
       "Vous {action} gérez le {mortgage_contract_link} pour exploiter MANA en votre nom.",
     "mortgage_rcn":
       "Vous {action} le {mortgage_contract_link} pour exploiter RCN en votre nom.",
+    "pay_mortgage":
+      "Vous avez effectué un paiement partiel de {amount} MANA pour l'hypothèque pour acheter le colis {parcel_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"

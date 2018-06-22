@@ -82,8 +82,13 @@ export function getMortgageCreatorAddress() {
 }
 
 export function getMortgageManagerAddress() {
-  const mortgageCreatorContract = eth.getContract('MortgageManager')
-  return mortgageCreatorContract.address
+  const mortgageManagerContract = eth.getContract('MortgageManager')
+  return mortgageManagerContract.address
+}
+
+export function getRCNEngineAddress() {
+  const rcnEngineContract = eth.getContract('RCNEngine')
+  return rcnEngineContract.address
 }
 
 export function getKyberOracleAddress() {

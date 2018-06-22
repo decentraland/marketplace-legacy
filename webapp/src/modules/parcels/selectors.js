@@ -8,7 +8,7 @@ import { getPublications as getAllPublications } from 'modules/publication/selec
 import { buildCoordinate } from 'shared/parcel'
 import { isLoadingType } from 'modules/loading/selectors'
 import { getMortgagesArray } from 'modules/mortgage/selectors'
-import { getActiveMortgagesByBorrower } from 'shared/mortgage'
+import { getActiveMortgages } from 'shared/mortgage'
 
 export const getState = state => state.parcels
 export const getData = state => getState(state).data
@@ -35,11 +35,11 @@ export const getPublications = (x, y) =>
   })
 
 export const getMortgagedParcels = createSelector(
-  state => state.wallet.data.address,
   getData,
   getMortgagesArray,
-  (borrower, parcels, mortgages) =>
-    getActiveMortgagesByBorrower(mortgages, borrower).map(mortgage => ({
+  getAllPublications,
+  (parcels, mortgages, publications) =>
+    getActiveMortgages(mortgages, parcels, publications).map(mortgage => ({
       ...parcels[mortgage.asset_id],
       mortgage
     }))

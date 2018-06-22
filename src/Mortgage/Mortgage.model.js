@@ -19,6 +19,9 @@ export class Mortgage extends Model {
     'amount',
     'expires_at',
     'is_due_at',
+    'payable_at',
+    'started_at',
+    'outstanding_amount',
     'block_time_created_at',
     'block_time_updated_at'
   ]
