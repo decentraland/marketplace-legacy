@@ -14,7 +14,7 @@ export class ContributionRouter {
      * @return {array<Contribution>}
      */
     this.app.get(
-      '/api/addresses/:address/contributions',
+      '/addresses/:address/contributions',
       server.handleRequest(this.getAddressContributions)
     )
   }

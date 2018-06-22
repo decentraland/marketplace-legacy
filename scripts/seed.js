@@ -7,6 +7,7 @@ import faker from 'faker'
 import { loadEnv } from './utils'
 import { db } from '../src/database'
 import { Publication } from '../src/Publication'
+import { PUBLICATION_STATUS } from '../shared/publication'
 
 const log = new Log('seed')
 
@@ -118,7 +119,7 @@ function getRandomColumnValue(columnName, tableName) {
         tableName === Publication.tableName &&
         columnName === 'status'
       ) {
-        value = faker.random.objectElement(Publication.STATUS)
+        value = faker.random.objectElement(PUBLICATION_STATUS)
       } else {
         value = faker.random.words()
       }

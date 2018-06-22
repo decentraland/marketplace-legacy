@@ -142,7 +142,7 @@ export class API {
   }
 
   getUrl(path) {
-    return `${URL}/api${path}`
+    return `${URL}${path}`
   }
 }
 

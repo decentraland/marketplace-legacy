@@ -20,7 +20,7 @@ export class EstateRouter {
      * @param  {number} offset
      * @return {array<Estate>}
      */
-    this.app.get('/api/estates', server.handleRequest(this.getEstates))
+    this.app.get('/estates', server.handleRequest(this.getEstates))
 
     /**
      * Returns the parcels an address owns
@@ -29,7 +29,7 @@ export class EstateRouter {
      * @return {array<Estate>}
      */
     this.app.get(
-      '/api/addresses/:address/estates',
+      '/addresses/:address/estates',
       server.handleRequest(this.getAddressEstates)
     )
   }
