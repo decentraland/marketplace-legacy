@@ -1,7 +1,7 @@
 import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
-import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../../shared/publication'
+import { PUBLICATION_TYPES, PUBLICATION_STATUS } from '../shared/publication'
 
 export const ALLOWED_SORT_VALUES = Object.freeze({
   price: ['ASC'],

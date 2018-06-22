@@ -53,7 +53,8 @@ export default class Parcel extends React.PureComponent {
       publication
     } = nextProps
 
-    const ownerIsNotAllowed = ownerNotAllowed && isOwner(wallet, parcel.id)
+    const ownerIsNotAllowed =
+      ownerNotAllowed && parcel && isOwner(wallet, parcel.id)
     const parcelShouldBeOnSale =
       withPublications && parcel && !isOpen(publication)
 

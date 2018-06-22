@@ -1,12 +1,15 @@
 import { takeLatest, call, put, select, all } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
+
 import { api } from 'lib/api'
 import {
   CREATE_MORTGAGE_REQUEST,
   CANCEL_MORTGAGE_REQUEST,
   FETCH_MORTGAGED_PARCELS_REQUEST,
   FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
+  PAY_MORTGAGE_REQUEST,
+  CLAIM_MORTGAGE_RESOLUTION_REQUEST,
   createMortgageSuccess,
   createMortgageFailure,
   cancelMortgageFailure,
@@ -14,25 +17,40 @@ import {
   fetchMortgagedParcelsSuccess,
   fetchMortgagedParcelsFailure,
   fetchActiveParcelMortgagesSuccess,
-  fetchActiveParcelMortgagesFailure
+  fetchActiveParcelMortgagesFailure,
+  payMortgageSuccess,
+  payMortgageFailure,
+  claimMortgageResolutionSuccess,
+  claimMortgageResolutionFailure
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
+import { getParcelPublications, normalizeParcel } from 'shared/parcel'
+
 import {
   MORTGAGE_STATUS,
   toInterestRate,
   getLoanMetadata,
   daysToSeconds
 } from 'shared/mortgage'
-import { getKyberOracleAddress } from 'modules/wallet/utils'
+import {
+  getKyberOracleAddress,
+  getRCNEngineAddress,
+  getMortgageManagerAddress
+} from 'modules/wallet/utils'
 import { locations } from 'locations'
 
 export function* mortgageSaga() {
   yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
   yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
   yield takeLatest(FETCH_MORTGAGED_PARCELS_REQUEST, handleFetchMortgageRequest)
+  yield takeLatest(PAY_MORTGAGE_REQUEST, handlePayMortgageRequest)
   yield takeLatest(
     FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
     handleFetchActiveParcelMortgagesRequest
+  )
+  yield takeLatest(
+    CLAIM_MORTGAGE_RESOLUTION_REQUEST,
+    handleClaimMortgageResolutionRequest
   )
 }
 
@@ -43,12 +61,20 @@ function* handleFetchMortgageRequest(action) {
       call(() => api.fetchMortgagedParcels(borrower)),
       call(() =>
         api.fetchMortgagesByBorrower(borrower, [
-          MORTGAGE_STATUS.open,
-          MORTGAGE_STATUS.claimed
+          MORTGAGE_STATUS.pending,
+          MORTGAGE_STATUS.ongoing,
+          MORTGAGE_STATUS.paid
         ])
       )
     ])
-    yield put(fetchMortgagedParcelsSuccess(parcels, mortgages))
+
+    yield put(
+      fetchMortgagedParcelsSuccess(
+        parcels.map(normalizeParcel),
+        mortgages,
+        getParcelPublications(parcels)
+      )
+    )
   } catch (error) {
     yield put(fetchMortgagedParcelsFailure(error.message))
   }
@@ -71,13 +97,12 @@ function* handleCreateMortgageRequest(action) {
     const landRegistryContract = eth.getContract('LANDRegistry')
     const kyberOrcaleAddress = getKyberOracleAddress()
     const manaCurrency = eth.utils.fromAscii('MANA')
-    const mortageManagerContract = eth.getContract('MortgageManager')
 
     const landId = yield call(() =>
       landRegistryContract.encodeTokenId(parcel.x, parcel.y)
     )
     const borrower = yield select(getAddress)
-    const loanMetadata = getLoanMetadata(mortageManagerContract.address)
+    const loanMetadata = getLoanMetadata(getMortgageManagerAddress())
 
     let loanParams = [
       eth.utils.toWei(amount), // Amount requested
@@ -146,10 +171,52 @@ function* handleFetchActiveParcelMortgagesRequest(action) {
   try {
     const { x, y } = action
     const mortgages = yield call(() =>
-      api.fetchMortgages(x, y, [MORTGAGE_STATUS.open, MORTGAGE_STATUS.claimed])
+      api.fetchMortgages(x, y, [
+        MORTGAGE_STATUS.pending,
+        MORTGAGE_STATUS.ongoing,
+        MORTGAGE_STATUS.paid
+      ])
     )
     yield put(fetchActiveParcelMortgagesSuccess(mortgages, x, y))
   } catch (error) {
     yield put(fetchActiveParcelMortgagesFailure(error.message))
+  }
+}
+
+function* handlePayMortgageRequest(action) {
+  try {
+    const { loanId, amount, assetId } = action
+    const borrower = yield select(getAddress)
+
+    const rcnEngineContract = eth.getContract('RCNEngine')
+
+    const payMortgageReceipt = yield call(() =>
+      rcnEngineContract.pay(loanId, eth.utils.toWei(amount), borrower, [])
+    )
+
+    yield put(payMortgageSuccess(payMortgageReceipt, assetId, amount))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(payMortgageFailure(error.message))
+  }
+}
+
+function* handleClaimMortgageResolutionRequest(action) {
+  try {
+    const { loanId, assetId } = action
+    const rcnEngineAddress = getRCNEngineAddress()
+
+    const mortgageManagerContract = eth.getContract('MortgageManager')
+
+    const claimMortgageResolutionReceipt = yield call(() =>
+      mortgageManagerContract.claim(rcnEngineAddress, loanId, [])
+    )
+
+    yield put(
+      claimMortgageResolutionSuccess(claimMortgageResolutionReceipt, assetId)
+    )
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(claimMortgageResolutionFailure(error.message))
   }
 }

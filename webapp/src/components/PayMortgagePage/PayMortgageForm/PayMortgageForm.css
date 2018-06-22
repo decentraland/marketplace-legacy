@@ -1,0 +1,8 @@
+.PayMortgageForm .ui.button + .ui.button {
+  margin-left: 20px;
+}
+
+.PayMortgageForm .transfer-warning {
+  color: var(--gray);
+  font-style: italic;
+}
