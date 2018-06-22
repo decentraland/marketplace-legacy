@@ -30,11 +30,8 @@ export class MapRouter {
       '/parcels/:x/:y/map.png',
       this.handleRequest(this.getParcelPNG)
     )
-    this.app.get(
-      '/api/estates/:id/map.png',
-      this.handleRequest(this.getEstatePNG)
-    )
-    this.app.get('/api/map', server.handleRequest(this.getMap))
+    this.app.get('/estates/:id/map.png', this.handleRequest(this.getEstatePNG))
+    this.app.get('/map', server.handleRequest(this.getMap))
   }
 
   handleRequest(callback) {

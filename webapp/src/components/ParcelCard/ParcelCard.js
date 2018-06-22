@@ -11,11 +11,8 @@ import ParcelTags from 'components/ParcelTags'
 import { parcelType, publicationType } from 'components/types'
 import { isMortgageActive } from 'shared/mortgage'
 import { t } from 'modules/translation/utils'
-import {
-  AUCTION_DATE,
-  buildCoordinate,
-  getOpenPublication
-} from 'shared/parcel'
+import { AUCTION_DATE, buildCoordinate } from 'shared/parcel'
+import { getOpenPublication } from 'shared/asset'
 
 import { formatDate } from 'lib/utils'
 
