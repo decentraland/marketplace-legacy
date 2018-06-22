@@ -52,7 +52,8 @@ export default class Asset extends React.PureComponent {
       onAccessDenied
     } = nextProps
 
-    const ownerIsNotAllowed = ownerNotAllowed && isOwner(wallet, value.id)
+    const ownerIsNotAllowed =
+      ownerNotAllowed && value && isOwner(wallet, value.id)
     const assetShouldBeOnSale = withPublications && value && !value.publication
 
     if (isConnecting) {

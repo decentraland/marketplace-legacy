@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect'
+
 import {
   getData as getParcels,
   getMortgagedParcels
 } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
-
 import { isOpen } from 'shared/publication'
 import { getEstates } from 'modules/estates/selectors'
 import { pickAndMap } from './utils'
@@ -42,17 +42,21 @@ export const getAddresses = createSelector(
         isOpen(publications[parcel.publication_tx_hash])
       )
 
+      const mortgagedParcelsByAddress = mortgagedParcels.filter(
+        parcel => parcel.mortgage.borrower === address
+      )
+
       return {
         ...map,
         [address]: {
           ...data[address],
+          mortgagedParcels: mortgagedParcelsByAddress,
           parcels,
           parcelsById,
           estates: estates.filter(e => e.data.parcels.length > 0),
           estatesById,
           contributions,
-          publishedParcels,
-          mortgagedParcels
+          publishedParcels
         }
       }
     }, {})

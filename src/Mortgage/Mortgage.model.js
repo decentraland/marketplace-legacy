@@ -1,6 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { SQL, raw, getInStatus } from '../database'
+import { MORTGAGE_STATUS } from '../shared/mortgage'
 
 export class Mortgage extends Model {
   static tableName = 'mortgages'
@@ -18,22 +19,19 @@ export class Mortgage extends Model {
     'amount',
     'expires_at',
     'is_due_at',
+    'payable_at',
+    'started_at',
+    'outstanding_amount',
     'block_time_created_at',
     'block_time_updated_at'
   ]
   static primaryKey = 'tx_hash'
 
-  static STATUS = Object.freeze({
-    open: 'open',
-    claimed: 'claimed',
-    cancelled: 'cancelled'
-  })
-
   static findByBorrower(borrower, status) {
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)}
         WHERE borrower = ${borrower}
-          AND status IN (${raw(getInStatus(status, this.STATUS))})
+          AND status IN (${raw(getInStatus(status, MORTGAGE_STATUS))})
           ORDER BY created_at DESC`
     )
   }
@@ -42,7 +40,7 @@ export class Mortgage extends Model {
     return this.db.query(
       SQL`SELECT * FROM ${raw(this.tableName)}
         WHERE asset_id = ${assetId}
-          AND status IN(${raw(getInStatus(status, this.STATUS))})
+          AND status IN(${raw(getInStatus(status, MORTGAGE_STATUS))})
           ORDER BY created_at DESC`
     )
   }

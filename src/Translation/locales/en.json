@@ -96,6 +96,7 @@
     "mortgages": "Mortgages",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
+    "paid_at": "Paid at",
     "parcels": "Parcels",
     "profile": "My Land",
     "request": "Request",
@@ -138,6 +139,7 @@
     "amount": "Amount",
     "amount_placeholder": "Amount in MANA",
     "cancel": "Cancel Mortgage",
+    "claim": "Claim parcel",
     "duration": "Duration",
     "duration_placeholder": "Duration in days",
     "errors": {
@@ -155,6 +157,11 @@
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "oracle": "Oracle contract address",
+    "outstanding_amount": "Outstanding amount",
+    "partial_payment": "Partial payment",
+    "partial_payment_desc":
+      "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount}",
+    "pay": "Pay",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",
     "punitory_rate": "Punitory interest rate",
@@ -277,7 +284,6 @@
     "on_sale": "On Sale"
   },
   "publication": {
-    "canceled": "Canceled",
     "sold": "Sold",
     "view": "View"
   },
@@ -327,6 +333,7 @@
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
+    "claim_mortgage_resolution": "You claimed {parcel_link}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
     "disapproved":
@@ -341,6 +348,8 @@
       "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
     "mortgage_rcn":
       "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
+    "pay_mortgage":
+      "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
     "publish": "You published {parcel_link}",
     "transfer": "You transfered {parcel_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"

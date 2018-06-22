@@ -102,3 +102,19 @@ export const toastType = shape({
   message: string,
   delay: number
 })
+
+export const mortgageType = shape({
+  status: string.isRequired,
+  asset_id: string.isRequired,
+  type: string.isRequired,
+  borrower: string.isRequired,
+  lender: string,
+  loan_id: number.isRequired,
+  mortgage_id: number.isRequired,
+  amount: number.isRequired,
+  expires_at: string.isRequired,
+  is_due_at: string.isRequired,
+  payable_at: string.isRequired,
+  started_at: number,
+  outstanding_amount: number.isRequired
+})

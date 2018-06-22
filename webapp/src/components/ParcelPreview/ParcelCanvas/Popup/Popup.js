@@ -2,7 +2,6 @@ import React from 'react'
 
 import Mana from 'components/Mana'
 import { t } from 'modules/translation/utils'
-
 import './Popup.css'
 
 export default function Popup(props) {

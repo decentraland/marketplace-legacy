@@ -11,6 +11,7 @@ import { processEvent } from './monitor/processEvents'
 import { MonitorCli } from './monitor/MonitorCli'
 import { main as indexMissingEvents } from './monitor/program'
 import { parseCLICoords, loadEnv } from './utils'
+import { PUBLICATION_STATUS } from '../shared/publication'
 
 const log = new Log('sanity-check')
 
@@ -139,7 +140,7 @@ async function getPublicationInconsistencies(parcel) {
         contractId
       ].join(' ')
     }
-  } else if (publication && publication.status === Publication.STATUS.open) {
+  } else if (publication && publication.status === PUBLICATION_STATUS.open) {
     // Check for hanging publication in db
     errors = `${id} open in db and null in blockchain`
   }

@@ -1,4 +1,4 @@
-import { hasStatus } from './asset'
+import { hasStatus } from './utils'
 
 export const PUBLICATION_STATUS = Object.freeze({
   open: 'open',

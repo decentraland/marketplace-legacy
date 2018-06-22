@@ -25,9 +25,9 @@ export class MapRouter {
   }
 
   mount() {
-    this.app.get('/api/map.png', this.handleRequest(this.getMapPNG))
+    this.app.get('/map.png', this.handleRequest(this.getMapPNG))
     this.app.get(
-      '/api/parcels/:x/:y/map.png',
+      '/parcels/:x/:y/map.png',
       this.handleRequest(this.getParcelPNG)
     )
     this.app.get(

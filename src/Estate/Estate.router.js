@@ -1,9 +1,9 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Estate } from './Estate.model'
+import { ASSET_TYPE } from '../shared/asset'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
-import { PUBLICATION_TYPES } from '../../shared/publication'
 
 export class EstateRouter {
   constructor(app) {
@@ -20,7 +20,7 @@ export class EstateRouter {
      * @param  {number} offset
      * @return {array<Estate>}
      */
-    this.app.get('/api/estates', server.handleRequest(this.getEstates))
+    this.app.get('/estates', server.handleRequest(this.getEstates))
 
     /**
      * Returns the parcels an address owns
@@ -29,14 +29,14 @@ export class EstateRouter {
      * @return {array<Estate>}
      */
     this.app.get(
-      '/api/addresses/:address/estates',
+      '/addresses/:address/estates',
       server.handleRequest(this.getAddressEstates)
     )
   }
 
   async getEstates(req) {
     // Force estate type
-    req.params.type = PUBLICATION_TYPES.estate
+    req.params.type = ASSET_TYPE.estate
 
     const result = await new AssetRouter().getAssets(req)
 

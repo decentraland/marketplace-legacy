@@ -40,7 +40,9 @@ import {
 } from 'modules/publication/actions'
 import {
   CREATE_MORTGAGE_SUCCESS,
-  CANCEL_MORTGAGE_SUCCESS
+  CANCEL_MORTGAGE_SUCCESS,
+  PAY_MORTGAGE_SUCCESS,
+  CLAIM_MORTGAGE_RESOLUTION_SUCCESS
 } from 'modules/mortgage/actions'
 
 import './Transaction.css'
@@ -221,6 +223,21 @@ export default class Transaction extends React.PureComponent {
           parcel_link: this.renderParcelLink(x, y)
         })
       }
+      case PAY_MORTGAGE_SUCCESS: {
+        const { x, y, amount } = payload
+
+        return t_html('transaction.pay_mortgage', {
+          parcel_link: this.renderParcelLink(x, y),
+          amount
+        })
+      }
+      case CLAIM_MORTGAGE_RESOLUTION_SUCCESS: {
+        const { x, y } = payload
+
+        return t_html('transaction.claim_mortgage_resolution', {
+          parcel_link: this.renderParcelLink(x, y)
+        })
+      }
       default:
         return null
     }
@@ -244,7 +261,9 @@ export default class Transaction extends React.PureComponent {
       CANCEL_SALE_SUCCESS,
       MANAGE_PARCEL_SUCCESS,
       CREATE_MORTGAGE_SUCCESS,
-      CANCEL_MORTGAGE_SUCCESS
+      CANCEL_MORTGAGE_SUCCESS,
+      PAY_MORTGAGE_SUCCESS,
+      CLAIM_MORTGAGE_RESOLUTION_SUCCESS
     ].includes(tx.actionType)
 
     return (
