@@ -12,8 +12,13 @@ import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
 import ParcelMortgage from './ParcelMortgage'
-import { parcelType, districtType, publicationType } from 'components/types'
-import { getDistrict, getOpenPublication } from 'shared/asset'
+import {
+  parcelType,
+  districtType,
+  publicationType,
+  mortgageType
+} from 'components/types'
+import { getDistrict, getOpenPublication } from 'shared/parcel'
 import { t } from 'modules/translation/utils'
 
 export default class ParcelDetail extends React.PureComponent {
@@ -22,7 +27,7 @@ export default class ParcelDetail extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
-    mortgages: PropTypes.array
+    mortgage: mortgageType
   }
 
   getDescription() {
@@ -40,7 +45,7 @@ export default class ParcelDetail extends React.PureComponent {
   }
 
   render() {
-    const { parcel, districts, publications, isOwner, mortgages } = this.props
+    const { parcel, districts, publications, isOwner, mortgage } = this.props
 
     const description = this.getDescription()
     const publication = getOpenPublication(parcel, publications)
@@ -90,8 +95,8 @@ export default class ParcelDetail extends React.PureComponent {
               >
                 <ParcelActions
                   parcel={parcel}
+                  mortgage={mortgage}
                   publications={publications}
-                  mortgages={mortgages}
                   isOwner={isOwner}
                 />
               </Grid.Column>
@@ -99,7 +104,7 @@ export default class ParcelDetail extends React.PureComponent {
           ) : null}
         </Grid>
 
-        <ParcelMortgage mortgages={mortgages} />
+        {mortgage && <ParcelMortgage mortgage={mortgage} />}
 
         {utils.isEmptyObject(parcel.tags) ? null : (
           <Grid stackable className="parcel-detail-row">

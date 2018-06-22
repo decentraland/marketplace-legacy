@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import differenceInDays from 'date-fns/difference_in_days'
 
 import { distanceInWordsToNow } from 'lib/utils'
-import { isExpired } from 'shared/asset'
+import { isExpired } from 'shared/utils'
 import { t } from 'modules/translation/utils'
 
 const MAX_EXPIRES = 10 * 365

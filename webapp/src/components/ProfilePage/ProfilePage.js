@@ -220,19 +220,20 @@ export default class ProfilePage extends React.PureComponent {
                 {this.renderBadge(estates, PROFILE_PAGE_TABS.estates)}
               </Menu.Item>
             ) /* Estate Feature */}
-            {isFeatureEnabled('MORTGAGES') && (
-              <Menu.Item
-                name={PROFILE_PAGE_TABS.mortgages}
-                active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
-                onClick={this.handleItemClick}
-              >
-                {t('global.mortgages')}
-                {this.renderBadge(
-                  mortgagedParcels,
-                  PROFILE_PAGE_TABS.mortgages
-                )}
-              </Menu.Item>
-            ) /* Mortgage Feature */}
+            {isFeatureEnabled('MORTGAGES') &&
+              isOwner && (
+                <Menu.Item
+                  name={PROFILE_PAGE_TABS.mortgages}
+                  active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
+                  onClick={this.handleItemClick}
+                >
+                  {t('global.mortgages')}
+                  {this.renderBadge(
+                    mortgagedParcels,
+                    PROFILE_PAGE_TABS.mortgages
+                  )}
+                </Menu.Item>
+              ) /* Mortgage Feature */}
           </Menu>
         </Container>
         <Container className="profile-grid">
