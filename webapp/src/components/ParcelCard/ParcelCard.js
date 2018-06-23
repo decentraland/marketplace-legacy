@@ -8,12 +8,15 @@ import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
 import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
-import { parcelType } from 'components/types'
-import { MORTGAGE_STATUS } from 'shared/mortgage'
+import { parcelType, publicationType } from 'components/types'
+import { isMortgageActive } from 'shared/mortgage'
 import { t } from 'modules/translation/utils'
-import { AUCTION_DATE, buildCoordinate } from 'shared/parcel'
-import { PUBLICATION_STATUS } from 'shared/publication'
-import { isOpen } from 'shared/publication'
+import {
+  AUCTION_DATE,
+  buildCoordinate,
+  getOpenPublication
+} from 'shared/parcel'
+
 import { formatDate } from 'lib/utils'
 
 import './ParcelCard.css'
@@ -21,16 +24,17 @@ import './ParcelCard.css'
 export default class ParcelCard extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
+    publications: PropTypes.objectOf(publicationType),
     debounce: PropTypes.number,
     showMortgage: PropTypes.bool
   }
 
   render() {
-    const { parcel, debounce, showMortgage } = this.props
-    const { x, y, publication } = parcel
+    const { parcel, debounce, publications, showMortgage } = this.props
+    const { x, y } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
-    const isPublicationOpen = isOpen(publication, PUBLICATION_STATUS.open)
+    const publication = getOpenPublication(parcel, publications)
 
     return (
       <Card className="ParcelCard">
@@ -47,12 +51,12 @@ export default class ParcelCard extends React.PureComponent {
           <Card.Content className="body">
             <Card.Description title={parcelName}>
               <span className="name">{parcelName}</span>
-              {isPublicationOpen ? (
+              {publication ? (
                 <Mana amount={parseFloat(publication.price)} />
               ) : null}
             </Card.Description>
 
-            {isPublicationOpen && (
+            {publication && (
               <React.Fragment>
                 <Card.Meta
                   title={formatDate(parseInt(publication.expires_at, 10))}
@@ -64,29 +68,7 @@ export default class ParcelCard extends React.PureComponent {
               </React.Fragment>
             )}
 
-            {isPublicationOpen &&
-              !showMortgage && (
-                <Card.Meta>
-                  {t('global.acquired_at', {
-                    date: formatDate(
-                      parcel.last_transferred_at
-                        ? parseInt(parcel.last_transferred_at, 10)
-                        : AUCTION_DATE,
-                      'MMM Do, YYYY'
-                    )
-                  })}
-                </Card.Meta>
-              )}
-
-            {showMortgage &&
-              isOpen(parcel.mortgage, MORTGAGE_STATUS.open) && (
-                <React.Fragment>
-                  <p className={`mortgage-status ${parcel.mortgage.status}`}>
-                    {parcel.mortgage.status}
-                  </p>
-                </React.Fragment>
-              )}
-            {!isOpen(publication, PUBLICATION_STATUS.open) &&
+            {!publication &&
               !showMortgage && (
                 <Card.Meta>
                   {t('global.acquired_at', {
@@ -98,6 +80,15 @@ export default class ParcelCard extends React.PureComponent {
                     )
                   })}
                 </Card.Meta>
+              )}
+
+            {showMortgage &&
+              isMortgageActive(parcel.mortgage, parcel, publications) && (
+                <React.Fragment>
+                  <p className={`mortgage-status ${parcel.mortgage.status}`}>
+                    {parcel.mortgage.status}
+                  </p>
+                </React.Fragment>
               )}
             <div className="footer">
               <div className="coords">

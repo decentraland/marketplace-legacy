@@ -150,9 +150,11 @@ export class Parcel extends Model {
     return District.isRoad(this.attributes.district_id)
   }
 
-  static async findWithLastActiveMortgageByBorrower(borrower) {
+  static findWithLastActiveMortgageByBorrower(borrower) {
     return this.db.query(
-      SQL`SELECT *
+      SQL`SELECT *, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+      ) as publication
         FROM ${SQL.raw(this.tableName)}
         WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
     )

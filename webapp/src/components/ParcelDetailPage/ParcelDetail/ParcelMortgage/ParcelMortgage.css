@@ -1,8 +1,42 @@
-.parcelMortgageDetail .open p{
-  color: var(--error);
+.ParcelMortgageDetail{
+  border-radius: 12px;
+  background-color: #181f33;
+  text-align: center;
+}
+
+.ParcelMortgageDetail.ui.grid>.row{
+  align-items: center;
+}
+
+.ParcelMortgageDetail.paid{
+  border: solid 2px transparent;
+  background-image: linear-gradient(#181f33, #181f33), linear-gradient(to top, #ff9a74, #ff0044);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+.ParcelMortgageDetail p {
+  font-size: 18px;
+}
+
+.ParcelMortgageDetail .pending p {
+  color: var(--orange);
   text-transform: capitalize;
 }
 
-.parcelMortgageDetail .mortgage-amount-icon{
-  font-size: 15px;
+.ParcelMortgageDetail .ongoing p{
+  color: var(--light-blue);
+  text-transform: capitalize;
+}
+
+.ParcelMortgageDetail .mortgage-amount-icon{
+  font-size: 18px;
+}
+
+.ParcelMortgageDetail .expires-at span{
+  color: var(--gray)
+}
+
+.ParcelMortgageDetail .cta{
+  margin-left: auto;
 }
