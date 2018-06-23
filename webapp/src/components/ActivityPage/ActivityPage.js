@@ -41,10 +41,22 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   renderTransactionLists() {
-    const { pendingTransactions, transactionHistory, network } = this.props
+    const {
+      pendingTransactions,
+      transactionHistory,
+      network,
+      onClear,
+      address
+    } = this.props
 
     return (
       <React.Fragment>
+        <div className="clear-button">
+          <Button size="tiny" className="link" onClick={() => onClear(address)}>
+            {t('global.clear')}
+          </Button>
+        </div>
+
         {pendingTransactions.length > 0 ? (
           <div className="transaction-list pending-transaction-list">
             <div className="section-title">
@@ -77,7 +89,7 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   render() {
-    const { isEmpty, isLoading, isConnected, onClear, address } = this.props
+    const { isEmpty, isLoading, isConnected } = this.props
 
     let content = null
     if (isLoading) {
@@ -92,19 +104,7 @@ export default class ActivityPage extends React.PureComponent {
 
     return (
       <div>
-        <Container className="ActivityPage">
-          <div className="clear-button">
-            <Button
-              size="tiny"
-              className="link"
-              onClick={() => onClear(address)}
-            >
-              {t('global.clear')}
-            </Button>
-          </div>
-
-          {content}
-        </Container>
+        <Container className="ActivityPage">{content}</Container>
       </div>
     )
   }
