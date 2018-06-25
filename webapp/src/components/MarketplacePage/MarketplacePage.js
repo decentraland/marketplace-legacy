@@ -43,8 +43,7 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { onFetchPublications } = this.props
-    onFetchPublications()
+    this.props.onFetchPublications()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,6 +54,7 @@ export default class MarketplacePage extends React.PureComponent {
       sortOrder !== nextProps.sortOrder
     ) {
       this.shouldFetchPublications = true
+      this.scrollToTop()
     }
   }
 
@@ -63,6 +63,10 @@ export default class MarketplacePage extends React.PureComponent {
       this.props.onFetchPublications()
       this.shouldFetchPublications = false
     }
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0)
   }
 
   navigateTo(options) {
