@@ -99,6 +99,7 @@
     "paid_at": "Pagada el",
     "parcels": "Parcelas",
     "profile": "Mi LAND",
+    "publications": "Publicaciones",
     "request": "Solicitud",
     "retry": "Reintentar",
     "revoke": "Revocar",
@@ -300,7 +301,7 @@
     "approve_mortgage_mana":
       "Autorice a {mortgage_contract_link} para operar MANA en su nombre",
     "approve_mortgage_rcn":
-      "Autorice el {mortgage_contract_link} ​​para operar RCN en su nombre",
+      "Autorice el {mortgage_contract_link} para operar RCN en su nombre",
     "authorization": "Autorización",
     "authorize":
       "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
@@ -317,7 +318,7 @@
     "unauthorize_land_check":
       "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
     "you_approved_mortgage_mana":
-      "Usted ha autorizado el {mortgage_contract_link} ​​para operar MANA en su nombre",
+      "Usted ha autorizado el {mortgage_contract_link} para operar MANA en su nombre",
     "you_approved_mortgage_rcn":
       "Usted ha autorizado {mortgage_contract_link} para operar RCN en su nombre",
     "you_authorized":
@@ -326,8 +327,14 @@
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
     "get_started": "Empezar",
-    "options":
-      "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}."
+    "intro":
+      "En primer lugar necesitarás un lugar seguro para guardar todo tu LAND.",
+    "options": {
+      "desktop":
+        "Puedes usar la extensión {metamask_link} o una billetera de hardware como {ledger_nano_link}.",
+      "mobile":
+        "Puedes usar navegadores móviles como {toshi_link} o {imtoken_link}."
+    }
   },
   "transaction": {
     "approved":
