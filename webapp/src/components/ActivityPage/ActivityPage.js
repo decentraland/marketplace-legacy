@@ -51,15 +51,18 @@ export default class ActivityPage extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <div className="clear-button">
-          <Button size="tiny" className="link" onClick={this.handleClear}>
-            {t('global.clear')}
-          </Button>
+        <div className="section-title">
+          {t('global.activity')}
+          <div className="clear-button">
+            <Button size="tiny" className="link" onClick={this.handleClear}>
+              {t('global.clear')}
+            </Button>
+          </div>
         </div>
 
         {pendingTransactions.length > 0 ? (
           <div className="transaction-list pending-transaction-list">
-            <div className="section-title">
+            <div className="section-subsubtitle">
               {pendingTransactions.length}&nbsp;{t('activity.pending')}
             </div>
             {pendingTransactions.map(tx => (
@@ -70,7 +73,7 @@ export default class ActivityPage extends React.PureComponent {
 
         {transactionHistory.length > 0 ? (
           <div className="transaction-list">
-            <div className="section-title">
+            <div className="section-subsubtitle">
               {transactionHistory.length}&nbsp;{t('activity.completed')}
             </div>
             {transactionHistory.map(tx => (

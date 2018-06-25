@@ -5,7 +5,14 @@
 
 .ActivityPage .section-title {
   margin-bottom: 10px;
-  font-size: 22px;
+  font-size: 32px;
+  font-weight: bold;
+  display: flex;
+}
+
+.ActivityPage .section-subtitle {
+  margin-bottom: 10px;
+  font-size: 17px;
   font-weight: bold;
 }
 
@@ -27,7 +34,7 @@
 }
 
 .ActivityPage .clear-button {
-  text-align: right;
+  margin-left: auto;
 }
 
 @media (max-width: 768px) {
