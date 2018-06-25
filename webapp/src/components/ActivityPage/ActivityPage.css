@@ -27,7 +27,7 @@
 }
 
 .ActivityPage .clear-button {
-  text-align: right !important;
+  text-align: right;
 }
 
 @media (max-width: 768px) {

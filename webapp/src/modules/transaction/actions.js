@@ -42,10 +42,11 @@ export const CLEAR_TRANSACTION_REQUEST = '[Request] Clear Transactions'
 export const CLEAR_TRANSACTION_SUCCESS = '[Success] Clear Transactions'
 export const CLEAR_TRANSACTION_FAILURE = '[Failure] Clear Transactions'
 
-export function clearTransactionsRequest(address) {
+export function clearTransactionsRequest(address, transactions) {
   return {
     type: CLEAR_TRANSACTION_REQUEST,
-    address
+    address,
+    transactions
   }
 }
 

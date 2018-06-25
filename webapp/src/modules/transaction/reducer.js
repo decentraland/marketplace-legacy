@@ -6,7 +6,7 @@ import {
   CLEAR_TRANSACTION_REQUEST
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { getTransactionFromAction, getTransactionHistoryFrom } from './utils'
+import { getTransactionFromAction } from './utils'
 
 const { TRANSACTION_STATUS } = txUtils
 
@@ -70,9 +70,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
       }
     }
     case CLEAR_TRANSACTION_REQUEST: {
-      const txToDelete = new Set(
-        getTransactionHistoryFrom(state.data, action.address).map(tx => tx.hash)
-      )
+      const txToDelete = new Set(action.transactions)
       return {
         ...state,
         data: state.data.filter(

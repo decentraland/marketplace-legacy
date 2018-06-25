@@ -20,6 +20,12 @@ export default class ActivityPage extends React.PureComponent {
     isConnected: PropTypes.bool.isRequired
   }
 
+  handleClear() {
+    const { onClear, address, transactionHistory } = this.props
+    const transactions = transactionHistory.map(tx => tx.hash)
+    onClear(address, transactions)
+  }
+
   renderLoading() {
     return <Loader active size="huge" />
   }
@@ -41,18 +47,12 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   renderTransactionLists() {
-    const {
-      pendingTransactions,
-      transactionHistory,
-      network,
-      onClear,
-      address
-    } = this.props
+    const { pendingTransactions, transactionHistory, network } = this.props
 
     return (
       <React.Fragment>
         <div className="clear-button">
-          <Button size="tiny" className="link" onClick={() => onClear(address)}>
+          <Button size="tiny" className="link" onClick={this.handleClear}>
             {t('global.clear')}
           </Button>
         </div>

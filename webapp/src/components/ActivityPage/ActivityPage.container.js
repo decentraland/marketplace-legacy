@@ -34,8 +34,12 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => ({
-  onClear: address => dispatch(clearTransactionsRequest(address))
-})
+const mapDispatch = (dispatch, props) => {
+  console.log(props)
+  return {
+    onClear: (address, transactions) =>
+      dispatch(clearTransactionsRequest(address, transactions))
+  }
+}
 
 export default withRouter(connect(mapState, mapDispatch)(ActivityPage))
