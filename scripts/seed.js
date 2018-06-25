@@ -75,9 +75,7 @@ function getRandomColumnValue(columnName, tableName) {
     case 'id':
       return undefined
     case 'asset_id':
-      return `${Math.floor(Math.random() * 307) - 153},${Math.floor(
-        Math.random() * 307
-      ) - 153}`
+      return `${getRandomCoordinate()},${getRandomCoordinate()}`
     case 'address':
     case 'owner':
     case 'buyer':
@@ -103,14 +101,14 @@ function getRandomColumnValue(columnName, tableName) {
       return faker.date.recent()
     case 'x':
     case 'y':
-      return Math.floor(Math.random() * 307) - 153
+      return getRandomCoordinate()
     default: {
       if (columnName.includes('price')) {
         return faker.random.number(10000000) // 10M max
       } else if (columnName.includes('_count')) {
         return faker.random.number(1000) // 1k max
       } else if (columnName.includes('_at')) {
-        return faker.random.number(1520000000000)
+        return faker.date.recent().getTime()
       } else if (columnName.includes('is_')) {
         return faker.random.boolean()
       } else if (
@@ -162,6 +160,10 @@ function generateEthereumTxHash() {
   const seed = Math.random() * 1000000000
   const hash = eth.utils.sha3(seed)
   return hash.toString('hex').toLowerCase()
+}
+
+function getRandomCoordinate() {
+  return Math.floor(Math.random() * 307) - 153
 }
 
 Promise.resolve()
