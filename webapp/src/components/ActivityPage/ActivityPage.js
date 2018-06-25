@@ -13,7 +13,6 @@ import './ActivityPage.css'
 
 export default class ActivityPage extends React.PureComponent {
   static propTypes = {
-    hasAnyPermissionOn: PropTypes.bool.isRequired,
     pendingTransactions: PropTypes.arrayOf(transactionType),
     transactionHistory: PropTypes.arrayOf(transactionType),
     network: PropTypes.string,
@@ -27,20 +26,9 @@ export default class ActivityPage extends React.PureComponent {
     return <Loader active size="huge" />
   }
 
-  hasAnyPermissionOn() {
-    const {
-      approvedBalance,
-      isLandAuthorized,
-      isMortgageApprovedForMana,
-      isMortgageApprovedForRCN
-    } = this.props.wallet
-
-    return (
-      approvedBalance ||
-      isLandAuthorized ||
-      isMortgageApprovedForMana ||
-      isMortgageApprovedForRCN
-    )
+  hasTradingPermissions() {
+    const { approvedBalance, isLandAuthorized } = this.props.wallet
+    return approvedBalance && isLandAuthorized
   }
 
   renderEmpty() {
@@ -49,7 +37,7 @@ export default class ActivityPage extends React.PureComponent {
         <p>
           {t('activity.no_activity')}
           <br />
-          {this.hasAnyPermissionOn()
+          {this.hasTradingPermissions()
             ? t_html('activity.start', {
                 marketplace: (
                   <Link to={locations.marketplace}>
