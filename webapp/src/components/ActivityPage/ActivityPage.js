@@ -7,6 +7,7 @@ import Transaction from './Transaction'
 import { locations } from 'locations'
 import { transactionType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
+import Prompt from 'components/Prompt'
 
 import './ActivityPage.css'
 
@@ -20,10 +21,23 @@ export default class ActivityPage extends React.PureComponent {
     isConnected: PropTypes.bool.isRequired
   }
 
-  handleClear() {
+  constructor(props) {
+    super(props)
+    this.state = { promptVisible: false }
+  }
+
+  handleClearClick = () => {
+    this.setState({ promptVisible: true })
+  }
+
+  handlePromptConfirm = () => {
     const { onClear, address, transactionHistory } = this.props
     const transactions = transactionHistory.map(tx => tx.hash)
     onClear(address, transactions)
+  }
+
+  handlePromptClose = () => {
+    this.setState({ promptVisible: false })
   }
 
   renderLoading() {
@@ -46,15 +60,32 @@ export default class ActivityPage extends React.PureComponent {
     )
   }
 
+  renderModal() {
+    return this.state.promptVisible ? (
+      <Prompt
+        title={t('activity.clear.title')}
+        text={t('activity.clear.body')}
+        onConfirm={this.handlePromptConfirm}
+        onReject={this.handlePromptClose}
+      />
+    ) : null
+  }
+
   renderTransactionLists() {
     const { pendingTransactions, transactionHistory, network } = this.props
 
     return (
       <React.Fragment>
+        {this.renderModal()}
+
         <div className="section-title">
           {t('global.activity')}
           <div className="clear-button">
-            <Button size="tiny" className="link" onClick={this.handleClear}>
+            <Button
+              size="tiny"
+              className="link"
+              onClick={this.handleClearClick}
+            >
               {t('global.clear')}
             </Button>
           </div>

@@ -12,7 +12,8 @@ export default function BaseModal(props) {
     footer,
     children,
     onClose,
-    onKeyDown
+    onKeyDown,
+    closeable
   } = props
 
   const containerClassName = `${className} ${isOpen ? 'modal-open' : ''}`
@@ -29,7 +30,7 @@ export default function BaseModal(props) {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <ModalCloseButton onClose={onClose}>
+              <ModalCloseButton onClose={onClose} closeable={closeable}>
                 <span aria-hidden="true">&times;</span>
               </ModalCloseButton>
               {title && <ModalTitle title={title} />}
@@ -52,16 +53,18 @@ BaseModal.propTypes = {
   body: PropTypes.node,
   footer: PropTypes.node,
   children: PropTypes.node,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  closeable: PropTypes.bool
 }
 
 BaseModal.defaultProps = {
   className: '',
-  isOpen: false
+  isOpen: false,
+  closeable: true
 }
 
-export function ModalCloseButton({ onClose, children }) {
-  return (
+export function ModalCloseButton({ onClose, children, closeable }) {
+  return closeable ? (
     <button
       type="button"
       className="close"
@@ -70,7 +73,7 @@ export function ModalCloseButton({ onClose, children }) {
     >
       {children}
     </button>
-  )
+  ) : null
 }
 
 export function ModalTitle({ title }) {
