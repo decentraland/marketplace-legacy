@@ -1,9 +1,10 @@
 {
   "activity": {
+    "approve": "您需要先在您的设置页面{settings_link}上授权同意使用 MANA",
     "completed": "已完成",
     "no_activity": "您尚无操作历史。",
     "pending": "待定",
-    "start": "您需要先在您的设置页面{settings_link}上授权同意使用 MANA"
+    "start": "你可以在{marketplace}开始交易！"
   },
   "address": {
     "its_you": "您的"

@@ -1,9 +1,11 @@
 {
   "activity": {
+    "approve":
+      "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다.",
     "completed": "완료 됨",
     "no_activity": "아직 활동이 없습니다.",
     "pending": "보류",
-    "start": "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다."
+    "start": "{marketplace}에서 거래를 시작할 수 있습니다!"
   },
   "address": {
     "its_you": "너야"

@@ -1,10 +1,11 @@
 {
   "activity": {
+    "approve":
+      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}",
     "completed": "Terminé",
     "no_activity": "Vous n'avez pas encore d'activité.",
     "pending": "En attente",
-    "start":
-      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}"
+    "start": "Vous êtes en mesure de commencer à négocier au {marketplace}!"
   },
   "address": {
     "its_you": "C'est toi"
