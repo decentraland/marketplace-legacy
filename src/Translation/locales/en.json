@@ -1,14 +1,14 @@
 {
   "activity": {
+    "clear": {
+      "body":
+        "Once you delete your transaction history you can't reverse the action, are you sure you want to continue?",
+      "title": "Delete transaction history"
+    },
     "completed": "Completed",
     "no_activity": "You have no activity yet.",
     "pending": "Pending",
-    "start": "You can start by approving some MANA on your {settings_link}",
-    "clear": {
-      "title": "Delete transaction history",
-      "body":
-        "Once you delete your transaction history you can't reverse the action, are you sure you want to continue?"
-    }
+    "start": "You can start by approving some MANA on your {settings_link}"
   },
   "address": {
     "its_you": "It's you"

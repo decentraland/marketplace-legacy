@@ -1,5 +1,10 @@
 {
   "activity": {
+    "clear": {
+      "body":
+        "Una vez que elimine su historial de transacciones, no puede revertir la acción, ¿está seguro de que desea continuar?",
+      "title": "Eliminar el historial de transacciones"
+    },
     "completed": "Completada",
     "no_activity": "No tienes actividad por el momento.",
     "pending": "Pendiente",

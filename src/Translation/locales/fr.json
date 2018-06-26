@@ -1,5 +1,10 @@
 {
   "activity": {
+    "clear": {
+      "body":
+        "Une fois que vous avez supprimé l'historique de vos transactions, vous ne pouvez plus revenir en arrière, êtes-vous sûr de vouloir continuer?",
+      "title": "Supprimer l'historique des transactions"
+    },
     "completed": "Terminé",
     "no_activity": "Vous n'avez pas encore d'activité.",
     "pending": "En attente",
