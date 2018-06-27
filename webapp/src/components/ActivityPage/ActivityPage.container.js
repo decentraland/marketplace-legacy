@@ -9,7 +9,8 @@ import {
   getNetwork,
   getAddress,
   isConnecting,
-  isConnected
+  isConnected,
+  getWallet
 } from 'modules/wallet/selectors'
 
 import ActivityPage from './ActivityPage'
@@ -27,6 +28,7 @@ const mapState = state => {
     transactionHistory,
     network: getNetwork(state),
     isEmpty: totalSent <= 0,
+    wallet: getWallet(state),
     isLoading: isConnecting(state),
     isConnected: isConnected(state)
   }

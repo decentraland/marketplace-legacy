@@ -6,7 +6,7 @@ import { locations } from 'locations'
 import { Container, Loader } from 'semantic-ui-react'
 import Transaction from './Transaction'
 
-import { transactionType } from 'components/types'
+import { transactionType, walletType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 
 import './ActivityPage.css'
@@ -16,6 +16,7 @@ export default class ActivityPage extends React.PureComponent {
     pendingTransactions: PropTypes.arrayOf(transactionType),
     transactionHistory: PropTypes.arrayOf(transactionType),
     network: PropTypes.string,
+    wallet: walletType,
     isEmpty: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired
@@ -25,17 +26,30 @@ export default class ActivityPage extends React.PureComponent {
     return <Loader active size="huge" />
   }
 
+  hasTradingPermissions() {
+    const { approvedBalance, isLandAuthorized } = this.props.wallet
+    return approvedBalance && isLandAuthorized
+  }
+
   renderEmpty() {
     return (
       <div className="empty">
         <p>
           {t('activity.no_activity')}
           <br />
-          {t_html('activity.start', {
-            settings_link: (
-              <Link to={locations.settings}>{t('global.settings')}</Link>
-            )
-          })}
+          {this.hasTradingPermissions()
+            ? t_html('activity.start', {
+                marketplace: (
+                  <Link to={locations.marketplace}>
+                    {t('global.marketplace')}
+                  </Link>
+                )
+              })
+            : t_html('activity.approve', {
+                settings_link: (
+                  <Link to={locations.settings}>{t('global.settings')}</Link>
+                )
+              })}
         </p>
       </div>
     )

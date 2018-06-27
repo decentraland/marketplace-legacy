@@ -71,62 +71,56 @@ const seed = {
 }
 
 function getRandomColumnValue(columnName, tableName) {
-  let value = null
-
   switch (columnName) {
     case 'id':
-      value = undefined
-      break
+      return undefined
+    case 'asset_id':
+      return `${getRandomCoordinate()},${getRandomCoordinate()}`
     case 'address':
     case 'owner':
     case 'buyer':
-      value = generateEthereumAddress()
-      break
+      return generateEthereumAddress()
     case 'tx_hash':
     case 'hash':
-      value = generateEthereumTxHash()
-      break
+      return generateEthereumTxHash()
     case 'tx_status': {
-      value = faker.random.objectElement(txUtils.TRANSACTION_STATUS)
-      break
+      return faker.random.objectElement(txUtils.TRANSACTION_STATUS)
     }
     case 'link':
-      value = faker.internet.url()
-      break
+      return faker.internet.url()
     case 'timestamp':
-      value = faker.date.recent().getTime()
-      break
+      return faker.date.recent().getTime()
     case 'district_id':
-      value = faker.random.uuid()
-      break
+      return faker.random.uuid()
     case 'contract_id':
-      value = faker.random.uuid().replace(/-/g, '')
-      break
+      return faker.random.uuid().replace(/-/g, '')
+    case 'block_number':
+      return faker.random.number(10000000)
+    case 'expired_at':
+    case 'created_at':
+      return faker.date.recent()
     case 'x':
     case 'y':
-      value = Math.floor(Math.random() * 307) - 153
-      break
+      return getRandomCoordinate()
     default: {
       if (columnName.includes('price')) {
-        value = faker.random.number(10000000) // 10M max
+        return faker.random.number(10000000) // 10M max
       } else if (columnName.includes('_count')) {
-        value = faker.random.number(1000) // 1k max
+        return faker.random.number(1000) // 1k max
       } else if (columnName.includes('_at')) {
-        value = faker.date.recent()
+        return faker.date.recent().getTime()
       } else if (columnName.includes('is_')) {
-        value = faker.random.boolean()
+        return faker.random.boolean()
       } else if (
         tableName === Publication.tableName &&
         columnName === 'status'
       ) {
-        value = faker.random.objectElement(PUBLICATION_STATUS)
+        return faker.random.objectElement(PUBLICATION_STATUS)
       } else {
-        value = faker.random.words()
+        return faker.random.words()
       }
     }
   }
-
-  return value
 }
 
 function generateEthereumAddress() {
@@ -166,6 +160,10 @@ function generateEthereumTxHash() {
   const seed = Math.random() * 1000000000
   const hash = eth.utils.sha3(seed)
   return hash.toString('hex').toLowerCase()
+}
+
+function getRandomCoordinate() {
+  return Math.floor(Math.random() * 307) - 153
 }
 
 Promise.resolve()

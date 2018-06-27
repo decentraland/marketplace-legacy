@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getData as getTransactions } from 'modules/transaction/selectors'
 import { isParcelPendingTransaction } from './utils'
 
-import TxStatusParcel from './TxStatusParcel'
+import TxStatusAsset from './TxStatusAsset'
 
 const mapState = (state, { parcel }) => {
   const transactions = getTransactions(state).filter(tx =>
@@ -19,4 +19,4 @@ const mapState = (state, { parcel }) => {
 
 const mapDispatch = () => ({})
 
-export default withRouter(connect(mapState, mapDispatch)(TxStatusParcel))
+export default withRouter(connect(mapState, mapDispatch)(TxStatusAsset))
