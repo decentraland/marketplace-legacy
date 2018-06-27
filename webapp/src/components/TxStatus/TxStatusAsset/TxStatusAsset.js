@@ -4,16 +4,15 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import { Message } from 'semantic-ui-react'
-import { transactionType, parcelType } from 'components/types'
-import ParcelName from 'components/ParcelName'
+import { transactionType } from 'components/types'
 import { t_html } from 'modules/translation/utils'
 
-import './TxStatusParcel.css'
+import './TxStatusAsset.css'
 
-export default class TxStatusParcel extends React.PureComponent {
+export default class TxStatusAsset extends React.PureComponent {
   static propTypes = {
     transactions: PropTypes.arrayOf(transactionType),
-    parcel: parcelType
+    name: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -21,12 +20,12 @@ export default class TxStatusParcel extends React.PureComponent {
   }
 
   render() {
-    const { transactions, parcel } = this.props
+    const { transactions, name } = this.props
 
     return transactions.length ? (
-      <Message warning className="TxStatusParcel">
+      <Message warning className="TxStatusAsset">
         {t_html('transaction_status.parcel.still_pending', {
-          parcel_name: <ParcelName parcel={parcel} />,
+          parcel_name: name,
           transactions_count: transactions.length
         })}
         <br />

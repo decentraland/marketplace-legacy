@@ -7,7 +7,7 @@ import TxStatus from 'components/TxStatus'
 import { t, t_html } from 'modules/translation/utils'
 import { buildCoordinate } from 'shared/parcel'
 import { locations } from 'locations'
-
+import ParcelName from 'components/ParcelName'
 import ManageParcelForm from './ManageParcelForm'
 
 import './ManageParcelPage.css'
@@ -48,7 +48,10 @@ export default class ManageParcelPage extends React.PureComponent {
                 onSubmit={onSubmit}
                 onCancel={onCancel}
               />
-              <TxStatus.Parcel parcel={parcel} />
+              <TxStatus.Asset
+                parcel={parcel}
+                name={<ParcelName parcel={parcel} />}
+              />
             </ParcelModal>
           </div>
         )}

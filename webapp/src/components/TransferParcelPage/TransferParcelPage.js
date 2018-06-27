@@ -9,7 +9,7 @@ import { t, t_html } from 'modules/translation/utils'
 import { buildCoordinate, isOnSale } from 'shared/parcel'
 import { locations } from 'locations'
 import { publicationType } from 'components/types'
-
+import ParcelName from 'components/ParcelName'
 import TransferParcelForm from './TransferParcelForm'
 
 import './TransferParcelPage.css'
@@ -73,7 +73,10 @@ export default class TransferParcelPage extends React.PureComponent {
                 onCancel={onCancel}
                 onCleanTransfer={onCleanTransfer}
               />
-              <TxStatus.Parcel parcel={parcel} />
+              <TxStatus.Asset
+                parcel={parcel}
+                name={<ParcelName parcel={parcel} />}
+              />
             </ParcelModal>
           </div>
         )}

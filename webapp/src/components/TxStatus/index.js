@@ -1,11 +1,11 @@
 import TxStatusIcon from './TxStatusIcon'
 import TxStatusIdle from './TxStatusIdle'
-import TxStatusParcel from './TxStatusParcel'
+import TxStatusAsset from './TxStatusAsset'
 import TxStatusText from './TxStatusText'
 
 export default {
   Icon: TxStatusIcon,
   Idle: TxStatusIdle,
-  Parcel: TxStatusParcel,
+  Asset: TxStatusAsset,
   Text: TxStatusText
 }

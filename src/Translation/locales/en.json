@@ -1,9 +1,10 @@
 {
   "activity": {
+    "approve": "You can start by approving some MANA on your {settings_link}",
     "completed": "Completed",
     "no_activity": "You have no activity yet.",
     "pending": "Pending",
-    "start": "You can start by approving some MANA on your {settings_link}"
+    "start": "You are able to start trading at the {marketplace}!"
   },
   "address": {
     "its_you": "It's you"
@@ -165,6 +166,7 @@
     "pay": "Pay",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",
+    "pending_tx": "The mortgage for",
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "request": "Requesting a Mortgage",
