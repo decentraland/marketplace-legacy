@@ -40,7 +40,12 @@ export default class ParcelTransactionHistory extends React.PureComponent {
     return (
       <div className="address-wrapper" title={address}>
         <Link to={locations.profilePage(address)}>
-          <AddressBlock address={address} scale={4} hasTooltip={false} />&nbsp;
+          <AddressBlock
+            address={address}
+            scale={4}
+            hasTooltip={false}
+            hasLink={false}
+          />&nbsp;
           <span className="short-address">{shortenAddress(address)}</span>
         </Link>
       </div>
