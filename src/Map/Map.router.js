@@ -64,7 +64,9 @@ export class MapRouter {
   }
 
   async getEstatePNG(req, res) {
-    const { id, width, height, size, showPublications } = this.sanitize(req)
+    const { id, width, height, size, showPublications } = this.sanitizeEstate(
+      req
+    )
     const estate = await Estate.findById(id)
 
     if (!estate) {
@@ -189,11 +191,17 @@ export class MapRouter {
     return canvas.pngStream()
   }
 
+  sanitizeEstate(req) {
+    return {
+      id: this.getId(req, 'id'),
+      ...this.sanitize(req)
+    }
+  }
+
   sanitize(req) {
     return {
       x: this.getNumber(req, 'x', minX, maxX, 0),
       y: this.getNumber(req, 'y', minY, maxY, 0),
-      id: this.getId(req, 'id'),
       width: this.getNumber(req, 'width', 32, 1024, 500),
       height: this.getNumber(req, 'height', 32, 1024, 500),
       size: this.getNumber(req, 'size', 5, 40, 10),
