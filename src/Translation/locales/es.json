@@ -1,9 +1,10 @@
 {
   "activity": {
+    "approve": "Puedes comenzar aprobando MANA desde {settings_link}",
     "completed": "Completada",
     "no_activity": "No tienes actividad por el momento.",
     "pending": "Pendiente",
-    "start": "Puedes comenzar aprobando MANA desde {settings_link}"
+    "start": "¡Usted puede comenzar a negociar en el {marketplace}!"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -166,6 +167,7 @@
     "pay": "Paga",
     "payable": "Pagadero a",
     "payable_placeholder": "Pagable en días",
+    "pending_tx": "La hipoteca de",
     "punitory_rate": "Tasa de interés punitiva",
     "punitory_rate_placeholder": "Tasa punitiva",
     "request": "Solicitar una hipoteca",
