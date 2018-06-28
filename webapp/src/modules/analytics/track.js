@@ -67,11 +67,10 @@ add(BUY_MANA_SUCCESS, 'Buy MANA', action => ({
   mana: action.mana
 }))
 
-add(
-  FETCH_TRANSACTION_FAILURE,
-  'Transaction Failed',
-  action => action.transaction
-)
+add(FETCH_TRANSACTION_FAILURE, 'Transaction Failed', action => ({
+  ...action.transaction,
+  errorMessage: action.error
+}))
 
 add(MANAGE_PARCEL_SUCCESS, 'Manage LAND Permissions', action => ({
   x: action.parcel.x,
