@@ -30,7 +30,9 @@ function* handleTransactionRequest(action = {}) {
   try {
     watchIndex[hash] = true
 
-    yield call(() => txUtils.getConfirmedTransaction(hash, transaction.events))
+    yield call(() =>
+      txUtils.getConfirmedTransaction(hash, transaction.events, 60)
+    )
 
     delete watchIndex[hash]
 

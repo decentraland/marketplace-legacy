@@ -1,5 +1,7 @@
 {
   "activity": {
+    "approve":
+      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}",
     "clear": {
       "body":
         "Une fois que vous avez supprimé l'historique de vos transactions, vous ne pouvez plus revenir en arrière, êtes-vous sûr de vouloir continuer?",
@@ -8,8 +10,7 @@
     "completed": "Terminé",
     "no_activity": "Vous n'avez pas encore d'activité.",
     "pending": "En attente",
-    "start":
-      "Vous pouvez commencer en validant de la MANA sur votre {settings_link}"
+    "start": "Vous êtes en mesure de commencer à négocier au {marketplace}!"
   },
   "address": {
     "its_you": "C'est toi"
@@ -105,6 +106,7 @@
     "paid_at": "Payé à",
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
+    "publications": "Publications",
     "request": "Demande",
     "retry": "Recommencez",
     "revoke": "Révoquer",
@@ -172,6 +174,7 @@
     "pay": "Payer",
     "payable": "Payable à",
     "payable_placeholder": "Payable en jours",
+    "pending_tx": "Hypothèque pour",
     "punitory_rate": "Taux d'intérêt punitif",
     "punitory_rate_placeholder": "Taux punitif",
     "request": "Demander une hypothèque",
@@ -333,8 +336,14 @@
   "sign_in": {
     "account_unlocked": "Assurez-vous que votre compte est déverrouillé",
     "get_started": "Commencer",
-    "options":
-      "Téléchargez {metamask_link} ou {mist_link} ou accédez à votre lien {ledger_nano_link} pour utiliser le Marketplace."
+    "intro":
+      "Tout d'abord, vous aurez besoin d'un endroit sûr pour garder tout votre NT1.",
+    "options": {
+      "desktop":
+        "Vous pouvez utiliser l'extension {metamask_link} ou un portefeuille matériel comme {ledger_nano_link}.",
+      "mobile":
+        "Vous pouvez utiliser des navigateurs mobiles tels que {toshi_link} ou {imtoken_link}."
+    }
   },
   "transaction": {
     "approved":

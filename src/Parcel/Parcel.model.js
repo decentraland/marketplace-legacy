@@ -64,7 +64,7 @@ export class Parcel extends Model {
 
   static async findOwneableParcels() {
     return this.db.query(
-      `SELECT *
+      SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
     )
@@ -72,9 +72,19 @@ export class Parcel extends Model {
 
   static async findLandmarks() {
     return this.db.query(
-      `SELECT *
+      SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
+    )
+  }
+
+  static findWithLastActiveMortgageByBorrower(borrower) {
+    return this.db.query(
+      SQL`SELECT *, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+      ) as publication
+        FROM ${SQL.raw(this.tableName)}
+        WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
     )
   }
 
@@ -83,6 +93,7 @@ export class Parcel extends Model {
       typeof min === 'string' ? coordinates.toArray(min) : [min.x, min.y]
     const [maxx, miny] =
       typeof max === 'string' ? coordinates.toArray(max) : [max.x, max.y]
+
     return this.db.query(SQL`SELECT *, (
       ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
     ) as publication
@@ -148,15 +159,5 @@ export class Parcel extends Model {
 
   isRoad() {
     return District.isRoad(this.attributes.district_id)
-  }
-
-  static findWithLastActiveMortgageByBorrower(borrower) {
-    return this.db.query(
-      SQL`SELECT *, (
-        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-      ) as publication
-        FROM ${SQL.raw(this.tableName)}
-        WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
-    )
   }
 }

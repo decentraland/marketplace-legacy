@@ -12,7 +12,8 @@ import { isMortgageOngoing } from 'shared/mortgage'
 import { formatMana } from 'lib/utils'
 import PayMortgageForm from './PayMortgageForm'
 import ParcelModal from 'components/ParcelModal'
-
+import TxStatus from 'components/TxStatus'
+import ParcelName from 'components/ParcelName'
 import './PayMortgagePage.css'
 
 export default class PayMortgagePage extends React.PureComponent {
@@ -109,6 +110,15 @@ export default class PayMortgagePage extends React.PureComponent {
                 onCancel={onCancel}
                 isTxIdle={isTxIdle}
                 isDisabled={!isMortgageOngoing(mortgage)}
+              />
+              <TxStatus.Asset
+                parcel={parcel}
+                name={
+                  <span>
+                    {`${t('mortgage.pending_tx')} `}
+                    <ParcelName parcel={parcel} />
+                  </span>
+                }
               />
             </ParcelModal>
           </React.Fragment>

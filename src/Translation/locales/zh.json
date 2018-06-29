@@ -1,5 +1,6 @@
 {
   "activity": {
+    "approve": "您需要先在您的设置页面{settings_link}上授权同意使用 MANA",
     "clear": {
       "body":
         "一旦你删除了你的交易记录，你不能撤销这个行动，你确定你想继续吗？",
@@ -8,7 +9,7 @@
     "completed": "已完成",
     "no_activity": "您尚无操作历史。",
     "pending": "待定",
-    "start": "您需要先在您的设置页面{settings_link}上授权同意使用 MANA"
+    "start": "你可以在{marketplace}开始交易！"
   },
   "address": {
     "its_you": "您的"
@@ -103,6 +104,7 @@
     "paid_at": "付费",
     "parcels": "地块",
     "profile": "我的虚拟土地",
+    "publications": "出版物",
     "request": "请求",
     "retry": "重试",
     "revoke": "撤消",
@@ -166,6 +168,7 @@
     "pay": "工资",
     "payable": "应付",
     "payable_placeholder": "应付天数",
+    "pending_tx": "按揭",
     "punitory_rate": "惩罚性利率",
     "punitory_rate_placeholder": "惩罚性利率",
     "request": "申请抵押",
@@ -309,8 +312,12 @@
   "sign_in": {
     "account_unlocked": "确保您的帐户已解锁",
     "get_started": "开始使用",
-    "options":
-      "首先，您需要使用钱包来安全地管理地块。可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。"
+    "intro": "首先，你需要一个安全的地方来保存所有的LAND。",
+    "options": {
+      "desktop":
+        "您可以使用{metamask_link}扩展名或像{ledger_nano_link}这样的硬件钱包。",
+      "mobile": "您可以使用移动浏览器，如{toshi_link}或{imtoken_link}。"
+    }
   },
   "transaction": {
     "approved": "您授权{marketplace_contract_link} 以您的名义操作 MANA",

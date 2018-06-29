@@ -1,5 +1,6 @@
 {
   "activity": {
+    "approve": "You can start by approving some MANA on your {settings_link}",
     "clear": {
       "body":
         "Once you delete your transaction history you can't reverse the action, are you sure you want to continue?",
@@ -8,7 +9,7 @@
     "completed": "Completed",
     "no_activity": "You have no activity yet.",
     "pending": "Pending",
-    "start": "You can start by approving some MANA on your {settings_link}"
+    "start": "You are able to start trading at the {marketplace}!"
   },
   "address": {
     "its_you": "It's you"
@@ -104,6 +105,7 @@
     "paid_at": "Paid at",
     "parcels": "Parcels",
     "profile": "My Land",
+    "publications": "Publications",
     "request": "Request",
     "retry": "Retry",
     "revoke": "Revoke",
@@ -169,6 +171,7 @@
     "pay": "Pay",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",
+    "pending_tx": "The mortgage for",
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "request": "Requesting a Mortgage",
@@ -326,8 +329,13 @@
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",
     "get_started": "Get Started",
-    "options":
-      "First off you’ll need a safe place to keep all your land. You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}."
+    "intro": "First off you’ll need a safe place to keep all your LAND.",
+    "options": {
+      "desktop":
+        "You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}.",
+      "mobile":
+        "You can use mobile browsers such as {toshi_link} or {imtoken_link}."
+    }
   },
   "transaction": {
     "approved":

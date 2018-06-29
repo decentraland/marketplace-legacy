@@ -1,5 +1,7 @@
 {
   "activity": {
+    "approve":
+      "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다.",
     "clear": {
       "body":
         "거래 내역을 삭제하면 해당 작업을 되돌릴 수 없습니다. 계속 하시겠습니까?",
@@ -8,7 +10,7 @@
     "completed": "완료 됨",
     "no_activity": "아직 활동이 없습니다.",
     "pending": "보류",
-    "start": "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다."
+    "start": "{marketplace}에서 거래를 시작할 수 있습니다!"
   },
   "address": {
     "its_you": "너야"
@@ -103,6 +105,7 @@
     "paid_at": "유료",
     "parcels": "필지",
     "profile": "나의 토지",
+    "publications": "간행물",
     "request": "의뢰",
     "retry": "다시 해 보다",
     "revoke": "취소",
@@ -168,6 +171,7 @@
     "pay": "지불",
     "payable": "지불 할 곳 :",
     "payable_placeholder": "일 단위로 지불 가능",
+    "pending_tx": "모기지",
     "punitory_rate": "도살장 이자율",
     "punitory_rate_placeholder": "처벌 비율",
     "request": "모기지 신청",
@@ -321,8 +325,13 @@
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",
     "get_started": "시작하다",
-    "options":
-      "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다."
+    "intro": "첫째로, 모든 LAND을 지킬 안전한 장소가 필요합니다.",
+    "options": {
+      "desktop":
+        "{metamask_link} 확장 또는 {ledger_nano_link}과 같은 하드웨어 지갑을 사용할 수 있습니다.",
+      "mobile":
+        "{toshi_link} 또는 {imtoken_link}과 같은 모바일 브라우저를 사용할 수 있습니다."
+    }
   },
   "transaction": {
     "approved":
