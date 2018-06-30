@@ -243,7 +243,7 @@ const main = {
           }
 
           if (options.clean) {
-            await Publication.delete({ x, y })
+            await Publication.delete({ asset_id: assetId })
           }
 
           for (let i = 0; i < events.length; i++) {
