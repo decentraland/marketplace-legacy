@@ -4,16 +4,16 @@
 }
 
 .ActivityPage .section-title {
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   font-size: 32px;
-  font-weight: bold;
+  font-weight: 600;
   display: flex;
 }
 
 .ActivityPage .section-subtitle {
   margin-bottom: 10px;
   font-size: 17px;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .ActivityPage .empty {
@@ -29,8 +29,8 @@
   margin-top: 50px;
 }
 
-.ActivityPage .pending-transaction-list {
-  margin-bottom: 30px;
+.ActivityPage .transaction-list {
+  margin-top: 48px;
 }
 
 .ActivityPage .clear-button {
