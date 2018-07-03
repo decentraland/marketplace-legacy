@@ -21,13 +21,19 @@
   },
   "rules": {
     "react/prop-types": 0,
-    "prettier/prettier": ["error", {"printWidth": 80, "singleQuote": true, "semi": false}],
+    "prettier/prettier": [
+      "error",
+      { "printWidth": 80, "singleQuote": true, "semi": false }
+    ],
     "no-console": 0,
     "no-debugger": 0,
-    "no-unused-vars": ["error", {
-      "vars": "all",
-      "args": "none",
-      "ignoreRestSiblings": false
-    }]
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none",
+        "ignoreRestSiblings": false
+      }
+    ]
   }
 }

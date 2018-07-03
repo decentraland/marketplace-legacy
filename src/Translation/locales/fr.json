@@ -16,6 +16,7 @@
     "on_sale": "A vendre: ",
     "owner": "Propriétaire : {owner}",
     "road": "Route",
+    "your_estate": "Votre domaine",
     "your_parcel": "Votre parcelle"
   },
   "buy_mana": {

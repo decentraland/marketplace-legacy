@@ -21,6 +21,7 @@ import {
   FETCH_PARCEL_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate, normalizeParcel, toParcelObject } from 'shared/parcel'
 import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
@@ -56,6 +57,14 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           ...state.data,
           [parcelId]: normalizeParcel(action.parcel, parcel)
         }
+      }
+    }
+    case FETCH_MAP_SUCCESS: {
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: { ...state.data, ...action.assets.parcels }
       }
     }
     case FETCH_PARCELS_SUCCESS: {

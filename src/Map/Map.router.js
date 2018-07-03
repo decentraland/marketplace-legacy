@@ -1,25 +1,22 @@
 import { server, utils } from 'decentraland-commons'
+import { createCanvas } from 'canvas'
 
-const { createCanvas } = require('canvas')
-
-import { Map as MapRenderer } from '../shared/map/render'
-
-import { Parcel } from '../Parcel'
-import { blacklist } from '../lib'
-import { Viewport } from '../shared/map'
 import {
   toParcelObject,
   splitCoordinate,
   getParcelPublications
-} from '../../shared/parcel'
-import { toPublicationObject } from '../../shared/publication'
-
-import { Bounds } from '../shared/map'
+} from '../shared/parcel'
+import { toEstateObject } from '../shared/estate'
+import { Viewport, Bounds } from '../shared/map'
+import { Map as MapRenderer } from '../shared/map/render'
+import { toPublicationObject, PUBLICATION_TYPES } from '../shared/publication'
+import { AssetRouter } from '../Asset'
+import { Parcel } from '../Parcel'
+import { EstateService } from '../Estate'
+import { blacklist } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
-
 const MAX_AREA = 15000
-
 const areCoordsValid = coords => !isNaN(coords.x) && !isNaN(coords.y)
 
 export class MapRouter {
@@ -34,6 +31,7 @@ export class MapRouter {
       this.handleRequest(this.getParcelPNG)
     )
     // TODO: add an endpoint for Estates someday 🏌🏼‍
+    this.app.get('/map', server.handleRequest(this.getMap))
   }
 
   handleRequest(callback) {
@@ -65,6 +63,26 @@ export class MapRouter {
     return this.sendPNG(res, mapOptions)
   }
 
+  async getMap(req) {
+    try {
+      const nw = server.extractFromReq(req, 'nw')
+      const se = server.extractFromReq(req, 'se')
+
+      const parcelsRange = await Parcel.inRange(nw, se)
+      const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
+      const estates = await EstateService.getByParcels(parcels)
+
+      const assets = { parcels, estates }
+      const total = parcels.length + estates.length
+      return { assets, total }
+    } catch (error) {
+      // Force parcel type
+      req.params.type = PUBLICATION_TYPES.parcel
+      const { assets, total } = await new AssetRouter().getAssets(req)
+      return { assets, total }
+    }
+  }
+
   async sendPNG(
     res,
     { width, height, size, center, selected, showPublications }
@@ -76,6 +94,7 @@ export class MapRouter {
       size,
       padding: 1
     })
+
     if (area > MAX_AREA) {
       res.status(400)
       res.send(
@@ -83,6 +102,7 @@ export class MapRouter {
       )
       return
     }
+
     try {
       const stream = await this.getStream({
         width,
@@ -102,11 +122,16 @@ export class MapRouter {
     }
   }
 
-  async getParcelsAndPublications(nw, se) {
-    const parcelRange = await Parcel.inRange(nw, se)
-    const parcels = toParcelObject(utils.mapOmit(parcelRange, blacklist.parcel))
+  async getAssetsAndPublications(nw, se) {
+    const parcelRange = utils.mapOmit(
+      await Parcel.inRange(nw, se),
+      blacklist.parcel
+    )
+    const parcels = toParcelObject(parcelRange)
+    const estatesRange = await EstateService.getByParcels(parcelRange)
+    const estates = toEstateObject(estatesRange)
     const publications = toPublicationObject(getParcelPublications(parcelRange))
-    return [parcels, publications]
+    return [parcels, estates, publications]
   }
 
   async getStream({
@@ -119,7 +144,11 @@ export class MapRouter {
     selected,
     showPublications
   }) {
-    const [parcels, publications] = await this.getParcelsAndPublications(nw, se)
+    const [
+      parcels,
+      estates,
+      publications
+    ] = await this.getAssetsAndPublications(nw, se)
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
     MapRenderer.draw({
@@ -131,6 +160,7 @@ export class MapRouter {
       se,
       center,
       parcels,
+      estates,
       publications: showPublications ? publications : {},
       selected
     })

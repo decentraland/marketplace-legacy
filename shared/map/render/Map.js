@@ -1,5 +1,6 @@
 import { Selection, Parcel } from '.'
-import { buildCoordinate, COLORS, getColor } from '../../parcel'
+import { COLORS, getColor, getAsset } from '../../asset'
+import { buildCoordinate } from '../../parcel'
 
 export class Map {
   static draw({
@@ -12,6 +13,7 @@ export class Map {
     se,
     center,
     parcels,
+    estates,
     publications,
     selected,
     wallet
@@ -32,8 +34,9 @@ export class Map {
         const rx = cx - offsetX
         const ry = cy - offsetY
         const id = buildCoordinate(px, py)
-        const color = getColor(id, px, py, parcels, publications, wallet)
         const parcel = parcels[id]
+        const asset = getAsset(id, parcels, estates)
+        const color = getColor(px, py, asset, publications, wallet)
 
         const connectedLeft = parcel ? parcel.connectedLeft : false
         const connectedTop = parcel ? parcel.connectedTop : false

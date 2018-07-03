@@ -7,7 +7,8 @@ import EstateSelectActions from './EstateSelectActions'
 import Parcel from 'components/Parcel'
 import { t } from 'modules/translation/utils'
 import { coordsType } from 'components/types'
-import { getCoordsMatcher, isEqualCoords, isOwner } from 'shared/parcel'
+import { getCoordsMatcher, isEqualCoords, buildCoordinate } from 'shared/parcel'
+import { isOwner } from 'shared/asset'
 
 import './EstateSelect.css'
 
@@ -67,7 +68,7 @@ export default class EstateSelect extends React.PureComponent {
   }
 
   handleParcelClick = wallet => (x, y) => {
-    if (!isOwner(wallet, x, y)) {
+    if (!isOwner(wallet, buildCoordinate(x, y))) {
       return
     }
 

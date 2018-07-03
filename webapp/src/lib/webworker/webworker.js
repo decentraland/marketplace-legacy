@@ -4,7 +4,7 @@ import {
   toParcelObject,
   normalizeParcel,
   connectParcels,
-  isSameValue,
+  areConnected,
   getParcelPublications,
   buildCoordinate
 } from 'shared/parcel'
@@ -13,7 +13,7 @@ const WebWorkerDependencies = [
   ['toParcelObject', toParcelObject],
   ['normalizeParcel', normalizeParcel],
   ['connectParcels', connectParcels],
-  ['isSameValue', isSameValue],
+  ['areConnected', areConnected],
   ['getParcelPublications', getParcelPublications],
   ['buildCoordinate', buildCoordinate]
 ]

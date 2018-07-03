@@ -14,16 +14,18 @@ import {
 } from 'components/types'
 import debounce from 'lodash.debounce'
 import { isMobileWidth } from 'lib/utils'
+import {
+  getAsset,
+  getType,
+  getColorByType,
+  getOpenPublication
+} from 'shared/asset'
 import { Map as MapRenderer } from 'shared/map/render'
 import { Bounds, Viewport } from 'shared/map'
-import {
-  getColor,
-  buildCoordinate,
-  COLORS,
-  getOpenPublication
-} from 'shared/parcel'
-import { getLabel, getTextColor, getDescription } from './utils'
+import { buildCoordinate } from 'shared/parcel'
+import { getLabel, getTextColor, getDescription, getConnections } from './utils'
 import { panzoom } from './utils'
+
 import './ParcelCanvas.css'
 
 const LOAD_PADDING = 4
@@ -67,7 +69,7 @@ export default class ParcelPreview extends React.PureComponent {
     minSize: 7,
     maxSize: 40,
     selected: null,
-    onFetchParcels: () => {},
+    onFetchMap: () => {},
     onClick: null,
     onHover: (x, y, parcel) => {},
     onChange: viewport => {},
@@ -94,7 +96,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.shouldRefreshMap = false
     this.canvas = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
-    this.debouncedFetchParcels = debounce(this.props.onFetchParcels, 400)
+    this.debouncedFetchMap = debounce(this.props.onFetchMap, 400)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
@@ -167,7 +169,7 @@ export default class ParcelPreview extends React.PureComponent {
     ) {
       const { nw, se } = newState
       if (!this.inStore(nw, se, nextProps.parcels) || !useCache) {
-        this.debouncedFetchParcels(nw, se)
+        this.debouncedFetchMap(nw, se)
       }
       this.oldState = newState
       this.setState(newState)
@@ -237,12 +239,7 @@ export default class ParcelPreview extends React.PureComponent {
   handleChange = () => {
     const { onChange } = this.props
     const { nw, se, center, zoom } = this.state
-    onChange({
-      nw,
-      se,
-      center,
-      zoom
-    })
+    onChange({ nw, se, center, zoom })
   }
 
   handlePanZoom = ({ dx, dy, dz }) => {
@@ -252,10 +249,7 @@ export default class ParcelPreview extends React.PureComponent {
     const maxZoom = maxSize / size
     const minZoom = minSize / size
 
-    const newPan = {
-      x: pan.x - dx,
-      y: pan.y - dy
-    }
+    const newPan = { x: pan.x - dx, y: pan.y - dy }
     const newZoom = Math.max(
       minZoom,
       Math.min(maxZoom, zoom - dz * this.getDzZoomModifier())
@@ -266,14 +260,8 @@ export default class ParcelPreview extends React.PureComponent {
     const halfHeight = (this.state.height - LOAD_PADDING) / 2
 
     const boundaries = {
-      nw: {
-        x: minX - halfWidth,
-        y: maxY + halfHeight
-      },
-      se: {
-        x: maxX + halfWidth,
-        y: minY - halfHeight
-      }
+      nw: { x: minX - halfWidth, y: maxY + halfHeight },
+      se: { x: maxX + halfWidth, y: minY - halfHeight }
     }
 
     const viewport = {
@@ -312,10 +300,7 @@ export default class ParcelPreview extends React.PureComponent {
   mouseToCoords(x, y) {
     const { size, pan, center, width, height } = this.state
 
-    const panOffset = {
-      x: (x + pan.x) / size,
-      y: (y + pan.y) / size
-    }
+    const panOffset = { x: (x + pan.x) / size, y: (y + pan.y) / size }
 
     const viewportOffset = {
       x: (width - LOAD_PADDING - 0.5) / 2 - center.x,
@@ -389,7 +374,10 @@ export default class ParcelPreview extends React.PureComponent {
 
     if (this.state.popup) {
       this.setState({
-        popup: { ...this.state.popup, visible: false }
+        popup: {
+          ...this.state.popup,
+          visible: false
+        }
       })
     }
   }
@@ -399,10 +387,7 @@ export default class ParcelPreview extends React.PureComponent {
 
     const panX = pan.x % size
     const panY = pan.y % size
-    const newPan = {
-      x: panX,
-      y: panY
-    }
+    const newPan = { x: panX, y: panY }
     const newCenter = {
       x: center.x + Math.floor((pan.x - panX) / size),
       y: center.y - Math.floor((pan.y - panY) / size)
@@ -417,52 +402,33 @@ export default class ParcelPreview extends React.PureComponent {
   getParcelAttributes = (x, y) => {
     const parcelId = buildCoordinate(x, y)
 
-    if (!this.cache[parcelId]) {
-      const { wallet, parcels, districts, publications } = this.props
-      const parcel = parcels[parcelId]
-      const publication = getOpenPublication(parcel, publications)
-
-      const color = getTextColor(parcelId, x, y, parcels, publications, wallet)
-      const backgroundColor = getColor(
-        parcelId,
-        x,
-        y,
-        parcels,
-        publications,
-        wallet
-      )
-      const label = getLabel(
-        parcelId,
-        x,
-        y,
-        parcels,
-        publications,
-        wallet,
-        districts
-      )
-      const description = getDescription(
-        parcelId,
-        x,
-        y,
-        parcels,
-        publications,
-        wallet
-      )
-
-      this.cache[parcelId] = {
-        id: parcelId,
-        publication,
-        connectedLeft: !!(parcel && parcel.connectedLeft),
-        connectedTop: !!(parcel && parcel.connectedTop),
-        connectedTopLeft: !!(parcel && parcel.connectedTopLeft),
-        color,
-        backgroundColor,
-        label,
-        description
-      }
+    if (this.cache[parcelId]) {
+      return this.cache[parcelId]
     }
 
-    return this.cache[parcelId]
+    const { wallet, parcels, districts, publications, estates } = this.props
+    const asset = getAsset(parcelId, parcels, estates)
+    const publication = getOpenPublication(asset, publications)
+
+    const type = getType(asset, publications, wallet)
+    const color = getTextColor(type)
+    const label = getLabel(type, asset, districts)
+    const description = getDescription(type, asset)
+    const backgroundColor = getColorByType(type, x, y)
+    const connections = getConnections(asset)
+
+    const result = {
+      id: parcelId,
+      publication,
+      color,
+      label,
+      description,
+      backgroundColor,
+      ...connections
+    }
+
+    this.cache[parcelId] = result
+    return result
   }
 
   getSelected() {
@@ -477,10 +443,9 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height, parcels, publications, wallet } = this.props
+    const { width, height, parcels, publications, wallet, estates } = this.props
 
     const { nw, se, pan, size, center } = this.state
-    const { x, y } = center
     const ctx = this.canvas.getContext('2d')
 
     MapRenderer.draw({
@@ -493,6 +458,7 @@ export default class ParcelPreview extends React.PureComponent {
       se,
       center,
       parcels,
+      estates,
       publications,
       selected: this.getSelected(),
       wallet
@@ -556,16 +522,12 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   handleMinimapChange = (x, y) => {
-    this.setState({
-      center: { x, y }
-    })
+    this.setState({ center: { x, y } })
   }
 
   handleTarget = () => {
     const { x, y } = this.getSelected()[0]
-    this.setState({
-      center: { x, y }
-    })
+    this.setState({ center: { x, y } })
   }
 
   handleZoomIn = () => {

@@ -44,14 +44,8 @@ export class Parcel extends Model {
     return coordinates
   }
 
-  static async findInIds(ids) {
-    if (ids.length === 0) return []
-
-    return this.db.query(
-      SQL`SELECT *
-        FROM ${SQL.raw(this.tableName)}
-        WHERE id = ANY(${ids})`
-    )
+  static findByIds(ids) {
+    return new Asset(this).findByIds(ids)
   }
 
   static async findByOwner(owner) {

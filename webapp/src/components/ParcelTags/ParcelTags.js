@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { parcelType, districtType, estateType } from 'components/types'
-import { getDistrict, isRoad, isPlaza } from 'shared/parcel'
+import { getDistrict, isRoad, isPlaza } from 'shared/asset'
 import { t } from 'modules/translation/utils'
 
 import './ParcelTags.css'
