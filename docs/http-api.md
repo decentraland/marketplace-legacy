@@ -1,6 +1,6 @@
 # Decentraland HTTP API
 
-Base URL:  `https://api.decentraland.org/`
+Base URL: `https://api.decentraland.org/`
 
 Specify version: `https://api.decentraland.org/v1`
 
@@ -220,6 +220,50 @@ GET /parcels/-36/-125/map.png?height=500&width=500&size=10&publications=true
 ### Result:
 
 ![map-1](https://user-images.githubusercontent.com/2781777/41127253-9f1af8a0-6a80-11e8-9b26-ba630c85871c.png)
+
+---
+
+```
+GET /estates/:id/map.png
+```
+
+### Description
+
+Same as `/parcels/:x/:y/map.png`, but instead of using `x` and `y` coordinates to determine the estate, its `id` is used.. Returns a PNG of a piece of the map center on a given estate
+
+### URI Params
+
+| name | type   | description               |
+| ---- | ------ | ------------------------- |
+| id   | string | The id of the estate      |
+
+
+### Query Params
+
+| name         | type    | min | max  | default | description                                                               |
+| ------------ | ------- | --- | ---- | ------- | ------------------------------------------------------------------------- |
+| width        | int     | 32  | 2048 | 500     | The width of the PNG image in pixels                                      |
+| height       | int     | 32  | 2048 | 500     | The height of the PNG image in pixels                                     |
+| size         | int     | 5   | 40   | 10      | The size of each parcel (i.e. 10 will render each parcel as 10x10 pixels) |
+| publications | boolean | N/A | N/A  | false   | If true, parcels that are on sale are highlighted                         |
+
+### Limits
+
+There's a limit of 15,000 parcels that can be rendered in a single PNG, if a request goes above this threshold the API will return a 500 with a message like this:
+
+```
+Too many parcels. You are trying to render 42436 parcels and the maximum allowed is 15000.
+```
+
+### Request Example:
+
+```
+GET /estates/znfhqr7s4g00000000000000000000000000000000/map.png?height=500&width=500&size=10&publications=true
+```
+
+### Result:
+
+![map-2](https://user-images.githubusercontent.com/692077/42239793-534b4878-7f05-11e8-9f3b-2860693433ef.png)
 
 ---
 
