@@ -85,15 +85,11 @@ export class API {
   }
 
   fetchMortgagesByBorrower(borrower, status) {
-    return this.request('get', `/addresses/${borrower}/mortgages/`, {
-      status: status.join(',')
-    })
+    return this.request('get', `/addresses/${borrower}/mortgages/`, { status })
   }
 
   fetchMortgages(x, y, status) {
-    return this.request('get', `/parcels/${x}/${y}/mortgages`, {
-      status: status.join(',')
-    })
+    return this.request('get', `/parcels/${x}/${y}/mortgages`, { status })
   }
 
   request(method, path, params) {

@@ -23,7 +23,7 @@ export class MortgageRouter {
     /**
      * Get mortgages by borrower
      * @param  {string} address
-     * @param  {string} status - specify a mortgage status to retreive: [cancelled|open|claimed].
+     * @param  {string} status - specify mortgage statuses to retreive
      * @return {array<Mortgage>}
      */
     this.app.get(
@@ -35,7 +35,7 @@ export class MortgageRouter {
      * Get mortgages by coordinates
      * @param  {string} x
      * @param  {string} y
-     * @param  {string} status - specify a mortgage status to retreive: [cancelled|open|claimed].
+     * @param  {string} status - specify mortgage statuses to retreive
      * @return {array<Mortgage>}
      */
     this.app.get(
@@ -53,6 +53,7 @@ export class MortgageRouter {
   async getMortgagesByBorrower(req) {
     const borrower = server.extractFromReq(req, 'address')
     const status = server.extractFromReq(req, 'status')
+
     return Mortgage.findByBorrower(borrower, status)
   }
 

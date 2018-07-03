@@ -71,10 +71,10 @@ describe('Mortgage', function() {
         Mortgage.insert(mortgage3),
         Mortgage.insert(mortgage4)
       ])
-      const mortgages = await Mortgage.findByBorrower(
-        '0xdeadbeef33',
-        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
-      )
+      const mortgages = await Mortgage.findByBorrower('0xdeadbeef33', [
+        MORTGAGE_STATUS.pending,
+        MORTGAGE_STATUS.ongoing
+      ])
       expect(mortgages).to.equalRows([
         {
           ...mortgage4,
@@ -120,10 +120,10 @@ describe('Mortgage', function() {
         Mortgage.insert(mortgage3),
         Mortgage.insert(mortgage4)
       ])
-      const mortgages = await Mortgage.findByBorrower(
-        '0xdeadbeef33122',
-        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
-      )
+      const mortgages = await Mortgage.findByBorrower('0xdeadbeef33122', [
+        MORTGAGE_STATUS.pending,
+        MORTGAGE_STATUS.ongoing
+      ])
       expect(mortgages).to.equalRows([])
     })
   })
@@ -153,7 +153,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findInCoordinate(
         Parcel.buildId(10, 10),
-        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
+        [MORTGAGE_STATUS.pending, MORTGAGE_STATUS.ongoing]
       )
 
       expect(mortgages).to.equalRows([
@@ -203,7 +203,7 @@ describe('Mortgage', function() {
       ])
       const mortgages = await Mortgage.findInCoordinate(
         Parcel.buildId(20, 20),
-        `${MORTGAGE_STATUS.pending},${MORTGAGE_STATUS.ongoing}`
+        [MORTGAGE_STATUS.pending, MORTGAGE_STATUS.ongoing]
       )
       expect(mortgages).to.equalRows([])
     })

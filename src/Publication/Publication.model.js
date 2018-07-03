@@ -1,6 +1,6 @@
 import { Model } from 'decentraland-commons'
 import { BlockchainEvent } from '../BlockchainEvent'
-import { SQL } from '../database'
+import { SQL, toRawStrings } from '../database'
 import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../shared/publication'
 
 export class Publication extends Model {
@@ -78,7 +78,7 @@ export class Publication extends Model {
     return this.db.query(
       SQL`UPDATE ${SQL.raw(this.tableName)}
         SET status = ${newStatus}
-        WHERE tx_hash IN (${txHashes})`
+        WHERE tx_hash IN (${toRawStrings(txHashes)})`
     )
   }
 }
