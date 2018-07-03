@@ -5,7 +5,11 @@ export function buildCoordinate(x, y) {
 }
 
 export function splitCoordinate(id) {
-  return id ? id.split(',') : [0, 0]
+  let ids = [0, 0]
+  if (id) {
+    ids = id.split(',').map(coord => parseInt(coord, 10))
+  }
+  return ids
 }
 
 export function isParcel(asset) {

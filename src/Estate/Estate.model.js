@@ -14,6 +14,10 @@ export class Estate extends Model {
     return new Asset(this).findByOwnerAndStatus(owner, status)
   }
 
+  static async findById(id) {
+    return new Asset(this).findById(id)
+  }
+
   static async findByIds(ids) {
     return new Asset(this).findByIds(ids)
   }

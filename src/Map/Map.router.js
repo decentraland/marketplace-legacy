@@ -6,18 +6,17 @@ import {
   splitCoordinate,
   getParcelPublications
 } from '../shared/parcel'
-import { toEstateObject } from '../shared/estate'
+import { toEstateObject, calculateZoomAndCenter } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject, PUBLICATION_TYPES } from '../shared/publication'
 import { AssetRouter } from '../Asset'
-import { Parcel } from '../Parcel'
-import { EstateService } from '../Estate'
+import { Parcel, coordinates } from '../Parcel'
+import { Estate, EstateService } from '../Estate'
 import { blacklist } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
-const areCoordsValid = coords => !isNaN(coords.x) && !isNaN(coords.y)
 
 export class MapRouter {
   constructor(app) {
@@ -30,7 +29,7 @@ export class MapRouter {
       '/parcels/:x/:y/map.png',
       this.handleRequest(this.getParcelPNG)
     )
-    // TODO: add an endpoint for Estates someday 🏌🏼‍
+    this.app.get('/estates/:id/map.png', this.handleRequest(this.getEstatePNG))
     this.app.get('/map', server.handleRequest(this.getMap))
   }
 
@@ -58,6 +57,29 @@ export class MapRouter {
       size,
       center,
       selected: [center],
+      showPublications
+    }
+    return this.sendPNG(res, mapOptions)
+  }
+
+  async getEstatePNG(req, res) {
+    const { id, width, height, size, showPublications } = this.sanitizeEstate(
+      req
+    )
+    const estate = await Estate.findById(id)
+
+    if (!estate) {
+      throw new Error(`The estate with id "${id}" doesn't exist.`)
+    }
+
+    const { parcels } = estate.data
+    const { center } = calculateZoomAndCenter(parcels)
+    const mapOptions = {
+      width,
+      height,
+      size,
+      center,
+      selected: parcels,
       showPublications
     }
     return this.sendPNG(res, mapOptions)
@@ -167,6 +189,13 @@ export class MapRouter {
     return canvas.pngStream()
   }
 
+  sanitizeEstate(req) {
+    return {
+      id: server.extractFromReq(req, 'id'),
+      ...this.sanitize(req)
+    }
+  }
+
   sanitize(req) {
     return {
       x: this.getNumber(req, 'x', minX, maxX, 0),
@@ -187,7 +216,8 @@ export class MapRouter {
     } catch (error) {
       return defaultValue
     }
-    const value = parseInt(param, 10)
+
+    const value = parseInt(Number(param), 10)
     if (isNaN(value)) {
       throw new Error(
         `Invalid param "${name}" should be a number but got "${param}".`
@@ -205,12 +235,12 @@ export class MapRouter {
     }
     let coords
     try {
-      const split = splitCoordinate(param)
-      const [x, y] = split.map(coord => parseInt(coord, 10))
-      coords = { x, y }
-      if (!areCoordsValid(coords)) {
+      if (coordinates.isValid(coords)) {
         throw new Error('Invalid coords')
       }
+
+      const [x, y] = splitCoordinate(param)
+      coords = { x, y }
     } catch (error) {
       throw new Error(
         `Invalid param "${name}" should be a coordinate "x,y" but got "${param}".`
@@ -226,14 +256,15 @@ export class MapRouter {
     } catch (error) {
       return defaultValue
     }
+
     let coordsArray = []
     try {
-      coordsArray = param
-        .split(';')
-        .map(pair => splitCoordinate(pair))
-        .map(pair => pair.map(coord => parseInt(coord, 10)))
-        .map(([x, y]) => ({ x, y }))
-      if (coordsArray.some(coords => !areCoordsValid(coords))) {
+      coordsArray = param.split(';').map(pair => {
+        const [x, y] = splitCoordinate(pair)
+        return { x, y }
+      })
+
+      if (coordsArray.some(coords => !coordinates.isValid(coords))) {
         throw new Error('Invalid coords')
       }
     } catch (error) {

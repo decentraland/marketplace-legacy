@@ -7,7 +7,7 @@ import ParcelTags from 'components/ParcelTags'
 import LandAmount from 'components/LandAmount'
 import { estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import { calculateZoomAndCenter } from 'modules/estates/utils'
+import { calculateZoomAndCenter } from 'shared/estate'
 import { formatDate } from 'lib/utils'
 
 import './EstateCard.css'
