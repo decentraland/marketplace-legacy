@@ -28,7 +28,7 @@ export class MortgageRouter {
      */
     this.app.get(
       '/addresses/:address/mortgages',
-      server.handleRequest(this.getMortgagesByBorrower)
+      server.handleRequest(this.getMortgagesByBorrower.bind(this))
     )
 
     /**
@@ -40,7 +40,7 @@ export class MortgageRouter {
      */
     this.app.get(
       '/parcels/:x/:y/mortgages',
-      server.handleRequest(this.getMortgagesInCoordinate)
+      server.handleRequest(this.getMortgagesInCoordinate.bind(this))
     )
   }
 
@@ -52,7 +52,7 @@ export class MortgageRouter {
 
   async getMortgagesByBorrower(req) {
     const borrower = server.extractFromReq(req, 'address')
-    const status = server.extractFromReq(req, 'status')
+    const status = this.getSafeStatusFromRequest()
 
     return Mortgage.findByBorrower(borrower, status)
   }
@@ -60,8 +60,14 @@ export class MortgageRouter {
   async getMortgagesInCoordinate(req) {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
-    const status = server.extractFromReq(req, 'status')
+    const status = this.getSafeStatusFromRequest()
 
     return Mortgage.findInCoordinate(Parcel.buildId(x, y), status)
+  }
+
+  getSafeStatusFromRequest(req) {
+    try {
+      return server.extractFromReq(req, 'status')
+    } catch (error) {}
   }
 }
