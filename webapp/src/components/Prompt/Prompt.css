@@ -1,0 +1,41 @@
+.Prompt {
+  color: var(--text);
+  user-select: text;
+}
+
+.Prompt .modal {
+  text-align: center;
+}
+
+.Prompt .modal:before {
+  display: inline-block;
+  content: '';
+  height: 100%;
+  vertical-align: middle;
+}
+
+.Prompt .modal-dialog {
+  display: inline-block;
+  text-align: left;
+}
+
+.Prompt .modal-header {
+  padding: 32px 24px 0;
+  border: none;
+  background-color: var(--background);
+}
+
+.Prompt .modal-body {
+  padding: 32px 24px;
+  background-color: var(--background);
+}
+
+.Prompt .actions {
+  margin-top: 50px;
+}
+
+.Prompt .actions .button {
+  margin-right: 16px;
+  padding: 11px 44px;
+  border-radius: 20px;
+}

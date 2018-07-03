@@ -2,7 +2,8 @@ import { txUtils } from 'decentraland-eth'
 import {
   FETCH_TRANSACTION_REQUEST,
   FETCH_TRANSACTION_SUCCESS,
-  FETCH_TRANSACTION_FAILURE
+  FETCH_TRANSACTION_FAILURE,
+  CLEAR_TRANSACTIONS
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { getTransactionFromAction } from './utils'
@@ -65,6 +66,16 @@ export function transactionReducer(state = INITIAL_STATE, action) {
                   error: action.error
                 }
               : transaction
+        )
+      }
+    }
+    case CLEAR_TRANSACTIONS: {
+      return {
+        ...state,
+        data: state.data.filter(
+          transaction =>
+            transaction.from !== action.address ||
+            transaction.status === TRANSACTION_STATUS.pending
         )
       }
     }

@@ -1,6 +1,11 @@
 {
   "activity": {
     "approve": "You can start by approving some MANA on your {settings_link}",
+    "clear": {
+      "body":
+        "Once you delete your transaction history you can't reverse the action, are you sure you want to continue?",
+      "title": "Delete transaction history"
+    },
     "completed": "Completed",
     "no_activity": "You have no activity yet.",
     "pending": "Pending",
@@ -77,6 +82,7 @@
     "blog": "Blog",
     "cancel": "Cancel",
     "change": "Change",
+    "clear": "Clear history",
     "click_here": "Click here",
     "community_chat": "Community Chat",
     "confirm": "Confirm",

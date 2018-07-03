@@ -37,3 +37,12 @@ export function watchLoadingTransactions() {
     type: WATCH_LOADING_TRANSACTIONS
   }
 }
+
+export const CLEAR_TRANSACTIONS = '[Request] Clear Transactions'
+
+export function clearTransactions(address) {
+  return {
+    type: CLEAR_TRANSACTIONS,
+    address
+  }
+}

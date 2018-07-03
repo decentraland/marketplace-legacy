@@ -5,7 +5,8 @@ import filter from 'redux-storage-decorator-filter'
 import {
   FETCH_TRANSACTION_REQUEST,
   FETCH_TRANSACTION_SUCCESS,
-  FETCH_TRANSACTION_FAILURE
+  FETCH_TRANSACTION_FAILURE,
+  CLEAR_TRANSACTIONS
 } from 'modules/transaction/actions'
 import {
   CHANGE_LOCALE,
@@ -34,6 +35,7 @@ export function createStorageMiddleware(storageKey) {
       FETCH_TRANSACTION_REQUEST,
       FETCH_TRANSACTION_SUCCESS,
       FETCH_TRANSACTION_FAILURE,
+      CLEAR_TRANSACTIONS,
       CHANGE_LOCALE,
       FETCH_TRANSLATIONS_REQUEST,
       FETCH_TRANSLATIONS_SUCCESS,

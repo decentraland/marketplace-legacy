@@ -4,9 +4,16 @@
 }
 
 .ActivityPage .section-title {
+  margin-bottom: 6px;
+  font-size: 32px;
+  font-weight: 600;
+  display: flex;
+}
+
+.ActivityPage .section-subtitle {
   margin-bottom: 10px;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight: 400;
 }
 
 .ActivityPage .empty {
@@ -22,8 +29,17 @@
   margin-top: 50px;
 }
 
-.ActivityPage .pending-transaction-list {
-  margin-bottom: 30px;
+.ActivityPage .transaction-list {
+  margin-top: 48px;
+}
+
+.ActivityPage .clear-button {
+  margin-left: auto;
+}
+
+.ActivityPage .modal-title {
+  font-size: 22px;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {

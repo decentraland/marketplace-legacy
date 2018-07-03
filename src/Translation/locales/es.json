@@ -1,6 +1,11 @@
 {
   "activity": {
     "approve": "Puedes comenzar aprobando MANA desde {settings_link}",
+    "clear": {
+      "body":
+        "Una vez que elimine su historial de transacciones, no puede revertir la acción, ¿está seguro de que desea continuar?",
+      "title": "Eliminar el historial de transacciones"
+    },
     "completed": "Completada",
     "no_activity": "No tienes actividad por el momento.",
     "pending": "Pendiente",
@@ -77,6 +82,7 @@
     "blog": "Blog",
     "cancel": "Cancelar",
     "change": "Cambio",
+    "clear": "Borrar historial",
     "click_here": "Pincha aquí",
     "community_chat": "Chat de la comunidad",
     "confirm": "Confirmar",

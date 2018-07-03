@@ -2,6 +2,11 @@
   "activity": {
     "approve":
       "Vous pouvez commencer en validant de la MANA sur votre {settings_link}",
+    "clear": {
+      "body":
+        "Une fois que vous avez supprimé l'historique de vos transactions, vous ne pouvez plus revenir en arrière, êtes-vous sûr de vouloir continuer?",
+      "title": "Supprimer l'historique des transactions"
+    },
     "completed": "Terminé",
     "no_activity": "Vous n'avez pas encore d'activité.",
     "pending": "En attente",
@@ -78,6 +83,7 @@
     "blog": "Blog",
     "cancel": "Annuler",
     "change": "Changement",
+    "clear": "Clair",
     "click_here": "Cliquez ici",
     "community_chat": "Chat communautaire",
     "confirm": "Confirmer",
