@@ -403,7 +403,7 @@ export default class ParcelPreview extends React.PureComponent {
     const parcelId = buildCoordinate(x, y)
 
     if (this.cache[parcelId]) {
-      this.cache[parcelId]
+      return this.cache[parcelId]
     }
 
     const { wallet, parcels, districts, publications, estates } = this.props
