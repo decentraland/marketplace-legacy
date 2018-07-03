@@ -3,7 +3,7 @@ import {
   FETCH_TRANSACTION_REQUEST,
   FETCH_TRANSACTION_SUCCESS,
   FETCH_TRANSACTION_FAILURE,
-  CLEAR_TRANSACTION_REQUEST
+  CLEAR_TRANSACTIONS
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { getTransactionFromAction } from './utils'
@@ -69,12 +69,13 @@ export function transactionReducer(state = INITIAL_STATE, action) {
         )
       }
     }
-    case CLEAR_TRANSACTION_REQUEST: {
-      const txToDelete = new Set(action.transactions)
+    case CLEAR_TRANSACTIONS: {
       return {
         ...state,
         data: state.data.filter(
-          transaction => !txToDelete.has(transaction.hash)
+          transaction =>
+            transaction.from !== action.address ||
+            transaction.status === TRANSACTION_STATUS.pending
         )
       }
     }

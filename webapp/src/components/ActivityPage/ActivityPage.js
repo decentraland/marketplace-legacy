@@ -32,9 +32,9 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   handlePromptConfirm = () => {
-    const { onClear, address, transactionHistory } = this.props
-    const transactions = transactionHistory.map(tx => tx.hash)
-    onClear(address, transactions)
+    const { onClear, address } = this.props
+    onClear(address)
+    this.handlePromptClose()
   }
 
   handlePromptClose = () => {

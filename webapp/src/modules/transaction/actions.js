@@ -38,27 +38,11 @@ export function watchLoadingTransactions() {
   }
 }
 
-export const CLEAR_TRANSACTION_REQUEST = '[Request] Clear Transactions'
-export const CLEAR_TRANSACTION_SUCCESS = '[Success] Clear Transactions'
-export const CLEAR_TRANSACTION_FAILURE = '[Failure] Clear Transactions'
+export const CLEAR_TRANSACTIONS = '[Request] Clear Transactions'
 
-export function clearTransactionsRequest(address, transactions) {
+export function clearTransactions(address) {
   return {
-    type: CLEAR_TRANSACTION_REQUEST,
-    address,
-    transactions
-  }
-}
-
-export function clearTransactionsSuccess() {
-  return {
-    type: CLEAR_TRANSACTION_SUCCESS
-  }
-}
-
-export function clearTransactionsFailure(error) {
-  return {
-    type: CLEAR_TRANSACTION_FAILURE,
-    error
+    type: CLEAR_TRANSACTIONS,
+    address
   }
 }

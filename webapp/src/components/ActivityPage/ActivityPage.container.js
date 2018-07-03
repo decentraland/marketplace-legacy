@@ -12,7 +12,7 @@ import {
   isConnected,
   getWallet
 } from 'modules/wallet/selectors'
-import { clearTransactionsRequest } from 'modules/transaction/actions'
+import { clearTransactions } from 'modules/transaction/actions'
 
 import ActivityPage from './ActivityPage'
 
@@ -37,8 +37,7 @@ const mapState = state => {
 }
 
 const mapDispatch = (dispatch, props) => ({
-  onClear: (address, transactions) =>
-    dispatch(clearTransactionsRequest(address, transactions))
+  onClear: address => dispatch(clearTransactions(address))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(ActivityPage))

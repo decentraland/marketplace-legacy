@@ -37,6 +37,11 @@
   margin-left: auto;
 }
 
+.ActivityPage .modal-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
 @media (max-width: 768px) {
   .ActivityPage {
     padding-left: 1em;
