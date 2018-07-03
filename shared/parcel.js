@@ -75,6 +75,14 @@ export function areConnected(parcels, parcelId, sideId) {
   return parcel.in_estate && parcel.owner && sameOwner
 }
 
+export function isSameValue(parcelA, parcelB, prop) {
+  return (
+    parcelA[prop] != null &&
+    parcelB[prop] != null &&
+    parcelA[prop] === parcelB[prop]
+  )
+}
+
 export function getParcelPublications(parcels) {
   return parcels.reduce((pubs, parcel) => {
     if (parcel.publication) pubs.push(parcel.publication)
