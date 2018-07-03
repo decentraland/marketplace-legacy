@@ -11,13 +11,12 @@ import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject, PUBLICATION_TYPES } from '../shared/publication'
 import { AssetRouter } from '../Asset'
-import { Parcel } from '../Parcel'
+import { Parcel, coordinates } from '../Parcel'
 import { Estate, EstateService } from '../Estate'
 import { blacklist } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
-const areCoordsValid = coords => !isNaN(coords.x) && !isNaN(coords.y)
 
 export class MapRouter {
   constructor(app) {
@@ -192,7 +191,7 @@ export class MapRouter {
 
   sanitizeEstate(req) {
     return {
-      id: this.getId(req, 'id'),
+      id: server.extractFromReq(req, 'id'),
       ...this.sanitize(req)
     }
   }
@@ -217,7 +216,8 @@ export class MapRouter {
     } catch (error) {
       return defaultValue
     }
-    const value = parseInt(param, 10)
+
+    const value = parseInt(Number(param), 10)
     if (isNaN(value)) {
       throw new Error(
         `Invalid param "${name}" should be a number but got "${param}".`
@@ -235,12 +235,12 @@ export class MapRouter {
     }
     let coords
     try {
-      const split = splitCoordinate(param)
-      const [x, y] = split.map(coord => parseInt(coord, 10))
-      coords = { x, y }
-      if (!areCoordsValid(coords)) {
+      if (coordinates.isValid(coords)) {
         throw new Error('Invalid coords')
       }
+
+      const [x, y] = splitCoordinate(param)
+      coords = { x, y }
     } catch (error) {
       throw new Error(
         `Invalid param "${name}" should be a coordinate "x,y" but got "${param}".`
@@ -256,14 +256,15 @@ export class MapRouter {
     } catch (error) {
       return defaultValue
     }
+
     let coordsArray = []
     try {
-      coordsArray = param
-        .split(';')
-        .map(pair => splitCoordinate(pair))
-        .map(pair => pair.map(coord => parseInt(coord, 10)))
-        .map(([x, y]) => ({ x, y }))
-      if (coordsArray.some(coords => !areCoordsValid(coords))) {
+      coordsArray = param.split(';').map(pair => {
+        const [x, y] = splitCoordinate(pair)
+        return { x, y }
+      })
+
+      if (coordsArray.some(coords => !coordinates.isValid(coords))) {
         throw new Error('Invalid coords')
       }
     } catch (error) {
@@ -288,15 +289,5 @@ export class MapRouter {
       )
     }
     return value
-  }
-
-  getId(req, name) {
-    let param
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      throw new Error(`Invalid param "${name}" should be a string address.`)
-    }
-    return param
   }
 }
