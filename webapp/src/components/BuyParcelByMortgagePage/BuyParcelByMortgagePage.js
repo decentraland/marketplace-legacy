@@ -12,6 +12,8 @@ import { buildCoordinate } from 'shared/parcel'
 import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
 import ParcelModal from 'components/ParcelModal'
+import TxStatus from 'components/TxStatus'
+import ParcelName from 'components/ParcelName'
 
 export default class BuyParcelByMortgagePage extends React.PureComponent {
   static propTypes = {
@@ -102,6 +104,15 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                   onCancel={onCancel}
                   error={error}
                   isTxIdle={isTxIdle}
+                />
+                <TxStatus.Asset
+                  parcel={parcel}
+                  name={
+                    <span>
+                      {`${t('mortgage.pending_tx')} `}
+                      <ParcelName parcel={parcel} />
+                    </span>
+                  }
                 />
               </ParcelModal>
             </React.Fragment>

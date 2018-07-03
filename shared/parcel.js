@@ -9,7 +9,7 @@ export function splitCoordinate(id) {
 }
 
 export function isParcel(asset) {
-  return !!asset.x
+  return typeof asset.x === 'undefined' && typeof asset.y === 'undefined'
 }
 
 export function toParcelObject(
@@ -61,11 +61,18 @@ export function connectParcels(array, parcels) {
 export function areConnected(parcels, parcelId, sideId) {
   const parcel = parcels[parcelId]
   const sideParcel = parcels[sideId]
-  return (
-    !sideParcel ||
-    isSameValue(parcel, sideParcel, 'district_id') ||
-    (parcel.in_estate && isSameValue(parcel, sideParcel, 'owner'))
-  )
+
+  if (!sideParcel) {
+    return false
+  }
+
+  const sameDistrict = parcel.district_id === sideParcel.district_id
+  if (parcel.district_id && sameDistrict) {
+    return true
+  }
+
+  const sameOwner = parcel.owner === sideParcel.owner
+  return parcel.in_estate && parcel.owner && sameOwner
 }
 
 export function isSameValue(parcelA, parcelB, prop) {
