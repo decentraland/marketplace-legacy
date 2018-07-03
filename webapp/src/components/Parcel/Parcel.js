@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { parcelType } from 'components/types'
 import Asset from 'components/Asset'
 
@@ -15,7 +16,7 @@ export default class Parcel extends React.PureComponent {
   }
 
   isConnected(address) {
-    return !!address.parcel_ids
+    return address.parcel_ids && address.parcel_ids.length > 0
   }
 
   render() {

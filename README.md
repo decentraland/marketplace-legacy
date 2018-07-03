@@ -59,3 +59,7 @@ If you need some test data to test the marketplace, you can use the seed for qui
 ## Translate
 
 You can translate automatically from English to the other locales by running the command `npm run translate`, this command will compare all the other locales to `en.json` and if it finds any missing translation it will use Google Translate to add it to the corresponding locale.
+
+## API
+
+We have documentation for our HTTP API that can be [found here](https://github.com/decentraland/marketplace/blob/master/docs/http-api.md).

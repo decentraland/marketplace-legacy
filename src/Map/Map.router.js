@@ -95,7 +95,6 @@ export class MapRouter {
 
       const assets = { parcels, estates }
       const total = parcels.length + estates.length
-      console.log(assets.estates)
       return { assets, total }
     } catch (error) {
       // Force parcel type

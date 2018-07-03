@@ -402,6 +402,10 @@ export default class ParcelPreview extends React.PureComponent {
   getParcelAttributes = (x, y) => {
     const parcelId = buildCoordinate(x, y)
 
+    if (this.cache[parcelId]) {
+      return this.cache[parcelId]
+    }
+
     const { wallet, parcels, districts, publications, estates } = this.props
     const asset = getAsset(parcelId, parcels, estates)
     const publication = getOpenPublication(asset, publications)
@@ -423,7 +427,7 @@ export default class ParcelPreview extends React.PureComponent {
       ...connections
     }
 
-    this.cache[parcelId] = asset
+    this.cache[parcelId] = result
     return result
   }
 

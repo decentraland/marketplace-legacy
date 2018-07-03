@@ -64,6 +64,21 @@ const main = {
       )
 
     program
+      .command('land-update-operator <coord>')
+      .description('Get the LAND operator of a (x,y) coordinate')
+      .action(
+        asSafeAction(async coord => {
+          const [x, y] = parseCLICoords(coord)
+          const contract = eth.getContract('LANDRegistry')
+          const assetId = await contract.encodeTokenId(x, y)
+          const operator = await contract.updateOperator(assetId)
+
+          log.info(`(land-update-operator) coords:(${x},${y})`)
+          log.info(`blockchain => ${operator}`)
+        })
+      )
+
+    program
       .command('land-data <coord>')
       .description('Get the land data for a (x,y) coordinate')
       .action(
@@ -228,7 +243,7 @@ const main = {
           }
 
           if (options.clean) {
-            await Publication.delete({ x, y })
+            await Publication.delete({ asset_id: assetId })
           }
 
           for (let i = 0; i < events.length; i++) {
