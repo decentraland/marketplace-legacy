@@ -68,6 +68,8 @@ export class MortgageRouter {
   getSafeStatusFromRequest(req) {
     try {
       return server.extractFromReq(req, 'status')
-    } catch (error) {}
+    } catch (error) {
+      // undefined
+    }
   }
 }
