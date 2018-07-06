@@ -10,15 +10,15 @@ import {
   buildCoordinate
 } from 'shared/parcel'
 
-const WebWorkerDependencies = [
-  ['toParcelObject', toParcelObject],
-  ['normalizeParcel', normalizeParcel],
-  ['connectParcels', connectParcels],
-  ['areConnected', areConnected],
-  ['isSameValue', isSameValue],
-  ['getParcelPublications', getParcelPublications],
-  ['buildCoordinate', buildCoordinate]
-]
+const WebWorkerDependencies = {
+  toParcelObject,
+  normalizeParcel,
+  areConnected,
+  connectParcels,
+  isSameValue,
+  getParcelPublications,
+  buildCoordinate
+}
 
 export const webworker = WebWorkerFactory.create(
   WebWorkerOnMessage,
