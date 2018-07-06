@@ -8,7 +8,7 @@ import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { mockModelDbOperations } from '../specs/utils'
 import { loadEnv, parseCLICoords } from './utils'
-import { processEvent } from './monitor/processEvents'
+import { processEvent } from '../monitor/processEvents'
 
 const log = new Log('mktcli')
 
@@ -243,7 +243,8 @@ const main = {
           }
 
           if (options.clean) {
-            await Publication.delete({ asset_id: assetId })
+            log.info(`Cleaning publications for ${coord}`)
+            await Publication.deleteByAsset({ id: Parcel.buildId(x, y) })
           }
 
           for (let i = 0; i < events.length; i++) {

@@ -7,11 +7,11 @@ import { Parcel, ParcelService } from '../src/Parcel'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { asyncBatch } from '../src/lib'
-import { processEvent } from './monitor/processEvents'
-import { MonitorCli } from './monitor/MonitorCli'
-import { main as indexMissingEvents } from './monitor/program'
-import { parseCLICoords, loadEnv } from './utils'
+import { processEvent } from '../monitor/processEvents'
+import { MonitorCli } from '../monitor/MonitorCli'
+import { main as indexMissingEvents } from '../monitor/program'
 import { PUBLICATION_STATUS } from '../shared/publication'
+import { parseCLICoords, loadEnv } from './utils'
 
 const log = new Log('sanity-check')
 
@@ -67,9 +67,12 @@ const sanityCheck = {
         if (options.selfHeal) {
           if (inconsistencies.length) {
             log.info(`Attempting to heal ${inconsistencies.length} parcels`)
-            log.info('Retreiving missing events')
+            log.info('Deleting current events')
+            await Promise.all(inconsistencies.map(cleanBlockainEvents))
 
-            // Hack: change the command name so we can keep the flags but run the monitor
+            log.info('Re-fetching events')
+
+            // @nico Hack: change the command name so we can keep the flags but run the monitor
             process.argv = process.argv.map(
               arg => (arg === 'run' ? 'index' : arg)
             )
@@ -91,19 +94,15 @@ async function getInconsistentPublishedParcels(allParcels) {
   await asyncBatch({
     elements: allParcels,
     callback: async (parcelsBatch, batchedCount) => {
-      const parcels = await Promise.all(
-        parcelsBatch.map(async parcel => ({
-          ...parcel,
-          sanityError: await getPublicationInconsistencies(parcel)
-        }))
-      )
+      const promises = parcelsBatch.map(async parcel => {
+        const sanityError = await getPublicationInconsistencies(parcel)
 
-      for (const parcel of parcels) {
-        if (parcel.sanityError) {
-          log.info(parcel.sanityError)
-          faultyParcels.push(parcel)
+        if (sanityError) {
+          log.info(sanityError)
+          faultyParcels.push({ ...parcel, sanityError })
         }
-      }
+      })
+      await Promise.all(promises)
 
       process.stdout.write(
         `- Checked ${batchedCount}/${allParcels.length} parcel publications \r`
@@ -205,11 +204,19 @@ class SanityMonitorCli extends MonitorCli {
       {}
     )
     for (const id in inconsistentciesCache) {
-      await this.replayEvents(inconsistentciesCache[id])
+      const parcel = inconsistentciesCache[id]
+
+      await this.cleanPublications(parcel)
+      await this.replayEvents(parcel)
     }
 
     log.info('All done!')
     process.exit()
+  }
+
+  async cleanPublications(parcel) {
+    log.info('Cleaning parcel publications')
+    return Publication.deleteByAsset(parcel)
   }
 
   async replayEvents(parcel) {
@@ -223,6 +230,10 @@ class SanityMonitorCli extends MonitorCli {
       await processEvent(events[i])
     }
   }
+}
+
+async function cleanBlockainEvents(parcel) {
+  return BlockchainEvent.deleteByAssetId(parcel.asset_id)
 }
 
 function isNullHash(x) {

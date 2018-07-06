@@ -3,9 +3,7 @@ import { Mortgage } from '../src/Mortgage'
 import { MORTGAGE_STATUS } from '../shared/mortgage'
 
 const tableName = Mortgage.tableName
-const mortgageStatus = Object.values(MORTGAGE_STATUS)
-  .map(val => `'${val}'`)
-  .join(', ')
+const mortgageStatus = Object.values(MORTGAGE_STATUS).map(val => `'${val}'`)
 
 exports.up = pgm => {
   pgm.createTable(
@@ -24,7 +22,7 @@ exports.up = pgm => {
       status: {
         type: 'TEXT',
         notNull: true,
-        default: MORTGAGE_STATUS.open,
+        default: MORTGAGE_STATUS.ongoing,
         check: `status IN (${mortgageStatus})`
       },
       asset_id: { type: 'TEXT', notNull: true },

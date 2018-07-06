@@ -27,7 +27,15 @@ export function mockModelDbOperations(operations) {
   operations = {
     query: async function(query, args) {
       const rows = await _query.call(this, query, args)
-      log.info(`Executing:\n${query} ${toJSON(args)} => ${rows.length} rows`)
+
+      if (query.values) {
+        args = query.values
+        query = query.text
+      }
+
+      log.info(
+        `Executing:\n${query} values ${toJSON(args)} => ${rows.length} rows`
+      )
       return rows
     },
     count: async function(tableName, conditions) {
