@@ -46,8 +46,8 @@ export function normalizeParcel(parcel, prevParcel = {}) {
   return normalizedParcel
 }
 
-export function connectParcels(array, parcels) {
-  array.forEach(parcel => {
+export function connectParcels(parcelArray, parcels) {
+  for (const parcel of parcelArray) {
     const { id, x, y } = parcel
     if (parcels[id].in_estate || parcels[id].district_id != null) {
       const leftId = buildCoordinate(x - 1, y)
@@ -58,7 +58,8 @@ export function connectParcels(array, parcels) {
       parcels[id].connectedTop = areConnected(parcels, id, topId)
       parcels[id].connectedTopLeft = areConnected(parcels, id, topLeftId)
     }
-  })
+  }
+
   return parcels
 }
 
