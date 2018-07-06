@@ -46,6 +46,10 @@ export class Publication extends Model {
     return this.find({ asset_id, status }, { created_at: 'DESC' })
   }
 
+  static deleteByAsset(asset) {
+    return this.delete({ asset_id: asset.id })
+  }
+
   static async cancelOlder(asset_id, block_number) {
     const name = BlockchainEvent.EVENTS.publicationCreated
     const status = PUBLICATION_STATUS.open

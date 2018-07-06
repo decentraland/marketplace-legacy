@@ -1,5 +1,5 @@
 import { Log } from 'decentraland-commons'
-import { BlockchainEvent } from '../../../src/BlockchainEvent'
+import { BlockchainEvent } from '../../src/BlockchainEvent'
 
 const log = new Log('handlers')
 

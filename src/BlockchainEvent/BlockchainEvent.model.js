@@ -64,4 +64,11 @@ export class BlockchainEvent extends Model {
         ORDER BY block_number DESC, log_index DESC`
     )
   }
+
+  static deleteByAssetId(assetId) {
+    return this.db.query(
+      SQL`DELETE FROM ${SQL.raw(this.tableName)}
+        WHERE args->>'assetId' = ${assetId}`
+    )
+  }
 }

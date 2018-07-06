@@ -4,8 +4,8 @@ import { eth, contracts } from 'decentraland-eth'
 import { env, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
 import { MonitorCli } from './MonitorCli'
-import { db } from '../../src/database'
-import { loadEnv } from '../../scripts/utils'
+import { db } from '../src/database'
+import { loadEnv } from '../scripts/utils'
 
 const log = new Log('main')
 
@@ -52,7 +52,7 @@ export async function main(
 }
 
 if (require.main === module) {
-  loadEnv('../../src/.env')
+  loadEnv('../src/.env')
 
   main().catch(error => {
     log.error(error)
