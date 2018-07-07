@@ -5,7 +5,7 @@ export function WebWorkerOnMessage(event) {
   let result = {}
 
   switch (action.type) {
-    case 'FETCH_PARCELS_REQUEST':
+    case 'FETCH_MAP_REQUEST':
     case 'FETCH_ADDRESS_PARCELS_REQUEST': {
       const { parcels, allParcels } = action
       const parcelObject = toParcelObject(parcels, allParcels)

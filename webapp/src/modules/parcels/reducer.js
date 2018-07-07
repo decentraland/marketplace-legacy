@@ -1,7 +1,4 @@
 import {
-  FETCH_PARCELS_REQUEST,
-  FETCH_PARCELS_SUCCESS,
-  FETCH_PARCELS_FAILURE,
   FETCH_PARCEL_REQUEST,
   FETCH_PARCEL_SUCCESS,
   FETCH_PARCEL_FAILURE,
@@ -39,8 +36,7 @@ const INITIAL_STATE = {
 
 export function parcelsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_PARCEL_REQUEST:
-    case FETCH_PARCELS_REQUEST: {
+    case FETCH_PARCEL_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
@@ -67,14 +63,6 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         data: { ...state.data, ...action.assets.parcels }
       }
     }
-    case FETCH_PARCELS_SUCCESS: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: null,
-        data: { ...state.data, ...action.parcels }
-      }
-    }
     case FETCH_PUBLICATIONS_SUCCESS:
       return {
         ...state,
@@ -85,8 +73,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           ...toParcelObject(action.parcels, state.data)
         }
       }
-    case FETCH_PARCEL_FAILURE:
-    case FETCH_PARCELS_FAILURE: {
+    case FETCH_PARCEL_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

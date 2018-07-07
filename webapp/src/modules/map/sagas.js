@@ -2,7 +2,7 @@ import { takeEvery, select, call, put } from 'redux-saga/effects'
 import { buildCoordinate } from 'shared/parcel'
 import { api } from 'lib/api'
 import { webworker } from 'lib/webworker'
-import { fetchMapSuccess, FETCH_MAP_REQUEST, fetchMapFailure } from './actions'
+import { FETCH_MAP_REQUEST, fetchMapSuccess, fetchMapFailure } from './actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
 
 export function* mapSaga() {
@@ -18,7 +18,7 @@ function* handleMapRequest(action) {
 
     const result = yield call(() =>
       webworker.postMessage({
-        type: 'FETCH_PARCELS_REQUEST',
+        type: 'FETCH_MAP_REQUEST',
         parcels: assets.parcels,
         allParcels: stateParcels
       })
