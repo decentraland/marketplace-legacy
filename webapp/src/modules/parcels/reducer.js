@@ -20,8 +20,8 @@ import {
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { buildCoordinate, normalizeParcel, toParcelObject } from 'shared/parcel'
 import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
+import { buildCoordinate, normalizeParcel, toParcelObject } from 'shared/parcel'
 
 import {
   FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,

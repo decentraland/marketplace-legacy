@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { utils } from 'decentraland-commons'
 import { Button, Icon } from 'semantic-ui-react'
+import { locations } from 'locations'
+import AddressBlock from 'components/AddressBlock'
 import { parcelType, districtType } from 'components/types'
 import { getDistrict, isDistrict } from 'shared/asset'
-import AddressBlock from 'components/AddressBlock'
 import { t, t_html } from 'modules/translation/utils'
-import { locations } from 'locations'
 
 import './ParcelOwner.css'
 

@@ -5,9 +5,9 @@ import {
   MANAGE_PARCEL_REQUEST
 } from './actions'
 import { getPublications as getAllPublications } from 'modules/publication/selectors'
-import { buildCoordinate } from 'shared/parcel'
 import { isLoadingType } from 'modules/loading/selectors'
 import { getMortgagesArray } from 'modules/mortgage/selectors'
+import { buildCoordinate } from 'shared/parcel'
 import { getActiveMortgages } from 'shared/mortgage'
 
 export const getState = state => state.parcels

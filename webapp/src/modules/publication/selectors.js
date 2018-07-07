@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
 import { PUBLISH_REQUEST, PUBLISH_SUCCESS } from './actions'
-import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
+import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import { buildCoordinate } from 'shared/parcel'
 
 export const getState = state => state.publication
