@@ -10,9 +10,9 @@ import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
 import { parcelType, publicationType } from 'components/types'
 import { isMortgageActive } from 'shared/mortgage'
-import { t } from 'modules/translation/utils'
 import { AUCTION_DATE, buildCoordinate } from 'shared/parcel'
 import { getOpenPublication } from 'shared/asset'
+import { t } from 'modules/translation/utils'
 
 import { formatDate } from 'lib/utils'
 

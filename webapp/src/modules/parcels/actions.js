@@ -1,34 +1,5 @@
 import { buildTransactionAction } from 'modules/transaction/utils'
 
-// Fetch Parcels
-
-export const FETCH_PARCELS_REQUEST = '[Request] Fetch Parcels'
-export const FETCH_PARCELS_SUCCESS = '[Success] Fetch Parcels'
-export const FETCH_PARCELS_FAILURE = '[Failure] Fetch Parcels'
-
-export function fetchParcelsRequest(nw, se) {
-  return {
-    type: FETCH_PARCELS_REQUEST,
-    nw,
-    se
-  }
-}
-
-export function fetchParcelsSuccess(parcels, publications) {
-  return {
-    type: FETCH_PARCELS_SUCCESS,
-    parcels,
-    publications
-  }
-}
-
-export function fetchParcelsFailure(error) {
-  return {
-    type: FETCH_PARCELS_FAILURE,
-    error
-  }
-}
-
 // Edit Parcel
 
 export const EDIT_PARCEL_REQUEST = '[Request] Edit Parcel'

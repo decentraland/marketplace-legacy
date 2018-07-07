@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
 
-import { isFeatureEnabled } from 'lib/featureUtils'
-import { parcelType, publicationType, mortgageType } from 'components/types'
-import { t } from 'modules/translation/utils'
-import { isOnSale } from 'shared/asset'
 import { locations } from 'locations'
+import { parcelType, publicationType, mortgageType } from 'components/types'
+import { isFeatureEnabled } from 'lib/featureUtils'
+import { isOnSale } from 'shared/asset'
+import { t } from 'modules/translation/utils'
 
 import './ParcelActions.css'
 
