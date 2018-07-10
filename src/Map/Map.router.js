@@ -235,7 +235,7 @@ export class MapRouter {
     }
     let coords
     try {
-      if (coordinates.isValid(coords)) {
+      if (coordinates.isValid(param)) {
         throw new Error('Invalid coords')
       }
 
@@ -261,12 +261,11 @@ export class MapRouter {
     try {
       coordsArray = param.split(';').map(pair => {
         const [x, y] = splitCoordinate(pair)
+        if (coordinates.isValid(pair)) {
+          throw new Error('Invalid coords')
+        }
         return { x, y }
       })
-
-      if (coordsArray.some(coords => !coordinates.isValid(coords))) {
-        throw new Error('Invalid coords')
-      }
     } catch (error) {
       throw new Error(
         `Invalid param "${name}" should be a list of coordinates "x1,y1;x2,y2" but got "${param}".`
