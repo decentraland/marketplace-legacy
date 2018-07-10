@@ -27,6 +27,10 @@ export class Mortgage extends Model {
   ]
   static primaryKey = 'tx_hash'
 
+  static findByMortgageId(id) {
+    return this.find({ mortgage_id: id })
+  }
+
   static findByBorrower(borrower, status = Object.values(MORTGAGE_STATUS)) {
     return this.db.query(
       SQL`SELECT * FROM ${SQL.raw(this.tableName)}

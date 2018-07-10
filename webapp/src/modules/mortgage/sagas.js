@@ -93,7 +93,7 @@ function* handleCreateMortgageRequest(action) {
     } = action
 
     const rcnEngineContract = eth.getContract('RCNEngine')
-    const mortgageCreatorContract = eth.getContract('MortgageCreator')
+    const mortgageHelperContract = eth.getContract('MortgageHelper')
     const landRegistryContract = eth.getContract('LANDRegistry')
     const kyberOrcaleAddress = getKyberOracleAddress()
     const manaCurrency = eth.utils.fromAscii('MANA')
@@ -118,7 +118,7 @@ function* handleCreateMortgageRequest(action) {
       rcnEngineContract.buildIdentifier(
         kyberOrcaleAddress, // Contract of the oracle
         borrower, // Borrower of the loan (caller of this method)
-        mortgageCreatorContract.address, // Creator of the loan, the mortgage creator
+        mortgageHelperContract.address, // Creator of the loan, the mortgage helper
         manaCurrency, // Currency of the loan, MANA
         ...loanParams,
         loanMetadata // Metadata
@@ -134,7 +134,7 @@ function* handleCreateMortgageRequest(action) {
 
     // Request a Mortgage
     let mortgageReceipt = yield call(() =>
-      mortgageCreatorContract.requestMortgage(
+      mortgageHelperContract.requestMortgage(
         loanParams, // Configuration of the loan request
         loanMetadata, // Metadata of the loan
         landId, // Id of the loan to buy
@@ -186,12 +186,16 @@ function* handleFetchActiveParcelMortgagesRequest(action) {
 function* handlePayMortgageRequest(action) {
   try {
     const { loanId, amount, assetId } = action
-    const borrower = yield select(getAddress)
+    const mortgageHelperContract = eth.getContract('MortgageHelper')
 
-    const rcnEngineContract = eth.getContract('RCNEngine')
+    const rcnEngineAddress = getRCNEngineAddress()
 
     const payMortgageReceipt = yield call(() =>
-      rcnEngineContract.pay(loanId, eth.utils.toWei(amount), borrower, [])
+      mortgageHelperContract.pay(
+        rcnEngineAddress,
+        loanId,
+        eth.utils.toWei(amount)
+      )
     )
 
     yield put(payMortgageSuccess(payMortgageReceipt, assetId, amount))

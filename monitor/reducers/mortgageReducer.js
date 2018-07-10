@@ -30,18 +30,11 @@ export async function mortgageReducer(event) {
       const LoanIdBN = eth.utils.toBigNumber(loanId)
       const rcnEngineContract = eth.getContract('RCNEngine')
 
-      const [
-        amount,
-        duesIn,
-        expiresAt,
-        payableAt,
-        outstandingAmount
-      ] = await Promise.all([
+      const [amount, duesIn, expiresAt, payableAt] = await Promise.all([
         rcnEngineContract.getAmount(LoanIdBN),
         rcnEngineContract.getDuesIn(LoanIdBN),
         rcnEngineContract.getExpirationRequest(LoanIdBN),
-        rcnEngineContract.getCancelableAt(LoanIdBN),
-        rcnEngineContract.sendCall('getPendingAmount', LoanIdBN)
+        rcnEngineContract.getCancelableAt(LoanIdBN)
       ])
 
       const block_time_created_at = await Promise.resolve(
@@ -50,7 +43,7 @@ export async function mortgageReducer(event) {
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: MORTGAGE_STATUS.ongoing,
+          status: MORTGAGE_STATUS.pending,
           is_due_at: duesIn.toNumber(),
           payable_at: payableAt.toNumber(),
           expires_at: expiresAt.toNumber(),
@@ -59,7 +52,7 @@ export async function mortgageReducer(event) {
           block_number,
           block_time_created_at,
           amount: eth.utils.fromWei(amount),
-          outstanding_amount: eth.utils.fromWei(outstandingAmount),
+          outstanding_amount: 0,
           tx_hash,
           asset_id: Parcel.buildId(x, y),
           type: ASSET_TYPE.parcel,
@@ -97,14 +90,21 @@ export async function mortgageReducer(event) {
     }
     case BlockchainEvent.EVENTS.startedMortgage: {
       const { _id } = event.args
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
+
       try {
         log.info(`[${name}] Starting Mortgage ${_id}`)
+        const mortgage = (await Mortgage.findByMortgageId(_id))[0]
+        const rcnEngineContract = eth.getContract('RCNEngine')
+        const LoanIdBN = eth.utils.toBigNumber(mortgage.loan_id)
+
+        const [block_time_updated_at, outstandingAmount] = await Promise.all([
+          new BlockTimestampService().getBlockTime(block_number),
+          rcnEngineContract.sendCall('getPendingAmount', LoanIdBN)
+        ])
         await Mortgage.update(
           {
             status: MORTGAGE_STATUS.ongoing,
+            outstanding_amount: eth.utils.fromWei(outstandingAmount),
             block_time_updated_at
           },
           { mortgage_id: _id }

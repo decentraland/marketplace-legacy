@@ -8,7 +8,7 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       MANAToken,
       LANDRegistry,
       Marketplace,
-      MortgageCreator,
+      MortgageHelper,
       MortgageManager,
       RCNEngine,
       ERC20Token
@@ -28,8 +28,8 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
         new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
         new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
         new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
-        new MortgageCreator(
-          env.get('REACT_APP_MORTGAGE_CREATOR_CONTRACT_ADDRESS')
+        new MortgageHelper(
+          env.get('REACT_APP_MORTGAGE_HELPER_CONTRACT_ADDRESS')
         ),
         new MortgageManager(
           env.get('REACT_APP_MORTGAGE_MANAGER_CONTRACT_ADDRESS')
@@ -76,9 +76,9 @@ export function getMarketplaceAddress() {
   return marketplaceContract.address
 }
 
-export function getMortgageCreatorAddress() {
-  const mortgageCreatorContract = eth.getContract('MortgageCreator')
-  return mortgageCreatorContract.address
+export function getMortgageHelperAddress() {
+  const mortgageHelperContract = eth.getContract('MortgageHelper')
+  return mortgageHelperContract.address
 }
 
 export function getMortgageManagerAddress() {

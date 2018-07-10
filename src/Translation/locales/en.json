@@ -316,7 +316,7 @@
     "mana_approved":
       "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
     "marketplace_contract": "Marketplace contract",
-    "mortgage_creator_contract": "Mortgage creator contract",
+    "mortgage_helper_contract": "Mortgage helper contract",
     "mortgage_manager_contract": "Mortgage manager contract",
     "pending_tx": "You have a pending transaction",
     "unauthorize_land_check":

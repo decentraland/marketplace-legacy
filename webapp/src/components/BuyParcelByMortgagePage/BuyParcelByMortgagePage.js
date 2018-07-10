@@ -77,14 +77,14 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed withPublications>
+      <Parcel x={x} y={y} ownerNotAllowed>
         {parcel =>
           isOpen(publication) ? (
             <React.Fragment>
               <ParcelModal
                 x={x}
                 y={y}
-                price={parcel.publication.price}
+                price={publication.price}
                 isLoading={isLoading}
                 title={t('mortgage.request')}
                 subtitle={t_html('mortgage.request_land', {
@@ -93,13 +93,13 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                       {buildCoordinate(x, y)}
                     </Link>
                   ),
-                  parcel_price: formatMana(parcel.publication.price)
+                  parcel_price: formatMana(publication.price)
                 })}
                 hasCustomFooter
               >
                 <MortgageForm
                   parcel={parcel}
-                  publication={parcel.publication}
+                  publication={publication}
                   onPublish={onConfirm}
                   onCancel={onCancel}
                   error={error}

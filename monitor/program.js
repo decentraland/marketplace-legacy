@@ -20,9 +20,7 @@ export async function main(
     contracts: [
       new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
       new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS')),
-      new contracts.MortgageCreator(
-        env.get('MORTGAGE_CREATOR_CONTRACT_ADDRESS')
-      ),
+      new contracts.MortgageHelper(env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS')),
       new contracts.RCNEngine(env.get('RCN_ENGINE_CONTRACT_ADDRESS')),
       new contracts.MortgageManager(
         env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
@@ -37,7 +35,7 @@ export async function main(
     {
       Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
       LANDRegistry: ['Update', 'Transfer'],
-      MortgageCreator: ['NewMortgage'],
+      MortgageHelper: ['NewMortgage'],
       MortgageManager: [
         'CanceledMortgage',
         'StartedMortgage',

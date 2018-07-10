@@ -39,7 +39,7 @@ export default class ParcelMortgage extends React.PureComponent {
               amount={
                 isMortgagePending(mortgage)
                   ? parseFloat(mortgage.amount)
-                  : parseFloat(mortgage.outstanding_amount)
+                  : parseFloat(mortgage.outstanding_amount).toFixed(2)
               }
               size={20}
               scale={1.2}

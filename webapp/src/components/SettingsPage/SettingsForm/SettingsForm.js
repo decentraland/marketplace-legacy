@@ -11,7 +11,7 @@ import DerivationPathDropdown from './DerivationPathDropdown'
 
 import {
   getMarketplaceAddress,
-  getMortgageCreatorAddress,
+  getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
@@ -52,10 +52,10 @@ export default class SettingsForm extends React.PureComponent {
     )
   }
 
-  renderMortgageCreatorLink() {
+  renderMortgageHelperLink() {
     return (
-      <EtherscanLink address={getMortgageCreatorAddress()}>
-        {t('settings.mortgage_creator_contract')}
+      <EtherscanLink address={getMortgageHelperAddress()}>
+        {t('settings.mortgage_helper_contract')}
       </EtherscanLink>
     )
   }
@@ -211,10 +211,10 @@ export default class SettingsForm extends React.PureComponent {
                 <div className="authorize-detail">
                   {isMortgageApprovedForMana
                     ? t_html('settings.you_approved_mortgage_mana', {
-                        mortgage_contract_link: this.renderMortgageCreatorLink()
+                        mortgage_contract_link: this.renderMortgageHelperLink()
                       })
                     : t_html('settings.approve_mortgage_mana', {
-                        mortgage_contract_link: this.renderMortgageCreatorLink()
+                        mortgage_contract_link: this.renderMortgageHelperLink()
                       })}
 
                   {isMortgageApprovedForManaPending && (
