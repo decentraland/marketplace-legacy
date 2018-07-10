@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
-
 import { isFeatureEnabled } from 'lib/featureUtils'
 import Mana from 'components/Mana'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
@@ -128,9 +127,21 @@ export default class SettingsForm extends React.PureComponent {
               <Mana amount={balance} unit="MANA" />
             </span>
             <span className="mana-actions">
-              <Link to={locations.buyMana} replace>
-                <Button className="buy-more">{t('buy_mana.action')}</Button>
-              </Link>
+              {isFeatureEnabled('BUY_MANA') ? (
+                <Link to={locations.buyMana} replace>
+                  <Button className="buy-more">{t('buy_mana.action')}</Button>
+                </Link>
+              ) : (
+                <span
+                  className="disabled-buy-more"
+                  data-balloon={t('global.service_unavailable')}
+                  data-balloon-pos="up"
+                >
+                  <Button disabled className="buy-more">
+                    {t('buy_mana.action')}
+                  </Button>
+                </span>
+              )}
               <Link to={locations.transferMana} replace>
                 <Button>{t('transfer_mana.action')}</Button>
               </Link>

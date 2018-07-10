@@ -110,6 +110,7 @@
     "request": "Request",
     "retry": "Retry",
     "revoke": "Revoke",
+    "service_unavailable": "Service unavailable",
     "settings": "Settings",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
