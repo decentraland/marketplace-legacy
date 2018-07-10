@@ -235,10 +235,9 @@ export class MapRouter {
     }
     let coords
     try {
-      if (coordinates.isValid(param)) {
+      if (!coordinates.isValid(param)) {
         throw new Error('Invalid coords')
       }
-
       const [x, y] = splitCoordinate(param)
       coords = { x, y }
     } catch (error) {
@@ -261,7 +260,7 @@ export class MapRouter {
     try {
       coordsArray = param.split(';').map(pair => {
         const [x, y] = splitCoordinate(pair)
-        if (coordinates.isValid(pair)) {
+        if (!coordinates.isValid(pair)) {
           throw new Error('Invalid coords')
         }
         return { x, y }
