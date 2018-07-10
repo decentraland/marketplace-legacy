@@ -25,6 +25,11 @@
   justify-content: flex-start;
 }
 
+.ParcelTransactionHistory .address-wrapper > a {
+  display: flex;
+  align-items: center;
+}
+
 .ParcelTransactionHistory .address-wrapper .AddressBlock {
   flex: none;
   margin-right: 0.5em;
