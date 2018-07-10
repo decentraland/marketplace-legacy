@@ -109,6 +109,7 @@
     "request": "请求",
     "retry": "重试",
     "revoke": "撤消",
+    "service_unavailable": "暂停服务",
     "settings": "设置",
     "sign_in": "登录",
     "sign_in_notice": "请登录 {sign_in_link} 后访问此页面",

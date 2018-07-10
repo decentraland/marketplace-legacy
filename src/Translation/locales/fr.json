@@ -111,6 +111,7 @@
     "request": "Demande",
     "retry": "Recommencez",
     "revoke": "Révoquer",
+    "service_unavailable": "Service indisponible",
     "settings": "Paramètres",
     "sign_in": "Se connecter",
     "sign_in_notice":

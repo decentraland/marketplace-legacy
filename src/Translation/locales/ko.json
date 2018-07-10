@@ -110,6 +110,7 @@
     "request": "의뢰",
     "retry": "다시 해 보다",
     "revoke": "취소",
+    "service_unavailable": "서비스를 사용할 수 없음",
     "settings": "설정",
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
