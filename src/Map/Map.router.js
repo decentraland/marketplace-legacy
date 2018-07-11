@@ -9,8 +9,7 @@ import {
 import { toEstateObject, calculateZoomAndCenter } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
-import { toPublicationObject, PUBLICATION_TYPES } from '../shared/publication'
-import { AssetRouter } from '../Asset'
+import { toPublicationObject } from '../shared/publication'
 import { Parcel, coordinates } from '../Parcel'
 import { Estate, EstateService } from '../Estate'
 import { blacklist } from '../lib'
@@ -86,23 +85,16 @@ export class MapRouter {
   }
 
   async getMap(req) {
-    try {
-      const nw = server.extractFromReq(req, 'nw')
-      const se = server.extractFromReq(req, 'se')
+    const nw = server.extractFromReq(req, 'nw')
+    const se = server.extractFromReq(req, 'se')
 
-      const parcelsRange = await Parcel.inRange(nw, se)
-      const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
-      const estates = await EstateService.getByParcels(parcels)
+    const parcelsRange = await Parcel.inRange(nw, se)
+    const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
+    const estates = await EstateService.getByParcels(parcels)
 
-      const assets = { parcels, estates }
-      const total = parcels.length + estates.length
-      return { assets, total }
-    } catch (error) {
-      // Force parcel type
-      req.params.type = PUBLICATION_TYPES.parcel
-      const { assets, total } = await new AssetRouter().getAssets(req)
-      return { assets, total }
-    }
+    const assets = { parcels, estates }
+    const total = parcels.length + estates.length
+    return { assets, total }
   }
 
   async sendPNG(
