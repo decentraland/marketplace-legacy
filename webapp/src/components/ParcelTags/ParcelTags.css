@@ -75,3 +75,9 @@
 .ParcelTags .tag-details {
   margin-left: 16px;
 }
+
+@media (max-width: 768px) {
+  .ParcelTags .tag.medium {
+    margin-bottom: 16px;
+  }
+}
