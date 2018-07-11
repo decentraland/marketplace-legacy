@@ -85,8 +85,14 @@ export class MapRouter {
   }
 
   async getMap(req) {
-    const nw = server.extractFromReq(req, 'nw')
-    const se = server.extractFromReq(req, 'se')
+    let nw
+    let se
+    try {
+      nw = server.extractFromReq(req, 'nw')
+      se = server.extractFromReq(req, 'se')
+    } catch (_) {
+      throw new Error('Both "nw" and "se" are required query params')
+    }
 
     const parcelsRange = await Parcel.inRange(nw, se)
     const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
