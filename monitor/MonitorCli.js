@@ -69,6 +69,7 @@ export class MonitorCli {
 
     this.processTimeout = setTimeout(() => {
       this.isProcessRunning = true
+
       this.processEvents(fromBlock).then(() => {
         this.isProcessRunning = false
         callback()
@@ -87,6 +88,7 @@ export class MonitorCli {
     if (!handler) throw new Error('Could not find a valid handler')
 
     const fromBlock = await this.getFromBlock(options)
+    const onEnd = () => this.runEnd(options)
 
     eventMonitor.run(options, async (error, logs) => {
       if (error) {
@@ -100,9 +102,9 @@ export class MonitorCli {
         }
 
         if (options.skipProcess) {
-          this.runEnd(options)
+          onEnd()
         } else {
-          this.processStoredEvents(fromBlock, () => this.runEnd(options))
+          this.processStoredEvents(fromBlock, onEnd)
         }
       }
     })
