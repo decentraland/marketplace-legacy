@@ -219,7 +219,7 @@ export class MapRouter {
       value = unsafeParseInt(param)
     } catch (e) {
       throw new Error(
-        `Invalid param "${name}" should be a number but got "${param}".`
+        `Invalid param "${name}" should be a integer but got "${param}".`
       )
     }
     return value > max ? max : value < min ? min : value
