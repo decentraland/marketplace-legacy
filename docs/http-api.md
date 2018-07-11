@@ -141,6 +141,43 @@ Returns all the Estates that belong to a given address
 ## Map
 
 ```
+GET /map
+```
+
+### Description
+
+Returns all the parcels and estates in a given area
+
+### Query Params
+
+| name | type | min  | max | description                     |
+| ---- | ---- | ---- | --- | ------------------------------- |
+| nw   | int  | -150 | 150 | The northwest coord of the area |
+| se   | int  | -150 | 150 | The southeast coord of the area |
+
+### Request Example:
+
+```
+GET /map?nw=-10,10&se=10,-10
+```
+
+### Result:
+
+```js
+{
+  "data": {
+    "assets": {
+      "parcels": [/* parcels */],
+      "estates": [/* estates */]
+    },
+    "total": 441
+  }
+}
+```
+
+---
+
+```
 GET /map.png
 ```
 
