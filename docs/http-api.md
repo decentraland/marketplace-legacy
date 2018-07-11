@@ -390,6 +390,16 @@ GET /addresses/:address/parcels
 
 Returns all the parcels that belong to a given address
 
+---
+
+```
+GET /parcels/:x/:y
+```
+
+### Description
+
+Returns a single parcel by its coords
+
 ## Publications
 
 ```
