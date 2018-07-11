@@ -110,7 +110,7 @@ Returns a list of Estates, paginated, sorted, and filtered according to the quer
 
 | name       | type | default              | description                                                                          |
 | ---------- | ---- | -------------------- | ------------------------------------------------------------------------------------ |
-| status     | enum | `open`               | Filter parcels by publications status: `open`, `cancelled` or `sold`                 |
+| status     | enum | `open`               | Filter estates by publications status: `open`, `cancelled` or `sold`                 |
 | sort_by    | enum | `created_at`         | Property to order by: `price`, `created_at`, `block_time_updated_at` or `expires_at` |
 | sort_order | enum | depends on `sort_by` | The order to sort by: `asc` or `desc`                                                |
 | limit      | int  | `20`                 | The number of results to be retuned                                                  |
