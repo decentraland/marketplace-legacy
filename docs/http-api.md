@@ -270,10 +270,9 @@ Same as `/parcels/:x/:y/map.png`, but instead of using `x` and `y` coordinates t
 
 ### URI Params
 
-| name | type   | description               |
-| ---- | ------ | ------------------------- |
-| id   | string | The id of the estate      |
-
+| name | type   | description          |
+| ---- | ------ | -------------------- |
+| id   | string | The id of the estate |
 
 ### Query Params
 
