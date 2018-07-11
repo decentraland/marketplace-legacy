@@ -12,7 +12,7 @@ import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject } from '../shared/publication'
 import { Parcel, coordinates } from '../Parcel'
 import { Estate, EstateService } from '../Estate'
-import { blacklist } from '../lib'
+import { blacklist, unsafeParseInt } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
@@ -196,27 +196,28 @@ export class MapRouter {
 
   sanitize(req) {
     return {
-      x: this.getNumber(req, 'x', minX, maxX, 0),
-      y: this.getNumber(req, 'y', minY, maxY, 0),
-      width: this.getNumber(req, 'width', 32, 1024, 500),
-      height: this.getNumber(req, 'height', 32, 1024, 500),
-      size: this.getNumber(req, 'size', 5, 40, 10),
+      x: this.getInteger(req, 'x', minX, maxX, 0),
+      y: this.getInteger(req, 'y', minY, maxY, 0),
+      width: this.getInteger(req, 'width', 32, 1024, 500),
+      height: this.getInteger(req, 'height', 32, 1024, 500),
+      size: this.getInteger(req, 'size', 5, 40, 10),
       center: this.getCoords(req, 'center', { x: 0, y: 0 }),
       selected: this.getCoordsArray(req, 'selected', []),
       showPublications: this.getBoolean(req, 'publications', false)
     }
   }
 
-  getNumber(req, name, min, max, defaultValue) {
-    let param
+  getInteger(req, name, min, max, defaultValue) {
+    let param, value
     try {
       param = server.extractFromReq(req, name)
     } catch (error) {
       return defaultValue
     }
 
-    const value = parseInt(Number(param), 10)
-    if (isNaN(value)) {
+    try {
+      value = unsafeParseInt(param)
+    } catch (e) {
       throw new Error(
         `Invalid param "${name}" should be a number but got "${param}".`
       )

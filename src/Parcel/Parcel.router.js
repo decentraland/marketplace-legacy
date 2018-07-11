@@ -5,6 +5,7 @@ import { ASSET_TYPE } from '../shared/asset'
 import { Bounds } from '../shared/map'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
+import { unsafeParseInt } from '../lib/unsafeParseInt'
 
 export class ParcelRouter {
   constructor(app) {
@@ -71,17 +72,18 @@ export class ParcelRouter {
   }
 
   async getParcel(req) {
-    let parcel
+    let parcel, x, y
 
-    const x = parseInt(server.extractFromReq(req, 'x'), 10)
-    const y = parseInt(server.extractFromReq(req, 'y'), 10)
-
-    if (isNaN(x)) {
-      throw new Error('Invalid coordinate "x" must be a number')
+    try {
+      x = unsafeParseInt(server.extractFromReq(req, 'x'))
+    } catch (e) {
+      throw new Error('Invalid coordinate "x" must be an integer')
     }
 
-    if (isNaN(y)) {
-      throw new Error('Invalid coordinate "y" must be a number')
+    try {
+      y = unsafeParseInt(server.extractFromReq(req, 'y'))
+    } catch (e) {
+      throw new Error('Invalid coordinate "y" must be an integer')
     }
 
     if (!Bounds.inBounds(x, y)) {
