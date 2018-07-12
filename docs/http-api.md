@@ -110,7 +110,7 @@ Returns a list of Estates, paginated, sorted, and filtered according to the quer
 
 | name       | type | default              | description                                                                          |
 | ---------- | ---- | -------------------- | ------------------------------------------------------------------------------------ |
-| status     | enum | `open`               | Filter parcels by publications status: `open`, `cancelled` or `sold`                 |
+| status     | enum | `open`               | Filter estates by publications status: `open`, `cancelled` or `sold`                 |
 | sort_by    | enum | `created_at`         | Property to order by: `price`, `created_at`, `block_time_updated_at` or `expires_at` |
 | sort_order | enum | depends on `sort_by` | The order to sort by: `asc` or `desc`                                                |
 | limit      | int  | `20`                 | The number of results to be retuned                                                  |
@@ -139,6 +139,43 @@ Returns all the Estates that belong to a given address
 | address | string | An Ethereum address |
 
 ## Map
+
+```
+GET /map
+```
+
+### Description
+
+Returns all the parcels and estates in a given area
+
+### Query Params
+
+| name | type | min  | max | description                     |
+| ---- | ---- | ---- | --- | ------------------------------- |
+| nw   | int  | -150 | 150 | The northwest coord of the area |
+| se   | int  | -150 | 150 | The southeast coord of the area |
+
+### Request Example:
+
+```
+GET /map?nw=-10,10&se=10,-10
+```
+
+### Result:
+
+```js
+{
+  "data": {
+    "assets": {
+      "parcels": [/* parcels */],
+      "estates": [/* estates */]
+    },
+    "total": 441
+  }
+}
+```
+
+---
 
 ```
 GET /map.png
@@ -233,10 +270,9 @@ Same as `/parcels/:x/:y/map.png`, but instead of using `x` and `y` coordinates t
 
 ### URI Params
 
-| name | type   | description               |
-| ---- | ------ | ------------------------- |
-| id   | string | The id of the estate      |
-
+| name | type   | description          |
+| ---- | ------ | -------------------- |
+| id   | string | The id of the estate |
 
 ### Query Params
 
@@ -352,6 +388,16 @@ GET /addresses/:address/parcels
 ### Description
 
 Returns all the parcels that belong to a given address
+
+---
+
+```
+GET /parcels/:x/:y
+```
+
+### Description
+
+Returns a single parcel by its coords
 
 ## Publications
 

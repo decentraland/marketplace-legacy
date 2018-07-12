@@ -28,8 +28,8 @@ export class API {
     return this.request('get', '/map', { nw, se })
   }
 
-  fetchParcelsInRange(nw, se) {
-    return this.request('get', '/parcels', { nw, se })
+  fetchParcel(x, y) {
+    return this.request('get', `/parcels/${x}/${y}`)
   }
 
   fetchParcels(options = FILTER_DEFAULTS) {

@@ -16,7 +16,6 @@ import { getData as getParcels } from './selectors'
 import { locations } from 'locations'
 import { api } from 'lib/api'
 import { buildCoordinate } from 'shared/parcel'
-import { Bounds } from 'shared/map'
 
 export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
@@ -27,16 +26,7 @@ export function* parcelsSaga() {
 function* handleParcelRequest(action) {
   const { x, y } = action
   try {
-    const parcelId = buildCoordinate(x, y)
-    const nw = parcelId
-    const se = parcelId
-
-    if (!Bounds.inBounds(x, y)) {
-      throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
-    }
-
-    const { parcels } = yield call(() => api.fetchParcelsInRange(nw, se))
-    const parcel = parcels.find(p => p.id === parcelId)
+    const parcel = yield call(() => api.fetchParcel(x, y))
 
     yield put(fetchParcelSuccess(x, y, parcel))
   } catch (error) {

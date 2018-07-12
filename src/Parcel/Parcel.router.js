@@ -2,8 +2,10 @@ import { server, utils } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
 import { ASSET_TYPE } from '../shared/asset'
+import { Bounds } from '../shared/map'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
+import { unsafeParseInt } from '../lib/unsafeParseInt'
 
 export class ParcelRouter {
   constructor(app) {
@@ -24,6 +26,15 @@ export class ParcelRouter {
      * @return {array<Parcel>}
      */
     this.app.get('/parcels', server.handleRequest(this.getParcels))
+
+    /**
+     * Returns the parcels in between the supplied coordinates
+     * Or filtered by the supplied params
+     * @param  {string} x - coordinate X
+     * @param  {string} y - coordinate Y
+     * @return {array<Parcel>}
+     */
+    this.app.get('/parcels/:x/:y', server.handleRequest(this.getParcel))
 
     /**
      * Returns the parcels an address owns
@@ -58,6 +69,34 @@ export class ParcelRouter {
     }
 
     return { parcels, total }
+  }
+
+  async getParcel(req) {
+    let parcel, x, y
+
+    try {
+      x = unsafeParseInt(server.extractFromReq(req, 'x'))
+    } catch (e) {
+      throw new Error('Invalid coordinate "x" must be an integer')
+    }
+
+    try {
+      y = unsafeParseInt(server.extractFromReq(req, 'y'))
+    } catch (e) {
+      throw new Error('Invalid coordinate "y" must be an integer')
+    }
+
+    if (!Bounds.inBounds(x, y)) {
+      throw new Error(
+        `Coords are out of bounds: ${JSON.stringify(Bounds.getBounds())}`
+      )
+    }
+    const coords = Parcel.buildId(x, y)
+    const range = await Parcel.inRange(coords, coords)
+
+    parcel = utils.omit(range[0], blacklist.parcel)
+
+    return parcel
   }
 
   async getAddressParcels(req) {

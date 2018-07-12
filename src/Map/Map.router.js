@@ -9,11 +9,10 @@ import {
 import { toEstateObject, calculateZoomAndCenter } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
-import { toPublicationObject, PUBLICATION_TYPES } from '../shared/publication'
-import { AssetRouter } from '../Asset'
+import { toPublicationObject } from '../shared/publication'
 import { Parcel, coordinates } from '../Parcel'
 import { Estate, EstateService } from '../Estate'
-import { blacklist } from '../lib'
+import { blacklist, unsafeParseInt } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
@@ -86,23 +85,22 @@ export class MapRouter {
   }
 
   async getMap(req) {
+    let nw
+    let se
     try {
-      const nw = server.extractFromReq(req, 'nw')
-      const se = server.extractFromReq(req, 'se')
-
-      const parcelsRange = await Parcel.inRange(nw, se)
-      const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
-      const estates = await EstateService.getByParcels(parcels)
-
-      const assets = { parcels, estates }
-      const total = parcels.length + estates.length
-      return { assets, total }
-    } catch (error) {
-      // Force parcel type
-      req.params.type = PUBLICATION_TYPES.parcel
-      const { assets, total } = await new AssetRouter().getAssets(req)
-      return { assets, total }
+      nw = server.extractFromReq(req, 'nw')
+      se = server.extractFromReq(req, 'se')
+    } catch (_) {
+      throw new Error('Both "nw" and "se" are required query params')
     }
+
+    const parcelsRange = await Parcel.inRange(nw, se)
+    const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
+    const estates = await EstateService.getByParcels(parcels)
+
+    const assets = { parcels, estates }
+    const total = parcels.length + estates.length
+    return { assets, total }
   }
 
   async sendPNG(
@@ -198,29 +196,30 @@ export class MapRouter {
 
   sanitize(req) {
     return {
-      x: this.getNumber(req, 'x', minX, maxX, 0),
-      y: this.getNumber(req, 'y', minY, maxY, 0),
-      width: this.getNumber(req, 'width', 32, 1024, 500),
-      height: this.getNumber(req, 'height', 32, 1024, 500),
-      size: this.getNumber(req, 'size', 5, 40, 10),
+      x: this.getInteger(req, 'x', minX, maxX, 0),
+      y: this.getInteger(req, 'y', minY, maxY, 0),
+      width: this.getInteger(req, 'width', 32, 1024, 500),
+      height: this.getInteger(req, 'height', 32, 1024, 500),
+      size: this.getInteger(req, 'size', 5, 40, 10),
       center: this.getCoords(req, 'center', { x: 0, y: 0 }),
       selected: this.getCoordsArray(req, 'selected', []),
       showPublications: this.getBoolean(req, 'publications', false)
     }
   }
 
-  getNumber(req, name, min, max, defaultValue) {
-    let param
+  getInteger(req, name, min, max, defaultValue) {
+    let param, value
     try {
       param = server.extractFromReq(req, name)
     } catch (error) {
       return defaultValue
     }
 
-    const value = parseInt(Number(param), 10)
-    if (isNaN(value)) {
+    try {
+      value = unsafeParseInt(param)
+    } catch (e) {
       throw new Error(
-        `Invalid param "${name}" should be a number but got "${param}".`
+        `Invalid param "${name}" should be a integer but got "${param}".`
       )
     }
     return value > max ? max : value < min ? min : value
