@@ -65,7 +65,7 @@ const sanityCheck = {
         }
 
         if (options.selfHeal) {
-          if (inconsistencies.length) {
+          if (inconsistencies.length > 0) {
             log.info(`Attempting to heal ${inconsistencies.length} parcels`)
             log.info('Deleting current events')
             await Promise.all(inconsistencies.map(cleanBlockainEvents))
@@ -80,10 +80,14 @@ const sanityCheck = {
             await indexMissingEvents(
               (...args) => new SanityMonitorCli(inconsistencies, ...args)
             )
+            log.info(
+              `Fixed inconsistencies on ${inconsistencies.length} parcels`
+            )
+          } else {
+            log.info('No inconsistencies found')
           }
-        } else {
-          process.exit()
         }
+        process.exit()
       })
   }
 }
