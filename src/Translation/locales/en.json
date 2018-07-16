@@ -149,6 +149,7 @@
     "amount_placeholder": "Amount in MANA",
     "cancel": "Cancel Mortgage",
     "claim": "Claim parcel",
+    "defaulted_in": "Defaulted in",
     "duration": "Duration",
     "duration_placeholder": "Duration in days",
     "errors": {

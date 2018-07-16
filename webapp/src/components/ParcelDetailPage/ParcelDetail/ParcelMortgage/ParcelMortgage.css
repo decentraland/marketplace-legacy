@@ -38,6 +38,10 @@
   color: var(--gray);
 }
 
+.ParcelMortgageDetail p::first-letter {
+  text-transform: uppercase;
+}
+
 .ParcelMortgageDetail .cta {
   margin-left: auto;
 }

@@ -148,6 +148,7 @@
     "amount_placeholder": "MANA 金额",
     "cancel": "取消抵押",
     "claim": "声明包裹",
+    "defaulted_in": "违约",
     "duration": "持续时间",
     "duration_placeholder": "持续时间以天计",
     "errors": {

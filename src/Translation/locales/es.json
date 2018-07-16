@@ -149,6 +149,7 @@
     "amount_placeholder": "Monto en MANA",
     "cancel": "Cancelar hipoteca",
     "claim": "Reclamo de paquete",
+    "defaulted_in": "Defecto en",
     "duration": "Duración",
     "duration_placeholder": "Duración en días",
     "errors": {
