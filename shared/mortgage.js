@@ -18,6 +18,12 @@ export const isMortgageOngoing = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.ongoing)
 export const isMortgagePaid = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.paid)
+export const isMortgageDefaulting = mortgage =>
+  new Date().getTime() > parseInt(mortgage.is_due_at * 1000, 10)
+export const isMortgageDefaulted = mortgage =>
+  hasStatus(mortgage, MORTGAGE_STATUS.defaulted) ||
+  new Date().getTime() <
+    parseInt(mortgage.is_due_at * 1000, 10) + MORTGAGE_DEFAULT_IN_DAYS
 
 // Interest in seconds
 export function toInterestRate(r) {
@@ -120,7 +126,12 @@ export function getMortgageOutstandingAmount(mortgage) {
       pending
     )
   }
-
+  console.log(
+    mortgage.amount + interest + punitoryInterest - mortgage.paid,
+    interest,
+    punitoryInterest,
+    mortgage.paid
+  )
   return Math.ceil(
     mortgage.amount + interest + punitoryInterest - mortgage.paid
   )
@@ -148,14 +159,14 @@ function getMortgageDefaultedTimeLeft(mortgage) {
   )
 }
 
-export function isMortgageDefaulted(mortgage) {
-  return new Date().getTime() > parseInt(mortgage.is_due_at * 1000, 10)
-}
-
 export function getMortgageTimeLeft(mortgage) {
-  if (isMortgageDefaulted(mortgage)) {
+  if (isMortgageDefaulting(mortgage)) {
     return getMortgageDefaultedTimeLeft(mortgage)
   } else {
     return parseInt(mortgage.is_due_at * 1000, 10)
   }
+}
+
+export function getMortgageDefaultedStatus() {
+  return MORTGAGE_STATUS.defaulted
 }
