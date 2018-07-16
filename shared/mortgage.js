@@ -126,12 +126,6 @@ export function getMortgageOutstandingAmount(mortgage) {
       pending
     )
   }
-  console.log(
-    mortgage.amount + interest + punitoryInterest - mortgage.paid,
-    interest,
-    punitoryInterest,
-    mortgage.paid
-  )
   return Math.ceil(
     mortgage.amount + interest + punitoryInterest - mortgage.paid
   )
