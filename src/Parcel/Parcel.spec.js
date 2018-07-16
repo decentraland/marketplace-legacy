@@ -161,6 +161,8 @@ describe('Parcel', function() {
         is_due_at: 10000,
         payable_at: 1000,
         amount: 1500,
+        interest_rate: 0,
+        punitory_interest_rate: 0,
         outstanding_amount: 1500,
         expires_at: new Date().getTime() * 1000,
         block_time_created_at: null,
