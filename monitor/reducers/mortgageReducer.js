@@ -32,14 +32,12 @@ export async function mortgageReducer(event) {
 
       const [
         amount,
-        duesIn,
         expiresAt,
         payableAt,
         interestRate,
         punitoryInterestRate
       ] = await Promise.all([
         rcnEngineContract.getAmount(LoanIdBN),
-        rcnEngineContract.getDuesIn(LoanIdBN),
         rcnEngineContract.getExpirationRequest(LoanIdBN),
         rcnEngineContract.getCancelableAt(LoanIdBN),
         rcnEngineContract.getInterestRate(LoanIdBN),
