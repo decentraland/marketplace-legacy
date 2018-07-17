@@ -78,13 +78,9 @@ export default class ParcelMortgage extends React.PureComponent {
                 <React.Fragment>
                   <Grid.Column width={4}>
                     <h3>
-                      {t(
-                        `${
-                          isMortgageDefaulting(mortgage)
-                            ? 'mortgage.defaulted_in'
-                            : 'global.time_left'
-                        }`
-                      )}
+                      {isMortgageDefaulting(mortgage)
+                        ? t('mortgage.defaulted_in')
+                        : t('global.time_left')}
                     </h3>
                     <p>{distanceInWordsToNow(getMortgageTimeLeft(mortgage))}</p>
                   </Grid.Column>

@@ -101,7 +101,7 @@ export default class PayMortgagePage extends React.PureComponent {
                   </Link>
                 ),
                 outstanding_amount: formatMana(
-                  mortgage ? getMortgageOutstandingAmount(mortgage) : 0
+                  getMortgageOutstandingAmount(mortgage)
                 )
               })}
               hasCustomFooter

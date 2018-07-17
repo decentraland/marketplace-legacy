@@ -89,6 +89,10 @@ export function getActiveMortgageByBorrower(
  */
 
 export function getMortgageOutstandingAmount(mortgage) {
+  if (!mortgage) {
+    return 0
+  }
+
   const now = parseInt(new Date().getTime() / 1000, 10)
   const startedTime = parseInt(mortgage.started_at / 1000, 10)
   const isDueAt = parseInt(mortgage.is_due_at, 10)
