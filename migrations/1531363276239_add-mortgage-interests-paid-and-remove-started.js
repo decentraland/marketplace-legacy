@@ -9,8 +9,7 @@ exports.up = pgm => {
     interest_rate: { type: 'FLOAT', notNull: true },
     punitory_interest_rate: { type: 'FLOAT', notNull: true },
     paid: { type: 'FLOAT', default: 0 },
-    started_at: { type: 'BIGINT' },
-    dues_in: { type: 'BIGINT' }
+    started_at: { type: 'BIGINT' }
   })
 }
 
@@ -19,8 +18,7 @@ exports.down = pgm => {
     interest_rate: { type: 'FLOAT' },
     punitory_interest_rate: { type: 'FLOAT' },
     paid: { type: 'FLOAT' },
-    started_at: { type: 'BIGINT' },
-    dues_in: { type: 'BIGINT' }
+    started_at: { type: 'BIGINT' }
   })
 
   pgm.addColumns(tableName, {

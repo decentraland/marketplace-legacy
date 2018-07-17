@@ -55,7 +55,6 @@ export async function mortgageReducer(event) {
           status: MORTGAGE_STATUS.pending,
           interest_rate: interestRate.toNumber(),
           punitory_interest_rate: punitoryInterestRate.toNumber(),
-          dues_in: duesIn.toNumber(),
           is_due_at: 0,
           payable_at: payableAt.toNumber(),
           expires_at: expiresAt.toNumber(),

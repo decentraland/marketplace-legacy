@@ -17,7 +17,6 @@ export class Mortgage extends Model {
     'loan_id',
     'mortgage_id',
     'amount',
-    'dues_in',
     'expires_at',
     'is_due_at',
     'payable_at',
