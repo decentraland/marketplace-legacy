@@ -22,8 +22,9 @@ export const isMortgageDefaulting = mortgage =>
   new Date().getTime() > parseInt(mortgage.is_due_at * 1000, 10)
 export const isMortgageDefaulted = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.defaulted) ||
-  new Date().getTime() <
-    parseInt(mortgage.is_due_at * 1000, 10) + MORTGAGE_DEFAULT_IN_DAYS
+  (!isMortgagePaid(mortgage) &&
+    new Date().getTime() <
+      parseInt(mortgage.is_due_at * 1000, 10) + MORTGAGE_DEFAULT_IN_DAYS)
 
 // Interest in seconds
 export function toInterestRate(r) {
