@@ -9,8 +9,14 @@ import { mortgageType } from 'components/types'
 import {
   isMortgagePending,
   isMortgageOngoing,
-  isMortgagePaid
+  isMortgagePaid,
+  isMortgageDefaulting,
+  isMortgageDefaulted,
+  getMortgageOutstandingAmount,
+  getMortgageTimeLeft,
+  getMortgageDefaultedStatus
 } from 'shared/mortgage'
+import { distanceInWordsToNow } from 'lib/utils'
 
 import './ParcelMortgage.css'
 
@@ -21,82 +27,80 @@ export default class ParcelMortgage extends React.PureComponent {
 
   render() {
     const { mortgage } = this.props
-    const startTime = Math.round(new Date(mortgage.started_at).getTime() / 1000)
     return (
-      <Grid className="ParcelMortgageDetail">
+      <Grid className={`ParcelMortgageDetail ${mortgage.status}`}>
         <Grid.Row>
-          <Grid.Column width={2} className={mortgage.status}>
+          <Grid.Column
+            width={2}
+            className={
+              isMortgageDefaulted(mortgage)
+                ? getMortgageDefaultedStatus()
+                : mortgage.status
+            }
+          >
             <h3>{t('global.mortgage')}</h3>
-            <p>{mortgage.status}</p>
+            <p>
+              {isMortgageDefaulted(mortgage)
+                ? getMortgageDefaultedStatus()
+                : mortgage.status}
+            </p>
           </Grid.Column>
-          <Grid.Column width={2}>
-            <h3>
-              {isMortgagePending(mortgage)
-                ? t('mortgage.requested')
-                : t('mortgage.outstanding_amount')}
-            </h3>
-            <Mana
-              amount={
-                isMortgagePending(mortgage)
-                  ? parseFloat(mortgage.amount)
-                  : parseFloat(mortgage.outstanding_amount)
-              }
-              size={20}
-              scale={1.2}
-              className="mortgage-amount-icon"
-            />
-          </Grid.Column>
-          {isMortgagePending(mortgage) && (
-            <Grid.Column width={3} className={'expires-at'}>
-              <h3>{t('global.time_left')}</h3>
-              <p>
-                <Expiration expiresAt={parseInt(mortgage.expires_at, 10)} />
-              </p>
-            </Grid.Column>
-          )}
-          {isMortgageOngoing(mortgage) && (
+          {!isMortgageDefaulted(mortgage) && (
             <React.Fragment>
-              <Grid.Column width={3}>
-                <h3>{t('mortgage.payable')}</h3>
-                <p>
-                  <Expiration
-                    expiresAt={parseInt(
-                      (startTime + parseInt(mortgage.payable_at, 10)) * 1000,
-                      10
-                    )}
+              {!isMortgagePaid(mortgage) && (
+                <Grid.Column width={isMortgageOngoing(mortgage) ? 4 : 2}>
+                  <h3>
+                    {isMortgagePending(mortgage)
+                      ? t('mortgage.requested')
+                      : t('mortgage.outstanding_amount')}
+                  </h3>
+                  <Mana
+                    amount={
+                      isMortgagePending(mortgage)
+                        ? parseFloat(mortgage.amount)
+                        : getMortgageOutstandingAmount(mortgage)
+                    }
+                    size={20}
+                    scale={1.2}
+                    className="mortgage-amount-icon"
                   />
-                </p>
-              </Grid.Column>
-              <Grid.Column width={3}>
-                <h3>{t('global.time_left')}</h3>
-                <p>
-                  <Expiration
-                    expiresAt={parseInt(
-                      (startTime + parseInt(mortgage.is_due_at, 10)) * 1000,
-                      10
+                </Grid.Column>
+              )}
+              {isMortgagePending(mortgage) && (
+                <Grid.Column width={4} className={'expires-at'}>
+                  <h3>{t('global.time_left')}</h3>
+                  <p>
+                    <Expiration expiresAt={parseInt(mortgage.expires_at, 10)} />
+                  </p>
+                </Grid.Column>
+              )}
+              {isMortgageOngoing(mortgage) && (
+                <React.Fragment>
+                  <Grid.Column width={4}>
+                    <h3>
+                      {isMortgageDefaulting(mortgage)
+                        ? t('mortgage.defaulted_in')
+                        : t('global.time_left')}
+                    </h3>
+                    <p>{distanceInWordsToNow(getMortgageTimeLeft(mortgage))}</p>
+                  </Grid.Column>
+                </React.Fragment>
+              )}
+              {isMortgagePaid(mortgage) && (
+                <Grid.Column width={3}>
+                  <h3>{t('global.paid_at')}</h3>
+                  <p>
+                    {distanceInWordsToNow(
+                      parseInt(mortgage.block_time_updated_at, 10)
                     )}
-                  />
-                </p>
+                  </p>
+                </Grid.Column>
+              )}
+              <Grid.Column width={3} className={'cta'}>
+                <MortgageActions mortgage={mortgage} />
               </Grid.Column>
             </React.Fragment>
           )}
-          {isMortgagePaid(mortgage) && (
-            <Grid.Column width={3}>
-              <h3>{t('global.paid_at')}</h3>
-              <p>
-                <Expiration
-                  expiresAt={parseInt(
-                    (startTime + parseInt(mortgage.block_time_updated_at, 10)) *
-                      1000,
-                    10
-                  )}
-                />
-              </p>
-            </Grid.Column>
-          )}
-          <Grid.Column width={3} className={'cta'}>
-            <MortgageActions mortgage={mortgage} />
-          </Grid.Column>
         </Grid.Row>
       </Grid>
     )

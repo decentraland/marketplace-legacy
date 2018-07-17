@@ -8,7 +8,10 @@ import { walletType, mortgageType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 import { buildCoordinate } from 'shared/parcel'
-import { isMortgageOngoing } from 'shared/mortgage'
+import {
+  isMortgageOngoing,
+  getMortgageOutstandingAmount
+} from 'shared/mortgage'
 import { formatMana } from 'lib/utils'
 import PayMortgageForm from './PayMortgageForm'
 import ParcelModal from 'components/ParcelModal'
@@ -98,7 +101,7 @@ export default class PayMortgagePage extends React.PureComponent {
                   </Link>
                 ),
                 outstanding_amount: formatMana(
-                  mortgage ? mortgage.outstanding_amount : 0
+                  getMortgageOutstandingAmount(mortgage)
                 )
               })}
               hasCustomFooter

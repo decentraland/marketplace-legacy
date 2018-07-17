@@ -149,6 +149,7 @@
     "amount_placeholder": "Monto en MANA",
     "cancel": "Cancelar hipoteca",
     "claim": "Reclamo de paquete",
+    "defaulted_in": "Defecto en",
     "duration": "Duración",
     "duration_placeholder": "Duración en días",
     "errors": {
@@ -321,7 +322,7 @@
     "mana_approved":
       "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
     "marketplace_contract": "Contrato de Mercado",
-    "mortgage_creator_contract": "Contrato de creador hipotecario",
+    "mortgage_helper_contract": "Contrato de creador hipotecario",
     "mortgage_manager_contract": "Contrato de administrador hipotecario",
     "pending_tx": "Tienes una transacción pendiente",
     "unauthorize_land_check":

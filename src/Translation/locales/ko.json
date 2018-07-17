@@ -149,6 +149,7 @@
     "amount_placeholder": "MANA의 금액",
     "cancel": "모기지 취소",
     "claim": "소유권 주장 소포",
+    "defaulted_in": "에서 기본값",
     "duration": "지속",
     "duration_placeholder": "기간 (일)",
     "errors": {
@@ -313,7 +314,7 @@
     "mana_approved":
       "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "marketplace_contract": "시장 계약",
-    "mortgage_creator_contract": "모기지 크리에이터 계약",
+    "mortgage_helper_contract": "모기지 크리에이터 계약",
     "mortgage_manager_contract": "모기지 매니저 계약",
     "pending_tx": "보류중인 거래가 있습니다.",
     "unauthorize_land_check":

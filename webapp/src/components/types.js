@@ -115,6 +115,5 @@ export const mortgageType = shape({
   expires_at: string.isRequired,
   is_due_at: string.isRequired,
   payable_at: string.isRequired,
-  started_at: number,
   outstanding_amount: number.isRequired
 })

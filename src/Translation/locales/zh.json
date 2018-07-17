@@ -148,6 +148,7 @@
     "amount_placeholder": "MANA 金额",
     "cancel": "取消抵押",
     "claim": "声明包裹",
+    "defaulted_in": "违约",
     "duration": "持续时间",
     "duration_placeholder": "持续时间以天计",
     "errors": {
@@ -301,7 +302,7 @@
     "disapprove_mana_check": "取消选中不授权虚拟市场合约使用 MANA",
     "mana_approved": "您已授权{marketplace_contract_link}以您的名义操作 MANA",
     "marketplace_contract": "虚拟市场合约",
-    "mortgage_creator_contract": "抵押创建者合约",
+    "mortgage_helper_contract": "抵押创建者合约",
     "mortgage_manager_contract": "抵押管理合约",
     "pending_tx": "您有待处理的交易",
     "unauthorize_land_check": "取消勾选取消授权市场合约使用虚拟土地",

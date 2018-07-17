@@ -21,11 +21,18 @@ export class Mortgage extends Model {
     'is_due_at',
     'payable_at',
     'started_at',
+    'paid',
+    'interest_rate',
+    'punitory_interest_rate',
     'outstanding_amount',
     'block_time_created_at',
     'block_time_updated_at'
   ]
   static primaryKey = 'tx_hash'
+
+  static findByMortgageId(id) {
+    return this.find({ mortgage_id: id })
+  }
 
   static findByBorrower(borrower, status = Object.values(MORTGAGE_STATUS)) {
     return this.db.query(

@@ -151,6 +151,7 @@
     "amount_placeholder": "Montant à MANA",
     "cancel": "Annuler l'hypothèque",
     "claim": "Demande de colis",
+    "defaulted_in": "Par défaut dans",
     "duration": "Durée",
     "duration_placeholder": "Durée en jours",
     "errors": {
@@ -323,7 +324,7 @@
     "mana_approved":
       "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
     "marketplace_contract": "Contrat de la place de marché",
-    "mortgage_creator_contract": "Contrat de créancier hypothécaire",
+    "mortgage_helper_contract": "Contrat de créancier hypothécaire",
     "mortgage_manager_contract": "Contrat de gestionnaire d'hypothèques",
     "pending_tx": "Vous avez une transaction en attente",
     "unauthorize_land_check":

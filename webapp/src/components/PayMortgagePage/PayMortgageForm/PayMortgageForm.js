@@ -27,16 +27,13 @@ export default class PayMortgageForm extends React.PureComponent {
   }
 
   handleAmountChange = e => {
-    const { mortgage, balance } = this.props
+    const { balance } = this.props
     const amount = e.currentTarget.value
     if (amount === '') {
       this.setState({ amount })
     } else {
       this.setState({
-        amount: Math.max(
-          Math.min(mortgage.outstanding_amount, balance, amount),
-          0
-        )
+        amount: Math.min(balance, amount)
       })
     }
   }

@@ -14,7 +14,7 @@ import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
 import { buildCoordinate } from 'shared/parcel'
 import {
   getMarketplaceAddress,
-  getMortgageCreatorAddress,
+  getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
@@ -69,10 +69,10 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  renderMortgageCreatorLink() {
+  renderMortgageHelperLink() {
     return (
-      <EtherscanLink address={getMortgageCreatorAddress()}>
-        Mortgage Creator
+      <EtherscanLink address={getMortgageHelperAddress()}>
+        Mortgage helper
       </EtherscanLink>
     )
   }
@@ -196,7 +196,7 @@ export default class Transaction extends React.PureComponent {
             ? t('global.authorized')
             : t('global.unauthorized')
           ).toLowerCase(),
-          mortgage_contract_link: this.renderMortgageCreatorLink()
+          mortgage_contract_link: this.renderMortgageHelperLink()
         })
       }
 

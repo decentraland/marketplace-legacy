@@ -32,16 +32,16 @@ export async function mortgageReducer(event) {
 
       const [
         amount,
-        duesIn,
         expiresAt,
         payableAt,
-        outstandingAmount
+        interestRate,
+        punitoryInterestRate
       ] = await Promise.all([
         rcnEngineContract.getAmount(LoanIdBN),
-        rcnEngineContract.getDuesIn(LoanIdBN),
         rcnEngineContract.getExpirationRequest(LoanIdBN),
         rcnEngineContract.getCancelableAt(LoanIdBN),
-        rcnEngineContract.sendCall('getPendingAmount', LoanIdBN)
+        rcnEngineContract.getInterestRate(LoanIdBN),
+        rcnEngineContract.getInterestRatePunitory(LoanIdBN)
       ])
 
       const block_time_created_at = await Promise.resolve(
@@ -50,8 +50,10 @@ export async function mortgageReducer(event) {
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_STATUS.confirmed,
-          status: MORTGAGE_STATUS.ongoing,
-          is_due_at: duesIn.toNumber(),
+          status: MORTGAGE_STATUS.pending,
+          interest_rate: interestRate.toNumber(),
+          punitory_interest_rate: punitoryInterestRate.toNumber(),
+          is_due_at: 0,
           payable_at: payableAt.toNumber(),
           expires_at: expiresAt.toNumber(),
           mortgage_id: parseInt(mortgageId, 10),
@@ -59,7 +61,7 @@ export async function mortgageReducer(event) {
           block_number,
           block_time_created_at,
           amount: eth.utils.fromWei(amount),
-          outstanding_amount: eth.utils.fromWei(outstandingAmount),
+          outstanding_amount: 0,
           tx_hash,
           asset_id: Parcel.buildId(x, y),
           type: ASSET_TYPE.parcel,
@@ -97,15 +99,30 @@ export async function mortgageReducer(event) {
     }
     case BlockchainEvent.EVENTS.startedMortgage: {
       const { _id } = event.args
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
+
       try {
         log.info(`[${name}] Starting Mortgage ${_id}`)
+        const mortgage = (await Mortgage.findByMortgageId(_id))[0]
+        const rcnEngineContract = eth.getContract('RCNEngine')
+        const loanIdBN = eth.utils.toBigNumber(mortgage.loan_id)
+
+        const [
+          block_time_updated_at,
+          outstandingAmount,
+          dueTime
+        ] = await Promise.all([
+          new BlockTimestampService().getBlockTime(block_number),
+          rcnEngineContract.sendCall('getPendingAmount', loanIdBN),
+          rcnEngineContract.getDueTime(loanIdBN)
+        ])
+
         await Mortgage.update(
           {
             status: MORTGAGE_STATUS.ongoing,
-            block_time_updated_at
+            outstanding_amount: eth.utils.fromWei(outstandingAmount),
+            block_time_updated_at,
+            started_at: block_time_updated_at,
+            is_due_at: dueTime.toNumber()
           },
           { mortgage_id: _id }
         )
@@ -125,14 +142,18 @@ export async function mortgageReducer(event) {
       log.info(`[${name}] Partial Payment for loan ${_index}`)
 
       const rcnEngineContract = eth.getContract('RCNEngine')
-      const outstandingAmount = await rcnEngineContract.sendCall(
-        'getPendingAmount',
-        eth.utils.toBigNumber(_index)
-      )
+      const [outstandingAmount, paid] = await Promise.all([
+        rcnEngineContract.sendCall(
+          'getPendingAmount',
+          eth.utils.toBigNumber(_index)
+        ),
+        rcnEngineContract.getPaid(eth.utils.toBigNumber(_index))
+      ])
 
       await Mortgage.update(
         {
           outstanding_amount: eth.utils.fromWei(outstandingAmount),
+          paid: eth.utils.fromWei(paid),
           block_time_updated_at
         },
         { loan_id: _index }
