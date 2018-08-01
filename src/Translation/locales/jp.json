@@ -33,19 +33,19 @@
     "rate": "Rate",
     "receive": "Receive",
     "slippage": "Slippage",
-    "title": "Convert ETH to MANA"
+    "title": "ETHからMANAへ変換"
   },
   "color_key": {
-    "contribution": "Contribution",
-    "district": "District",
+    "contribution": "貢献",
+    "district": "地区",
     "loading": "Loading",
-    "on_sale": "On sale",
-    "plaza": "Plaza",
-    "roads": "Roads",
-    "taken": "Taken",
-    "title": "Color key",
-    "unowned": "Unowned",
-    "yours": "Yours"
+    "on_sale": "販売中",
+    "plaza": "プラザ",
+    "roads": "道路",
+    "taken": "取得済",
+    "title": "カラーガイド",
+    "unowned": "未所有",
+    "yours": "マイランド"
   },
   "contribution": {
     "proposal": "proposal"
@@ -66,11 +66,11 @@
     "selection": "Select the parcels for your new Estate"
   },
   "footer": {
-    "color_key": "Color Key",
+    "color_key": "カラーガイド",
     "copyright": "© 2018 Decentraland. All rights reserved.",
     "mini_copyright": "© 2018 Decentraland.",
-    "privacy_policy": "Privacy Policy",
-    "terms": "Terms & Conditions"
+    "privacy_policy": "プライバシーポリシー ",
+    "terms": "利用規約"
   },
   "global": {
     "acquired_at": "Acquired at {date}",
@@ -215,37 +215,37 @@
     "description": "Description",
     "empty_description": "This parcel has no description",
     "history": {
-      "auction": "Auction",
-      "event": "Event",
-      "from": "From",
-      "price": "Price",
-      "sold": "Sold",
-      "title": "Transaction History",
-      "to": "To",
-      "when": "When"
+      "auction": "オークション",
+      "event": "イベント",
+      "from": "送信者",
+      "price": "価格",
+      "sold": "売却済",
+      "title": "取引履歴",
+      "to": "送信者",
+      "when": "時期"
     },
     "owner": {
-      "no_owner": "No Owner",
-      "part_of": "Part of {name}"
+      "no_owner": "所有者なし",
+      "part_of": "{name}の一部"
     },
     "publication": {
-      "buy": "Buy",
+      "buy": "購入",
       "mortgage": "Request Mortgage",
-      "price": "Price"
+      "price": "価格"
     },
     "tags": {
-      "title": "Highlights"
+      "title": "特徴"
     },
-    "view": "View on Atlas"
+    "view": "地図で見る"
   },
   "parcel_edit": {
     "description": "Description",
-    "edit_land": "Edit LAND",
-    "name": "Name",
-    "set_name_and_desc": "Set a name and description for {parcel_name}."
+    "edit_land": "ランドを編集",
+    "name": "名称",
+    "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。"
   },
   "parcel_manage": {
-    "address": "Operator address",
+    "address": "編集者のアドレス",
     "address_permission":
       "This address will be able to update the contents of this parcel.",
     "check_address": "Please check the address carefully",
