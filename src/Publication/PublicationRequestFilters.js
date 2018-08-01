@@ -32,34 +32,26 @@ export class PublicationRequestFilters {
 
   sanitize(req) {
     return {
-      status: this.getOrDefault(this.getStatus, null),
-      type: this.getOrDefault(this.getType, DEFAULT_TYPE),
-      sort: this.getOrDefault(this.getSort, DEFAULT_SORT),
-      pagination: this.getOrDefault(this.getPagination, DEFAULT_PAGINATION)
-    }
-  }
-
-  getOrDefault(getter, defaultValue) {
-    try {
-      return getter.call(this)
-    } catch (error) {
-      return defaultValue
+      status: this.getStatus(),
+      type: this.getType(),
+      sort: this.getSort(),
+      pagination: this.getPagination()
     }
   }
 
   getStatus() {
-    const status = this.getReqParam('status')
+    const status = this.getReqParam('status', PUBLICATION_STATUS.open)
     return Publication.isValidStatus(status) ? status : PUBLICATION_STATUS.open
   }
 
   getType() {
-    const type = this.getReqParam('type')
+    const type = this.getReqParam('type', PUBLICATION_TYPES.parcel)
     return Publication.isValidType(type) ? type : PUBLICATION_TYPES.parcel
   }
 
   getSort() {
-    let by = this.getReqParam('sort_by')
-    let order = this.getReqParam('sort_order')
+    let by = this.getReqParam('sort_by', DEFAULT_SORT.by)
+    let order = this.getReqParam('sort_order', '')
 
     by = by in ALLOWED_SORT_VALUES ? by : DEFAULT_SORT.by
 
@@ -72,8 +64,8 @@ export class PublicationRequestFilters {
   }
 
   getPagination() {
-    let limit = this.getReqParam('limit')
-    let offset = this.getReqParam('offset')
+    const limit = this.getReqParam('limit', DEFAULT_PAGINATION.limit)
+    const offset = this.getReqParam('offset', DEFAULT_PAGINATION.offset)
 
     return {
       limit: Math.max(Math.min(100, limit), 0),
@@ -81,7 +73,12 @@ export class PublicationRequestFilters {
     }
   }
 
-  getReqParam(name) {
-    return server.extractFromReq(this.req, name)
+  getReqParam(name, defaultValue) {
+    try {
+      return server.extractFromReq(this.req, name)
+    } catch (error) {
+      if (defaultValue === undefined) throw error
+      return defaultValue
+    }
   }
 }
