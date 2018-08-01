@@ -26,7 +26,7 @@ export class Location {
   }
 
   getOptionFromRouter(optionName) {
-    const { page, sort_by, sort_order } = this.query
+    const { sort_by, sort_order, page } = this.query
     let value = null
 
     switch (optionName) {
