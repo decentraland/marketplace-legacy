@@ -122,12 +122,12 @@
     "website": "Website"
   },
   "homepage": {
-    "get_started": "Get Started",
-    "hero_subtitle": "Decentralized market for LAND. Zero fees.",
-    "hero_title": "Choose your ideal location in Genesis City",
-    "newest_lands": "Newest LAND",
-    "view_more": "View More",
-    "watch_tutorial": "Watch the tutorial"
+    "get_started": "始める",
+    "hero_subtitle": "ランドの分散型マーケット。手数料は無料です。",
+    "hero_title": "ジェネシスシティで、あなたの理想の場所を選ぼう",
+    "newest_lands": "新着ランド",
+    "view_more": "もっと見る",
+    "watch_tutorial": "チュートリアルを観る"
   },
   "languages": {
     "en": "English",
@@ -137,11 +137,11 @@
     "zh": "Chinese"
   },
   "marketplace": {
-    "empty": "Oops... nothing found here.",
+    "empty": "Oops... ここには何もありません。",
     "filter": {
-      "cheapest": "Cheapest",
-      "close_to_expire": "Closest to expire",
-      "newest": "Newest"
+      "cheapest": "価格が安い順",
+      "close_to_expire": "締め切り順",
+      "newest": "新着順"
     }
   },
   "mortgage": {
