@@ -39,9 +39,7 @@ export default class AddressInput extends React.PureComponent {
             id={id}
             className="address-input"
             type="text"
-            placeholder={t('global.address_placeholder', {
-              address: '0x0f5d2fb29fb7d3cfee444a200298f468908cc942'
-            })}
+            placeholder={t('global.address_placeholder')}
             value={address}
             onChange={this.handleAddressChange}
             autoComplete="off"

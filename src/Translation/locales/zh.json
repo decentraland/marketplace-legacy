@@ -74,7 +74,7 @@
   "global": {
     "acquired_at": "获得日期 {date}",
     "activity": "活动",
-    "address_placeholder": "例如：{address}",
+    "address_placeholder": "0x...",
     "atlas": "地图",
     "authorized": "已授权",
     "balance": "余额",
@@ -278,7 +278,6 @@
     "error_persists":
       "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
     "irreversible": "请注意，转让土地的操作无法撤消。",
-    "placeholder": "例: {address}",
     "recipient_address": "接收者地址",
     "transfer_land": "转让土地",
     "unknown_error": "发生未知错误，详情如下。"
