@@ -4,11 +4,11 @@
     "clear": {
       "body":
         "Once you delete your transaction history you can't reverse the action, are you sure you want to continue?",
-      "title": "Delete transaction history"
+      "title": "取引履歴を削除"
     },
-    "completed": "Completed",
-    "no_activity": "You have no activity yet.",
-    "pending": "Pending",
+    "completed": "完了",
+    "no_activity": "まだ取引がありません。.",
+    "pending": "確認中",
     "start": "You are able to start trading at the {marketplace}!"
   },
   "address": {
@@ -16,15 +16,15 @@
   },
   "atlas": {
     "loading": "Loading",
-    "no_owner": "No Owner",
-    "on_sale": "On Sale: ",
-    "owner": "Owner: {owner}",
-    "road": "Road",
+    "no_owner": "所有者なし",
+    "on_sale": "販売中: ",
+    "owner": "所有者: {owner}",
+    "road": "道路",
     "your_estate": "Your estate",
-    "your_parcel": "Your parcel"
+    "your_parcel": "あなたの区画"
   },
   "buy_mana": {
-    "action": "Buy More",
+    "action": "もっと購入する",
     "amount_too_big": "This amount is too big for the Bancor Network",
     "available_eth": "Available: {eth} ETH",
     "not_enough": "You don't have enough ETH to pay for this",
