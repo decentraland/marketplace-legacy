@@ -102,9 +102,7 @@ export default class TransferManaForm extends React.PureComponent {
             id="address-input"
             className="address-input"
             type="text"
-            placeholder={t('parcel_transfer.placeholder', {
-              address: '0x0f5d2fb29fb7d3cfee444a200298f468908cc942'
-            })}
+            placeholder={t('global.address_placeholder')}
             value={address}
             onChange={this.handleAddressChange}
             autoComplete="off"

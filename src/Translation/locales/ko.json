@@ -75,7 +75,7 @@
   "global": {
     "acquired_at": "TK0에서 획득",
     "activity": "활동",
-    "address_placeholder": "예 : {address}",
+    "address_placeholder": "0x...",
     "atlas": "지도",
     "authorized": "허가",
     "balance": "밸런스",
@@ -283,7 +283,6 @@
       "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
     "irreversible":
       "토지를 이전하는 것은 돌이킬 수 없는 작업이라는 것을 기억하십시오.",
-    "placeholder": "예: {address}",
     "recipient_address": "수신자 주소",
     "transfer_land": "토지 이전",
     "unknown_error":

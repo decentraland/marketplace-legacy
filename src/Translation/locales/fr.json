@@ -76,7 +76,7 @@
   "global": {
     "acquired_at": "Acquis à {date}",
     "activity": "Activité",
-    "address_placeholder": "Exemple: {address}",
+    "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Autorisé",
     "balance": "Balance",
@@ -291,7 +291,6 @@
     "error_persists":
       "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
     "irreversible": "Chaque transfert de LAND est une opération irréversible.",
-    "placeholder": "Exemple: {address}",
     "recipient_address": "Adresse du destinataire",
     "transfer_land": "Transférer une LAND",
     "unknown_error":

@@ -75,7 +75,7 @@
   "global": {
     "acquired_at": "Acquired at {date}",
     "activity": "Activity",
-    "address_placeholder": "Example: {address}",
+    "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Authorized",
     "balance": "Balance",
@@ -285,7 +285,6 @@
       "If the problem persists, contact us at our {community_chat_link}",
     "irreversible":
       "Remember that transferring LAND is an irreversible operation.",
-    "placeholder": "Example: {address}",
     "recipient_address": "Recipient address",
     "transfer_land": "Transfer LAND",
     "unknown_error": "An unknown error occurred, the details are below."
