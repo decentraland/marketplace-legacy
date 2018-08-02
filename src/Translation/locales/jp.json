@@ -183,14 +183,14 @@
     "requested": "Requested"
   },
   "parcel": {
-    "no_description": "No description",
-    "no_name": "No name",
-    "view": "View"
+    "no_description": "説明文未設定",
+    "no_name": "名称未設定",
+    "view": "見る"
   },
   "parcel_buy": {
-    "about_to_buy": "You are about to buy {parcel_name} {parcel_price}.",
-    "approved_balance": "Your approved balance is {approved_balance}",
-    "buy_land": "Buy LAND",
+    "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
+    "approved_balance": "確認されている残高は{approved_balance}です。",
+    "buy_land": "ランドを購入",
     "buy_mana": "{click_here} to buy some MANA.",
     "didnt_approve": "You haven't authorized MANA usage",
     "needs_at_least": "You need at least {mana} in order to buy this LAND.",
@@ -200,20 +200,20 @@
   },
   "parcel_cancel": {
     "about_to_cancel": "You are about to cancel the sale of {parcel}.",
-    "cancel_land": "Cancel Sale",
-    "not_for_sale": "The parcel {parcel} is not for sale."
+    "cancel_land": "販売をキャンセル",
+    "not_for_sale": "この区画 {parcel} は販売されていません。"
   },
   "parcel_detail": {
     "actions": {
-      "cancel": "Cancel sale",
+      "cancel": "販売をキャンセル",
       "create_estate": "Create Estate",
       "edit": "Edit",
       "permissions": "Permissions",
       "sell": "Sell",
       "transfer": "Transfer"
     },
-    "description": "Description",
-    "empty_description": "This parcel has no description",
+    "description": "説明",
+    "empty_description": "この区画に説明文はありません。",
     "history": {
       "auction": "オークション",
       "event": "イベント",
@@ -239,7 +239,7 @@
     "view": "地図で見る"
   },
   "parcel_edit": {
-    "description": "Description",
+    "description": "説明",
     "edit_land": "ランドを編集",
     "name": "名称",
     "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。"
