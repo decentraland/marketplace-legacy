@@ -180,7 +180,7 @@
     "request": "Requesting a Mortgage",
     "request_land":
       "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
-    "requested": "Requested"
+    "requested": "申請しました。"
   },
   "parcel": {
     "no_description": "説明文未設定",
@@ -206,7 +206,7 @@
   "parcel_detail": {
     "actions": {
       "cancel": "販売をキャンセル",
-      "create_estate": "Create Estate",
+      "create_estate": "不動産を作成する",
       "edit": "編集する",
       "permissions": "権限",
       "sell": "販売する",
@@ -300,26 +300,26 @@
   },
   "settings": {
     "approve_mana":
-      "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
+      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
     "approve_mana_check":
-      "Checking authorizes MANA usage to the Marketplace contract",
+      "マーケットコントラクトでMANAの使用承認について確認しています。",
     "approve_mortgage_mana":
-      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
+      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
     "approve_mortgage_rcn":
       "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
-    "authorization": "Authorization",
+    "authorization": "承認事項",
     "authorize":
-      "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
+      "マーケット上でランドを使用することを{marketplace_contract_link}で承認します。",
     "authorize_land_check":
-      "Checking authorizes LAND usage to the Marketplace contract",
+      "マーケットコントラクトでランドの使用承認について確認しています。",
     "disapprove_mana_check":
       "Unchecking unauthorizes MANA usage for the Marketplace contract",
     "mana_approved":
-      "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "marketplace_contract": "Marketplace contract",
+      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
+    "marketplace_contract": "マーケットコントラクト",
     "mortgage_helper_contract": "Mortgage helper contract",
     "mortgage_manager_contract": "Mortgage manager contract",
-    "pending_tx": "You have a pending transaction",
+    "pending_tx": "　処理中の取引があります。",
     "unauthorize_land_check":
       "Unchecking unauthorizes LAND usage for the Marketplace contract",
     "you_approved_mortgage_mana":
@@ -332,7 +332,7 @@
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
     "get_started": "始める",
-    "intro": "まずはじめに、あなたのランドを安全に保管する環境を整えてください。",
+    "intro": "まずはじめに、あなたのランド（土地)を安全に保管する環境を整えてください。",
     "options": {
       "desktop":
         "{metamask_link} の拡張機能や {ledger_nano_link}ハードウェアウォレットを使用できます。",
