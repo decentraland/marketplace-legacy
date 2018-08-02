@@ -91,19 +91,19 @@
     "continue": "続ける",
     "contributions": "Contributions",
     "created_at": "{date}に作成されました。",
-    "estate": "Estate",
-    "estates": "Estates",
+    "estate": "不動産",
+    "estates": "不動産",
     "expired_at": "{time}に締め切り済",
     "expires_in": "締め切りまであと{time}",
     "expires_in_more_than_years": "締め切りまであと{years}年以上",
     "for": "for",
     "loading": "読込み中",
     "marketplace": "マーケット",
-    "mortgage": "Mortgage",
-    "mortgages": "Mortgages",
+    "mortgage": "担保",
+    "mortgages": "担保",
     "owned_by": "所有者",
     "owned_by_link": "所有者： {address_link}",
-    "paid_at": "Paid at",
+    "paid_at": "支払済み",
     "parcels": "パーセル区画",
     "profile": "マイランド",
     "publications": "Publications",
@@ -163,16 +163,16 @@
       "parcel_price": "Amount required should be less than parcel price"
     },
     "expiration": "有効期限を申請する",
-    "expiration_placeholder": "Expiration date for the mortgage",
-    "interest_rate": "Interest rate",
+    "expiration_placeholder": "担保の有効期限",
+    "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "oracle": "Oracle contract address",
     "outstanding_amount": "Outstanding amount",
-    "partial_payment": "Partial payment",
+    "partial_payment": "部分払い",
     "partial_payment_desc":
       "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount}",
     "pay": "支払う",
-    "payable": "Payable at",
+    "payable": "支払い方法",
     "payable_placeholder": "Payable in days",
     "pending_tx": "The mortgage for",
     "punitory_rate": "Punitory interest rate",
@@ -284,7 +284,7 @@
     "error_persists":
       "エラーが続く場合は、お手数ですが{community_chat_link}までお問い合わせください。",
     "irreversible":
-      "ランドの転送はやり直すことができませんので、ご確認ください。",
+      "ランドの転送はやり直すことができませんので、ご注意ください。",
     "placeholder": "例: {address}",
     "recipient_address": "受信者のアドレス",
     "transfer_land": "ランドを転送する",
@@ -306,7 +306,7 @@
     "approve_mortgage_mana":
       "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
     "approve_mortgage_rcn":
-      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
+      "{mortgage_contract_link}でRCNを使用することを承認します。",
     "authorization": "承認事項",
     "authorize":
       "マーケット上でランドを使用することを{marketplace_contract_link}で承認します。",
@@ -318,14 +318,14 @@
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
     "marketplace_contract": "マーケットコントラクト",
     "mortgage_helper_contract": "Mortgage helper contract",
-    "mortgage_manager_contract": "Mortgage manager contract",
+    "mortgage_manager_contract": "担保管理コントラクト",
     "pending_tx": "　処理中の取引があります。",
     "unauthorize_land_check":
       "Unchecking unauthorizes LAND usage for the Marketplace contract",
     "you_approved_mortgage_mana":
-      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
+      "あなたは{mortgage_contract_link} でMANAを使用することを承認しました",
     "you_approved_mortgage_rcn":
-      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
+      "{mortgage_contract_link} でRCNを使用することを承認しました",
     "you_authorized":
       "あなたは、マーケット上でランドを使用することを {marketplace_contract_link} で承認しました。"
   },
@@ -344,8 +344,8 @@
     "確認済み":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で認証しました。",
     "authorize":
-      "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
-    "buy": "You bought {parcel_link}",
+      "あなたは、マーケット上でランドを使用することを{marketplace_contract_link}で{action}しました。",
+    "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
     "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
@@ -357,13 +357,13 @@
     "edit":
       "{parcel_link}の名称を\"{name}\"説明文を \"{description}\"に変更しました。",
     "manage":
-      "You gave {address_link} permission to update the contents of {parcel_link}",
+      "{parcel_link}のコンテンツを更新する権限を {address_link} に与えました。",
     "manage_revoked":
-      "You revoked {address_link} permission to update the contents of {parcel_link}",
+      "{parcel_link}のコンテンツを更新する権限を {address_link} から取り消しました。",
     "mortgage_mana":
-      "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
+      "{mortgage_contract_link} でMANAを使用することを{action}しました。",
     "mortgage_rcn":
-      "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
+      "{mortgage_contract_link} でRCNを使用することを{action}しました。",
     "pay_mortgage":
       "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
     "publish": "{parcel_link}を公開しました。",
