@@ -7,12 +7,14 @@ import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl'
 import enIntlData from 'react-intl/locale-data/en'
 import esIntlData from 'react-intl/locale-data/es'
 import frIntlData from 'react-intl/locale-data/fr'
+import jaIntlData from 'react-intl/locale-data/ja'
 import koIntlData from 'react-intl/locale-data/ko'
 import zhIntlData from 'react-intl/locale-data/zh'
 
 import enFnsData from 'date-fns/locale/en'
 import esFnsData from 'date-fns/locale/es'
 import frFnsData from 'date-fns/locale/fr'
+import jaFnsData from 'date-fns/locale/ja'
 import koFnsData from 'date-fns/locale/ko'
 import zhFnsData from 'date-fns/locale/zh_cn'
 
@@ -30,6 +32,7 @@ export function addAvailableLocaleData() {
       enIntlData,
       esIntlData,
       frIntlData,
+      jaIntlData,
       zhIntlData,
       koIntlData
     )
@@ -56,7 +59,7 @@ export function getPreferredLocale() {
 export function getAvailableLocales() {
   // This is a hardcoded list that replicates the `Translation/locales` folder on the server
   // It saves us a request
-  return ['en', 'zh', 'ko', 'es', 'fr']
+  return ['en', 'zh', 'ko', 'es', 'fr', 'ja']
 }
 
 export function setI18n(intl) {
@@ -68,6 +71,7 @@ export function setCurrentLocale(localeName) {
     en: enFnsData,
     es: esFnsData,
     fr: frFnsData,
+    ja: jaFnsData,
     zh: zhFnsData,
     ko: koFnsData
   }[localeName || DEFAULT_LOCALE]

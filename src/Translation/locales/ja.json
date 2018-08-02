@@ -1,9 +1,9 @@
 {
   "activity": {
-    "approve": "取引を始める前に、{settings_link}でMANAの認証を行ってください。",
+    "approve":
+      "取引を始める前に、{settings_link}でMANAの認証を行ってください。",
     "clear": {
-      "body":
-        "一度、取引履歴を削除すると復旧できません。実行しますか？",
+      "body": "一度、取引履歴を削除すると復旧できません。実行しますか？",
       "title": "取引履歴を削除"
     },
     "completed": "完了",
@@ -58,8 +58,7 @@
     "description": "説明",
     "edit_estate": "不動産を編集",
     "name": "名称",
-    "subtitle":
-      "あなたの不動産の区画の名称と説明の設定・編集ができます。"
+    "subtitle": "あなたの不動産の区画の名称と説明の設定・編集ができます。"
   },
   "estate_select": {
     "description": "{x},{y}から始まる、隣接した区画を選んでください。",
@@ -113,7 +112,8 @@
     "service_unavailable": "サービスは利用できません。",
     "settings": "設定",
     "sign_in": "サインイン",
-    "sign_in_notice": "アクセスするには、こちらで{sign_in_link} サインインする必要があります。",
+    "sign_in_notice":
+      "アクセスするには、こちらで{sign_in_link} サインインする必要があります。",
     "submit": "送信",
     "time_left": "残り時間",
     "unauthorized": "未認証",
@@ -133,6 +133,7 @@
     "en": "English",
     "es": "Spanish",
     "fr": "French",
+    "ja": "Japanese",
     "ko": "Korean",
     "zh": "Chinese"
   },
@@ -273,8 +274,7 @@
     "adjacent": "隣接",
     "district": "地区",
     "plaza": "プラザ",
-    "proximity":
-      "{distance}区画先",
+    "proximity": "{distance}区画先",
     "road": "道路"
   },
   "parcel_transfer": {
@@ -332,7 +332,8 @@
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
     "get_started": "始める",
-    "intro": "まずはじめに、あなたのランド（土地)を安全に保管する環境を整えてください。",
+    "intro":
+      "まずはじめに、あなたのランド（土地)を安全に保管する環境を整えてください。",
     "options": {
       "desktop":
         "{metamask_link} の拡張機能や {ledger_nano_link}ハードウェアウォレットを使用できます。",
@@ -350,8 +351,7 @@
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
     "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
     "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
-    "create_mortgage":
-      "{parcel_link}区画を購入するのに担保を申請しました。",
+    "create_mortgage": "{parcel_link}区画を購入するのに担保を申請しました。",
     "disapproved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
     "edit":
@@ -375,11 +375,9 @@
       "please_confirm": "取引を確認してください。"
     },
     "parcel": {
-      "still_pending":
-        "{parcel_name} は {transactions_count}件、処理中です。"
+      "still_pending": "{parcel_name} は {transactions_count}件、処理中です。"
     },
-    "see_activity":
-      "取引履歴を表示するには、{activity_link}をご覧ください。",
+    "see_activity": "取引履歴を表示するには、{activity_link}をご覧ください。",
     "text": {
       "failed": "処理に失敗しました。もう一度試してください。",
       "pending": "取引が承認されるのを待っています。"
