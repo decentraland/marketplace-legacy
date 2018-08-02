@@ -57,7 +57,7 @@
   "estate_edit": {
     "description": "説明",
     "edit_estate": "Edit Estate",
-    "name": "Name",
+    "name": "名称",
     "subtitle":
       "Set a name and description, and edit the parcels for your estate."
   },
@@ -110,13 +110,13 @@
     "request": "リクエスト",
     "retry": "Retry",
     "revoke": "取り消す",
-    "service_unavailable": "Service unavailable",
+    "service_unavailable": "サービスは利用できません。",
     "settings": "設定",
     "sign_in": "サインイン",
-    "sign_in_notice": "You need to {sign_in_link} to access this page",
-    "submit": "Submit",
-    "time_left": "Time left",
-    "unauthorized": "Unauthorized",
+    "sign_in_notice": "アクセスするには、こちらで{sign_in_link} サインインする必要があります。",
+    "submit": "送信",
+    "time_left": "残り時間",
+    "unauthorized": "未認証",
     "undo": "戻す",
     "wallet_address": "ウォレットアドレス",
     "website": "ウェブサイト"
@@ -191,15 +191,15 @@
     "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
     "approved_balance": "確認されている残高は{approved_balance}です。",
     "buy_land": "ランドを購入",
-    "buy_mana": "{click_here} to buy some MANA.",
-    "didnt_approve": "You haven't authorized MANA usage",
-    "needs_at_least": "You need at least {mana} in order to buy this LAND.",
+    "buy_mana": "MANAを更に購入する{click_here} ",
+    "didnt_approve": "MANAの使用に関しての承認がありません。",
+    "needs_at_least": "このランドを購入するには最低{mana}必要です。",
     "please_approve":
-      "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
-    "total_balance": "Your balance is {balance}"
+      " {settings_link} にて、マーケット上でMANAを使用することをマーケットコントラクトで承認して下さい。",
+    "total_balance": "残高： {balance}"
   },
   "parcel_cancel": {
-    "about_to_cancel": "You are about to cancel the sale of {parcel}.",
+    "about_to_cancel": "{parcel}の販売をキャンセルしようとしています。",
     "cancel_land": "販売をキャンセル",
     "not_for_sale": "この区画 {parcel} は販売されていません。"
   },
@@ -207,7 +207,7 @@
     "actions": {
       "cancel": "販売をキャンセル",
       "create_estate": "Create Estate",
-      "edit": "Edit",
+      "edit": "編集する",
       "permissions": "権限",
       "sell": "販売する",
       "transfer": "転送する"
@@ -255,19 +255,19 @@
   "parcel_publish": {
     "already_sold": "このランドは既に{value}で販売されています。",
     "errors": {
-      "maximum_expiration": "The maximum expiration date is {date}",
-      "maximum_land_price": "The maximum LAND price is {value} MANA",
-      "minimum_expiration": "The minimum expiration date is {date}",
-      "minimum_land_price": "The minimum LAND price is {value} MANA"
+      "maximum_expiration": "有効期限の最長は{date}です。",
+      "maximum_land_price": "ランドの最高価格は{value} MANAです。",
+      "minimum_expiration": "有効期限の最短は{date}です。",
+      "minimum_land_price": "ランドの最低価格は{value} MANAです。"
     },
-    "expiration": "Expiration",
+    "expiration": "有効期限",
     "expiration_placeholder": "Expiration date for this publication",
-    "list_land": "List LAND for sale",
+    "list_land": "このランドを販売リストに追加する",
     "please_authorize":
-      "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
-    "price": "Price",
-    "price_placeholder": "Price in MANA for this LAND",
-    "set_land_price": "Set a price and an expiration date for {parcel_name}."
+      " 販売リストに追加する前に、{settings_link} にてマーケット上でランドを使用することをマーケットコントラクトで承認して下さい。",
+    "price": "価格",
+    "price_placeholder": "このランドにMANAで値段をつけてください。",
+    "set_land_price": "{parcel_name}の価格と締切期限を設置してください。"
   },
   "parcel_tags": {
     "adjacent": "隣接",
