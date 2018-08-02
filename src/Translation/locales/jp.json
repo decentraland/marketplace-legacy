@@ -148,38 +148,38 @@
     "amount": "総額",
     "amount_placeholder": "MANA総額",
     "cancel": "担保をキャンセルする",
-    "claim": "Claim parcel",
+    "claim": "区画を請求する",
     "defaulted_in": "Defaulted in",
-    "duration": "Duration",
+    "duration": "有効期間",
     "duration_placeholder": "Duration in days",
     "errors": {
       "amount_minimum": "{amount}より大きい必要があります。",
       "duration_gte_payable":
         "Duration should be greater or equal than payable at days",
-      "maximum_interest_rate": "レートは{maximum}より低い必要があります。",
-      "minimum_duration": "Duration should be greater than {minimum} days",
-      "minimum_interest_rate": "The rate should be greater than {minimum}",
-      "minimum_payable": "Payable at should be greater than {minimum} days",
-      "parcel_price": "Amount required should be less than parcel price"
+      "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
+      "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
+      "minimum_interest_rate": "レートは{minimum}以上で設定してください。",
+      "minimum_payable": "{minimum}日以上で支払い設定する必要があります。",
+      "parcel_price": "総額は区画の価格以下にしなければいけません。"
     },
     "expiration": "有効期限を申請する",
     "expiration_placeholder": "担保の有効期限",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
-    "oracle": "Oracle contract address",
-    "outstanding_amount": "Outstanding amount",
+    "oracle": "オクラルコントラクトのアドレス",
+    "outstanding_amount": "未払い残高",
     "partial_payment": "部分払い",
     "partial_payment_desc":
-      "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount}",
+      "{parcel_name}のランドを購入する為の担保への部分払いを行おうとしています。 未払い残高: {outstanding_amount}",
     "pay": "支払う",
     "payable": "支払い方法",
     "payable_placeholder": "Payable in days",
     "pending_tx": "The mortgage for",
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
-    "request": "Requesting a Mortgage",
+    "request": "担保を申請しています。",
     "request_land":
-      "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
+      "{parcel_name}への担保を{parcel_price}価値で申請しようとしています。",
     "requested": "申請しました。"
   },
   "parcel": {
@@ -230,7 +230,7 @@
     },
     "publication": {
       "buy": "購入",
-      "mortgage": "Request Mortgage",
+      "mortgage": "担保を申請する",
       "price": "価格"
     },
     "tags": {
@@ -313,7 +313,7 @@
     "authorize_land_check":
       "マーケットコントラクトでランドの使用承認について確認しています。",
     "disapprove_mana_check":
-      "Unchecking unauthorizes MANA usage for the Marketplace contract",
+      "マーケットコントラクトで、MANAの使用について承認を解除しています。",
     "mana_approved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
     "marketplace_contract": "マーケットコントラクト",
@@ -321,7 +321,7 @@
     "mortgage_manager_contract": "担保管理コントラクト",
     "pending_tx": "　処理中の取引があります。",
     "unauthorize_land_check":
-      "Unchecking unauthorizes LAND usage for the Marketplace contract",
+      "マーケットコントラクトで、LANDの使用について承認を解除しています。",
     "you_approved_mortgage_mana":
       "あなたは{mortgage_contract_link} でMANAを使用することを承認しました",
     "you_approved_mortgage_rcn":
@@ -337,7 +337,7 @@
       "desktop":
         "{metamask_link} の拡張機能や {ledger_nano_link}ハードウェアウォレットを使用できます。",
       "mobile":
-        " {toshi_link} や {imtoken_link}などのモバイルブラウザを使用することができます。"
+        "{toshi_link} や {imtoken_link}などのモバイルブラウザを使用することができます。"
     }
   },
   "transaction": {
@@ -349,9 +349,9 @@
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
     "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
-    "claim_mortgage_resolution": "You claimed {parcel_link}",
+    "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
     "create_mortgage":
-      "You requested a Mortgage to buy the parcel {parcel_link}",
+      "{parcel_link}区画を購入するのに担保を申請しました。",
     "disapproved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
     "edit":
@@ -365,7 +365,7 @@
     "mortgage_rcn":
       "{mortgage_contract_link} でRCNを使用することを{action}しました。",
     "pay_mortgage":
-      "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
+      "{parcel_link}区画を購入する担保への一部払いで {amount} MANAを支払いました。",
     "publish": "{parcel_link}を公開しました。",
     "transfer": "{parcel_link} を {owner_link} へ転送しました。",
     "transfer_mana": "{mana} MANAを {address_link} へ転送しました。"
