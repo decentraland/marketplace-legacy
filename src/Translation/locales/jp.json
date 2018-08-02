@@ -32,7 +32,7 @@
     "powered_by": "powered by {bancor_link}",
     "rate": "レート",
     "receive": "受け取る",
-    "slippage": "Slippage",
+    "slippage": "スリッページ",
     "title": "ETHからMANAへ変換"
   },
   "color_key": {
@@ -52,7 +52,7 @@
   },
   "derivation_path": {
     "invalid":
-      "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
+      "あなたのウォレット不適合な導出関数をしています。導出関数は 44'/60|61'/x'/n 型でなければいけません。"
   },
   "estate_edit": {
     "description": "説明",
