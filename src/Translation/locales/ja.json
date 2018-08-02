@@ -342,7 +342,7 @@
     }
   },
   "transaction": {
-    "確認済み":
+    "approved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で認証しました。",
     "authorize":
       "あなたは、マーケット上でランドを使用することを{marketplace_contract_link}で{action}しました。",
