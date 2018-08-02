@@ -28,7 +28,7 @@
     "amount_too_big": "バンカーネットワークには額が大き過ぎます。",
     "available_eth": "利用可能額: {eth} ETH",
     "not_enough": "購入するのにETHが不足しています。",
-    "pay_with": "Pay with",
+    "pay_with": "支払い",
     "powered_by": "powered by {bancor_link}",
     "rate": "レート",
     "receive": "受け取る",
@@ -56,14 +56,14 @@
   },
   "estate_edit": {
     "description": "説明",
-    "edit_estate": "Edit Estate",
+    "edit_estate": "不動産を編集",
     "name": "名称",
     "subtitle":
-      "Set a name and description, and edit the parcels for your estate."
+      "あなたの不動産の区画の名称と説明の設定・編集ができます。"
   },
   "estate_select": {
-    "description": "Select adjacent parcels beginning from {x},{y}",
-    "selection": "Select the parcels for your new Estate"
+    "description": "{x},{y}から始まる、隣接した区画を選んでください。",
+    "selection": "新しい不動産の区画を選んでください。"
   },
   "footer": {
     "color_key": "カラーガイド",
@@ -171,7 +171,7 @@
     "partial_payment": "Partial payment",
     "partial_payment_desc":
       "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount}",
-    "pay": "Pay",
+    "pay": "支払う",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",
     "pending_tx": "The mortgage for",
@@ -342,20 +342,20 @@
   },
   "transaction": {
     "確認済み":
-      "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
+      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で認証しました。",
     "authorize":
       "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "buy": "You bought {parcel_link}",
-    "buy_mana": "You bought {mana} MANA",
-    "cancel": "You cancelled the {publication_link} on {parcel_link}",
-    "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
+    "buy_mana": "{mana} MANAを購入しました。",
+    "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
+    "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
     "claim_mortgage_resolution": "You claimed {parcel_link}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
     "disapproved":
-      "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
+      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
     "edit":
-      "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+      "{parcel_link}の名称を\"{name}\"説明文を \"{description}\"に変更しました。",
     "manage":
       "You gave {address_link} permission to update the contents of {parcel_link}",
     "manage_revoked":
@@ -366,9 +366,9 @@
       "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
     "pay_mortgage":
       "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
-    "publish": "You published {parcel_link}",
-    "transfer": "You transfered {parcel_link} to {owner_link}",
-    "transfer_mana": "You transfered {mana} MANA to {address_link}"
+    "publish": "{parcel_link}を公開しました。",
+    "transfer": "{parcel_link} を {owner_link} へ転送しました。",
+    "transfer_mana": "{mana} MANAを {address_link} へ転送しました。"
   },
   "transaction_status": {
     "idle": {
@@ -376,12 +376,12 @@
     },
     "parcel": {
       "still_pending":
-        "{parcel_name} still has {transactions_count} pending {transactions_count, plural, one {transaction} other {transactions}}"
+        "{parcel_name} は {transactions_count}件、処理中です。"
     },
     "see_activity":
       "取引履歴を表示するには、{activity_link}をご覧ください。",
     "text": {
-      "failed": "Your transaction failed, you can try sending a new one.",
+      "failed": "処理に失敗しました。もう一度試してください。",
       "pending": "取引が承認されるのを待っています。"
     }
   },
