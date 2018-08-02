@@ -72,7 +72,7 @@
     "terms": "利用規約"
   },
   "global": {
-    "acquired_at": "{date}に取得しました。",
+    "acquired_at": "{date}に取得済",
     "activity": "取引履歴",
     "address_placeholder": "例: {address}",
     "atlas": "地図",
@@ -88,7 +88,7 @@
     "connect": "接続する",
     "connecting": "接続しています",
     "continue": "続ける",
-    "contributions": "Contributions",
+    "contributions": "貢献",
     "created_at": "{date}に作成されました。",
     "estate": "不動産",
     "estates": "不動産",
