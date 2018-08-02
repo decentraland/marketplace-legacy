@@ -208,9 +208,9 @@
       "cancel": "販売をキャンセル",
       "create_estate": "Create Estate",
       "edit": "Edit",
-      "permissions": "Permissions",
-      "sell": "Sell",
-      "transfer": "Transfer"
+      "permissions": "権限",
+      "sell": "販売する",
+      "transfer": "転送する"
     },
     "description": "説明",
     "empty_description": "この区画に説明文はありません。",
@@ -327,21 +327,21 @@
     "you_approved_mortgage_rcn":
       "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
     "you_authorized":
-      "You have authorized the {marketplace_contract_link} to operate LAND on your behalf"
+      "あなたは、マーケット上でランドを使用することを {marketplace_contract_link} で承認しました。"
   },
   "sign_in": {
-    "account_unlocked": "Make sure your account is unlocked",
-    "get_started": "Get Started",
-    "intro": "First off you’ll need a safe place to keep all your LAND.",
+    "account_unlocked": "アカウントがアンロックされているか確認してください。",
+    "get_started": "始める",
+    "intro": "まずはじめに、あなたのランドを安全に保管する環境を整えてください。",
     "options": {
       "desktop":
-        "You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}.",
+        "{metamask_link} の拡張機能や {ledger_nano_link}ハードウェアウォレットを使用できます。",
       "mobile":
-        "You can use mobile browsers such as {toshi_link} or {imtoken_link}."
+        " {toshi_link} や {imtoken_link}などのモバイルブラウザを使用することができます。"
     }
   },
   "transaction": {
-    "approved":
+    "確認済み":
       "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
     "authorize":
       "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
@@ -379,10 +379,10 @@
         "{parcel_name} still has {transactions_count} pending {transactions_count, plural, one {transaction} other {transactions}}"
     },
     "see_activity":
-      "To see your transaction history, visit your {activity_link}.",
+      "取引履歴を表示するには、{activity_link}をご覧ください。",
     "text": {
       "failed": "Your transaction failed, you can try sending a new one.",
-      "pending": "The transaction is waiting to be confirmed."
+      "pending": "取引が承認されるのを待っています。"
     }
   },
   "transfer_mana": {
