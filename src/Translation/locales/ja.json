@@ -89,7 +89,7 @@
     "connecting": "接続しています",
     "continue": "続ける",
     "contributions": "貢献区画",
-    "created_at": "{date}に作成されました。",
+    "created_at": "{date}に作成済",
     "estate": "不動産",
     "estates": "不動産",
     "expired_at": "{time}に締め切り済",
@@ -262,7 +262,7 @@
       "minimum_land_price": "ランドの最低価格は{value} MANAです。"
     },
     "expiration": "有効期限",
-    "expiration_placeholder": "Expiration date for this publication",
+    "expiration_placeholder": "この公開区画の有効期限",
     "list_land": "このランドを販売リストに追加する",
     "please_authorize":
       " 販売リストに追加する前に、{settings_link} にてマーケット上でランドを使用することをマーケットコントラクトで承認して下さい。",
