@@ -270,33 +270,33 @@
     "set_land_price": "Set a price and an expiration date for {parcel_name}."
   },
   "parcel_tags": {
-    "adjacent": "Adjacent",
-    "district": "District",
-    "plaza": "Plaza",
+    "adjacent": "隣接",
+    "district": "地区",
+    "plaza": "プラザ",
     "proximity":
-      "{distance} {distance, plural, one {parcel} other {parcels}} away",
-    "road": "Road"
+      "{distance}区画先",
+    "road": "道路"
   },
   "parcel_transfer": {
-    "about_to_transfer": "You're about to transfer {parcel_name}.",
-    "cant_transfer": "This LAND can't be transferred because it's on sale.",
-    "check_address": "Please check the address carefully",
+    "about_to_transfer": "{parcel_name}の区画を転送しようとしています。",
+    "cant_transfer": "このランドは販売中の為、転送できません。",
+    "check_address": "アドレスをもう一度確認してください。",
     "error_persists":
-      "If the problem persists, contact us at our {community_chat_link}",
+      "エラーが続く場合は、お手数ですが{community_chat_link}までお問い合わせください。",
     "irreversible":
-      "Remember that transferring LAND is an irreversible operation.",
-    "placeholder": "Example: {address}",
-    "recipient_address": "Recipient address",
-    "transfer_land": "Transfer LAND",
-    "unknown_error": "An unknown error occurred, the details are below."
+      "ランドの転送はやり直すことができませんので、ご確認ください。",
+    "placeholder": "例: {address}",
+    "recipient_address": "受信者のアドレス",
+    "transfer_land": "ランドを転送する",
+    "unknown_error": "不明のエラーが発生しました。詳細は以下の通りです。"
   },
   "profile_page": {
-    "empty": "The user has no {content}",
-    "on_sale": "On Sale"
+    "empty": "このユーザーは{content}がありません。",
+    "on_sale": "販売中"
   },
   "publication": {
-    "sold": "Sold",
-    "view": "View"
+    "sold": "売却済",
+    "view": "見る"
   },
   "settings": {
     "approve_mana":
@@ -372,7 +372,7 @@
   },
   "transaction_status": {
     "idle": {
-      "please_confirm": "Please confirm the transaction"
+      "please_confirm": "取引を確認してください。"
     },
     "parcel": {
       "still_pending":
@@ -386,11 +386,11 @@
     }
   },
   "transfer_mana": {
-    "action": "Transfer",
-    "current_balance": "Your current balance is {balance}",
+    "action": "転送する",
+    "current_balance": "現在の残高： {balance}",
     "irreversible":
-      "Remember that transferring MANA is an irreversible operation.",
-    "own_address_warning": "That's your own address!",
-    "title": "Transfer MANA"
+      "MANAの転送はやり直すことができませんので、ご確認ください。",
+    "own_address_warning": "これはあなたのアドレスです!",
+    "title": "MANAを転送"
   }
 }
