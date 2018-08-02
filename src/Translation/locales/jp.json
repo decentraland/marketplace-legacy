@@ -217,11 +217,11 @@
     "history": {
       "auction": "オークション",
       "event": "イベント",
-      "from": "送信者",
+      "from": "送信元",
       "price": "価格",
       "sold": "売却済",
       "title": "取引履歴",
-      "to": "送信者",
+      "to": "受信者",
       "when": "時期"
     },
     "owner": {
