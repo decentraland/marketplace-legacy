@@ -1,6 +1,6 @@
 {
   "activity": {
-    "approve": "You can start by approving some MANA on your {settings_link}",
+    "approve": "取引を始める前に、{settings_link}でMANAの認証を行ってください。",
     "clear": {
       "body":
         "一度、取引履歴を削除すると復旧できません。実行しますか？",
@@ -247,13 +247,13 @@
   "parcel_manage": {
     "address": "編集者のアドレス",
     "address_permission":
-      "This address will be able to update the contents of this parcel.",
-    "check_address": "Please check the address carefully",
-    "give_permission": "Give permission to update contents of {parcel_name}.",
-    "manage_land": "Manage LAND"
+      "このアドレスの持ち主が指定された区画のコンテンツを更新できるようになります。",
+    "check_address": "もう一度アドレスを確認して下さい。",
+    "give_permission": "{parcel_name}の更新権限を与える.",
+    "manage_land": "ランドを管理"
   },
   "parcel_publish": {
-    "already_sold": "This LAND is already on sale for {value}",
+    "already_sold": "このランドは既に{value}で販売されています。",
     "errors": {
       "maximum_expiration": "The maximum expiration date is {date}",
       "maximum_land_price": "The maximum LAND price is {value} MANA",
