@@ -332,10 +332,10 @@
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
     "get_started": "始める",
-    "intro": "まずはじめに、あなたのランド（土地)を安全に保管する環境を整えてください。",
+    "intro": "まず始めに、あなたのランド(土地)を安全に保管する環境を整えてください。",
     "options": {
       "desktop":
-        "{metamask_link} の拡張機能や {ledger_nano_link}ハードウェアウォレットを使用できます。",
+        "{metamask_link} の拡張機能や {ledger_nano_link}などのハードウェアウォレットを使用できます。",
       "mobile":
         "{toshi_link} や {imtoken_link}などのモバイルブラウザを使用することができます。"
     }
