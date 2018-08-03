@@ -103,6 +103,8 @@ export async function mortgageReducer(event) {
       try {
         log.info(`[${name}] Starting Mortgage ${_id}`)
         const mortgage = (await Mortgage.findByMortgageId(_id))[0]
+        if (!mortgage) return
+
         const rcnEngineContract = eth.getContract('RCNEngine')
         const loanIdBN = eth.utils.toBigNumber(mortgage.loan_id)
 
