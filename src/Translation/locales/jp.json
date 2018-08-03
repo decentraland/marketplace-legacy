@@ -1,0 +1,396 @@
+{
+  "activity": {
+    "approve": "取引を始める前に、{settings_link}でMANAの認証を行ってください。",
+    "clear": {
+      "body":
+        "一度、取引履歴を削除すると復旧できません。実行しますか？",
+      "title": "取引履歴を削除"
+    },
+    "completed": "完了",
+    "no_activity": "まだ取引がありません。.",
+    "pending": "確認中",
+    "start": "{marketplace}で取引が出来るようになりました!"
+  },
+  "address": {
+    "its_you": "あなたです。"
+  },
+  "atlas": {
+    "loading": "読込み中",
+    "no_owner": "所有者なし",
+    "on_sale": "販売中: ",
+    "owner": "所有者: {owner}",
+    "road": "道路",
+    "your_estate": "あなたの不動産",
+    "your_parcel": "あなたの区画"
+  },
+  "buy_mana": {
+    "action": "もっと購入する",
+    "amount_too_big": "バンカーネットワークには額が大き過ぎます。",
+    "available_eth": "利用可能額: {eth} ETH",
+    "not_enough": "購入するのにETHが不足しています。",
+    "pay_with": "支払い",
+    "powered_by": "powered by {bancor_link}",
+    "rate": "レート",
+    "receive": "受け取る",
+    "slippage": "スリッページ",
+    "title": "ETHからMANAへ変換"
+  },
+  "color_key": {
+    "contribution": "貢献",
+    "district": "地区",
+    "loading": "読込み中",
+    "on_sale": "販売中",
+    "plaza": "プラザ",
+    "roads": "道路",
+    "taken": "取得済",
+    "title": "カラーガイド",
+    "unowned": "未所有",
+    "yours": "マイランド"
+  },
+  "contribution": {
+    "proposal": "提案"
+  },
+  "derivation_path": {
+    "invalid":
+      "あなたのウォレットは、不適合な導出関数をしています。導出関数は 44'/60|61'/x'/n 型でなければいけません。"
+  },
+  "estate_edit": {
+    "description": "説明",
+    "edit_estate": "不動産を編集",
+    "name": "名称",
+    "subtitle":
+      "あなたの不動産の区画の名称と説明の設定・編集ができます。"
+  },
+  "estate_select": {
+    "description": "{x},{y}から始まる、隣接した区画を選んでください。",
+    "selection": "新しい不動産の区画を選んでください。"
+  },
+  "footer": {
+    "color_key": "カラーガイド",
+    "copyright": "© 2018 Decentraland. All rights reserved.",
+    "mini_copyright": "© 2018 Decentraland.",
+    "privacy_policy": "プライバシーポリシー ",
+    "terms": "利用規約"
+  },
+  "global": {
+    "acquired_at": "{date}に取得済",
+    "activity": "取引履歴",
+    "address_placeholder": "例: {address}",
+    "atlas": "地図",
+    "authorized": "認証済み",
+    "balance": "残高",
+    "blog": "ブログ",
+    "cancel": "キャンセル",
+    "change": "変更",
+    "clear": "履歴を削除",
+    "click_here": "こちらをクリック",
+    "community_chat": "コミュニティーチャット",
+    "confirm": "確認",
+    "connect": "接続する",
+    "connecting": "接続しています",
+    "continue": "続ける",
+    "contributions": "貢献区画",
+    "created_at": "{date}に作成済",
+    "estate": "不動産",
+    "estates": "不動産",
+    "expired_at": "{time}に締め切り済",
+    "expires_in": "締め切りまであと{time}",
+    "expires_in_more_than_years": "締め切りまであと{years}年以上",
+    "for": "for",
+    "loading": "読込み中",
+    "marketplace": "マーケット",
+    "mortgage": "担保",
+    "mortgages": "担保",
+    "owned_by": "所有者",
+    "owned_by_link": "所有者： {address_link}",
+    "paid_at": "支払済み",
+    "parcels": "パーセル区画",
+    "profile": "マイランド",
+    "publications": "公開中の区画",
+    "request": "リクエスト",
+    "retry": "やり直す",
+    "revoke": "取り消す",
+    "service_unavailable": "サービスは利用できません。",
+    "settings": "設定",
+    "sign_in": "サインイン",
+    "sign_in_notice": "アクセスするには、こちらで{sign_in_link} サインインする必要があります。",
+    "submit": "送信",
+    "time_left": "残り時間",
+    "unauthorized": "未認証",
+    "undo": "戻す",
+    "wallet_address": "ウォレットアドレス",
+    "website": "ウェブサイト"
+  },
+  "homepage": {
+    "get_started": "始める",
+    "hero_subtitle": "分散型のランドマーケット。手数料は無料です。",
+    "hero_title": "ジェネシスシティで、あなたの理想の場所を選ぼう",
+    "newest_lands": "新着ランド",
+    "view_more": "もっと見る",
+    "watch_tutorial": "チュートリアルを観る"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "ko": "Korean",
+    "zh": "Chinese"
+  },
+  "marketplace": {
+    "empty": "Oops... ここには何もありません。",
+    "filter": {
+      "cheapest": "価格が安い順",
+      "close_to_expire": "締め切り順",
+      "newest": "新着順"
+    }
+  },
+  "mortgage": {
+    "amount": "総額",
+    "amount_placeholder": "MANA総額",
+    "cancel": "担保をキャンセルする",
+    "claim": "区画を請求する",
+    "defaulted_in": "Defaulted in",
+    "duration": "有効期間",
+    "duration_placeholder": "Duration in days",
+    "errors": {
+      "amount_minimum": "{amount}より大きい必要があります。",
+      "duration_gte_payable":
+        "Duration should be greater or equal than payable at days",
+      "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
+      "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
+      "minimum_interest_rate": "レートは{minimum}以上で設定してください。",
+      "minimum_payable": "{minimum}日以上で支払い設定する必要があります。",
+      "parcel_price": "総額は区画の価格以下にしなければいけません。"
+    },
+    "expiration": "有効期限を申請する",
+    "expiration_placeholder": "担保の有効期限",
+    "interest_rate": "利率",
+    "interest_rate_placeholder": "利率",
+    "oracle": "オクラルコントラクトのアドレス",
+    "outstanding_amount": "未払い残高",
+    "partial_payment": "部分払い",
+    "partial_payment_desc":
+      "{parcel_name}のランドを購入する為の担保への部分払いを行おうとしています。 未払い残高: {outstanding_amount}",
+    "pay": "支払う",
+    "payable": "支払い方法",
+    "payable_placeholder": "Payable in days",
+    "pending_tx": "The mortgage for",
+    "punitory_rate": "Punitory interest rate",
+    "punitory_rate_placeholder": "Punitory rate",
+    "request": "担保を申請しています。",
+    "request_land":
+      "{parcel_name}への担保を{parcel_price}価値で申請しようとしています。",
+    "requested": "申請しました。"
+  },
+  "parcel": {
+    "no_description": "説明文未設定",
+    "no_name": "名称未設定",
+    "view": "見る"
+  },
+  "parcel_buy": {
+    "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
+    "approved_balance": "確認されている残高は{approved_balance}です。",
+    "buy_land": "ランドを購入",
+    "buy_mana": "MANAを更に購入する{click_here} ",
+    "didnt_approve": "MANAの使用に関しての承認がありません。",
+    "needs_at_least": "このランドを購入するには最低{mana}必要です。",
+    "please_approve":
+      " {settings_link} にて、マーケット上でMANAを使用することをマーケットコントラクトで承認して下さい。",
+    "total_balance": "残高： {balance}"
+  },
+  "parcel_cancel": {
+    "about_to_cancel": "{parcel}の販売をキャンセルしようとしています。",
+    "cancel_land": "販売をキャンセル",
+    "not_for_sale": "この区画 {parcel} は販売されていません。"
+  },
+  "parcel_detail": {
+    "actions": {
+      "cancel": "販売をキャンセル",
+      "create_estate": "不動産を作成する",
+      "edit": "編集する",
+      "permissions": "権限",
+      "sell": "販売する",
+      "transfer": "転送する"
+    },
+    "description": "説明",
+    "empty_description": "この区画に説明文はありません。",
+    "history": {
+      "auction": "オークション",
+      "event": "イベント",
+      "from": "送信者",
+      "price": "価格",
+      "sold": "売却済",
+      "title": "取引履歴",
+      "to": "受信者",
+      "when": "時期"
+    },
+    "owner": {
+      "no_owner": "所有者なし",
+      "part_of": "{name}の一部"
+    },
+    "publication": {
+      "buy": "購入",
+      "mortgage": "担保を申請する",
+      "price": "価格"
+    },
+    "tags": {
+      "title": "特徴"
+    },
+    "view": "地図で見る"
+  },
+  "parcel_edit": {
+    "description": "説明",
+    "edit_land": "ランドを編集",
+    "name": "名称",
+    "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。"
+  },
+  "parcel_manage": {
+    "address": "編集者のアドレス",
+    "address_permission":
+      "このアドレスの持ち主が指定された区画のコンテンツを更新できるようになります。",
+    "check_address": "もう一度アドレスを確認して下さい。",
+    "give_permission": "{parcel_name}の更新権限を与える.",
+    "manage_land": "ランドを管理"
+  },
+  "parcel_publish": {
+    "already_sold": "このランドは既に{value}で販売されています。",
+    "errors": {
+      "maximum_expiration": "有効期限の最長は{date}です。",
+      "maximum_land_price": "ランドの最高価格は{value} MANAです。",
+      "minimum_expiration": "有効期限の最短は{date}です。",
+      "minimum_land_price": "ランドの最低価格は{value} MANAです。"
+    },
+    "expiration": "有効期限",
+    "expiration_placeholder": "この公開区画の有効期限",
+    "list_land": "このランドを販売リストに追加する",
+    "please_authorize":
+      " 販売リストに追加する前に、{settings_link} にてマーケット上でランドを使用することをマーケットコントラクトで承認して下さい。",
+    "price": "価格",
+    "price_placeholder": "このランドにMANAで値段をつけてください。",
+    "set_land_price": "{parcel_name}の価格と締切期限を設置してください。"
+  },
+  "parcel_tags": {
+    "adjacent": "隣接",
+    "district": "地区",
+    "plaza": "プラザ",
+    "proximity":
+      "{distance}区画先",
+    "road": "道路"
+  },
+  "parcel_transfer": {
+    "about_to_transfer": "{parcel_name}の区画を転送しようとしています。",
+    "cant_transfer": "このランドは販売中の為、転送できません。",
+    "check_address": "アドレスをもう一度確認してください。",
+    "error_persists":
+      "エラーが続く場合は、お手数ですが{community_chat_link}までお問い合わせください。",
+    "irreversible":
+      "ランドの転送はやり直すことができませんので、ご注意ください。",
+    "placeholder": "例: {address}",
+    "recipient_address": "受信者のアドレス",
+    "transfer_land": "ランドを転送する",
+    "unknown_error": "不明のエラーが発生しました。詳細は以下の通りです。"
+  },
+  "profile_page": {
+    "empty": "このユーザーは{content}がありません。",
+    "on_sale": "販売中"
+  },
+  "publication": {
+    "sold": "売却済",
+    "view": "見る"
+  },
+  "settings": {
+    "approve_mana":
+      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
+    "approve_mana_check":
+      "マーケットコントラクトでMANAの使用承認について確認しています。",
+    "approve_mortgage_mana":
+      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
+    "approve_mortgage_rcn":
+      "{mortgage_contract_link}でRCNを使用することを承認します。",
+    "authorization": "承認事項",
+    "authorize":
+      "マーケット上でランドを使用することを{marketplace_contract_link}で承認します。",
+    "authorize_land_check":
+      "マーケットコントラクトでランドの使用承認について確認しています。",
+    "disapprove_mana_check":
+      "マーケットコントラクトで、MANAの使用について承認を解除しています。",
+    "mana_approved":
+      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
+    "marketplace_contract": "マーケットコントラクト",
+    "mortgage_helper_contract": "Mortgage helper contract",
+    "mortgage_manager_contract": "担保管理コントラクト",
+    "pending_tx": "　処理中の取引があります。",
+    "unauthorize_land_check":
+      "マーケットコントラクトで、LANDの使用について承認を解除しています。",
+    "you_approved_mortgage_mana":
+      "あなたは{mortgage_contract_link} でMANAを使用することを承認しました",
+    "you_approved_mortgage_rcn":
+      "{mortgage_contract_link} でRCNを使用することを承認しました",
+    "you_authorized":
+      "あなたは、マーケット上でランドを使用することを {marketplace_contract_link} で承認しました。"
+  },
+  "sign_in": {
+    "account_unlocked": "アカウントがアンロックされているか確認してください。",
+    "get_started": "始める",
+    "intro": "まず始めに、あなたのランド(土地)を安全に保管する環境を整えてください。",
+    "options": {
+      "desktop":
+        "{metamask_link} の拡張機能や {ledger_nano_link}などのハードウェアウォレットを使用できます。",
+      "mobile":
+        "{toshi_link} や {imtoken_link}などのモバイルブラウザを使用することができます。"
+    }
+  },
+  "transaction": {
+    "確認済み":
+      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で認証しました。",
+    "authorize":
+      "あなたは、マーケット上でランドを使用することを{marketplace_contract_link}で{action}しました。",
+    "buy": "{parcel_link}を購入しました。",
+    "buy_mana": "{mana} MANAを購入しました。",
+    "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
+    "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
+    "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
+    "create_mortgage":
+      "{parcel_link}区画を購入するのに担保を申請しました。",
+    "disapproved":
+      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
+    "edit":
+      "{parcel_link}の名称を\"{name}\"説明文を \"{description}\"に変更しました。",
+    "manage":
+      "{parcel_link}のコンテンツを更新する権限を {address_link} に与えました。",
+    "manage_revoked":
+      "{parcel_link}のコンテンツを更新する権限を {address_link} から取り消しました。",
+    "mortgage_mana":
+      "{mortgage_contract_link} でMANAを使用することを{action}しました。",
+    "mortgage_rcn":
+      "{mortgage_contract_link} でRCNを使用することを{action}しました。",
+    "pay_mortgage":
+      "{parcel_link}区画を購入する担保への一部払いで {amount} MANAを支払いました。",
+    "publish": "{parcel_link}を公開しました。",
+    "transfer": "{parcel_link} を {owner_link} へ転送しました。",
+    "transfer_mana": "{mana} MANAを {address_link} へ転送しました。"
+  },
+  "transaction_status": {
+    "idle": {
+      "please_confirm": "取引を確認してください。"
+    },
+    "parcel": {
+      "still_pending":
+        "{parcel_name} は {transactions_count}件、処理中です。"
+    },
+    "see_activity":
+      "取引履歴を表示するには、{activity_link}をご覧ください。",
+    "text": {
+      "failed": "処理に失敗しました。もう一度試してください。",
+      "pending": "取引が承認されるのを待っています。"
+    }
+  },
+  "transfer_mana": {
+    "action": "転送する",
+    "current_balance": "現在の残高： {balance}",
+    "irreversible":
+      "MANAの転送はやり直すことができませんので、ご確認ください。",
+    "own_address_warning": "これはあなたのアドレスです!",
+    "title": "MANAを転送"
+  }
+}
