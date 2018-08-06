@@ -61,7 +61,7 @@
             url: https://contracts.decentraland.org/addresses.json
             dest: "{{ app_location }}/scripts/addresses.json"
         - name: Create config file
-          shell: ./build-env.sh "{{ network }}" "{{ connection_string }}" > ../src/.env
+          shell: ./build-env.sh "{{ network }}" "{{ connection_string }}" "{{ rpc_url }}" > ../src/.env
           args:
             chdir: "{{ app_location }}/scripts"
 
