@@ -4,6 +4,7 @@
     app_location: /home/ubuntu/app
     repo_url: https://github.com/decentraland/marketplace.git
 
+
   tasks:
     - name: Base packages
       block:
@@ -46,6 +47,8 @@
             repo: "{{ repo_url }}"
             dest: "{{ app_location }}"
             version: chore/ansible-setup-server
+            clone: yes
+            update: yes
         - name: Install node packages
           shell: npm install
           args:
