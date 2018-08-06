@@ -1,5 +1,8 @@
 - hosts: backends
   remote_user: ubuntu
+  vars:
+    app_location: /home/ubuntu/app
+    repo_url: https://github.com/decentraland/marketplace.git
 
   tasks:
     - name: Base packages
@@ -36,14 +39,17 @@
       become: yes
       become_method: sudo
 
-    - name: Get application
-      git:
-        # TODO: setup repo location as variable
-        repo: 'https://github.com/decentraland/marketplace.git'
-        dest: /home/ubuntu/app
-        version: chore/ansible-setup-server
-
-        # TODO: Setup environment variables
+    - name: Install application
+      block:
+        - name: Clone repo
+          git:
+            repo: "{{ repo_url }}"
+            dest: "{{ app_location }}"
+            version: chore/ansible-setup-server
+        - name: Install node packages
+          shell: npm install
+          args:
+            chdir: "{{ app_location }}"
 
     - name: Setup supervisor
       block:
@@ -53,11 +59,21 @@
             state: present
         - name: App config file
           copy:
-            src: /home/ubuntu/app/etc/supervisor/mkt-app.conf
+            src: "{{ app_location }}/etc/supervisor/mkt-app.conf"
             dest: /etc/supervisor/conf.d
+            remote_src: yes
         - name: Monitor config file
           copy:
-            src: /home/ubuntu/app/etc/supervisor/mkt-monitor.conf
+            src: "{{ app_location }}/etc/supervisor/mkt-monitor.conf"
             dest: /etc/supervisor/conf.d
+            remote_src: yes
+        - name: Reload app
+          supervisorctl:
+            name: 'app:'
+            state: restarted
+        - name: Reload monitor
+          supervisorctl:
+            name: monitor
+            state: restarted
       become: yes
       become_method: sudo
