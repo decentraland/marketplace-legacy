@@ -2,41 +2,62 @@
   remote_user: ubuntu
 
   tasks:
-    - block:
-      - name: Update packages
-        apt:
-          update_cache: yes
-      - name: Upgrade packages
-        apt:
-          name: "*"
-          state: latest
-          force_apt_get: true
-      - name: Autoremove packages
-        apt:
-          autoremove: yes
+    - name: Base packages
+      block:
+        - name: Update packages
+          apt:
+            update_cache: yes
+        - name: Upgrade packages
+          apt:
+            name: "*"
+            state: latest
+            force_apt_get: true
+        - name: Autoremove packages
+          apt:
+            autoremove: yes
       become: yes
       become_method: sudo
 
-    - block:
-      - name: Clone repo
-        git:
-          repo: 'https://github.com/decentraland/marketplace.git'
-          dest: /home/ubuntu/app
-          version: master
+    - name: Install nodejs
+      block:
+        - name: Get nodejs package  
+          get_url: 
+            url: https://deb.nodesource.com/setup_8.x
+            dest: /tmp/nodesource_setup.sh
+        - name: Update apt source
+          shell: bash /tmp/nodesource_setup.sh
+        - name: Update packages
+          apt:
+            update_cache: yes
+        - name: Install nodejs
+          apt:
+            name: nodejs
+            state: present
+      become: yes
+      become_method: sudo
 
-    - block:
-      - name: Install 
-        get_url: 
-          url: https://deb.nodesource.com/setup_8.x
-          dest: /tmp/nodesource_setup.sh
-      - name: Use magic
-        shell: bash /tmp/nodesource_setup.sh
-      - name: Update packages
-        apt:
-          update_cache: yes
-      - name: Install the nodejs
-        apt:
-          name: nodejs
-          state: present
+    - name: Get application
+      git:
+        # TODO: setup repo location as variable
+        repo: 'https://github.com/decentraland/marketplace.git'
+        dest: /home/ubuntu/app
+        version: chore/ansible-setup-server
+
+        # TODO: Setup environment variables
+
+    - name: Setup supervisor
+      block:
+        - name: Install supervisor
+          apt:
+            name: supervisor
+            state: present
+        - name: App config file
+          copy:
+            src: /home/ubuntu/app/etc/supervisor/mkt-app.conf
+            dest: /etc/supervisor/conf.d
+        - name: Monitor config file
+          copy:
+            src: /home/ubuntu/app/etc/supervisor/mkt-monitor.conf
+            dest: /etc/supervisor/conf.d
       become: yes
       become_method: sudo
