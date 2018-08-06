@@ -77,3 +77,10 @@
             state: restarted
       become: yes
       become_method: sudo
+
+    - name: Setup app config file
+      block:
+        - name: 
+          get_url: 
+            url: https://contracts.decentraland.org/addresses.json
+            dest: "{{ app_location }}/addresses.json"
