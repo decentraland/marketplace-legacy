@@ -18,8 +18,9 @@ function get_config_item() {
 
 echo "NODE_ENV=\"$(nodeenv_from_network $1)\""
 echo "WEBAPP_PATH=\"../webapp/build\""
-echo "CONNECTION_STRING=$2"
-echo "RPC_URL=$3"
+echo "CONNECTION_STRING=\"$2\""
+echo "RPC_URL=\"$3\""
+echo "NEW_RELIC_LICENSE_KEY=\"$4\""
 echo "PROCESS_EVENTS_DELAY=30000"
 echo "LAND_REGISTRY_CONTRACT_ADDRESS=$(get_config_item 'LANDRegistry')"
 echo "MARKETPLACE_CONTRACT_ADDRESS=$(get_config_item 'Marketplace')"

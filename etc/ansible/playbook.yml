@@ -3,7 +3,9 @@
   vars:
     app_location: /home/ubuntu/app
     repo_url: https://github.com/decentraland/marketplace.git
-
+    repo_branch: master
+    rpc_url: http://localhost:8545
+    new_relic_key: ""
 
   tasks:
     - name: Base packages
@@ -46,7 +48,7 @@
           git:
             repo: "{{ repo_url }}"
             dest: "{{ app_location }}"
-            version: chore/ansible-setup-server
+            version: "{{ repo_branch }}"
             clone: yes
             update: yes
         - name: Install node packages
@@ -61,7 +63,7 @@
             url: https://contracts.decentraland.org/addresses.json
             dest: "{{ app_location }}/scripts/addresses.json"
         - name: Create config file
-          shell: ./build-env.sh "{{ network }}" "{{ connection_string }}" "{{ rpc_url }}" > ../src/.env
+          shell: ./build-env.sh "{{ network }}" "{{ connection_string }}" "{{ rpc_url }}" "{{ new_relic_key }}"> ../src/.env
           args:
             chdir: "{{ app_location }}/scripts"
 
