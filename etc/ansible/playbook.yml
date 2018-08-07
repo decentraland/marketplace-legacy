@@ -58,6 +58,10 @@
 
     - name: Setup app config file
       block:
+        - name: Install jq
+          apt:
+            name: jq
+            state: present
         - name: Get contract addresses
           get_url: 
             url: https://contracts.decentraland.org/addresses.json
