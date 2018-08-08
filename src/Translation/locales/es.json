@@ -200,6 +200,10 @@
     "payable": "Pagadero a",
     "payable_placeholder": "Pagable en días",
     "pending_tx": "La hipoteca de",
+    "please_authorize_MANA":
+      "Vaya a {settings_link} y autorice el contrato de Mortgage Helper para operar MANA en su nombre",
+    "please_authorize_RCN":
+      "Vaya a {settings_link} y autorice el contrato de Administrador de hipoteca para operar RCN en su nombre",
     "punitory_rate": "Tasa de interés punitiva",
     "punitory_rate_placeholder": "Tasa punitiva",
     "request": "Solicitar una hipoteca",

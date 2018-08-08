@@ -14,7 +14,7 @@ import {
   isMortgageDefaulted,
   getMortgageOutstandingAmount,
   getMortgageTimeLeft,
-  getMortgageDefaultedStatus
+  getMortgageStatus
 } from 'shared/mortgage'
 import { distanceInWordsToNow } from 'lib/utils'
 
@@ -27,23 +27,13 @@ export default class ParcelMortgage extends React.PureComponent {
 
   render() {
     const { mortgage } = this.props
+
     return (
-      <Grid className={`ParcelMortgageDetail ${mortgage.status}`}>
+      <Grid className={`ParcelMortgageDetail ${getMortgageStatus(mortgage)}`}>
         <Grid.Row>
-          <Grid.Column
-            width={2}
-            className={
-              isMortgageDefaulted(mortgage)
-                ? getMortgageDefaultedStatus()
-                : mortgage.status
-            }
-          >
+          <Grid.Column width={2} className={getMortgageStatus(mortgage)}>
             <h3>{t('global.mortgage')}</h3>
-            <p>
-              {isMortgageDefaulted(mortgage)
-                ? getMortgageDefaultedStatus()
-                : mortgage.status}
-            </p>
+            <p>{getMortgageStatus(mortgage)}</p>
           </Grid.Column>
           {!isMortgageDefaulted(mortgage) && (
             <React.Fragment>
@@ -87,7 +77,7 @@ export default class ParcelMortgage extends React.PureComponent {
                 </React.Fragment>
               )}
               {isMortgagePaid(mortgage) && (
-                <Grid.Column width={3}>
+                <Grid.Column width={6}>
                   <h3>{t('global.paid_at')}</h3>
                   <p>
                     {distanceInWordsToNow(
