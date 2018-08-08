@@ -54,16 +54,23 @@
     "invalid":
       "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
+  "estate_detail": {
+    "delete": "Delete",
+    "edit_parcels": "Edit Parcels",
+    "parcels": "Parcels included",
+    "pending_tx": "This estate"
+  },
   "estate_edit": {
     "description": "Description",
     "edit_estate": "Edit Estate",
     "name": "Name",
-    "subtitle":
-      "Set a name and description, and edit the parcels for your estate."
+    "subtitle": "Set a name and description for your estate."
   },
   "estate_select": {
-    "description": "Select adjacent parcels beginning from {x},{y}",
-    "selection": "Select the parcels for your new Estate"
+    "description": "Selected parcels",
+    "detail": "Estate detail",
+    "edit_selection": "Select the parcels on the map",
+    "new_selection": "Select the parcels on the map for your new Estate"
   },
   "footer": {
     "color_key": "Color Key",
@@ -91,6 +98,7 @@
     "continue": "Continue",
     "contributions": "Contributions",
     "created_at": "Created at {date}",
+    "edit": "Edit",
     "estate": "Estate",
     "estates": "Estates",
     "expired_at": "Expired {time}",
@@ -209,7 +217,6 @@
     "actions": {
       "cancel": "Cancel sale",
       "create_estate": "Create Estate",
-      "edit": "Edit",
       "permissions": "Permissions",
       "sell": "Sell",
       "transfer": "Transfer"
@@ -344,6 +351,7 @@
     "claim_mortgage_resolution": "You claimed {parcel_link}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
+    "delete_estate": "You deleted the estate {estate_id}",
     "disapproved":
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "edit":

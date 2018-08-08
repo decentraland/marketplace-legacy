@@ -23,19 +23,26 @@ export default class ParcelCard extends React.PureComponent {
     parcel: parcelType,
     publications: PropTypes.objectOf(publicationType),
     debounce: PropTypes.number,
-    showMortgage: PropTypes.bool
+    showMortgage: PropTypes.bool,
+    withMap: PropTypes.bool,
+    withLink: PropTypes.bool
   }
 
-  render() {
-    const { parcel, debounce, publications, showMortgage } = this.props
+  static defaultProps = {
+    withMap: true,
+    withLink: true
+  }
+
+  renderContent() {
+    const { parcel, debounce, publications, showMortgage, withMap } = this.props
     const { x, y } = parcel
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
     const publication = getOpenPublication(parcel, publications)
 
     return (
-      <Card className="ParcelCard">
-        <Link to={locations.parcelDetail(x, y)}>
+      <React.Fragment>
+        {withMap && (
           <div className="preview">
             <ParcelPreview
               x={x}
@@ -45,57 +52,70 @@ export default class ParcelCard extends React.PureComponent {
               selected={parcel}
             />
           </div>
-          <Card.Content className="body">
-            <Card.Description title={parcelName}>
-              <span className="name">{parcelName}</span>
-              {publication ? (
-                <Mana amount={parseFloat(publication.price)} />
-              ) : null}
-            </Card.Description>
+        )}
+        <Card.Content className="body">
+          <Card.Description title={parcelName}>
+            <span className="name">{parcelName}</span>
+            {publication ? (
+              <Mana amount={parseFloat(publication.price)} />
+            ) : null}
+          </Card.Description>
 
-            {publication && (
-              <React.Fragment>
-                <Card.Meta
-                  title={formatDate(parseInt(publication.expires_at, 10))}
-                >
-                  <Expiration
-                    expiresAt={parseInt(publication.expires_at, 10)}
-                  />
-                </Card.Meta>
-              </React.Fragment>
+          {publication && (
+            <React.Fragment>
+              <Card.Meta
+                title={formatDate(parseInt(publication.expires_at, 10))}
+              >
+                <Expiration expiresAt={parseInt(publication.expires_at, 10)} />
+              </Card.Meta>
+            </React.Fragment>
+          )}
+
+          {!publication &&
+            !showMortgage && (
+              <Card.Meta>
+                {t('global.acquired_at', {
+                  date: formatDate(
+                    parcel.last_transferred_at
+                      ? parseInt(parcel.last_transferred_at, 10)
+                      : AUCTION_DATE,
+                    'MMMM Do, YYYY'
+                  )
+                })}
+              </Card.Meta>
             )}
 
-            {!publication &&
-              !showMortgage && (
-                <Card.Meta>
-                  {t('global.acquired_at', {
-                    date: formatDate(
-                      parcel.last_transferred_at
-                        ? parseInt(parcel.last_transferred_at, 10)
-                        : AUCTION_DATE,
-                      'MMMM Do, YYYY'
-                    )
-                  })}
-                </Card.Meta>
-              )}
-
-            {showMortgage &&
-              isMortgageActive(parcel.mortgage, parcel, publications) && (
-                <React.Fragment>
-                  <p className={`mortgage-status ${parcel.mortgage.status}`}>
-                    {parcel.mortgage.status}
-                  </p>
-                </React.Fragment>
-              )}
-            <div className="footer">
-              <div className="coords">
-                <Icon name="marker" />
-                <span className="coord">{buildCoordinate(x, y)}</span>
-              </div>
-              <ParcelTags parcel={parcel} size="small" />
+          {showMortgage &&
+            isMortgageActive(parcel.mortgage, parcel, publications) && (
+              <React.Fragment>
+                <p className={`mortgage-status ${parcel.mortgage.status}`}>
+                  {parcel.mortgage.status}
+                </p>
+              </React.Fragment>
+            )}
+          <div className="footer">
+            <div className="coords">
+              <Icon name="marker" />
+              <span className="coord">{buildCoordinate(x, y)}</span>
             </div>
-          </Card.Content>
-        </Link>
+            <ParcelTags parcel={parcel} size="small" />
+          </div>
+        </Card.Content>
+      </React.Fragment>
+    )
+  }
+
+  render() {
+    const { parcel, withLink } = this.props
+    const { x, y } = parcel
+
+    return (
+      <Card className="ParcelCard">
+        {withLink ? (
+          <Link to={locations.parcelDetail(x, y)}>{this.renderContent()}</Link>
+        ) : (
+          this.renderContent()
+        )}
       </Card>
     )
   }

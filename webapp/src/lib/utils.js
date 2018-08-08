@@ -1,5 +1,6 @@
 import dateFnsFormat from 'date-fns/format'
 import dateFnsDistanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import { env } from 'decentraland-commons'
 
 import { getCurrentLocale } from 'modules/translation/utils'
 
@@ -62,4 +63,18 @@ export function distanceInWordsToNow(date) {
     addSuffix: true,
     locale: getCurrentLocale()
   })
+}
+
+/*
+* @dev returns if address is blacklisted or not
+* @param string - address
+* @returns bool - whether the address is blacklisted or not
+*/
+export function isBlacklistedAddress(address) {
+  const value = env.get('REACT_APP_BLACKLISTED_ADDRESSES')
+  if (!value) {
+    return false
+  }
+  const blackListedAddresses = value.split(',')
+  return blackListedAddresses.includes(address)
 }

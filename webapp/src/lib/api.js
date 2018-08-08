@@ -62,18 +62,8 @@ export class API {
     return this.request('get', `/addresses/${address}/estates`, {})
   }
 
-  fetchEstates(options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
-      options
-    )
-
-    return this.request('get', '/estates', {
-      limit,
-      offset,
-      sort_by: sortBy,
-      sort_order: sortOrder,
-      status
-    })
+  fetchEstate(assetId) {
+    return this.request('get', `/estate/${assetId}`)
   }
 
   fetchDistricts() {

@@ -1,13 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { estateType } from 'components/types'
 import Asset from 'components/Asset'
 
 export default class Estate extends React.PureComponent {
   static propTypes = {
     estate: estateType,
+    id: PropTypes.string,
+    x: PropTypes.number,
+    y: PropTypes.number,
     onAccessDenied: PropTypes.func.isRequired,
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    onEstateFetched: PropTypes.func
   }
 
   static defaultProps = {

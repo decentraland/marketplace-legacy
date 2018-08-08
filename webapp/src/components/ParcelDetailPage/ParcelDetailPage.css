@@ -1,25 +1,3 @@
-.Page > .ParcelDetailPage {
-  padding-top: 0;
-}
-
-.ParcelDetailPage {
-  color: var(--text);
-}
-
-.ParcelDetailPage > .Loading {
-  font-size: 10px;
-  top: 35%;
-}
-
-.ParcelDetailPage .title {
-  margin-top: 20px;
-  margin-bottom: 30px !important;
-}
-
-.ParcelDetailPage .parcel-preview {
-  height: 400px;
-}
-
 .ParcelDetailPage .ParcelDetail {
   padding-top: 35px;
   font-size: 15px;

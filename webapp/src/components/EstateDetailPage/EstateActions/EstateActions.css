@@ -2,9 +2,14 @@
   margin-left: 15px;
 }
 
-@media (max-width: 768px) {
+.EstateActions div {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 920px) {
   .EstateActions {
     width: 100%;
+    margin: 1em 0;
   }
 
   .EstateActions .button {

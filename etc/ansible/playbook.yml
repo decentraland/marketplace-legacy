@@ -40,8 +40,13 @@
 
     - name: Install nodejs
       block:
+<<<<<<< HEAD
         - name: Get nodejs package  
           get_url: 
+=======
+        - name: Get nodejs package
+          get_url:
+>>>>>>> feat: estate flow
             url: https://deb.nodesource.com/setup_8.x
             dest: /tmp/nodesource_setup.sh
         - name: Update apt source
@@ -73,7 +78,11 @@
     - name: Setup app config file
       block:
         - name: Get contract addresses
+<<<<<<< HEAD
           get_url: 
+=======
+          get_url:
+>>>>>>> feat: estate flow
             url: https://contracts.decentraland.org/addresses.json
             dest: "{{ app_location }}/scripts/addresses.json"
         - name: Create config file

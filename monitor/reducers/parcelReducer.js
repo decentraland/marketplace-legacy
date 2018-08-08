@@ -9,10 +9,13 @@ import { getParcelIdFromEvent } from './utils'
 const log = new Log('parcelReducer')
 
 export async function parcelReducer(event) {
-  const { block_number, name } = event
+  const { block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
 
-  switch (name) {
+  switch (normalizedName) {
+    case BlockchainEvent.EVENTS.parcelSetEstateRegistry: {
+      break
+    }
     case BlockchainEvent.EVENTS.parcelUpdate: {
       try {
         const { data } = event.args
@@ -31,16 +34,39 @@ export async function parcelReducer(event) {
     case BlockchainEvent.EVENTS.parcelTransfer: {
       const { to } = event.args
 
-      log.info(`[${name}] Updating "${parcelId}" owner with "${to}"`)
+      log.info(`[${name}] Transfering "${parcelId}" owner to "${to}"`)
 
       const [last_transferred_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
         Publication.cancelOlder(parcelId, block_number)
       ])
+
       await Parcel.update(
         { owner: to.toLowerCase(), last_transferred_at },
         { id: parcelId }
       )
+      break
+    }
+    case BlockchainEvent.EVENTS.addLand: {
+      if (parcelId) {
+        const { estateId } = event.args
+        log.info(
+          `[${name}] Adding "${parcelId}" as part of the estate id "${estateId}"`
+        )
+
+        await Parcel.update({ estate_id: estateId }, { id: parcelId })
+      }
+      break
+    }
+    case BlockchainEvent.EVENTS.removeLand: {
+      if (parcelId) {
+        const { estateId } = event.args
+        log.info(
+          `[${name}] Removing "${parcelId}" as part of the estate id "${estateId}"`
+        )
+
+        await Parcel.update({ estate_id: null }, { id: parcelId })
+      }
       break
     }
     default:

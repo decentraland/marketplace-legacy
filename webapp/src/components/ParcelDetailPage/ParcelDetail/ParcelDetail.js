@@ -16,7 +16,8 @@ import {
   parcelType,
   districtType,
   publicationType,
-  mortgageType
+  mortgageType,
+  walletType
 } from 'components/types'
 import { getDistrict, getOpenPublication } from 'shared/asset'
 import { t } from 'modules/translation/utils'
@@ -24,6 +25,7 @@ import { t } from 'modules/translation/utils'
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
+    wallet: walletType.isRequired,
     publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
@@ -45,7 +47,14 @@ export default class ParcelDetail extends React.PureComponent {
   }
 
   render() {
-    const { parcel, districts, publications, isOwner, mortgage } = this.props
+    const {
+      parcel,
+      districts,
+      publications,
+      isOwner,
+      mortgage,
+      wallet
+    } = this.props
 
     const description = this.getDescription()
     const publication = getOpenPublication(parcel, publications)
@@ -94,6 +103,7 @@ export default class ParcelDetail extends React.PureComponent {
                 width={publication ? 8 : 16}
               >
                 <ParcelActions
+                  wallet={wallet}
                   parcel={parcel}
                   mortgage={mortgage}
                   publications={publications}

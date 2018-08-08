@@ -106,7 +106,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                   isTxIdle={isTxIdle}
                 />
                 <TxStatus.Asset
-                  parcel={parcel}
+                  asset={parcel}
                   name={
                     <span>
                       {`${t('mortgage.pending_tx')} `}

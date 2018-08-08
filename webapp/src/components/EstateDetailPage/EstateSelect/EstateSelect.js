@@ -1,0 +1,213 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Header, Grid, Container } from 'semantic-ui-react'
+
+import AssetDetailPage from 'components/AssetDetailPage'
+import ParcelCard from 'components/ParcelCard'
+import EstateSelectActions from './EstateSelectActions'
+import { t } from 'modules/translation/utils'
+import { parcelType, estateType } from 'components/types'
+import { getCoordsMatcher, isEqualCoords, buildCoordinate } from 'shared/parcel'
+import { isOwner } from 'shared/asset'
+import { hasNeighbour, areConnected, isEstate } from 'shared/estate'
+import { getParcelsNotIncluded } from 'shared/utils'
+import './EstateSelect.css'
+
+export default class EstateSelect extends React.PureComponent {
+  static propTypes = {
+    estate: estateType.isRequired,
+    estatePristine: estateType,
+    allParcels: PropTypes.objectOf(parcelType),
+    wallet: PropTypes.object.isRequired,
+    isCreation: PropTypes.bool.isRequired,
+    isTxIdle: PropTypes.bool.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onCreateCancel: PropTypes.func.isRequired,
+    onContinue: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
+  }
+
+  handleParcelClick = wallet => (asset, { x, y }) => {
+    if (
+      !isOwner(wallet, buildCoordinate(x, y)) &&
+      !isOwner(wallet, asset.asset_id)
+    ) {
+      return
+    }
+
+    const { estate, isCreation, onChange } = this.props
+    const parcels = estate.data.parcels
+
+    if (!isCreation && isEstate(asset) && asset.asset_id !== estate.asset_id) {
+      return
+    }
+
+    if (!hasNeighbour(x, y, parcels)) {
+      return
+    }
+
+    const isSelected = parcels.some(getCoordsMatcher({ x, y }))
+    if (isSelected) {
+      const newParcels = parcels.filter(
+        coords => !isEqualCoords(coords, { x, y })
+      )
+
+      if (
+        !areConnected(newParcels, [...parcels]) ||
+        !areConnected(newParcels) ||
+        (!isCreation && newParcels.length < 2)
+      ) {
+        return
+      }
+      return onChange(newParcels)
+    }
+
+    onChange([...parcels, { x, y }])
+  }
+
+  canContinue = parcels => {
+    if (parcels.length > 1) {
+      return true
+    }
+
+    if (this.props.estatePristine) {
+      return !this.hasParcelsChanged(parcels)
+    }
+
+    return false
+  }
+
+  hasParcelsChanged = parcels => {
+    const { estatePristine } = this.props
+    if (!estatePristine) {
+      return false
+    }
+
+    const pristineParcels = estatePristine.data.parcels
+
+    if (pristineParcels.length != parcels.length) {
+      return true
+    }
+
+    if (
+      getParcelsNotIncluded(parcels, pristineParcels).length ||
+      getParcelsNotIncluded(pristineParcels, parcels).length
+    ) {
+      return true
+    }
+
+    return false
+  }
+
+  renderTxLabel = () => {
+    const { estate, estatePristine } = this.props
+    const newParcels = estate.data.parcels
+    const pristineParcels = estatePristine.data.parcels
+
+    const parcelsToAdd = getParcelsNotIncluded(newParcels, pristineParcels)
+    const parcelsToRemove = getParcelsNotIncluded(pristineParcels, newParcels)
+    return (
+      <React.Fragment>
+        {!!parcelsToAdd.length && (
+          <p className="tx-label">
+            {t('estate_select.tx_to_be_send', {
+              action: t('global.add'),
+              parcels: parcelsToAdd.map(({ x, y }) => `(${x},${y})`).join(', ')
+            })}
+          </p>
+        )}
+        {!!parcelsToRemove.length && (
+          <p className="tx-label">
+            {t('estate_select.tx_to_be_send', {
+              action: t('global.remove'),
+              parcels: parcelsToRemove
+                .map(({ x, y }) => `(${x},${y})`)
+                .join(', ')
+            })}
+          </p>
+        )}
+      </React.Fragment>
+    )
+  }
+
+  render() {
+    const {
+      estate,
+      onCancel,
+      onContinue,
+      onSubmit,
+      wallet,
+      allParcels,
+      isCreation,
+      onCreateCancel,
+      isTxIdle
+    } = this.props
+
+    const parcels = estate.data.parcels
+    const canEdit = isCreation || isOwner(wallet, estate.asset_id)
+
+    return (
+      <div className="EstateSelect">
+        <div className="parcel-preview" title={t('parcel_detail.view')}>
+          <AssetDetailPage
+            asset={estate}
+            showMiniMap={false}
+            showControls={false}
+            onAssetClick={this.handleParcelClick(wallet)}
+          />
+        </div>
+        <Container>
+          <Grid className="estate-selection">
+            <Grid.Row>
+              <Grid.Column computer={8} tablet={16}>
+                <Header size="large">
+                  <p>
+                    {isCreation
+                      ? t('estate_select.new_selection')
+                      : t('estate_select.edit_selection')}
+                  </p>
+                </Header>
+              </Grid.Column>
+              {canEdit && (
+                <Grid.Column
+                  className="parcel-actions-container"
+                  computer={8}
+                  tablet={16}
+                >
+                  <EstateSelectActions
+                    isTxIdle={isTxIdle}
+                    isCreation={isCreation}
+                    onSubmit={onSubmit}
+                    onCancel={isCreation ? onCreateCancel : onCancel}
+                    onContinue={onContinue}
+                    canContinue={this.canContinue(parcels)}
+                    canSubmit={this.hasParcelsChanged(parcels)}
+                  />
+                  {!isCreation && this.renderTxLabel()}
+                </Grid.Column>
+              )}
+              <Grid.Column width={16} className={'selected-parcels'}>
+                <p className="parcels-included">
+                  {t('estate_select.description')}
+                </p>
+                {allParcels &&
+                  parcels.map(({ x, y }) => {
+                    const parcel = allParcels[buildCoordinate(x, y)]
+                    return parcel ? (
+                      <ParcelCard
+                        key={parcel.id}
+                        parcel={parcel}
+                        withMap={false}
+                        withLink={false}
+                      />
+                    ) : null
+                  })}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </div>
+    )
+  }
+}

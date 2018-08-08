@@ -1,5 +1,8 @@
 import { isOpen } from './publication'
-import { getEstateByParcel, isEstate } from './estate'
+import { isParcel } from './parcel'
+import { getEstateByParcel, isEstate, calculateZoomAndCenter } from './estate'
+import { contracts } from 'decentraland-eth'
+const { LANDRegistry } = contracts
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
@@ -117,16 +120,17 @@ export function getColorByType(type, x, y) {
 }
 
 export function getAsset(parcelId, parcels, estates) {
-  const parcel = parcels[parcelId]
-  if (!parcel) {
-    return null
+  const selectedParcel = parcels[parcelId]
+  if (!selectedParcel) {
+    return {}
   }
 
-  if (!parcel.in_estate) {
-    return parcel
+  return {
+    asset: !selectedParcel.estate_id
+      ? selectedParcel
+      : getEstateByParcel(selectedParcel, estates),
+    selectedParcel
   }
-
-  return getEstateByParcel(parcel, estates)
 }
 
 export function isOwner(wallet, assetId) {
@@ -137,7 +141,6 @@ export function isOwner(wallet, assetId) {
   if (wallet.parcelsById && wallet.parcelsById[assetId]) {
     return true
   }
-
   return !!(wallet.estatesById && wallet.estatesById[assetId])
 }
 
@@ -190,3 +193,23 @@ export const ASSET_TYPE = Object.freeze({
   estate: 'estate',
   parcel: 'parcel'
 })
+
+export function getCenterCoords(asset) {
+  if (isParcel(asset)) {
+    return { x: asset.x, y: asset.y }
+  }
+  const { center } = calculateZoomAndCenter(asset.data.parcels)
+  return center
+}
+
+export function isNewAsset(asset) {
+  return !asset || !asset.asset_id
+}
+
+export function decodeMetadata(data) {
+  return LANDRegistry.decodeLandData(data)
+}
+
+export function encodeMetadata(data) {
+  return LANDRegistry.encodeLandData(data)
+}

@@ -1,3 +1,5 @@
+import { isParcel } from 'shared/parcel'
+
 export const locations = {
   root: '/',
 
@@ -29,6 +31,13 @@ export const locations = {
   transfer: '/:x/:y/transfer',
   transferLand: (x, y) => `/${x}/${y}/transfer`,
 
+  estate: '/estate/:assetId/detail',
+  estateDetail: assetId => `/estate/${assetId}/detail`,
+  ediEstateParcels: '/estate/:assetId/edit-parcels',
+  editEstateParcelsRequest: () => 'edit-parcels',
+  ediEstateMetadata: '/estate/:assetId/edit-metadata',
+  editEstateMetadataRequest: () => 'edit-metadata',
+
   createEstate: '/:x/:y/create-estate',
   createEstateLand: (x, y) => `/${x}/${y}/create-estate`,
 
@@ -37,6 +46,12 @@ export const locations = {
 
   parcel: '/:x/:y/detail',
   parcelDetail: (x, y) => `/${x}/${y}/detail`,
+
+  assetDetail: function(asset) {
+    return isParcel(asset)
+      ? this.parcelDetail(asset.x, asset.y)
+      : this.estateDetail(asset.asset_id)
+  },
 
   settings: '/settings',
   activity: '/activity',

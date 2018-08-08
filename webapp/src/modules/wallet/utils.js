@@ -11,7 +11,8 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       MortgageHelper,
       MortgageManager,
       RCNEngine,
-      ERC20Token
+      ERC20Token,
+      EstateRegistry
     } = contracts
 
     const RCNToken = Object.create(
@@ -28,6 +29,9 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
         new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
         new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
         new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
+        new EstateRegistry(
+          env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')
+        ),
         new MortgageHelper(
           env.get('REACT_APP_MORTGAGE_HELPER_CONTRACT_ADDRESS')
         ),

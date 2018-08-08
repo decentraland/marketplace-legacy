@@ -13,8 +13,8 @@ import {
 const WebWorkerDependencies = {
   toParcelObject,
   normalizeParcel,
-  areConnected,
   connectParcels,
+  areConnected,
   isSameValue,
   getParcelPublications,
   buildCoordinate

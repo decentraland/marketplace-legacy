@@ -83,7 +83,7 @@ describe('Parcel', function() {
           owner: null,
           data: null,
           district_id: null,
-          in_estate: false,
+          estate_id: null,
           last_transferred_at: null,
           auction_owner: null,
           tags: {},
@@ -97,7 +97,7 @@ describe('Parcel', function() {
           owner: null,
           data: null,
           district_id: null,
-          in_estate: false,
+          estate_id: null,
           last_transferred_at: null,
           auction_owner: null,
           tags: {},
@@ -213,7 +213,7 @@ describe('Parcel', function() {
           district_id: null,
           last_transferred_at: null,
           auction_owner: null,
-          in_estate: false,
+          estate_id: null,
           tags: {},
           publication
         },
@@ -227,7 +227,7 @@ describe('Parcel', function() {
           district_id: null,
           last_transferred_at: null,
           auction_owner: null,
-          in_estate: false,
+          estate_id: null,
           tags: {},
           publication: publication2
         }

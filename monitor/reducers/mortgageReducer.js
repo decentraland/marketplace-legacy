@@ -12,10 +12,10 @@ import { getParcelIdFromEvent } from './utils'
 const log = new Log('mortgageReducer')
 
 export async function mortgageReducer(event) {
-  const { tx_hash, block_number, name } = event
+  const { tx_hash, block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
 
-  switch (name) {
+  switch (normalizedName) {
     case BlockchainEvent.EVENTS.newMortgage: {
       const { borrower, loanId, mortgageId } = event.args
 

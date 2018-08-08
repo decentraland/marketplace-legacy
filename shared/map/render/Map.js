@@ -35,7 +35,7 @@ export class Map {
         const ry = cy - offsetY
         const id = buildCoordinate(px, py)
         const parcel = parcels[id]
-        const asset = getAsset(id, parcels, estates)
+        const { asset } = getAsset(id, parcels, estates)
         const color = getColor(px, py, asset, publications, wallet)
 
         const connectedLeft = parcel ? parcel.connectedLeft : false

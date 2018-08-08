@@ -6,7 +6,14 @@ const log = new Log('handlers')
 export async function index(eventData) {
   if (eventData.removed) return
 
-  const { event, transactionHash, blockNumber, logIndex, args } = eventData
+  const {
+    event,
+    transactionHash,
+    blockNumber,
+    logIndex,
+    args,
+    address
+  } = eventData
 
   log.info(`[${event}] Storing blockchain event ${transactionHash}`)
 
@@ -15,7 +22,8 @@ export async function index(eventData) {
     name: event,
     block_number: blockNumber,
     log_index: logIndex,
-    args: transformArgValuesToString(args)
+    args: transformArgValuesToString(args),
+    address
   })
 }
 

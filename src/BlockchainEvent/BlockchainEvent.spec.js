@@ -11,13 +11,15 @@ describe('BlockchainEvent', function() {
           tx_hash: '0x1',
           block_number: 22,
           log_index: 1,
-          name: 'AuctionCreated'
+          name: 'AuctionCreated',
+          address: '0x'
         }),
         BlockchainEvent.insert({
           tx_hash: '0x2',
           block_number: 10,
           log_index: 1,
-          name: 'AuctionCreated'
+          name: 'AuctionCreated',
+          address: '0x'
         })
       ])
 

@@ -16,6 +16,12 @@ import {
   BUY_MANA_SUCCESS
 } from 'modules/wallet/actions'
 import { FETCH_TRANSACTION_FAILURE } from 'modules/transaction/actions'
+import {
+  CREATE_ESTATE_SUCCESS,
+  EDIT_ESTATE_METADATA_SUCCESS,
+  EDIT_ESTATE_PARCELS_SUCCESS,
+  DELETE_ESTATE_SUCCESS
+} from 'modules/estates/actions'
 
 add(BUY_SUCCESS, 'Buy', action => ({
   assetId: action.publication.asset_id,
@@ -77,4 +83,27 @@ add(MANAGE_PARCEL_SUCCESS, 'Manage LAND Permissions', action => ({
   y: action.parcel.y,
   address: action.address,
   revoked: action.revoked
+})),
+  add(CREATE_ESTATE_SUCCESS, 'Create Estate', action => ({
+    parcels: action.estate.data.parcels.map(p => `(${p.x}, ${p.y})`).join(', '),
+    address: action.owner
+  }))
+
+add(EDIT_ESTATE_METADATA_SUCCESS, 'Edit Estate Metadata', action => ({
+  asset_id: action.estate.asset_id,
+  name: action.estate.data.name,
+  description: action.estate.data.description,
+  address: action.estate.owner
+}))
+
+add(EDIT_ESTATE_PARCELS_SUCCESS, 'Edit Estate Parcels', action => ({
+  asset_id: action.estate.asset_id,
+  parcels: action.parcels.map(p => `(${p.x}, ${p.y})`).join(', '),
+  type: action.actionType,
+  address: action.estate.owner
+}))
+
+add(DELETE_ESTATE_SUCCESS, 'Delete Estate', action => ({
+  asset_id: action.estate.asset_id,
+  address: action.estate.owner
 }))

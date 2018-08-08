@@ -17,7 +17,7 @@ import Contribution from './Contribution'
 import { parcelType, contributionType, estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { buildUrl } from './utils'
-import { shortenAddress } from 'lib/utils'
+import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
 
 import './ProfilePage.css'
 import EstateCard from 'components/EstateCard'
@@ -44,6 +44,10 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   componentWillMount() {
+    const { address, onAccessDenied } = this.props
+    if (isBlacklistedAddress(address)) {
+      onAccessDenied()
+    }
     this.props.onFetchAddress()
   }
 
@@ -112,7 +116,9 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.estates: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(estate => <EstateCard key={estate.id} estate={estate} />)}
+            {grid.map(estate => (
+              <EstateCard key={estate.asset_id} estate={estate} />
+            ))}
           </Card.Group>
         )
       }

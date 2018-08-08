@@ -1,27 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Button, Form, Input } from 'semantic-ui-react/dist/commonjs'
 
-import { Button, Form, Input } from 'semantic-ui-react'
+import TxStatus from 'components/TxStatus'
 import { isValidName, isValidDescription } from 'shared/asset'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 import { estateType } from 'components/types'
+import './EditEstateMetadataForm.css'
 
-import './EditEstateForm.css'
-
-export default class EditEstateForm extends React.PureComponent {
+export default class EditEstateMetadataForm extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    isTxIdle: PropTypes.bool.isRequired
   }
 
   constructor(props) {
     super(props)
     const { estate } = this.props
-    this.state = {
-      initialEstate: estate
-    }
+    this.initialEstate = estate
+  }
+
+  componentWillUnmount() {
+    const { estate, onChange } = this.props
+    onChange({
+      ...estate,
+      data: {
+        ...estate.data,
+        description: '',
+        name: ''
+      }
+    })
   }
 
   handleNameChange = event => {
@@ -30,7 +41,7 @@ export default class EditEstateForm extends React.PureComponent {
       ...estate,
       data: {
         ...estate.data,
-        name: event.target.estate
+        name: event.target.value
       }
     })
   }
@@ -41,24 +52,30 @@ export default class EditEstateForm extends React.PureComponent {
       ...estate,
       data: {
         ...estate.data,
-        description: event.target.estate
+        description: event.target.value
       }
     })
   }
 
   hasChanged() {
     const { data } = this.props.estate
-    const { name, description } = this.state.initialEstate
+    const { name, description } = this.initialEstate.data
 
-    return name !== data.name || description !== data.description
+    return (
+      name.toString() !== data.name.toString() ||
+      description.toString() !== data.description.toString()
+    )
   }
 
   render() {
-    const { onCancel, onSubmit, estate } = this.props
+    const { onCancel, onSubmit, estate, isTxIdle } = this.props
     const { name, description } = estate.data
 
     return (
-      <Form className="EditEstateForm" onSubmit={preventDefault(onSubmit)}>
+      <Form
+        className="EditEstateMetadataForm"
+        onSubmit={preventDefault(onSubmit)}
+      >
         <Form.Field>
           <label>{t('estate_edit.name')}</label>
           <Input
@@ -78,7 +95,8 @@ export default class EditEstateForm extends React.PureComponent {
           />
         </Form.Field>
         <br />
-        <div className="modal-buttons">
+        {isTxIdle && <TxStatus.Idle isIdle={isTxIdle} />}
+        <div>
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>

@@ -12,10 +12,9 @@ import { getParcelIdFromEvent } from './utils'
 const log = new Log('publicationReducer')
 
 export async function publicationReducer(event) {
-  const { tx_hash, block_number, name } = event
+  const { tx_hash, block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
-
-  switch (name) {
+  switch (normalizedName) {
     case BlockchainEvent.EVENTS.publicationCreated: {
       const { seller, priceInWei, expiresAt } = event.args
       const contract_id = event.args.id

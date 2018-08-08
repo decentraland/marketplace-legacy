@@ -15,7 +15,6 @@ import {
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
-import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'shared/parcel'
 import { toAddressParcelIds, toAddressPublicationIds } from './utils'
@@ -156,26 +155,6 @@ export function addressReducer(state = INITIAL_STATE, action) {
         }
         default: {
           return state
-        }
-      }
-    }
-    case CREATE_ESTATE_SUCCESS: {
-      const { id, owner, data } = action.estate
-      const parcelIds = new Set(
-        data.parcels.map(({ x, y }) => buildCoordinate(x, y))
-      )
-
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [owner]: {
-            ...state.data[owner],
-            parcel_ids: state.data[owner].parcel_ids.filter(
-              x => !parcelIds.has(x)
-            ),
-            estate_ids: [...state.data[owner].estate_ids, id]
-          }
         }
       }
     }

@@ -115,7 +115,7 @@ export default class PayMortgagePage extends React.PureComponent {
                 isDisabled={!isMortgageOngoing(mortgage)}
               />
               <TxStatus.Asset
-                parcel={parcel}
+                asset={parcel}
                 name={
                   <span>
                     {`${t('mortgage.pending_tx')} `}

@@ -4,7 +4,16 @@ import {
   CREATE_ESTATE_FAILURE,
   FETCH_ESTATE_REQUEST,
   FETCH_ESTATE_FAILURE,
-  FETCH_ESTATE_SUCCESS
+  FETCH_ESTATE_SUCCESS,
+  EDIT_ESTATE_METADATA_REQUEST,
+  EDIT_ESTATE_METADATA_SUCCESS,
+  EDIT_ESTATE_METADATA_FAILURE,
+  EDIT_ESTATE_PARCELS_FAILURE,
+  EDIT_ESTATE_PARCELS_REQUEST,
+  EDIT_ESTATE_PARCELS_SUCCESS,
+  DELETE_ESTATE_REQUEST,
+  DELETE_ESTATE_FAILURE,
+  DELETE_ESTATE_SUCCESS
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
@@ -19,13 +28,20 @@ const INITIAL_STATE = {
 export function estatesReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_ESTATE_REQUEST:
-    case CREATE_ESTATE_REQUEST: {
+    case CREATE_ESTATE_REQUEST:
+    case CREATE_ESTATE_SUCCESS:
+    case EDIT_ESTATE_PARCELS_REQUEST:
+    case EDIT_ESTATE_PARCELS_SUCCESS:
+    case EDIT_ESTATE_METADATA_REQUEST:
+    case EDIT_ESTATE_METADATA_SUCCESS:
+    case DELETE_ESTATE_REQUEST:
+    case DELETE_ESTATE_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
       }
     }
-    case CREATE_ESTATE_SUCCESS: {
+    case FETCH_ESTATE_SUCCESS: {
       const { estate } = action
       return {
         ...state,
@@ -33,39 +49,32 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         error: null,
         data: {
           ...state.data,
-          [estate.id]: {
+          [estate.asset_id]: {
             ...estate
           }
         }
       }
     }
     case FETCH_ESTATE_FAILURE:
-    case CREATE_ESTATE_FAILURE: {
+    case CREATE_ESTATE_FAILURE:
+    case EDIT_ESTATE_PARCELS_FAILURE:
+    case EDIT_ESTATE_METADATA_FAILURE:
+    case DELETE_ESTATE_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: action.error
       }
     }
-    case FETCH_ESTATE_SUCCESS: {
-      const { id, estate } = action
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: null,
-        data: {
-          ...state.data,
-          [id]: estate
-        }
-      }
-    }
     case FETCH_MAP_SUCCESS: {
       return {
         ...state,
-        data: {
-          ...state.data,
-          ...action.assets.estates
-        }
+        data: action.assets.estates.reduce(
+          (acc, estate) => {
+            return { ...acc, [estate.asset_id]: estate }
+          },
+          { ...state.data }
+        )
       }
     }
     case FETCH_ADDRESS_ESTATES_SUCCESS: {

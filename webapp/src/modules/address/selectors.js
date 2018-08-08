@@ -53,7 +53,7 @@ export const getAddresses = createSelector(
           mortgagedParcels: mortgagedParcelsByAddress,
           parcels,
           parcelsById,
-          estates: estates.filter(e => e.data.parcels.length > 0),
+          estates: estates.filter(e => e.owner === address),
           estatesById,
           contributions,
           publishedParcels
