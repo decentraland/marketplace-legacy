@@ -1,7 +1,8 @@
-.ParcelMortgageDetail {
+.ParcelMortgageDetail.ui.grid {
   border-radius: 12px;
   background-color: #181f33;
   text-align: center;
+  margin: 0;
 }
 
 .ParcelMortgageDetail.ui.grid > .row {
