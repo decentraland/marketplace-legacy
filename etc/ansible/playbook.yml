@@ -8,6 +8,11 @@
     new_relic_key: ""
 
   tasks:
+    - name: Install Python in target host
+      raw: apt install -y python
+      become: yes
+      become_method: sudo
+
     - name: Base packages
       block:
         - name: Update packages
@@ -18,6 +23,15 @@
             name: "*"
             state: latest
             force_apt_get: true
+        - name: Install required packages
+          apt:
+            name: "{{ packages }}"
+            state: present
+          vars:
+            packages:
+              - "build-essential"
+              - "jq"
+              - "postgresql-client"
         - name: Autoremove packages
           apt:
             autoremove: yes
@@ -58,10 +72,6 @@
 
     - name: Setup app config file
       block:
-        - name: Install jq
-          apt:
-            name: jq
-            state: present
         - name: Get contract addresses
           get_url: 
             url: https://contracts.decentraland.org/addresses.json
