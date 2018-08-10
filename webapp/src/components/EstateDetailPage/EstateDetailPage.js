@@ -20,12 +20,10 @@ export default class EstateDetailPage extends React.PureComponent {
     x: PropTypes.number,
     y: PropTypes.number,
     assetId: PropTypes.string,
-    isTxIdle: PropTypes.bool.isRequired,
     allParcels: PropTypes.objectOf(parcelType),
     submitEstate: PropTypes.func.isRequired,
     editEstateMetadata: PropTypes.func.isRequired,
     onViewAssetClick: PropTypes.func.isRequired,
-    onDeleteEstate: PropTypes.func.isRequired,
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
@@ -36,12 +34,10 @@ export default class EstateDetailPage extends React.PureComponent {
       assetId,
       x,
       y,
-      isTxIdle,
       submitEstate,
       editEstateMetadata,
       onViewAssetClick,
       allParcels,
-      onDeleteEstate,
       onEditParcels,
       onEditMetadata,
       onCancel
@@ -68,9 +64,7 @@ export default class EstateDetailPage extends React.PureComponent {
               allParcels={allParcels}
               estate={estate}
               isOwner={isOwner}
-              isTxIdle={isTxIdle}
               onViewAssetClick={onViewAssetClick}
-              onDeleteEstate={onDeleteEstate}
               onEditParcels={onEditParcels}
               onEditMetadata={onEditMetadata}
             />

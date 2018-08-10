@@ -28,10 +28,9 @@ export default class EstateSelectActions extends React.PureComponent {
       isTxIdle
     } = this.props
 
-    return isTxIdle ? (
-      <TxStatus.Idle isIdle={isTxIdle} />
-    ) : (
-      <div className="EstateActions">
+    return (
+      <div className="EstateSelectActions">
+        {isTxIdle && <TxStatus.Idle isIdle={isTxIdle} />}
         <Button size="tiny" onClick={onCancel}>
           {t('global.cancel')}
         </Button>

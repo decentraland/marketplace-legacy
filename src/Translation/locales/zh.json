@@ -71,7 +71,8 @@
     "description": "在{x}，{y}处选择相邻的地块",
     "detail": "房地产细节",
     "edit_selection": "在地图上选择宗地",
-    "new_selection": "在地图上选择新地块的地块"
+    "new_selection": "在地图上选择新地块的地块",
+    "tx_to_be_send": "您将向{action} parcels发送交易：{parcels}"
   },
   "footer": {
     "color_key": "图示",

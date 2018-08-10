@@ -71,7 +71,9 @@
     "description": "Selected parcels",
     "detail": "Estate detail",
     "edit_selection": "Select the parcels on the map",
-    "new_selection": "Select the parcels on the map for your new Estate"
+    "new_selection": "Select the parcels on the map for your new Estate",
+    "tx_to_be_send":
+      "You will send a transaction to {action} parcels: {parcels}"
   },
   "footer": {
     "color_key": "Color Key",
@@ -83,6 +85,8 @@
   "global": {
     "acquired_at": "Acquired at {date}",
     "activity": "Activity",
+    "add": "add",
+    "added": "added",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Authorized",
@@ -116,6 +120,8 @@
     "parcels": "Parcels",
     "profile": "My Land",
     "publications": "Publications",
+    "remove": "remove",
+    "removed": "removed",
     "request": "Request",
     "retry": "Retry",
     "revoke": "Revoke",

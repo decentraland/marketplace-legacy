@@ -1,7 +1,7 @@
 import { getCoordsMatcher } from './parcel'
 
 export function isEstate(asset) {
-  return !!asset.parcels
+  return !!asset.data.parcels
 }
 
 export function getEstateByParcel(parcel, estates) {

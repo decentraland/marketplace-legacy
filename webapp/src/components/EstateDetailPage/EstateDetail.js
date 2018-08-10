@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Grid, Container } from 'semantic-ui-react'
+import { Header, Grid, Container, Button } from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
@@ -14,12 +14,10 @@ export default class EstateDetail extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
     isOwner: PropTypes.bool.isRequired,
-    isTxIdle: PropTypes.bool.isRequired,
     onViewAssetClick: PropTypes.func.isRequired,
     allParcels: PropTypes.objectOf(parcelType),
     onEditParcels: PropTypes.func.isRequired,
-    onEditMetadata: PropTypes.func.isRequired,
-    onDeleteEstate: PropTypes.func.isRequired
+    onEditMetadata: PropTypes.func.isRequired
   }
 
   render() {
@@ -29,9 +27,7 @@ export default class EstateDetail extends React.PureComponent {
       allParcels,
       onViewAssetClick,
       onEditParcels,
-      onEditMetadata,
-      onDeleteEstate,
-      isTxIdle
+      onEditMetadata
     } = this.props
     const { parcels } = estate.data
 
@@ -43,7 +39,7 @@ export default class EstateDetail extends React.PureComponent {
         <Container>
           <Grid className="details">
             <Grid.Row>
-              <Grid.Column computer={8} tablet={16} className={'parcels'}>
+              <Grid.Column width={8} className={'parcels'}>
                 <Header size="large">
                   <p className="estate-title">
                     {estate.data.name || t('estate_select.detail')}
@@ -56,25 +52,35 @@ export default class EstateDetail extends React.PureComponent {
                 </Header>
               </Grid.Column>
               {isOwner && (
-                <Grid.Column
-                  className="parcel-actions-container"
-                  tablet={16}
-                  computer={8}
-                >
-                  <EstateActions
-                    isTxIdle={isTxIdle}
-                    onEditMetadata={onEditMetadata}
-                    onEditParcels={onEditParcels}
-                    onDeleteEstate={onDeleteEstate}
-                  />
+                <Grid.Column className="parcel-actions-container" computer={8}>
+                  <EstateActions onEditMetadata={onEditMetadata} />
                 </Grid.Column>
               )}
-              <Grid.Column width={16} className={'selected-parcels'}>
-                {allParcels && (
-                  <React.Fragment>
+              {allParcels && (
+                <React.Fragment>
+                  <Grid.Column
+                    width={8}
+                    className={'selected-parcels-headline'}
+                  >
                     <p className="parcels-included">
                       {t('estate_detail.parcels')}
                     </p>
+                  </Grid.Column>
+                  {isOwner && (
+                    <Grid.Column
+                      width={8}
+                      className={'selected-parcels-headline'}
+                    >
+                      <Button
+                        size="tiny"
+                        className="link"
+                        onClick={onEditParcels}
+                      >
+                        {t('estate_detail.edit_parcels')}{' '}
+                      </Button>
+                    </Grid.Column>
+                  )}
+                  <Grid.Column width={16} className={'selected-parcels'}>
                     {parcels.map(({ x, y }) => {
                       const parcel = allParcels[buildCoordinate(x, y)]
                       return parcel ? (
@@ -85,9 +91,9 @@ export default class EstateDetail extends React.PureComponent {
                         />
                       ) : null
                     })}
-                  </React.Fragment>
-                )}
-              </Grid.Column>
+                  </Grid.Column>
+                </React.Fragment>
+              )}
             </Grid.Row>
           </Grid>
         </Container>

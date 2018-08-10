@@ -72,7 +72,9 @@
     "description": "{x}, {y}에서 시작하여 인접한 소포를 선택하십시오.",
     "detail": "부동산 상세",
     "edit_selection": "지도에서 소포를 선택하십시오.",
-    "new_selection": "새로운 부동산에 대한지도에서 소포를 선택하십시오."
+    "new_selection": "새로운 부동산에 대한지도에서 소포를 선택하십시오.",
+    "tx_to_be_send":
+      "다음과 같이 트랜잭션을 {action} 소포로 보냅니다. {parcels}"
   },
   "footer": {
     "color_key": "색상 키",

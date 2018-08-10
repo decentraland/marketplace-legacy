@@ -7,6 +7,11 @@
   font-size: 15px;
 }
 
+.EstateSelect .select-title {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
 .EstateSelect > .Loading {
   font-size: 10px;
   top: 35%;
@@ -26,7 +31,8 @@
 }
 
 .EstateSelect .EstateActions {
-  text-align: right;
+  text-align: left;
+  margin-top: 30px;
 }
 
 .EstateSelect .estate-selection .selected-parcels.column {
@@ -58,8 +64,13 @@
 }
 
 .tx-label {
-  text-align: right;
+  text-align: left;
   font-size: 14px;
   margin-top: 15px;
-  color: var(--primary);
+  color: var(--text);
+}
+
+.EstateSelect .selected-parcels-headline.column {
+  margin-top: 20px;
+  text-align: right
 }

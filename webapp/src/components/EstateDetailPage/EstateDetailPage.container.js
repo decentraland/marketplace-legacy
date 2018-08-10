@@ -12,7 +12,6 @@ import {
 } from 'modules/estates/actions'
 import EstateDetailPage from 'components/EstateDetailPage/EstateDetailPage'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import { isEstateTransactionIdle } from 'modules/estates/selectors'
 
 const mapState = (state, ownProps) => {
   const { x, y, assetId } = getMatchParams(ownProps)
@@ -20,8 +19,7 @@ const mapState = (state, ownProps) => {
     x: parseInt(x, 10),
     y: parseInt(y, 10),
     assetId,
-    allParcels: getParcels(state),
-    isTxIdle: isEstateTransactionIdle(state)
+    allParcels: getParcels(state)
   }
 }
 
@@ -35,8 +33,6 @@ const mapDispatch = (dispatch, ownProps) => {
     editEstateMetadata: estate => dispatch(editEstateMetadataRequest(estate)),
     onViewAssetClick: asset =>
       dispatch(navigateTo(locations.assetDetail(asset))),
-    onDeleteEstate: () =>
-      dispatch(navigateTo(locations.deleteEstatePage(assetId))),
     onEditParcels: () =>
       dispatch(navigateTo(locations.editEstateParcelsRequest())),
     onEditMetadata: () =>

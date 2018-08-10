@@ -16,8 +16,10 @@ export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 
-export const isEditingOrCreatingMetadataEstateTransactionIdle = state =>
-  isLoadingType(getLoading(state), CREATE_ESTATE_REQUEST) ||
+export const isCreatingEstateTransactionIdle = state =>
+  isLoadingType(getLoading(state), CREATE_ESTATE_REQUEST)
+
+export const isEditingMetadataTransactionIdle = state =>
   isLoadingType(getLoading(state), EDIT_ESTATE_METADATA_REQUEST)
 
 export const isDeletingEstateTransactionIdle = state =>
@@ -27,7 +29,8 @@ export const isEditingParcelTransactionIdle = state =>
   isLoadingType(getLoading(state), EDIT_ESTATE_PARCELS_REQUEST)
 
 export const isEstateTransactionIdle = state =>
-  isEditingOrCreatingMetadataEstateTransactionIdle(state) ||
+  isCreatingEstateTransactionIdle(state) ||
+  isEditingMetadataTransactionIdle(state) ||
   isEditingParcelTransactionIdle(state) ||
   isDeletingEstateTransactionIdle(state)
 

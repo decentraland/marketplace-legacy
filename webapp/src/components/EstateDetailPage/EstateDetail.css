@@ -38,14 +38,25 @@
 .EstateDetail .details .parcels-included {
   width: 100%;
   font-size: 18px;
-  margin-top: 20px;
   color: var(--gray);
-  margin-bottom: 0px;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.EstateDetail .details  .selected-parcels-headline.column {
+  margin-top: 20px;
+  text-align: right
+}
+
+
+.EstateDetail .details  .selected-parcels-headline.column .button{
+  font-size: 14px;
 }
 
 .EstateDetail .details .selected-parcels.column {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .selected-parcels .ParcelCard {

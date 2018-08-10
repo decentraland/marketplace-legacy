@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Grid, Container } from 'semantic-ui-react'
+import { Header, Grid, Container, Button } from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
@@ -25,7 +25,8 @@ export default class EstateSelect extends React.PureComponent {
     onCreateCancel: PropTypes.func.isRequired,
     onContinue: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    onDeleteEstate: PropTypes.func.isRequired
   }
 
   getParcelClickHandler = wallet => (asset, { x, y }) => {
@@ -39,7 +40,7 @@ export default class EstateSelect extends React.PureComponent {
     const { estate, isCreation, onChange } = this.props
     const parcels = estate.data.parcels
 
-    if (!isCreation && isEstate(asset) && asset.asset_id !== estate.asset_id) {
+    if (isEstate(asset) && asset.asset_id !== estate.asset_id) {
       return
     }
 
@@ -141,7 +142,8 @@ export default class EstateSelect extends React.PureComponent {
       allParcels,
       isCreation,
       onCreateCancel,
-      isTxIdle
+      isTxIdle,
+      onDeleteEstate
     } = this.props
 
     const parcels = estate.data.parcels
@@ -160,7 +162,7 @@ export default class EstateSelect extends React.PureComponent {
         <Container>
           <Grid className="estate-selection">
             <Grid.Row>
-              <Grid.Column computer={8} tablet={16}>
+              <Grid.Column width={8}>
                 <Header size="large">
                   <p>
                     {isCreation
@@ -168,6 +170,38 @@ export default class EstateSelect extends React.PureComponent {
                       : t('estate_select.edit_selection')}
                   </p>
                 </Header>
+              </Grid.Column>
+              {!isCreation &&
+                isOwner(wallet, estate.asset_id) && (
+                  <Grid.Column
+                    width={8}
+                    className={'selected-parcels-headline'}
+                  >
+                    <Button
+                      size="tiny"
+                      className="link"
+                      onClick={onDeleteEstate}
+                    >
+                      {t('estate_detail.delete')}{' '}
+                    </Button>
+                  </Grid.Column>
+                )}
+              <Grid.Column width={16} className={'selected-parcels'}>
+                <p className="parcels-included">
+                  {t('estate_select.description')}
+                </p>
+                {allParcels &&
+                  parcels.map(({ x, y }) => {
+                    const parcel = allParcels[buildCoordinate(x, y)]
+                    return parcel ? (
+                      <ParcelCard
+                        key={parcel.id}
+                        parcel={parcel}
+                        withMap={false}
+                        withLink={false}
+                      />
+                    ) : null
+                  })}
               </Grid.Column>
               {canEdit && (
                 <Grid.Column
@@ -187,23 +221,6 @@ export default class EstateSelect extends React.PureComponent {
                   {!isCreation && this.renderTxLabel()}
                 </Grid.Column>
               )}
-              <Grid.Column width={16} className={'selected-parcels'}>
-                <p className="parcels-included">
-                  {t('estate_select.description')}
-                </p>
-                {allParcels &&
-                  parcels.map(({ x, y }) => {
-                    const parcel = allParcels[buildCoordinate(x, y)]
-                    return parcel ? (
-                      <ParcelCard
-                        key={parcel.id}
-                        parcel={parcel}
-                        withMap={false}
-                        withLink={false}
-                      />
-                    ) : null
-                  })}
-              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>
