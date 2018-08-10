@@ -20,7 +20,7 @@ export function hasStatus(obj, status) {
 export function getParcelsNotIncluded(newParcels, allParcels) {
   return newParcels.filter(
     newParcel =>
-      !allParcels.find(
+      !allParcels.some(
         parcel => parcel.x === newParcel.x && parcel.y === newParcel.y
       )
   )

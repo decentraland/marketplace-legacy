@@ -7,10 +7,8 @@ export function isEstate(asset) {
 export function getEstateByParcel(parcel, estates) {
   return Object.keys(estates)
     .map(estateId => estates[estateId])
-    .find(
-      estate =>
-        estate.data.parcels.filter(p => p.x === parcel.x && p.y === parcel.y)
-          .length > 0
+    .find(estate =>
+      estate.data.parcels.some(p => p.x === parcel.x && p.y === parcel.y)
     )
 }
 
@@ -72,16 +70,16 @@ export function areConnected(
   return areConnected(parcels, remaining, [...alreadyTraveled, ...neighbours])
 }
 
-export function isNeighbour(x, y) {
+export function getIsNeighbourMatcher(x, y) {
   return coords =>
     (coords.x === x && (coords.y + 1 === y || coords.y - 1 === y)) ||
     (coords.y === y && (coords.x + 1 === x || coords.x - 1 === x))
 }
 
 export function hasNeighbour(x, y, parcels) {
-  return parcels.some(isNeighbour(x, y))
+  return parcels.some(getIsNeighbourMatcher(x, y))
 }
 
 export function getNeighbours(x, y, parcels) {
-  return parcels.filter(isNeighbour(x, y))
+  return parcels.filter(getIsNeighbourMatcher(x, y))
 }

@@ -24,9 +24,10 @@ export async function processEvents(fromBlock = 0) {
 }
 
 export async function processEvent(event) {
+  const events = BlockchainEvent.getEvents()
   return Promise.all(
     Object.values(reducers).map(reducer =>
-      reducer(BlockchainEvent.normalizeEvent(event))
+      reducer(events, BlockchainEvent.normalizeEvent(event))
     )
   )
 }

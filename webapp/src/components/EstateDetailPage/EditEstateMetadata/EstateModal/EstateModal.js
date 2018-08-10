@@ -1,22 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Grid, Header } from 'semantic-ui-react'
+
 import ParcelPreview from 'components/ParcelPreview'
-import { coordsType } from 'components/types'
+import { coordsType, estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { calculateZoomAndCenter } from 'shared/estate'
-
+import TxStatus from 'components/TxStatus'
 import './EstateModal.css'
 
 export default class EstateModal extends React.PureComponent {
   static propTypes = {
+    estate: estateType,
     parcels: PropTypes.arrayOf(coordsType).isRequired,
     isDisabled: PropTypes.bool,
     hasCustomFooter: PropTypes.bool,
     cancelLabel: PropTypes.string,
     confirmLabel: PropTypes.string,
     children: PropTypes.node,
-    preview: PropTypes.node
+    preview: PropTypes.node,
+    isTxIdle: PropTypes.bool
   }
 
   static defaultProps = {
@@ -28,6 +31,7 @@ export default class EstateModal extends React.PureComponent {
 
   render() {
     const {
+      estate,
       parcels,
       title,
       subtitle,
@@ -38,7 +42,8 @@ export default class EstateModal extends React.PureComponent {
       onCancel,
       onConfirm,
       children,
-      preview
+      preview,
+      isTxIdle
     } = this.props
 
     const { center, zoom } = calculateZoomAndCenter(parcels)
@@ -76,21 +81,32 @@ export default class EstateModal extends React.PureComponent {
           ) : null}
           {hasCustomFooter ? null : (
             <div>
-              <Grid.Column className="modal-buttons">
-                <Button onClick={onCancel} type="button">
-                  {cancelLabel || t('global.cancel')}
-                </Button>
-                <Button
-                  onClick={onConfirm}
-                  type="button"
-                  primary
-                  disabled={isDisabled}
-                >
-                  {confirmLabel || t('global.confirm')}
-                </Button>
+              <Grid.Column>
+                {isTxIdle && (
+                  <div className="tx-idle">
+                    <TxStatus.Idle isIdle={isTxIdle} />
+                  </div>
+                )}
+                <div className="modal-buttons">
+                  <Button onClick={onCancel} type="button">
+                    {cancelLabel || t('global.cancel')}
+                  </Button>
+                  <Button
+                    onClick={onConfirm}
+                    type="button"
+                    primary
+                    disabled={isDisabled}
+                  >
+                    {confirmLabel || t('global.confirm')}
+                  </Button>
+                </div>
               </Grid.Column>
             </div>
           )}
+          <TxStatus.Asset
+            asset={estate}
+            name={<span>{t('estate_detail.pending_tx')}</span>}
+          />
         </div>
       </div>
     )

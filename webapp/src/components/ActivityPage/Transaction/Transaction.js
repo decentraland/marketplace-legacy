@@ -107,7 +107,7 @@ export default class Transaction extends React.PureComponent {
       <React.Fragment>
         {parcels.map((p, index) => (
           <span
-            key={`${p.x},${p.y}`}
+            key={buildCoordinate(p.x, p.y)}
             style={{ marginRight: index === parcels.length - 1 ? '0' : '10px' }}
           >
             {this.renderParcelLink(p.x, p.y)}

@@ -2,7 +2,6 @@ import { eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
-import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'
 import { isDuplicatedConstraintError } from '../../src/database'
@@ -11,11 +10,11 @@ import { getParcelIdFromEvent } from './utils'
 
 const log = new Log('publicationReducer')
 
-export async function publicationReducer(event) {
+export async function publicationReducer(events, event) {
   const { tx_hash, block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
   switch (normalizedName) {
-    case BlockchainEvent.EVENTS.publicationCreated: {
+    case events.publicationCreated: {
       const { seller, priceInWei, expiresAt } = event.args
       const contract_id = event.args.id
       const marketplace = new MarketplaceEvent(event)
@@ -66,7 +65,7 @@ export async function publicationReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.publicationSuccessful: {
+    case events.publicationSuccessful: {
       const { totalPrice, winner } = event.args
       const contract_id = event.args.id
 
@@ -95,7 +94,7 @@ export async function publicationReducer(event) {
       ])
       break
     }
-    case BlockchainEvent.EVENTS.publicationCancelled: {
+    case events.publicationCancelled: {
       const contract_id = event.args.id
 
       if (!contract_id) {

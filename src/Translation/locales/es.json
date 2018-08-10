@@ -54,6 +54,13 @@
     "invalid":
       "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
+  "estate_detail": {
+    "delete": "Eliminar estado",
+    "delete_desc": "Vas a eliminar la propiedad {estate_id}",
+    "edit_parcels": "Editar paquetes",
+    "parcels": "Parcelas incluidas",
+    "pending_tx": "Esta propiedad"
+  },
   "estate_edit": {
     "description": "Descripción",
     "edit_estate": "Editar propiedad",
@@ -63,7 +70,9 @@
   },
   "estate_select": {
     "description": "Seleccione parcelas adyacentes a partir de {x}, {y}",
-    "selection": "Seleccione las parcelas para su nueva propiedad"
+    "detail": "Detalle de finca",
+    "edit_selection": "Seleccione las parcelas en el mapa",
+    "new_selection": "Seleccione las parcelas en el mapa para su nueva finca"
   },
   "footer": {
     "color_key": "Mapa de Colores",
@@ -91,6 +100,7 @@
     "continue": "Continuar",
     "contributions": "Contribuciones",
     "created_at": "Creado en {date}",
+    "edit": "Editar",
     "estate": "Propiedad",
     "estates": "Propiedades",
     "expired_at": "Caducado {time}",
@@ -210,7 +220,6 @@
     "actions": {
       "cancel": "Cancelar venta",
       "create_estate": "Crear Propiedad",
-      "edit": "Editar",
       "permissions": "Permisos",
       "sell": "Vender",
       "transfer": "Transferir"
@@ -349,6 +358,7 @@
     "claim_mortgage_resolution": "Usted afirmó {parcel_link}",
     "create_mortgage":
       "Solicitó una hipoteca para comprar el paquete {parcel_link}",
+    "delete_estate": "Borraste la propiedad {estate_id}",
     "disapproved":
       "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "edit":

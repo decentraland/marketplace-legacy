@@ -120,16 +120,13 @@ export function getColorByType(type, x, y) {
 }
 
 export function getAsset(parcelId, parcels, estates) {
-  const selectedParcel = parcels[parcelId]
-  if (!selectedParcel) {
+  const parcel = parcels[parcelId]
+  if (!parcel) {
     return {}
   }
 
   return {
-    asset: !selectedParcel.estate_id
-      ? selectedParcel
-      : getEstateByParcel(selectedParcel, estates),
-    selectedParcel
+    asset: !parcel.estate_id ? parcel : getEstateByParcel(parcel, estates)
   }
 }
 

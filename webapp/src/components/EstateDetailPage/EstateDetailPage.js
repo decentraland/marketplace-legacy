@@ -11,7 +11,7 @@ export default class EstateDetailPage extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      isEdition: props.isEdition,
+      isEditing: props.isEditing,
       isSelecting: props.isSelecting
     }
   }
@@ -47,11 +47,11 @@ export default class EstateDetailPage extends React.PureComponent {
       onCancel
     } = this.props
 
-    const { isEdition, isSelecting } = this.state
+    const { isEditing, isSelecting } = this.state
     return (
       <Estate assetId={assetId} x={x} y={y}>
         {(estate, isOwner, wallet) =>
-          isNewAsset(estate) || isEdition ? (
+          isNewAsset(estate) || isEditing ? (
             <EditEstate
               estate={estate}
               isCreation={isNewAsset(estate)}
@@ -60,7 +60,7 @@ export default class EstateDetailPage extends React.PureComponent {
               submitEstate={submitEstate}
               editEstateMetadata={editEstateMetadata}
               onViewAssetClick={onViewAssetClick}
-              isSelecting={isNewAsset(estate) ? true : isSelecting}
+              isSelecting={isNewAsset(estate) || isSelecting}
               onCancel={onCancel}
             />
           ) : (

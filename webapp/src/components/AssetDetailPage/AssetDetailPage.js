@@ -24,10 +24,6 @@ export default class AssetDetailPage extends React.PureComponent {
     showControls: true
   }
 
-  componentWillMount() {
-    this.isAdditionalResourcesFetched = false
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
       return this.props.onError(nextProps.error)

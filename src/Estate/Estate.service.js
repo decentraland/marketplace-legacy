@@ -2,10 +2,12 @@ import { Estate } from './Estate.model'
 
 export class EstateService {
   static getByParcels(parcels) {
-    let ids = parcels
-      .filter(parcel => parcel.estate_id)
-      .map(parcel => parcel.estate_id)
-    ids = [...new Set(ids)] // Remove duplicates
-    return Estate.findByAssetIds(ids)
+    let ids = new Set([])
+    for (const parcel of parcels) {
+      if (parcel.estate_id) {
+        ids.add(parcel.estate_id)
+      }
+    }
+    return Estate.findByAssetIds([...ids])
   }
 }

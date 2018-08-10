@@ -55,6 +55,13 @@
     "invalid":
       "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
+  "estate_detail": {
+    "delete": "Supprimer la succession",
+    "delete_desc": "Vous allez supprimer le domaine {estate_id}",
+    "edit_parcels": "Modifier les colis",
+    "parcels": "Colis inclus",
+    "pending_tx": "Ce domaine"
+  },
   "estate_edit": {
     "description": "La description",
     "edit_estate": "Modifier le domaine",
@@ -64,7 +71,10 @@
   },
   "estate_select": {
     "description": "Sélectionnez les parcelles adjacentes à partir de {x}, {y}",
-    "selection": "Sélectionnez les parcelles pour votre nouveau domaine"
+    "detail": "Détail immobilier",
+    "edit_selection": "Sélectionnez les parcelles sur la carte",
+    "new_selection":
+      "Sélectionnez les parcelles sur la carte pour votre nouveau domaine"
   },
   "footer": {
     "color_key": "Code Couleur",
@@ -92,6 +102,7 @@
     "continue": "Continuer",
     "contributions": "Contributions",
     "created_at": "Créé à {date}",
+    "edit": "Modifier",
     "estate": "Biens",
     "estates": "Estates",
     "expired_at": "Expiré {time}",
@@ -214,7 +225,6 @@
     "actions": {
       "cancel": "Annuler la vente",
       "create_estate": "Créer un domaine",
-      "edit": "Edition",
       "permissions": "Autorisations",
       "sell": "Vendre",
       "transfer": "Transferer"
@@ -353,6 +363,7 @@
     "claim_mortgage_resolution": "Vous avez réclamé {parcel_link}",
     "create_mortgage":
       "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
+    "delete_estate": "Vous avez supprimé le domaine {estate_id}",
     "disapproved":
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "edit":

@@ -32,6 +32,7 @@ import PayMortgagePage from 'components/PayMortgagePage'
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 import TermsPage from 'components/TermsPage'
+import DeleteEstatePage from 'components/DeleteEstatePage'
 
 export default class Routes extends React.Component {
   renderRoutes() {
@@ -47,7 +48,7 @@ export default class Routes extends React.Component {
         ) /* Estate Feature */}
         {isFeatureEnabled('ESTATES') && (
           <Route exact path={locations.estate} component={EstateDetailPage} />
-        )}
+        ) /* Estate Feature */}
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
@@ -55,12 +56,12 @@ export default class Routes extends React.Component {
             component={props => (
               <EstateDetailPage
                 isSelecting={true}
-                isEdition={true}
+                isEditing={true}
                 {...props}
               />
             )}
           />
-        )}
+        ) /* Estate Feature */}
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
@@ -68,10 +69,17 @@ export default class Routes extends React.Component {
             component={props => (
               <EstateDetailPage
                 isSelecting={false}
-                isEdition={true}
+                isEditing={true}
                 {...props}
               />
             )}
+          />
+        ) /* Estate Feature */}
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.deleteEstate}
+            component={DeleteEstatePage}
           />
         ) /* Estate Feature */}
         <Route exact path={locations.parcel} component={ParcelDetailPage} />

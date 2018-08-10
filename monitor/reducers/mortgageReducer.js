@@ -2,7 +2,6 @@ import { eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Mortgage } from '../../src/Mortgage'
-import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { MORTGAGE_STATUS } from '../../shared/mortgage'
@@ -11,12 +10,12 @@ import { getParcelIdFromEvent } from './utils'
 
 const log = new Log('mortgageReducer')
 
-export async function mortgageReducer(event) {
+export async function mortgageReducer(events, event) {
   const { tx_hash, block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
 
   switch (normalizedName) {
-    case BlockchainEvent.EVENTS.newMortgage: {
+    case events.newMortgage: {
       const { borrower, loanId, mortgageId } = event.args
 
       const exists = await Mortgage.count({ tx_hash })
@@ -75,7 +74,7 @@ export async function mortgageReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.cancelledMortgage: {
+    case events.cancelledMortgage: {
       const { _id } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -97,7 +96,7 @@ export async function mortgageReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.startedMortgage: {
+    case events.startedMortgage: {
       const { _id } = event.args
 
       try {
@@ -136,7 +135,7 @@ export async function mortgageReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.partialPayment: {
+    case events.partialPayment: {
       const { _index } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -162,7 +161,7 @@ export async function mortgageReducer(event) {
       )
       break
     }
-    case BlockchainEvent.EVENTS.totalPayment: {
+    case events.totalPayment: {
       const { _index } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -178,7 +177,7 @@ export async function mortgageReducer(event) {
       )
       break
     }
-    case BlockchainEvent.EVENTS.paidMortgage: {
+    case events.paidMortgage: {
       const { _id } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -193,7 +192,7 @@ export async function mortgageReducer(event) {
       )
       break
     }
-    case BlockchainEvent.EVENTS.defaultedMortgage: {
+    case events.defaultedMortgage: {
       const { _id } = event.args
       const block_time_updated_at = await new BlockTimestampService().getBlockTime(
         block_number

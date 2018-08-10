@@ -2,21 +2,17 @@ import { contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
 import { Publication } from '../../src/Publication'
-import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { getParcelIdFromEvent } from './utils'
 
 const log = new Log('parcelReducer')
 
-export async function parcelReducer(event) {
+export async function parcelReducer(events, event) {
   const { block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
 
   switch (normalizedName) {
-    case BlockchainEvent.EVENTS.parcelSetEstateRegistry: {
-      break
-    }
-    case BlockchainEvent.EVENTS.parcelUpdate: {
+    case events.parcelUpdate: {
       try {
         const { data } = event.args
         const attributes = {
@@ -31,7 +27,7 @@ export async function parcelReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.parcelTransfer: {
+    case events.parcelTransfer: {
       const { to } = event.args
 
       log.info(`[${name}] Transfering "${parcelId}" owner to "${to}"`)
@@ -47,7 +43,7 @@ export async function parcelReducer(event) {
       )
       break
     }
-    case BlockchainEvent.EVENTS.addLand: {
+    case events.addLand: {
       if (parcelId) {
         const { estateId } = event.args
         log.info(
@@ -58,7 +54,7 @@ export async function parcelReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.removeLand: {
+    case events.removeLand: {
       if (parcelId) {
         const { estateId } = event.args
         log.info(

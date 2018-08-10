@@ -38,6 +38,9 @@ export const locations = {
   ediEstateMetadata: '/estate/:assetId/edit-metadata',
   editEstateMetadataRequest: () => 'edit-metadata',
 
+  deleteEstate: '/estate/:assetId/delete-estate',
+  deleteEstatePage: assetId => `/estate/${assetId}/delete-estate`,
+
   createEstate: '/:x/:y/create-estate',
   createEstateLand: (x, y) => `/${x}/${y}/create-estate`,
 

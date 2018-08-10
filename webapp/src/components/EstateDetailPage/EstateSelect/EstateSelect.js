@@ -28,7 +28,7 @@ export default class EstateSelect extends React.PureComponent {
     onSubmit: PropTypes.func.isRequired
   }
 
-  handleParcelClick = wallet => (asset, { x, y }) => {
+  getParcelClickHandler = wallet => (asset, { x, y }) => {
     if (
       !isOwner(wallet, buildCoordinate(x, y)) &&
       !isOwner(wallet, asset.asset_id)
@@ -154,7 +154,7 @@ export default class EstateSelect extends React.PureComponent {
             asset={estate}
             showMiniMap={false}
             showControls={false}
-            onAssetClick={this.handleParcelClick(wallet)}
+            onAssetClick={this.getParcelClickHandler(wallet)}
           />
         </div>
         <Container>

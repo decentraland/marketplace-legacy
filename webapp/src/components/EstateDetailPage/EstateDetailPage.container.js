@@ -8,8 +8,7 @@ import { getMatchParams } from 'modules/location/selectors'
 import {
   createEstateRequest,
   editEstateParcelsRequest,
-  editEstateMetadataRequest,
-  deleteEstateRequest
+  editEstateMetadataRequest
 } from 'modules/estates/actions'
 import EstateDetailPage from 'components/EstateDetailPage/EstateDetailPage'
 import { getData as getParcels } from 'modules/parcels/selectors'
@@ -36,7 +35,8 @@ const mapDispatch = (dispatch, ownProps) => {
     editEstateMetadata: estate => dispatch(editEstateMetadataRequest(estate)),
     onViewAssetClick: asset =>
       dispatch(navigateTo(locations.assetDetail(asset))),
-    onDeleteEstate: () => dispatch(deleteEstateRequest(assetId)),
+    onDeleteEstate: () =>
+      dispatch(navigateTo(locations.deleteEstatePage(assetId))),
     onEditParcels: () =>
       dispatch(navigateTo(locations.editEstateParcelsRequest())),
     onEditMetadata: () =>

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Header, Grid, Container } from 'semantic-ui-react'
 
-import TxStatus from 'components/TxStatus'
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
 import EstateActions from './EstateActions'
@@ -47,9 +46,7 @@ export default class EstateDetail extends React.PureComponent {
               <Grid.Column computer={8} tablet={16} className={'parcels'}>
                 <Header size="large">
                   <p className="estate-title">
-                    {estate.data.name
-                      ? estate.data.name
-                      : t('estate_select.detail')}
+                    {estate.data.name || t('estate_select.detail')}
                   </p>
                   {estate.data.description && (
                     <p className="estate-description">
@@ -69,10 +66,6 @@ export default class EstateDetail extends React.PureComponent {
                     onEditMetadata={onEditMetadata}
                     onEditParcels={onEditParcels}
                     onDeleteEstate={onDeleteEstate}
-                  />
-                  <TxStatus.Asset
-                    asset={estate}
-                    name={<span>{t('estate_detail.pending_tx')}</span>}
                   />
                 </Grid.Column>
               )}

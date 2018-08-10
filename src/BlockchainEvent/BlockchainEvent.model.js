@@ -1,8 +1,5 @@
 import { env, Model } from 'decentraland-commons'
 import { SQL } from '../database'
-import { loadEnv } from '../../scripts/utils'
-
-loadEnv()
 
 export class BlockchainEvent extends Model {
   static tableName = 'blockchain_events'
@@ -16,86 +13,84 @@ export class BlockchainEvent extends Model {
     'address'
   ]
 
-  static landRegistryAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
-  static marketPlaceAddress = env.get('MARKETPLACE_CONTRACT_ADDRESS')
-  static mortgageHelperAddress = env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS')
-  static rcnEngineAddress = env.get('RCN_ENGINE_CONTRACT_ADDRESS')
-  static mortgageManagerAddress = env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
-  static estateRegistryAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
+  static getEvents() {
+    const landRegistryAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
+    const marketPlaceAddress = env.get('MARKETPLACE_CONTRACT_ADDRESS')
+    const mortgageHelperAddress = env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS')
+    const rcnEngineAddress = env.get('RCN_ENGINE_CONTRACT_ADDRESS')
+    const mortgageManagerAddress = env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
+    const estateRegistryAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
 
-  static EVENTS = {
-    publicationCreated: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.marketPlaceAddress,
-      'AuctionCreated'
-    ),
-    publicationSuccessful: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.marketPlaceAddress,
-      'AuctionSuccessful'
-    ),
-    publicationCancelled: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.marketPlaceAddress,
-      'AuctionCancelled'
-    ),
-    parcelTransfer: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.landRegistryAddress,
-      'Transfer'
-    ),
-    parcelUpdate: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.landRegistryAddress,
-      'Update'
-    ),
-    parcelSetEstateRegistry: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.landRegistryAddress,
-      'EstateRegistrySet'
-    ),
-    estateTransfer: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.estateRegistryAddress,
-      'Transfer'
-    ),
-    estateUpdate: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.estateRegistryAddress,
-      'Update'
-    ),
-    addLand: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.estateRegistryAddress,
-      'AddLand'
-    ),
-    removeLand: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.estateRegistryAddress,
-      'RemoveLand'
-    ),
-    estateCreate: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.estateRegistryAddress,
-      'CreateEstate'
-    ),
-    newMortgage: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.mortgageHelperAddress,
-      'NewMortgage'
-    ),
-    cancelledMortgage: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.mortgageManagerAddress,
-      'CanceledMortgage'
-    ),
-    startedMortgage: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.mortgageManagerAddress,
-      'StartedMortgage'
-    ),
-    paidMortgage: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.mortgageManagerAddress,
-      'PaidMortgage'
-    ),
-    defaultedMortgage: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.mortgageManagerAddress,
-      'DefaultedMortgage'
-    ),
-    partialPayment: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.rcnEngineAddress,
-      'PartialPayment'
-    ),
-    totalPayment: BlockchainEvent.getNormalizedEventName(
-      BlockchainEvent.rcnEngineAddress,
-      'TotalPayment'
-    )
+    return {
+      publicationCreated: BlockchainEvent.getNormalizedEventName(
+        marketPlaceAddress,
+        'AuctionCreated'
+      ),
+      publicationSuccessful: BlockchainEvent.getNormalizedEventName(
+        marketPlaceAddress,
+        'AuctionSuccessful'
+      ),
+      publicationCancelled: BlockchainEvent.getNormalizedEventName(
+        marketPlaceAddress,
+        'AuctionCancelled'
+      ),
+      parcelTransfer: BlockchainEvent.getNormalizedEventName(
+        landRegistryAddress,
+        'Transfer'
+      ),
+      parcelUpdate: BlockchainEvent.getNormalizedEventName(
+        landRegistryAddress,
+        'Update'
+      ),
+      estateTransfer: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'Transfer'
+      ),
+      estateUpdate: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'Update'
+      ),
+      addLand: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'AddLand'
+      ),
+      removeLand: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'RemoveLand'
+      ),
+      estateCreate: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'CreateEstate'
+      ),
+      newMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageHelperAddress,
+        'NewMortgage'
+      ),
+      cancelledMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'CanceledMortgage'
+      ),
+      startedMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'StartedMortgage'
+      ),
+      paidMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'PaidMortgage'
+      ),
+      defaultedMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'DefaultedMortgage'
+      ),
+      partialPayment: BlockchainEvent.getNormalizedEventName(
+        rcnEngineAddress,
+        'PartialPayment'
+      ),
+      totalPayment: BlockchainEvent.getNormalizedEventName(
+        rcnEngineAddress,
+        'TotalPayment'
+      )
+    }
   }
 
   static async insertWithoutConflicts(blockchainEvent) {

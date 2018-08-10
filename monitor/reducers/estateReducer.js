@@ -1,6 +1,5 @@
 import { Log } from 'decentraland-commons'
 import { Estate } from '../../src/Estate'
-import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { getParcelIdFromEvent } from './utils'
 import { Parcel } from '../../src/Parcel'
@@ -8,12 +7,12 @@ import { decodeMetadata } from '../../shared/asset'
 
 const log = new Log('estateReducer')
 
-export async function estateReducer(event) {
+export async function estateReducer(events, event) {
   const { tx_hash, block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
 
   switch (normalizedName) {
-    case BlockchainEvent.EVENTS.estateCreate: {
+    case events.estateCreate: {
       const { owner, estateId, metadata } = event.args
 
       const exists = await Estate.count({ asset_id: estateId })
@@ -37,21 +36,20 @@ export async function estateReducer(event) {
         id: estateId,
         asset_id: estateId,
         owner: owner.toLowerCase(),
-        data: data ? { ...data, parcels: [] } : { parcels: [] },
+        data: { ...data, parcels: [] },
         last_transferred_at,
         tx_hash
       })
       break
     }
-    case BlockchainEvent.EVENTS.addLand: {
+    case events.addLand: {
       if (parcelId) {
         const { estateId } = event.args
         const estate = (await Estate.findByAssetId(estateId))[0]
-        const coorindates = Parcel.splitId(parcelId)
-        const [x, y] = [
-          parseInt(coorindates[0], 10),
-          parseInt(coorindates[1], 10)
-        ]
+        const coordinates = Parcel.splitId(parcelId)
+        const x = parseInt(coordinates[0], 10)
+        const y = parseInt(coordinates[1], 10)
+
         log.info(
           `[${name}] Updating Estate "${estate.asset_id}" add land (${x},${y})`
         )
@@ -69,7 +67,7 @@ export async function estateReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.removeLand: {
+    case events.removeLand: {
       if (parcelId) {
         const { estateId } = event.args
         const estate = (await Estate.findByAssetId(estateId))[0]
@@ -93,7 +91,7 @@ export async function estateReducer(event) {
       }
       break
     }
-    case BlockchainEvent.EVENTS.estateTransfer: {
+    case events.estateTransfer: {
       const { to, estateId } = event.args
 
       log.info(`[${name}] Transfering "${estateId}" owner to "${to}"`)
@@ -108,7 +106,7 @@ export async function estateReducer(event) {
       )
       break
     }
-    case BlockchainEvent.EVENTS.estateUpdate: {
+    case events.estateUpdate: {
       const { assetId, data } = event.args
 
       const estate = (await Estate.findByAssetId(assetId))[0]
