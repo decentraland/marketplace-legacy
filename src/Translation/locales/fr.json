@@ -88,6 +88,8 @@
   "global": {
     "acquired_at": "Acquis à {date}",
     "activity": "Activité",
+    "add": "ajouter",
+    "added": "ajoutée",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Autorisé",
@@ -121,6 +123,8 @@
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
     "publications": "Publications",
+    "remove": "retirer",
+    "removed": "enlevé",
     "request": "Demande",
     "retry": "Recommencez",
     "revoke": "Révoquer",

@@ -84,6 +84,8 @@
   "global": {
     "acquired_at": "获得日期 {date}",
     "activity": "活动",
+    "add": "加",
+    "added": "添加",
     "address_placeholder": "0x...",
     "atlas": "地图",
     "authorized": "已授权",
@@ -117,6 +119,8 @@
     "parcels": "地块",
     "profile": "我的虚拟土地",
     "publications": "出版物",
+    "remove": "去掉",
+    "removed": "去除",
     "request": "请求",
     "retry": "重试",
     "revoke": "撤消",

@@ -86,6 +86,8 @@
   "global": {
     "acquired_at": "TK0에서 획득",
     "activity": "활동",
+    "add": "더하다",
+    "added": "추가 된",
     "address_placeholder": "0x...",
     "atlas": "지도",
     "authorized": "허가",
@@ -119,6 +121,8 @@
     "parcels": "필지",
     "profile": "나의 토지",
     "publications": "간행물",
+    "remove": "풀다",
+    "removed": "제거 된",
     "request": "의뢰",
     "retry": "다시 해 보다",
     "revoke": "취소",
