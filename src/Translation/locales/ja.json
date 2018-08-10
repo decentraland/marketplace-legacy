@@ -285,7 +285,6 @@
       "エラーが続く場合は、お手数ですが{community_chat_link}までお問い合わせください。",
     "irreversible":
       "ランドの転送はやり直すことができませんので、ご注意ください。",
-    "placeholder": "例: {address}",
     "recipient_address": "受信者のアドレス",
     "transfer_land": "ランドを転送する",
     "unknown_error": "不明のエラーが発生しました。詳細は以下の通りです。"
