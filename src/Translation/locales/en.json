@@ -356,6 +356,7 @@
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
     "claim_mortgage_resolution": "You claimed {parcel_link}",
+    "create_estate": "You created a estate with the parcels {parcels_link}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
     "delete_estate": "You deleted the estate {estate_id}",
@@ -363,6 +364,10 @@
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+    "edit_estate_metadata":
+      "You edited estate {estate_id} with the name \"{name}\" and description \"{description}\"",
+    "edit_estate_parcels":
+      "You {action} parcels {parcels_link} to estate {estate_id}",
     "manage":
       "You gave {address_link} permission to update the contents of {parcel_link}",
     "manage_revoked":

@@ -287,9 +287,8 @@ export default class Transaction extends React.PureComponent {
         const { estate } = payload
         return t_html('transaction.edit_estate_metadata', {
           estate_id: this.renderEstateLink(estate.asset_id),
-          metadata: `name: ${estate.data.name}, description: ${
-            estate.data.description
-          }`
+          name: estate.data.name,
+          description: estate.data.description
         })
       }
       case DELETE_ESTATE_SUCCESS: {

@@ -361,6 +361,7 @@
     "cancel_mortgage":
       "Usted cancela una hipoteca para comprar el paquete {parcel_link}",
     "claim_mortgage_resolution": "Usted afirmó {parcel_link}",
+    "create_estate": "Has creado una finca con los paquetes {parcels_link}",
     "create_mortgage":
       "Solicitó una hipoteca para comprar el paquete {parcel_link}",
     "delete_estate": "Borraste la propiedad {estate_id}",
@@ -368,6 +369,10 @@
       "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
+    "edit_estate_metadata":
+      "Editó el estado {estate_id} con el nombre \"{name}\" y la descripción \"{description}\"",
+    "edit_estate_parcels":
+      "Usted {action} parcelas {parcels_link} a estate {estate_id}",
     "manage":
       "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
     "manage_revoked":
