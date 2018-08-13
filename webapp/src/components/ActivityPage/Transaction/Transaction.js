@@ -106,10 +106,7 @@ export default class Transaction extends React.PureComponent {
     return (
       <React.Fragment>
         {parcels.map((p, index) => (
-          <span
-            key={buildCoordinate(p.x, p.y)}
-            style={{ marginRight: index === parcels.length - 1 ? '0' : '10px' }}
-          >
+          <span key={buildCoordinate(p.x, p.y)} className="parcels-link">
             {this.renderParcelLink(p.x, p.y)}
           </span>
         ))}
@@ -310,7 +307,7 @@ export default class Transaction extends React.PureComponent {
       <Link
         to={
           isNewAsset(estate)
-            ? locations.estateDetail(x, y, buildCoordinate(x, y))
+            ? locations.parcelMapDetail(x, y, buildCoordinate(x, y))
             : locations.estateDetail(estate.asset_id)
         }
       >
