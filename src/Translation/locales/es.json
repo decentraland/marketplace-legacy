@@ -314,7 +314,7 @@
       "Autorice el {mortgage_contract_link} para operar RCN en su nombre",
     "authorization": "Autorización",
     "authorize":
-      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
+      "Autorizar al {marketplace_contract_link} a operar LAND por tu cuenta",
     "authorize_land_check":
       "Marcando autoriza el uso de LAND al contrato de Mercado",
     "disapprove_mana_check":
