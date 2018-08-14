@@ -2,7 +2,8 @@ import { createSelector } from 'reselect'
 import {
   EDIT_PARCEL_REQUEST,
   FETCH_PARCEL_REQUEST,
-  MANAGE_PARCEL_REQUEST
+  MANAGE_PARCEL_REQUEST,
+  TRANSFER_PARCEL_REQUEST
 } from './actions'
 import { getPublications as getAllPublications } from 'modules/publication/selectors'
 import { isLoadingType } from 'modules/loading/selectors'
@@ -24,6 +25,9 @@ export const isManageTransactionIdle = state =>
 
 export const isFetchingParcel = state =>
   isLoadingType(getLoading(state), FETCH_PARCEL_REQUEST)
+
+export const isTransferIdle = state =>
+  isLoadingType(getLoading(state), TRANSFER_PARCEL_REQUEST)
 
 export const getPublications = (x, y) =>
   createSelector(getData, getAllPublications, (parcels, publications) => {

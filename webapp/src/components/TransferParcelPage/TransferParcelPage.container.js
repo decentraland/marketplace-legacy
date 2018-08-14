@@ -2,9 +2,9 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { getPublications } from 'modules/publication/selectors'
-import { isTransferIdle, getError } from 'modules/transfer/selectors'
+import { isTransferIdle } from 'modules/parcels/selectors'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
-import { transferParcelRequest, cleanTransfer } from 'modules/transfer/actions'
+import { transferParcelRequest } from 'modules/parcels/actions'
 import { locations } from 'locations'
 
 import TransferParcelPage from './TransferParcelPage'
@@ -15,7 +15,6 @@ const mapState = (state, ownProps) => {
     x,
     y,
     isTxIdle: isTransferIdle(state),
-    transferError: getError(state),
     publications: getPublications(state)
   }
 }
@@ -25,8 +24,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     onSubmit: (parcel, address) =>
       dispatch(transferParcelRequest(parcel, address)),
-    onCancel: () => dispatch(push(locations.parcelDetail(x, y))),
-    onCleanTransfer: () => dispatch(cleanTransfer())
+    onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
   }
 }
 

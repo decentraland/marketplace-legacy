@@ -281,18 +281,6 @@
     "proximity": "{distance}区画先",
     "road": "道路"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "{parcel_name}の区画を転送しようとしています。",
-    "cant_transfer": "このランドは販売中の為、転送できません。",
-    "check_address": "アドレスをもう一度確認してください。",
-    "error_persists":
-      "エラーが続く場合は、お手数ですが{community_chat_link}までお問い合わせください。",
-    "irreversible":
-      "ランドの転送はやり直すことができませんので、ご注意ください。",
-    "recipient_address": "受信者のアドレス",
-    "transfer_land": "ランドを転送する",
-    "unknown_error": "不明のエラーが発生しました。詳細は以下の通りです。"
-  },
   "profile_page": {
     "empty": "このユーザーは{content}がありません。",
     "on_sale": "販売中"
@@ -388,10 +376,20 @@
   },
   "transfer_mana": {
     "action": "転送する",
+    "amount": "量",
     "current_balance": "現在の残高： {balance}",
     "irreversible":
       "MANAの転送はやり直すことができませんので、ご確認ください。",
     "own_address_warning": "これはあなたのアドレスです!",
     "title": "MANAを転送"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "あなたは{parcel_name}を転送しようとしています。",
+    "cant_transfer": "このLANDは販売中であるため、転送できません。",
+    "check_address": "アドレスを慎重に確認してください",
+    "irreversible": "LANDの転送は元に戻すことができません。",
+    "own_address_warning": "それはあなた自身のアドレスです！",
+    "recipient_address": "受信者アドレス",
+    "transfer_land": "転送LAND"
   }
 }

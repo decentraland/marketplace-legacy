@@ -6,7 +6,6 @@ import { districtsReducer as districts } from 'modules/districts/reducer'
 import { parcelsReducer as parcels } from 'modules/parcels/reducer'
 import { publicationReducer as publication } from 'modules/publication/reducer'
 import { transactionReducer as transaction } from 'modules/transaction/reducer'
-import { transferReducer as transfer } from 'modules/transfer/reducer'
 import { translationReducer as translation } from 'modules/translation/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
@@ -24,7 +23,6 @@ export const rootReducer = storageReducerWrapper(
     parcels,
     publication,
     transaction,
-    transfer,
     translation,
     ui,
     wallet,

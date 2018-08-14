@@ -282,18 +282,6 @@
       "{distance} {distance, plural, one {parcel} other {parcels}} away",
     "road": "Road"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "You're about to transfer {parcel_name}.",
-    "cant_transfer": "This LAND can't be transferred because it's on sale.",
-    "check_address": "Please check the address carefully",
-    "error_persists":
-      "If the problem persists, contact us at our {community_chat_link}",
-    "irreversible":
-      "Remember that transferring LAND is an irreversible operation.",
-    "recipient_address": "Recipient address",
-    "transfer_land": "Transfer LAND",
-    "unknown_error": "An unknown error occurred, the details are below."
-  },
   "profile_page": {
     "empty": "The user has no {content}",
     "on_sale": "On Sale"
@@ -391,10 +379,21 @@
   },
   "transfer_mana": {
     "action": "Transfer",
+    "amount": "Amount",
     "current_balance": "Your current balance is {balance}",
     "irreversible":
       "Remember that transferring MANA is an irreversible operation.",
     "own_address_warning": "That's your own address!",
     "title": "Transfer MANA"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "You're about to transfer {parcel_name}.",
+    "cant_transfer": "This LAND can't be transferred because it's on sale.",
+    "check_address": "Please check the address carefully",
+    "irreversible":
+      "Remember that transferring LAND is an irreversible operation.",
+    "own_address_warning": "That's your own address!",
+    "recipient_address": "Recipient address",
+    "transfer_land": "Transfer LAND"
   }
 }

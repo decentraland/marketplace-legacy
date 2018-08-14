@@ -285,20 +285,6 @@
       "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia",
     "road": "Camino"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "Estas por transferir {parcel_name}",
-    "cant_transfer":
-      "Esta LAND no puede ser transferida porque se encuentra en venta.",
-    "check_address": "Por favor revisa la dirección cuidadosamente",
-    "error_persists":
-      "Si el problema persiste, contáctate con nosotros en {community_chat_link}",
-    "irreversible":
-      "Recuerda que transferir LAND es una operación irreversible.",
-    "recipient_address": "Dirección de destino",
-    "transfer_land": "Transferir LAND",
-    "unknown_error":
-      "Un problema desconocido ha ocurrido, los detalles se encuentran debajo."
-  },
   "profile_page": {
     "empty": "El usuario no tiene {content}",
     "on_sale": "En Venta"
@@ -399,10 +385,21 @@
   },
   "transfer_mana": {
     "action": "Transferir",
+    "amount": "Cantidad",
     "current_balance": "Tu balance actual es {balance}",
     "irreversible":
       "Recuerda que transferir MANA es una operación irreversible.",
     "own_address_warning": "Esa es tu propia dirección!",
     "title": "Transferir MANA"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "Estás a punto de transferir {parcel_name}.",
+    "cant_transfer": "Este LAND no se puede transferir porque está en oferta.",
+    "check_address": "Por favor, compruebe la dirección con cuidado",
+    "irreversible":
+      "Recuerde que la transferencia de LAND es una operación irreversible.",
+    "own_address_warning": "Esa es tu propia dirección!",
+    "recipient_address": "Dirección del receptor",
+    "transfer_land": "Transferencia LAND"
   }
 }

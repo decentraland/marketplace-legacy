@@ -70,7 +70,7 @@ export default class PayMortgageForm extends React.PureComponent {
         <br />
         <TxStatus.Idle isIdle={isTxIdle} />
         <br />
-        <div className="footer">
+        <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>

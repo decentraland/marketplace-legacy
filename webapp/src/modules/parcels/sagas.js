@@ -1,19 +1,23 @@
 import { takeEvery, select, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth, contracts } from 'decentraland-eth'
+import { locations } from 'locations'
 import {
   FETCH_PARCEL_REQUEST,
   EDIT_PARCEL_REQUEST,
   MANAGE_PARCEL_REQUEST,
+  TRANSFER_PARCEL_REQUEST,
   fetchParcelSuccess,
   fetchParcelFailure,
   editParcelSuccess,
   editParcelFailure,
   manageParcelSuccess,
-  manageParcelFailure
+  manageParcelFailure,
+  transferParcelSuccess,
+  transferParcelFailure
 } from './actions'
 import { getData as getParcels } from './selectors'
-import { locations } from 'locations'
+import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
 import { buildCoordinate } from 'shared/parcel'
 
@@ -21,6 +25,7 @@ export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
   yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
   yield takeEvery(MANAGE_PARCEL_REQUEST, handleManageParcelsRequest)
+  yield takeEvery(TRANSFER_PARCEL_REQUEST, handleTransferRequest)
 }
 
 function* handleParcelRequest(action) {
@@ -74,5 +79,44 @@ function* handleManageParcelsRequest(action) {
     yield put(
       manageParcelFailure(parcel, action.address, action.revoked, error.message)
     )
+  }
+}
+
+function* handleTransferRequest(action) {
+  try {
+    const oldOwner = yield select(getAddress)
+    const newOwner = action.address
+    const parcel = { ...action.parcel }
+
+    if (oldOwner.toLowerCase() === newOwner.toLowerCase()) {
+      throw new Error("You can't transfer parcels to yourself")
+    }
+
+    if (!eth.utils.isValidAddress(newOwner)) {
+      throw new Error('Invalid Ethereum address')
+    }
+
+    if (!parcel) {
+      throw new Error('Invalid parcel')
+    }
+
+    const contract = eth.getContract('LANDRegistry')
+    const txHash = yield call(() =>
+      contract.transferLand(parcel.x, parcel.y, newOwner)
+    )
+
+    const transfer = {
+      txHash,
+      oldOwner,
+      newOwner,
+      parcelId: parcel.id,
+      x: parcel.x,
+      y: parcel.y
+    }
+
+    yield put(push(locations.activity))
+    yield put(transferParcelSuccess(txHash, transfer))
+  } catch (error) {
+    yield put(transferParcelFailure(error.message))
   }
 }

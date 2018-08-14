@@ -1,5 +1,1 @@
 .EditEstateForm {}
-
-.EditEstateForm .ui.button + .ui.button {
-  margin-left: 20px;
-}

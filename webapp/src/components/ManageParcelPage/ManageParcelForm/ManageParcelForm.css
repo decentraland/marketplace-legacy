@@ -1,7 +1,3 @@
-.ManageParcelForm .ui.button + .ui.button {
-  margin-left: 20px;
-}
-
 .ManageParcelForm .transfer-warning {
   color: var(--gray);
   font-style: italic;

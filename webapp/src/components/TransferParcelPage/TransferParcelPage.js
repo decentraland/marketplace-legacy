@@ -21,23 +21,12 @@ export default class TransferParcelPage extends React.PureComponent {
     y: PropTypes.number.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
     isTxIdle: PropTypes.bool.isRequired,
-    transferError: PropTypes.string,
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onCleanTransfer: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const {
-      x,
-      y,
-      isTxIdle,
-      transferError,
-      publications,
-      onSubmit,
-      onCancel,
-      onCleanTransfer
-    } = this.props
+    const { x, y, isTxIdle, publications, onSubmit, onCancel } = this.props
 
     return (
       <Parcel x={x} y={y} ownerOnly>
@@ -48,15 +37,15 @@ export default class TransferParcelPage extends React.PureComponent {
                 <Message
                   warning
                   icon="warning sign"
-                  content={t('parcel_transfer.cant_transfer')}
+                  content={t('transfer_parcel.cant_transfer')}
                 />
               </Container>
             ) : null}
             <ParcelModal
               x={x}
               y={y}
-              title={t('parcel_transfer.transfer_land')}
-              subtitle={t_html('parcel_transfer.about_to_transfer', {
+              title={t('transfer_parcel.transfer_land')}
+              subtitle={t_html('transfer_parcel.about_to_transfer', {
                 parcel_name: (
                   <Link to={locations.parcelDetail(x, y)}>
                     {buildCoordinate(x, y)}
@@ -67,12 +56,10 @@ export default class TransferParcelPage extends React.PureComponent {
             >
               <TransferParcelForm
                 parcel={parcel}
-                publications={publications}
                 isTxIdle={isTxIdle}
-                transferError={transferError}
+                isOnSale={isOnSale(parcel, publications)}
                 onSubmit={onSubmit}
                 onCancel={onCancel}
-                onCleanTransfer={onCleanTransfer}
               />
               <TxStatus.Asset
                 parcel={parcel}

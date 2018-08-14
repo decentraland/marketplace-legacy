@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { eth } from 'decentraland-eth'
 
-import { Button, Form, Message } from 'semantic-ui-react'
-import { parcelType, publicationType } from 'components/types'
+import { Button, Form } from 'semantic-ui-react'
+import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
-import { isTransactionRejectedError } from 'modules/transaction/utils'
-import { isOnSale } from 'shared/asset'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
@@ -15,17 +14,13 @@ import './TransferParcelForm.css'
 export default class TransferParcelForm extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    publications: PropTypes.objectOf(publicationType).isRequired,
     isTxIdle: PropTypes.bool,
-    transferError: PropTypes.string,
+    isOnSale: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onCleanTransfer: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired
   }
 
-  static defaultProps = {
-    transferError: null
-  }
+  static defaultProps = {}
 
   constructor(props) {
     super(props)
@@ -36,8 +31,6 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   handleAddressChange = address => {
-    const { transferError } = this.props
-    if (transferError) this.handleClearFormErrors()
     this.setState({ address })
   }
 
@@ -47,83 +40,43 @@ export default class TransferParcelForm extends React.PureComponent {
     this.props.onSubmit(parcel, newAddress)
   }
 
-  handleClearFormErrors = () => {
-    this.props.onCleanTransfer()
-  }
-
   handleCancel = () => {
     this.props.onCancel()
   }
 
-  isEmptyAddress() {
-    return this.state.address.trim() === ''
-  }
-
-  hasError() {
-    const { transferError } = this.props
-    return transferError && !isTransactionRejectedError(transferError)
-  }
-
-  isExpectedError() {
-    return !this.props.transferError.includes('Error: Error:')
+  isValidAddress() {
+    const { address } = this.state
+    return address.trim() !== '' && eth.utils.isValidAddress(address)
   }
 
   render() {
-    const { parcel, isTxIdle, transferError, publications } = this.props
+    const { isTxIdle, isOnSale } = this.props
     const { address } = this.state
 
     return (
       <Form
         className="TransferParcelForm"
         onSubmit={preventDefault(this.handleSubmit)}
-        error={!!transferError}
+        error={this.isValidAddress()}
       >
         <Form.Field>
           <AddressInput
-            label={t('parcel_transfer.recipient_address')}
+            label={t('transfer_parcel.recipient_address')}
             address={address}
             onChange={this.handleAddressChange}
           />
           <span className="transfer-warning">
-            {t('parcel_transfer.irreversible')}
+            {t('transfer_parcel.irreversible')}
           </span>
           <br />
           <span className="transfer-warning">
-            {t('parcel_transfer.check_address')}
+            {t('transfer_parcel.check_address')}
           </span>
-          <br />
-          {this.hasError() && (
-            <Message error onDismiss={this.handleClearFormErrors}>
-              {this.isExpectedError() ? (
-                <React.Fragment>{transferError}</React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {t('transfer_land.unknown_error')}
-                  <br />
-                  {t('transfer_land.error_persists', {
-                    community_chat_link: (
-                      <a
-                        href="https://chat.decentraland.org"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        {t('global.community_chat')}
-                      </a>
-                    )
-                  })}
-                  <br />
-                  <div className="error-stack">{transferError}</div>
-                </React.Fragment>
-              )}
-            </Message>
-          )}
-
-          <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
-
         <br />
-
-        <div>
+        <TxStatus.Idle isIdle={isTxIdle} />
+        <br />
+        <div className="modal-buttons">
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>
@@ -131,11 +84,7 @@ export default class TransferParcelForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={
-              this.isEmptyAddress() ||
-              isOnSale(parcel, publications) ||
-              isTxIdle
-            }
+            disabled={isOnSale || !this.isValidAddress() || isTxIdle}
           >
             {t('global.submit')}
           </Button>

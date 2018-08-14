@@ -275,17 +275,6 @@
     "proximity": "距离 {distance} 个地块",
     "road": "路"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "您即将转让 {parcel_name}",
-    "cant_transfer": "这块土地正在出售中，不能转让。",
-    "check_address": "请仔细检查地址",
-    "error_persists":
-      "如果问题仍然存在，请通过我们的{community_chat_link}与我们联系",
-    "irreversible": "请注意，转让土地的操作无法撤消。",
-    "recipient_address": "接收者地址",
-    "transfer_land": "转让土地",
-    "unknown_error": "发生未知错误，详情如下。"
-  },
   "profile_page": {
     "empty": "用户尚无{content}",
     "on_sale": "出售"
@@ -361,9 +350,19 @@
   },
   "transfer_mana": {
     "action": "转帐",
+    "amount": "量",
     "current_balance": "您目前的余额是 {balance}",
     "irreversible": "注意，MANA 转帐不能回退或撤消。",
     "own_address_warning": "这是您自己的地址！",
     "title": "MANA 转帐"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "你即将转移{parcel_name}。",
+    "cant_transfer": "这个LAND不能转让，因为它正在出售。",
+    "check_address": "请仔细检查地址",
+    "irreversible": "请记住，转移LAND是一种不可逆转的操作。",
+    "own_address_warning": "那是你自己的地址！",
+    "recipient_address": "收件人地址",
+    "transfer_land": "转移LAND"
   }
 }

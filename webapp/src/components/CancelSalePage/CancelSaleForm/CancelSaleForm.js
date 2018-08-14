@@ -22,7 +22,7 @@ export default class CancelSaleForm extends React.PureComponent {
       <Form className="CancelSaleForm" onSubmit={preventDefault(onConfirm)}>
         <TxStatus.Idle isIdle={isTxIdle} />
         <br />
-        <div>
+        <div className="modal-buttons">
           <Button onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>

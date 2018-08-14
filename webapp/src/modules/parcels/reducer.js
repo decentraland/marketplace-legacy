@@ -7,7 +7,10 @@ import {
   EDIT_PARCEL_FAILURE,
   MANAGE_PARCEL_REQUEST,
   MANAGE_PARCEL_SUCCESS,
-  MANAGE_PARCEL_FAILURE
+  MANAGE_PARCEL_FAILURE,
+  TRANSFER_PARCEL_REQUEST,
+  TRANSFER_PARCEL_SUCCESS,
+  TRANSFER_PARCEL_FAILURE
 } from './actions'
 import {
   BUY_SUCCESS,
@@ -15,7 +18,6 @@ import {
   PUBLISH_SUCCESS
 } from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import {
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_PARCEL_PUBLICATIONS_SUCCESS
@@ -97,7 +99,10 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     case EDIT_PARCEL_SUCCESS:
     case MANAGE_PARCEL_REQUEST:
     case MANAGE_PARCEL_SUCCESS:
-    case MANAGE_PARCEL_FAILURE: {
+    case MANAGE_PARCEL_FAILURE:
+    case TRANSFER_PARCEL_REQUEST:
+    case TRANSFER_PARCEL_SUCCESS:
+    case TRANSFER_PARCEL_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)

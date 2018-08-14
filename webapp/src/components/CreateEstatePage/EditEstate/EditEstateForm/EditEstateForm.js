@@ -78,7 +78,7 @@ export default class EditEstateForm extends React.PureComponent {
           />
         </Form.Field>
         <br />
-        <div>
+        <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>

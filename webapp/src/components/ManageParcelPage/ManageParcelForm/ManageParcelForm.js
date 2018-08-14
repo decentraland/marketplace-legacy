@@ -183,7 +183,7 @@ export default class ManageParcelForm extends React.PureComponent {
         <TxStatus.Idle isIdle={isTxIdle} />
         <br />
 
-        <div>
+        <div className="modal-buttons">
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>

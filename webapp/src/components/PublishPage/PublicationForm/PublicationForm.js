@@ -154,7 +154,7 @@ export default class PublicationForm extends React.PureComponent {
           </Message>
         ) : null}
         <br />
-        <div>
+        <div className="modal-buttons">
           <Button onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>

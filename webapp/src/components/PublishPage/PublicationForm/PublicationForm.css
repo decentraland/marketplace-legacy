@@ -1,5 +1,1 @@
 .PublicationForm {}
-
-.PublicationForm .ui.button + .ui.button {
-  margin-left: 20px;
-}

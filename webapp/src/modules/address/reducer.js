@@ -12,13 +12,13 @@ import {
   FETCH_ADDRESS_ESTATES_SUCCESS,
   FETCH_ADDRESS_ESTATES_FAILURE
 } from './actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
+import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
-import { loadingReducer } from 'modules/loading/reducer'
-import { toAddressParcelIds, toAddressPublicationIds } from './utils'
-import { buildCoordinate } from 'shared/parcel'
 import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
+import { loadingReducer } from 'modules/loading/reducer'
+import { buildCoordinate } from 'shared/parcel'
+import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 
 const EMPTY_ADDRESS = {
   contributions: [],

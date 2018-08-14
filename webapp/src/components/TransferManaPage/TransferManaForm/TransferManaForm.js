@@ -4,6 +4,7 @@ import { eth } from 'decentraland-eth'
 
 import { Button, Form, Input } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
+import AddressInput from 'components/AddressInput'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
@@ -37,9 +38,8 @@ export default class TransferManaForm extends React.PureComponent {
     }
   }
 
-  handleAddressChange = e => {
+  handleAddressChange = newAddress => {
     const { address } = this.state
-    const newAddress = e.currentTarget.value
 
     if (address !== newAddress.toLowerCase()) {
       this.setState({ address: newAddress })
@@ -84,7 +84,7 @@ export default class TransferManaForm extends React.PureComponent {
         onSubmit={preventDefault(this.handleSubmit)}
       >
         <Form.Field>
-          <label>Amount</label>
+          <label>{t('transfer_mana.amount')}</label>
           <Input
             id="amount-input"
             className="amount-input"
@@ -97,22 +97,18 @@ export default class TransferManaForm extends React.PureComponent {
           />
         </Form.Field>
         <Form.Field>
-          <label>{t('parcel_transfer.recipient_address')}</label>
-          <Input
-            id="address-input"
-            className="address-input"
-            type="text"
+          <AddressInput
+            label={t('transfer_parcel.recipient_address')}
             placeholder={t('global.address_placeholder')}
-            value={address}
+            address={address}
             onChange={this.handleAddressChange}
-            autoComplete="off"
           />
           <span className="transfer-warning">
             {t('transfer_mana.irreversible')}
           </span>
           <br />
           <span className="transfer-warning">
-            {t('parcel_transfer.check_address')}
+            {t('transfer_parcel.check_address')}
           </span>
           {this.isOwnAddress() ? (
             <React.Fragment>
@@ -127,7 +123,7 @@ export default class TransferManaForm extends React.PureComponent {
         <br />
         <TxStatus.Idle isIdle={isTxIdle} />
         <br />
-        <div className="footer">
+        <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>

@@ -30,14 +30,6 @@
   display: inline-block;
 }
 
-.ParcelModal .modal-buttons {
-  margin: 0px 50px;
-}
-
-.ParcelModal .modal-buttons button + button {
-  margin-left: 20px;
-}
-
 .ParcelModal .modal-children {
   margin: 0px 0px 0px 50px;
 }
@@ -55,10 +47,24 @@
   .ParcelModal .modal-children {
     margin: 0px 50px 0px 50px;
   }
+
+  .ParcelModal .modal-buttons {
+    display: flex;
+    flex-flow: column-reverse nowrap;
+  }
+
+  .ParcelModal .modal-buttons .button {
+    margin-top: 1em;
+    width: 100%;
+  }
 }
 
 @media (min-width: 768px) {
   .ParcelModal .modal-children {
     min-width: 420px;
+  }
+
+  .ParcelModal .modal-buttons .ui.button + .ui.button {
+    margin-left: 20px;
   }
 }

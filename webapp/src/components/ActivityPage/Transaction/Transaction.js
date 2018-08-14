@@ -30,9 +30,9 @@ import {
 } from 'modules/wallet/actions'
 import {
   EDIT_PARCEL_SUCCESS,
-  MANAGE_PARCEL_SUCCESS
+  MANAGE_PARCEL_SUCCESS,
+  TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import {
   PUBLISH_SUCCESS,
   BUY_SUCCESS,
