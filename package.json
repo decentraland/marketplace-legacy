@@ -59,7 +59,7 @@
     "flat": "^4.0.0",
     "inquirer": "^5.2.0",
     "mocha": "^4.0.1",
-    "newrelic": "^3.3.0",
+    "newrelic": "^4.8.0",
     "node-pg-migrate": "^2.23.0",
     "prettier": "1.12.1",
     "sinon": "^5.0.3",
