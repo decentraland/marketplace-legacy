@@ -5,7 +5,7 @@ import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import {
   getPublicationByCoordinate,
-  isTxIdle
+  isPublishingIdle
 } from 'modules/publication/selectors'
 import { getWallet } from 'modules/wallet/selectors'
 import { publishRequest } from 'modules/publication/actions'
@@ -19,7 +19,7 @@ const mapState = (state, ownProps) => {
     x,
     y,
     publication: getPublicationByCoordinate(state, x, y),
-    isTxIdle: isTxIdle(state),
+    isTxIdle: isPublishingIdle(state),
     wallet: getWallet(state)
   }
 }

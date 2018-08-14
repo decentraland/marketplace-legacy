@@ -4,7 +4,10 @@ import {
   FETCH_PARCEL_FAILURE,
   EDIT_PARCEL_REQUEST,
   EDIT_PARCEL_SUCCESS,
-  EDIT_PARCEL_FAILURE
+  EDIT_PARCEL_FAILURE,
+  MANAGE_PARCEL_REQUEST,
+  MANAGE_PARCEL_SUCCESS,
+  MANAGE_PARCEL_FAILURE
 } from './actions'
 import {
   BUY_SUCCESS,
@@ -89,23 +92,15 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case EDIT_PARCEL_REQUEST: {
-      const parcelId = action.parcel.id
-      const parcel = state.data[parcelId]
+    case EDIT_PARCEL_REQUEST:
+    case EDIT_PARCEL_FAILURE:
+    case EDIT_PARCEL_SUCCESS:
+    case MANAGE_PARCEL_REQUEST:
+    case MANAGE_PARCEL_SUCCESS:
+    case MANAGE_PARCEL_FAILURE: {
       return {
         ...state,
-        loading: loadingReducer(state.loading, action),
-        data: {
-          ...state.data,
-          [parcelId]: { ...parcel }
-        }
-      }
-    }
-    case EDIT_PARCEL_FAILURE: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        data: state.data
+        loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_PARCEL_PUBLICATIONS_SUCCESS: {
@@ -169,7 +164,6 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           const parcelId = buildCoordinate(x, y)
           return {
             ...state,
-            loading: loadingReducer(state.loading, action),
             data: {
               ...state.data,
               [parcelId]: {

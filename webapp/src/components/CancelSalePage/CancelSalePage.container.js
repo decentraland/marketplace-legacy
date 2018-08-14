@@ -5,24 +5,19 @@ import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import {
   getPublicationByCoordinate,
-  getLoading
+  isCancelIdle
 } from 'modules/publication/selectors'
-import { isLoadingType } from 'modules/loading/selectors'
-import {
-  CANCEL_SALE_REQUEST,
-  cancelSaleRequest
-} from 'modules/publication/actions'
+import { cancelSaleRequest } from 'modules/publication/actions'
 
 import CancelSalePage from './CancelSalePage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
-
   return {
     x,
     y,
-    publication: getPublicationByCoordinate(state, x, y),
-    isDisabled: isLoadingType(getLoading(state), CANCEL_SALE_REQUEST)
+    isTxIdle: isCancelIdle(state),
+    publication: getPublicationByCoordinate(state, x, y)
   }
 }
 

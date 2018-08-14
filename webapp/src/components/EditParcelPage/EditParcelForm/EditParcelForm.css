@@ -1,6 +1,4 @@
-.EditParcelForm {
-  min-width: 400px;
-}
+.EditParcelForm {}
 
 .EditParcelForm .ui.button + .ui.button {
   margin-left: 20px;

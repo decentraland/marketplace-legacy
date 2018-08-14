@@ -1,6 +1,4 @@
-.MortgageForm {
-  min-width: 400px;
-}
+.MortgageForm {}
 
 .MortgageForm .ui.button + .ui.button {
   margin-left: 20px;

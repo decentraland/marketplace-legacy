@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { txUtils } from 'decentraland-eth'
 import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
 
-import { Form, Button, Input, Message, Icon } from 'semantic-ui-react'
+import { Form, Button, Input, Message } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 
-import { parcelType, publicationType } from 'components/types'
+import { parcelType } from 'components/types'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
@@ -23,16 +22,11 @@ const INPUT_FORMAT = 'YYYY-MM-DD'
 
 export default class PublicationForm extends React.PureComponent {
   static propTypes = {
-    publication: publicationType,
     parcel: parcelType,
     isTxIdle: PropTypes.bool,
     isDisabled: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    publication: {}
   }
 
   constructor(props) {
@@ -124,11 +118,8 @@ export default class PublicationForm extends React.PureComponent {
   }
 
   render() {
-    const { publication, isTxIdle, isDisabled, onCancel } = this.props
+    const { isTxIdle, isDisabled, onCancel } = this.props
     const { price, expiresAt, formErrors } = this.state
-
-    const isPending =
-      publication.tx_status === txUtils.TRANSACTION_STATUS.pending
 
     return (
       <Form
@@ -157,17 +148,6 @@ export default class PublicationForm extends React.PureComponent {
           />
         </Form.Field>
         <TxStatus.Idle isIdle={isTxIdle} />
-        {isPending ? (
-          <Message icon>
-            <Icon name="circle notched" loading />
-            <Message.Content>
-              <TxStatus.Text
-                txHash={publication.tx_hash}
-                txStatus={publication.tx_status}
-              />
-            </Message.Content>
-          </Message>
-        ) : null}
         {formErrors.length > 0 ? (
           <Message error onDismiss={this.handleClearFormErrors}>
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}
@@ -175,13 +155,13 @@ export default class PublicationForm extends React.PureComponent {
         ) : null}
         <br />
         <div>
-          <Button disabled={isPending} onClick={onCancel} type="button">
+          <Button onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
           <Button
             type="submit"
             primary={true}
-            disabled={isPending || isTxIdle || isDisabled}
+            disabled={isTxIdle || isDisabled}
           >
             {t('global.submit')}
           </Button>

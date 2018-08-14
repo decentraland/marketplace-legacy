@@ -1,0 +1,5 @@
+.CancelSaleForm {}
+
+.CancelSaleForm .ui.button + .ui.button {
+  margin-left: 20px;
+}
