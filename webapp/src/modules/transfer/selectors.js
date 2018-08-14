@@ -8,4 +8,4 @@ export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 
 export const isTransferIdle = state =>
-  isLoadingType(isLoading(state), TRANSFER_PARCEL_REQUEST)
+  isLoadingType(getLoading(state), TRANSFER_PARCEL_REQUEST)

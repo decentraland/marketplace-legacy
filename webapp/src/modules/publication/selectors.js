@@ -18,10 +18,10 @@ export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 
 export const isPublishingIdle = state =>
-  isLoadingType(isLoading(state), PUBLISH_REQUEST)
+  isLoadingType(getLoading(state), PUBLISH_REQUEST)
 
 export const isCancelIdle = state =>
-  isLoadingType(isLoading(state), CANCEL_SALE_REQUEST)
+  isLoadingType(getLoading(state), CANCEL_SALE_REQUEST)
 
 export const getPublications = createSelector(
   getData,
