@@ -248,7 +248,10 @@
     "description": "Description",
     "edit_land": "Editer les informations de ma LAND",
     "name": "Nom",
-    "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}"
+    "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}",
+    "ipns": "Lien de contenu",
+    "warning_tooltip":
+      "Ceci sera utilisé pour montrer votre scène. Mettre à jour seulement si vous savez ce que vous faites."
   },
   "parcel_manage": {
     "address": "Adresse de l'opérateur",

@@ -243,7 +243,10 @@
     "description": "説明",
     "edit_land": "ランドを編集",
     "name": "名称",
-    "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。"
+    "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。",
+    "ipns": "コンテンツリンク",
+    "warning_tooltip":
+      "これはあなたのシーンを表示するために使用されます。あなたが何をしているのか分かっている場合にのみ更新してください。"
   },
   "parcel_manage": {
     "address": "編集者のアドレス",
