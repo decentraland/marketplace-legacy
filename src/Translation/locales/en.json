@@ -110,6 +110,7 @@
     "request": "Request",
     "retry": "Retry",
     "revoke": "Revoke",
+    "sale": "Sale",
     "service_unavailable": "Service unavailable",
     "settings": "Settings",
     "sign_in": "Sign In",

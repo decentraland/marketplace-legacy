@@ -20,7 +20,8 @@ export function transferParcelSuccess(txHash, transfer) {
     ...buildTransactionAction(txHash, {
       x: transfer.x,
       y: transfer.y,
-      newOwner: transfer.newOwner
+      newOwner: transfer.newOwner,
+      oldOwner: transfer.oldOwner
     }),
     transfer
   }

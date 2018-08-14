@@ -101,16 +101,11 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case EDIT_PARCEL_SUCCESS:
     case EDIT_PARCEL_FAILURE: {
-      const { parcel } = action
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        data: {
-          ...state.data,
-          [parcel.id]: { ...parcel }
-        }
+        data: state.data
       }
     }
     case FETCH_PARCEL_PUBLICATIONS_SUCCESS: {
@@ -169,6 +164,21 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       const transaction = action.transaction
 
       switch (transaction.actionType) {
+        case EDIT_PARCEL_SUCCESS: {
+          const { x, y, data } = transaction.payload
+          const parcelId = buildCoordinate(x, y)
+          return {
+            ...state,
+            loading: loadingReducer(state.loading, action),
+            data: {
+              ...state.data,
+              [parcelId]: {
+                ...state.data[parcelId],
+                data
+              }
+            }
+          }
+        }
         case TRANSFER_PARCEL_SUCCESS: {
           const { x, y, newOwner } = transaction.payload
           const parcelId = buildCoordinate(x, y)
@@ -197,7 +207,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
                   owner
                 }
               } else {
-                newParcels[parcel.id] = parcel
+                newParcels[parcel.id] = { ...parcel }
               }
               return newParcels
             }, {})

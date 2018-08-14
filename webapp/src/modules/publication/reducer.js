@@ -130,7 +130,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
 
       switch (transaction.actionType) {
         case BUY_SUCCESS: {
-          const tx_hash = transaction.payload.tx_hash
+          const { tx_hash, buyer } = transaction.payload
 
           return {
             ...state,
@@ -138,7 +138,8 @@ export function publicationReducer(state = INITIAL_STATE, action) {
               ...state.data,
               [tx_hash]: {
                 ...state.data[tx_hash],
-                status: PUBLICATION_STATUS.sold
+                status: PUBLICATION_STATUS.sold,
+                buyer
               }
             }
           }

@@ -177,7 +177,9 @@ export default class Transaction extends React.PureComponent {
 
         return t_html('transaction.cancel', {
           publication_link: (
-            <EtherscanLink txHash={tx_hash}>publication</EtherscanLink>
+            <EtherscanLink txHash={tx_hash}>
+              {t('global.sale').toLowerCase()}
+            </EtherscanLink>
           ),
           parcel_link: this.renderParcelLink(x, y)
         })

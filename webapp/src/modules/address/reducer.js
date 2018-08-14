@@ -111,29 +111,32 @@ export function addressReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action),
         error: action.error
       }
-    case TRANSFER_PARCEL_SUCCESS: {
-      const { oldOwner, newOwner, parcelId } = action.transfer
-      const oldOwnerAddress = state.data[oldOwner] || { ...EMPTY_ADDRESS }
-      const newOwnerAddress = state.data[newOwner] || { ...EMPTY_ADDRESS }
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [oldOwner]: {
-            ...oldOwnerAddress,
-            parcel_ids: oldOwnerAddress.parcel_ids.filter(x => x !== parcelId)
-          },
-          [newOwner]: {
-            ...newOwnerAddress,
-            parcel_ids: newOwnerAddress.parcel_ids.concat(parcelId)
-          }
-        }
-      }
-    }
     case FETCH_TRANSACTION_SUCCESS: {
       const transaction = action.transaction
 
       switch (transaction.actionType) {
+        case TRANSFER_PARCEL_SUCCESS: {
+          const { oldOwner, newOwner, x, y } = transaction.payload
+          const parcelId = buildCoordinate(x, y)
+          const oldOwnerAddress = state.data[oldOwner] || { ...EMPTY_ADDRESS }
+          const newOwnerAddress = state.data[newOwner] || { ...EMPTY_ADDRESS }
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [oldOwner]: {
+                ...oldOwnerAddress,
+                parcel_ids: oldOwnerAddress.parcel_ids.filter(
+                  x => x !== parcelId
+                )
+              },
+              [newOwner]: {
+                ...newOwnerAddress,
+                parcel_ids: newOwnerAddress.parcel_ids.concat(parcelId)
+              }
+            }
+          }
+        }
         case BUY_SUCCESS: {
           const { x, y } = transaction.payload
           const parcelId = buildCoordinate(x, y)
