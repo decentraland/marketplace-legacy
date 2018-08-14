@@ -111,6 +111,7 @@
     "request": "Demande",
     "retry": "Recommencez",
     "revoke": "Révoquer",
+    "sale": "Vente",
     "service_unavailable": "Service indisponible",
     "settings": "Paramètres",
     "sign_in": "Se connecter",
@@ -287,19 +288,6 @@
       "{distance} {distance, plural, one {parcelle} other {parcelles}} loin",
     "road": "Route"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "Vous êtes sur le point de transferer {parcel_name}",
-    "cant_transfer":
-      "Cette LAND ne peut être transferée car elle est en vente.",
-    "check_address": "Merci de vérifier l'addresse soigneusement.",
-    "error_persists":
-      "Si le problème persiste, veuillez nous contacter sur {community_chat_link}",
-    "irreversible": "Chaque transfert de LAND est une opération irréversible.",
-    "recipient_address": "Adresse du destinataire",
-    "transfer_land": "Transférer une LAND",
-    "unknown_error":
-      "Une erreur s'est produite, les détails se trouvent ci-dessous."
-  },
   "profile_page": {
     "empty": "L'utilisateur n'as pas de {content}",
     "on_sale": "A vendre"
@@ -401,9 +389,20 @@
   },
   "transfer_mana": {
     "action": "Transférer",
+    "amount": "Montant",
     "current_balance": "Votre solde actuel est {balance}",
     "irreversible": "Chaque transfert de MANA est une opération irréversible.",
     "own_address_warning": "C'est ta propre adresse!",
     "title": "Transférer MANA"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "Vous êtes sur le point de transférer {parcel_name}.",
+    "cant_transfer": "Ce LAND ne peut pas être transféré car il est en vente.",
+    "check_address": "S'il vous plaît vérifier l'adresse soigneusement",
+    "irreversible":
+      "Rappelez-vous que le transfert de NT1 est une opération irréversible.",
+    "own_address_warning": "C'est ta propre adresse!",
+    "recipient_address": "Adresse du destinataire",
+    "transfer_land": "Transférer LAND"
   }
 }

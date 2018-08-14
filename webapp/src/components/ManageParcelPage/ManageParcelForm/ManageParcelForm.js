@@ -178,16 +178,15 @@ export default class ManageParcelForm extends React.PureComponent {
           {this.state.editing
             ? this.renderEditOperatorForm()
             : this.renderSetOperatorForm()}
-          <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
 
+        <TxStatus.Idle isIdle={isTxIdle} />
         <br />
 
-        <div>
+        <div className="modal-buttons">
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>
-
           <Button
             type="submit"
             primary={true}

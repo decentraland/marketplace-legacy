@@ -1,7 +1,3 @@
-.TransferParcelForm .ui.button + .ui.button {
-  margin-left: 20px;
-}
-
 .TransferParcelForm .ui.input.address-input {
   max-width: 450px !important;
   display: block;

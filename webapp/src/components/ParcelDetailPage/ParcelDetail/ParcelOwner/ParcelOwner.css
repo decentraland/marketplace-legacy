@@ -7,7 +7,7 @@
   color: var(--gray);
 }
 
-.ParcelOwner.is-owner .button + .button {
+.ParcelOwner.is-owner .manage-button {
   margin-left: 30px;
 }
 

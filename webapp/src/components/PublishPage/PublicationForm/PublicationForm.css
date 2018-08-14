@@ -1,7 +1,1 @@
-.PublicationForm {
-  min-width: 400px;
-}
-
-.PublicationForm .ui.button + .ui.button {
-  margin-left: 20px;
-}
+.PublicationForm {}

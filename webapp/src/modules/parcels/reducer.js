@@ -4,7 +4,13 @@ import {
   FETCH_PARCEL_FAILURE,
   EDIT_PARCEL_REQUEST,
   EDIT_PARCEL_SUCCESS,
-  EDIT_PARCEL_FAILURE
+  EDIT_PARCEL_FAILURE,
+  MANAGE_PARCEL_REQUEST,
+  MANAGE_PARCEL_SUCCESS,
+  MANAGE_PARCEL_FAILURE,
+  TRANSFER_PARCEL_REQUEST,
+  TRANSFER_PARCEL_SUCCESS,
+  TRANSFER_PARCEL_FAILURE
 } from './actions'
 import {
   BUY_SUCCESS,
@@ -12,7 +18,6 @@ import {
   PUBLISH_SUCCESS
 } from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import {
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_PARCEL_PUBLICATIONS_SUCCESS
@@ -89,28 +94,18 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case EDIT_PARCEL_REQUEST: {
-      const parcelId = action.parcel.id
-      const parcel = state.data[parcelId]
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        data: {
-          ...state.data,
-          [parcelId]: { ...parcel }
-        }
-      }
-    }
+    case EDIT_PARCEL_REQUEST:
+    case EDIT_PARCEL_FAILURE:
     case EDIT_PARCEL_SUCCESS:
-    case EDIT_PARCEL_FAILURE: {
-      const { parcel } = action
+    case MANAGE_PARCEL_REQUEST:
+    case MANAGE_PARCEL_SUCCESS:
+    case MANAGE_PARCEL_FAILURE:
+    case TRANSFER_PARCEL_REQUEST:
+    case TRANSFER_PARCEL_SUCCESS:
+    case TRANSFER_PARCEL_FAILURE: {
       return {
         ...state,
-        loading: loadingReducer(state.loading, action),
-        data: {
-          ...state.data,
-          [parcel.id]: { ...parcel }
-        }
+        loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_PARCEL_PUBLICATIONS_SUCCESS: {
@@ -169,6 +164,20 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       const transaction = action.transaction
 
       switch (transaction.actionType) {
+        case EDIT_PARCEL_SUCCESS: {
+          const { x, y, data } = transaction.payload
+          const parcelId = buildCoordinate(x, y)
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [parcelId]: {
+                ...state.data[parcelId],
+                data
+              }
+            }
+          }
+        }
         case TRANSFER_PARCEL_SUCCESS: {
           const { x, y, newOwner } = transaction.payload
           const parcelId = buildCoordinate(x, y)
@@ -197,7 +206,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
                   owner
                 }
               } else {
-                newParcels[parcel.id] = parcel
+                newParcels[parcel.id] = { ...parcel }
               }
               return newParcels
             }, {})

@@ -12,13 +12,13 @@ import {
   FETCH_ADDRESS_ESTATES_SUCCESS,
   FETCH_ADDRESS_ESTATES_FAILURE
 } from './actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
+import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
-import { loadingReducer } from 'modules/loading/reducer'
-import { toAddressParcelIds, toAddressPublicationIds } from './utils'
-import { buildCoordinate } from 'shared/parcel'
 import { CREATE_ESTATE_SUCCESS } from 'modules/estates/actions'
+import { loadingReducer } from 'modules/loading/reducer'
+import { buildCoordinate } from 'shared/parcel'
+import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 
 const EMPTY_ADDRESS = {
   contributions: [],
@@ -111,29 +111,32 @@ export function addressReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action),
         error: action.error
       }
-    case TRANSFER_PARCEL_SUCCESS: {
-      const { oldOwner, newOwner, parcelId } = action.transfer
-      const oldOwnerAddress = state.data[oldOwner] || { ...EMPTY_ADDRESS }
-      const newOwnerAddress = state.data[newOwner] || { ...EMPTY_ADDRESS }
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [oldOwner]: {
-            ...oldOwnerAddress,
-            parcel_ids: oldOwnerAddress.parcel_ids.filter(x => x !== parcelId)
-          },
-          [newOwner]: {
-            ...newOwnerAddress,
-            parcel_ids: newOwnerAddress.parcel_ids.concat(parcelId)
-          }
-        }
-      }
-    }
     case FETCH_TRANSACTION_SUCCESS: {
       const transaction = action.transaction
 
       switch (transaction.actionType) {
+        case TRANSFER_PARCEL_SUCCESS: {
+          const { oldOwner, newOwner, x, y } = transaction.payload
+          const parcelId = buildCoordinate(x, y)
+          const oldOwnerAddress = state.data[oldOwner] || { ...EMPTY_ADDRESS }
+          const newOwnerAddress = state.data[newOwner] || { ...EMPTY_ADDRESS }
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [oldOwner]: {
+                ...oldOwnerAddress,
+                parcel_ids: oldOwnerAddress.parcel_ids.filter(
+                  x => x !== parcelId
+                )
+              },
+              [newOwner]: {
+                ...newOwnerAddress,
+                parcel_ids: newOwnerAddress.parcel_ids.concat(parcelId)
+              }
+            }
+          }
+        }
         case BUY_SUCCESS: {
           const { x, y } = transaction.payload
           const parcelId = buildCoordinate(x, y)

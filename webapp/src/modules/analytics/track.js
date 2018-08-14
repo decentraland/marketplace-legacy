@@ -4,10 +4,10 @@ import {
   PUBLISH_SUCCESS,
   CANCEL_SALE_SUCCESS
 } from 'modules/publication/actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import {
   EDIT_PARCEL_SUCCESS,
-  MANAGE_PARCEL_SUCCESS
+  MANAGE_PARCEL_SUCCESS,
+  TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
 import {
   APPROVE_MANA_SUCCESS,

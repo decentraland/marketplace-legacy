@@ -110,6 +110,7 @@
     "request": "의뢰",
     "retry": "다시 해 보다",
     "revoke": "취소",
+    "sale": "판매",
     "service_unavailable": "서비스를 사용할 수 없음",
     "settings": "설정",
     "sign_in": "로그인",
@@ -279,19 +280,6 @@
     "proximity": "{distance} 개 분실물",
     "road": "도로"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "{parcel_name}을(를) 이전하려고합니다.",
-    "cant_transfer": "이 토지는 판매 중이므로 이전 할 수 없습니다.",
-    "check_address": "신중하게 주소를 확인하십시오",
-    "error_persists":
-      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
-    "irreversible":
-      "토지를 이전하는 것은 돌이킬 수 없는 작업이라는 것을 기억하십시오.",
-    "recipient_address": "수신자 주소",
-    "transfer_land": "토지 이전",
-    "unknown_error":
-      "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다."
-  },
   "profile_page": {
     "empty": "사용자에게는 {content}가 없습니다.",
     "on_sale": "판매 중"
@@ -384,10 +372,20 @@
   },
   "transfer_mana": {
     "action": "이전",
+    "amount": "양",
     "current_balance": "현재 잔액은 {balance}입니다.",
     "irreversible":
       "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
     "own_address_warning": "그것은 당신의 자신의 주소입니다!",
     "title": "MANA 이전"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "이제 {parcel_name}를 전송하려고합니다.",
+    "cant_transfer": "이 LAND은 판매 중이므로 이전 할 수 없습니다.",
+    "check_address": "주소를 신중히 확인하십시오.",
+    "irreversible": "LAND 전송은 돌이킬 수없는 작업임을 기억하십시오.",
+    "own_address_warning": "그것은 당신의 자신의 주소입니다!",
+    "recipient_address": "수취인 주소",
+    "transfer_land": "전송 LAND"
   }
 }

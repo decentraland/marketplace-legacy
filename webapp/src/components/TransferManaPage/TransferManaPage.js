@@ -2,18 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Loader, Container } from 'semantic-ui-react'
+import { locations } from 'locations'
 import ParcelModal from 'components/ParcelModal'
 import Mana from 'components/Mana'
-import { t, t_html } from 'modules/translation/utils'
 import { walletType } from 'components/types'
-import { locations } from 'locations'
+import { t, t_html } from 'modules/translation/utils'
 import TransferManaForm from './TransferManaForm'
 import './TransferManaPage.css'
-
-const manaStyle = {
-  display: 'inline-block',
-  transform: 'translateY(3px)'
-}
 
 export default class TransferManaPage extends React.PureComponent {
   static propTypes = {
@@ -54,7 +49,7 @@ export default class TransferManaPage extends React.PureComponent {
           <div>
             {t_html('transfer_mana.current_balance', {
               balance: (
-                <span style={manaStyle}>
+                <span className="mana-icon-wrapper">
                   &nbsp;
                   <Mana amount={wallet.balance} />
                 </span>

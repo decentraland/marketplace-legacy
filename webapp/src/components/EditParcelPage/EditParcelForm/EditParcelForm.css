@@ -1,10 +1,4 @@
-.EditParcelForm {
-  min-width: 400px;
-}
-
-.EditParcelForm .ui.button + .ui.button {
-  margin-left: 20px;
-}
+.EditParcelForm {}
 
 .EditParcelForm .ipns-input .warning.sign {
   color: var(--yellow);

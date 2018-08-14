@@ -7,7 +7,6 @@ import { locationSaga } from 'modules/location/sagas'
 import { parcelsSaga } from 'modules/parcels/sagas'
 import { publicationSaga } from 'modules/publication/sagas'
 import { transactionSaga } from 'modules/transaction/sagas'
-import { transferSaga } from 'modules/transfer/sagas'
 import { translationSaga } from 'modules/translation/sagas'
 import { walletSaga } from 'modules/wallet/sagas'
 import { estateSaga } from 'modules/estates/sagas'
@@ -23,7 +22,6 @@ export function* rootSaga() {
     parcelsSaga(),
     publicationSaga(),
     transactionSaga(),
-    transferSaga(),
     translationSaga(),
     walletSaga(),
     estateSaga(),

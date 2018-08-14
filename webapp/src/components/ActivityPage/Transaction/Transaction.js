@@ -30,9 +30,9 @@ import {
 } from 'modules/wallet/actions'
 import {
   EDIT_PARCEL_SUCCESS,
-  MANAGE_PARCEL_SUCCESS
+  MANAGE_PARCEL_SUCCESS,
+  TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import {
   PUBLISH_SUCCESS,
   BUY_SUCCESS,
@@ -177,7 +177,9 @@ export default class Transaction extends React.PureComponent {
 
         return t_html('transaction.cancel', {
           publication_link: (
-            <EtherscanLink txHash={tx_hash}>publication</EtherscanLink>
+            <EtherscanLink txHash={tx_hash}>
+              {t('global.sale').toLowerCase()}
+            </EtherscanLink>
           ),
           parcel_link: this.renderParcelLink(x, y)
         })

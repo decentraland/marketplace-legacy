@@ -1,10 +1,4 @@
-.MortgageForm {
-  min-width: 400px;
-}
-
-.MortgageForm .ui.button + .ui.button {
-  margin-left: 20px;
-}
+.MortgageForm {}
 
 .MortgageFormGrid {
   display: block !important;

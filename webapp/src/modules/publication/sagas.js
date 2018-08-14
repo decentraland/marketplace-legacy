@@ -1,6 +1,10 @@
-import { call, takeEvery, put } from 'redux-saga/effects'
+import { select, call, takeEvery, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
+import { locations } from 'locations'
+import { getAddress } from 'modules/wallet/selectors'
+import { splitCoordinate } from 'shared/parcel'
+import { api } from 'lib/api'
 import {
   FETCH_PUBLICATIONS_REQUEST,
   FETCH_PARCEL_PUBLICATIONS_REQUEST,
@@ -18,9 +22,6 @@ import {
   cancelSaleSuccess,
   cancelSaleFailure
 } from './actions'
-import { locations } from 'locations'
-import { splitCoordinate } from 'shared/parcel'
-import { api } from 'lib/api'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
@@ -84,13 +85,19 @@ function* handleBuyRequest(action) {
   try {
     const { asset_id, price } = action.publication
     const asset = yield call(() => buildAsset(asset_id))
+    const buyer = yield select(getAddress)
 
     const marketplaceContract = eth.getContract('Marketplace')
     const txHash = yield call(() =>
       marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
     )
 
-    yield put(buySuccess(txHash, action.publication, asset))
+    const publication = {
+      ...action.publication,
+      buyer
+    }
+
+    yield put(buySuccess(txHash, publication, asset))
     yield put(push(locations.activity))
   } catch (error) {
     yield put(buyFailure(error.message))
@@ -123,7 +130,7 @@ function* fetchPublications(action) {
 
 function* buildAsset(asset_id) {
   // TODO: if publication.type === 'parcel' then split and encode
-  //  if publication.type === 'estate' then use_address
+  //  if publication.type === 'estate' then ??
 
   const [x, y] = splitCoordinate(asset_id)
 
@@ -133,7 +140,7 @@ function* buildAsset(asset_id) {
   )
 
   return {
-    id: blockchainId,
+    id: blockchainId.toString(),
     x: parseInt(x, 10),
     y: parseInt(y, 10)
   }
