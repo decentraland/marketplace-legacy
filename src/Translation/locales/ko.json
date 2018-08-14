@@ -242,7 +242,10 @@
     "description": "설명",
     "edit_land": "토지 편집",
     "name": "이름",
-    "set_name_and_desc": "{parcel_name}의 이름 및 설명 설정"
+    "set_name_and_desc": "{parcel_name}의 이름 및 설명 설정",
+    "ipns": "콘텐츠 링크",
+    "warning_tooltip":
+      "이것은 당신의 장면을 보여주기 위해 사용됩니다. 자신이하는 일을 알고있는 경우에만 업데이트하십시오."
   },
   "parcel_manage": {
     "address": "운영자 주소",

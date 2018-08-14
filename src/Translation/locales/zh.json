@@ -239,7 +239,9 @@
     "description": "描述",
     "edit_land": "编辑土地",
     "name": "名称",
-    "set_name_and_desc": "为 {parcel_name} 设置名称和描述"
+    "set_name_and_desc": "为 {parcel_name} 设置名称和描述",
+    "ipns": "内容链接",
+    "warning_tooltip": "这将用于显示您的场景。仅在您知道自己在做什么时才更新。"
   },
   "parcel_manage": {
     "address": "运营商地址",

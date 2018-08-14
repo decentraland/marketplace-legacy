@@ -244,7 +244,10 @@
     "description": "Descripción",
     "edit_land": "Editar LAND",
     "name": "Nombre",
-    "set_name_and_desc": "Configura un nombre y descripción para {parcel_name}"
+    "set_name_and_desc": "Configura un nombre y descripción para {parcel_name}",
+    "ipns": "Link de contenido",
+    "warning_tooltip":
+      "Esto será usado para mostrar tu escena. Actualiza sólo si sabes lo que estas haciendo."
   },
   "parcel_manage": {
     "address": "Dirección del operador",
