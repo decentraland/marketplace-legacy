@@ -54,6 +54,13 @@
     "invalid":
       "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
+  "estate_detail": {
+    "delete": "删除遗产",
+    "delete_desc": "你要删除庄园{estate_id}",
+    "edit_parcels": "编辑地块",
+    "parcels": "包裹包括在内",
+    "pending_tx": "这个庄园"
+  },
   "estate_edit": {
     "description": "描述",
     "edit_estate": "编辑地产",
@@ -62,7 +69,10 @@
   },
   "estate_select": {
     "description": "在{x}，{y}处选择相邻的地块",
-    "selection": "选择你的地块建立新的地产"
+    "detail": "房地产细节",
+    "edit_selection": "在地图上选择宗地",
+    "new_selection": "在地图上选择新地块的地块",
+    "tx_to_be_send": "您将向{action} parcels发送交易：{parcels}"
   },
   "footer": {
     "color_key": "图示",
@@ -74,6 +84,8 @@
   "global": {
     "acquired_at": "获得日期 {date}",
     "activity": "活动",
+    "add": "加",
+    "added": "添加",
     "address_placeholder": "0x...",
     "atlas": "地图",
     "authorized": "已授权",
@@ -90,6 +102,7 @@
     "continue": "继续",
     "contributions": "小区份额",
     "created_at": "创建于 {date}",
+    "edit": "编辑",
     "estate": "地产",
     "estates": "地产",
     "expired_at": "截止时间 {time}",
@@ -106,6 +119,8 @@
     "parcels": "地块",
     "profile": "我的虚拟土地",
     "publications": "出版物",
+    "remove": "去掉",
+    "removed": "去除",
     "request": "请求",
     "retry": "重试",
     "revoke": "撤消",
@@ -205,7 +220,6 @@
     "actions": {
       "cancel": "取消出售",
       "create_estate": "建立地产",
-      "edit": "编辑",
       "permissions": "权限",
       "sell": "出售",
       "transfer": "转让"
@@ -239,9 +253,9 @@
   "parcel_edit": {
     "description": "描述",
     "edit_land": "编辑土地",
+    "ipns": "内容链接",
     "name": "名称",
     "set_name_and_desc": "为 {parcel_name} 设置名称和描述",
-    "ipns": "内容链接",
     "warning_tooltip": "这将用于显示您的场景。仅在您知道自己在做什么时才更新。"
   },
   "parcel_manage": {
@@ -322,9 +336,14 @@
     "cancel": "您取消了 {parcel_link} 上的 {publication_link}",
     "cancel_mortgage": "您取消了购买地块 {parcel_link} 的抵押",
     "claim_mortgage_resolution": "你声称{parcel_link}",
+    "create_estate": "您创建了包裹{parcels_link}的地产",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
+    "delete_estate": "你删除了庄园{estate_id}",
     "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
+    "edit_estate_metadata":
+      "你编辑了庄园{estate_id}，名称为“{name}”，描述为“{description}”",
+    "edit_estate_parcels": "你{action}包裹{parcels_link}到庄园{estate_id}",
     "manage": "您授权{address_link}更新{parcel_link}上的内容",
     "manage_revoked": "您撤销了允许{address_link}更新{parcel_link}内容的授权",
     "mortgage_mana": "您{action} {mortgage_contract_link}代表您操作 MANA。",

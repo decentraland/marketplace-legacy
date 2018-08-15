@@ -87,7 +87,7 @@ export default class PublishPage extends React.PureComponent {
                 isDisabled={!isLandAuthorized}
               />
               <TxStatus.Asset
-                parcel={parcel}
+                asset={parcel}
                 name={<ParcelName parcel={parcel} />}
               />
             </ParcelModal>

@@ -1,0 +1,76 @@
+.Page > .EstateSelect {
+  padding-top: 0;
+}
+
+.EstateSelect {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.EstateSelect .select-title {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.EstateSelect > .Loading {
+  font-size: 10px;
+  top: 35%;
+}
+
+.EstateSelect .description {
+  color: var(--gray);
+}
+
+.EstateSelect .parcel-preview {
+  height: 400px;
+}
+
+.EstateSelect .estate-selection {
+  margin: 30px 0;
+  font-size: 15px;
+}
+
+.EstateSelect .EstateActions {
+  text-align: left;
+  margin-top: 30px;
+}
+
+.EstateSelect .estate-selection .selected-parcels.column {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.EstateSelect .estate-selection .parcels-included {
+  width: 100%;
+  font-size: 18px;
+  margin-top: 20px;
+  color: var(--gray);
+  margin-bottom: 0px;
+}
+
+.selected-parcels .ParcelCard {
+  margin-top: 20px !important;
+  margin-bottom: 0;
+  margin-right: 25px;
+}
+
+.ParcelCard .name {
+  color: var(--text);
+}
+
+.ParcelCard:hover .coords {
+  color: var(--text);
+  border: 1px solid var(--gray);
+}
+
+.tx-label {
+  text-align: left;
+  font-size: 14px;
+  margin-top: 15px;
+  color: var(--text);
+}
+
+.EstateSelect .selected-parcels-headline.column {
+  margin-top: 20px;
+  text-align: right
+}

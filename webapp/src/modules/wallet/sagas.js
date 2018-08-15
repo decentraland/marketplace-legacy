@@ -51,6 +51,7 @@ import {
   sendTransaction,
   fetchBalance
 } from './utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
@@ -106,7 +107,9 @@ function* handleConnectWalletRequest(action = {}) {
       manaTokenContract.balanceOf(address),
       fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
-      landRegistryContract.isApprovedForAll(marketplaceAddress, address),
+      isFeatureEnabled('ESTATES') // @nacho TODO: remove when isApprovedForAll is updated in mainnet
+        ? landRegistryContract.isApprovedForAll(address, marketplaceAddress)
+        : landRegistryContract.isApprovedForAll(marketplaceAddress, address),
       manaTokenContract.allowance(address, mortgageHelperAddress),
       rcnTokenContract.allowance(address, mortgageManagerAddress)
     ])

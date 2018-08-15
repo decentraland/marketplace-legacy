@@ -26,11 +26,11 @@ const mapState = (state, { match, location }) => {
   }
 }
 
-const mapDispatch = (dispatch, { location }) => ({
+const mapDispatch = dispatch => ({
   onLoading: () => dispatch(setLoading(true)),
   onChange: (x, y, marker) =>
     dispatch(push(locations.parcelMapDetail(x, y, marker))),
-  onSelect: (x, y) => dispatch(push(locations.parcelDetail(x, y)))
+  onSelect: asset => dispatch(push(locations.assetDetail(asset)))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(MapComponent))

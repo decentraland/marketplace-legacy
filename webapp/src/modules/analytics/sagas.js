@@ -16,7 +16,7 @@ function handleConnectWalletSuccess(action) {
 }
 
 // Track pages
-function handleLocationChange(action) {
+function handleLocationChange() {
   if (window.analytics) {
     window.analytics.page()
   }

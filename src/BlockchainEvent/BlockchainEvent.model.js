@@ -1,24 +1,96 @@
-import { Model } from 'decentraland-commons'
+import { env, Model } from 'decentraland-commons'
 import { SQL } from '../database'
 
 export class BlockchainEvent extends Model {
   static tableName = 'blockchain_events'
   static primaryKey = 'tx_hash'
-  static columnNames = ['tx_hash', 'name', 'block_number', 'log_index', 'args']
+  static columnNames = [
+    'tx_hash',
+    'name',
+    'block_number',
+    'log_index',
+    'args',
+    'address'
+  ]
 
-  static EVENTS = {
-    publicationCreated: 'AuctionCreated',
-    publicationSuccessful: 'AuctionSuccessful',
-    publicationCancelled: 'AuctionCancelled',
-    parcelTransfer: 'Transfer',
-    parcelUpdate: 'Update',
-    newMortgage: 'NewMortgage',
-    cancelledMortgage: 'CanceledMortgage',
-    startedMortgage: 'StartedMortgage',
-    paidMortgage: 'PaidMortgage',
-    defaultedMortgage: 'DefaultedMortgage',
-    partialPayment: 'PartialPayment',
-    totalPayment: 'TotalPayment'
+  static getEvents() {
+    const landRegistryAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
+    const marketPlaceAddress = env.get('MARKETPLACE_CONTRACT_ADDRESS')
+    const mortgageHelperAddress = env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS')
+    const rcnEngineAddress = env.get('RCN_ENGINE_CONTRACT_ADDRESS')
+    const mortgageManagerAddress = env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
+    const estateRegistryAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
+
+    return {
+      publicationCreated: BlockchainEvent.getNormalizedEventName(
+        marketPlaceAddress,
+        'AuctionCreated'
+      ),
+      publicationSuccessful: BlockchainEvent.getNormalizedEventName(
+        marketPlaceAddress,
+        'AuctionSuccessful'
+      ),
+      publicationCancelled: BlockchainEvent.getNormalizedEventName(
+        marketPlaceAddress,
+        'AuctionCancelled'
+      ),
+      parcelTransfer: BlockchainEvent.getNormalizedEventName(
+        landRegistryAddress,
+        'Transfer'
+      ),
+      parcelUpdate: BlockchainEvent.getNormalizedEventName(
+        landRegistryAddress,
+        'Update'
+      ),
+      estateTransfer: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'Transfer'
+      ),
+      estateUpdate: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'Update'
+      ),
+      addLand: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'AddLand'
+      ),
+      removeLand: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'RemoveLand'
+      ),
+      estateCreate: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'CreateEstate'
+      ),
+      newMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageHelperAddress,
+        'NewMortgage'
+      ),
+      cancelledMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'CanceledMortgage'
+      ),
+      startedMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'StartedMortgage'
+      ),
+      paidMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'PaidMortgage'
+      ),
+      defaultedMortgage: BlockchainEvent.getNormalizedEventName(
+        mortgageManagerAddress,
+        'DefaultedMortgage'
+      ),
+      partialPayment: BlockchainEvent.getNormalizedEventName(
+        rcnEngineAddress,
+        'PartialPayment'
+      ),
+      totalPayment: BlockchainEvent.getNormalizedEventName(
+        rcnEngineAddress,
+        'TotalPayment'
+      )
+    }
   }
 
   static async insertWithoutConflicts(blockchainEvent) {
@@ -70,5 +142,16 @@ export class BlockchainEvent extends Model {
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
         WHERE args->>'assetId' = ${assetId}`
     )
+  }
+
+  static normalizeEvent(event) {
+    return {
+      ...event,
+      normalizedName: this.getNormalizedEventName(event.address, event.name)
+    }
+  }
+
+  static getNormalizedEventName(address, name) {
+    return `${address}-${name}`
   }
 }

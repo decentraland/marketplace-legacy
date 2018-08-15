@@ -1,4 +1,5 @@
 import { buildCoordinate } from 'shared/parcel'
+import { Bounds } from 'shared/map'
 
 export const getEstateConnections = (x, y, estate) => {
   const leftId = buildCoordinate(x - 1, y)
@@ -16,4 +17,10 @@ export const getEstateConnections = (x, y, estate) => {
   )
 
   return { connectedLeft, connectedTop, connectedTopLeft }
+}
+
+export function validateCoords(x, y) {
+  if (!Bounds.inBounds(x, y)) {
+    throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
+  }
 }

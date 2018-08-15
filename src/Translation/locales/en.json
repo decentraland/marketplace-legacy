@@ -54,16 +54,26 @@
     "invalid":
       "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
+  "estate_detail": {
+    "delete": "Delete estate",
+    "delete_desc": "You are going to delete the estate {estate_id}",
+    "edit_parcels": "Edit Parcels",
+    "parcels": "Parcels included",
+    "pending_tx": "This estate"
+  },
   "estate_edit": {
     "description": "Description",
     "edit_estate": "Edit Estate",
     "name": "Name",
-    "subtitle":
-      "Set a name and description, and edit the parcels for your estate."
+    "subtitle": "Set a name and description for your estate."
   },
   "estate_select": {
-    "description": "Select adjacent parcels beginning from {x},{y}",
-    "selection": "Select the parcels for your new Estate"
+    "description": "Selected parcels",
+    "detail": "Estate detail",
+    "edit_selection": "Select the parcels on the map",
+    "new_selection": "Select the parcels on the map for your new Estate",
+    "tx_to_be_send":
+      "You will send a transaction to {action} parcels: {parcels}"
   },
   "footer": {
     "color_key": "Color Key",
@@ -75,6 +85,8 @@
   "global": {
     "acquired_at": "Acquired at {date}",
     "activity": "Activity",
+    "add": "add",
+    "added": "added",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Authorized",
@@ -91,6 +103,7 @@
     "continue": "Continue",
     "contributions": "Contributions",
     "created_at": "Created at {date}",
+    "edit": "Edit",
     "estate": "Estate",
     "estates": "Estates",
     "expired_at": "Expired {time}",
@@ -107,6 +120,8 @@
     "parcels": "Parcels",
     "profile": "My Land",
     "publications": "Publications",
+    "remove": "remove",
+    "removed": "removed",
     "request": "Request",
     "retry": "Retry",
     "revoke": "Revoke",
@@ -209,7 +224,6 @@
     "actions": {
       "cancel": "Cancel sale",
       "create_estate": "Create Estate",
-      "edit": "Edit",
       "permissions": "Permissions",
       "sell": "Sell",
       "transfer": "Transfer"
@@ -243,9 +257,9 @@
   "parcel_edit": {
     "description": "Description",
     "edit_land": "Edit LAND",
+    "ipns": "Content link",
     "name": "Name",
     "set_name_and_desc": "Set a name and description for {parcel_name}.",
-    "ipns": "Content link",
     "warning_tooltip":
       "This will be used to show your scene. Update only if you know what you are doing."
   },
@@ -342,12 +356,18 @@
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
     "claim_mortgage_resolution": "You claimed {parcel_link}",
+    "create_estate": "You created a estate with the parcels {parcels_link}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
+    "delete_estate": "You deleted the estate {estate_id}",
     "disapproved":
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+    "edit_estate_metadata":
+      "You edited estate {estate_id} with the name \"{name}\" and description \"{description}\"",
+    "edit_estate_parcels":
+      "You {action} parcels {parcels_link} to estate {estate_id}",
     "manage":
       "You gave {address_link} permission to update the contents of {parcel_link}",
     "manage_revoked":

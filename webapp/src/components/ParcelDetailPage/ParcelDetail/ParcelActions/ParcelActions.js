@@ -7,6 +7,7 @@ import { locations } from 'locations'
 import { parcelType, publicationType, mortgageType } from 'components/types'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { isOnSale } from 'shared/asset'
+import { hasParcelsConnected } from 'shared/parcel'
 import { t } from 'modules/translation/utils'
 
 import './ParcelActions.css'
@@ -18,6 +19,14 @@ export default class ParcelActions extends React.PureComponent {
     mortgage: mortgageType,
     publications: PropTypes.objectOf(publicationType).isRequired,
     isLoading: PropTypes.bool.isRequired
+  }
+
+  canCreateEstate = () => {
+    const { wallet, parcel } = this.props
+    return (
+      isFeatureEnabled('ESTATES') &&
+      hasParcelsConnected(parcel, wallet.parcelsById)
+    )
   }
 
   render() {
@@ -37,7 +46,7 @@ export default class ParcelActions extends React.PureComponent {
               </Button>
             </Link>
 
-            {isFeatureEnabled('ESTATES') && (
+            {this.canCreateEstate() && (
               <Link to={locations.createEstateLand(x, y)}>
                 <Button size="tiny">
                   {t('parcel_detail.actions.create_estate')}

@@ -16,6 +16,7 @@ export async function main(
   await db.connect()
 
   log.debug('Connecting to Ethereum node')
+
   await eth.connect({
     contracts: [
       new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
@@ -24,7 +25,8 @@ export async function main(
       new contracts.RCNEngine(env.get('RCN_ENGINE_CONTRACT_ADDRESS')),
       new contracts.MortgageManager(
         env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
-      )
+      ),
+      new contracts.EstateRegistry(env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'))
     ],
     provider: env.get('RPC_URL')
   })
@@ -34,7 +36,7 @@ export async function main(
     handlers,
     {
       Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
-      LANDRegistry: ['Update', 'Transfer'],
+      LANDRegistry: ['Update', 'Transfer', 'EstateRegistrySet'],
       MortgageHelper: ['NewMortgage'],
       MortgageManager: [
         'CanceledMortgage',
@@ -42,7 +44,8 @@ export async function main(
         'PaidMortgage',
         'DefaultedMortgage'
       ],
-      RCNEngine: ['PartialPayment', 'TotalPayment']
+      RCNEngine: ['PartialPayment', 'TotalPayment'],
+      EstateRegistry: ['AddLand', 'RemoveLand', 'Update', 'CreateEstate']
     },
     env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
   )

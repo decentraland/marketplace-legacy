@@ -315,13 +315,16 @@ export default class ParcelPreview extends React.PureComponent {
 
   handleClick = event => {
     const [x, y] = this.mouseToCoords(event.layerX, event.layerY)
-    if (Bounds.inBounds(x, y)) {
-      const parcelId = buildCoordinate(x, y)
-      const { onClick, parcels } = this.props
-      const parcel = parcels[parcelId]
-      if (onClick && Date.now() - this.mousedownTimestamp < 200) {
-        onClick(x, y, parcel)
-      }
+    if (!Bounds.inBounds(x, y)) {
+      return
+    }
+
+    const parcelId = buildCoordinate(x, y)
+    const { onClick, parcels, estates } = this.props
+    const { asset } = getAsset(parcelId, parcels, estates)
+
+    if (onClick && Date.now() - this.mousedownTimestamp < 200) {
+      onClick(asset, parcels[parcelId])
     }
   }
 
@@ -407,7 +410,7 @@ export default class ParcelPreview extends React.PureComponent {
     }
 
     const { wallet, parcels, districts, publications, estates } = this.props
-    const asset = getAsset(parcelId, parcels, estates)
+    const { asset } = getAsset(parcelId, parcels, estates)
     const publication = getOpenPublication(asset, publications)
 
     const type = getType(asset, publications, wallet)

@@ -24,7 +24,12 @@ export async function processEvents(fromBlock = 0) {
 }
 
 export async function processEvent(event) {
-  return Promise.all(Object.values(reducers).map(reducer => reducer(event)))
+  const events = BlockchainEvent.getEvents()
+  return Promise.all(
+    Object.values(reducers).map(reducer =>
+      reducer(events, BlockchainEvent.normalizeEvent(event))
+    )
+  )
 }
 
 const eventCache = {

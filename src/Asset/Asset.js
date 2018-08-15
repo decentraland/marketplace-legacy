@@ -18,12 +18,28 @@ export class Asset {
     return assets[0]
   }
 
+  findByAssetId(assetId) {
+    return db.query(SQL`SELECT ${raw(this.tableName)}.*, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+      ) as publication
+        FROM ${raw(this.tableName)}
+        WHERE asset_id = ${assetId}`)
+  }
+
   findByIds(ids) {
     if (ids.length === 0) return []
 
     return db.query(SQL`SELECT *
         FROM ${raw(this.tableName)}
         WHERE id = ANY(${ids})`)
+  }
+
+  findByAssetIds(assetIds) {
+    if (assetIds.length === 0) return []
+
+    return db.query(SQL`SELECT *
+        FROM ${raw(this.tableName)}
+        WHERE asset_id = ANY(${assetIds})`)
   }
 
   async findByOwner(owner) {

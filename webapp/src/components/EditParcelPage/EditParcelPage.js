@@ -48,7 +48,7 @@ export default class EditParcelPage extends React.PureComponent {
                 onCancel={onCancel}
               />
               <TxStatus.Asset
-                parcel={parcel}
+                asset={parcel}
                 name={<ParcelName parcel={parcel} />}
               />
             </ParcelModal>

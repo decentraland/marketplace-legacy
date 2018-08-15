@@ -42,6 +42,11 @@
   margin: 0px 0px 0px 50px;
 }
 
+.EstateModal .tx-idle{
+  margin: 0 auto 20px;
+  width: 310px;
+}
+
 @media (max-width: 768px) {
   .EstateModal {
     flex-flow: column nowrap;

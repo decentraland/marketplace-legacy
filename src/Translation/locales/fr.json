@@ -55,6 +55,13 @@
     "invalid":
       "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
+  "estate_detail": {
+    "delete": "Supprimer la succession",
+    "delete_desc": "Vous allez supprimer le domaine {estate_id}",
+    "edit_parcels": "Modifier les colis",
+    "parcels": "Colis inclus",
+    "pending_tx": "Ce domaine"
+  },
   "estate_edit": {
     "description": "La description",
     "edit_estate": "Modifier le domaine",
@@ -64,7 +71,12 @@
   },
   "estate_select": {
     "description": "Sélectionnez les parcelles adjacentes à partir de {x}, {y}",
-    "selection": "Sélectionnez les parcelles pour votre nouveau domaine"
+    "detail": "Détail immobilier",
+    "edit_selection": "Sélectionnez les parcelles sur la carte",
+    "new_selection":
+      "Sélectionnez les parcelles sur la carte pour votre nouveau domaine",
+    "tx_to_be_send":
+      "Vous allez envoyer une transaction à {action} parcelles: {parcels}"
   },
   "footer": {
     "color_key": "Code Couleur",
@@ -76,6 +88,8 @@
   "global": {
     "acquired_at": "Acquis à {date}",
     "activity": "Activité",
+    "add": "ajouter",
+    "added": "ajoutée",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Autorisé",
@@ -92,6 +106,7 @@
     "continue": "Continuer",
     "contributions": "Contributions",
     "created_at": "Créé à {date}",
+    "edit": "Modifier",
     "estate": "Biens",
     "estates": "Estates",
     "expired_at": "Expiré {time}",
@@ -108,6 +123,8 @@
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
     "publications": "Publications",
+    "remove": "retirer",
+    "removed": "enlevé",
     "request": "Demande",
     "retry": "Recommencez",
     "revoke": "Révoquer",
@@ -214,7 +231,6 @@
     "actions": {
       "cancel": "Annuler la vente",
       "create_estate": "Créer un domaine",
-      "edit": "Edition",
       "permissions": "Autorisations",
       "sell": "Vendre",
       "transfer": "Transferer"
@@ -248,9 +264,9 @@
   "parcel_edit": {
     "description": "Description",
     "edit_land": "Editer les informations de ma LAND",
+    "ipns": "Lien de contenu",
     "name": "Nom",
     "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}",
-    "ipns": "Lien de contenu",
     "warning_tooltip":
       "Ceci sera utilisé pour montrer votre scène. Mettre à jour seulement si vous savez ce que vous faites."
   },
@@ -351,12 +367,19 @@
     "cancel_mortgage":
       "Vous annulez une hypothèque pour acheter le colis {parcel_link}",
     "claim_mortgage_resolution": "Vous avez réclamé {parcel_link}",
+    "create_estate":
+      "Vous avez créé un domaine avec les parcelles {parcels_link}",
     "create_mortgage":
       "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
+    "delete_estate": "Vous avez supprimé le domaine {estate_id}",
     "disapproved":
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
+    "edit_estate_metadata":
+      "Vous avez édité la propriété {estate_id} sous le nom \"{name}\" et la description \"{description}\"",
+    "edit_estate_parcels":
+      "Vous {action} colis {parcels_link} à succession {estate_id}",
     "manage":
       "Vous avez donné {address_link} la permission de mettre à jour le contenu de {parcel_link}",
     "manage_revoked":
