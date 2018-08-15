@@ -107,7 +107,7 @@ function* handleConnectWalletRequest(action = {}) {
       manaTokenContract.balanceOf(address),
       fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
-      landRegistryContract.isApprovedForAll(marketplaceAddress, address),
+      landRegistryContract.isApprovedForAll(address, marketplaceAddress),
       manaTokenContract.allowance(address, mortgageHelperAddress),
       rcnTokenContract.allowance(address, mortgageManagerAddress)
     ])
