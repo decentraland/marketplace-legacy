@@ -114,19 +114,26 @@ export function getCoordsMatcher(coords) {
 * @return bool where at least the parcel has a connection
 */
 export function hasParcelsConnected({ x, y }, parcels) {
-  const parcelUp = { x, y: y + 1 },
+  const moveUp = { x, y: y + 1 },
     moveDown = { x, y: y - 1 },
     moveLeft = { x: x - 1, y },
     moveRight = { x: x + 1, y }
 
+  const parcelUp = parcels[buildCoordinate(moveUp.x, moveUp.y)],
+    parcelDown = parcels[buildCoordinate(moveDown.x, moveDown.y)],
+    parcelLeft = parcels[buildCoordinate(moveLeft.x, moveLeft.y)],
+    parcelRight = parcels[buildCoordinate(moveRight.x, moveRight.y)]
+
   return (
-    (Bounds.inBounds(parcelUp.x, parcelUp.y) &&
-      parcels[buildCoordinate(parcelUp.x, parcelUp.y)]) ||
+    (Bounds.inBounds(moveUp.x, moveUp.y) && parcelUp && !parcelUp.estate_id) ||
     (Bounds.inBounds(moveDown.x, moveDown.y) &&
-      parcels[buildCoordinate(moveDown.x, moveDown.y)]) ||
+      parcelDown &&
+      !parcelDown.estate_id) ||
     (Bounds.inBounds(moveLeft.x, moveLeft.y) &&
-      parcels[buildCoordinate(moveLeft.x, moveLeft.y)]) ||
+      parcelLeft &&
+      !parcelLeft.estate_id) ||
     (Bounds.inBounds(moveRight.x, moveRight.y) &&
-      parcels[buildCoordinate(moveRight.x, moveRight.y)])
+      parcelRight &&
+      !parcelRight.estate_id)
   )
 }

@@ -11,8 +11,7 @@ export default class Estate extends React.PureComponent {
     x: PropTypes.number,
     y: PropTypes.number,
     onAccessDenied: PropTypes.func.isRequired,
-    children: PropTypes.func.isRequired,
-    onEstateFetched: PropTypes.func
+    children: PropTypes.func.isRequired
   }
 
   static defaultProps = {

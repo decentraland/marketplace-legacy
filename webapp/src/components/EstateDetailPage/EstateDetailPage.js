@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import EstateDetail from './EstateDetail'
 import Estate from 'components/Estate'
 import { isNewAsset } from 'shared/asset'
-import EditEstate from './EditEstate/EditEstate'
+import EditEstate from './EditEstate'
 import { parcelType } from 'components/types'
 
 export default class EstateDetailPage extends React.PureComponent {
@@ -21,12 +21,9 @@ export default class EstateDetailPage extends React.PureComponent {
     y: PropTypes.number,
     assetId: PropTypes.string,
     allParcels: PropTypes.objectOf(parcelType),
-    submitEstate: PropTypes.func.isRequired,
-    editEstateMetadata: PropTypes.func.isRequired,
     onViewAssetClick: PropTypes.func.isRequired,
     onEditParcels: PropTypes.func.isRequired,
-    onEditMetadata: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onEditMetadata: PropTypes.func.isRequired
   }
 
   render() {
@@ -34,13 +31,10 @@ export default class EstateDetailPage extends React.PureComponent {
       assetId,
       x,
       y,
-      submitEstate,
-      editEstateMetadata,
       onViewAssetClick,
       allParcels,
       onEditParcels,
-      onEditMetadata,
-      onCancel
+      onEditMetadata
     } = this.props
 
     const { isEditing, isSelecting } = this.state
@@ -53,11 +47,8 @@ export default class EstateDetailPage extends React.PureComponent {
               isCreation={isNewAsset(estate)}
               isOwner={isOwner}
               wallet={wallet}
-              submitEstate={submitEstate}
-              editEstateMetadata={editEstateMetadata}
               onViewAssetClick={onViewAssetClick}
               isSelecting={isNewAsset(estate) || isSelecting}
-              onCancel={onCancel}
             />
           ) : (
             <EstateDetail

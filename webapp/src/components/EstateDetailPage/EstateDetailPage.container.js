@@ -1,15 +1,9 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { goBack } from 'react-router-redux'
 
 import { locations } from 'locations'
 import { navigateTo } from 'modules/location/actions'
 import { getMatchParams } from 'modules/location/selectors'
-import {
-  createEstateRequest,
-  editEstateParcelsRequest,
-  editEstateMetadataRequest
-} from 'modules/estates/actions'
 import EstateDetailPage from 'components/EstateDetailPage/EstateDetailPage'
 import { getData as getParcels } from 'modules/parcels/selectors'
 
@@ -23,22 +17,12 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
-  const { assetId } = getMatchParams(ownProps)
-  return {
-    submitEstate: estate =>
-      assetId
-        ? dispatch(editEstateParcelsRequest(estate))
-        : dispatch(createEstateRequest(estate)),
-    editEstateMetadata: estate => dispatch(editEstateMetadataRequest(estate)),
-    onViewAssetClick: asset =>
-      dispatch(navigateTo(locations.assetDetail(asset))),
-    onEditParcels: () =>
-      dispatch(navigateTo(locations.editEstateParcelsRequest())),
-    onEditMetadata: () =>
-      dispatch(navigateTo(locations.editEstateMetadataRequest())),
-    onCancel: () => dispatch(goBack())
-  }
-}
+const mapDispatch = dispatch => ({
+  onViewAssetClick: asset => dispatch(navigateTo(locations.assetDetail(asset))),
+  onEditParcels: () =>
+    dispatch(navigateTo(locations.editEstateParcelsRequest())),
+  onEditMetadata: () =>
+    dispatch(navigateTo(locations.editEstateMetadataRequest()))
+})
 
 export default withRouter(connect(mapState, mapDispatch)(EstateDetailPage))

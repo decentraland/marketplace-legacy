@@ -11,11 +11,12 @@ export default class EditEstate extends React.PureComponent {
     estate: estateType.isRequired,
     wallet: walletType.isRequired,
     isOwner: PropTypes.bool.isRequired,
-    submitEstate: PropTypes.func.isRequired,
-    editEstateMetadata: PropTypes.func.isRequired,
     isCreation: PropTypes.bool.isRequired,
     isSelecting: PropTypes.bool,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func,
+    onEditEstateParcels: PropTypes.func,
+    onCreateEstate: PropTypes.func,
+    onEditEstateMetadata: PropTypes.func
   }
 
   static defaultProps = {
@@ -24,7 +25,6 @@ export default class EditEstate extends React.PureComponent {
 
   constructor(props) {
     super(props)
-
     this.state = {
       isSelecting: props.isSelecting,
       estate: props.estate
@@ -55,10 +55,15 @@ export default class EditEstate extends React.PureComponent {
 
   handleSubmit = () => {
     const { estate, isSelecting } = this.state
+    const {
+      onCreateEstate,
+      onEditEstateParcels,
+      onEditEstateMetadata
+    } = this.props
     if (isNewAsset(estate) || isSelecting) {
-      this.props.submitEstate(estate)
+      isNewAsset(estate) ? onCreateEstate(estate) : onEditEstateParcels(estate)
     } else {
-      this.props.editEstateMetadata(estate)
+      onEditEstateMetadata(estate)
     }
   }
 
