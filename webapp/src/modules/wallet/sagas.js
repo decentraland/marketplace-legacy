@@ -73,16 +73,15 @@ export function* walletSaga() {
 function* handleConnectWalletRequest(action = {}) {
   while (yield select(isStorageLoading)) yield delay(5)
   try {
-    if (!eth.isConnected()) {
-      const { address, derivationPath } = yield select(getData)
+    if (eth.isConnected()) eth.disconnect()
 
-      yield call(() =>
-        connectEthereumWallet({
-          address,
-          derivationPath
-        })
-      )
-    }
+    const walletData = yield select(getData)
+    yield call(() =>
+      connectEthereumWallet({
+        address: walletData.address,
+        derivationPath: walletData.derivationPath
+      })
+    )
 
     let address = yield call(() => eth.getAddress())
     address = address.toLowerCase()
