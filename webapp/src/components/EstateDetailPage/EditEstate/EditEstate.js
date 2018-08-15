@@ -13,10 +13,10 @@ export default class EditEstate extends React.PureComponent {
     isOwner: PropTypes.bool.isRequired,
     isCreation: PropTypes.bool.isRequired,
     isSelecting: PropTypes.bool,
-    onCancel: PropTypes.func,
-    onEditEstateParcels: PropTypes.func,
-    onCreateEstate: PropTypes.func,
-    onEditEstateMetadata: PropTypes.func
+    onCancel: PropTypes.func.isRequired,
+    onEditEstateParcels: PropTypes.func.isRequired,
+    onCreateEstate: PropTypes.func.isRequired,
+    onEditEstateMetadata: PropTypes.func.isRequired
   }
 
   static defaultProps = {
