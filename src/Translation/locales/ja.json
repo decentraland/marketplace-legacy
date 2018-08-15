@@ -54,6 +54,13 @@
     "invalid":
       "あなたのウォレットは、不適合な導出関数をしています。導出関数は 44'/60|61'/x'/n 型でなければいけません。"
   },
+  "estate_detail": {
+    "delete": "財産を削除する",
+    "delete_desc": "あなたは不動産{estate_id}を削除するつもりです",
+    "edit_parcels": "小包の編集",
+    "parcels": "小包を含む",
+    "pending_tx": "この不動産"
+  },
   "estate_edit": {
     "description": "説明",
     "edit_estate": "不動産を編集",
@@ -62,7 +69,10 @@
   },
   "estate_select": {
     "description": "{x},{y}から始まる、隣接した区画を選んでください。",
-    "selection": "新しい不動産の区画を選んでください。"
+    "detail": "エステートディテール",
+    "edit_selection": "地図上の区画を選択する",
+    "new_selection": "あなたの新しい不動産の地図上の区画を選択してください",
+    "tx_to_be_send": "トランザクションを{action}パーセルに送信します：{parcels}"
   },
   "footer": {
     "color_key": "カラーガイド",
@@ -74,6 +84,8 @@
   "global": {
     "acquired_at": "{date}に取得済",
     "activity": "取引履歴",
+    "add": "追加する",
+    "added": "追加された",
     "address_placeholder": "例: {address}",
     "atlas": "地図",
     "authorized": "認証済み",
@@ -90,6 +102,7 @@
     "continue": "続ける",
     "contributions": "貢献区画",
     "created_at": "{date}に作成済",
+    "edit": "編集",
     "estate": "不動産",
     "estates": "不動産",
     "expired_at": "{time}に締め切り済",
@@ -106,6 +119,8 @@
     "parcels": "パーセル区画",
     "profile": "マイランド",
     "publications": "公開中の区画",
+    "remove": "除去する",
+    "removed": "除去された",
     "request": "リクエスト",
     "retry": "やり直す",
     "revoke": "取り消す",
@@ -209,7 +224,6 @@
     "actions": {
       "cancel": "販売をキャンセル",
       "create_estate": "不動産を作成する",
-      "edit": "編集する",
       "permissions": "権限",
       "sell": "販売する",
       "transfer": "転送する"
@@ -243,9 +257,9 @@
   "parcel_edit": {
     "description": "説明",
     "edit_land": "ランドを編集",
+    "ipns": "コンテンツリンク",
     "name": "名称",
     "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。",
-    "ipns": "コンテンツリンク",
     "warning_tooltip":
       "これはあなたのシーンを表示するために使用されます。あなたが何をしているのか分かっている場合にのみ更新してください。"
   },
@@ -342,11 +356,17 @@
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
     "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
     "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
+    "create_estate": "小包{parcels_link}で不動産を作った",
     "create_mortgage": "{parcel_link}区画を購入するのに担保を申請しました。",
+    "delete_estate": "あなたは不動産{estate_id}を削除しました",
     "disapproved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
     "edit":
       "{parcel_link}の名称を\"{name}\"説明文を \"{description}\"に変更しました。",
+    "edit_estate_metadata":
+      "「{name}」という名前の不動産{estate_id}を編集し、「{description}」という名前を編集しました。",
+    "edit_estate_parcels":
+      "あなた{action}は{parcels_link}を不動産{estate_id}に分けます",
     "manage":
       "{parcel_link}のコンテンツを更新する権限を {address_link} に与えました。",
     "manage_revoked":

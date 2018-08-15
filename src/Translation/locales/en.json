@@ -257,9 +257,9 @@
   "parcel_edit": {
     "description": "Description",
     "edit_land": "Edit LAND",
+    "ipns": "Content link",
     "name": "Name",
     "set_name_and_desc": "Set a name and description for {parcel_name}.",
-    "ipns": "Content link",
     "warning_tooltip":
       "This will be used to show your scene. Update only if you know what you are doing."
   },
