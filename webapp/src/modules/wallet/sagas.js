@@ -74,9 +74,8 @@ export function* walletSaga() {
 function* handleConnectWalletRequest(action = {}) {
   while (yield select(isStorageLoading)) yield delay(5)
   try {
-    if (eth.isConnected()) eth.disconnect()
-
     const walletData = yield select(getData)
+
     yield call(() =>
       connectEthereumWallet({
         address: walletData.address,
