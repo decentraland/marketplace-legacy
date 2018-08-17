@@ -95,6 +95,7 @@
     "blog": "블로그",
     "cancel": "취소",
     "change": "변화",
+    "check_address": "주소를 신중히 확인하십시오.",
     "clear": "명확한",
     "click_here": "여기를 클릭하십시오",
     "community_chat": "커뮤니티 채팅",
@@ -115,12 +116,14 @@
     "marketplace": "시장",
     "mortgage": "저당",
     "mortgages": "모기지",
+    "own_address_warning": "그것은 당신의 자신의 주소입니다!",
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
     "paid_at": "유료",
     "parcels": "필지",
     "profile": "나의 토지",
     "publications": "간행물",
+    "recipient_address": "수취인 주소",
     "remove": "풀다",
     "removed": "제거 된",
     "request": "의뢰",
@@ -132,7 +135,10 @@
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "submit": "제출",
+    "the_estate": "재산",
+    "the_parcel": "소포",
     "time_left": "남은 시간",
+    "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
     "unauthorized": "무단",
     "undo": "끄르다",
     "wallet_address": "지갑 주소",
@@ -266,7 +272,6 @@
   "parcel_manage": {
     "address": "운영자 주소",
     "address_permission": "이 주소는이 소포의 내용을 업데이트 할 수 있습니다.",
-    "check_address": "주소를 신중히 확인하십시오.",
     "give_permission":
       "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
     "manage_land": "토지 관리"
@@ -374,7 +379,7 @@
     "pay_mortgage":
       "소포 {parcel_link}을 구입하기 위해 모기지에 대해 {amount}의 부분 지불을했습니다.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
-    "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
+    "transfer": "당신은 {asset_type} {asset_link}을 {owner_link}로 옮겼습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."
   },
   "transaction_status": {
@@ -391,22 +396,21 @@
       "pending": "거래가 확인되기를 기다리고 있습니다."
     }
   },
+  "transfer_estate": {
+    "about_to_transfer": "부동산 {estate_id}을 양도하려합니다.",
+    "transfer_estate": "트랜스퍼 에스테이트"
+  },
   "transfer_mana": {
     "action": "이전",
     "amount": "양",
     "current_balance": "현재 잔액은 {balance}입니다.",
     "irreversible":
       "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
-    "own_address_warning": "그것은 당신의 자신의 주소입니다!",
     "title": "MANA 이전"
   },
   "transfer_parcel": {
     "about_to_transfer": "이제 {parcel_name}를 전송하려고합니다.",
     "cant_transfer": "이 LAND은 판매 중이므로 이전 할 수 없습니다.",
-    "check_address": "주소를 신중히 확인하십시오.",
-    "irreversible": "LAND 전송은 돌이킬 수없는 작업임을 기억하십시오.",
-    "own_address_warning": "그것은 당신의 자신의 주소입니다!",
-    "recipient_address": "수취인 주소",
     "transfer_land": "전송 LAND"
   }
 }

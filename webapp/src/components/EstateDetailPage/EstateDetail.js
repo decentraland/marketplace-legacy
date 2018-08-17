@@ -53,13 +53,16 @@ export default class EstateDetail extends React.PureComponent {
               </Grid.Column>
               {isOwner && (
                 <Grid.Column className="parcel-actions-container" computer={8}>
-                  <EstateActions onEditMetadata={onEditMetadata} />
+                  <EstateActions
+                    onEditMetadata={onEditMetadata}
+                    assetId={estate.asset_id}
+                  />
                 </Grid.Column>
               )}
               {allParcels && (
                 <React.Fragment>
                   <Grid.Column
-                    width={8}
+                    width={isOwner ? 8 : 16}
                     className={'selected-parcels-headline'}
                   >
                     <p className="parcels-included">

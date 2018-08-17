@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import { eth } from 'decentraland-eth'
 
 import { Button, Form } from 'semantic-ui-react'
-import { parcelType } from 'components/types'
+import { assetType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
 import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
-import './TransferParcelForm.css'
+import './TransferAssetForm.css'
 
-export default class TransferParcelForm extends React.PureComponent {
+export default class TransferAssetForm extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType,
+    asset: assetType.isRequired,
     isTxIdle: PropTypes.bool,
     isOnSale: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
@@ -35,9 +35,9 @@ export default class TransferParcelForm extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    const { parcel } = this.props
+    const { asset } = this.props
     const newAddress = this.state.address.trim().toLowerCase()
-    this.props.onSubmit(parcel, newAddress)
+    this.props.onSubmit(asset, newAddress)
   }
 
   handleCancel = () => {
@@ -55,23 +55,21 @@ export default class TransferParcelForm extends React.PureComponent {
 
     return (
       <Form
-        className="TransferParcelForm"
+        className="TransferAssetForm"
         onSubmit={preventDefault(this.handleSubmit)}
         error={this.isValidAddress()}
       >
         <Form.Field>
           <AddressInput
-            label={t('transfer_parcel.recipient_address')}
+            label={t('global.recipient_address')}
             address={address}
             onChange={this.handleAddressChange}
           />
           <span className="transfer-warning">
-            {t('transfer_parcel.irreversible')}
+            {t('global.transfer_irreversible')}
           </span>
           <br />
-          <span className="transfer-warning">
-            {t('transfer_parcel.check_address')}
-          </span>
+          <span className="transfer-warning">{t('global.check_address')}</span>
         </Form.Field>
         <br />
         <TxStatus.Idle isIdle={isTxIdle} />

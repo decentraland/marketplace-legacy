@@ -94,6 +94,7 @@
     "blog": "Blog",
     "cancel": "Cancel",
     "change": "Change",
+    "check_address": "Please check the address carefully",
     "clear": "Clear history",
     "click_here": "Click here",
     "community_chat": "Community Chat",
@@ -114,12 +115,14 @@
     "marketplace": "Marketplace",
     "mortgage": "Mortgage",
     "mortgages": "Mortgages",
+    "own_address_warning": "That's your own address!",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
     "paid_at": "Paid at",
     "parcels": "Parcels",
     "profile": "My Land",
     "publications": "Publications",
+    "recipient_address": "Recipient address",
     "remove": "remove",
     "removed": "removed",
     "request": "Request",
@@ -131,7 +134,11 @@
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
     "submit": "Submit",
+    "the_estate": "the estate",
+    "the_parcel": "the parcel",
     "time_left": "Time left",
+    "transfer_irreversible":
+      "Remember that transferring is an irreversible operation.",
     "unauthorized": "Unauthorized",
     "undo": "Undo",
     "wallet_address": "Wallet address",
@@ -267,7 +274,6 @@
     "address": "Operator address",
     "address_permission":
       "This address will be able to update the contents of this parcel.",
-    "check_address": "Please check the address carefully",
     "give_permission": "Give permission to update contents of {parcel_name}.",
     "manage_land": "Manage LAND"
   },
@@ -379,7 +385,7 @@
     "pay_mortgage":
       "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
     "publish": "You published {parcel_link}",
-    "transfer": "You transfered {parcel_link} to {owner_link}",
+    "transfer": "You transfered {asset_type} {asset_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"
   },
   "transaction_status": {
@@ -397,23 +403,21 @@
       "pending": "The transaction is waiting to be confirmed."
     }
   },
+  "transfer_estate": {
+    "about_to_transfer": "You're about to transfer the estate {estate_id}.",
+    "transfer_estate": "Transfer Estate"
+  },
   "transfer_mana": {
     "action": "Transfer",
     "amount": "Amount",
     "current_balance": "Your current balance is {balance}",
     "irreversible":
       "Remember that transferring MANA is an irreversible operation.",
-    "own_address_warning": "That's your own address!",
     "title": "Transfer MANA"
   },
   "transfer_parcel": {
     "about_to_transfer": "You're about to transfer {parcel_name}.",
     "cant_transfer": "This LAND can't be transferred because it's on sale.",
-    "check_address": "Please check the address carefully",
-    "irreversible":
-      "Remember that transferring LAND is an irreversible operation.",
-    "own_address_warning": "That's your own address!",
-    "recipient_address": "Recipient address",
     "transfer_land": "Transfer LAND"
   }
 }

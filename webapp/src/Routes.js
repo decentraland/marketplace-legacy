@@ -33,6 +33,7 @@ import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 import TermsPage from 'components/TermsPage'
 import DeleteEstatePage from 'components/DeleteEstatePage'
+import TransferEstatePage from 'components/TransferEstatePage'
 
 export default class Routes extends React.Component {
   renderRoutes() {
@@ -80,6 +81,13 @@ export default class Routes extends React.Component {
             exact
             path={locations.deleteEstate}
             component={DeleteEstatePage}
+          />
+        ) /* Estate Feature */}
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.transferEstate}
+            component={TransferEstatePage}
           />
         ) /* Estate Feature */}
         <Route exact path={locations.parcel} component={ParcelDetailPage} />

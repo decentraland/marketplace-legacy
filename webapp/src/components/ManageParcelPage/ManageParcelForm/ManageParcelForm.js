@@ -153,9 +153,7 @@ export default class ManageParcelForm extends React.PureComponent {
           {t('parcel_manage.address_permission')}
         </span>
         <br />
-        <span className="transfer-warning">
-          {t('parcel_manage.check_address')}
-        </span>
+        <span className="transfer-warning">{t('global.check_address')}</span>
         <br />
       </React.Fragment>
     )

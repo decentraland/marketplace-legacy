@@ -156,3 +156,30 @@ export function deleteEstateFailure(error) {
     error
   }
 }
+
+export const TRANSFER_ESTATE_REQUEST = '[Request] Transfer Estate'
+export const TRANSFER_ESTATE_SUCCESS = '[Success] Transfer Estate'
+export const TRANSFER_ESTATE_FAILURE = '[Failure] Transfer Estate'
+
+export function transferEstateRequest(estate, to) {
+  return {
+    type: TRANSFER_ESTATE_REQUEST,
+    estate,
+    to
+  }
+}
+
+export function transferEstateSuccess(txHash, transfer) {
+  return {
+    type: TRANSFER_ESTATE_SUCCESS,
+    ...buildTransactionAction(txHash, transfer),
+    estate: transfer.estate
+  }
+}
+
+export function transferEstateFailure(error) {
+  return {
+    type: TRANSFER_ESTATE_FAILURE,
+    error
+  }
+}

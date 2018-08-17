@@ -72,7 +72,8 @@
     "detail": "不動産の詳細",
     "edit_selection": "地図上のパーセルを選択する",
     "new_selection": "新しい不動産のパーセルを地図から選択してください。",
-    "tx_to_be_send": "トランザクションを{action}したパーセル{parcels}へ送信します。"
+    "tx_to_be_send":
+      "トランザクションを{action}したパーセル{parcels}へ送信します。"
   },
   "footer": {
     "color_key": "カラーガイド",
@@ -93,6 +94,7 @@
     "blog": "ブログ",
     "cancel": "キャンセル",
     "change": "変更",
+    "check_address": "アドレスを慎重に確認してください",
     "clear": "履歴を削除",
     "click_here": "こちらをクリック",
     "community_chat": "コミュニティーチャット",
@@ -113,6 +115,7 @@
     "marketplace": "マーケット",
     "mortgage": "担保",
     "mortgages": "担保",
+    "own_address_warning": "それはあなた自身のアドレスです！",
     "owned_by": "所有者",
     "owned_by_link": "所有者：{address_link}",
     "paid_at": "支払済み",
@@ -131,7 +134,10 @@
     "sign_in_notice":
       "アクセスするには、こちらで{sign_in_link}サインインする必要があります。",
     "submit": "送信",
+    "the_estate": "不動産",
+    "the_parcel": "小包",
     "time_left": "残り時間",
+    "transfer_irreversible": "転送は元に戻すことができません。",
     "unauthorized": "未認証",
     "undo": "戻す",
     "wallet_address": "ウォレットアドレス",
@@ -354,10 +360,12 @@
     "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
-    "cancel_mortgage": "パーセル{parcel_link}購入の為の担保をキャンセルしました。",
+    "cancel_mortgage":
+      "パーセル{parcel_link}購入の為の担保をキャンセルしました。",
     "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
     "create_estate": "パーセル{parcels_link}に不動産を作成しました。",
-    "create_mortgage": "パーセル{parcel_link}を購入するのに担保を申請しました。",
+    "create_mortgage":
+      "パーセル{parcel_link}を購入するのに担保を申請しました。",
     "delete_estate": "不動産{estate_id}を削除しました。",
     "disapproved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
@@ -393,6 +401,10 @@
       "failed": "処理に失敗しました。もう一度試してください。",
       "pending": "取引が承認されるのを待っています。"
     }
+  },
+  "transfer_estate": {
+    "about_to_transfer": "不動産{estate_id}を移転しようとしています。",
+    "transfer_estate": "トランスファーエステート"
   },
   "transfer_mana": {
     "action": "転送する",

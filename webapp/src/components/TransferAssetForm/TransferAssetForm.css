@@ -1,0 +1,13 @@
+.TransferAssetForm .ui.input.address-input {
+  max-width: 450px !important;
+  display: block;
+}
+
+.TransferAssetForm .ui.input.address-input input {
+  width: 100% !important;
+}
+
+.TransferAssetForm .transfer-warning {
+  color: var(--gray);
+  font-style: italic;
+}
