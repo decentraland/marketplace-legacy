@@ -21,12 +21,12 @@
     "owner": "所有者: {owner}",
     "road": "道路",
     "your_estate": "あなたの不動産",
-    "your_parcel": "あなたの区画"
+    "your_parcel": "あなたのパーセル"
   },
   "buy_mana": {
     "action": "もっと購入する",
-    "amount_too_big": "バンカーネットワークには額が大き過ぎます。",
-    "available_eth": "利用可能額: {eth} ETH",
+    "amount_too_big": "Bancor Networkには額が大き過ぎます。",
+    "available_eth": "利用可能額: {eth}ETH",
     "not_enough": "購入するのにETHが不足しています。",
     "pay_with": "支払い",
     "powered_by": "powered by {bancor_link}",
@@ -52,33 +52,33 @@
   },
   "derivation_path": {
     "invalid":
-      "あなたのウォレットは、不適合な導出関数をしています。導出関数は 44'/60|61'/x'/n 型でなければいけません。"
+      "あなたのウォレットは、不適合な導出関数をしています。導出関数は44'/60|61'/x'/n型でなければいけません。"
   },
   "estate_detail": {
-    "delete": "財産を削除する",
-    "delete_desc": "あなたは不動産{estate_id}を削除するつもりです",
-    "edit_parcels": "小包の編集",
-    "parcels": "小包を含む",
+    "delete": "不動産を削除",
+    "delete_desc": "あなたは不動産{estate_id}を削除しようとしています。",
+    "edit_parcels": "パーセルの編集",
+    "parcels": "パーセルを含む",
     "pending_tx": "この不動産"
   },
   "estate_edit": {
     "description": "説明",
     "edit_estate": "不動産を編集",
     "name": "名称",
-    "subtitle": "あなたの不動産の区画の名称と説明の設定・編集ができます。"
+    "subtitle": "あなたの不動産のパーセルの名称と説明の設定・編集ができます。"
   },
   "estate_select": {
-    "description": "{x},{y}から始まる、隣接した区画を選んでください。",
-    "detail": "エステートディテール",
-    "edit_selection": "地図上の区画を選択する",
-    "new_selection": "あなたの新しい不動産の地図上の区画を選択してください",
-    "tx_to_be_send": "トランザクションを{action}パーセルに送信します：{parcels}"
+    "description": "{x},{y}から始まる、隣接したパーセルを選んでください。",
+    "detail": "不動産の詳細",
+    "edit_selection": "地図上のパーセルを選択する",
+    "new_selection": "新しい不動産のパーセルを地図から選択してください。",
+    "tx_to_be_send": "トランザクションを{action}したパーセル{parcels}へ送信します。"
   },
   "footer": {
     "color_key": "カラーガイド",
     "copyright": "© 2018 Decentraland. All rights reserved.",
     "mini_copyright": "© 2018 Decentraland.",
-    "privacy_policy": "プライバシーポリシー ",
+    "privacy_policy": "プライバシーポリシー",
     "terms": "利用規約"
   },
   "global": {
@@ -86,7 +86,7 @@
     "activity": "取引履歴",
     "add": "追加する",
     "added": "追加された",
-    "address_placeholder": "例: {address}",
+    "address_placeholder": "0x...",
     "atlas": "地図",
     "authorized": "認証済み",
     "balance": "残高",
@@ -100,27 +100,27 @@
     "connect": "接続する",
     "connecting": "接続しています",
     "continue": "続ける",
-    "contributions": "貢献区画",
+    "contributions": "貢献用",
     "created_at": "{date}に作成済",
     "edit": "編集",
     "estate": "不動産",
     "estates": "不動産",
-    "expired_at": "{time}に締め切り済",
-    "expires_in": "締め切りまであと{time}",
-    "expires_in_more_than_years": "締め切りまであと{years}年以上",
+    "expired_at": "{time}に締切済",
+    "expires_in": "締切まであと{time}",
+    "expires_in_more_than_years": "締切まであと{years}年以上",
     "for": "for",
     "loading": "読込み中",
     "marketplace": "マーケット",
     "mortgage": "担保",
     "mortgages": "担保",
     "owned_by": "所有者",
-    "owned_by_link": "所有者： {address_link}",
+    "owned_by_link": "所有者：{address_link}",
     "paid_at": "支払済み",
     "parcels": "パーセル区画",
     "profile": "マイランド",
-    "publications": "公開中の区画",
-    "remove": "除去する",
-    "removed": "除去された",
+    "publications": "公開中のパーセル",
+    "remove": "削除する",
+    "removed": "削除済",
     "request": "リクエスト",
     "retry": "やり直す",
     "revoke": "取り消す",
@@ -129,7 +129,7 @@
     "settings": "設定",
     "sign_in": "サインイン",
     "sign_in_notice":
-      "アクセスするには、こちらで{sign_in_link} サインインする必要があります。",
+      "アクセスするには、こちらで{sign_in_link}サインインする必要があります。",
     "submit": "送信",
     "time_left": "残り時間",
     "unauthorized": "未認証",
@@ -140,7 +140,7 @@
   "homepage": {
     "get_started": "始める",
     "hero_subtitle": "分散型のランドマーケット。手数料は無料です。",
-    "hero_title": "ジェネシスシティで、あなたの理想の場所を選ぼう",
+    "hero_title": "ジェネシスシティで、あなたの理想の土地を選ぼう",
     "newest_lands": "新着ランド",
     "view_more": "もっと見る",
     "watch_tutorial": "チュートリアルを観る"
@@ -149,7 +149,7 @@
     "en": "English",
     "es": "Spanish",
     "fr": "French",
-    "ja": "Japanese",
+    "ja": "日本語",
     "ko": "Korean",
     "zh": "Chinese"
   },
@@ -165,19 +165,19 @@
     "amount": "総額",
     "amount_placeholder": "MANA総額",
     "cancel": "担保をキャンセルする",
-    "claim": "区画を請求する",
-    "defaulted_in": "Defaulted in",
+    "claim": "パーセルを請求する",
+    "defaulted_in": "デフォルト設定",
     "duration": "有効期間",
-    "duration_placeholder": "Duration in days",
+    "duration_placeholder": "有効期限日数",
     "errors": {
       "amount_minimum": "{amount}より大きい必要があります。",
       "duration_gte_payable":
-        "Duration should be greater or equal than payable at days",
+        "有効期間は支払期間と同じか、それよりも長くなければなりません。",
       "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
       "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
       "minimum_interest_rate": "レートは{minimum}以上で設定してください。",
       "minimum_payable": "{minimum}日以上で支払い設定する必要があります。",
-      "parcel_price": "総額は区画の価格以下にしなければいけません。"
+      "parcel_price": "総額はパーセルの価格以下にしなければいけません。"
     },
     "expiration": "有効期限を申請する",
     "expiration_placeholder": "担保の有効期限",
@@ -187,13 +187,13 @@
     "outstanding_amount": "未払い残高",
     "partial_payment": "部分払い",
     "partial_payment_desc":
-      "{parcel_name}のランドを購入する為の担保への部分払いを行おうとしています。 未払い残高: {outstanding_amount}",
+      "{parcel_name}のランドを購入する為の担保への部分払いを行おうとしています。 未払い残高:{outstanding_amount}",
     "pay": "支払う",
     "payable": "支払い方法",
-    "payable_placeholder": "Payable in days",
-    "pending_tx": "The mortgage for",
-    "punitory_rate": "Punitory interest rate",
-    "punitory_rate_placeholder": "Punitory rate",
+    "payable_placeholder": "数日で支払い可能",
+    "pending_tx": "次の為の担保",
+    "punitory_rate": "遅延利息",
+    "punitory_rate_placeholder": "遅延利息",
     "request": "担保を申請しています。",
     "request_land":
       "{parcel_name}への担保を{parcel_price}価値で申請しようとしています。",
@@ -208,17 +208,17 @@
     "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
     "approved_balance": "確認されている残高は{approved_balance}です。",
     "buy_land": "ランドを購入",
-    "buy_mana": "MANAを更に購入する{click_here} ",
+    "buy_mana": "MANAを更に購入する{click_here}",
     "didnt_approve": "MANAの使用に関しての承認がありません。",
     "needs_at_least": "このランドを購入するには最低{mana}必要です。",
     "please_approve":
       " {settings_link} にて、マーケット上でMANAを使用することをマーケットコントラクトで承認して下さい。",
-    "total_balance": "残高： {balance}"
+    "total_balance": "残高：{balance}"
   },
   "parcel_cancel": {
     "about_to_cancel": "{parcel}の販売をキャンセルしようとしています。",
     "cancel_land": "販売をキャンセル",
-    "not_for_sale": "この区画 {parcel} は販売されていません。"
+    "not_for_sale": "このパーセル{parcel}は販売されていません。"
   },
   "parcel_detail": {
     "actions": {
@@ -229,7 +229,7 @@
       "transfer": "転送する"
     },
     "description": "説明",
-    "empty_description": "この区画に説明文はありません。",
+    "empty_description": "このパーセルに説明文はありません。",
     "history": {
       "auction": "オークション",
       "event": "イベント",
@@ -261,12 +261,12 @@
     "name": "名称",
     "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。",
     "warning_tooltip":
-      "これはあなたのシーンを表示するために使用されます。あなたが何をしているのか分かっている場合にのみ更新してください。"
+      "変更はあなたのシーンに反映されます。実行する前にもう一度確認して下さい。"
   },
   "parcel_manage": {
     "address": "編集者のアドレス",
     "address_permission":
-      "このアドレスの持ち主が指定された区画のコンテンツを更新できるようになります。",
+      "このアドレスの持ち主が指定されたパーセルのコンテンツを更新できるようになります。",
     "check_address": "もう一度アドレスを確認して下さい。",
     "give_permission": "{parcel_name}の更新権限を与える.",
     "manage_land": "ランドを管理"
@@ -275,15 +275,15 @@
     "already_sold": "このランドは既に{value}で販売されています。",
     "errors": {
       "maximum_expiration": "有効期限の最長は{date}です。",
-      "maximum_land_price": "ランドの最高価格は{value} MANAです。",
+      "maximum_land_price": "ランドの最高価格は{value}MANAです。",
       "minimum_expiration": "有効期限の最短は{date}です。",
-      "minimum_land_price": "ランドの最低価格は{value} MANAです。"
+      "minimum_land_price": "ランドの最低価格は{value}MANAです。"
     },
     "expiration": "有効期限",
-    "expiration_placeholder": "この公開区画の有効期限",
+    "expiration_placeholder": "この公開パーセルの有効期限",
     "list_land": "このランドを販売リストに追加する",
     "please_authorize":
-      " 販売リストに追加する前に、{settings_link} にてマーケット上でランドを使用することをマーケットコントラクトで承認して下さい。",
+      " 販売リストに追加する前に、{settings_link}にてマーケット上でランドを使用することをマーケットコントラクトで承認して下さい。",
     "price": "価格",
     "price_placeholder": "このランドにMANAで値段をつけてください。",
     "set_land_price": "{parcel_name}の価格と締切期限を設置してください。"
@@ -292,7 +292,7 @@
     "adjacent": "隣接",
     "district": "地区",
     "plaza": "プラザ",
-    "proximity": "{distance}区画先",
+    "proximity": "{distance}パーセル先",
     "road": "道路"
   },
   "profile_page": {
@@ -318,21 +318,21 @@
     "authorize_land_check":
       "マーケットコントラクトでランドの使用承認について確認しています。",
     "disapprove_mana_check":
-      "マーケットコントラクトで、MANAの使用について承認を解除しています。",
+      "マーケットコントラクトでMANAの使用について承認を解除しています。",
     "mana_approved":
-      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
+      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
     "marketplace_contract": "マーケットコントラクト",
-    "mortgage_helper_contract": "Mortgage helper contract",
+    "mortgage_helper_contract": "担保支援コントラクト",
     "mortgage_manager_contract": "担保管理コントラクト",
     "pending_tx": "　処理中の取引があります。",
     "unauthorize_land_check":
       "マーケットコントラクトで、LANDの使用について承認を解除しています。",
     "you_approved_mortgage_mana":
-      "あなたは{mortgage_contract_link} でMANAを使用することを承認しました",
+      "{mortgage_contract_link}でMANAを使用することを承認しました。",
     "you_approved_mortgage_rcn":
-      "{mortgage_contract_link} でRCNを使用することを承認しました",
+      "{mortgage_contract_link}でRCNを使用することを承認しました。",
     "you_authorized":
-      "あなたは、マーケット上でランドを使用することを {marketplace_contract_link} で承認しました。"
+      "マーケット上でランドを使用することを{marketplace_contract_link}で承認しました。"
   },
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
@@ -341,9 +341,9 @@
       "まず始めに、あなたのランド(土地)を安全に保管する環境を整えてください。",
     "options": {
       "desktop":
-        "{metamask_link} の拡張機能や {ledger_nano_link}などのハードウェアウォレットを使用できます。",
+        "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます。",
       "mobile":
-        "{toshi_link} や {imtoken_link}などのモバイルブラウザを使用することができます。"
+        "{toshi_link}や{imtoken_link}などのモバイルブラウザも使用することができます。"
     }
   },
   "transaction": {
@@ -354,39 +354,39 @@
     "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
-    "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
+    "cancel_mortgage": "パーセル{parcel_link}購入の為の担保をキャンセルしました。",
     "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
-    "create_estate": "小包{parcels_link}で不動産を作った",
-    "create_mortgage": "{parcel_link}区画を購入するのに担保を申請しました。",
-    "delete_estate": "あなたは不動産{estate_id}を削除しました",
+    "create_estate": "パーセル{parcels_link}に不動産を作成しました。",
+    "create_mortgage": "パーセル{parcel_link}を購入するのに担保を申請しました。",
+    "delete_estate": "不動産{estate_id}を削除しました。",
     "disapproved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
     "edit":
-      "{parcel_link}の名称を\"{name}\"説明文を \"{description}\"に変更しました。",
+      "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",
     "edit_estate_metadata":
-      "「{name}」という名前の不動産{estate_id}を編集し、「{description}」という名前を編集しました。",
+      "不動産{estate_id}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",
     "edit_estate_parcels":
-      "あなた{action}は{parcels_link}を不動産{estate_id}に分けます",
+      "パーセル{parcels_link}を不動産：{estate_id}に{action}します。",
     "manage":
-      "{parcel_link}のコンテンツを更新する権限を {address_link} に与えました。",
+      "{parcel_link}のコンテンツを更新する権限を{address_link}に与えました。",
     "manage_revoked":
-      "{parcel_link}のコンテンツを更新する権限を {address_link} から取り消しました。",
+      "{parcel_link}のコンテンツを更新する権限を{address_link}から取り消しました。",
     "mortgage_mana":
-      "{mortgage_contract_link} でMANAを使用することを{action}しました。",
+      "{mortgage_contract_link}でMANAを使用することを{action}しました。",
     "mortgage_rcn":
-      "{mortgage_contract_link} でRCNを使用することを{action}しました。",
+      "{mortgage_contract_link}でRCNを使用することを{action}しました。",
     "pay_mortgage":
-      "{parcel_link}区画を購入する担保への一部払いで {amount} MANAを支払いました。",
+      "パーセル{parcel_link}を購入する担保への一部払いで{amount}MANAを支払いました。",
     "publish": "{parcel_link}を公開しました。",
-    "transfer": "{parcel_link} を {owner_link} へ転送しました。",
-    "transfer_mana": "{mana} MANAを {address_link} へ転送しました。"
+    "transfer": "{parcel_link}を{owner_link}へ転送しました。",
+    "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
   },
   "transaction_status": {
     "idle": {
       "please_confirm": "取引を確認してください。"
     },
     "parcel": {
-      "still_pending": "{parcel_name} は {transactions_count}件、処理中です。"
+      "still_pending": "{parcel_name}は{transactions_count}件、処理中です。"
     },
     "see_activity": "取引履歴を表示するには、{activity_link}をご覧ください。",
     "text": {
@@ -396,20 +396,20 @@
   },
   "transfer_mana": {
     "action": "転送する",
-    "amount": "量",
-    "current_balance": "現在の残高： {balance}",
+    "amount": "金額",
+    "current_balance": "現在の残高：{balance}",
     "irreversible":
       "MANAの転送はやり直すことができませんので、ご確認ください。",
     "own_address_warning": "これはあなたのアドレスです!",
-    "title": "MANAを転送"
+    "title": "MANAを転送する"
   },
   "transfer_parcel": {
     "about_to_transfer": "あなたは{parcel_name}を転送しようとしています。",
-    "cant_transfer": "このLANDは販売中であるため、転送できません。",
-    "check_address": "アドレスを慎重に確認してください",
-    "irreversible": "LANDの転送は元に戻すことができません。",
+    "cant_transfer": "このランドは販売中であるため、転送できません。",
+    "check_address": "アドレスをもう一度確認してください",
+    "irreversible": "ランドの転送は元に戻すことができません。",
     "own_address_warning": "それはあなた自身のアドレスです！",
     "recipient_address": "受信者アドレス",
-    "transfer_land": "転送LAND"
+    "transfer_land": "転送ランド"
   }
 }
