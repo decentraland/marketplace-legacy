@@ -82,7 +82,7 @@
     "terms": "利用規約"
   },
   "global": {
-    "acquired_at": "{date}に取得済",
+    "acquired_at": "{date}に取得済み",
     "activity": "取引履歴",
     "add": "追加する",
     "added": "追加された",
@@ -105,7 +105,7 @@
     "edit": "編集",
     "estate": "不動産",
     "estates": "不動産",
-    "expired_at": "{time}に締切済",
+    "expired_at": "{time}に締切済み",
     "expires_in": "締切まであと{time}",
     "expires_in_more_than_years": "締切まであと{years}年以上",
     "for": "for",
