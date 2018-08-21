@@ -44,6 +44,7 @@ if (env.isDevelopment()) {
 const router = new express.Router()
 app.use('/v1', router)
 
+<<<<<<< HEAD
 new TranslationRouter(router).mount()
 new PublicationRouter(router).mount()
 new MortgageRouter(router).mount()
@@ -52,6 +53,16 @@ new DistrictRouter(router).mount()
 new ContributionRouter(router).mount()
 new MapRouter(router).mount()
 new ParcelRouter(router).mount()
+=======
+new TranslationRouter(app).mount()
+new PublicationRouter(app).mount()
+new MortgageRouter(app).mount()
+new EstateRouter(app).mount()
+new DistrictRouter(app).mount()
+new ContributionRouter(app).mount()
+new MapRouter(app).mount()
+new ParcelRouter(app).mount()
+>>>>>>> fix: upate mortgaged parcel details & UI
 
 /* Start the server only if run directly */
 if (require.main === module) {

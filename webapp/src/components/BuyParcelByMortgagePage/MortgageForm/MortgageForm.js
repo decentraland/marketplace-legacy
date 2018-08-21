@@ -292,7 +292,7 @@ export default class MortgageForm extends React.PureComponent {
         ) : null}
         {error && <Message error>{<div>{error}</div>}</Message>}
         <br />
-        <div>
+        <div className="actions">
           <Button onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
