@@ -29,6 +29,7 @@ export default class EditEstateMetadata extends React.PureComponent {
     return (
       <div className="EditEstate">
         <EstateModal
+          estate={estate}
           parcels={estate.data.parcels}
           title={
             isCreation
