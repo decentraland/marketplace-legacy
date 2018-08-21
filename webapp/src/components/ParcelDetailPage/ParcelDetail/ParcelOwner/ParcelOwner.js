@@ -33,7 +33,7 @@ export default class ParcelOwner extends React.PureComponent {
               {t('global.edit')}
             </Link>
           </Button>
-          <Button size="tiny" className="link">
+          <Button size="tiny" className="link manage-button">
             <Icon name="add user" />
             <Link to={locations.manageLand(parcel.x, parcel.y)}>
               {t('parcel_detail.actions.permissions')}
