@@ -146,12 +146,12 @@
     "watch_tutorial": "チュートリアルを観る"
   },
   "languages": {
-    "en": "English",
-    "es": "Spanish",
-    "fr": "French",
+    "en": "英語",
+    "es": "スペイン語",
+    "fr": "フランス語",
     "ja": "日本語",
-    "ko": "Korean",
-    "zh": "Chinese"
+    "ko": "韓国語",
+    "zh": "中国語"
   },
   "marketplace": {
     "empty": "Oops... ここには何もありません。",
