@@ -13,29 +13,31 @@ export async function estateReducer(events, event) {
 
   switch (normalizedName) {
     case events.estateCreate: {
-      const { owner, estateId, metadata } = event.args
+      const { _owner, _estateId, _data } = event.args
 
-      const exists = await Estate.count({ asset_id: estateId })
+      const exists = await Estate.count({ asset_id: _estateId })
       if (exists) {
-        log.info(`[${name}] Estate ${estateId} already exists`)
+        log.info(`[${name}] Estate ${_estateId} already exists`)
         return
       }
       let data
       try {
-        data = decodeMetadata(metadata)
+        data = decodeMetadata(_data)
       } catch (e) {
         data = ''
       }
 
-      log.info(`[${name}] Creating Estate "${estateId}" with owner "${owner}"`)
+      log.info(
+        `[${name}] Creating Estate "${_estateId}" with owner "${_owner}"`
+      )
 
       const last_transferred_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
       await Estate.insert({
-        id: estateId,
-        asset_id: estateId,
-        owner: owner.toLowerCase(),
+        id: _estateId,
+        asset_id: _estateId,
+        owner: _owner.toLowerCase(),
         data: { ...data, parcels: [] },
         last_transferred_at,
         tx_hash
@@ -44,8 +46,8 @@ export async function estateReducer(events, event) {
     }
     case events.addLand: {
       if (parcelId) {
-        const { estateId } = event.args
-        const estate = (await Estate.findByAssetId(estateId))[0]
+        const { _estateId } = event.args
+        const estate = (await Estate.findByAssetId(_estateId))[0]
         const coordinates = Parcel.splitId(parcelId)
         const x = parseInt(coordinates[0], 10)
         const y = parseInt(coordinates[1], 10)
@@ -69,8 +71,8 @@ export async function estateReducer(events, event) {
     }
     case events.removeLand: {
       if (parcelId) {
-        const { estateId } = event.args
-        const estate = (await Estate.findByAssetId(estateId))[0]
+        const { _estateId } = event.args
+        const estate = (await Estate.findByAssetId(_estateId))[0]
         const [x, y] = Parcel.splitId(parcelId)
         log.info(
           `[${name}] Updating Estate "${
@@ -86,38 +88,38 @@ export async function estateReducer(events, event) {
               )
             }
           },
-          { asset_id: estateId }
+          { asset_id: _estateId }
         )
       }
       break
     }
     case events.estateTransfer: {
-      const { to, estateId } = event.args
+      const { _to, _tokenId } = event.args
 
-      log.info(`[${name}] Transfering "${estateId}" owner to "${to}"`)
+      log.info(`[${name}] Transfering "${_tokenId}" owner to "${_to}"`)
 
       const last_transferred_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
 
       await Estate.update(
-        { owner: to.toLowerCase(), last_transferred_at },
-        { asset_id: estateId }
+        { owner: _to.toLowerCase(), last_transferred_at },
+        { asset_id: _tokenId }
       )
       break
     }
     case events.estateUpdate: {
-      const { assetId, data } = event.args
+      const { _assetId, _data } = event.args
 
-      const estate = (await Estate.findByAssetId(assetId))[0]
+      const estate = (await Estate.findByAssetId(_assetId))[0]
 
-      log.info(`[${name}] Updating Estate "${estate.asset_id}" data: ${data}`)
+      log.info(`[${name}] Updating Estate "${estate.asset_id}" data: ${_data}`)
 
       await Estate.update(
         {
           data: {
             ...estate.data,
-            ...decodeMetadata(data)
+            ...decodeMetadata(_data)
           }
         },
         { asset_id: estate.asset_id }
