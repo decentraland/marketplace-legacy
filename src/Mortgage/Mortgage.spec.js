@@ -5,7 +5,7 @@ import { db } from '../database'
 import { Mortgage } from '../Mortgage'
 import { Parcel } from '../Parcel'
 import { Publication } from '../Publication'
-import { ASSET_TYPE } from '../shared/asset'
+import { ASSET_TYPES } from '../shared/asset'
 import { MORTGAGE_STATUS } from '../shared/mortgage'
 
 describe('Mortgage', function() {
@@ -22,7 +22,7 @@ describe('Mortgage', function() {
       loan_id: 0,
       mortgage_id: 0,
       asset_id: Parcel.buildId(2, 5),
-      asset_type: ASSET_TYPE.parcel,
+      asset_type: ASSET_TYPES.parcel,
       borrower: '0xdeadbeef33',
       lender: null,
       amount: 1500,

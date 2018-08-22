@@ -2,12 +2,11 @@ import { isOpen } from './publication'
 import { isParcel } from './parcel'
 import { getEstateByParcel, isEstate, calculateMapProps } from './estate'
 import { contracts } from 'decentraland-eth'
-const { LANDRegistry } = contracts
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
 
-export const TYPE = Object.freeze({
+export const TYPES = Object.freeze({
   myParcels: 'MY_PARCEL_TYPE',
   myParcelsOnSale: 'MY_PARCEL_ON_SALE_TYPE',
   myEstates: 'MY_ESTATE_TYPE',
@@ -35,6 +34,11 @@ export const COLORS = Object.freeze({
   background: '#0d0e18',
   loadingEven: '#131523',
   loadingOdd: '#181a29'
+})
+
+export const ASSET_TYPES = Object.freeze({
+  estate: 'estate',
+  parcel: 'parcel'
 })
 
 export function isExpired(expires_at) {
@@ -87,33 +91,33 @@ export function getColor(x, y, asset, publications, wallet) {
 
 export function getColorByType(type, x, y) {
   switch (type) {
-    case TYPE.loading: {
+    case TYPES.loading: {
       const isEven = (x + y) % 2 === 0
       return isEven ? COLORS.loadingEven : COLORS.loadingOdd
     }
-    case TYPE.myParcels:
+    case TYPES.myParcels:
       return COLORS.myParcels
-    case TYPE.myParcelsOnSale:
+    case TYPES.myParcelsOnSale:
       return COLORS.myParcelsOnSale
-    case TYPE.myEstates:
+    case TYPES.myEstates:
       return COLORS.myParcels
-    case TYPE.myEstatesOnSale:
+    case TYPES.myEstatesOnSale:
       return COLORS.myParcelsOnSale
-    case TYPE.district:
+    case TYPES.district:
       return COLORS.district
-    case TYPE.contribution:
+    case TYPES.contribution:
       return COLORS.contribution
-    case TYPE.roads:
+    case TYPES.roads:
       return COLORS.roads
-    case TYPE.plaza:
+    case TYPES.plaza:
       return COLORS.plaza
-    case TYPE.taken:
+    case TYPES.taken:
       return COLORS.taken
-    case TYPE.onSale:
+    case TYPES.onSale:
       return COLORS.onSale
-    case TYPE.unowned:
+    case TYPES.unowned:
       return COLORS.unowned
-    case TYPE.background:
+    case TYPES.background:
     default:
       return COLORS.background
   }
@@ -143,39 +147,41 @@ export function isOwner(wallet, assetId) {
 
 export function getType(asset, publications, wallet) {
   if (!asset) {
-    return TYPE.loading
+    return TYPES.loading
   }
 
   if (isEstate(asset)) {
-    return wallet && isOwner(wallet, asset.id) ? TYPE.myEstates : TYPE.taken
+    return wallet && isOwner(wallet, asset.id) ? TYPES.myEstates : TYPES.taken
   }
 
   if (isDistrict(asset)) {
     if (isRoad(asset.district_id)) {
-      return TYPE.roads
+      return TYPES.roads
     }
     if (isPlaza(asset.district_id)) {
-      return TYPE.plaza
+      return TYPES.plaza
     }
     if (wallet && wallet.contributionsById[asset.district_id]) {
-      return TYPE.contribution
+      return TYPES.contribution
     }
-    return TYPE.district
+    return TYPES.district
   }
 
   if (wallet && isOwner(wallet, asset.id)) {
-    return isOnSale(asset, publications) ? TYPE.myParcelsOnSale : TYPE.myParcels
+    return isOnSale(asset, publications)
+      ? TYPES.myParcelsOnSale
+      : TYPES.myParcels
   }
 
   if (!asset.owner && !asset.district_id) {
-    return TYPE.unowned
+    return TYPES.unowned
   }
 
   if (isOnSale(asset, publications)) {
-    return TYPE.onSale
+    return TYPES.onSale
   }
 
-  return TYPE.taken
+  return TYPES.taken
 }
 
 export function isValidName(name) {
@@ -185,11 +191,6 @@ export function isValidName(name) {
 export function isValidDescription(description) {
   return description <= 140
 }
-
-export const ASSET_TYPE = Object.freeze({
-  estate: 'estate',
-  parcel: 'parcel'
-})
 
 export function getCenterCoords(asset) {
   if (isParcel(asset)) {
@@ -204,9 +205,9 @@ export function isNewAsset(asset) {
 }
 
 export function decodeMetadata(data) {
-  return LANDRegistry.decodeLandData(data)
+  return contracts.LANDRegistry.decodeLandData(data)
 }
 
 export function encodeMetadata(data) {
-  return LANDRegistry.encodeLandData(data)
+  return contracts.LANDRegistry.encodeLandData(data)
 }

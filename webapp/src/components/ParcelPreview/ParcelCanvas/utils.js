@@ -8,7 +8,7 @@ import * as wheel from 'mouse-wheel'
 import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
 import { t } from 'modules/translation/utils'
-import { TYPE } from 'shared/asset'
+import { TYPES } from 'shared/asset'
 import { shortenAddress } from 'lib/utils'
 
 export function panzoom(target, cb) {
@@ -128,27 +128,27 @@ export function panzoom(target, cb) {
 
 export function getLabel(type, asset, districts) {
   switch (type) {
-    case TYPE.loading:
+    case TYPES.loading:
       return t('atlas.loading') + '...'
-    case TYPE.district:
-    case TYPE.contribution: {
+    case TYPES.district:
+    case TYPES.contribution: {
       const district = districts[asset.district_id]
       return district ? district.name : 'District'
     }
-    case TYPE.plaza:
+    case TYPES.plaza:
       return 'Genesis Plaza'
-    case TYPE.roads:
+    case TYPES.roads:
       return t('atlas.road')
-    case TYPE.myParcels:
-    case TYPE.myParcelsOnSale:
-    case TYPE.myEstates:
-    case TYPE.myEstatesOnSale:
-    case TYPE.taken:
-    case TYPE.onSale: {
+    case TYPES.myParcels:
+    case TYPES.myParcelsOnSale:
+    case TYPES.myEstates:
+    case TYPES.myEstatesOnSale:
+    case TYPES.taken:
+    case TYPES.onSale: {
       return asset.data.name || null
     }
-    case TYPE.unowned:
-    case TYPE.background:
+    case TYPES.unowned:
+    case TYPES.background:
     default:
       return null
   }
@@ -156,25 +156,25 @@ export function getLabel(type, asset, districts) {
 
 export function getDescription(type, asset) {
   switch (type) {
-    case TYPE.loading:
-    case TYPE.district:
-    case TYPE.contribution:
-    case TYPE.plaza:
-    case TYPE.roads:
+    case TYPES.loading:
+    case TYPES.district:
+    case TYPES.contribution:
+    case TYPES.plaza:
+    case TYPES.roads:
       return null
-    case TYPE.unowned:
+    case TYPES.unowned:
       return t('atlas.no_owner')
-    case TYPE.myParcels:
-    case TYPE.myParcelsOnSale:
+    case TYPES.myParcels:
+    case TYPES.myParcelsOnSale:
       return t('atlas.your_parcel')
-    case TYPE.myEstates:
-    case TYPE.myEstatesOnSale:
+    case TYPES.myEstates:
+    case TYPES.myEstatesOnSale:
       return t('atlas.your_estate')
-    case TYPE.taken:
-    case TYPE.onSale: {
+    case TYPES.taken:
+    case TYPES.onSale: {
       return t('atlas.owner', { owner: shortenAddress(asset.owner) })
     }
-    case TYPE.background:
+    case TYPES.background:
     default:
       return null
   }
@@ -182,21 +182,21 @@ export function getDescription(type, asset) {
 
 export function getTextColor(type) {
   switch (type) {
-    case TYPE.loading:
-    case TYPE.district:
-    case TYPE.contribution:
-    case TYPE.roads:
-    case TYPE.taken:
-    case TYPE.unowned:
-    case TYPE.background:
+    case TYPES.loading:
+    case TYPES.district:
+    case TYPES.contribution:
+    case TYPES.roads:
+    case TYPES.taken:
+    case TYPES.unowned:
+    case TYPES.background:
       return 'white'
 
-    case TYPE.myParcels:
-    case TYPE.myParcelsOnSale:
-    case TYPE.myEstates:
-    case TYPE.myEstatesOnSale:
-    case TYPE.plaza:
-    case TYPE.onSale:
+    case TYPES.myParcels:
+    case TYPES.myParcelsOnSale:
+    case TYPES.myEstates:
+    case TYPES.myEstatesOnSale:
+    case TYPES.plaza:
+    case TYPES.onSale:
     default:
       return 'black'
   }

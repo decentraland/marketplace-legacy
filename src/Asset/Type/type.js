@@ -1,4 +1,4 @@
-export const TYPE = {
+export const TYPES = {
   estate: 'estate',
   parcel: 'parcel'
 }

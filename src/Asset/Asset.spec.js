@@ -4,7 +4,7 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Parcel, ParcelService } from '../Parcel'
 import { Publication } from '../Publication'
-import { ASSET_TYPE } from '../shared/asset'
+import { ASSET_TYPES } from '../shared/asset'
 import { PUBLICATION_STATUS } from '../shared/publication'
 import { Asset } from './Asset'
 
@@ -13,7 +13,7 @@ describe('Asset', function() {
     sanitize() {
       return {
         status: PUBLICATION_STATUS.open,
-        asset_type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPES.parcel,
         sort: {
           by: 'price',
           order: 'desc'
@@ -130,7 +130,7 @@ describe('Asset', function() {
             price: 40,
             buyer: null,
             status: PUBLICATION_STATUS.open,
-            asset_type: ASSET_TYPE.parcel,
+            asset_type: ASSET_TYPES.parcel,
             asset_id: '1,2',
             expires_at,
             owner,

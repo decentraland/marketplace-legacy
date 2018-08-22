@@ -9,7 +9,7 @@ import { coordinates } from './coordinates'
 import { Publication } from '../Publication'
 import { Mortgage } from '../Mortgage'
 
-import { ASSET_TYPE } from '../../shared/asset'
+import { ASSET_TYPES } from '../../shared/asset'
 import { PUBLICATION_STATUS } from '../../shared/publication'
 import { MORTGAGE_STATUS } from '../../shared/mortgage'
 
@@ -59,7 +59,7 @@ describe('Parcel', function() {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: PUBLICATION_STATUS.open,
-        asset_type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPES.parcel,
         asset_id: '3,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -115,7 +115,7 @@ describe('Parcel', function() {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: PUBLICATION_STATUS.open,
-        asset_type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPES.parcel,
         asset_id: '2,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -131,7 +131,7 @@ describe('Parcel', function() {
         tx_hash: '0xdeadabeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: PUBLICATION_STATUS.open,
-        asset_type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPES.parcel,
         asset_id: '6,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -155,7 +155,7 @@ describe('Parcel', function() {
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
-        asset_type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPES.parcel,
         borrower: '0xdeadbeef33',
         lender: null,
         is_due_at: 10000,
