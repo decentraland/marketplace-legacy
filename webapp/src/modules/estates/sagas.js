@@ -23,7 +23,10 @@ import {
   REMOVE_PARCELS,
   DELETE_ESTATE_REQUEST,
   deleteEstateSuccess,
-  deleteEstateFailure
+  deleteEstateFailure,
+  TRANSFER_ESTATE_REQUEST,
+  transferEstateSuccess,
+  transferEstateFailure
 } from './actions'
 import { validateCoords } from './utils'
 import { getEstates } from './selectors'
@@ -36,6 +39,7 @@ export function* estateSaga() {
   yield takeEvery(FETCH_ESTATE_REQUEST, handleEstateRequest)
   yield takeEvery(EDIT_ESTATE_METADATA_REQUEST, handleEditEstateMetadataRequest)
   yield takeEvery(DELETE_ESTATE_REQUEST, handleDeleteEstate)
+  yield takeEvery(TRANSFER_ESTATE_REQUEST, handleTransferRequest)
 }
 
 function* handleCreateEstateRequest(action) {
@@ -160,5 +164,40 @@ function* handleDeleteEstate({ estateId }) {
     yield put(push(locations.activity))
   } catch (e) {
     yield put(deleteEstateFailure(e.message))
+  }
+}
+
+function* handleTransferRequest({ estate, to }) {
+  try {
+    const oldOwner = yield select(getAddress)
+
+    if (oldOwner.toLowerCase() === to.toLowerCase()) {
+      throw new Error("You can't transfer estates to yourself")
+    }
+
+    if (!eth.utils.isValidAddress(to)) {
+      throw new Error('Invalid Ethereum address')
+    }
+
+    if (!estate) {
+      throw new Error('Invalid estate')
+    } //@nacho TODO: on translations?
+
+    const contract = eth.getContract('EstateRegistry')
+    const txHash = yield call(() =>
+      contract.safeTransferFrom(oldOwner, to, estate.asset_id)
+    )
+
+    const transfer = {
+      txHash,
+      oldOwner,
+      to,
+      estate
+    }
+
+    yield put(push(locations.activity))
+    yield put(transferEstateSuccess(txHash, transfer))
+  } catch (error) {
+    yield put(transferEstateFailure(error.message))
   }
 }

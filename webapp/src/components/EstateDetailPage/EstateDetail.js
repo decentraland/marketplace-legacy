@@ -10,6 +10,9 @@ import { buildCoordinate } from 'shared/parcel'
 import { estateType, parcelType } from 'components/types'
 import './EstateDetail.css'
 
+const WITH_ACTION_BUTTONS_WIDTH = 8
+const WITHOUT_ACTION_BUTTONS_WIDTH = 16
+
 export default class EstateDetail extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
@@ -53,13 +56,20 @@ export default class EstateDetail extends React.PureComponent {
               </Grid.Column>
               {isOwner && (
                 <Grid.Column className="parcel-actions-container" computer={8}>
-                  <EstateActions onEditMetadata={onEditMetadata} />
+                  <EstateActions
+                    onEditMetadata={onEditMetadata}
+                    assetId={estate.asset_id}
+                  />
                 </Grid.Column>
               )}
               {allParcels && (
                 <React.Fragment>
                   <Grid.Column
-                    width={8}
+                    width={
+                      isOwner
+                        ? WITH_ACTION_BUTTONS_WIDTH
+                        : WITHOUT_ACTION_BUTTONS_WIDTH
+                    }
                     className={'selected-parcels-headline'}
                   >
                     <p className="parcels-included">

@@ -45,20 +45,20 @@ export async function parcelReducer(events, event) {
     }
     case events.addLand: {
       if (parcelId) {
-        const { estateId } = event.args
+        const { _estateId } = event.args
         log.info(
-          `[${name}] Adding "${parcelId}" as part of the estate id "${estateId}"`
+          `[${name}] Adding "${parcelId}" as part of the estate id "${_estateId}"`
         )
 
-        await Parcel.update({ estate_id: estateId }, { id: parcelId })
+        await Parcel.update({ estate_id: _estateId }, { id: parcelId })
       }
       break
     }
     case events.removeLand: {
       if (parcelId) {
-        const { estateId } = event.args
+        const { _estateId } = event.args
         log.info(
-          `[${name}] Removing "${parcelId}" as part of the estate id "${estateId}"`
+          `[${name}] Removing "${parcelId}" as part of the estate id "${_estateId}"`
         )
 
         await Parcel.update({ estate_id: null }, { id: parcelId })

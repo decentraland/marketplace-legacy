@@ -45,7 +45,13 @@ export async function main(
         'DefaultedMortgage'
       ],
       RCNEngine: ['PartialPayment', 'TotalPayment'],
-      EstateRegistry: ['AddLand', 'RemoveLand', 'Update', 'CreateEstate']
+      EstateRegistry: [
+        'AddLand',
+        'RemoveLand',
+        'Update',
+        'CreateEstate',
+        'Transfer'
+      ]
     },
     env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
   )

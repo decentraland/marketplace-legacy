@@ -51,7 +51,8 @@ import {
   EDIT_ESTATE_PARCELS_SUCCESS,
   EDIT_ESTATE_METADATA_SUCCESS,
   ADD_PARCELS,
-  DELETE_ESTATE_SUCCESS
+  DELETE_ESTATE_SUCCESS,
+  TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 
 import './Transaction.css'
@@ -177,7 +178,8 @@ export default class Transaction extends React.PureComponent {
         const { x, y, newOwner } = payload
 
         return t_html('transaction.transfer', {
-          parcel_link: this.renderParcelLink(x, y),
+          asset_link: this.renderParcelLink(x, y),
+          asset_type: t('global.the_parcel').toLowerCase(),
           owner_link: (
             <Link to={locations.profilePage(newOwner)}>{newOwner}</Link>
           )
@@ -294,6 +296,15 @@ export default class Transaction extends React.PureComponent {
           estate_id: estate.asset_id
         })
       }
+      case TRANSFER_ESTATE_SUCCESS: {
+        const { estate, to } = payload
+
+        return t_html('transaction.transfer', {
+          asset_link: this.renderEstateLink(estate.asset_id),
+          asset_type: t('global.the_estate').toLowerCase(),
+          owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
+        })
+      }
       default:
         return null
     }
@@ -368,7 +379,8 @@ export default class Transaction extends React.PureComponent {
       CREATE_ESTATE_SUCCESS,
       EDIT_ESTATE_PARCELS_SUCCESS,
       EDIT_ESTATE_METADATA_SUCCESS,
-      DELETE_ESTATE_SUCCESS
+      DELETE_ESTATE_SUCCESS,
+      TRANSFER_ESTATE_SUCCESS
     ].includes(tx.actionType)
 
     const isMANATransaction = !isParcelTransaction && !isEstateTransaction

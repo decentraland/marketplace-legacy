@@ -97,6 +97,7 @@
     "blog": "Blog",
     "cancel": "Annuler",
     "change": "Changement",
+    "check_address": "S'il vous plaît vérifier l'adresse soigneusement",
     "clear": "Clair",
     "click_here": "Cliquez ici",
     "community_chat": "Chat communautaire",
@@ -117,12 +118,14 @@
     "marketplace": "Marché",
     "mortgage": "Hypothèque",
     "mortgages": "Hypothèques",
+    "own_address_warning": "C'est ta propre adresse!",
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
     "paid_at": "Payé à",
     "parcels": "Parcelles",
     "profile": "Mes LANDs",
     "publications": "Publications",
+    "recipient_address": "Adresse du destinataire",
     "remove": "retirer",
     "removed": "enlevé",
     "request": "Demande",
@@ -135,7 +138,11 @@
     "sign_in_notice":
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "submit": "Envoyer",
+    "the_estate": "le domaine",
+    "the_parcel": "le colis",
     "time_left": "Temps restant",
+    "transfer_irreversible":
+      "Rappelez-vous que le transfert est une opération irréversible.",
     "unauthorized": "Non autorisé",
     "undo": "Annuler",
     "wallet_address": "Adresse du porte-feuille",
@@ -274,7 +281,6 @@
     "address": "Adresse de l'opérateur",
     "address_permission":
       "Cette adresse pourra mettre à jour le contenu de cette parcelle.",
-    "check_address": "S'il vous plaît vérifier l'adresse avec soin",
     "give_permission": "Autoriser la mise à jour du contenu de {parcel_name}",
     "manage_land": "Gérer les terres"
   },
@@ -391,7 +397,7 @@
     "pay_mortgage":
       "Vous avez effectué un paiement partiel de {amount} MANA pour l'hypothèque pour acheter le colis {parcel_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
-    "transfer": "Vous avez transféré {parcel_link} à {owner_link}",
+    "transfer": "Vous avez transféré {asset_type} {asset_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"
   },
   "transaction_status": {
@@ -410,22 +416,21 @@
       "pending": "La transaction est en attente d'être confirmée."
     }
   },
+  "transfer_estate": {
+    "about_to_transfer":
+      "Vous êtes sur le point de transférer la succession {estate_id}.",
+    "transfer_estate": "Transfert immobilier"
+  },
   "transfer_mana": {
     "action": "Transférer",
     "amount": "Montant",
     "current_balance": "Votre solde actuel est {balance}",
     "irreversible": "Chaque transfert de MANA est une opération irréversible.",
-    "own_address_warning": "C'est ta propre adresse!",
     "title": "Transférer MANA"
   },
   "transfer_parcel": {
     "about_to_transfer": "Vous êtes sur le point de transférer {parcel_name}.",
     "cant_transfer": "Ce LAND ne peut pas être transféré car il est en vente.",
-    "check_address": "S'il vous plaît vérifier l'adresse soigneusement",
-    "irreversible":
-      "Rappelez-vous que le transfert de NT1 est une opération irréversible.",
-    "own_address_warning": "C'est ta propre adresse!",
-    "recipient_address": "Adresse du destinataire",
     "transfer_land": "Transférer LAND"
   }
 }

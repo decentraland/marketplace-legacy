@@ -93,6 +93,7 @@
     "blog": "博客",
     "cancel": "取消",
     "change": "更改",
+    "check_address": "请仔细检查地址",
     "clear": "明确",
     "click_here": "点击这里",
     "community_chat": "社区聊天",
@@ -113,12 +114,14 @@
     "marketplace": "虚拟物品市场",
     "mortgage": "抵押",
     "mortgages": "抵押",
+    "own_address_warning": "那是你自己的地址！",
     "owned_by": "拥有",
     "owned_by_link": "{address_link} 소유",
     "paid_at": "付费",
     "parcels": "地块",
     "profile": "我的虚拟土地",
     "publications": "出版物",
+    "recipient_address": "收件人地址",
     "remove": "去掉",
     "removed": "去除",
     "request": "请求",
@@ -130,7 +133,10 @@
     "sign_in": "登录",
     "sign_in_notice": "请登录 {sign_in_link} 后访问此页面",
     "submit": "提交",
+    "the_estate": "庄园",
+    "the_parcel": "包裹",
     "time_left": "剩下的时间",
+    "transfer_irreversible": "请记住，转移是不可逆转的操作。",
     "unauthorized": "未授权",
     "undo": "撤消",
     "wallet_address": "钱包地址",
@@ -261,7 +267,6 @@
   "parcel_manage": {
     "address": "运营商地址",
     "address_permission": "此地址将有权更新地块的内容。",
-    "check_address": "请仔细检查地址",
     "give_permission": "授权更新 {parcel_name} 上的内容。",
     "manage_land": "地块管理"
   },
@@ -350,7 +355,7 @@
     "mortgage_rcn": "您{action} {mortgage_contract_link}代表您运营 RCN。",
     "pay_mortgage": "您为抵押购买{parcel_link}包的部分支付{amount}",
     "publish": "您发布了{parcel_link}地块",
-    "transfer": "您已将{parcel_link}转让给{owner_link}",
+    "transfer": "您将{asset_type} {asset_link}转移到{owner_link}",
     "transfer_mana": "{mana} 个 MANA 已转帐至{address_link}"
   },
   "transaction_status": {
@@ -367,21 +372,20 @@
       "pending": "交易正在等待确认。"
     }
   },
+  "transfer_estate": {
+    "about_to_transfer": "你即将转移庄园{estate_id}。",
+    "transfer_estate": "转让遗产"
+  },
   "transfer_mana": {
     "action": "转帐",
     "amount": "量",
     "current_balance": "您目前的余额是 {balance}",
     "irreversible": "注意，MANA 转帐不能回退或撤消。",
-    "own_address_warning": "这是您自己的地址！",
     "title": "MANA 转帐"
   },
   "transfer_parcel": {
     "about_to_transfer": "你即将转移{parcel_name}。",
     "cant_transfer": "这个LAND不能转让，因为它正在出售。",
-    "check_address": "请仔细检查地址",
-    "irreversible": "请记住，转移LAND是一种不可逆转的操作。",
-    "own_address_warning": "那是你自己的地址！",
-    "recipient_address": "收件人地址",
     "transfer_land": "转移LAND"
   }
 }

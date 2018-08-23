@@ -11,9 +11,7 @@ import ParcelName from 'components/ParcelName'
 import { buildCoordinate } from 'shared/parcel'
 import { isOnSale } from 'shared/asset'
 import { t, t_html } from 'modules/translation/utils'
-import TransferParcelForm from './TransferParcelForm'
-
-import './TransferParcelPage.css'
+import TransferAssetForm from 'components/TransferAssetForm'
 
 export default class TransferParcelPage extends React.PureComponent {
   static propTypes = {
@@ -54,8 +52,8 @@ export default class TransferParcelPage extends React.PureComponent {
               })}
               hasCustomFooter
             >
-              <TransferParcelForm
-                parcel={parcel}
+              <TransferAssetForm
+                asset={parcel}
                 isTxIdle={isTxIdle}
                 isOnSale={isOnSale(parcel, publications)}
                 onSubmit={onSubmit}

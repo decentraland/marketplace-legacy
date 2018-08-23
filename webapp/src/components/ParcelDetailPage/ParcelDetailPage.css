@@ -1,3 +1,7 @@
+.Page > .ParcelDetailPage {
+  padding-top: 0;
+}
+
 .ParcelDetailPage .ParcelDetail {
   padding-top: 35px;
   font-size: 15px;

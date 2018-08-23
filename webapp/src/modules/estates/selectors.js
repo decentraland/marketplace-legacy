@@ -7,7 +7,8 @@ import {
   CREATE_ESTATE_REQUEST,
   EDIT_ESTATE_METADATA_REQUEST,
   DELETE_ESTATE_REQUEST,
-  EDIT_ESTATE_PARCELS_REQUEST
+  EDIT_ESTATE_PARCELS_REQUEST,
+  TRANSFER_ESTATE_REQUEST
 } from './actions'
 import { isLoadingType } from 'modules/loading/selectors'
 
@@ -27,6 +28,9 @@ export const isDeletingEstateTransactionIdle = state =>
 
 export const isEditingParcelTransactionIdle = state =>
   isLoadingType(getLoading(state), EDIT_ESTATE_PARCELS_REQUEST)
+
+export const isTransferIdle = state =>
+  isLoadingType(getLoading(state), TRANSFER_ESTATE_REQUEST)
 
 export const isEstateTransactionIdle = state =>
   isCreatingEstateTransactionIdle(state) ||

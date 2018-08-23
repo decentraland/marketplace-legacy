@@ -98,7 +98,7 @@ export default class TransferManaForm extends React.PureComponent {
         </Form.Field>
         <Form.Field>
           <AddressInput
-            label={t('transfer_parcel.recipient_address')}
+            label={t('global.recipient_address')}
             placeholder={t('global.address_placeholder')}
             address={address}
             onChange={this.handleAddressChange}
@@ -107,15 +107,13 @@ export default class TransferManaForm extends React.PureComponent {
             {t('transfer_mana.irreversible')}
           </span>
           <br />
-          <span className="transfer-warning">
-            {t('transfer_parcel.check_address')}
-          </span>
+          <span className="transfer-warning">{t('global.check_address')}</span>
           {this.isOwnAddress() ? (
             <React.Fragment>
               <br />
               <br />
               <span className="transfer-warning error">
-                {t('transfer_mana.own_address_warning')}
+                {t('global.own_address_warning')}
               </span>
             </React.Fragment>
           ) : null}

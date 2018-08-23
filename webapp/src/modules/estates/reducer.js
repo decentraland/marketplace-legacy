@@ -13,7 +13,10 @@ import {
   EDIT_ESTATE_PARCELS_SUCCESS,
   DELETE_ESTATE_REQUEST,
   DELETE_ESTATE_FAILURE,
-  DELETE_ESTATE_SUCCESS
+  DELETE_ESTATE_SUCCESS,
+  TRANSFER_ESTATE_REQUEST,
+  TRANSFER_ESTATE_SUCCESS,
+  TRANSFER_ESTATE_FAILURE
 } from './actions'
 import { loadingReducer } from 'modules/loading/reducer'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
@@ -35,7 +38,9 @@ export function estatesReducer(state = INITIAL_STATE, action) {
     case EDIT_ESTATE_METADATA_REQUEST:
     case EDIT_ESTATE_METADATA_SUCCESS:
     case DELETE_ESTATE_REQUEST:
-    case DELETE_ESTATE_SUCCESS: {
+    case DELETE_ESTATE_SUCCESS:
+    case TRANSFER_ESTATE_REQUEST:
+    case TRANSFER_ESTATE_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
@@ -59,7 +64,8 @@ export function estatesReducer(state = INITIAL_STATE, action) {
     case CREATE_ESTATE_FAILURE:
     case EDIT_ESTATE_PARCELS_FAILURE:
     case EDIT_ESTATE_METADATA_FAILURE:
-    case DELETE_ESTATE_FAILURE: {
+    case DELETE_ESTATE_FAILURE:
+    case TRANSFER_ESTATE_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

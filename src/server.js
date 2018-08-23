@@ -48,10 +48,10 @@ new TranslationRouter(router).mount()
 new PublicationRouter(router).mount()
 new MortgageRouter(router).mount()
 new EstateRouter(router).mount()
-new ParcelRouter(router).mount()
 new DistrictRouter(router).mount()
 new ContributionRouter(router).mount()
 new MapRouter(router).mount()
+new ParcelRouter(router).mount()
 
 /* Start the server only if run directly */
 if (require.main === module) {
