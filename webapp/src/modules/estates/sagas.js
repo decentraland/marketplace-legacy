@@ -135,7 +135,7 @@ function* handleEstateRequest(action) {
   const { assetId } = action
   try {
     const estate = yield call(() => api.fetchEstate(assetId))
-    yield put(fetchEstateSuccess(assetId, estate))
+    yield put(fetchEstateSuccess(estate))
   } catch (error) {
     yield put(fetchEstateFailure(assetId, error.message))
   }

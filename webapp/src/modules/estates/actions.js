@@ -47,10 +47,9 @@ export function fetchEstateRequest(assetId) {
   }
 }
 
-export function fetchEstateSuccess(id, estate) {
+export function fetchEstateSuccess(estate) {
   return {
     type: FETCH_ESTATE_SUCCESS,
-    id,
     estate
   }
 }
