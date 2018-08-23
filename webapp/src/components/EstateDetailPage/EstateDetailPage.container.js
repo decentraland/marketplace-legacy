@@ -18,12 +18,17 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const mapDispatch = dispatch => ({
-  onViewAssetClick: asset => dispatch(navigateTo(locations.assetDetail(asset))),
-  onEditParcels: () =>
-    dispatch(navigateTo(locations.editEstateParcelsRequest())),
-  onEditMetadata: () =>
-    dispatch(navigateTo(locations.editEstateMetadataRequest()))
-})
+const mapDispatch = (dispatch, ownProps) => {
+  const { tokenId } = getMatchParams(ownProps)
+
+  return {
+    onViewAssetClick: asset =>
+      dispatch(navigateTo(locations.assetDetail(asset))),
+    onEditParcels: () =>
+      dispatch(navigateTo(locations.editEstateParcels(tokenId))),
+    onEditMetadata: () =>
+      dispatch(navigateTo(locations.editEstateMetadata(tokenId)))
+  }
+}
 
 export default withRouter(connect(mapState, mapDispatch)(EstateDetailPage))

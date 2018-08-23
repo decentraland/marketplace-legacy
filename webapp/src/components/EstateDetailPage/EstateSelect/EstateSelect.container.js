@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
+import { locations } from 'locations'
 import { getMatchParams } from 'modules/location/selectors'
 import { navigateTo } from 'modules/location/actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
@@ -9,7 +10,6 @@ import {
   isEstateTransactionIdle
 } from 'modules/estates/selectors'
 import EstateSelect from 'components/EstateDetailPage/EstateSelect/EstateSelect'
-import { locations } from 'locations'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)
@@ -28,9 +28,9 @@ const mapDispatch = (dispatch, ownProps) => {
   const { x, y, id } = getMatchParams(ownProps)
 
   return {
-    onError: () => dispatch(navigateTo(locations.root)),
+    onError: () => dispatch(navigateTo(locations.root())),
     onCreateCancel: () => dispatch(navigateTo(locations.parcelDetail(x, y))),
-    onDeleteEstate: () => dispatch(navigateTo(locations.deleteEstatePage(id)))
+    onDeleteEstate: () => dispatch(navigateTo(locations.deleteEstate(id)))
   }
 }
 

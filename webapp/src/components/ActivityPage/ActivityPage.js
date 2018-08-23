@@ -59,14 +59,14 @@ export default class ActivityPage extends React.PureComponent {
           {this.hasTradingPermissions()
             ? t_html('activity.start', {
                 marketplace: (
-                  <Link to={locations.marketplace}>
+                  <Link to={locations.marketplace()}>
                     {t('global.marketplace')}
                   </Link>
                 )
               })
             : t_html('activity.approve', {
                 settings_link: (
-                  <Link to={locations.settings}>{t('global.settings')}</Link>
+                  <Link to={locations.settings()}>{t('global.settings')}</Link>
                 )
               })}
         </p>
@@ -132,7 +132,7 @@ export default class ActivityPage extends React.PureComponent {
 
   renderNotConnected() {
     return t_html('global.sign_in_notice', {
-      sign_in_link: <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+      sign_in_link: <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
     })
   }
 

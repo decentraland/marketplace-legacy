@@ -8,10 +8,10 @@ import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
+import ParcelDetailLink from 'components/ParcelDetailLink'
 import { publicationType, walletType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { isOpen } from 'shared/publication'
-import { buildCoordinate } from 'shared/parcel'
 import { formatMana } from 'lib/utils'
 import PublicationForm from './PublicationForm'
 
@@ -61,7 +61,9 @@ export default class PublishPage extends React.PureComponent {
                   icon="warning sign"
                   header={t('global.unauthorized')}
                   content={t_html('parcel_publish.please_authorize', {
-                    settings_link: <Link to={locations.settings}>Settings</Link>
+                    settings_link: (
+                      <Link to={locations.settings()}>Settings</Link>
+                    )
                   })}
                 />
               </Container>
@@ -71,11 +73,7 @@ export default class PublishPage extends React.PureComponent {
               y={y}
               title={t('parcel_publish.list_land')}
               subtitle={t_html('parcel_publish.set_land_price', {
-                parcel_name: (
-                  <Link to={locations.parcelDetail(x, y)}>
-                    {buildCoordinate(x, y)}
-                  </Link>
-                )
+                parcel_name: <ParcelDetailLink parcel={parcel} />
               })}
               hasCustomFooter
             >

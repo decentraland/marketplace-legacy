@@ -35,11 +35,12 @@ export default class ParcelActions extends React.PureComponent {
       return null
     }
     const { x, y } = parcel
+
     return (
       <div className="ParcelActions">
         {isOwner ? (
           <React.Fragment>
-            <Link to={locations.transferLand(x, y)}>
+            <Link to={locations.transferParcel(x, y)}>
               <Button size="tiny">
                 <Icon name="exchange" />
                 {t('parcel_detail.actions.transfer')}
@@ -47,7 +48,7 @@ export default class ParcelActions extends React.PureComponent {
             </Link>
 
             {this.canCreateEstate() && (
-              <Link to={locations.createEstateLand(x, y)}>
+              <Link to={locations.createEstate(x, y)}>
                 <Button size="tiny">
                   <Icon name="object group" />
                   {t('parcel_detail.actions.create_estate')}
@@ -55,14 +56,14 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             ) /* Estate Feature */}
             {isOnSale(parcel, publications) ? (
-              <Link to={locations.cancelSaleLand(x, y)}>
+              <Link to={locations.cancelSaleParcel(x, y)}>
                 <Button size="tiny" primary>
                   <Icon name="cancel" />
                   {t('parcel_detail.actions.cancel')}
                 </Button>
               </Link>
             ) : (
-              <Link to={locations.sellLand(x, y)}>
+              <Link to={locations.sellParcel(x, y)}>
                 <Button size="tiny" primary>
                   <Icon name="tag" />
                   {t('parcel_detail.actions.sell')}
@@ -72,13 +73,13 @@ export default class ParcelActions extends React.PureComponent {
           </React.Fragment>
         ) : isOnSale(parcel, publications) && !mortgage ? (
           <React.Fragment>
-            <Link to={locations.buyLand(x, y)}>
+            <Link to={locations.buyParcel(x, y)}>
               <Button primary size="large">
                 {t('parcel_detail.publication.buy')}
               </Button>
             </Link>
             {isFeatureEnabled('MORTGAGES') && (
-              <Link to={locations.buyLandByMortgage(x, y)}>
+              <Link to={locations.buyParcelByMortgage(x, y)}>
                 <Button primary size="large">
                   {t('parcel_detail.publication.mortgage')}
                 </Button>

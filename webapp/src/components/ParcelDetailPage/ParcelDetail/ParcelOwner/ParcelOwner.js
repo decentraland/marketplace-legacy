@@ -38,7 +38,7 @@ export default class ParcelOwner extends React.PureComponent {
             </Button>
           </Link>
           <Link
-            to={locations.manageLand(parcel.x, parcel.y)}
+            to={locations.manageParcel(parcel.x, parcel.y)}
             className="manage-button"
           >
             <Button size="tiny" className="link">

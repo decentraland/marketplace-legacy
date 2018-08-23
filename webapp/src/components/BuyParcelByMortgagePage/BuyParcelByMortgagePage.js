@@ -8,10 +8,10 @@ import { walletType, publicationType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
 import { isOpen } from 'shared/publication'
-import { buildCoordinate } from 'shared/parcel'
 import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
 import ParcelModal from 'components/ParcelModal'
+import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 
@@ -47,7 +47,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
           <p className="sign-in">
             {t_html('global.sign_in_notice', {
               sign_in_link: (
-                <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+                <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
               )
             })}
           </p>
@@ -119,11 +119,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                 isLoading={isLoading}
                 title={t('mortgage.request')}
                 subtitle={t_html('mortgage.request_land', {
-                  parcel_name: (
-                    <Link to={locations.parcelDetail(x, y)}>
-                      {buildCoordinate(x, y)}
-                    </Link>
-                  ),
+                  parcel_name: <ParcelDetailLink parcel={parcel} />,
                   parcel_price: formatMana(publication.price)
                 })}
                 hasCustomFooter

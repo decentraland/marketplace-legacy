@@ -18,12 +18,12 @@ export default class Account extends React.PureComponent {
     }
     return (
       <span className="Account">
-        <Link to={locations.settings}>
+        <Link to={locations.settings()}>
           <Mana amount={wallet.balance} />
         </Link>
         <AddressBlock
           scale={6}
-          link={locations.settings}
+          link={locations.settings()}
           address={wallet.address}
           hasTooltip={false}
         />

@@ -37,9 +37,9 @@ export default class TermsModal extends React.PureComponent {
   render() {
     const { pathname } = this.props.location
     if (
-      pathname === locations.root ||
-      pathname === locations.terms ||
-      pathname === locations.privacy
+      pathname === locations.root() ||
+      pathname === locations.terms() ||
+      pathname === locations.privacy()
     ) {
       return null
     }
@@ -64,11 +64,11 @@ export default class TermsModal extends React.PureComponent {
             </p>
             <p>
               By choosing &quot;I agree&quot; below, you agree to our{' '}
-              <Link to={locations.terms}>Terms of Service</Link>.
+              <Link to={locations.terms()}>Terms of Service</Link>.
             </p>
             <p>
               You also agree to our{' '}
-              <Link to={locations.privacy}>Privacy Policy</Link>, which
+              <Link to={locations.privacy()}>Privacy Policy</Link>, which
               describes how we process your information.
             </p>
           </div>

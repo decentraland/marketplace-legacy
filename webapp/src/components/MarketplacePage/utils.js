@@ -72,7 +72,7 @@ export function getOptionsFromRouter(location) {
 }
 
 export function buildUrl({ page, sortBy, sortOrder }) {
-  return Location.buildUrl(locations.marketplace, {
+  return Location.buildUrl(locations.marketplace(), {
     page,
     sort_by: sortBy,
     sort_order: sortOrder

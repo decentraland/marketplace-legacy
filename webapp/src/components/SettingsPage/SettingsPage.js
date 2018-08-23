@@ -148,7 +148,7 @@ export default class SettingsPage extends React.PureComponent {
                 <p className="sign-in">
                   {t_html('global.sign_in_notice', {
                     sign_in_link: (
-                      <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+                      <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
                     )
                   })}
                 </p>
