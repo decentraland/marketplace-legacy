@@ -15,7 +15,10 @@ export function getEstateByParcel(parcel, estates) {
 export function toEstateObject(estatesArray) {
   return estatesArray
     .filter(estate => estate.data.parcels.length)
-    .reduce((estates, estate) => ({ ...estates, [estate.id]: estate }), {})
+    .reduce(
+      (estates, estate) => ({ ...estates, [estate.asset_id]: estate }),
+      {}
+    )
 }
 
 export function calculateZoomAndCenter(parcels) {
@@ -36,11 +39,6 @@ export function getInitialEstate(x, y) {
       parcels: [{ x, y }]
     }
   }
-}
-
-export function areOnSameEstate(parcels) {
-  const { owner } = parcels[0]
-  return parcels.every(parcel => parcel.in_estate && parcel.owner === owner)
 }
 
 export function areConnected(
