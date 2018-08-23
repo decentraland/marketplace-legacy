@@ -44,14 +44,14 @@ if (env.isDevelopment()) {
 const router = new express.Router()
 app.use('/v1', router)
 
-new TranslationRouter(app).mount()
-new PublicationRouter(app).mount()
-new MortgageRouter(app).mount()
-new EstateRouter(app).mount()
-new ParcelRouter(app).mount()
-new DistrictRouter(app).mount()
-new ContributionRouter(app).mount()
-new MapRouter(app).mount()
+new TranslationRouter(router).mount()
+new PublicationRouter(router).mount()
+new MortgageRouter(router).mount()
+new EstateRouter(router).mount()
+new ParcelRouter(router).mount()
+new DistrictRouter(router).mount()
+new ContributionRouter(router).mount()
+new MapRouter(router).mount()
 
 /* Start the server only if run directly */
 if (require.main === module) {
