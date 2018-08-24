@@ -50,6 +50,8 @@ export default class ParcelPreview extends React.PureComponent {
     zoom: PropTypes.number,
     minSize: PropTypes.number,
     maxSize: PropTypes.number,
+    panX: PropTypes.number,
+    panY: PropTypes.number,
     selected: PropTypes.oneOfType([PropTypes.arrayOf(coordsType), coordsType]),
     debounce: PropTypes.number,
     isDraggable: PropTypes.bool,
@@ -68,6 +70,8 @@ export default class ParcelPreview extends React.PureComponent {
     zoom: 1,
     minSize: 7,
     maxSize: 40,
+    panX: 0,
+    panY: 0,
     selected: null,
     onFetchMap: () => {},
     onClick: null,
@@ -83,9 +87,9 @@ export default class ParcelPreview extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    const { x, y, size, zoom } = props
+    const { x, y, size, zoom, panX, panY } = props
     const initialState = {
-      pan: { x: 0, y: 0 },
+      pan: { x: panX, y: panY },
       center: { x, y },
       size: zoom * size,
       zoom,

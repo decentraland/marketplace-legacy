@@ -13,7 +13,7 @@ import { transactionType } from 'components/types'
 import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
 import { buildCoordinate } from 'shared/parcel'
 import { isNewAsset } from 'shared/asset'
-import { calculateZoomAndCenter } from 'shared/estate'
+import { calculateMapProps } from 'shared/estate'
 import {
   getMarketplaceAddress,
   getMortgageHelperAddress,
@@ -311,7 +311,8 @@ export default class Transaction extends React.PureComponent {
   }
 
   renderEstatePreview({ estate }) {
-    const { center, zoom } = calculateZoomAndCenter(estate.data.parcels)
+    const size = 5
+    const { center, zoom, pan } = calculateMapProps(estate.data.parcels, size)
     const { x, y } = center
 
     return (
@@ -328,7 +329,9 @@ export default class Transaction extends React.PureComponent {
           zoom={zoom}
           width={64}
           height={64}
-          size={5}
+          size={size}
+          panX={pan.x}
+          panY={pan.y}
           selected={estate.data.parcels}
         />
       </Link>

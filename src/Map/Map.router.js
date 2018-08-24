@@ -6,7 +6,7 @@ import {
   splitCoordinate,
   getParcelPublications
 } from '../shared/parcel'
-import { toEstateObject, calculateZoomAndCenter } from '../shared/estate'
+import { toEstateObject, calculateMapProps } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject } from '../shared/publication'
@@ -65,19 +65,20 @@ export class MapRouter {
     const { id, width, height, size, showPublications } = this.sanitizeEstate(
       req
     )
-    const estate = await Estate.findById(id)
-
+    const estate = (await Estate.findByAssetId(id))[0]
     if (!estate) {
       throw new Error(`The estate with id "${id}" doesn't exist.`)
     }
 
     const { parcels } = estate.data
-    const { center } = calculateZoomAndCenter(parcels)
+    const { center, zoom, pan } = calculateMapProps(parcels, size)
     const mapOptions = {
       width,
       height,
       size,
       center,
+      zoom,
+      pan,
       selected: parcels,
       showPublications
     }
@@ -105,13 +106,15 @@ export class MapRouter {
 
   async sendPNG(
     res,
-    { width, height, size, center, selected, showPublications }
+    { width, height, size, center, selected, showPublications, zoom, pan }
   ) {
     const { nw, se, area } = Viewport.getDimensions({
       width,
       height,
       center,
       size,
+      zoom,
+      pan,
       padding: 1
     })
 

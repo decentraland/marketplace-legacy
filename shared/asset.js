@@ -1,6 +1,6 @@
 import { isOpen } from './publication'
 import { isParcel } from './parcel'
-import { getEstateByParcel, isEstate, calculateZoomAndCenter } from './estate'
+import { getEstateByParcel, isEstate, calculateMapProps } from './estate'
 import { contracts } from 'decentraland-eth'
 const { LANDRegistry } = contracts
 
@@ -195,7 +195,7 @@ export function getCenterCoords(asset) {
   if (isParcel(asset)) {
     return { x: asset.x, y: asset.y }
   }
-  const { center } = calculateZoomAndCenter(asset.data.parcels)
+  const { center } = calculateMapProps(asset.data.parcels)
   return center
 }
 

@@ -5,7 +5,7 @@ import { Button, Grid, Header } from 'semantic-ui-react'
 import ParcelPreview from 'components/ParcelPreview'
 import { coordsType, estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import { calculateZoomAndCenter } from 'shared/estate'
+import { calculateMapProps } from 'shared/estate'
 import TxStatus from 'components/TxStatus'
 import './EstateModal.css'
 
@@ -46,8 +46,8 @@ export default class EstateModal extends React.PureComponent {
       isTxIdle
     } = this.props
 
-    const { center, zoom } = calculateZoomAndCenter(parcels)
-
+    const size = 20
+    const { center, zoom, pan } = calculateMapProps(parcels, size)
     return (
       <div className="EstateModal">
         <div className="modal-column">
@@ -58,9 +58,11 @@ export default class EstateModal extends React.PureComponent {
               <ParcelPreview
                 x={center.x}
                 y={center.y}
-                zoom={zoom}
                 selected={parcels}
-                size={20}
+                zoom={zoom}
+                size={size}
+                panX={pan.x}
+                panY={pan.y}
               />
             </div>
           )}
