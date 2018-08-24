@@ -38,24 +38,47 @@ const { minX, minY, maxX, maxY } = Bounds.getBounds()
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
+    /** where to position the map in the X axis */
     x: PropTypes.number.isRequired,
+    /** where to position the map in the Y axis */
     y: PropTypes.number.isRequired,
+    /** size of each parcel, i.e: size=5 makes each parcel of 5x5 pixels */
     size: PropTypes.number,
+    /** width of the canvas in pixels */
     width: PropTypes.number,
+    /** height of the canvas in pixels */
     height: PropTypes.number,
+    /** wallet from modules/wallet */
     wallet: walletType,
+    /** parcels from modules/parcels */
     parcels: PropTypes.objectOf(parcelType),
+    /** districts from modules/districts */
     districts: PropTypes.objectOf(districtType),
+    /** publications from modules/publications */
     publications: PropTypes.objectOf(publicationType),
+    /** zoom level of the map, this changes in the end the size on which parcels are rendered, i.e: size=10 and zoom=0.5 makes each parcel of 5x5 pixels */
     zoom: PropTypes.number,
+    /** minimum size that parcels can take (after applying zoom) */
     minSize: PropTypes.number,
+    /** maximum size that parcels can take (after applying zoom) */
     maxSize: PropTypes.number,
+    /** initial panning in the X axis, this changes the initial position of the map adding an offset to the prop `x` */
+    panX: PropTypes.number,
+    /** initial panning in the Y axis, this changes the initial position of the map adding an offset to the prop `y` */
+    panY: PropTypes.number,
+    /** array of coords { x, y } that will be highlighted as selected */
     selected: PropTypes.oneOfType([PropTypes.arrayOf(coordsType), coordsType]),
+    /** debounce in milliseconds used to fetch the map after a user interaction (panning or zooming) */
     debounce: PropTypes.number,
+    /** whether the map should be draggable or not */
     isDraggable: PropTypes.bool,
+    /** whether to show or not the minimap */
     showMinimap: PropTypes.bool,
+    /** whether to show or not the popup */
     showPopup: PropTypes.bool,
+    /** whether to show or not the zoom/recenter controls */
     showControls: PropTypes.bool,
+    /** if true, the map will NOT fetch parcels that are already in the state */
     useCache: PropTypes.bool
   }
 
@@ -68,6 +91,8 @@ export default class ParcelPreview extends React.PureComponent {
     zoom: 1,
     minSize: 7,
     maxSize: 40,
+    panX: 0,
+    panY: 0,
     selected: null,
     onFetchMap: () => {},
     onClick: null,
@@ -83,9 +108,9 @@ export default class ParcelPreview extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    const { x, y, size, zoom } = props
+    const { x, y, size, zoom, panX, panY } = props
     const initialState = {
-      pan: { x: 0, y: 0 },
+      pan: { x: panX, y: panY },
       center: { x, y },
       size: zoom * size,
       zoom,

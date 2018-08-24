@@ -8,7 +8,7 @@ import ParcelTags from 'components/ParcelTags'
 import LandAmount from 'components/LandAmount'
 import { estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
-import { calculateZoomAndCenter } from 'shared/estate'
+import { calculateMapProps } from 'shared/estate'
 import { formatDate } from 'lib/utils'
 import { locations } from 'locations'
 
@@ -22,7 +22,8 @@ export default class EstateCard extends React.PureComponent {
 
   render() {
     const { estate, debounce } = this.props
-    const { center, zoom } = calculateZoomAndCenter(estate.data.parcels)
+    const size = 12
+    const { center, zoom, pan } = calculateMapProps(estate.data.parcels, size)
     const { x, y } = center
     const estateName = estate.data.name || t('global.estate')
 
@@ -35,7 +36,9 @@ export default class EstateCard extends React.PureComponent {
               y={y}
               zoom={zoom}
               debounce={debounce}
-              size={12}
+              size={size}
+              panX={pan.x}
+              panY={pan.y}
               selected={estate.data.parcels}
             />
           </div>
