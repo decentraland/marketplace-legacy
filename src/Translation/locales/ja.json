@@ -199,6 +199,10 @@
     "payable": "支払い方法",
     "payable_placeholder": "数日で支払い可能",
     "pending_tx": "次の為の担保",
+    "please_authorize_MANA":
+      "{settings_link}に行き、あなたのためにMANAを運用するための抵当ヘルパー契約を承認してください",
+    "please_authorize_RCN":
+      "{settings_link}に行き、あなたのためにRCNを運営するモーゲージマネージャー契約を承認してください",
     "punitory_rate": "遅延利息",
     "punitory_rate_placeholder": "遅延利息",
     "request": "担保を申請しています。",
