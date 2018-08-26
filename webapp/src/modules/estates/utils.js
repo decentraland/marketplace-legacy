@@ -24,3 +24,11 @@ export function validateCoords(x, y) {
     throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
   }
 }
+
+export function getEstateIdFromTxReceipt({ receipt }) {
+  const createEstateLog = receipt.logs.find(log => log.name === 'CreateEstate')
+  const estateIdArg = createEstateLog.events.find(
+    args => args.name === '_estateId'
+  )
+  return estateIdArg.value
+}

@@ -43,8 +43,7 @@ export default class EditEstate extends React.PureComponent {
         data: {
           ...estate.data,
           parcels
-        },
-        parcels
+        }
       }
     })
   }

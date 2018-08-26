@@ -31,6 +31,14 @@ import {
   FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
   FETCH_MORTGAGED_PARCELS_SUCCESS
 } from '../mortgage/actions'
+import {
+  ADD_PARCELS,
+  EDIT_ESTATE_PARCELS_SUCCESS,
+  DELETE_ESTATE_SUCCESS,
+  CREATE_ESTATE_SUCCESS
+} from 'modules/estates/actions'
+import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
+import { getEstateRegistryAddress } from 'modules/wallet/utils'
 
 const INITIAL_STATE = {
   data: {},
@@ -252,6 +260,71 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             }
           }
           return state
+        }
+        case EDIT_ESTATE_PARCELS_SUCCESS: {
+          const { estate, parcels, type } = transaction.payload
+          const updatedParcels = parcels.reduce((acc, parcel) => {
+            const parcelId = buildCoordinate(parcel.x, parcel.y)
+            acc[parcelId] = {
+              ...state.data[parcelId],
+              estate_id: type === ADD_PARCELS ? estate.asset_id : null,
+              owner:
+                type === ADD_PARCELS
+                  ? getEstateRegistryAddress()
+                  : transaction.from
+            }
+            return acc
+          }, {})
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              ...updatedParcels
+            }
+          }
+        }
+        case DELETE_ESTATE_SUCCESS: {
+          const { estate } = transaction.payload
+          const updatedParcels = estate.data.parcels.reduce((acc, parcel) => {
+            const parcelId = buildCoordinate(parcel.x, parcel.y)
+            acc[parcelId] = {
+              ...state.data[parcelId],
+              estate_id: null,
+              owner: transaction.from
+            }
+            return acc
+          }, {})
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              ...updatedParcels
+            }
+          }
+        }
+        case CREATE_ESTATE_SUCCESS: {
+          const { receipt } = transaction
+          const { estate } = transaction.payload
+          const estateId = getEstateIdFromTxReceipt(receipt)
+          const updatedParcels = estate.data.parcels.reduce((acc, parcel) => {
+            const parcelId = buildCoordinate(parcel.x, parcel.y)
+            acc[parcelId] = {
+              ...state.data[parcelId],
+              estate_id: estateId,
+              owner: getEstateRegistryAddress()
+            }
+            return acc
+          }, {})
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              ...updatedParcels
+            }
+          }
         }
         default:
           return state

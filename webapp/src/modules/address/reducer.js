@@ -15,6 +15,14 @@ import {
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
+import {
+  EDIT_ESTATE_PARCELS_SUCCESS,
+  TRANSFER_ESTATE_SUCCESS,
+  DELETE_ESTATE_SUCCESS,
+  CREATE_ESTATE_SUCCESS,
+  REMOVE_PARCELS
+} from 'modules/estates/actions'
+import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
 import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'shared/parcel'
 import { toAddressParcelIds, toAddressPublicationIds } from './utils'
@@ -149,6 +157,97 @@ export function addressReducer(state = INITIAL_STATE, action) {
                   ...state.data[transaction.from].parcel_ids,
                   parcelId
                 ]
+              }
+            }
+          }
+        }
+        case EDIT_ESTATE_PARCELS_SUCCESS: {
+          const { parcels, type } = transaction.payload
+          const user = state.data[transaction.from]
+          let updatedParcelIds = []
+
+          if (type === REMOVE_PARCELS) {
+            updatedParcelIds = [
+              ...user.parcel_ids,
+              ...parcels.map(p => buildCoordinate(p.x, p.y))
+            ]
+          } else {
+            updatedParcelIds = user.parcel_ids.filter(
+              parcelId =>
+                !parcels.some(
+                  estateParcel =>
+                    buildCoordinate(estateParcel.x, estateParcel.y) === parcelId
+                )
+            )
+          }
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [transaction.from]: {
+                ...user,
+                parcel_ids: updatedParcelIds
+              }
+            }
+          }
+        }
+        case TRANSFER_ESTATE_SUCCESS: {
+          const { estate } = transaction.payload
+          const user = state.data[transaction.from]
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [transaction.from]: {
+                ...user,
+                estate_ids: user.estate_ids.filter(
+                  estateId => estateId !== estate.asset_id
+                )
+              }
+            }
+          }
+        }
+        case DELETE_ESTATE_SUCCESS: {
+          const { estate } = transaction.payload
+          const user = state.data[transaction.from]
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [transaction.from]: {
+                ...user,
+                parcel_ids: [
+                  ...user.parcel_ids,
+                  ...estate.data.parcels.map(parcel =>
+                    buildCoordinate(parcel.x, parcel.y)
+                  )
+                ]
+              }
+            }
+          }
+        }
+        case CREATE_ESTATE_SUCCESS: {
+          const { receipt } = transaction
+          const { estate } = transaction.payload
+          const estateId = getEstateIdFromTxReceipt(receipt)
+          const user = state.data[transaction.from]
+          const updatedParcelIds = user.parcel_ids.filter(
+            parcelId =>
+              !estate.data.parcels.some(
+                estateParcel =>
+                  buildCoordinate(estateParcel.x, estateParcel.y) === parcelId
+              )
+          )
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [transaction.from]: {
+                ...user,
+                parcel_ids: updatedParcelIds,
+                estate_ids: [...user.estate_ids, estateId]
               }
             }
           }

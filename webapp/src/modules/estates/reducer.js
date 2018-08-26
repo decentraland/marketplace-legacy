@@ -21,6 +21,8 @@ import {
 import { loadingReducer } from 'modules/loading/reducer'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { getEstateIdFromTxReceipt } from './utils'
 
 const INITIAL_STATE = {
   data: {},
@@ -92,7 +94,93 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-
+    case FETCH_TRANSACTION_SUCCESS: {
+      const transaction = action.transaction
+      switch (transaction.actionType) {
+        case EDIT_ESTATE_METADATA_SUCCESS: {
+          const { estate } = transaction.payload
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [estate.asset_id]: {
+                ...state.data[estate.asset_id],
+                data: {
+                  ...state.data[estate.asset_id].data,
+                  name: estate.data.name,
+                  description: estate.data.description
+                }
+              }
+            }
+          }
+        }
+        case EDIT_ESTATE_PARCELS_SUCCESS: {
+          const { estate } = transaction.payload
+          const oldEstate = state.data[estate.asset_id]
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [estate.asset_id]: {
+                ...oldEstate,
+                data: {
+                  ...oldEstate.data,
+                  parcels: estate.data.parcels
+                }
+              }
+            }
+          }
+        }
+        case TRANSFER_ESTATE_SUCCESS: {
+          const { estate, to } = transaction.payload
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [estate.asset_id]: {
+                ...state.data[estate.asset_id],
+                owner: to
+              }
+            }
+          }
+        }
+        case DELETE_ESTATE_SUCCESS: {
+          const { estate } = transaction.payload
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [estate.asset_id]: {
+                ...state.data[estate.asset_id],
+                data: {
+                  ...state.data[estate.asset_id].data,
+                  parcels: []
+                }
+              }
+            }
+          }
+        }
+        case CREATE_ESTATE_SUCCESS: {
+          const { receipt } = transaction
+          const { estate } = transaction.payload
+          const estateId = getEstateIdFromTxReceipt(receipt)
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [estateId]: {
+                ...estate,
+                id: estateId,
+                asset_id: estateId,
+                owner: transaction.from
+              }
+            }
+          }
+        }
+        default:
+          return state
+      }
+    }
     default:
       return state
   }
