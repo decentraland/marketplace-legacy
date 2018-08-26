@@ -52,7 +52,7 @@ export class Publication extends Model {
 
   static async cancelOlder(asset_id, block_number) {
     const events = BlockchainEvent.getEvents()
-    const name = events.publicationCreated
+    const name = BlockchainEvent.getEventName(events.publicationCreated)
     const status = PUBLICATION_STATUS.open
 
     const rows = await this.db.query(
