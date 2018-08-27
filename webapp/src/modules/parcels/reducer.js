@@ -263,9 +263,9 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
         case EDIT_ESTATE_PARCELS_SUCCESS: {
           const { estate, parcels, type } = transaction.payload
-          const updatedParcels = parcels.reduce((acc, parcel) => {
+          const updatedParcels = parcels.map(parcel => {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
-            acc[parcelId] = {
+            return {
               ...state.data[parcelId],
               estate_id: type === ADD_PARCELS ? estate.asset_id : null,
               owner:
@@ -273,34 +273,42 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
                   ? getEstateRegistryAddress()
                   : transaction.from
             }
-            return acc
-          }, {})
+          })
 
+          estate.data.parcels.forEach(parcel => {
+            const updatedParcel = updatedParcels.find(
+              p => p.x === parcel.x && p.y === parcel.y
+            )
+            if (!updatedParcel) {
+              const parcelId = buildCoordinate(parcel.x, parcel.y)
+              updatedParcels.push(state.data[parcelId])
+            }
+          })
+          console.log(updatedParcels)
           return {
             ...state,
             data: {
               ...state.data,
-              ...updatedParcels
+              ...toParcelObject(updatedParcels, state.data, true, true)
             }
           }
         }
         case DELETE_ESTATE_SUCCESS: {
           const { estate } = transaction.payload
-          const updatedParcels = estate.data.parcels.reduce((acc, parcel) => {
+          const updatedParcels = estate.data.parcels.map(parcel => {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
-            acc[parcelId] = {
+            return {
               ...state.data[parcelId],
               estate_id: null,
               owner: transaction.from
             }
-            return acc
-          }, {})
+          })
 
           return {
             ...state,
             data: {
               ...state.data,
-              ...updatedParcels
+              ...toParcelObject(updatedParcels, state.data, true, true)
             }
           }
         }
@@ -308,21 +316,20 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           const { receipt } = transaction
           const { estate } = transaction.payload
           const estateId = getEstateIdFromTxReceipt(receipt)
-          const updatedParcels = estate.data.parcels.reduce((acc, parcel) => {
+          const updatedParcels = estate.data.parcels.map(parcel => {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
-            acc[parcelId] = {
+            return {
               ...state.data[parcelId],
               estate_id: estateId,
               owner: getEstateRegistryAddress()
             }
-            return acc
-          }, {})
+          })
 
           return {
             ...state,
             data: {
               ...state.data,
-              ...updatedParcels
+              ...toParcelObject(updatedParcels, state.data)
             }
           }
         }
