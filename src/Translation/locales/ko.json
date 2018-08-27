@@ -359,9 +359,9 @@
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
     "cancel_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 취소합니다.",
     "claim_mortgage_resolution": "당신은 {parcel_link}을 주장했습니다.",
-    "create_estate": "소포 {parcels_link}로 부동산을 만들었습니다.",
+    "create_estate": "부동산 {name}을 만들었습니다.",
     "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
-    "delete_estate": "부동산 {estate_id}을 삭제했습니다.",
+    "delete_estate": "부동산 {name}을 삭제했습니다.",
     "disapproved":
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "edit":
@@ -369,9 +369,9 @@
     "edit_estate_metadata":
       "이름이 \"{name}\"이고 설명이 \"{description}\"인 부동산 {estate_id}을 편집했습니다.",
     "edit_estate_parcels_added":
-      "부동산 {estate_id}에 소포 {parcels_link}를 추가했습니다.",
+      "부동산 {name}에 {amount} 소포를 추가했습니다.",
     "edit_estate_parcels_removed":
-      "부동산 {estate_id}에서 소포 {parcels_link}를 제거했습니다.",
+      "부동산 {name}에서 {amount} 소포를 제거했습니다.",
     "manage":
       "{address_link}에게 {parcel_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다.",
     "manage_revoked":

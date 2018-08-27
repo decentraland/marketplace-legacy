@@ -375,11 +375,10 @@
     "cancel_mortgage":
       "Vous annulez une hypothèque pour acheter le colis {parcel_link}",
     "claim_mortgage_resolution": "Vous avez réclamé {parcel_link}",
-    "create_estate":
-      "Vous avez créé un domaine avec les parcelles {parcels_link}",
+    "create_estate": "Vous avez créé le domaine {name}",
     "create_mortgage":
       "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
-    "delete_estate": "Vous avez supprimé le domaine {estate_id}",
+    "delete_estate": "Vous avez supprimé le domaine {name}",
     "disapproved":
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "edit":
@@ -387,9 +386,9 @@
     "edit_estate_metadata":
       "Vous avez édité la propriété {estate_id} sous le nom \"{name}\" et la description \"{description}\"",
     "edit_estate_parcels_added":
-      "Vous avez ajouté les colis {parcels_link} au domaine {estate_id}",
+      "Vous avez ajouté des colis {amount} à la succession {name}",
     "edit_estate_parcels_removed":
-      "Vous avez retiré des colis {parcels_link} de la succession {estate_id}",
+      "Vous avez supprimé les colis {amount} de la succession {name}",
     "manage":
       "Vous avez donné {address_link} la permission de mettre à jour le contenu de {parcel_link}",
     "manage_revoked":
