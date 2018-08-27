@@ -378,7 +378,7 @@
     }
   },
   "transfer_estate": {
-    "about_to_transfer": "你即将转移庄园{estate_id}。",
+    "about_to_transfer": "你即将转移庄园{name}。",
     "transfer_estate": "转让遗产"
   },
   "transfer_mana": {

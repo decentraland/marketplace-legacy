@@ -422,7 +422,7 @@
   },
   "transfer_estate": {
     "about_to_transfer":
-      "Vous êtes sur le point de transférer la succession {estate_id}.",
+      "Vous êtes sur le point de transférer la succession {name}.",
     "transfer_estate": "Transfert immobilier"
   },
   "transfer_mana": {

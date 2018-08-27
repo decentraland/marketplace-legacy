@@ -407,7 +407,7 @@
     }
   },
   "transfer_estate": {
-    "about_to_transfer": "不動産{estate_id}を移転しようとしています。",
+    "about_to_transfer": "不動産{name}を移転しようとしています。",
     "transfer_estate": "トランスファーエステート"
   },
   "transfer_mana": {
