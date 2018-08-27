@@ -117,6 +117,7 @@
     "own_address_warning": "That's your own address!",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
+    "owner_address_warning": "That's already the owner!",
     "paid_at": "Paid at",
     "parcels": "Parcels",
     "profile": "My Land",

@@ -117,6 +117,7 @@
     "own_address_warning": "Esa es tu propia dirección!",
     "owned_by": "Controlada por",
     "owned_by_link": "Controlada por {address_link}",
+    "owner_address_warning": "¡Ese es el dueño!",
     "paid_at": "Pagada el",
     "parcels": "Parcelas",
     "profile": "Mi LAND",

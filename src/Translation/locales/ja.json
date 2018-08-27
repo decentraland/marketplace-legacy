@@ -117,6 +117,7 @@
     "own_address_warning": "それはあなた自身のアドレスです！",
     "owned_by": "所有者",
     "owned_by_link": "所有者：{address_link}",
+    "owner_address_warning": "それはすでに所有者です！",
     "paid_at": "支払済み",
     "parcels": "パーセル区画",
     "profile": "マイランド",

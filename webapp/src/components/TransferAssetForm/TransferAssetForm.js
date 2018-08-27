@@ -83,7 +83,7 @@ export default class TransferAssetForm extends React.PureComponent {
               <br />
               <br />
               <span className="transfer-warning error">
-                {t('global.own_address_warning')}
+                {t('global.owner_address_warning')}
               </span>
             </React.Fragment>
           ) : null}
