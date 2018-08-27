@@ -408,7 +408,7 @@
     }
   },
   "transfer_estate": {
-    "about_to_transfer": "You're about to transfer the estate {estate_id}.",
+    "about_to_transfer": "You're about to transfer the estate {name}.",
     "transfer_estate": "Transfer Estate"
   },
   "transfer_mana": {

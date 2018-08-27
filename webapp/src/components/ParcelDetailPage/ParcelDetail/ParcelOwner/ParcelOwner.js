@@ -16,7 +16,7 @@ export default class ParcelOwner extends React.PureComponent {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool.isRequired,
     districts: PropTypes.objectOf(districtType).isRequired,
-    estates: PropTypes.objectOf(estateType).isRequireds
+    estates: PropTypes.objectOf(estateType).isRequired
   }
 
   render() {
