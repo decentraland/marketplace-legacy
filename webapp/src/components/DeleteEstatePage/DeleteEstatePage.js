@@ -24,7 +24,7 @@ export default class DeleteEstatePage extends React.PureComponent {
               parcels={estate.data.parcels}
               title={t('estate_detail.delete')}
               subtitle={t('estate_detail.delete_desc', {
-                estate_id: estate.asset_id
+                name: estate.data.name
               })}
               isTxIdle={isTxIdle}
               onCancel={onCancel}
