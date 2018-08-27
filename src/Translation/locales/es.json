@@ -20,7 +20,7 @@
     "on_sale": "En Venta: ",
     "owner": "Dueño: {owner}",
     "road": "Carretera",
-    "your_estate": "Su estado",
+    "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
   "buy_mana": {
@@ -86,7 +86,6 @@
     "acquired_at": "Adquirido en {date}",
     "activity": "Actividad",
     "add": "añadir",
-    "added": "adicional",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Autorizado",
@@ -124,7 +123,6 @@
     "publications": "Publicaciones",
     "recipient_address": "Dirección del receptor",
     "remove": "retirar",
-    "removed": "remoto",
     "request": "Solicitud",
     "retry": "Reintentar",
     "revoke": "Revocar",
@@ -134,7 +132,7 @@
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "submit": "Enviar",
-    "the_estate": "el estado",
+    "the_estate": "la propiedad",
     "the_parcel": "la parcela",
     "time_left": "Tiempo restante",
     "transfer_irreversible":
@@ -381,8 +379,10 @@
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
     "edit_estate_metadata":
       "Editó el estado {estate_id} con el nombre \"{name}\" y la descripción \"{description}\"",
-    "edit_estate_parcels":
-      "Usted {action} parcelas {parcels_link} a estate {estate_id}",
+    "edit_estate_parcels_added":
+      "Agregaste parcelas {parcels_link} a estate {estate_id}",
+    "edit_estate_parcels_removed":
+      "Has eliminado parcelas {parcels_link} de estate {estate_id}",
     "manage":
       "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
     "manage_revoked":
@@ -416,7 +416,7 @@
   "transfer_estate": {
     "about_to_transfer":
       "Estás a punto de transferir la propiedad {estate_id}.",
-    "transfer_estate": "Finca de transferencia"
+    "transfer_estate": "Transferir propiedad"
   },
   "transfer_mana": {
     "action": "Transferir",
