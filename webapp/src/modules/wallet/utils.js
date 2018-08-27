@@ -75,6 +75,11 @@ export function getRCNToApprove() {
   return Math.pow(2, 180)
 }
 
+export function getMANATokenAddress() {
+  const manaTokenContract = eth.getContract('MANAToken')
+  return manaTokenContract.address
+}
+
 export function getMarketplaceAddress() {
   const marketplaceContract = eth.getContract('Marketplace')
   return marketplaceContract.address

@@ -429,6 +429,7 @@
     "amount": "Montant",
     "current_balance": "Votre solde actuel est {balance}",
     "irreversible": "Chaque transfert de MANA est une opération irréversible.",
+    "is_mana_contract_address": "C'est l'adresse du contrat MANA",
     "title": "Transférer MANA"
   },
   "transfer_parcel": {

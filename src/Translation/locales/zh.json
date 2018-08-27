@@ -384,6 +384,7 @@
     "amount": "量",
     "current_balance": "您目前的余额是 {balance}",
     "irreversible": "注意，MANA 转帐不能回退或撤消。",
+    "is_mana_contract_address": "这是MANA合同地址",
     "title": "MANA 转帐"
   },
   "transfer_parcel": {

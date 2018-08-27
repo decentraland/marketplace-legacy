@@ -344,7 +344,7 @@
     "you_approved_mortgage_rcn":
       "Usted ha autorizado {mortgage_contract_link} para operar RCN en su nombre",
     "you_authorized":
-      "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta"
+      "Has autorizado al {marketplace_contract_link} a operar LAND por tu cuenta"
   },
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
@@ -421,6 +421,7 @@
     "current_balance": "Tu balance actual es {balance}",
     "irreversible":
       "Recuerda que transferir MANA es una operación irreversible.",
+    "is_mana_contract_address": "Esa es la dirección del contrato de MANA",
     "title": "Transferir MANA"
   },
   "transfer_parcel": {
