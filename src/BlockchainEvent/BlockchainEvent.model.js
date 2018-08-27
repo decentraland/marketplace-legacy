@@ -154,4 +154,8 @@ export class BlockchainEvent extends Model {
   static getNormalizedEventName(address, name) {
     return `${address}-${name}`
   }
+
+  static getEventName(event) {
+    return event.split('-')[1]
+  }
 }
