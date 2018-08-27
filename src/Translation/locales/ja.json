@@ -86,7 +86,6 @@
     "acquired_at": "{date}に取得済み",
     "activity": "取引履歴",
     "add": "追加する",
-    "added": "追加された",
     "address_placeholder": "0x...",
     "atlas": "地図",
     "authorized": "認証済み",
@@ -124,7 +123,6 @@
     "publications": "公開中のパーセル",
     "recipient_address": "受信者アドレス",
     "remove": "削除する",
-    "removed": "削除済",
     "request": "リクエスト",
     "retry": "やり直す",
     "revoke": "取り消す",
@@ -377,8 +375,10 @@
       "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",
     "edit_estate_metadata":
       "不動産{estate_id}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",
-    "edit_estate_parcels":
-      "パーセル{parcels_link}を不動産：{estate_id}に{action}します。",
+    "edit_estate_parcels_added":
+      "不動産{estate_id}に小包{parcels_link}を追加しました",
+    "edit_estate_parcels_removed":
+      "不動産{estate_id}から小包{parcels_link}を削除した",
     "manage":
       "{parcel_link}のコンテンツを更新する権限を{address_link}に与えました。",
     "manage_revoked":

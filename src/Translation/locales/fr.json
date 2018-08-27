@@ -89,7 +89,6 @@
     "acquired_at": "Acquis à {date}",
     "activity": "Activité",
     "add": "ajouter",
-    "added": "ajoutée",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Autorisé",
@@ -127,7 +126,6 @@
     "publications": "Publications",
     "recipient_address": "Adresse du destinataire",
     "remove": "retirer",
-    "removed": "enlevé",
     "request": "Demande",
     "retry": "Recommencez",
     "revoke": "Révoquer",
@@ -388,8 +386,10 @@
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "edit_estate_metadata":
       "Vous avez édité la propriété {estate_id} sous le nom \"{name}\" et la description \"{description}\"",
-    "edit_estate_parcels":
-      "Vous {action} colis {parcels_link} à succession {estate_id}",
+    "edit_estate_parcels_added":
+      "Vous avez ajouté les colis {parcels_link} au domaine {estate_id}",
+    "edit_estate_parcels_removed":
+      "Vous avez retiré des colis {parcels_link} de la succession {estate_id}",
     "manage":
       "Vous avez donné {address_link} la permission de mettre à jour le contenu de {parcel_link}",
     "manage_revoked":

@@ -275,12 +275,15 @@ export default class Transaction extends React.PureComponent {
       }
       case EDIT_ESTATE_PARCELS_SUCCESS: {
         const { estate, type, parcels } = payload
-        return t_html('transaction.edit_estate_parcels', {
-          estate_id: this.renderEstateLink(estate.asset_id),
-          action:
-            type === ADD_PARCELS ? t('global.added') : t('global.removed'),
-          parcels_link: this.renderParcelsLink(parcels)
-        })
+        return t_html(
+          type === ADD_PARCELS
+            ? 'transaction.edit_estate_parcels_added'
+            : 'transaction.edit_estate_parcels_removed',
+          {
+            estate_id: this.renderEstateLink(estate.asset_id),
+            parcels_link: this.renderParcelsLink(parcels)
+          }
+        )
       }
       case EDIT_ESTATE_METADATA_SUCCESS: {
         const { estate } = payload

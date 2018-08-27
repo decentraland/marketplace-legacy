@@ -85,7 +85,6 @@
     "acquired_at": "获得日期 {date}",
     "activity": "活动",
     "add": "加",
-    "added": "添加",
     "address_placeholder": "0x...",
     "atlas": "地图",
     "authorized": "已授权",
@@ -123,7 +122,6 @@
     "publications": "出版物",
     "recipient_address": "收件人地址",
     "remove": "去掉",
-    "removed": "去除",
     "request": "请求",
     "retry": "重试",
     "revoke": "撤消",
@@ -352,7 +350,10 @@
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
     "edit_estate_metadata":
       "你编辑了庄园{estate_id}，名称为“{name}”，描述为“{description}”",
-    "edit_estate_parcels": "你{action}包裹{parcels_link}到庄园{estate_id}",
+    "edit_estate_parcels_added":
+      "您已将parcels {parcels_link}添加到estate {estate_id}",
+    "edit_estate_parcels_removed":
+      "您从庄园{estate_id}中删除了包裹{parcels_link}",
     "manage": "您授权{address_link}更新{parcel_link}上的内容",
     "manage_revoked": "您撤销了允许{address_link}更新{parcel_link}内容的授权",
     "mortgage_mana": "您{action} {mortgage_contract_link}代表您操作 MANA。",
