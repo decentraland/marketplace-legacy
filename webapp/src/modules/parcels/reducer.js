@@ -284,7 +284,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
               updatedParcels.push(state.data[parcelId])
             }
           })
-          console.log(updatedParcels)
+
           return {
             ...state,
             data: {

@@ -193,17 +193,22 @@ export function addressReducer(state = INITIAL_STATE, action) {
           }
         }
         case TRANSFER_ESTATE_SUCCESS: {
-          const { estate } = transaction.payload
-          const user = state.data[transaction.from]
+          const { estate, to } = transaction.payload
+          const fromUser = state.data[transaction.from]
+          const toUser = state.data[to]
           return {
             ...state,
             data: {
               ...state.data,
               [transaction.from]: {
-                ...user,
-                estate_ids: user.estate_ids.filter(
+                ...fromUser,
+                estate_ids: fromUser.estate_ids.filter(
                   estateId => estateId !== estate.asset_id
                 )
+              },
+              [to]: {
+                ...toUser,
+                estate_ids: [...toUser.estate_ids, estate.asset_id]
               }
             }
           }
