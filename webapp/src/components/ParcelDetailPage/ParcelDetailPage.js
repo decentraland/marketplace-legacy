@@ -28,16 +28,21 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.isLoading) {
-      this.fetchAdditionalParcelResources()
+    const { x, y } = this.props
+    const hasChangedParcel = nextProps.x !== x || nextProps.y !== y
+
+    if (hasChangedParcel) {
+      this.isAdditionalResourcesFetched = false
+    }
+
+    if (!nextProps.isLoading || hasChangedParcel) {
+      this.fetchAdditionalParcelResources(nextProps.x, nextProps.y)
     }
   }
 
-  fetchAdditionalParcelResources() {
+  fetchAdditionalParcelResources(x, y) {
     if (!this.isAdditionalResourcesFetched) {
       const {
-        x,
-        y,
         onFetchParcelPublications,
         onFetchActiveParcelMortgages
       } = this.props
