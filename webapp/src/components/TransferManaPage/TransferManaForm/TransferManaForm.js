@@ -64,7 +64,7 @@ export default class TransferManaForm extends React.PureComponent {
     )
   }
 
-  isMANACTokenAddress() {
+  isMANATokenAddress() {
     return (
       this.state.address.trim().toLowerCase() ===
       getMANATokenAddress().toLowerCase()
@@ -125,7 +125,7 @@ export default class TransferManaForm extends React.PureComponent {
               </span>
             </React.Fragment>
           ) : null}
-          {this.isMANACTokenAddress() ? (
+          {this.isMANATokenAddress() ? (
             <React.Fragment>
               <br />
               <br />
