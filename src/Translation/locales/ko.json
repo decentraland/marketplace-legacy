@@ -410,6 +410,7 @@
     "current_balance": "현재 잔액은 {balance}입니다.",
     "irreversible":
       "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
+    "is_mana_contract_address": "그것은 MANA 계약 주소입니다.",
     "title": "MANA 이전"
   },
   "transfer_parcel": {

@@ -5,8 +5,9 @@ import { eth } from 'decentraland-eth'
 import { Button, Form, Input } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
-import { preventDefault } from 'lib/utils'
 import { t } from 'modules/translation/utils'
+import { getMANATokenAddress } from 'modules/wallet/utils'
+import { preventDefault } from 'lib/utils'
 
 import './TransferManaForm.css'
 
@@ -63,6 +64,13 @@ export default class TransferManaForm extends React.PureComponent {
     )
   }
 
+  isMANACTokenAddress() {
+    return (
+      this.state.address.trim().toLowerCase() ===
+      getMANATokenAddress().toLowerCase()
+    )
+  }
+
   isDisabled() {
     const { balance } = this.props
     const { amount, address } = this.state
@@ -114,6 +122,15 @@ export default class TransferManaForm extends React.PureComponent {
               <br />
               <span className="transfer-warning error">
                 {t('global.own_address_warning')}
+              </span>
+            </React.Fragment>
+          ) : null}
+          {this.isMANACTokenAddress() ? (
+            <React.Fragment>
+              <br />
+              <br />
+              <span className="transfer-warning error">
+                {t('transfer_mana.is_mana_contract_address')}
               </span>
             </React.Fragment>
           ) : null}

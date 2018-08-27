@@ -416,6 +416,7 @@
     "current_balance": "Your current balance is {balance}",
     "irreversible":
       "Remember that transferring MANA is an irreversible operation.",
+    "is_mana_contract_address": "That's the MANA contract address",
     "title": "Transfer MANA"
   },
   "transfer_parcel": {
