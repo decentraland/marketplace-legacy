@@ -49,6 +49,7 @@ export default class ParcelActions extends React.PureComponent {
             {this.canCreateEstate() && (
               <Link to={locations.createEstateLand(x, y)}>
                 <Button size="tiny">
+                  <Icon name="object group" />
                   {t('parcel_detail.actions.create_estate')}
                 </Button>
               </Link>

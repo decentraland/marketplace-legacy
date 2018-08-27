@@ -52,7 +52,15 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { x, y, publications, districts, mortgage, onBuy } = this.props
+    const {
+      x,
+      y,
+      publications,
+      districts,
+      estates,
+      mortgage,
+      onBuy
+    } = this.props
 
     return (
       <div className="ParcelDetailPage">
@@ -65,6 +73,7 @@ export default class ParcelDetailPage extends React.PureComponent {
                 isOwner={isOwner}
                 publications={publications}
                 districts={districts}
+                estates={estates}
                 onBuy={onBuy}
                 mortgage={mortgage}
               />

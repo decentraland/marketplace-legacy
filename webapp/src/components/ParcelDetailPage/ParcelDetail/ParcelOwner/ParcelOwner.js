@@ -5,7 +5,7 @@ import { utils } from 'decentraland-commons'
 import { Button, Icon } from 'semantic-ui-react'
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
-import { parcelType, districtType } from 'components/types'
+import { parcelType, districtType, estateType } from 'components/types'
 import { getDistrict, isDistrict } from 'shared/asset'
 import { t, t_html } from 'modules/translation/utils'
 
@@ -15,11 +15,12 @@ export default class ParcelOwner extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool.isRequired,
-    districts: PropTypes.objectOf(districtType).isRequired
+    districts: PropTypes.objectOf(districtType).isRequired,
+    estates: PropTypes.objectOf(estateType).isRequireds
   }
 
   render() {
-    const { districts, parcel, isOwner } = this.props
+    const { districts, estates, parcel, isOwner } = this.props
     if (!parcel || utils.isEmptyObject(districts)) {
       return null
     }
@@ -68,10 +69,25 @@ export default class ParcelOwner extends React.PureComponent {
       }
 
       return (
-        <span className="ParcelOwner is-district">
+        <span className="ParcelOwner part-of">
           {t_html('parcel_detail.owner.part_of', { name: districtName })}
         </span>
       )
+    }
+
+    if (parcel.estate_id) {
+      if (!estates) return null
+      const estate = estates[parcel.estate_id]
+      if (estate) {
+        const estateName = (
+          <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
+        )
+        return (
+          <span className="ParcelOwner part-of">
+            {t_html('parcel_detail.owner.part_of', { name: estateName })}
+          </span>
+        )
+      }
     }
 
     if (parcel.owner) {

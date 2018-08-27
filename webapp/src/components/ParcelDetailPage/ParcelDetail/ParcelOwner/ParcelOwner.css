@@ -11,7 +11,7 @@
   margin-left: 25px;
 }
 
-.ParcelOwner.is-district {
+.ParcelOwner.part-of {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
@@ -20,7 +20,7 @@
   max-width: 100%;
 }
 
-.ParcelOwner.is-district .district-name {
+.ParcelOwner.part-of .district-name {
   color: var(--gray);
 }
 
