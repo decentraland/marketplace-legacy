@@ -31,6 +31,7 @@ export default class TransferEstatePage extends React.PureComponent {
               hasCustomFooter
             >
               <TransferAssetForm
+                address={estate.owner}
                 asset={estate}
                 isTxIdle={isTxIdle}
                 isOnSale={false}
