@@ -55,8 +55,8 @@
       "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
   "estate_detail": {
-    "delete": "Eliminar estado",
-    "delete_desc": "Vas a eliminar la propiedad {estate_id}",
+    "delete": "Eliminar Estado",
+    "delete_desc": "Vas a eliminar la propiedad {name}",
     "edit_parcels": "Editar paquetes",
     "parcels": "Parcelas incluidas",
     "pending_tx": "Esta propiedad"
@@ -414,8 +414,7 @@
     }
   },
   "transfer_estate": {
-    "about_to_transfer":
-      "Estás a punto de transferir la propiedad {estate_id}.",
+    "about_to_transfer": "Estás a punto de transferir la propiedad {name}.",
     "transfer_estate": "Transferir propiedad"
   },
   "transfer_mana": {

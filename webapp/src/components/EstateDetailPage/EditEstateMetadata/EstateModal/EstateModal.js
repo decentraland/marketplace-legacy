@@ -84,12 +84,12 @@ export default class EstateModal extends React.PureComponent {
           {hasCustomFooter ? null : (
             <div>
               <Grid.Column>
-                {isTxIdle && (
-                  <div className="tx-idle">
-                    <TxStatus.Idle isIdle={isTxIdle} />
-                  </div>
-                )}
                 <div className="modal-buttons">
+                  {isTxIdle && (
+                    <div className="tx-idle">
+                      <TxStatus.Idle isIdle={isTxIdle} />
+                    </div>
+                  )}
                   <Button onClick={onCancel} type="button">
                     {cancelLabel || t('global.cancel')}
                   </Button>

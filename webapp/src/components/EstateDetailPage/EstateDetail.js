@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Grid, Container, Button } from 'semantic-ui-react'
+import { Icon, Header, Grid, Container, Button } from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
@@ -72,23 +72,23 @@ export default class EstateDetail extends React.PureComponent {
                     }
                     className={'selected-parcels-headline'}
                   >
-                    <p className="parcels-included">
+                    <h3 className="parcels-included">
                       {t('estate_detail.parcels')}
-                    </p>
-                  </Grid.Column>
-                  {isOwner && (
-                    <Grid.Column
-                      width={8}
-                      className={'selected-parcels-headline'}
-                    >
                       <Button
                         size="tiny"
                         className="link"
                         onClick={onEditParcels}
                       >
+                        <Icon name="pencil" />
                         {t('estate_detail.edit_parcels')}{' '}
                       </Button>
-                    </Grid.Column>
+                    </h3>
+                  </Grid.Column>
+                  {isOwner && (
+                    <Grid.Column
+                      width={8}
+                      className={'selected-parcels-headline'}
+                    />
                   )}
                   <Grid.Column width={16} className={'selected-parcels'}>
                     {parcels.map(({ x, y }) => {

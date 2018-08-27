@@ -53,7 +53,7 @@ export default class Routes extends React.Component {
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.ediEstateParcels}
+            path={locations.editEstateParcels}
             component={props => (
               <EstateDetailPage
                 isSelecting={true}
@@ -66,7 +66,7 @@ export default class Routes extends React.Component {
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.ediEstateMetadata}
+            path={locations.editEstateMetadata}
             component={props => (
               <EstateDetailPage
                 isSelecting={false}

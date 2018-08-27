@@ -17,7 +17,8 @@ import {
   districtType,
   publicationType,
   mortgageType,
-  walletType
+  walletType,
+  estateType
 } from 'components/types'
 import { getDistrict, getOpenPublication } from 'shared/asset'
 import { t } from 'modules/translation/utils'
@@ -27,6 +28,7 @@ export default class ParcelDetail extends React.PureComponent {
     parcel: parcelType.isRequired,
     wallet: walletType.isRequired,
     publications: PropTypes.objectOf(publicationType),
+    estates: PropTypes.objectOf(estateType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
     mortgage: mortgageType
@@ -50,6 +52,7 @@ export default class ParcelDetail extends React.PureComponent {
     const {
       parcel,
       districts,
+      estates,
       publications,
       isOwner,
       mortgage,
@@ -72,6 +75,7 @@ export default class ParcelDetail extends React.PureComponent {
             <Grid.Column className="parcel-owner-container">
               <ParcelOwner
                 parcel={parcel}
+                estates={estates}
                 districts={districts}
                 isOwner={isOwner}
               />

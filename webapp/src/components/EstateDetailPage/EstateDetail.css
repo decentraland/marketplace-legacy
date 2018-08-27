@@ -1,13 +1,14 @@
-.EstateDetail {
+.Page > .EstateDetail {
   color: var(--text);
   font-size: 15px;
+  padding-top: 0px;
 }
 
-.EstateDetail .estate-title{
+.EstateDetail .estate-title {
   margin-bottom: 5px;
 }
 
-.EstateDetail .estate-description{
+.EstateDetail .estate-description {
   color: var(--gray);
   font-size: 15px;
 }
@@ -38,19 +39,18 @@
 .EstateDetail .details .parcels-included {
   width: 100%;
   font-size: 18px;
-  color: var(--gray);
+  color: white;
   margin-bottom: 0;
   text-align: left;
 }
 
-.EstateDetail .details  .selected-parcels-headline.column {
-  margin-top: 20px;
-  text-align: right
+.EstateDetail .details .parcels-included .button.tiny.link {
+  margin-left: 16px;
 }
 
-
-.EstateDetail .details  .selected-parcels-headline.column .button{
-  font-size: 14px;
+.EstateDetail .details .selected-parcels-headline.column {
+  margin-top: 20px;
+  text-align: right;
 }
 
 .EstateDetail .details .selected-parcels.column {

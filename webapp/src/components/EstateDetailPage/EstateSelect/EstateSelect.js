@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Grid, Container, Button } from 'semantic-ui-react'
+import { Header, Icon, Grid, Container, Button } from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
@@ -162,7 +162,7 @@ export default class EstateSelect extends React.PureComponent {
         <Container>
           <Grid className="estate-selection">
             <Grid.Row>
-              <Grid.Column width={8}>
+              <Grid.Column width={isCreation ? 16 : 8}>
                 <Header size="large">
                   <p>
                     {isCreation
@@ -182,6 +182,7 @@ export default class EstateSelect extends React.PureComponent {
                       className="link"
                       onClick={onDeleteEstate}
                     >
+                      <Icon name="trash" />
                       {t('estate_detail.delete')}{' '}
                     </Button>
                   </Grid.Column>

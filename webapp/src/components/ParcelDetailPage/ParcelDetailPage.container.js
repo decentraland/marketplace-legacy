@@ -10,6 +10,7 @@ import { fetchActiveParcelMortgagesRequest } from 'modules/mortgage/actions'
 import { getParcelMortgageFactory } from 'modules/mortgage/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
+import { getEstates } from 'modules/estates/selectors'
 
 import ParcelDetailPage from './ParcelDetailPage'
 
@@ -21,7 +22,8 @@ const mapState = (state, ownProps) => {
     y,
     publications: getPublications(state),
     districts: getDistricts(state),
-    mortgage: getParcelMortgage(state)
+    mortgage: getParcelMortgage(state),
+    estates: getEstates(state)
   }
 }
 

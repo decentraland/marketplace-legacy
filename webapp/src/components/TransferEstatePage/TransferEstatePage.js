@@ -26,7 +26,7 @@ export default class TransferEstatePage extends React.PureComponent {
               parcels={estate.data.parcels}
               title={t('transfer_estate.transfer_estate')}
               subtitle={t_html('transfer_estate.about_to_transfer', {
-                estate_id: assetId
+                name: estate.data.name
               })}
               hasCustomFooter
             >
