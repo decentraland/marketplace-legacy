@@ -414,6 +414,7 @@
     "current_balance": "現在の残高：{balance}",
     "irreversible":
       "MANAの転送はやり直すことができませんので、ご確認ください。",
+    "is_mana_contract_address": "それがMANA契約のアドレスです",
     "title": "MANAを転送する"
   },
   "transfer_parcel": {
