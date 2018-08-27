@@ -103,18 +103,6 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  renderParcelsLink(parcels) {
-    return (
-      <React.Fragment>
-        {parcels.map((p, index) => (
-          <span key={buildCoordinate(p.x, p.y)} className="parcels-link">
-            {this.renderParcelLink(p.x, p.y)}
-          </span>
-        ))}
-      </React.Fragment>
-    )
-  }
-
   renderEstateLink(estate) {
     return (
       <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
