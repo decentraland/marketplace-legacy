@@ -28,7 +28,14 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.isLoading) {
+    const { x, y } = this.props
+    const hasChangedParcel = nextProps.x !== x || nextProps.y !== y
+
+    if (hasChangedParcel) {
+      this.isAdditionalResourcesFetched = false
+    }
+
+    if (!nextProps.isLoading || hasChangedParcel) {
       this.fetchAdditionalParcelResources()
     }
   }
