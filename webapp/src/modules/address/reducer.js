@@ -194,8 +194,8 @@ export function addressReducer(state = INITIAL_STATE, action) {
         }
         case TRANSFER_ESTATE_SUCCESS: {
           const { estate, to } = transaction.payload
-          const fromUser = state.data[transaction.from]
-          const toUser = state.data[to]
+          const fromUser = state.data[transaction.from] || { ...EMPTY_ADDRESS }
+          const toUser = state.data[to] || { ...EMPTY_ADDRESS }
           return {
             ...state,
             data: {
