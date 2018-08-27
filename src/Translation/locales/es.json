@@ -380,9 +380,9 @@
     "edit_estate_metadata":
       "Editó el estado {estate_id} con el nombre \"{name}\" y la descripción \"{description}\"",
     "edit_estate_parcels_added":
-      "Agregaste parcelas {parcels_link} a estate {estate_id}",
+      "Agregaste parcelas {parcels_link} a la propiedad {estate_id}",
     "edit_estate_parcels_removed":
-      "Has eliminado parcelas {parcels_link} de estate {estate_id}",
+      "Has eliminado parcelas {parcels_link} de la propiedad {estate_id}",
     "manage":
       "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
     "manage_revoked":
