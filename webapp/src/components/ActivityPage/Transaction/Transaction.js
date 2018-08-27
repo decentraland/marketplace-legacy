@@ -64,7 +64,7 @@ export default class Transaction extends React.PureComponent {
   }
 
   handleTransactionClick = e => {
-    if (e.target.nodeName !== 'A') {
+    if (e.target.nodeName !== 'A' && e.target.nodeName !== 'CANVAS') {
       const { tx, network } = this.props
       const href = getEtherscanHref({ txHash: tx.hash }, network)
       window.open(href, '_blank')
@@ -103,20 +103,10 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  renderParcelsLink(parcels) {
+  renderEstateLink(estate) {
     return (
-      <React.Fragment>
-        {parcels.map((p, index) => (
-          <span key={buildCoordinate(p.x, p.y)} className="parcels-link">
-            {this.renderParcelLink(p.x, p.y)}
-          </span>
-        ))}
-      </React.Fragment>
+      <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
     )
-  }
-
-  renderEstateLink(assetId) {
-    return <Link to={locations.estateDetail(assetId)}>{assetId}</Link>
   }
 
   renderText() {
@@ -270,7 +260,7 @@ export default class Transaction extends React.PureComponent {
       case CREATE_ESTATE_SUCCESS: {
         const { estate } = payload
         return t_html('transaction.create_estate', {
-          parcels_link: this.renderParcelsLink(estate.data.parcels)
+          name: estate.data.name
         })
       }
       case EDIT_ESTATE_PARCELS_SUCCESS: {
@@ -280,15 +270,15 @@ export default class Transaction extends React.PureComponent {
             ? 'transaction.edit_estate_parcels_added'
             : 'transaction.edit_estate_parcels_removed',
           {
-            estate_id: this.renderEstateLink(estate.asset_id),
-            parcels_link: this.renderParcelsLink(parcels)
+            name: this.renderEstateLink(estate),
+            amount: parcels.length
           }
         )
       }
       case EDIT_ESTATE_METADATA_SUCCESS: {
         const { estate } = payload
         return t_html('transaction.edit_estate_metadata', {
-          estate_id: this.renderEstateLink(estate.asset_id),
+          estate_id: this.renderEstateLink(estate),
           name: estate.data.name,
           description: estate.data.description
         })
@@ -296,14 +286,14 @@ export default class Transaction extends React.PureComponent {
       case DELETE_ESTATE_SUCCESS: {
         const { estate } = payload
         return t_html('transaction.delete_estate', {
-          estate_id: estate.asset_id
+          name: estate.data.name
         })
       }
       case TRANSFER_ESTATE_SUCCESS: {
         const { estate, to } = payload
 
         return t_html('transaction.transfer', {
-          asset_link: this.renderEstateLink(estate.asset_id),
+          asset_link: this.renderEstateLink(estate),
           asset_type: t('global.the_estate').toLowerCase(),
           owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
         })

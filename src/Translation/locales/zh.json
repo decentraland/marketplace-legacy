@@ -343,17 +343,15 @@
     "cancel": "您取消了 {parcel_link} 上的 {publication_link}",
     "cancel_mortgage": "您取消了购买地块 {parcel_link} 的抵押",
     "claim_mortgage_resolution": "你声称{parcel_link}",
-    "create_estate": "您创建了包裹{parcels_link}的地产",
+    "create_estate": "你创建了庄园{name}",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
-    "delete_estate": "你删除了庄园{estate_id}",
+    "delete_estate": "你删除了庄园{name}",
     "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
     "edit_estate_metadata":
       "你编辑了庄园{estate_id}，名称为“{name}”，描述为“{description}”",
-    "edit_estate_parcels_added":
-      "您已将parcels {parcels_link}添加到estate {estate_id}",
-    "edit_estate_parcels_removed":
-      "您从庄园{estate_id}中删除了包裹{parcels_link}",
+    "edit_estate_parcels_added": "您将{amount} parcel添加到庄园{name}",
+    "edit_estate_parcels_removed": "您从庄园{name}中删除了{amount}包裹",
     "manage": "您授权{address_link}更新{parcel_link}上的内容",
     "manage_revoked": "您撤销了允许{address_link}更新{parcel_link}内容的授权",
     "mortgage_mana": "您{action} {mortgage_contract_link}代表您操作 MANA。",
