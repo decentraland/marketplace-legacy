@@ -57,7 +57,7 @@
   },
   "estate_detail": {
     "delete": "Supprimer la succession",
-    "delete_desc": "Vous allez supprimer le domaine {estate_id}",
+    "delete_desc": "Vous allez supprimer le domaine {name}",
     "edit_parcels": "Modifier les colis",
     "parcels": "Colis inclus",
     "pending_tx": "Ce domaine"

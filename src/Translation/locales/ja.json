@@ -56,7 +56,7 @@
   },
   "estate_detail": {
     "delete": "不動産を削除",
-    "delete_desc": "あなたは不動産{estate_id}を削除しようとしています。",
+    "delete_desc": "あなたは不動産{name}を削除しようとしています。",
     "edit_parcels": "パーセルの編集",
     "parcels": "パーセルを含む",
     "pending_tx": "この不動産"

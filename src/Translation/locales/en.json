@@ -55,8 +55,8 @@
       "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
   "estate_detail": {
-    "delete": "Delete estate",
-    "delete_desc": "You are going to delete the estate {estate_id}",
+    "delete": "Delete Estate",
+    "delete_desc": "You are going to delete the estate {name}",
     "edit_parcels": "Edit Parcels",
     "parcels": "Parcels included",
     "pending_tx": "This estate"

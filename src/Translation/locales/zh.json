@@ -56,7 +56,7 @@
   },
   "estate_detail": {
     "delete": "删除遗产",
-    "delete_desc": "你要删除庄园{estate_id}",
+    "delete_desc": "你要删除庄园{name}",
     "edit_parcels": "编辑地块",
     "parcels": "包裹包括在内",
     "pending_tx": "这个庄园"
