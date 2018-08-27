@@ -22,8 +22,9 @@ export const isMortgageDefaulting = mortgage =>
   new Date().getTime() > parseInt(mortgage.is_due_at * 1000, 10)
 export const isMortgageDefaulted = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.defaulted) ||
-  (!isMortgagePaid(mortgage) &&
-    new Date().getTime() <
+  (!isMortgagePending(mortgage) &&
+    !isMortgagePaid(mortgage) &&
+    new Date().getTime() >
       parseInt(mortgage.is_due_at * 1000, 10) + MORTGAGE_DEFAULT_IN_DAYS)
 
 // Interest in seconds
@@ -90,6 +91,7 @@ export function getActiveMortgageByBorrower(
  */
 
 export function getMortgageOutstandingAmount(mortgage) {
+  const oneHour = 60 * 60 // used to ensure the total payment of the mortgage
   if (!mortgage) {
     return 0
   }
@@ -102,7 +104,7 @@ export function getMortgageOutstandingAmount(mortgage) {
     pending,
     deltaTime
 
-  // Won't calculate interest if payable at  is now or after
+  // Won't calculate interest if payable at is now or after
   if (startedTime + parseInt(mortgage.payable_at, 10) >= now) {
     return Math.ceil(mortgage.outstanding_amount)
   }
@@ -114,14 +116,14 @@ export function getMortgageOutstandingAmount(mortgage) {
   }
 
   if (now <= isDueAt) {
-    deltaTime = now - startedTime
+    deltaTime = now - startedTime + oneHour
     interest = calculateInterest(deltaTime, mortgage.interest_rate, pending)
   } else {
     // Calculate punitory interest if defaulted
     deltaTime = isDueAt - startedTime
     interest = calculateInterest(deltaTime, mortgage.interest_rate, pending)
 
-    deltaTime = now - isDueAt
+    deltaTime = now - isDueAt + oneHour
     const debt = mortgage.amount + interest
     pending = Math.min(debt, debt - mortgage.paid)
 
@@ -168,4 +170,10 @@ export function getMortgageTimeLeft(mortgage) {
 
 export function getMortgageDefaultedStatus() {
   return MORTGAGE_STATUS.defaulted
+}
+
+export function getMortgageStatus(mortgage) {
+  return isMortgageDefaulted(mortgage)
+    ? getMortgageDefaultedStatus()
+    : mortgage.status
 }

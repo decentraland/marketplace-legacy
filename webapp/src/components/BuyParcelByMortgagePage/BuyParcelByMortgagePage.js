@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Loader, Container, Header } from 'semantic-ui-react'
+import { Loader, Container, Header, Message } from 'semantic-ui-react'
 
 import Parcel from 'components/Parcel'
 import { walletType, publicationType } from 'components/types'
@@ -60,6 +60,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     const {
       x,
       y,
+      wallet,
       publication,
       isTxIdle,
       isLoading,
@@ -76,11 +77,41 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
       return this.renderNotConnected()
     }
 
+    const { isMortgageApprovedForMana, isMortgageApprovedForRCN } = wallet
+
     return (
       <Parcel x={x} y={y} ownerNotAllowed>
         {parcel =>
           isOpen(publication) ? (
-            <React.Fragment>
+            <div className="BuyParcelByMortgage">
+              {!isMortgageApprovedForMana ? (
+                <Container text>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('global.unauthorized')}
+                    content={t_html('mortgage.please_authorize_MANA', {
+                      settings_link: (
+                        <Link to={locations.settings}>Settings</Link>
+                      )
+                    })}
+                  />
+                </Container>
+              ) : null}
+              {!isMortgageApprovedForRCN ? (
+                <Container text>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('global.unauthorized')}
+                    content={t_html('mortgage.please_authorize_RCN', {
+                      settings_link: (
+                        <Link to={locations.settings}>Settings</Link>
+                      )
+                    })}
+                  />
+                </Container>
+              ) : null}
               <ParcelModal
                 x={x}
                 y={y}
@@ -104,6 +135,9 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                   onCancel={onCancel}
                   error={error}
                   isTxIdle={isTxIdle}
+                  isDisabled={
+                    !isMortgageApprovedForMana || !isMortgageApprovedForRCN
+                  }
                 />
                 <TxStatus.Asset
                   asset={parcel}
@@ -115,7 +149,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                   }
                 />
               </ParcelModal>
-            </React.Fragment>
+            </div>
           ) : null
         }
       </Parcel>

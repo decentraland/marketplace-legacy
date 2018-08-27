@@ -204,6 +204,10 @@
     "payable": "Payable à",
     "payable_placeholder": "Payable en jours",
     "pending_tx": "Hypothèque pour",
+    "please_authorize_MANA":
+      "S'il vous plaît aller à {settings_link} et et autoriser le contrat Mortgage Helper à exploiter MANA en votre nom",
+    "please_authorize_RCN":
+      "S'il vous plaît aller à {settings_link} et autoriser le contrat de gestionnaire hypothécaire à exploiter RCN en votre nom",
     "punitory_rate": "Taux d'intérêt punitif",
     "punitory_rate_placeholder": "Taux punitif",
     "request": "Demander une hypothèque",

@@ -17,7 +17,7 @@ const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
 const MINIMUM_MORTGAGE_AMOUNT = 1
-const MINIMUM_DURATION_DAYS = 30
+const MINIMUM_DURATION_DAYS = 1
 const MINIMUM_PAYABLE_DAYS = 0
 const MAXIMUM_INTEREST_RATE = 100
 const MINIMUM_INTEREST_RATE = 1
@@ -31,7 +31,8 @@ export default class MortgageForm extends React.PureComponent {
     error: PropTypes.string,
     isTxIdle: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    isDisabled: PropTypes.bool.isRequired
   }
 
   static defaultProps = {
@@ -177,7 +178,7 @@ export default class MortgageForm extends React.PureComponent {
   }
 
   render() {
-    const { onCancel, isTxIdle, error } = this.props
+    const { onCancel, isTxIdle, error, isDisabled } = this.props
     const {
       amount,
       payableAt,
@@ -291,11 +292,15 @@ export default class MortgageForm extends React.PureComponent {
         ) : null}
         {error && <Message error>{<div>{error}</div>}</Message>}
         <br />
-        <div>
+        <div className="actions">
           <Button onClick={onCancel} type="button">
             {t('global.cancel')}
           </Button>
-          <Button type="submit" primary={true} disabled={isTxIdle}>
+          <Button
+            type="submit"
+            primary={true}
+            disabled={isTxIdle || isDisabled}
+          >
             {t('global.request')}
           </Button>
         </div>

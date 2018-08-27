@@ -199,6 +199,10 @@
     "payable": "지불 할 곳 :",
     "payable_placeholder": "일 단위로 지불 가능",
     "pending_tx": "모기지",
+    "please_authorize_MANA":
+      "{settings_link}에 가서 귀하를 대신하여 MANA를 운영하기 위해 저당 도우미 계약을 승인하십시오.",
+    "please_authorize_RCN":
+      "{settings_link}로 가서 모기지 매니저 계약을 통해 귀하를 대신하여 RCN을 운영하도록 허가하십시오.",
     "punitory_rate": "도살장 이자율",
     "punitory_rate_placeholder": "처벌 비율",
     "request": "모기지 신청",

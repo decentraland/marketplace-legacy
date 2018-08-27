@@ -13,9 +13,8 @@ import { isMortgageActive } from 'shared/mortgage'
 import { AUCTION_DATE, buildCoordinate } from 'shared/parcel'
 import { getOpenPublication } from 'shared/asset'
 import { t } from 'modules/translation/utils'
-
 import { formatDate } from 'lib/utils'
-
+import { getMortgageStatus } from 'shared/mortgage'
 import './ParcelCard.css'
 
 export default class ParcelCard extends React.PureComponent {
@@ -88,8 +87,12 @@ export default class ParcelCard extends React.PureComponent {
           {showMortgage &&
             isMortgageActive(parcel.mortgage, parcel, publications) && (
               <React.Fragment>
-                <p className={`mortgage-status ${parcel.mortgage.status}`}>
-                  {parcel.mortgage.status}
+                <p
+                  className={`mortgage-status ${getMortgageStatus(
+                    parcel.mortgage
+                  )}`}
+                >
+                  {getMortgageStatus(parcel.mortgage)}
                 </p>
               </React.Fragment>
             )}

@@ -14,19 +14,14 @@ import { getDistricts } from 'modules/districts/selectors'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
-  // Instanciate selectors
   const { x, y } = getMatchParams(ownProps)
   const getParcelMortgage = getParcelMortgageFactory(x, y)
-  // Return mapStateToProps function
-  return (state, ownProps) => {
-    const { x, y } = getMatchParams(ownProps)
-    return {
-      x,
-      y,
-      publications: getPublications(state),
-      districts: getDistricts(state),
-      mortgage: getParcelMortgage(state)
-    }
+  return {
+    x,
+    y,
+    publications: getPublications(state),
+    districts: getDistricts(state),
+    mortgage: getParcelMortgage(state)
   }
 }
 
