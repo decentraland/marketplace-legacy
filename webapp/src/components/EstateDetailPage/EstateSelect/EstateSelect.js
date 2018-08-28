@@ -37,7 +37,7 @@ export default class EstateSelect extends React.PureComponent {
       return
     }
 
-    const { estate, isCreation, onChange } = this.props
+    const { estate, onChange } = this.props
     const parcels = estate.data.parcels
 
     if (isEstate(asset) && asset.asset_id !== estate.asset_id) {
@@ -53,12 +53,7 @@ export default class EstateSelect extends React.PureComponent {
       const newParcels = parcels.filter(
         coords => !isEqualCoords(coords, { x, y })
       )
-
-      if (
-        !areConnected(newParcels, [...parcels]) ||
-        !areConnected(newParcels) ||
-        (!isCreation && newParcels.length < 2)
-      ) {
+      if (!areConnected(newParcels)) {
         return
       }
       return onChange(newParcels)
