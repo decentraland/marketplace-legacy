@@ -120,6 +120,7 @@
     "own_address_warning": "C'est ta propre adresse!",
     "owned_by": "Controlé par",
     "owned_by_link": "Controlé par {address_link}",
+    "owner_address_warning": "C'est déjà le propriétaire!",
     "paid_at": "Payé à",
     "parcels": "Parcelles",
     "profile": "Mes LANDs",

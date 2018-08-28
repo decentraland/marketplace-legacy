@@ -53,6 +53,7 @@ export default class TransferParcelPage extends React.PureComponent {
               hasCustomFooter
             >
               <TransferAssetForm
+                address={parcel.owner}
                 asset={parcel}
                 isTxIdle={isTxIdle}
                 isOnSale={isOnSale(parcel, publications)}

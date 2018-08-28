@@ -118,6 +118,7 @@
     "own_address_warning": "그것은 당신의 자신의 주소입니다!",
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
+    "owner_address_warning": "그것은 이미 소유자입니다!",
     "paid_at": "유료",
     "parcels": "필지",
     "profile": "나의 토지",
