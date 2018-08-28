@@ -86,12 +86,6 @@ export default class EstateDetail extends React.PureComponent {
                       )}
                     </h3>
                   </Grid.Column>
-                  {isOwner && (
-                    <Grid.Column
-                      width={8}
-                      className={'selected-parcels-headline'}
-                    />
-                  )}
                   <Grid.Column width={16} className={'selected-parcels'}>
                     {parcels.map(({ x, y }) => {
                       const parcel = allParcels[buildCoordinate(x, y)]
