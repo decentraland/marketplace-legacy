@@ -1,5 +1,3 @@
-import { getCoordsMatcher } from './parcel'
-
 export function isEstate(asset) {
   return !!asset.data.parcels
 }
@@ -45,31 +43,27 @@ export function getInitialEstate(x, y) {
   }
 }
 
-export function areConnected(
-  parcels,
-  remaining = [...parcels],
-  alreadyTraveled = []
-) {
-  if (alreadyTraveled.length === parcels.length) {
-    return true
-  }
-
-  if (remaining.length === 0) {
+export function areConnected(parcels) {
+  if (parcels.length === 0) {
     return false
   }
+  const visited = visitParcel(parcels[0], parcels)
+  return visited.length === parcels.length
+}
 
-  let actual = remaining.pop()
-
-  const neighbours = getNeighbours(actual.x, actual.y, parcels).filter(
-    coords => {
-      return (
-        parcels.some(getCoordsMatcher(coords)) &&
-        !alreadyTraveled.some(getCoordsMatcher(coords))
-      )
-    }
+export function visitParcel(parcel, allParcels = [parcel], visited = []) {
+  var isVisited = visited.some(
+    visitedParcel =>
+      visitedParcel.x === parcel.x && visitedParcel.y === parcel.y
   )
-
-  return areConnected(parcels, remaining, [...alreadyTraveled, ...neighbours])
+  if (!isVisited) {
+    visited.push(parcel)
+    var neighbours = getNeighbours(parcel.x, parcel.y, allParcels)
+    neighbours.forEach(neighbours =>
+      visitParcel(neighbours, allParcels, visited)
+    )
+  }
+  return visited
 }
 
 export function getIsNeighbourMatcher(x, y) {
