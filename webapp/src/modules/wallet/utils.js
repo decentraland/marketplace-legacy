@@ -104,6 +104,11 @@ export function getKyberOracleAddress() {
   return env.get('REACT_APP_KYBER_ORACLE_CONTRACT_ADDRESS')
 }
 
+export function getEstateRegistryAddress() {
+  const estateRegistry = eth.getContract('EstateRegistry')
+  return estateRegistry.address
+}
+
 export async function sendTransaction(tx) {
   const web3 = eth.wallet.getWeb3()
   return utils.promisify(web3.eth.sendTransaction)(tx)

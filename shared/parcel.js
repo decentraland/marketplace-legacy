@@ -23,7 +23,8 @@ export function isParcel(asset) {
 export function toParcelObject(
   parcelsArray,
   prevParcels = [],
-  normalize = true
+  normalize = true,
+  redoConnections = false
 ) {
   return connectParcels(
     parcelsArray,
@@ -32,7 +33,8 @@ export function toParcelObject(
         ? normalizeParcel(parcel, prevParcels[parcel.id])
         : parcel
       return map
-    }, {})
+    }, {}),
+    redoConnections
   )
 }
 
@@ -50,14 +52,17 @@ export function normalizeParcel(parcel, prevParcel = {}) {
   return normalizedParcel
 }
 
-export function connectParcels(parcelArray, parcels) {
+export function connectParcels(parcelArray, parcels, redoConnections = false) {
   for (const parcel of parcelArray) {
     const { id, x, y } = parcel
-    if (parcels[id].estate_id || parcels[id].district_id != null) {
+    if (
+      parcels[id].estate_id ||
+      parcels[id].district_id != null ||
+      redoConnections
+    ) {
       const leftId = buildCoordinate(x - 1, y)
       const topId = buildCoordinate(x, y + 1)
       const topLeftId = buildCoordinate(x - 1, y + 1)
-
       parcels[id].connectedLeft = areConnected(parcels, id, leftId)
       parcels[id].connectedTop = areConnected(parcels, id, topId)
       parcels[id].connectedTopLeft = areConnected(parcels, id, topLeftId)

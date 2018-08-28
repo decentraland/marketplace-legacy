@@ -31,6 +31,14 @@ import {
   FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
   FETCH_MORTGAGED_PARCELS_SUCCESS
 } from '../mortgage/actions'
+import {
+  ADD_PARCELS,
+  EDIT_ESTATE_PARCELS_SUCCESS,
+  DELETE_ESTATE_SUCCESS,
+  CREATE_ESTATE_SUCCESS
+} from 'modules/estates/actions'
+import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
+import { getEstateRegistryAddress } from 'modules/wallet/utils'
 
 const INITIAL_STATE = {
   data: {},
@@ -252,6 +260,78 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             }
           }
           return state
+        }
+        case EDIT_ESTATE_PARCELS_SUCCESS: {
+          const { estate, parcels, type } = transaction.payload
+          const updatedParcels = parcels.map(parcel => {
+            const parcelId = buildCoordinate(parcel.x, parcel.y)
+            return {
+              ...state.data[parcelId],
+              estate_id: type === ADD_PARCELS ? estate.asset_id : null,
+              owner:
+                type === ADD_PARCELS
+                  ? getEstateRegistryAddress()
+                  : transaction.from
+            }
+          })
+
+          estate.data.parcels.forEach(parcel => {
+            const updatedParcel = updatedParcels.find(
+              p => p.x === parcel.x && p.y === parcel.y
+            )
+            if (!updatedParcel) {
+              const parcelId = buildCoordinate(parcel.x, parcel.y)
+              updatedParcels.push(state.data[parcelId])
+            }
+          })
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              ...toParcelObject(updatedParcels, state.data, true, true)
+            }
+          }
+        }
+        case DELETE_ESTATE_SUCCESS: {
+          const { estate } = transaction.payload
+          const updatedParcels = estate.data.parcels.map(parcel => {
+            const parcelId = buildCoordinate(parcel.x, parcel.y)
+            return {
+              ...state.data[parcelId],
+              estate_id: null,
+              owner: transaction.from
+            }
+          })
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              ...toParcelObject(updatedParcels, state.data, true, true)
+            }
+          }
+        }
+        case CREATE_ESTATE_SUCCESS: {
+          const { receipt } = transaction
+          const { estate } = transaction.payload
+          const estateId = getEstateIdFromTxReceipt(receipt)
+          const updatedParcels = estate.data.parcels.map(parcel => {
+            const parcelId = buildCoordinate(parcel.x, parcel.y)
+            return {
+              ...state.data[parcelId],
+              estate_id: estateId,
+              owner: getEstateRegistryAddress()
+            }
+          })
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              ...toParcelObject(updatedParcels, state.data)
+            }
+          }
         }
         default:
           return state
