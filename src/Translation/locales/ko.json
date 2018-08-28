@@ -59,6 +59,7 @@
     "delete": "재산 삭제",
     "delete_desc": "당신은 부동산 {name}을 삭제하려고합니다.",
     "edit_parcels": "소포 편집",
+    "empty_estate": "부동산 {name}이 삭제되었습니다.",
     "parcels": "소포 포함",
     "pending_tx": "이 재산"
   },

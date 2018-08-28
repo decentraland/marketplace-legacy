@@ -58,6 +58,7 @@
     "delete": "Delete Estate",
     "delete_desc": "You are going to delete the estate {name}",
     "edit_parcels": "Edit Parcels",
+    "empty_estate": "The estate {name} has been deleted",
     "parcels": "Parcels included",
     "pending_tx": "This estate"
   },

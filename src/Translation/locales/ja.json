@@ -58,6 +58,7 @@
     "delete": "不動産を削除",
     "delete_desc": "あなたは不動産{name}を削除しようとしています。",
     "edit_parcels": "パーセルの編集",
+    "empty_estate": "不動産{name}が削除されました",
     "parcels": "パーセルを含む",
     "pending_tx": "この不動産"
   },

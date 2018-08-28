@@ -59,6 +59,7 @@
     "delete": "Supprimer la succession",
     "delete_desc": "Vous allez supprimer le domaine {name}",
     "edit_parcels": "Modifier les colis",
+    "empty_estate": "Le domaine {name} a été supprimé",
     "parcels": "Colis inclus",
     "pending_tx": "Ce domaine"
   },

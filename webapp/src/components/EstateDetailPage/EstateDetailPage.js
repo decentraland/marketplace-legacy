@@ -41,27 +41,26 @@ export default class EstateDetailPage extends React.PureComponent {
     return (
       <Estate assetId={assetId} x={x} y={y}>
         {(estate, isOwner, wallet) =>
-          estate.data.parcels.length ? (
-            isNewAsset(estate) || isEditing ? (
-              <EditEstate
-                estate={estate}
-                isCreation={isNewAsset(estate)}
-                isOwner={isOwner}
-                wallet={wallet}
-                onViewAssetClick={onViewAssetClick}
-                isSelecting={isNewAsset(estate) || isSelecting}
-              />
-            ) : (
-              <EstateDetail
-                allParcels={allParcels}
-                estate={estate}
-                isOwner={isOwner}
-                onViewAssetClick={onViewAssetClick}
-                onEditParcels={onEditParcels}
-                onEditMetadata={onEditMetadata}
-              />
-            )
-          ) : null
+          estate.data.parcels.length > 0 &&
+          (isNewAsset(estate) || isEditing) ? (
+            <EditEstate
+              estate={estate}
+              isCreation={isNewAsset(estate)}
+              isOwner={isOwner}
+              wallet={wallet}
+              onViewAssetClick={onViewAssetClick}
+              isSelecting={isNewAsset(estate) || isSelecting}
+            />
+          ) : (
+            <EstateDetail
+              allParcels={allParcels}
+              estate={estate}
+              isOwner={isOwner}
+              onViewAssetClick={onViewAssetClick}
+              onEditParcels={onEditParcels}
+              onEditMetadata={onEditMetadata}
+            />
+          )
         }
       </Estate>
     )
