@@ -74,14 +74,16 @@ export default class EstateDetail extends React.PureComponent {
                   >
                     <h3 className="parcels-included">
                       {t('estate_detail.parcels')}
-                      <Button
-                        size="tiny"
-                        className="link"
-                        onClick={onEditParcels}
-                      >
-                        <Icon name="pencil" />
-                        {t('estate_detail.edit_parcels')}{' '}
-                      </Button>
+                      {isOwner && (
+                        <Button
+                          size="tiny"
+                          className="link"
+                          onClick={onEditParcels}
+                        >
+                          <Icon name="pencil" />
+                          {t('estate_detail.edit_parcels')}{' '}
+                        </Button>
+                      )}
                     </h3>
                   </Grid.Column>
                   {isOwner && (
