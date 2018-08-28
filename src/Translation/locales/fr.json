@@ -59,7 +59,13 @@
     "dissolve": "Dissoudre le domaine",
     "dissolve_desc": "Vous allez dissoudre le domaine {name}",
     "edit_parcels": "Modifier les colis",
+<<<<<<< HEAD
     "empty_estate": "Le domaine {name} a été dissous",
+=======
+    "maximum_parcels_message":
+      "Vous ne pouvez pas envoyer plus de colis {max} en une seule transaction. ",
+    "maximum_parcels_title": "Maximum de colis par transaction",
+>>>>>>> feat: limit maximum parcels per transaction
     "parcels": "Colis inclus",
     "pending_tx": "Ce domaine"
   },

@@ -57,7 +57,12 @@
     "dissolve": "解散遗产",
     "dissolve_desc": "你将解散庄园{name}",
     "edit_parcels": "编辑地块",
+<<<<<<< HEAD
     "empty_estate": "庄园{name}已经解散",
+=======
+    "maximum_parcels_message": "您不能在单个交易中发送超过{max}的包裹。",
+    "maximum_parcels_title": "每笔交易的最大包裹数",
+>>>>>>> feat: limit maximum parcels per transaction
     "parcels": "包括地块",
     "pending_tx": "地产"
   },

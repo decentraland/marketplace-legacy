@@ -1,6 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Icon, Grid, Container, Button } from 'semantic-ui-react'
+import {
+  Message,
+  Header,
+  Icon,
+  Grid,
+  Container,
+  Button
+} from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
@@ -12,6 +19,8 @@ import { isOwner } from 'shared/asset'
 import { hasNeighbour, areConnected, isEstate } from 'shared/estate'
 import { getParcelsNotIncluded } from 'shared/utils'
 import './EstateSelect.css'
+
+const MAX_PARCELS_PER_TX = 12
 
 export default class EstateSelect extends React.PureComponent {
   static propTypes = {
@@ -45,6 +54,10 @@ export default class EstateSelect extends React.PureComponent {
     }
 
     if (!hasNeighbour(x, y, parcels)) {
+      return
+    }
+
+    if (this.hasReachedTransactionLimit()) {
       return
     }
 
@@ -96,13 +109,34 @@ export default class EstateSelect extends React.PureComponent {
     return false
   }
 
-  renderTxLabel = () => {
+  getParcelsToAdd() {
     const { estate, estatePristine } = this.props
     const newParcels = estate.data.parcels
     const pristineParcels = estatePristine.data.parcels
-
     const parcelsToAdd = getParcelsNotIncluded(newParcels, pristineParcels)
+    return parcelsToAdd
+  }
+
+  getParcelsToRemove() {
+    const { estate, estatePristine } = this.props
+    const newParcels = estate.data.parcels
+    const pristineParcels = estatePristine.data.parcels
     const parcelsToRemove = getParcelsNotIncluded(pristineParcels, newParcels)
+    return parcelsToRemove
+  }
+
+  hasReachedTransactionLimit() {
+    const parcelsToAdd = this.getParcelsToAdd()
+    const parcelsToRemove = this.getParcelsToRemove()
+    return (
+      parcelsToAdd.length >= MAX_PARCELS_PER_TX ||
+      parcelsToRemove.length >= MAX_PARCELS_PER_TX
+    )
+  }
+
+  renderTxLabel = () => {
+    const parcelsToAdd = this.getParcelsToAdd()
+    const parcelsToRemove = this.getParcelsToRemove()
     return (
       <React.Fragment>
         {!!parcelsToAdd.length && (
@@ -156,6 +190,21 @@ export default class EstateSelect extends React.PureComponent {
         </div>
         <Container>
           <Grid className="estate-selection">
+            {this.hasReachedTransactionLimit() ? (
+              <Grid.Row>
+                <Grid.Column width={16}>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('estate_detail.maximum_parcels_title')}
+                    content={t('estate_detail.maximum_parcels_message', {
+                      max: MAX_PARCELS_PER_TX
+                    })}
+                  />
+                  <p className="warning-parcels-limit" />
+                </Grid.Column>
+              </Grid.Row>
+            ) : null}
             <Grid.Row>
               <Grid.Column width={isCreation ? 16 : 8}>
                 <Header size="large">

@@ -59,6 +59,9 @@
     "dissolve_desc": "You are going to dissolve the estate {name}",
     "edit_parcels": "Edit Parcels",
     "empty_estate": "The estate {name} has been dissolved",
+    "maximum_parcels_message":
+      "You can't send more than {max} parcels in a single transaction. You can submit this transaction and then add or remove more parcels in a subsequent transaction by editing the estate.",
+    "maximum_parcels_title": "Maximum parcels per transaction",
     "parcels": "Parcels included",
     "pending_tx": "This estate"
   },

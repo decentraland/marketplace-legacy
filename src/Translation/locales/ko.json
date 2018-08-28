@@ -59,7 +59,13 @@
     "dissolve": "부동산 디졸브",
     "dissolve_desc": "당신은 부동산 {name}을 해산하려고합니다.",
     "edit_parcels": "소포 편집",
+<<<<<<< HEAD
     "empty_estate": "부동산 {name}가 해체되었습니다.",
+=======
+    "maximum_parcels_message":
+      "단일 트랜잭션에서 {max} 소포를 초과하여 보낼 수 없습니다. ",
+    "maximum_parcels_title": "거래 당 최대 소포",
+>>>>>>> feat: limit maximum parcels per transaction
     "parcels": "소포 포함",
     "pending_tx": "이 재산"
   },
