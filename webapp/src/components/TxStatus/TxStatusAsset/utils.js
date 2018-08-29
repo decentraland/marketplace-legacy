@@ -9,6 +9,9 @@ export function isParcelPendingTransaction(parcel, tx) {
 }
 
 export function isAssetPendingTransaction(asset, tx) {
+  if (!asset) {
+    return false
+  }
   if (isParcel(asset)) {
     return isParcelPendingTransaction(asset, tx)
   }
