@@ -2,13 +2,13 @@
   "activity": {
     "approve": "您需要先在您的设置页面{settings_link}上授权同意使用 MANA",
     "clear": {
-      "body": "一旦你删除了你的交易记录，你不能撤销这个行动，你确定你想继续吗？",
+      "body": "一旦您删除了您的交易记录，将不能撤销，确定继续吗？",
       "title": "删除交易记录"
     },
     "completed": "已完成",
     "no_activity": "您尚无操作历史。",
     "pending": "待定",
-    "start": "你可以在{marketplace}开始交易！"
+    "start": "您可以在{marketplace}开始交易！"
   },
   "address": {
     "its_you": "您的"
@@ -19,7 +19,7 @@
     "on_sale": "出售中：",
     "owner": "所有者：{owner}",
     "road": "路",
-    "your_estate": "你的地产",
+    "your_estate": "您的地产",
     "your_parcel": "您的地块"
   },
   "buy_mana": {
@@ -50,11 +50,11 @@
     "proposal": "提案"
   },
   "derivation_path": {
-    "invalid": "您为钱包设置了错误的派生路径。 你的派生路径必须遵循模式 44'/60|61'/x'/n"
+    "invalid": "您为钱包设置了错误的派生路径。 您的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "estate_detail": {
     "delete": "删除地产",
-    "delete_desc": "你要删除地产{name}",
+    "delete_desc": "您要删除地产{name}",
     "edit_parcels": "编辑地块",
     "parcels": "包括地块",
     "pending_tx": "地产"
@@ -111,7 +111,7 @@
     "marketplace": "虚拟物品市场",
     "mortgage": "抵押",
     "mortgages": "抵押",
-    "own_address_warning": "那是你自己的地址！",
+    "own_address_warning": "那是您自己的地址！",
     "owned_by": "土地所有人：",
     "owned_by_link": "由 {address_link} 所有",
     "owner_address_warning": "那已是土地所有人了！",
@@ -187,7 +187,7 @@
     "oracle": "Oracle合同地址",
     "outstanding_amount": "杰出的金额",
     "partial_payment": "部分付款",
-    "partial_payment_desc": "你即将支付部分抵押贷款购买土地{parcel_name}",
+    "partial_payment_desc": "您即将支付部分抵押贷款购买土地{parcel_name}",
     "pay": "工资",
     "payable": "应付",
     "payable_placeholder": "应付天数",
@@ -321,7 +321,7 @@
   "sign_in": {
     "account_unlocked": "确保您的帐户已解锁",
     "get_started": "开始使用",
-    "intro": "首先，你需要一个安全的地方来保存所有的LAND。",
+    "intro": "首先，您需要一个安全的地方来保存所有的LAND。",
     "options": {
       "desktop": "您可以使用{metamask_link}扩展名或像{ledger_nano_link}这样的硬件钱包。",
       "mobile": "您可以使用移动浏览器，如{toshi_link}或{imtoken_link}。"
@@ -334,13 +334,13 @@
     "buy_mana": "您已经买了 {mana} MANA",
     "cancel": "您取消了 {parcel_link} 上的 {publication_link}",
     "cancel_mortgage": "您取消了购买地块 {parcel_link} 的抵押",
-    "claim_mortgage_resolution": "你声称{parcel_link}",
+    "claim_mortgage_resolution": "您认领了 {parcel_link}",
     "create_estate": "您创建了地产 {name}",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
     "delete_estate": "您删除了地产{name}",
     "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
-    "edit_estate_metadata": "你编辑了地产{estate_id}，名称为“{name}”，描述为“{description}”",
+    "edit_estate_metadata": "您编辑了地产{estate_id}，名称为“{name}”，描述为“{description}”",
     "edit_estate_parcels_added": "您将 {amount} 地块添加到地产 {name}",
     "edit_estate_parcels_removed": "您从地产 {name} 中删除了 {amount} 地块",
     "manage": "您授权{address_link}更新{parcel_link}上的内容",
@@ -366,7 +366,7 @@
     }
   },
   "transfer_estate": {
-    "about_to_transfer": "你即将转让地产 {name}。",
+    "about_to_transfer": "您即将转让地产 {name}。",
     "transfer_estate": "转让地产"
   },
   "transfer_mana": {
@@ -378,7 +378,7 @@
     "title": "MANA 转帐"
   },
   "transfer_parcel": {
-    "about_to_transfer": "你即将转让 {parcel_name}。",
+    "about_to_transfer": "您即将转让 {parcel_name}。",
     "cant_transfer": "这个 LAND 不能转让，因为它正在出售。",
     "transfer_land": "转让 LAND"
   }
