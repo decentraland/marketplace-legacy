@@ -17,7 +17,7 @@ import './EstateCard.css'
 export default class EstateCard extends React.PureComponent {
   static propTypes = {
     estate: estateType,
-    parcels: parcelType,
+    parcels: PropTypes.arrayOf(parcelType),
     debounce: PropTypes.number
   }
 
