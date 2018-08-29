@@ -285,7 +285,7 @@ export default class Transaction extends React.PureComponent {
       }
       case DELETE_ESTATE_SUCCESS: {
         const { estate } = payload
-        return t_html('transaction.delete_estate', {
+        return t_html('transaction.dissolve_estate', {
           name: estate.data.name
         })
       }

@@ -54,10 +54,10 @@
       "您为钱包设置了错误的派生路径。 您的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "estate_detail": {
-    "delete": "删除地产",
-    "delete_desc": "您要删除地产{name}",
+    "dissolve": "解散遗产",
+    "dissolve_desc": "你将解散庄园{name}",
     "edit_parcels": "编辑地块",
-    "empty_estate": "庄园{name}已被删除",
+    "empty_estate": "庄园{name}已经解散",
     "parcels": "包括地块",
     "pending_tx": "地产"
   },
@@ -346,8 +346,8 @@
     "claim_mortgage_resolution": "您认领了 {parcel_link}",
     "create_estate": "您创建了地产 {name}",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
-    "delete_estate": "您删除了地产{name}",
     "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
+    "dissolve_estate": "你解散了庄园{name}",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
     "edit_estate_metadata":
       "您编辑了地产{estate_id}，名称为“{name}”，描述为“{description}”",

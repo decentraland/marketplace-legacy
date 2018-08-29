@@ -56,10 +56,10 @@
       "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
   },
   "estate_detail": {
-    "delete": "재산 삭제",
-    "delete_desc": "당신은 부동산 {name}을 삭제하려고합니다.",
+    "dissolve": "부동산 디졸브",
+    "dissolve_desc": "당신은 부동산 {name}을 해산하려고합니다.",
     "edit_parcels": "소포 편집",
-    "empty_estate": "부동산 {name}이 삭제되었습니다.",
+    "empty_estate": "부동산 {name}가 해체되었습니다.",
     "parcels": "소포 포함",
     "pending_tx": "이 재산"
   },
@@ -363,9 +363,9 @@
     "claim_mortgage_resolution": "당신은 {parcel_link}을 주장했습니다.",
     "create_estate": "부동산 {name}을 만들었습니다.",
     "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
-    "delete_estate": "부동산 {name}을 삭제했습니다.",
     "disapproved":
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
+    "dissolve_estate": "너는 재산을 해산했다. {name}",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
     "edit_estate_metadata":
