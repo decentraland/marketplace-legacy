@@ -58,15 +58,18 @@
     "dissolve": "ディゾルブエステート",
     "dissolve_desc": "あなたは不動産{name}を解散するつもりです",
     "edit_parcels": "パーセルの編集",
-<<<<<<< HEAD
     "empty_estate": "不動産{name}が解散しました",
-=======
     "maximum_parcels_message":
-      "単一のトランザクションでは、{max}個以上の小包を送ることはできません。",
-    "maximum_parcels_title": "トランザクションあたりの最大パーセル",
->>>>>>> feat: limit maximum parcels per transaction
+      "1回のトランザクションで{max}パーセルを追加または削除すると、ガスがなくなる可能性があります。",
+    "maximum_parcels_title":
+      "あなたはトランザクションごとに最大の小包に達しました",
     "parcels": "パーセルを含む",
     "pending_tx": "この不動産"
+  },
+  "estate_dissolve": {
+    "too_big": "この不動産は大きすぎます",
+    "too_big_desc":
+      "不動産が{max}小包を超過すると、解散する取引にガスがなくなる可能性があります。"
   },
   "estate_edit": {
     "description": "説明",

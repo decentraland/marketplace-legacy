@@ -16,11 +16,14 @@ import { t } from 'modules/translation/utils'
 import { parcelType, estateType } from 'components/types'
 import { getCoordsMatcher, isEqualCoords, buildCoordinate } from 'shared/parcel'
 import { isOwner } from 'shared/asset'
-import { hasNeighbour, areConnected, isEstate } from 'shared/estate'
+import {
+  hasNeighbour,
+  areConnected,
+  isEstate,
+  MAX_PARCELS_PER_TX
+} from 'shared/estate'
 import { getParcelsNotIncluded } from 'shared/utils'
 import './EstateSelect.css'
-
-const MAX_PARCELS_PER_TX = 12
 
 export default class EstateSelect extends React.PureComponent {
   static propTypes = {
@@ -93,7 +96,7 @@ export default class EstateSelect extends React.PureComponent {
       return false
     }
 
-    const pristineParcels = estatePristine.data.parcels
+    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
 
     if (pristineParcels.length != parcels.length) {
       return true
@@ -112,14 +115,14 @@ export default class EstateSelect extends React.PureComponent {
   getParcelsToAdd() {
     const { estate, estatePristine } = this.props
     const newParcels = estate.data.parcels
-    const pristineParcels = estatePristine.data.parcels
+    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
     return getParcelsNotIncluded(newParcels, pristineParcels)
   }
 
   getParcelsToRemove() {
     const { estate, estatePristine } = this.props
     const newParcels = estate.data.parcels
-    const pristineParcels = estatePristine.data.parcels
+    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
     return getParcelsNotIncluded(pristineParcels, newParcels)
   }
 

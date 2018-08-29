@@ -59,15 +59,18 @@
     "dissolve": "Dissoudre le domaine",
     "dissolve_desc": "Vous allez dissoudre le domaine {name}",
     "edit_parcels": "Modifier les colis",
-<<<<<<< HEAD
     "empty_estate": "Le domaine {name} a été dissous",
-=======
     "maximum_parcels_message":
-      "Vous ne pouvez pas envoyer plus de colis {max} en une seule transaction. ",
-    "maximum_parcels_title": "Maximum de colis par transaction",
->>>>>>> feat: limit maximum parcels per transaction
+      "Si vous ajoutez ou supprimez plus de paquets {max} en une seule transaction, vous risquez de manquer d'essence. ",
+    "maximum_parcels_title":
+      "Vous avez atteint le maximum de colis par transaction",
     "parcels": "Colis inclus",
     "pending_tx": "Ce domaine"
+  },
+  "estate_dissolve": {
+    "too_big": "Ce domaine est trop grand",
+    "too_big_desc":
+      "Lorsqu'une succession a plus de {max} colis, une transaction à dissoudre peut manquer d'essence. "
   },
   "estate_edit": {
     "description": "La description",

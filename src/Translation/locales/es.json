@@ -59,8 +59,16 @@
     "dissolve_desc": "Vas a disolver la propiedad {name}",
     "edit_parcels": "Editar paquetes",
     "empty_estate": "La propiedad {name} ha sido disuelta",
+    "maximum_parcels_message":
+      "Si agrega o elimina más de {max} parcelas en una sola transacción, puede quedarse sin gas. Puedes enviar esta transacción y luego agregar o quitar más parcelas en otra transacción editando la propiedad",
+    "maximum_parcels_title": "Alcanzaste el máximo de parcelas por transacción",
     "parcels": "Parcelas incluidas",
     "pending_tx": "Esta propiedad"
+  },
+  "estate_dissolve": {
+    "too_big": "Esta propiedad es demasiado grande",
+    "too_big_desc":
+      "Cuando una propiedad tiene más de {max} parcelas, una transacción para disolverlo puede quedarse sin gas. Debes remover parcelas primero editando la propiedad y disolverla cuando tenga {max} parcelas o menos."
   },
   "estate_edit": {
     "description": "Descripción",
