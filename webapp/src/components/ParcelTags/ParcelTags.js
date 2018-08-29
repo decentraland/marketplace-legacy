@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { parcelType, districtType, estateType } from 'components/types'
+import { parcelType, districtType } from 'components/types'
 import { getDistrict, isRoad, isPlaza } from 'shared/asset'
 import { t } from 'modules/translation/utils'
 
@@ -10,7 +10,7 @@ import './ParcelTags.css'
 export default class ParcelTags extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    estate: estateType,
+    parcels: PropTypes.arrayOf(parcelType),
     districts: PropTypes.objectOf(districtType),
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     showDetails: PropTypes.bool
@@ -74,8 +74,8 @@ export default class ParcelTags extends React.PureComponent {
     return this.props.parcel.tags
   }
 
-  getEstateTags() {
-    const { parcels } = this.props.estate
+  getParcelsTags() {
+    const { parcels } = this.props
     const proximities = parcels
       .map(parcel => parcel.tags.proximity)
       .filter(prox => prox)
@@ -102,7 +102,7 @@ export default class ParcelTags extends React.PureComponent {
       return this.getParcelTags()
     }
 
-    return this.getEstateTags()
+    return this.getParcelsTags()
   }
 
   render() {
