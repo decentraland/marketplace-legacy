@@ -18,7 +18,7 @@ export class PublicationRouter {
      * @return {array<Publication>}
      */
     this.app.get(
-      '/api/parcels/:x/:y/publications',
+      '/parcels/:x/:y/publications',
       server.handleRequest(this.getParcelPublications)
     )
 
@@ -28,7 +28,7 @@ export class PublicationRouter {
      * @return {array}
      */
     this.app.get(
-      '/api/publications/:txHash',
+      '/publications/:txHash',
       server.handleRequest(this.getPublication)
     )
   }

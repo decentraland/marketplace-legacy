@@ -1,0 +1,110 @@
+- hosts: backends
+  remote_user: ubuntu
+  vars:
+    app_location: /home/ubuntu/app
+    repo_url: https://github.com/decentraland/marketplace.git
+    repo_branch: master
+    rpc_url: http://localhost:8545
+    new_relic_key: ''
+
+  tasks:
+    - name: Install Python in target host
+      raw: apt install -y python
+      become: yes
+      become_method: sudo
+
+    - name: Base packages
+      block:
+        - name: Update packages
+          apt:
+            update_cache: yes
+        - name: Upgrade packages
+          apt:
+            name: '*'
+            state: latest
+            force_apt_get: true
+        - name: Install required packages
+          apt:
+            name: "{{ packages }}"
+            state: present
+          vars:
+            packages:
+              - "build-essential"
+              - "jq"
+              - "postgresql-client"
+        - name: Autoremove packages
+          apt:
+            autoremove: yes
+      become: yes
+      become_method: sudo
+
+    - name: Install nodejs
+      block:
+        - name: Get nodejs package
+          get_url:
+            url: https://deb.nodesource.com/setup_8.x
+            dest: /tmp/nodesource_setup.sh
+        - name: Update apt source
+          shell: bash /tmp/nodesource_setup.sh
+        - name: Update packages
+          apt:
+            update_cache: yes
+        - name: Install nodejs
+          apt:
+            name: nodejs
+            state: present
+      become: yes
+      become_method: sudo
+
+    - name: Install application
+      block:
+        - name: Clone repo
+          git:
+            repo: '{{ repo_url }}'
+            dest: '{{ app_location }}'
+            version: '{{ repo_branch }}'
+            clone: yes
+            update: yes
+        - name: Install node packages
+          shell: npm install
+          args:
+            chdir: '{{ app_location }}'
+
+    - name: Setup app config file
+      block:
+        - name: Get contract addresses
+          get_url:
+            url: https://contracts.decentraland.org/addresses.json
+            dest: '{{ app_location }}/scripts/addresses.json'
+        - name: Create config file
+          shell:
+            ./build-env.sh "{{ network }}" "{{ connection_string }}" "{{ rpc_url }}" "{{ new_relic_key }}"> ../src/.env
+          args:
+            chdir: '{{ app_location }}/scripts'
+
+    - name: Setup supervisor
+      block:
+        - name: Install supervisor
+          apt:
+            name: supervisor
+            state: present
+        - name: App config file
+          copy:
+            src: '{{ app_location }}/etc/supervisor/mkt-app.conf'
+            dest: /etc/supervisor/conf.d
+            remote_src: yes
+        - name: Monitor config file
+          copy:
+            src: '{{ app_location }}/etc/supervisor/mkt-monitor.conf'
+            dest: /etc/supervisor/conf.d
+            remote_src: yes
+        - name: Reload app
+          supervisorctl:
+            name: 'app:'
+            state: restarted
+        - name: Reload monitor
+          supervisorctl:
+            name: monitor
+            state: restarted
+      become: yes
+      become_method: sudo

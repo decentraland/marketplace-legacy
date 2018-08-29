@@ -1,0 +1,66 @@
+.Page > .EstateDetail {
+  color: var(--text);
+  font-size: 15px;
+  padding-top: 0px;
+}
+
+.EstateDetail .estate-title {
+  margin-bottom: 5px;
+}
+
+.EstateDetail .estate-description {
+  color: var(--gray);
+  font-size: 15px;
+}
+
+.EstateDetail .row .parcels.column {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  align-content: center;
+}
+
+.EstateDetail .parcels h3 {
+  margin: auto 0 15px 0;
+}
+
+.EstateDetail .parcels .description {
+  margin: 0 0 auto 0;
+}
+
+.EstateDetail .EstateActions {
+  text-align: right;
+}
+
+.EstateDetail .details {
+  margin-top: 20px;
+}
+
+.EstateDetail .details .parcels-included {
+  width: 100%;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.EstateDetail .details .parcels-included .button.tiny.link {
+  margin-left: 16px;
+}
+
+.EstateDetail .details .selected-parcels-headline.column {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.EstateDetail .details .selected-parcels.column {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.selected-parcels .ParcelCard {
+  margin-top: 20px !important;
+  margin-bottom: 0;
+  margin-right: 25px;
+}

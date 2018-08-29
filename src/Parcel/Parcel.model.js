@@ -17,7 +17,7 @@ export class Parcel extends Model {
     'owner',
     'data',
     'district_id',
-    'in_estate',
+    'estate_id',
     'tags',
     'auction_price',
     'auction_owner',
@@ -44,14 +44,8 @@ export class Parcel extends Model {
     return coordinates
   }
 
-  static async findInIds(ids) {
-    if (ids.length === 0) return []
-
-    return this.db.query(
-      SQL`SELECT *
-        FROM ${SQL.raw(this.tableName)}
-        WHERE id = ANY(${ids})`
-    )
+  static findByIds(ids) {
+    return new Asset(this).findByIds(ids)
   }
 
   static async findByOwner(owner) {
@@ -64,7 +58,7 @@ export class Parcel extends Model {
 
   static async findOwneableParcels() {
     return this.db.query(
-      `SELECT *
+      SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
     )
@@ -72,24 +66,34 @@ export class Parcel extends Model {
 
   static async findLandmarks() {
     return this.db.query(
-      `SELECT *
+      SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
     )
   }
 
-  static async inRange(min, max) {
-    const [minx, maxy] = coordinates.toArray(min)
-    const [maxx, miny] = coordinates.toArray(max)
-
+  static findWithLastActiveMortgageByBorrower(borrower) {
     return this.db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
       ) as publication
         FROM ${SQL.raw(this.tableName)}
-        WHERE x BETWEEN ${minx} AND ${maxx}
-          AND y BETWEEN ${miny} AND ${maxy}`
+        WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
     )
+  }
+
+  static async inRange(min, max) {
+    const [minx, maxy] =
+      typeof min === 'string' ? coordinates.toArray(min) : [min.x, min.y]
+    const [maxx, miny] =
+      typeof max === 'string' ? coordinates.toArray(max) : [max.x, max.y]
+
+    return this.db.query(SQL`SELECT *, (
+      ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+    ) as publication
+      FROM ${SQL.raw(this.tableName)}
+      WHERE x BETWEEN ${minx} AND ${maxx}
+        AND y BETWEEN ${miny} AND ${maxy}`)
   }
 
   static async encodeAssetId(x, y) {
@@ -149,13 +153,5 @@ export class Parcel extends Model {
 
   isRoad() {
     return District.isRoad(this.attributes.district_id)
-  }
-
-  static async findWithLastActiveMortgageByBorrower(borrower) {
-    return this.db.query(
-      SQL`SELECT *
-        FROM ${SQL.raw(this.tableName)}
-        WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
-    )
   }
 }

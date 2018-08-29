@@ -1,9 +1,16 @@
 {
   "activity": {
+    "approve":
+      "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다.",
+    "clear": {
+      "body":
+        "거래 내역을 삭제하면 해당 작업을 되돌릴 수 없습니다. 계속 하시겠습니까?",
+      "title": "거래 내역 삭제"
+    },
     "completed": "완료 됨",
     "no_activity": "아직 활동이 없습니다.",
     "pending": "보류",
-    "start": "{settings_link}에서 일부 MANA를 승인함으로써 시작할 수 있습니다."
+    "start": "{marketplace}에서 거래를 시작할 수 있습니다!"
   },
   "address": {
     "its_you": "너야"
@@ -14,6 +21,7 @@
     "on_sale": "판매 중 :",
     "owner": "소유자 : {owner}",
     "road": "도로",
+    "your_estate": "당신의 재산",
     "your_parcel": "당신의 토지"
   },
   "buy_mana": {
@@ -47,9 +55,12 @@
     "invalid":
       "지갑에 대해 잘못된 파생 경로를 설정했습니다. 파생 경로는 패턴 44 '/ 60 | 61'/ x '/ n을 따라야합니다."
   },
-  "estate": {
-    "acquired_at": "TK0에서 획득",
-    "created_at": "만든 {date}"
+  "estate_detail": {
+    "delete": "재산 삭제",
+    "delete_desc": "당신은 부동산 {name}을 삭제하려고합니다.",
+    "edit_parcels": "소포 편집",
+    "parcels": "소포 포함",
+    "pending_tx": "이 재산"
   },
   "estate_edit": {
     "description": "기술",
@@ -59,7 +70,11 @@
   },
   "estate_select": {
     "description": "{x}, {y}에서 시작하여 인접한 소포를 선택하십시오.",
-    "selection": "새 부동산에 대한 소포를 선택하십시오."
+    "detail": "부동산 상세",
+    "edit_selection": "지도에서 소포를 선택하십시오.",
+    "new_selection": "새로운 부동산에 대한지도에서 소포를 선택하십시오.",
+    "tx_to_be_send":
+      "다음과 같이 트랜잭션을 {action} 소포로 보냅니다. {parcels}"
   },
   "footer": {
     "color_key": "색상 키",
@@ -71,13 +86,16 @@
   "global": {
     "acquired_at": "TK0에서 획득",
     "activity": "활동",
-    "address_placeholder": "예 : {address}",
+    "add": "더하다",
+    "address_placeholder": "0x...",
     "atlas": "지도",
     "authorized": "허가",
     "balance": "밸런스",
     "blog": "블로그",
     "cancel": "취소",
     "change": "변화",
+    "check_address": "주소를 신중히 확인하십시오.",
+    "clear": "명확한",
     "click_here": "여기를 클릭하십시오",
     "community_chat": "커뮤니티 채팅",
     "confirm": "확인",
@@ -86,6 +104,7 @@
     "continue": "잇다",
     "contributions": "공헌",
     "created_at": "만든 {date}",
+    "edit": "편집하다",
     "estate": "재산",
     "estates": "부동산",
     "expired_at": "만료 됨 {time}",
@@ -96,18 +115,29 @@
     "marketplace": "시장",
     "mortgage": "저당",
     "mortgages": "모기지",
+    "own_address_warning": "그것은 당신의 자신의 주소입니다!",
     "owned_by": "에게 소유 된",
     "owned_by_link": "{address_link} 소유",
+    "owner_address_warning": "그것은 이미 소유자입니다!",
+    "paid_at": "유료",
     "parcels": "필지",
     "profile": "나의 토지",
+    "publications": "간행물",
+    "recipient_address": "수취인 주소",
+    "remove": "풀다",
     "request": "의뢰",
     "retry": "다시 해 보다",
     "revoke": "취소",
+    "sale": "판매",
+    "service_unavailable": "서비스를 사용할 수 없음",
     "settings": "설정",
     "sign_in": "로그인",
     "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "submit": "제출",
+    "the_estate": "재산",
+    "the_parcel": "소포",
     "time_left": "남은 시간",
+    "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
     "unauthorized": "무단",
     "undo": "끄르다",
     "wallet_address": "지갑 주소",
@@ -125,6 +155,7 @@
     "en": "영어",
     "es": "스페인 사람",
     "fr": "프랑스 국민",
+    "ja": "일본어",
     "ko": "한국어",
     "zh": "중국말"
   },
@@ -140,6 +171,8 @@
     "amount": "양",
     "amount_placeholder": "MANA의 금액",
     "cancel": "모기지 취소",
+    "claim": "소유권 주장 소포",
+    "defaulted_in": "에서 기본값",
     "duration": "지속",
     "duration_placeholder": "기간 (일)",
     "errors": {
@@ -157,8 +190,18 @@
     "interest_rate": "이자율",
     "interest_rate_placeholder": "이자율",
     "oracle": "오라클 계약 주소",
+    "outstanding_amount": "미납금",
+    "partial_payment": "부분 지불",
+    "partial_payment_desc":
+      "당신은 토지 {parcel_name}를 구입하기 위해 모기지에 대한 부분적인 지불을하려고합니다",
+    "pay": "지불",
     "payable": "지불 할 곳 :",
     "payable_placeholder": "일 단위로 지불 가능",
+    "pending_tx": "모기지",
+    "please_authorize_MANA":
+      "{settings_link}에 가서 귀하를 대신하여 MANA를 운영하기 위해 저당 도우미 계약을 승인하십시오.",
+    "please_authorize_RCN":
+      "{settings_link}로 가서 모기지 매니저 계약을 통해 귀하를 대신하여 RCN을 운영하도록 허가하십시오.",
     "punitory_rate": "도살장 이자율",
     "punitory_rate_placeholder": "처벌 비율",
     "request": "모기지 신청",
@@ -190,7 +233,6 @@
     "actions": {
       "cancel": "판매취소",
       "create_estate": "부동산 만들기",
-      "edit": "편집",
       "permissions": "권한",
       "sell": "판매",
       "transfer": "이전"
@@ -224,13 +266,15 @@
   "parcel_edit": {
     "description": "설명",
     "edit_land": "토지 편집",
+    "ipns": "콘텐츠 링크",
     "name": "이름",
-    "set_name_and_desc": "{parcel_name}의 이름 및 설명 설정"
+    "set_name_and_desc": "{parcel_name}의 이름 및 설명 설정",
+    "warning_tooltip":
+      "이것은 당신의 장면을 보여주기 위해 사용됩니다. 자신이하는 일을 알고있는 경우에만 업데이트하십시오."
   },
   "parcel_manage": {
     "address": "운영자 주소",
     "address_permission": "이 주소는이 소포의 내용을 업데이트 할 수 있습니다.",
-    "check_address": "주소를 신중히 확인하십시오.",
     "give_permission":
       "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
     "manage_land": "토지 관리"
@@ -259,27 +303,11 @@
     "proximity": "{distance} 개 분실물",
     "road": "도로"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "{parcel_name}을(를) 이전하려고합니다.",
-    "cant_transfer": "이 토지는 판매 중이므로 이전 할 수 없습니다.",
-    "check_address": "신중하게 주소를 확인하십시오",
-    "error_persists":
-      "문제가 지속되면 {community_chat_link}(으)로 문의하십시오.",
-    "irreversible":
-      "토지를 이전하는 것은 돌이킬 수 없는 작업이라는 것을 기억하십시오.",
-    "placeholder": "예: {address}",
-    "recipient_address": "수신자 주소",
-    "transfer_land": "토지 이전",
-    "unknown_error":
-      "알 수없는 오류가 발생했습니다. 자세한 내용은 아래와 같습니다."
-  },
   "profile_page": {
     "empty": "사용자에게는 {content}가 없습니다.",
     "on_sale": "판매 중"
   },
   "publication": {
-    "acquired_at": "{date}에 인수 됨",
-    "canceled": "취소 됨",
     "sold": "판매 됨",
     "view": "보기"
   },
@@ -300,7 +328,7 @@
     "mana_approved":
       "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
     "marketplace_contract": "시장 계약",
-    "mortgage_creator_contract": "모기지 크리에이터 계약",
+    "mortgage_helper_contract": "모기지 크리에이터 계약",
     "mortgage_manager_contract": "모기지 매니저 계약",
     "pending_tx": "보류중인 거래가 있습니다.",
     "unauthorize_land_check":
@@ -313,8 +341,14 @@
   },
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",
-    "options":
-      "먼저 모든 땅을 지킬 안전한 장소가 필요합니다. {metamask_link} 확장 프로그램이나 {ledger_nano_link}와 같은 하드웨어 지갑을 사용할 수 있습니다."
+    "get_started": "시작하다",
+    "intro": "첫째로, 모든 LAND을 지킬 안전한 장소가 필요합니다.",
+    "options": {
+      "desktop":
+        "{metamask_link} 확장 또는 {ledger_nano_link}과 같은 하드웨어 지갑을 사용할 수 있습니다.",
+      "mobile":
+        "{toshi_link} 또는 {imtoken_link}과 같은 모바일 브라우저를 사용할 수 있습니다."
+    }
   },
   "transaction": {
     "approved":
@@ -325,11 +359,20 @@
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
     "cancel_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 취소합니다.",
+    "claim_mortgage_resolution": "당신은 {parcel_link}을 주장했습니다.",
+    "create_estate": "부동산 {name}을 만들었습니다.",
     "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
+    "delete_estate": "부동산 {name}을 삭제했습니다.",
     "disapproved":
       "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",
+    "edit_estate_metadata":
+      "이름이 \"{name}\"이고 설명이 \"{description}\"인 부동산 {estate_id}을 편집했습니다.",
+    "edit_estate_parcels_added":
+      "부동산 {name}에 {amount} 소포를 추가했습니다.",
+    "edit_estate_parcels_removed":
+      "부동산 {name}에서 {amount} 소포를 제거했습니다.",
     "manage":
       "{address_link}에게 {parcel_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다.",
     "manage_revoked":
@@ -338,8 +381,10 @@
       "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}.",
     "mortgage_rcn":
       "{action} 귀하를 대신하여 RCN을 운영하는 {mortgage_contract_link}.",
+    "pay_mortgage":
+      "소포 {parcel_link}을 구입하기 위해 모기지에 대해 {amount}의 부분 지불을했습니다.",
     "publish": "{parcel_link}을(를) 게시했습니다.",
-    "transfer": "{parcel_link}을 {owner_link}로 이전했습니다.",
+    "transfer": "당신은 {asset_type} {asset_link}을 {owner_link}로 옮겼습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."
   },
   "transaction_status": {
@@ -356,12 +401,22 @@
       "pending": "거래가 확인되기를 기다리고 있습니다."
     }
   },
+  "transfer_estate": {
+    "about_to_transfer": "부동산 {name}을 양도하려합니다.",
+    "transfer_estate": "트랜스퍼 에스테이트"
+  },
   "transfer_mana": {
     "action": "이전",
+    "amount": "양",
     "current_balance": "현재 잔액은 {balance}입니다.",
     "irreversible":
       "MANA를 이전하는 것은 돌이킬 수없는 작업이라는 것을 기억하십시오.",
-    "own_address_warning": "그것은 당신의 자신의 주소입니다!",
+    "is_mana_contract_address": "그것은 MANA 계약 주소입니다.",
     "title": "MANA 이전"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "이제 {parcel_name}를 전송하려고합니다.",
+    "cant_transfer": "이 LAND은 판매 중이므로 이전 할 수 없습니다.",
+    "transfer_land": "전송 LAND"
   }
 }

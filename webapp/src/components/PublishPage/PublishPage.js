@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import { Container, Message } from 'semantic-ui-react'
-import PublicationForm from './PublicationForm'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
-
+import ParcelName from 'components/ParcelName'
 import { publicationType, walletType } from 'components/types'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
 import { t, t_html } from 'modules/translation/utils'
-
-import { formatMana, buildCoordinate, isOpen } from 'lib/utils'
+import { isOpen } from 'shared/publication'
+import { buildCoordinate } from 'shared/parcel'
+import { formatMana } from 'lib/utils'
+import PublicationForm from './PublicationForm'
 
 import './PublishPage.css'
 
@@ -43,7 +43,7 @@ export default class PublishPage extends React.PureComponent {
       <Parcel x={x} y={y} ownerOnly>
         {parcel => (
           <div className="PublishPage">
-            {isOpen(publication, PUBLICATION_STATUS.open) ? (
+            {isOpen(publication) ? (
               <Container text>
                 <Message
                   warning
@@ -81,13 +81,15 @@ export default class PublishPage extends React.PureComponent {
             >
               <PublicationForm
                 parcel={parcel}
-                publication={publication}
                 isTxIdle={isTxIdle}
                 onPublish={onPublish}
                 onCancel={onCancel}
                 isDisabled={!isLandAuthorized}
               />
-              <TxStatus.Parcel parcel={parcel} />
+              <TxStatus.Asset
+                asset={parcel}
+                name={<ParcelName parcel={parcel} />}
+              />
             </ParcelModal>
           </div>
         )}

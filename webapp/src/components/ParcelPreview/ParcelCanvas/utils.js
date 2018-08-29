@@ -7,6 +7,9 @@ import * as Impetus from 'impetus'
 import * as wheel from 'mouse-wheel'
 import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
+import { t } from 'modules/translation/utils'
+import { TYPE } from 'shared/asset'
+import { shortenAddress } from 'lib/utils'
 
 export function panzoom(target, cb) {
   if (target instanceof Function) {
@@ -120,5 +123,89 @@ export function panzoom(target, cb) {
     target.removeEventListener('wheel', wheelListener)
     target.removeEventListener('mousedown', initListener)
     target.removeEventListener('touchstart', initListener)
+  }
+}
+
+export function getLabel(type, asset, districts) {
+  switch (type) {
+    case TYPE.loading:
+      return t('atlas.loading') + '...'
+    case TYPE.district:
+    case TYPE.contribution: {
+      const district = districts[asset.district_id]
+      return district ? district.name : 'District'
+    }
+    case TYPE.plaza:
+      return 'Genesis Plaza'
+    case TYPE.roads:
+      return t('atlas.road')
+    case TYPE.myParcels:
+    case TYPE.myParcelsOnSale:
+    case TYPE.myEstates:
+    case TYPE.myEstatesOnSale:
+    case TYPE.taken:
+    case TYPE.onSale: {
+      return asset.data.name || null
+    }
+    case TYPE.unowned:
+    case TYPE.background:
+    default:
+      return null
+  }
+}
+
+export function getDescription(type, asset) {
+  switch (type) {
+    case TYPE.loading:
+    case TYPE.district:
+    case TYPE.contribution:
+    case TYPE.plaza:
+    case TYPE.roads:
+      return null
+    case TYPE.unowned:
+      return t('atlas.no_owner')
+    case TYPE.myParcels:
+    case TYPE.myParcelsOnSale:
+      return t('atlas.your_parcel')
+    case TYPE.myEstates:
+    case TYPE.myEstatesOnSale:
+      return t('atlas.your_estate')
+    case TYPE.taken:
+    case TYPE.onSale: {
+      return t('atlas.owner', { owner: shortenAddress(asset.owner) })
+    }
+    case TYPE.background:
+    default:
+      return null
+  }
+}
+
+export function getTextColor(type) {
+  switch (type) {
+    case TYPE.loading:
+    case TYPE.district:
+    case TYPE.contribution:
+    case TYPE.roads:
+    case TYPE.taken:
+    case TYPE.unowned:
+    case TYPE.background:
+      return 'white'
+
+    case TYPE.myParcels:
+    case TYPE.myParcelsOnSale:
+    case TYPE.myEstates:
+    case TYPE.myEstatesOnSale:
+    case TYPE.plaza:
+    case TYPE.onSale:
+    default:
+      return 'black'
+  }
+}
+
+export function getConnections(asset) {
+  return {
+    connectedLeft: !!(asset && asset.connectedLeft),
+    connectedTop: !!(asset && asset.connectedTop),
+    connectedTopLeft: !!(asset && asset.connectedTopLeft)
   }
 }

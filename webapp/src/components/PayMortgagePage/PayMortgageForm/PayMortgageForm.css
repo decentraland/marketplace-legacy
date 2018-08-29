@@ -1,0 +1,4 @@
+.PayMortgageForm .transfer-warning {
+  color: var(--gray);
+  font-style: italic;
+}

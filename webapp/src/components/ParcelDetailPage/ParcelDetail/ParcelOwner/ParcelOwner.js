@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { utils } from 'decentraland-commons'
 import { Button, Icon } from 'semantic-ui-react'
-import { parcelType, districtType } from 'components/types'
-import { getDistrict, isDistrict } from 'lib/parcelUtils'
-import AddressBlock from 'components/AddressBlock'
-import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
+import AddressBlock from 'components/AddressBlock'
+import { parcelType, districtType, estateType } from 'components/types'
+import { getDistrict, isDistrict } from 'shared/asset'
+import { t, t_html } from 'modules/translation/utils'
 
 import './ParcelOwner.css'
 
@@ -15,11 +15,12 @@ export default class ParcelOwner extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool.isRequired,
-    districts: PropTypes.objectOf(districtType).isRequired
+    districts: PropTypes.objectOf(districtType).isRequired,
+    estates: PropTypes.objectOf(estateType).isRequired
   }
 
   render() {
-    const { districts, parcel, isOwner } = this.props
+    const { districts, estates, parcel, isOwner } = this.props
     if (!parcel || utils.isEmptyObject(districts)) {
       return null
     }
@@ -27,18 +28,24 @@ export default class ParcelOwner extends React.PureComponent {
     if (isOwner) {
       return (
         <span className="ParcelOwner is-owner">
-          <Button size="tiny" className="link">
-            <Icon name="pencil" />
-            <Link to={locations.editLand(parcel.x, parcel.y)}>
-              {t('parcel_detail.actions.edit')}
-            </Link>
-          </Button>
-          <Button size="tiny" className="link">
-            <Icon name="add user" />
-            <Link to={locations.manageLand(parcel.x, parcel.y)}>
+          <Link
+            to={locations.editLand(parcel.x, parcel.y)}
+            className="edit-button"
+          >
+            <Button size="tiny" className="link">
+              <Icon name="pencil" />
+              {t('global.edit')}
+            </Button>
+          </Link>
+          <Link
+            to={locations.manageLand(parcel.x, parcel.y)}
+            className="manage-button"
+          >
+            <Button size="tiny" className="link">
+              <Icon name="add user" />
               {t('parcel_detail.actions.permissions')}
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </span>
       )
     }
@@ -62,10 +69,25 @@ export default class ParcelOwner extends React.PureComponent {
       }
 
       return (
-        <span className="ParcelOwner is-district">
+        <span className="ParcelOwner part-of">
           {t_html('parcel_detail.owner.part_of', { name: districtName })}
         </span>
       )
+    }
+
+    if (parcel.estate_id) {
+      if (!estates) return null
+      const estate = estates[parcel.estate_id]
+      if (estate) {
+        const estateName = (
+          <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
+        )
+        return (
+          <span className="ParcelOwner part-of">
+            {t_html('parcel_detail.owner.part_of', { name: estateName })}
+          </span>
+        )
+      }
     }
 
     if (parcel.owner) {

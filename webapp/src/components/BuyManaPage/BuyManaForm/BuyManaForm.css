@@ -1,7 +1,3 @@
-.BuyManaForm .ui.button + .ui.button {
-  margin-left: 20px;
-}
-
 .BuyManaForm .transfer-warning {
   color: var(--gray);
   font-style: italic;
@@ -36,21 +32,5 @@
 @media (min-width: 768px) {
   .BuyManaForm {
     min-width: 550px;
-  }
-}
-
-@media (max-width: 768px) {
-  .BuyManaForm .footer {
-    display: flex;
-    flex-flow: column-reverse nowrap;
-  }
-
-  .BuyManaForm .footer .button {
-    margin-top: 1em;
-    width: 100%;
-  }
-
-  .BuyManaForm .ui.button + .ui.button {
-    margin-left: 0;
   }
 }

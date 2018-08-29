@@ -1,10 +1,15 @@
 import { createSelector } from 'reselect'
-import { PUBLISH_REQUEST, PUBLISH_SUCCESS } from './actions'
-import { PUBLICATION_STATUS, findAssetPublications } from './utils'
+import {
+  PUBLISH_REQUEST,
+  PUBLISH_SUCCESS,
+  CANCEL_SALE_REQUEST
+} from './actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
+import { isLoadingType } from 'modules/loading/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
-import { buildCoordinate } from 'lib/utils'
+import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
+import { buildCoordinate } from 'shared/parcel'
 
 export const getState = state => state.publication
 export const getData = state => getState(state).data
@@ -12,8 +17,11 @@ export const isLoading = state => getState(state).loading.length > 0
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 
-export const isTxIdle = state =>
-  getLoading(state).some(action => action.type === PUBLISH_REQUEST)
+export const isPublishingIdle = state =>
+  isLoadingType(getLoading(state), PUBLISH_REQUEST)
+
+export const isCancelIdle = state =>
+  isLoadingType(getLoading(state), CANCEL_SALE_REQUEST)
 
 export const getPublications = createSelector(
   getData,

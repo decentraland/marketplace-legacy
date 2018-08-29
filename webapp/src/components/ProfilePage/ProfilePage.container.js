@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { PROFILE_PAGE_TABS } from 'locations'
+
+import { PROFILE_PAGE_TABS, locations } from 'locations'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
@@ -81,7 +82,8 @@ const mapState = (state, { location, match }) => {
 
 const mapDispatch = (dispatch, { match }) => ({
   onFetchAddress: () => dispatch(fetchAddress(match.params.address)),
-  onNavigate: url => dispatch(navigateTo(url))
+  onNavigate: url => dispatch(navigateTo(url)),
+  onAccessDenied: () => dispatch(navigateTo(locations.marketplace))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(ProfilePage))

@@ -8,7 +8,7 @@ import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { mockModelDbOperations } from '../specs/utils'
 import { loadEnv, parseCLICoords } from './utils'
-import { processEvent } from './monitor/processEvents'
+import { processEvent } from '../monitor/processEvents'
 
 const log = new Log('mktcli')
 
@@ -60,6 +60,21 @@ const main = {
           log.info(`(land-owner) coords:(${x},${y})`)
           log.info(`blockchain => ${owner}`)
           log.info(`db         => ${dbOwner}`)
+        })
+      )
+
+    program
+      .command('land-update-operator <coord>')
+      .description('Get the LAND operator of a (x,y) coordinate')
+      .action(
+        asSafeAction(async coord => {
+          const [x, y] = parseCLICoords(coord)
+          const contract = eth.getContract('LANDRegistry')
+          const assetId = await contract.encodeTokenId(x, y)
+          const operator = await contract.updateOperator(assetId)
+
+          log.info(`(land-update-operator) coords:(${x},${y})`)
+          log.info(`blockchain => ${operator}`)
         })
       )
 
@@ -159,11 +174,12 @@ const main = {
       .description('Get chronological blockchain events of a (x,y) coordinate')
       .action(
         asSafeAction(async (coord, options) => {
+          const events = BlockchainEvent.getEvents()
           const [x, y] = parseCLICoords(coord)
           const assetId = await Parcel.encodeAssetId(x, y)
 
-          const events = await BlockchainEvent.findByAssetId(assetId)
-          const eventLog = events.map(event => {
+          const blockchainEvents = await BlockchainEvent.findByAssetId(assetId)
+          const eventLog = blockchainEvents.map(event => {
             const { name, block_number, log_index, tx_hash, args } = event
             let log = `${name} (${block_number},${log_index}): `
 
@@ -175,21 +191,21 @@ const main = {
             }
 
             switch (name) {
-              case BlockchainEvent.EVENTS.publicationCreated:
+              case events.publicationCreated:
                 log += `with id ${args.id} by ${args.seller} for ${
                   args.priceInWei
                 }`
                 break
-              case BlockchainEvent.EVENTS.publicationCancelled:
+              case events.publicationCancelled:
                 log += `with id ${args.id}`
                 break
-              case BlockchainEvent.EVENTS.publicationSuccessful:
+              case events.publicationSuccessful:
                 log += `with id ${args.id} and winner ${args.winner}`
                 break
-              case BlockchainEvent.EVENTS.parcelUpdate:
+              case events.parcelUpdate:
                 log += `with data ${args.data}`
                 break
-              case BlockchainEvent.EVENTS.parcelTransfer:
+              case events.parcelTransfer:
                 log += `to ${args.to}`
                 break
               default:
@@ -228,7 +244,8 @@ const main = {
           }
 
           if (options.clean) {
-            await Publication.delete({ x, y })
+            log.info(`Cleaning publications for ${coord}`)
+            await Publication.deleteByAsset({ id: Parcel.buildId(x, y) })
           }
 
           for (let i = 0; i < events.length; i++) {

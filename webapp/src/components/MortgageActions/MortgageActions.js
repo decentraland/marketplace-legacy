@@ -1,21 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'semantic-ui-react'
+import { MORTGAGE_STATUS } from 'shared/mortgage'
 
 import { t } from 'modules/translation/utils'
+import { mortgageType } from 'components/types'
 
 export default class MortgageActions extends React.PureComponent {
   static propTypes = {
-    mortgage: PropTypes.object.isRequired,
-    onCancel: PropTypes.func.isRequired
+    mortgage: mortgageType,
+    onCancel: PropTypes.func.isRequired,
+    onPay: PropTypes.func.isRequired,
+    onClaim: PropTypes.func.isRequired
   }
   render() {
-    const { mortgage, onCancel } = this.props
+    const { mortgage, onCancel, onPay, onClaim } = this.props
 
-    return mortgage.status === 'open' ? (
-      <Button size="tiny" onClick={onCancel}>
-        {t('mortgage.cancel')}
-      </Button>
-    ) : null
+    switch (mortgage.status) {
+      case MORTGAGE_STATUS.pending:
+        return (
+          <Button size="tiny" onClick={onCancel}>
+            {t('mortgage.cancel')}
+          </Button>
+        )
+      case MORTGAGE_STATUS.ongoing:
+      case MORTGAGE_STATUS.defaulted:
+        return (
+          <Button size="tiny" onClick={onPay}>
+            {t('mortgage.pay')}
+          </Button>
+        )
+      case MORTGAGE_STATUS.paid:
+        return (
+          <Button size="tiny" onClick={onClaim}>
+            {t('mortgage.claim')}
+          </Button>
+        )
+      default:
+        return null
+    }
   }
 }

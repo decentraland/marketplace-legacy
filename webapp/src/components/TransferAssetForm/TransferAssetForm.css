@@ -1,0 +1,8 @@
+.TransferAssetForm .transfer-warning {
+  color: var(--gray);
+  font-style: italic;
+}
+
+.TransferAssetForm .transfer-warning.error {
+  color: var(--red);
+}

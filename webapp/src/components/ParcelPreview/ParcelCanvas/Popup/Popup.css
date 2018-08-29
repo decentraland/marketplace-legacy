@@ -64,7 +64,7 @@
 }
 
 .text.description {
-  color: var(--light-gray);
+  color: var(--gray) !important;
 }
 
 .parcel-popup .on-sale {

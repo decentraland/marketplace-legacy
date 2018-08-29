@@ -1,0 +1,9 @@
+.BuyParcelByMortgage .text.container{
+  min-height: unset;
+  height: auto;
+  padding: 0;
+}
+
+.BuyParcelByMortgage .Page .ParcelModal {
+  background: none;
+}

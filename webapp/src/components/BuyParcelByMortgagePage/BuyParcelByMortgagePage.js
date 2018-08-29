@@ -1,27 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Loader, Container, Header } from 'semantic-ui-react'
+import { Loader, Container, Header, Message } from 'semantic-ui-react'
 
 import Parcel from 'components/Parcel'
-import { walletType } from 'components/types'
+import { walletType, publicationType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
-import { buildCoordinate, formatMana } from 'lib/utils'
+import { isOpen } from 'shared/publication'
+import { buildCoordinate } from 'shared/parcel'
+import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
 import ParcelModal from 'components/ParcelModal'
+import TxStatus from 'components/TxStatus'
+import ParcelName from 'components/ParcelName'
 
 export default class BuyParcelByMortgagePage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
+    publication: publicationType,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    isDisabled: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    isTxIdle: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    publication: PropTypes.object
+    onCancel: PropTypes.func.isRequired
   }
 
   renderLoading() {
@@ -55,11 +60,14 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     const {
       x,
       y,
+      wallet,
       publication,
+      isTxIdle,
       isLoading,
       isConnected,
       onConfirm,
-      onCancel
+      onCancel,
+      error
     } = this.props
     if (isLoading) {
       return this.renderLoading()
@@ -69,11 +77,41 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
       return this.renderNotConnected()
     }
 
+    const { isMortgageApprovedForMana, isMortgageApprovedForRCN } = wallet
+
     return (
-      <Parcel x={x} y={y} ownerNotAllowed withPublications>
+      <Parcel x={x} y={y} ownerNotAllowed>
         {parcel =>
-          parcel.publication ? (
-            <React.Fragment>
+          isOpen(publication) ? (
+            <div className="BuyParcelByMortgage">
+              {!isMortgageApprovedForMana ? (
+                <Container text>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('global.unauthorized')}
+                    content={t_html('mortgage.please_authorize_MANA', {
+                      settings_link: (
+                        <Link to={locations.settings}>Settings</Link>
+                      )
+                    })}
+                  />
+                </Container>
+              ) : null}
+              {!isMortgageApprovedForRCN ? (
+                <Container text>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('global.unauthorized')}
+                    content={t_html('mortgage.please_authorize_RCN', {
+                      settings_link: (
+                        <Link to={locations.settings}>Settings</Link>
+                      )
+                    })}
+                  />
+                </Container>
+              ) : null}
               <ParcelModal
                 x={x}
                 y={y}
@@ -93,13 +131,25 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                 <MortgageForm
                   parcel={parcel}
                   publication={publication}
-                  isTxIdle={false}
                   onPublish={onConfirm}
                   onCancel={onCancel}
-                  isDisabled={false}
+                  error={error}
+                  isTxIdle={isTxIdle}
+                  isDisabled={
+                    !isMortgageApprovedForMana || !isMortgageApprovedForRCN
+                  }
+                />
+                <TxStatus.Asset
+                  asset={parcel}
+                  name={
+                    <span>
+                      {`${t('mortgage.pending_tx')} `}
+                      <ParcelName parcel={parcel} />
+                    </span>
+                  }
                 />
               </ParcelModal>
-            </React.Fragment>
+            </div>
           ) : null
         }
       </Parcel>

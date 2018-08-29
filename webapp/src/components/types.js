@@ -9,7 +9,7 @@ import {
   oneOf,
   oneOfType
 } from 'prop-types'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'shared/publication'
 
 export const publicationType = shape({
   tx_hash: string,
@@ -29,6 +29,11 @@ export const coordsType = shape({
   y: number
 })
 
+export const assetType = shape({
+  id: string,
+  owner: string
+})
+
 export const parcelType = shape({
   id: string.isRequired,
   district_id: string,
@@ -43,8 +48,7 @@ export const parcelType = shape({
 export const estateType = shape({
   id: string,
   owner: string,
-  data: object,
-  parcels: arrayOf(parcelType)
+  data: object
 })
 
 export const contributionType = shape({
@@ -101,4 +105,19 @@ export const toastType = shape({
   kind: oneOf(['info', 'success', 'error', 'warning']),
   message: string,
   delay: number
+})
+
+export const mortgageType = shape({
+  status: string.isRequired,
+  asset_id: string.isRequired,
+  type: string.isRequired,
+  borrower: string.isRequired,
+  lender: string,
+  loan_id: number.isRequired,
+  mortgage_id: number.isRequired,
+  amount: number.isRequired,
+  expires_at: string.isRequired,
+  is_due_at: string.isRequired,
+  payable_at: string.isRequired,
+  outstanding_amount: number.isRequired
 })

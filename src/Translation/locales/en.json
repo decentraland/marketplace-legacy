@@ -1,9 +1,15 @@
 {
   "activity": {
+    "approve": "You can start by approving some MANA on your {settings_link}",
+    "clear": {
+      "body":
+        "Once you delete your transaction history you can't reverse the action, are you sure you want to continue?",
+      "title": "Delete transaction history"
+    },
     "completed": "Completed",
     "no_activity": "You have no activity yet.",
     "pending": "Pending",
-    "start": "You can start by approving some MANA on your {settings_link}"
+    "start": "You are able to start trading at the {marketplace}!"
   },
   "address": {
     "its_you": "It's you"
@@ -14,6 +20,7 @@
     "on_sale": "On Sale: ",
     "owner": "Owner: {owner}",
     "road": "Road",
+    "your_estate": "Your estate",
     "your_parcel": "Your parcel"
   },
   "buy_mana": {
@@ -47,16 +54,26 @@
     "invalid":
       "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
+  "estate_detail": {
+    "delete": "Delete Estate",
+    "delete_desc": "You are going to delete the estate {name}",
+    "edit_parcels": "Edit Parcels",
+    "parcels": "Parcels included",
+    "pending_tx": "This estate"
+  },
   "estate_edit": {
     "description": "Description",
     "edit_estate": "Edit Estate",
     "name": "Name",
-    "subtitle":
-      "Set a name and description, and edit the parcels for your estate."
+    "subtitle": "Set a name and description for your estate."
   },
   "estate_select": {
-    "description": "Select adjacent parcels beginning from {x},{y}",
-    "selection": "Select the parcels for your new Estate"
+    "description": "Selected parcels",
+    "detail": "Estate detail",
+    "edit_selection": "Select the parcels on the map",
+    "new_selection": "Select the parcels on the map for your new Estate",
+    "tx_to_be_send":
+      "You will send a transaction to {action} parcels: {parcels}"
   },
   "footer": {
     "color_key": "Color Key",
@@ -68,13 +85,16 @@
   "global": {
     "acquired_at": "Acquired at {date}",
     "activity": "Activity",
-    "address_placeholder": "Example: {address}",
+    "add": "add",
+    "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Authorized",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancel",
     "change": "Change",
+    "check_address": "Please check the address carefully",
+    "clear": "Clear history",
     "click_here": "Click here",
     "community_chat": "Community Chat",
     "confirm": "Confirm",
@@ -83,6 +103,7 @@
     "continue": "Continue",
     "contributions": "Contributions",
     "created_at": "Created at {date}",
+    "edit": "Edit",
     "estate": "Estate",
     "estates": "Estates",
     "expired_at": "Expired {time}",
@@ -93,18 +114,30 @@
     "marketplace": "Marketplace",
     "mortgage": "Mortgage",
     "mortgages": "Mortgages",
+    "own_address_warning": "That's your own address!",
     "owned_by": "Owned by",
     "owned_by_link": "Owned by {address_link}",
+    "owner_address_warning": "That's already the owner!",
+    "paid_at": "Paid at",
     "parcels": "Parcels",
     "profile": "My Land",
+    "publications": "Publications",
+    "recipient_address": "Recipient address",
+    "remove": "remove",
     "request": "Request",
     "retry": "Retry",
     "revoke": "Revoke",
+    "sale": "Sale",
+    "service_unavailable": "Service unavailable",
     "settings": "Settings",
     "sign_in": "Sign In",
     "sign_in_notice": "You need to {sign_in_link} to access this page",
     "submit": "Submit",
+    "the_estate": "the estate",
+    "the_parcel": "the parcel",
     "time_left": "Time left",
+    "transfer_irreversible":
+      "Remember that transferring is an irreversible operation.",
     "unauthorized": "Unauthorized",
     "undo": "Undo",
     "wallet_address": "Wallet address",
@@ -122,6 +155,7 @@
     "en": "English",
     "es": "Spanish",
     "fr": "French",
+    "ja": "Japanese",
     "ko": "Korean",
     "zh": "Chinese"
   },
@@ -137,6 +171,8 @@
     "amount": "Amount",
     "amount_placeholder": "Amount in MANA",
     "cancel": "Cancel Mortgage",
+    "claim": "Claim parcel",
+    "defaulted_in": "Defaulted in",
     "duration": "Duration",
     "duration_placeholder": "Duration in days",
     "errors": {
@@ -154,8 +190,18 @@
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "oracle": "Oracle contract address",
+    "outstanding_amount": "Outstanding amount",
+    "partial_payment": "Partial payment",
+    "partial_payment_desc":
+      "You are about to make a partial payment for the mortgage to buy the land {parcel_name}. Outstading amount: {outstanding_amount}",
+    "pay": "Pay",
     "payable": "Payable at",
     "payable_placeholder": "Payable in days",
+    "pending_tx": "The mortgage for",
+    "please_authorize_MANA":
+      "Please go to {settings_link} and and authorize the Mortgage Helper contract to operate MANA on your behalf",
+    "please_authorize_RCN":
+      "Please go to {settings_link} and authorize the Mortgage Manager contract to operate RCN on your behalf",
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "request": "Requesting a Mortgage",
@@ -188,7 +234,6 @@
     "actions": {
       "cancel": "Cancel sale",
       "create_estate": "Create Estate",
-      "edit": "Edit",
       "permissions": "Permissions",
       "sell": "Sell",
       "transfer": "Transfer"
@@ -222,14 +267,16 @@
   "parcel_edit": {
     "description": "Description",
     "edit_land": "Edit LAND",
+    "ipns": "Content link",
     "name": "Name",
-    "set_name_and_desc": "Set a name and description for {parcel_name}."
+    "set_name_and_desc": "Set a name and description for {parcel_name}.",
+    "warning_tooltip":
+      "This will be used to show your scene. Update only if you know what you are doing."
   },
   "parcel_manage": {
     "address": "Operator address",
     "address_permission":
       "This address will be able to update the contents of this parcel.",
-    "check_address": "Please check the address carefully",
     "give_permission": "Give permission to update contents of {parcel_name}.",
     "manage_land": "Manage LAND"
   },
@@ -258,25 +305,11 @@
       "{distance} {distance, plural, one {parcel} other {parcels}} away",
     "road": "Road"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "You're about to transfer {parcel_name}.",
-    "cant_transfer": "This LAND can't be transferred because it's on sale.",
-    "check_address": "Please check the address carefully",
-    "error_persists":
-      "If the problem persists, contact us at our {community_chat_link}",
-    "irreversible":
-      "Remember that transferring LAND is an irreversible operation.",
-    "placeholder": "Example: {address}",
-    "recipient_address": "Recipient address",
-    "transfer_land": "Transfer LAND",
-    "unknown_error": "An unknown error occurred, the details are below."
-  },
   "profile_page": {
     "empty": "The user has no {content}",
     "on_sale": "On Sale"
   },
   "publication": {
-    "canceled": "Canceled",
     "sold": "Sold",
     "view": "View"
   },
@@ -299,8 +332,8 @@
     "mana_approved":
       "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
     "marketplace_contract": "Marketplace contract",
-    "mortgage_creator_contract": "Mortgage creator contract",
-    "mortgage_manager_contract": "Mortgage manager contract",
+    "mortgage_helper_contract": "Mortgage Helper contract",
+    "mortgage_manager_contract": "Mortgage Manager contract",
     "pending_tx": "You have a pending transaction",
     "unauthorize_land_check":
       "Unchecking unauthorizes LAND usage for the Marketplace contract",
@@ -313,8 +346,14 @@
   },
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",
-    "options":
-      "First off you’ll need a safe place to keep all your land. You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}."
+    "get_started": "Get Started",
+    "intro": "First off you’ll need a safe place to keep all your LAND.",
+    "options": {
+      "desktop":
+        "You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}.",
+      "mobile":
+        "You can use mobile browsers such as {toshi_link} or {imtoken_link}."
+    }
   },
   "transaction": {
     "approved":
@@ -325,12 +364,20 @@
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
+    "claim_mortgage_resolution": "You claimed {parcel_link}",
+    "create_estate": "You created the estate {name}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
+    "delete_estate": "You deleted the estate {name}",
     "disapproved":
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
+    "edit_estate_metadata":
+      "You edited estate {estate_id} with the name \"{name}\" and description \"{description}\"",
+    "edit_estate_parcels_added": "You added {amount} parcels to estate {name}",
+    "edit_estate_parcels_removed":
+      "You removed {amount} parcels from estate {name}",
     "manage":
       "You gave {address_link} permission to update the contents of {parcel_link}",
     "manage_revoked":
@@ -339,8 +386,10 @@
       "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
     "mortgage_rcn":
       "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
+    "pay_mortgage":
+      "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
     "publish": "You published {parcel_link}",
-    "transfer": "You transfered {parcel_link} to {owner_link}",
+    "transfer": "You transfered {asset_type} {asset_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"
   },
   "transaction_status": {
@@ -358,12 +407,22 @@
       "pending": "The transaction is waiting to be confirmed."
     }
   },
+  "transfer_estate": {
+    "about_to_transfer": "You're about to transfer the estate {name}.",
+    "transfer_estate": "Transfer Estate"
+  },
   "transfer_mana": {
     "action": "Transfer",
+    "amount": "Amount",
     "current_balance": "Your current balance is {balance}",
     "irreversible":
       "Remember that transferring MANA is an irreversible operation.",
-    "own_address_warning": "That's your own address!",
+    "is_mana_contract_address": "That's the MANA contract address",
     "title": "Transfer MANA"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "You're about to transfer {parcel_name}.",
+    "cant_transfer": "This LAND can't be transferred because it's on sale.",
+    "transfer_land": "Transfer LAND"
   }
 }

@@ -4,8 +4,10 @@ import { eth } from 'decentraland-eth'
 
 import { Button, Form, Input } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
-import { preventDefault } from 'lib/utils'
+import AddressInput from 'components/AddressInput'
 import { t } from 'modules/translation/utils'
+import { getMANATokenAddress } from 'modules/wallet/utils'
+import { preventDefault } from 'lib/utils'
 
 import './TransferManaForm.css'
 
@@ -37,9 +39,8 @@ export default class TransferManaForm extends React.PureComponent {
     }
   }
 
-  handleAddressChange = e => {
+  handleAddressChange = newAddress => {
     const { address } = this.state
-    const newAddress = e.currentTarget.value
 
     if (address !== newAddress.toLowerCase()) {
       this.setState({ address: newAddress })
@@ -60,6 +61,13 @@ export default class TransferManaForm extends React.PureComponent {
     return (
       this.state.address.trim().toLowerCase() ===
       this.props.address.trim().toLowerCase()
+    )
+  }
+
+  isMANATokenAddress() {
+    return (
+      this.state.address.trim().toLowerCase() ===
+      getMANATokenAddress().toLowerCase()
     )
   }
 
@@ -84,7 +92,7 @@ export default class TransferManaForm extends React.PureComponent {
         onSubmit={preventDefault(this.handleSubmit)}
       >
         <Form.Field>
-          <label>Amount</label>
+          <label>{t('transfer_mana.amount')}</label>
           <Input
             id="amount-input"
             className="amount-input"
@@ -97,31 +105,32 @@ export default class TransferManaForm extends React.PureComponent {
           />
         </Form.Field>
         <Form.Field>
-          <label>{t('parcel_transfer.recipient_address')}</label>
-          <Input
-            id="address-input"
-            className="address-input"
-            type="text"
-            placeholder={t('parcel_transfer.placeholder', {
-              address: '0x0f5d2fb29fb7d3cfee444a200298f468908cc942'
-            })}
-            value={address}
+          <AddressInput
+            label={t('global.recipient_address')}
+            placeholder={t('global.address_placeholder')}
+            address={address}
             onChange={this.handleAddressChange}
-            autoComplete="off"
           />
           <span className="transfer-warning">
             {t('transfer_mana.irreversible')}
           </span>
           <br />
-          <span className="transfer-warning">
-            {t('parcel_transfer.check_address')}
-          </span>
+          <span className="transfer-warning">{t('global.check_address')}</span>
           {this.isOwnAddress() ? (
             <React.Fragment>
               <br />
               <br />
               <span className="transfer-warning error">
-                {t('transfer_mana.own_address_warning')}
+                {t('global.own_address_warning')}
+              </span>
+            </React.Fragment>
+          ) : null}
+          {this.isMANATokenAddress() ? (
+            <React.Fragment>
+              <br />
+              <br />
+              <span className="transfer-warning error">
+                {t('transfer_mana.is_mana_contract_address')}
               </span>
             </React.Fragment>
           ) : null}
@@ -129,7 +138,7 @@ export default class TransferManaForm extends React.PureComponent {
         <br />
         <TxStatus.Idle isIdle={isTxIdle} />
         <br />
-        <div className="footer">
+        <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>

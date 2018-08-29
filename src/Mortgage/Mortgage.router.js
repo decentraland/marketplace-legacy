@@ -16,31 +16,31 @@ export class MortgageRouter {
      * @return {array<Parcel>}
      */
     this.app.get(
-      '/api/parcels/:address/mortgages',
+      '/parcels/:address/mortgages',
       server.handleRequest(this.getMortgagedParcelsByBorrower)
     )
 
     /**
      * Get mortgages by borrower
      * @param  {string} address
-     * @param  {string} status - specify a mortgage status to retreive: [cancelled|open|claimed].
+     * @param  {string} status - specify mortgage statuses to retreive
      * @return {array<Mortgage>}
      */
     this.app.get(
-      '/api/addresses/:address/mortgages',
-      server.handleRequest(this.getMortgagesByBorrower)
+      '/addresses/:address/mortgages',
+      server.handleRequest(this.getMortgagesByBorrower.bind(this))
     )
 
     /**
      * Get mortgages by coordinates
      * @param  {string} x
      * @param  {string} y
-     * @param  {string} status - specify a mortgage status to retreive: [cancelled|open|claimed].
+     * @param  {string} status - specify mortgage statuses to retreive
      * @return {array<Mortgage>}
      */
     this.app.get(
-      '/api/parcels/:x/:y/mortgages',
-      server.handleRequest(this.getMortgagesInCoordinate)
+      '/parcels/:x/:y/mortgages',
+      server.handleRequest(this.getMortgagesInCoordinate.bind(this))
     )
   }
 
@@ -52,15 +52,24 @@ export class MortgageRouter {
 
   async getMortgagesByBorrower(req) {
     const borrower = server.extractFromReq(req, 'address')
-    const status = server.extractFromReq(req, 'status')
+    const status = this.getSafeStatusFromRequest()
+
     return Mortgage.findByBorrower(borrower, status)
   }
 
   async getMortgagesInCoordinate(req) {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
-    const status = server.extractFromReq(req, 'status')
+    const status = this.getSafeStatusFromRequest()
 
     return Mortgage.findInCoordinate(Parcel.buildId(x, y), status)
+  }
+
+  getSafeStatusFromRequest(req) {
+    try {
+      return server.extractFromReq(req, 'status')
+    } catch (error) {
+      // undefined
+    }
   }
 }

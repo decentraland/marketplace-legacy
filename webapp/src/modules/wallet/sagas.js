@@ -46,11 +46,12 @@ import { watchLoadingTransactions } from 'modules/transaction/actions'
 import {
   connectEthereumWallet,
   getMarketplaceAddress,
-  getMortgageCreatorAddress,
+  getMortgageHelperAddress,
   getMortgageManagerAddress,
   sendTransaction,
   fetchBalance
 } from './utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
@@ -73,16 +74,14 @@ export function* walletSaga() {
 function* handleConnectWalletRequest(action = {}) {
   while (yield select(isStorageLoading)) yield delay(5)
   try {
-    if (!eth.isConnected()) {
-      const { address, derivationPath } = yield select(getData)
+    const walletData = yield select(getData)
 
-      yield call(() =>
-        connectEthereumWallet({
-          address,
-          derivationPath
-        })
-      )
-    }
+    yield call(() =>
+      connectEthereumWallet({
+        address: walletData.address,
+        derivationPath: walletData.derivationPath
+      })
+    )
 
     let address = yield call(() => eth.getAddress())
     address = address.toLowerCase()
@@ -91,7 +90,7 @@ function* handleConnectWalletRequest(action = {}) {
     const landRegistryContract = eth.getContract('LANDRegistry')
     const rcnTokenContract = eth.getContract('RCNToken')
     const marketplaceAddress = getMarketplaceAddress()
-    const mortgageCreatorAddress = getMortgageCreatorAddress()
+    const mortgageHelperAddress = getMortgageHelperAddress()
     const mortgageManagerAddress = getMortgageManagerAddress()
 
     const [
@@ -107,8 +106,10 @@ function* handleConnectWalletRequest(action = {}) {
       manaTokenContract.balanceOf(address),
       fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
-      landRegistryContract.isApprovedForAll(marketplaceAddress, address),
-      manaTokenContract.allowance(address, mortgageCreatorAddress),
+      isFeatureEnabled('ESTATES') // @nacho TODO: remove when isApprovedForAll is updated in mainnet
+        ? landRegistryContract.isApprovedForAll(address, marketplaceAddress)
+        : landRegistryContract.isApprovedForAll(marketplaceAddress, address),
+      manaTokenContract.allowance(address, mortgageHelperAddress),
       rcnTokenContract.allowance(address, mortgageManagerAddress)
     ])
     const wallet = {
@@ -227,7 +228,7 @@ function* handleApproveMortgageForManaRequest(action) {
     const manaTokenContract = eth.getContract('MANAToken')
 
     const txHash = yield call(() =>
-      manaTokenContract.approve(getMortgageCreatorAddress(), mana)
+      manaTokenContract.approve(getMortgageHelperAddress(), mana)
     )
 
     yield put(approveMortgageForManaSuccess(txHash, mana))

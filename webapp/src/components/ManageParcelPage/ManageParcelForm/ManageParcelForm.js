@@ -5,7 +5,7 @@ import { Button, Form, Loader } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
-import { getUpdateOperator } from 'lib/parcelUtils'
+import { getUpdateOperator } from 'modules/wallet/utils'
 import { preventDefault, shortenAddress } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 
@@ -153,9 +153,7 @@ export default class ManageParcelForm extends React.PureComponent {
           {t('parcel_manage.address_permission')}
         </span>
         <br />
-        <span className="transfer-warning">
-          {t('parcel_manage.check_address')}
-        </span>
+        <span className="transfer-warning">{t('global.check_address')}</span>
         <br />
       </React.Fragment>
     )
@@ -178,16 +176,15 @@ export default class ManageParcelForm extends React.PureComponent {
           {this.state.editing
             ? this.renderEditOperatorForm()
             : this.renderSetOperatorForm()}
-          <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
 
+        <TxStatus.Idle isIdle={isTxIdle} />
         <br />
 
-        <div>
+        <div className="modal-buttons">
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>
-
           <Button
             type="submit"
             primary={true}

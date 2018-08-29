@@ -1,4 +1,26 @@
 import { WebWorkerFactory } from './WebWorkerFactory'
 import { WebWorkerOnMessage } from './WebWorkerOnMessage'
+import {
+  toParcelObject,
+  normalizeParcel,
+  connectParcels,
+  areConnected,
+  isSameValue,
+  getParcelPublications,
+  buildCoordinate
+} from 'shared/parcel'
 
-export const webworker = WebWorkerFactory.create(WebWorkerOnMessage)
+const WebWorkerDependencies = {
+  toParcelObject,
+  normalizeParcel,
+  connectParcels,
+  areConnected,
+  isSameValue,
+  getParcelPublications,
+  buildCoordinate
+}
+
+export const webworker = WebWorkerFactory.create(
+  WebWorkerOnMessage,
+  WebWorkerDependencies
+)

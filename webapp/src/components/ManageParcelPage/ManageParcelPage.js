@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { locations } from 'locations'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
+import ParcelName from 'components/ParcelName'
+import { buildCoordinate } from 'shared/parcel'
 import { t, t_html } from 'modules/translation/utils'
-import { buildCoordinate } from 'lib/utils'
-import { locations } from 'locations'
-
 import ManageParcelForm from './ManageParcelForm'
 
 import './ManageParcelPage.css'
@@ -48,7 +48,10 @@ export default class ManageParcelPage extends React.PureComponent {
                 onSubmit={onSubmit}
                 onCancel={onCancel}
               />
-              <TxStatus.Parcel parcel={parcel} />
+              <TxStatus.Asset
+                asset={parcel}
+                name={<ParcelName parcel={parcel} />}
+              />
             </ParcelModal>
           </div>
         )}

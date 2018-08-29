@@ -2,16 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Grid, Responsive } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+
+import { locations } from 'locations'
+import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
 import { parcelType, publicationType } from 'components/types'
-import {
-  PUBLICATION_STATUS,
-  findAssetPublications
-} from 'modules/publication/utils'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
-import { AUCTION_DATE } from 'lib/parcelUtils'
+import { AUCTION_DATE } from 'shared/parcel'
 import { t } from 'modules/translation/utils'
 
 import './ParcelTransactionHistory.css'
@@ -39,8 +39,15 @@ export default class ParcelTransactionHistory extends React.PureComponent {
   renderAddress(address) {
     return (
       <div className="address-wrapper" title={address}>
-        <AddressBlock address={address} scale={4} hasTooltip={false} />&nbsp;
-        <span className="short-address">{shortenAddress(address)}</span>
+        <Link to={locations.profilePage(address)}>
+          <AddressBlock
+            address={address}
+            scale={4}
+            hasTooltip={false}
+            hasLink={false}
+          />&nbsp;
+          <span className="short-address">{shortenAddress(address)}</span>
+        </Link>
       </div>
     )
   }

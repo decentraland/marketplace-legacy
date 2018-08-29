@@ -4,6 +4,9 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { locations } from 'locations'
 
+import Intercom from 'components/Intercom'
+import Modal from 'components/Modal'
+import Toast from 'components/Toast'
 import Wallet from 'components/Wallet'
 import Page from 'components/Page'
 
@@ -15,7 +18,7 @@ import ProfilePage from 'components/ProfilePage'
 import PublishPage from 'components/PublishPage'
 import EditParcelPage from 'components/EditParcelPage'
 import TransferParcelPage from 'components/TransferParcelPage'
-import CreateEstatePage from 'components/CreateEstatePage'
+import EstateDetailPage from 'components/EstateDetailPage'
 import ManageParcelPage from 'components/ManageParcelPage'
 import BuyParcelPage from 'components/BuyParcelPage'
 import CancelSalePage from 'components/CancelSalePage'
@@ -25,34 +28,74 @@ import SignInPage from 'components/SignInPage'
 import TransferManaPage from 'components/TransferManaPage'
 import BuyManaPage from 'components/BuyManaPage'
 import BuyParcelByMortgagePage from 'components/BuyParcelByMortgagePage'
-
+import PayMortgagePage from 'components/PayMortgagePage'
 import ColorKeyPage from 'components/ColorKeyPage'
 import PrivacyPage from 'components/PrivacyPage'
 import TermsPage from 'components/TermsPage'
-
-import Intercom from 'components/Intercom'
-
-import Modal from 'components/Modal'
-import Toast from 'components/Toast'
+import DeleteEstatePage from 'components/DeleteEstatePage'
+import TransferEstatePage from 'components/TransferEstatePage'
 
 export default class Routes extends React.Component {
   renderRoutes() {
     return (
       <Switch>
         <Route exact path={locations.root} component={HomePage} />
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.createEstate}
+            component={EstateDetailPage}
+          />
+        ) /* Estate Feature */}
+        {isFeatureEnabled('ESTATES') && (
+          <Route exact path={locations.estate} component={EstateDetailPage} />
+        ) /* Estate Feature */}
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.editEstateParcels}
+            component={props => (
+              <EstateDetailPage
+                isSelecting={true}
+                isEditing={true}
+                {...props}
+              />
+            )}
+          />
+        ) /* Estate Feature */}
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.editEstateMetadata}
+            component={props => (
+              <EstateDetailPage
+                isSelecting={false}
+                isEditing={true}
+                {...props}
+              />
+            )}
+          />
+        ) /* Estate Feature */}
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.deleteEstate}
+            component={DeleteEstatePage}
+          />
+        ) /* Estate Feature */}
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.transferEstate}
+            component={TransferEstatePage}
+          />
+        ) /* Estate Feature */}
         <Route exact path={locations.parcel} component={ParcelDetailPage} />
         <Route exact path={locations.marketplace} component={MarketplacePage} />
         <Route exact path={locations.profile} component={ProfilePage} />
         <Route exact path={locations.sell} component={PublishPage} />
         <Route exact path={locations.edit} component={EditParcelPage} />
         <Route exact path={locations.transfer} component={TransferParcelPage} />
-        {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.createEstate}
-            component={CreateEstatePage}
-          />
-        ) /* Estate Feature */}
         <Route exact path={locations.manage} component={ManageParcelPage} />
         <Route exact path={locations.buy} component={BuyParcelPage} />
         <Route exact path={locations.cancelSale} component={CancelSalePage} />
@@ -76,6 +119,15 @@ export default class Routes extends React.Component {
             component={BuyParcelByMortgagePage}
           />
         ) /* Mortgage Feature */}
+        {isFeatureEnabled('MORTGAGES') && (
+          <Route
+            exact
+            path={locations.payMortgagePath}
+            component={PayMortgagePage}
+          />
+        )
+        /* Mortgage Feature */
+        }
         <Redirect to={locations.root} />
       </Switch>
     )

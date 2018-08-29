@@ -1,5 +1,10 @@
-import { takeEvery, put, select, call } from 'redux-saga/effects'
+import { takeEvery, put, select, call, all } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
+import { eth } from 'decentraland-eth'
+
+import { getParcelsNotIncluded } from 'shared/utils'
+import { encodeMetadata } from 'shared/asset'
+import { getAddress } from 'modules/wallet/selectors'
 
 import {
   CREATE_ESTATE_REQUEST,
@@ -7,67 +12,192 @@ import {
   createEstateFailure,
   FETCH_ESTATE_REQUEST,
   fetchEstateSuccess,
-  fetchEstateFailure
+  fetchEstateFailure,
+  EDIT_ESTATE_PARCELS_REQUEST,
+  editEstateParcelsSuccess,
+  editEstateParcelsFailure,
+  EDIT_ESTATE_METADATA_REQUEST,
+  editEstateMetadataSuccess,
+  editEstateMetadataFailure,
+  ADD_PARCELS,
+  REMOVE_PARCELS,
+  DELETE_ESTATE_REQUEST,
+  deleteEstateSuccess,
+  deleteEstateFailure,
+  TRANSFER_ESTATE_REQUEST,
+  transferEstateSuccess,
+  transferEstateFailure
 } from './actions'
-import { inBounds } from 'lib/parcelUtils'
-import { getParcels } from 'modules/parcels/selectors'
+import { validateCoords } from './utils'
+import { getEstates } from './selectors'
 import { locations } from 'locations'
 import { api } from 'lib/api'
-import { buildCoordinate } from 'lib/utils'
 
 export function* estateSaga() {
   yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
+  yield takeEvery(EDIT_ESTATE_PARCELS_REQUEST, handleEditEstateParcelsRequest)
   yield takeEvery(FETCH_ESTATE_REQUEST, handleEstateRequest)
-}
-
-function validateCoords(x, y) {
-  if (!inBounds(x, y)) {
-    throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
-  }
-}
-
-// TODO delete when estate contract returns an address
-function randomString(length) {
-  return Math.round(
-    Math.pow(36, length + 1) - Math.random() * Math.pow(36, length)
-  )
-    .toString(36)
-    .slice(1)
+  yield takeEvery(EDIT_ESTATE_METADATA_REQUEST, handleEditEstateMetadataRequest)
+  yield takeEvery(DELETE_ESTATE_REQUEST, handleDeleteEstate)
+  yield takeEvery(TRANSFER_ESTATE_REQUEST, handleTransferRequest)
 }
 
 function* handleCreateEstateRequest(action) {
   const { estate } = action
   try {
-    estate.data.parcels.forEach(coords => validateCoords)
+    estate.data.parcels.forEach(({ x, y }) => validateCoords(x, y))
     // call estate contract
-    const contractAddress = randomString(42)
-    const txHash = randomString(42)
-    const allParcels = yield select(getParcels)
-    const [parcel] = estate.data.parcels
-    const { owner } = allParcels[buildCoordinate(parcel.x, parcel.y)]
-
-    yield put(
-      createEstateSuccess(txHash, {
-        ...estate,
-        id: contractAddress,
-        owner
-      })
+    const xs = estate.data.parcels.map(p => p.x)
+    const ys = estate.data.parcels.map(p => p.y)
+    const metadata = {
+      version: 0,
+      name: estate.data.name,
+      description: estate.data.description,
+      ipns: ''
+    }
+    const data = yield call(() => encodeMetadata(metadata))
+    const owner = yield select(getAddress)
+    const land = eth.getContract('LANDRegistry')
+    const txHash = yield call(() =>
+      land.createEstateWithMetadata(xs, ys, owner, data)
     )
+    yield put(createEstateSuccess(txHash, { ...estate, owner }))
     yield put(push(locations.activity))
   } catch (error) {
-    console.warn(error)
-    yield put(createEstateFailure(estate, error.message))
+    yield put(createEstateFailure(error.message))
+  }
+}
+
+function* handleEditEstateParcelsRequest(action) {
+  const { estate } = action
+  const newParcels = estate.data.parcels
+  try {
+    newParcels.forEach(({ x, y }) => validateCoords(x, y))
+
+    const pristineEstate = (yield select(getEstates))[estate.asset_id]
+    const pristineParcels = pristineEstate.data.parcels
+
+    const parcelsToAdd = getParcelsNotIncluded(newParcels, pristineParcels)
+    const parcelsToRemove = getParcelsNotIncluded(pristineParcels, newParcels)
+
+    const owner = yield select(getAddress)
+    const landRegistry = eth.getContract('LANDRegistry')
+    const estateRegistry = eth.getContract('EstateRegistry')
+
+    if (parcelsToAdd.length) {
+      const xs = parcelsToAdd.map(p => p.x)
+      const ys = parcelsToAdd.map(p => p.y)
+
+      const txHash = yield call(() =>
+        landRegistry.transferManyLandToEstate(xs, ys, estate.asset_id)
+      )
+      yield put(
+        editEstateParcelsSuccess(txHash, estate, parcelsToAdd, ADD_PARCELS)
+      )
+    }
+
+    if (parcelsToRemove.length) {
+      const landIds = yield all(
+        parcelsToRemove.map(({ x, y }) =>
+          call(() => landRegistry.encodeTokenId(x, y))
+        )
+      )
+      const txHash = yield call(() =>
+        estateRegistry.transferManyLands(estate.asset_id, landIds, owner)
+      )
+      yield put(
+        editEstateParcelsSuccess(
+          txHash,
+          estate,
+          parcelsToRemove,
+          REMOVE_PARCELS
+        )
+      )
+    }
+
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(editEstateParcelsFailure(error.message))
+  }
+}
+
+function* handleEditEstateMetadataRequest({ estate }) {
+  try {
+    const estateRegistry = eth.getContract('EstateRegistry')
+    const data = yield call(() => encodeMetadata(estate.data))
+    const txHash = yield call(() =>
+      estateRegistry.updateMetadata(estate.asset_id, data)
+    )
+    yield put(editEstateMetadataSuccess(txHash, estate))
+    yield put(push(locations.activity))
+  } catch (error) {
+    yield put(editEstateMetadataFailure(error.message))
   }
 }
 
 function* handleEstateRequest(action) {
-  const { id } = action
+  const { assetId } = action
   try {
-    const { estates } = yield call(() => api.fetchEstates())
-    const estate = estates.find(e => e.id === id)
-    yield put(fetchEstateSuccess(id, estate))
+    const estate = yield call(() => api.fetchEstate(assetId))
+    yield put(fetchEstateSuccess(estate))
   } catch (error) {
-    console.warn(error)
-    yield put(fetchEstateFailure(id, error.message))
+    yield put(fetchEstateFailure(assetId, error.message))
+  }
+}
+
+function* handleDeleteEstate({ estateId }) {
+  const owner = yield select(getAddress)
+  const landRegistry = eth.getContract('LANDRegistry')
+  const estateRegistry = eth.getContract('EstateRegistry')
+  try {
+    const estate = (yield select(getEstates))[estateId]
+    const parcelsToRemove = getParcelsNotIncluded(estate.data.parcels, [])
+    const landIds = yield all(
+      parcelsToRemove.map(({ x, y }) =>
+        call(() => landRegistry.encodeTokenId(x, y))
+      )
+    )
+    const txHash = yield call(() =>
+      estateRegistry.transferManyLands(estateId, landIds, owner)
+    )
+    yield put(deleteEstateSuccess(txHash, estate))
+    yield put(push(locations.activity))
+  } catch (e) {
+    yield put(deleteEstateFailure(e.message))
+  }
+}
+
+function* handleTransferRequest({ estate, to }) {
+  try {
+    const oldOwner = yield select(getAddress)
+
+    if (oldOwner.toLowerCase() === to.toLowerCase()) {
+      throw new Error("You can't transfer estates to yourself")
+    }
+
+    if (!eth.utils.isValidAddress(to)) {
+      throw new Error('Invalid Ethereum address')
+    }
+
+    if (!estate) {
+      throw new Error('Invalid estate')
+    } //@nacho TODO: on translations?
+
+    const contract = eth.getContract('EstateRegistry')
+    const txHash = yield call(() =>
+      contract.safeTransferFrom(oldOwner, to, estate.asset_id)
+    )
+
+    const transfer = {
+      txHash,
+      oldOwner,
+      to,
+      estate
+    }
+
+    yield put(push(locations.activity))
+    yield put(transferEstateSuccess(txHash, transfer))
+  } catch (error) {
+    yield put(transferEstateFailure(error.message))
   }
 }

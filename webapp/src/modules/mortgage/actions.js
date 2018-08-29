@@ -1,5 +1,5 @@
 import { buildTransactionAction } from 'modules/transaction/utils'
-import { splitCoordinate } from 'lib/utils'
+import { splitCoordinate } from 'shared/parcel'
 
 export const CREATE_MORTGAGE_REQUEST = '[Request] Create Mortgage'
 export const CREATE_MORTGAGE_SUCCESS = '[Success] Create Mortgage'
@@ -43,7 +43,7 @@ export function cancelMortgageRequest(mortgageId, assetId) {
 }
 
 export function cancelMortgageSuccess(txHash, assetId) {
-  const { x, y } = splitCoordinate(assetId)
+  const [x, y] = splitCoordinate(assetId)
   return {
     type: CANCEL_MORTGAGE_SUCCESS,
     ...buildTransactionAction(txHash, {
@@ -75,11 +75,12 @@ export function fetchMortgagedParcelsRequest(borrower) {
   }
 }
 
-export function fetchMortgagedParcelsSuccess(parcels, mortgages) {
+export function fetchMortgagedParcelsSuccess(parcels, mortgages, publications) {
   return {
     type: FETCH_MORTGAGED_PARCELS_SUCCESS,
     parcels,
-    mortgages
+    mortgages,
+    publications
   }
 }
 
@@ -117,6 +118,73 @@ export function fetchActiveParcelMortgagesSuccess(mortgages, x, y) {
 export function fetchActiveParcelMortgagesFailure(error) {
   return {
     type: FETCH_ACTIVE_PARCEL_MORTGAGES_FAILURE,
+    error
+  }
+}
+
+export const PAY_MORTGAGE_REQUEST = '[Request] Pay mortgage'
+export const PAY_MORTGAGE_SUCCESS = '[Success] Pay mortgage'
+export const PAY_MORTGAGE_FAILURE = '[Failure] Pay mortgage'
+
+export function payMortgageRequest({ loanId, assetId, amount }) {
+  return {
+    type: PAY_MORTGAGE_REQUEST,
+    loanId,
+    assetId,
+    amount
+  }
+}
+
+export function payMortgageSuccess(txHash, assetId, amount) {
+  const [x, y] = splitCoordinate(assetId)
+  return {
+    type: PAY_MORTGAGE_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      tx_hash: txHash,
+      x: parseInt(x, 10),
+      y: parseInt(y, 10),
+      amount
+    })
+  }
+}
+
+export function payMortgageFailure(error) {
+  return {
+    type: PAY_MORTGAGE_FAILURE,
+    error
+  }
+}
+
+export const CLAIM_MORTGAGE_RESOLUTION_REQUEST =
+  '[Request] Claim mortgage resolution'
+export const CLAIM_MORTGAGE_RESOLUTION_SUCCESS =
+  '[Success] Claim mortgage resolution'
+export const CLAIM_MORTGAGE_RESOLUTION_FAILURE =
+  '[Failure] Claim mortgage resolution'
+
+export function claimMortgageResolutionRequest(loanId, assetId) {
+  return {
+    type: CLAIM_MORTGAGE_RESOLUTION_REQUEST,
+    loanId,
+    assetId
+  }
+}
+
+export function claimMortgageResolutionSuccess(txHash, assetId) {
+  const [x, y] = splitCoordinate(assetId)
+  return {
+    type: CLAIM_MORTGAGE_RESOLUTION_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      tx_hash: txHash,
+      x: parseInt(x, 10),
+      y: parseInt(y, 10)
+    })
+  }
+}
+
+export function claimMortgageResolutionFailure(error) {
+  return {
+    type: CLAIM_MORTGAGE_RESOLUTION_FAILURE,
     error
   }
 }

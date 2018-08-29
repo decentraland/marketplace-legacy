@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { env } from 'decentraland-commons'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'shared/publication'
 
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
@@ -24,8 +24,12 @@ export class API {
     return this.request('get', `/translations/${locale}`, {})
   }
 
-  fetchParcelsInRange(nw, se) {
-    return this.request('get', '/parcels', { nw, se })
+  fetchMapInRange(nw, se) {
+    return this.request('get', '/map', { nw, se })
+  }
+
+  fetchParcel(x, y) {
+    return this.request('get', `/parcels/${x}/${y}`)
   }
 
   fetchParcels(options = FILTER_DEFAULTS) {
@@ -58,18 +62,8 @@ export class API {
     return this.request('get', `/addresses/${address}/estates`, {})
   }
 
-  fetchEstates(options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
-      options
-    )
-
-    return this.request('get', '/estates', {
-      limit,
-      offset,
-      sort_by: sortBy,
-      sort_order: sortOrder,
-      status
-    })
+  fetchEstate(assetId) {
+    return this.request('get', `/estate/${assetId}`)
   }
 
   fetchDistricts() {
@@ -81,15 +75,11 @@ export class API {
   }
 
   fetchMortgagesByBorrower(borrower, status) {
-    return this.request('get', `/addresses/${borrower}/mortgages/`, {
-      status: status.join(',')
-    })
+    return this.request('get', `/addresses/${borrower}/mortgages/`, { status })
   }
 
   fetchMortgages(x, y, status) {
-    return this.request('get', `/parcels/${x}/${y}/mortgages`, {
-      status: status.join(',')
-    })
+    return this.request('get', `/parcels/${x}/${y}/mortgages`, { status })
   }
 
   request(method, path, params) {
@@ -138,7 +128,7 @@ export class API {
   }
 
   getUrl(path) {
-    return `${URL}/api${path}`
+    return `${URL}${path}`
   }
 }
 

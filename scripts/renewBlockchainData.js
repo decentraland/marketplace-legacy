@@ -1,7 +1,8 @@
 #!/usr/bin/env babel-node
-
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
+import ProgressBar from 'progress'
+
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
 import { asyncBatch } from '../src/lib'
@@ -30,19 +31,21 @@ export async function renewBlockchainData() {
 }
 
 export async function updateParcelsData(parcels) {
-  log.info(`Processing ${parcels.length} parcels`)
-
+  const bar = new ProgressBar(
+    'Processing [:bar] :percent :current/:total parcels',
+    { total: parcels.length }
+  )
   const service = new ParcelService()
 
   let updates = []
   await asyncBatch({
     elements: parcels,
-    callback: async (newParcels, batchSize) => {
+    callback: async newParcels => {
       newParcels = await service.addLandData(newParcels)
       newParcels = await service.addOwners(newParcels)
       newParcels = await service.addAssetIds(newParcels)
 
-      log.info(`Processing ${batchSize}/${parcels.length} parcels`)
+      bar.tick(BATCH_SIZE)
 
       updates = updates.concat(
         newParcels.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
@@ -58,7 +61,7 @@ export async function updateParcelsData(parcels) {
 
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 1000), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 50), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

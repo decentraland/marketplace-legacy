@@ -1,68 +1,37 @@
 import { takeEvery, select, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth, contracts } from 'decentraland-eth'
+import { locations } from 'locations'
 import {
-  FETCH_PARCELS_REQUEST,
   FETCH_PARCEL_REQUEST,
   EDIT_PARCEL_REQUEST,
   MANAGE_PARCEL_REQUEST,
+  TRANSFER_PARCEL_REQUEST,
   fetchParcelSuccess,
   fetchParcelFailure,
-  fetchParcelsSuccess,
-  fetchParcelsFailure,
   editParcelSuccess,
   editParcelFailure,
   manageParcelSuccess,
-  manageParcelFailure
+  manageParcelFailure,
+  transferParcelSuccess,
+  transferParcelFailure
 } from './actions'
 import { getData as getParcels } from './selectors'
-import { locations } from 'locations'
+import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
-import { buildCoordinate } from 'lib/utils'
-import { inBounds } from 'lib/parcelUtils'
-import { webworker } from 'lib/webworker'
+import { buildCoordinate } from 'shared/parcel'
 
 export function* parcelsSaga() {
-  yield takeEvery(FETCH_PARCELS_REQUEST, handleParcelsRequest)
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
   yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
   yield takeEvery(MANAGE_PARCEL_REQUEST, handleManageParcelsRequest)
-}
-
-function* handleParcelsRequest(action) {
-  try {
-    const nw = buildCoordinate(action.nw.x, action.nw.y)
-    const se = buildCoordinate(action.se.x, action.se.y)
-    const { parcels } = yield call(() => api.fetchParcelsInRange(nw, se))
-    const allParcels = yield select(getParcels)
-
-    const result = yield call(() =>
-      webworker.postMessage({
-        type: 'FETCH_PARCELS_REQUEST',
-        parcels,
-        allParcels
-      })
-    )
-
-    yield put(fetchParcelsSuccess(result.parcels, result.publications))
-  } catch (error) {
-    yield put(fetchParcelsFailure(error.message))
-  }
+  yield takeEvery(TRANSFER_PARCEL_REQUEST, handleTransferRequest)
 }
 
 function* handleParcelRequest(action) {
   const { x, y } = action
   try {
-    const parcelId = buildCoordinate(x, y)
-    const nw = parcelId
-    const se = parcelId
-
-    if (!inBounds(x, y)) {
-      throw new Error(`Coords (${x}, ${y}) are outside of the valid bounds`)
-    }
-
-    const { parcels } = yield call(() => api.fetchParcelsInRange(nw, se))
-    const parcel = parcels.find(p => p.id === parcelId)
+    const parcel = yield call(() => api.fetchParcel(x, y))
 
     yield put(fetchParcelSuccess(x, y, parcel))
   } catch (error) {
@@ -110,5 +79,44 @@ function* handleManageParcelsRequest(action) {
     yield put(
       manageParcelFailure(parcel, action.address, action.revoked, error.message)
     )
+  }
+}
+
+function* handleTransferRequest(action) {
+  try {
+    const oldOwner = yield select(getAddress)
+    const newOwner = action.address
+    const parcel = { ...action.parcel }
+
+    if (oldOwner.toLowerCase() === newOwner.toLowerCase()) {
+      throw new Error("You can't transfer parcels to yourself")
+    }
+
+    if (!eth.utils.isValidAddress(newOwner)) {
+      throw new Error('Invalid Ethereum address')
+    }
+
+    if (!parcel) {
+      throw new Error('Invalid parcel')
+    }
+
+    const contract = eth.getContract('LANDRegistry')
+    const txHash = yield call(() =>
+      contract.transferLand(parcel.x, parcel.y, newOwner)
+    )
+
+    const transfer = {
+      txHash,
+      oldOwner,
+      newOwner,
+      parcelId: parcel.id,
+      x: parcel.x,
+      y: parcel.y
+    }
+
+    yield put(push(locations.activity))
+    yield put(transferParcelSuccess(txHash, transfer))
+  } catch (error) {
+    yield put(transferParcelFailure(error.message))
   }
 }

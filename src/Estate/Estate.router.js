@@ -1,7 +1,7 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Estate } from './Estate.model'
-import { Publication } from '../Publication'
+import { ASSET_TYPE } from '../shared/asset'
 import { AssetRouter } from '../Asset'
 import { blacklist } from '../lib'
 
@@ -20,7 +20,7 @@ export class EstateRouter {
      * @param  {number} offset
      * @return {array<Estate>}
      */
-    this.app.get('/api/estates', server.handleRequest(this.getEstates))
+    this.app.get('/estates', server.handleRequest(this.getEstates))
 
     /**
      * Returns the parcels an address owns
@@ -29,14 +29,21 @@ export class EstateRouter {
      * @return {array<Estate>}
      */
     this.app.get(
-      '/api/addresses/:address/estates',
+      '/addresses/:address/estates',
       server.handleRequest(this.getAddressEstates)
     )
+
+    /**
+     * Returns the estates for the supplied params
+     * @param  {string} assetId - estate's asset_id.
+     * @return {Estate}
+     */
+    this.app.get('/estate/:assetId', server.handleRequest(this.getEstate))
   }
 
   async getEstates(req) {
     // Force estate type
-    req.params.type = Publication.TYPES.estate
+    req.params.type = ASSET_TYPE.estate
 
     const result = await new AssetRouter().getAssets(req)
 
@@ -59,5 +66,12 @@ export class EstateRouter {
     }
 
     return utils.mapOmit(estates, blacklist.estate)
+  }
+
+  async getEstate(req) {
+    const assetId = server.extractFromReq(req, 'assetId').toLowerCase()
+
+    const result = await Estate.findByAssetId(assetId)
+    return utils.mapOmit(result, blacklist.estate)[0]
   }
 }

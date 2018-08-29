@@ -5,7 +5,8 @@ import filter from 'redux-storage-decorator-filter'
 import {
   FETCH_TRANSACTION_REQUEST,
   FETCH_TRANSACTION_SUCCESS,
-  FETCH_TRANSACTION_FAILURE
+  FETCH_TRANSACTION_FAILURE,
+  CLEAR_TRANSACTIONS
 } from 'modules/transaction/actions'
 import {
   CHANGE_LOCALE,
@@ -14,8 +15,12 @@ import {
   FETCH_TRANSLATIONS_FAILURE
 } from 'modules/translation/actions'
 import { UPDATE_DERIVATION_PATH } from 'modules/wallet/actions'
+import { STORAGE_LOAD } from 'modules/storage/actions'
+import { hasLocalStorage } from 'lib/localStorage'
 
 export function createStorageMiddleware(storageKey) {
+  if (!hasLocalStorage()) return disabledMiddleware
+
   const storageEngine = filter(createStorageEngine(storageKey), [
     'transaction',
     'translation',
@@ -30,6 +35,7 @@ export function createStorageMiddleware(storageKey) {
       FETCH_TRANSACTION_REQUEST,
       FETCH_TRANSACTION_SUCCESS,
       FETCH_TRANSACTION_FAILURE,
+      CLEAR_TRANSACTIONS,
       CHANGE_LOCALE,
       FETCH_TRANSLATIONS_REQUEST,
       FETCH_TRANSLATIONS_SUCCESS,
@@ -52,3 +58,9 @@ export function createStorageMiddleware(storageKey) {
 
   return storageMiddleware
 }
+
+const disabledMiddleware = () => next => action => {
+  next(action)
+}
+disabledMiddleware.load = store =>
+  setTimeout(() => store.dispatch({ type: STORAGE_LOAD, payload: {} }))

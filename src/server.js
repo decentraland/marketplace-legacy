@@ -1,8 +1,6 @@
 import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
-
-import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { db } from './database'
@@ -13,6 +11,7 @@ import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
 import { PublicationRouter } from './Publication'
 import { TranslationRouter } from './Translation'
+import { MapRouter } from './Map'
 
 env.load()
 
@@ -41,13 +40,18 @@ if (env.isDevelopment()) {
   require('newrelic')
 }
 
-new TranslationRouter(app).mount()
-new PublicationRouter(app).mount()
-new ParcelRouter(app).mount()
-new EstateRouter(app).mount()
-new DistrictRouter(app).mount()
-new ContributionRouter(app).mount()
-new MortgageRouter(app).mount()
+// Set base URL for API to v1
+const router = new express.Router()
+app.use('/v1', router)
+
+new TranslationRouter(router).mount()
+new PublicationRouter(router).mount()
+new MortgageRouter(router).mount()
+new EstateRouter(router).mount()
+new DistrictRouter(router).mount()
+new ContributionRouter(router).mount()
+new MapRouter(router).mount()
+new ParcelRouter(router).mount()
 
 /* Start the server only if run directly */
 if (require.main === module) {
@@ -57,22 +61,6 @@ if (require.main === module) {
 async function startServer() {
   console.log('Connecting database')
   await db.connect()
-
-  console.log('Connecting to Ethereum node')
-  await eth
-    .connect({
-      contracts: [
-        new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
-      ],
-      provider: env.get('RPC_URL') // default to localhost
-    })
-    .catch(error =>
-      console.error(
-        '\nCould not connect to the Ethereum node. Some endpoints may not work correctly.',
-        '\nMake sure you have a node running on port 8545.',
-        `\nError: "${error.message}"\n`
-      )
-    )
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)

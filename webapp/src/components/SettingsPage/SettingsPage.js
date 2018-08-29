@@ -110,12 +110,14 @@ export default class SettingsPage extends React.PureComponent {
         <Container>
           <div className="row">
             <div className="column blockie">
-              <AddressBlock
-                address={address}
-                hasTooltip={false}
-                hasLink={false}
-                scale={30}
-              />
+              {address ? (
+                <AddressBlock
+                  address={address}
+                  hasTooltip={false}
+                  hasLink={false}
+                  scale={30}
+                />
+              ) : null}
             </div>
             <div className="column">
               {isConnected ? (

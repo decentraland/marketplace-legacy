@@ -12,17 +12,26 @@ import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelTransactionHistory from './ParcelTransactionHistory'
 import ParcelMortgage from './ParcelMortgage'
-import { parcelType, districtType, publicationType } from 'components/types'
-import { getDistrict, isOnSale } from 'lib/parcelUtils'
+import {
+  parcelType,
+  districtType,
+  publicationType,
+  mortgageType,
+  walletType,
+  estateType
+} from 'components/types'
+import { getDistrict, getOpenPublication } from 'shared/asset'
 import { t } from 'modules/translation/utils'
 
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
+    wallet: walletType.isRequired,
     publications: PropTypes.objectOf(publicationType),
+    estates: PropTypes.objectOf(estateType),
     districts: PropTypes.objectOf(districtType).isRequired,
     onBuy: PropTypes.func.isRequired,
-    mortgages: PropTypes.array
+    mortgage: mortgageType
   }
 
   getDescription() {
@@ -39,16 +48,19 @@ export default class ParcelDetail extends React.PureComponent {
     return null
   }
 
-  getPublication() {
-    const { parcel } = this.props
-    return isOnSale(parcel) ? parcel.publication : null
-  }
-
   render() {
-    const { parcel, districts, publications, isOwner, mortgages } = this.props
+    const {
+      parcel,
+      districts,
+      estates,
+      publications,
+      isOwner,
+      mortgage,
+      wallet
+    } = this.props
 
     const description = this.getDescription()
-    const publication = this.getPublication()
+    const publication = getOpenPublication(parcel, publications)
 
     return (
       <div className="ParcelDetail">
@@ -63,6 +75,7 @@ export default class ParcelDetail extends React.PureComponent {
             <Grid.Column className="parcel-owner-container">
               <ParcelOwner
                 parcel={parcel}
+                estates={estates}
                 districts={districts}
                 isOwner={isOwner}
               />
@@ -94,8 +107,10 @@ export default class ParcelDetail extends React.PureComponent {
                 width={publication ? 8 : 16}
               >
                 <ParcelActions
+                  wallet={wallet}
                   parcel={parcel}
-                  mortgages={mortgages}
+                  mortgage={mortgage}
+                  publications={publications}
                   isOwner={isOwner}
                 />
               </Grid.Column>
@@ -103,7 +118,7 @@ export default class ParcelDetail extends React.PureComponent {
           ) : null}
         </Grid>
 
-        <ParcelMortgage mortgages={mortgages} />
+        {mortgage && <ParcelMortgage mortgage={mortgage} />}
 
         {utils.isEmptyObject(parcel.tags) ? null : (
           <Grid stackable className="parcel-detail-row">

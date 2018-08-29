@@ -122,6 +122,7 @@ export function buySuccess(txHash, publication, asset) {
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
       price: publication.price,
+      buyer: publication.buyer,
       ...asset
     }),
     publication

@@ -66,7 +66,7 @@ export default class ParcelModal extends React.PureComponent {
             </React.Fragment>
           ) : null}
           {hasCustomFooter ? null : (
-            <div>
+            <div className="modal-children">
               <Grid.Column className="modal-buttons">
                 <Button onClick={onCancel} type="button">
                   {cancelLabel || t('global.cancel')}

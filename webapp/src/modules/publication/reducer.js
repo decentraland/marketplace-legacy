@@ -15,14 +15,13 @@ import {
   CANCEL_SALE_SUCCESS,
   CANCEL_SALE_FAILURE
 } from './actions'
-import {
-  FETCH_PARCEL_SUCCESS,
-  FETCH_PARCELS_SUCCESS
-} from 'modules/parcels/actions'
+import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { loadingReducer } from 'modules/loading/reducer'
-import { toPublicationsObject, PUBLICATION_STATUS } from './utils'
+import { toPublicationsObject, PUBLICATION_STATUS } from 'shared/publication'
+import { FETCH_MORTGAGED_PARCELS_SUCCESS } from 'modules/mortgage/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -74,10 +73,10 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       }
       return state
     }
-    case FETCH_PARCELS_SUCCESS:
+    case FETCH_MORTGAGED_PARCELS_SUCCESS:
+    case FETCH_MAP_SUCCESS:
     case FETCH_ADDRESS_PARCELS_SUCCESS: {
       const publications = action.publications
-
       if (publications.length > 0) {
         return {
           ...state,
@@ -131,7 +130,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
 
       switch (transaction.actionType) {
         case BUY_SUCCESS: {
-          const tx_hash = transaction.payload.tx_hash
+          const { tx_hash, buyer } = transaction.payload
 
           return {
             ...state,
@@ -139,7 +138,8 @@ export function publicationReducer(state = INITIAL_STATE, action) {
               ...state.data,
               [tx_hash]: {
                 ...state.data[tx_hash],
-                status: PUBLICATION_STATUS.sold
+                status: PUBLICATION_STATUS.sold,
+                buyer
               }
             }
           }

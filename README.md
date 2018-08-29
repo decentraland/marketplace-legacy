@@ -36,8 +36,12 @@ If you don't want to install `babel-node` globally, you can use [npx](https://ww
 
 ### Front-end
 
-* **Adding the .env files**<br /> Create an `.env` file on the [`/webapp`](https://github.com/decentraland/marketplace/tree/master/webapp) folder and fill it following the `.env.example` file found there. You will need to specify `NODE_PATH` to be `src/`, `REACT_APP_API_URL` to be `http://localhost:5000` (unless you changed the default server configuration, if so point to the right `host:port`) and `REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS` to Ropsten's MANAToken address: `0x2a8fd99c19271f4f04b1b7b9c4f7cf264b626edb`.
+* **Adding the .env files**<br /> Create an `.env` file on the [`/webapp`](https://github.com/decentraland/marketplace/tree/master/webapp) folder and fill it following the `.env.example` file found there. You will need to specify `NODE_PATH` to be `src/`, `REACT_APP_API_URL` to be `http://localhost:5000/v1` (unless you changed the default server configuration, if so point to the right `host:port`) and `REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS` to Ropsten's MANAToken address: `0x2a8fd99c19271f4f04b1b7b9c4f7cf264b626edb`.
 * **Running the front-end**<br /> You will need to first have the server running (see above). After that just jump into the webapp folder `$ cd webapp` and start the local development `$ npm start`
+
+### Shared code
+
+There's a `/shared` directory where some of the logic shared between backend and frontend lives (i.e. everything related to rendering the map). We have symlinks that point to this directory from the `src` directories of the server and the UI (`src/shared` and `webapp/src/shared`). This symlinks have been versioned in this repo, but if for some reason they don't work (Windows?) you will need to recreate them in order to `npm start` or `npm build` this project.
 
 ### Tests
 
@@ -56,3 +60,6 @@ If you need some test data to test the marketplace, you can use the seed for qui
 
 You can translate automatically from English to the other locales by running the command `npm run translate`, this command will compare all the other locales to `en.json` and if it finds any missing translation it will use Google Translate to add it to the corresponding locale.
 
+## API
+
+We have documentation for our HTTP API that can be [found here](https://github.com/decentraland/marketplace/blob/master/docs/http-api.md).

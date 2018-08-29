@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
-
 import { isFeatureEnabled } from 'lib/featureUtils'
 import Mana from 'components/Mana'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
@@ -12,7 +11,7 @@ import DerivationPathDropdown from './DerivationPathDropdown'
 
 import {
   getMarketplaceAddress,
-  getMortgageCreatorAddress,
+  getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
@@ -53,10 +52,10 @@ export default class SettingsForm extends React.PureComponent {
     )
   }
 
-  renderMortgageCreatorLink() {
+  renderMortgageHelperLink() {
     return (
-      <EtherscanLink address={getMortgageCreatorAddress()}>
-        {t('settings.mortgage_creator_contract')}
+      <EtherscanLink address={getMortgageHelperAddress()}>
+        {t('settings.mortgage_helper_contract')}
       </EtherscanLink>
     )
   }
@@ -128,9 +127,21 @@ export default class SettingsForm extends React.PureComponent {
               <Mana amount={balance} unit="MANA" />
             </span>
             <span className="mana-actions">
-              <Link to={locations.buyMana} replace>
-                <Button className="buy-more">{t('buy_mana.action')}</Button>
-              </Link>
+              {isFeatureEnabled('BUY_MANA') ? (
+                <Link to={locations.buyMana} replace>
+                  <Button className="buy-more">{t('buy_mana.action')}</Button>
+                </Link>
+              ) : (
+                <span
+                  className="disabled-buy-more"
+                  data-balloon={t('global.service_unavailable')}
+                  data-balloon-pos="up"
+                >
+                  <Button disabled className="buy-more">
+                    {t('buy_mana.action')}
+                  </Button>
+                </span>
+              )}
               <Link to={locations.transferMana} replace>
                 <Button>{t('transfer_mana.action')}</Button>
               </Link>
@@ -200,10 +211,10 @@ export default class SettingsForm extends React.PureComponent {
                 <div className="authorize-detail">
                   {isMortgageApprovedForMana
                     ? t_html('settings.you_approved_mortgage_mana', {
-                        mortgage_contract_link: this.renderMortgageCreatorLink()
+                        mortgage_contract_link: this.renderMortgageHelperLink()
                       })
                     : t_html('settings.approve_mortgage_mana', {
-                        mortgage_contract_link: this.renderMortgageCreatorLink()
+                        mortgage_contract_link: this.renderMortgageHelperLink()
                       })}
 
                   {isMortgageApprovedForManaPending && (

@@ -4,14 +4,16 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Parcel, ParcelService } from '../Parcel'
 import { Publication } from '../Publication'
+import { ASSET_TYPE } from '../shared/asset'
+import { PUBLICATION_STATUS } from '../shared/publication'
 import { Asset } from './Asset'
 
 describe('Asset', function() {
   const filters = {
     sanitize() {
       return {
-        status: Publication.STATUS.open,
-        type: Publication.TYPES.parcel,
+        status: PUBLICATION_STATUS.open,
+        type: ASSET_TYPE.parcel,
         sort: {
           by: 'price',
           order: 'desc'
@@ -29,7 +31,7 @@ describe('Asset', function() {
       // Setup
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_STATUS.confirmed
-      const status = Publication.STATUS.open
+      const status = PUBLICATION_STATUS.open
       const block_number = 1
       const block_time_created_at = null
       const block_time_updated_at = null
@@ -44,7 +46,7 @@ describe('Asset', function() {
         contract_id: '0x1',
         asset_id: '0,0',
         price: 3,
-        status: Publication.STATUS.sold,
+        status: PUBLICATION_STATUS.sold,
         expires_at,
         owner,
         tx_status,
@@ -121,14 +123,14 @@ describe('Asset', function() {
           data: null,
           auction_owner: null,
           tags: {},
-          in_estate: false,
+          estate_id: null,
           publication: {
             tx_hash: '0x4',
             contract_id: '0x4',
             price: 40,
             buyer: null,
-            status: Publication.STATUS.open,
-            type: Publication.TYPES.parcel,
+            status: PUBLICATION_STATUS.open,
+            type: ASSET_TYPE.parcel,
             asset_id: '1,2',
             expires_at,
             owner,

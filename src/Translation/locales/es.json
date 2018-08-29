@@ -1,9 +1,15 @@
 {
   "activity": {
+    "approve": "Puedes comenzar aprobando MANA desde {settings_link}",
+    "clear": {
+      "body":
+        "Una vez que elimine su historial de transacciones, no puede revertir la acción, ¿está seguro de que desea continuar?",
+      "title": "Eliminar el historial de transacciones"
+    },
     "completed": "Completada",
     "no_activity": "No tienes actividad por el momento.",
     "pending": "Pendiente",
-    "start": "Puedes comenzar aprobando MANA desde {settings_link}"
+    "start": "¡Usted puede comenzar a negociar en el {marketplace}!"
   },
   "address": {
     "its_you": "Eres tú!"
@@ -14,6 +20,7 @@
     "on_sale": "En Venta: ",
     "owner": "Dueño: {owner}",
     "road": "Carretera",
+    "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
   "buy_mana": {
@@ -47,9 +54,12 @@
     "invalid":
       "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
-  "estate": {
-    "acquired_at": "Adquirido en {date}",
-    "created_at": "Creado en {date}"
+  "estate_detail": {
+    "delete": "Eliminar Estado",
+    "delete_desc": "Vas a eliminar la propiedad {name}",
+    "edit_parcels": "Editar paquetes",
+    "parcels": "Parcelas incluidas",
+    "pending_tx": "Esta propiedad"
   },
   "estate_edit": {
     "description": "Descripción",
@@ -60,7 +70,10 @@
   },
   "estate_select": {
     "description": "Seleccione parcelas adyacentes a partir de {x}, {y}",
-    "selection": "Seleccione las parcelas para su nueva propiedad"
+    "detail": "Detalle de finca",
+    "edit_selection": "Seleccione las parcelas en el mapa",
+    "new_selection": "Seleccione las parcelas en el mapa para su nueva finca",
+    "tx_to_be_send": "Enviarás una transacción a {action} parcels: {parcels}"
   },
   "footer": {
     "color_key": "Mapa de Colores",
@@ -72,13 +85,16 @@
   "global": {
     "acquired_at": "Adquirido en {date}",
     "activity": "Actividad",
-    "address_placeholder": "Ejemplo: {address}",
+    "add": "añadir",
+    "address_placeholder": "0x...",
     "atlas": "Atlas",
     "authorized": "Autorizado",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancelar",
     "change": "Cambio",
+    "check_address": "Por favor, compruebe la dirección con cuidado",
+    "clear": "Borrar historial",
     "click_here": "Pincha aquí",
     "community_chat": "Chat de la comunidad",
     "confirm": "Confirmar",
@@ -87,6 +103,7 @@
     "continue": "Continuar",
     "contributions": "Contribuciones",
     "created_at": "Creado en {date}",
+    "edit": "Editar",
     "estate": "Propiedad",
     "estates": "Propiedades",
     "expired_at": "Caducado {time}",
@@ -97,18 +114,30 @@
     "marketplace": "Mercado",
     "mortgage": "Hipoteca",
     "mortgages": "Hipotecas",
+    "own_address_warning": "Esa es tu propia dirección!",
     "owned_by": "Controlada por",
     "owned_by_link": "Controlada por {address_link}",
+    "owner_address_warning": "¡Ese es el dueño!",
+    "paid_at": "Pagada el",
     "parcels": "Parcelas",
     "profile": "Mi LAND",
+    "publications": "Publicaciones",
+    "recipient_address": "Dirección del receptor",
+    "remove": "retirar",
     "request": "Solicitud",
     "retry": "Reintentar",
     "revoke": "Revocar",
+    "sale": "Venta",
+    "service_unavailable": "Servicio no disponible",
     "settings": "Configuración",
     "sign_in": "Conectar",
     "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "submit": "Enviar",
+    "the_estate": "la propiedad",
+    "the_parcel": "la parcela",
     "time_left": "Tiempo restante",
+    "transfer_irreversible":
+      "Recuerde que la transferencia es una operación irreversible.",
     "unauthorized": "No autorizado",
     "undo": "Deshacer",
     "wallet_address": "Dirección de billetera",
@@ -126,6 +155,7 @@
     "en": "Ingles",
     "es": "Español",
     "fr": "Frances",
+    "ja": "Japonés",
     "ko": "Coreano",
     "zh": "Chino"
   },
@@ -141,6 +171,8 @@
     "amount": "Cantidad",
     "amount_placeholder": "Monto en MANA",
     "cancel": "Cancelar hipoteca",
+    "claim": "Reclamo de paquete",
+    "defaulted_in": "Defecto en",
     "duration": "Duración",
     "duration_placeholder": "Duración en días",
     "errors": {
@@ -159,8 +191,18 @@
     "interest_rate": "Tasa de interés",
     "interest_rate_placeholder": "Tasa de interés",
     "oracle": "Dirección del contrato de Oracle",
+    "outstanding_amount": "Monto pendiente",
+    "partial_payment": "Pago parcial",
+    "partial_payment_desc":
+      "Está por hacer un pago parcial de la hipoteca para comprar el terreno {parcel_name}",
+    "pay": "Paga",
     "payable": "Pagadero a",
     "payable_placeholder": "Pagable en días",
+    "pending_tx": "La hipoteca de",
+    "please_authorize_MANA":
+      "Vaya a {settings_link} y autorice el contrato de Mortgage Helper para operar MANA en su nombre",
+    "please_authorize_RCN":
+      "Vaya a {settings_link} y autorice el contrato de Administrador de hipoteca para operar RCN en su nombre",
     "punitory_rate": "Tasa de interés punitiva",
     "punitory_rate_placeholder": "Tasa punitiva",
     "request": "Solicitar una hipoteca",
@@ -193,7 +235,6 @@
     "actions": {
       "cancel": "Cancelar venta",
       "create_estate": "Crear Propiedad",
-      "edit": "Editar",
       "permissions": "Permisos",
       "sell": "Vender",
       "transfer": "Transferir"
@@ -227,14 +268,16 @@
   "parcel_edit": {
     "description": "Descripción",
     "edit_land": "Editar LAND",
+    "ipns": "Link de contenido",
     "name": "Nombre",
-    "set_name_and_desc": "Configura un nombre y descripción para {parcel_name}"
+    "set_name_and_desc": "Configura un nombre y descripción para {parcel_name}",
+    "warning_tooltip":
+      "Esto será usado para mostrar tu escena. Actualiza sólo si sabes lo que estas haciendo."
   },
   "parcel_manage": {
     "address": "Dirección del operador",
     "address_permission":
       "Esta dirección podrá actualizar el contenido de este paquete.",
-    "check_address": "Por favor, compruebe la dirección con cuidado",
     "give_permission":
       "Dar permiso para actualizar el contenido de {parcel_name}.",
     "manage_land": "Administrar LAND"
@@ -265,28 +308,11 @@
       "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia",
     "road": "Camino"
   },
-  "parcel_transfer": {
-    "about_to_transfer": "Estas por transferir {parcel_name}",
-    "cant_transfer":
-      "Esta LAND no puede ser transferida porque se encuentra en venta.",
-    "check_address": "Por favor revisa la dirección cuidadosamente",
-    "error_persists":
-      "Si el problema persiste, contáctate con nosotros en {community_chat_link}",
-    "irreversible":
-      "Recuerda que transferir LAND es una operación irreversible.",
-    "placeholder": "Ejemplo: {address}",
-    "recipient_address": "Dirección de destino",
-    "transfer_land": "Transferir LAND",
-    "unknown_error":
-      "Un problema desconocido ha ocurrido, los detalles se encuentran debajo."
-  },
   "profile_page": {
     "empty": "El usuario no tiene {content}",
     "on_sale": "En Venta"
   },
   "publication": {
-    "acquired_at": "Adquirida en {date}",
-    "canceled": "Cancelada",
     "sold": "Vendida",
     "view": "Ver"
   },
@@ -298,10 +324,10 @@
     "approve_mortgage_mana":
       "Autorice a {mortgage_contract_link} para operar MANA en su nombre",
     "approve_mortgage_rcn":
-      "Autorice el {mortgage_contract_link} ​​para operar RCN en su nombre",
+      "Autorice el {mortgage_contract_link} para operar RCN en su nombre",
     "authorization": "Autorización",
     "authorize":
-      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
+      "Autorizar al {marketplace_contract_link} a operar LAND por tu cuenta",
     "authorize_land_check":
       "Marcando autoriza el uso de LAND al contrato de Mercado",
     "disapprove_mana_check":
@@ -309,22 +335,29 @@
     "mana_approved":
       "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
     "marketplace_contract": "Contrato de Mercado",
-    "mortgage_creator_contract": "Contrato de creador hipotecario",
+    "mortgage_helper_contract": "Contrato de creador hipotecario",
     "mortgage_manager_contract": "Contrato de administrador hipotecario",
     "pending_tx": "Tienes una transacción pendiente",
     "unauthorize_land_check":
       "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
     "you_approved_mortgage_mana":
-      "Usted ha autorizado el {mortgage_contract_link} ​​para operar MANA en su nombre",
+      "Usted ha autorizado el {mortgage_contract_link} para operar MANA en su nombre",
     "you_approved_mortgage_rcn":
       "Usted ha autorizado {mortgage_contract_link} para operar RCN en su nombre",
     "you_authorized":
-      "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta"
+      "Has autorizado al {marketplace_contract_link} a operar LAND por tu cuenta"
   },
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
-    "options":
-      "En primer lugar tienes que buscar un lugar seguro para guardar tu LAND. Puedes usar la extensión {metamask_link} o una billetera física como {ledger_nano_link}."
+    "get_started": "Empezar",
+    "intro":
+      "En primer lugar necesitarás un lugar seguro para guardar todo tu LAND.",
+    "options": {
+      "desktop":
+        "Puedes usar la extensión {metamask_link} o una billetera de hardware como {ledger_nano_link}.",
+      "mobile":
+        "Puedes usar navegadores móviles como {toshi_link} o {imtoken_link}."
+    }
   },
   "transaction": {
     "approved":
@@ -336,12 +369,19 @@
     "cancel": "Has cancelado {publication_link} de {parcel_link}",
     "cancel_mortgage":
       "Usted cancela una hipoteca para comprar el paquete {parcel_link}",
+    "claim_mortgage_resolution": "Usted afirmó {parcel_link}",
+    "create_estate": "Usted creó la propiedad {name}",
     "create_mortgage":
       "Solicitó una hipoteca para comprar el paquete {parcel_link}",
+    "delete_estate": "Borraste la propiedad {name}",
     "disapproved":
       "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
+    "edit_estate_metadata":
+      "Editó el estado {estate_id} con el nombre \"{name}\" y la descripción \"{description}\"",
+    "edit_estate_parcels_added": "Agregaste {amount} parcelas a {name}",
+    "edit_estate_parcels_removed": "Has eliminado {amount} parcelas de {name}",
     "manage":
       "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
     "manage_revoked":
@@ -350,8 +390,10 @@
       "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre.",
     "mortgage_rcn":
       "Usted {action} el {mortgage_contract_link} para operar RCN en su nombre.",
+    "pay_mortgage":
+      "Hizo un pago parcial de {amount} MANA por la hipoteca para comprar el paquete {parcel_link}",
     "publish": "Has publicado {parcel_link}",
-    "transfer": "Has transferido {parcel_link} a {owner_link}",
+    "transfer": "Has transferido {asset_type} {asset_link} a {owner_link}",
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"
   },
   "transaction_status": {
@@ -370,12 +412,22 @@
       "pending": "Tu transacción está esperando ser confirmada."
     }
   },
+  "transfer_estate": {
+    "about_to_transfer": "Estás a punto de transferir la propiedad {name}.",
+    "transfer_estate": "Transferir propiedad"
+  },
   "transfer_mana": {
     "action": "Transferir",
+    "amount": "Cantidad",
     "current_balance": "Tu balance actual es {balance}",
     "irreversible":
       "Recuerda que transferir MANA es una operación irreversible.",
-    "own_address_warning": "Esa es tu propia dirección!",
+    "is_mana_contract_address": "Esa es la dirección del contrato de MANA",
     "title": "Transferir MANA"
+  },
+  "transfer_parcel": {
+    "about_to_transfer": "Estás a punto de transferir {parcel_name}.",
+    "cant_transfer": "Este LAND no se puede transferir porque está en oferta.",
+    "transfer_land": "Transferencia LAND"
   }
 }

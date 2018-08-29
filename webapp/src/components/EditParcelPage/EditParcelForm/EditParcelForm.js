@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { Button, Form, Input } from 'semantic-ui-react'
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
-import { preventDefault, isValidName, isValidDescription } from 'lib/utils'
+import { preventDefault } from 'lib/utils'
+import { isValidName, isValidDescription } from 'shared/asset'
 import { t } from 'modules/translation/utils'
 
 import './EditParcelForm.css'
@@ -23,7 +24,8 @@ export default class EditParcelForm extends React.PureComponent {
     const { data } = this.props.parcel
     this.state = {
       name: data.name || '',
-      description: data.description || ''
+      description: data.description || '',
+      ipns: data.ipns || ''
     }
   }
 
@@ -35,6 +37,10 @@ export default class EditParcelForm extends React.PureComponent {
     this.setState({ description: event.target.value })
   }
 
+  handleIpnsChange = event => {
+    this.setState({ ipns: event.target.value })
+  }
+
   handleCancel = () => {
     this.props.onCancel()
   }
@@ -44,20 +50,22 @@ export default class EditParcelForm extends React.PureComponent {
 
     return (
       this.state.name !== data.name ||
-      this.state.description !== data.description
+      this.state.description !== data.description ||
+      this.state.ipns !== data.ipns
     )
   }
 
   handleSubmit = () => {
     if (this.hasChanged()) {
       const { parcel, onSubmit } = this.props
-      const { name, description } = this.state
+      const { name, description, ipns } = this.state
       onSubmit({
         ...parcel,
         data: {
           ...parcel.data,
           name,
-          description
+          description,
+          ipns
         }
       })
     }
@@ -65,7 +73,7 @@ export default class EditParcelForm extends React.PureComponent {
 
   render() {
     const { isTxIdle } = this.props
-    const { name, description } = this.state
+    const { name, description, ipns } = this.state
 
     return (
       <Form
@@ -89,10 +97,25 @@ export default class EditParcelForm extends React.PureComponent {
             onChange={this.handleDescriptionChange}
             error={!isValidDescription}
           />
-          <TxStatus.Idle isIdle={isTxIdle} />
         </Form.Field>
+        <Form.Field>
+          <label>{t('parcel_edit.ipns')}</label>
+          <Input
+            type="text"
+            icon="warning sign"
+            value={ipns}
+            onChange={this.handleIpnsChange}
+            className="ipns-input"
+          />
+          <span
+            className="warning-tooltip"
+            data-balloon={t('parcel_edit.warning_tooltip')}
+            data-balloon-pos="up"
+          />
+        </Form.Field>
+        <TxStatus.Idle isIdle={isTxIdle} />
         <br />
-        <div>
+        <div className="modal-buttons">
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>

@@ -27,6 +27,14 @@
   height: 100%;
 }
 
+.Transaction .parcels-link{
+  margin-right: 10px;
+}
+
+.Transaction .parcels-link:last-child{
+  margin-right: 0;
+}
+
 .Transaction .transaction-avatar {
   width: 64px;
   height: 64px;

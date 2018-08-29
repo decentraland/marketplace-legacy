@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { coordsType } from 'components/types'
-import { getBounds } from 'lib/parcelUtils'
+import { Bounds } from 'shared/map'
 
 import './Minimap.css'
 
-const { minX, maxX, minY, maxY } = getBounds()
+const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MINIMAP_WIDTH = 150 /* pixels */
 const MINIMAP_HEIGHT = 149 /* pixels */
 const HORIZONTAL_PARCELS = maxX - minX

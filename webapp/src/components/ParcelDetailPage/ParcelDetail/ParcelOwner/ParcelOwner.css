@@ -7,11 +7,11 @@
   color: var(--gray);
 }
 
-.ParcelOwner.is-owner .button + .button {
-  margin-left: 30px;
+.ParcelOwner.is-owner .manage-button {
+  margin-left: 25px;
 }
 
-.ParcelOwner.is-district {
+.ParcelOwner.part-of {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
@@ -20,7 +20,7 @@
   max-width: 100%;
 }
 
-.ParcelOwner.is-district .district-name {
+.ParcelOwner.part-of .district-name {
   color: var(--gray);
 }
 

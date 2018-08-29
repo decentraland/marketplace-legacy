@@ -5,6 +5,7 @@ import { Button, Form, Input, Icon } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import { preventDefault, formatMana } from 'lib/utils'
 import { t, t_html } from 'modules/translation/utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   fetchTransaction,
   fetchManaRate,
@@ -149,6 +150,7 @@ export default class BuyManaForm extends React.PureComponent {
             onChange={this.handleAmountChange}
             autoComplete="off"
             autoFocus={true}
+            disabled={!isFeatureEnabled('BUY_MANA')}
           />
           {price > balance ? (
             <label className="warning">
@@ -195,24 +197,29 @@ export default class BuyManaForm extends React.PureComponent {
             <br />
           </React.Fragment>
         ) : null}
-        <span className="info">
-          {t_html('buy_mana.powered_by', {
-            bancor_link: (
-              <a
-                href="https://bancor.network"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="external-link"
-              >
-                Bancor Network
-              </a>
-            )
-          })}
-        </span>
+        {isFeatureEnabled('BUY_MANA') ? (
+          <span className="info">
+            {t_html('buy_mana.powered_by', {
+              bancor_link: (
+                <a
+                  href="https://bancor.network"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="external-link"
+                >
+                  Bancor Network
+                </a>
+              )
+            })}
+          </span>
+        ) : (
+          <label className="warning">{t('global.service_unavailable')}</label>
+        )}
+
         <br />
         <TxStatus.Idle isIdle={isTxIdle} />
         <br />
-        <div className="footer">
+        <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>

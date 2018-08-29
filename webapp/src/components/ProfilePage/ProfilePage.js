@@ -17,7 +17,7 @@ import Contribution from './Contribution'
 import { parcelType, contributionType, estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { buildUrl } from './utils'
-import { shortenAddress } from 'lib/utils'
+import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
 
 import './ProfilePage.css'
 import EstateCard from 'components/EstateCard'
@@ -44,6 +44,10 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   componentWillMount() {
+    const { address, onAccessDenied } = this.props
+    if (isBlacklistedAddress(address)) {
+      onAccessDenied()
+    }
     this.props.onFetchAddress()
   }
 
@@ -65,7 +69,11 @@ export default class ProfilePage extends React.PureComponent {
     const { tab } = this.props
     return (
       <div className="empty">
-        <p>{t('profile_page.empty', { content: tab })}</p>
+        <p>
+          {t('profile_page.empty', {
+            content: t(`global.${tab}`).toLowerCase()
+          })}
+        </p>
       </div>
     )
   }
@@ -108,7 +116,9 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.estates: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(estate => <EstateCard key={estate.id} estate={estate} />)}
+            {grid.map(estate => (
+              <EstateCard key={estate.asset_id} estate={estate} />
+            ))}
           </Card.Group>
         )
       }
@@ -220,19 +230,20 @@ export default class ProfilePage extends React.PureComponent {
                 {this.renderBadge(estates, PROFILE_PAGE_TABS.estates)}
               </Menu.Item>
             ) /* Estate Feature */}
-            {isFeatureEnabled('MORTGAGES') && (
-              <Menu.Item
-                name={PROFILE_PAGE_TABS.mortgages}
-                active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
-                onClick={this.handleItemClick}
-              >
-                {t('global.mortgages')}
-                {this.renderBadge(
-                  mortgagedParcels,
-                  PROFILE_PAGE_TABS.mortgages
-                )}
-              </Menu.Item>
-            ) /* Mortgage Feature */}
+            {isFeatureEnabled('MORTGAGES') &&
+              isOwner && (
+                <Menu.Item
+                  name={PROFILE_PAGE_TABS.mortgages}
+                  active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
+                  onClick={this.handleItemClick}
+                >
+                  {t('global.mortgages')}
+                  {this.renderBadge(
+                    mortgagedParcels,
+                    PROFILE_PAGE_TABS.mortgages
+                  )}
+                </Menu.Item>
+              ) /* Mortgage Feature */}
           </Menu>
         </Container>
         <Container className="profile-grid">

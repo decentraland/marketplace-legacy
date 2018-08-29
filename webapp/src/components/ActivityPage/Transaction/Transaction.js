@@ -10,15 +10,13 @@ import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import {
-  formatDate,
-  formatMana,
-  distanceInWordsToNow,
-  buildCoordinate
-} from 'lib/utils'
+import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
+import { buildCoordinate } from 'shared/parcel'
+import { isNewAsset } from 'shared/asset'
+import { calculateMapProps } from 'shared/estate'
 import {
   getMarketplaceAddress,
-  getMortgageCreatorAddress,
+  getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
 import { t, t_html } from 'modules/translation/utils'
@@ -34,9 +32,9 @@ import {
 } from 'modules/wallet/actions'
 import {
   EDIT_PARCEL_SUCCESS,
-  MANAGE_PARCEL_SUCCESS
+  MANAGE_PARCEL_SUCCESS,
+  TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
-import { TRANSFER_PARCEL_SUCCESS } from 'modules/transfer/actions'
 import {
   PUBLISH_SUCCESS,
   BUY_SUCCESS,
@@ -44,8 +42,18 @@ import {
 } from 'modules/publication/actions'
 import {
   CREATE_MORTGAGE_SUCCESS,
-  CANCEL_MORTGAGE_SUCCESS
+  CANCEL_MORTGAGE_SUCCESS,
+  PAY_MORTGAGE_SUCCESS,
+  CLAIM_MORTGAGE_RESOLUTION_SUCCESS
 } from 'modules/mortgage/actions'
+import {
+  CREATE_ESTATE_SUCCESS,
+  EDIT_ESTATE_PARCELS_SUCCESS,
+  EDIT_ESTATE_METADATA_SUCCESS,
+  ADD_PARCELS,
+  DELETE_ESTATE_SUCCESS,
+  TRANSFER_ESTATE_SUCCESS
+} from 'modules/estates/actions'
 
 import './Transaction.css'
 
@@ -56,7 +64,7 @@ export default class Transaction extends React.PureComponent {
   }
 
   handleTransactionClick = e => {
-    if (e.target.nodeName !== 'A') {
+    if (e.target.nodeName !== 'A' && e.target.nodeName !== 'CANVAS') {
       const { tx, network } = this.props
       const href = getEtherscanHref({ txHash: tx.hash }, network)
       window.open(href, '_blank')
@@ -71,10 +79,10 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  renderMortgageCreatorLink() {
+  renderMortgageHelperLink() {
     return (
-      <EtherscanLink address={getMortgageCreatorAddress()}>
-        Mortgage Creator
+      <EtherscanLink address={getMortgageHelperAddress()}>
+        Mortgage helper
       </EtherscanLink>
     )
   }
@@ -92,6 +100,12 @@ export default class Transaction extends React.PureComponent {
       <Link to={locations.parcelDetail(x, y)}>
         {x}, {y}
       </Link>
+    )
+  }
+
+  renderEstateLink(estate) {
+    return (
+      <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
     )
   }
 
@@ -154,7 +168,8 @@ export default class Transaction extends React.PureComponent {
         const { x, y, newOwner } = payload
 
         return t_html('transaction.transfer', {
-          parcel_link: this.renderParcelLink(x, y),
+          asset_link: this.renderParcelLink(x, y),
+          asset_type: t('global.the_parcel').toLowerCase(),
           owner_link: (
             <Link to={locations.profilePage(newOwner)}>{newOwner}</Link>
           )
@@ -179,7 +194,9 @@ export default class Transaction extends React.PureComponent {
 
         return t_html('transaction.cancel', {
           publication_link: (
-            <EtherscanLink txHash={tx_hash}>publication</EtherscanLink>
+            <EtherscanLink txHash={tx_hash}>
+              {t('global.sale').toLowerCase()}
+            </EtherscanLink>
           ),
           parcel_link: this.renderParcelLink(x, y)
         })
@@ -198,7 +215,7 @@ export default class Transaction extends React.PureComponent {
             ? t('global.authorized')
             : t('global.unauthorized')
           ).toLowerCase(),
-          mortgage_contract_link: this.renderMortgageCreatorLink()
+          mortgage_contract_link: this.renderMortgageHelperLink()
         })
       }
 
@@ -225,9 +242,112 @@ export default class Transaction extends React.PureComponent {
           parcel_link: this.renderParcelLink(x, y)
         })
       }
+      case PAY_MORTGAGE_SUCCESS: {
+        const { x, y, amount } = payload
+
+        return t_html('transaction.pay_mortgage', {
+          parcel_link: this.renderParcelLink(x, y),
+          amount
+        })
+      }
+      case CLAIM_MORTGAGE_RESOLUTION_SUCCESS: {
+        const { x, y } = payload
+
+        return t_html('transaction.claim_mortgage_resolution', {
+          parcel_link: this.renderParcelLink(x, y)
+        })
+      }
+      case CREATE_ESTATE_SUCCESS: {
+        const { estate } = payload
+        return t_html('transaction.create_estate', {
+          name: estate.data.name
+        })
+      }
+      case EDIT_ESTATE_PARCELS_SUCCESS: {
+        const { estate, type, parcels } = payload
+        return t_html(
+          type === ADD_PARCELS
+            ? 'transaction.edit_estate_parcels_added'
+            : 'transaction.edit_estate_parcels_removed',
+          {
+            name: this.renderEstateLink(estate),
+            amount: parcels.length
+          }
+        )
+      }
+      case EDIT_ESTATE_METADATA_SUCCESS: {
+        const { estate } = payload
+        return t_html('transaction.edit_estate_metadata', {
+          estate_id: this.renderEstateLink(estate),
+          name: estate.data.name,
+          description: estate.data.description
+        })
+      }
+      case DELETE_ESTATE_SUCCESS: {
+        const { estate } = payload
+        return t_html('transaction.delete_estate', {
+          name: estate.data.name
+        })
+      }
+      case TRANSFER_ESTATE_SUCCESS: {
+        const { estate, to } = payload
+
+        return t_html('transaction.transfer', {
+          asset_link: this.renderEstateLink(estate),
+          asset_type: t('global.the_estate').toLowerCase(),
+          owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
+        })
+      }
       default:
         return null
     }
+  }
+
+  renderEstatePreview({ estate }) {
+    const size = 5
+    const { center, zoom, pan } = calculateMapProps(estate.data.parcels, size)
+    const { x, y } = center
+
+    return (
+      <Link
+        to={
+          isNewAsset(estate)
+            ? locations.parcelMapDetail(x, y, buildCoordinate(x, y))
+            : locations.estateDetail(estate.asset_id)
+        }
+      >
+        <ParcelPreview
+          x={x}
+          y={y}
+          zoom={zoom}
+          width={64}
+          height={64}
+          size={size}
+          panX={pan.x}
+          panY={pan.y}
+          selected={estate.data.parcels}
+        />
+      </Link>
+    )
+  }
+
+  renderParcelPreview({ x, y }) {
+    return (
+      <Link to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}>
+        <ParcelPreview
+          x={x}
+          y={y}
+          width={64}
+          height={64}
+          size={15}
+          selected={{ x, y }}
+        />
+      </Link>
+    )
+  }
+
+  renderMANAPreview() {
+    return <Mana size={64} scale={1} />
   }
 
   render() {
@@ -237,8 +357,6 @@ export default class Transaction extends React.PureComponent {
     }
 
     const { tx } = this.props
-    let x = tx.payload.x
-    let y = tx.payload.y
 
     const isParcelTransaction = [
       EDIT_PARCEL_SUCCESS,
@@ -248,8 +366,20 @@ export default class Transaction extends React.PureComponent {
       CANCEL_SALE_SUCCESS,
       MANAGE_PARCEL_SUCCESS,
       CREATE_MORTGAGE_SUCCESS,
-      CANCEL_MORTGAGE_SUCCESS
+      CANCEL_MORTGAGE_SUCCESS,
+      PAY_MORTGAGE_SUCCESS,
+      CLAIM_MORTGAGE_RESOLUTION_SUCCESS
     ].includes(tx.actionType)
+
+    const isEstateTransaction = [
+      CREATE_ESTATE_SUCCESS,
+      EDIT_ESTATE_PARCELS_SUCCESS,
+      EDIT_ESTATE_METADATA_SUCCESS,
+      DELETE_ESTATE_SUCCESS,
+      TRANSFER_ESTATE_SUCCESS
+    ].includes(tx.actionType)
+
+    const isMANATransaction = !isParcelTransaction && !isEstateTransaction
 
     return (
       <Segment size="large" vertical>
@@ -265,22 +395,9 @@ export default class Transaction extends React.PureComponent {
             )}
 
             <div className="transaction-avatar">
-              {isParcelTransaction ? (
-                <Link
-                  to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}
-                >
-                  <ParcelPreview
-                    x={x}
-                    y={y}
-                    width={64}
-                    height={64}
-                    size={15}
-                    selected={{ x, y }}
-                  />
-                </Link>
-              ) : (
-                <Mana size={64} scale={1} />
-              )}
+              {isParcelTransaction && this.renderParcelPreview(tx.payload)}
+              {isEstateTransaction && this.renderEstatePreview(tx.payload)}
+              {isMANATransaction && this.renderMANAPreview()}
             </div>
 
             <div className="transaction-text">

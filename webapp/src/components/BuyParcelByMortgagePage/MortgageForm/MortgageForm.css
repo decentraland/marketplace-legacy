@@ -1,11 +1,3 @@
-.MortgageForm {
-  min-width: 400px;
-}
-
-.MortgageForm .ui.button + .ui.button {
-  margin-left: 20px;
-}
-
 .MortgageFormGrid {
   display: block !important;
 }
@@ -31,6 +23,10 @@
   bottom: 10px;
 }
 
+.MortgageForm .actions button + button{
+  margin-left: 15px !important;
+}
+
 .ui.form.MortgageForm .address-input {
   background: transparent;
   color: #fff;
@@ -40,3 +36,11 @@
   border-bottom: 2px solid var(--dark-gray);
 
 }
+
+.MortgageForm .ui.error.message{
+  max-width: 500px;
+}
+
+.MortgageForm .ui.error.message div {
+   word-wrap: break-word;
+ }

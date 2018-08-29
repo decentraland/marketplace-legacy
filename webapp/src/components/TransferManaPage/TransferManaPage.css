@@ -1,19 +1,14 @@
-.big-mana-icon .Mana .ManaIcon {
+.TransferManaPage .big-mana-icon .Mana .ManaIcon {
   margin-right: 0px;
 }
 
 @media (max-width: 768px) {
-  .big-mana-icon {
+  .TransferManaPage .big-mana-icon {
     margin: 0 auto 50px;
   }
+}
 
-  .TransferManaForm .footer {
-    display: flex;
-    flex-flow: column-reverse nowrap;
-  }
-
-  .TransferManaForm .footer .button {
-    margin-top: 1em;
-    width: 100%;
-  }
+.TransferManaPage .mana-icon-wrapper {
+  display: inline-block;
+  transform: translateY(3px);
 }

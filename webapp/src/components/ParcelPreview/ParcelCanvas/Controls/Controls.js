@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from 'semantic-ui-react'
-import { isEqualCoords } from 'lib/utils'
+import { isEqualCoords } from 'shared/parcel'
 
 import './Controls.css'
 

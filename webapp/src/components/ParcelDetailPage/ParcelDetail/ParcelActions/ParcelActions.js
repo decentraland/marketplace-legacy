@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
 
-import { isFeatureEnabled } from 'lib/featureUtils'
-import { parcelType } from 'components/types'
-import { t } from 'modules/translation/utils'
-import { isOnSale } from 'lib/parcelUtils'
 import { locations } from 'locations'
+import { parcelType, publicationType, mortgageType } from 'components/types'
+import { isFeatureEnabled } from 'lib/featureUtils'
+import { isOnSale } from 'shared/asset'
+import { hasParcelsConnected } from 'shared/parcel'
+import { t } from 'modules/translation/utils'
 
 import './ParcelActions.css'
 
@@ -15,12 +16,21 @@ export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool,
-    mortgages: PropTypes.array.isRequired,
+    mortgage: mortgageType,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     isLoading: PropTypes.bool.isRequired
   }
 
+  canCreateEstate = () => {
+    const { wallet, parcel } = this.props
+    return (
+      isFeatureEnabled('ESTATES') &&
+      hasParcelsConnected(parcel, wallet.parcelsById)
+    )
+  }
+
   render() {
-    const { parcel, isOwner, mortgages, isLoading } = this.props
+    const { parcel, isOwner, mortgage, isLoading, publications } = this.props
     if (!parcel || isLoading) {
       return null
     }
@@ -35,14 +45,16 @@ export default class ParcelActions extends React.PureComponent {
                 {t('parcel_detail.actions.transfer')}
               </Button>
             </Link>
-            {isFeatureEnabled('ESTATES') && (
+
+            {this.canCreateEstate() && (
               <Link to={locations.createEstateLand(x, y)}>
                 <Button size="tiny">
+                  <Icon name="object group" />
                   {t('parcel_detail.actions.create_estate')}
                 </Button>
               </Link>
             ) /* Estate Feature */}
-            {isOnSale(parcel) ? (
+            {isOnSale(parcel, publications) ? (
               <Link to={locations.cancelSaleLand(x, y)}>
                 <Button size="tiny" primary>
                   <Icon name="cancel" />
@@ -58,7 +70,7 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : isOnSale(parcel) && mortgages.length === 0 ? (
+        ) : isOnSale(parcel, publications) && !mortgage ? (
           <React.Fragment>
             <Link to={locations.buyLand(x, y)}>
               <Button primary size="large">

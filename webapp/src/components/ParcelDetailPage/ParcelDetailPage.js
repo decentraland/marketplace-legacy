@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container } from 'semantic-ui-react'
 
 import { isFeatureEnabled } from 'lib/featureUtils'
-import ParcelPreview from 'components/ParcelPreview'
-import ParcelDetail from './ParcelDetail'
+import AssetDetailPage from 'components/AssetDetailPage'
 import Parcel from 'components/Parcel'
-import { districtType, publicationType } from 'components/types'
+import ParcelDetail from './ParcelDetail'
+import { publicationType, districtType, mortgageType } from 'components/types'
 
 import './ParcelDetailPage.css'
 
@@ -14,17 +13,14 @@ export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
-    isLoading: PropTypes.bool,
-    error: PropTypes.string,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     districts: PropTypes.objectOf(districtType).isRequired,
-    publications: PropTypes.objectOf(publicationType),
-    mortgages: PropTypes.array,
+    mortgage: mortgageType,
+    user: PropTypes.string,
     onFetchParcelPublications: PropTypes.func.isRequired,
     onFetchActiveParcelMortgages: PropTypes.func.isRequired,
-    onError: PropTypes.func.isRequired,
     onBuy: PropTypes.func.isRequired,
-    user: PropTypes.string,
-    onParcelClick: PropTypes.func.isRequired
+    onAssetClick: PropTypes.func.isRequired
   }
 
   componentWillMount() {
@@ -32,26 +28,26 @@ export default class ParcelDetailPage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
-      return this.props.onError(nextProps.error)
+    const { x, y } = this.props
+    const hasChangedParcel = nextProps.x !== x || nextProps.y !== y
+
+    if (hasChangedParcel) {
+      this.isAdditionalResourcesFetched = false
     }
 
-    if (!nextProps.isLoading) {
-      this.fetchAdditionalParcelResources()
+    if (!nextProps.isLoading || hasChangedParcel) {
+      this.fetchAdditionalParcelResources(nextProps.x, nextProps.y)
     }
   }
 
-  fetchAdditionalParcelResources() {
+  fetchAdditionalParcelResources(x, y) {
     if (!this.isAdditionalResourcesFetched) {
       const {
-        x,
-        y,
         onFetchParcelPublications,
         onFetchActiveParcelMortgages
       } = this.props
 
       if (isFeatureEnabled('MORTGAGES')) {
-        // Mortgage Feature
         onFetchActiveParcelMortgages(x, y)
       }
       onFetchParcelPublications(x, y)
@@ -64,46 +60,32 @@ export default class ParcelDetailPage extends React.PureComponent {
     const {
       x,
       y,
-      error,
-      districts,
       publications,
-      onBuy,
-      onParcelClick,
-      mortgages
+      districts,
+      estates,
+      mortgage,
+      onBuy
     } = this.props
 
-    if (error) {
-      return null
-    }
     return (
-      <Parcel x={x} y={y}>
-        {(parcel, isOwner) => (
-          <div className="ParcelDetailPage">
-            <div className="parcel-preview">
-              <ParcelPreview
-                x={parcel.x}
-                y={parcel.y}
-                selected={parcel}
-                isDraggable
-                showMinimap
-                showPopup
-                showControls
-                onClick={onParcelClick}
-              />
-            </div>
-            <Container>
+      <div className="ParcelDetailPage">
+        <Parcel x={x} y={y}>
+          {(parcel, isOwner, wallet) => (
+            <AssetDetailPage asset={parcel} {...this.props}>
               <ParcelDetail
+                wallet={wallet}
                 parcel={parcel}
                 isOwner={isOwner}
-                districts={districts}
                 publications={publications}
+                districts={districts}
+                estates={estates}
                 onBuy={onBuy}
-                mortgages={mortgages}
+                mortgage={mortgage}
               />
-            </Container>
-          </div>
-        )}
-      </Parcel>
+            </AssetDetailPage>
+          )}
+        </Parcel>
+      </div>
     )
   }
 }

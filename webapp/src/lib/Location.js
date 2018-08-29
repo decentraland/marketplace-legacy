@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { PUBLICATION_STATUS } from 'modules/publication/utils'
+import { PUBLICATION_STATUS } from 'shared/publication'
 import { PAGE_SIZE } from './Pagination'
 
 export class Location {
@@ -26,7 +26,7 @@ export class Location {
   }
 
   getOptionFromRouter(optionName) {
-    const { page, sort_by, sort_order } = this.query
+    const { sort_by, sort_order, page } = this.query
     let value = null
 
     switch (optionName) {
