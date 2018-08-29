@@ -41,8 +41,7 @@ export default class EstateDetailPage extends React.PureComponent {
     return (
       <Estate assetId={assetId} x={x} y={y}>
         {(estate, isOwner, wallet) =>
-          estate.data.parcels.length > 0 &&
-          (isNewAsset(estate) || isEditing) ? (
+          isNewAsset(estate) || isEditing ? (
             <EditEstate
               estate={estate}
               isCreation={isNewAsset(estate)}
