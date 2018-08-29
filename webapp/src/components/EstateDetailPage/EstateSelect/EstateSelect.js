@@ -113,16 +113,14 @@ export default class EstateSelect extends React.PureComponent {
     const { estate, estatePristine } = this.props
     const newParcels = estate.data.parcels
     const pristineParcels = estatePristine.data.parcels
-    const parcelsToAdd = getParcelsNotIncluded(newParcels, pristineParcels)
-    return parcelsToAdd
+    return getParcelsNotIncluded(newParcels, pristineParcels)
   }
 
   getParcelsToRemove() {
     const { estate, estatePristine } = this.props
     const newParcels = estate.data.parcels
     const pristineParcels = estatePristine.data.parcels
-    const parcelsToRemove = getParcelsNotIncluded(pristineParcels, newParcels)
-    return parcelsToRemove
+    return getParcelsNotIncluded(pristineParcels, newParcels)
   }
 
   hasReachedTransactionLimit() {
