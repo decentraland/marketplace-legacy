@@ -21,6 +21,7 @@ import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
 
 import './ProfilePage.css'
 import EstateCard from 'components/EstateCard'
+import { buildCoordinate } from '../../shared/parcel'
 
 export default class ProfilePage extends React.PureComponent {
   static propTypes = {
@@ -114,11 +115,28 @@ export default class ProfilePage extends React.PureComponent {
         )
       }
       case PROFILE_PAGE_TABS.estates: {
+        const { parcels } = this.props
         return (
           <Card.Group stackable={true}>
-            {grid.map(estate => (
-              <EstateCard key={estate.asset_id} estate={estate} />
-            ))}
+            {grid.map(estate => {
+              const estateParcels = estate.data.parcels.reduce(
+                (acc, parcel) => {
+                  const parcelId = buildCoordinate(parcel.x, parcel.y)
+                  if (parcels[parcelId]) {
+                    acc.push(parcels[parcelId])
+                  }
+                  return acc
+                },
+                []
+              )
+              return (
+                <EstateCard
+                  key={estate.asset_id}
+                  estate={estate}
+                  parcels={estateParcels}
+                />
+              )
+            })}
           </Card.Group>
         )
       }

@@ -6,7 +6,7 @@ import { Card } from 'semantic-ui-react'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelTags from 'components/ParcelTags'
 import LandAmount from 'components/LandAmount'
-import { estateType } from 'components/types'
+import { estateType, parcelType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { calculateMapProps } from 'shared/estate'
 import { formatDate } from 'lib/utils'
@@ -17,11 +17,12 @@ import './EstateCard.css'
 export default class EstateCard extends React.PureComponent {
   static propTypes = {
     estate: estateType,
+    parcels: PropTypes.arrayOf(parcelType),
     debounce: PropTypes.number
   }
 
   render() {
-    const { estate, debounce } = this.props
+    const { estate, debounce, parcels } = this.props
     const size = 12
     const { center, zoom, pan } = calculateMapProps(estate.data.parcels, size)
     const { x, y } = center
@@ -64,7 +65,7 @@ export default class EstateCard extends React.PureComponent {
             </Card.Meta>
 
             <div className="footer">
-              <ParcelTags estate={estate} size="small" />
+              <ParcelTags parcels={parcels} size="small" />
               <LandAmount value={estate.parcels.length} />
             </div>
           </Card.Content>
