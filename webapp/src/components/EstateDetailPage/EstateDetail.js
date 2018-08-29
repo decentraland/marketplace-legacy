@@ -74,11 +74,12 @@ export default class EstateDetail extends React.PureComponent {
               {allParcels && (
                 <React.Fragment>
                   <Grid.Column
-                    width={
+                    computer={
                       isOwner
                         ? WITH_ACTION_BUTTONS_WIDTH
                         : WITHOUT_ACTION_BUTTONS_WIDTH
                     }
+                    mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
                     className={'selected-parcels-headline'}
                   >
                     <h3 className="parcels-included">
