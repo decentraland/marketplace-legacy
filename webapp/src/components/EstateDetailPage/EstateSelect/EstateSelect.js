@@ -178,7 +178,7 @@ export default class EstateSelect extends React.PureComponent {
                       onClick={onDeleteEstate}
                     >
                       <Icon name="trash" />
-                      {t('estate_detail.delete')}{' '}
+                      {t('estate_detail.dissolve')}{' '}
                     </Button>
                   </Grid.Column>
                 )}

@@ -72,6 +72,9 @@ export class EstateRouter {
     const assetId = server.extractFromReq(req, 'assetId').toLowerCase()
 
     const result = await Estate.findByAssetId(assetId)
+    if (result.length === 0) {
+      throw new Error('Not found')
+    }
     return utils.mapOmit(result, blacklist.estate)[0]
   }
 }

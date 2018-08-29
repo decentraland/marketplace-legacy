@@ -55,9 +55,10 @@
       "El derivation path es incorrecto. Debe seguir el siguiente patrón 44'/60|61'/x'/n"
   },
   "estate_detail": {
-    "delete": "Eliminar Estado",
-    "delete_desc": "Vas a eliminar la propiedad {name}",
+    "dissolve": "Disolver Propiedad",
+    "dissolve_desc": "Vas a disolver la propiedad {name}",
     "edit_parcels": "Editar paquetes",
+    "empty_estate": "La propiedad {name} ha sido disuelta",
     "parcels": "Parcelas incluidas",
     "pending_tx": "Esta propiedad"
   },
@@ -373,9 +374,9 @@
     "create_estate": "Usted creó la propiedad {name}",
     "create_mortgage":
       "Solicitó una hipoteca para comprar el paquete {parcel_link}",
-    "delete_estate": "Borraste la propiedad {name}",
     "disapproved":
       "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
+    "dissolve_estate": "Usted disolvió la propiedad {name}",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",
     "edit_estate_metadata":

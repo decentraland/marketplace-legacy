@@ -24,6 +24,19 @@ export default class EstateDetail extends React.PureComponent {
     onEditMetadata: PropTypes.func.isRequired
   }
 
+  renderEmptyEstate() {
+    const { estate } = this.props
+    return (
+      <div className="EstateDetail empty">
+        <span className="empty-estate-message">
+          {t('estate_detail.empty_estate', {
+            name: estate.data.name
+          })}
+        </span>
+      </div>
+    )
+  }
+
   render() {
     const {
       estate,
@@ -34,6 +47,10 @@ export default class EstateDetail extends React.PureComponent {
       onEditMetadata
     } = this.props
     const { parcels } = estate.data
+
+    if (estate.data.parcels.length === 0) {
+      return this.renderEmptyEstate()
+    }
 
     return (
       <div className="EstateDetail">
