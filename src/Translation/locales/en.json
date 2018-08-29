@@ -68,7 +68,7 @@
   "estate_dissolve": {
     "too_big": "This estate is too big",
     "too_big_desc":
-      "When an estate has over {max} parcels a transaction to dissolve may run out of gas. You should remove parcels by editing the estate and dissolve it when it has {max} parcels or less."
+      "When an estate has over {max} parcels a transaction to dissolve it may run out of gas. You should remove parcels by editing the estate and dissolve it when it has {max} parcels or less."
   },
   "estate_edit": {
     "description": "Description",
