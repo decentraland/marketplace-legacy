@@ -58,8 +58,15 @@
     "dissolve_desc": "你将解散庄园{name}",
     "edit_parcels": "编辑地块",
     "empty_estate": "庄园{name}已经解散",
+    "maximum_parcels_message":
+      "如果您在单个交易中添加或删除超过{max}的包裹，则可能会耗尽燃气。",
+    "maximum_parcels_title": "您达到了每笔交易的最大包裹数",
     "parcels": "包括地块",
     "pending_tx": "地产"
+  },
+  "estate_dissolve": {
+    "too_big": "这个庄园太大了",
+    "too_big_desc": "如果遗产超过{max}包裹，则解散的交易可能会耗尽燃气。"
   },
   "estate_edit": {
     "description": "描述",

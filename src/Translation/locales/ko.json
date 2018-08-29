@@ -60,8 +60,16 @@
     "dissolve_desc": "당신은 부동산 {name}을 해산하려고합니다.",
     "edit_parcels": "소포 편집",
     "empty_estate": "부동산 {name}가 해체되었습니다.",
+    "maximum_parcels_message":
+      "단일 트랜잭션에서 {max} 개 이상의 소포를 추가하거나 제거하면 가스가 고갈 될 수 있습니다. ",
+    "maximum_parcels_title": "거래 당 최대 소포에 도달했습니다.",
     "parcels": "소포 포함",
     "pending_tx": "이 재산"
+  },
+  "estate_dissolve": {
+    "too_big": "이 부동산은 너무 큽니다.",
+    "too_big_desc":
+      "토지가 {max} 소포를 초과하면 해산 될 거래에 가스가 부족할 수 있습니다. "
   },
   "estate_edit": {
     "description": "기술",

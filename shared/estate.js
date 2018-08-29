@@ -1,3 +1,5 @@
+export const MAX_PARCELS_PER_TX = 12
+
 export function isEstate(asset) {
   return !!asset.data.parcels
 }
