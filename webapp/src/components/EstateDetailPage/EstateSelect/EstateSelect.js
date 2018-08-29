@@ -60,12 +60,11 @@ export default class EstateSelect extends React.PureComponent {
       return
     }
 
-    if (this.hasReachedTransactionLimit()) {
-      return
-    }
-
     const isSelected = parcels.some(getCoordsMatcher({ x, y }))
     if (isSelected) {
+      if (this.hasReachedRemoveLimit()) {
+        return
+      }
       const newParcels = parcels.filter(
         coords => !isEqualCoords(coords, { x, y })
       )
@@ -73,6 +72,10 @@ export default class EstateSelect extends React.PureComponent {
         return
       }
       return onChange(newParcels)
+    }
+
+    if (this.hasReachedAddLimit()) {
+      return
     }
 
     onChange([...parcels, { x, y }])
@@ -126,13 +129,14 @@ export default class EstateSelect extends React.PureComponent {
     return getParcelsNotIncluded(pristineParcels, newParcels)
   }
 
-  hasReachedTransactionLimit() {
+  hasReachedAddLimit() {
     const parcelsToAdd = this.getParcelsToAdd()
+    return parcelsToAdd.length >= MAX_PARCELS_PER_TX
+  }
+
+  hasReachedRemoveLimit() {
     const parcelsToRemove = this.getParcelsToRemove()
-    return (
-      parcelsToAdd.length >= MAX_PARCELS_PER_TX ||
-      parcelsToRemove.length >= MAX_PARCELS_PER_TX
-    )
+    return parcelsToRemove.length >= MAX_PARCELS_PER_TX
   }
 
   renderTxLabel = () => {
@@ -191,7 +195,7 @@ export default class EstateSelect extends React.PureComponent {
         </div>
         <Container>
           <Grid className="estate-selection">
-            {this.hasReachedTransactionLimit() ? (
+            {this.hasReachedAddLimit() || this.hasReachedRemoveLimit() ? (
               <Grid.Row>
                 <Grid.Column width={16}>
                   <Message
