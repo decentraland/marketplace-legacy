@@ -22,7 +22,7 @@ export default class DeleteEstatePage extends React.PureComponent {
     const { tokenId, isTxIdle, onCancel, onConfirm } = this.props
     return (
       <Container className="DeleteEstatePage">
-        <Estate tokenId={tokenId}  ownerOnly>
+        <Estate tokenId={tokenId} ownerOnly>
           {estate => (
             <React.Fragment>
               {this.isTooBig(estate) ? (
