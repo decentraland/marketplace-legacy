@@ -171,7 +171,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
               [estateId]: {
                 ...estate,
                 id: estateId,
-                asset_id: estateId,
+                token_id: estateId,
                 owner: transaction.from
               }
             }

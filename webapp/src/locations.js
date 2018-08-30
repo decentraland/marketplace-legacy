@@ -31,21 +31,21 @@ export const locations = {
   transfer: '/:x/:y/transfer',
   transferLand: (x, y) => `/${x}/${y}/transfer`,
 
-  estate: '/estate/:tokenId/detail',
-  estateDetail: tokenId => `/estate/${tokenId}/detail`,
-  ediEstateParcels: '/estate/:tokenId/edit-parcels',
+  estate: '/estates/:tokenId/detail',
+  estateDetail: tokenId => `/estates/${tokenId}/detail`,
+  editEstateParcels: '/estates/:tokenId/edit-parcels',
   editEstateParcelsRequest: () => 'edit-parcels',
-  ediEstateMetadata: '/estate/:tokenId/edit-metadata',
+  editEstateMetadata: '/estates/:tokenId/edit-metadata',
   editEstateMetadataRequest: () => 'edit-metadata',
 
-  deleteEstate: '/estate/:tokenId/delete-estate',
-  deleteEstatePage: tokenId => `/estate/${tokenId}/delete-estate`,
+  deleteEstate: '/estates/:tokenId/delete-estate',
+  deleteEstatePage: tokenId => `/estates/${tokenId}/delete-estate`,
 
   createEstate: '/:x/:y/create-estate',
   createEstateLand: (x, y) => `/${x}/${y}/create-estate`,
 
-  transferEstate: '/estate/:tokenId/transfer',
-  transferEstatePage: tokenId => `/estate/${tokenId}/transfer`,
+  transferEstate: '/estates/:tokenId/transfer',
+  transferEstatePage: tokenId => `/estates/${tokenId}/transfer`,
 
   buyMana: `/buy-mana`,
   transferMana: `/transfer-mana`,

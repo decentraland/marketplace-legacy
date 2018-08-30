@@ -19,6 +19,7 @@ export default class MapComponent extends React.Component {
 
   render() {
     const { selected, center, onSelect } = this.props
+
     return (
       <div className="map-container">
         <ParcelPreview

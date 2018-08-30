@@ -124,8 +124,8 @@ export async function fetchBalance(address) {
 export async function getUpdateOperator(x, y) {
   try {
     const contract = eth.getContract('LANDRegistry')
-    const assetId = await contract.encodeTokenId(x, y)
-    const address = await contract.updateOperator(assetId)
+    const tokenId = await contract.encodeTokenId(x, y)
+    const address = await contract.updateOperator(tokenId)
     if (
       eth.utils.isValidAddress(address) &&
       !Contract.isEmptyAddress(address)
