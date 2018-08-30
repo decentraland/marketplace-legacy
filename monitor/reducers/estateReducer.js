@@ -47,7 +47,7 @@ export async function estateReducer(events, event) {
     case events.addLand: {
       if (parcelId) {
         const { _estateId } = event.args
-        const estate = (await Estate.findByAssetId(_estateId + 'aaaa'))[0]
+        const estate = (await Estate.findByAssetId(_estateId))[0]
         if (estate) {
           const coordinates = Parcel.splitId(parcelId)
           const x = parseInt(coordinates[0], 10)
@@ -78,7 +78,7 @@ export async function estateReducer(events, event) {
     case events.removeLand: {
       if (parcelId) {
         const { _estateId } = event.args
-        const estate = (await Estate.findByAssetId(_estateId + 'aaaa'))[0]
+        const estate = (await Estate.findByAssetId(_estateId))[0]
         if (estate) {
           const [x, y] = Parcel.splitId(parcelId)
           log.info(
@@ -121,7 +121,7 @@ export async function estateReducer(events, event) {
     case events.estateUpdate: {
       const { _assetId, _data } = event.args
 
-      const estate = (await Estate.findByAssetId(_assetId + 'aaaa'))[0]
+      const estate = (await Estate.findByAssetId(_assetId))[0]
       if (estate) {
         log.info(
           `[${name}] Updating Estate "${estate.asset_id}" data: ${_data}`
