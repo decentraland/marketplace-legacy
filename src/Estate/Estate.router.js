@@ -38,7 +38,7 @@ export class EstateRouter {
      * @param  {string} assetId - estate's asset_id.
      * @return {Estate}
      */
-    this.app.get('/estate/:assetId', server.handleRequest(this.getEstate))
+    this.app.get('/estates/:assetId', server.handleRequest(this.getEstate))
   }
 
   async getEstates(req) {
