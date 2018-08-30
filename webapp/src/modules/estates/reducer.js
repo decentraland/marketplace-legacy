@@ -103,10 +103,10 @@ export function estatesReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              [estate.asset_id]: {
-                ...state.data[estate.asset_id],
+              [estate.token_id]: {
+                ...state.data[estate.token_id],
                 data: {
-                  ...state.data[estate.asset_id].data,
+                  ...state.data[estate.token_id].data,
                   name: estate.data.name,
                   description: estate.data.description
                 }
@@ -116,12 +116,12 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
         case EDIT_ESTATE_PARCELS_SUCCESS: {
           const { estate } = transaction.payload
-          const oldEstate = state.data[estate.asset_id]
+          const oldEstate = state.data[estate.token_id]
           return {
             ...state,
             data: {
               ...state.data,
-              [estate.asset_id]: {
+              [estate.token_id]: {
                 ...oldEstate,
                 data: {
                   ...oldEstate.data,
@@ -137,8 +137,8 @@ export function estatesReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              [estate.asset_id]: {
-                ...state.data[estate.asset_id],
+              [estate.token_id]: {
+                ...state.data[estate.token_id],
                 owner: to
               }
             }
@@ -150,10 +150,10 @@ export function estatesReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              [estate.asset_id]: {
-                ...state.data[estate.asset_id],
+              [estate.token_id]: {
+                ...state.data[estate.token_id],
                 data: {
-                  ...state.data[estate.asset_id].data,
+                  ...state.data[estate.token_id].data,
                   parcels: []
                 }
               }

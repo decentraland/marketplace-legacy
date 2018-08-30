@@ -80,7 +80,9 @@ export default class ParcelOwner extends React.PureComponent {
       const estate = estates[parcel.estate_id]
       if (estate) {
         const estateName = (
-          <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
+          <Link to={locations.estateDetail(estate.token_id)}>
+            {estate.data.name}
+          </Link>
         )
         return (
           <span className="ParcelOwner part-of">
