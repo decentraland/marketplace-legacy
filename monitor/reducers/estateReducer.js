@@ -48,23 +48,29 @@ export async function estateReducer(events, event) {
       if (parcelId) {
         const { _estateId } = event.args
         const estate = (await Estate.findByAssetId(_estateId))[0]
-        const coordinates = Parcel.splitId(parcelId)
-        const x = parseInt(coordinates[0], 10)
-        const y = parseInt(coordinates[1], 10)
+        if (estate) {
+          const coordinates = Parcel.splitId(parcelId)
+          const x = parseInt(coordinates[0], 10)
+          const y = parseInt(coordinates[1], 10)
 
-        log.info(
-          `[${name}] Updating Estate "${estate.asset_id}" add land (${x},${y})`
-        )
-        if (!estate.data.parcels.find(p => p.x === x && p.y === y)) {
-          await Estate.update(
-            {
-              data: {
-                ...estate.data,
-                parcels: [...estate.data.parcels, { x, y }]
-              }
-            },
-            { asset_id: estate.asset_id }
+          log.info(
+            `[${name}] Updating Estate "${
+              estate.asset_id
+            }" add land (${x},${y})`
           )
+          if (!estate.data.parcels.find(p => p.x === x && p.y === y)) {
+            await Estate.update(
+              {
+                data: {
+                  ...estate.data,
+                  parcels: [...estate.data.parcels, { x, y }]
+                }
+              },
+              { asset_id: estate.asset_id }
+            )
+          }
+        } else {
+          log.info(`[${name}] Estate id ${_estateId} does not exist`)
         }
       }
       break
@@ -73,23 +79,27 @@ export async function estateReducer(events, event) {
       if (parcelId) {
         const { _estateId } = event.args
         const estate = (await Estate.findByAssetId(_estateId))[0]
-        const [x, y] = Parcel.splitId(parcelId)
-        log.info(
-          `[${name}] Updating Estate "${
-            estate.asset_id
-          }" remove land (${x},${y})`
-        )
-        await Estate.update(
-          {
-            data: {
-              ...estate.data,
-              parcels: estate.data.parcels.filter(
-                p => p.x !== parseInt(x, 10) || p.y !== parseInt(y, 10)
-              )
-            }
-          },
-          { asset_id: _estateId }
-        )
+        if (estate) {
+          const [x, y] = Parcel.splitId(parcelId)
+          log.info(
+            `[${name}] Updating Estate "${
+              estate.asset_id
+            }" remove land (${x},${y})`
+          )
+          await Estate.update(
+            {
+              data: {
+                ...estate.data,
+                parcels: estate.data.parcels.filter(
+                  p => p.x !== parseInt(x, 10) || p.y !== parseInt(y, 10)
+                )
+              }
+            },
+            { asset_id: _estateId }
+          )
+        } else {
+          log.info(`[${name}] Estate id ${_estateId} does not exist`)
+        }
       }
       break
     }
@@ -112,18 +122,23 @@ export async function estateReducer(events, event) {
       const { _assetId, _data } = event.args
 
       const estate = (await Estate.findByAssetId(_assetId))[0]
+      if (estate) {
+        log.info(
+          `[${name}] Updating Estate "${estate.asset_id}" data: ${_data}`
+        )
 
-      log.info(`[${name}] Updating Estate "${estate.asset_id}" data: ${_data}`)
-
-      await Estate.update(
-        {
-          data: {
-            ...estate.data,
-            ...decodeMetadata(_data)
-          }
-        },
-        { asset_id: estate.asset_id }
-      )
+        await Estate.update(
+          {
+            data: {
+              ...estate.data,
+              ...decodeMetadata(_data)
+            }
+          },
+          { asset_id: estate.asset_id }
+        )
+      } else {
+        log.info(`[${name}] Estate id ${_assetId} does not exist`)
+      }
       break
     }
     default:
