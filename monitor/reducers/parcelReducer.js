@@ -1,6 +1,7 @@
 import { contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Parcel'
+import { Estate } from '../../src/Estate'
 import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { getParcelIdFromEvent } from './utils'
@@ -46,22 +47,32 @@ export async function parcelReducer(events, event) {
     case events.addLand: {
       if (parcelId) {
         const { _estateId } = event.args
-        log.info(
-          `[${name}] Adding "${parcelId}" as part of the estate id "${_estateId}"`
-        )
+        const estate = (await Estate.findByAssetId(_estateId))[0]
+        if (estate) {
+          log.info(
+            `[${name}] Adding "${parcelId}" as part of the estate id "${_estateId}"`
+          )
 
-        await Parcel.update({ estate_id: _estateId }, { id: parcelId })
+          await Parcel.update({ estate_id: _estateId }, { id: parcelId })
+        } else {
+          log.info(`[${name}] Estate id ${_estateId} does not exist`)
+        }
       }
       break
     }
     case events.removeLand: {
       if (parcelId) {
         const { _estateId } = event.args
-        log.info(
-          `[${name}] Removing "${parcelId}" as part of the estate id "${_estateId}"`
-        )
+        const estate = (await Estate.findByAssetId(_estateId))[0]
+        if (estate) {
+          log.info(
+            `[${name}] Removing "${parcelId}" as part of the estate id "${_estateId}"`
+          )
 
-        await Parcel.update({ estate_id: null }, { id: parcelId })
+          await Parcel.update({ estate_id: null }, { id: parcelId })
+        } else {
+          log.info(`[${name}] Estate id ${_estateId} does not exist`)
+        }
       }
       break
     }
