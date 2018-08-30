@@ -13,7 +13,7 @@ export class Parcel extends Model {
     'id',
     'x',
     'y',
-    'asset_id',
+    'token_id',
     'owner',
     'data',
     'district_id',
@@ -96,22 +96,22 @@ export class Parcel extends Model {
         AND y BETWEEN ${miny} AND ${maxy}`)
   }
 
-  static async encodeAssetId(x, y) {
+  static async encodeTokenId(x, y) {
     const rows = await this.db.query(
-      SQL`SELECT asset_id
+      SQL`SELECT token_id
         FROM ${SQL.raw(this.tableName)}
         WHERE x = ${x}
           AND y = ${y}
         LIMIT 1`
     )
-    return rows.length ? rows[0].asset_id : null
+    return rows.length ? rows[0].token_id : null
   }
 
-  static async decodeAssetId(assetId) {
+  static async decodeTokenId(tokenId) {
     const rows = await this.db.query(
       SQL`SELECT id
         FROM ${SQL.raw(this.tableName)}
-        WHERE asset_id = ${assetId}
+        WHERE token_id = ${tokenId}
         LIMIT 1`
     )
     return rows.length ? rows[0].id : null

@@ -15,16 +15,16 @@ const log = new Log('mktcli')
 const main = {
   addCommands(program) {
     program
-      .command('decode <assetId>')
+      .command('decode <tokenId>')
       .description('Decode an asset id')
       .action(
-        asSafeAction(async assetId => {
-          if (!assetId) throw new Error('You need to supply an asset id')
+        asSafeAction(async tokenId => {
+          if (!tokenId) throw new Error('You need to supply an token id')
 
           const contract = eth.getContract('LANDRegistry')
-          const coords = await contract.decodeTokenId(assetId)
+          const coords = await contract.decodeTokenId(tokenId)
 
-          log.info(`(decode) str:${assetId} => coords:(${coords})`)
+          log.info(`(decode) str:${tokenId} => coords:(${coords})`)
         })
       )
 
@@ -35,10 +35,10 @@ const main = {
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
           const contract = eth.getContract('LANDRegistry')
-          const assetId = await contract.encodeTokenId(x, y)
+          const tokenId = await contract.encodeTokenId(x, y)
 
           log.info(
-            `(encode) coords:(${x},${y}) => str:${assetId.toString()} hex:${assetId.toString(
+            `(encode) coords:(${x},${y}) => str:${tokenId.toString()} hex:${tokenId.toString(
               16
             )}`
           )
@@ -70,8 +70,8 @@ const main = {
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
           const contract = eth.getContract('LANDRegistry')
-          const assetId = await contract.encodeTokenId(x, y)
-          const operator = await contract.updateOperator(assetId)
+          const tokenId = await contract.encodeTokenId(x, y)
+          const operator = await contract.updateOperator(tokenId)
 
           log.info(`(land-update-operator) coords:(${x},${y})`)
           log.info(`blockchain => ${operator}`)
@@ -119,10 +119,10 @@ const main = {
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
           const id = Parcel.buildId(x, y)
-          const assetId = await Parcel.encodeAssetId(x, y)
+          const tokenId = await Parcel.encodeTokenId(x, y)
 
           const contract = eth.getContract('Marketplace')
-          const publication = await contract.auctionByAssetId(assetId)
+          const publication = await contract.auctionByAssetId(tokenId)
 
           const pubDb = (await Publication.findByAssetId(id))[0]
           const publicationDb = toPublicationLog(pubDb)
@@ -156,11 +156,11 @@ const main = {
       .action(
         asSafeAction(async coord => {
           const [x, y] = parseCLICoords(coord)
-          const assetId = await Parcel.encodeAssetId(x, y)
+          const tokenId = await Parcel.encodeTokenId(x, y)
           const contract = eth.getContract('Marketplace')
 
           await unlockAccountWithPrompt()
-          const txHash = await contract.cancelOrder(assetId)
+          const txHash = await contract.cancelOrder(tokenId)
 
           log.info(`(publication-cancel) coords:(${x},${y})`)
           log.info(`(publication-cancel) tx:${txHash}`)
@@ -176,9 +176,11 @@ const main = {
         asSafeAction(async (coord, options) => {
           const events = BlockchainEvent.getEvents()
           const [x, y] = parseCLICoords(coord)
-          const assetId = await Parcel.encodeAssetId(x, y)
+          const tokenId = await Parcel.encodeTokenId(x, y)
 
-          const blockchainEvents = await BlockchainEvent.findByAssetId(assetId)
+          const blockchainEvents = await BlockchainEvent.findByArgsAssetId(
+            tokenId
+          )
           const eventLog = blockchainEvents.map(event => {
             const { name, block_number, log_index, tx_hash, args } = event
             let log = `${name} (${block_number},${log_index}): `
@@ -235,8 +237,8 @@ const main = {
       .action(
         asSafeAction(async (coord, options) => {
           const [x, y] = parseCLICoords(coord)
-          const assetId = await Parcel.encodeAssetId(x, y)
-          const events = await BlockchainEvent.findByAssetId(assetId)
+          const tokenId = await Parcel.encodeTokenId(x, y)
+          const events = await BlockchainEvent.findByArgsAssetId(tokenId)
           events.reverse()
 
           if (!options.persist) {

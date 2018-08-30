@@ -61,7 +61,7 @@ export class ParcelRouter {
       total = parcels.length
     } catch (error) {
       // Force parcel type
-      req.params.type = ASSET_TYPE.parcel
+      req.params.asset_type = ASSET_TYPE.parcel
       const result = await new AssetRouter().getAssets(req)
 
       parcels = result.assets

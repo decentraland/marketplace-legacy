@@ -105,7 +105,9 @@ export default class Transaction extends React.PureComponent {
 
   renderEstateLink(estate) {
     return (
-      <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
+      <Link to={locations.estateDetail(estate.token_id)}>
+        {estate.data.name}
+      </Link>
     )
   }
 
@@ -293,7 +295,7 @@ export default class Transaction extends React.PureComponent {
         const { estate, to } = payload
 
         return t_html('transaction.transfer', {
-          asset_link: this.renderEstateLink(estate),
+          asset_link: this.renderEstateLink(estate.token_id),
           asset_type: t('global.the_estate').toLowerCase(),
           owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
         })
@@ -313,7 +315,7 @@ export default class Transaction extends React.PureComponent {
         to={
           isNewAsset(estate)
             ? locations.parcelMapDetail(x, y, buildCoordinate(x, y))
-            : locations.estateDetail(estate.asset_id)
+            : locations.estateDetail(estate.token_id)
         }
       >
         <ParcelPreview

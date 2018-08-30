@@ -63,7 +63,7 @@ export async function mortgageReducer(events, event) {
           outstanding_amount: 0,
           tx_hash,
           asset_id: Parcel.buildId(x, y),
-          type: ASSET_TYPE.parcel,
+          asset_type: ASSET_TYPE.parcel,
           borrower
         })
       } catch (error) {

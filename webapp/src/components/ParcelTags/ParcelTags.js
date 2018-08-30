@@ -76,9 +76,11 @@ export default class ParcelTags extends React.PureComponent {
 
   getEstateTags() {
     const { parcels } = this.props.estate
+
     const proximities = parcels
+      .filter(parcel => !!parcel.tags.proximity)
       .map(parcel => parcel.tags.proximity)
-      .filter(prox => prox)
+
     const proximity = proximities.reduce((finalProximity, actualProximity) => {
       Object.keys(actualProximity).forEach(key => {
         if (!finalProximity[key]) {

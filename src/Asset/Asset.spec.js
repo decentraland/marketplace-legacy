@@ -13,7 +13,7 @@ describe('Asset', function() {
     sanitize() {
       return {
         status: PUBLICATION_STATUS.open,
-        type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPE.parcel,
         sort: {
           by: 'price',
           order: 'desc'
@@ -35,7 +35,7 @@ describe('Asset', function() {
       const block_number = 1
       const block_time_created_at = null
       const block_time_updated_at = null
-      const marketplace_id = '0xdeadbeef'
+      const marketplace_address = '0xdeadbeef'
 
       let expires_at = new Date()
       expires_at.setMonth(expires_at.getMonth() + 3)
@@ -52,7 +52,7 @@ describe('Asset', function() {
         tx_status,
         block_time_created_at,
         block_time_updated_at,
-        marketplace_id,
+        marketplace_address,
         block_number
       }
       const publicationRows = [
@@ -68,7 +68,7 @@ describe('Asset', function() {
           status,
           block_time_created_at,
           block_time_updated_at,
-          marketplace_id,
+          marketplace_address,
           block_number
         },
         {
@@ -82,7 +82,7 @@ describe('Asset', function() {
           status,
           block_time_created_at,
           block_time_updated_at,
-          marketplace_id,
+          marketplace_address,
           block_number
         },
         {
@@ -96,7 +96,7 @@ describe('Asset', function() {
           status,
           block_time_created_at,
           block_time_updated_at,
-          marketplace_id,
+          marketplace_address,
           block_number
         }
       ]
@@ -115,7 +115,7 @@ describe('Asset', function() {
         {
           x: 1,
           y: 2,
-          asset_id: null,
+          token_id: null,
           auction_price: null,
           district_id: null,
           last_transferred_at: null,
@@ -130,14 +130,14 @@ describe('Asset', function() {
             price: 40,
             buyer: null,
             status: PUBLICATION_STATUS.open,
-            type: ASSET_TYPE.parcel,
+            asset_type: ASSET_TYPE.parcel,
             asset_id: '1,2',
             expires_at,
             owner,
             tx_status,
             block_time_created_at,
             block_time_updated_at,
-            marketplace_id,
+            marketplace_address,
             block_number
           }
         }

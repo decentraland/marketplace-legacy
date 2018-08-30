@@ -35,15 +35,15 @@ export class EstateRouter {
 
     /**
      * Returns the estates for the supplied params
-     * @param  {string} assetId - estate's asset_id.
+     * @param  {string} tokenId - estate's token_id.
      * @return {Estate}
      */
-    this.app.get('/estates/:assetId', server.handleRequest(this.getEstate))
+    this.app.get('/estates/:tokenId', server.handleRequest(this.getEstate))
   }
 
   async getEstates(req) {
     // Force estate type
-    req.params.type = ASSET_TYPE.estate
+    req.params.asset_type = ASSET_TYPE.estate
 
     const result = await new AssetRouter().getAssets(req)
 
@@ -69,12 +69,11 @@ export class EstateRouter {
   }
 
   async getEstate(req) {
-    const assetId = server.extractFromReq(req, 'assetId').toLowerCase()
-
-    const result = await Estate.findByAssetId(assetId)
-    if (result.length === 0) {
-      throw new Error('Not found')
+    const tokenId = server.extractFromReq(req, 'tokenId')
+    const result = await Estate.findByTokenId(tokenId)
+    if (result) {
+      throw new Error(`Estate ${tokenId} not found`)
     }
-    return utils.mapOmit(result, blacklist.estate)[0]
+    return utils.omit(result, blacklist.estate)
   }
 }

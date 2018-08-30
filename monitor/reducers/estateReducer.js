@@ -15,7 +15,7 @@ export async function estateReducer(events, event) {
     case events.estateCreate: {
       const { _owner, _estateId, _data } = event.args
 
-      const exists = await Estate.count({ asset_id: _estateId })
+      const exists = await Estate.count({ token_id: _estateId })
       if (exists) {
         log.info(`[${name}] Estate ${_estateId} already exists`)
         return
@@ -36,7 +36,7 @@ export async function estateReducer(events, event) {
       )
       await Estate.insert({
         id: _estateId,
-        asset_id: _estateId,
+        token_id: _estateId,
         owner: _owner.toLowerCase(),
         data: { ...data, parcels: [] },
         last_transferred_at,
@@ -47,6 +47,7 @@ export async function estateReducer(events, event) {
     case events.addLand: {
       if (parcelId) {
         const { _estateId } = event.args
+<<<<<<< HEAD
         const estate = (await Estate.findByAssetId(_estateId))[0]
         if (estate) {
           const coordinates = Parcel.splitId(parcelId)
@@ -57,6 +58,25 @@ export async function estateReducer(events, event) {
             `[${name}] Updating Estate "${
               estate.asset_id
             }" add land (${x},${y})`
+=======
+        const estate = await Estate.findByTokenId(_estateId)
+        const coordinates = Parcel.splitId(parcelId)
+        const x = parseInt(coordinates[0], 10)
+        const y = parseInt(coordinates[1], 10)
+
+        log.info(
+          `[${name}] Updating Estate "${estate.token_id}" add land (${x},${y})`
+        )
+        if (!estate.data.parcels.find(p => p.x === x && p.y === y)) {
+          await Estate.update(
+            {
+              data: {
+                ...estate.data,
+                parcels: [...estate.data.parcels, { x, y }]
+              }
+            },
+            { token_id: estate.token_id }
+>>>>>>> chore: renames. Closes #349 #340 #339
           )
           if (!estate.data.parcels.find(p => p.x === x && p.y === y)) {
             await Estate.update(
@@ -78,7 +98,7 @@ export async function estateReducer(events, event) {
     case events.removeLand: {
       if (parcelId) {
         const { _estateId } = event.args
-        const estate = (await Estate.findByAssetId(_estateId))[0]
+        const estate = await Estate.findByTokenId(_estateId)
         if (estate) {
           const [x, y] = Parcel.splitId(parcelId)
           log.info(
@@ -95,7 +115,7 @@ export async function estateReducer(events, event) {
                 )
               }
             },
-            { asset_id: _estateId }
+            { token_id: _estateId }
           )
         } else {
           log.info(`[${name}] Estate id ${_estateId} does not exist`)
@@ -114,17 +134,16 @@ export async function estateReducer(events, event) {
 
       await Estate.update(
         { owner: _to.toLowerCase(), last_transferred_at },
-        { asset_id: _tokenId }
+        { token_id: _tokenId }
       )
       break
     }
     case events.estateUpdate: {
       const { _assetId, _data } = event.args
-
-      const estate = (await Estate.findByAssetId(_assetId))[0]
+      const estate = await Estate.findByTokenId(_assetId)
       if (estate) {
         log.info(
-          `[${name}] Updating Estate "${estate.asset_id}" data: ${_data}`
+          `[${name}] Updating Estate "${estate.token_id}" data: ${_data}`
         )
 
         await Estate.update(
@@ -134,7 +153,7 @@ export async function estateReducer(events, event) {
               ...decodeMetadata(_data)
             }
           },
-          { asset_id: estate.asset_id }
+          { token_id: estate.token_id }
         )
       } else {
         log.info(`[${name}] Estate id ${_assetId} does not exist`)

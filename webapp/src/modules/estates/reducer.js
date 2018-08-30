@@ -56,7 +56,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         error: null,
         data: {
           ...state.data,
-          [estate.asset_id]: {
+          [estate.token_id]: {
             ...estate
           }
         }
@@ -79,7 +79,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         ...state,
         data: action.assets.estates.reduce(
           (acc, estate) => {
-            return { ...acc, [estate.asset_id]: estate }
+            return { ...acc, [estate.token_id]: estate }
           },
           { ...state.data }
         )

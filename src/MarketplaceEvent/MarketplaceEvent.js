@@ -7,7 +7,7 @@ export class MarketplaceEvent {
     this.event = event
   }
 
-  getId() {
+  getAddress() {
     // TODO: makeshift method, check pending
     return env.get('MARKETPLACE_CONTRACT_ADDRESS')
   }

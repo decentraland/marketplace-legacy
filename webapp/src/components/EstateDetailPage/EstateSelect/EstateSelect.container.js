@@ -12,22 +12,22 @@ import EstateSelect from 'components/EstateDetailPage/EstateSelect/EstateSelect'
 import { locations } from 'locations'
 
 const mapState = (state, ownProps) => {
-  const { assetId } = getMatchParams(ownProps)
+  const { tokenId } = getMatchParams(ownProps)
   const estates = getEstates(state)
   return {
     allParcels: getParcels(state),
-    estatePristine: estates[assetId],
+    pristineEstate: estates[tokenId],
     isTxIdle: isEstateTransactionIdle(state)
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const { x, y, assetId } = getMatchParams(ownProps)
+  const { x, y, tokenId } = getMatchParams(ownProps)
   return {
     onError: () => dispatch(navigateTo(locations.root)),
     onCreateCancel: () => dispatch(navigateTo(locations.parcelDetail(x, y))),
     onDeleteEstate: () =>
-      dispatch(navigateTo(locations.deleteEstatePage(assetId)))
+      dispatch(navigateTo(locations.deleteEstatePage(tokenId)))
   }
 }
 

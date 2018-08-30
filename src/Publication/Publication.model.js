@@ -1,7 +1,10 @@
 import { Model } from 'decentraland-commons'
 import { BlockchainEvent } from '../BlockchainEvent'
 import { SQL, toRawStrings } from '../database'
-import { PUBLICATION_STATUS, PUBLICATION_TYPES } from '../shared/publication'
+import {
+  PUBLICATION_STATUS,
+  PUBLICATION_ASSET_TYPES
+} from '../shared/publication'
 
 export class Publication extends Model {
   static tableName = 'publications'
@@ -10,8 +13,8 @@ export class Publication extends Model {
     'tx_hash',
     'tx_status',
     'asset_id',
-    'type',
-    'marketplace_id',
+    'asset_type',
+    'marketplace_address',
     'block_number',
     'status',
     'owner',
@@ -26,8 +29,8 @@ export class Publication extends Model {
     return Object.values(PUBLICATION_STATUS).includes(status)
   }
 
-  static isValidType(type) {
-    return Object.values(PUBLICATION_TYPES).includes(type)
+  static isValidAssetType(assetType) {
+    return Object.values(PUBLICATION_ASSET_TYPES).includes(assetType)
   }
 
   static findByOwner(owner) {

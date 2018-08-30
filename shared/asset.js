@@ -200,7 +200,7 @@ export function getCenterCoords(asset) {
 }
 
 export function isNewAsset(asset) {
-  return !asset || !asset.asset_id
+  return !asset || !asset.token_id
 }
 
 export function decodeMetadata(data) {

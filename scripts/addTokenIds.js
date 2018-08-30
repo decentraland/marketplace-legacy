@@ -9,9 +9,9 @@ import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 
 let BATCH_SIZE
-const log = new Log('addAssetIds')
+const log = new Log('addTokenIds')
 
-export async function addAssetIds() {
+export async function addTokenIds() {
   log.info('Connecting database')
   await db.connect()
 
@@ -24,14 +24,14 @@ export async function addAssetIds() {
   })
 
   const parcels = await Parcel.find()
-  await updateAssetIds(parcels)
+  await updateTokenIds(parcels)
 
   log.info('All done!')
   process.exit()
 }
 
-export async function updateAssetIds(parcels) {
-  parcels = parcels.filter(parcel => !parcel.asset_id) // avoid adding a new method to Parcel
+export async function updateTokenIds(parcels) {
+  parcels = parcels.filter(parcel => !parcel.token_id) // avoid adding a new method to Parcel
 
   const contract = eth.getContract('LANDRegistry')
 
@@ -41,9 +41,9 @@ export async function updateAssetIds(parcels) {
       log.info(`Updating ${batchedCount}/${parcels.length} parcels...`)
 
       const updates = parcelsBatch.map(async parcel => {
-        const assetId = await contract.encodeTokenId(parcel.x, parcel.y)
+        const tokenId = await contract.encodeTokenId(parcel.x, parcel.y)
         return Parcel.update(
-          { asset_id: assetId.toString() },
+          { token_id: tokenId.toString() },
           { id: parcel.id }
         )
       })
@@ -60,6 +60,6 @@ if (require.main === module) {
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()
-    .then(addAssetIds)
+    .then(addTokenIds)
     .catch(console.error)
 }

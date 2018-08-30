@@ -128,7 +128,7 @@ export class BlockchainEvent extends Model {
     )
   }
 
-  static findByAssetId(assetId) {
+  static findByArgsAssetId(assetId) {
     return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
@@ -137,7 +137,7 @@ export class BlockchainEvent extends Model {
     )
   }
 
-  static deleteByAssetId(assetId) {
+  static deleteByArgsAssetId(assetId) {
     return this.db.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
         WHERE args->>'assetId' = ${assetId}`

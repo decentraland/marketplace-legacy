@@ -11,7 +11,7 @@ export class Mortgage extends Model {
     'block_number',
     'status',
     'asset_id',
-    'type',
+    'asset_type',
     'borrower',
     'lender',
     'loan_id',
@@ -36,7 +36,8 @@ export class Mortgage extends Model {
 
   static findByBorrower(borrower, status = Object.values(MORTGAGE_STATUS)) {
     return this.db.query(
-      SQL`SELECT * FROM ${SQL.raw(this.tableName)}
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
         WHERE borrower = ${borrower}
           AND status IN (${toRawStrings(status)})
           ORDER BY created_at DESC`
@@ -45,7 +46,8 @@ export class Mortgage extends Model {
 
   static findInCoordinate(assetId, status = Object.values(MORTGAGE_STATUS)) {
     return this.db.query(
-      SQL`SELECT * FROM ${SQL.raw(this.tableName)}
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
         WHERE asset_id = ${assetId}
           AND status IN (${toRawStrings(status)})
           ORDER BY created_at DESC`

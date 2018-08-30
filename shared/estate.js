@@ -5,18 +5,14 @@ export function isEstate(asset) {
 }
 
 export function getEstateByParcel(parcel, estates) {
-  return Object.keys(estates)
-    .map(estateId => estates[estateId])
-    .find(estate =>
-      estate.data.parcels.some(p => p.x === parcel.x && p.y === parcel.y)
-    )
+  return estates[parcel.estate_id]
 }
 
 export function toEstateObject(estatesArray) {
   return estatesArray
     .filter(estate => estate.data.parcels.length)
     .reduce(
-      (estates, estate) => ({ ...estates, [estate.asset_id]: estate }),
+      (estates, estate) => ({ ...estates, [estate.token_id]: estate }),
       {}
     )
 }

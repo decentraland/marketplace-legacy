@@ -28,7 +28,7 @@ import './EstateSelect.css'
 export default class EstateSelect extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
-    estatePristine: estateType,
+    pristineEstate: estateType,
     allParcels: PropTypes.objectOf(parcelType),
     wallet: PropTypes.object.isRequired,
     isCreation: PropTypes.bool.isRequired,
@@ -44,7 +44,7 @@ export default class EstateSelect extends React.PureComponent {
   getParcelClickHandler = wallet => (asset, { x, y }) => {
     if (
       !isOwner(wallet, buildCoordinate(x, y)) &&
-      !isOwner(wallet, asset.asset_id)
+      !isOwner(wallet, asset.token_id)
     ) {
       return
     }
@@ -52,7 +52,7 @@ export default class EstateSelect extends React.PureComponent {
     const { estate, onChange } = this.props
     const parcels = estate.data.parcels
 
-    if (isEstate(asset) && asset.asset_id !== estate.asset_id) {
+    if (isEstate(asset) && asset.token_id !== estate.token_id) {
       return
     }
 
@@ -86,7 +86,7 @@ export default class EstateSelect extends React.PureComponent {
       return true
     }
 
-    if (this.props.estatePristine) {
+    if (this.props.pristineEstate) {
       return !this.hasParcelsChanged(parcels)
     }
 
@@ -94,13 +94,12 @@ export default class EstateSelect extends React.PureComponent {
   }
 
   hasParcelsChanged = parcels => {
-    const { estatePristine } = this.props
-    if (!estatePristine) {
+    const { pristineEstate } = this.props
+    if (!pristineEstate) {
       return false
     }
 
-    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
-
+    const pristineParcels = pristineEstate ? pristineEstate.data.parcels : []
     if (pristineParcels.length != parcels.length) {
       return true
     }
@@ -116,16 +115,16 @@ export default class EstateSelect extends React.PureComponent {
   }
 
   getParcelsToAdd() {
-    const { estate, estatePristine } = this.props
+    const { estate, pristineEstate } = this.props
     const newParcels = estate.data.parcels
-    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
+    const pristineParcels = pristineEstate ? pristineEstate.data.parcels : []
     return getParcelsNotIncluded(newParcels, pristineParcels)
   }
 
   getParcelsToRemove() {
-    const { estate, estatePristine } = this.props
+    const { estate, pristineEstate } = this.props
     const newParcels = estate.data.parcels
-    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
+    const pristineParcels = pristineEstate ? pristineEstate.data.parcels : []
     return getParcelsNotIncluded(pristineParcels, newParcels)
   }
 
@@ -181,7 +180,7 @@ export default class EstateSelect extends React.PureComponent {
     } = this.props
 
     const parcels = estate.data.parcels
-    const canEdit = isCreation || isOwner(wallet, estate.asset_id)
+    const canEdit = isCreation || isOwner(wallet, estate.token_id)
 
     return (
       <div className="EstateSelect">
@@ -221,7 +220,7 @@ export default class EstateSelect extends React.PureComponent {
                 </Header>
               </Grid.Column>
               {!isCreation &&
-                isOwner(wallet, estate.asset_id) && (
+                isOwner(wallet, estate.token_id) && (
                   <Grid.Column
                     width={8}
                     className={'selected-parcels-headline'}

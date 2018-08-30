@@ -9,7 +9,7 @@ import { t } from 'modules/translation/utils'
 
 export default class DeleteEstatePage extends React.PureComponent {
   static props = {
-    assetId: PropTypes.string.isRequired,
+    tokenId: PropTypes.string.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
     onCancel: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired
@@ -19,10 +19,10 @@ export default class DeleteEstatePage extends React.PureComponent {
     return estate.data.parcels.length > MAX_PARCELS_PER_TX
   }
   render() {
-    const { assetId, isTxIdle, onCancel, onConfirm } = this.props
+    const { tokenId, isTxIdle, onCancel, onConfirm } = this.props
     return (
       <Container className="DeleteEstatePage">
-        <Estate assetId={assetId} ownerOnly>
+        <Estate tokenId={tokenId}  ownerOnly>
           {estate => (
             <React.Fragment>
               {this.isTooBig(estate) ? (
