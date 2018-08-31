@@ -354,7 +354,6 @@
     "claim_mortgage_resolution": "您认领了 {parcel_link}",
     "create_estate": "您创建了连块土地 {name}",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
-    "delete_estate": "您删除了连块土地{name}",
     "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
     "dissolve_estate": "你解散了连块土地 {name}",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
