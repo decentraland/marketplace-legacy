@@ -17,7 +17,7 @@ export async function estateReducer(events, event) {
 
       const exists = await Estate.count({ token_id: _estateId })
       if (exists) {
-        log.info(`[${name}] Estate ${_estateId} already exists`)
+        log.info(`[${name}] Estate with token id ${_estateId} already exists`)
         return
       }
       let data
@@ -28,7 +28,7 @@ export async function estateReducer(events, event) {
       }
 
       log.info(
-        `[${name}] Creating Estate "${_estateId}" with owner "${_owner}"`
+        `[${name}] Creating Estate with token id "${_estateId}" and owner "${_owner}"`
       )
 
       const last_transferred_at = await new BlockTimestampService().getBlockTime(
@@ -54,7 +54,7 @@ export async function estateReducer(events, event) {
           const y = parseInt(coordinates[1], 10)
 
           log.info(
-            `[${name}] Updating Estate "${
+            `[${name}] Updating Estate with token id "${
               estate.token_id
             }" add land (${x},${y})`
           )
@@ -70,7 +70,7 @@ export async function estateReducer(events, event) {
             )
           }
         } else {
-          log.info(`[${name}] Estate id ${_estateId} does not exist`)
+          log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
         }
       }
       break
@@ -82,8 +82,8 @@ export async function estateReducer(events, event) {
         if (estate) {
           const [x, y] = Parcel.splitId(parcelId)
           log.info(
-            `[${name}] Updating Estate "${
-              estate.asset_id
+            `[${name}] Updating Estate with token id "${
+              estate.token_id
             }" remove land (${x},${y})`
           )
           await Estate.update(
@@ -98,7 +98,7 @@ export async function estateReducer(events, event) {
             { token_id: _estateId }
           )
         } else {
-          log.info(`[${name}] Estate id ${_estateId} does not exist`)
+          log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
         }
       }
       break
@@ -106,7 +106,9 @@ export async function estateReducer(events, event) {
     case events.estateTransfer: {
       const { _to, _tokenId } = event.args
 
-      log.info(`[${name}] Transfering "${_tokenId}" owner to "${_to}"`)
+      log.info(
+        `[${name}] Transferring Estate with token id "${_tokenId}" ownership to "${_to}"`
+      )
 
       const last_transferred_at = await new BlockTimestampService().getBlockTime(
         block_number
@@ -123,7 +125,9 @@ export async function estateReducer(events, event) {
       const estate = await Estate.findByTokenId(_assetId)
       if (estate) {
         log.info(
-          `[${name}] Updating Estate "${estate.token_id}" data: ${_data}`
+          `[${name}] Updating Estate with token id "${
+            estate.token_id
+          }" data: ${_data}`
         )
 
         await Estate.update(
@@ -136,7 +140,7 @@ export async function estateReducer(events, event) {
           { token_id: estate.token_id }
         )
       } else {
-        log.info(`[${name}] Estate id ${_assetId} does not exist`)
+        log.info(`[${name}] Estate with token id ${_assetId} does not exist`)
       }
       break
     }

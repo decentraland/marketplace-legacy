@@ -71,8 +71,8 @@ export class EstateRouter {
   async getEstate(req) {
     const tokenId = server.extractFromReq(req, 'tokenId')
     const result = await Estate.findByTokenId(tokenId)
-    if (result) {
-      throw new Error(`Estate ${tokenId} not found`)
+    if (!result) {
+      throw new Error(`Estate with token id ${tokenId} not found`)
     }
     return utils.omit(result, blacklist.estate)
   }
