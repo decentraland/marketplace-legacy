@@ -55,11 +55,21 @@
       "あなたのウォレットは、不適合な導出関数をしています。導出関数は44'/60|61'/x'/n型でなければいけません。"
   },
   "estate_detail": {
-    "delete": "不動産を削除",
-    "delete_desc": "あなたは不動産{name}を削除しようとしています。",
+    "dissolve": "ディゾルブエステート",
+    "dissolve_desc": "あなたは不動産{name}を解散するつもりです",
     "edit_parcels": "パーセルの編集",
+    "empty_estate": "不動産{name}が解散しました",
+    "maximum_parcels_message":
+      "1回のトランザクションで{max}パーセルを追加または削除すると、ガスがなくなる可能性があります。",
+    "maximum_parcels_title":
+      "あなたはトランザクションごとに最大の小包に達しました",
     "parcels": "パーセルを含む",
     "pending_tx": "この不動産"
+  },
+  "estate_dissolve": {
+    "too_big": "この不動産は大きすぎます",
+    "too_big_desc":
+      "不動産が{max}小包を超過すると、解散する取引にガスがなくなる可能性があります。"
   },
   "estate_edit": {
     "description": "説明",
@@ -369,9 +379,9 @@
     "create_estate": "あなたは不動産{name}を作成しました",
     "create_mortgage":
       "パーセル{parcel_link}を購入するのに担保を申請しました。",
-    "delete_estate": "あなたは不動産{name}を削除しました",
     "disapproved":
       "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
+    "dissolve_estate": "あなたは不動産{name}を解散しました",
     "edit":
       "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",
     "edit_estate_metadata":

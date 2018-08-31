@@ -38,7 +38,7 @@ export class EstateRouter {
      * @param  {string} assetId - estate's asset_id.
      * @return {Estate}
      */
-    this.app.get('/estate/:assetId', server.handleRequest(this.getEstate))
+    this.app.get('/estates/:assetId', server.handleRequest(this.getEstate))
   }
 
   async getEstates(req) {
@@ -72,6 +72,9 @@ export class EstateRouter {
     const assetId = server.extractFromReq(req, 'assetId').toLowerCase()
 
     const result = await Estate.findByAssetId(assetId)
+    if (result.length === 0) {
+      throw new Error('Not found')
+    }
     return utils.mapOmit(result, blacklist.estate)[0]
   }
 }

@@ -28,8 +28,21 @@
   margin: 0 0 auto 0;
 }
 
-.EstateDetail .EstateActions {
+.EstateDetail .parcel-actions-container {
   text-align: right;
+}
+
+.EstateDetail .parcel-actions-container .is-address {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--gray);
+}
+
+.EstateDetail .AddressBlock {
+  height: 24px;
+  margin-left: 10px;
 }
 
 .EstateDetail .details {
@@ -63,4 +76,14 @@
   margin-top: 20px !important;
   margin-bottom: 0;
   margin-right: 25px;
+}
+
+.EstateDetail.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.EstateDetail.empty .empty-estate-message {
+  color: var(--gray);
 }

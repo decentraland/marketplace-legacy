@@ -48,8 +48,7 @@ export default class Asset extends React.PureComponent {
       ownerOnly,
       wallet,
       ownerNotAllowed,
-      withPublications,
-      onAccessDenied
+      withPublications
     } = nextProps
 
     const ownerIsNotAllowed =
@@ -65,8 +64,19 @@ export default class Asset extends React.PureComponent {
     }
 
     if (ownerIsNotAllowed || assetShouldBeOnSale) {
-      return onAccessDenied()
+      this.redirect()
+      return
     }
+
+    if (!value) {
+      this.redirect()
+    }
+  }
+
+  redirect() {
+    const { onAccessDenied } = this.props
+    this.isNavigatingAway = true
+    onAccessDenied()
   }
 
   checkOwnership(wallet, assetId) {

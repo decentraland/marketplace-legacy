@@ -1,6 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Icon, Grid, Container, Button } from 'semantic-ui-react'
+import {
+  Message,
+  Header,
+  Icon,
+  Grid,
+  Container,
+  Button
+} from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
@@ -9,7 +16,12 @@ import { t } from 'modules/translation/utils'
 import { parcelType, estateType } from 'components/types'
 import { getCoordsMatcher, isEqualCoords, buildCoordinate } from 'shared/parcel'
 import { isOwner } from 'shared/asset'
-import { hasNeighbour, areConnected, isEstate } from 'shared/estate'
+import {
+  hasNeighbour,
+  areConnected,
+  isEstate,
+  MAX_PARCELS_PER_TX
+} from 'shared/estate'
 import { getParcelsNotIncluded } from 'shared/utils'
 import './EstateSelect.css'
 
@@ -50,6 +62,9 @@ export default class EstateSelect extends React.PureComponent {
 
     const isSelected = parcels.some(getCoordsMatcher({ x, y }))
     if (isSelected) {
+      if (this.hasReachedRemoveLimit()) {
+        return
+      }
       const newParcels = parcels.filter(
         coords => !isEqualCoords(coords, { x, y })
       )
@@ -57,6 +72,10 @@ export default class EstateSelect extends React.PureComponent {
         return
       }
       return onChange(newParcels)
+    }
+
+    if (this.hasReachedAddLimit()) {
+      return
     }
 
     onChange([...parcels, { x, y }])
@@ -80,7 +99,7 @@ export default class EstateSelect extends React.PureComponent {
       return false
     }
 
-    const pristineParcels = estatePristine.data.parcels
+    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
 
     if (pristineParcels.length != parcels.length) {
       return true
@@ -96,13 +115,33 @@ export default class EstateSelect extends React.PureComponent {
     return false
   }
 
-  renderTxLabel = () => {
+  getParcelsToAdd() {
     const { estate, estatePristine } = this.props
     const newParcels = estate.data.parcels
-    const pristineParcels = estatePristine.data.parcels
+    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
+    return getParcelsNotIncluded(newParcels, pristineParcels)
+  }
 
-    const parcelsToAdd = getParcelsNotIncluded(newParcels, pristineParcels)
-    const parcelsToRemove = getParcelsNotIncluded(pristineParcels, newParcels)
+  getParcelsToRemove() {
+    const { estate, estatePristine } = this.props
+    const newParcels = estate.data.parcels
+    const pristineParcels = estatePristine ? estatePristine.data.parcels : []
+    return getParcelsNotIncluded(pristineParcels, newParcels)
+  }
+
+  hasReachedAddLimit() {
+    const parcelsToAdd = this.getParcelsToAdd()
+    return parcelsToAdd.length >= MAX_PARCELS_PER_TX
+  }
+
+  hasReachedRemoveLimit() {
+    const parcelsToRemove = this.getParcelsToRemove()
+    return parcelsToRemove.length >= MAX_PARCELS_PER_TX
+  }
+
+  renderTxLabel = () => {
+    const parcelsToAdd = this.getParcelsToAdd()
+    const parcelsToRemove = this.getParcelsToRemove()
     return (
       <React.Fragment>
         {!!parcelsToAdd.length && (
@@ -156,6 +195,21 @@ export default class EstateSelect extends React.PureComponent {
         </div>
         <Container>
           <Grid className="estate-selection">
+            {this.hasReachedAddLimit() || this.hasReachedRemoveLimit() ? (
+              <Grid.Row>
+                <Grid.Column width={16}>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('estate_detail.maximum_parcels_title')}
+                    content={t('estate_detail.maximum_parcels_message', {
+                      max: MAX_PARCELS_PER_TX
+                    })}
+                  />
+                  <p className="warning-parcels-limit" />
+                </Grid.Column>
+              </Grid.Row>
+            ) : null}
             <Grid.Row>
               <Grid.Column width={isCreation ? 16 : 8}>
                 <Header size="large">
@@ -178,7 +232,7 @@ export default class EstateSelect extends React.PureComponent {
                       onClick={onDeleteEstate}
                     >
                       <Icon name="trash" />
-                      {t('estate_detail.delete')}{' '}
+                      {t('estate_detail.dissolve')}{' '}
                     </Button>
                   </Grid.Column>
                 )}

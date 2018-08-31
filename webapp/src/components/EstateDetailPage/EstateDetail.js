@@ -4,10 +4,11 @@ import { Icon, Header, Grid, Container, Button } from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
-import EstateActions from './EstateActions'
+import AddressBlock from 'components/AddressBlock'
 import { t } from 'modules/translation/utils'
-import { buildCoordinate } from 'shared/parcel'
 import { estateType, parcelType } from 'components/types'
+import { buildCoordinate } from 'shared/parcel'
+import EstateActions from './EstateActions'
 import './EstateDetail.css'
 
 const WITH_ACTION_BUTTONS_WIDTH = 8
@@ -23,6 +24,19 @@ export default class EstateDetail extends React.PureComponent {
     onEditMetadata: PropTypes.func.isRequired
   }
 
+  renderEmptyEstate() {
+    const { estate } = this.props
+    return (
+      <div className="EstateDetail empty">
+        <span className="empty-estate-message">
+          {t('estate_detail.empty_estate', {
+            name: estate.data.name
+          })}
+        </span>
+      </div>
+    )
+  }
+
   render() {
     const {
       estate,
@@ -34,6 +48,10 @@ export default class EstateDetail extends React.PureComponent {
     } = this.props
     const { parcels } = estate.data
 
+    if (estate.data.parcels.length === 0) {
+      return this.renderEmptyEstate()
+    }
+
     return (
       <div className="EstateDetail">
         <div className="parcel-preview" title={t('parcel_detail.view')}>
@@ -42,7 +60,10 @@ export default class EstateDetail extends React.PureComponent {
         <Container>
           <Grid className="details">
             <Grid.Row>
-              <Grid.Column width={8} className={'parcels'}>
+              <Grid.Column
+                width={WITH_ACTION_BUTTONS_WIDTH}
+                className="parcels"
+              >
                 <Header size="large">
                   <p className="estate-title">
                     {estate.data.name || t('estate_select.detail')}
@@ -54,22 +75,28 @@ export default class EstateDetail extends React.PureComponent {
                   )}
                 </Header>
               </Grid.Column>
-              {isOwner && (
-                <Grid.Column className="parcel-actions-container" computer={8}>
+              <Grid.Column className="parcel-actions-container" computer={8}>
+                {isOwner ? (
                   <EstateActions
                     onEditMetadata={onEditMetadata}
                     assetId={estate.asset_id}
                   />
-                </Grid.Column>
-              )}
+                ) : (
+                  <span className="is-address">
+                    <span>{t('global.owned_by')}</span>
+                    <AddressBlock address={estate.owner} scale={4} />
+                  </span>
+                )}
+              </Grid.Column>
               {allParcels && (
                 <React.Fragment>
                   <Grid.Column
-                    width={
+                    computer={
                       isOwner
                         ? WITH_ACTION_BUTTONS_WIDTH
                         : WITHOUT_ACTION_BUTTONS_WIDTH
                     }
+                    mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
                     className={'selected-parcels-headline'}
                   >
                     <h3 className="parcels-included">

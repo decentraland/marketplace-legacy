@@ -80,12 +80,13 @@ export function areConnected(parcels, parcelId, sideId) {
     return false
   }
 
-  const sameDistrict = parcel.district_id === sideParcel.district_id
-  if (parcel.district_id && sameDistrict) {
+  const isSameDistrict = parcel.district_id === sideParcel.district_id
+  if (parcel.district_id && isSameDistrict) {
     return true
   }
-  const sameOwner = parcel.owner === sideParcel.owner
-  return parcel.estate_id && parcel.owner && sameOwner
+
+  const isSameEstate = parcel.estate_id === sideParcel.estate_id
+  return parcel.estate_id && isSameEstate
 }
 
 export function isSameValue(parcelA, parcelB, prop) {

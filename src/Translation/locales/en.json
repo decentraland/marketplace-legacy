@@ -55,11 +55,20 @@
       "You have set a wrong derivation path for your wallet. Your derivation path must follow pattern 44'/60|61'/x'/n"
   },
   "estate_detail": {
-    "delete": "Delete Estate",
-    "delete_desc": "You are going to delete the estate {name}",
+    "dissolve": "Dissolve Estate",
+    "dissolve_desc": "You are going to dissolve the estate {name}",
     "edit_parcels": "Edit Parcels",
+    "empty_estate": "The estate {name} has been dissolved",
+    "maximum_parcels_message":
+      "If you add or removes more than {max} parcels in a single transaction it may run out of gas. You can submit this transaction and then add or remove more parcels in a subsequent transaction by editing the estate.",
+    "maximum_parcels_title": "You reached the maximum parcels per transaction",
     "parcels": "Parcels included",
     "pending_tx": "This estate"
+  },
+  "estate_dissolve": {
+    "too_big": "This estate is too big",
+    "too_big_desc":
+      "When an estate has over {max} parcels a transaction to dissolve it may run out of gas. You should remove parcels by editing the estate and dissolve it when it has {max} parcels or less."
   },
   "estate_edit": {
     "description": "Description",
@@ -368,9 +377,9 @@
     "create_estate": "You created the estate {name}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
-    "delete_estate": "You deleted the estate {name}",
     "disapproved":
       "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
+    "dissolve_estate": "You dissolved the estate {name}",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",
     "edit_estate_metadata":

@@ -56,11 +56,21 @@
       "Vous avez défini un mauvais chemin de dérivation pour votre portefeuille. Votre chemin de dérivation doit suivre le modèle 44 '/ 60 | 61' / x '/ n"
   },
   "estate_detail": {
-    "delete": "Supprimer la succession",
-    "delete_desc": "Vous allez supprimer le domaine {name}",
+    "dissolve": "Dissoudre le domaine",
+    "dissolve_desc": "Vous allez dissoudre le domaine {name}",
     "edit_parcels": "Modifier les colis",
+    "empty_estate": "Le domaine {name} a été dissous",
+    "maximum_parcels_message":
+      "Si vous ajoutez ou supprimez plus de paquets {max} en une seule transaction, vous risquez de manquer d'essence. ",
+    "maximum_parcels_title":
+      "Vous avez atteint le maximum de colis par transaction",
     "parcels": "Colis inclus",
     "pending_tx": "Ce domaine"
+  },
+  "estate_dissolve": {
+    "too_big": "Ce domaine est trop grand",
+    "too_big_desc":
+      "Lorsqu'une succession a plus de {max} colis, une transaction à dissoudre peut manquer d'essence. "
   },
   "estate_edit": {
     "description": "La description",
@@ -379,9 +389,9 @@
     "create_estate": "Vous avez créé le domaine {name}",
     "create_mortgage":
       "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
-    "delete_estate": "Vous avez supprimé le domaine {name}",
     "disapproved":
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
+    "dissolve_estate": "Vous avez dissous le domaine {name}",
     "edit":
       "Vous avez mis à jour {parcel_link} avec le nom \"{name}\" et la description \"{description}\"",
     "edit_estate_metadata":
