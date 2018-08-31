@@ -43,13 +43,13 @@ export default class SignInPage extends React.PureComponent {
               {t('sign_in.intro')}{' '}
               {isMobile()
                 ? t_html('sign_in.options.mobile', {
-                    toshi_link: (
+                    coinbase_link: (
                       <a
-                        href="https://www.toshi.org"
+                        href="https://wallet.coinbase.com"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Toshi
+                        Coinbase Wallet
                       </a>
                     ),
                     imtoken_link: (

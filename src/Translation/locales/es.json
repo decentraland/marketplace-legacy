@@ -365,7 +365,7 @@
       "desktop":
         "Puedes usar la extensión {metamask_link} o una billetera de hardware como {ledger_nano_link}.",
       "mobile":
-        "Puedes usar navegadores móviles como {toshi_link} o {imtoken_link}."
+        "Puedes usar navegadores móviles como {coinbase_link} o {imtoken_link}."
     }
   },
   "transaction": {
