@@ -53,10 +53,10 @@
     "invalid": "您为钱包设置了错误的派生路径。 您的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "estate_detail": {
-    "dissolve": "分离连块土地",
-    "dissolve_desc": "你将分离连块土地 {name}",
+    "dissolve": "解散连块土地",
+    "dissolve_desc": "你将解散连块土地 {name}",
     "edit_parcels": "编辑地块",
-    "empty_estate": "连块土地 {name} 已经分离",
+    "empty_estate": "连块土地 {name} 已经解散",
     "maximum_parcels_message": "如果您在单个交易中添加或删除超过 {max} 个地块，交易费用可能会不足。您可以先提交此交易，然后在编辑连块土地中再增加或删除地块。",
     "maximum_parcels_title": "您达到了每笔交易的最大土地数",
     "parcels": "包括地块",
@@ -64,7 +64,7 @@
   },
   "estate_dissolve": {
     "too_big": "连块土地太大了",
-    "too_big_desc": "如果连块土地超过 {max} 块土地，则使之分离的交易有可能引起交易费用不足。您可以在编辑连块土块中移除地块，直到地块少于或等于 {max}， 然后再分离连块土地"
+    "too_big_desc": "如果连块土地超过 {max} 块土地，则解散连块土地的交易有可能引起交易费用不足。您可以在编辑连块土地中移除地块，直到地块少于或等于 {max}， 然后再解散连块土地"
   },
   "estate_edit": {
     "description": "描述",
@@ -108,8 +108,8 @@
     "contributions": "小区份额",
     "created_at": "创建于 {date}",
     "edit": "编辑",
-    "estate": "连块土块",
-    "estates": "连块土块",
+    "estate": "连块土地",
+    "estates": "连块土地",
     "expired_at": "截止时间 {time}",
     "expires_in": "到期时间 {time}",
     "expires_in_more_than_years": "{years} 年以上到期",
@@ -137,7 +137,7 @@
     "sign_in": "登录",
     "sign_in_notice": "请登录 {sign_in_link} 后访问此页面",
     "submit": "提交",
-    "the_estate": "连块土块",
+    "the_estate": "连块土地",
     "the_parcel": "包裹",
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
@@ -230,7 +230,7 @@
   "parcel_detail": {
     "actions": {
       "cancel": "取消出售",
-      "create_estate": "创建连块土块",
+      "create_estate": "创建连块土地",
       "permissions": "权限",
       "sell": "出售",
       "transfer": "转让"
@@ -342,15 +342,15 @@
     "cancel": "您取消了 {parcel_link} 上的 {publication_link}",
     "cancel_mortgage": "您取消了购买地块 {parcel_link} 的抵押",
     "claim_mortgage_resolution": "您认领了 {parcel_link}",
-    "create_estate": "您创建了连块土块 {name}",
+    "create_estate": "您创建了连块土地 {name}",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
-    "delete_estate": "您删除了连块土块{name}",
+    "delete_estate": "您删除了连块土地{name}",
     "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
-    "dissolve_estate": "你解散了连块土块 {name}",
+    "dissolve_estate": "你解散了连块土地 {name}",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
-    "edit_estate_metadata": "您编辑了连块土块 {estate_id}，名称为“{name}”，描述为“{description}”",
-    "edit_estate_parcels_added": "您将 {amount} 地块添加到连块土块 {name}",
-    "edit_estate_parcels_removed": "您从连块土块 {name} 中移除了 {amount} 地块",
+    "edit_estate_metadata": "您编辑了连块土地 {estate_id}，名称为“{name}”，描述为“{description}”",
+    "edit_estate_parcels_added": "您将 {amount} 地块添加到连块土地 {name}",
+    "edit_estate_parcels_removed": "您从连块土地 {name} 中移除了 {amount} 地块",
     "manage": "您授权{address_link}更新{parcel_link}上的内容",
     "manage_revoked": "您撤销了允许{address_link}更新{parcel_link}内容的授权",
     "mortgage_mana": "您{action} {mortgage_contract_link}代表您操作 MANA。",
@@ -374,8 +374,8 @@
     }
   },
   "transfer_estate": {
-    "about_to_transfer": "您即将转让连块土块 {name}。",
-    "transfer_estate": "转让连块土块"
+    "about_to_transfer": "您即将转让连块土地 {name}。",
+    "transfer_estate": "转让连块土地"
   },
   "transfer_mana": {
     "action": "转帐",
