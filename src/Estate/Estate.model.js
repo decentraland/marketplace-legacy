@@ -7,7 +7,7 @@ export class Estate extends Model {
   static columnNames = [
     'id',
     'tx_hash',
-    'asset_id',
+    'token_id',
     'owner',
     'data',
     'last_transferred_at'
@@ -21,11 +21,11 @@ export class Estate extends Model {
     return new Asset(this).findByOwnerAndStatus(owner, status)
   }
 
-  static findByAssetId(assetId) {
-    return new Asset(this).findByAssetId(assetId)
+  static findByTokenId(tokenId) {
+    return new Asset(this).findByTokenId(tokenId)
   }
 
-  static findByAssetIds(assetIds) {
-    return new Asset(this).findByAssetIds(assetIds)
+  static findByTokenIds(tokenIds) {
+    return new Asset(this).findByTokenIds(tokenIds)
   }
 }

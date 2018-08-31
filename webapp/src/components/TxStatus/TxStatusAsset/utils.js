@@ -17,6 +17,6 @@ export function isAssetPendingTransaction(asset, tx) {
   }
   return (
     tx.status === txUtils.TRANSACTION_STATUS.pending &&
-    tx.payload.asset_id === asset.asset_id
+    tx.payload.token_id === asset.token_id
   )
 }

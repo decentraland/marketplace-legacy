@@ -90,20 +90,20 @@ add(MANAGE_PARCEL_SUCCESS, 'Manage LAND Permissions', action => ({
   }))
 
 add(EDIT_ESTATE_METADATA_SUCCESS, 'Edit Estate Metadata', action => ({
-  asset_id: action.estate.asset_id,
+  token_id: action.estate.token_id,
   name: action.estate.data.name,
   description: action.estate.data.description,
   address: action.estate.owner
 }))
 
 add(EDIT_ESTATE_PARCELS_SUCCESS, 'Edit Estate Parcels', action => ({
-  asset_id: action.estate.asset_id,
+  token_id: action.estate.token_id,
   parcels: action.parcels.map(p => `(${p.x}, ${p.y})`).join(', '),
   type: action.actionType,
   address: action.estate.owner
 }))
 
 add(DELETE_ESTATE_SUCCESS, 'Delete Estate', action => ({
-  asset_id: action.estate.asset_id,
+  token_id: action.estate.token_id,
   address: action.estate.owner
 }))

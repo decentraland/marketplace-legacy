@@ -8,6 +8,6 @@ export class EstateService {
         ids.add(parcel.estate_id)
       }
     }
-    return Estate.findByAssetIds([...ids])
+    return Estate.findByTokenIds([...ids])
   }
 }

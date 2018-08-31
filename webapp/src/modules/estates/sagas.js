@@ -74,7 +74,8 @@ function* handleEditEstateParcelsRequest(action) {
   try {
     newParcels.forEach(({ x, y }) => validateCoords(x, y))
 
-    const pristineEstate = (yield select(getEstates))[estate.asset_id]
+    const estates = yield select(getEstates)
+    const pristineEstate = estates[estate.token_id]
     const pristineParcels = pristineEstate.data.parcels
 
     const parcelsToAdd = getParcelsNotIncluded(newParcels, pristineParcels)
@@ -89,7 +90,7 @@ function* handleEditEstateParcelsRequest(action) {
       const ys = parcelsToAdd.map(p => p.y)
 
       const txHash = yield call(() =>
-        landRegistry.transferManyLandToEstate(xs, ys, estate.asset_id)
+        landRegistry.transferManyLandToEstate(xs, ys, estate.token_id)
       )
       yield put(
         editEstateParcelsSuccess(txHash, estate, parcelsToAdd, ADD_PARCELS)
@@ -103,7 +104,7 @@ function* handleEditEstateParcelsRequest(action) {
         )
       )
       const txHash = yield call(() =>
-        estateRegistry.transferManyLands(estate.asset_id, landIds, owner)
+        estateRegistry.transferManyLands(estate.token_id, landIds, owner)
       )
       yield put(
         editEstateParcelsSuccess(
@@ -126,7 +127,7 @@ function* handleEditEstateMetadataRequest({ estate }) {
     const estateRegistry = eth.getContract('EstateRegistry')
     const data = yield call(() => encodeMetadata(estate.data))
     const txHash = yield call(() =>
-      estateRegistry.updateMetadata(estate.asset_id, data)
+      estateRegistry.updateMetadata(estate.token_id, data)
     )
     yield put(editEstateMetadataSuccess(txHash, estate))
     yield put(push(locations.activity))
@@ -136,12 +137,12 @@ function* handleEditEstateMetadataRequest({ estate }) {
 }
 
 function* handleEstateRequest(action) {
-  const { assetId } = action
+  const { tokenId } = action
   try {
-    const estate = yield call(() => api.fetchEstate(assetId))
+    const estate = yield call(() => api.fetchEstate(tokenId))
     yield put(fetchEstateSuccess(estate))
   } catch (error) {
-    yield put(fetchEstateFailure(assetId, error.message))
+    yield put(fetchEstateFailure(error.message))
   }
 }
 
@@ -185,7 +186,7 @@ function* handleTransferRequest({ estate, to }) {
 
     const contract = eth.getContract('EstateRegistry')
     const txHash = yield call(() =>
-      contract.safeTransferFrom(oldOwner, to, estate.asset_id)
+      contract.safeTransferFrom(oldOwner, to, estate.token_id)
     )
 
     const transfer = {

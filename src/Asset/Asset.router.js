@@ -12,7 +12,7 @@ export class AssetRouter {
   mount() {
     /**
      * Returns the assets filtered by the supplied params
-     * @param  {string} type - specify a publication type to retreive: [parcel|estate|...].
+     * @param  {string} asset_type - specify a publication type to retreive: [parcel|estate|...].
      * @param  {string} status - specify a publication status to retreive: [cancelled|sold|pending].
      * @param  {string} sort_by - Publication prop
      * @param  {string} sort_order - asc or desc
@@ -25,7 +25,9 @@ export class AssetRouter {
 
   async getAssets(req) {
     const filters = new PublicationRequestFilters(req)
-    const Model = new PublicationService().getModelFromType(filters.getType())
+    const Model = new PublicationService().getModelFromAssetType(
+      filters.getAssetType()
+    )
     const result = await new Asset(Model).filter(filters)
 
     return {

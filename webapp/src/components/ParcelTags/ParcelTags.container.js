@@ -6,7 +6,7 @@ import { getEstates } from 'modules/estates/selectors'
 
 const mapState = (state, ownProps) => ({
   districts: getDistricts(state),
-  estate: ownProps.estate ? getEstates(state)[ownProps.estate.asset_id] : null
+  estate: ownProps.estate ? getEstates(state)[ownProps.estate.token_id] : null
 })
 
 const mapDispatch = () => ({})

@@ -19,7 +19,7 @@ export default class EstateDetailPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number,
     y: PropTypes.number,
-    assetId: PropTypes.string,
+    tokenId: PropTypes.string,
     allParcels: PropTypes.objectOf(parcelType),
     onViewAssetClick: PropTypes.func.isRequired,
     onEditParcels: PropTypes.func.isRequired,
@@ -28,7 +28,7 @@ export default class EstateDetailPage extends React.PureComponent {
 
   render() {
     const {
-      assetId,
+      tokenId,
       x,
       y,
       onViewAssetClick,
@@ -39,7 +39,7 @@ export default class EstateDetailPage extends React.PureComponent {
 
     const { isEditing, isSelecting } = this.state
     return (
-      <Estate assetId={assetId} x={x} y={y}>
+      <Estate tokenId={tokenId} x={x} y={y}>
         {(estate, isOwner, wallet) =>
           isNewAsset(estate) || isEditing ? (
             <EditEstate

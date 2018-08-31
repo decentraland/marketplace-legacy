@@ -27,7 +27,7 @@ describe('PublicationRequestFilters', function() {
       const request = buildRequest({
         query: {
           status: PUBLICATION_STATUS.sold,
-          type: ASSET_TYPE.estate,
+          asset_type: ASSET_TYPE.estate,
           sort_by: 'price',
           sort_order: 'desc',
           limit: 33,
@@ -38,7 +38,7 @@ describe('PublicationRequestFilters', function() {
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
         status: PUBLICATION_STATUS.sold,
-        type: ASSET_TYPE.estate,
+        asset_type: ASSET_TYPE.estate,
         sort: {
           by: 'price',
           order: 'ASC'
@@ -54,7 +54,7 @@ describe('PublicationRequestFilters', function() {
       const request = buildRequest({
         query: {
           status: '--SELECT * FROM publications;',
-          type: '--UPDATE parcels set x = 9999;--',
+          asset_type: '--UPDATE parcels set x = 9999;--',
           sort_by: ';/**/DELETE * FROM publications;',
           sort_order: ';/**/;',
           limit: 10000,
@@ -65,7 +65,7 @@ describe('PublicationRequestFilters', function() {
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
         status: PUBLICATION_STATUS.open,
-        type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPE.parcel,
         sort: {
           by: 'created_at',
           order: 'DESC'
@@ -80,17 +80,21 @@ describe('PublicationRequestFilters', function() {
 })
 
 describe('PublicationService', function() {
-  describe('#getModelByType', function() {
+  describe('#getModelFromAssetType', function() {
     it('should return the model class for the supplied type', function() {
       const service = new PublicationService()
-      expect(service.getModelFromType(ASSET_TYPE.parcel)).to.be.equal(Parcel)
-      expect(service.getModelFromType(ASSET_TYPE.estate)).to.be.equal(Estate)
+      expect(service.getModelFromAssetType(ASSET_TYPE.parcel)).to.be.equal(
+        Parcel
+      )
+      expect(service.getModelFromAssetType(ASSET_TYPE.estate)).to.be.equal(
+        Estate
+      )
     })
 
     it('should throw if the type is invalid', function() {
       expect(() =>
-        new PublicationService().getModelFromType('Nonsense')
-      ).to.throw('Invalid publication type "Nonsense"')
+        new PublicationService().getModelFromAssetType('Nonsense')
+      ).to.throw('Invalid publication asset_type "Nonsense"')
     })
   })
 })

@@ -8,19 +8,20 @@ import { deleteEstateRequest } from 'modules/estates/actions'
 import { isEstateTransactionIdle } from 'modules/estates/selectors'
 
 const mapState = (state, ownProps) => {
-  const { assetId } = getMatchParams(ownProps)
+  const { tokenId } = getMatchParams(ownProps)
+
   return {
-    assetId,
+    tokenId,
     isTxIdle: isEstateTransactionIdle(state)
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const { assetId } = getMatchParams(ownProps)
+  const { tokenId } = getMatchParams(ownProps)
 
   return {
     onCancel: () => dispatch(goBack()),
-    onConfirm: () => dispatch(deleteEstateRequest(assetId))
+    onConfirm: () => dispatch(deleteEstateRequest(tokenId))
   }
 }
 

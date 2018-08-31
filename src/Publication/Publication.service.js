@@ -10,14 +10,14 @@ export class PublicationService {
     this.Estate = Estate
   }
 
-  getModelFromType(type) {
-    if (!this.Publication.isValidType(type)) {
-      throw new Error(`Invalid publication type "${type}"`)
+  getModelFromAssetType(assetType) {
+    if (!this.Publication.isValidAssetType(assetType)) {
+      throw new Error(`Invalid publication asset_type "${assetType}"`)
     }
 
     return {
       [ASSET_TYPE.parcel]: this.Parcel,
       [ASSET_TYPE.estate]: this.Estate
-    }[type]
+    }[assetType]
   }
 }

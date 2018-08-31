@@ -6,7 +6,7 @@ export const PUBLICATION_STATUS = Object.freeze({
   cancelled: 'cancelled'
 })
 
-export const PUBLICATION_TYPES = Object.freeze({
+export const PUBLICATION_ASSET_TYPES = Object.freeze({
   parcel: 'parcel',
   estate: 'estate'
 })

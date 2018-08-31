@@ -79,7 +79,7 @@ export default class EstateDetail extends React.PureComponent {
                 {isOwner ? (
                   <EstateActions
                     onEditMetadata={onEditMetadata}
-                    assetId={estate.asset_id}
+                    tokenId={estate.token_id}
                   />
                 ) : (
                   <span className="is-address">

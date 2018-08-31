@@ -203,12 +203,12 @@ export function addressReducer(state = INITIAL_STATE, action) {
               [transaction.from]: {
                 ...fromUser,
                 estate_ids: fromUser.estate_ids.filter(
-                  estateId => estateId !== estate.asset_id
+                  estateId => estateId !== estate.token_id
                 )
               },
               [to]: {
                 ...toUser,
-                estate_ids: [...toUser.estate_ids, estate.asset_id]
+                estate_ids: [...toUser.estate_ids, estate.token_id]
               }
             }
           }

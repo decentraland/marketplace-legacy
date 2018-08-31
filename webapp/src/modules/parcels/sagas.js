@@ -66,9 +66,9 @@ function* handleManageParcelsRequest(action) {
 
     const contract = eth.getContract('LANDRegistry')
     // @cazala TODO: this line should be removed once the method setUpdateOperator accepts x,y instead of assetId
-    const assetId = yield call(() => contract.encodeTokenId(x, y))
+    const tokenId = yield call(() => contract.encodeTokenId(x, y))
     const txHash = yield call(() =>
-      contract.setUpdateOperator(assetId, revoked ? null : address)
+      contract.setUpdateOperator(tokenId, revoked ? null : address)
     )
 
     yield put(manageParcelSuccess(txHash, parcel, address, revoked))

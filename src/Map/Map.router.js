@@ -65,9 +65,9 @@ export class MapRouter {
     const { id, width, height, size, showPublications } = this.sanitizeEstate(
       req
     )
-    const estate = (await Estate.findByAssetId(id))[0]
+    const estate = await Estate.findByTokenId(id)
     if (!estate) {
-      throw new Error(`The estate with id "${id}" doesn't exist.`)
+      throw new Error(`The estate with token id "${id}" doesn't exist.`)
     }
 
     const { parcels } = estate.data

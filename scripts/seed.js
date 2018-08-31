@@ -92,6 +92,7 @@ function getRandomColumnValue(columnName, tableName) {
       return faker.date.recent().getTime()
     case 'district_id':
       return faker.random.uuid()
+    case 'token_id':
     case 'contract_id':
       return faker.random.uuid().replace(/-/g, '')
     case 'block_number':

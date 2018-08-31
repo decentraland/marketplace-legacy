@@ -59,7 +59,7 @@ describe('Parcel', function() {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: PUBLICATION_STATUS.open,
-        type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPE.parcel,
         asset_id: '3,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -68,7 +68,7 @@ describe('Parcel', function() {
         contract_id: '0xdeadbeef',
         block_time_created_at: null,
         block_time_updated_at: null,
-        marketplace_id: '0x113322',
+        marketplace_address: '0x113322',
         block_number: 1
       }
       await Publication.insert(publication)
@@ -78,7 +78,7 @@ describe('Parcel', function() {
         {
           x: 3,
           y: 5,
-          asset_id: null,
+          token_id: null,
           auction_price: null,
           owner: null,
           data: null,
@@ -92,7 +92,7 @@ describe('Parcel', function() {
         {
           x: 4,
           y: 5,
-          asset_id: null,
+          token_id: null,
           auction_price: null,
           owner: null,
           data: null,
@@ -115,7 +115,7 @@ describe('Parcel', function() {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: PUBLICATION_STATUS.open,
-        type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPE.parcel,
         asset_id: '2,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -124,14 +124,14 @@ describe('Parcel', function() {
         contract_id: '0xdeadbeef',
         block_time_created_at: null,
         block_time_updated_at: null,
-        marketplace_id: '0x113322',
+        marketplace_address: '0x113322',
         block_number: 1
       }
       const publication2 = {
         tx_hash: '0xdeadabeef',
         tx_status: txUtils.TRANSACTION_STATUS.confirmed,
         status: PUBLICATION_STATUS.open,
-        type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPE.parcel,
         asset_id: '6,5',
         owner: '0xdeadbeef33',
         buyer: null,
@@ -140,7 +140,7 @@ describe('Parcel', function() {
         contract_id: '0xdseadbeef',
         block_time_created_at: null,
         block_time_updated_at: null,
-        marketplace_id: '0x113322',
+        marketplace_address: '0x113322',
         block_number: 1
       }
       await Promise.all([
@@ -155,7 +155,7 @@ describe('Parcel', function() {
         loan_id: 0,
         mortgage_id: 0,
         asset_id: Parcel.buildId(2, 5),
-        type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPE.parcel,
         borrower: '0xdeadbeef33',
         lender: null,
         is_due_at: 10000,
@@ -204,7 +204,7 @@ describe('Parcel', function() {
       expect(range.length).to.be.equal(2)
       expect(range).to.equalRows([
         {
-          asset_id: null,
+          token_id: null,
           x: 2,
           y: 5,
           auction_price: null,
@@ -218,7 +218,7 @@ describe('Parcel', function() {
           publication
         },
         {
-          asset_id: null,
+          token_id: null,
           x: 6,
           y: 5,
           auction_price: null,

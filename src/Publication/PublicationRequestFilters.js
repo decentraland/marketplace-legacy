@@ -1,7 +1,10 @@
 import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
-import { PUBLICATION_TYPES, PUBLICATION_STATUS } from '../shared/publication'
+import {
+  PUBLICATION_ASSET_TYPES,
+  PUBLICATION_STATUS
+} from '../shared/publication'
 
 export const ALLOWED_SORT_VALUES = Object.freeze({
   price: ['ASC'],
@@ -10,7 +13,7 @@ export const ALLOWED_SORT_VALUES = Object.freeze({
   expires_at: ['ASC']
 })
 export const DEFAULT_STATUS = PUBLICATION_STATUS.open
-export const DEFAULT_TYPE = PUBLICATION_TYPES.parcel
+export const DEFAULT_ASSET_TYPE = PUBLICATION_ASSET_TYPES.parcel
 export const DEFAULT_SORT_VALUE = 'created_at'
 export const DEFAULT_SORT = {
   by: DEFAULT_SORT_VALUE,
@@ -33,7 +36,7 @@ export class PublicationRequestFilters {
   sanitize(req) {
     return {
       status: this.getStatus(),
-      type: this.getType(),
+      asset_type: this.getAssetType(),
       sort: this.getSort(),
       pagination: this.getPagination()
     }
@@ -44,9 +47,11 @@ export class PublicationRequestFilters {
     return Publication.isValidStatus(status) ? status : PUBLICATION_STATUS.open
   }
 
-  getType() {
-    const type = this.getReqParam('type', PUBLICATION_TYPES.parcel)
-    return Publication.isValidType(type) ? type : PUBLICATION_TYPES.parcel
+  getAssetType() {
+    const type = this.getReqParam('asset_type', PUBLICATION_ASSET_TYPES.parcel)
+    return Publication.isValidAssetType(type)
+      ? type
+      : PUBLICATION_ASSET_TYPES.parcel
   }
 
   getSort() {

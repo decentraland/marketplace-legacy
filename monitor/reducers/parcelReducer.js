@@ -31,7 +31,9 @@ export async function parcelReducer(events, event) {
     case events.parcelTransfer: {
       const { to } = event.args
 
-      log.info(`[${name}] Transfering "${parcelId}" owner to "${to}"`)
+      log.info(
+        `[${name}] Transferring parcel "${parcelId}" ownership to "${to}"`
+      )
 
       const [last_transferred_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
@@ -47,15 +49,15 @@ export async function parcelReducer(events, event) {
     case events.addLand: {
       if (parcelId) {
         const { _estateId } = event.args
-        const estate = (await Estate.findByAssetId(_estateId))[0]
+        const estate = await Estate.findByTokenId(_estateId)
         if (estate) {
           log.info(
-            `[${name}] Adding "${parcelId}" as part of the estate id "${_estateId}"`
+            `[${name}] Adding "${parcelId}" as part of the estate with token id "${_estateId}"`
           )
 
           await Parcel.update({ estate_id: _estateId }, { id: parcelId })
         } else {
-          log.info(`[${name}] Estate id ${_estateId} does not exist`)
+          log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
         }
       }
       break
@@ -63,15 +65,17 @@ export async function parcelReducer(events, event) {
     case events.removeLand: {
       if (parcelId) {
         const { _estateId } = event.args
-        const estate = (await Estate.findByAssetId(_estateId))[0]
+        const estate = await Estate.findByTokenId(_estateId)
         if (estate) {
           log.info(
-            `[${name}] Removing "${parcelId}" as part of the estate id "${_estateId}"`
+            `[${name}] Removing "${parcelId}" as part of the estate with token id "${_estateId}"`
           )
 
           await Parcel.update({ estate_id: null }, { id: parcelId })
         } else {
-          log.info(`[${name}] Estate id ${_estateId} does not exist`)
+          log.info(
+            `[${name}] Estate with token id  ${_estateId} does not exist`
+          )
         }
       }
       break

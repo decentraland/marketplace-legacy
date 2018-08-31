@@ -10,88 +10,103 @@ export class Asset {
   }
 
   async findById(id) {
-    const assets = await db.query(SQL`SELECT ${raw(this.tableName)}.*, (
+    const assets = await db.query(
+      SQL`SELECT ${raw(this.tableName)}.*, (
         ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
       ) as publication
         FROM ${raw(this.tableName)}
-        WHERE id = ${id}`)
+        WHERE id = ${id}
+        LIMIT 1`
+    )
     return assets[0]
   }
 
-  findByAssetId(assetId) {
-    return db.query(SQL`SELECT ${raw(this.tableName)}.*, (
+  async findByTokenId(tokenId) {
+    const assets = await db.query(
+      SQL`SELECT ${raw(this.tableName)}.*, (
         ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
       ) as publication
         FROM ${raw(this.tableName)}
-        WHERE asset_id = ${assetId}`)
+        WHERE token_id = ${tokenId}
+        LIMIT 1`
+    )
+    return assets[0]
   }
 
   findByIds(ids) {
     if (ids.length === 0) return []
 
-    return db.query(SQL`SELECT *
+    return db.query(
+      SQL`SELECT *
         FROM ${raw(this.tableName)}
-        WHERE id = ANY(${ids})`)
+        WHERE id = ANY(${ids})`
+    )
   }
 
-  findByAssetIds(assetIds) {
-    if (assetIds.length === 0) return []
+  findByTokenIds(tokenIds) {
+    if (tokenIds.length === 0) return []
 
-    return db.query(SQL`SELECT *
+    return db.query(
+      SQL`SELECT *
         FROM ${raw(this.tableName)}
-        WHERE asset_id = ANY(${assetIds})`)
+        WHERE token_id = ANY(${tokenIds})`
+    )
   }
 
   async findByOwner(owner) {
-    return db.query(SQL`SELECT ${raw(this.tableName)}.*, (
+    return db.query(
+      SQL`SELECT ${raw(this.tableName)}.*, (
         ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
       ) as publication
         FROM ${raw(this.tableName)}
-        WHERE owner = ${owner}`)
+        WHERE owner = ${owner}`
+    )
   }
 
   async findByOwnerAndStatus(owner, status) {
-    return db.query(SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication
+    return db.query(
+      SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication
         FROM ${raw(this.tableName)} as asset
         LEFT JOIN (
           ${PublicationQueries.findByStatusSql(status)}
         ) as pub ON asset.id = pub.asset_id
         WHERE asset.owner = ${owner}
-          AND pub.tx_hash IS NOT NULL`)
+          AND pub.tx_hash IS NOT NULL`
+    )
   }
 
   async filter(filters) {
-    const { status, type, sort, pagination } = filters.sanitize()
+    const { status, asset_type, sort, pagination } = filters.sanitize()
     const tx_status = txUtils.TRANSACTION_STATUS.confirmed
     const [assets, total] = await Promise.all([
       db.query(
         SQL`SELECT model.*, row_to_json(pub.*) as publication
-      FROM ${raw(Publication.tableName)} as pub
-      JOIN ${raw(this.tableName)} as model ON model.id = pub.asset_id
-      WHERE tx_status = ${tx_status}
-        AND type = ${type}
-        AND ${PublicationQueries.whereisActive()}
-        AND ${PublicationQueries.hasStatus(status)}
-      ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
-      LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
+          FROM ${raw(Publication.tableName)} as pub
+          JOIN ${raw(this.tableName)} as model ON model.id = pub.asset_id
+          WHERE tx_status = ${tx_status}
+            AND asset_type = ${asset_type}
+            AND ${PublicationQueries.whereisActive()}
+            AND ${PublicationQueries.hasStatus(status)}
+          ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
+          LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
-      this.countAssetPublications(filters, type)
+      this.countAssetPublications(filters, asset_type)
     ])
 
     return { assets, total }
   }
 
   async countAssetPublications(filters) {
-    const { status, type } = filters.sanitize()
+    const { status, asset_type } = filters.sanitize()
     const tx_status = txUtils.TRANSACTION_STATUS.confirmed
 
     const counts = await db.query(
       SQL`SELECT COUNT(*)
-          FROM ${raw(Publication.tableName)}
-          WHERE status = ${status}
-            AND tx_status = ${tx_status}
-            AND type = ${type}
-            AND ${PublicationQueries.whereisActive()}`
+        FROM ${raw(Publication.tableName)}
+        WHERE status = ${status}
+          AND tx_status = ${tx_status}
+          AND asset_type = ${asset_type}
+          AND ${PublicationQueries.whereisActive()}`
     )
 
     return parseInt(counts[0].count, 10)

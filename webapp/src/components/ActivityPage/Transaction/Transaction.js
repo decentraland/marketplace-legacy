@@ -105,7 +105,9 @@ export default class Transaction extends React.PureComponent {
 
   renderEstateLink(estate) {
     return (
-      <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
+      <Link to={locations.estateDetail(estate.token_id)}>
+        {estate.data.name}
+      </Link>
     )
   }
 
@@ -313,7 +315,7 @@ export default class Transaction extends React.PureComponent {
         to={
           isNewAsset(estate)
             ? locations.parcelMapDetail(x, y, buildCoordinate(x, y))
-            : locations.estateDetail(estate.asset_id)
+            : locations.estateDetail(estate.token_id)
         }
       >
         <ParcelPreview

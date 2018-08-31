@@ -118,10 +118,10 @@ async function getInconsistentPublishedParcels(allParcels) {
 async function getPublicationInconsistencies(parcel) {
   if (!parcel) return ''
 
-  const { id, asset_id } = parcel
+  const { id, token_id } = parcel
   const marketplace = eth.getContract('Marketplace')
   const publication = (await Publication.findByAssetId(id))[0]
-  const auction = await marketplace.auctionByAssetId(asset_id)
+  const auction = await marketplace.auctionByAssetId(token_id)
   const contractId = auction[0]
 
   let errors = ''
@@ -220,7 +220,7 @@ class SanityMonitorCli extends MonitorCli {
   }
 
   async replayEvents(parcel) {
-    const events = await BlockchainEvent.findByAssetId(parcel.asset_id)
+    const events = await BlockchainEvent.findByArgsAssetId(parcel.token_id)
     events.reverse()
 
     for (let i = 0; i < events.length; i++) {
@@ -233,7 +233,7 @@ class SanityMonitorCli extends MonitorCli {
 }
 
 async function cleanBlockainEvents(parcel) {
-  return BlockchainEvent.deleteByAssetId(parcel.asset_id)
+  return BlockchainEvent.deleteByArgsAssetId(parcel.token_id)
 }
 
 function isNullHash(x) {

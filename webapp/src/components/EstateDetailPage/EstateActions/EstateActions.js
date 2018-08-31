@@ -10,11 +10,11 @@ import './EstateActions.css'
 export default class EstateActions extends React.PureComponent {
   static propTypes = {
     onEditMetadata: PropTypes.func.isRequired,
-    assetId: PropTypes.string.isRequired
+    tokenId: PropTypes.string.isRequired
   }
 
   render() {
-    const { onEditMetadata, assetId } = this.props
+    const { onEditMetadata, tokenId } = this.props
 
     return (
       <div className="EstateActions">
@@ -25,7 +25,7 @@ export default class EstateActions extends React.PureComponent {
           </Button>
         </div>
         <div>
-          <Link to={locations.transferEstatePage(assetId)}>
+          <Link to={locations.transferEstatePage(tokenId)}>
             <Button size="tiny">
               <Icon name="exchange" />
               {t('parcel_detail.actions.transfer')}
