@@ -5,7 +5,7 @@ import { Estate } from '../Estate'
 import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
 import { PublicationRequestFilters } from './PublicationRequestFilters'
-import { ASSET_TYPE } from '../shared/asset'
+import { ASSET_TYPES } from '../shared/asset'
 import { PUBLICATION_STATUS } from '../shared/publication'
 
 describe('Publication', function() {
@@ -27,7 +27,7 @@ describe('PublicationRequestFilters', function() {
       const request = buildRequest({
         query: {
           status: PUBLICATION_STATUS.sold,
-          asset_type: ASSET_TYPE.estate,
+          asset_type: ASSET_TYPES.estate,
           sort_by: 'price',
           sort_order: 'desc',
           limit: 33,
@@ -38,7 +38,7 @@ describe('PublicationRequestFilters', function() {
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
         status: PUBLICATION_STATUS.sold,
-        asset_type: ASSET_TYPE.estate,
+        asset_type: ASSET_TYPES.estate,
         sort: {
           by: 'price',
           order: 'ASC'
@@ -65,7 +65,7 @@ describe('PublicationRequestFilters', function() {
       const filters = new PublicationRequestFilters(request)
       expect(filters.sanitize()).to.deep.equal({
         status: PUBLICATION_STATUS.open,
-        asset_type: ASSET_TYPE.parcel,
+        asset_type: ASSET_TYPES.parcel,
         sort: {
           by: 'created_at',
           order: 'DESC'
@@ -83,10 +83,10 @@ describe('PublicationService', function() {
   describe('#getModelFromAssetType', function() {
     it('should return the model class for the supplied type', function() {
       const service = new PublicationService()
-      expect(service.getModelFromAssetType(ASSET_TYPE.parcel)).to.be.equal(
+      expect(service.getModelFromAssetType(ASSET_TYPES.parcel)).to.be.equal(
         Parcel
       )
-      expect(service.getModelFromAssetType(ASSET_TYPE.estate)).to.be.equal(
+      expect(service.getModelFromAssetType(ASSET_TYPES.estate)).to.be.equal(
         Estate
       )
     })

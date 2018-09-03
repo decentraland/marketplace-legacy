@@ -5,7 +5,7 @@ import { Mortgage } from '../../src/Mortgage'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { MORTGAGE_STATUS } from '../../shared/mortgage'
-import { ASSET_TYPE } from '../../shared/asset'
+import { ASSET_TYPES } from '../../shared/asset'
 import { getParcelIdFromEvent } from './utils'
 
 const log = new Log('mortgageReducer')
@@ -63,7 +63,7 @@ export async function mortgageReducer(events, event) {
           outstanding_amount: 0,
           tx_hash,
           asset_id: Parcel.buildId(x, y),
-          asset_type: ASSET_TYPE.parcel,
+          asset_type: ASSET_TYPES.parcel,
           borrower
         })
       } catch (error) {

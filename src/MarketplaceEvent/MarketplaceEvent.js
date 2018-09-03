@@ -1,6 +1,6 @@
 import { env } from 'decentraland-commons'
 
-import { ASSET_TYPE } from '../shared/asset'
+import { ASSET_TYPES } from '../shared/asset'
 
 export class MarketplaceEvent {
   constructor(event) {
@@ -14,6 +14,6 @@ export class MarketplaceEvent {
 
   getType() {
     // TODO: makeshift method, check pending
-    return ASSET_TYPE.parcel
+    return ASSET_TYPES.parcel
   }
 }
