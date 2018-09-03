@@ -1,7 +1,3 @@
 .EditEstateMetadataForm {
   width: 100%;
 }
-
-.EditEstateMetadataForm .ui.button + .ui.button {
-  margin-left: 20px;
-}

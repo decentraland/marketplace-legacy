@@ -96,7 +96,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
         </Form.Field>
         <br />
         {isTxIdle && <TxStatus.Idle isIdle={isTxIdle} />}
-        <div>
+        <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>

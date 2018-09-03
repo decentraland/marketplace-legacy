@@ -34,6 +34,7 @@
   margin: 0px 0px 0px 50px;
 }
 
+/* TODO: rules are duplicated on EstateModal */
 @media (max-width: 768px) {
   .ParcelModal {
     flex-flow: column nowrap;
