@@ -63,12 +63,7 @@ export default class Asset extends React.PureComponent {
       this.checkOwnership(wallet, value.id)
     }
 
-    if (ownerIsNotAllowed || assetShouldBeOnSale) {
-      this.redirect()
-      return
-    }
-
-    if (!value) {
+    if (ownerIsNotAllowed || assetShouldBeOnSale || !value) {
       this.redirect()
     }
   }
