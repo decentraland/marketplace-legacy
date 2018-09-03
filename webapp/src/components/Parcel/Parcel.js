@@ -19,7 +19,6 @@ export default class Parcel extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { parcel } = this.props
-    debugger
     if (
       parcel &&
       nextProps.parcel &&
