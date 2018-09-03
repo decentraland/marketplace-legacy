@@ -5,8 +5,6 @@ import { parcelType } from 'components/types'
 import Asset from 'components/Asset'
 
 export default class Parcel extends React.PureComponent {
-  shouldRefresh = false
-
   static propTypes = {
     parcel: parcelType,
     onAccessDenied: PropTypes.func.isRequired,
@@ -15,6 +13,11 @@ export default class Parcel extends React.PureComponent {
 
   static defaultProps = {
     parcel: null
+  }
+
+  constructor(props) {
+    super(props)
+    this.shouldRefresh = false
   }
 
   componentWillReceiveProps(nextProps) {
