@@ -397,6 +397,7 @@
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."
   },
   "transaction_status": {
+    "activity_page": "활동 페이지",
     "idle": {
       "please_confirm": "Please confirm the transaction"
     },

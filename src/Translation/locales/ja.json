@@ -401,6 +401,7 @@
     "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
   },
   "transaction_status": {
+    "activity_page": "活動ページ",
     "idle": {
       "please_confirm": "取引を確認してください。"
     },
