@@ -28,7 +28,7 @@
     "action": "Acheter plus",
     "amount_too_big": "Ce montant est trop important pour le Bancor Network",
     "available_eth": "Disponible: {eth} ETH",
-    "not_enough": "Vous n'avez pas assez d'ETH à payer pour cela",
+    "not_enough": "Vous n'avez pas assez d'ETH disponible pour cela",
     "pay_with": "Payer avec",
     "powered_by": "par {bancor_link}",
     "rate": "Taux",
@@ -40,12 +40,12 @@
     "contribution": "Contribution",
     "district": "Quartiers",
     "loading": "Chargement",
-    "on_sale": "À vendre",
+    "on_sale": "En vente",
     "plaza": "Places",
     "roads": "Routes",
-    "taken": "Prises",
+    "taken": "Non disponibles",
     "title": "Code couleur",
-    "unowned": "Libres",
+    "unowned": "Non achetées",
     "yours": "Les votres"
   },
   "contribution": {
@@ -58,26 +58,26 @@
   "estate_detail": {
     "dissolve": "Dissoudre le domaine",
     "dissolve_desc": "Vous allez dissoudre le domaine {name}",
-    "edit_parcels": "Modifier les colis",
-    "empty_estate": "Le domaine {name} a été dissous",
+    "edit_parcels": "Modifier les parcelles",
+    "empty_estate": "Le domaine {name} a été dissout",
     "maximum_parcels_message":
-      "Si vous ajoutez ou supprimez plus de paquets {max} en une seule transaction, vous risquez de manquer d'essence. ",
+      "Si vous ajoutez ou supprimez plus de paquets {max} en une seule transaction, vous risquez de manquer de gas. ",
     "maximum_parcels_title":
-      "Vous avez atteint le maximum de colis par transaction",
-    "parcels": "Colis inclus",
+      "Vous avez atteint le maximum de parcelles par transaction",
+    "parcels": "Parcelles incluses",
     "pending_tx": "Ce domaine"
   },
   "estate_dissolve": {
     "too_big": "Ce domaine est trop grand",
     "too_big_desc":
-      "Lorsqu'une succession a plus de {max} colis, une transaction à dissoudre peut manquer d'essence. "
+      "Lorsqu'un domaine a plus de {max} parcelles, une transaction de dissolution peut manquer de gas."
   },
   "estate_edit": {
-    "description": "La description",
+    "description": "Description",
     "edit_estate": "Modifier le domaine",
-    "name": "Prénom",
+    "name": "Nom",
     "subtitle":
-      "Définissez un nom et une description et modifiez les parcelles de votre succession."
+      "Définissez un nom et une description et modifiez les parcelles de votre domaine."
   },
   "estate_select": {
     "description": "Sélectionnez les parcelles adjacentes à partir de {x}, {y}",
@@ -86,7 +86,7 @@
     "new_selection":
       "Sélectionnez les parcelles sur la carte pour votre nouveau domaine",
     "tx_to_be_send":
-      "Vous allez envoyer une transaction à {action} parcelles: {parcels}"
+      "Vous allez envoyer une transaction pour {action} les parcelles: {parcels}"
   },
   "footer": {
     "color_key": "Code Couleur",
@@ -96,7 +96,7 @@
     "terms": "Termes et Conditions"
   },
   "global": {
-    "acquired_at": "Acquis à {date}",
+    "acquired_at": "Acquis le {date}",
     "activity": "Activité",
     "add": "ajouter",
     "address_placeholder": "0x...",
@@ -106,19 +106,19 @@
     "blog": "Blog",
     "cancel": "Annuler",
     "change": "Changement",
-    "check_address": "S'il vous plaît vérifier l'adresse soigneusement",
-    "clear": "Clair",
+    "check_address": "Veuillez vérifier l'adresse soigneusement",
+    "clear": "Effacer",
     "click_here": "Cliquez ici",
-    "community_chat": "Chat communautaire",
+    "community_chat": "Chat de la communauté",
     "confirm": "Confirmer",
     "connect": "Connection",
     "connecting": "Connexion",
     "continue": "Continuer",
     "contributions": "Contributions",
-    "created_at": "Créé à {date}",
+    "created_at": "Créé le {date}",
     "edit": "Modifier",
-    "estate": "Biens",
-    "estates": "Estates",
+    "estate": "Domaine",
+    "estates": "Domaines",
     "expired_at": "Expiré {time}",
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de {years} ans",
@@ -148,7 +148,7 @@
       "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "submit": "Envoyer",
     "the_estate": "le domaine",
-    "the_parcel": "le colis",
+    "the_parcel": "la parcelle",
     "time_left": "Temps restant",
     "transfer_irreversible":
       "Rappelez-vous que le transfert est une opération irréversible.",
@@ -185,7 +185,7 @@
     "amount": "Montant",
     "amount_placeholder": "Montant à MANA",
     "cancel": "Annuler l'hypothèque",
-    "claim": "Demande de colis",
+    "claim": "Demande de parcelle",
     "defaulted_in": "Par défaut dans",
     "duration": "Durée",
     "duration_placeholder": "Durée en jours",
@@ -198,7 +198,7 @@
       "minimum_interest_rate": "Le taux devrait être supérieur à {minimum}",
       "minimum_payable": "Payable à doit être supérieur à {minimum} jours",
       "parcel_price":
-        "Le montant requis devrait être inférieur au prix du colis"
+        "Le montant requis devrait être inférieur au prix de la parcelle"
     },
     "expiration": "Demande d'expiration",
     "expiration_placeholder": "Date d'expiration de l'hypothèque",
@@ -382,13 +382,13 @@
     "buy": "Vous avez acheté {parcel_link}",
     "buy_mana": "Vous avez acheté {mana} MANA",
     "cancel":
-      "Vous avez annulé l'offre {publication_link} sur la LAND {parcel_link}",
+      "Vous avez annulé l'offre {publication_link} sur le LAND {parcel_link}",
     "cancel_mortgage":
-      "Vous annulez une hypothèque pour acheter le colis {parcel_link}",
+      "Vous annulez une hypothèque pour acheter la parcelle {parcel_link}",
     "claim_mortgage_resolution": "Vous avez réclamé {parcel_link}",
     "create_estate": "Vous avez créé le domaine {name}",
     "create_mortgage":
-      "Vous avez demandé une hypothèque pour acheter le colis {parcel_link}",
+      "Vous avez demandé une hypothèque pour acheter la parcelle {parcel_link}",
     "disapproved":
       "Vous avez autorisé le {marketplace_contract_link} à transférer des fonds en votre nom",
     "dissolve_estate": "Vous avez dissous le domaine {name}",
@@ -397,9 +397,9 @@
     "edit_estate_metadata":
       "Vous avez édité la propriété {estate_id} sous le nom \"{name}\" et la description \"{description}\"",
     "edit_estate_parcels_added":
-      "Vous avez ajouté des colis {amount} à la succession {name}",
+      "Vous avez ajouté des parcelles {amount} au domaine {name}",
     "edit_estate_parcels_removed":
-      "Vous avez supprimé les colis {amount} de la succession {name}",
+      "Vous avez supprimé les parcelles {amount} au domaine {name}",
     "manage":
       "Vous avez donné {address_link} la permission de mettre à jour le contenu de {parcel_link}",
     "manage_revoked":
@@ -409,7 +409,7 @@
     "mortgage_rcn":
       "Vous {action} le {mortgage_contract_link} pour exploiter RCN en votre nom.",
     "pay_mortgage":
-      "Vous avez effectué un paiement partiel de {amount} MANA pour l'hypothèque pour acheter le colis {parcel_link}",
+      "Vous avez effectué un paiement partiel de {amount} MANA pour l'hypothèque pour acheter la parcelle {parcel_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
     "transfer": "Vous avez transféré {asset_type} {asset_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"
