@@ -5,6 +5,8 @@ import { parcelType } from 'components/types'
 import Asset from 'components/Asset'
 
 export default class Parcel extends React.PureComponent {
+  shouldRefresh = false
+
   static propTypes = {
     parcel: parcelType,
     onAccessDenied: PropTypes.func.isRequired,
@@ -13,6 +15,25 @@ export default class Parcel extends React.PureComponent {
 
   static defaultProps = {
     parcel: null
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { parcel } = this.props
+    debugger
+    if (
+      parcel &&
+      nextProps.parcel &&
+      (parcel.x !== nextProps.parcel.x || parcel.y !== nextProps.parcel.y)
+    ) {
+      this.shouldRefresh = true
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.shouldRefresh) {
+      this.props.onLoaded()
+      this.shouldRefresh = false
+    }
   }
 
   isConnected(address) {

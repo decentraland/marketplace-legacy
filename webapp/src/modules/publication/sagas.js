@@ -20,8 +20,10 @@ import {
   buySuccess,
   buyFailure,
   cancelSaleSuccess,
-  cancelSaleFailure
+  cancelSaleFailure,
+  fetchParcelPublicationsRequest
 } from './actions'
+import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
@@ -32,6 +34,7 @@ export function* publicationSaga() {
   yield takeEvery(PUBLISH_REQUEST, handlePublishRequest)
   yield takeEvery(BUY_REQUEST, handleBuyRequest)
   yield takeEvery(CANCEL_SALE_REQUEST, handleCancelSaleRequest)
+  yield takeEvery(FETCH_PARCEL_SUCCESS, handleFetchParcelSuccess)
 }
 
 function* handlePublicationsRequest(action) {
@@ -117,6 +120,10 @@ function* handleCancelSaleRequest(action) {
   } catch (error) {
     yield put(cancelSaleFailure(error.message))
   }
+}
+
+function* handleFetchParcelSuccess(action) {
+  yield put(fetchParcelPublicationsRequest(action.x, action.y))
 }
 
 function* fetchPublications(action) {
