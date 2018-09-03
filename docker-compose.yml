@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgres/data
+    environment:
+      POSTGRES_USER: marketplace
+      POSTGRES_DB: marketplace
