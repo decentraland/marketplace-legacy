@@ -9,17 +9,17 @@ import TransferAssetForm from 'components/TransferAssetForm'
 
 export default class TransferEstatePage extends React.PureComponent {
   static propTypes = {
-    tokenId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const { tokenId, isTxIdle, onSubmit, onCancel } = this.props
+    const { id, isTxIdle, onSubmit, onCancel } = this.props
 
     return (
-      <Estate tokenId={tokenId} ownerOnly>
+      <Estate id={id} ownerOnly>
         {estate => (
           <div className="TransferEstatePage">
             <EstateModal

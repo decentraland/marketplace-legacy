@@ -15,7 +15,7 @@ import {
 import debounce from 'lodash.debounce'
 import { isMobileWidth } from 'lib/utils'
 import {
-  getAsset,
+  getMapAsset,
   getType,
   getColorByType,
   getOpenPublication
@@ -346,7 +346,7 @@ export default class ParcelPreview extends React.PureComponent {
 
     const parcelId = buildCoordinate(x, y)
     const { onClick, parcels, estates } = this.props
-    const { asset } = getAsset(parcelId, parcels, estates)
+    const { asset } = getMapAsset(parcelId, parcels, estates)
 
     if (onClick && Date.now() - this.mousedownTimestamp < 200) {
       onClick(asset, parcels[parcelId])
@@ -435,7 +435,7 @@ export default class ParcelPreview extends React.PureComponent {
     }
 
     const { wallet, parcels, districts, publications, estates } = this.props
-    const { asset } = getAsset(parcelId, parcels, estates)
+    const { asset } = getMapAsset(parcelId, parcels, estates)
     const publication = getOpenPublication(asset, publications)
 
     const type = getType(asset, publications, wallet)

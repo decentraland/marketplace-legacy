@@ -62,8 +62,8 @@ export class API {
     return this.request('get', `/addresses/${address}/estates`, {})
   }
 
-  fetchEstate(tokenId) {
-    return this.request('get', `/estates/${tokenId}`)
+  fetchEstate(id) {
+    return this.request('get', `/estates/${id}`)
   }
 
   fetchDistricts() {
