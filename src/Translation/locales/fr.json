@@ -80,7 +80,7 @@
       "Définissez un nom et une description et modifiez les parcelles de votre domaine."
   },
   "estate_select": {
-    "description": "Sélectionnez les parcelles adjacentes à partir de {x}, {y}",
+    "description": "Sélectionnez des parcelles adjacentes",
     "detail": "Détail immobilier",
     "edit_selection": "Sélectionnez les parcelles sur la carte",
     "new_selection":

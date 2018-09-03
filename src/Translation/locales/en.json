@@ -77,7 +77,7 @@
     "subtitle": "Set a name and description for your estate."
   },
   "estate_select": {
-    "description": "Selected parcels",
+    "description": "Select parcels adjacent to each other",
     "detail": "Estate detail",
     "edit_selection": "Select the parcels on the map",
     "new_selection": "Select the parcels on the map for your new Estate",
