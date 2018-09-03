@@ -348,7 +348,11 @@ export default class ParcelPreview extends React.PureComponent {
     const { onClick, parcels, estates } = this.props
     const { asset } = getAsset(parcelId, parcels, estates)
 
-    if (onClick && Date.now() - this.mousedownTimestamp < 200) {
+    if (
+      onClick &&
+      Date.now() - this.mousedownTimestamp < 200 &&
+      asset != null
+    ) {
       onClick(asset, parcels[parcelId])
     }
   }
