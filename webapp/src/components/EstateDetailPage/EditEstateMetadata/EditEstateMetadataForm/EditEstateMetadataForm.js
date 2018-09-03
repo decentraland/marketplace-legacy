@@ -67,9 +67,20 @@ export default class EditEstateMetadataForm extends React.PureComponent {
     )
   }
 
+  isValidName(name) {
+    return !this.hasChanged() || isValidName(name)
+  }
+
+  isValidDescription(description) {
+    return !this.hasChanged() || isValidDescription(description)
+  }
+
   render() {
     const { onCancel, onSubmit, estate, isTxIdle } = this.props
     const { name, description } = estate.data
+
+    const isValidName = this.isValidName(name)
+    const isValidDescription = this.isValidDescription(description)
 
     return (
       <Form
@@ -83,6 +94,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
             value={name}
             onChange={this.handleNameChange}
             error={!isValidName}
+            autoFocus
           />
         </Form.Field>
         <Form.Field>
@@ -95,12 +107,16 @@ export default class EditEstateMetadataForm extends React.PureComponent {
           />
         </Form.Field>
         <br />
-        {isTxIdle && <TxStatus.Idle isIdle={isTxIdle} />}
+        <TxStatus.Idle isIdle={isTxIdle} />
         <div>
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>
-          <Button type="submit" primary={true} disabled={!this.hasChanged()}>
+          <Button
+            type="submit"
+            primary={true}
+            disabled={!this.hasChanged() || !isValidName || !isValidDescription}
+          >
             {t('global.submit')}
           </Button>
         </div>

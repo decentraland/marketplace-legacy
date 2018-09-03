@@ -184,12 +184,12 @@ export function getType(asset, publications, wallet) {
   return TYPES.taken
 }
 
-export function isValidName(name) {
-  return name <= 50
+export function isValidName(name = '') {
+  return name.length > 0 && name.length <= 50
 }
 
-export function isValidDescription(description) {
-  return description <= 140
+export function isValidDescription(description = '') {
+  return description.length <= 140
 }
 
 export function getCenterCoords(asset) {
