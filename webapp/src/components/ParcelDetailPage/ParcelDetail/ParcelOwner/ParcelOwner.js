@@ -29,7 +29,7 @@ export default class ParcelOwner extends React.PureComponent {
       return (
         <span className="ParcelOwner is-owner">
           <Link
-            to={locations.editLand(parcel.x, parcel.y)}
+            to={locations.editParcel(parcel.x, parcel.y)}
             className="edit-button"
           >
             <Button size="tiny" className="link">

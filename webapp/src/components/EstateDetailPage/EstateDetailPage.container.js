@@ -19,15 +19,13 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const { tokenId } = getMatchParams(ownProps)
+  const { id } = getMatchParams(ownProps)
 
   return {
     onViewAssetClick: asset =>
       dispatch(navigateTo(locations.assetDetail(asset))),
-    onEditParcels: () =>
-      dispatch(navigateTo(locations.editEstateParcels(tokenId))),
-    onEditMetadata: () =>
-      dispatch(navigateTo(locations.editEstateMetadata(tokenId)))
+    onEditParcels: () => dispatch(navigateTo(locations.editEstateParcels(id))),
+    onEditMetadata: () => dispatch(navigateTo(locations.editEstateMetadata(id)))
   }
 }
 

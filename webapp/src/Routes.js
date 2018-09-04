@@ -137,7 +137,7 @@ export default class Routes extends React.Component {
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.transferEstate}
+            path={locations.transferEstate()}
             component={TransferEstatePage}
           />
         )}
