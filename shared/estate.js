@@ -1,20 +1,17 @@
 export const MAX_PARCELS_PER_TX = 12
 
-export function isEstate(asset) {
-  return !!asset.data.parcels
+export function isNewEstate(estate) {
+  return !estate || !estate.token_id
 }
 
-export function getEstateByParcel(parcel, estates) {
-  return estates[parcel.estate_id]
+export function isEstate(asset) {
+  return !!asset.data.parcels
 }
 
 export function toEstateObject(estatesArray) {
   return estatesArray
     .filter(estate => estate.data.parcels.length)
-    .reduce(
-      (estates, estate) => ({ ...estates, [estate.token_id]: estate }),
-      {}
-    )
+    .reduce((estates, estate) => ({ ...estates, [estate.id]: estate }), {})
 }
 
 export function calculateMapProps(parcels, size = 20) {

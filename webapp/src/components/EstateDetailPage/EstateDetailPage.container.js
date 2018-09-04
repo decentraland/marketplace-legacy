@@ -8,9 +8,10 @@ import EstateDetailPage from 'components/EstateDetailPage/EstateDetailPage'
 import { getData as getParcels } from 'modules/parcels/selectors'
 
 const mapState = (state, ownProps) => {
-  const { x, y, tokenId } = getMatchParams(ownProps)
+  const { id, x, y } = getMatchParams(ownProps)
+
   return {
-    tokenId,
+    id,
     x: parseInt(x, 10),
     y: parseInt(y, 10),
     allParcels: getParcels(state)

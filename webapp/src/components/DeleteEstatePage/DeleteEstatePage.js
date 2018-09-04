@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import { Container, Message } from 'semantic-ui-react'
 import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateModal'
 import Estate from 'components/Estate'
-import { isNewAsset } from 'shared/asset'
-import { MAX_PARCELS_PER_TX } from 'shared/estate'
+import { isNewEstate, MAX_PARCELS_PER_TX } from 'shared/estate'
 import { t } from 'modules/translation/utils'
 
 export default class DeleteEstatePage extends React.PureComponent {
   static props = {
-    tokenId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
     onCancel: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired
@@ -19,10 +18,10 @@ export default class DeleteEstatePage extends React.PureComponent {
     return estate.data.parcels.length > MAX_PARCELS_PER_TX
   }
   render() {
-    const { tokenId, isTxIdle, onCancel, onConfirm } = this.props
+    const { id, isTxIdle, onCancel, onConfirm } = this.props
     return (
       <Container className="DeleteEstatePage">
-        <Estate tokenId={tokenId} ownerOnly>
+        <Estate id={id} ownerOnly>
           {estate => (
             <React.Fragment>
               {this.isTooBig(estate) ? (
@@ -45,7 +44,7 @@ export default class DeleteEstatePage extends React.PureComponent {
                 isTxIdle={isTxIdle}
                 onCancel={onCancel}
                 onConfirm={onConfirm}
-                isDisabled={isNewAsset(estate) || this.isTooBig(estate)}
+                isDisabled={isNewEstate(estate) || this.isTooBig(estate)}
               />
             </React.Fragment>
           )}

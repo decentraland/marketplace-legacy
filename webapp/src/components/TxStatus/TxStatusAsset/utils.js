@@ -1,22 +1,15 @@
 import { txUtils } from 'decentraland-eth'
 import { buildCoordinate, isParcel } from 'shared/parcel'
 
-export function isParcelPendingTransaction(parcel, tx) {
-  return (
-    tx.status === txUtils.TRANSACTION_STATUS.pending &&
-    buildCoordinate(tx.payload.x, tx.payload.y) === parcel.id
-  )
-}
-
 export function isAssetPendingTransaction(asset, tx) {
-  if (!asset) {
-    return false
-  }
-  if (isParcel(asset)) {
-    return isParcelPendingTransaction(asset, tx)
-  }
+  if (!asset) return false
+
+  const payloadAssetId = isParcel(asset)
+    ? buildCoordinate(tx.payload.x, tx.payload.y)
+    : tx.payload.id
+
   return (
     tx.status === txUtils.TRANSACTION_STATUS.pending &&
-    tx.payload.token_id === asset.token_id
+    payloadAssetId === asset.id
   )
 }

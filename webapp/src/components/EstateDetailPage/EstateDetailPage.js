@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import EstateDetail from './EstateDetail'
 import Estate from 'components/Estate'
-import { isNewAsset } from 'shared/asset'
-import EditEstate from './EditEstate'
 import { parcelType } from 'components/types'
+import { isNewEstate } from 'shared/estate'
+import EstateDetail from './EstateDetail'
+import EditEstate from './EditEstate'
 
 export default class EstateDetailPage extends React.PureComponent {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class EstateDetailPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number,
     y: PropTypes.number,
-    tokenId: PropTypes.string,
+    id: PropTypes.string,
     allParcels: PropTypes.objectOf(parcelType),
     onViewAssetClick: PropTypes.func.isRequired,
     onEditParcels: PropTypes.func.isRequired,
@@ -28,7 +28,7 @@ export default class EstateDetailPage extends React.PureComponent {
 
   render() {
     const {
-      tokenId,
+      id,
       x,
       y,
       onViewAssetClick,
@@ -39,21 +39,21 @@ export default class EstateDetailPage extends React.PureComponent {
 
     const { isEditing, isSelecting } = this.state
     return (
-      <Estate tokenId={tokenId} x={x} y={y}>
+      <Estate id={id} x={x} y={y}>
         {(estate, isOwner, wallet) =>
-          isNewAsset(estate) || isEditing ? (
+          isNewEstate(estate) || isEditing ? (
             <EditEstate
               estate={estate}
-              isCreation={isNewAsset(estate)}
+              isCreation={isNewEstate(estate)}
               isOwner={isOwner}
               wallet={wallet}
               onViewAssetClick={onViewAssetClick}
-              isSelecting={isNewAsset(estate) || isSelecting}
+              isSelecting={isNewEstate(estate) || isSelecting}
             />
           ) : (
             <EstateDetail
-              allParcels={allParcels}
               estate={estate}
+              allParcels={allParcels}
               isOwner={isOwner}
               onViewAssetClick={onViewAssetClick}
               onEditParcels={onEditParcels}

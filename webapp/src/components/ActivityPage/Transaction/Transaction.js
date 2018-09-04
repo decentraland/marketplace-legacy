@@ -12,8 +12,7 @@ import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
 import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
 import { buildCoordinate } from 'shared/parcel'
-import { isNewAsset } from 'shared/asset'
-import { calculateMapProps } from 'shared/estate'
+import { isNewEstate, calculateMapProps } from 'shared/estate'
 import {
   getMarketplaceAddress,
   getMortgageHelperAddress,
@@ -105,9 +104,7 @@ export default class Transaction extends React.PureComponent {
 
   renderEstateLink(estate) {
     return (
-      <Link to={locations.estateDetail(estate.token_id)}>
-        {estate.data.name}
-      </Link>
+      <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
     )
   }
 
@@ -305,17 +302,18 @@ export default class Transaction extends React.PureComponent {
     }
   }
 
-  renderEstatePreview({ estate }) {
+  renderEstatePreview(tx) {
     const size = 5
+    const { estate } = tx.payload
     const { center, zoom, pan } = calculateMapProps(estate.data.parcels, size)
     const { x, y } = center
 
     return (
       <Link
         to={
-          isNewAsset(estate)
+          isNewEstate(estate)
             ? locations.parcelMapDetail(x, y, buildCoordinate(x, y))
-            : locations.estateDetail(estate.token_id)
+            : locations.estateDetail(estate.id)
         }
       >
         <ParcelPreview
@@ -333,7 +331,8 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  renderParcelPreview({ x, y }) {
+  renderParcelPreview(tx) {
+    const { x, y } = tx.payload
     return (
       <Link to={locations.parcelMapDetail(x, y, buildCoordinate(x, y))}>
         <ParcelPreview
@@ -397,8 +396,8 @@ export default class Transaction extends React.PureComponent {
             )}
 
             <div className="transaction-avatar">
-              {isParcelTransaction && this.renderParcelPreview(tx.payload)}
-              {isEstateTransaction && this.renderEstatePreview(tx.payload)}
+              {isParcelTransaction && this.renderParcelPreview(tx)}
+              {isEstateTransaction && this.renderEstatePreview(tx)}
               {isMANATransaction && this.renderMANAPreview()}
             </div>
 
