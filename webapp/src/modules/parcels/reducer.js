@@ -289,7 +289,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              ...toParcelObject(updatedParcels, state.data, true, true)
+              ...toParcelObject(updatedParcels, state.data)
             }
           }
         }
@@ -308,7 +308,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              ...toParcelObject(updatedParcels, state.data, true, true)
+              ...toParcelObject(updatedParcels, state.data)
             }
           }
         }
