@@ -371,6 +371,7 @@
     "transfer_mana": "{mana} 个 MANA 已转帐至{address_link}"
   },
   "transaction_status": {
+    "activity_page": "活动页面",
     "idle": {
       "please_confirm": "请确认交易"
     },

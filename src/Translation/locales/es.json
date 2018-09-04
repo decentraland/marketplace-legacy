@@ -406,6 +406,7 @@
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"
   },
   "transaction_status": {
+    "activity_page": "página de actividad",
     "idle": {
       "please_confirm": "Por favor confirma la transacción"
     },

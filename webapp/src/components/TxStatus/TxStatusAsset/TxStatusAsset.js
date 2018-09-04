@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { locations } from 'locations'
 import { Message } from 'semantic-ui-react'
 import { transactionType } from 'components/types'
-import { t_html } from 'modules/translation/utils'
+import { t, t_html } from 'modules/translation/utils'
 
 import './TxStatusAsset.css'
 
@@ -30,7 +30,11 @@ export default class TxStatusAsset extends React.PureComponent {
         })}
         <br />
         {t_html('transaction_status.see_activity', {
-          activity_link: <Link to={locations.activity}>activity page</Link>
+          activity_link: (
+            <Link to={locations.activity}>
+              {t('transaction_status.activity_page')}
+            </Link>
+          )
         })}
       </Message>
     ) : null

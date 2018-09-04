@@ -415,6 +415,7 @@
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"
   },
   "transaction_status": {
+    "activity_page": "page d'activité",
     "idle": {
       "please_confirm": "Veuillez confirmer la transaction"
     },
