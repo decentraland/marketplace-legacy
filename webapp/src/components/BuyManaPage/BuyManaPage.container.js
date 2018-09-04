@@ -23,7 +23,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   onSubmit: (mana, tx) => dispatch(buyManaRequest(mana, tx)),
-  onCancel: () => dispatch(replace(locations.settings))
+  onCancel: () => dispatch(replace(locations.settings()))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(BuyManaPage))

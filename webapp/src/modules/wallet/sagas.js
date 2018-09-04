@@ -181,7 +181,7 @@ function* handleTransferManaRequest(action) {
     )
 
     yield put(transferManaSuccess(txHash, address, mana))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(transferManaFailure(error.message))
   }
@@ -192,7 +192,7 @@ function* handleBuyManaRequest(action) {
     const { mana, tx } = action
     const txHash = yield call(() => sendTransaction(tx))
     yield put(buyManaSuccess(txHash, mana))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(buyManaFailure(error.message))
   }

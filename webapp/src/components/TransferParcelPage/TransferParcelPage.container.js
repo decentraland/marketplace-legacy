@@ -11,6 +11,7 @@ import TransferParcelPage from './TransferParcelPage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     x,
     y,
@@ -21,6 +22,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     onSubmit: (parcel, address) =>
       dispatch(transferParcelRequest(parcel, address)),

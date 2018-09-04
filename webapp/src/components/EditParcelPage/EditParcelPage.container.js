@@ -10,6 +10,7 @@ import EditParcelPage from './EditParcelPage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     x,
     y,
@@ -19,6 +20,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     onSubmit: parcel => dispatch(editParcelRequest(parcel)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))

@@ -39,21 +39,72 @@ export default class Routes extends React.Component {
   renderRoutes() {
     return (
       <Switch>
-        <Route exact path={locations.root} component={HomePage} />
+        <Route exact path={locations.root()} component={HomePage} />
+
+        {/*Addresses*/}
+        <Route exact path={locations.profilePage()} component={ProfilePage} />
+
+        {/*Parcels*/}
+        <Route
+          exact
+          path={this.addLegacySupport(locations.parcelDetail())}
+          component={ParcelDetailPage}
+        />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.sellParcel())}
+          component={PublishPage}
+        />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.editParcel())}
+          component={EditParcelPage}
+        />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.transferParcel())}
+          component={TransferParcelPage}
+        />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.manageParcel())}
+          component={ManageParcelPage}
+        />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.buyParcel())}
+          component={BuyParcelPage}
+        />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.cancelSaleParcel())}
+          component={CancelSalePage}
+        />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.parcelMapDetail())}
+          component={AtlasPage}
+        />
+
+        {/*Estates*/}
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.createEstate}
+            path={locations.createEstate()}
             component={EstateDetailPage}
           />
-        ) /* Estate Feature */}
-        {isFeatureEnabled('ESTATES') && (
-          <Route exact path={locations.estate} component={EstateDetailPage} />
-        ) /* Estate Feature */}
+        )}
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.editEstateParcels}
+            path={locations.estateDetail()}
+            component={EstateDetailPage}
+          />
+        )}
+        {isFeatureEnabled('ESTATES') && (
+          <Route
+            exact
+            path={locations.editEstateParcels()}
             component={props => (
               <EstateDetailPage
                 isSelecting={true}
@@ -62,11 +113,11 @@ export default class Routes extends React.Component {
               />
             )}
           />
-        ) /* Estate Feature */}
+        )}
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.editEstateMetadata}
+            path={locations.editEstateMetadata()}
             component={props => (
               <EstateDetailPage
                 isSelecting={false}
@@ -75,62 +126,64 @@ export default class Routes extends React.Component {
               />
             )}
           />
-        ) /* Estate Feature */}
+        )}
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.deleteEstate}
+            path={locations.deleteEstate()}
             component={DeleteEstatePage}
           />
-        ) /* Estate Feature */}
+        )}
         {isFeatureEnabled('ESTATES') && (
           <Route
             exact
-            path={locations.transferEstate}
+            path={locations.transferEstate()}
             component={TransferEstatePage}
           />
-        ) /* Estate Feature */}
-        <Route exact path={locations.parcel} component={ParcelDetailPage} />
-        <Route exact path={locations.marketplace} component={MarketplacePage} />
-        <Route exact path={locations.profile} component={ProfilePage} />
-        <Route exact path={locations.sell} component={PublishPage} />
-        <Route exact path={locations.edit} component={EditParcelPage} />
-        <Route exact path={locations.transfer} component={TransferParcelPage} />
-        <Route exact path={locations.manage} component={ManageParcelPage} />
-        <Route exact path={locations.buy} component={BuyParcelPage} />
-        <Route exact path={locations.cancelSale} component={CancelSalePage} />
-        <Route exact path={locations.activity} component={ActivityPage} />
-        <Route exact path={locations.settings} component={SettingsPage} />
-        <Route exact path={locations.colorKey} component={ColorKeyPage} />
-        <Route exact path={locations.privacy} component={PrivacyPage} />
-        <Route exact path={locations.terms} component={TermsPage} />
-        <Route exact path={locations.parcelMap} component={AtlasPage} />
-        <Route exact path={locations.signIn} component={SignInPage} />
-        <Route
-          exact
-          path={locations.transferMana}
-          component={TransferManaPage}
-        />
-        <Route exact path={locations.buyMana} component={BuyManaPage} />
+        )}
+
+        {/*Mortgages*/}
         {isFeatureEnabled('MORTGAGES') && (
           <Route
             exact
-            path={locations.mortgage}
+            path={locations.buyParcelByMortgage()}
             component={BuyParcelByMortgagePage}
           />
-        ) /* Mortgage Feature */}
+        )}
         {isFeatureEnabled('MORTGAGES') && (
           <Route
             exact
-            path={locations.payMortgagePath}
+            path={locations.payMortgageParcel()}
             component={PayMortgagePage}
           />
-        )
-        /* Mortgage Feature */
-        }
-        <Redirect to={locations.root} />
+        )}
+
+        {/*General routes*/}
+        <Route
+          exact
+          path={locations.marketplace()}
+          component={MarketplacePage}
+        />
+        <Route exact path={locations.buyMana()} component={BuyManaPage} />
+        <Route
+          exact
+          path={locations.transferMana()}
+          component={TransferManaPage}
+        />
+        <Route exact path={locations.settings()} component={SettingsPage} />
+        <Route exact path={locations.activity()} component={ActivityPage} />
+        <Route exact path={locations.colorKey()} component={ColorKeyPage} />
+        <Route exact path={locations.privacy()} component={PrivacyPage} />
+        <Route exact path={locations.terms()} component={TermsPage} />
+        <Route exact path={locations.signIn()} component={SignInPage} />
+
+        <Redirect to={locations.root()} />
       </Switch>
     )
+  }
+
+  addLegacySupport(path) {
+    return path.replace('/parcels', '(/parcels)?')
   }
 
   render() {

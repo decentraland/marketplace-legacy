@@ -13,6 +13,7 @@ import CancelSalePage from './CancelSalePage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     x,
     y,
@@ -23,6 +24,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     onConfirm: publication => dispatch(cancelSaleRequest(publication)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))

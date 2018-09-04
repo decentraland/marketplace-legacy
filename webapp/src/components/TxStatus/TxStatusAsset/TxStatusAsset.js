@@ -31,7 +31,7 @@ export default class TxStatusAsset extends React.PureComponent {
         <br />
         {t_html('transaction_status.see_activity', {
           activity_link: (
-            <Link to={locations.activity}>
+            <Link to={locations.activity()}>
               {t('transaction_status.activity_page')}
             </Link>
           )

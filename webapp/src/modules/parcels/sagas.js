@@ -50,7 +50,7 @@ function* handleEditParcelsRequest(action) {
     const txHash = yield call(() => contract.updateLandData(x, y, dataString))
 
     yield put(editParcelSuccess(txHash, parcel))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     const parcels = yield select(getParcels)
     const { x, y } = action.parcel
@@ -72,7 +72,7 @@ function* handleManageParcelsRequest(action) {
     )
 
     yield put(manageParcelSuccess(txHash, parcel, address, revoked))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     const parcels = yield select(getParcels)
     const parcel = parcels[buildCoordinate(x, y)]
@@ -114,7 +114,7 @@ function* handleTransferRequest(action) {
       y: parcel.y
     }
 
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
     yield put(transferParcelSuccess(txHash, transfer))
   } catch (error) {
     yield put(transferParcelFailure(error.message))

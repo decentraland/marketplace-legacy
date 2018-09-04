@@ -25,7 +25,7 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = dispatch => ({
-  onBuy: ({ x, y }) => dispatch(navigateTo(locations.buyLand(x, y))),
+  onBuy: ({ x, y }) => dispatch(navigateTo(locations.buyParcel(x, y))),
   onAssetClick: asset => dispatch(navigateTo(locations.assetDetail(asset)))
 })
 

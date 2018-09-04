@@ -26,6 +26,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     onPublish: publication => dispatch(publishRequest(publication)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))

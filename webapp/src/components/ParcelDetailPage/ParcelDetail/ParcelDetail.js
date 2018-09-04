@@ -30,7 +30,6 @@ export default class ParcelDetail extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType),
     estates: PropTypes.objectOf(estateType),
     districts: PropTypes.objectOf(districtType).isRequired,
-    onBuy: PropTypes.func.isRequired,
     mortgage: mortgageType
   }
 
