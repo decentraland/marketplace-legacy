@@ -57,7 +57,7 @@
   "estate_detail": {
     "dissolve": "Disolver Propiedad",
     "dissolve_desc": "Vas a disolver la propiedad {name}",
-    "edit_parcels": "Editar paquetes",
+    "edit_parcels": "Editar parcelas",
     "empty_estate": "La propiedad {name} ha sido disuelta",
     "maximum_parcels_message":
       "Si agrega o elimina más de {max} parcelas en una sola transacción, puede quedarse sin gas. Puedes enviar esta transacción y luego agregar o quitar más parcelas en otra transacción editando la propiedad",
