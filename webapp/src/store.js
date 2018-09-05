@@ -8,6 +8,7 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
+import { LOCAL_STORAGE_KEY } from 'lib/localStorage'
 
 import { createTransactionMiddleware } from 'modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'modules/analytics/middleware'
@@ -15,6 +16,10 @@ import { createStorageMiddleware } from 'modules/storage/middleware'
 
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
+import {
+  shouldMigrateLocalStorage,
+  migrateLocalStorage
+} from './lib/localStorage'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -31,9 +36,12 @@ const transactionMiddleware = createTransactionMiddleware()
 const analyticsMiddleware = createAnalyticsMiddleware(
   env.get('REACT_APP_SEGMENT_API_KEY')
 )
-const storageMiddleware = createStorageMiddleware(
-  env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-marketplace')
-)
+
+if (shouldMigrateLocalStorage()) {
+  migrateLocalStorage()
+}
+
+const storageMiddleware = createStorageMiddleware(LOCAL_STORAGE_KEY)
 
 const middleware = applyMiddleware(
   thunk.withExtraArgument(api),
