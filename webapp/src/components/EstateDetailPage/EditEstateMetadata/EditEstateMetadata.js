@@ -5,6 +5,8 @@ import { t } from 'modules/translation/utils'
 import EstateModal from './EstateModal'
 import EditEstateMetadataForm from './EditEstateMetadataForm'
 import { estateType } from 'components/types'
+import TxStatus from 'components/TxStatus'
+import EstateName from 'components/EstateName'
 
 export default class EditEstateMetadata extends React.PureComponent {
   static propTypes = {
@@ -45,6 +47,10 @@ export default class EditEstateMetadata extends React.PureComponent {
             onCancel={onCancel}
             onChange={onChange}
             isTxIdle={isTxIdle}
+          />
+          <TxStatus.Asset
+            asset={estate}
+            name={<EstateName estate={estate} />}
           />
         </EstateModal>
       </div>

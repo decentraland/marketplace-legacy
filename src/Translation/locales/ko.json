@@ -63,8 +63,7 @@
     "maximum_parcels_message":
       "단일 트랜잭션에서 {max} 개 이상의 소포를 추가하거나 제거하면 가스가 고갈 될 수 있습니다. ",
     "maximum_parcels_title": "거래 당 최대 소포에 도달했습니다.",
-    "parcels": "소포 포함",
-    "pending_tx": "이 재산"
+    "parcels": "소포 포함"
   },
   "estate_dissolve": {
     "too_big": "이 부동산은 너무 큽니다.",

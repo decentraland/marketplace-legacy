@@ -62,8 +62,7 @@
     "maximum_parcels_message":
       "If you add or removes more than {max} parcels in a single transaction it may run out of gas. You can submit this transaction and then add or remove more parcels in a subsequent transaction by editing the estate.",
     "maximum_parcels_title": "You reached the maximum parcels per transaction",
-    "parcels": "Parcels included",
-    "pending_tx": "This estate"
+    "parcels": "Parcels included"
   },
   "estate_dissolve": {
     "too_big": "This estate is too big",

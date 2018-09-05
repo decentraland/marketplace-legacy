@@ -64,8 +64,7 @@
       "Si vous ajoutez ou supprimez plus de paquets {max} en une seule transaction, vous risquez de manquer de gas. ",
     "maximum_parcels_title":
       "Vous avez atteint le maximum de parcelles par transaction",
-    "parcels": "Parcelles incluses",
-    "pending_tx": "Ce domaine"
+    "parcels": "Parcelles incluses"
   },
   "estate_dissolve": {
     "too_big": "Ce domaine est trop grand",

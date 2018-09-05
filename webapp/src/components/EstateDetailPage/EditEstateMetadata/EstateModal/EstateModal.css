@@ -31,10 +31,14 @@
 }
 
 .EstateModal .modal-children {
-  margin: 0px 0px 0px 50px;
+  margin: 0 0 0 50px;
 }
 
-.EstateModal .tx-idle {
+.EstateModal .modal-buttons button + button {
+  margin-left: 20px;
+}
+
+.EstateModal .tx-idle{
   margin: 0 auto 20px;
   width: 310px;
 }

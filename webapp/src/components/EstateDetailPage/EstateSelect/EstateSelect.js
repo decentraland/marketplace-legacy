@@ -23,6 +23,8 @@ import {
   MAX_PARCELS_PER_TX
 } from 'shared/estate'
 import { getParcelsNotIncluded } from 'shared/utils'
+import TxStatus from 'components/TxStatus'
+import EstateName from 'components/EstateName'
 import './EstateSelect.css'
 
 export default class EstateSelect extends React.PureComponent {
@@ -49,7 +51,7 @@ export default class EstateSelect extends React.PureComponent {
     const { estate, onChange } = this.props
     const parcels = estate.data.parcels
 
-    if (isEstate(asset) && asset.token_id !== estate.token_id) {
+    if (isEstate(asset) && asset.id !== estate.id) {
       return
     }
 
@@ -265,6 +267,10 @@ export default class EstateSelect extends React.PureComponent {
                     canSubmit={this.hasParcelsChanged(parcels)}
                   />
                   {!isCreation && this.renderTxLabel()}
+                  <TxStatus.Asset
+                    asset={estate}
+                    name={<EstateName estate={estate} />}
+                  />
                 </Grid.Column>
               )}
             </Grid.Row>

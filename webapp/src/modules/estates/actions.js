@@ -76,7 +76,11 @@ export function editEstateParcelsSuccess(txHash, estate, parcels, type) {
   return {
     type: EDIT_ESTATE_PARCELS_SUCCESS,
     ...buildTransactionAction(txHash, {
-      estate,
+      estate: {
+        id: estate.id,
+        data: { name: estate.data.name, parcels: estate.data.parcels }
+      },
+      id: estate.id,
       type,
       parcels,
       tx_hash: txHash
@@ -109,7 +113,15 @@ export function editEstateMetadataSuccess(txHash, estate) {
   return {
     type: EDIT_ESTATE_METADATA_SUCCESS,
     ...buildTransactionAction(txHash, {
-      estate,
+      estate: {
+        id: estate.id,
+        data: {
+          name: estate.data.name,
+          description: estate.data.description,
+          parcels: estate.data.parcels
+        }
+      },
+      id: estate.id,
       tx_hash: txHash
     }),
     estate
@@ -138,7 +150,11 @@ export function deleteEstateSuccess(txHash, estate) {
   return {
     type: DELETE_ESTATE_SUCCESS,
     ...buildTransactionAction(txHash, {
-      estate,
+      estate: {
+        id: estate.id,
+        data: { name: estate.data.name, parcels: estate.data.parcels }
+      },
+      id: estate.id,
       tx_hash: txHash
     }),
     estate

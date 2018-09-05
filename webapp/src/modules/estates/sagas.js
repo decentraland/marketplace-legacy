@@ -90,7 +90,7 @@ function* handleEditEstateParcelsRequest(action) {
       const ys = parcelsToAdd.map(p => p.y)
 
       const txHash = yield call(() =>
-        landRegistry.transferManyLandToEstate(xs, ys, estate.token_id)
+        landRegistry.transferManyLandToEstate(xs, ys, estate.id)
       )
       yield put(
         editEstateParcelsSuccess(txHash, estate, parcelsToAdd, ADD_PARCELS)
@@ -104,7 +104,7 @@ function* handleEditEstateParcelsRequest(action) {
         )
       )
       const txHash = yield call(() =>
-        estateRegistry.transferManyLands(estate.token_id, landIds, owner)
+        estateRegistry.transferManyLands(estate.id, landIds, owner)
       )
       yield put(
         editEstateParcelsSuccess(
@@ -127,7 +127,7 @@ function* handleEditEstateMetadataRequest({ estate }) {
     const estateRegistry = eth.getContract('EstateRegistry')
     const data = yield call(() => encodeMetadata(estate.data))
     const txHash = yield call(() =>
-      estateRegistry.updateMetadata(estate.token_id, data)
+      estateRegistry.updateMetadata(estate.id, data)
     )
     yield put(editEstateMetadataSuccess(txHash, estate))
     yield put(push(locations.activity()))
@@ -185,14 +185,15 @@ function* handleTransferRequest({ estate, to }) {
 
     const contract = eth.getContract('EstateRegistry')
     const txHash = yield call(() =>
-      contract.safeTransferFrom(oldOwner, to, estate.token_id)
+      contract.safeTransferFrom(oldOwner, to, estate.id)
     )
 
     const transfer = {
       txHash,
       oldOwner,
       to,
-      estate
+      estate: { id: estate.id, data: { name: estate.data.name } },
+      id: estate.id
     }
 
     yield put(push(locations.activity))
