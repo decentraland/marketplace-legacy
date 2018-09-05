@@ -46,12 +46,12 @@ export default class EditParcelForm extends React.PureComponent {
   }
 
   hasChanged() {
-    const { data } = this.props.parcel
+    const { name = '', description = '', ipns = '' } = this.props.parcel.data
 
     return (
-      this.state.name !== data.name ||
-      this.state.description !== data.description ||
-      this.state.ipns !== data.ipns
+      this.state.name !== name ||
+      this.state.description !== description ||
+      this.state.ipns !== ipns
     )
   }
 
@@ -71,9 +71,20 @@ export default class EditParcelForm extends React.PureComponent {
     }
   }
 
+  isValidName(name) {
+    return !this.hasChanged() || isValidName(name)
+  }
+
+  isValidDescription(description) {
+    return !this.hasChanged() || isValidDescription(description)
+  }
+
   render() {
     const { isTxIdle } = this.props
     const { name, description, ipns } = this.state
+
+    const isValidName = this.isValidName(name)
+    const isValidDescription = this.isValidDescription(description)
 
     return (
       <Form
@@ -87,6 +98,7 @@ export default class EditParcelForm extends React.PureComponent {
             value={name}
             onChange={this.handleNameChange}
             error={!isValidName}
+            autoFocus
           />
         </Form.Field>
         <Form.Field>
@@ -122,7 +134,7 @@ export default class EditParcelForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={!this.hasChanged() || isTxIdle}
+            disabled={!this.hasChanged() || !isValidName || !isValidDescription}
           >
             {t('global.submit')}
           </Button>
