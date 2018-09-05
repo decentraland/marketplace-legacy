@@ -29,13 +29,13 @@ export function shouldMigrateLocalStorage() {
 export function getOldLocalStorageKey() {
   const version = parseInt(LOCAL_STORAGE_KEY_VERSION.replace('v', ''))
 
-  for (let i = version - 1; i >= 0; i--) {
+  for (let i = version - 1; i > 0; i--) {
     const key = `${LOCAL_STORAGE_KEY_BASE}-v${i}`
     if (localStorage.getItem(key)) {
       return key
     }
   }
-  // the first version we did not have '-vX' on it
+  // the first version did not have '-vX' on it
   return LOCAL_STORAGE_KEY_BASE
 }
 

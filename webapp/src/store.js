@@ -8,7 +8,11 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
-import { LOCAL_STORAGE_KEY } from 'lib/localStorage'
+import {
+  LOCAL_STORAGE_KEY,
+  shouldMigrateLocalStorage,
+  migrateLocalStorage
+} from 'lib/localStorage'
 
 import { createTransactionMiddleware } from 'modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'modules/analytics/middleware'
@@ -16,10 +20,6 @@ import { createStorageMiddleware } from 'modules/storage/middleware'
 
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
-import {
-  shouldMigrateLocalStorage,
-  migrateLocalStorage
-} from './lib/localStorage'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
