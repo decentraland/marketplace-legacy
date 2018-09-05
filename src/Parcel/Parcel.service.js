@@ -160,13 +160,6 @@ export class ParcelService {
     return contract.encodeTokenId(parcel.x, parcel.y)
   }
 
-  toParcelObject(parcelArray) {
-    return parcelArray.reduce((map, parcel) => {
-      map[parcel.id] = parcel
-      return map
-    }, {})
-  }
-
   getLANDRegistryContract() {
     return eth.getContract('LANDRegistry')
   }

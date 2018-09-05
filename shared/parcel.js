@@ -20,9 +20,9 @@ export function isParcel(asset) {
   )
 }
 
-export function toParcelObject(parcelsArray, prevParcels) {
-  const parcelObject = {}
-  for (const parcel of parcelsArray) {
+export function toParcelObject(parcelArray, prevParcels = {}) {
+  const parcelObject = Object.assign({}, prevParcels)
+  for (const parcel of parcelArray) {
     parcelObject[parcel.id] = connectParcel(parcel, parcelObject, prevParcels)
   }
   return parcelObject
