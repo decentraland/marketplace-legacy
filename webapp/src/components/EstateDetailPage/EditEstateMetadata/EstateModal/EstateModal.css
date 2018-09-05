@@ -39,8 +39,7 @@
 }
 
 .EstateModal .tx-idle{
-  margin: 0 auto 20px;
-  width: 310px;
+  margin: 0 0 20px;
 }
 
 /* TODO: rules are duplicated on ParcelModal */
@@ -66,6 +65,10 @@
   .EstateModal .modal-buttons .button {
     margin-top: 1em;
     width: 100%;
+  }
+
+  .EstateModal .modal-buttons .ui.button + .ui.button {
+    margin-left: 0;
   }
 }
 
