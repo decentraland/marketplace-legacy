@@ -116,9 +116,7 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.estates: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(estate => (
-              <EstateCard key={estate.token_id} estate={estate} />
-            ))}
+            {grid.map(estate => <EstateCard key={estate.id} estate={estate} />)}
           </Card.Group>
         )
       }

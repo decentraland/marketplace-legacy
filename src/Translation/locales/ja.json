@@ -78,7 +78,7 @@
     "subtitle": "あなたのエステートの区画の名称と説明の設定・編集ができます。"
   },
   "estate_select": {
-    "description": "隣接した区画を選んでください。",
+    "description": "互いに隣接する区画を選択する",
     "detail": "エステートの詳細",
     "edit_selection": "地図上の区画を選択する",
     "new_selection": "新しいエステートの区画を地図から選択してください。",
@@ -401,6 +401,7 @@
     "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
   },
   "transaction_status": {
+    "activity_page": "活動ページ",
     "idle": {
       "please_confirm": "取引を確認してください。"
     },

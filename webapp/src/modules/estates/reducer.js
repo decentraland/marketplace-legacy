@@ -57,7 +57,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         error: null,
         data: {
           ...state.data,
-          [estate.token_id]: {
+          [estate.id]: {
             ...estate
           }
         }
@@ -80,7 +80,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         ...state,
         data: action.assets.estates.reduce(
           (acc, estate) => {
-            return { ...acc, [estate.token_id]: estate }
+            return { ...acc, [estate.id]: estate }
           },
           { ...state.data }
         )
@@ -97,6 +97,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_TRANSACTION_SUCCESS: {
       const transaction = action.transaction
+
       switch (transaction.actionType) {
         case EDIT_ESTATE_METADATA_SUCCESS: {
           const { estate } = transaction.payload
@@ -104,10 +105,10 @@ export function estatesReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              [estate.token_id]: {
-                ...state.data[estate.token_id],
+              [estate.id]: {
+                ...state.data[estate.id],
                 data: {
-                  ...state.data[estate.token_id].data,
+                  ...state.data[estate.id].data,
                   name: estate.data.name,
                   description: estate.data.description
                 }
@@ -117,12 +118,12 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
         case EDIT_ESTATE_PARCELS_SUCCESS: {
           const { estate } = transaction.payload
-          const oldEstate = state.data[estate.token_id]
+          const oldEstate = state.data[estate.id]
           return {
             ...state,
             data: {
               ...state.data,
-              [estate.token_id]: {
+              [estate.id]: {
                 ...oldEstate,
                 data: {
                   ...oldEstate.data,
@@ -138,8 +139,8 @@ export function estatesReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              [estate.token_id]: {
-                ...state.data[estate.token_id],
+              [estate.id]: {
+                ...state.data[estate.id],
                 owner: to
               }
             }
@@ -147,7 +148,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
         case DELETE_ESTATE_SUCCESS: {
           const { estate } = transaction.payload
-          const data = utils.omit(state.data, estate.token_id)
+          const data = utils.omit(state.data, estate.id)
           return {
             ...state,
             data

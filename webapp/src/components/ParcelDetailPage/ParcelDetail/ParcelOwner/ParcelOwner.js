@@ -29,7 +29,7 @@ export default class ParcelOwner extends React.PureComponent {
       return (
         <span className="ParcelOwner is-owner">
           <Link
-            to={locations.editLand(parcel.x, parcel.y)}
+            to={locations.editParcel(parcel.x, parcel.y)}
             className="edit-button"
           >
             <Button size="tiny" className="link">
@@ -38,7 +38,7 @@ export default class ParcelOwner extends React.PureComponent {
             </Button>
           </Link>
           <Link
-            to={locations.manageLand(parcel.x, parcel.y)}
+            to={locations.manageParcel(parcel.x, parcel.y)}
             className="manage-button"
           >
             <Button size="tiny" className="link">
@@ -80,9 +80,7 @@ export default class ParcelOwner extends React.PureComponent {
       const estate = estates[parcel.estate_id]
       if (estate) {
         const estateName = (
-          <Link to={locations.estateDetail(estate.token_id)}>
-            {estate.data.name}
-          </Link>
+          <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
         )
         return (
           <span className="ParcelOwner part-of">

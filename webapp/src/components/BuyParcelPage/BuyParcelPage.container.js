@@ -29,6 +29,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     onConfirm: publication => dispatch(buyRequest(publication)),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))

@@ -3,20 +3,21 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Header } from 'semantic-ui-react'
 
+import { locations } from 'locations'
 import Parcel from 'components/Parcel'
 import { walletType, mortgageType } from 'components/types'
 import { t, t_html } from 'modules/translation/utils'
-import { locations } from 'locations'
-import { buildCoordinate } from 'shared/parcel'
+import ParcelModal from 'components/ParcelModal'
+import ParcelDetailLink from 'components/ParcelDetailLink'
+import TxStatus from 'components/TxStatus'
+import ParcelName from 'components/ParcelName'
 import {
   isMortgageOngoing,
   getMortgageOutstandingAmount
 } from 'shared/mortgage'
 import { formatMana } from 'lib/utils'
 import PayMortgageForm from './PayMortgageForm'
-import ParcelModal from 'components/ParcelModal'
-import TxStatus from 'components/TxStatus'
-import ParcelName from 'components/ParcelName'
+
 import './PayMortgagePage.css'
 
 export default class PayMortgagePage extends React.PureComponent {
@@ -56,7 +57,7 @@ export default class PayMortgagePage extends React.PureComponent {
           <p className="sign-in">
             {t_html('global.sign_in_notice', {
               sign_in_link: (
-                <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+                <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
               )
             })}
           </p>
@@ -95,11 +96,7 @@ export default class PayMortgagePage extends React.PureComponent {
               isLoading={isLoading || isFetchingMortgages}
               title={t('mortgage.partial_payment')}
               subtitle={t_html('mortgage.partial_payment_desc', {
-                parcel_name: (
-                  <Link to={locations.parcelDetail(x, y)}>
-                    {buildCoordinate(x, y)}
-                  </Link>
-                ),
+                parcel_name: <ParcelDetailLink parcel={parcel} />,
                 outstanding_amount: formatMana(
                   getMortgageOutstandingAmount(mortgage)
                 )

@@ -20,8 +20,10 @@ import {
   buySuccess,
   buyFailure,
   cancelSaleSuccess,
-  cancelSaleFailure
+  cancelSaleFailure,
+  fetchParcelPublicationsRequest
 } from './actions'
+import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
@@ -32,6 +34,7 @@ export function* publicationSaga() {
   yield takeEvery(PUBLISH_REQUEST, handlePublishRequest)
   yield takeEvery(BUY_REQUEST, handleBuyRequest)
   yield takeEvery(CANCEL_SALE_REQUEST, handleCancelSaleRequest)
+  yield takeEvery(FETCH_PARCEL_SUCCESS, handleFetchParcelSuccess)
 }
 
 function* handlePublicationsRequest(action) {
@@ -75,7 +78,7 @@ function* handlePublishRequest(action) {
     }
 
     yield put(publishSuccess(txHash, publication, asset))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(publishFailure(error.message))
   }
@@ -98,7 +101,7 @@ function* handleBuyRequest(action) {
     }
 
     yield put(buySuccess(txHash, publication, asset))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(buyFailure(error.message))
   }
@@ -113,10 +116,14 @@ function* handleCancelSaleRequest(action) {
     const txHash = yield call(() => marketplaceContract.cancelOrder(asset.id))
 
     yield put(cancelSaleSuccess(txHash, action.publication, asset))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(cancelSaleFailure(error.message))
   }
+}
+
+function* handleFetchParcelSuccess(action) {
+  yield put(fetchParcelPublicationsRequest(action.x, action.y))
 }
 
 function* fetchPublications(action) {

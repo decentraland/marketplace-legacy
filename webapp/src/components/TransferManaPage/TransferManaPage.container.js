@@ -24,7 +24,7 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   onSubmit: ({ amount, address }) =>
     dispatch(transferManaRequest(address, amount)),
-  onCancel: () => dispatch(replace(locations.settings))
+  onCancel: () => dispatch(replace(locations.settings()))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(TransferManaPage))

@@ -35,10 +35,10 @@ export class EstateRouter {
 
     /**
      * Returns the estates for the supplied params
-     * @param  {string} tokenId - estate's token_id.
+     * @param  {string} id - estate's id (which corresponds with the blockchains token id)
      * @return {Estate}
      */
-    this.app.get('/estates/:tokenId', server.handleRequest(this.getEstate))
+    this.app.get('/estates/:id', server.handleRequest(this.getEstate))
   }
 
   async getEstates(req) {
@@ -69,11 +69,11 @@ export class EstateRouter {
   }
 
   async getEstate(req) {
-    const tokenId = server.extractFromReq(req, 'tokenId')
-    const result = await Estate.findByTokenId(tokenId)
-    if (!result) {
-      throw new Error(`Estate with token id ${tokenId} not found`)
+    const id = server.extractFromReq(req, 'id')
+    const estate = await Estate.findOne(id)
+    if (!estate) {
+      throw new Error(`Estate with id ${id} not found`)
     }
-    return utils.omit(result, blacklist.estate)
+    return utils.omit(estate, blacklist.estate)
   }
 }

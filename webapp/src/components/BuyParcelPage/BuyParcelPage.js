@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Loader, Container, Header, Grid, Message } from 'semantic-ui-react'
 import ParcelModal from 'components/ParcelModal'
+import ParcelDetailLink from 'components/ParcelDetailLink'
 import Parcel from 'components/Parcel'
 import Mana from 'components/Mana'
 import { walletType } from 'components/types'
 import { locations } from 'locations'
 import { formatMana } from 'lib/utils'
-import { buildCoordinate } from 'shared/parcel'
 import { t, t_html } from 'modules/translation/utils'
 
 import './BuyParcelPage.css'
@@ -48,7 +48,7 @@ export default class BuyParcelPage extends React.PureComponent {
           <p className="sign-in">
             {t_html('global.sign_in_notice', {
               sign_in_link: (
-                <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+                <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
               )
             })}
           </p>
@@ -91,7 +91,7 @@ export default class BuyParcelPage extends React.PureComponent {
                   <br />
                   {t_html('parcel_buy.buy_mana', {
                     click_here: (
-                      <Link to={locations.buyMana}>
+                      <Link to={locations.buyMana()}>
                         {t('global.click_here')}
                       </Link>
                     )
@@ -107,7 +107,7 @@ export default class BuyParcelPage extends React.PureComponent {
                   <br />
                   {t_html('parcel_buy.please_approve', {
                     settings_link: (
-                      <Link to={locations.settings}>
+                      <Link to={locations.settings()}>
                         {t('global.settings')}
                       </Link>
                     )
@@ -117,7 +117,7 @@ export default class BuyParcelPage extends React.PureComponent {
                 <React.Fragment>
                   {t_html('parcel_buy.please_approve', {
                     settings_link: (
-                      <Link to={locations.settings}>
+                      <Link to={locations.settings()}>
                         {t('global.settings')}
                       </Link>
                     )
@@ -150,11 +150,7 @@ export default class BuyParcelPage extends React.PureComponent {
               y={y}
               title={t('parcel_buy.buy_land')}
               subtitle={t_html('parcel_buy.about_to_buy', {
-                parcel_name: (
-                  <Link to={locations.parcelDetail(x, y)}>
-                    {buildCoordinate(x, y)}
-                  </Link>
-                ),
+                parcel_name: <ParcelDetailLink parcel={parcel} />,
                 parcel_price: publication ? (
                   <React.Fragment>
                     &nbsp;{t('global.for')}&nbsp;&nbsp;

@@ -1,7 +1,7 @@
 import { takeLatest, call, put, select, all } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
-
+import { isFeatureEnabled } from 'lib/featureUtils'
 import { api } from 'lib/api'
 import {
   CREATE_MORTGAGE_REQUEST,
@@ -21,7 +21,8 @@ import {
   payMortgageSuccess,
   payMortgageFailure,
   claimMortgageResolutionSuccess,
-  claimMortgageResolutionFailure
+  claimMortgageResolutionFailure,
+  fetchActiveParcelMortgagesRequest
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { getParcelPublications, normalizeParcel } from 'shared/parcel'
@@ -38,20 +39,27 @@ import {
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
 import { locations } from 'locations'
+import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 
 export function* mortgageSaga() {
-  yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
-  yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
-  yield takeLatest(FETCH_MORTGAGED_PARCELS_REQUEST, handleFetchMortgageRequest)
-  yield takeLatest(PAY_MORTGAGE_REQUEST, handlePayMortgageRequest)
-  yield takeLatest(
-    FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
-    handleFetchActiveParcelMortgagesRequest
-  )
-  yield takeLatest(
-    CLAIM_MORTGAGE_RESOLUTION_REQUEST,
-    handleClaimMortgageResolutionRequest
-  )
+  if (isFeatureEnabled('MORTGAGES')) {
+    yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
+    yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
+    yield takeLatest(
+      FETCH_MORTGAGED_PARCELS_REQUEST,
+      handleFetchMortgageRequest
+    )
+    yield takeLatest(PAY_MORTGAGE_REQUEST, handlePayMortgageRequest)
+    yield takeLatest(
+      FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
+      handleFetchActiveParcelMortgagesRequest
+    )
+    yield takeLatest(
+      CLAIM_MORTGAGE_RESOLUTION_REQUEST,
+      handleClaimMortgageResolutionRequest
+    )
+    yield takeLatest(FETCH_PARCEL_SUCCESS, handleFetchParcelSuccess)
+  }
 }
 
 function* handleFetchMortgageRequest(action) {
@@ -145,7 +153,7 @@ function* handleCreateMortgageRequest(action) {
     )
 
     yield put(createMortgageSuccess(mortgageReceipt, parcel))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(createMortgageFailure(error.message))
   }
@@ -161,7 +169,7 @@ function* handleCancelMortgageRequest(action) {
     )
 
     yield put(cancelMortgageSuccess(mortgageCancelReceipt, assetId))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(cancelMortgageFailure(error.message))
   }
@@ -200,7 +208,7 @@ function* handlePayMortgageRequest(action) {
     )
 
     yield put(payMortgageSuccess(payMortgageReceipt, assetId, amount))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(payMortgageFailure(error.message))
   }
@@ -220,8 +228,12 @@ function* handleClaimMortgageResolutionRequest(action) {
     yield put(
       claimMortgageResolutionSuccess(claimMortgageResolutionReceipt, assetId)
     )
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(claimMortgageResolutionFailure(error.message))
   }
+}
+
+function* handleFetchParcelSuccess(action) {
+  yield put(fetchActiveParcelMortgagesRequest(action.x, action.y))
 }

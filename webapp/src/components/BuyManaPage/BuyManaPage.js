@@ -31,7 +31,7 @@ export default class BuyManaPage extends React.PureComponent {
 
   renderNotConnected() {
     return t_html('global.sign_in_notice', {
-      sign_in_link: <Link to={locations.signIn}>{t('global.sign_in')}</Link>
+      sign_in_link: <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
     })
   }
 

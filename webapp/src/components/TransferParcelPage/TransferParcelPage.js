@@ -1,14 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { Container, Message } from 'semantic-ui-react'
-import { locations } from 'locations'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
+import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import { publicationType } from 'components/types'
 import ParcelName from 'components/ParcelName'
-import { buildCoordinate } from 'shared/parcel'
 import { isOnSale } from 'shared/asset'
 import { t, t_html } from 'modules/translation/utils'
 import TransferAssetForm from 'components/TransferAssetForm'
@@ -44,11 +42,7 @@ export default class TransferParcelPage extends React.PureComponent {
               y={y}
               title={t('transfer_parcel.transfer_land')}
               subtitle={t_html('transfer_parcel.about_to_transfer', {
-                parcel_name: (
-                  <Link to={locations.parcelDetail(x, y)}>
-                    {buildCoordinate(x, y)}
-                  </Link>
-                )
+                parcel_name: <ParcelDetailLink parcel={parcel} />
               })}
               hasCustomFooter
             >

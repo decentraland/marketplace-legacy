@@ -78,7 +78,7 @@
     "subtitle": "이름과 설명을 설정하고 재산에 대한 소포를 편집하십시오."
   },
   "estate_select": {
-    "description": "{x}, {y}에서 시작하여 인접한 소포를 선택하십시오.",
+    "description": "서로 인접한 소포를 선택하십시오.",
     "detail": "부동산 상세",
     "edit_selection": "지도에서 소포를 선택하십시오.",
     "new_selection": "새로운 부동산에 대한지도에서 소포를 선택하십시오.",
@@ -397,6 +397,7 @@
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."
   },
   "transaction_status": {
+    "activity_page": "활동 페이지",
     "idle": {
       "please_confirm": "Please confirm the transaction"
     },

@@ -1,6 +1,6 @@
 import { isOpen } from './publication'
 import { isParcel } from './parcel'
-import { getEstateByParcel, isEstate, calculateMapProps } from './estate'
+import { isEstate, calculateMapProps } from './estate'
 import { contracts } from 'decentraland-eth'
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
@@ -123,14 +123,14 @@ export function getColorByType(type, x, y) {
   }
 }
 
-export function getAsset(parcelId, parcels, estates) {
+export function getMapAsset(parcelId, parcels, estates) {
   const parcel = parcels[parcelId]
   if (!parcel) {
     return {}
   }
 
   return {
-    asset: !parcel.estate_id ? parcel : getEstateByParcel(parcel, estates)
+    asset: parcel.estate_id ? estates[parcel.estate_id] : parcel
   }
 }
 
@@ -198,10 +198,6 @@ export function getCenterCoords(asset) {
   }
   const { center } = calculateMapProps(asset.data.parcels)
   return center
-}
-
-export function isNewAsset(asset) {
-  return !asset || !asset.token_id
 }
 
 export function decodeMetadata(data) {
