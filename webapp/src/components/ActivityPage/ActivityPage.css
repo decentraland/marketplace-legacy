@@ -1,6 +1,7 @@
 .ActivityPage.container {
-  overflow: visible;
   color: var(--text);
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .ActivityPage .section-title {

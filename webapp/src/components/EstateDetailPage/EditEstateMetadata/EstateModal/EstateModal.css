@@ -30,23 +30,16 @@
   display: inline-block;
 }
 
-.EstateModal .modal-buttons {
-  margin: 0px 50px;
-}
-
-.EstateModal .modal-buttons button + button {
-  margin-left: 20px;
-}
-
 .EstateModal .modal-children {
   margin: 0px 0px 0px 50px;
 }
 
-.EstateModal .tx-idle{
+.EstateModal .tx-idle {
   margin: 0 auto 20px;
   width: 310px;
 }
 
+/* TODO: rules are duplicated on ParcelModal */
 @media (max-width: 768px) {
   .EstateModal {
     flex-flow: column nowrap;
@@ -59,5 +52,25 @@
 
   .EstateModal .modal-children {
     margin: 0px 50px 0px 50px;
+  }
+
+  .EstateModal .modal-buttons {
+    display: flex;
+    flex-flow: column-reverse nowrap;
+  }
+
+  .EstateModal .modal-buttons .button {
+    margin-top: 1em;
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .EstateModal .modal-children {
+    min-width: 420px;
+  }
+
+  .EstateModal .modal-buttons .ui.button + .ui.button {
+    margin-left: 20px;
   }
 }

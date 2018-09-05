@@ -1,3 +1,8 @@
+.EstateDetail {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
 .Page > .EstateDetail {
   color: var(--text);
   font-size: 15px;
