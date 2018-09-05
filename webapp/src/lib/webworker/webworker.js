@@ -3,7 +3,7 @@ import { WebWorkerOnMessage } from './WebWorkerOnMessage'
 import {
   toParcelObject,
   normalizeParcel,
-  connectParcels,
+  connectParcel,
   areConnected,
   isSameValue,
   getParcelPublications,
@@ -13,7 +13,7 @@ import {
 const WebWorkerDependencies = {
   toParcelObject,
   normalizeParcel,
-  connectParcels,
+  connectParcel,
   areConnected,
   isSameValue,
   getParcelPublications,

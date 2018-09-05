@@ -93,7 +93,8 @@ export class Parcel extends Model {
     ) as publication
       FROM ${SQL.raw(this.tableName)}
       WHERE x BETWEEN ${minx} AND ${maxx}
-        AND y BETWEEN ${miny} AND ${maxy}`)
+        AND y BETWEEN ${miny} AND ${maxy}
+      ORDER BY x ASC, y DESC`)
   }
 
   static async encodeTokenId(x, y) {
