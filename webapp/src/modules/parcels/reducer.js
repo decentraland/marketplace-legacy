@@ -72,7 +72,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
-        data: { ...state.data, ...action.assets.parcels }
+        data: action.assets.parcels
       }
     }
     case FETCH_PUBLICATIONS_SUCCESS:
@@ -80,10 +80,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
-        data: {
-          ...state.data,
-          ...toParcelObject(action.parcels, state.data)
-        }
+        data: toParcelObject(action.parcels, state.data)
       }
     case FETCH_PARCEL_FAILURE: {
       return {
@@ -287,10 +284,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
 
           return {
             ...state,
-            data: {
-              ...state.data,
-              ...toParcelObject(updatedParcels, state.data, true, true)
-            }
+            data: toParcelObject(updatedParcels, state.data)
           }
         }
         case DELETE_ESTATE_SUCCESS: {
@@ -306,10 +300,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
 
           return {
             ...state,
-            data: {
-              ...state.data,
-              ...toParcelObject(updatedParcels, state.data, true, true)
-            }
+            data: toParcelObject(updatedParcels, state.data)
           }
         }
         case CREATE_ESTATE_SUCCESS: {
@@ -327,10 +318,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
 
           return {
             ...state,
-            data: {
-              ...state.data,
-              ...toParcelObject(updatedParcels, state.data)
-            }
+            data: toParcelObject(updatedParcels, state.data)
           }
         }
         default:

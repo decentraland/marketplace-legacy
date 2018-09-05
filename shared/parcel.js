@@ -20,22 +20,12 @@ export function isParcel(asset) {
   )
 }
 
-export function toParcelObject(
-  parcelsArray,
-  prevParcels = [],
-  normalize = true,
-  redoConnections = false
-) {
-  return connectParcels(
-    parcelsArray,
-    parcelsArray.reduce((map, parcel) => {
-      map[parcel.id] = normalize
-        ? normalizeParcel(parcel, prevParcels[parcel.id])
-        : parcel
-      return map
-    }, {}),
-    redoConnections
-  )
+export function toParcelObject(parcelArray, prevParcels = {}) {
+  const parcelObject = Object.assign({}, prevParcels)
+  for (const parcel of parcelArray) {
+    parcelObject[parcel.id] = connectParcel(parcel, parcelObject, prevParcels)
+  }
+  return parcelObject
 }
 
 export function normalizeParcel(parcel, prevParcel = {}) {
@@ -52,30 +42,39 @@ export function normalizeParcel(parcel, prevParcel = {}) {
   return normalizedParcel
 }
 
-export function connectParcels(parcelArray, parcels, redoConnections = false) {
-  for (const parcel of parcelArray) {
-    const { id, x, y } = parcel
-    if (
-      parcels[id].estate_id ||
-      parcels[id].district_id != null ||
-      redoConnections
-    ) {
-      const leftId = buildCoordinate(x - 1, y)
-      const topId = buildCoordinate(x, y + 1)
-      const topLeftId = buildCoordinate(x - 1, y + 1)
-      parcels[id].connectedLeft = areConnected(parcels, id, leftId)
-      parcels[id].connectedTop = areConnected(parcels, id, topId)
-      parcels[id].connectedTopLeft = areConnected(parcels, id, topLeftId)
-    }
+export function connectParcel(parcel, newParcels, prevParcels) {
+  const { id, x, y, estate_id, district_id } = parcel
+
+  const isDistrict = district_id != null
+  const isEstate = estate_id != null
+  const hasEstateChanged =
+    id in prevParcels && prevParcels[id].estate_id !== estate_id
+
+  const newParcel = normalizeParcel(parcel, prevParcels[id])
+
+  if (isDistrict || isEstate || hasEstateChanged) {
+    const leftId = buildCoordinate(x - 1, y)
+    const topId = buildCoordinate(x, y + 1)
+    const topLeftId = buildCoordinate(x - 1, y + 1)
+
+    newParcel.connectedLeft = areConnected(
+      newParcel,
+      newParcels[leftId] || prevParcels[leftId]
+    )
+    newParcel.connectedTop = areConnected(
+      newParcel,
+      newParcels[topId] || prevParcels[topId]
+    )
+    newParcel.connectedTopLeft = areConnected(
+      newParcel,
+      newParcels[topLeftId] || prevParcels[topLeftId]
+    )
   }
 
-  return parcels
+  return newParcel
 }
 
-export function areConnected(parcels, parcelId, sideId) {
-  const parcel = parcels[parcelId]
-  const sideParcel = parcels[sideId]
-
+export function areConnected(parcel, sideParcel) {
   if (!sideParcel) {
     return false
   }
