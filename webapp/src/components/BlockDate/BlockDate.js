@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 
 import { distanceInWordsToNow } from 'lib/utils'
 import { getEtherscanHref } from 'modules/transaction/utils'
@@ -23,16 +22,16 @@ export default class BlockDate extends React.PureComponent {
     const href = getEtherscanHref({ blockNumber }, network)
 
     return (
-      <Link
+      <a
         className={className}
-        to={href}
+        href={href}
         target={target}
         title={`Block #${blockNumber}`}
       >
         {blockTime
           ? distanceInWordsToNow(parseInt(blockTime, 10))
           : `#${blockNumber}`}
-      </Link>
+      </a>
     )
   }
 }
