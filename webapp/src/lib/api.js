@@ -62,8 +62,8 @@ export class API {
     return this.request('get', `/addresses/${address}/estates`, {})
   }
 
-  fetchEstate(tokenId) {
-    return this.request('get', `/estates/${tokenId}`)
+  fetchEstate(id) {
+    return this.request('get', `/estates/${id}`)
   }
 
   fetchDistricts() {
@@ -71,11 +71,11 @@ export class API {
   }
 
   fetchMortgagedParcels(borrower) {
-    return this.request('get', `/parcels/${borrower}/mortgages/`)
+    return this.request('get', `/parcels/${borrower}/mortgages`)
   }
 
   fetchMortgagesByBorrower(borrower, status) {
-    return this.request('get', `/addresses/${borrower}/mortgages/`, { status })
+    return this.request('get', `/addresses/${borrower}/mortgages`, { status })
   }
 
   fetchMortgages(x, y, status) {

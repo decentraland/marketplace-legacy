@@ -128,7 +128,7 @@ export default class SettingsForm extends React.PureComponent {
             </span>
             <span className="mana-actions">
               {isFeatureEnabled('BUY_MANA') ? (
-                <Link to={locations.buyMana} replace>
+                <Link to={locations.buyMana()} replace>
                   <Button className="buy-more">{t('buy_mana.action')}</Button>
                 </Link>
               ) : (
@@ -142,7 +142,7 @@ export default class SettingsForm extends React.PureComponent {
                   </Button>
                 </span>
               )}
-              <Link to={locations.transferMana} replace>
+              <Link to={locations.transferMana()} replace>
                 <Button>{t('transfer_mana.action')}</Button>
               </Link>
             </span>

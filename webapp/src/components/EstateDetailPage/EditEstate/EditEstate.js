@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { estateType, walletType } from 'components/types'
 import EstateSelect from '../EstateSelect'
 import EditEstateMetadata from '../EditEstateMetadata'
-import { isNewAsset } from 'shared/asset'
+import { isNewEstate } from 'shared/estate'
 
 export default class EditEstate extends React.PureComponent {
   static propTypes = {
@@ -59,8 +59,12 @@ export default class EditEstate extends React.PureComponent {
       onEditEstateParcels,
       onEditEstateMetadata
     } = this.props
-    if (isNewAsset(estate) || isSelecting) {
-      isNewAsset(estate) ? onCreateEstate(estate) : onEditEstateParcels(estate)
+    const isNew = isNewEstate(estate)
+
+    if (isNew && !isSelecting) {
+      onCreateEstate(estate)
+    } else if (!isNew && isSelecting) {
+      onEditEstateParcels(estate)
     } else {
       onEditEstateMetadata(estate)
     }

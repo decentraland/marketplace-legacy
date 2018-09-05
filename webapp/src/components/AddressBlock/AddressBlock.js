@@ -62,7 +62,7 @@ export default class AddressBlock extends React.Component {
         data-balloon={tooltip}
       >
         {hasLink ? (
-          <Link to={link ? link : locations.profilePage(address)}>
+          <Link to={link || locations.profilePageDefault(address)}>
             {blockie}
           </Link>
         ) : (

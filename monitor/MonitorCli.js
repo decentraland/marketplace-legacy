@@ -89,8 +89,9 @@ export class MonitorCli {
 
     const fromBlock = await this.getFromBlock(options)
     const onEnd = () => this.runEnd(options)
+    const monitorOptions = { ...options, fromBlock }
 
-    eventMonitor.run(options, async (error, logs) => {
+    eventMonitor.run(monitorOptions, async (error, logs) => {
       if (error) {
         log.error(`Error monitoring "${contractName}" for "${eventNames}"`)
         log.error(error)

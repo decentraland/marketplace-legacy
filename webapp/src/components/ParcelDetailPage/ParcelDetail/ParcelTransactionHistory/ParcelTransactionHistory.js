@@ -39,7 +39,7 @@ export default class ParcelTransactionHistory extends React.PureComponent {
   renderAddress(address) {
     return (
       <div className="address-wrapper" title={address}>
-        <Link to={locations.profilePage(address)}>
+        <Link to={locations.profilePageDefault(address)}>
           <AddressBlock
             address={address}
             scale={4}

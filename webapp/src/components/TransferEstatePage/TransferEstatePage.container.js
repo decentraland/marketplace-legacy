@@ -10,19 +10,21 @@ import { locations } from 'locations'
 import TransferEstatePage from './TransferEstatePage'
 
 const mapState = (state, ownProps) => {
-  const { tokenId } = getMatchParams(ownProps)
+  const { id } = getMatchParams(ownProps)
+
   return {
-    tokenId,
+    id,
     isTxIdle: isTransferIdle(state)
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const { tokenId } = getMatchParams(ownProps)
+  const { id } = getMatchParams(ownProps)
+
   return {
     onSubmit: (estate, address) =>
       dispatch(transferEstateRequest(estate, address)),
-    onCancel: () => dispatch(push(locations.estateDetail(tokenId)))
+    onCancel: () => dispatch(push(locations.estateDetail(id)))
   }
 }
 

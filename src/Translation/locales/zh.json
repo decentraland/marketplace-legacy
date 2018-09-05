@@ -76,7 +76,7 @@
     "subtitle": "设置名称和说明，及连块土地的相关地块。"
   },
   "estate_select": {
-    "description": "选择地块",
+    "description": "选择彼此相邻的宗地",
     "detail": "连块土地细节",
     "edit_selection": "在地图上选择宗地",
     "new_selection": "请在地图上选择新地块",
@@ -371,6 +371,7 @@
     "transfer_mana": "{mana} 个 MANA 已转帐至{address_link}"
   },
   "transaction_status": {
+    "activity_page": "活动页面",
     "idle": {
       "please_confirm": "请确认交易"
     },

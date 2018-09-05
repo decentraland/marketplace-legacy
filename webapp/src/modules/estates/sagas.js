@@ -62,7 +62,7 @@ function* handleCreateEstateRequest(action) {
       land.createEstateWithMetadata(xs, ys, owner, data)
     )
     yield put(createEstateSuccess(txHash, { ...estate, owner }))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(createEstateFailure(error.message))
   }
@@ -75,7 +75,7 @@ function* handleEditEstateParcelsRequest(action) {
     newParcels.forEach(({ x, y }) => validateCoords(x, y))
 
     const estates = yield select(getEstates)
-    const pristineEstate = estates[estate.token_id]
+    const pristineEstate = estates[estate.id]
     const pristineParcels = pristineEstate.data.parcels
 
     const parcelsToAdd = getParcelsNotIncluded(newParcels, pristineParcels)
@@ -116,7 +116,7 @@ function* handleEditEstateParcelsRequest(action) {
       )
     }
 
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(editEstateParcelsFailure(error.message))
   }
@@ -130,16 +130,15 @@ function* handleEditEstateMetadataRequest({ estate }) {
       estateRegistry.updateMetadata(estate.token_id, data)
     )
     yield put(editEstateMetadataSuccess(txHash, estate))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(editEstateMetadataFailure(error.message))
   }
 }
 
 function* handleEstateRequest(action) {
-  const { tokenId } = action
   try {
-    const estate = yield call(() => api.fetchEstate(tokenId))
+    const estate = yield call(() => api.fetchEstate(action.id))
     yield put(fetchEstateSuccess(estate))
   } catch (error) {
     yield put(fetchEstateFailure(error.message))
@@ -162,7 +161,7 @@ function* handleDeleteEstate({ estateId }) {
       estateRegistry.transferManyLands(estateId, landIds, owner)
     )
     yield put(deleteEstateSuccess(txHash, estate))
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
   } catch (e) {
     yield put(deleteEstateFailure(e.message))
   }

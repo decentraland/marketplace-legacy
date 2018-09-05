@@ -17,9 +17,9 @@ const WITHOUT_ACTION_BUTTONS_WIDTH = 16
 export default class EstateDetail extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
+    allParcels: PropTypes.objectOf(parcelType),
     isOwner: PropTypes.bool.isRequired,
     onViewAssetClick: PropTypes.func.isRequired,
-    allParcels: PropTypes.objectOf(parcelType),
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired
   }
@@ -78,8 +78,8 @@ export default class EstateDetail extends React.PureComponent {
               <Grid.Column className="parcel-actions-container" computer={8}>
                 {isOwner ? (
                   <EstateActions
+                    id={estate.id}
                     onEditMetadata={onEditMetadata}
-                    tokenId={estate.token_id}
                   />
                 ) : (
                   <span className="is-address">

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { isFeatureEnabled } from 'lib/featureUtils'
 import AssetDetailPage from 'components/AssetDetailPage'
 import Parcel from 'components/Parcel'
 import ParcelDetail from './ParcelDetail'
@@ -17,43 +16,8 @@ export default class ParcelDetailPage extends React.PureComponent {
     districts: PropTypes.objectOf(districtType).isRequired,
     mortgage: mortgageType,
     user: PropTypes.string,
-    onFetchParcelPublications: PropTypes.func.isRequired,
-    onFetchActiveParcelMortgages: PropTypes.func.isRequired,
     onBuy: PropTypes.func.isRequired,
     onAssetClick: PropTypes.func.isRequired
-  }
-
-  componentWillMount() {
-    this.isAdditionalResourcesFetched = false
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { x, y } = this.props
-    const hasChangedParcel = nextProps.x !== x || nextProps.y !== y
-
-    if (hasChangedParcel) {
-      this.isAdditionalResourcesFetched = false
-    }
-
-    if (!nextProps.isLoading || hasChangedParcel) {
-      this.fetchAdditionalParcelResources(nextProps.x, nextProps.y)
-    }
-  }
-
-  fetchAdditionalParcelResources(x, y) {
-    if (!this.isAdditionalResourcesFetched) {
-      const {
-        onFetchParcelPublications,
-        onFetchActiveParcelMortgages
-      } = this.props
-
-      if (isFeatureEnabled('MORTGAGES')) {
-        onFetchActiveParcelMortgages(x, y)
-      }
-      onFetchParcelPublications(x, y)
-
-      this.isAdditionalResourcesFetched = true
-    }
   }
 
   render() {

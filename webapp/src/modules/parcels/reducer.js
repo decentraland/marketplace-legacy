@@ -267,7 +267,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
             return {
               ...state.data[parcelId],
-              estate_id: type === ADD_PARCELS ? estate.token_id : null,
+              estate_id: type === ADD_PARCELS ? estate.id : null,
               owner:
                 type === ADD_PARCELS
                   ? getEstateRegistryAddress()

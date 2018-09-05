@@ -1,81 +1,89 @@
 import { isParcel } from 'shared/parcel'
 
-export const locations = {
-  root: '/',
+const asCoordinateParam = key => `:${key}(-?\\d+)`
+const asIntParam = key => `:${key}(\\d+)`
+const params = {
+  x: asCoordinateParam('x'),
+  y: asCoordinateParam('y'),
+  id: asIntParam('id')
+}
 
-  profile: '/address/:address/:tab',
-  profilePage: (address, tab = PROFILE_PAGE_TABS.parcels) =>
+export const locations = {
+  root: () => '/',
+
+  // Addresses
+
+  profilePageDefault: (address = ':address', tab = PROFILE_PAGE_TABS.parcels) =>
+    locations.profilePage(address, PROFILE_PAGE_TABS.parcels),
+
+  profilePage: (address = ':address', tab = ':tab') =>
     `/address/${address}/${tab}`,
 
-  parcelMap: '/:x/:y',
-  parcelMapDetail: (x, y, marker) =>
+  // Parcels
+
+  parcelMapDetail: (x = params.x, y = params.y, marker = '') =>
     `/${x}/${y}` + (marker ? `?marker=${marker}` : ''),
 
-  marketplace: '/marketplace',
+  parcelDetail: (x = params.x, y = params.y) => `/parcels/${x}/${y}/detail`,
 
-  sell: '/:x/:y/sell',
-  sellLand: (x, y) => `/${x}/${y}/sell`,
+  sellParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/sell`,
+  buyParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/buy`,
+  cancelSaleParcel: (x = params.x, y = params.y) =>
+    `/parcels/${x}/${y}/cancel-sale`,
 
-  buy: '/:x/:y/buy',
-  buyLand: (x, y) => `/${x}/${y}/buy`,
+  editParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/edit`,
+  manageParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/manage`,
+  transferParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/transfer`,
 
-  cancelSale: '/:x/:y/cancel-sale',
-  cancelSaleLand: (x, y) => `/${x}/${y}/cancel-sale`,
+  createEstate: (x = params.x, y = params.y) =>
+    `/parcels/${x}/${y}/create-estate`, // this could be /estates/create once it's parcel independent
 
-  edit: '/:x/:y/edit',
-  editLand: (x, y) => `/${x}/${y}/edit`,
+  // Estates
 
-  manage: '/:x/:y/manage',
-  manageLand: (x, y) => `/${x}/${y}/manage`,
+  estateDetail: (id = params.id) => `/estates/${id}/detail`,
 
-  transfer: '/:x/:y/transfer',
-  transferLand: (x, y) => `/${x}/${y}/transfer`,
+  editEstateParcels: (id = params.id) => `/estates/${id}/edit-parcels`,
+  editEstateMetadata: (id = params.id) => `/estates/${id}/edit-metadata`,
 
-  estate: '/estates/:tokenId/detail',
-  estateDetail: tokenId => `/estates/${tokenId}/detail`,
-  editEstateParcels: '/estates/:tokenId/edit-parcels',
-  editEstateParcelsRequest: () => 'edit-parcels',
-  editEstateMetadata: '/estates/:tokenId/edit-metadata',
-  editEstateMetadataRequest: () => 'edit-metadata',
+  transferEstate: (id = params.id) => `/estates/${id}/transfer`,
+  deleteEstate: (id = params.id) => `/estates/${id}/delete-estate`,
 
-  deleteEstate: '/estates/:tokenId/delete-estate',
-  deleteEstatePage: tokenId => `/estates/${tokenId}/delete-estate`,
-
-  createEstate: '/:x/:y/create-estate',
-  createEstateLand: (x, y) => `/${x}/${y}/create-estate`,
-
-  transferEstate: '/estates/:tokenId/transfer',
-  transferEstatePage: tokenId => `/estates/${tokenId}/transfer`,
-
-  buyMana: `/buy-mana`,
-  transferMana: `/transfer-mana`,
-
-  parcel: '/:x/:y/detail',
-  parcelDetail: (x, y) => `/${x}/${y}/detail`,
+  // Generic assets
 
   assetDetail: function(asset) {
     return isParcel(asset)
       ? this.parcelDetail(asset.x, asset.y)
-      : this.estateDetail(asset.token_id)
+      : this.estateDetail(asset.id)
   },
 
-  settings: '/settings',
-  activity: '/activity',
+  // Mortgages
 
-  colorKey: '/colorKey',
-  privacy: '/privacy',
-  terms: '/terms',
+  buyParcelByMortgage: (x = params.x, y = params.y) =>
+    `/mortgages/${x}/${y}/buy`,
+  payMortgageParcel: (x = params.x, y = params.y) => `/mortgages/${x}/${y}/pay`,
 
-  error: '/error',
-  signIn: '/sign-in',
+  // General routes
 
-  mortgage: '/:x/:y/mortgage',
-  buyLandByMortgage: (x, y) => `/${x}/${y}/mortgage`,
-  payMortgagePath: '/:x/:y/mortgage/pay',
-  payMortgage: (x, y) => `/${x}/${y}/mortgage/pay`
+  marketplace: () => '/marketplace',
+
+  buyMana: () => '/buy-mana',
+  transferMana: () => '/transfer-mana',
+
+  settings: () => '/settings',
+  activity: () => '/activity',
+
+  colorKey: () => '/colorKey',
+  privacy: () => '/privacy',
+  terms: () => '/terms',
+
+  signIn: () => '/sign-in'
 }
 
-export const STATIC_PAGES = [locations.root, locations.privacy, locations.terms]
+export const STATIC_PAGES = [
+  locations.root(),
+  locations.privacy(),
+  locations.terms()
+]
 
 export const PROFILE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',

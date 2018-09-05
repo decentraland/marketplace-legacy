@@ -19,7 +19,7 @@ const mapState = (state, { asset }) => {
 }
 
 const mapDispatch = dispatch => ({
-  onError: () => dispatch(navigateTo(locations.root))
+  onError: () => dispatch(navigateTo(locations.root()))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(AssetDetailPage))

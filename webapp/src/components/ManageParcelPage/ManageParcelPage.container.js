@@ -11,6 +11,7 @@ import ManageParcelPage from './ManageParcelPage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     x,
     y,
@@ -20,6 +21,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+
   return {
     onSubmit: (parcel, address, revoked) =>
       dispatch(manageParcelRequest(parcel, address, revoked)),

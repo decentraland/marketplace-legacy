@@ -78,7 +78,7 @@
       "Establezca un nombre y una descripción, y edite las parcelas de su propiedad."
   },
   "estate_select": {
-    "description": "Seleccione parcelas adyacentes a partir de {x}, {y}",
+    "description": "Seleccione parcelas adyacentes entre sí",
     "detail": "Detalle de finca",
     "edit_selection": "Seleccione las parcelas en el mapa",
     "new_selection": "Seleccione las parcelas en el mapa para su nueva finca",
@@ -406,6 +406,7 @@
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"
   },
   "transaction_status": {
+    "activity_page": "página de actividad",
     "idle": {
       "please_confirm": "Por favor confirma la transacción"
     },
