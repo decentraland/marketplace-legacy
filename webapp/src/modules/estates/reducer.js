@@ -1,3 +1,4 @@
+import { utils } from 'decentraland-commons'
 import {
   CREATE_ESTATE_REQUEST,
   CREATE_ESTATE_SUCCESS,
@@ -147,18 +148,10 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
         case DELETE_ESTATE_SUCCESS: {
           const { estate } = transaction.payload
+          const data = utils.omit(state.data, estate.id)
           return {
             ...state,
-            data: {
-              ...state.data,
-              [estate.id]: {
-                ...state.data[estate.id],
-                data: {
-                  ...state.data[estate.id].data,
-                  parcels: []
-                }
-              }
-            }
+            data
           }
         }
         case CREATE_ESTATE_SUCCESS: {
