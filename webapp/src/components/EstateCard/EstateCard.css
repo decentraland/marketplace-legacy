@@ -1,3 +1,4 @@
+/* TODO: width rules are duplicated on ParcelCard */
 .EstateCard {
   width: calc(100% - 14px) !important;
 }
@@ -18,6 +19,10 @@
   .EstateCard {
     width: calc(25% - 14px) !important;
   }
+}
+
+.ui.card.EstateCard {
+  overflow: inherit;
 }
 
 .EstateCard .preview {

@@ -1,21 +1,6 @@
+/* TODO: width rules are duplicated on EstateCard */
 .ParcelCard {
   width: calc(100% - 14px) !important;
-}
-
-.ParcelCard .mortgage-status {
-  text-transform: capitalize;
-}
-
-.ParcelCard .Mortgage.pending {
-  color: var(--orange);
-}
-
-.ParcelCard .mortgage-status.ongoing {
-  color: var(--light-blue);
-}
-
-.ParcelCard .mortgage-status.defaulted {
-  color: var(--text);
 }
 
 @media (min-width: 480px) {
@@ -34,6 +19,22 @@
   .ParcelCard {
     width: calc(25% - 14px) !important;
   }
+}
+
+.ParcelCard .mortgage-status {
+  text-transform: capitalize;
+}
+
+.ParcelCard .Mortgage.pending {
+  color: var(--orange);
+}
+
+.ParcelCard .mortgage-status.ongoing {
+  color: var(--light-blue);
+}
+
+.ParcelCard .mortgage-status.defaulted {
+  color: var(--text);
 }
 
 .ParcelCard .publication-owner {
