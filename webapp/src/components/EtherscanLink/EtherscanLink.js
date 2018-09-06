@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { getEtherscanHref } from 'modules/transaction/utils'
 
 export default class EtherscanLink extends React.PureComponent {
@@ -35,9 +34,9 @@ export default class EtherscanLink extends React.PureComponent {
     const href = getEtherscanHref({ address, txHash }, network)
 
     return (
-      <Link className={className} to={href} target={target}>
+      <a className={className} href={href} target={target}>
         {children || text || href}
-      </Link>
+      </a>
     )
   }
 }
