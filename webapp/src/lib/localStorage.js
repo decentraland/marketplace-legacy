@@ -1,10 +1,6 @@
 import { env } from 'decentraland-commons'
 
-const LOCAL_STORAGE_KEY_BASE = env.get('REACT_APP_LOCAL_STORAGE_KEY_BASE')
-
-const LOCAL_STORAGE_KEY_VERSION = env.get('REACT_APP_LOCAL_STORAGE_KEY_VERSION')
-
-export const LOCAL_STORAGE_KEY = `${LOCAL_STORAGE_KEY_BASE}-${LOCAL_STORAGE_KEY_VERSION}`
+export const LOCAL_STORAGE_KEY = env.get('REACT_APP_LOCAL_STORAGE_KEY')
 
 export function hasLocalStorage() {
   try {
@@ -22,32 +18,23 @@ export const localStorage = hasLocalStorage()
   ? window.localStorage
   : { getItem: () => {}, setItem: () => {}, removeItem: () => {} }
 
-export function shouldMigrateLocalStorage() {
-  return !localStorage.getItem(LOCAL_STORAGE_KEY)
-}
-
-export function getOldLocalStorageKey() {
-  const version = parseInt(LOCAL_STORAGE_KEY_VERSION.replace('v', ''))
-
-  for (let i = version - 1; i > 0; i--) {
-    const key = `${LOCAL_STORAGE_KEY_BASE}-v${i}`
-    if (localStorage.getItem(key)) {
-      return key
-    }
-  }
-  // the first version did not have '-vX' on it
-  return LOCAL_STORAGE_KEY_BASE
-}
-
 export function migrateLocalStorage() {
-  migration[LOCAL_STORAGE_KEY]()
+  const dataString = localStorage.getItem(LOCAL_STORAGE_KEY)
+  const data = JSON.parse(dataString)
+  let version = parseInt(data.storage.version || 0) + 1
+  while (hasMigrateFunction(version)) {
+    migrations[version](data, version)
+    version++
+  }
 }
 
-const migration = {
-  [LOCAL_STORAGE_KEY]: () => {
-    const oldKey = getOldLocalStorageKey()
-    const oldLocalStorage = localStorage.getItem(oldKey)
-    localStorage.setItem(LOCAL_STORAGE_KEY, oldLocalStorage)
-    localStorage.removeItem(oldKey)
+function hasMigrateFunction(version) {
+  return !!migrations[version]
+}
+
+const migrations = {
+  '1': (data, version) => {
+    const dataString = JSON.stringify({ ...data, storage: { version } })
+    localStorage.setItem(LOCAL_STORAGE_KEY, dataString)
   }
 }

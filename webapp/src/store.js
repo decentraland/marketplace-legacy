@@ -8,11 +8,7 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
-import {
-  LOCAL_STORAGE_KEY,
-  shouldMigrateLocalStorage,
-  migrateLocalStorage
-} from 'lib/localStorage'
+import { LOCAL_STORAGE_KEY } from 'lib/localStorage'
 
 import { createTransactionMiddleware } from 'modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'modules/analytics/middleware'
@@ -36,10 +32,6 @@ const transactionMiddleware = createTransactionMiddleware()
 const analyticsMiddleware = createAnalyticsMiddleware(
   env.get('REACT_APP_SEGMENT_API_KEY')
 )
-
-if (shouldMigrateLocalStorage()) {
-  migrateLocalStorage()
-}
 
 const storageMiddleware = createStorageMiddleware(LOCAL_STORAGE_KEY)
 
