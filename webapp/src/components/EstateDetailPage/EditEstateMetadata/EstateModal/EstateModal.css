@@ -34,10 +34,6 @@
   margin: 0 0 0 50px;
 }
 
-.EstateModal .modal-buttons button + button {
-  margin-left: 20px;
-}
-
 .EstateModal .tx-idle{
   margin: 0 0 20px;
 }
@@ -65,10 +61,6 @@
   .EstateModal .modal-buttons .button {
     margin-top: 1em;
     width: 100%;
-  }
-
-  .EstateModal .modal-buttons .ui.button + .ui.button {
-    margin-left: 0;
   }
 }
 
