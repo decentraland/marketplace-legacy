@@ -84,7 +84,7 @@ export default class EstateModal extends React.PureComponent {
               </React.Fragment>
             ) : null}
             {hasCustomFooter ? null : (
-              <div>
+              <React.Fragment>
                 <Grid.Column>
                   {isTxIdle && (
                     <div className="tx-idle">
@@ -109,7 +109,7 @@ export default class EstateModal extends React.PureComponent {
                     name={<EstateName estate={estate} />}
                   />
                 </Grid.Column>
-              </div>
+              </React.Fragment>
             )}
           </div>
         </div>

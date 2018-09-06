@@ -78,7 +78,7 @@ export function editEstateParcelsSuccess(txHash, estate, parcels, type) {
     ...buildTransactionAction(txHash, {
       estate: {
         id: estate.id,
-        data: { name: estate.data.name, parcels: estate.data.parcels }
+        data: { name: estate.data.name, parcels: estate.data.parcels } // array of {x, y}
       },
       id: estate.id,
       type,
@@ -118,7 +118,7 @@ export function editEstateMetadataSuccess(txHash, estate) {
         data: {
           name: estate.data.name,
           description: estate.data.description,
-          parcels: estate.data.parcels
+          parcels: estate.data.parcels // array of {x, y}
         }
       },
       id: estate.id,
@@ -152,7 +152,7 @@ export function deleteEstateSuccess(txHash, estate) {
     ...buildTransactionAction(txHash, {
       estate: {
         id: estate.id,
-        data: { name: estate.data.name, parcels: estate.data.parcels }
+        data: { name: estate.data.name, parcels: estate.data.parcels } // array of {x, y}
       },
       id: estate.id,
       tx_hash: txHash

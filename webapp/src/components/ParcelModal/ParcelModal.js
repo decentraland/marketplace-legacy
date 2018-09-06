@@ -59,29 +59,31 @@ export default class ParcelModal extends React.PureComponent {
             <span className="modal-subtitle">{subtitle}</span>
           </div>
           <br />
-          {children ? (
-            <React.Fragment>
-              <div className="modal-children">{children}</div>
-              <br />
-            </React.Fragment>
-          ) : null}
-          {hasCustomFooter ? null : (
-            <div className="modal-children">
-              <Grid.Column className="modal-buttons">
-                <Button onClick={onCancel} type="button">
-                  {cancelLabel || t('global.cancel')}
-                </Button>
-                <Button
-                  onClick={onConfirm}
-                  type="button"
-                  primary
-                  disabled={isDisabled}
-                >
-                  {confirmLabel || t('global.confirm')}
-                </Button>
-              </Grid.Column>
-            </div>
-          )}
+          <div className="modal-children">
+            {children ? (
+              <React.Fragment>
+                {children}
+                <br />
+              </React.Fragment>
+            ) : null}
+            {hasCustomFooter ? null : (
+              <React.Fragment>
+                <Grid.Column className="modal-buttons">
+                  <Button onClick={onCancel} type="button">
+                    {cancelLabel || t('global.cancel')}
+                  </Button>
+                  <Button
+                    onClick={onConfirm}
+                    type="button"
+                    primary
+                    disabled={isDisabled}
+                  >
+                    {confirmLabel || t('global.confirm')}
+                  </Button>
+                </Grid.Column>
+              </React.Fragment>
+            )}
+          </div>
         </div>
       </div>
     )
