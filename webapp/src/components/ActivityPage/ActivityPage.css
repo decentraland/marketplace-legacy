@@ -1,7 +1,17 @@
-.ActivityPage.container {
+.ActivityPage {
   color: var(--text);
-  overflow-x: hidden;
-  overflow-y: visible;
+}
+
+@media (max-width: 768px) {
+  .ActivityPage {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .ActivityPage.container {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
 
 .ActivityPage .section-title {
@@ -41,11 +51,4 @@
 .ActivityPage .modal-title {
   font-size: 22px;
   font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .ActivityPage {
-    padding-left: 1em;
-    padding-right: 1em;
-  }
 }
