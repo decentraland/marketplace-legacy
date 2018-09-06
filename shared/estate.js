@@ -1,7 +1,7 @@
 export const MAX_PARCELS_PER_TX = 12
 
 export function isNewEstate(estate) {
-  return !estate || !estate.token_id
+  return !estate || !estate.id
 }
 
 export function isEstate(asset) {

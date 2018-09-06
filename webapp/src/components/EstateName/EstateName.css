@@ -1,0 +1,22 @@
+/* TODO: rules are duplicated on ParcelName */
+.EstateName {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline;
+}
+
+.EstateName a {
+  display: inline-block;
+  margin-top: 0;
+}
+
+.EstateName a:hover {
+  text-decoration: underline;
+}
+
+.EstateName .name {
+  color: var(--primary);
+  white-space: nowrap;
+  font-weight: bold;
+}

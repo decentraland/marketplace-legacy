@@ -7,6 +7,7 @@ import { coordsType, estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { calculateMapProps } from 'shared/estate'
 import TxStatus from 'components/TxStatus'
+import EstateName from 'components/EstateName'
 import './EstateModal.css'
 
 export default class EstateModal extends React.PureComponent {
@@ -75,40 +76,42 @@ export default class EstateModal extends React.PureComponent {
             <span className="modal-subtitle">{subtitle}</span>
           </div>
           <br />
-          {children ? (
-            <React.Fragment>
-              <div className="modal-children">{children}</div>
-              <br />
-            </React.Fragment>
-          ) : null}
-          {hasCustomFooter ? null : (
-            <div>
-              <Grid.Column>
-                <div className="modal-buttons">
+          <div className="modal-children">
+            {children ? (
+              <React.Fragment>
+                {children}
+                <br />
+              </React.Fragment>
+            ) : null}
+            {hasCustomFooter ? null : (
+              <React.Fragment>
+                <Grid.Column>
                   {isTxIdle && (
                     <div className="tx-idle">
                       <TxStatus.Idle isIdle={isTxIdle} />
                     </div>
                   )}
-                  <Button onClick={onCancel} type="button">
-                    {cancelLabel || t('global.cancel')}
-                  </Button>
-                  <Button
-                    onClick={onConfirm}
-                    type="button"
-                    primary
-                    disabled={isDisabled}
-                  >
-                    {confirmLabel || t('global.confirm')}
-                  </Button>
-                </div>
-              </Grid.Column>
-            </div>
-          )}
-          <TxStatus.Asset
-            asset={estate}
-            name={<span>{t('estate_detail.pending_tx')}</span>}
-          />
+                  <div className="modal-buttons">
+                    <Button onClick={onCancel} type="button">
+                      {cancelLabel || t('global.cancel')}
+                    </Button>
+                    <Button
+                      onClick={onConfirm}
+                      type="button"
+                      primary
+                      disabled={isDisabled}
+                    >
+                      {confirmLabel || t('global.confirm')}
+                    </Button>
+                  </div>
+                  <TxStatus.Asset
+                    asset={estate}
+                    name={<EstateName estate={estate} />}
+                  />
+                </Grid.Column>
+              </React.Fragment>
+            )}
+          </div>
         </div>
       </div>
     )

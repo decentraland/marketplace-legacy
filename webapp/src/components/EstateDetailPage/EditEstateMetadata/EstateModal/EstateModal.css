@@ -31,12 +31,11 @@
 }
 
 .EstateModal .modal-children {
-  margin: 0px 0px 0px 50px;
+  margin: 0 0 0 50px;
 }
 
-.EstateModal .tx-idle {
-  margin: 0 auto 20px;
-  width: 310px;
+.EstateModal .tx-idle{
+  margin: 0 0 20px;
 }
 
 /* TODO: rules are duplicated on ParcelModal */

@@ -61,8 +61,7 @@
     "maximum_parcels_message":
       "如果您在单个交易中添加或删除超过 {max} 个地块，交易费用可能会不足。您可以先提交此交易，然后在编辑连块土地中再增加或删除地块。",
     "maximum_parcels_title": "您达到了每笔交易的最大土地数",
-    "parcels": "包括地块",
-    "pending_tx": "连块土地"
+    "parcels": "包括地块"
   },
   "estate_dissolve": {
     "too_big": "连块土地太大了",

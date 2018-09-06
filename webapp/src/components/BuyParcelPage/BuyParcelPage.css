@@ -10,10 +10,6 @@
   font-weight: bolder;
 }
 
-.BuyParcelPage button + button {
-  margin-left: 15px !important;
-}
-
 .BuyParcelPage .sign-in {
   display: block;
   text-align: center;

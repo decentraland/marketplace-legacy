@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container, Message } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
 import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateModal'
 import Estate from 'components/Estate'
 import { isNewEstate, MAX_PARCELS_PER_TX } from 'shared/estate'
@@ -20,7 +20,7 @@ export default class DeleteEstatePage extends React.PureComponent {
   render() {
     const { id, isTxIdle, onCancel, onConfirm } = this.props
     return (
-      <Container className="DeleteEstatePage">
+      <div className="DeleteEstatePage">
         <Estate id={id} ownerOnly>
           {estate => (
             <React.Fragment>
@@ -49,7 +49,7 @@ export default class DeleteEstatePage extends React.PureComponent {
             </React.Fragment>
           )}
         </Estate>
-      </Container>
+      </div>
     )
   }
 }

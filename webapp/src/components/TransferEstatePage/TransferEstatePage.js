@@ -6,6 +6,7 @@ import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateMo
 import TxStatus from 'components/TxStatus'
 import { t, t_html } from 'modules/translation/utils'
 import TransferAssetForm from 'components/TransferAssetForm'
+import EstateName from 'components/EstateName'
 
 export default class TransferEstatePage extends React.PureComponent {
   static propTypes = {
@@ -40,7 +41,7 @@ export default class TransferEstatePage extends React.PureComponent {
               />
               <TxStatus.Asset
                 asset={estate}
-                name={<span>{t('estate_detail.pending_tx')}</span>}
+                name={<EstateName estate={estate} />}
               />
             </EstateModal>
           </div>
