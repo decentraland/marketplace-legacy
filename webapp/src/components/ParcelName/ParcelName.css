@@ -1,13 +1,10 @@
 .ParcelName {
   max-width: 400px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline;
 }
 
 .ParcelName a {
   display: inline-block;
-  margin-top: 0;
+  margin-top: 10px;
 }
 
 .ParcelName a:hover {
@@ -20,8 +17,8 @@
 
 .ParcelName .name {
   color: white;
-  white-space: nowrap;
   font-weight: bold;
+  display: block;
 }
 
 .ParcelName .marker.icon {
