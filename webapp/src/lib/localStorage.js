@@ -19,12 +19,20 @@ export const localStorage = hasLocalStorage()
   : { getItem: () => {}, setItem: () => {}, removeItem: () => {} }
 
 export function migrateLocalStorage() {
-  const dataString = localStorage.getItem(LOCAL_STORAGE_KEY)
-  const data = JSON.parse(dataString)
-  let version = parseInt(data.storage.version || 0) + 1
-  while (hasMigrateFunction(version)) {
-    migrations[version](data, version)
-    version++
+  let version = null
+  try {
+    const dataString = localStorage.getItem(LOCAL_STORAGE_KEY)
+    const data = JSON.parse(dataString)
+    version = parseInt(data.storage.version || 0) + 1
+    while (hasMigrateFunction(version)) {
+      migrations[version](data, version)
+      version++
+    }
+  } catch (error) {
+    window.Rollbar.info(
+      `Failed to migrate the user localstorage to version ${version}`,
+      error
+    )
   }
 }
 
