@@ -43,7 +43,7 @@ export async function updateParcelsData(parcels) {
     callback: async newParcels => {
       newParcels = await service.addLandData(newParcels)
       newParcels = await service.addOwners(newParcels)
-      newParcels = await service.addAssetIds(newParcels)
+      newParcels = await service.addTokenIds(newParcels)
 
       bar.tick(BATCH_SIZE)
 
