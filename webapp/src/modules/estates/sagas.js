@@ -192,11 +192,17 @@ function* handleTransferRequest({ estate, to }) {
       txHash,
       oldOwner,
       to,
-      estate: { id: estate.id, data: { name: estate.data.name } },
+      estate: {
+        id: estate.id,
+        data: {
+          name: estate.data.name,
+          parcels: estate.data.parcels // array of {x, y}
+        }
+      },
       id: estate.id
     }
 
-    yield put(push(locations.activity))
+    yield put(push(locations.activity()))
     yield put(transferEstateSuccess(txHash, transfer))
   } catch (error) {
     yield put(transferEstateFailure(error.message))

@@ -92,7 +92,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                     header={t('global.unauthorized')}
                     content={t_html('mortgage.please_authorize_MANA', {
                       settings_link: (
-                        <Link to={locations.settings}>Settings</Link>
+                        <Link to={locations.settings()}>Settings</Link>
                       )
                     })}
                   />
@@ -106,7 +106,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                     header={t('global.unauthorized')}
                     content={t_html('mortgage.please_authorize_RCN', {
                       settings_link: (
-                        <Link to={locations.settings}>Settings</Link>
+                        <Link to={locations.settings()}>Settings</Link>
                       )
                     })}
                   />
