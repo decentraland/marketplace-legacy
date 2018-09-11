@@ -16,16 +16,19 @@ import {
 } from 'modules/translation/actions'
 import { UPDATE_DERIVATION_PATH } from 'modules/wallet/actions'
 import { STORAGE_LOAD } from 'modules/storage/actions'
-import { hasLocalStorage } from 'lib/localStorage'
+import { hasLocalStorage, migrateLocalStorage } from 'lib/localStorage'
 
 export function createStorageMiddleware(storageKey) {
   if (!hasLocalStorage()) return disabledMiddleware
+
+  migrateLocalStorage()
 
   const storageEngine = filter(createStorageEngine(storageKey), [
     'transaction',
     'translation',
     ['wallet', 'data', 'locale'],
-    ['wallet', 'data', 'derivationPath']
+    ['wallet', 'data', 'derivationPath'],
+    ['storage', 'version']
   ])
 
   const storageMiddleware = storage.createMiddleware(

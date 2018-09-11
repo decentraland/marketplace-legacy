@@ -8,6 +8,7 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
+import { LOCAL_STORAGE_KEY } from 'lib/localStorage'
 
 import { createTransactionMiddleware } from 'modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'modules/analytics/middleware'
@@ -31,9 +32,8 @@ const transactionMiddleware = createTransactionMiddleware()
 const analyticsMiddleware = createAnalyticsMiddleware(
   env.get('REACT_APP_SEGMENT_API_KEY')
 )
-const storageMiddleware = createStorageMiddleware(
-  env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-marketplace')
-)
+
+const storageMiddleware = createStorageMiddleware(LOCAL_STORAGE_KEY)
 
 const middleware = applyMiddleware(
   thunk.withExtraArgument(api),
