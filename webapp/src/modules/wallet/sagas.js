@@ -207,6 +207,7 @@ function* handleTransactionSuccess(action) {
   const { transaction } = action
   switch (transaction.actionType) {
     case BUY_MANA_SUCCESS: {
+      yield delay(5000) // 5 seconds of delay to get new balances
       let address = yield call(() => eth.getAddress())
       address = address.toLowerCase()
       const manaTokenContract = eth.getContract('MANAToken')
