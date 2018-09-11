@@ -191,6 +191,7 @@
     },
     "expiration": "申请到期",
     "expiration_placeholder": "抵押到期日期",
+    "fetching_data": "获取抵押贷款数据",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "oracle": "Oracle合同地址",

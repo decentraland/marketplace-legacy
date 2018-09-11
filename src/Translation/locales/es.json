@@ -196,6 +196,7 @@
     },
     "expiration": "Solicitud de caducidad",
     "expiration_placeholder": "Fecha de vencimiento de la hipoteca",
+    "fetching_data": "Obteniendo datos de hipoteca",
     "interest_rate": "Tasa de interés",
     "interest_rate_placeholder": "Tasa de interés",
     "oracle": "Dirección del contrato de Oracle",

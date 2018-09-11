@@ -195,6 +195,7 @@
     },
     "expiration": "만료 요청",
     "expiration_placeholder": "모기지 만기일",
+    "fetching_data": "모기지 데이터 가져 오기",
     "interest_rate": "이자율",
     "interest_rate_placeholder": "이자율",
     "oracle": "오라클 계약 주소",
