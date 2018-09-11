@@ -122,16 +122,6 @@ export function walletReducer(state = INITIAL_STATE, action) {
               isMortgageApprovedForRCN: transaction.payload.rcn > 0
             }
           }
-        case BUY_MANA_SUCCESS: {
-          const mana = parseFloat(transaction.payload.mana)
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              balance: state.data.balance + mana
-            }
-          }
-        }
         default:
           return state
       }
