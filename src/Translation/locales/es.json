@@ -100,7 +100,7 @@
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancelar",
-    "change": "Cambio",
+    "change": "Cambiar",
     "check_address": "Por favor, compruebe la dirección con cuidado",
     "clear": "Borrar historial",
     "click_here": "Pincha aquí",
@@ -391,7 +391,7 @@
     "edit_estate_parcels_added": "Agregaste {amount} parcelas a {name}",
     "edit_estate_parcels_removed": "Has eliminado {amount} parcelas de {name}",
     "manage":
-      "Le dio {address_link} permiso para actualizar el contenido de {parcel_link}",
+      "Has dado a {address_link} permiso para actualizar el contenido de {parcel_link}",
     "manage_revoked":
       "Ha revocado el permiso {address_link} para actualizar el contenido de {parcel_link}",
     "mortgage_mana":
