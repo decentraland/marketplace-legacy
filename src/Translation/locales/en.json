@@ -195,6 +195,7 @@
     },
     "expiration": "Request expiration",
     "expiration_placeholder": "Expiration date for the mortgage",
+    "fetching_data": "Fetching mortgage data",
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
     "oracle": "Oracle contract address",

@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
-import { Form, Button, Input, Message, Grid } from 'semantic-ui-react'
+import { Form, Button, Input, Message, Grid, Icon } from 'semantic-ui-react'
+import debounce from 'lodash.debounce'
 
 import TxStatus from 'components/TxStatus'
 import AddressBlock from 'components/AddressBlock'
@@ -10,6 +11,7 @@ import { parcelType, publicationType } from 'components/types'
 import { preventDefault, formatDate } from 'lib/utils'
 import { t } from 'modules/translation/utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
+import { fetchMortgageData } from './utils'
 
 import './MortgageForm.css'
 
@@ -21,6 +23,8 @@ const MINIMUM_DURATION_DAYS = 1
 const MINIMUM_PAYABLE_DAYS = 0
 const MAXIMUM_INTEREST_RATE = 100
 const MINIMUM_INTEREST_RATE = 1
+const PAYABLE_AT_COEFFICIENT = 0.3
+const PUNITORY_RATE_COEFFICIENT = 1.5
 
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
@@ -42,6 +46,8 @@ export default class MortgageForm extends React.PureComponent {
   constructor(props) {
     super(props)
 
+    this.debouncedFetchMortgageData = debounce(this.fetchMortgageData, 400)
+
     this.state = {
       amount: '',
       duration: '',
@@ -49,14 +55,35 @@ export default class MortgageForm extends React.PureComponent {
       expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
       interestRate: 0,
       punitoryRate: 0,
-      formErrors: []
+      formErrors: [],
+      isLoading: false
     }
   }
 
   handleChangeNumber = (e, key) => {
+    const value = e.currentTarget.value
+      ? parseInt(e.currentTarget.value, 10)
+      : ''
+    this.setState(
+      {
+        [key]: value,
+        formErrors: []
+      },
+      async () =>
+        key === 'duration' ? this.debouncedFetchMortgageData() : true
+    )
+  }
+
+  fetchMortgageData = async () => {
+    this.setState({ isLoading: true })
+    const { duration } = this.state
+    const { x, y } = this.props.parcel
+    const { interest_rate } = await fetchMortgageData(x, y, duration)
     this.setState({
-      [key]: e.currentTarget.value ? parseInt(e.currentTarget.value, 10) : '',
-      formErrors: []
+      interestRate: parseInt(interest_rate, 10),
+      punitoryRate: parseInt(interest_rate * PUNITORY_RATE_COEFFICIENT, 10),
+      payableAt: parseInt(duration * PAYABLE_AT_COEFFICIENT, 10),
+      isLoading: false
     })
   }
 
@@ -186,7 +213,8 @@ export default class MortgageForm extends React.PureComponent {
       interestRate,
       duration,
       punitoryRate,
-      formErrors
+      formErrors,
+      isLoading
     } = this.state
 
     return (
@@ -292,6 +320,14 @@ export default class MortgageForm extends React.PureComponent {
         ) : null}
         {error && <Message error>{<div>{error}</div>}</Message>}
         <br />
+        {isLoading && (
+          <div className="loader-wrapper">
+            <Message icon>
+              <Icon name="circle notched" loading />
+              <Message.Content>{t('mortgage.fetching_data')}</Message.Content>
+            </Message>
+          </div>
+        )}
         <div className="actions">
           <Button onClick={onCancel} type="button">
             {t('global.cancel')}
@@ -299,7 +335,7 @@ export default class MortgageForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={isTxIdle || isDisabled}
+            disabled={isTxIdle || isLoading || isDisabled}
           >
             {t('global.request')}
           </Button>

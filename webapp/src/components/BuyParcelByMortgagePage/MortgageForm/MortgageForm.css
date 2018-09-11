@@ -44,3 +44,7 @@
 .MortgageForm .ui.error.message div {
    word-wrap: break-word;
  }
+
+ .MortgageForm .loader-wrapper {
+   position: relative;
+ }
