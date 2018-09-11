@@ -25,8 +25,11 @@ export function migrateLocalStorage() {
     const data = JSON.parse(dataString)
     version = parseInt(data.storage.version || 0) + 1
     while (hasMigrateFunction(version)) {
-      const newData = migrations[version](data, version)
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData))
+      const newData = migrations[version](data)
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY,
+        JSON.stringify({ ...newData, storage: { version } })
+      )
       version++
     }
   } catch (error) {
@@ -42,5 +45,5 @@ function hasMigrateFunction(version) {
 }
 
 const migrations = {
-  '1': (data, version) => ({ ...data, storage: { version } })
+  '1': data => data
 }
