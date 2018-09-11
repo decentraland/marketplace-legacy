@@ -9,9 +9,9 @@ import { ConnectedRouter } from 'react-router-redux'
 import { env } from 'decentraland-commons'
 
 import Routes from './Routes'
+import './rollbar'
 import { store, history } from './store'
 
-import './rollbar'
 import './index.css'
 
 env.load()
