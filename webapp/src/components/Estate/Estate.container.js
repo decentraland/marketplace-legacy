@@ -21,7 +21,7 @@ const mapState = (state, { id, x, y }) => {
 
 const mapDispatch = (dispatch, { id }) => ({
   onLoaded: () => id && dispatch(fetchEstateRequest(id)),
-  onAccessDenied: () => dispatch(push(locations.marketplace))
+  onAccessDenied: () => dispatch(push(locations.marketplace()))
 })
 
 export default connect(mapState, mapDispatch)(Estate)
