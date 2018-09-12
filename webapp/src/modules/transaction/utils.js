@@ -28,10 +28,10 @@ export function buildTransactionWithReceiptAction(
   payload = {},
   events = []
 ) {
-  return {
-    ...buildTransactionAction(hash, payload, events),
-    withReceipt: true
-  }
+  const txAction = buildTransactionAction(hash, payload, events)
+  txAction[TRANSACTION_ACTION_FLAG].withReceipt = true
+
+  return txAction
 }
 
 export function isTransactionRejectedError(message) {
