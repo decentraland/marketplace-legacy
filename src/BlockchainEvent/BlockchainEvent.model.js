@@ -1,4 +1,5 @@
 import { env, Model } from 'decentraland-commons'
+import { BlockchainEventQueries } from './BlockchainEvent.queries'
 import { SQL } from '../database'
 
 export class BlockchainEvent extends Model {
@@ -129,19 +130,19 @@ export class BlockchainEvent extends Model {
     )
   }
 
-  static findByArgsAssetId(assetId) {
+  static findByArgs(argName, assetId) {
     return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
-        WHERE args->>'assetId' = ${assetId}
-        ORDER BY block_number DESC, log_index DESC`
+        WHERE ${BlockchainEventQueries.byArgs(argName, assetId)}
+        ORDER BY block_number ASC, log_index ASC`
     )
   }
 
-  static deleteByArgsAssetId(assetId) {
+  static deleteByArgs(argName, assetId) {
     return this.db.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
-        WHERE args->>'assetId' = ${assetId}`
+        WHERE ${BlockchainEventQueries.byArgs(argName, assetId)}`
     )
   }
 

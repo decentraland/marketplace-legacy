@@ -42,15 +42,11 @@ async function updateAllPublications() {
 }
 
 async function updateBlockTimes(publications) {
-  publications = publications.filter(parcel => !parcel.block_time_created_at) // avoid adding a new method to Publication
+  publications = publications.filter(parcel => !parcel.block_time_created_at) // Filter to avoid adding a new method to Publication
 
   await asyncBatch({
     elements: publications,
-    callback: async (publicationsBatch, batchedCount) => {
-      log.info(
-        `Updating ${batchedCount}/${publications.length} publications...`
-      )
-
+    callback: async publicationsBatch => {
       const updates = publicationsBatch.map(async publication => {
         const block_time_created_at = await new BlockTimestampService().getBlockTime(
           publication.block_number
@@ -69,7 +65,7 @@ async function updateBlockTimes(publications) {
 
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 200), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

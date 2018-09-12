@@ -47,36 +47,34 @@ export async function parcelReducer(events, event) {
       break
     }
     case events.addLand: {
-      if (parcelId) {
-        const { _estateId } = event.args
-        const estate = await Estate.findByTokenId(_estateId)
-        if (estate) {
-          log.info(
-            `[${name}] Adding "${parcelId}" as part of the estate with token id "${_estateId}"`
-          )
+      if (!parcelId) return
 
-          await Parcel.update({ estate_id: _estateId }, { id: parcelId })
-        } else {
-          log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
-        }
+      const { _estateId } = event.args
+      const estate = await Estate.findByTokenId(_estateId)
+      if (estate) {
+        log.info(
+          `[${name}] Adding "${parcelId}" as part of the estate with token id "${_estateId}"`
+        )
+
+        await Parcel.update({ estate_id: _estateId }, { id: parcelId })
+      } else {
+        log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
       }
       break
     }
     case events.removeLand: {
-      if (parcelId) {
-        const { _estateId } = event.args
-        const estate = await Estate.findByTokenId(_estateId)
-        if (estate) {
-          log.info(
-            `[${name}] Removing "${parcelId}" as part of the estate with token id "${_estateId}"`
-          )
+      if (!parcelId) return
 
-          await Parcel.update({ estate_id: null }, { id: parcelId })
-        } else {
-          log.info(
-            `[${name}] Estate with token id  ${_estateId} does not exist`
-          )
-        }
+      const { _estateId } = event.args
+      const estate = await Estate.findByTokenId(_estateId)
+      if (estate) {
+        log.info(
+          `[${name}] Removing "${parcelId}" as part of the estate with token id "${_estateId}"`
+        )
+
+        await Parcel.update({ estate_id: null }, { id: parcelId })
+      } else {
+        log.info(`[${name}] Estate with token id  ${_estateId} does not exist`)
       }
       break
     }

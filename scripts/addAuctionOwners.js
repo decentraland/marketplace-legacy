@@ -32,15 +32,9 @@ async function normalizeParcelStates() {
   let parcelStates = await db.query('SELECT * FROM parcel_states')
   parcelStates = parcelStates.filter(parcel => parcel.address)
 
-  let count = 0
-
   await asyncBatch({
     elements: parcelStates,
     callback: async parcelStatesBatch => {
-      count += parcelStatesBatch.length
-
-      log.info(`Updating ${count}/${parcelStates.length} parcels...`)
-
       const updates = parcelStatesBatch.map(parcelState =>
         Parcel.update(
           { auction_owner: parcelState.address },

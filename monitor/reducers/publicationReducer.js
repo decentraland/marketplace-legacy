@@ -13,6 +13,7 @@ const log = new Log('publicationReducer')
 export async function publicationReducer(events, event) {
   const { tx_hash, block_number, name, normalizedName } = event
   const parcelId = await getParcelIdFromEvent(event)
+
   switch (normalizedName) {
     case events.publicationCreated: {
       const { seller, priceInWei, expiresAt } = event.args

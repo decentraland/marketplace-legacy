@@ -1,7 +1,6 @@
 #!/usr/bin/env babel-node
 import { eth, contracts } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
-import ProgressBar from 'progress'
 
 import { db } from '../src/database'
 import { Parcel, ParcelService } from '../src/Parcel'
@@ -31,21 +30,15 @@ export async function renewBlockchainData() {
 }
 
 export async function updateParcelsData(parcels) {
-  const bar = new ProgressBar(
-    'Processing [:bar] :percent :current/:total parcels',
-    { total: parcels.length }
-  )
   const service = new ParcelService()
-
   let updates = []
+
   await asyncBatch({
     elements: parcels,
     callback: async newParcels => {
       newParcels = await service.addLandData(newParcels)
       newParcels = await service.addOwners(newParcels)
       newParcels = await service.addTokenIds(newParcels)
-
-      bar.tick(BATCH_SIZE)
 
       updates = updates.concat(
         newParcels.map(({ id, ...parcel }) => Parcel.update(parcel, { id }))
