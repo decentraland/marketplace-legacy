@@ -63,6 +63,6 @@ if (require.main === module) {
 
   main().catch(error => {
     log.error(error)
-    process.exit()
+    process.exit(1)
   })
 }
