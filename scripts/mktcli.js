@@ -378,6 +378,6 @@ if (require.main === module) {
     .then(() => cli.runProgram([main]))
     .catch(error => {
       log.error(error)
-      process.exit()
+      process.exit(1)
     })
 }
