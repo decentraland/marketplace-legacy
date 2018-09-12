@@ -195,6 +195,7 @@
     },
     "expiration": "有効期限を申請する",
     "expiration_placeholder": "担保の有効期限",
+    "fetching_data": "住宅ローンデータの取得",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "oracle": "オクラルコントラクトのアドレス",

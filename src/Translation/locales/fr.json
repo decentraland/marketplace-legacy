@@ -201,6 +201,7 @@
     },
     "expiration": "Demande d'expiration",
     "expiration_placeholder": "Date d'expiration de l'hypothèque",
+    "fetching_data": "Récupération des données hypothécaires",
     "interest_rate": "Taux d'intérêt",
     "interest_rate_placeholder": "Taux d'intérêt",
     "oracle": "Adresse du contrat Oracle",
