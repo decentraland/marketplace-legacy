@@ -23,6 +23,17 @@ export function buildTransactionAction(hash, payload = {}, events = []) {
   }
 }
 
+export function buildTransactionWithReceiptAction(
+  hash,
+  payload = {},
+  events = []
+) {
+  return {
+    ...buildTransactionAction(hash, payload, events),
+    withReceipt: true
+  }
+}
+
 export function isTransactionRejectedError(message) {
   // "Recommended" way to check for rejections
   // https://github.com/MetaMask/faq/issues/6#issuecomment-264900031

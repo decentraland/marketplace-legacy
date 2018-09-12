@@ -37,7 +37,9 @@ function* handleTransactionRequest(action = {}) {
       fetchTransactionSuccess({
         ...transaction,
         status: TRANSACTION_STATUS.confirmed,
-        receipt
+        receipt: {
+          logs: transaction.withReceipt ? receipt.receipt.logs : []
+        }
       })
     )
   } catch (error) {
