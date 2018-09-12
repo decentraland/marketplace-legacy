@@ -85,7 +85,7 @@ export default class PublicationForm extends React.PureComponent {
       )
     }
 
-    if (price <= MINIMUM_LAND_PRICE) {
+    if (price < MINIMUM_LAND_PRICE) {
       formErrors.push(
         t('parcel_publish.errors.minimum_land_price', {
           value: formatMana(MINIMUM_LAND_PRICE, '')
@@ -93,7 +93,7 @@ export default class PublicationForm extends React.PureComponent {
       )
     }
 
-    if (price >= Number.MAX_SAFE_INTEGER) {
+    if (price > Number.MAX_SAFE_INTEGER) {
       formErrors.push(
         t('parcel_publish.errors.maximum_land_price', {
           value: formatMana(Number.MAX_SAFE_INTEGER, '')
@@ -153,7 +153,6 @@ export default class PublicationForm extends React.PureComponent {
             {formErrors.map((error, index) => <div key={index}>{error}</div>)}
           </Message>
         ) : null}
-        <br />
         <div className="modal-buttons">
           <Button onClick={onCancel} type="button">
             {t('global.cancel')}
@@ -161,7 +160,7 @@ export default class PublicationForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={isTxIdle || isDisabled}
+            disabled={isTxIdle || isDisabled || price <= 0}
           >
             {t('global.submit')}
           </Button>

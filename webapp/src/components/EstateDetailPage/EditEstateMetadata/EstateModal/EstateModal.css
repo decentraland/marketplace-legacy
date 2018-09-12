@@ -34,8 +34,8 @@
   margin: 0 0 0 50px;
 }
 
-.EstateModal .tx-idle{
-  margin: 0 0 20px;
+.EstateModal .modal-buttons {
+  margin-top: 20px;
 }
 
 /* TODO: rules are duplicated on ParcelModal */

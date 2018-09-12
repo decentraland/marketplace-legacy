@@ -48,6 +48,7 @@ export default class BuyManaPage extends React.PureComponent {
         subtitle={t('buy_mana.available_eth', {
           eth: wallet.ethBalance ? wallet.ethBalance.toFixed(5) : 0
         })}
+        isTxIdle={isTxIdle}
         hasCustomFooter
       >
         <BuyManaForm

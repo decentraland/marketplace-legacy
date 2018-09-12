@@ -34,6 +34,10 @@
   margin: 0px 0px 0px 50px;
 }
 
+.ParcelModal .modal-buttons {
+  margin-top: 20px;
+}
+
 /* TODO: rules are duplicated on EstateModal */
 @media (max-width: 768px) {
   .ParcelModal {

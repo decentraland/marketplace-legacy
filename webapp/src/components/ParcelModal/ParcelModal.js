@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Grid, Header } from 'semantic-ui-react'
+
 import ParcelPreview from 'components/ParcelPreview'
+import TxStatus from 'components/TxStatus'
 import { t } from 'modules/translation/utils'
 import './ParcelModal.css'
 
@@ -14,7 +16,8 @@ export default class ParcelModal extends React.PureComponent {
     cancelLabel: PropTypes.string,
     confirmLabel: PropTypes.string,
     children: PropTypes.node,
-    preview: PropTypes.node
+    preview: PropTypes.node,
+    isTxIdle: PropTypes.bool
   }
 
   static defaultProps = {
@@ -37,6 +40,7 @@ export default class ParcelModal extends React.PureComponent {
       onCancel,
       onConfirm,
       preview,
+      isTxIdle,
       children
     } = this.props
 
@@ -58,16 +62,12 @@ export default class ParcelModal extends React.PureComponent {
             </Header>
             <span className="modal-subtitle">{subtitle}</span>
           </div>
-          <br />
           <div className="modal-children">
-            {children ? (
-              <React.Fragment>
-                {children}
-                <br />
-              </React.Fragment>
-            ) : null}
+            {children ? children : null}
             {hasCustomFooter ? null : (
               <React.Fragment>
+                <TxStatus.Idle isIdle={isTxIdle} />
+
                 <Grid.Column className="modal-buttons">
                   <Button onClick={onCancel} type="button">
                     {cancelLabel || t('global.cancel')}

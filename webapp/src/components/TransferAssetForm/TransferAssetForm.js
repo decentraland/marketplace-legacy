@@ -88,9 +88,9 @@ export default class TransferAssetForm extends React.PureComponent {
             </React.Fragment>
           ) : null}
         </Form.Field>
-        <br />
+
         <TxStatus.Idle isIdle={isTxIdle} />
-        <br />
+
         <div className="modal-buttons">
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}

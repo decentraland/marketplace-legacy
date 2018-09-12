@@ -17,6 +17,7 @@ export default class DeleteEstatePage extends React.PureComponent {
   isTooBig(estate) {
     return estate.data.parcels.length > MAX_PARCELS_PER_TX
   }
+
   render() {
     const { id, isTxIdle, onCancel, onConfirm } = this.props
     return (

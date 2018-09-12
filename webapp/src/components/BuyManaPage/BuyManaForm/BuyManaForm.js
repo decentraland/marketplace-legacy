@@ -216,9 +216,8 @@ export default class BuyManaForm extends React.PureComponent {
           <label className="warning">{t('global.service_unavailable')}</label>
         )}
 
-        <br />
         <TxStatus.Idle isIdle={isTxIdle} />
-        <br />
+
         <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
