@@ -30,35 +30,67 @@ export default class Footer extends React.PureComponent {
       <footer className="Footer">
         <div className="footer-column left">
           <div className="links">
-            <Link to="https://blog.decentraland.org" target="_blank">
+            <a
+              href="https://blog.decentraland.org"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               {t('global.blog')}
-            </Link>
-            <Link to="https://decentraland.org" target="_blank">
+            </a>
+            <a
+              href="https://decentraland.org"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               {t('global.website')}
-            </Link>
-            <Link to="https://docs.decentraland.org" target="_blank">
+            </a>
+            <a
+              href="https://docs.decentraland.org"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               FAQ
-            </Link>
+            </a>
             <Link to={locations.colorKey()}>{t('footer.color_key')}</Link>
             <Link to={locations.privacy()}>{t('footer.privacy_policy')}</Link>
             <Link to={locations.terms()}>{t('footer.terms')}</Link>
           </div>
           <div className="social-icons">
-            <Link to="https://twitter.com/decentraland/" target="_blank">
+            <a
+              href="https://twitter.com/decentraland/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <Icon name="twitter" />
-            </Link>
-            <Link to="https://chat.decentraland.org/" target="_blank">
+            </a>
+            <a
+              href="https://chat.decentraland.org/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <Icon name="rocketchat" />
-            </Link>
-            <Link to="https://github.com/decentraland/" target="_blank">
+            </a>
+            <a
+              href="https://github.com/decentraland/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <Icon name="github" />
-            </Link>
-            <Link to="https://reddit.com/r/decentraland/" target="_blank">
+            </a>
+            <a
+              href="https://reddit.com/r/decentraland/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <Icon name="reddit" />
-            </Link>
-            <Link to="https://www.facebook.com/decentraland/" target="_blank">
+            </a>
+            <a
+              href="https://www.facebook.com/decentraland/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <Icon name="facebook" />
-            </Link>
+            </a>
           </div>
         </div>
         <div className="footer-column right">
