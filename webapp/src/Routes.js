@@ -40,10 +40,8 @@ export default class Routes extends React.Component {
     return (
       <Switch>
         <Route exact path={locations.root()} component={HomePage} />
-
         {/*Addresses*/}
         <Route exact path={locations.profilePage()} component={ProfilePage} />
-
         {/*Parcels*/}
         <Route
           exact
@@ -87,60 +85,40 @@ export default class Routes extends React.Component {
         />
 
         {/*Estates*/}
-        {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.createEstate()}
-            component={EstateDetailPage}
-          />
-        )}
-        {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.estateDetail()}
-            component={EstateDetailPage}
-          />
-        )}
-        {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.editEstateParcels()}
-            component={props => (
-              <EstateDetailPage
-                isSelecting={true}
-                isEditing={true}
-                {...props}
-              />
-            )}
-          />
-        )}
-        {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.editEstateMetadata()}
-            component={props => (
-              <EstateDetailPage
-                isSelecting={false}
-                isEditing={true}
-                {...props}
-              />
-            )}
-          />
-        )}
-        {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.deleteEstate()}
-            component={DeleteEstatePage}
-          />
-        )}
-        {isFeatureEnabled('ESTATES') && (
-          <Route
-            exact
-            path={locations.transferEstate()}
-            component={TransferEstatePage}
-          />
-        )}
+        <Route
+          exact
+          path={locations.createEstate()}
+          component={EstateDetailPage}
+        />
+        <Route
+          exact
+          path={locations.estateDetail()}
+          component={EstateDetailPage}
+        />
+        <Route
+          exact
+          path={locations.editEstateParcels()}
+          component={props => (
+            <EstateDetailPage isSelecting={true} isEditing={true} {...props} />
+          )}
+        />
+        <Route
+          exact
+          path={locations.editEstateMetadata()}
+          component={props => (
+            <EstateDetailPage isSelecting={false} isEditing={true} {...props} />
+          )}
+        />
+        <Route
+          exact
+          path={locations.deleteEstate()}
+          component={DeleteEstatePage}
+        />
+        <Route
+          exact
+          path={locations.transferEstate()}
+          component={TransferEstatePage}
+        />
 
         {/*Mortgages*/}
         {isFeatureEnabled('MORTGAGES') && (
@@ -157,7 +135,6 @@ export default class Routes extends React.Component {
             component={PayMortgagePage}
           />
         )}
-
         {/*General routes*/}
         <Route
           exact
@@ -176,7 +153,6 @@ export default class Routes extends React.Component {
         <Route exact path={locations.privacy()} component={PrivacyPage} />
         <Route exact path={locations.terms()} component={TermsPage} />
         <Route exact path={locations.signIn()} component={SignInPage} />
-
         <Redirect to={locations.root()} />
       </Switch>
     )

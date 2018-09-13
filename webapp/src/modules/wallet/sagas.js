@@ -39,10 +39,6 @@ import {
   approveMortgageForRCNFailure
 } from './actions'
 import { getData } from './selectors'
-import { locations } from 'locations'
-import { isLoading as isStorageLoading } from 'modules/storage/selectors'
-import { fetchAddress } from 'modules/address/actions'
-import { watchLoadingTransactions } from 'modules/transaction/actions'
 import {
   connectEthereumWallet,
   getMarketplaceAddress,
@@ -51,7 +47,10 @@ import {
   sendTransaction,
   fetchBalance
 } from './utils'
-import { isFeatureEnabled } from 'lib/featureUtils'
+import { locations } from 'locations'
+import { isLoading as isStorageLoading } from 'modules/storage/selectors'
+import { fetchAddress } from 'modules/address/actions'
+import { watchLoadingTransactions } from 'modules/transaction/actions'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
@@ -106,9 +105,7 @@ function* handleConnectWalletRequest(action = {}) {
       manaTokenContract.balanceOf(address),
       fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
-      isFeatureEnabled('ESTATES') // @nacho TODO: remove when isApprovedForAll is updated in mainnet
-        ? landRegistryContract.isApprovedForAll(address, marketplaceAddress)
-        : landRegistryContract.isApprovedForAll(marketplaceAddress, address),
+      landRegistryContract.isApprovedForAll(address, marketplaceAddress),
       manaTokenContract.allowance(address, mortgageHelperAddress),
       rcnTokenContract.allowance(address, mortgageManagerAddress)
     ])

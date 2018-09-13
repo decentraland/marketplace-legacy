@@ -218,16 +218,14 @@ export default class ProfilePage extends React.PureComponent {
                 PROFILE_PAGE_TABS.publications
               )}
             </Menu.Item>
-            {isFeatureEnabled('ESTATES') && (
-              <Menu.Item
-                name={PROFILE_PAGE_TABS.estates}
-                active={this.isActive(PROFILE_PAGE_TABS.estates)}
-                onClick={this.handleItemClick}
-              >
-                {t('global.estates')}
-                {this.renderBadge(estates, PROFILE_PAGE_TABS.estates)}
-              </Menu.Item>
-            ) /* Estate Feature */}
+            <Menu.Item
+              name={PROFILE_PAGE_TABS.estates}
+              active={this.isActive(PROFILE_PAGE_TABS.estates)}
+              onClick={this.handleItemClick}
+            >
+              {t('global.estates')}
+              {this.renderBadge(estates, PROFILE_PAGE_TABS.estates)}
+            </Menu.Item>
             {isFeatureEnabled('MORTGAGES') &&
               isOwner && (
                 <Menu.Item
