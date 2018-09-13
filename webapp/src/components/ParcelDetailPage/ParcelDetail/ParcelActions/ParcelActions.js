@@ -23,10 +23,7 @@ export default class ParcelActions extends React.PureComponent {
 
   canCreateEstate = () => {
     const { wallet, parcel } = this.props
-    return (
-      isFeatureEnabled('ESTATES') &&
-      hasParcelsConnected(parcel, wallet.parcelsById)
-    )
+    return hasParcelsConnected(parcel, wallet.parcelsById)
   }
 
   render() {
