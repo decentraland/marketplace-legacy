@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { localStorage } from 'lib/localStorage'
+import { localStorage } from 'decentraland-dapps/dist/lib/localStorage'
 import { Button } from 'semantic-ui-react'
 
 import DecentralandLogo from 'components/DecentralandLogo'

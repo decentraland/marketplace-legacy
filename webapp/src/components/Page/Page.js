@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
 import TranslationProvider from './TranslationProvider'
-import { localStorage } from 'lib/localStorage'
+import { localStorage } from 'decentraland-dapps/dist/lib/localStorage'
 
 import './Page.css'
 
