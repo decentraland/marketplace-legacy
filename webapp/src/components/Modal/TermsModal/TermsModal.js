@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { localStorage } from 'decentraland-dapps/dist/lib/localStorage'
+import { getLocalStorage } from 'decentraland-dapps/dist/lib/localStorage'
 import { Button } from 'semantic-ui-react'
 
 import DecentralandLogo from 'components/DecentralandLogo'
@@ -26,6 +26,7 @@ export default class TermsModal extends React.PureComponent {
   handleOnClose = () => {
     if (this.state.acceptedTerms) {
       this.props.onClose()
+      const localStorage = getLocalStorage()
       localStorage.setItem('seenTermsModal', new Date().getTime())
     }
   }
