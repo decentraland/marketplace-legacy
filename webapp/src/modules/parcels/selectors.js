@@ -23,11 +23,11 @@ export const isEditTransactionIdle = state =>
 export const isManageTransactionIdle = state =>
   isLoadingType(getLoading(state), MANAGE_PARCEL_REQUEST)
 
-export const isFetchingParcel = state =>
-  isLoadingType(getLoading(state), FETCH_PARCEL_REQUEST)
-
 export const isTransferIdle = state =>
   isLoadingType(getLoading(state), TRANSFER_PARCEL_REQUEST)
+
+export const isFetchingParcel = state =>
+  isLoadingType(getLoading(state), FETCH_PARCEL_REQUEST)
 
 export const getPublications = (x, y) =>
   createSelector(getData, getAllPublications, (parcels, publications) => {

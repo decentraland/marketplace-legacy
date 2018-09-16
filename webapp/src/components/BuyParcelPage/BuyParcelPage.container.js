@@ -8,8 +8,9 @@ import {
   getPublicationByCoordinate,
   getLoading
 } from 'modules/publication/selectors'
-import { BUY_REQUEST, buyRequest } from 'modules/publication/actions'
 import { isLoadingType } from 'modules/loading/selectors'
+import { isBuyIdle } from 'modules/publication/selectors'
+import { BUY_REQUEST, buyRequest } from 'modules/publication/actions'
 
 import BuyParcelPage from './BuyParcelPage'
 
@@ -21,6 +22,7 @@ const mapState = (state, ownProps) => {
     y,
     publication: getPublicationByCoordinate(state, x, y),
     isDisabled: isLoadingType(getLoading(state), BUY_REQUEST),
+    isTxIdle: isBuyIdle(state),
     wallet: getWallet(state),
     isConnected: isConnected(state),
     isLoading: isConnecting(state)

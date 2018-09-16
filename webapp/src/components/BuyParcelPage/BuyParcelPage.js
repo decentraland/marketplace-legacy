@@ -132,7 +132,15 @@ export default class BuyParcelPage extends React.PureComponent {
   }
 
   renderPage() {
-    const { wallet, x, y, publication, isDisabled, onCancel } = this.props
+    const {
+      wallet,
+      x,
+      y,
+      publication,
+      isDisabled,
+      isTxIdle,
+      onCancel
+    } = this.props
     const { balance, approvedBalance } = wallet
 
     const price = publication ? parseFloat(publication.price) : 0
@@ -170,6 +178,7 @@ export default class BuyParcelPage extends React.PureComponent {
               onCancel={onCancel}
               onConfirm={this.handleConfirm}
               isDisabled={isDisabled || isNotEnoughMana || isNotEnoughApproved}
+              isTxIdle={isTxIdle}
             />
           </div>
         )}

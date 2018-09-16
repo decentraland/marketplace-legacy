@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Button, Grid, Header } from 'semantic-ui-react'
 
 import ParcelPreview from 'components/ParcelPreview'
+import TxStatus from 'components/TxStatus'
+import EstateName from 'components/EstateName'
 import { coordsType, estateType } from 'components/types'
 import { t } from 'modules/translation/utils'
 import { calculateMapProps } from 'shared/estate'
-import TxStatus from 'components/TxStatus'
-import EstateName from 'components/EstateName'
 import './EstateModal.css'
 
 export default class EstateModal extends React.PureComponent {
@@ -75,22 +75,12 @@ export default class EstateModal extends React.PureComponent {
             </Header>
             <span className="modal-subtitle">{subtitle}</span>
           </div>
-          <br />
           <div className="modal-children">
-            {children ? (
-              <React.Fragment>
-                {children}
-                <br />
-              </React.Fragment>
-            ) : null}
+            {children ? children : null}
             {hasCustomFooter ? null : (
               <React.Fragment>
                 <Grid.Column>
-                  {isTxIdle && (
-                    <div className="tx-idle">
-                      <TxStatus.Idle isIdle={isTxIdle} />
-                    </div>
-                  )}
+                  <TxStatus.Idle isIdle={isTxIdle} />
                   <div className="modal-buttons">
                     <Button onClick={onCancel} type="button">
                       {cancelLabel || t('global.cancel')}

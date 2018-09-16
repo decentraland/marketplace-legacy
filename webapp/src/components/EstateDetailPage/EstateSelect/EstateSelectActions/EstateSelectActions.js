@@ -38,6 +38,7 @@ export default class EstateSelectActions extends React.PureComponent {
           size="tiny"
           disabled={isCreation ? !canContinue : !canSubmit}
           onClick={isCreation ? onContinue : onSubmit}
+          primary
         >
           {isCreation ? t('global.continue') : t('global.submit')}
         </Button>

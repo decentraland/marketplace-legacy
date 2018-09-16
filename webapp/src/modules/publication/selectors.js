@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import {
   PUBLISH_REQUEST,
   PUBLISH_SUCCESS,
+  BUY_REQUEST,
   CANCEL_SALE_REQUEST
 } from './actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
@@ -19,6 +20,8 @@ export const getError = state => getState(state).error
 
 export const isPublishingIdle = state =>
   isLoadingType(getLoading(state), PUBLISH_REQUEST)
+
+export const isBuyIdle = state => isLoadingType(getLoading(state), BUY_REQUEST)
 
 export const isCancelIdle = state =>
   isLoadingType(getLoading(state), CANCEL_SALE_REQUEST)
