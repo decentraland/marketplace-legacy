@@ -1,4 +1,7 @@
-import { buildTransactionAction } from 'modules/transaction/utils'
+import {
+  buildTransactionAction,
+  buildTransactionWithReceiptAction
+} from 'modules/transaction/utils'
 
 export const ADD_PARCELS = 'add'
 export const REMOVE_PARCELS = 'remove'
@@ -19,7 +22,7 @@ export function createEstateRequest(estate) {
 export function createEstateSuccess(txHash, estate) {
   return {
     type: CREATE_ESTATE_SUCCESS,
-    ...buildTransactionAction(txHash, {
+    ...buildTransactionWithReceiptAction(txHash, {
       estate,
       tx_hash: txHash
     }),

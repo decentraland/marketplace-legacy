@@ -19,11 +19,13 @@ export const localStorage = hasLocalStorage()
   : { getItem: () => {}, setItem: () => {}, removeItem: () => {} }
 
 export function migrateLocalStorage() {
-  let version = null
+  let version = 1 // initial value for versions
   try {
     const dataString = localStorage.getItem(LOCAL_STORAGE_KEY)
     const data = JSON.parse(dataString)
-    version = parseInt(data.storage.version || 0) + 1
+    if (data.storage) {
+      version = parseInt(data.storage.version || 0) + 1
+    }
     while (hasMigrateFunction(version)) {
       const newData = migrations[version](data)
       localStorage.setItem(
@@ -45,5 +47,17 @@ function hasMigrateFunction(version) {
 }
 
 const migrations = {
-  '1': data => data
+  '1': data => data,
+  '2': data => {
+    const transaction = data.transaction
+    if (transaction && transaction.data) {
+      transaction.data = transaction.data.map(tx => {
+        return {
+          ...tx,
+          receipt: null // Remove previous receipt. Will save receipt on demand
+        }
+      })
+    }
+    return { ...data, transaction }
+  }
 }

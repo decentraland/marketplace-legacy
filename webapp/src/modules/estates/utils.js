@@ -25,8 +25,8 @@ export function validateCoords(x, y) {
   }
 }
 
-export function getEstateIdFromTxReceipt({ receipt }) {
-  const createEstateLog = receipt.logs.find(log => log.name === 'CreateEstate')
+export function getEstateIdFromTxReceipt({ logs }) {
+  const createEstateLog = logs.find(log => log.name === 'CreateEstate')
   const estateIdArg = createEstateLog.events.find(
     args => args.name === '_estateId'
   )
