@@ -80,18 +80,6 @@ export default class EstateSelect extends React.PureComponent {
     onChange([...parcels, { x, y }])
   }
 
-  canContinue = parcels => {
-    if (parcels.length > 1) {
-      return true
-    }
-
-    if (this.props.pristineEstate) {
-      return !this.hasParcelsChanged(parcels)
-    }
-
-    return false
-  }
-
   hasParcelsChanged = parcels => {
     const { pristineEstate } = this.props
     if (!pristineEstate) {
@@ -111,6 +99,10 @@ export default class EstateSelect extends React.PureComponent {
     }
 
     return false
+  }
+
+  hasParcels(parcels) {
+    return parcels.length > 1
   }
 
   getParcelsToAdd() {
@@ -263,8 +255,11 @@ export default class EstateSelect extends React.PureComponent {
                     onSubmit={onSubmit}
                     onCancel={isCreation ? onCreateCancel : onCancel}
                     onContinue={onContinue}
-                    canContinue={this.canContinue(parcels)}
-                    canSubmit={this.hasParcelsChanged(parcels)}
+                    canContinue={this.hasParcels(parcels)}
+                    canSubmit={
+                      this.hasParcels(parcels) &&
+                      this.hasParcelsChanged(parcels)
+                    }
                   />
                   {!isCreation && this.renderTxLabel()}
                   <TxStatus.Asset
