@@ -16,15 +16,15 @@ export class SanityActions {
 
       log.info(`[${i + 1}/${total}]: Running ${key}`)
       const doctor = new doctors[key]()
-      const diagnosis = await doctor.diagnose(options)
+      const diagnoses = await doctor.diagnose(options)
 
-      if (!diagnosis.hasProblems()) continue
+      if (!diagnoses.hasProblems()) continue
 
-      diagnostics.push(diagnosis)
+      diagnostics.push(diagnoses)
 
       if (options.selfHeal) {
         log.info(`Preparing ${key} problems`)
-        await diagnosis.prepare()
+        await diagnoses.prepare()
       }
     }
 
@@ -71,8 +71,8 @@ class SanitiyMonitorActions extends MonitorActions {
   async processEvents() {
     log.info('Replaying events for inconsistent data')
 
-    for (const diagnosis of this.diagnostics) {
-      await diagnosis.doTreatment()
+    for (const diagnoses of this.diagnostics) {
+      await diagnoses.doTreatment()
     }
 
     log.info('All done!')
