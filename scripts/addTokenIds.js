@@ -31,15 +31,13 @@ export async function addTokenIds() {
 }
 
 export async function updateTokenIds(parcels) {
-  parcels = parcels.filter(parcel => !parcel.token_id) // avoid adding a new method to Parcel
+  parcels = parcels.filter(parcel => !parcel.token_id) // Filter to avoid adding a new method to Parcel
 
   const contract = eth.getContract('LANDRegistry')
 
   await asyncBatch({
     elements: parcels,
-    callback: async (parcelsBatch, batchedCount) => {
-      log.info(`Updating ${batchedCount}/${parcels.length} parcels...`)
-
+    callback: async parcelsBatch => {
       const updates = parcelsBatch.map(async parcel => {
         const tokenId = await contract.encodeTokenId(parcel.x, parcel.y)
         return Parcel.update(
@@ -56,7 +54,7 @@ export async function updateTokenIds(parcels) {
 
 if (require.main === module) {
   loadEnv()
-  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 300), 10)
+  BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 200), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
 
   Promise.resolve()

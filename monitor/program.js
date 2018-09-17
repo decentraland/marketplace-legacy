@@ -1,22 +1,19 @@
 #!/usr/bin/env babel-node
 
 import { eth, contracts } from 'decentraland-eth'
-import { env, Log } from 'decentraland-commons'
+import { cli, env, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
-import { MonitorCli } from './MonitorCli'
+import { MonitorActions } from './MonitorActions'
 import { db } from '../src/database'
 import { loadEnv } from '../scripts/utils'
 
 const log = new Log('main')
 
-export async function main(
-  getNewMonitor = (...args) => new MonitorCli(...args)
-) {
-  log.debug('Connecting to database')
+export async function main(getActions = createMonitorActions) {
+  log.info('Connecting to database')
   await db.connect()
 
-  log.debug('Connecting to Ethereum node')
-
+  log.info('Connecting to Ethereum node')
   await eth.connect({
     contracts: [
       new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
@@ -31,8 +28,8 @@ export async function main(
     provider: env.get('RPC_URL')
   })
 
-  log.debug('Starting CLI')
-  const monitor = getNewMonitor(
+  log.info('Starting CLI')
+  const monitorActions = getActions(
     handlers,
     {
       Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
@@ -55,14 +52,53 @@ export async function main(
     },
     env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
   )
-  await monitor.run()
+
+  cli.runProgram([getProgram(monitorActions)])
+}
+
+function getProgram(actions) {
+  return {
+    addCommands(program) {
+      program
+        .command('index')
+        .option(
+          '--args [args]',
+          'JSON string containing args to filter by. Defaults to {}'
+        )
+        .option(
+          '--from-block [fromBlock]',
+          'The number of the earliest block. Defaults to 0'
+        )
+        .option(
+          '--to-block [toBlock]',
+          'The number of the latest block. Defaults to `latest`'
+        )
+        .option(
+          '--address [address]',
+          'An address to only get logs from particular account(s).'
+        )
+        .option(
+          '-w, --watch',
+          'Keep watching the blockchain for new events after --to-block.'
+        )
+        .option(
+          '--skip-process',
+          'Only restore the stored events, without processing each one'
+        )
+        .allowUnknownOption()
+        .action(options => actions.index(options))
+    }
+  }
+}
+
+function createMonitorActions(...args) {
+  return new MonitorActions(...args)
 }
 
 if (require.main === module) {
   loadEnv('../src/.env')
 
-  main().catch(error => {
-    log.error(error)
-    process.exit(1)
-  })
+  Promise.resolve()
+    .then(main)
+    .catch(console.error)
 }

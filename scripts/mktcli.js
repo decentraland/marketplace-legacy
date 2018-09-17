@@ -178,9 +178,12 @@ const main = {
           const [x, y] = parseCLICoords(coord)
           const tokenId = await Parcel.encodeTokenId(x, y)
 
-          const blockchainEvents = await BlockchainEvent.findByArgsAssetId(
+          const blockchainEvents = await BlockchainEvent.findByArgs(
+            'assetId',
             tokenId
           )
+          blockchainEvents.reverse()
+
           const eventLog = blockchainEvents.map(event => {
             const { name, block_number, log_index, tx_hash, args } = event
             let log = `${name} (${block_number},${log_index}): `
@@ -238,8 +241,7 @@ const main = {
         asSafeAction(async (coord, options) => {
           const [x, y] = parseCLICoords(coord)
           const tokenId = await Parcel.encodeTokenId(x, y)
-          const events = await BlockchainEvent.findByArgsAssetId(tokenId)
-          events.reverse()
+          const events = await BlockchainEvent.findByArgs('assetId', tokenId)
 
           if (!options.persist) {
             mockModelDbOperations()

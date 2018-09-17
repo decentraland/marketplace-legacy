@@ -181,6 +181,7 @@ if (require.main === module) {
   loadEnv()
   BATCH_SIZE = parseInt(env.get('BATCH_SIZE', 10), 10)
   log.info(`Using ${BATCH_SIZE} as batch size, configurable via BATCH_SIZE`)
+
   Promise.resolve()
     .then(main)
     .catch(console.error)

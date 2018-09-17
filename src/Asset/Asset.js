@@ -85,7 +85,7 @@ export class Asset {
           JOIN ${raw(this.tableName)} as model ON model.id = pub.asset_id
           WHERE tx_status = ${tx_status}
             AND asset_type = ${asset_type}
-            AND ${PublicationQueries.whereisActive()}
+            AND ${PublicationQueries.whereIsActive()}
             AND ${PublicationQueries.hasStatus(status)}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
@@ -106,7 +106,7 @@ export class Asset {
         WHERE status = ${status}
           AND tx_status = ${tx_status}
           AND asset_type = ${asset_type}
-          AND ${PublicationQueries.whereisActive()}`
+          AND ${PublicationQueries.whereIsActive()}`
     )
 
     return parseInt(counts[0].count, 10)

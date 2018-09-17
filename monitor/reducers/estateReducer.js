@@ -45,61 +45,61 @@ export async function estateReducer(events, event) {
       break
     }
     case events.addLand: {
-      if (parcelId) {
-        const { _estateId } = event.args
-        const estate = await Estate.findByTokenId(_estateId)
-        if (estate) {
-          const coordinates = Parcel.splitId(parcelId)
-          const x = parseInt(coordinates[0], 10)
-          const y = parseInt(coordinates[1], 10)
+      if (!parcelId) return
 
-          log.info(
-            `[${name}] Updating Estate with token id "${
-              estate.token_id
-            }" add land (${x},${y})`
-          )
-          if (!estate.data.parcels.find(p => p.x === x && p.y === y)) {
-            await Estate.update(
-              {
-                data: {
-                  ...estate.data,
-                  parcels: [...estate.data.parcels, { x, y }]
-                }
-              },
-              { token_id: estate.token_id }
-            )
-          }
-        } else {
-          log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
-        }
-      }
-      break
-    }
-    case events.removeLand: {
-      if (parcelId) {
-        const { _estateId } = event.args
-        const estate = await Estate.findByTokenId(_estateId)
-        if (estate) {
-          const [x, y] = Parcel.splitId(parcelId)
-          log.info(
-            `[${name}] Updating Estate with token id "${
-              estate.token_id
-            }" remove land (${x},${y})`
-          )
+      const { _estateId } = event.args
+      const estate = await Estate.findByTokenId(_estateId)
+      if (estate) {
+        const coordinates = Parcel.splitId(parcelId)
+        const x = parseInt(coordinates[0], 10)
+        const y = parseInt(coordinates[1], 10)
+
+        log.info(
+          `[${name}] Updating Estate with token id "${
+            estate.token_id
+          }" add land (${x},${y})`
+        )
+        if (!estate.data.parcels.find(p => p.x === x && p.y === y)) {
           await Estate.update(
             {
               data: {
                 ...estate.data,
-                parcels: estate.data.parcels.filter(
-                  p => p.x !== parseInt(x, 10) || p.y !== parseInt(y, 10)
-                )
+                parcels: [...estate.data.parcels, { x, y }]
               }
             },
-            { token_id: _estateId }
+            { token_id: estate.token_id }
           )
-        } else {
-          log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
         }
+      } else {
+        log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
+      }
+      break
+    }
+    case events.removeLand: {
+      if (!parcelId) return
+
+      const { _estateId } = event.args
+      const estate = await Estate.findByTokenId(_estateId)
+      if (estate) {
+        const [x, y] = Parcel.splitId(parcelId)
+        log.info(
+          `[${name}] Updating Estate with token id "${
+            estate.token_id
+          }" remove land (${x},${y})`
+        )
+        await Estate.update(
+          {
+            data: {
+              ...estate.data,
+              parcels: estate.data.parcels.filter(
+                p => p.x !== parseInt(x, 10) || p.y !== parseInt(y, 10)
+              )
+            }
+          },
+          { token_id: _estateId }
+        )
+      } else {
+        log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
       }
       break
     }
