@@ -5,7 +5,7 @@ export const migrations = {
       transaction.data = transaction.data.map(tx => {
         return {
           ...tx,
-          receipt: null // Remove previous receipt. Will save receipt on demand
+          receipt: null // Remove previous receipt. Will save them on demand
         }
       })
     }
