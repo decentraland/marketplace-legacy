@@ -48,7 +48,7 @@ import {
   fetchBalance
 } from './utils'
 import { locations } from 'locations'
-import { isLoading as isStorageLoading } from 'modules/storage/selectors'
+import { isLoading as isStorageLoading } from 'decentraland-dapps/dist/modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
 

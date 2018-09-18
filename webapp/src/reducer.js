@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
+import {
+  storageReducer as storage,
+  storageReducerWrapper
+} from 'decentraland-dapps/dist/modules/storage/reducer'
 
 import { addressReducer as address } from 'modules/address/reducer'
 import { districtsReducer as districts } from 'modules/districts/reducer'
@@ -10,10 +14,6 @@ import { translationReducer as translation } from 'modules/translation/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
 import { estatesReducer as estates } from 'modules/estates/reducer'
-import {
-  storageReducer as storage,
-  storageReducerWrapper
-} from 'modules/storage/reducer'
 import mortgages from 'modules/mortgage/reducer'
 
 export const rootReducer = storageReducerWrapper(

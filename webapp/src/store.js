@@ -1,6 +1,7 @@
 import { compose, createStore, applyMiddleware } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { env } from 'decentraland-commons'
+import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
 
 import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
@@ -8,11 +9,11 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
-import { LOCAL_STORAGE_KEY } from 'lib/localStorage'
 
 import { createTransactionMiddleware } from 'modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'modules/analytics/middleware'
-import { createStorageMiddleware } from 'modules/storage/middleware'
+
+import { migrations } from 'lib/localStorage'
 
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
@@ -33,7 +34,10 @@ const analyticsMiddleware = createAnalyticsMiddleware(
   env.get('REACT_APP_SEGMENT_API_KEY')
 )
 
-const storageMiddleware = createStorageMiddleware(LOCAL_STORAGE_KEY)
+const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
+  migrations,
+  storageKey: env.get('REACT_APP_LOCAL_STORAGE_KEY')
+})
 
 const middleware = applyMiddleware(
   thunk.withExtraArgument(api),
@@ -48,7 +52,7 @@ const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer)
 
 sagasMiddleware.run(rootSaga)
-storageMiddleware.load(store)
+loadStorageMiddleware(store)
 
 export function dispatch(action) {
   if (typeof action === 'string') {
