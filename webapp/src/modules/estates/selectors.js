@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 
+import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'shared/parcel'
@@ -10,7 +11,6 @@ import {
   EDIT_ESTATE_PARCELS_REQUEST,
   TRANSFER_ESTATE_REQUEST
 } from './actions'
-import { isLoadingType } from 'modules/loading/selectors'
 
 export const getState = state => state.estates
 export const getData = state => getState(state).data

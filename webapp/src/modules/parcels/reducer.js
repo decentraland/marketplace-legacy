@@ -12,6 +12,7 @@ import {
   TRANSFER_PARCEL_SUCCESS,
   TRANSFER_PARCEL_FAILURE
 } from './actions'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS,
@@ -24,7 +25,6 @@ import {
 } from 'modules/publication/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
-import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate, normalizeParcel, toParcelObject } from 'shared/parcel'
 
 import {

@@ -4,7 +4,7 @@ import {
   FETCH_TRANSLATIONS_SUCCESS,
   FETCH_TRANSLATIONS_FAILURE
 } from './actions'
-import { loadingReducer } from 'modules/loading/reducer'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 
 const INITIAL_STATE = {
   data: {}, // { locale: translations }

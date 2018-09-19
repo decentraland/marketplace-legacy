@@ -5,7 +5,7 @@ import {
   FETCH_TRANSACTION_FAILURE,
   CLEAR_TRANSACTIONS
 } from './actions'
-import { loadingReducer } from 'modules/loading/reducer'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { getTransactionFromAction } from './utils'
 
 const { TRANSACTION_STATUS } = txUtils

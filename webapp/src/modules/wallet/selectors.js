@@ -8,9 +8,9 @@ import {
   APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
   APPROVE_MORTGAGE_FOR_RCN_SUCCESS
 } from './actions'
+import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getAddresses } from 'modules/address/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
-import { isLoadingType } from 'modules/loading/selectors'
 
 export const getState = state => state.wallet
 export const getData = state => getState(state).data

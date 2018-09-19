@@ -2,13 +2,13 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { locations } from 'locations'
+import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import {
   getPublicationByCoordinate,
   getLoading
 } from 'modules/publication/selectors'
-import { isLoadingType } from 'modules/loading/selectors'
 import { isBuyIdle } from 'modules/publication/selectors'
 import { BUY_REQUEST, buyRequest } from 'modules/publication/actions'
 

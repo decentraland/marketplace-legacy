@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { loadingReducer } from 'modules/loading/reducer'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 
 import {
   CREATE_MORTGAGE_REQUEST,
