@@ -9,6 +9,8 @@ import {
 } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
+import { isLoading as isStorageLoading } from '@dapps/modules/storage/selectors'
+import { locations } from 'locations'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
   CONNECT_WALLET_REQUEST,
@@ -47,8 +49,6 @@ import {
   sendTransaction,
   fetchBalance
 } from './utils'
-import { locations } from 'locations'
-import { isLoading as isStorageLoading } from 'decentraland-dapps/dist/modules/storage/selectors'
 import { fetchAddress } from 'modules/address/actions'
 import { watchLoadingTransactions } from 'modules/transaction/actions'
 

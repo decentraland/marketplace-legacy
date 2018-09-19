@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { getLocalStorage } from '@dapps/lib/localStorage'
 
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
 import TranslationProvider from './TranslationProvider'
-import { getLocalStorage } from 'decentraland-dapps/dist/lib/localStorage'
 
 import './Page.css'
 

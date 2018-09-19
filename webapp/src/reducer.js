@@ -3,7 +3,7 @@ import { routerReducer as router } from 'react-router-redux'
 import {
   storageReducer as storage,
   storageReducerWrapper
-} from 'decentraland-dapps/dist/modules/storage/reducer'
+} from '@dapps/modules/storage/reducer'
 
 import { addressReducer as address } from 'modules/address/reducer'
 import { districtsReducer as districts } from 'modules/districts/reducer'

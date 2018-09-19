@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
+import { isLoading } from '@dapps/modules/storage/selectors'
 import { getLocale } from 'modules/wallet/selectors'
 import { getData } from 'modules/translation/selectors'
-import { isLoading } from 'decentraland-dapps/dist/modules/storage/selectors'
 import { fetchTranslationsRequest } from 'modules/translation/actions'
 import { getPreferredLocale } from 'modules/translation/utils'
 
