@@ -1,6 +1,6 @@
 import { locations } from 'locations'
+import { t } from '@dapps/modules/translation/utils'
 import { Location } from 'lib/Location'
-import { t } from 'modules/translation/utils'
 
 let SORT_TYPES = null // filled upon the first call to getSortTypes
 

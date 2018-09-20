@@ -1,3 +1,4 @@
+import { eth } from 'decentraland-eth'
 import { delay } from 'redux-saga'
 import {
   call,
@@ -8,10 +9,8 @@ import {
   put
 } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-import { eth } from 'decentraland-eth'
-import { isLoading as isStorageLoading } from '@dapps/modules/storage/selectors'
+
 import { locations } from 'locations'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
   CONNECT_WALLET_REQUEST,
   APPROVE_MANA_REQUEST,
@@ -40,6 +39,10 @@ import {
   approveMortgageForRCNSuccess,
   approveMortgageForRCNFailure
 } from './actions'
+import { isLoading as isStorageLoading } from '@dapps/modules/storage/selectors'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { fetchAddress } from 'modules/address/actions'
+import { watchLoadingTransactions } from 'modules/transaction/actions'
 import { getData } from './selectors'
 import {
   connectEthereumWallet,
@@ -49,8 +52,6 @@ import {
   sendTransaction,
   fetchBalance
 } from './utils'
-import { fetchAddress } from 'modules/address/actions'
-import { watchLoadingTransactions } from 'modules/transaction/actions'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)

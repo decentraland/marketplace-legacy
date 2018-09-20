@@ -7,9 +7,9 @@ import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import { publicationType } from 'components/types'
 import ParcelName from 'components/ParcelName'
-import { isOnSale } from 'shared/asset'
-import { t, t_html } from 'modules/translation/utils'
 import TransferAssetForm from 'components/TransferAssetForm'
+import { t, t_html } from '@dapps/modules/translation/utils'
+import { isOnSale } from 'shared/asset'
 
 export default class TransferParcelPage extends React.PureComponent {
   static propTypes = {

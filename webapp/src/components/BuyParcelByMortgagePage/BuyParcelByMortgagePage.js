@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Loader, Container, Header, Message } from 'semantic-ui-react'
 
-import Parcel from 'components/Parcel'
-import { walletType, publicationType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
 import { locations } from 'locations'
-import { isOpen } from 'shared/publication'
-import { formatMana } from 'lib/utils'
-import MortgageForm from './MortgageForm'
+import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
+import { walletType, publicationType } from 'components/types'
+import { t, t_html } from '@dapps/modules/translation/utils'
+import { isOpen } from 'shared/publication'
+import { formatMana } from 'lib/utils'
+import MortgageForm from './MortgageForm'
 
 export default class BuyParcelByMortgagePage extends React.PureComponent {
   static propTypes = {

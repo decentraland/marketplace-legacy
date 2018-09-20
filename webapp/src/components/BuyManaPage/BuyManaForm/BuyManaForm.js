@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { Button, Form, Input, Icon } from 'semantic-ui-react'
+
 import TxStatus from 'components/TxStatus'
+import { t, t_html } from '@dapps/modules/translation/utils'
 import { preventDefault, formatMana } from 'lib/utils'
-import { t, t_html } from 'modules/translation/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   fetchTransaction,

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Dropdown } from 'semantic-ui-react'
-import { t, getAvailableLocales } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
+import { getAvailableLocales } from 'lib/translation'
 
 export default class LocalesDropdown extends React.PureComponent {
   static propTypes = {

@@ -4,7 +4,7 @@ import { Button, Grid, Header } from 'semantic-ui-react'
 
 import ParcelPreview from 'components/ParcelPreview'
 import TxStatus from 'components/TxStatus'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 import './ParcelModal.css'
 
 export default class ParcelModal extends React.PureComponent {

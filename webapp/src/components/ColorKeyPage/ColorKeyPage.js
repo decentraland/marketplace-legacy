@@ -1,7 +1,7 @@
 import React from 'react'
 
 import StaticPage from 'components/StaticPage'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 
 import './ColorKeyPage.css'
 

@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
-import { t, t_html } from 'modules/translation/utils'
+import { t, t_html } from '@dapps/modules/translation/utils'
 import CancelSaleForm from './CancelSaleForm'
 
 export default class CancelSalePage extends React.PureComponent {

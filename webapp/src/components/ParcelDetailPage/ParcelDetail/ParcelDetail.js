@@ -7,11 +7,6 @@ import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
-import ParcelOwner from './ParcelOwner'
-import ParcelActions from './ParcelActions'
-import ParcelDescription from './ParcelDescription'
-import ParcelTransactionHistory from './ParcelTransactionHistory'
-import ParcelMortgage from './ParcelMortgage'
 import {
   parcelType,
   districtType,
@@ -20,8 +15,13 @@ import {
   walletType,
   estateType
 } from 'components/types'
+import { t } from '@dapps/modules/translation/utils'
 import { getDistrict, getOpenPublication } from 'shared/asset'
-import { t } from 'modules/translation/utils'
+import ParcelOwner from './ParcelOwner'
+import ParcelActions from './ParcelActions'
+import ParcelDescription from './ParcelDescription'
+import ParcelTransactionHistory from './ParcelTransactionHistory'
+import ParcelMortgage from './ParcelMortgage'
 
 export default class ParcelDetail extends React.PureComponent {
   static propTypes = {

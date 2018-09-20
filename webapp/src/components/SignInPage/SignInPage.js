@@ -1,13 +1,13 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import { Button, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { Button, Loader } from 'semantic-ui-react'
 import StaticPage from 'components/StaticPage'
-import { isMobile } from 'lib/utils'
-import { t, t_html } from 'modules/translation/utils'
-
+import { t, t_html } from '@dapps/modules/translation/utils'
 import WalletIcon from './WalletIcon'
+import { isMobile } from 'lib/utils'
+
 import './SignInPage.css'
 
 export default class SignInPage extends React.PureComponent {

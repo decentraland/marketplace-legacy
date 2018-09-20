@@ -2,7 +2,7 @@ import dateFnsFormat from 'date-fns/format'
 import dateFnsDistanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import { env } from 'decentraland-commons'
 
-import { getCurrentLocale } from 'modules/translation/utils'
+import { getCurrentLocale } from '@dapps/modules/translation/utils'
 
 export function preventDefault(fn) {
   return function(event) {

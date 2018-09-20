@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { Button, Form, Input } from 'semantic-ui-react'
+
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
-import { preventDefault } from 'lib/utils'
+import { t } from '@dapps/modules/translation/utils'
 import { isValidName, isValidDescription } from 'shared/asset'
-import { t } from 'modules/translation/utils'
+import { preventDefault } from 'lib/utils'
 
 import './EditParcelForm.css'
 

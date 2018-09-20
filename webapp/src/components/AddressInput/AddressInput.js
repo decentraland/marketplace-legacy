@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { eth } from 'decentraland-eth'
 import { Input } from 'semantic-ui-react'
+
 import AddressBlock from 'components/AddressBlock'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 
 import './AddressInput.css'
 

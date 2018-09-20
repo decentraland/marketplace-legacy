@@ -1,19 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Container, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { Container, Loader } from 'semantic-ui-react'
 import AddressBlock from 'components/AddressBlock'
-import SettingsForm from './SettingsForm'
-
 import { walletType } from 'components/types'
+import { t, t_html } from '@dapps/modules/translation/utils'
 import {
   getManaToApprove,
   isLedgerWallet,
   getRCNToApprove
 } from 'modules/wallet/utils'
-import { t, t_html } from 'modules/translation/utils'
+import SettingsForm from './SettingsForm'
 
 import './SettingsPage.css'
 

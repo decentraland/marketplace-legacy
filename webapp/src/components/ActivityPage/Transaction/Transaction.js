@@ -2,25 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
+import { Segment, Grid, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { Segment, Grid, Loader } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
-import { buildCoordinate } from 'shared/parcel'
-import { isNewEstate, calculateMapProps } from 'shared/estate'
+import { t, t_html } from '@dapps/modules/translation/utils'
 import {
   getMarketplaceAddress,
   getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
-import { t, t_html } from 'modules/translation/utils'
 import { getEtherscanHref } from 'modules/transaction/utils'
-
 import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
@@ -53,6 +49,9 @@ import {
   DELETE_ESTATE_SUCCESS,
   TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
+import { buildCoordinate } from 'shared/parcel'
+import { isNewEstate, calculateMapProps } from 'shared/estate'
+import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
 
 import './Transaction.css'
 

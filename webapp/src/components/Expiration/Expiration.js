@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import differenceInDays from 'date-fns/difference_in_days'
 
+import { t } from '@dapps/modules/translation/utils'
 import { distanceInWordsToNow } from 'lib/utils'
 import { isExpired } from 'shared/utils'
-import { t } from 'modules/translation/utils'
 
 const MAX_EXPIRES = 10 * 365
 

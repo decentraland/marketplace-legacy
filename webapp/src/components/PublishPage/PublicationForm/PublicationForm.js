@@ -2,13 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
-
 import { Form, Button, Input, Message } from 'semantic-ui-react'
-import TxStatus from 'components/TxStatus'
 
+import TxStatus from 'components/TxStatus'
 import { parcelType } from 'components/types'
+import { t } from '@dapps/modules/translation/utils'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
-import { t } from 'modules/translation/utils'
 
 import './PublicationForm.css'
 

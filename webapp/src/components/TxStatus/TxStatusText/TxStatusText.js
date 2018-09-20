@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
 
 import { locations } from 'locations'
-import { t, t_html } from 'modules/translation/utils'
+import { t, t_html } from '@dapps/modules/translation/utils'
 
 import './TxStatusText.css'
 

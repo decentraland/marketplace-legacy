@@ -15,11 +15,11 @@ import {
   APPROVE_MORTGAGE_FOR_RCN_SUCCESS
 } from './actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import {
   CHANGE_LOCALE,
   FETCH_TRANSLATIONS_SUCCESS
-} from 'modules/translation/actions'
+} from '@dapps/modules/translation/actions'
+import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
 
 const INITIAL_STATE = {
@@ -156,7 +156,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
         ...state,
         data: {
           ...state.data,
-          locale: action.locale
+          locale: action.payload.locale
         }
       }
     default:

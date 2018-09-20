@@ -6,7 +6,7 @@ import { locations } from 'locations'
 import ParcelModal from 'components/ParcelModal'
 import Mana from 'components/Mana'
 import { walletType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
+import { t, t_html } from '@dapps/modules/translation/utils'
 import TransferManaForm from './TransferManaForm'
 import './TransferManaPage.css'
 

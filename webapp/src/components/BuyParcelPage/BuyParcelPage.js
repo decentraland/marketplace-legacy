@@ -2,14 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Loader, Container, Header, Grid, Message } from 'semantic-ui-react'
+
+import { locations } from 'locations'
 import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import Parcel from 'components/Parcel'
 import Mana from 'components/Mana'
 import { walletType } from 'components/types'
-import { locations } from 'locations'
+import { t, t_html } from '@dapps/modules/translation/utils'
 import { formatMana } from 'lib/utils'
-import { t, t_html } from 'modules/translation/utils'
 
 import './BuyParcelPage.css'
 

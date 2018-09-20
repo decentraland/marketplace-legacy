@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'semantic-ui-react'
-import { MORTGAGE_STATUS } from 'shared/mortgage'
 
-import { t } from 'modules/translation/utils'
 import { mortgageType } from 'components/types'
+import { t } from '@dapps/modules/translation/utils'
+import { MORTGAGE_STATUS } from 'shared/mortgage'
 
 export default class MortgageActions extends React.PureComponent {
   static propTypes = {

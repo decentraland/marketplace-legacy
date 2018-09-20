@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { Button, Form, Input } from 'semantic-ui-react'
-import { preventDefault } from 'lib/utils'
-import { t } from 'modules/translation/utils'
+
+import { t } from '@dapps/modules/translation/utils'
 import { mortgageType } from 'components/types'
 import TxStatus from 'components/TxStatus'
+import { preventDefault } from 'lib/utils'
 import './PayMortgageForm.css'
 
 export default class PayMortgageForm extends React.PureComponent {

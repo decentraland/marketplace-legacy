@@ -2,20 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
-import { isFeatureEnabled } from 'lib/featureUtils'
-import Mana from 'components/Mana'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
+
+import { locations } from 'locations'
+import Mana from 'components/Mana'
 import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
-import DerivationPathDropdown from './DerivationPathDropdown'
-
+import { t, t_html } from '@dapps/modules/translation/utils'
 import {
   getMarketplaceAddress,
   getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
-import { t, t_html } from 'modules/translation/utils'
-import { locations } from 'locations'
+import { isFeatureEnabled } from 'lib/featureUtils'
+import DerivationPathDropdown from './DerivationPathDropdown'
 
 import './SettingsForm.css'
 

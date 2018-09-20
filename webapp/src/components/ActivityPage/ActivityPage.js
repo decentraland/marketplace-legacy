@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Loader, Button } from 'semantic-ui-react'
 
-import Transaction from './Transaction'
 import { locations } from 'locations'
 import Prompt from 'components/Prompt'
 import { transactionType, walletType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
+import { t, t_html } from '@dapps/modules/translation/utils'
+import Transaction from './Transaction'
 
 import './ActivityPage.css'
 

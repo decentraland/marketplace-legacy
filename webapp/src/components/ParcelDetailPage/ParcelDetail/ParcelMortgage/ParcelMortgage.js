@@ -4,8 +4,8 @@ import { Grid } from 'semantic-ui-react'
 import Mana from 'components/Mana'
 import MortgageActions from 'components/MortgageActions'
 import Expiration from 'components/Expiration'
-import { t } from 'modules/translation/utils'
 import { mortgageType } from 'components/types'
+import { t } from '@dapps/modules/translation/utils'
 import {
   isMortgagePending,
   isMortgageOngoing,

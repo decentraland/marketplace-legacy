@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+
 import { locations } from 'locations'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Message, Icon } from 'semantic-ui-react'
 
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 
 export default class TxStatusIdle extends React.PureComponent {
   static propTypes = {

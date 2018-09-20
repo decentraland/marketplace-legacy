@@ -5,7 +5,7 @@ import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
-import { t, t_html } from 'modules/translation/utils'
+import { t, t_html } from '@dapps/modules/translation/utils'
 import ManageParcelForm from './ManageParcelForm'
 
 import './ManageParcelPage.css'

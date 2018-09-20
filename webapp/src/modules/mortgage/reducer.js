@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
 
 import {
   CREATE_MORTGAGE_REQUEST,
@@ -19,6 +18,7 @@ import {
   CANCEL_MORTGAGE_SUCCESS,
   CLAIM_MORTGAGE_RESOLUTION_SUCCESS
 } from './actions'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 
 const INITIAL_DATA_STATE = {
   mortgages: {}

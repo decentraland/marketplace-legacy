@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Message } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { Message } from 'semantic-ui-react'
 import { transactionType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
+import { t, t_html } from '@dapps/modules/translation/utils'
 
 import './TxStatusAsset.css'
 

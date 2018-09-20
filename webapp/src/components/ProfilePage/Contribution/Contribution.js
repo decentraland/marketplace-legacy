@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, Header, Button, Icon } from 'semantic-ui-react'
 import { contributionType } from 'components/types'
-import { t } from 'modules/translation/utils'
 import LandAmount from 'components/LandAmount'
+import { t } from '@dapps/modules/translation/utils'
 
 import './Contribution.css'
 

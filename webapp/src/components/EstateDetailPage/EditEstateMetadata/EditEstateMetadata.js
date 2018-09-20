@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { t } from 'modules/translation/utils'
-import EstateModal from './EstateModal'
-import EditEstateMetadataForm from './EditEstateMetadataForm'
 import { estateType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
+import { t } from '@dapps/modules/translation/utils'
+import EditEstateMetadataForm from './EditEstateMetadataForm'
+import EstateModal from './EstateModal'
 
 export default class EditEstateMetadata extends React.PureComponent {
   static propTypes = {

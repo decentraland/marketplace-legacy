@@ -7,7 +7,7 @@ import * as Impetus from 'impetus'
 import * as wheel from 'mouse-wheel'
 import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 import { TYPES } from 'shared/asset'
 import { shortenAddress } from 'lib/utils'
 

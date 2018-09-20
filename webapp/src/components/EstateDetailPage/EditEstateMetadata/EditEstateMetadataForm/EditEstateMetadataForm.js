@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Form, Input } from 'semantic-ui-react/dist/commonjs'
+import { Button, Form, Input } from 'semantic-ui-react'
 
 import TxStatus from 'components/TxStatus'
-import { isValidName, isValidDescription } from 'shared/asset'
-import { preventDefault } from 'lib/utils'
-import { t } from 'modules/translation/utils'
 import { estateType } from 'components/types'
+import { t } from '@dapps/modules/translation/utils'
+import { preventDefault } from 'lib/utils'
+import { isValidName, isValidDescription } from 'shared/asset'
 import './EditEstateMetadataForm.css'
 
 export default class EditEstateMetadataForm extends React.PureComponent {

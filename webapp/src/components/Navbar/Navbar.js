@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Menu, Icon, Responsive, Sidebar, Label } from 'semantic-ui-react'
 
 import { locations, NAVBAR_PAGES } from 'locations'
-import { Menu, Icon, Responsive, Sidebar, Label } from 'semantic-ui-react'
-import Account from './Account'
 import Badge from 'components/Badge'
 import { default as DecentralandIcon } from 'components/Icon'
-
 import { walletType, coordsType } from 'components/types'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
+import Account from './Account'
 
 import './Navbar.css'
 

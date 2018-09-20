@@ -1,8 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { isFeatureEnabled } from 'lib/featureUtils'
-import { PROFILE_PAGE_TABS } from 'locations'
 import {
   Menu,
   Container,
@@ -11,16 +8,19 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
+
+import { PROFILE_PAGE_TABS } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import ParcelCard from 'components/ParcelCard'
-import Contribution from './Contribution'
+import EstateCard from 'components/EstateCard'
 import { parcelType, contributionType, estateType } from 'components/types'
-import { t } from 'modules/translation/utils'
-import { buildUrl } from './utils'
+import { t } from '@dapps/modules/translation/utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
+import { buildUrl } from './utils'
+import Contribution from './Contribution'
 
 import './ProfilePage.css'
-import EstateCard from 'components/EstateCard'
 
 export default class ProfilePage extends React.PureComponent {
   static propTypes = {
