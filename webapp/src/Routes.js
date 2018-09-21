@@ -30,8 +30,6 @@ import BuyManaPage from 'components/BuyManaPage'
 import BuyParcelByMortgagePage from 'components/BuyParcelByMortgagePage'
 import PayMortgagePage from 'components/PayMortgagePage'
 import ColorKeyPage from 'components/ColorKeyPage'
-import PrivacyPage from 'components/PrivacyPage'
-import TermsPage from 'components/TermsPage'
 import DeleteEstatePage from 'components/DeleteEstatePage'
 import TransferEstatePage from 'components/TransferEstatePage'
 
@@ -150,8 +148,6 @@ export default class Routes extends React.Component {
         <Route exact path={locations.settings()} component={SettingsPage} />
         <Route exact path={locations.activity()} component={ActivityPage} />
         <Route exact path={locations.colorKey()} component={ColorKeyPage} />
-        <Route exact path={locations.privacy()} component={PrivacyPage} />
-        <Route exact path={locations.terms()} component={TermsPage} />
         <Route exact path={locations.signIn()} component={SignInPage} />
         <Redirect to={locations.root()} />
       </Switch>
