@@ -52,8 +52,20 @@ export default class Footer extends React.PureComponent {
               FAQ
             </a>
             <Link to={locations.colorKey()}>{t('footer.color_key')}</Link>
-            <Link to={locations.privacy()}>{t('footer.privacy_policy')}</Link>
-            <Link to={locations.terms()}>{t('footer.terms')}</Link>
+            <a
+              href="https://decentraland.org/privacy"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {t('footer.privacy_policy')}
+            </a>
+            <a
+              href="https://decentraland.org/terms"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {t('footer.terms')}
+            </a>
           </div>
           <div className="social-icons">
             <a

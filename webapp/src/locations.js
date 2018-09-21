@@ -73,17 +73,11 @@ export const locations = {
   activity: () => '/activity',
 
   colorKey: () => '/colorKey',
-  privacy: () => '/privacy',
-  terms: () => '/terms',
 
   signIn: () => '/sign-in'
 }
 
-export const STATIC_PAGES = [
-  locations.root(),
-  locations.privacy(),
-  locations.terms()
-]
+export const STATIC_PAGES = [locations.root()]
 
 export const PROFILE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',
