@@ -9,7 +9,7 @@ import ParcelDetailLink from 'components/ParcelDetailLink'
 import Parcel from 'components/Parcel'
 import Mana from 'components/Mana'
 import { walletType } from 'components/types'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import { formatMana } from 'lib/utils'
 
 import './BuyParcelPage.css'
@@ -47,11 +47,16 @@ export default class BuyParcelPage extends React.PureComponent {
             {t('parcel_buy.buy_land')}
           </Header>
           <p className="sign-in">
-            {t_html('global.sign_in_notice', {
-              sign_in_link: (
-                <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-              )
-            })}
+            {
+              <T
+                id="global.sign_in_notice"
+                values={{
+                  sign_in_link: (
+                    <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+                  )
+                }}
+              />
+            }
           </p>
         </Container>
       </div>
@@ -90,13 +95,18 @@ export default class BuyParcelPage extends React.PureComponent {
                     })}
                   </span>
                   <br />
-                  {t_html('parcel_buy.buy_mana', {
-                    click_here: (
-                      <Link to={locations.buyMana()}>
-                        {t('global.click_here')}
-                      </Link>
-                    )
-                  })}
+                  {
+                    <T
+                      id="parcel_buy.buy_mana"
+                      values={{
+                        click_here: (
+                          <Link to={locations.buyMana()}>
+                            {t('global.click_here')}
+                          </Link>
+                        )
+                      }}
+                    />
+                  }
                 </React.Fragment>
               ) : approvedBalance > 0 ? (
                 <React.Fragment>
@@ -106,23 +116,33 @@ export default class BuyParcelPage extends React.PureComponent {
                     })}
                   </span>
                   <br />
-                  {t_html('parcel_buy.please_approve', {
-                    settings_link: (
-                      <Link to={locations.settings()}>
-                        {t('global.settings')}
-                      </Link>
-                    )
-                  })}
+                  {
+                    <T
+                      id="parcel_buy.please_approve"
+                      values={{
+                        settings_link: (
+                          <Link to={locations.settings()}>
+                            {t('global.settings')}
+                          </Link>
+                        )
+                      }}
+                    />
+                  }
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {t_html('parcel_buy.please_approve', {
-                    settings_link: (
-                      <Link to={locations.settings()}>
-                        {t('global.settings')}
-                      </Link>
-                    )
-                  })}
+                  {
+                    <T
+                      id="parcel_buy.please_approve"
+                      values={{
+                        settings_link: (
+                          <Link to={locations.settings()}>
+                            {t('global.settings')}
+                          </Link>
+                        )
+                      }}
+                    />
+                  }
                 </React.Fragment>
               )
             }
@@ -158,24 +178,29 @@ export default class BuyParcelPage extends React.PureComponent {
               x={x}
               y={y}
               title={t('parcel_buy.buy_land')}
-              subtitle={t_html('parcel_buy.about_to_buy', {
-                parcel_name: <ParcelDetailLink parcel={parcel} />,
-                parcel_price: publication ? (
-                  <React.Fragment>
-                    &nbsp;{t('global.for')}&nbsp;&nbsp;
-                    <span
-                      style={{
-                        display: 'inline-block',
-                        transform: 'translateY(3px)'
-                      }}
-                    >
-                      <Mana amount={publication.price} size={14} />
-                    </span>
-                  </React.Fragment>
-                ) : (
-                  ''
-                )
-              })}
+              subtitle={
+                <T
+                  id="parcel_buy.about_to_buy"
+                  values={{
+                    parcel_name: <ParcelDetailLink parcel={parcel} />,
+                    parcel_price: publication ? (
+                      <React.Fragment>
+                        &nbsp;{t('global.for')}&nbsp;&nbsp;
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            transform: 'translateY(3px)'
+                          }}
+                        >
+                          <Mana amount={publication.price} size={14} />
+                        </span>
+                      </React.Fragment>
+                    ) : (
+                      ''
+                    )
+                  }}
+                />
+              }
               onCancel={onCancel}
               onConfirm={this.handleConfirm}
               isDisabled={isDisabled || isNotEnoughMana || isNotEnoughApproved}

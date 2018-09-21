@@ -8,7 +8,7 @@ import TxStatus from 'components/TxStatus'
 import { publicationType } from 'components/types'
 import ParcelName from 'components/ParcelName'
 import TransferAssetForm from 'components/TransferAssetForm'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import { isOnSale } from 'shared/asset'
 
 export default class TransferParcelPage extends React.PureComponent {
@@ -41,9 +41,12 @@ export default class TransferParcelPage extends React.PureComponent {
               x={x}
               y={y}
               title={t('transfer_parcel.transfer_land')}
-              subtitle={t_html('transfer_parcel.about_to_transfer', {
-                parcel_name: <ParcelDetailLink parcel={parcel} />
-              })}
+              subtitle={
+                <T
+                  id="transfer_parcel.about_to_transfer"
+                  values={{ parcel_name: <ParcelDetailLink parcel={parcel} /> }}
+                />
+              }
               hasCustomFooter
             >
               <TransferAssetForm

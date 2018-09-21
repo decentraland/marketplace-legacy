@@ -10,7 +10,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import {
   getMarketplaceAddress,
   getMortgageHelperAddress,
@@ -116,185 +116,275 @@ export default class Transaction extends React.PureComponent {
         const tkey =
           payload.mana > 0 ? 'transaction.approved' : 'transaction.disapproved'
 
-        return t_html(tkey, {
-          marketplace_contract_link: this.renderMarketplaceLink()
-        })
+        return (
+          <T
+            id={tkey}
+            values={{ marketplace_contract_link: this.renderMarketplaceLink() }}
+          />
+        )
       }
       case AUTHORIZE_LAND_SUCCESS: {
         const action = payload.isAuthorized
           ? t('global.authorized')
           : t('global.unauthorized')
 
-        return t_html('transaction.authorize', {
-          action: action.toLowerCase(),
-          marketplace_contract_link: this.renderMarketplaceLink()
-        })
+        return (
+          <T
+            id="transaction.authorize"
+            values={{
+              action: action.toLowerCase(),
+              marketplace_contract_link: this.renderMarketplaceLink()
+            }}
+          />
+        )
       }
       case TRANSFER_MANA_SUCCESS: {
         const { address, mana } = payload
-        return t_html('transaction.transfer_mana', {
-          mana: formatMana(mana, ''),
-          address_link: (
-            <Link to={locations.profilePageDefault(address)}>{address}</Link>
-          )
-        })
+        return (
+          <T
+            id="transaction.transfer_mana"
+            values={{
+              mana: formatMana(mana, ''),
+              address_link: (
+                <Link to={locations.profilePageDefault(address)}>
+                  {address}
+                </Link>
+              )
+            }}
+          />
+        )
       }
       case EDIT_PARCEL_SUCCESS: {
         const { x, y, data } = payload
         const { name, description } = data
 
-        return t_html('transaction.edit', {
-          parcel_link: this.renderParcelLink(x, y),
-          name: <i>{name}</i>,
-          description: <i>{description}</i>
-        })
+        return (
+          <T
+            id="transaction.edit"
+            values={{
+              parcel_link: this.renderParcelLink(x, y),
+              name: <i>{name}</i>,
+              description: <i>{description}</i>
+            }}
+          />
+        )
       }
       case MANAGE_PARCEL_SUCCESS: {
         const { x, y, address, revoked } = payload
-        return t_html(
-          revoked ? 'transaction.manage_revoked' : 'transaction.manage',
-          {
-            parcel_link: this.renderParcelLink(x, y),
-            address_link: (
-              <Link to={locations.profilePageDefault(address)}>{address}</Link>
-            )
-          }
+        return (
+          <T
+            id={revoked ? 'transaction.manage_revoked' : 'transaction.manage'}
+            values={{
+              parcel_link: this.renderParcelLink(x, y),
+              address_link: (
+                <Link to={locations.profilePageDefault(address)}>
+                  {address}
+                </Link>
+              )
+            }}
+          />
         )
       }
-
       case TRANSFER_PARCEL_SUCCESS: {
         const { x, y, newOwner } = payload
 
-        return t_html('transaction.transfer', {
-          asset_link: this.renderParcelLink(x, y),
-          asset_type: t('global.the_parcel').toLowerCase(),
-          owner_link: (
-            <Link to={locations.profilePageDefault(newOwner)}>{newOwner}</Link>
-          )
-        })
+        return (
+          <T
+            id="transaction.transfer"
+            values={{
+              asset_link: this.renderParcelLink(x, y),
+              asset_type: t('global.the_parcel').toLowerCase(),
+              owner_link: (
+                <Link to={locations.profilePageDefault(newOwner)}>
+                  {newOwner}
+                </Link>
+              )
+            }}
+          />
+        )
       }
       case PUBLISH_SUCCESS: {
         const { x, y } = payload
 
-        return t_html('transaction.publish', {
-          parcel_link: this.renderParcelLink(x, y)
-        })
+        return (
+          <T
+            id="transaction.publish"
+            values={{ parcel_link: this.renderParcelLink(x, y) }}
+          />
+        )
       }
       case BUY_SUCCESS: {
         const { x, y } = payload
 
-        return t_html('transaction.buy', {
-          parcel_link: this.renderParcelLink(x, y)
-        })
+        return (
+          <T
+            id="transaction.buy"
+            values={{ parcel_link: this.renderParcelLink(x, y) }}
+          />
+        )
       }
       case CANCEL_SALE_SUCCESS: {
         const { tx_hash, x, y } = payload
 
-        return t_html('transaction.cancel', {
-          publication_link: (
-            <EtherscanLink txHash={tx_hash}>
-              {t('global.sale').toLowerCase()}
-            </EtherscanLink>
-          ),
-          parcel_link: this.renderParcelLink(x, y)
-        })
+        return (
+          <T
+            id="transaction.cancel"
+            values={{
+              publication_link: (
+                <EtherscanLink txHash={tx_hash}>
+                  {t('global.sale').toLowerCase()}
+                </EtherscanLink>
+              ),
+              parcel_link: this.renderParcelLink(x, y)
+            }}
+          />
+        )
       }
       case BUY_MANA_SUCCESS: {
         const { mana } = payload
 
-        return t_html('transaction.buy_mana', {
-          mana: formatMana(mana, '')
-        })
+        return (
+          <T
+            id="transaction.buy_mana"
+            values={{ mana: formatMana(mana, '') }}
+          />
+        )
       }
 
       case APPROVE_MORTGAGE_FOR_MANA_SUCCESS: {
-        return t_html('transaction.mortgage_mana', {
-          action: (payload.mana > 0
-            ? t('global.authorized')
-            : t('global.unauthorized')
-          ).toLowerCase(),
-          mortgage_contract_link: this.renderMortgageHelperLink()
-        })
+        return (
+          <T
+            id="transaction.mortgage_mana"
+            values={{
+              action: (payload.mana > 0
+                ? t('global.authorized')
+                : t('global.unauthorized')
+              ).toLowerCase(),
+              mortgage_contract_link: this.renderMortgageHelperLink()
+            }}
+          />
+        )
       }
 
       case APPROVE_MORTGAGE_FOR_RCN_SUCCESS: {
-        return t_html('transaction.mortgage_rcn', {
-          action: (payload.rcn > 0
-            ? t('global.authorized')
-            : t('global.unauthorized')
-          ).toLowerCase(),
-          mortgage_contract_link: this.renderMortgageManagerLink()
-        })
+        return (
+          <T
+            id="transaction.mortgage_rcn"
+            values={{
+              action: (payload.rcn > 0
+                ? t('global.authorized')
+                : t('global.unauthorized')
+              ).toLowerCase(),
+              mortgage_contract_link: this.renderMortgageManagerLink()
+            }}
+          />
+        )
       }
       case CREATE_MORTGAGE_SUCCESS: {
         const { x, y } = payload
 
-        return t_html('transaction.create_mortgage', {
-          parcel_link: this.renderParcelLink(x, y)
-        })
+        return (
+          <T
+            id="transaction.create_mortgage"
+            values={{ parcel_link: this.renderParcelLink(x, y) }}
+          />
+        )
       }
       case CANCEL_MORTGAGE_SUCCESS: {
         const { x, y } = payload
 
-        return t_html('transaction.cancel_mortgage', {
-          parcel_link: this.renderParcelLink(x, y)
-        })
+        return (
+          <T
+            id="transaction.cancel_mortgage"
+            values={{ parcel_link: this.renderParcelLink(x, y) }}
+          />
+        )
       }
       case PAY_MORTGAGE_SUCCESS: {
         const { x, y, amount } = payload
 
-        return t_html('transaction.pay_mortgage', {
-          parcel_link: this.renderParcelLink(x, y),
-          amount
-        })
+        return (
+          <T
+            id="transaction.pay_mortgage"
+            values={{
+              parcel_link: this.renderParcelLink(x, y),
+              amount
+            }}
+          />
+        )
       }
       case CLAIM_MORTGAGE_RESOLUTION_SUCCESS: {
         const { x, y } = payload
 
-        return t_html('transaction.claim_mortgage_resolution', {
-          parcel_link: this.renderParcelLink(x, y)
-        })
+        return (
+          <T
+            id="transaction.claim_mortgage_resolution"
+            values={{
+              parcel_link: this.renderParcelLink(x, y)
+            }}
+          />
+        )
       }
       case CREATE_ESTATE_SUCCESS: {
         const { estate } = payload
-        return t_html('transaction.create_estate', {
-          name: estate.data.name
-        })
+        return (
+          <T
+            id="transaction.create_estate"
+            values={{ name: estate.data.name }}
+          />
+        )
       }
       case EDIT_ESTATE_PARCELS_SUCCESS: {
         const { estate, type, parcels } = payload
-        return t_html(
-          type === ADD_PARCELS
-            ? 'transaction.edit_estate_parcels_added'
-            : 'transaction.edit_estate_parcels_removed',
-          {
-            name: this.renderEstateLink(estate),
-            amount: parcels.length
-          }
+        return (
+          <T
+            id={
+              type === ADD_PARCELS
+                ? 'transaction.edit_estate_parcels_added'
+                : 'transaction.edit_estate_parcels_removed'
+            }
+            values={{
+              name: this.renderEstateLink(estate),
+              amount: parcels.length
+            }}
+          />
         )
       }
       case EDIT_ESTATE_METADATA_SUCCESS: {
         const { estate } = payload
-        return t_html('transaction.edit_estate_metadata', {
-          estate_id: this.renderEstateLink(estate),
-          name: estate.data.name,
-          description: estate.data.description
-        })
+        return (
+          <T
+            id="transaction.edit_estate_metadata"
+            values={{
+              estate_id: this.renderEstateLink(estate),
+              name: estate.data.name,
+              description: estate.data.description
+            }}
+          />
+        )
       }
       case DELETE_ESTATE_SUCCESS: {
         const { estate } = payload
-        return t_html('transaction.dissolve_estate', {
-          name: estate.data.name
-        })
+        return (
+          <T
+            id="transaction.dissolve_estate"
+            values={{ name: estate.data.name }}
+          />
+        )
       }
       case TRANSFER_ESTATE_SUCCESS: {
         const { estate, to } = payload
 
-        return t_html('transaction.transfer', {
-          asset_link: this.renderEstateLink(estate),
-          asset_type: t('global.the_estate').toLowerCase(),
-          owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
-        })
+        return (
+          <T
+            id="transaction.transfer"
+            values={{
+              asset_link: this.renderEstateLink(estate),
+              asset_type: t('global.the_estate').toLowerCase(),
+              owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
+            }}
+          />
+        )
       }
       default:
         return null

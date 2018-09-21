@@ -10,7 +10,7 @@ import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import { walletType, publicationType } from 'components/types'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
 import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
@@ -45,11 +45,16 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
             {t('mortgage.request')}
           </Header>
           <p className="sign-in">
-            {t_html('global.sign_in_notice', {
-              sign_in_link: (
-                <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-              )
-            })}
+            {
+              <T
+                id="global.sign_in_notice"
+                values={{
+                  sign_in_link: (
+                    <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+                  )
+                }}
+              />
+            }
           </p>
         </Container>
       </div>
@@ -90,11 +95,16 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                     warning
                     icon="warning sign"
                     header={t('global.unauthorized')}
-                    content={t_html('mortgage.please_authorize_MANA', {
-                      settings_link: (
-                        <Link to={locations.settings()}>Settings</Link>
-                      )
-                    })}
+                    content={
+                      <T
+                        id="mortgage.please_authorize_MANA"
+                        values={{
+                          settings_link: (
+                            <Link to={locations.settings()}>Settings</Link>
+                          )
+                        }}
+                      />
+                    }
                   />
                 </Container>
               ) : null}
@@ -104,11 +114,16 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                     warning
                     icon="warning sign"
                     header={t('global.unauthorized')}
-                    content={t_html('mortgage.please_authorize_RCN', {
-                      settings_link: (
-                        <Link to={locations.settings()}>Settings</Link>
-                      )
-                    })}
+                    content={
+                      <T
+                        id="mortgage.please_authorize_RCN"
+                        values={{
+                          settings_link: (
+                            <Link to={locations.settings()}>Settings</Link>
+                          )
+                        }}
+                      />
+                    }
                   />
                 </Container>
               ) : null}
@@ -118,10 +133,15 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                 price={publication.price}
                 isLoading={isLoading}
                 title={t('mortgage.request')}
-                subtitle={t_html('mortgage.request_land', {
-                  parcel_name: <ParcelDetailLink parcel={parcel} />,
-                  parcel_price: formatMana(publication.price)
-                })}
+                subtitle={
+                  <T
+                    id="mortgage.request_land"
+                    values={{
+                      parcel_name: <ParcelDetailLink parcel={parcel} />,
+                      parcel_price: formatMana(publication.price)
+                    }}
+                  />
+                }
                 hasCustomFooter
               >
                 <MortgageForm

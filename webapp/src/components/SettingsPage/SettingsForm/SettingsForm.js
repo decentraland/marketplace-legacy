@@ -8,7 +8,7 @@ import { locations } from 'locations'
 import Mana from 'components/Mana'
 import EtherscanLink from 'components/EtherscanLink'
 import TxStatus from 'components/TxStatus'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import {
   getMarketplaceAddress,
   getMortgageHelperAddress,
@@ -157,13 +157,21 @@ export default class SettingsForm extends React.PureComponent {
               onChange={onManaApprovedChange}
             />
             <div className="authorize-detail">
-              {manaApproved > 0
-                ? t_html('settings.mana_approved', {
+              {manaApproved > 0 ? (
+                <T
+                  id="settings.mana_approved"
+                  values={{
                     marketplace_contract_link: this.renderMarketplaceLink()
-                  })
-                : t_html('settings.approve_mana', {
+                  }}
+                />
+              ) : (
+                <T
+                  id="settings.approve_mana"
+                  values={{
                     marketplace_contract_link: this.renderMarketplaceLink()
-                  })}
+                  }}
+                />
+              )}
 
               {isApprovePending && (
                 <TxStatus.Text
@@ -182,13 +190,21 @@ export default class SettingsForm extends React.PureComponent {
             />
 
             <div className="authorize-detail">
-              {isLandAuthorized
-                ? t_html('settings.you_authorized', {
+              {isLandAuthorized ? (
+                <T
+                  id="settings.you_authorized"
+                  values={{
                     marketplace_contract_link: this.renderMarketplaceLink()
-                  })
-                : t_html('settings.authorize', {
+                  }}
+                />
+              ) : (
+                <T
+                  id="settings.authorize"
+                  values={{
                     marketplace_contract_link: this.renderMarketplaceLink()
-                  })}
+                  }}
+                />
+              )}
 
               {isAuthorizePending && (
                 <TxStatus.Text
@@ -209,13 +225,21 @@ export default class SettingsForm extends React.PureComponent {
                 />
 
                 <div className="authorize-detail">
-                  {isMortgageApprovedForMana
-                    ? t_html('settings.you_approved_mortgage_mana', {
+                  {isMortgageApprovedForMana ? (
+                    <T
+                      id="settings.you_approved_mortgage_mana"
+                      values={{
                         mortgage_contract_link: this.renderMortgageHelperLink()
-                      })
-                    : t_html('settings.approve_mortgage_mana', {
+                      }}
+                    />
+                  ) : (
+                    <T
+                      id="settings.approve_mortgage_mana"
+                      values={{
                         mortgage_contract_link: this.renderMortgageHelperLink()
-                      })}
+                      }}
+                    />
+                  )}
 
                   {isMortgageApprovedForManaPending && (
                     <TxStatus.Text
@@ -234,13 +258,21 @@ export default class SettingsForm extends React.PureComponent {
                 />
 
                 <div className="authorize-detail">
-                  {isMortgageApprovedForRCN
-                    ? t_html('settings.you_approved_mortgage_rcn', {
+                  {isMortgageApprovedForRCN ? (
+                    <T
+                      id="settings.you_approved_mortgage_rcn"
+                      values={{
                         mortgage_contract_link: this.renderMortgageManagerLink()
-                      })
-                    : t_html('settings.approve_mortgage_rcn', {
+                      }}
+                    />
+                  ) : (
+                    <T
+                      id="settings.approve_mortgage_rcn"
+                      values={{
                         mortgage_contract_link: this.renderMortgageManagerLink()
-                      })}
+                      }}
+                    />
+                  )}
 
                   {isMortgageApprovedForRCNPending && (
                     <TxStatus.Text

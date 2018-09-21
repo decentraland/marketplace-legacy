@@ -6,7 +6,7 @@ import { Container, Loader, Button } from 'semantic-ui-react'
 import { locations } from 'locations'
 import Prompt from 'components/Prompt'
 import { transactionType, walletType } from 'components/types'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import Transaction from './Transaction'
 
 import './ActivityPage.css'
@@ -56,19 +56,27 @@ export default class ActivityPage extends React.PureComponent {
         <p>
           {t('activity.no_activity')}
           <br />
-          {this.hasTradingPermissions()
-            ? t_html('activity.start', {
+          {this.hasTradingPermissions() ? (
+            <T
+              id="activity.start"
+              values={{
                 marketplace: (
                   <Link to={locations.marketplace()}>
                     {t('global.marketplace')}
                   </Link>
                 )
-              })
-            : t_html('activity.approve', {
+              }}
+            />
+          ) : (
+            <T
+              id="activity.approve"
+              values={{
                 settings_link: (
                   <Link to={locations.settings()}>{t('global.settings')}</Link>
                 )
-              })}
+              }}
+            />
+          )}
         </p>
       </div>
     )
@@ -131,9 +139,16 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   renderNotConnected() {
-    return t_html('global.sign_in_notice', {
-      sign_in_link: <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-    })
+    return (
+      <T
+        id="global.sign_in_notice"
+        values={{
+          sign_in_link: (
+            <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+          )
+        }}
+      />
+    )
   }
 
   render() {

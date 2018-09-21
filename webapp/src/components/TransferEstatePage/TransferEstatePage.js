@@ -6,7 +6,7 @@ import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateMo
 import TxStatus from 'components/TxStatus'
 import TransferAssetForm from 'components/TransferAssetForm'
 import EstateName from 'components/EstateName'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 
 export default class TransferEstatePage extends React.PureComponent {
   static propTypes = {
@@ -26,9 +26,12 @@ export default class TransferEstatePage extends React.PureComponent {
             <EstateModal
               parcels={estate.data.parcels}
               title={t('transfer_estate.transfer_estate')}
-              subtitle={t_html('transfer_estate.about_to_transfer', {
-                name: estate.data.name
-              })}
+              subtitle={
+                <T
+                  id="transfer_estate.about_to_transfer"
+                  values={{ name: estate.data.name }}
+                />
+              }
               hasCustomFooter
             >
               <TransferAssetForm

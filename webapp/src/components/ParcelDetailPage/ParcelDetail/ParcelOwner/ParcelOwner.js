@@ -6,7 +6,7 @@ import { Button, Icon } from 'semantic-ui-react'
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import { parcelType, districtType, estateType } from 'components/types'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import { getDistrict, isDistrict } from 'shared/asset'
 
 import './ParcelOwner.css'
@@ -70,7 +70,12 @@ export default class ParcelOwner extends React.PureComponent {
 
       return (
         <span className="ParcelOwner part-of">
-          {t_html('parcel_detail.owner.part_of', { name: districtName })}
+          {
+            <T
+              id="parcel_detail.owner.part_of"
+              values={{ name: districtName }}
+            />
+          }
         </span>
       )
     }
@@ -84,7 +89,12 @@ export default class ParcelOwner extends React.PureComponent {
         )
         return (
           <span className="ParcelOwner part-of">
-            {t_html('parcel_detail.owner.part_of', { name: estateName })}
+            {
+              <T
+                id="parcel_detail.owner.part_of"
+                values={{ name: estateName }}
+              />
+            }
           </span>
         )
       }

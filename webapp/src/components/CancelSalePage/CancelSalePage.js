@@ -6,7 +6,7 @@ import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
-import { t, t_html } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import CancelSaleForm from './CancelSaleForm'
 
 export default class CancelSalePage extends React.PureComponent {
@@ -27,9 +27,14 @@ export default class CancelSalePage extends React.PureComponent {
     const { publication } = this.props
     const parceDetailLink = <ParcelDetailLink parcel={parcel} />
 
-    return publication
-      ? t_html('parcel_cancel.about_to_cancel', { parcel: parceDetailLink })
-      : t_html('parcel_cancel.not_for_sale', { parcel: parceDetailLink })
+    return publication ? (
+      <T
+        id="parcel_cancel.about_to_cancel"
+        values={{ parcel: parceDetailLink }}
+      />
+    ) : (
+      <T id="parcel_cancel.not_for_sale" values={{ parcel: parceDetailLink }} />
+    )
   }
 
   render() {
