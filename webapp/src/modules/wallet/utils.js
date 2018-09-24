@@ -1,24 +1,11 @@
 import { eth, contracts, wallets, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
 import { isMobile } from 'lib/utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 
 export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
-    const {
-      MANAToken,
-      LANDRegistry,
-      Marketplace,
-      MortgageHelper,
-      MortgageManager,
-      RCNEngine,
-      ERC20Token,
-      EstateRegistry
-    } = contracts
-
-    const RCNToken = Object.create(
-      new ERC20Token(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
-    )
-    RCNToken.getContractName = () => 'RCNToken'
+    const { MANAToken, LANDRegistry, Marketplace, EstateRegistry } = contracts
 
     const { LedgerWallet, NodeWallet } = wallets
     const { address, derivationPath } = options
@@ -32,14 +19,7 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
         new EstateRegistry(
           env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')
         ),
-        new MortgageHelper(
-          env.get('REACT_APP_MORTGAGE_HELPER_CONTRACT_ADDRESS')
-        ),
-        new MortgageManager(
-          env.get('REACT_APP_MORTGAGE_MANAGER_CONTRACT_ADDRESS')
-        ),
-        new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS')),
-        RCNToken
+        ...getMortgageContracts()
       ],
       wallets: isMobile()
         ? [new NodeWallet(address)]
@@ -61,6 +41,25 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
     await utils.sleep(125)
     return connectEthereumWallet(options, retries + 1)
   }
+}
+
+function getMortgageContracts() {
+  // To be deleted when mortgages go live
+  if (!isFeatureEnabled('MORTGAGES')) return []
+
+  const { MortgageHelper, MortgageManager, RCNEngine, ERC20Token } = contracts
+
+  const RCNToken = Object.create(
+    new ERC20Token(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
+  )
+  RCNToken.getContractName = () => 'RCNToken'
+
+  return [
+    new MortgageHelper(env.get('REACT_APP_MORTGAGE_HELPER_CONTRACT_ADDRESS')),
+    new MortgageManager(env.get('REACT_APP_MORTGAGE_MANAGER_CONTRACT_ADDRESS')),
+    new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS')),
+    RCNToken
+  ]
 }
 
 export function isLedgerWallet() {

@@ -51,6 +51,7 @@ import {
   sendTransaction,
   fetchBalance
 } from './utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
@@ -87,10 +88,19 @@ function* handleConnectWalletRequest(action = {}) {
 
     const manaTokenContract = eth.getContract('MANAToken')
     const landRegistryContract = eth.getContract('LANDRegistry')
-    const rcnTokenContract = eth.getContract('RCNToken')
     const marketplaceAddress = getMarketplaceAddress()
-    const mortgageHelperAddress = getMortgageHelperAddress()
-    const mortgageManagerAddress = getMortgageManagerAddress()
+
+    let mortgageAllowancePromises = [Promise.resolve(0), Promise.resolve(0)]
+
+    if (isFeatureEnabled('MORTGAGES')) {
+      // To be deleted when mortgages go live
+      const rcnTokenContract = eth.getContract('RCNToken')
+
+      mortgageAllowancePromises = [
+        manaTokenContract.allowance(address, getMortgageHelperAddress()),
+        rcnTokenContract.allowance(address, getMortgageManagerAddress())
+      ]
+    }
 
     const [
       network,
@@ -106,8 +116,7 @@ function* handleConnectWalletRequest(action = {}) {
       fetchBalance(address),
       manaTokenContract.allowance(address, marketplaceAddress),
       landRegistryContract.isApprovedForAll(address, marketplaceAddress),
-      manaTokenContract.allowance(address, mortgageHelperAddress),
-      rcnTokenContract.allowance(address, mortgageManagerAddress)
+      ...mortgageAllowancePromises
     ])
     const wallet = {
       network: network.name,
