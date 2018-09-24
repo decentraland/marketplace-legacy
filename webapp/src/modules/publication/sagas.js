@@ -65,7 +65,7 @@ function* handlePublishRequest(action) {
     const priceInWei = eth.utils.toWei(price)
     const asset = yield call(() => buildAsset(id))
 
-    const marketplaceContract = eth.getContract('Marketplace')
+    const marketplaceContract = eth.getContract('LegacyMarketplace')
 
     const txHash = yield call(() =>
       marketplaceContract.createOrder(asset.id, priceInWei, expires_at)

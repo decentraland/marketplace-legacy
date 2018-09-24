@@ -53,7 +53,7 @@ export class PublicationDoctor extends Doctor {
     if (!parcel) return ''
 
     const { id, token_id } = parcel
-    const marketplace = eth.getContract('Marketplace')
+    const marketplace = eth.getContract('LegacyMarketplace')
     const auction = await marketplace.auctionByAssetId(token_id)
     const publication = (await Publication.findByAssetId(id))[0]
     const contractId = auction[0]

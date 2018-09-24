@@ -5,7 +5,13 @@ import { isFeatureEnabled } from 'lib/featureUtils'
 
 export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
-    const { MANAToken, LANDRegistry, Marketplace, EstateRegistry } = contracts
+    const {
+      MANAToken,
+      LANDRegistry,
+      LegacyMarketplace,
+      Marketplace,
+      EstateRegistry
+    } = contracts
 
     const { LedgerWallet, NodeWallet } = wallets
     const { address, derivationPath } = options
@@ -15,6 +21,9 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       contracts: [
         new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
         new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
+        new LegacyMarketplace(
+          env.get('REACT_APP_LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
+        ),
         new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
         new EstateRegistry(
           env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')
@@ -80,7 +89,7 @@ export function getMANATokenAddress() {
 }
 
 export function getMarketplaceAddress() {
-  const marketplaceContract = eth.getContract('Marketplace')
+  const marketplaceContract = eth.getContract('LegacyMarketplace')
   return marketplaceContract.address
 }
 

@@ -121,7 +121,7 @@ const main = {
           const id = Parcel.buildId(x, y)
           const tokenId = await Parcel.encodeTokenId(x, y)
 
-          const contract = eth.getContract('Marketplace')
+          const contract = eth.getContract('LegacyMarketplace')
           const publication = await contract.auctionByAssetId(tokenId)
 
           const pubDb = (await Publication.findByAssetId(id))[0]
