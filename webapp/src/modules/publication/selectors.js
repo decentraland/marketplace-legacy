@@ -5,8 +5,8 @@ import {
   BUY_REQUEST,
   CANCEL_SALE_REQUEST
 } from './actions'
+import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import { isLoadingType } from 'modules/loading/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getTransactionsByType } from 'modules/transaction/selectors'
 import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'

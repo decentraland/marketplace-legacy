@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Button, Icon } from 'semantic-ui-react'
 
+import { locations } from 'locations'
 import { parcelType } from 'components/types'
 import ParcelCard from 'components/ParcelCard'
-import { locations } from 'locations'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 
 import './HomePage.css'
 

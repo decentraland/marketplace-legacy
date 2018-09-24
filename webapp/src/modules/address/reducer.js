@@ -12,6 +12,7 @@ import {
   FETCH_ADDRESS_ESTATES_SUCCESS,
   FETCH_ADDRESS_ESTATES_FAILURE
 } from './actions'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
@@ -23,7 +24,6 @@ import {
   REMOVE_PARCELS
 } from 'modules/estates/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
-import { loadingReducer } from 'modules/loading/reducer'
 import { buildCoordinate } from 'shared/parcel'
 import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 

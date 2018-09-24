@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { eth } from 'decentraland-eth'
-
 import { Button, Form, Input } from 'semantic-ui-react'
+
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 import { getMANATokenAddress } from 'modules/wallet/utils'
 import { preventDefault } from 'lib/utils'
 

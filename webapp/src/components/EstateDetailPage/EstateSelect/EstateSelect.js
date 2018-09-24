@@ -11,11 +11,12 @@ import {
 
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
-import EstateSelectActions from './EstateSelectActions'
-import { t } from 'modules/translation/utils'
+import TxStatus from 'components/TxStatus'
+import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'
-import { getCoordsMatcher, isEqualCoords, buildCoordinate } from 'shared/parcel'
+import { t } from '@dapps/modules/translation/utils'
 import { isOwner } from 'shared/asset'
+import { getCoordsMatcher, isEqualCoords, buildCoordinate } from 'shared/parcel'
 import {
   hasNeighbour,
   areConnected,
@@ -23,8 +24,7 @@ import {
   MAX_PARCELS_PER_TX
 } from 'shared/estate'
 import { getParcelsNotIncluded } from 'shared/utils'
-import TxStatus from 'components/TxStatus'
-import EstateName from 'components/EstateName'
+import EstateSelectActions from './EstateSelectActions'
 import './EstateSelect.css'
 
 export default class EstateSelect extends React.PureComponent {

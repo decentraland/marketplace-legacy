@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { Button, Form, Input, Icon } from 'semantic-ui-react'
+
 import TxStatus from 'components/TxStatus'
+import { t, T } from '@dapps/modules/translation/utils'
 import { preventDefault, formatMana } from 'lib/utils'
-import { t, t_html } from 'modules/translation/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   fetchTransaction,
@@ -199,18 +199,23 @@ export default class BuyManaForm extends React.PureComponent {
         ) : null}
         {isFeatureEnabled('BUY_MANA') ? (
           <span className="info">
-            {t_html('buy_mana.powered_by', {
-              bancor_link: (
-                <a
-                  href="https://bancor.network"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="external-link"
-                >
-                  Bancor Network
-                </a>
-              )
-            })}
+            {
+              <T
+                id="buy_mana.powered_by"
+                values={{
+                  bancor_link: (
+                    <a
+                      href="https://bancor.network"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="external-link"
+                    >
+                      Bancor Network
+                    </a>
+                  )
+                }}
+              />
+            }
           </span>
         ) : (
           <label className="warning">{t('global.service_unavailable')}</label>

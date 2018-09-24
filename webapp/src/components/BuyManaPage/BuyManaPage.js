@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Loader, Container } from 'semantic-ui-react'
+
+import { locations } from 'locations'
 import ParcelModal from 'components/ParcelModal'
 import Mana from 'components/Mana'
-import { t, t_html } from 'modules/translation/utils'
 import { walletType } from 'components/types'
-import { locations } from 'locations'
+import { t, T } from '@dapps/modules/translation/utils'
 import BuyManaForm from './BuyManaForm'
 import './BuyManaPage.css'
 
@@ -30,9 +31,16 @@ export default class BuyManaPage extends React.PureComponent {
   }
 
   renderNotConnected() {
-    return t_html('global.sign_in_notice', {
-      sign_in_link: <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-    })
+    return (
+      <T
+        id="global.sign_in_notice"
+        values={{
+          sign_in_link: (
+            <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+          )
+        }}
+      />
+    )
   }
 
   renderContent() {

@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Container, Message } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { Container, Message } from 'semantic-ui-react'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import { publicationType, walletType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
 import { formatMana } from 'lib/utils'
 import PublicationForm from './PublicationForm'
@@ -60,11 +60,16 @@ export default class PublishPage extends React.PureComponent {
                   warning
                   icon="warning sign"
                   header={t('global.unauthorized')}
-                  content={t_html('parcel_publish.please_authorize', {
-                    settings_link: (
-                      <Link to={locations.settings()}>Settings</Link>
-                    )
-                  })}
+                  content={
+                    <T
+                      id="parcel_publish.please_authorize"
+                      values={{
+                        settings_link: (
+                          <Link to={locations.settings()}>Settings</Link>
+                        )
+                      }}
+                    />
+                  }
                 />
               </Container>
             ) : null}
@@ -72,9 +77,12 @@ export default class PublishPage extends React.PureComponent {
               x={x}
               y={y}
               title={t('parcel_publish.list_land')}
-              subtitle={t_html('parcel_publish.set_land_price', {
-                parcel_name: <ParcelDetailLink parcel={parcel} />
-              })}
+              subtitle={
+                <T
+                  id="parcel_publish.set_land_price"
+                  values={{ parcel_name: <ParcelDetailLink parcel={parcel} /> }}
+                />
+              }
               hasCustomFooter
             >
               <PublicationForm

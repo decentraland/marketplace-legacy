@@ -5,7 +5,7 @@ import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
-import { t, t_html } from 'modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import EditParcelForm from './EditParcelForm'
 
 import './EditParcelPage.css'
@@ -30,9 +30,12 @@ export default class EditParcelPage extends React.PureComponent {
               x={x}
               y={y}
               title={t('parcel_edit.edit_land')}
-              subtitle={t_html('parcel_edit.set_name_and_desc', {
-                parcel_name: <ParcelDetailLink parcel={parcel} />
-              })}
+              subtitle={
+                <T
+                  id="parcel_edit.set_name_and_desc"
+                  values={{ parcel_name: <ParcelDetailLink parcel={parcel} /> }}
+                />
+              }
               hasCustomFooter
             >
               <EditParcelForm

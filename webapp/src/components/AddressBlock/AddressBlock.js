@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import Blockie from 'components/Blockie'
+import { t } from '@dapps/modules/translation/utils'
 import { shortenAddress } from 'lib/utils'
-import { t } from 'modules/translation/utils'
 
 import './AddressBlock.css'
 

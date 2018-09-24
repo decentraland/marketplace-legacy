@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 
 import './DerivationPathDropdown.css'
 

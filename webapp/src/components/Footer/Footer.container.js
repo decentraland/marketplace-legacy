@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
+import { changeLocale } from '@dapps/modules/translation/actions'
 import { getLocale } from 'modules/wallet/selectors'
-import { changeLocale } from 'modules/translation/actions'
 import Footer from './Footer'
 
 const mapState = state => {

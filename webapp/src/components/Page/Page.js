@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
-import TranslationProvider from './TranslationProvider'
-import { getLocalStorage } from 'decentraland-dapps/dist/lib/localStorage'
+import { getLocalStorage } from '@dapps/lib/localStorage'
 
 import './Page.css'
 
@@ -54,13 +53,13 @@ export default class Page extends React.PureComponent {
     const { children } = this.props
 
     return (
-      <TranslationProvider>
+      <React.Fragment>
         <Navbar />
         <div className="Page">
           {children}
           <Footer />
         </div>
-      </TranslationProvider>
+      </React.Fragment>
     )
   }
 }

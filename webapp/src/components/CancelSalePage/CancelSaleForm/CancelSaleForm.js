@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Button } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 
 import './CancelSaleForm.css'
 

@@ -3,7 +3,7 @@ import {
   FETCH_DISTRICTS_SUCCESS,
   FETCH_DISTRICTS_FAILURE
 } from './actions'
-import { loadingReducer } from 'modules/loading/reducer'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { toDistrictObject } from './utils'
 
 const INITIAL_STATE = {

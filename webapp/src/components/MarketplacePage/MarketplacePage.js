@@ -10,11 +10,10 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
+
 import ParcelCard from 'components/ParcelCard'
-
 import { parcelType } from 'components/types'
-import { t } from 'modules/translation/utils'
-
+import { t } from '@dapps/modules/translation/utils'
 import {
   getSortOptions,
   getOptionsFromSortType,

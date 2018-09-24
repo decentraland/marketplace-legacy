@@ -1,13 +1,13 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import { Button, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { Button, Loader } from 'semantic-ui-react'
 import StaticPage from 'components/StaticPage'
-import { isMobile } from 'lib/utils'
-import { t, t_html } from 'modules/translation/utils'
-
+import { t, T } from '@dapps/modules/translation/utils'
 import WalletIcon from './WalletIcon'
+import { isMobile } from 'lib/utils'
+
 import './SignInPage.css'
 
 export default class SignInPage extends React.PureComponent {
@@ -41,8 +41,10 @@ export default class SignInPage extends React.PureComponent {
             <h1>{t('sign_in.get_started')}</h1>
             <p className="sign-in-options">
               {t('sign_in.intro')}{' '}
-              {isMobile()
-                ? t_html('sign_in.options.mobile', {
+              {isMobile() ? (
+                <T
+                  id="sign_in.options.mobile"
+                  values={{
                     coinbase_link: (
                       <a
                         href="https://wallet.coinbase.com"
@@ -61,8 +63,12 @@ export default class SignInPage extends React.PureComponent {
                         imToken
                       </a>
                     )
-                  })
-                : t_html('sign_in.options.desktop', {
+                  }}
+                />
+              ) : (
+                <T
+                  id="sign_in.options.desktop"
+                  values={{
                     metamask_link: (
                       <a
                         href="https://metamask.io"
@@ -90,7 +96,9 @@ export default class SignInPage extends React.PureComponent {
                         Ledger Nano S
                       </a>
                     )
-                  })}
+                  }}
+                />
+              )}
             </p>
             <br />
             <Button type="button" primary onClick={this.handleRetry}>

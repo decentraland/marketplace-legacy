@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { eth } from 'decentraland-eth'
-
 import { Button, Form } from 'semantic-ui-react'
+
 import { assetType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
+import { t } from '@dapps/modules/translation/utils'
 import { preventDefault } from 'lib/utils'
-import { t } from 'modules/translation/utils'
 
 import './TransferAssetForm.css'
 

@@ -1,12 +1,11 @@
 import React from 'react'
-
-import { getLocalStorage } from 'decentraland-dapps/dist/lib/localStorage'
 import { Button } from 'semantic-ui-react'
 
-import DecentralandLogo from 'components/DecentralandLogo'
-import BaseModal from '../BaseModal'
-
 import { locations } from 'locations'
+import DecentralandLogo from 'components/DecentralandLogo'
+import { getLocalStorage } from '@dapps/lib/localStorage'
+
+import BaseModal from '../BaseModal'
 
 import './TermsModal.css'
 

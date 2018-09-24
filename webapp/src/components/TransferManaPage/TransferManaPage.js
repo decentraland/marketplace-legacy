@@ -6,7 +6,7 @@ import { locations } from 'locations'
 import ParcelModal from 'components/ParcelModal'
 import Mana from 'components/Mana'
 import { walletType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import TransferManaForm from './TransferManaForm'
 import './TransferManaPage.css'
 
@@ -30,9 +30,16 @@ export default class TransferManaPage extends React.PureComponent {
   }
 
   renderNotConnected() {
-    return t_html('global.sign_in_notice', {
-      sign_in_link: <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-    })
+    return (
+      <T
+        id="global.sign_in_notice"
+        values={{
+          sign_in_link: (
+            <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+          )
+        }}
+      />
+    )
   }
 
   renderContent() {
@@ -47,14 +54,19 @@ export default class TransferManaPage extends React.PureComponent {
         title={t('transfer_mana.title')}
         subtitle={
           <div>
-            {t_html('transfer_mana.current_balance', {
-              balance: (
-                <span className="mana-icon-wrapper">
-                  &nbsp;
-                  <Mana amount={wallet.balance} />
-                </span>
-              )
-            })}
+            {
+              <T
+                id="transfer_mana.current_balance"
+                values={{
+                  balance: (
+                    <span className="mana-icon-wrapper">
+                      &nbsp;
+                      <Mana amount={wallet.balance} />
+                    </span>
+                  )
+                }}
+              />
+            }
           </div>
         }
         hasCustomFooter

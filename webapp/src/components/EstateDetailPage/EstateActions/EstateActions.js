@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 import './EstateActions.css'
 
 export default class EstateActions extends React.PureComponent {

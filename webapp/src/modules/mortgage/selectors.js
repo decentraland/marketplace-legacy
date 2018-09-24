@@ -5,7 +5,7 @@ import {
   CREATE_MORTGAGE_REQUEST,
   PAY_MORTGAGE_REQUEST
 } from './actions'
-import { isLoadingType } from 'modules/loading/selectors'
+import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'

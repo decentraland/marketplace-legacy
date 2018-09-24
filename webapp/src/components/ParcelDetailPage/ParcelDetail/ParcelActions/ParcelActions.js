@@ -5,10 +5,10 @@ import { Button, Icon } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import { parcelType, publicationType, mortgageType } from 'components/types'
-import { isFeatureEnabled } from 'lib/featureUtils'
+import { t } from '@dapps/modules/translation/utils'
 import { isOnSale } from 'shared/asset'
 import { hasParcelsConnected } from 'shared/parcel'
-import { t } from 'modules/translation/utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 
 import './ParcelActions.css'
 

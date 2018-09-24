@@ -19,7 +19,7 @@ import {
   TRANSFER_ESTATE_SUCCESS,
   TRANSFER_ESTATE_FAILURE
 } from './actions'
-import { loadingReducer } from 'modules/loading/reducer'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'

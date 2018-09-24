@@ -6,11 +6,11 @@ import { Container, Header } from 'semantic-ui-react'
 import { locations } from 'locations'
 import Parcel from 'components/Parcel'
 import { walletType, mortgageType } from 'components/types'
-import { t, t_html } from 'modules/translation/utils'
 import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
+import { t, T } from '@dapps/modules/translation/utils'
 import {
   isMortgageOngoing,
   getMortgageOutstandingAmount
@@ -55,11 +55,16 @@ export default class PayMortgagePage extends React.PureComponent {
             {t('mortgage.partial_payment')}
           </Header>
           <p className="sign-in">
-            {t_html('global.sign_in_notice', {
-              sign_in_link: (
-                <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-              )
-            })}
+            {
+              <T
+                id="global.sign_in_notice"
+                values={{
+                  sign_in_link: (
+                    <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+                  )
+                }}
+              />
+            }
           </p>
         </Container>
       </div>
@@ -95,12 +100,17 @@ export default class PayMortgagePage extends React.PureComponent {
               selected={parcel}
               isLoading={isLoading || isFetchingMortgages}
               title={t('mortgage.partial_payment')}
-              subtitle={t_html('mortgage.partial_payment_desc', {
-                parcel_name: <ParcelDetailLink parcel={parcel} />,
-                outstanding_amount: formatMana(
-                  getMortgageOutstandingAmount(mortgage)
-                )
-              })}
+              subtitle={
+                <T
+                  id="mortgage.partial_payment_desc"
+                  values={{
+                    parcel_name: <ParcelDetailLink parcel={parcel} />,
+                    outstanding_amount: formatMana(
+                      getMortgageOutstandingAmount(mortgage)
+                    )
+                  }}
+                />
+              }
               hasCustomFooter
             >
               <PayMortgageForm

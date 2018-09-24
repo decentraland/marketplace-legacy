@@ -1,18 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
-import { Grid, Responsive } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { Grid, Responsive } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
 import { parcelType, publicationType } from 'components/types'
-import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
+import { t } from '@dapps/modules/translation/utils'
+import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import { AUCTION_DATE } from 'shared/parcel'
-import { t } from 'modules/translation/utils'
+import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
 import './ParcelTransactionHistory.css'
 

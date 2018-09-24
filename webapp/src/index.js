@@ -5,11 +5,13 @@ import ReactDOM from 'react-dom'
 
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
+import TranslationProvider from '@dapps/providers/TranslationProvider'
 
 import { env } from 'decentraland-commons'
 
 import { store, history } from './store'
 import Routes from './Routes'
+import { getAvailableLocales } from './lib/translation'
 
 import './rollbar'
 import './index.css'
@@ -18,9 +20,11 @@ env.load()
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Routes />
-    </ConnectedRouter>
+    <TranslationProvider locales={getAvailableLocales()}>
+      <ConnectedRouter history={history}>
+        <Routes />
+      </ConnectedRouter>
+    </TranslationProvider>
   </Provider>,
   document.getElementById('app')
 )

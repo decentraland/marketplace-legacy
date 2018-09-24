@@ -1,19 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Container, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { Container, Loader } from 'semantic-ui-react'
 import AddressBlock from 'components/AddressBlock'
-import SettingsForm from './SettingsForm'
-
 import { walletType } from 'components/types'
+import { t, T } from '@dapps/modules/translation/utils'
 import {
   getManaToApprove,
   isLedgerWallet,
   getRCNToApprove
 } from 'modules/wallet/utils'
-import { t, t_html } from 'modules/translation/utils'
+import SettingsForm from './SettingsForm'
 
 import './SettingsPage.css'
 
@@ -146,11 +145,18 @@ export default class SettingsPage extends React.PureComponent {
                 />
               ) : (
                 <p className="sign-in">
-                  {t_html('global.sign_in_notice', {
-                    sign_in_link: (
-                      <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-                    )
-                  })}
+                  {
+                    <T
+                      id="global.sign_in_notice"
+                      values={{
+                        sign_in_link: (
+                          <Link to={locations.signIn()}>
+                            {t('global.sign_in')}
+                          </Link>
+                        )
+                      }}
+                    />
+                  }
                 </p>
               )}
             </div>

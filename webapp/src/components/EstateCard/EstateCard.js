@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-
 import { Card } from 'semantic-ui-react'
+
+import { locations } from 'locations'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelTags from 'components/ParcelTags'
 import LandAmount from 'components/LandAmount'
 import { estateType } from 'components/types'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 import { calculateMapProps } from 'shared/estate'
 import { formatDate } from 'lib/utils'
-import { locations } from 'locations'
 
 import './EstateCard.css'
 

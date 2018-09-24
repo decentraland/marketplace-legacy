@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 import { locations } from 'locations'
 import Icon from 'components/Icon'
+import { t } from '@dapps/modules/translation/utils'
 import LocalesDropdown from './LocalesDropdown'
-import { t } from 'modules/translation/utils'
 
 import './Footer.css'
 

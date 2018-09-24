@@ -6,7 +6,7 @@ import ParcelPreview from 'components/ParcelPreview'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { coordsType, estateType } from 'components/types'
-import { t } from 'modules/translation/utils'
+import { t } from '@dapps/modules/translation/utils'
 import { calculateMapProps } from 'shared/estate'
 import './EstateModal.css'
 
