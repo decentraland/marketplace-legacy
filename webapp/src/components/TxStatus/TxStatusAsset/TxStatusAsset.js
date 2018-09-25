@@ -24,28 +24,24 @@ export default class TxStatusAsset extends React.PureComponent {
 
     return transactions.length ? (
       <Message warning className="TxStatusAsset">
-        {
-          <T
-            id="transaction_status.parcel.still_pending"
-            values={{
-              parcel_name: name,
-              transactions_count: transactions.length
-            }}
-          />
-        }
+        <T
+          id="transaction_status.parcel.still_pending"
+          values={{
+            parcel_name: name,
+            transactions_count: transactions.length
+          }}
+        />
         <br />
-        {
-          <T
-            id="transaction_status.see_activity"
-            values={{
-              activity_link: (
-                <Link to={locations.activity()}>
-                  {t('transaction_status.activity_page')}
-                </Link>
-              )
-            }}
-          />
-        }
+        <T
+          id="transaction_status.see_activity"
+          values={{
+            activity_link: (
+              <Link to={locations.activity()}>
+                {t('transaction_status.activity_page')}
+              </Link>
+            )
+          }}
+        />
       </Message>
     ) : null
   }

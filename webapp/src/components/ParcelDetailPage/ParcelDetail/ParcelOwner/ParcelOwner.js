@@ -70,12 +70,7 @@ export default class ParcelOwner extends React.PureComponent {
 
       return (
         <span className="ParcelOwner part-of">
-          {
-            <T
-              id="parcel_detail.owner.part_of"
-              values={{ name: districtName }}
-            />
-          }
+          <T id="parcel_detail.owner.part_of" values={{ name: districtName }} />
         </span>
       )
     }
@@ -89,12 +84,7 @@ export default class ParcelOwner extends React.PureComponent {
         )
         return (
           <span className="ParcelOwner part-of">
-            {
-              <T
-                id="parcel_detail.owner.part_of"
-                values={{ name: estateName }}
-              />
-            }
+            <T id="parcel_detail.owner.part_of" values={{ name: estateName }} />
           </span>
         )
       }

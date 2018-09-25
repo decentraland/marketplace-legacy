@@ -145,18 +145,16 @@ export default class SettingsPage extends React.PureComponent {
                 />
               ) : (
                 <p className="sign-in">
-                  {
-                    <T
-                      id="global.sign_in_notice"
-                      values={{
-                        sign_in_link: (
-                          <Link to={locations.signIn()}>
-                            {t('global.sign_in')}
-                          </Link>
-                        )
-                      }}
-                    />
-                  }
+                  <T
+                    id="global.sign_in_notice"
+                    values={{
+                      sign_in_link: (
+                        <Link to={locations.signIn()}>
+                          {t('global.sign_in')}
+                        </Link>
+                      )
+                    }}
+                  />
                 </p>
               )}
             </div>

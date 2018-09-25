@@ -26,18 +26,16 @@ export default class TxStatusText extends React.PureComponent {
           ? t('transaction_status.text.pending')
           : t('transaction_status.text.failed')}
         &nbsp;
-        {
-          <T
-            id="transaction_status.see_activity"
-            values={{
-              activity_link: (
-                <Link to={locations.activity()}>
-                  {t('transaction_status.activity_page')}
-                </Link>
-              )
-            }}
-          />
-        }
+        <T
+          id="transaction_status.see_activity"
+          values={{
+            activity_link: (
+              <Link to={locations.activity()}>
+                {t('transaction_status.activity_page')}
+              </Link>
+            )
+          }}
+        />
       </div>
     ) : null
   }

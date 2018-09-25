@@ -47,16 +47,14 @@ export default class BuyParcelPage extends React.PureComponent {
             {t('parcel_buy.buy_land')}
           </Header>
           <p className="sign-in">
-            {
-              <T
-                id="global.sign_in_notice"
-                values={{
-                  sign_in_link: (
-                    <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-                  )
-                }}
-              />
-            }
+            <T
+              id="global.sign_in_notice"
+              values={{
+                sign_in_link: (
+                  <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+                )
+              }}
+            />
           </p>
         </Container>
       </div>
@@ -95,18 +93,16 @@ export default class BuyParcelPage extends React.PureComponent {
                     })}
                   </span>
                   <br />
-                  {
-                    <T
-                      id="parcel_buy.buy_mana"
-                      values={{
-                        click_here: (
-                          <Link to={locations.buyMana()}>
-                            {t('global.click_here')}
-                          </Link>
-                        )
-                      }}
-                    />
-                  }
+                  <T
+                    id="parcel_buy.buy_mana"
+                    values={{
+                      click_here: (
+                        <Link to={locations.buyMana()}>
+                          {t('global.click_here')}
+                        </Link>
+                      )
+                    }}
+                  />
                 </React.Fragment>
               ) : approvedBalance > 0 ? (
                 <React.Fragment>
@@ -116,33 +112,29 @@ export default class BuyParcelPage extends React.PureComponent {
                     })}
                   </span>
                   <br />
-                  {
-                    <T
-                      id="parcel_buy.please_approve"
-                      values={{
-                        settings_link: (
-                          <Link to={locations.settings()}>
-                            {t('global.settings')}
-                          </Link>
-                        )
-                      }}
-                    />
-                  }
+                  <T
+                    id="parcel_buy.please_approve"
+                    values={{
+                      settings_link: (
+                        <Link to={locations.settings()}>
+                          {t('global.settings')}
+                        </Link>
+                      )
+                    }}
+                  />
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {
-                    <T
-                      id="parcel_buy.please_approve"
-                      values={{
-                        settings_link: (
-                          <Link to={locations.settings()}>
-                            {t('global.settings')}
-                          </Link>
-                        )
-                      }}
-                    />
-                  }
+                  <T
+                    id="parcel_buy.please_approve"
+                    values={{
+                      settings_link: (
+                        <Link to={locations.settings()}>
+                          {t('global.settings')}
+                        </Link>
+                      )
+                    }}
+                  />
                 </React.Fragment>
               )
             }

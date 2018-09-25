@@ -54,19 +54,17 @@ export default class TransferManaPage extends React.PureComponent {
         title={t('transfer_mana.title')}
         subtitle={
           <div>
-            {
-              <T
-                id="transfer_mana.current_balance"
-                values={{
-                  balance: (
-                    <span className="mana-icon-wrapper">
-                      &nbsp;
-                      <Mana amount={wallet.balance} />
-                    </span>
-                  )
-                }}
-              />
-            }
+            <T
+              id="transfer_mana.current_balance"
+              values={{
+                balance: (
+                  <span className="mana-icon-wrapper">
+                    &nbsp;
+                    <Mana amount={wallet.balance} />
+                  </span>
+                )
+              }}
+            />
           </div>
         }
         hasCustomFooter

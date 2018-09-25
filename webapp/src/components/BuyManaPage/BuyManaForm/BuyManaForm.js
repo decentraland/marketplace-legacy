@@ -199,23 +199,21 @@ export default class BuyManaForm extends React.PureComponent {
         ) : null}
         {isFeatureEnabled('BUY_MANA') ? (
           <span className="info">
-            {
-              <T
-                id="buy_mana.powered_by"
-                values={{
-                  bancor_link: (
-                    <a
-                      href="https://bancor.network"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="external-link"
-                    >
-                      Bancor Network
-                    </a>
-                  )
-                }}
-              />
-            }
+            <T
+              id="buy_mana.powered_by"
+              values={{
+                bancor_link: (
+                  <a
+                    href="https://bancor.network"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="external-link"
+                  >
+                    Bancor Network
+                  </a>
+                )
+              }}
+            />
           </span>
         ) : (
           <label className="warning">{t('global.service_unavailable')}</label>

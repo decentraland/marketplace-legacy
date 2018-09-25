@@ -55,16 +55,14 @@ export default class PayMortgagePage extends React.PureComponent {
             {t('mortgage.partial_payment')}
           </Header>
           <p className="sign-in">
-            {
-              <T
-                id="global.sign_in_notice"
-                values={{
-                  sign_in_link: (
-                    <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-                  )
-                }}
-              />
-            }
+            <T
+              id="global.sign_in_notice"
+              values={{
+                sign_in_link: (
+                  <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
+                )
+              }}
+            />
           </p>
         </Container>
       </div>
