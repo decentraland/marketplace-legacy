@@ -84,7 +84,7 @@ function getRandomColumnValue(columnName, tableName) {
     case 'hash':
       return generateEthereumTxHash()
     case 'tx_status': {
-      return faker.random.objectElement(txUtils.TRANSACTION_STATUS)
+      return faker.random.objectElement(txUtils.TRANSACTION_TYPES)
     }
     case 'link':
       return faker.internet.url()

@@ -48,7 +48,7 @@ export async function mortgageReducer(events, event) {
       )
       try {
         await Mortgage.insert({
-          tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+          tx_status: txUtils.TRANSACTION_TYPES.confirmed,
           status: MORTGAGE_STATUS.pending,
           interest_rate: interestRate.toNumber(),
           punitory_interest_rate: punitoryInterestRate.toNumber(),

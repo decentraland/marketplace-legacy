@@ -44,7 +44,7 @@ export async function publicationReducer(events, event) {
 
       try {
         await Publication.insert({
-          tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+          tx_status: txUtils.TRANSACTION_TYPES.confirmed,
           status: PUBLICATION_STATUS.open,
           owner: seller.toLowerCase(),
           buyer: null,

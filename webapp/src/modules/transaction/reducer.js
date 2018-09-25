@@ -8,7 +8,7 @@ import {
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { getTransactionFromAction } from './utils'
 
-const { TRANSACTION_STATUS } = txUtils
+const { TRANSACTION_TYPES } = txUtils
 
 const INITIAL_STATE = {
   data: [],
@@ -31,7 +31,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
             timestamp: Date.now(),
             from: action.address,
             actionType: actionRef.type,
-            status: TRANSACTION_STATUS.pending
+            status: TRANSACTION_TYPES.pending
           }
         ]
       }
@@ -46,7 +46,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
               ? {
                   ...transaction,
                   ...action.transaction,
-                  status: TRANSACTION_STATUS.confirmed
+                  status: TRANSACTION_TYPES.confirmed
                 }
               : transaction
         )
@@ -62,7 +62,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
               ? {
                   ...transaction,
                   ...action.transaction,
-                  status: TRANSACTION_STATUS.failed,
+                  status: TRANSACTION_TYPES.failed,
                   error: action.error
                 }
               : transaction
@@ -75,7 +75,7 @@ export function transactionReducer(state = INITIAL_STATE, action) {
         data: state.data.filter(
           transaction =>
             transaction.from !== action.address ||
-            transaction.status === TRANSACTION_STATUS.pending
+            transaction.status === TRANSACTION_TYPES.pending
         )
       }
     }

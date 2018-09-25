@@ -8,7 +8,7 @@ import {
 } from './actions'
 import { getData, getLoading } from './selectors'
 
-const { TRANSACTION_STATUS } = txUtils
+const { TRANSACTION_TYPES } = txUtils
 
 export function* transactionSaga() {
   yield takeEvery(FETCH_TRANSACTION_REQUEST, handleTransactionRequest)
@@ -36,7 +36,7 @@ function* handleTransactionRequest(action = {}) {
     yield put(
       fetchTransactionSuccess({
         ...transaction,
-        status: TRANSACTION_STATUS.confirmed,
+        status: TRANSACTION_TYPES.confirmed,
         receipt: {
           logs: transaction.withReceipt ? receipt.receipt.logs : []
         }
@@ -47,7 +47,7 @@ function* handleTransactionRequest(action = {}) {
       fetchTransactionFailure(
         {
           ...transaction,
-          status: TRANSACTION_STATUS.failed
+          status: TRANSACTION_TYPES.failed
         },
         error.message
       )
@@ -60,7 +60,7 @@ function* handleWatchLoadingTransactions(action) {
 
   const transactions = yield select(getData)
   const pendingTransactions = transactions.filter(
-    transaction => transaction.status === TRANSACTION_STATUS.pending
+    transaction => transaction.status === TRANSACTION_TYPES.pending
   )
 
   const allTransactions = transactionRequests.concat(pendingTransactions)

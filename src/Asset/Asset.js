@@ -77,7 +77,7 @@ export class Asset {
 
   async filter(filters) {
     const { status, asset_type, sort, pagination } = filters.sanitize()
-    const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+    const tx_status = txUtils.TRANSACTION_TYPES.confirmed
     const [assets, total] = await Promise.all([
       db.query(
         SQL`SELECT model.*, row_to_json(pub.*) as publication
@@ -98,7 +98,7 @@ export class Asset {
 
   async countAssetPublications(filters) {
     const { status, asset_type } = filters.sanitize()
-    const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+    const tx_status = txUtils.TRANSACTION_TYPES.confirmed
 
     const counts = await db.query(
       SQL`SELECT COUNT(*)

@@ -11,7 +11,7 @@ exports.up = pgm => {
       tx_status: {
         type: 'TEXT',
         notNull: true,
-        default: txUtils.TRANSACTION_STATUS.pending
+        default: txUtils.TRANSACTION_TYPES.pending
       },
       x: { type: 'INT', notNull: true },
       y: { type: 'INT', notNull: true },

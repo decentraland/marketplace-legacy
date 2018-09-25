@@ -30,7 +30,7 @@ describe('Asset', function() {
     it('should filter the published assets using the supplied filters', async function() {
       // Setup
       const owner = '0xasdf'
-      const tx_status = txUtils.TRANSACTION_STATUS.confirmed
+      const tx_status = txUtils.TRANSACTION_TYPES.confirmed
       const status = PUBLICATION_STATUS.open
       const block_number = 1
       const block_time_created_at = null

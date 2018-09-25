@@ -478,7 +478,7 @@ export default class Transaction extends React.PureComponent {
             className="Transaction"
             onClick={this.handleTransactionClick}
           >
-            {tx.status === txUtils.TRANSACTION_STATUS.pending ? (
+            {tx.status === txUtils.TRANSACTION_TYPES.pending ? (
               <Loader active size="mini" />
             ) : (
               <div className="mini circle" />

@@ -13,7 +13,7 @@ import { PUBLICATION_STATUS } from 'shared/publication'
 
 export const publicationType = shape({
   tx_hash: string,
-  tx_status: oneOf(Object.values(txUtils.TRANSACTION_STATUS)),
+  tx_status: oneOf(Object.values(txUtils.TRANSACTION_TYPES)),
   status: oneOf(Object.values(PUBLICATION_STATUS)),
   price: number,
   owner: string,
@@ -77,7 +77,7 @@ export const transactionType = shape({
   hash: string.isRequired,
   blockNumber: number,
   timestamp: number,
-  status: oneOf(Object.values(txUtils.TRANSACTION_STATUS)),
+  status: oneOf(Object.values(txUtils.TRANSACTION_TYPES)),
   action: object,
   error: string
 })
