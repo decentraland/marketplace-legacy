@@ -46,8 +46,11 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   hasTradingPermissions() {
-    const { approvedBalance, isLandAuthorized } = this.props.wallet
-    return approvedBalance && isLandAuthorized
+    const { allowances, authorizations } = this.props.wallet
+    return (
+      allowances.MANAToken.Marketplace > 0 &&
+      authorizations.LANDRegistry.Marketplace
+    )
   }
 
   renderEmpty() {

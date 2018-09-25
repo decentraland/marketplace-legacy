@@ -96,7 +96,6 @@
     "add": "add",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
-    "authorized": "Authorized",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancel",
@@ -146,7 +145,6 @@
     "time_left": "Time left",
     "transfer_irreversible":
       "Remember that transferring is an irreversible operation.",
-    "unauthorized": "Unauthorized",
     "undo": "Undo",
     "wallet_address": "Wallet address",
     "website": "Website"
@@ -323,35 +321,8 @@
     "view": "View"
   },
   "settings": {
-    "approve_mana":
-      "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
-    "approve_mana_check":
-      "Checking authorizes MANA usage to the Marketplace contract",
-    "approve_mortgage_mana":
-      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
-    "approve_mortgage_rcn":
-      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
     "authorization": "Authorization",
-    "authorize":
-      "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
-    "authorize_land_check":
-      "Checking authorizes LAND usage to the Marketplace contract",
-    "disapprove_mana_check":
-      "Unchecking unauthorizes MANA usage for the Marketplace contract",
-    "mana_approved":
-      "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "marketplace_contract": "Marketplace contract",
-    "mortgage_helper_contract": "Mortgage Helper contract",
-    "mortgage_manager_contract": "Mortgage Manager contract",
-    "pending_tx": "You have a pending transaction",
-    "unauthorize_land_check":
-      "Unchecking unauthorizes LAND usage for the Marketplace contract",
-    "you_approved_mortgage_mana":
-      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
-    "you_approved_mortgage_rcn":
-      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
-    "you_authorized":
-      "You have authorized the {marketplace_contract_link} to operate LAND on your behalf"
+    "pending_tx": "You have a pending transaction"
   },
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",
@@ -364,11 +335,40 @@
         "You can use mobile browsers such as {coinbase_link} or {imtoken_link}."
     }
   },
+  "token_allowance": {
+    "approve": {
+      "MANAToken":
+        "Authorize the {contract_link} to operate MANA on your behalf",
+      "RCNToken": "Authorize the {contract_link} to operate RCN on your behalf"
+    },
+    "approved": {
+      "MANAToken":
+        "You authorized the {contract_link} to operate MANA on your behalf",
+      "RCNToken":
+        "You authorized the {contract_link} to operate RCN on your behalf"
+    },
+    "disapproved": {
+      "MANAToken":
+        "You unauthorized the {contract_link} to operate MANA on your behalf",
+      "RCNToken":
+        "You unauthorized the {contract_link} to operate MANA on your behalf"
+    }
+  },
+  "token_authorization": {
+    "authorize": {
+      "LANDRegistry":
+        "Authorize the {contract_link} to operate LAND on your behalf"
+    },
+    "authorized": {
+      "LANDRegistry":
+        "You authorized the {contract_link} to operate LAND on your behalf"
+    },
+    "unauthorized": {
+      "LANDRegistry":
+        "You unauthorized the {contract_link} to operate LAND on your behalf"
+    }
+  },
   "transaction": {
-    "approved":
-      "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "authorize":
-      "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
@@ -377,8 +377,6 @@
     "create_estate": "You created the estate {name}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
-    "disapproved":
-      "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "dissolve_estate": "You dissolved the estate {name}",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",

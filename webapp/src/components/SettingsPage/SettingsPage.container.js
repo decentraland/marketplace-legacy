@@ -2,11 +2,9 @@ import { connect } from 'react-redux'
 
 import { getWallet, isConnecting, isConnected } from 'modules/wallet/selectors'
 import {
-  approveManaRequest,
-  authorizeLandRequest,
   updateDerivationPath,
-  approveMortgageForManaRequest,
-  approveMortgageForRCNRequest
+  approveTokenRequest,
+  authorizeTokenRequest
 } from 'modules/wallet/actions'
 import SettingsPage from './SettingsPage'
 
@@ -19,14 +17,14 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  onApproveMana: mana => dispatch(approveManaRequest(mana)),
-  onAuthorizeLand: isAuthorized => dispatch(authorizeLandRequest(isAuthorized)),
   onUpdateDerivationPath: derivationPath =>
     dispatch(updateDerivationPath(derivationPath)),
-  onAuthorizeMortgageForMana: isAuthorized =>
-    dispatch(approveMortgageForManaRequest(isAuthorized)),
-  onAuthorizeMortgageForRCN: isAuthorized =>
-    dispatch(approveMortgageForRCNRequest(isAuthorized))
+  onApproveToken: (amount, contractName, tokenContractName) =>
+    dispatch(approveTokenRequest(amount, contractName, tokenContractName)),
+  onAuthorizeToken: (isAuthorized, contractName, tokenContractName) =>
+    dispatch(
+      authorizeTokenRequest(isAuthorized, contractName, tokenContractName)
+    )
 })
 
 export default connect(mapState, mapDispatch)(SettingsPage)

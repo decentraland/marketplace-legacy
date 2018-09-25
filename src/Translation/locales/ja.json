@@ -322,35 +322,26 @@
     "view": "見る"
   },
   "settings": {
-    "approve_mana":
-      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
-    "approve_mana_check":
-      "マーケットコントラクトでMANAの使用承認について確認しています。",
-    "approve_mortgage_mana":
-      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
-    "approve_mortgage_rcn":
-      "{mortgage_contract_link}でRCNを使用することを承認します。",
-    "authorization": "承認事項",
-    "authorize":
-      "マーケット上でランドを使用することを{marketplace_contract_link}で承認します。",
-    "authorize_land_check":
-      "マーケットコントラクトでランドの使用承認について確認しています。",
-    "disapprove_mana_check":
-      "マーケットコントラクトでMANAの使用について承認を解除しています。",
-    "mana_approved":
-      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
-    "marketplace_contract": "マーケットコントラクト",
-    "mortgage_helper_contract": "担保支援コントラクト",
-    "mortgage_manager_contract": "担保管理コントラクト",
+    "approve_token": {
+      "MANAToken":
+        "あなたに代わって{contract_link}にMANAを動作させる権限を与える",
+      "RCNToken": "あなたのためにRCNを作動させるために{contract_link}を認証する"
+    },
+    "authorize_token": {
+      "LANDRegistry":
+        "あなたのためにLANDを動作させるために{contract_link}を認証する"
+    },
     "pending_tx": "　処理中の取引があります。",
-    "unauthorize_land_check":
-      "マーケットコントラクトで、LANDの使用について承認を解除しています。",
-    "you_approved_mortgage_mana":
-      "{mortgage_contract_link}でMANAを使用することを承認しました。",
-    "you_approved_mortgage_rcn":
-      "{mortgage_contract_link}でRCNを使用することを承認しました。",
-    "you_authorized":
-      "マーケット上でランドを使用することを{marketplace_contract_link}で承認しました。"
+    "token_approved": {
+      "MANAToken":
+        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を承認しました",
+      "RCNToken":
+        "あなたはあなたのためにRCNを運営する{contract_link}を承認しました"
+    },
+    "token_authorized": {
+      "LANDRegistry":
+        "あなたはあなたのためにLANDを動作させるために{contract_link}を承認しました"
+    }
   },
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",

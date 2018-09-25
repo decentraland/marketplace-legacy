@@ -10,19 +10,13 @@ import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import {
-  getMarketplaceAddress,
-  getMortgageHelperAddress,
-  getMortgageManagerAddress
-} from 'modules/wallet/utils'
+import { getContractAddress } from 'modules/wallet/utils'
 import { getEtherscanHref, isPending } from '@dapps/modules/transaction/utils'
 import {
-  APPROVE_MANA_SUCCESS,
-  AUTHORIZE_LAND_SUCCESS,
+  APPROVE_TOKEN_SUCCESS,
+  AUTHORIZE_TOKEN_SUCCESS,
   TRANSFER_MANA_SUCCESS,
-  BUY_MANA_SUCCESS,
-  APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
-  APPROVE_MORTGAGE_FOR_RCN_SUCCESS
+  BUY_MANA_SUCCESS
 } from 'modules/wallet/actions'
 import {
   EDIT_PARCEL_SUCCESS,
@@ -68,26 +62,10 @@ export default class Transaction extends React.PureComponent {
     }
   }
 
-  renderMarketplaceLink() {
+  renderContractLink(contractName) {
     return (
-      <EtherscanLink address={getMarketplaceAddress()}>
-        Marketplace
-      </EtherscanLink>
-    )
-  }
-
-  renderMortgageHelperLink() {
-    return (
-      <EtherscanLink address={getMortgageHelperAddress()}>
-        Mortgage helper
-      </EtherscanLink>
-    )
-  }
-
-  renderMortgageManagerLink() {
-    return (
-      <EtherscanLink address={getMortgageManagerAddress()}>
-        Mortgage Manager
+      <EtherscanLink address={getContractAddress(contractName)}>
+        {contractName}
       </EtherscanLink>
     )
   }
@@ -111,29 +89,30 @@ export default class Transaction extends React.PureComponent {
     const { payload } = tx
 
     switch (tx.actionType) {
-      case APPROVE_MANA_SUCCESS: {
+      case APPROVE_TOKEN_SUCCESS: {
+        const { amount, contractName } = payload
         const tkey =
-          payload.mana > 0 ? 'transaction.approved' : 'transaction.disapproved'
+          amount > 0
+            ? 'token_allowance.approved'
+            : 'token_allowance.disapproved'
 
         return (
           <T
             id={tkey}
-            values={{ marketplace_contract_link: this.renderMarketplaceLink() }}
+            values={{ contract_link: this.renderContractLink(contractName) }}
           />
         )
       }
-      case AUTHORIZE_LAND_SUCCESS: {
-        const action = payload.isAuthorized
-          ? t('global.authorized')
-          : t('global.unauthorized')
+      case AUTHORIZE_TOKEN_SUCCESS: {
+        const { isAuthorized, contractName } = payload
+        const tkey = isAuthorized
+          ? 'token_authorization.authorized'
+          : 'token_authorization.unauthorized'
 
         return (
           <T
-            id="transaction.authorize"
-            values={{
-              action: action.toLowerCase(),
-              marketplace_contract_link: this.renderMarketplaceLink()
-            }}
+            id={tkey}
+            values={{ contract_link: this.renderContractLink(contractName) }}
           />
         )
       }
@@ -246,36 +225,6 @@ export default class Transaction extends React.PureComponent {
           <T
             id="transaction.buy_mana"
             values={{ mana: formatMana(mana, '') }}
-          />
-        )
-      }
-
-      case APPROVE_MORTGAGE_FOR_MANA_SUCCESS: {
-        return (
-          <T
-            id="transaction.mortgage_mana"
-            values={{
-              action: (payload.mana > 0
-                ? t('global.authorized')
-                : t('global.unauthorized')
-              ).toLowerCase(),
-              mortgage_contract_link: this.renderMortgageHelperLink()
-            }}
-          />
-        )
-      }
-
-      case APPROVE_MORTGAGE_FOR_RCN_SUCCESS: {
-        return (
-          <T
-            id="transaction.mortgage_rcn"
-            values={{
-              action: (payload.rcn > 0
-                ? t('global.authorized')
-                : t('global.unauthorized')
-              ).toLowerCase(),
-              mortgage_contract_link: this.renderMortgageManagerLink()
-            }}
           />
         )
       }

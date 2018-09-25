@@ -10,8 +10,8 @@ import {
   TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
 import {
-  APPROVE_MANA_SUCCESS,
-  AUTHORIZE_LAND_SUCCESS,
+  APPROVE_TOKEN_SUCCESS,
+  AUTHORIZE_TOKEN_SUCCESS,
   TRANSFER_MANA_SUCCESS,
   BUY_MANA_SUCCESS
 } from 'modules/wallet/actions'
@@ -56,13 +56,19 @@ add(EDIT_PARCEL_SUCCESS, 'Edit', action => ({
 }))
 
 add(
-  APPROVE_MANA_SUCCESS,
-  action => (action.mana > 0 ? 'Authorize MANA' : 'Unauthorize MANA')
+  APPROVE_TOKEN_SUCCESS,
+  action =>
+    action.amount > 0
+      ? `Authorize ${action.contractName} for ${action.tokenContractName}`
+      : `Unauthorize ${action.contractName} for ${action.tokenContractName}`
 )
 
 add(
-  AUTHORIZE_LAND_SUCCESS,
-  action => (action.isAuthorized ? 'Authorize LAND' : 'Unauthorize LAND')
+  AUTHORIZE_TOKEN_SUCCESS,
+  action =>
+    action.isAuthorized
+      ? `Authorize ${action.contractName} for ${action.tokenContractName}`
+      : `Unauthorize ${action.contractName} for ${action.tokenContractName}`
 )
 
 add(TRANSFER_MANA_SUCCESS, 'Transfer MANA', action => ({

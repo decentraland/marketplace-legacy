@@ -53,7 +53,7 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
 }
 
 function getMortgageContracts() {
-  // To be deleted when mortgages go live
+  // Condition should be deleted when mortgages go live
   if (!isFeatureEnabled('MORTGAGES')) return []
 
   const { MortgageHelper, MortgageManager, RCNEngine, ERC20Token } = contracts
@@ -75,12 +75,13 @@ export function isLedgerWallet() {
   return eth.wallet instanceof wallets.LedgerWallet
 }
 
-export function getManaToApprove() {
+export function getTokenAmountToApprove() {
   return Math.pow(2, 180)
 }
 
-export function getRCNToApprove() {
-  return Math.pow(2, 180)
+export function getContractAddress(contractName) {
+  const tokenContract = eth.getContract(contractName)
+  return tokenContract.address
 }
 
 export function getMANATokenAddress() {
@@ -88,8 +89,13 @@ export function getMANATokenAddress() {
   return manaTokenContract.address
 }
 
-export function getMarketplaceAddress() {
+export function getLegacyMarketplaceAddress() {
   const marketplaceContract = eth.getContract('LegacyMarketplace')
+  return marketplaceContract.address
+}
+
+export function getMarketplaceAddress() {
+  const marketplaceContract = eth.getContract('Marketplace')
   return marketplaceContract.address
 }
 

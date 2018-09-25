@@ -332,35 +332,24 @@
     "view": "Vue"
   },
   "settings": {
-    "approve_mana":
-      "Autorise le {marketplace_contract_link} à gerer votre MANA en votre nom.",
-    "approve_mana_check":
-      "Cocher pour autoriser la place de marché à gérer votre MANA.",
-    "approve_mortgage_mana":
-      "Autoriser le {mortgage_contract_link} à faire fonctionner MANA en votre nom",
-    "approve_mortgage_rcn":
-      "Autoriser le {mortgage_contract_link} à faire fonctionner RCN en votre nom",
-    "authorization": "Autorisation",
-    "authorize":
-      "Autorise le {marketplace_contract_link} à gerer les LANDs en votre nom.",
-    "authorize_land_check":
-      "Cocher pour autoriser la place de marché à gérer vos LANDs.",
-    "disapprove_mana_check":
-      "Décocher cette case enlève le droit à la place de marché de gérer votre MANA.",
-    "mana_approved":
-      "Vous avez autorisé le {marketplace_contract_link} à gerer votre MANA en votre nom.",
-    "marketplace_contract": "Contrat de la place de marché",
-    "mortgage_helper_contract": "Contrat de créancier hypothécaire",
-    "mortgage_manager_contract": "Contrat de gestionnaire d'hypothèques",
+    "approve_token": {
+      "MANAToken": "Autoriser le {contract_link} à opérer MANA en votre nom",
+      "RCNToken": "Autoriser le {contract_link} à exploiter RCN en votre nom"
+    },
+    "authorize_token": {
+      "LANDRegistry": "Autoriser le {contract_link} à opérer LAND en votre nom"
+    },
     "pending_tx": "Vous avez une transaction en attente",
-    "unauthorize_land_check":
-      "Décocher cette case enlève le droit à la place de marché de gérer vos LANDs.",
-    "you_approved_mortgage_mana":
-      "Vous avez autorisé le {mortgage_contract_link} à exploiter MANA en votre nom",
-    "you_approved_mortgage_rcn":
-      "Vous avez autorisé le {mortgage_contract_link} à exploiter RCN en votre nom",
-    "you_authorized":
-      "Vous avez autorisé le {marketplace_contract_link} à gerer les LANDs en votre nom."
+    "token_approved": {
+      "MANAToken":
+        "Vous avez autorisé le {contract_link} à opérer MANA en votre nom",
+      "RCNToken":
+        "Vous avez autorisé le {contract_link} à exploiter RCN en votre nom"
+    },
+    "token_authorized": {
+      "LANDRegistry":
+        "Vous avez autorisé le {contract_link} à opérer LAND en votre nom"
+    }
   },
   "sign_in": {
     "account_unlocked": "Assurez-vous que votre compte est déverrouillé",

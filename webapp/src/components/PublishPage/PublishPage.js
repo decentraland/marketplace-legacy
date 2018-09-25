@@ -27,17 +27,10 @@ export default class PublishPage extends React.PureComponent {
   }
 
   render() {
-    const {
-      wallet,
-      x,
-      y,
-      publication,
-      isTxIdle,
-      onPublish,
-      onCancel
-    } = this.props
+    const { x, y, publication, isTxIdle, onPublish, onCancel } = this.props
+    const { authorizations } = this.props.wallet
 
-    const { isLandAuthorized } = wallet
+    const isMarketplaceAuthorized = authorizations.LANDRegistry.Marketplace
 
     return (
       <Parcel x={x} y={y} ownerOnly>
@@ -54,7 +47,7 @@ export default class PublishPage extends React.PureComponent {
                 />
               </Container>
             ) : null}
-            {!isLandAuthorized ? (
+            {!isMarketplaceAuthorized ? (
               <Container text>
                 <Message
                   warning
@@ -90,7 +83,7 @@ export default class PublishPage extends React.PureComponent {
                 isTxIdle={isTxIdle}
                 onPublish={onPublish}
                 onCancel={onCancel}
-                isDisabled={!isLandAuthorized}
+                isDisabled={!isMarketplaceAuthorized}
               />
               <TxStatus.Asset
                 asset={parcel}

@@ -1,12 +1,8 @@
 import { createSelector } from 'reselect'
 import {
-  APPROVE_MANA_SUCCESS,
-  AUTHORIZE_LAND_SUCCESS,
   CONNECT_WALLET_REQUEST,
   TRANSFER_MANA_REQUEST,
-  BUY_MANA_REQUEST,
-  APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
-  APPROVE_MORTGAGE_FOR_RCN_SUCCESS
+  BUY_MANA_REQUEST
 } from './actions'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
@@ -23,33 +19,29 @@ export const isConnected = state => !!getData(state).address
 export const isConnecting = state =>
   isLoadingType(getLoading(state), CONNECT_WALLET_REQUEST)
 
+// state =>
+//   getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
+// state =>
+//   getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
+// state =>
+//   getTransactionsByType(
+//     state,
+//     getAddress(state),
+//     APPROVE_MORTGAGE_FOR_MANA_SUCCESS
+//   ),
+// state =>
+//   getTransactionsByType(
+//     state,
+//     getAddress(state),
+//     APPROVE_MORTGAGE_FOR_RCN_SUCCESS
+//   )
+
 export const getWallet = createSelector(
   state => getData(state),
   state => getAddresses(state),
-  state =>
-    getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
-  state =>
-    getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
-  state =>
-    getTransactionsByType(
-      state,
-      getAddress(state),
-      APPROVE_MORTGAGE_FOR_MANA_SUCCESS
-    ),
-  state =>
-    getTransactionsByType(
-      state,
-      getAddress(state),
-      APPROVE_MORTGAGE_FOR_RCN_SUCCESS
-    ),
-  (
-    wallet,
-    addresses,
-    approveManaTransactions,
-    authorizeLandTransactions,
-    approveMortgageForManaTransactions,
-    approveMortgageForRCNTransactions
-  ) => {
+  getData,
+  getAddresses,
+  (wallet, addresses) => {
     const address = addresses[wallet.address] || {}
     const {
       parcels = [],
@@ -67,11 +59,7 @@ export const getWallet = createSelector(
       estates,
       estatesById,
       contributions,
-      contributionsById,
-      approveManaTransactions,
-      authorizeLandTransactions,
-      approveMortgageForManaTransactions,
-      approveMortgageForRCNTransactions
+      contributionsById
     }
   }
 )

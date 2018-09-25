@@ -321,32 +321,26 @@
     "view": "보기"
   },
   "settings": {
-    "approve_mana":
-      "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
-    "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
-    "approve_mortgage_mana":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
-    "approve_mortgage_rcn":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인하십시오.",
-    "authorization": "권한 부여",
-    "authorize":
-      "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
-    "authorize_land_check": "선택하면 시장 계약에 대한 토지 사용을 허가합니다",
-    "disapprove_mana_check":
-      "선택 해제하면 마켓 플레이스 계약에 대한 MANA 사용 권한이 승인되지 않음",
-    "mana_approved":
-      "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "marketplace_contract": "시장 계약",
-    "mortgage_helper_contract": "모기지 크리에이터 계약",
-    "mortgage_manager_contract": "모기지 매니저 계약",
+    "approve_token": {
+      "MANAToken": "MANA를 작동시키기 위해 {contract_link}에 권한 부여",
+      "RCNToken":
+        "{contract_link}가 귀하를 대신하여 RCN을 운영하도록 승인하십시오"
+    },
+    "authorize_token": {
+      "LANDRegistry":
+        "{contract_link}이 LAND을 대신하여 작동하도록 승인하십시오."
+    },
     "pending_tx": "보류중인 거래가 있습니다.",
-    "unauthorize_land_check":
-      "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",
-    "you_approved_mortgage_mana":
-      "{mortgage_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "you_approved_mortgage_rcn":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인했습니다.",
-    "you_authorized": "{marketplace_contract_link}을(를) 승인했습니다."
+    "token_approved": {
+      "MANAToken":
+        "귀하를 대신하여 {contract_link}가 MANA를 운영하도록 승인했습니다",
+      "RCNToken":
+        "귀하는 {contract_link}이 귀하를 대신하여 RCN을 운영하도록 승인했습니다"
+    },
+    "token_authorized": {
+      "LANDRegistry":
+        "귀하는 {contract_link}이 귀하를 대신하여 LAND을 운영하도록 승인했습니다"
+    }
   },
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",

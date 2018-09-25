@@ -7,11 +7,7 @@ import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import { walletType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import {
-  getManaToApprove,
-  isLedgerWallet,
-  getRCNToApprove
-} from 'modules/wallet/utils'
+import { isLedgerWallet, getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
 
 import './SettingsPage.css'
@@ -21,21 +17,9 @@ export default class SettingsPage extends React.PureComponent {
     wallet: walletType,
     isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
-    onApproveMana: PropTypes.func,
-    onAuthorizeLand: PropTypes.func,
     onUpdateDerivationPath: PropTypes.func,
-    onAuthorizeMortgageForMana: PropTypes.func,
-    onAuthorizeMortgageForRCN: PropTypes.func
-  }
-
-  handleManaApproval = (event, data) => {
-    const manaToApprove = data.checked ? getManaToApprove() : 0
-
-    this.props.onApproveMana(manaToApprove)
-  }
-
-  handleLandAuthorization = (event, data) => {
-    this.props.onAuthorizeLand(data.checked)
+    onApproveToken: PropTypes.func,
+    onAuthorizeToken: PropTypes.func
   }
 
   handleDerivationPathChange = derivationPath => {
@@ -46,14 +30,13 @@ export default class SettingsPage extends React.PureComponent {
     }
   }
 
-  handleMortgageForManaApproval = (event, data) => {
-    const manaToApprove = data.checked ? getManaToApprove() : 0
-    this.props.onAuthorizeMortgageForMana(manaToApprove)
+  handleTokenApproval = (checked, contractName, tokenContractName) => {
+    const amount = checked ? getTokenAmountToApprove() : 0
+    this.props.onApproveToken(amount, contractName, tokenContractName)
   }
 
-  handleMortgageForRCNApproval = (event, data) => {
-    const rcnToApprove = data.checked ? getRCNToApprove() : 0
-    this.props.onAuthorizeMortgageForRCN(rcnToApprove)
+  handleTokenAuthorization = (checked, contractName, tokenContractName) => {
+    this.props.onAuthorizeToken(checked, contractName, tokenContractName)
   }
 
   getApproveTransaction() {
@@ -86,15 +69,6 @@ export default class SettingsPage extends React.PureComponent {
 
   render() {
     const { isLoading, isConnected, wallet } = this.props
-    const {
-      address,
-      balance,
-      derivationPath,
-      approvedBalance,
-      isLandAuthorized,
-      isMortgageApprovedForMana,
-      isMortgageApprovedForRCN
-    } = wallet
 
     if (isLoading) {
       return (
@@ -109,9 +83,9 @@ export default class SettingsPage extends React.PureComponent {
         <Container>
           <div className="row">
             <div className="column blockie">
-              {address ? (
+              {wallet.address ? (
                 <AddressBlock
-                  address={address}
+                  address={wallet.address}
                   hasTooltip={false}
                   hasLink={false}
                   scale={30}
@@ -121,27 +95,11 @@ export default class SettingsPage extends React.PureComponent {
             <div className="column">
               {isConnected ? (
                 <SettingsForm
-                  address={address}
-                  balance={balance}
+                  wallet={wallet}
                   isLedgerWallet={isLedgerWallet()}
-                  walletDerivationPath={derivationPath}
                   onDerivationPathChange={this.handleDerivationPathChange}
-                  manaApproved={approvedBalance}
-                  approveTransaction={this.getApproveTransaction()}
-                  onManaApprovedChange={this.handleManaApproval}
-                  isLandAuthorized={isLandAuthorized}
-                  authorizeTransaction={this.getAuthorizeTransaction()}
-                  onLandAuthorizedChange={this.handleLandAuthorization}
-                  isMortgageApprovedForMana={isMortgageApprovedForMana}
-                  isMortgageApprovedForRCN={isMortgageApprovedForRCN}
-                  onMortgageApprovedForManaChange={
-                    this.handleMortgageForManaApproval
-                  }
-                  onMortgageApprovedForRCNChange={
-                    this.handleMortgageForRCNApproval
-                  }
-                  approveMortgageForManaTransaction={this.getApproveMortgageForManaTransaction()}
-                  approveMortgageForRCNTransaction={this.getApproveMortgageForRCNTransaction()}
+                  onTokenApprovedChange={this.handleTokenApproval}
+                  onTokenAuthorizedChange={this.handleTokenAuthorization}
                 />
               ) : (
                 <p className="sign-in">

@@ -61,11 +61,14 @@ export default class BuyParcelPage extends React.PureComponent {
     )
   }
 
-  renderMessage(isNotEnoughMana, isNotEnoughApproved) {
-    if (!isNotEnoughMana && !isNotEnoughApproved) return null
+  renderMessage(isNotEnoughMana, isNotEnoughAllowance) {
+    if (!isNotEnoughMana && !isNotEnoughAllowance) return null
 
     const { wallet, publication } = this.props
-    const { balance, approvedBalance } = wallet
+    const { balance, allowances } = wallet
+
+    const allowance = allowances.MANAToken.Marketplace
+    const isMarketplaceAllowed = allowance > 0
 
     return (
       <Container text>
@@ -78,9 +81,9 @@ export default class BuyParcelPage extends React.PureComponent {
                 ? t('parcel_buy.total_balance', {
                     balance: formatMana(balance)
                   })
-                : approvedBalance > 0
+                : isMarketplaceAllowed
                   ? t('parcel_buy.approved_balance', {
-                      approved_balance: formatMana(approvedBalance)
+                      approved_balance: formatMana(allowance)
                     })
                   : t('parcel_buy.didnt_approve')
             }
@@ -104,7 +107,7 @@ export default class BuyParcelPage extends React.PureComponent {
                     }}
                   />
                 </React.Fragment>
-              ) : approvedBalance > 0 ? (
+              ) : isMarketplaceAllowed ? (
                 <React.Fragment>
                   <span>
                     {t('parcel_buy.needs_at_least', {
@@ -154,18 +157,19 @@ export default class BuyParcelPage extends React.PureComponent {
       isTxIdle,
       onCancel
     } = this.props
-    const { balance, approvedBalance } = wallet
+    const { balance, allowances } = wallet
+    const allowance = allowances.MANAToken.Marketplace
 
     const price = publication ? parseFloat(publication.price) : 0
 
     const isNotEnoughMana = balance < price
-    const isNotEnoughApproved = approvedBalance < price
+    const isNotEnoughAllowance = allowance < price
 
     return (
       <Parcel x={x} y={y} ownerNotAllowed>
         {parcel => (
           <div className="BuyParcelPage">
-            {this.renderMessage(isNotEnoughMana, isNotEnoughApproved)}
+            {this.renderMessage(isNotEnoughMana, isNotEnoughAllowance)}
             <ParcelModal
               x={x}
               y={y}
@@ -195,7 +199,7 @@ export default class BuyParcelPage extends React.PureComponent {
               }
               onCancel={onCancel}
               onConfirm={this.handleConfirm}
-              isDisabled={isDisabled || isNotEnoughMana || isNotEnoughApproved}
+              isDisabled={isDisabled || isNotEnoughMana || isNotEnoughAllowance}
               isTxIdle={isTxIdle}
             />
           </div>

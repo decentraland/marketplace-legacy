@@ -26,58 +26,92 @@ export function connectWalletFailure(error) {
   }
 }
 
-// Approve MANA
+// Approve Token
 
-export const APPROVE_MANA_REQUEST = '[Request] Approve MANA'
-export const APPROVE_MANA_SUCCESS = '[Success] Approve MANA'
-export const APPROVE_MANA_FAILURE = '[Failure] Approve MANA'
+export const APPROVE_TOKEN_REQUEST = '[Request] Approve Token'
+export const APPROVE_TOKEN_SUCCESS = '[Success] Approve Token'
+export const APPROVE_TOKEN_FAILURE = '[Failure] Approve Token'
 
-export function approveManaRequest(mana) {
+export function approveTokenRequest(
+  amount,
+  contractName,
+  tokenContractName = null // optional
+) {
   return {
-    type: APPROVE_MANA_REQUEST,
-    mana
+    type: APPROVE_TOKEN_REQUEST,
+    amount,
+    contractName,
+    tokenContractName
   }
 }
 
-export function approveManaSuccess(txHash, mana) {
+export function approveTokenSuccess(
+  txHash,
+  amount,
+  contractName,
+  tokenContractName
+) {
   return {
-    type: APPROVE_MANA_SUCCESS,
-    ...buildTransactionAction(txHash, { mana }),
-    mana
+    type: APPROVE_TOKEN_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      amount,
+      contractName,
+      tokenContractName
+    }),
+    amount,
+    contractName,
+    tokenContractName
   }
 }
 
-export function approveManaFailure(error) {
+export function approveTokenFailure(error) {
   return {
-    type: APPROVE_MANA_FAILURE,
+    type: APPROVE_TOKEN_FAILURE,
     error
   }
 }
 
-// Authorize LAND
+// Authorize Token
 
-export const AUTHORIZE_LAND_REQUEST = '[Request] Authorize LAND'
-export const AUTHORIZE_LAND_SUCCESS = '[Success] Authorize LAND'
-export const AUTHORIZE_LAND_FAILURE = '[Failure] Authorize LAND'
+export const AUTHORIZE_TOKEN_REQUEST = '[Request] Authorize Token'
+export const AUTHORIZE_TOKEN_SUCCESS = '[Success] Authorize Token'
+export const AUTHORIZE_TOKEN_FAILURE = '[Failure] Authorize Token'
 
-export function authorizeLandRequest(isAuthorized) {
+export function authorizeTokenRequest(
+  isAuthorized,
+  contractName,
+  tokenContractName = null // optional
+) {
   return {
-    type: AUTHORIZE_LAND_REQUEST,
-    isAuthorized
+    type: AUTHORIZE_TOKEN_REQUEST,
+    isAuthorized,
+    contractName,
+    tokenContractName
   }
 }
 
-export function authorizeLandSuccess(txHash, isAuthorized) {
+export function authorizeTokenSuccess(
+  txHash,
+  isAuthorized,
+  contractName,
+  tokenContractName
+) {
   return {
-    type: AUTHORIZE_LAND_SUCCESS,
-    ...buildTransactionAction(txHash, { isAuthorized }),
-    isAuthorized
+    type: AUTHORIZE_TOKEN_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      isAuthorized,
+      contractName,
+      tokenContractName
+    }),
+    isAuthorized,
+    contractName,
+    tokenContractName
   }
 }
 
-export function authorizeLandFailure(error) {
+export function authorizeTokenFailure(error) {
   return {
-    type: AUTHORIZE_LAND_FAILURE,
+    type: AUTHORIZE_TOKEN_FAILURE,
     error
   }
 }
@@ -175,67 +209,5 @@ export function updateEthBalance(ethBalance) {
   return {
     type: UPDATE_ETH_BALANCE,
     ethBalance
-  }
-}
-
-// Approve Mortgage for MANA
-
-export const APPROVE_MORTGAGE_FOR_MANA_REQUEST =
-  '[Request] Approve Mortgage for MANA'
-export const APPROVE_MORTGAGE_FOR_MANA_SUCCESS =
-  '[Success] Approve Mortgage for MANA'
-export const APPROVE_MORTGAGE_FOR_MANA_FAILURE =
-  '[Failure] Approve Mortgage for MANA'
-
-export function approveMortgageForManaRequest(mana) {
-  return {
-    type: APPROVE_MORTGAGE_FOR_MANA_REQUEST,
-    mana
-  }
-}
-
-export function approveMortgageForManaSuccess(txHash, mana) {
-  return {
-    type: APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
-    ...buildTransactionAction(txHash, { mana }),
-    mana
-  }
-}
-
-export function approveMortgageForManaFailure(error) {
-  return {
-    type: APPROVE_MORTGAGE_FOR_MANA_FAILURE,
-    error
-  }
-}
-
-// Approve Mortgage for RCN
-
-export const APPROVE_MORTGAGE_FOR_RCN_REQUEST =
-  '[Request] Approve Mortgage for RCN'
-export const APPROVE_MORTGAGE_FOR_RCN_SUCCESS =
-  '[Success] Approve Mortgage for RCN'
-export const APPROVE_MORTGAGE_FOR_RCN_FAILURE =
-  '[Failure] Approve Mortgage for RCN'
-
-export function approveMortgageForRCNRequest(rcn) {
-  return {
-    type: APPROVE_MORTGAGE_FOR_RCN_REQUEST,
-    rcn
-  }
-}
-
-export function approveMortgageForRCNSuccess(txHash, rcn) {
-  return {
-    type: APPROVE_MORTGAGE_FOR_RCN_SUCCESS,
-    ...buildTransactionAction(txHash, { rcn }),
-    rcn
-  }
-}
-
-export function approveMortgageForRCNFailure(error) {
-  return {
-    type: APPROVE_MORTGAGE_FOR_RCN_FAILURE,
-    error
   }
 }
