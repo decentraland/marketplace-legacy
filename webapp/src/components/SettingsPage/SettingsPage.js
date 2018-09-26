@@ -2,10 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Loader } from 'semantic-ui-react'
+import { txUtils } from 'decentraland-eth'
 
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
-import { walletType, authorizationType } from 'components/types'
+import {
+  walletType,
+  authorizationType,
+  transactionType
+} from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isLedgerWallet, getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
@@ -16,6 +21,8 @@ export default class SettingsPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
     authorizations: authorizationType,
+    allowTransactions: PropTypes.arrayOf(transactionType),
+    approveTransactions: PropTypes.arrayOf(transactionType),
     isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
     onUpdateDerivationPath: PropTypes.func,
@@ -32,40 +39,23 @@ export default class SettingsPage extends React.PureComponent {
   }
 
   handleTokenAllowance = (checked, contractName, tokenContractName) => {
-    this.props.onAllowToken(checked, contractName, tokenContractName)
+    const amount = checked ? getTokenAmountToApprove() : 0
+    this.props.onAllowToken(amount, contractName, tokenContractName)
   }
 
   handleTokenApproval = (checked, contractName, tokenContractName) => {
-    const amount = checked ? getTokenAmountToApprove() : 0
-    this.props.onApproveToken(amount, contractName, tokenContractName)
+    this.props.onApproveToken(checked, contractName, tokenContractName)
   }
 
-  getApproveTransaction() {
-    // Transactions are ordered, the last one corresponds to the last sent
-    const { approveManaTransactions } = this.props.wallet
-    return approveManaTransactions[approveManaTransactions.length - 1]
-  }
+  getPendingTransactions() {
+    const { allowTransactions, approveTransactions } = this.props
+    const isPending = transaction =>
+      transaction.status === txUtils.TRANSACTION_STATUS.pending
 
-  getAuthorizeTransaction() {
-    // Transactions are ordered, the last one corresponds to the last sent
-    const { authorizeLandTransactions } = this.props.wallet
-    return authorizeLandTransactions[authorizeLandTransactions.length - 1]
-  }
-
-  getApproveMortgageForManaTransaction() {
-    // Transactions are ordered, the last one corresponds to the last sent
-    const { approveMortgageForManaTransactions } = this.props.wallet
-    return approveMortgageForManaTransactions[
-      approveMortgageForManaTransactions.length - 1
-    ]
-  }
-
-  getApproveMortgageForRCNTransaction() {
-    // Transactions are ordered, the last one corresponds to the last sent
-    const { approveMortgageForRCNTransactions } = this.props.wallet
-    return approveMortgageForRCNTransactions[
-      approveMortgageForRCNTransactions.length - 1
-    ]
+    return {
+      pendingAllowTransactions: allowTransactions.filter(isPending),
+      pendingApproveTransactions: approveTransactions.filter(isPending)
+    }
   }
 
   render() {
@@ -78,6 +68,11 @@ export default class SettingsPage extends React.PureComponent {
         </div>
       )
     }
+
+    const {
+      pendingAllowTransactions,
+      pendingApproveTransactions
+    } = this.getPendingTransactions()
 
     return (
       <div className="SettingsPage">
@@ -99,6 +94,8 @@ export default class SettingsPage extends React.PureComponent {
                   wallet={wallet}
                   authorizations={authorizations}
                   isLedgerWallet={isLedgerWallet()}
+                  pendingAllowTransactions={pendingAllowTransactions}
+                  pendingApproveTransactions={pendingApproveTransactions}
                   onDerivationPathChange={this.handleDerivationPathChange}
                   onTokenAllowedChange={this.handleTokenAllowance}
                   onTokenApprovedChange={this.handleTokenApproval}

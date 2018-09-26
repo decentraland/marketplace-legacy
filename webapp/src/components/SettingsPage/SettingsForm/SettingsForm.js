@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Form, Checkbox, Button } from 'semantic-ui-react'
+import { Loader, Form, Checkbox, Button } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
 import EtherscanLink from 'components/EtherscanLink'
-import { walletType, authorizationType } from 'components/types'
+import {
+  walletType,
+  authorizationType,
+  transactionType
+} from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
@@ -20,6 +24,8 @@ export default class SettingsForm extends React.PureComponent {
     wallet: walletType,
     authorizations: authorizationType,
     isLedgerWallet: PropTypes.bool,
+    pendingAllowTransactions: PropTypes.arrayOf(transactionType),
+    pendingApproveTransactions: PropTypes.arrayOf(transactionType),
     onDerivationPathChange: PropTypes.func,
     onTokenAllowedChange: PropTypes.func,
     onTokenApprovedChange: PropTypes.func
@@ -38,44 +44,76 @@ export default class SettingsForm extends React.PureComponent {
     )
   }
 
+  renderLoading() {
+    return (
+      <span
+        className="loader-tooltip"
+        data-balloon={t('settings.pending_tx')}
+        data-balloon-pos="up"
+        data-balloon-length="large"
+      >
+        <Loader active size="mini" />
+      </span>
+    )
+  }
+
   renderAllowance(allowance, contractName) {
+    const { pendingAllowTransactions } = this.props
+
     return Object.keys(allowance).map(tokenContractName => (
       <Form.Field key={tokenContractName}>
-        <Checkbox
-          checked={allowance[tokenContractName] > 0}
-          onChange={this.getTokenAllowedChange(contractName, tokenContractName)}
-        />
-        <div className="authorize-detail">
-          <div className="title">{contractName}</div>
-          <div className="description">
-            <T
-              id={`authorization.allow.${tokenContractName}`}
-              values={{ contract_link: this.renderContractLink(contractName) }}
-            />
-          </div>
+        {this.hasTransactionPending(
+          pendingAllowTransactions,
+          contractName,
+          tokenContractName
+        ) ? (
+          this.renderLoading()
+        ) : (
+          <Checkbox
+            checked={allowance[tokenContractName] > 0}
+            onChange={this.getTokenAllowedChange(
+              contractName,
+              tokenContractName
+            )}
+          />
+        )}
+        <div className="title">{contractName}</div>
+        <div className="description">
+          <T
+            id={`authorization.allow.${tokenContractName}`}
+            values={{ contract_link: this.renderContractLink(contractName) }}
+          />
         </div>
       </Form.Field>
     ))
   }
 
   renderApproval(approval, contractName) {
+    const { pendingApproveTransactions } = this.props
+
     return Object.keys(approval).map(tokenContractName => (
       <Form.Field key={tokenContractName}>
-        <Checkbox
-          checked={approval[tokenContractName]}
-          onChange={this.getTokenApprovedChange(
-            contractName,
-            tokenContractName
-          )}
-        />
-        <div className="authorize-detail">
-          <div className="title">{contractName}</div>
-          <div className="description">
-            <T
-              id={`authorization.approved.${tokenContractName}`}
-              values={{ contract_link: this.renderContractLink(contractName) }}
-            />
-          </div>
+        {this.hasTransactionPending(
+          pendingApproveTransactions,
+          contractName,
+          tokenContractName
+        ) ? (
+          this.renderLoading()
+        ) : (
+          <Checkbox
+            checked={approval[tokenContractName]}
+            onChange={this.getTokenApprovedChange(
+              contractName,
+              tokenContractName
+            )}
+          />
+        )}
+        <div className="title">{contractName}</div>
+        <div className="description">
+          <T
+            id={`authorization.approve.${tokenContractName}`}
+            values={{ contract_link: this.renderContractLink(contractName) }}
+          />
         </div>
       </Form.Field>
     ))
@@ -113,6 +151,15 @@ export default class SettingsForm extends React.PureComponent {
     return contracts
   }
 
+  hasTransactionPending(transactions, contractName, tokenContractName) {
+    console.log('hasTransactionPending', transactions)
+    return transactions.some(
+      transaction =>
+        transaction.payload.contractName === contractName &&
+        transaction.payload.tokenContractName === tokenContractName
+    )
+  }
+
   isDisabledContract(contractName) {
     return (
       !isFeatureEnabled('MORTGAGES') &&
@@ -132,7 +179,7 @@ export default class SettingsForm extends React.PureComponent {
     const approvals = this.filterWalletContracts(authorizations.approvals)
 
     return (
-      <Form className={`SettingsForm ${isTxPending ? 'tx-pending' : ''}`}>
+      <Form className="SettingsForm">
         {isLedgerWallet ? (
           <Form.Field>
             <DerivationPathDropdown

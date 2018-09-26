@@ -24,6 +24,37 @@
     "your_estate": "당신의 재산",
     "your_parcel": "당신의 토지"
   },
+  "authorization": {
+    "allow": {
+      "MANAToken": "MANA를 작동시키기 위해 {contract_link}에 권한 부여",
+      "RCNToken":
+        "{contract_link}가 귀하를 대신하여 RCN을 운영하도록 승인하십시오"
+    },
+    "allowed": {
+      "MANAToken":
+        "귀하는 {contract_link}가 귀하를 대신하여 MANA를 운영하도록 승인했습니다",
+      "RCNToken":
+        "귀하는 {contract_link}이 귀하를 대신하여 RCN을 운영하도록 허가했습니다."
+    },
+    "approve": {
+      "LANDRegistry":
+        "{contract_link}이 LAND을 대신하여 작동하도록 승인하십시오."
+    },
+    "approved": {
+      "LANDRegistry":
+        "귀하는 {contract_link}이 귀하를 대신하여 LAND을 운영하도록 승인했습니다"
+    },
+    "disallowed": {
+      "MANAToken":
+        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다.",
+      "RCNToken":
+        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다."
+    },
+    "disapproved": {
+      "LANDRegistry":
+        "당신을 대신하여 {contract_link}가 LAND을 작동하도록 승인하지 않았습니다."
+    }
+  },
   "buy_mana": {
     "action": "더 사",
     "amount_too_big": "이 금액은 Bancor Network에 비해 너무 큽니다.",
@@ -320,9 +351,10 @@
   },
   "settings": {
     "authorization": "권한 부여",
+    "for_buying": "구매를 위해",
+    "for_selling": "판매용",
     "legacy_authorization": "레거시 인증",
-    "pending_tx": "보류중인 거래가 있습니다.",
-    "view_more": "더보기"
+    "pending_tx": "보류중인 거래가 있습니다."
   },
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",
@@ -333,39 +365,6 @@
         "{metamask_link} 확장 또는 {ledger_nano_link}과 같은 하드웨어 지갑을 사용할 수 있습니다.",
       "mobile":
         "{coinbase_link} 또는 {imtoken_link}과 같은 모바일 브라우저를 사용할 수 있습니다."
-    }
-  },
-  "token_allowance": {
-    "approve": {
-      "MANAToken": "MANA를 작동시키기 위해 {contract_link}에 권한 부여",
-      "RCNToken":
-        "{contract_link}가 귀하를 대신하여 RCN을 운영하도록 승인하십시오"
-    },
-    "approved": {
-      "MANAToken":
-        "귀하는 {contract_link}가 귀하를 대신하여 MANA를 운영하도록 승인했습니다",
-      "RCNToken":
-        "귀하는 {contract_link}이 귀하를 대신하여 RCN을 운영하도록 허가했습니다."
-    },
-    "disapproved": {
-      "MANAToken":
-        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다.",
-      "RCNToken":
-        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다."
-    }
-  },
-  "token_authorization": {
-    "authorize": {
-      "LANDRegistry":
-        "{contract_link}이 LAND을 대신하여 작동하도록 승인하십시오."
-    },
-    "authorized": {
-      "LANDRegistry":
-        "귀하는 {contract_link}이 귀하를 대신하여 LAND을 운영하도록 승인했습니다"
-    },
-    "unauthorized": {
-      "LANDRegistry":
-        "당신을 대신하여 {contract_link}가 LAND을 작동하도록 승인하지 않았습니다."
     }
   },
   "transaction": {

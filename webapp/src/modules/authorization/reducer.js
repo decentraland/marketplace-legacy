@@ -66,48 +66,10 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
         case ALLOW_TOKEN_SUCCESS: {
           const {
             address,
-            isApproved,
-            contractName,
-            tokenContractName
-          } = transaction.payload
-
-          console.log(
-            'ALLOW_TOKEN_SUCCESS',
-            state.data,
-            address,
-            state.data[address].approvals
-          )
-
-          const approvals = {
-            ...state.data[address].approvals,
-            [contractName]: {
-              ...state.data[address].approvals[contractName],
-              [tokenContractName]: isApproved
-            }
-          }
-
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              [address]: { ...state.data[address], approvals }
-            }
-          }
-        }
-        case APPROVE_TOKEN_SUCCESS: {
-          const {
-            address,
             amount,
             contractName,
             tokenContractName
           } = transaction.payload
-
-          console.log(
-            'APPROVE_TOKEN_SUCCESS',
-            state.data,
-            address,
-            state.data[address].allowances
-          )
 
           const allowances = {
             ...state.data[address].allowances,
@@ -122,6 +84,30 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             data: {
               ...state.data,
               [address]: { ...state.data[address], allowances }
+            }
+          }
+        }
+        case APPROVE_TOKEN_SUCCESS: {
+          const {
+            address,
+            isApproved,
+            contractName,
+            tokenContractName
+          } = transaction.payload
+
+          const approvals = {
+            ...state.data[address].approvals,
+            [contractName]: {
+              ...state.data[address].approvals[contractName],
+              [tokenContractName]: isApproved
+            }
+          }
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [address]: { ...state.data[address], approvals }
             }
           }
         }

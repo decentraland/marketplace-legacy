@@ -23,6 +23,34 @@
     "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
+  "authorization": {
+    "allow": {
+      "MANAToken": "Autorice a {contract_link} para operar MANA en su nombre",
+      "RCNToken": "Autorice al {contract_link} a operar RCN en su nombre"
+    },
+    "allowed": {
+      "MANAToken":
+        "Usted autorizó al {contract_link} a operar MANA en su nombre",
+      "RCNToken": "Usted autorizó al {contract_link} a operar RCN en su nombre"
+    },
+    "approve": {
+      "LANDRegistry": "Autorice al {contract_link} a operar LAND en su nombre"
+    },
+    "approved": {
+      "LANDRegistry":
+        "Usted autorizó al {contract_link} a operar LAND en su nombre"
+    },
+    "disallowed": {
+      "MANAToken":
+        "Usted no autorizó el {contract_link} para operar MANA en su nombre",
+      "RCNToken":
+        "Usted no autorizó el {contract_link} para operar MANA en su nombre"
+    },
+    "disapproved": {
+      "LANDRegistry":
+        "Usted no ha autorizado el {contract_link} para operar LAND en su nombre"
+    }
+  },
   "buy_mana": {
     "action": "Comprar Más",
     "amount_too_big": "Este monto es demaciado grande para la red de Bancor",
@@ -325,9 +353,10 @@
   },
   "settings": {
     "authorization": "Autorización",
+    "for_buying": "Por comprar",
+    "for_selling": "Para la venta de",
     "legacy_authorization": "Autorización heredada",
-    "pending_tx": "Tienes una transacción pendiente",
-    "view_more": "Ver más"
+    "pending_tx": "Tienes una transacción pendiente"
   },
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
@@ -339,36 +368,6 @@
         "Puedes usar la extensión {metamask_link} o una billetera de hardware como {ledger_nano_link}.",
       "mobile":
         "Puedes usar navegadores móviles como {coinbase_link} o {imtoken_link}."
-    }
-  },
-  "token_allowance": {
-    "approve": {
-      "MANAToken": "Autorice a {contract_link} para operar MANA en su nombre",
-      "RCNToken": "Autorice al {contract_link} a operar RCN en su nombre"
-    },
-    "approved": {
-      "MANAToken":
-        "Usted autorizó al {contract_link} a operar MANA en su nombre",
-      "RCNToken": "Usted autorizó al {contract_link} a operar RCN en su nombre"
-    },
-    "disapproved": {
-      "MANAToken":
-        "Usted no autorizó el {contract_link} para operar MANA en su nombre",
-      "RCNToken":
-        "Usted no autorizó el {contract_link} para operar MANA en su nombre"
-    }
-  },
-  "token_authorization": {
-    "authorize": {
-      "LANDRegistry": "Autorice al {contract_link} a operar LAND en su nombre"
-    },
-    "authorized": {
-      "LANDRegistry":
-        "Usted autorizó al {contract_link} a operar LAND en su nombre"
-    },
-    "unauthorized": {
-      "LANDRegistry":
-        "Usted no ha autorizado el {contract_link} para operar LAND en su nombre"
     }
   },
   "transaction": {

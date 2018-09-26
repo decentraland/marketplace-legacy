@@ -1,7 +1,6 @@
 import { eth } from 'decentraland-eth'
 import { all, put, call, takeEvery } from 'redux-saga/effects'
 
-// import { locations } from 'locations'
 import {
   FETCH_AUTHORIZATIONS_REQUEST,
   ALLOW_TOKEN_REQUEST,

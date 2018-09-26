@@ -79,6 +79,7 @@ export const transactionType = shape({
   blockNumber: number,
   timestamp: number,
   status: oneOf(Object.values(txUtils.TRANSACTION_TYPES)),
+  payload: object,
   action: object,
   error: string
 })

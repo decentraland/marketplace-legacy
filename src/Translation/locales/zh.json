@@ -22,6 +22,29 @@
     "your_estate": "您的连块土地",
     "your_parcel": "您的地块"
   },
+  "authorization": {
+    "allow": {
+      "MANAToken": "授权{contract_link}代表您运行MANA",
+      "RCNToken": "授权{contract_link}代表您运营RCN"
+    },
+    "allowed": {
+      "MANAToken": "您授权{contract_link}代表您运行MANA",
+      "RCNToken": "您授权{contract_link}代表您运行RCN"
+    },
+    "approve": {
+      "LANDRegistry": "授权{contract_link}代表您运行LAND"
+    },
+    "approved": {
+      "LANDRegistry": "您授权{contract_link}代表您运行LAND"
+    },
+    "disallowed": {
+      "MANAToken": "您未经授权{contract_link}代表您操作MANA",
+      "RCNToken": "您未经授权{contract_link}代表您操作MANA"
+    },
+    "disapproved": {
+      "LANDRegistry": "您未经授权{contract_link}代表您操作LAND"
+    }
+  },
   "buy_mana": {
     "action": "购买",
     "amount_too_big": "对于 Bancor 网络来说数额太大",
@@ -313,9 +336,10 @@
   },
   "settings": {
     "authorization": "授权",
+    "for_buying": "购买",
+    "for_selling": "出售",
     "legacy_authorization": "遗产授权",
-    "pending_tx": "您有待处理的交易",
-    "view_more": "查看更多"
+    "pending_tx": "您有待处理的交易"
   },
   "sign_in": {
     "account_unlocked": "确保您的帐户已解锁",
@@ -325,31 +349,6 @@
       "desktop":
         "您可以使用{metamask_link}扩展名或像{ledger_nano_link}这样的硬件钱包。",
       "mobile": "您可以使用移动浏览器，如{coinbase_link}或{imtoken_link}。"
-    }
-  },
-  "token_allowance": {
-    "approve": {
-      "MANAToken": "授权{contract_link}代表您运行MANA",
-      "RCNToken": "授权{contract_link}代表您运营RCN"
-    },
-    "approved": {
-      "MANAToken": "您授权{contract_link}代表您运行MANA",
-      "RCNToken": "您授权{contract_link}代表您运行RCN"
-    },
-    "disapproved": {
-      "MANAToken": "您未经授权{contract_link}代表您操作MANA",
-      "RCNToken": "您未经授权{contract_link}代表您操作MANA"
-    }
-  },
-  "token_authorization": {
-    "authorize": {
-      "LANDRegistry": "授权{contract_link}代表您运行LAND"
-    },
-    "authorized": {
-      "LANDRegistry": "您授权{contract_link}代表您运行LAND"
-    },
-    "unauthorized": {
-      "LANDRegistry": "您未经授权{contract_link}代表您操作LAND"
     }
   },
   "transaction": {

@@ -23,6 +23,37 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "authorization": {
+    "allow": {
+      "MANAToken":
+        "あなたに代わって{contract_link}にMANAを動作させる権限を与える",
+      "RCNToken": "あなたのためにRCNを作動させるために{contract_link}を認証する"
+    },
+    "allowed": {
+      "MANAToken":
+        "あなたはあなたのためにMANAを動作させるために{contract_link}を許可しました",
+      "RCNToken":
+        "あなたはあなたのためにRCNを作動させるために{contract_link}を許可しました"
+    },
+    "approve": {
+      "LANDRegistry":
+        "あなたのためにLANDを動作させるために{contract_link}を認証する"
+    },
+    "approved": {
+      "LANDRegistry":
+        "あなたはあなたのためにLANDを動作させるために{contract_link}を許可しました"
+    },
+    "disallowed": {
+      "MANAToken":
+        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を不正にしました",
+      "RCNToken":
+        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を不正にしました"
+    },
+    "disapproved": {
+      "LANDRegistry":
+        "あなたはあなたの代わりにLANDを動作させるために{contract_link}を許可しなかった"
+    }
+  },
   "buy_mana": {
     "action": "もっと購入する",
     "amount_too_big": "Bancor Networkには額が大き過ぎます。",
@@ -321,9 +352,10 @@
   },
   "settings": {
     "authorization": "承認",
+    "for_buying": "購入のために",
+    "for_selling": "販売のため",
     "legacy_authorization": "従来の承認",
-    "pending_tx": "　処理中の取引があります。",
-    "view_more": "もっと見る"
+    "pending_tx": "　処理中の取引があります。"
   },
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
@@ -335,39 +367,6 @@
         "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます。",
       "mobile":
         "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます。"
-    }
-  },
-  "token_allowance": {
-    "approve": {
-      "MANAToken":
-        "あなたに代わって{contract_link}にMANAを動作させる権限を与える",
-      "RCNToken": "あなたのためにRCNを作動させるために{contract_link}を認証する"
-    },
-    "approved": {
-      "MANAToken":
-        "あなたはあなたのためにMANAを動作させるために{contract_link}を許可しました",
-      "RCNToken":
-        "あなたはあなたのためにRCNを作動させるために{contract_link}を許可しました"
-    },
-    "disapproved": {
-      "MANAToken":
-        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を不正にしました",
-      "RCNToken":
-        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を不正にしました"
-    }
-  },
-  "token_authorization": {
-    "authorize": {
-      "LANDRegistry":
-        "あなたのためにLANDを動作させるために{contract_link}を認証する"
-    },
-    "authorized": {
-      "LANDRegistry":
-        "あなたはあなたのためにLANDを動作させるために{contract_link}を許可しました"
-    },
-    "unauthorized": {
-      "LANDRegistry":
-        "あなたはあなたの代わりにLANDを動作させるために{contract_link}を許可しなかった"
     }
   },
   "transaction": {

@@ -1,7 +1,3 @@
-.SettingsForm .tx-pending .authorize-detail {
-  font-style: italic;
-}
-
 .SettingsForm.form .field {
   margin-bottom: 15px;
 }
@@ -47,6 +43,19 @@
 .SettingsForm .authorization-checks label {
   margin-bottom: 1em;
   color: var(--gray);
+}
+
+.SettingsForm .authorization-checks .loader-tooltip {
+  left: -12px; /*Center of the loader circle*/
+}
+
+.SettingsForm .authorization-checks .ui.loader {
+  margin-right: 5px;
+  left: 6px;
+  top: 10px;
+  position: relative;
+  float: left;
+  display: inline-block;
 }
 
 .SettingsForm .title {

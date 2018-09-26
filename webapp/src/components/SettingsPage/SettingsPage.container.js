@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { getWallet, isConnecting, isConnected } from 'modules/wallet/selectors'
 import {
   getData as getAuthorizations,
-  isLoading
-  // getAllowTransactions,
-  // getApproveTransactions
+  isLoading,
+  getAllowTransactions,
+  getApproveTransactions
 } from 'modules/authorization/selectors'
 import {
   allowTokenRequest,
@@ -16,15 +16,22 @@ import SettingsPage from './SettingsPage'
 
 const mapState = state => {
   const wallet = getWallet(state)
-  let authorizations = getAuthorizations(state)
+
+  let authorizations
+  let allowTransactions = []
+  let approveTransactions = []
 
   if (wallet) {
     authorizations = getAuthorizations(state)[wallet.address]
+    allowTransactions = getAllowTransactions(state)
+    approveTransactions = getApproveTransactions(state)
   }
 
   return {
     wallet,
     authorizations,
+    allowTransactions,
+    approveTransactions,
     isLoading: isConnecting(state) || isLoading(state),
     isConnected: isConnected(state)
   }
@@ -33,10 +40,10 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   onUpdateDerivationPath: derivationPath =>
     dispatch(updateDerivationPath(derivationPath)),
-  onAllowToken: (isAuthorized, contractName, tokenContractName) =>
-    dispatch(allowTokenRequest(isAuthorized, contractName, tokenContractName)),
-  onApproveToken: (amount, contractName, tokenContractName) =>
-    dispatch(approveTokenRequest(amount, contractName, tokenContractName))
+  onAllowToken: (amount, contractName, tokenContractName) =>
+    dispatch(allowTokenRequest(amount, contractName, tokenContractName)),
+  onApproveToken: (isApproved, contractName, tokenContractName) =>
+    dispatch(approveTokenRequest(isApproved, contractName, tokenContractName))
 })
 
 export default connect(mapState, mapDispatch)(SettingsPage)
