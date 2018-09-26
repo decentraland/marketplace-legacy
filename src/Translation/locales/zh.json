@@ -23,27 +23,12 @@
     "your_parcel": "您的地块"
   },
   "authorization": {
-    "allow": {
-      "MANAToken": "授权{contract_link}代表您运行MANA",
-      "RCNToken": "授权{contract_link}代表您运营RCN"
-    },
-    "allowed": {
-      "MANAToken": "您授权{contract_link}代表您运行MANA",
-      "RCNToken": "您授权{contract_link}代表您运行RCN"
-    },
-    "approve": {
-      "LANDRegistry": "授权{contract_link}代表您运行LAND"
-    },
-    "approved": {
-      "LANDRegistry": "您授权{contract_link}代表您运行LAND"
-    },
-    "disallowed": {
-      "MANAToken": "您未经授权{contract_link}代表您操作MANA",
-      "RCNToken": "您未经授权{contract_link}代表您操作MANA"
-    },
-    "disapproved": {
-      "LANDRegistry": "您未经授权{contract_link}代表您操作LAND"
-    }
+    "allow": "授权{contract_link}代表您运行{symbol}",
+    "allowed": "您授权{contract_link}代表您运行{symbol}",
+    "approve": "授权{contract_link}代表您运行{symbol}",
+    "approved": "您授权{contract_link}代表您运行{symbol}",
+    "disallowed": "您未经授权{contract_link}代表您操作{symbol}",
+    "disapproved": "您未经授权{contract_link}代表您操作{symbol}"
   },
   "buy_mana": {
     "action": "购买",

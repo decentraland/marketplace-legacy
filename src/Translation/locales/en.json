@@ -339,7 +339,7 @@
     "for_selling": "For selling",
     "legacy_authorization": "Legacy authorization",
     "pending_tx":
-      "This transaction is pending, go to your activity to see a detailed status"
+      "Transaction pending, click the loading to go to your activity for a detailed status"
   },
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",

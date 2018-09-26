@@ -25,35 +25,16 @@
     "your_parcel": "당신의 토지"
   },
   "authorization": {
-    "allow": {
-      "MANAToken": "MANA를 작동시키기 위해 {contract_link}에 권한 부여",
-      "RCNToken":
-        "{contract_link}가 귀하를 대신하여 RCN을 운영하도록 승인하십시오"
-    },
-    "allowed": {
-      "MANAToken":
-        "귀하는 {contract_link}가 귀하를 대신하여 MANA를 운영하도록 승인했습니다",
-      "RCNToken":
-        "귀하는 {contract_link}이 귀하를 대신하여 RCN을 운영하도록 허가했습니다."
-    },
-    "approve": {
-      "LANDRegistry":
-        "{contract_link}이 LAND을 대신하여 작동하도록 승인하십시오."
-    },
-    "approved": {
-      "LANDRegistry":
-        "귀하는 {contract_link}이 귀하를 대신하여 LAND을 운영하도록 승인했습니다"
-    },
-    "disallowed": {
-      "MANAToken":
-        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다.",
-      "RCNToken":
-        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다."
-    },
-    "disapproved": {
-      "LANDRegistry":
-        "당신을 대신하여 {contract_link}가 LAND을 작동하도록 승인하지 않았습니다."
-    }
+    "allow": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
+    "allowed":
+      "귀하는 {contract_link}이 귀하를 대신하여 {symbol}을 운영하도록 승인했습니다",
+    "approve": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
+    "approved":
+      "귀하는 {contract_link}이 귀하를 대신하여 {symbol}을 운영하도록 승인했습니다",
+    "disallowed":
+      "당신은 {contract_link}을 당신을 대신하여 {symbol}을 조작하도록 승인하지 않았습니다.",
+    "disapproved":
+      "당신은 {contract_link}을 당신을 대신하여 {symbol}을 조작하도록 승인하지 않았습니다."
   },
   "buy_mana": {
     "action": "더 사",

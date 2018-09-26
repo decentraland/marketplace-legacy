@@ -24,32 +24,16 @@
     "your_parcel": "Tu parcela"
   },
   "authorization": {
-    "allow": {
-      "MANAToken": "Autorice a {contract_link} para operar MANA en su nombre",
-      "RCNToken": "Autorice al {contract_link} a operar RCN en su nombre"
-    },
-    "allowed": {
-      "MANAToken":
-        "Usted autorizó al {contract_link} a operar MANA en su nombre",
-      "RCNToken": "Usted autorizó al {contract_link} a operar RCN en su nombre"
-    },
-    "approve": {
-      "LANDRegistry": "Autorice al {contract_link} a operar LAND en su nombre"
-    },
-    "approved": {
-      "LANDRegistry":
-        "Usted autorizó al {contract_link} a operar LAND en su nombre"
-    },
-    "disallowed": {
-      "MANAToken":
-        "Usted no autorizó el {contract_link} para operar MANA en su nombre",
-      "RCNToken":
-        "Usted no autorizó el {contract_link} para operar MANA en su nombre"
-    },
-    "disapproved": {
-      "LANDRegistry":
-        "Usted no ha autorizado el {contract_link} para operar LAND en su nombre"
-    }
+    "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",
+    "allowed":
+      "Usted autorizó a {contract_link} a operar {symbol} en su nombre",
+    "approve": "Autorice al {contract_link} a operar {symbol} en su nombre",
+    "approved":
+      "Usted autorizó a {contract_link} a operar {symbol} en su nombre",
+    "disallowed":
+      "Usted no ha autorizado el {contract_link} para operar {symbol} en su nombre",
+    "disapproved":
+      "Usted no ha autorizado el {contract_link} para operar {symbol} en su nombre"
   },
   "buy_mana": {
     "action": "Comprar Más",

@@ -47,14 +47,15 @@ export default class SettingsForm extends React.PureComponent {
 
   renderLoading() {
     return (
-      <span
+      <Link
+        to={locations.activity()}
         className="loader-tooltip"
         data-balloon={t('settings.pending_tx')}
         data-balloon-pos="up"
         data-balloon-length="large"
       >
         <Loader active size="mini" />
-      </span>
+      </Link>
     )
   }
 
@@ -159,7 +160,6 @@ export default class SettingsForm extends React.PureComponent {
   }
 
   hasTransactionPending(transactions, contractName, tokenContractName) {
-    console.log('hasTransactionPending', transactions)
     return transactions.some(
       transaction =>
         transaction.payload.contractName === contractName &&
