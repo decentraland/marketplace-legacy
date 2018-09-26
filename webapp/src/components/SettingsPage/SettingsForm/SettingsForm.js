@@ -6,7 +6,7 @@ import { Form, Checkbox, Button } from 'semantic-ui-react'
 import { locations } from 'locations'
 import Mana from 'components/Mana'
 import EtherscanLink from 'components/EtherscanLink'
-import { walletType } from 'components/types'
+import { walletType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
@@ -18,14 +18,16 @@ import './SettingsForm.css'
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
+    authorizations: authorizationType,
     isLedgerWallet: PropTypes.bool,
     onDerivationPathChange: PropTypes.func,
-    onTokenApprovedChange: PropTypes.func,
-    onTokenAuthorizedChange: PropTypes.func
+    onTokenAllowedChange: PropTypes.func,
+    onTokenApprovedChange: PropTypes.func
   }
 
   static defaultProps = {
-    wallet: {}
+    wallet: {},
+    authorizations: {}
   }
 
   constructor(props) {
@@ -54,25 +56,45 @@ export default class SettingsForm extends React.PureComponent {
       <Form.Field key={tokenContractName}>
         <Checkbox
           checked={allowance[tokenContractName] > 0}
+          onChange={this.getTokenAllowedChange(contractName, tokenContractName)}
+        />
+        <div className="authorize-detail">
+          {allowance[tokenContractName] > 0 ? (
+            <T
+              id={`authorization.allowed.${tokenContractName}`}
+              values={{ contract_link: this.renderContractLink(contractName) }}
+            />
+          ) : (
+            <T
+              id={`authorization.allow.${tokenContractName}`}
+              values={{ contract_link: this.renderContractLink(contractName) }}
+            />
+          )}
+        </div>
+      </Form.Field>
+    ))
+  }
+
+  renderApproval(approval, contractName) {
+    return Object.keys(approval).map(tokenContractName => (
+      <Form.Field key={tokenContractName}>
+        <Checkbox
+          checked={approval[tokenContractName]}
           onChange={this.getTokenApprovedChange(
             contractName,
             tokenContractName
           )}
         />
         <div className="authorize-detail">
-          {allowance[tokenContractName] > 0 ? (
+          {approval[tokenContractName] ? (
             <T
-              id={`token_allowance.approved.${tokenContractName}`}
-              values={{
-                contract_link: this.renderContractLink(contractName)
-              }}
+              id={`authorization.approved.${tokenContractName}`}
+              values={{ contract_link: this.renderContractLink(contractName) }}
             />
           ) : (
             <T
-              id={`token_allowance.approve.${tokenContractName}`}
-              values={{
-                contract_link: this.renderContractLink(contractName)
-              }}
+              id={`authorization.approve.${tokenContractName}`}
+              values={{ contract_link: this.renderContractLink(contractName) }}
             />
           )}
         </div>
@@ -80,49 +102,18 @@ export default class SettingsForm extends React.PureComponent {
     ))
   }
 
-  renderAuthorization(authorization, contractName) {
-    return Object.keys(authorization).map(tokenContractName => (
-      <Form.Field key={tokenContractName}>
-        <Checkbox
-          checked={authorization[tokenContractName]}
-          onChange={this.getTokenAuthorizedChange(
-            contractName,
-            tokenContractName
-          )}
-        />
-        <div className="authorize-detail">
-          {authorization[tokenContractName] ? (
-            <T
-              id={`token_authorization.authorized.${tokenContractName}`}
-              values={{
-                contract_link: this.renderContractLink(contractName)
-              }}
-            />
-          ) : (
-            <T
-              id={`token_authorization.authorize.${tokenContractName}`}
-              values={{
-                contract_link: this.renderContractLink(contractName)
-              }}
-            />
-          )}
-        </div>
-      </Form.Field>
-    ))
-  }
-
-  getTokenApprovedChange(contractName, tokenContractName) {
+  getTokenAllowedChange(contractName, tokenContractName) {
     return (_, data) =>
-      this.props.onTokenApprovedChange(
+      this.props.onTokenAllowedChange(
         data.checked,
         contractName,
         tokenContractName
       )
   }
 
-  getTokenAuthorizedChange(contractName, tokenContractName) {
+  getTokenApprovedChange(contractName, tokenContractName) {
     return (_, data) =>
-      this.props.onTokenAuthorizedChange(
+      this.props.onTokenApprovedChange(
         data.checked,
         contractName,
         tokenContractName
@@ -159,17 +150,22 @@ export default class SettingsForm extends React.PureComponent {
   }
 
   render() {
-    const { wallet, isLedgerWallet, onDerivationPathChange } = this.props
+    const {
+      wallet,
+      authorizations,
+      isLedgerWallet,
+      onDerivationPathChange
+    } = this.props
     const { legacyAuthorizationsVisible } = this.state
 
     const {
       contracts: allowances,
       legacyContracts: legacyAllowances
-    } = this.filterWalletContracts(wallet.allowances)
+    } = this.filterWalletContracts(authorizations.allowances)
     const {
       contracts: approvals,
       legacyContracts: legacyApprovals
-    } = this.filterWalletContracts(wallet.approvals)
+    } = this.filterWalletContracts(authorizations.approvals)
 
     return (
       <Form className={`SettingsForm ${isTxPending ? 'tx-pending' : ''}`}>
@@ -222,7 +218,7 @@ export default class SettingsForm extends React.PureComponent {
             this.renderAllowance(allowances[contractName], contractName)
           )}
           {Object.keys(approvals).map(contractName =>
-            this.renderAuthorization(approvals[contractName], contractName)
+            this.renderApproval(approvals[contractName], contractName)
           )}
 
           <small className="link" onClick={this.toggleLegacyAuhorizations}>
@@ -242,7 +238,7 @@ export default class SettingsForm extends React.PureComponent {
                 )
               )}
               {Object.keys(legacyApprovals).map(tokenContractName =>
-                this.renderAuthorization(
+                this.renderApproval(
                   legacyApprovals[tokenContractName],
                   tokenContractName
                 )

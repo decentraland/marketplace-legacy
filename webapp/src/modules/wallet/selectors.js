@@ -19,23 +19,6 @@ export const isConnected = state => !!getData(state).address
 export const isConnecting = state =>
   isLoadingType(getLoading(state), CONNECT_WALLET_REQUEST)
 
-// state =>
-//   getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
-// state =>
-//   getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
-// state =>
-//   getTransactionsByType(
-//     state,
-//     getAddress(state),
-//     APPROVE_MORTGAGE_FOR_MANA_SUCCESS
-//   ),
-// state =>
-//   getTransactionsByType(
-//     state,
-//     getAddress(state),
-//     APPROVE_MORTGAGE_FOR_RCN_SUCCESS
-//   )
-
 export const getWallet = createSelector(
   state => getData(state),
   state => getAddresses(state),

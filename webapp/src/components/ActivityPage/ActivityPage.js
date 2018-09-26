@@ -48,8 +48,7 @@ export default class ActivityPage extends React.PureComponent {
   hasTradingPermissions() {
     const { allowances, approvals } = this.props.wallet
     return (
-      allowances.Marketplace.MANAToken > 0 &&
-      approvals.Marketplace.LANDRegistry
+      allowances.Marketplace.MANAToken > 0 && approvals.Marketplace.LANDRegistry
     )
   }
 

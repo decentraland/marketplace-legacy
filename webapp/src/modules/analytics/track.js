@@ -10,11 +10,10 @@ import {
   TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
 import {
-  APPROVE_TOKEN_SUCCESS,
-  AUTHORIZE_TOKEN_SUCCESS,
-  TRANSFER_MANA_SUCCESS,
-  BUY_MANA_SUCCESS
-} from 'modules/wallet/actions'
+  ALLOW_TOKEN_SUCCESS,
+  APPROVE_TOKEN_SUCCESS
+} from 'modules/authorization/actions'
+import { TRANSFER_MANA_SUCCESS, BUY_MANA_SUCCESS } from 'modules/wallet/actions'
 import { FETCH_TRANSACTION_FAILURE } from '@dapps/modules/transaction/actions'
 import {
   CREATE_ESTATE_SUCCESS,
@@ -56,7 +55,7 @@ add(EDIT_PARCEL_SUCCESS, 'Edit', action => ({
 }))
 
 add(
-  APPROVE_TOKEN_SUCCESS,
+  ALLOW_TOKEN_SUCCESS,
   action =>
     action.amount > 0
       ? `Authorize ${action.contractName} for ${action.tokenContractName}`
@@ -64,9 +63,9 @@ add(
 )
 
 add(
-  AUTHORIZE_TOKEN_SUCCESS,
+  APPROVE_TOKEN_SUCCESS,
   action =>
-    action.isAuthorized
+    action.isApproved
       ? `Authorize ${action.contractName} for ${action.tokenContractName}`
       : `Unauthorize ${action.contractName} for ${action.tokenContractName}`
 )

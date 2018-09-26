@@ -87,9 +87,12 @@ export const walletType = shape({
   network: string, // TODO: Maybe use eth.getNetworks().map(name) to validate here
   address: string,
   balance: number,
-  allowances: objectOf(objectOf(number)),
-  approvals: objectOf(objectOf(bool)),
   parcels: arrayOf(parcelType).isRequired
+})
+
+export const authorizationType = shape({
+  allowances: objectOf(objectOf(number)),
+  approvals: objectOf(objectOf(bool))
 })
 
 export const transferType = shape({

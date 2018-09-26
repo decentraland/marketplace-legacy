@@ -13,11 +13,10 @@ import { t, T } from '@dapps/modules/translation/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { getEtherscanHref, isPending } from '@dapps/modules/transaction/utils'
 import {
-  APPROVE_TOKEN_SUCCESS,
-  AUTHORIZE_TOKEN_SUCCESS,
-  TRANSFER_MANA_SUCCESS,
-  BUY_MANA_SUCCESS
-} from 'modules/wallet/actions'
+  ALLOW_TOKEN_SUCCESS,
+  APPROVE_TOKEN_SUCCESS
+} from 'modules/authorization/actions'
+import { TRANSFER_MANA_SUCCESS, BUY_MANA_SUCCESS } from 'modules/wallet/actions'
 import {
   EDIT_PARCEL_SUCCESS,
   MANAGE_PARCEL_SUCCESS,
@@ -89,12 +88,11 @@ export default class Transaction extends React.PureComponent {
     const { payload } = tx
 
     switch (tx.actionType) {
-      case APPROVE_TOKEN_SUCCESS: {
-        const { amount, contractName, tokenContractName } = payload
-        const tkey =
-          amount > 0
-            ? `token_allowance.approved.${tokenContractName}`
-            : `token_allowance.disapproved.${tokenContractName}`
+      case ALLOW_TOKEN_SUCCESS: {
+        const { isAuthorized, contractName, tokenContractName } = payload
+        const tkey = isAuthorized
+          ? `authorization.allowed.${tokenContractName}`
+          : `authorization.disallowed.${tokenContractName}`
 
         return (
           <T
@@ -103,11 +101,12 @@ export default class Transaction extends React.PureComponent {
           />
         )
       }
-      case AUTHORIZE_TOKEN_SUCCESS: {
-        const { isAuthorized, contractName, tokenContractName } = payload
-        const tkey = isAuthorized
-          ? `token_authorization.authorized.${tokenContractName}`
-          : `token_authorization.unauthorized.${tokenContractName}`
+      case APPROVE_TOKEN_SUCCESS: {
+        const { amount, contractName, tokenContractName } = payload
+        const tkey =
+          amount > 0
+            ? `authorization.approved.${tokenContractName}`
+            : `authorization.disapproved.${tokenContractName}`
 
         return (
           <T

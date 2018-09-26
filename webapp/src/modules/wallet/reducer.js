@@ -2,8 +2,6 @@ import {
   CONNECT_WALLET_REQUEST,
   CONNECT_WALLET_SUCCESS,
   CONNECT_WALLET_FAILURE,
-  APPROVE_TOKEN_SUCCESS,
-  AUTHORIZE_TOKEN_SUCCESS,
   TRANSFER_MANA_SUCCESS,
   UPDATE_DERIVATION_PATH,
   UPDATE_BALANCE,
@@ -28,12 +26,8 @@ const INITIAL_STATE = {
     balance: null,
     derivationPath: null,
     ethBalance: null,
-    allowances: {
-      /* [contractName]: { [tokenContractName]: amount, (...) } */
-    },
-    approvals: {
-      /* [contractName]: { [tokenContractName]: isAuthorized, (...) } */
-    }
+    allowances: {},
+    approvals: {}
   },
   loading: [],
   error: null
@@ -68,46 +62,6 @@ export function walletReducer(state = INITIAL_STATE, action) {
       const { transaction } = action.payload
 
       switch (transaction.actionType) {
-        case APPROVE_TOKEN_SUCCESS: {
-          const {
-            amount,
-            contractName,
-            tokenContractName
-          } = transaction.payload
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              allowances: {
-                ...state.data.allowances,
-                [contractName]: {
-                  ...state.data.allowances[contractName],
-                  [tokenContractName]: amount
-                }
-              }
-            }
-          }
-        }
-        case AUTHORIZE_TOKEN_SUCCESS: {
-          const {
-            isAuthorized,
-            contractName,
-            tokenContractName
-          } = transaction.payload
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              approvals: {
-                ...state.data.allowances,
-                [contractName]: {
-                  ...state.data.approvals[contractName],
-                  [tokenContractName]: isAuthorized
-                }
-              }
-            }
-          }
-        }
         case TRANSFER_MANA_SUCCESS: {
           const mana = parseFloat(transaction.payload.mana)
           return {

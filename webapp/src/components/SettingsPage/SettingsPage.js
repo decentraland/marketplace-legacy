@@ -5,7 +5,7 @@ import { Container, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
-import { walletType } from 'components/types'
+import { walletType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isLedgerWallet, getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
@@ -15,11 +15,12 @@ import './SettingsPage.css'
 export default class SettingsPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
+    authorizations: authorizationType,
     isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
     onUpdateDerivationPath: PropTypes.func,
-    onApproveToken: PropTypes.func,
-    onAuthorizeToken: PropTypes.func
+    onAllowToken: PropTypes.func,
+    onApproveToken: PropTypes.func
   }
 
   handleDerivationPathChange = derivationPath => {
@@ -30,13 +31,13 @@ export default class SettingsPage extends React.PureComponent {
     }
   }
 
+  handleTokenAllowance = (checked, contractName, tokenContractName) => {
+    this.props.onAllowToken(checked, contractName, tokenContractName)
+  }
+
   handleTokenApproval = (checked, contractName, tokenContractName) => {
     const amount = checked ? getTokenAmountToApprove() : 0
     this.props.onApproveToken(amount, contractName, tokenContractName)
-  }
-
-  handleTokenAuthorization = (checked, contractName, tokenContractName) => {
-    this.props.onAuthorizeToken(checked, contractName, tokenContractName)
   }
 
   getApproveTransaction() {
@@ -68,7 +69,7 @@ export default class SettingsPage extends React.PureComponent {
   }
 
   render() {
-    const { isLoading, isConnected, wallet } = this.props
+    const { isLoading, isConnected, wallet, authorizations } = this.props
 
     if (isLoading) {
       return (
@@ -96,10 +97,11 @@ export default class SettingsPage extends React.PureComponent {
               {isConnected ? (
                 <SettingsForm
                   wallet={wallet}
+                  authorizations={authorizations}
                   isLedgerWallet={isLedgerWallet()}
                   onDerivationPathChange={this.handleDerivationPathChange}
+                  onTokenAllowedChange={this.handleTokenAllowance}
                   onTokenApprovedChange={this.handleTokenApproval}
-                  onTokenAuthorizedChange={this.handleTokenAuthorization}
                 />
               ) : (
                 <p className="sign-in">

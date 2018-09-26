@@ -13,8 +13,6 @@ import { push } from 'react-router-redux'
 import { locations } from 'locations'
 import {
   CONNECT_WALLET_REQUEST,
-  APPROVE_TOKEN_REQUEST,
-  AUTHORIZE_TOKEN_REQUEST,
   TRANSFER_MANA_REQUEST,
   BUY_MANA_REQUEST,
   UPDATE_DERIVATION_PATH,
@@ -22,10 +20,6 @@ import {
   connectWalletRequest,
   connectWalletSuccess,
   connectWalletFailure,
-  approveTokenSuccess,
-  approveTokenFailure,
-  authorizeTokenSuccess,
-  authorizeTokenFailure,
   transferManaSuccess,
   transferManaFailure,
   buyManaSuccess,
@@ -36,14 +30,13 @@ import {
 import { isLoading as isStorageLoading } from '@dapps/modules/storage/selectors'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { fetchAddress } from 'modules/address/actions'
+import { fetchAuthorizationsRequest } from 'modules/authorization/actions'
+import { isFeatureEnabled } from 'lib/featureUtils'
 import { getData } from './selectors'
 import { connectEthereumWallet, sendTransaction, fetchBalance } from './utils'
-import { isFeatureEnabled } from 'lib/featureUtils'
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
-  yield takeLatest(APPROVE_TOKEN_REQUEST, handleApproveTokenRequest)
-  yield takeLatest(AUTHORIZE_TOKEN_REQUEST, handleAuthorizeTokenRequest)
   yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
   yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
   yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
@@ -61,41 +54,15 @@ function* handleConnectWalletRequest(action = {}) {
         derivationPath: walletData.derivationPath
       })
     )
+    const manaTokenContract = eth.getContract('MANAToken')
 
     let address = yield call(() => eth.getAddress())
     address = address.toLowerCase()
 
-    const manaTokenContract = eth.getContract('MANAToken')
-    const landRegistryContract = eth.getContract('LANDRegistry')
-    const legacyMarketplaceContract = eth.getContract('LegacyMarketplace')
-    const marketplaceContract = eth.getContract('Marketplace')
-
-    const [
-      network,
-      balance,
-      ethBalance,
-
-      legacyManaAllowance,
-      manaAllowance,
-
-      legacyIsLandApproved,
-      isLandApproved
-    ] = yield all([
+    const [network, balance, ethBalance] = yield all([
       eth.getNetwork(),
       manaTokenContract.balanceOf(address),
-      fetchBalance(address),
-
-      manaTokenContract.allowance(address, legacyMarketplaceContract.address),
-      manaTokenContract.allowance(address, marketplaceContract.address),
-
-      landRegistryContract.isApprovedForAll(
-        address,
-        legacyMarketplaceContract.address
-      ),
-      landRegistryContract.isApprovedForAll(
-        address,
-        marketplaceContract.address
-      )
+      fetchBalance(address)
     ])
 
     const wallet = {
@@ -104,31 +71,7 @@ function* handleConnectWalletRequest(action = {}) {
       derivationPath: eth.wallet.derivationPath,
       address,
       balance,
-      ethBalance,
-      allowances: {
-        [legacyMarketplaceContract.getContractName()]: {
-          MANAToken: legacyManaAllowance
-        },
-        [marketplaceContract.getContractName()]: {
-          MANAToken: manaAllowance
-        }
-      },
-      approvals: {
-        [legacyMarketplaceContract.getContractName()]: {
-          LANDRegistry: legacyIsLandApproved
-        },
-        [marketplaceContract.getContractName()]: {
-          LANDRegistry: isLandApproved
-        }
-      }
-    }
-
-    console.log(wallet)
-
-    // This condition should be deleted and the `allowance`s used when building the wallet once mortgages go live
-    if (isFeatureEnabled('MORTGAGES')) {
-      const mortgageAllowances = yield call(getMortgageAllowances, address)
-      Object.assign(wallet.allowances, mortgageAllowances)
+      ethBalance
     }
 
     yield handleConnectWalletSuccess(address)
@@ -138,76 +81,26 @@ function* handleConnectWalletRequest(action = {}) {
   }
 }
 
-function* getMortgageAllowances(address) {
-  const mortgageHelperContract = eth.getContract('MortgageHelper')
-  const mortgageManagerContract = eth.getContract('MortgageManager')
-  const rcnTokenContract = eth.getContract('RCNToken')
-  const manaTokenContract = eth.getContract('MANAToken')
-
-  const [mortgageManaAllowance, mortgageRCNAllowance] = yield all([
-    manaTokenContract.allowance(address, mortgageHelperContract.address),
-    rcnTokenContract.allowance(address, mortgageManagerContract.address)
-  ])
-
-  return {
-    [mortgageHelperContract.getContractName()]: {
-      MANAToken: mortgageManaAllowance
+function* handleConnectWalletSuccess(address) {
+  const authorizations = {
+    allowances: {
+      Marketplace: ['MANAToken'],
+      LegacyMarketplace: ['MANAToken']
     },
-    [mortgageManagerContract.getContractName()]: {
-      RCNToken: mortgageRCNAllowance.toNumber() // mortgageRCNAllowance is a BigNumber
+    approvals: {
+      Marketplace: ['LANDRegistry'],
+      LegacyMarketplace: ['LANDRegistry']
     }
   }
-}
+  if (isFeatureEnabled('MORTGAGES')) {
+    Object.assign(authorizations.allowances, {
+      MortgageHelper: ['MANAToken'],
+      MortgageManager: ['RCNToken']
+    })
+  }
 
-function* handleConnectWalletSuccess(address) {
   yield put(fetchAddress(address))
-}
-
-function* handleApproveTokenRequest(action) {
-  try {
-    const { amount, contractName, tokenContractName = 'MANAToken' } = action
-
-    const contractToApprove = eth.getContract(contractName)
-    const tokenContract = eth.getContract(tokenContractName)
-
-    const txHash = yield call(() =>
-      tokenContract.approve(contractToApprove.address, amount)
-    )
-
-    yield put(
-      approveTokenSuccess(txHash, amount, contractName, tokenContractName)
-    )
-  } catch (error) {
-    yield put(approveTokenFailure(error.message))
-  }
-}
-
-function* handleAuthorizeTokenRequest(action) {
-  try {
-    const {
-      isAuthorized,
-      contractName,
-      tokenContractName = 'LANDRegistry'
-    } = action
-
-    const contractToApprove = eth.getContract(contractName)
-    const tokenContract = eth.getContract(tokenContractName)
-
-    const txHash = yield call(() =>
-      tokenContract.setApprovalForAll(contractToApprove.address, isAuthorized)
-    )
-
-    yield put(
-      authorizeTokenSuccess(
-        txHash,
-        isAuthorized,
-        contractName,
-        tokenContractName
-      )
-    )
-  } catch (error) {
-    yield put(authorizeTokenFailure(error.message))
-  }
+  yield put(fetchAuthorizationsRequest(address, authorizations))
 }
 
 function* handleTransferManaRequest(action) {

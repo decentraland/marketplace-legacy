@@ -337,35 +337,33 @@
         "You can use mobile browsers such as {coinbase_link} or {imtoken_link}."
     }
   },
-  "token_allowance": {
-    "approve": {
+  "authorization": {
+    "allow": {
       "MANAToken":
         "Authorize the {contract_link} to operate MANA on your behalf",
       "RCNToken": "Authorize the {contract_link} to operate RCN on your behalf"
     },
-    "approved": {
+    "allowed": {
       "MANAToken":
         "You authorized the {contract_link} to operate MANA on your behalf",
       "RCNToken":
         "You authorized the {contract_link} to operate RCN on your behalf"
     },
-    "disapproved": {
+    "disallowed": {
       "MANAToken":
         "You unauthorized the {contract_link} to operate MANA on your behalf",
       "RCNToken":
         "You unauthorized the {contract_link} to operate MANA on your behalf"
-    }
-  },
-  "token_authorization": {
-    "authorize": {
+    },
+    "approve": {
       "LANDRegistry":
         "Authorize the {contract_link} to operate LAND on your behalf"
     },
-    "authorized": {
+    "approved": {
       "LANDRegistry":
         "You authorized the {contract_link} to operate LAND on your behalf"
     },
-    "unauthorized": {
+    "disapproved": {
       "LANDRegistry":
         "You unauthorized the {contract_link} to operate LAND on your behalf"
     }
