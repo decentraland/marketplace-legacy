@@ -24,35 +24,17 @@
     "your_parcel": "Your parcel"
   },
   "authorization": {
-    "allow": {
-      "MANAToken":
-        "Authorize the {contract_link} to operate MANA on your behalf",
-      "RCNToken": "Authorize the {contract_link} to operate RCN on your behalf"
-    },
-    "allowed": {
-      "MANAToken":
-        "You authorized the {contract_link} to operate MANA on your behalf",
-      "RCNToken":
-        "You authorized the {contract_link} to operate RCN on your behalf"
-    },
-    "approve": {
-      "LANDRegistry":
-        "Authorize the {contract_link} to operate LAND on your behalf"
-    },
-    "approved": {
-      "LANDRegistry":
-        "You authorized the {contract_link} to operate LAND on your behalf"
-    },
-    "disallowed": {
-      "MANAToken":
-        "You unauthorized the {contract_link} to operate MANA on your behalf",
-      "RCNToken":
-        "You unauthorized the {contract_link} to operate MANA on your behalf"
-    },
-    "disapproved": {
-      "LANDRegistry":
-        "You unauthorized the {contract_link} to operate LAND on your behalf"
-    }
+    "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",
+    "allowed":
+      "You authorized the {contract_link} to operate {symbol} on your behalf",
+    "approve":
+      "Authorize the {contract_link} to operate {symbol} on your behalf",
+    "approved":
+      "You authorized the {contract_link} to operate {symbol} on your behalf",
+    "disallowed":
+      "You unauthorized the {contract_link} to operate {symbol} on your behalf",
+    "disapproved":
+      "You unauthorized the {contract_link} to operate {symbol} on your behalf"
   },
   "buy_mana": {
     "action": "Buy More",

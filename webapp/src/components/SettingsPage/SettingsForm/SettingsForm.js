@@ -14,6 +14,7 @@ import {
 import { t, T } from '@dapps/modules/translation/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
+import { token } from 'lib/token'
 import DerivationPathDropdown from './DerivationPathDropdown'
 import { isPending } from '@dapps/modules/transaction/utils'
 
@@ -80,8 +81,11 @@ export default class SettingsForm extends React.PureComponent {
         <div className="title">{contractName}</div>
         <div className="description">
           <T
-            id={`authorization.allow.${tokenContractName}`}
-            values={{ contract_link: this.renderContractLink(contractName) }}
+            id="authorization.allow"
+            values={{
+              contract_link: this.renderContractLink(contractName),
+              symbol: token.getSymbolByContractName(tokenContractName)
+            }}
           />
         </div>
       </Form.Field>
@@ -111,8 +115,11 @@ export default class SettingsForm extends React.PureComponent {
         <div className="title">{contractName}</div>
         <div className="description">
           <T
-            id={`authorization.approve.${tokenContractName}`}
-            values={{ contract_link: this.renderContractLink(contractName) }}
+            id="authorization.approve"
+            values={{
+              contract_link: this.renderContractLink(contractName),
+              symbol: token.getSymbolByContractName(tokenContractName)
+            }}
           />
         </div>
       </Form.Field>

@@ -43,6 +43,7 @@ import {
 } from 'modules/estates/actions'
 import { buildCoordinate } from 'shared/parcel'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
+import { token } from 'lib/token'
 import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
 
 import './Transaction.css'
@@ -89,29 +90,33 @@ export default class Transaction extends React.PureComponent {
 
     switch (tx.actionType) {
       case ALLOW_TOKEN_SUCCESS: {
-        const { isAuthorized, contractName, tokenContractName } = payload
-        const tkey = isAuthorized
-          ? `authorization.allowed.${tokenContractName}`
-          : `authorization.disallowed.${tokenContractName}`
+        const { amount, contractName, tokenContractName } = payload
+        const tkey =
+          amount > 0 ? 'authorization.allowed' : 'authorization.disallowed'
 
         return (
           <T
             id={tkey}
-            values={{ contract_link: this.renderContractLink(contractName) }}
+            values={{
+              contract_link: this.renderContractLink(contractName),
+              symbol: token.getSymbolByContractName(tokenContractName)
+            }}
           />
         )
       }
       case APPROVE_TOKEN_SUCCESS: {
-        const { amount, contractName, tokenContractName } = payload
-        const tkey =
-          amount > 0
-            ? `authorization.approved.${tokenContractName}`
-            : `authorization.disapproved.${tokenContractName}`
+        const { isApproved, contractName, tokenContractName } = payload
+        const tkey = isApproved
+          ? 'authorization.approved'
+          : 'authorization.disapproved'
 
         return (
           <T
             id={tkey}
-            values={{ contract_link: this.renderContractLink(contractName) }}
+            values={{
+              contract_link: this.renderContractLink(contractName),
+              symbol: token.getSymbolByContractName(tokenContractName)
+            }}
           />
         )
       }
