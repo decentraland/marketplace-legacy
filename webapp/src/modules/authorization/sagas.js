@@ -97,7 +97,7 @@ function* handleAllowTokenRequest(action) {
 function* handleApproveTokenRequest(action) {
   try {
     const {
-      isAuthorized,
+      isApproved,
       contractName,
       tokenContractName = 'LANDRegistry'
     } = action
@@ -107,14 +107,14 @@ function* handleApproveTokenRequest(action) {
     const tokenContract = eth.getContract(tokenContractName)
 
     const txHash = yield call(() =>
-      tokenContract.setApprovalForAll(contractToApprove.address, isAuthorized)
+      tokenContract.setApprovalForAll(contractToApprove.address, isApproved)
     )
 
     yield put(
       approveTokenSuccess(
         txHash,
         address,
-        isAuthorized,
+        isApproved,
         contractName,
         tokenContractName
       )

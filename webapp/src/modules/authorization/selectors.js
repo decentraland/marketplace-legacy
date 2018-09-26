@@ -1,23 +1,15 @@
 // import { isLoadingType } from '@dapps/modules/loading/selectors'
+import { ALLOW_TOKEN_SUCCESS, APPROVE_TOKEN_SUCCESS } from './actions'
+import { getTransactionsByType } from 'modules/transaction/selectors'
+import { getAddress } from 'modules/wallet/selectors'
 
 export const getState = state => state.authorization
 export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
+export const isLoading = state => getLoading(state).length > 0
 export const getError = state => getState(state).error
 
-// state =>
-//   getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
-// state =>
-//   getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
-// state =>
-//   getTransactionsByType(
-//     state,
-//     getAddress(state),
-//     APPROVE_MORTGAGE_FOR_MANA_SUCCESS
-//   ),
-// state =>
-//   getTransactionsByType(
-//     state,
-//     getAddress(state),
-//     APPROVE_MORTGAGE_FOR_RCN_SUCCESS
-//   )
+export const getAllowTransactions = state =>
+  getTransactionsByType(state, getAddress(state), ALLOW_TOKEN_SUCCESS)
+export const getApproveTransactions = state =>
+  getTransactionsByType(state, getAddress(state), APPROVE_TOKEN_SUCCESS)

@@ -81,7 +81,7 @@ export default class SettingsPage extends React.PureComponent {
 
     return (
       <div className="SettingsPage">
-        <Container>
+        <Container fluid>
           <div className="row">
             <div className="column blockie">
               {wallet.address ? (

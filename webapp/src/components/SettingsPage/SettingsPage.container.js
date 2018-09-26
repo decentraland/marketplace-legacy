@@ -1,7 +1,12 @@
 import { connect } from 'react-redux'
 
 import { getWallet, isConnecting, isConnected } from 'modules/wallet/selectors'
-import { getData as getAuthorizations } from 'modules/authorization/selectors'
+import {
+  getData as getAuthorizations,
+  isLoading
+  // getAllowTransactions,
+  // getApproveTransactions
+} from 'modules/authorization/selectors'
 import {
   allowTokenRequest,
   approveTokenRequest
@@ -14,18 +19,13 @@ const mapState = state => {
   let authorizations = getAuthorizations(state)
 
   if (wallet) {
-    console.log({
-      wallet,
-      authorizations: getAuthorizations(state),
-      wauthorizations: getAuthorizations(state)[wallet.address]
-    })
     authorizations = getAuthorizations(state)[wallet.address]
   }
 
   return {
     wallet,
     authorizations,
-    isLoading: isConnecting(state),
+    isLoading: isConnecting(state) || isLoading(state),
     isConnected: isConnected(state)
   }
 }

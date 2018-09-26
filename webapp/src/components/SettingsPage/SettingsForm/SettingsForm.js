@@ -30,19 +30,6 @@ export default class SettingsForm extends React.PureComponent {
     authorizations: {}
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      legacyAuthorizationsVisible: false
-    }
-  }
-
-  toggleLegacyAuhorizations = () => {
-    const { legacyAuthorizationsVisible } = this.state
-    this.setState({ legacyAuthorizationsVisible: !legacyAuthorizationsVisible })
-  }
-
   renderContractLink(contractName) {
     return (
       <EtherscanLink address={getContractAddress(contractName)}>
@@ -59,17 +46,13 @@ export default class SettingsForm extends React.PureComponent {
           onChange={this.getTokenAllowedChange(contractName, tokenContractName)}
         />
         <div className="authorize-detail">
-          {allowance[tokenContractName] > 0 ? (
-            <T
-              id={`authorization.allowed.${tokenContractName}`}
-              values={{ contract_link: this.renderContractLink(contractName) }}
-            />
-          ) : (
+          <div className="title">{contractName}</div>
+          <div className="description">
             <T
               id={`authorization.allow.${tokenContractName}`}
               values={{ contract_link: this.renderContractLink(contractName) }}
             />
-          )}
+          </div>
         </div>
       </Form.Field>
     ))
@@ -86,17 +69,13 @@ export default class SettingsForm extends React.PureComponent {
           )}
         />
         <div className="authorize-detail">
-          {approval[tokenContractName] ? (
+          <div className="title">{contractName}</div>
+          <div className="description">
             <T
               id={`authorization.approved.${tokenContractName}`}
               values={{ contract_link: this.renderContractLink(contractName) }}
             />
-          ) : (
-            <T
-              id={`authorization.approve.${tokenContractName}`}
-              values={{ contract_link: this.renderContractLink(contractName) }}
-            />
-          )}
+          </div>
         </div>
       </Form.Field>
     ))
@@ -122,30 +101,22 @@ export default class SettingsForm extends React.PureComponent {
 
   filterWalletContracts(walletContracts) {
     const contracts = {}
-    const legacyContracts = {}
 
     for (const contractName in walletContracts) {
-      if (this.isLegacyContract(contractName)) {
-        legacyContracts[contractName] = walletContracts[contractName]
-      } else if (this.isDisabledContract(contractName)) {
+      if (this.isDisabledContract(contractName)) {
         continue
       } else {
         contracts[contractName] = walletContracts[contractName]
       }
     }
 
-    return { contracts, legacyContracts }
-  }
-
-  isLegacyContract(contractName) {
-    return contractName === 'LegacyMarketplace'
+    return contracts
   }
 
   isDisabledContract(contractName) {
     return (
-      (!isFeatureEnabled('MORTGAGES') &&
-        ['MortgageHelper', 'MortgageManager'].includes(contractName)) ||
-      (!isFeatureEnabled('MARKETPLACEV2') && contractName === 'Marketplace')
+      !isFeatureEnabled('MORTGAGES') &&
+      ['MortgageHelper', 'MortgageManager'].includes(contractName)
     )
   }
 
@@ -156,16 +127,9 @@ export default class SettingsForm extends React.PureComponent {
       isLedgerWallet,
       onDerivationPathChange
     } = this.props
-    const { legacyAuthorizationsVisible } = this.state
 
-    const {
-      contracts: allowances,
-      legacyContracts: legacyAllowances
-    } = this.filterWalletContracts(authorizations.allowances)
-    const {
-      contracts: approvals,
-      legacyContracts: legacyApprovals
-    } = this.filterWalletContracts(authorizations.approvals)
+    const allowances = this.filterWalletContracts(authorizations.allowances)
+    const approvals = this.filterWalletContracts(authorizations.approvals)
 
     return (
       <Form className={`SettingsForm ${isTxPending ? 'tx-pending' : ''}`}>
@@ -211,41 +175,25 @@ export default class SettingsForm extends React.PureComponent {
             </span>
           </div>
         </Form.Field>
-        <div className="authorization-checks">
-          <label>{t('settings.authorization')}</label>
 
-          {Object.keys(allowances).map(contractName =>
-            this.renderAllowance(allowances[contractName], contractName)
-          )}
-          {Object.keys(approvals).map(contractName =>
-            this.renderApproval(approvals[contractName], contractName)
-          )}
+        <div className="authorization-checks-container">
+          <div className="row">
+            <div className="authorization-checks">
+              <label>{t('settings.for_buying')}</label>
 
-          <small className="link" onClick={this.toggleLegacyAuhorizations}>
-            {t('settings.view_more')}
-          </small>
-        </div>
-
-        {legacyAuthorizationsVisible ? (
-          <div className="authorization-checks legacy-authorizations">
-            <label>{t('settings.legacy_authorization')} </label>
-
-            <React.Fragment>
-              {Object.keys(legacyAllowances).map(tokenContractName =>
-                this.renderAllowance(
-                  legacyAllowances[tokenContractName],
-                  tokenContractName
-                )
+              {Object.keys(allowances).map(contractName =>
+                this.renderAllowance(allowances[contractName], contractName)
               )}
-              {Object.keys(legacyApprovals).map(tokenContractName =>
-                this.renderApproval(
-                  legacyApprovals[tokenContractName],
-                  tokenContractName
-                )
+            </div>
+            <div className="authorization-checks">
+              <label>{t('settings.for_selling')}</label>
+
+              {Object.keys(approvals).map(contractName =>
+                this.renderApproval(approvals[contractName], contractName)
               )}
-            </React.Fragment>
+            </div>
           </div>
-        ) : null}
+        </div>
       </Form>
     )
   }

@@ -71,10 +71,17 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             tokenContractName
           } = transaction.payload
 
+          console.log(
+            'ALLOW_TOKEN_SUCCESS',
+            state.data,
+            address,
+            state.data[address].approvals
+          )
+
           const approvals = {
-            ...state.data.approvals,
+            ...state.data[address].approvals,
             [contractName]: {
-              ...state.data.approvals[contractName],
+              ...state.data[address].approvals[contractName],
               [tokenContractName]: isApproved
             }
           }
@@ -95,10 +102,17 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             tokenContractName
           } = transaction.payload
 
+          console.log(
+            'APPROVE_TOKEN_SUCCESS',
+            state.data,
+            address,
+            state.data[address].allowances
+          )
+
           const allowances = {
-            ...state.data.allowances,
+            ...state.data[address].allowances,
             [contractName]: {
-              ...state.data.allowances[contractName],
+              ...state.data[address].allowances[contractName],
               [tokenContractName]: amount
             }
           }

@@ -17,12 +17,6 @@
   float: left;
 }
 
-.SettingsForm .authorize-detail {
-  font-size: 16px;
-  overflow: hidden;
-  display: inline;
-}
-
 .SettingsForm .TxStatusText {
   font-size: 16px;
   font-style: italic;
@@ -41,28 +35,34 @@
   text-overflow: ellipsis;
 }
 
-.SettingsForm .authorization-checks {
-  margin: 50px 0 15px;
-  max-width: 487px;
-  line-height: 1.5em;
+.SettingsForm .authorization-checks-container {
+  font-size: 16px;
+  font-weight: 400;
 }
 
-.SettingsForm .legacy-authorizations {
-  margin: 0;
+.SettingsForm .authorization-checks > .field {
+  margin-bottom: 2em;
 }
 
 .SettingsForm .authorization-checks label {
-  color: var(--gray);
-  font-weight: 400;
-  font-size: 16px;
   margin-bottom: 1em;
+  color: var(--gray);
+}
+
+.SettingsForm .title {
+  font-weight: 700;
+}
+
+.SettingsForm .description {
+  margin-top: 1em;
+  color: var(--gray);
+  font-size: 14px;
 }
 
 .SettingsForm .mana {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: space-between;
 }
 
 .SettingsForm .buy-more {
@@ -71,4 +71,26 @@
 
 .SettingsForm .disabled-buy-more {
   display: inline-block;
+}
+
+@media (max-width: 767px) {
+  .SettingsForm .authorization-checks {
+    margin-top: 25px;
+  }
+  .SettingsForm .authorization-checks:first-child {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 767px) {
+  .SettingsForm .mana-actions {
+    margin-left: 88px;
+  }
+
+  .SettingsForm .authorization-checks {
+    margin-right: 15px;
+  }
+  .SettingsForm .authorization-checks:last-child {
+    margin-right: 0;
+  }
 }

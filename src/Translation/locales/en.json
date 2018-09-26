@@ -322,9 +322,10 @@
   },
   "settings": {
     "authorization": "Authorization",
+    "for_buying": "For buying",
+    "for_selling": "For selling",
     "legacy_authorization": "Legacy authorization",
-    "pending_tx": "You have a pending transaction",
-    "view_more": "View more"
+    "pending_tx": "You have a pending transaction"
   },
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",

@@ -88,8 +88,7 @@ function* handleConnectWalletSuccess(address) {
       LegacyMarketplace: ['MANAToken']
     },
     approvals: {
-      Marketplace: ['LANDRegistry'],
-      LegacyMarketplace: ['LANDRegistry']
+      Marketplace: ['LANDRegistry']
     }
   }
   if (isFeatureEnabled('MORTGAGES')) {
