@@ -6,7 +6,7 @@ import { Button, Form, Input } from 'semantic-ui-react'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
 import { t } from '@dapps/modules/translation/utils'
-import { getMANATokenAddress } from 'modules/wallet/utils'
+import { getContractAddress } from 'modules/wallet/utils'
 import { preventDefault } from 'lib/utils'
 
 import './TransferManaForm.css'
@@ -67,7 +67,7 @@ export default class TransferManaForm extends React.PureComponent {
   isMANATokenAddress() {
     return (
       this.state.address.trim().toLowerCase() ===
-      getMANATokenAddress().toLowerCase()
+      getContractAddress('MANAToken').toLowerCase()
     )
   }
 

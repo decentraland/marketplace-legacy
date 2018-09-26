@@ -67,7 +67,7 @@ export default class BuyParcelPage extends React.PureComponent {
     const { wallet, publication } = this.props
     const { balance, allowances } = wallet
 
-    const allowance = allowances.MANAToken.Marketplace
+    const allowance = allowances.Marketplace.MANAToken
     const isMarketplaceAllowed = allowance > 0
 
     return (
@@ -158,7 +158,7 @@ export default class BuyParcelPage extends React.PureComponent {
       onCancel
     } = this.props
     const { balance, allowances } = wallet
-    const allowance = allowances.MANAToken.Marketplace
+    const allowance = allowances.Marketplace.MANAToken
 
     const price = publication ? parseFloat(publication.price) : 0
 

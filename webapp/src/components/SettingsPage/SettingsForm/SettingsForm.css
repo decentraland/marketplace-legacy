@@ -3,7 +3,7 @@
 }
 
 .SettingsForm.form .field {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .SettingsForm.form .field > label,
@@ -42,7 +42,13 @@
 }
 
 .SettingsForm .authorization-checks {
-  margin: 50px 0px;
+  margin: 50px 0 15px;
+  max-width: 487px;
+  line-height: 1.5em;
+}
+
+.SettingsForm .legacy-authorizations {
+  margin: 0;
 }
 
 .SettingsForm .authorization-checks label {

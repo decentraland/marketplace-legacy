@@ -84,43 +84,8 @@ export function getContractAddress(contractName) {
   return tokenContract.address
 }
 
-export function getMANATokenAddress() {
-  const manaTokenContract = eth.getContract('MANAToken')
-  return manaTokenContract.address
-}
-
-export function getLegacyMarketplaceAddress() {
-  const marketplaceContract = eth.getContract('LegacyMarketplace')
-  return marketplaceContract.address
-}
-
-export function getMarketplaceAddress() {
-  const marketplaceContract = eth.getContract('Marketplace')
-  return marketplaceContract.address
-}
-
-export function getMortgageHelperAddress() {
-  const mortgageHelperContract = eth.getContract('MortgageHelper')
-  return mortgageHelperContract.address
-}
-
-export function getMortgageManagerAddress() {
-  const mortgageManagerContract = eth.getContract('MortgageManager')
-  return mortgageManagerContract.address
-}
-
-export function getRCNEngineAddress() {
-  const rcnEngineContract = eth.getContract('RCNEngine')
-  return rcnEngineContract.address
-}
-
 export function getKyberOracleAddress() {
   return env.get('REACT_APP_KYBER_ORACLE_CONTRACT_ADDRESS')
-}
-
-export function getEstateRegistryAddress() {
-  const estateRegistry = eth.getContract('EstateRegistry')
-  return estateRegistry.address
 }
 
 export async function sendTransaction(tx) {

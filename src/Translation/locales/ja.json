@@ -96,7 +96,6 @@
     "add": "追加する",
     "address_placeholder": "0x...",
     "atlas": "地図",
-    "authorized": "認証済み",
     "balance": "残高",
     "blog": "ブログ",
     "cancel": "キャンセル",
@@ -146,7 +145,6 @@
     "the_parcel": "区画",
     "time_left": "残り時間",
     "transfer_irreversible": "転送は元に戻すことができません。",
-    "unauthorized": "未認証",
     "undo": "戻す",
     "wallet_address": "ウォレットアドレス",
     "website": "ウェブサイト"
@@ -322,26 +320,10 @@
     "view": "見る"
   },
   "settings": {
-    "approve_token": {
-      "MANAToken":
-        "あなたに代わって{contract_link}にMANAを動作させる権限を与える",
-      "RCNToken": "あなたのためにRCNを作動させるために{contract_link}を認証する"
-    },
-    "authorize_token": {
-      "LANDRegistry":
-        "あなたのためにLANDを動作させるために{contract_link}を認証する"
-    },
+    "authorization": "承認",
+    "legacy_authorization": "従来の承認",
     "pending_tx": "　処理中の取引があります。",
-    "token_approved": {
-      "MANAToken":
-        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を承認しました",
-      "RCNToken":
-        "あなたはあなたのためにRCNを運営する{contract_link}を承認しました"
-    },
-    "token_authorized": {
-      "LANDRegistry":
-        "あなたはあなたのためにLANDを動作させるために{contract_link}を承認しました"
-    }
+    "view_more": "もっと見る"
   },
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
@@ -355,11 +337,40 @@
         "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます。"
     }
   },
+  "token_allowance": {
+    "approve": {
+      "MANAToken":
+        "あなたに代わって{contract_link}にMANAを動作させる権限を与える",
+      "RCNToken": "あなたのためにRCNを作動させるために{contract_link}を認証する"
+    },
+    "approved": {
+      "MANAToken":
+        "あなたはあなたのためにMANAを動作させるために{contract_link}を許可しました",
+      "RCNToken":
+        "あなたはあなたのためにRCNを作動させるために{contract_link}を許可しました"
+    },
+    "disapproved": {
+      "MANAToken":
+        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を不正にしました",
+      "RCNToken":
+        "あなたはあなたの代わりにMANAを動作させるために{contract_link}を不正にしました"
+    }
+  },
+  "token_authorization": {
+    "authorize": {
+      "LANDRegistry":
+        "あなたのためにLANDを動作させるために{contract_link}を認証する"
+    },
+    "authorized": {
+      "LANDRegistry":
+        "あなたはあなたのためにLANDを動作させるために{contract_link}を許可しました"
+    },
+    "unauthorized": {
+      "LANDRegistry":
+        "あなたはあなたの代わりにLANDを動作させるために{contract_link}を許可しなかった"
+    }
+  },
   "transaction": {
-    "approved":
-      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で認証しました。",
-    "authorize":
-      "あなたは、マーケット上でランドを使用することを{marketplace_contract_link}で{action}しました。",
     "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
@@ -367,8 +378,6 @@
     "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
     "create_estate": "あなたはエステート{name}を作成しました",
     "create_mortgage": "区画{parcel_link}を購入するのに担保を申請しました。",
-    "disapproved":
-      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
     "dissolve_estate": "エステート{name}を解散しました。",
     "edit":
       "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",

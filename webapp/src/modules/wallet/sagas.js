@@ -106,16 +106,19 @@ function* handleConnectWalletRequest(action = {}) {
       balance,
       ethBalance,
       allowances: {
-        MANAToken: {
-          [legacyMarketplaceContract.getContractName()]: legacyManaAllowance,
-          [marketplaceContract.getContractName()]: manaAllowance
+        [legacyMarketplaceContract.getContractName()]: {
+          MANAToken: legacyManaAllowance
         },
-        RCNToken: {}
+        [marketplaceContract.getContractName()]: {
+          MANAToken: manaAllowance
+        }
       },
       authorizations: {
-        LANDRegistry: {
-          [legacyMarketplaceContract.getContractName()]: legacyIsLandAuthorized,
-          [marketplaceContract.getContractName()]: isLandAuthorized
+        [legacyMarketplaceContract.getContractName()]: {
+          LANDRegistry: legacyIsLandAuthorized
+        },
+        [marketplaceContract.getContractName()]: {
+          LANDRegistry: isLandAuthorized
         }
       }
     }
@@ -125,8 +128,7 @@ function* handleConnectWalletRequest(action = {}) {
     // This condition should be deleted and the `allowance`s used when building the wallet once mortgages go live
     if (isFeatureEnabled('MORTGAGES')) {
       const mortgageAllowances = yield call(getMortgageAllowances, address)
-      Object.assign(wallet.allowances.MANAToken, mortgageAllowances.MANAToken)
-      Object.assign(wallet.allowances.RCNToken, mortgageAllowances.RCNToken)
+      Object.assign(wallet.allowances, mortgageAllowances)
     }
 
     yield handleConnectWalletSuccess(address)
@@ -148,11 +150,11 @@ function* getMortgageAllowances(address) {
   ])
 
   return {
-    MANAToken: {
-      [mortgageHelperContract.getContractName()]: mortgageManaAllowance
+    [mortgageHelperContract.getContractName()]: {
+      MANAToken: mortgageManaAllowance
     },
-    RCNToken: {
-      [mortgageManagerContract.getContractName()]: mortgageRCNAllowance.toNumber() // mortgageRCNAllowance is a BigNumber
+    [mortgageManagerContract.getContractName()]: {
+      RCNToken: mortgageRCNAllowance.toNumber() // mortgageRCNAllowance is a BigNumber
     }
   }
 }

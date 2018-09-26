@@ -97,7 +97,6 @@
     "add": "더하다",
     "address_placeholder": "0x...",
     "atlas": "지도",
-    "authorized": "허가",
     "balance": "밸런스",
     "blog": "블로그",
     "cancel": "취소",
@@ -146,7 +145,6 @@
     "the_parcel": "소포",
     "time_left": "남은 시간",
     "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
-    "unauthorized": "무단",
     "undo": "끄르다",
     "wallet_address": "지갑 주소",
     "website": "웹 사이트"
@@ -321,26 +319,10 @@
     "view": "보기"
   },
   "settings": {
-    "approve_token": {
-      "MANAToken": "MANA를 작동시키기 위해 {contract_link}에 권한 부여",
-      "RCNToken":
-        "{contract_link}가 귀하를 대신하여 RCN을 운영하도록 승인하십시오"
-    },
-    "authorize_token": {
-      "LANDRegistry":
-        "{contract_link}이 LAND을 대신하여 작동하도록 승인하십시오."
-    },
+    "authorization": "권한 부여",
+    "legacy_authorization": "레거시 인증",
     "pending_tx": "보류중인 거래가 있습니다.",
-    "token_approved": {
-      "MANAToken":
-        "귀하를 대신하여 {contract_link}가 MANA를 운영하도록 승인했습니다",
-      "RCNToken":
-        "귀하는 {contract_link}이 귀하를 대신하여 RCN을 운영하도록 승인했습니다"
-    },
-    "token_authorized": {
-      "LANDRegistry":
-        "귀하는 {contract_link}이 귀하를 대신하여 LAND을 운영하도록 승인했습니다"
-    }
+    "view_more": "더보기"
   },
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",
@@ -353,11 +335,40 @@
         "{coinbase_link} 또는 {imtoken_link}과 같은 모바일 브라우저를 사용할 수 있습니다."
     }
   },
+  "token_allowance": {
+    "approve": {
+      "MANAToken": "MANA를 작동시키기 위해 {contract_link}에 권한 부여",
+      "RCNToken":
+        "{contract_link}가 귀하를 대신하여 RCN을 운영하도록 승인하십시오"
+    },
+    "approved": {
+      "MANAToken":
+        "귀하는 {contract_link}가 귀하를 대신하여 MANA를 운영하도록 승인했습니다",
+      "RCNToken":
+        "귀하는 {contract_link}이 귀하를 대신하여 RCN을 운영하도록 허가했습니다."
+    },
+    "disapproved": {
+      "MANAToken":
+        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다.",
+      "RCNToken":
+        "당신을 대신하여 {contract_link}가 MANA를 작동하도록 승인하지 않았습니다."
+    }
+  },
+  "token_authorization": {
+    "authorize": {
+      "LANDRegistry":
+        "{contract_link}이 LAND을 대신하여 작동하도록 승인하십시오."
+    },
+    "authorized": {
+      "LANDRegistry":
+        "귀하는 {contract_link}이 귀하를 대신하여 LAND을 운영하도록 승인했습니다"
+    },
+    "unauthorized": {
+      "LANDRegistry":
+        "당신을 대신하여 {contract_link}가 LAND을 작동하도록 승인하지 않았습니다."
+    }
+  },
   "transaction": {
-    "approved":
-      "{marketplace_contract_link} 이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "authorize":
-      "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
@@ -365,8 +376,6 @@
     "claim_mortgage_resolution": "당신은 {parcel_link}을 주장했습니다.",
     "create_estate": "부동산 {name}을 만들었습니다.",
     "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
-    "disapproved":
-      "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "dissolve_estate": "너는 재산을 해산했다. {name}",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",

@@ -96,7 +96,6 @@
     "add": "añadir",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
-    "authorized": "Autorizado",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancelar",
@@ -146,7 +145,6 @@
     "time_left": "Tiempo restante",
     "transfer_irreversible":
       "Recuerde que la transferencia es una operación irreversible.",
-    "unauthorized": "No autorizado",
     "undo": "Deshacer",
     "wallet_address": "Dirección de billetera",
     "website": "Website"
@@ -326,24 +324,10 @@
     "view": "Ver"
   },
   "settings": {
-    "approve_token": {
-      "MANAToken": "Autorice a {contract_link} para operar MANA en su nombre",
-      "RCNToken": "Autorice al {contract_link} a operar RCN en su nombre"
-    },
-    "authorize_token": {
-      "LANDRegistry": "Autorice al {contract_link} a operar LAND en su nombre"
-    },
+    "authorization": "Autorización",
+    "legacy_authorization": "Autorización heredada",
     "pending_tx": "Tienes una transacción pendiente",
-    "token_approved": {
-      "MANAToken":
-        "Usted ha autorizado el {contract_link} para operar MANA en su nombre",
-      "RCNToken":
-        "Usted ha autorizado el {contract_link} para operar RCN en su nombre"
-    },
-    "token_authorized": {
-      "LANDRegistry":
-        "Usted ha autorizado el {contract_link} para operar LAND en su nombre"
-    }
+    "view_more": "Ver más"
   },
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
@@ -357,11 +341,37 @@
         "Puedes usar navegadores móviles como {coinbase_link} o {imtoken_link}."
     }
   },
+  "token_allowance": {
+    "approve": {
+      "MANAToken": "Autorice a {contract_link} para operar MANA en su nombre",
+      "RCNToken": "Autorice al {contract_link} a operar RCN en su nombre"
+    },
+    "approved": {
+      "MANAToken":
+        "Usted autorizó al {contract_link} a operar MANA en su nombre",
+      "RCNToken": "Usted autorizó al {contract_link} a operar RCN en su nombre"
+    },
+    "disapproved": {
+      "MANAToken":
+        "Usted no autorizó el {contract_link} para operar MANA en su nombre",
+      "RCNToken":
+        "Usted no autorizó el {contract_link} para operar MANA en su nombre"
+    }
+  },
+  "token_authorization": {
+    "authorize": {
+      "LANDRegistry": "Autorice al {contract_link} a operar LAND en su nombre"
+    },
+    "authorized": {
+      "LANDRegistry":
+        "Usted autorizó al {contract_link} a operar LAND en su nombre"
+    },
+    "unauthorized": {
+      "LANDRegistry":
+        "Usted no ha autorizado el {contract_link} para operar LAND en su nombre"
+    }
+  },
   "transaction": {
-    "approved":
-      "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "authorize":
-      "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "cancel": "Has cancelado {publication_link} de {parcel_link}",
@@ -371,8 +381,6 @@
     "create_estate": "Usted creó la propiedad {name}",
     "create_mortgage":
       "Solicitó una hipoteca para comprar el paquete {parcel_link}",
-    "disapproved":
-      "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "dissolve_estate": "Usted disolvió la propiedad {name}",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",

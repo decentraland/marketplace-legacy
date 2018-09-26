@@ -30,7 +30,7 @@ export default class PublishPage extends React.PureComponent {
     const { x, y, publication, isTxIdle, onPublish, onCancel } = this.props
     const { authorizations } = this.props.wallet
 
-    const isMarketplaceAuthorized = authorizations.LANDRegistry.Marketplace
+    const isMarketplaceAuthorized = authorizations.Marketplace.LANDRegistry
 
     return (
       <Parcel x={x} y={y} ownerOnly>

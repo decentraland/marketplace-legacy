@@ -29,10 +29,10 @@ const INITIAL_STATE = {
     derivationPath: null,
     ethBalance: null,
     allowances: {
-      /* [tokenContractName]: { [contractName]: amount, (...) } */
+      /* [contractName]: { [tokenContractName]: amount, (...) } */
     },
     authorizations: {
-      /* [tokenContractName]: { [contractName]: amount, (...) } */
+      /* [contractName]: { [tokenContractName]: isAuthorized, (...) } */
     }
   },
   loading: [],
@@ -80,9 +80,9 @@ export function walletReducer(state = INITIAL_STATE, action) {
               ...state.data,
               allowances: {
                 ...state.data.allowances,
-                [tokenContractName]: {
-                  ...state.data.allowances[tokenContractName],
-                  [contractName]: amount
+                [contractName]: {
+                  ...state.data.allowances[contractName],
+                  [tokenContractName]: amount
                 }
               }
             }
@@ -100,9 +100,9 @@ export function walletReducer(state = INITIAL_STATE, action) {
               ...state.data,
               authorizations: {
                 ...state.data.allowances,
-                [tokenContractName]: {
-                  ...state.data.authorizations[tokenContractName],
-                  [contractName]: isAuthorized
+                [contractName]: {
+                  ...state.data.authorizations[contractName],
+                  [tokenContractName]: isAuthorized
                 }
               }
             }

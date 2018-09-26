@@ -90,11 +90,11 @@ export default class Transaction extends React.PureComponent {
 
     switch (tx.actionType) {
       case APPROVE_TOKEN_SUCCESS: {
-        const { amount, contractName } = payload
+        const { amount, contractName, tokenContractName } = payload
         const tkey =
           amount > 0
-            ? 'token_allowance.approved'
-            : 'token_allowance.disapproved'
+            ? `token_allowance.approved.${tokenContractName}`
+            : `token_allowance.disapproved.${tokenContractName}`
 
         return (
           <T
@@ -104,10 +104,10 @@ export default class Transaction extends React.PureComponent {
         )
       }
       case AUTHORIZE_TOKEN_SUCCESS: {
-        const { isAuthorized, contractName } = payload
+        const { isAuthorized, contractName, tokenContractName } = payload
         const tkey = isAuthorized
-          ? 'token_authorization.authorized'
-          : 'token_authorization.unauthorized'
+          ? `token_authorization.authorized.${tokenContractName}`
+          : `token_authorization.unauthorized.${tokenContractName}`
 
         return (
           <T

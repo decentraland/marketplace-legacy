@@ -322,7 +322,9 @@
   },
   "settings": {
     "authorization": "Authorization",
-    "pending_tx": "You have a pending transaction"
+    "legacy_authorization": "Legacy authorization",
+    "pending_tx": "You have a pending transaction",
+    "view_more": "View more"
   },
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",

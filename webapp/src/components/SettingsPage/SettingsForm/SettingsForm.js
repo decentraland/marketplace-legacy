@@ -28,6 +28,19 @@ export default class SettingsForm extends React.PureComponent {
     wallet: {}
   }
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      legacyAuthorizationsVisible: false
+    }
+  }
+
+  toggleLegacyAuhorizations = () => {
+    const { legacyAuthorizationsVisible } = this.state
+    this.setState({ legacyAuthorizationsVisible: !legacyAuthorizationsVisible })
+  }
+
   renderContractLink(contractName) {
     return (
       <EtherscanLink address={getContractAddress(contractName)}>
@@ -36,18 +49,18 @@ export default class SettingsForm extends React.PureComponent {
     )
   }
 
-  renderAllowance(allowance, tokenContractName) {
-    return Object.keys(allowance).map(contractName => (
-      <Form.Field key={contractName}>
+  renderAllowance(allowance, contractName) {
+    return Object.keys(allowance).map(tokenContractName => (
+      <Form.Field key={tokenContractName}>
         <Checkbox
-          checked={allowance[contractName] > 0}
+          checked={allowance[tokenContractName] > 0}
           onChange={this.getTokenApprovedChange(
             contractName,
             tokenContractName
           )}
         />
         <div className="authorize-detail">
-          {allowance[contractName] > 0 ? (
+          {allowance[tokenContractName] > 0 ? (
             <T
               id={`token_allowance.approved.${tokenContractName}`}
               values={{
@@ -67,18 +80,18 @@ export default class SettingsForm extends React.PureComponent {
     ))
   }
 
-  renderAuthorization(authorization, tokenContractName) {
-    return Object.keys(authorization).map(contractName => (
-      <Form.Field key={contractName}>
+  renderAuthorization(authorization, contractName) {
+    return Object.keys(authorization).map(tokenContractName => (
+      <Form.Field key={tokenContractName}>
         <Checkbox
-          checked={authorization[contractName]}
+          checked={authorization[tokenContractName]}
           onChange={this.getTokenAuthorizedChange(
             contractName,
             tokenContractName
           )}
         />
         <div className="authorize-detail">
-          {authorization[contractName] ? (
+          {authorization[tokenContractName] ? (
             <T
               id={`token_authorization.authorized.${tokenContractName}`}
               values={{
@@ -116,8 +129,47 @@ export default class SettingsForm extends React.PureComponent {
       )
   }
 
+  filterWalletContracts(walletContracts) {
+    const contracts = {}
+    const legacyContracts = {}
+
+    for (const contractName in walletContracts) {
+      if (this.isLegacyContract(contractName)) {
+        legacyContracts[contractName] = walletContracts[contractName]
+      } else if (this.isDisabledContract(contractName)) {
+        continue
+      } else {
+        contracts[contractName] = walletContracts[contractName]
+      }
+    }
+
+    return { contracts, legacyContracts }
+  }
+
+  isLegacyContract(contractName) {
+    return contractName === 'LegacyMarketplace'
+  }
+
+  isDisabledContract(contractName) {
+    return (
+      (!isFeatureEnabled('MORTGAGES') &&
+        ['MortgageHelper', 'MortgageManager'].includes(contractName)) ||
+      (!isFeatureEnabled('MARKETPLACEV2') && contractName === 'Marketplace')
+    )
+  }
+
   render() {
     const { wallet, isLedgerWallet, onDerivationPathChange } = this.props
+    const { legacyAuthorizationsVisible } = this.state
+
+    const {
+      contracts: allowances,
+      legacyContracts: legacyAllowances
+    } = this.filterWalletContracts(wallet.allowances)
+    const {
+      contracts: authorizations,
+      legacyContracts: legacyAuthorizations
+    } = this.filterWalletContracts(wallet.authorizations)
 
     return (
       <Form className={`SettingsForm ${isTxPending ? 'tx-pending' : ''}`}>
@@ -166,19 +218,38 @@ export default class SettingsForm extends React.PureComponent {
         <div className="authorization-checks">
           <label>{t('settings.authorization')}</label>
 
-          {Object.keys(wallet.allowances).map(tokenContractName =>
-            this.renderAllowance(
-              wallet.allowances[tokenContractName],
-              tokenContractName
-            )
+          {Object.keys(allowances).map(contractName =>
+            this.renderAllowance(allowances[contractName], contractName)
           )}
-          {Object.keys(wallet.authorizations).map(tokenContractName =>
-            this.renderAuthorization(
-              wallet.authorizations[tokenContractName],
-              tokenContractName
-            )
+          {Object.keys(authorizations).map(contractName =>
+            this.renderAuthorization(authorizations[contractName], contractName)
           )}
+
+          <small className="link" onClick={this.toggleLegacyAuhorizations}>
+            {t('settings.view_more')}
+          </small>
         </div>
+
+        {legacyAuthorizationsVisible ? (
+          <div className="authorization-checks legacy-authorizations">
+            <label>{t('settings.legacy_authorization')} </label>
+
+            <React.Fragment>
+              {Object.keys(legacyAllowances).map(tokenContractName =>
+                this.renderAllowance(
+                  legacyAllowances[tokenContractName],
+                  tokenContractName
+                )
+              )}
+              {Object.keys(legacyAuthorizations).map(tokenContractName =>
+                this.renderAuthorization(
+                  legacyAuthorizations[tokenContractName],
+                  tokenContractName
+                )
+              )}
+            </React.Fragment>
+          </div>
+        ) : null}
       </Form>
     )
   }
