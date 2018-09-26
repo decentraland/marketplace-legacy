@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {
   getPendingTransactions,
   getTransactionHistory
-} from 'modules/transaction/selectors'
+} from '@dapps/modules/transaction/selectors'
 import {
   getNetwork,
   getAddress,
@@ -12,15 +12,15 @@ import {
   isConnected,
   getWallet
 } from 'modules/wallet/selectors'
-import { clearTransactions } from 'modules/transaction/actions'
+import { clearTransactions } from '@dapps/modules/transaction/actions'
 
 import ActivityPage from './ActivityPage'
 
 const mapState = state => {
   const address = getAddress(state)
 
-  const pendingTransactions = getPendingTransactions(state, address).reverse()
-  const transactionHistory = getTransactionHistory(state, address).reverse()
+  const pendingTransactions = getPendingTransactions(state, address)
+  const transactionHistory = getTransactionHistory(state, address)
 
   const totalSent = pendingTransactions.length + transactionHistory.length
 

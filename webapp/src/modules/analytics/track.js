@@ -15,13 +15,14 @@ import {
   TRANSFER_MANA_SUCCESS,
   BUY_MANA_SUCCESS
 } from 'modules/wallet/actions'
-import { FETCH_TRANSACTION_FAILURE } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_FAILURE } from '@dapps/modules/transaction/actions'
 import {
   CREATE_ESTATE_SUCCESS,
   EDIT_ESTATE_METADATA_SUCCESS,
   EDIT_ESTATE_PARCELS_SUCCESS,
   DELETE_ESTATE_SUCCESS
 } from 'modules/estates/actions'
+import { txUtils } from 'decentraland-eth'
 
 add(BUY_SUCCESS, 'Buy', action => ({
   assetId: action.publication.asset_id,
@@ -73,10 +74,14 @@ add(BUY_MANA_SUCCESS, 'Buy MANA', action => ({
   mana: action.mana
 }))
 
-add(FETCH_TRANSACTION_FAILURE, 'Transaction Failed', action => ({
-  ...action.transaction,
-  errorMessage: action.error
-}))
+add(
+  FETCH_TRANSACTION_FAILURE,
+  action =>
+    action.payload.status === txUtils.TRANSACTION_TYPES.reverted
+      ? 'Transaction Failed'
+      : 'Transaction Dropped',
+  action => action.payload
+)
 
 add(MANAGE_PARCEL_SUCCESS, 'Manage LAND Permissions', action => ({
   x: action.parcel.x,

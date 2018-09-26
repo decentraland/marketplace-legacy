@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
-
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'shared/parcel'
+import { lazy } from 'lib/reselect'
 import {
   CREATE_ESTATE_REQUEST,
   EDIT_ESTATE_METADATA_REQUEST,
@@ -38,28 +38,30 @@ export const isEstateTransactionIdle = state =>
   isEditingParcelTransactionIdle(state) ||
   isDeletingEstateTransactionIdle(state)
 
-export const getEstates = createSelector(
-  getData,
-  getParcels,
-  getPublications,
-  (estates, parcels, publications) =>
-    Object.keys(estates).reduce((acc, estateId) => {
-      const estate = estates[estateId]
-      if (estate) {
-        acc[estateId] = {
-          ...estate,
-          parcels: estate.data.parcels
-            .map(p => parcels[buildCoordinate(p.x, p.y)])
-            .filter(parcel => parcel) // Remove undefined elements
-            .map(parcel => ({
-              ...parcel,
-              publication:
-                parcel.publication_tx_hash in publications
-                  ? publications[parcel.publication_tx_hash]
-                  : null
-            }))
+export const getEstates = lazy(() =>
+  createSelector(
+    getData,
+    getParcels,
+    getPublications,
+    (estates, parcels, publications) =>
+      Object.keys(estates).reduce((acc, estateId) => {
+        const estate = estates[estateId]
+        if (estate) {
+          acc[estateId] = {
+            ...estate,
+            parcels: estate.data.parcels
+              .map(p => parcels[buildCoordinate(p.x, p.y)])
+              .filter(parcel => parcel) // Remove undefined elements
+              .map(parcel => ({
+                ...parcel,
+                publication:
+                  parcel.publication_tx_hash in publications
+                    ? publications[parcel.publication_tx_hash]
+                    : null
+              }))
+          }
         }
-      }
-      return acc
-    }, {})
+        return acc
+      }, {})
+  )
 )

@@ -10,6 +10,7 @@ import { getPublications as getAllPublications } from 'modules/publication/selec
 import { getMortgagesArray } from 'modules/mortgage/selectors'
 import { buildCoordinate } from 'shared/parcel'
 import { getActiveMortgages } from 'shared/mortgage'
+import { lazy } from 'lib/reselect'
 
 export const getState = state => state.parcels
 export const getData = state => getState(state).data
@@ -38,13 +39,15 @@ export const getPublications = (x, y) =>
     )
   })
 
-export const getMortgagedParcels = createSelector(
-  getData,
-  getMortgagesArray,
-  getAllPublications,
-  (parcels, mortgages, publications) =>
-    getActiveMortgages(mortgages, parcels, publications).map(mortgage => ({
-      ...parcels[mortgage.asset_id],
-      mortgage
-    }))
+export const getMortgagedParcels = lazy(() =>
+  createSelector(
+    getData,
+    getMortgagesArray,
+    getAllPublications,
+    (parcels, mortgages, publications) =>
+      getActiveMortgages(mortgages, parcels, publications).map(mortgage => ({
+        ...parcels[mortgage.asset_id],
+        mortgage
+      }))
+  )
 )

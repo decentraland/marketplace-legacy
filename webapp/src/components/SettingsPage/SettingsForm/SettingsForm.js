@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { txUtils } from 'decentraland-eth'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
 
 import { locations } from 'locations'
@@ -89,14 +88,10 @@ export default class SettingsForm extends React.PureComponent {
       approveMortgageForRCNTransaction
     } = this.props
 
-    const isApprovePending = txUtils.isPending(approveTransaction)
-    const isAuthorizePending = txUtils.isPending(authorizeTransaction)
-    const isMortgageApprovedForManaPending = txUtils.isPending(
-      approveMortgageForManaTransaction
-    )
-    const isMortgageApprovedForRCNPending = txUtils.isPending(
-      approveMortgageForRCNTransaction
-    )
+    const isApprovePending = false //txUtils.isPending(approveTransaction)
+    const isAuthorizePending = false //txUtils.isPending(authorizeTransaction)
+    const isMortgageApprovedForManaPending = false //txUtils.isPending(approveMortgageForManaTransaction)
+    const isMortgageApprovedForRCNPending = false //txUtils.isPending(approveMortgageForRCNTransaction)
 
     const isPending =
       isApprovePending ||

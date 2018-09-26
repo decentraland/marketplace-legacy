@@ -18,7 +18,7 @@ export default class TxStatusText extends React.PureComponent {
     const { txStatus } = this.props
 
     const isPending = txStatus === txUtils.TRANSACTION_TYPES.pending
-    const isFailure = txStatus === txUtils.TRANSACTION_TYPES.failed
+    const isFailure = txStatus === txUtils.TRANSACTION_TYPES.reverted
 
     return isPending || isFailure ? (
       <div className="TxStatusText">

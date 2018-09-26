@@ -10,7 +10,7 @@ import { createLogger } from 'redux-logger'
 import { api } from 'lib/api'
 
 import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
-import { createTransactionMiddleware } from 'modules/transaction/middleware'
+import { createTransactionMiddleware } from '@dapps/modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'modules/analytics/middleware'
 
 import { migrations } from 'lib/localStorage'

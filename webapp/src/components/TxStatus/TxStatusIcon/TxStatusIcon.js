@@ -29,7 +29,7 @@ export default class TxStatusIcon extends React.PureComponent {
     if (txStatus === txUtils.TRANSACTION_TYPES.confirmed) {
       Icon = <ConfirmedIcon />
       iconTooltip = 'Transaction confirmed'
-    } else if (txStatus === txUtils.TRANSACTION_TYPES.failed) {
+    } else if (txStatus === txUtils.TRANSACTION_TYPES.reverted) {
       Icon = <FailedIcon />
       iconTooltip = 'Transaction failed'
     }

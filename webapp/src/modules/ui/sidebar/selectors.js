@@ -2,13 +2,12 @@ import { createSelector } from 'reselect'
 import { getWallet } from 'modules/wallet/selectors'
 import { isLoading } from 'modules/address/selectors'
 import { land } from 'lib/land'
+import { lazy } from 'lib/reselect'
 
 export const getState = state => state.ui.sidebar
 export const isOpen = state => getState(state).open
-export const getStats = createSelector(
-  getWallet,
-  isLoading,
-  (wallet, loading) => {
+export const getStats = lazy(() =>
+  createSelector(getWallet, isLoading, (wallet, loading) => {
     const balance = wallet.balance
     const loaded = balance !== null && !loading
     const parcels = loaded ? wallet.parcels.length : null
@@ -26,5 +25,5 @@ export const getStats = createSelector(
       contribDistricts,
       contribMana
     }
-  }
+  })
 )

@@ -16,7 +16,7 @@ import {
   getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
-import { getEtherscanHref } from 'modules/transaction/utils'
+import { getEtherscanHref } from '@dapps/modules/transaction/utils'
 import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
