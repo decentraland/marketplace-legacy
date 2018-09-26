@@ -88,7 +88,7 @@ export const walletType = shape({
   address: string,
   balance: number,
   allowances: objectOf(objectOf(number)),
-  authorizations: objectOf(objectOf(bool)),
+  approvals: objectOf(objectOf(bool)),
   parcels: arrayOf(parcelType).isRequired
 })
 

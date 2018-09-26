@@ -31,7 +31,7 @@ const INITIAL_STATE = {
     allowances: {
       /* [contractName]: { [tokenContractName]: amount, (...) } */
     },
-    authorizations: {
+    approvals: {
       /* [contractName]: { [tokenContractName]: isAuthorized, (...) } */
     }
   },
@@ -98,10 +98,10 @@ export function walletReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              authorizations: {
+              approvals: {
                 ...state.data.allowances,
                 [contractName]: {
-                  ...state.data.authorizations[contractName],
+                  ...state.data.approvals[contractName],
                   [tokenContractName]: isAuthorized
                 }
               }

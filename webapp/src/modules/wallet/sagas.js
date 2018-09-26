@@ -78,8 +78,8 @@ function* handleConnectWalletRequest(action = {}) {
       legacyManaAllowance,
       manaAllowance,
 
-      legacyIsLandAuthorized,
-      isLandAuthorized
+      legacyIsLandApproved,
+      isLandApproved
     ] = yield all([
       eth.getNetwork(),
       manaTokenContract.balanceOf(address),
@@ -113,12 +113,12 @@ function* handleConnectWalletRequest(action = {}) {
           MANAToken: manaAllowance
         }
       },
-      authorizations: {
+      approvals: {
         [legacyMarketplaceContract.getContractName()]: {
-          LANDRegistry: legacyIsLandAuthorized
+          LANDRegistry: legacyIsLandApproved
         },
         [marketplaceContract.getContractName()]: {
-          LANDRegistry: isLandAuthorized
+          LANDRegistry: isLandApproved
         }
       }
     }

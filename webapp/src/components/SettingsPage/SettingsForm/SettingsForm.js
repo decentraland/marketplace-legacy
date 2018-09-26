@@ -167,9 +167,9 @@ export default class SettingsForm extends React.PureComponent {
       legacyContracts: legacyAllowances
     } = this.filterWalletContracts(wallet.allowances)
     const {
-      contracts: authorizations,
-      legacyContracts: legacyAuthorizations
-    } = this.filterWalletContracts(wallet.authorizations)
+      contracts: approvals,
+      legacyContracts: legacyApprovals
+    } = this.filterWalletContracts(wallet.approvals)
 
     return (
       <Form className={`SettingsForm ${isTxPending ? 'tx-pending' : ''}`}>
@@ -221,8 +221,8 @@ export default class SettingsForm extends React.PureComponent {
           {Object.keys(allowances).map(contractName =>
             this.renderAllowance(allowances[contractName], contractName)
           )}
-          {Object.keys(authorizations).map(contractName =>
-            this.renderAuthorization(authorizations[contractName], contractName)
+          {Object.keys(approvals).map(contractName =>
+            this.renderAuthorization(approvals[contractName], contractName)
           )}
 
           <small className="link" onClick={this.toggleLegacyAuhorizations}>
@@ -241,9 +241,9 @@ export default class SettingsForm extends React.PureComponent {
                   tokenContractName
                 )
               )}
-              {Object.keys(legacyAuthorizations).map(tokenContractName =>
+              {Object.keys(legacyApprovals).map(tokenContractName =>
                 this.renderAuthorization(
-                  legacyAuthorizations[tokenContractName],
+                  legacyApprovals[tokenContractName],
                   tokenContractName
                 )
               )}
