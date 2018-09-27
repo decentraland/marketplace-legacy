@@ -23,7 +23,7 @@ import './SettingsForm.css'
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
-    authorizations: authorizationType,
+    authorization: authorizationType,
     isLedgerWallet: PropTypes.bool,
     pendingAllowTransactions: PropTypes.arrayOf(transactionType),
     pendingApproveTransactions: PropTypes.arrayOf(transactionType),
@@ -34,7 +34,7 @@ export default class SettingsForm extends React.PureComponent {
 
   static defaultProps = {
     wallet: {},
-    authorizations: {}
+    authorization: {}
   }
 
   renderContractLink(contractName) {
@@ -177,13 +177,13 @@ export default class SettingsForm extends React.PureComponent {
   render() {
     const {
       wallet,
-      authorizations,
+      authorization,
       isLedgerWallet,
       onDerivationPathChange
     } = this.props
 
-    const allowances = this.filterWalletContracts(authorizations.allowances)
-    const approvals = this.filterWalletContracts(authorizations.approvals)
+    const allowances = this.filterWalletContracts(authorization.allowances)
+    const approvals = this.filterWalletContracts(authorization.approvals)
 
     return (
       <Form className="SettingsForm">

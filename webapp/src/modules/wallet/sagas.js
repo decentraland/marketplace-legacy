@@ -82,7 +82,7 @@ function* handleConnectWalletRequest(action = {}) {
 }
 
 function* handleConnectWalletSuccess(address) {
-  const authorizations = {
+  const authorization = {
     allowances: {
       Marketplace: ['MANAToken'],
       LegacyMarketplace: ['MANAToken']
@@ -92,7 +92,7 @@ function* handleConnectWalletSuccess(address) {
     }
   }
   if (isFeatureEnabled('MORTGAGES')) {
-    Object.assign(authorizations.allowances, {
+    Object.assign(authorization.allowances, {
       MortgageHelper: ['MANAToken'],
       MortgageManager: ['RCNToken']
     })

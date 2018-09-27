@@ -9,6 +9,7 @@ export default class Asset extends React.PureComponent {
     wallet: walletType.isRequired,
     value: PropTypes.object,
     isConnecting: PropTypes.bool,
+    isFetchingParcel: PropTypes.bool,
     isLoading: PropTypes.bool,
     ownerOnly: PropTypes.bool,
     ownerNotAllowed: PropTypes.bool,
@@ -19,6 +20,7 @@ export default class Asset extends React.PureComponent {
 
   static defaultProps = {
     isConnecting: false,
+    isFetchingParcel: false,
     isLoading: false,
     ownerOnly: false,
     ownerNotAllowed: false,
@@ -45,6 +47,7 @@ export default class Asset extends React.PureComponent {
     const {
       value,
       isConnecting,
+      isFetchingParcel,
       ownerOnly,
       wallet,
       ownerNotAllowed,
@@ -55,7 +58,7 @@ export default class Asset extends React.PureComponent {
       ownerNotAllowed && value && isOwner(wallet, value.id)
     const assetShouldBeOnSale = withPublications && value && !value.publication
 
-    if (isConnecting) {
+    if (isConnecting || isFetchingParcel) {
       return
     }
 
@@ -70,8 +73,10 @@ export default class Asset extends React.PureComponent {
 
   redirect() {
     const { onAccessDenied } = this.props
-    this.isNavigatingAway = true
-    onAccessDenied()
+    if (!this.isNavigatingAway) {
+      this.isNavigatingAway = true
+      return onAccessDenied()
+    }
   }
 
   checkOwnership(wallet, assetId) {

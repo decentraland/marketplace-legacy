@@ -20,7 +20,7 @@ import './SettingsPage.css'
 export default class SettingsPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
-    authorizations: authorizationType,
+    authorization: authorizationType,
     allowTransactions: PropTypes.arrayOf(transactionType),
     approveTransactions: PropTypes.arrayOf(transactionType),
     isLoading: PropTypes.bool,
@@ -58,15 +58,19 @@ export default class SettingsPage extends React.PureComponent {
     }
   }
 
+  renderLoading() {
+    return (
+      <div>
+        <Loader active size="massive" />
+      </div>
+    )
+  }
+
   render() {
-    const { isLoading, isConnected, wallet, authorizations } = this.props
+    const { isLoading, isConnected, wallet, authorization } = this.props
 
     if (isLoading) {
-      return (
-        <div>
-          <Loader active size="massive" />
-        </div>
-      )
+      return this.renderLoading()
     }
 
     const {
@@ -92,7 +96,7 @@ export default class SettingsPage extends React.PureComponent {
               {isConnected ? (
                 <SettingsForm
                   wallet={wallet}
-                  authorizations={authorizations}
+                  authorization={authorization}
                   isLedgerWallet={isLedgerWallet()}
                   pendingAllowTransactions={pendingAllowTransactions}
                   pendingApproveTransactions={pendingApproveTransactions}

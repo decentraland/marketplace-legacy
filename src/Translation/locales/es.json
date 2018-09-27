@@ -236,13 +236,17 @@
   },
   "parcel_buy": {
     "about_to_buy": "Estas por comprar {parcel_name} {parcel_price}",
-    "approved_balance": "Tu balance aprobado es {approved_balance}",
+    "allowed_balance": "Tu asignación es {allowance}",
     "buy_land": "Comprar LAND",
     "buy_mana": "{click_here} para comprar MANA.",
-    "didnt_approve": "No has autorizado el uso de MANA",
+    "didnt_allow": "No has autorizado el uso de MANA",
+    "didnt_allow_new_marketplace":
+      "No ha autorizado el uso de MANA para la nueva versión de Marketplace",
     "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
-    "please_approve":
-      "Por favor entra en {settings_link} y permite al contrato de Mercado a operar MANA por tu cuenta",
+    "please_allow":
+      "Vaya a {settings_link} y permita que el contrato LegacyMarketplace opere MANA en su nombre",
+    "please_allow_new_marketplace":
+      "Vaya a {settings_link} y permita que el contrato del Marketplace opere MANA en su nombre",
     "total_balance": "Tu balance es {balance}"
   },
   "parcel_cancel": {

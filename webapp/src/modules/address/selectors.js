@@ -56,7 +56,7 @@ export const getAddresses = createSelector(
         parcel => parcel.mortgage.borrower === address
       )
 
-      const authorizations = allAuthorizations[address]
+      const authorization = allAuthorizations[address]
 
       return {
         ...map,
@@ -69,7 +69,7 @@ export const getAddresses = createSelector(
           estatesById,
           contributions,
           publishedParcels,
-          authorizations
+          authorization
         }
       }
     }, {})

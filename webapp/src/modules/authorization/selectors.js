@@ -1,4 +1,3 @@
-// import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { ALLOW_TOKEN_SUCCESS, APPROVE_TOKEN_SUCCESS } from './actions'
 import { getTransactionsByType } from 'modules/transaction/selectors'
 import { getAddress } from 'modules/wallet/selectors'

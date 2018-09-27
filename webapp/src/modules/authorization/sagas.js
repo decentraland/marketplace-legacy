@@ -2,11 +2,11 @@ import { eth } from 'decentraland-eth'
 import { all, put, call, takeEvery } from 'redux-saga/effects'
 
 import {
-  FETCH_AUTHORIZATIONS_REQUEST,
+  FETCH_AUTHORIZATION_REQUEST,
   ALLOW_TOKEN_REQUEST,
   APPROVE_TOKEN_REQUEST,
-  fetchAuthorizationsSuccess,
-  fetchAuthorizationsFailure,
+  fetchAuthorizationSuccess,
+  fetchAuthorizationFailure,
   allowTokenSuccess,
   allowTokenFailure,
   approveTokenSuccess,
@@ -14,38 +14,35 @@ import {
 } from './actions'
 
 export function* authorizationSaga() {
-  yield takeEvery(
-    FETCH_AUTHORIZATIONS_REQUEST,
-    handleFetchAuthorizationsRequest
-  )
+  yield takeEvery(FETCH_AUTHORIZATION_REQUEST, handleFetchAuthorizationRequest)
   yield takeEvery(ALLOW_TOKEN_REQUEST, handleAllowTokenRequest)
   yield takeEvery(APPROVE_TOKEN_REQUEST, handleApproveTokenRequest)
 }
 
-function* handleFetchAuthorizationsRequest(action = {}) {
+function* handleFetchAuthorizationRequest(action = {}) {
   try {
     const payload = action.payload
     const address = payload.address.toLowerCase()
 
     const [allowances, approvals] = yield all([
-      fillAuthorizations(payload.allowances, (tokenContract, contract) =>
+      fillAuthorization(payload.allowances, (tokenContract, contract) =>
         tokenContract.allowance(address, contract.address)
       ),
-      fillAuthorizations(payload.approvals, (tokenContract, contract) =>
+      fillAuthorization(payload.approvals, (tokenContract, contract) =>
         tokenContract.isApprovedForAll(address, contract.address)
       )
     ])
 
-    const authorizations = { allowances, approvals }
+    const authorization = { allowances, approvals }
 
-    yield put(fetchAuthorizationsSuccess(address, authorizations))
+    yield put(fetchAuthorizationSuccess(address, authorization))
   } catch (error) {
-    yield put(fetchAuthorizationsFailure(error.message))
+    yield put(fetchAuthorizationFailure(error.message))
   }
 }
 
-function* fillAuthorizations(contractsToReview, contractCall) {
-  const authorizations = {}
+function* fillAuthorization(contractsToReview, contractCall) {
+  const authorization = {}
 
   for (const contractName in contractsToReview) {
     const contract = eth.getContract(contractName)
@@ -58,14 +55,14 @@ function* fillAuthorizations(contractsToReview, contractCall) {
       result =
         typeof result.toNumber === 'function' ? result.toNumber() : result // handle BigNumbers
 
-      authorizations[contractName] = {
-        ...authorizations[contractName],
+      authorization[contractName] = {
+        ...authorization[contractName],
         [tokenContractName]: result
       }
     }
   }
 
-  return authorizations
+  return authorization
 }
 
 function* handleAllowTokenRequest(action) {

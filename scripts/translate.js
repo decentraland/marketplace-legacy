@@ -10,7 +10,13 @@ import { Translation } from '../src/Translation'
 let BATCH_SIZE = 10
 const log = new Log('translate')
 
-const nonTranslatable = ['Decentraland', 'LAND', 'MANA']
+const nonTranslatable = [
+  'Decentraland',
+  'LAND',
+  'MANA',
+  'MortgageHelper',
+  'MortgageManager'
+]
 
 const TRANSLATION_KEY = 'tk'
 const NON_TRANSLATABLE_KEY = 'nt'

@@ -235,12 +235,17 @@
   },
   "parcel_buy": {
     "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
-    "approved_balance": "승인 된 잔액은 {approved_balance}입니다.",
+    "allowed_balance": "수당은 {allowance}입니다.",
     "buy_land": "토지 구입",
     "buy_mana": "MANA를 사기 위해 {click_here}.",
-    "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
+    "didnt_allow": "MANA 사용 권한을 허가하지 않았습니다.",
+    "didnt_allow_new_marketplace":
+      "마켓 플레이스의 새 버전에 대한 MANA 사용을 승인하지 않았습니다.",
     "needs_at_least": "이 토지를 사려면 적어도 {mana}가 필요합니다.",
-    "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
+    "please_allow":
+      "{settings_link}로 이동하여 LegacyMarketplace 계약이 MANA를 대신하여 작동하도록 허용하십시오.",
+    "please_allow_new_marketplace":
+      "{settings_link}로 이동하여 마켓 플레이스 계약이 귀하를 대신하여 MANA를 운영하도록 허용하십시오.",
     "total_balance": "Your balance is {balance}"
   },
   "parcel_cancel": {

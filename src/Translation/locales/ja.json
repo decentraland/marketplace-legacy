@@ -237,13 +237,17 @@
   },
   "parcel_buy": {
     "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
-    "approved_balance": "確認されている残高は{approved_balance}です。",
+    "allowed_balance": "あなたの手当は{allowance}です",
     "buy_land": "ランドを購入",
     "buy_mana": "MANAを更に購入する{click_here}",
-    "didnt_approve": "MANAの使用に関しての承認がありません。",
+    "didnt_allow": "あなたはMANAの使用を許可していません",
+    "didnt_allow_new_marketplace":
+      "新しいバージョンのMarketplaceでMANAの使用を許可していない",
     "needs_at_least": "このランドを購入するには最低{mana}必要です。",
-    "please_approve":
-      " {settings_link} にて、マーケット上でMANAを使用することをマーケットコントラクトで承認して下さい。",
+    "please_allow":
+      "{settings_link}にアクセスし、LegacyMarketplace契約でMANAをあなたのために操作できるようにしてください",
+    "please_allow_new_marketplace":
+      "{settings_link}に行き、Marketplace契約があなたのためにMANAを操作できるようにしてください",
     "total_balance": "残高：{balance}"
   },
   "parcel_cancel": {

@@ -226,12 +226,16 @@
   },
   "parcel_buy": {
     "about_to_buy": "您即将购买 {parcel_name}",
-    "approved_balance": "您能使用的余额是 {approved_balance}",
+    "allowed_balance": "你的津贴是{allowance}",
     "buy_land": "购买土地",
     "buy_mana": "{click_here}购买一些 MANA。",
-    "didnt_approve": "您没有批准使用 MANA",
+    "didnt_allow": "您尚未授权使用MANA",
+    "didnt_allow_new_marketplace": "您尚未授权新版本的Marketplace使用MANA",
     "needs_at_least": "为了购买这块土地，您至少需要 {mana} MANA。",
-    "please_approve": "请前往{settings_link}，允许虚拟市场以您的名义使用 MANA",
+    "please_allow":
+      "请转到{settings_link}并允许LegacyMarketplace合同代表您运行MANA",
+    "please_allow_new_marketplace":
+      "请转到{settings_link}并允许Marketplace合同代表您运行MANA",
     "total_balance": "您的余额是 {balance}"
   },
   "parcel_cancel": {

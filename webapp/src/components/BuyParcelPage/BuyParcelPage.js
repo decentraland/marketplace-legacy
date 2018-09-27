@@ -8,22 +8,33 @@ import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import Parcel from 'components/Parcel'
 import Mana from 'components/Mana'
-import { walletType } from 'components/types'
+import {
+  walletType,
+  authorizationType,
+  publicationType
+} from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
+import { getContractAddress } from 'modules/wallet/utils'
 import { formatMana } from 'lib/utils'
 
 import './BuyParcelPage.css'
 
 export default class BuyParcelPage extends React.PureComponent {
   static propTypes = {
-    wallet: walletType,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    wallet: walletType,
+    authorization: authorizationType,
+    publication: publicationType,
     isDisabled: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
+  }
+
+  static defaultProps = {
+    publication: { price: 0 }
   }
 
   handleConfirm = () => {
@@ -61,106 +72,20 @@ export default class BuyParcelPage extends React.PureComponent {
     )
   }
 
-  renderMessage(isNotEnoughMana, isNotEnoughAllowance) {
-    if (!isNotEnoughMana && !isNotEnoughAllowance) return null
-
-    const { wallet, publication } = this.props
-    const { balance, allowances } = wallet
-
-    const allowance = allowances.Marketplace.MANAToken
-    const isMarketplaceAllowed = allowance > 0
-
-    return (
-      <Container text>
-        <Grid.Column>
-          <Message
-            warning
-            icon="warning sign"
-            header={
-              isNotEnoughMana
-                ? t('parcel_buy.total_balance', {
-                    balance: formatMana(balance)
-                  })
-                : isMarketplaceAllowed
-                  ? t('parcel_buy.approved_balance', {
-                      approved_balance: formatMana(allowance)
-                    })
-                  : t('parcel_buy.didnt_approve')
-            }
-            content={
-              isNotEnoughMana ? (
-                <React.Fragment>
-                  <span>
-                    {t('parcel_buy.needs_at_least', {
-                      mana: formatMana(publication.price)
-                    })}
-                  </span>
-                  <br />
-                  <T
-                    id="parcel_buy.buy_mana"
-                    values={{
-                      click_here: (
-                        <Link to={locations.buyMana()}>
-                          {t('global.click_here')}
-                        </Link>
-                      )
-                    }}
-                  />
-                </React.Fragment>
-              ) : isMarketplaceAllowed ? (
-                <React.Fragment>
-                  <span>
-                    {t('parcel_buy.needs_at_least', {
-                      mana: formatMana(publication.price)
-                    })}
-                  </span>
-                  <br />
-                  <T
-                    id="parcel_buy.please_approve"
-                    values={{
-                      settings_link: (
-                        <Link to={locations.settings()}>
-                          {t('global.settings')}
-                        </Link>
-                      )
-                    }}
-                  />
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <T
-                    id="parcel_buy.please_approve"
-                    values={{
-                      settings_link: (
-                        <Link to={locations.settings()}>
-                          {t('global.settings')}
-                        </Link>
-                      )
-                    }}
-                  />
-                </React.Fragment>
-              )
-            }
-          />
-        </Grid.Column>
-      </Container>
-    )
-  }
-
   renderPage() {
     const {
-      wallet,
       x,
       y,
+      wallet,
       publication,
       isDisabled,
       isTxIdle,
       onCancel
     } = this.props
-    const { balance, allowances } = wallet
-    const allowance = allowances.Marketplace.MANAToken
+    const { balance } = wallet
+    const allowance = this.getCurrentAllowance()
 
-    const price = publication ? parseFloat(publication.price) : 0
+    const price = parseFloat(publication.price)
 
     const isNotEnoughMana = balance < price
     const isNotEnoughAllowance = allowance < price
@@ -169,7 +94,9 @@ export default class BuyParcelPage extends React.PureComponent {
       <Parcel x={x} y={y} ownerNotAllowed>
         {parcel => (
           <div className="BuyParcelPage">
-            {this.renderMessage(isNotEnoughMana, isNotEnoughAllowance)}
+            {isNotEnoughMana || isNotEnoughAllowance
+              ? this.renderMessage()
+              : null}
             <ParcelModal
               x={x}
               y={y}
@@ -205,6 +132,101 @@ export default class BuyParcelPage extends React.PureComponent {
           </div>
         )}
       </Parcel>
+    )
+  }
+
+  renderMessage() {
+    const { wallet, publication } = this.props
+    const { balance } = wallet
+    const allowance = this.getCurrentAllowance()
+
+    const isNotEnoughMana = balance < parseFloat(publication.price)
+    const isMarketplaceAllowed = allowance > 0
+
+    return (
+      <Container text>
+        <Grid.Column>
+          <Message
+            warning
+            icon="warning sign"
+            header={
+              isNotEnoughMana
+                ? t('parcel_buy.total_balance', {
+                    balance: formatMana(balance)
+                  })
+                : isMarketplaceAllowed
+                  ? t('parcel_buy.allowed_balance', {
+                      allowance: formatMana(allowance)
+                    })
+                  : this.isLegacyMarketplace()
+                    ? t('parcel_buy.didnt_allow')
+                    : t('parcel_buy.didnt_allow_new_marketplace')
+            }
+            content={
+              isNotEnoughMana ? (
+                <React.Fragment>
+                  <span>
+                    {t('parcel_buy.needs_at_least', {
+                      mana: formatMana(publication.price)
+                    })}
+                  </span>
+                  <br />
+                  <T
+                    id="parcel_buy.buy_mana"
+                    values={{
+                      click_here: (
+                        <Link to={locations.buyMana()}>
+                          {t('global.click_here')}
+                        </Link>
+                      )
+                    }}
+                  />
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {isMarketplaceAllowed ? (
+                    <span>
+                      {t('parcel_buy.needs_at_least', {
+                        mana: formatMana(publication.price)
+                      })}
+                      <br />
+                    </span>
+                  ) : null}
+                  <T
+                    id={
+                      this.isLegacyMarketplace()
+                        ? 'parcel_buy.please_allow'
+                        : 'parcel_buy.please_allow_new_marketplace'
+                    }
+                    values={{
+                      settings_link: (
+                        <Link to={locations.settings()}>
+                          {t('global.settings')}
+                        </Link>
+                      )
+                    }}
+                  />
+                </React.Fragment>
+              )
+            }
+          />
+        </Grid.Column>
+      </Container>
+    )
+  }
+
+  getCurrentAllowance() {
+    const { allowances } = this.props.authorization
+
+    return this.isLegacyMarketplace()
+      ? allowances.LegacyMarketplace.MANAToken
+      : allowances.Marketplace.MANAToken
+  }
+
+  isLegacyMarketplace() {
+    return (
+      this.props.publication.marketplace_address ===
+      getContractAddress('LegacyMarketplace')
     )
   }
 

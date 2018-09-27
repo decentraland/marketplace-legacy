@@ -1,7 +1,7 @@
 import {
-  FETCH_AUTHORIZATIONS_REQUEST,
-  FETCH_AUTHORIZATIONS_SUCCESS,
-  FETCH_AUTHORIZATIONS_FAILURE,
+  FETCH_AUTHORIZATION_REQUEST,
+  FETCH_AUTHORIZATION_SUCCESS,
+  FETCH_AUTHORIZATION_FAILURE,
   ALLOW_TOKEN_SUCCESS,
   APPROVE_TOKEN_SUCCESS
 } from './actions'
@@ -25,14 +25,14 @@ const INITIAL_STATE = {
 
 export function authorizationReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_AUTHORIZATIONS_REQUEST: {
+    case FETCH_AUTHORIZATION_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
       }
     }
-    case FETCH_AUTHORIZATIONS_SUCCESS: {
-      const { address, authorizations } = action.payload
+    case FETCH_AUTHORIZATION_SUCCESS: {
+      const { address, authorization } = action.payload
       return {
         loading: loadingReducer(state.loading, action),
         error: null,
@@ -42,17 +42,17 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             ...state.data[address],
             allowances: {
               ...(state.data[address] || {}).allowances,
-              ...authorizations.allowances
+              ...authorization.allowances
             },
             approvals: {
               ...(state.data[address] || {}).approvals,
-              ...authorizations.approvals
+              ...authorization.approvals
             }
           }
         }
       }
     }
-    case FETCH_AUTHORIZATIONS_FAILURE: {
+    case FETCH_AUTHORIZATION_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -60,7 +60,7 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
-      const transaction = action.payload.transaction
+      const transaction = action.transaction
 
       switch (transaction.actionType) {
         case ALLOW_TOKEN_SUCCESS: {

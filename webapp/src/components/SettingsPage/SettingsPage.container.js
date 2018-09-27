@@ -17,19 +17,19 @@ import SettingsPage from './SettingsPage'
 const mapState = state => {
   const wallet = getWallet(state)
 
-  let authorizations
+  let authorization
   let allowTransactions = []
   let approveTransactions = []
 
   if (wallet) {
-    authorizations = getAuthorizations(state)[wallet.address]
+    authorization = getAuthorizations(state)[wallet.address]
     allowTransactions = getAllowTransactions(state)
     approveTransactions = getApproveTransactions(state)
   }
 
   return {
     wallet,
-    authorizations,
+    authorization,
     allowTransactions,
     approveTransactions,
     isLoading: isConnecting(state) || isLoading(state),

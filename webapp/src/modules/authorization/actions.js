@@ -1,14 +1,14 @@
 import { buildTransactionAction } from 'modules/transaction/utils'
 
-// Fetch authorizations
+// Fetch authorization
 
-export const FETCH_AUTHORIZATIONS_REQUEST = '[Request] Fetch Authorizations'
-export const FETCH_AUTHORIZATIONS_SUCCESS = '[Success] Fetch Authorizations'
-export const FETCH_AUTHORIZATIONS_FAILURE = '[Failure] Fetch Authorizations'
+export const FETCH_AUTHORIZATION_REQUEST = '[Request] Fetch Authorization'
+export const FETCH_AUTHORIZATION_SUCCESS = '[Success] Fetch Authorization'
+export const FETCH_AUTHORIZATION_FAILURE = '[Failure] Fetch Authorization'
 
-export function fetchAuthorizationsRequest(address, { allowances, approvals }) {
+export function fetchAuthorizationRequest(address, { allowances, approvals }) {
   return {
-    type: FETCH_AUTHORIZATIONS_REQUEST,
+    type: FETCH_AUTHORIZATION_REQUEST,
     payload: {
       address,
       allowances,
@@ -17,19 +17,19 @@ export function fetchAuthorizationsRequest(address, { allowances, approvals }) {
   }
 }
 
-export function fetchAuthorizationsSuccess(address, authorizations) {
+export function fetchAuthorizationSuccess(address, authorization) {
   return {
-    type: FETCH_AUTHORIZATIONS_SUCCESS,
+    type: FETCH_AUTHORIZATION_SUCCESS,
     payload: {
       address,
-      authorizations
+      authorization
     }
   }
 }
 
-export function fetchAuthorizationsFailure(error) {
+export function fetchAuthorizationFailure(error) {
   return {
-    type: FETCH_AUTHORIZATIONS_FAILURE,
+    type: FETCH_AUTHORIZATION_FAILURE,
     payload: {
       error
     }
