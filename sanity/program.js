@@ -16,7 +16,9 @@ export async function main(getActions = createSanityActions) {
   await eth.connect({
     contracts: [
       new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-      new contracts.LegacyMarketplace(env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')),
+      new contracts.LegacyMarketplace(
+        env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
+      ),
       new contracts.EstateRegistry(env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'))
     ],
     provider: env.get('RPC_URL')
