@@ -9,24 +9,30 @@ export const FETCH_AUTHORIZATIONS_FAILURE = '[Failure] Fetch Authorizations'
 export function fetchAuthorizationsRequest(address, { allowances, approvals }) {
   return {
     type: FETCH_AUTHORIZATIONS_REQUEST,
-    address,
-    allowances,
-    approvals
+    payload: {
+      address,
+      allowances,
+      approvals
+    }
   }
 }
 
 export function fetchAuthorizationsSuccess(address, authorizations) {
   return {
     type: FETCH_AUTHORIZATIONS_SUCCESS,
-    address,
-    authorizations
+    payload: {
+      address,
+      authorizations
+    }
   }
 }
 
 export function fetchAuthorizationsFailure(error) {
   return {
     type: FETCH_AUTHORIZATIONS_FAILURE,
-    error
+    payload: {
+      error
+    }
   }
 }
 
@@ -43,9 +49,11 @@ export function allowTokenRequest(
 ) {
   return {
     type: ALLOW_TOKEN_REQUEST,
-    amount,
-    contractName,
-    tokenContractName
+    payload: {
+      amount,
+      contractName,
+      tokenContractName
+    }
   }
 }
 
@@ -64,17 +72,21 @@ export function allowTokenSuccess(
       contractName,
       tokenContractName
     }),
-    address,
-    amount,
-    contractName,
-    tokenContractName
+    payload: {
+      address,
+      amount,
+      contractName,
+      tokenContractName
+    }
   }
 }
 
 export function allowTokenFailure(error) {
   return {
     type: ALLOW_TOKEN_FAILURE,
-    error
+    payload: {
+      error
+    }
   }
 }
 
@@ -91,9 +103,11 @@ export function approveTokenRequest(
 ) {
   return {
     type: APPROVE_TOKEN_REQUEST,
-    isApproved,
-    contractName,
-    tokenContractName
+    payload: {
+      isApproved,
+      contractName,
+      tokenContractName
+    }
   }
 }
 
@@ -112,16 +126,20 @@ export function approveTokenSuccess(
       contractName,
       tokenContractName
     }),
-    address,
-    isApproved,
-    contractName,
-    tokenContractName
+    payload: {
+      address,
+      isApproved,
+      contractName,
+      tokenContractName
+    }
   }
 }
 
 export function approveTokenFailure(error) {
   return {
     type: APPROVE_TOKEN_FAILURE,
-    error
+    payload: {
+      error
+    }
   }
 }

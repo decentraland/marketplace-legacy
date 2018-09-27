@@ -24,13 +24,14 @@ export function* authorizationSaga() {
 
 function* handleFetchAuthorizationsRequest(action = {}) {
   try {
-    const address = action.address.toLowerCase()
+    const payload = action.payload
+    const address = payload.address.toLowerCase()
 
     const [allowances, approvals] = yield all([
-      fillAuthorizations(action.allowances, (tokenContract, contract) =>
+      fillAuthorizations(payload.allowances, (tokenContract, contract) =>
         tokenContract.allowance(address, contract.address)
       ),
-      fillAuthorizations(action.approvals, (tokenContract, contract) =>
+      fillAuthorizations(payload.approvals, (tokenContract, contract) =>
         tokenContract.isApprovedForAll(address, contract.address)
       )
     ])
@@ -69,7 +70,11 @@ function* fillAuthorizations(contractsToReview, contractCall) {
 
 function* handleAllowTokenRequest(action) {
   try {
-    const { amount, contractName, tokenContractName = 'MANAToken' } = action
+    const {
+      amount,
+      contractName,
+      tokenContractName = 'MANAToken'
+    } = action.payload
     const address = yield call(() => eth.getAddress())
 
     const contractToApprove = eth.getContract(contractName)
@@ -99,7 +104,7 @@ function* handleApproveTokenRequest(action) {
       isApproved,
       contractName,
       tokenContractName = 'LANDRegistry'
-    } = action
+    } = action.payload
     const address = yield call(() => eth.getAddress())
 
     const contractToApprove = eth.getContract(contractName)
