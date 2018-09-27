@@ -16,14 +16,18 @@ import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { isOwner } from 'shared/asset'
-import { getCoordsMatcher, isEqualCoords, buildCoordinate } from 'shared/parcel'
+import {
+  getCoordsMatcher,
+  isEqualCoords,
+  buildCoordinate,
+  getParcelsNotIncluded
+} from 'shared/parcel'
 import {
   hasNeighbour,
   areConnected,
   isEstate,
   MAX_PARCELS_PER_TX
 } from 'shared/estate'
-import { getParcelsNotIncluded } from 'shared/utils'
 import EstateSelectActions from './EstateSelectActions'
 import './EstateSelect.css'
 

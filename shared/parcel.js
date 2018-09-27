@@ -142,3 +142,18 @@ export function hasParcelsConnected({ x, y }, parcels) {
       !parcelRight.estate_id)
   )
 }
+
+/**
+ * Get the parcels not included in allParcels
+ * @param newParcels
+ * @param allParcels
+ * @return array with parcels of newParcels not included in allParcels
+ */
+export function getParcelsNotIncluded(newParcels, allParcels) {
+  return newParcels.filter(
+    newParcel =>
+      !allParcels.some(
+        parcel => parcel.x === newParcel.x && parcel.y === newParcel.y
+      )
+  )
+}

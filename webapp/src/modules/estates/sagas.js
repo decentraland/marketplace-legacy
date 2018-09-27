@@ -2,10 +2,7 @@ import { takeEvery, put, select, call, all } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
 
-import { getParcelsNotIncluded } from 'shared/utils'
-import { encodeMetadata } from 'shared/asset'
-import { getAddress } from 'modules/wallet/selectors'
-
+import { locations } from 'locations'
 import {
   CREATE_ESTATE_REQUEST,
   createEstateSuccess,
@@ -30,7 +27,9 @@ import {
 } from './actions'
 import { validateCoords } from './utils'
 import { getEstates } from './selectors'
-import { locations } from 'locations'
+import { getAddress } from 'modules/wallet/selectors'
+import { getParcelsNotIncluded } from 'shared/parcel'
+import { encodeMetadata } from 'shared/asset'
 import { api } from 'lib/api'
 
 export function* estateSaga() {

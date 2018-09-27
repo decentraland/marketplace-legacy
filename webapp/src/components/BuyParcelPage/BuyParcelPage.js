@@ -14,7 +14,7 @@ import {
   publicationType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { getContractAddress } from 'modules/wallet/utils'
+import { isLegacyPublication } from 'modules/publication/utils'
 import { formatMana } from 'lib/utils'
 
 import './BuyParcelPage.css'
@@ -224,10 +224,7 @@ export default class BuyParcelPage extends React.PureComponent {
   }
 
   isLegacyMarketplace() {
-    return (
-      this.props.publication.marketplace_address ===
-      getContractAddress('LegacyMarketplace')
-    )
+    return isLegacyPublication(this.props.publication)
   }
 
   render() {
