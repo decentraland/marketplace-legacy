@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Loader } from 'semantic-ui-react'
-import { txUtils } from 'decentraland-eth'
 
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
@@ -12,6 +11,7 @@ import {
   transactionType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
+import { isPending as isTransactionPending } from '@dapps/modules/transaction/utils'
 import { isLedgerWallet, getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
 
@@ -49,8 +49,7 @@ export default class SettingsPage extends React.PureComponent {
 
   getPendingTransactions() {
     const { allowTransactions, approveTransactions } = this.props
-    const isPending = transaction =>
-      transaction.status === txUtils.TRANSACTION_TYPES.pending
+    const isPending = transaction => isTransactionPending(transaction.status)
 
     return {
       pendingAllowTransactions: allowTransactions.filter(isPending),
