@@ -11,7 +11,7 @@ import './TxStatusIcon.css'
 export default class TxStatusIcon extends React.PureComponent {
   static propTypes = {
     txHash: PropTypes.string.isRequired,
-    txStatus: PropTypes.string.isRequired,
+    txStatus: PropTypes.string,
     className: PropTypes.string
   }
 
