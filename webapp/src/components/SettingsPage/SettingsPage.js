@@ -50,7 +50,7 @@ export default class SettingsPage extends React.PureComponent {
   getPendingTransactions() {
     const { allowTransactions, approveTransactions } = this.props
     const isPending = transaction =>
-      transaction.status === txUtils.TRANSACTION_STATUS.pending
+      transaction.status === txUtils.TRANSACTION_TYPES.pending
 
     return {
       pendingAllowTransactions: allowTransactions.filter(isPending),

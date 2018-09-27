@@ -1,5 +1,5 @@
 import { ALLOW_TOKEN_SUCCESS, APPROVE_TOKEN_SUCCESS } from './actions'
-import { getTransactionsByType } from 'modules/transaction/selectors'
+import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 
 export const getState = state => state.authorization

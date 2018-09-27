@@ -30,7 +30,7 @@ import {
 import { isLoading as isStorageLoading } from '@dapps/modules/storage/selectors'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { fetchAddress } from 'modules/address/actions'
-import { fetchAuthorizationsRequest } from 'modules/authorization/actions'
+import { fetchAuthorizationRequest } from 'modules/authorization/actions'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { getData } from './selectors'
 import { connectEthereumWallet, sendTransaction, fetchBalance } from './utils'
@@ -99,7 +99,7 @@ function* handleConnectWalletSuccess(address) {
   }
 
   yield put(fetchAddress(address))
-  yield put(fetchAuthorizationsRequest(address, authorizations))
+  yield put(fetchAuthorizationRequest(address, authorization))
 }
 
 function* handleTransferManaRequest(action) {

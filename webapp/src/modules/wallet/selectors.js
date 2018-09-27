@@ -5,7 +5,6 @@ import {
   BUY_MANA_REQUEST
 } from './actions'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
-import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
 import { getAddresses } from 'modules/address/selectors'
 
 export const getState = state => state.wallet

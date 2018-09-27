@@ -120,13 +120,13 @@ export function approveTokenSuccess(
 ) {
   return {
     type: APPROVE_TOKEN_SUCCESS,
-    ...buildTransactionAction(txHash, {
-      address,
-      isApproved,
-      contractName,
-      tokenContractName
-    }),
     payload: {
+      ...buildTransactionPayload(txHash, {
+        address,
+        isApproved,
+        contractName,
+        tokenContractName
+      }),
       address,
       isApproved,
       contractName,

@@ -6,7 +6,7 @@ import {
   APPROVE_TOKEN_SUCCESS
 } from './actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 
 /* {
 [address]: {

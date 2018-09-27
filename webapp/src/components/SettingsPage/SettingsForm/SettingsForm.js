@@ -16,7 +16,6 @@ import { getContractAddress } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { token } from 'lib/token'
 import DerivationPathDropdown from './DerivationPathDropdown'
-import { isPending } from '@dapps/modules/transaction/utils'
 
 import './SettingsForm.css'
 
