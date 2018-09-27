@@ -21,8 +21,6 @@ export const isConnecting = state =>
 export const getWallet = createSelector(
   state => getData(state),
   state => getAddresses(state),
-  getData,
-  getAddresses,
   (wallet, addresses) => {
     const address = addresses[wallet.address] || {}
     const {
