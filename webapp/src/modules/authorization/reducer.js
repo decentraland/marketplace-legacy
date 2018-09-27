@@ -60,7 +60,7 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
-      const transaction = action.transaction
+      const transaction = action.payload.transaction
 
       switch (transaction.actionType) {
         case ALLOW_TOKEN_SUCCESS: {

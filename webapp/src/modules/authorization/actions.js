@@ -1,4 +1,4 @@
-import { buildTransactionAction } from 'modules/transaction/utils'
+import { buildTransactionPayload } from '@dapps/modules/transaction/utils'
 
 // Fetch authorization
 
@@ -66,13 +66,13 @@ export function allowTokenSuccess(
 ) {
   return {
     type: ALLOW_TOKEN_SUCCESS,
-    ...buildTransactionAction(txHash, {
-      address,
-      amount,
-      contractName,
-      tokenContractName
-    }),
     payload: {
+      ...buildTransactionPayload(txHash, {
+        address,
+        amount,
+        contractName,
+        tokenContractName
+      }),
       address,
       amount,
       contractName,
