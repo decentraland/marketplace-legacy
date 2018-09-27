@@ -8,7 +8,7 @@ import {
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getAddress } from 'modules/wallet/selectors'
-import { getTransactionsByType } from 'modules/transaction/selectors'
+import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
 import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import { buildCoordinate } from 'shared/parcel'
 
@@ -27,7 +27,7 @@ export const isCancelIdle = state =>
   isLoadingType(getLoading(state), CANCEL_SALE_REQUEST)
 
 export const getPublications = createSelector(
-  getData,
+  state => getData(state),
   state => getTransactionsByType(state, getAddress(state), PUBLISH_SUCCESS),
   (publications = {}, publishTransactions) => {
     const txPublications = {}

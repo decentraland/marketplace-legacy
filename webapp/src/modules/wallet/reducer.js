@@ -19,7 +19,7 @@ import {
   CHANGE_LOCALE,
   FETCH_TRANSLATIONS_SUCCESS
 } from '@dapps/modules/translation/actions'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
 
 const INITIAL_STATE = {
@@ -65,7 +65,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
         error: action.error
       }
     case FETCH_TRANSACTION_SUCCESS: {
-      const transaction = action.transaction
+      const { transaction } = action.payload
 
       switch (transaction.actionType) {
         case APPROVE_MANA_SUCCESS:

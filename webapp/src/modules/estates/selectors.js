@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect'
-
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
@@ -39,9 +38,9 @@ export const isEstateTransactionIdle = state =>
   isDeletingEstateTransactionIdle(state)
 
 export const getEstates = createSelector(
-  getData,
-  getParcels,
-  getPublications,
+  state => getData(state),
+  state => getParcels(state),
+  state => getPublications(state),
   (estates, parcels, publications) =>
     Object.keys(estates).reduce((acc, estateId) => {
       const estate = estates[estateId]

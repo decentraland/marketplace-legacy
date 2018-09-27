@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { txUtils } from 'decentraland-eth'
 import { Segment, Grid, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
@@ -16,7 +15,7 @@ import {
   getMortgageHelperAddress,
   getMortgageManagerAddress
 } from 'modules/wallet/utils'
-import { getEtherscanHref } from 'modules/transaction/utils'
+import { getEtherscanHref, isPending } from '@dapps/modules/transaction/utils'
 import {
   APPROVE_MANA_SUCCESS,
   AUTHORIZE_LAND_SUCCESS,
@@ -478,7 +477,7 @@ export default class Transaction extends React.PureComponent {
             className="Transaction"
             onClick={this.handleTransactionClick}
           >
-            {tx.status === txUtils.TRANSACTION_STATUS.pending ? (
+            {isPending(tx.status) ? (
               <Loader active size="mini" />
             ) : (
               <div className="mini circle" />

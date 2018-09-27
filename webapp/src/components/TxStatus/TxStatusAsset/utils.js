@@ -9,7 +9,7 @@ export function isAssetPendingTransaction(asset, tx) {
     : tx.payload.id
 
   return (
-    tx.status === txUtils.TRANSACTION_STATUS.pending &&
+    tx.status === txUtils.TRANSACTION_TYPES.pending &&
     payloadAssetId === asset.id
   )
 }

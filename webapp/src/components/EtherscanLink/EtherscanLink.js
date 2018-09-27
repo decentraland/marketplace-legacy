@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getEtherscanHref } from 'modules/transaction/utils'
+import { getEtherscanHref } from '@dapps/modules/transaction/utils'
 
 export default class EtherscanLink extends React.PureComponent {
   static propTypes = {

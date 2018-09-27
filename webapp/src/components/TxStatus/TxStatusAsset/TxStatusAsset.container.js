@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import { getData as getTransactions } from 'modules/transaction/selectors'
+import { getData as getTransactions } from '@dapps/modules/transaction/selectors'
 import { isAssetPendingTransaction } from './utils'
 
 import TxStatusAsset from './TxStatusAsset'

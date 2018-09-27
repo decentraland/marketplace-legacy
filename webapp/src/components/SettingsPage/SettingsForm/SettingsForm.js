@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { txUtils } from 'decentraland-eth'
 import { Form, Checkbox, Button } from 'semantic-ui-react'
 
 import { locations } from 'locations'
@@ -16,6 +15,7 @@ import {
 } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import DerivationPathDropdown from './DerivationPathDropdown'
+import { isPending } from '@dapps/modules/transaction/utils'
 
 import './SettingsForm.css'
 
@@ -89,23 +89,25 @@ export default class SettingsForm extends React.PureComponent {
       approveMortgageForRCNTransaction
     } = this.props
 
-    const isApprovePending = txUtils.isPending(approveTransaction)
-    const isAuthorizePending = txUtils.isPending(authorizeTransaction)
-    const isMortgageApprovedForManaPending = txUtils.isPending(
-      approveMortgageForManaTransaction
-    )
-    const isMortgageApprovedForRCNPending = txUtils.isPending(
-      approveMortgageForRCNTransaction
-    )
+    const isApprovePending =
+      approveTransaction && isPending(approveTransaction.status)
+    const isAuthorizePending =
+      authorizeTransaction && isPending(authorizeTransaction.status)
+    const isMortgageApprovedForManaPending =
+      approveMortgageForManaTransaction &&
+      isPending(approveMortgageForManaTransaction.status)
+    const isMortgageApprovedForRCNPending =
+      approveMortgageForRCNTransaction &&
+      isPending(approveMortgageForRCNTransaction.status)
 
-    const isPending =
+    const isTxPending =
       isApprovePending ||
       isAuthorizePending ||
       isMortgageApprovedForManaPending ||
       isMortgageApprovedForRCNPending
 
     return (
-      <Form className={`SettingsForm ${isPending ? 'tx-pending' : ''}`}>
+      <Form className={`SettingsForm ${isTxPending ? 'tx-pending' : ''}`}>
         {isLedgerWallet ? (
           <Form.Field>
             <DerivationPathDropdown

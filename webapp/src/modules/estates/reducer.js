@@ -22,7 +22,7 @@ import {
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { getEstateIdFromTxReceipt } from './utils'
 
 const INITIAL_STATE = {
@@ -96,7 +96,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
-      const transaction = action.transaction
+      const { transaction } = action.payload
 
       switch (transaction.actionType) {
         case EDIT_ESTATE_METADATA_SUCCESS: {

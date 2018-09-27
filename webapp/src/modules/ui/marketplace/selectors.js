@@ -5,9 +5,9 @@ import { getPublications } from 'modules/publication/selectors'
 export const getState = state => state.ui.marketplace
 export const getGrid = state => getState(state).grid
 export const getParcels = createSelector(
-  getGrid,
-  getPublications,
-  getAllParcels,
+  state => getGrid(state),
+  state => getPublications(state),
+  state => getAllParcels(state),
   (grid, publications, parcels) =>
     grid.map(id => {
       return {

@@ -11,7 +11,7 @@ import './TxStatusIcon.css'
 export default class TxStatusIcon extends React.PureComponent {
   static propTypes = {
     txHash: PropTypes.string.isRequired,
-    txStatus: PropTypes.string.isRequired,
+    txStatus: PropTypes.string,
     className: PropTypes.string
   }
 
@@ -24,14 +24,14 @@ export default class TxStatusIcon extends React.PureComponent {
     let Icon = null
     let iconTooltip = ''
 
-    if (txStatus === txUtils.TRANSACTION_STATUS.pending) return null
-
-    if (txStatus === txUtils.TRANSACTION_STATUS.confirmed) {
+    if (txStatus === txUtils.TRANSACTION_TYPES.confirmed) {
       Icon = <ConfirmedIcon />
       iconTooltip = 'Transaction confirmed'
-    } else if (txStatus === txUtils.TRANSACTION_STATUS.failed) {
+    } else if (txStatus === txUtils.TRANSACTION_TYPES.reverted) {
       Icon = <FailedIcon />
       iconTooltip = 'Transaction failed'
+    } else {
+      return null
     }
 
     const classes = `TxStatusIcon ${className}`.trim()

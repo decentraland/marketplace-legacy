@@ -9,8 +9,8 @@ import {
   APPROVE_MORTGAGE_FOR_RCN_SUCCESS
 } from './actions'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
+import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
 import { getAddresses } from 'modules/address/selectors'
-import { getTransactionsByType } from 'modules/transaction/selectors'
 
 export const getState = state => state.wallet
 export const getData = state => getState(state).data
@@ -24,8 +24,8 @@ export const isConnecting = state =>
   isLoadingType(getLoading(state), CONNECT_WALLET_REQUEST)
 
 export const getWallet = createSelector(
-  getData,
-  getAddresses,
+  state => getData(state),
+  state => getAddresses(state),
   state =>
     getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
   state =>
@@ -75,6 +75,7 @@ export const getWallet = createSelector(
     }
   }
 )
+
 export const isTransferManaTransactionIdle = state =>
   isLoadingType(getLoading(state), TRANSFER_MANA_REQUEST)
 

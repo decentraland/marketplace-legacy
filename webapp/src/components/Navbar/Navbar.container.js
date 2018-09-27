@@ -10,7 +10,7 @@ import {
 import { isConnected, isConnecting } from 'modules/wallet/selectors'
 import { isLoading } from 'modules/ui/loading/selectors'
 import { isLoading as isLoadingParcels } from 'modules/parcels/selectors'
-import { getPendingTransactions } from 'modules/transaction/selectors'
+import { getPendingTransactions } from '@dapps/modules/transaction/selectors'
 import { getCenter } from 'modules/location/utils'
 import { navigateTo } from 'modules/location/actions'
 import { getActivePage } from './utils'

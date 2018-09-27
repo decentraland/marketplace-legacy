@@ -19,7 +19,7 @@ import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { toPublicationsObject, PUBLICATION_STATUS } from 'shared/publication'
 import { FETCH_MORTGAGED_PARCELS_SUCCESS } from 'modules/mortgage/actions'
 
@@ -126,7 +126,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       return newState
     }
     case FETCH_TRANSACTION_SUCCESS: {
-      const transaction = action.transaction
+      const { transaction } = action.payload
 
       switch (transaction.actionType) {
         case BUY_SUCCESS: {

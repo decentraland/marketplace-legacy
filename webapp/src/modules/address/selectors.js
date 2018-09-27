@@ -16,12 +16,12 @@ export const getLoading = state => getState(state).loading
 export const isLoading = state => getLoading(state).length > 0
 export const getError = state => getState(state).error
 export const getAddresses = createSelector(
-  getData,
-  getDistricts,
-  getParcels,
-  getPublications,
-  getEstates,
-  getMortgagedParcels,
+  state => getData(state),
+  state => getDistricts(state),
+  state => getParcels(state),
+  state => getPublications(state),
+  state => getEstates(state),
+  state => getMortgagedParcels(state),
   (data, districts, allParcels, publications, allEstates, mortgagedParcels) =>
     Object.keys(data).reduce((map, address) => {
       const parcelIds = data[address].parcel_ids || []

@@ -57,7 +57,7 @@ describe('Parcel', function() {
     it('should join the last open publication', async function() {
       const publication = {
         tx_hash: '0xdeadbeef',
-        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        tx_status: txUtils.TRANSACTION_TYPES.confirmed,
         status: PUBLICATION_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '3,5',
@@ -113,7 +113,7 @@ describe('Parcel', function() {
     it('should return parcels with mortgages by borrower', async function() {
       const publication = {
         tx_hash: '0xdeadbeef',
-        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        tx_status: txUtils.TRANSACTION_TYPES.confirmed,
         status: PUBLICATION_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '2,5',
@@ -129,7 +129,7 @@ describe('Parcel', function() {
       }
       const publication2 = {
         tx_hash: '0xdeadabeef',
-        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        tx_status: txUtils.TRANSACTION_TYPES.confirmed,
         status: PUBLICATION_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '6,5',
@@ -150,7 +150,7 @@ describe('Parcel', function() {
 
       const mortgage = {
         tx_hash: '1xdeadbeef',
-        tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+        tx_status: txUtils.TRANSACTION_TYPES.confirmed,
         status: MORTGAGE_STATUS.pending,
         loan_id: 0,
         mortgage_id: 0,

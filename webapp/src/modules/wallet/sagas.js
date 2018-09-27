@@ -40,9 +40,8 @@ import {
   approveMortgageForRCNFailure
 } from './actions'
 import { isLoading as isStorageLoading } from '@dapps/modules/storage/selectors'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { fetchAddress } from 'modules/address/actions'
-import { watchLoadingTransactions } from 'modules/transaction/actions'
 import { getData } from './selectors'
 import {
   connectEthereumWallet,
@@ -131,7 +130,6 @@ function* handleConnectWalletRequest(action = {}) {
 
 function* handleConnectWalletSuccess(address) {
   yield put(fetchAddress(address))
-  yield put(watchLoadingTransactions())
 }
 
 function* handleApproveManaRequest(action) {
@@ -202,7 +200,7 @@ function* handleUpdateDerivationPath(action) {
 }
 
 function* handleTransactionSuccess(action) {
-  const { transaction } = action
+  const { transaction } = action.payload
   switch (transaction.actionType) {
     case BUY_MANA_SUCCESS: {
       yield delay(5000) // 5 seconds of delay to get new balances

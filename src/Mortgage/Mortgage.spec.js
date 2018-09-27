@@ -17,7 +17,7 @@ describe('Mortgage', function() {
   beforeEach(() => {
     mortgage = {
       tx_hash: '1xdeadbeef',
-      tx_status: txUtils.TRANSACTION_STATUS.confirmed,
+      tx_status: txUtils.TRANSACTION_TYPES.confirmed,
       status: MORTGAGE_STATUS.pending,
       loan_id: 0,
       mortgage_id: 0,

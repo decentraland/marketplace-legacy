@@ -14,7 +14,7 @@ import {
 } from './actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
 import {
   EDIT_ESTATE_PARCELS_SUCCESS,
@@ -119,7 +119,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
         error: action.error
       }
     case FETCH_TRANSACTION_SUCCESS: {
-      const transaction = action.transaction
+      const transaction = action.payload.transaction
 
       switch (transaction.actionType) {
         case TRANSFER_PARCEL_SUCCESS: {

@@ -6,8 +6,8 @@ import { land } from 'lib/land'
 export const getState = state => state.ui.sidebar
 export const isOpen = state => getState(state).open
 export const getStats = createSelector(
-  getWallet,
-  isLoading,
+  state => getWallet(state),
+  state => isLoading(state),
   (wallet, loading) => {
     const balance = wallet.balance
     const loaded = balance !== null && !loading

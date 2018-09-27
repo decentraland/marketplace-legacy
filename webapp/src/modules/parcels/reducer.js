@@ -23,7 +23,7 @@ import {
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_PARCEL_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
-import { FETCH_TRANSACTION_SUCCESS } from 'modules/transaction/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { buildCoordinate, normalizeParcel, toParcelObject } from 'shared/parcel'
 
@@ -171,7 +171,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
-      const transaction = action.transaction
+      const { transaction } = action.payload
 
       switch (transaction.actionType) {
         case EDIT_PARCEL_SUCCESS: {
