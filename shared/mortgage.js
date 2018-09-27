@@ -19,13 +19,13 @@ export const isMortgageOngoing = mortgage =>
 export const isMortgagePaid = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.paid)
 export const isMortgageDefaulting = mortgage =>
-  new Date().getTime() > parseInt(mortgage.is_due_at * 1000, 10)
+  Date.now() > parseInt(mortgage.is_due_at * 1000, 10)
 export const isMortgageDefaulted = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.defaulted) ||
   (!isMortgagePending(mortgage) &&
     !isMortgagePaid(mortgage) &&
-    new Date().getTime() >
-      parseInt(mortgage.is_due_at * 1000, 10) + MORTGAGE_DEFAULT_IN_DAYS)
+    Date.now() >
+      (parseInt(mortgage.is_due_at, 10) + MORTGAGE_DEFAULT_IN_DAYS) * 1000)
 
 // Interest in seconds
 export function toInterestRate(r) {
@@ -96,7 +96,7 @@ export function getMortgageOutstandingAmount(mortgage) {
     return 0
   }
 
-  const now = parseInt(new Date().getTime() / 1000, 10)
+  const now = parseInt(Date.now() / 1000, 10)
   const startedTime = parseInt(mortgage.started_at / 1000, 10)
   const isDueAt = parseInt(mortgage.is_due_at, 10)
   let punitoryInterest = 0,
