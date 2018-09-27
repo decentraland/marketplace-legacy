@@ -11,7 +11,6 @@ import {
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
 import { getAddresses } from 'modules/address/selectors'
-import { lazy } from 'lib/reselect'
 
 export const getState = state => state.wallet
 export const getData = state => getState(state).data
@@ -24,60 +23,59 @@ export const isConnected = state => !!getData(state).address
 export const isConnecting = state =>
   isLoadingType(getLoading(state), CONNECT_WALLET_REQUEST)
 
-export const getWallet = lazy(() =>
-  createSelector(
-    getData,
-    getAddresses,
-    state =>
-      getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
-    state =>
-      getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
-    state =>
-      getTransactionsByType(
-        state,
-        getAddress(state),
-        APPROVE_MORTGAGE_FOR_MANA_SUCCESS
-      ),
-    state =>
-      getTransactionsByType(
-        state,
-        getAddress(state),
-        APPROVE_MORTGAGE_FOR_RCN_SUCCESS
-      ),
-    (
-      wallet,
-      addresses,
+export const getWallet = createSelector(
+  state => getData(state),
+  state => getAddresses(state),
+  state =>
+    getTransactionsByType(state, getAddress(state), APPROVE_MANA_SUCCESS),
+  state =>
+    getTransactionsByType(state, getAddress(state), AUTHORIZE_LAND_SUCCESS),
+  state =>
+    getTransactionsByType(
+      state,
+      getAddress(state),
+      APPROVE_MORTGAGE_FOR_MANA_SUCCESS
+    ),
+  state =>
+    getTransactionsByType(
+      state,
+      getAddress(state),
+      APPROVE_MORTGAGE_FOR_RCN_SUCCESS
+    ),
+  (
+    wallet,
+    addresses,
+    approveManaTransactions,
+    authorizeLandTransactions,
+    approveMortgageForManaTransactions,
+    approveMortgageForRCNTransactions
+  ) => {
+    const address = addresses[wallet.address] || {}
+    const {
+      parcels = [],
+      parcelsById = {},
+      estates = [],
+      estatesById = {},
+      contributions = [],
+      contributionsById = {}
+    } = address
+
+    return {
+      ...wallet,
+      parcels,
+      parcelsById,
+      estates,
+      estatesById,
+      contributions,
+      contributionsById,
       approveManaTransactions,
       authorizeLandTransactions,
       approveMortgageForManaTransactions,
       approveMortgageForRCNTransactions
-    ) => {
-      const address = addresses[wallet.address] || {}
-      const {
-        parcels = [],
-        parcelsById = {},
-        estates = [],
-        estatesById = {},
-        contributions = [],
-        contributionsById = {}
-      } = address
-
-      return {
-        ...wallet,
-        parcels,
-        parcelsById,
-        estates,
-        estatesById,
-        contributions,
-        contributionsById,
-        approveManaTransactions,
-        authorizeLandTransactions,
-        approveMortgageForManaTransactions,
-        approveMortgageForRCNTransactions
-      }
     }
-  )
+  }
 )
+
 export const isTransferManaTransactionIdle = state =>
   isLoadingType(getLoading(state), TRANSFER_MANA_REQUEST)
 
