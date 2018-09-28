@@ -23,6 +23,20 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "authorization": {
+    "allow":
+      "あなたに代わって{contract_link}が{symbol}を操作することを許可する",
+    "allowed":
+      "あなたは{contract_link}をあなたのために{symbol}を操作することを許可しました",
+    "approve":
+      "あなたに代わって{contract_link}が{symbol}を操作することを許可する",
+    "approved":
+      "あなたは{contract_link}をあなたのために{symbol}を操作することを許可しました",
+    "disallowed":
+      "あなたは{contract_link}をあなたのために{symbol}を操作することを許可しませんでした",
+    "disapproved":
+      "あなたは{contract_link}をあなたのために{symbol}を操作することを許可しませんでした"
+  },
   "buy_mana": {
     "action": "もっと購入する",
     "amount_too_big": "Bancor Networkには額が大き過ぎます。",
@@ -96,7 +110,6 @@
     "add": "追加する",
     "address_placeholder": "0x...",
     "atlas": "地図",
-    "authorized": "認証済み",
     "balance": "残高",
     "blog": "ブログ",
     "cancel": "キャンセル",
@@ -146,7 +159,6 @@
     "the_parcel": "区画",
     "time_left": "残り時間",
     "transfer_irreversible": "転送は元に戻すことができません。",
-    "unauthorized": "未認証",
     "undo": "戻す",
     "wallet_address": "ウォレットアドレス",
     "website": "ウェブサイト"
@@ -225,13 +237,17 @@
   },
   "parcel_buy": {
     "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
-    "approved_balance": "確認されている残高は{approved_balance}です。",
+    "allowed_balance": "あなたの手当は{allowance}です",
     "buy_land": "ランドを購入",
     "buy_mana": "MANAを更に購入する{click_here}",
-    "didnt_approve": "MANAの使用に関しての承認がありません。",
+    "didnt_allow": "あなたはMANAの使用を許可していません",
+    "didnt_allow_new_marketplace":
+      "新しいバージョンのMarketplaceでMANAの使用を許可していない",
     "needs_at_least": "このランドを購入するには最低{mana}必要です。",
-    "please_approve":
-      " {settings_link} にて、マーケット上でMANAを使用することをマーケットコントラクトで承認して下さい。",
+    "please_allow":
+      "{settings_link}にアクセスし、LegacyMarketplace契約でMANAをあなたのために操作できるようにしてください",
+    "please_allow_new_marketplace":
+      "{settings_link}に行き、Marketplace契約があなたのためにMANAを操作できるようにしてください",
     "total_balance": "残高：{balance}"
   },
   "parcel_cancel": {
@@ -322,35 +338,14 @@
     "view": "見る"
   },
   "settings": {
-    "approve_mana":
-      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
-    "approve_mana_check":
-      "マーケットコントラクトでMANAの使用承認について確認しています。",
-    "approve_mortgage_mana":
-      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認します。",
-    "approve_mortgage_rcn":
-      "{mortgage_contract_link}でRCNを使用することを承認します。",
-    "authorization": "承認事項",
-    "authorize":
-      "マーケット上でランドを使用することを{marketplace_contract_link}で承認します。",
-    "authorize_land_check":
-      "マーケットコントラクトでランドの使用承認について確認しています。",
-    "disapprove_mana_check":
-      "マーケットコントラクトでMANAの使用について承認を解除しています。",
-    "mana_approved":
-      "マーケット上でMANAを使用することを{marketplace_contract_link}で承認しました。",
-    "marketplace_contract": "マーケットコントラクト",
-    "mortgage_helper_contract": "担保支援コントラクト",
-    "mortgage_manager_contract": "担保管理コントラクト",
-    "pending_tx": "　処理中の取引があります。",
-    "unauthorize_land_check":
-      "マーケットコントラクトで、LANDの使用について承認を解除しています。",
-    "you_approved_mortgage_mana":
-      "{mortgage_contract_link}でMANAを使用することを承認しました。",
-    "you_approved_mortgage_rcn":
-      "{mortgage_contract_link}でRCNを使用することを承認しました。",
-    "you_authorized":
-      "マーケット上でランドを使用することを{marketplace_contract_link}で承認しました。"
+    "authorization": "承認",
+    "authorization_error": "許可を読み込めませんでした。もう一度お試しください",
+    "authorization_error_contact":
+      "エラーが解決しない場合は、お気軽にお問い合わせください",
+    "for_buying": "購入のために",
+    "for_selling": "販売のため",
+    "legacy_authorization": "従来の承認",
+    "pending_tx": "　処理中の取引があります。"
   },
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
@@ -365,10 +360,6 @@
     }
   },
   "transaction": {
-    "approved":
-      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で認証しました。",
-    "authorize":
-      "あなたは、マーケット上でランドを使用することを{marketplace_contract_link}で{action}しました。",
     "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
@@ -376,8 +367,6 @@
     "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
     "create_estate": "あなたはエステート{name}を作成しました",
     "create_mortgage": "区画{parcel_link}を購入するのに担保を申請しました。",
-    "disapproved":
-      "あなたは、マーケット上でMANAを使用することを{marketplace_contract_link}で承認していません。",
     "dissolve_estate": "エステート{name}を解散しました。",
     "edit":
       "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",

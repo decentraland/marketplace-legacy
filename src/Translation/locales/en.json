@@ -23,6 +23,19 @@
     "your_estate": "Your estate",
     "your_parcel": "Your parcel"
   },
+  "authorization": {
+    "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",
+    "allowed":
+      "You authorized the {contract_link} to operate {symbol} on your behalf",
+    "approve":
+      "Authorize the {contract_link} to operate {symbol} on your behalf",
+    "approved":
+      "You authorized the {contract_link} to operate {symbol} on your behalf",
+    "disallowed":
+      "You unauthorized the {contract_link} to operate {symbol} on your behalf",
+    "disapproved":
+      "You unauthorized the {contract_link} to operate {symbol} on your behalf"
+  },
   "buy_mana": {
     "action": "Buy More",
     "amount_too_big": "This amount is too big for the Bancor Network",
@@ -96,7 +109,6 @@
     "add": "add",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
-    "authorized": "Authorized",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancel",
@@ -146,7 +158,6 @@
     "time_left": "Time left",
     "transfer_irreversible":
       "Remember that transferring is an irreversible operation.",
-    "unauthorized": "Unauthorized",
     "undo": "Undo",
     "wallet_address": "Wallet address",
     "website": "Website"
@@ -208,9 +219,9 @@
     "payable_placeholder": "Payable in days",
     "pending_tx": "The mortgage for",
     "please_authorize_MANA":
-      "Please go to {settings_link} and and authorize the Mortgage Helper contract to operate MANA on your behalf",
+      "Please go to {settings_link} and and authorize the MortgageHelper contract to operate MANA on your behalf",
     "please_authorize_RCN":
-      "Please go to {settings_link} and authorize the Mortgage Manager contract to operate RCN on your behalf",
+      "Please go to {settings_link} and authorize the MortgageManager contract to operate RCN on your behalf",
     "punitory_rate": "Punitory interest rate",
     "punitory_rate_placeholder": "Punitory rate",
     "request": "Requesting a Mortgage",
@@ -225,12 +236,16 @@
   },
   "parcel_buy": {
     "about_to_buy": "You are about to buy {parcel_name} {parcel_price}.",
-    "approved_balance": "Your approved balance is {approved_balance}",
+    "allowed_balance": "Your allowance is {allowance}",
     "buy_land": "Buy LAND",
     "buy_mana": "{click_here} to buy some MANA.",
-    "didnt_approve": "You haven't authorized MANA usage",
+    "didnt_allow": "You haven't authorized MANA usage",
+    "didnt_allow_new_marketplace":
+      "You haven't authorized MANA usage for the new version of the Marketplace",
     "needs_at_least": "You need at least {mana} in order to buy this LAND.",
-    "please_approve":
+    "please_allow":
+      "Please go to {settings_link} and allow the LegacyMarketplace contract to operate MANA on your behalf",
+    "please_allow_new_marketplace":
       "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
     "total_balance": "Your balance is {balance}"
   },
@@ -323,35 +338,16 @@
     "view": "View"
   },
   "settings": {
-    "approve_mana":
-      "Authorize the {marketplace_contract_link} to operate MANA on your behalf",
-    "approve_mana_check":
-      "Checking authorizes MANA usage to the Marketplace contract",
-    "approve_mortgage_mana":
-      "Authorize the {mortgage_contract_link} to operate MANA on your behalf",
-    "approve_mortgage_rcn":
-      "Authorize the {mortgage_contract_link} to operate RCN on your behalf",
     "authorization": "Authorization",
-    "authorize":
-      "Authorize the {marketplace_contract_link} to operate LAND on your behalf",
-    "authorize_land_check":
-      "Checking authorizes LAND usage to the Marketplace contract",
-    "disapprove_mana_check":
-      "Unchecking unauthorizes MANA usage for the Marketplace contract",
-    "mana_approved":
-      "You have authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "marketplace_contract": "Marketplace contract",
-    "mortgage_helper_contract": "Mortgage Helper contract",
-    "mortgage_manager_contract": "Mortgage Manager contract",
-    "pending_tx": "You have a pending transaction",
-    "unauthorize_land_check":
-      "Unchecking unauthorizes LAND usage for the Marketplace contract",
-    "you_approved_mortgage_mana":
-      "You have authorized the {mortgage_contract_link} to operate MANA on your behalf",
-    "you_approved_mortgage_rcn":
-      "You have authorized the {mortgage_contract_link} to operate RCN on your behalf",
-    "you_authorized":
-      "You have authorized the {marketplace_contract_link} to operate LAND on your behalf"
+    "authorization_error":
+      "We couldn't load your authorizations, please try again",
+    "authorization_error_contact":
+      "If the error persist don't hesitate to contact us",
+    "for_buying": "For buying",
+    "for_selling": "For selling",
+    "legacy_authorization": "Legacy authorization",
+    "pending_tx":
+      "Transaction pending, click the loading to go to your activity for a detailed status"
   },
   "sign_in": {
     "account_unlocked": "Make sure your account is unlocked",
@@ -365,10 +361,6 @@
     }
   },
   "transaction": {
-    "approved":
-      "You authorized the {marketplace_contract_link} to operate MANA on your behalf",
-    "authorize":
-      "You {action} the {marketplace_contract_link} to operate LAND on your behalf",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the {publication_link} on {parcel_link}",
@@ -377,8 +369,6 @@
     "create_estate": "You created the estate {name}",
     "create_mortgage":
       "You requested a Mortgage to buy the parcel {parcel_link}",
-    "disapproved":
-      "You unauthorized the {marketplace_contract_link} to operate MANA on your behalf",
     "dissolve_estate": "You dissolved the estate {name}",
     "edit":
       "You edited {parcel_link} with the name \"{name}\" and description \"{description}\"",

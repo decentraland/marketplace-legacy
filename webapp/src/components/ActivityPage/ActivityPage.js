@@ -5,7 +5,7 @@ import { Container, Loader, Button } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Prompt from 'components/Prompt'
-import { transactionType, walletType } from 'components/types'
+import { authorizationType, transactionType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import Transaction from './Transaction'
 
@@ -13,10 +13,10 @@ import './ActivityPage.css'
 
 export default class ActivityPage extends React.PureComponent {
   static propTypes = {
+    authorization: authorizationType,
     pendingTransactions: PropTypes.arrayOf(transactionType),
     transactionHistory: PropTypes.arrayOf(transactionType),
     network: PropTypes.string,
-    wallet: walletType,
     isEmpty: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired
@@ -46,8 +46,10 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   hasTradingPermissions() {
-    const { approvedBalance, isLandAuthorized } = this.props.wallet
-    return approvedBalance && isLandAuthorized
+    const { allowances, approvals } = this.props.authorization
+    return (
+      allowances.Marketplace.MANAToken > 0 && approvals.Marketplace.LANDRegistry
+    )
   }
 
   renderEmpty() {

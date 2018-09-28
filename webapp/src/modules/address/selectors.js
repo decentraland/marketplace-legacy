@@ -6,8 +6,9 @@ import {
 } from 'modules/parcels/selectors'
 import { getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
-import { isOpen } from 'shared/publication'
 import { getEstates } from 'modules/estates/selectors'
+import { getData as getAuthorizations } from 'modules/authorization/selectors'
+import { isOpen } from 'shared/publication'
 import { pickAndMap } from './utils'
 
 export const getState = state => state.address
@@ -22,7 +23,16 @@ export const getAddresses = createSelector(
   state => getPublications(state),
   state => getEstates(state),
   state => getMortgagedParcels(state),
-  (data, districts, allParcels, publications, allEstates, mortgagedParcels) =>
+  state => getAuthorizations(state),
+  (
+    data,
+    allDistricts,
+    allParcels,
+    allPublications,
+    allEstates,
+    allMortgagedParcels,
+    allAuthorizations
+  ) =>
     Object.keys(data).reduce((map, address) => {
       const parcelIds = data[address].parcel_ids || []
       const [parcels, parcelsById] = pickAndMap(allParcels, parcelIds)
@@ -33,30 +43,33 @@ export const getAddresses = createSelector(
       const contributions = (data[address].contributions || []).map(
         contribution => ({
           ...contribution,
-          district: districts[contribution.district_id]
+          district: allDistricts[contribution.district_id]
         })
       )
 
       // filter only open publications
       const publishedParcels = parcels.filter(parcel =>
-        isOpen(publications[parcel.publication_tx_hash])
+        isOpen(allPublications[parcel.publication_tx_hash])
       )
 
-      const mortgagedParcelsByAddress = mortgagedParcels.filter(
+      const mortgagedParcels = allMortgagedParcels.filter(
         parcel => parcel.mortgage.borrower === address
       )
+
+      const authorization = allAuthorizations[address]
 
       return {
         ...map,
         [address]: {
           ...data[address],
-          mortgagedParcels: mortgagedParcelsByAddress,
+          mortgagedParcels,
           parcels,
           parcelsById,
-          estates: estates.filter(e => e.owner === address),
+          estates,
           estatesById,
           contributions,
-          publishedParcels
+          publishedParcels,
+          authorization
         }
       }
     }, {})

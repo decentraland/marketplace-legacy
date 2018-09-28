@@ -23,6 +23,18 @@
     "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
+  "authorization": {
+    "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",
+    "allowed":
+      "Usted autorizó a {contract_link} a operar {symbol} en su nombre",
+    "approve": "Autorice al {contract_link} a operar {symbol} en su nombre",
+    "approved":
+      "Usted autorizó a {contract_link} a operar {symbol} en su nombre",
+    "disallowed":
+      "Usted no ha autorizado el {contract_link} para operar {symbol} en su nombre",
+    "disapproved":
+      "Usted no ha autorizado el {contract_link} para operar {symbol} en su nombre"
+  },
   "buy_mana": {
     "action": "Comprar Más",
     "amount_too_big": "Este monto es demaciado grande para la red de Bancor",
@@ -96,7 +108,6 @@
     "add": "añadir",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
-    "authorized": "Autorizado",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancelar",
@@ -146,7 +157,6 @@
     "time_left": "Tiempo restante",
     "transfer_irreversible":
       "Recuerde que la transferencia es una operación irreversible.",
-    "unauthorized": "No autorizado",
     "undo": "Deshacer",
     "wallet_address": "Dirección de billetera",
     "website": "Website"
@@ -226,13 +236,17 @@
   },
   "parcel_buy": {
     "about_to_buy": "Estas por comprar {parcel_name} {parcel_price}",
-    "approved_balance": "Tu balance aprobado es {approved_balance}",
+    "allowed_balance": "Tu asignación es {allowance}",
     "buy_land": "Comprar LAND",
     "buy_mana": "{click_here} para comprar MANA.",
-    "didnt_approve": "No has autorizado el uso de MANA",
+    "didnt_allow": "No has autorizado el uso de MANA",
+    "didnt_allow_new_marketplace":
+      "No ha autorizado el uso de MANA para la nueva versión de Marketplace",
     "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
-    "please_approve":
-      "Por favor entra en {settings_link} y permite al contrato de Mercado a operar MANA por tu cuenta",
+    "please_allow":
+      "Vaya a {settings_link} y permita que el contrato LegacyMarketplace opere MANA en su nombre",
+    "please_allow_new_marketplace":
+      "Vaya a {settings_link} y permita que el contrato del Marketplace opere MANA en su nombre",
     "total_balance": "Tu balance es {balance}"
   },
   "parcel_cancel": {
@@ -326,35 +340,15 @@
     "view": "Ver"
   },
   "settings": {
-    "approve_mana":
-      "Autorizar al {marketplace_contract_link} a operar MANA por tu cuenta",
-    "approve_mana_check":
-      "Marcando autoriza el uso de MANA al contrato de Mercado",
-    "approve_mortgage_mana":
-      "Autorice a {mortgage_contract_link} para operar MANA en su nombre",
-    "approve_mortgage_rcn":
-      "Autorice el {mortgage_contract_link} para operar RCN en su nombre",
     "authorization": "Autorización",
-    "authorize":
-      "Autorizar al {marketplace_contract_link} a operar LAND por tu cuenta",
-    "authorize_land_check":
-      "Marcando autoriza el uso de LAND al contrato de Mercado",
-    "disapprove_mana_check":
-      "Desmarcando desautoriza el uso de MANA al contrato de Mercado",
-    "mana_approved":
-      "Has autorizado al {marketplace_contract_link} a operar MANA por tu cuenta",
-    "marketplace_contract": "Contrato de Mercado",
-    "mortgage_helper_contract": "Contrato de creador hipotecario",
-    "mortgage_manager_contract": "Contrato de administrador hipotecario",
-    "pending_tx": "Tienes una transacción pendiente",
-    "unauthorize_land_check":
-      "Desmarcando desautoriza el uso de LAND al contrato de Mercado",
-    "you_approved_mortgage_mana":
-      "Usted ha autorizado el {mortgage_contract_link} para operar MANA en su nombre",
-    "you_approved_mortgage_rcn":
-      "Usted ha autorizado {mortgage_contract_link} para operar RCN en su nombre",
-    "you_authorized":
-      "Has autorizado al {marketplace_contract_link} a operar LAND por tu cuenta"
+    "authorization_error":
+      "No pudimos cargar sus autorizaciones, por favor intente de nuevo",
+    "authorization_error_contact":
+      "Si el error persiste no dudes en contactar con nosotros.",
+    "for_buying": "Por comprar",
+    "for_selling": "Para la venta de",
+    "legacy_authorization": "Autorización heredada",
+    "pending_tx": "Tienes una transacción pendiente"
   },
   "sign_in": {
     "account_unlocked": "Revisa que tu cuenta esté desbloqueada.",
@@ -369,10 +363,6 @@
     }
   },
   "transaction": {
-    "approved":
-      "Has autorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
-    "authorize":
-      "Has {action} al {marketplace_contract_link} para operar LAND por tu cuenta.",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "cancel": "Has cancelado {publication_link} de {parcel_link}",
@@ -382,8 +372,6 @@
     "create_estate": "Usted creó la propiedad {name}",
     "create_mortgage":
       "Solicitó una hipoteca para comprar el paquete {parcel_link}",
-    "disapproved":
-      "Has desautorizado al {marketplace_contract_link} para operar MANA por tu cuenta.",
     "dissolve_estate": "Usted disolvió la propiedad {name}",
     "edit":
       "Has editado {parcel_link} con el nombre \"{name}\" y la descripción \"{description}\"",

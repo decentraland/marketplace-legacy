@@ -16,7 +16,7 @@ export class BlockchainEvent extends Model {
 
   static getEvents() {
     const landRegistryAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
-    const marketPlaceAddress = env.get('MARKETPLACE_CONTRACT_ADDRESS')
+    const marketPlaceAddress = env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
     const mortgageHelperAddress = env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS')
     const rcnEngineAddress = env.get('RCN_ENGINE_CONTRACT_ADDRESS')
     const mortgageManagerAddress = env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')

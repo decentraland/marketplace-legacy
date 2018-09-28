@@ -38,7 +38,7 @@ import {
   CREATE_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
-import { getEstateRegistryAddress } from 'modules/wallet/utils'
+import { getContractAddress } from 'modules/wallet/utils'
 
 const INITIAL_STATE = {
   data: {},
@@ -273,7 +273,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
               estate_id: type === ADD_PARCELS ? estate.id : null,
               owner:
                 type === ADD_PARCELS
-                  ? getEstateRegistryAddress()
+                  ? getContractAddress('EstateRegistry')
                   : transaction.from
             }
           })
@@ -324,7 +324,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             return {
               ...state.data[parcelId],
               estate_id: estateId,
-              owner: getEstateRegistryAddress()
+              owner: getContractAddress('EstateRegistry')
             }
           })
 

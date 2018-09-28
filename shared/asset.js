@@ -1,7 +1,7 @@
+import { contracts } from 'decentraland-eth'
 import { isOpen } from './publication'
 import { isParcel } from './parcel'
 import { isEstate, calculateMapProps } from './estate'
-import { contracts } from 'decentraland-eth'
 
 export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
 export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'

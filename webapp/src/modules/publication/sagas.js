@@ -65,7 +65,7 @@ function* handlePublishRequest(action) {
     const priceInWei = eth.utils.toWei(price)
     const asset = yield call(() => buildAsset(id))
 
-    const marketplaceContract = eth.getContract('Marketplace')
+    const marketplaceContract = eth.getContract('LegacyMarketplace')
 
     const txHash = yield call(() =>
       marketplaceContract.createOrder(asset.id, priceInWei, expires_at)
@@ -90,7 +90,7 @@ function* handleBuyRequest(action) {
     const asset = yield call(() => buildAsset(asset_id))
     const buyer = yield select(getAddress)
 
-    const marketplaceContract = eth.getContract('Marketplace')
+    const marketplaceContract = eth.getContract('LegacyMarketplace')
     const txHash = yield call(() =>
       marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
     )
@@ -112,7 +112,7 @@ function* handleCancelSaleRequest(action) {
     const { asset_id } = action.publication
     const asset = yield call(() => buildAsset(asset_id))
 
-    const marketplaceContract = eth.getContract('Marketplace')
+    const marketplaceContract = eth.getContract('LegacyMarketplace')
     const txHash = yield call(() => marketplaceContract.cancelOrder(asset.id))
 
     yield put(cancelSaleSuccess(txHash, action.publication, asset))

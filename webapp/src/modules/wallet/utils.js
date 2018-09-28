@@ -1,24 +1,17 @@
 import { eth, contracts, wallets, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
 import { isMobile } from 'lib/utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 
 export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
     const {
       MANAToken,
       LANDRegistry,
+      LegacyMarketplace,
       Marketplace,
-      MortgageHelper,
-      MortgageManager,
-      RCNEngine,
-      ERC20Token,
       EstateRegistry
     } = contracts
-
-    const RCNToken = Object.create(
-      new ERC20Token(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
-    )
-    RCNToken.getContractName = () => 'RCNToken'
 
     const { LedgerWallet, NodeWallet } = wallets
     const { address, derivationPath } = options
@@ -28,18 +21,14 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
       contracts: [
         new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
         new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
+        new LegacyMarketplace(
+          env.get('REACT_APP_LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
+        ),
         new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
         new EstateRegistry(
           env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')
         ),
-        new MortgageHelper(
-          env.get('REACT_APP_MORTGAGE_HELPER_CONTRACT_ADDRESS')
-        ),
-        new MortgageManager(
-          env.get('REACT_APP_MORTGAGE_MANAGER_CONTRACT_ADDRESS')
-        ),
-        new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS')),
-        RCNToken
+        ...getMortgageContracts()
       ],
       wallets: isMobile()
         ? [new NodeWallet(address)]
@@ -63,50 +52,40 @@ export async function connectEthereumWallet(options = {}, retries = 0) {
   }
 }
 
+function getMortgageContracts() {
+  // Condition should be deleted when mortgages go live
+  if (!isFeatureEnabled('MORTGAGES')) return []
+
+  const { MortgageHelper, MortgageManager, RCNEngine, ERC20Token } = contracts
+
+  const RCNToken = Object.create(
+    new ERC20Token(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
+  )
+  RCNToken.getContractName = () => 'RCNToken'
+
+  return [
+    new MortgageHelper(env.get('REACT_APP_MORTGAGE_HELPER_CONTRACT_ADDRESS')),
+    new MortgageManager(env.get('REACT_APP_MORTGAGE_MANAGER_CONTRACT_ADDRESS')),
+    new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS')),
+    RCNToken
+  ]
+}
+
 export function isLedgerWallet() {
   return eth.wallet instanceof wallets.LedgerWallet
 }
 
-export function getManaToApprove() {
+export function getTokenAmountToApprove() {
   return Math.pow(2, 180)
 }
 
-export function getRCNToApprove() {
-  return Math.pow(2, 180)
-}
-
-export function getMANATokenAddress() {
-  const manaTokenContract = eth.getContract('MANAToken')
-  return manaTokenContract.address
-}
-
-export function getMarketplaceAddress() {
-  const marketplaceContract = eth.getContract('Marketplace')
-  return marketplaceContract.address
-}
-
-export function getMortgageHelperAddress() {
-  const mortgageHelperContract = eth.getContract('MortgageHelper')
-  return mortgageHelperContract.address
-}
-
-export function getMortgageManagerAddress() {
-  const mortgageManagerContract = eth.getContract('MortgageManager')
-  return mortgageManagerContract.address
-}
-
-export function getRCNEngineAddress() {
-  const rcnEngineContract = eth.getContract('RCNEngine')
-  return rcnEngineContract.address
+export function getContractAddress(contractName) {
+  const tokenContract = eth.getContract(contractName)
+  return tokenContract.address
 }
 
 export function getKyberOracleAddress() {
   return env.get('REACT_APP_KYBER_ORACLE_CONTRACT_ADDRESS')
-}
-
-export function getEstateRegistryAddress() {
-  const estateRegistry = eth.getContract('EstateRegistry')
-  return estateRegistry.address
 }
 
 export async function sendTransaction(tx) {

@@ -1,117 +1,196 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { utils } from 'decentraland-commons'
 import { Link } from 'react-router-dom'
-import { Form, Checkbox, Button } from 'semantic-ui-react'
+import { Loader, Form, Checkbox, Button } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
 import EtherscanLink from 'components/EtherscanLink'
-import TxStatus from 'components/TxStatus'
-import { t, T } from '@dapps/modules/translation/utils'
 import {
-  getMarketplaceAddress,
-  getMortgageHelperAddress,
-  getMortgageManagerAddress
-} from 'modules/wallet/utils'
+  walletType,
+  authorizationType,
+  transactionType
+} from 'components/types'
+import { t, T } from '@dapps/modules/translation/utils'
+import { getContractAddress } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
+import { token } from 'lib/token'
 import DerivationPathDropdown from './DerivationPathDropdown'
-import { isPending } from '@dapps/modules/transaction/utils'
 
 import './SettingsForm.css'
 
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
-    address: PropTypes.string,
-    balance: PropTypes.number,
+    wallet: walletType,
+    authorization: authorizationType,
     isLedgerWallet: PropTypes.bool,
-    walletDerivationPath: PropTypes.string,
+    pendingAllowTransactions: PropTypes.arrayOf(transactionType),
+    pendingApproveTransactions: PropTypes.arrayOf(transactionType),
     onDerivationPathChange: PropTypes.func,
-    manaApproved: PropTypes.number,
-    approveTransaction: PropTypes.object,
-    onManaApprovedChange: PropTypes.func,
-    isLandAuthorized: PropTypes.bool,
-    authorizeTransaction: PropTypes.object,
-    onLandAuthorizedChange: PropTypes.func,
-    isMortgageApprovedForMana: PropTypes.bool,
-    isMortgageApprovedForRCN: PropTypes.bool,
-    onMortgageApprovedForManaChange: PropTypes.func,
-    onMortgageApprovedForRCNChange: PropTypes.func,
-    approveMortgageForManaTransaction: PropTypes.object,
-    approveMortgageForRCNTransaction: PropTypes.object
+    onTokenAllowedChange: PropTypes.func,
+    onTokenApprovedChange: PropTypes.func
   }
 
   static defaultProps = {
-    address: ''
+    wallet: {},
+    authorization: {}
   }
 
-  renderMarketplaceLink() {
+  renderContractLink(contractName) {
     return (
-      <EtherscanLink address={getMarketplaceAddress()}>
-        {t('settings.marketplace_contract')}
+      <EtherscanLink address={getContractAddress(contractName)}>
+        {contractName}
       </EtherscanLink>
     )
   }
 
-  renderMortgageHelperLink() {
+  renderLoading() {
     return (
-      <EtherscanLink address={getMortgageHelperAddress()}>
-        {t('settings.mortgage_helper_contract')}
-      </EtherscanLink>
+      <Link
+        to={locations.activity()}
+        className="loader-tooltip"
+        data-balloon={t('settings.pending_tx')}
+        data-balloon-pos="up"
+        data-balloon-length="large"
+      >
+        <Loader active size="mini" />
+      </Link>
     )
   }
 
-  renderMortgageManagerLink() {
+  renderAllowance(allowance, contractName) {
+    const { pendingAllowTransactions } = this.props
+
+    return Object.keys(allowance).map(tokenContractName => (
+      <Form.Field key={tokenContractName}>
+        {this.hasTransactionPending(
+          pendingAllowTransactions,
+          contractName,
+          tokenContractName
+        ) ? (
+          this.renderLoading()
+        ) : (
+          <Checkbox
+            checked={allowance[tokenContractName] > 0}
+            onChange={this.getTokenAllowedChange(
+              contractName,
+              tokenContractName
+            )}
+          />
+        )}
+        <div className="title">{contractName}</div>
+        <div className="description">
+          <T
+            id="authorization.allow"
+            values={{
+              contract_link: this.renderContractLink(contractName),
+              symbol: token.getSymbolByContractName(tokenContractName)
+            }}
+          />
+        </div>
+      </Form.Field>
+    ))
+  }
+
+  renderApproval(approval, contractName) {
+    const { pendingApproveTransactions } = this.props
+
+    return Object.keys(approval).map(tokenContractName => (
+      <Form.Field key={tokenContractName}>
+        {this.hasTransactionPending(
+          pendingApproveTransactions,
+          contractName,
+          tokenContractName
+        ) ? (
+          this.renderLoading()
+        ) : (
+          <Checkbox
+            checked={approval[tokenContractName]}
+            onChange={this.getTokenApprovedChange(
+              contractName,
+              tokenContractName
+            )}
+          />
+        )}
+        <div className="title">{contractName}</div>
+        <div className="description">
+          <T
+            id="authorization.approve"
+            values={{
+              contract_link: this.renderContractLink(contractName),
+              symbol: token.getSymbolByContractName(tokenContractName)
+            }}
+          />
+        </div>
+      </Form.Field>
+    ))
+  }
+
+  getTokenAllowedChange(contractName, tokenContractName) {
+    return (_, data) =>
+      this.props.onTokenAllowedChange(
+        data.checked,
+        contractName,
+        tokenContractName
+      )
+  }
+
+  getTokenApprovedChange(contractName, tokenContractName) {
+    return (_, data) =>
+      this.props.onTokenApprovedChange(
+        data.checked,
+        contractName,
+        tokenContractName
+      )
+  }
+
+  filterWalletContracts(walletContracts) {
+    const contracts = {}
+
+    for (const contractName in walletContracts) {
+      if (this.isDisabledContract(contractName)) {
+        continue
+      } else {
+        contracts[contractName] = walletContracts[contractName]
+      }
+    }
+
+    return contracts
+  }
+
+  hasTransactionPending(transactions, contractName, tokenContractName) {
+    return transactions.some(
+      transaction =>
+        transaction.payload.contractName === contractName &&
+        transaction.payload.tokenContractName === tokenContractName
+    )
+  }
+
+  isDisabledContract(contractName) {
     return (
-      <EtherscanLink address={getMortgageManagerAddress()}>
-        {t('settings.mortgage_manager_contract')}
-      </EtherscanLink>
+      !isFeatureEnabled('MORTGAGES') &&
+      ['MortgageHelper', 'MortgageManager'].includes(contractName)
     )
   }
 
   render() {
     const {
-      address,
-      balance,
+      wallet,
+      authorization,
       isLedgerWallet,
-      walletDerivationPath,
-      onDerivationPathChange,
-      manaApproved,
-      approveTransaction,
-      onManaApprovedChange,
-      isLandAuthorized,
-      authorizeTransaction,
-      onLandAuthorizedChange,
-      isMortgageApprovedForMana,
-      isMortgageApprovedForRCN,
-      onMortgageApprovedForManaChange,
-      onMortgageApprovedForRCNChange,
-      approveMortgageForManaTransaction,
-      approveMortgageForRCNTransaction
+      onDerivationPathChange
     } = this.props
 
-    const isApprovePending =
-      approveTransaction && isPending(approveTransaction.status)
-    const isAuthorizePending =
-      authorizeTransaction && isPending(authorizeTransaction.status)
-    const isMortgageApprovedForManaPending =
-      approveMortgageForManaTransaction &&
-      isPending(approveMortgageForManaTransaction.status)
-    const isMortgageApprovedForRCNPending =
-      approveMortgageForRCNTransaction &&
-      isPending(approveMortgageForRCNTransaction.status)
-
-    const isTxPending =
-      isApprovePending ||
-      isAuthorizePending ||
-      isMortgageApprovedForManaPending ||
-      isMortgageApprovedForRCNPending
+    const allowances = this.filterWalletContracts(authorization.allowances)
+    const approvals = this.filterWalletContracts(authorization.approvals)
 
     return (
-      <Form className={`SettingsForm ${isTxPending ? 'tx-pending' : ''}`}>
+      <Form className="SettingsForm">
         {isLedgerWallet ? (
           <Form.Field>
             <DerivationPathDropdown
-              value={walletDerivationPath}
+              value={wallet.derivationPath}
               onChange={onDerivationPathChange}
             />
           </Form.Field>
@@ -119,14 +198,14 @@ export default class SettingsForm extends React.PureComponent {
 
         <Form.Field>
           <label htmlFor="wallet-address">{t('global.wallet_address')}</label>
-          <label id="wallet-address">{address}</label>
+          <label id="wallet-address">{wallet.address}</label>
         </Form.Field>
 
         <Form.Field>
           <label htmlFor="mana-balance">{t('global.balance')}</label>
           <div className="mana">
             <span id="mana-balance">
-              <Mana amount={balance} unit="MANA" />
+              <Mana amount={wallet.balance} unit="MANA" />
             </span>
             <span className="mana-actions">
               {isFeatureEnabled('BUY_MANA') ? (
@@ -150,142 +229,35 @@ export default class SettingsForm extends React.PureComponent {
             </span>
           </div>
         </Form.Field>
-        <div className="authorization-checks">
-          <label>{t('settings.authorization')}</label>
-          <Form.Field>
-            <Checkbox
-              checked={manaApproved > 0}
-              disabled={isApprovePending}
-              onChange={onManaApprovedChange}
-            />
-            <div className="authorize-detail">
-              {manaApproved > 0 ? (
-                <T
-                  id="settings.mana_approved"
-                  values={{
-                    marketplace_contract_link: this.renderMarketplaceLink()
-                  }}
-                />
-              ) : (
-                <T
-                  id="settings.approve_mana"
-                  values={{
-                    marketplace_contract_link: this.renderMarketplaceLink()
-                  }}
-                />
-              )}
 
-              {isApprovePending && (
-                <TxStatus.Text
-                  txHash={approveTransaction.hash}
-                  txStatus={approveTransaction.status}
-                />
-              )}
+        <div className="authorization-checks-container">
+          {utils.isEmptyObject(authorization) ? (
+            <div className="authorization-checks">
+              <label>{t('settings.authorization')}</label>
+              <p>
+                <T id="settings.authorization_error" />
+                <br />
+                <T id="settings.authorization_error_contact" />
+              </p>
             </div>
-          </Form.Field>
+          ) : (
+            <div className="row">
+              <div className="authorization-checks">
+                <label>{t('settings.for_buying')}</label>
 
-          <Form.Field>
-            <Checkbox
-              checked={isLandAuthorized}
-              disabled={isAuthorizePending}
-              onChange={onLandAuthorizedChange}
-            />
+                {Object.keys(allowances).map(contractName =>
+                  this.renderAllowance(allowances[contractName], contractName)
+                )}
+              </div>
+              <div className="authorization-checks">
+                <label>{t('settings.for_selling')}</label>
 
-            <div className="authorize-detail">
-              {isLandAuthorized ? (
-                <T
-                  id="settings.you_authorized"
-                  values={{
-                    marketplace_contract_link: this.renderMarketplaceLink()
-                  }}
-                />
-              ) : (
-                <T
-                  id="settings.authorize"
-                  values={{
-                    marketplace_contract_link: this.renderMarketplaceLink()
-                  }}
-                />
-              )}
-
-              {isAuthorizePending && (
-                <TxStatus.Text
-                  txHash={authorizeTransaction.hash}
-                  txStatus={authorizeTransaction.status}
-                />
-              )}
+                {Object.keys(approvals).map(contractName =>
+                  this.renderApproval(approvals[contractName], contractName)
+                )}
+              </div>
             </div>
-          </Form.Field>
-
-          {isFeatureEnabled('MORTGAGES') && (
-            <React.Fragment>
-              <Form.Field>
-                <Checkbox
-                  checked={isMortgageApprovedForMana}
-                  disabled={isMortgageApprovedForManaPending}
-                  onChange={onMortgageApprovedForManaChange}
-                />
-
-                <div className="authorize-detail">
-                  {isMortgageApprovedForMana ? (
-                    <T
-                      id="settings.you_approved_mortgage_mana"
-                      values={{
-                        mortgage_contract_link: this.renderMortgageHelperLink()
-                      }}
-                    />
-                  ) : (
-                    <T
-                      id="settings.approve_mortgage_mana"
-                      values={{
-                        mortgage_contract_link: this.renderMortgageHelperLink()
-                      }}
-                    />
-                  )}
-
-                  {isMortgageApprovedForManaPending && (
-                    <TxStatus.Text
-                      txHash={approveMortgageForManaTransaction.hash}
-                      txStatus={approveMortgageForManaTransaction.status}
-                    />
-                  )}
-                </div>
-              </Form.Field>
-
-              <Form.Field>
-                <Checkbox
-                  checked={isMortgageApprovedForRCN}
-                  disabled={isMortgageApprovedForRCNPending}
-                  onChange={onMortgageApprovedForRCNChange}
-                />
-
-                <div className="authorize-detail">
-                  {isMortgageApprovedForRCN ? (
-                    <T
-                      id="settings.you_approved_mortgage_rcn"
-                      values={{
-                        mortgage_contract_link: this.renderMortgageManagerLink()
-                      }}
-                    />
-                  ) : (
-                    <T
-                      id="settings.approve_mortgage_rcn"
-                      values={{
-                        mortgage_contract_link: this.renderMortgageManagerLink()
-                      }}
-                    />
-                  )}
-
-                  {isMortgageApprovedForRCNPending && (
-                    <TxStatus.Text
-                      txHash={approveMortgageForRCNTransaction.hash}
-                      txStatus={approveMortgageForRCNTransaction.status}
-                    />
-                  )}
-                </div>
-              </Form.Field>
-            </React.Fragment>
-          ) /* Mortgage Feature */}
+          )}
         </div>
       </Form>
     )

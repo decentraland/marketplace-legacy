@@ -22,6 +22,14 @@
     "your_estate": "您的连块土地",
     "your_parcel": "您的地块"
   },
+  "authorization": {
+    "allow": "授权{contract_link}代表您运行{symbol}",
+    "allowed": "您授权{contract_link}代表您运行{symbol}",
+    "approve": "授权{contract_link}代表您运行{symbol}",
+    "approved": "您授权{contract_link}代表您运行{symbol}",
+    "disallowed": "您未经授权{contract_link}代表您操作{symbol}",
+    "disapproved": "您未经授权{contract_link}代表您操作{symbol}"
+  },
   "buy_mana": {
     "action": "购买",
     "amount_too_big": "对于 Bancor 网络来说数额太大",
@@ -94,7 +102,6 @@
     "add": "加",
     "address_placeholder": "0x...",
     "atlas": "地图",
-    "authorized": "已授权",
     "balance": "余额",
     "blog": "博客",
     "cancel": "取消",
@@ -143,7 +150,6 @@
     "the_parcel": "包裹",
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
-    "unauthorized": "未授权",
     "undo": "撤消",
     "wallet_address": "钱包地址",
     "website": "网站"
@@ -220,12 +226,16 @@
   },
   "parcel_buy": {
     "about_to_buy": "您即将购买 {parcel_name}",
-    "approved_balance": "您能使用的余额是 {approved_balance}",
+    "allowed_balance": "你的津贴是{allowance}",
     "buy_land": "购买土地",
     "buy_mana": "{click_here}购买一些 MANA。",
-    "didnt_approve": "您没有批准使用 MANA",
+    "didnt_allow": "您尚未授权使用MANA",
+    "didnt_allow_new_marketplace": "您尚未授权新版本的Marketplace使用MANA",
     "needs_at_least": "为了购买这块土地，您至少需要 {mana} MANA。",
-    "please_approve": "请前往{settings_link}，允许虚拟市场以您的名义使用 MANA",
+    "please_allow":
+      "请转到{settings_link}并允许LegacyMarketplace合同代表您运行MANA",
+    "please_allow_new_marketplace":
+      "请转到{settings_link}并允许Marketplace合同代表您运行MANA",
     "total_balance": "您的余额是 {balance}"
   },
   "parcel_cancel": {
@@ -314,25 +324,13 @@
     "view": "查看"
   },
   "settings": {
-    "approve_mana": "授权{marketplace_contract_link}以您的名义操作 MANA",
-    "approve_mana_check": "检查虚拟市场合约使用 MANA 的授权",
-    "approve_mortgage_mana": "授权{mortgage_contract_link}代您操作 MANA",
-    "approve_mortgage_rcn": "授权{mortgage_contract_link}代您操作 RCN",
     "authorization": "授权",
-    "authorize": "授权{marketplace_contract_link}代您操作土地",
-    "authorize_land_check": "勾选并授权虚拟市场合约使用土地",
-    "disapprove_mana_check": "取消选中不授权虚拟市场合约使用 MANA",
-    "mana_approved": "您已授权{marketplace_contract_link}以您的名义操作 MANA",
-    "marketplace_contract": "虚拟市场合约",
-    "mortgage_helper_contract": "抵押创建者合约",
-    "mortgage_manager_contract": "抵押管理合约",
-    "pending_tx": "您有待处理的交易",
-    "unauthorize_land_check": "取消勾选取消授权市场合约使用虚拟土地",
-    "you_approved_mortgage_mana":
-      "您已授权{mortgage_contract_link}代表您操作 MANA",
-    "you_approved_mortgage_rcn":
-      "您已授权{mortgage_contract_link}代表您运营 RCN",
-    "you_authorized": "您已授权{marketplace_contract_link}以您的名义操作土地"
+    "authorization_error": "我们无法加载您的授权，请重试",
+    "authorization_error_contact": "如果错误仍然存​​在，请不要犹豫与我们联系",
+    "for_buying": "购买",
+    "for_selling": "出售",
+    "legacy_authorization": "遗产授权",
+    "pending_tx": "您有待处理的交易"
   },
   "sign_in": {
     "account_unlocked": "确保您的帐户已解锁",
@@ -345,8 +343,6 @@
     }
   },
   "transaction": {
-    "approved": "您授权 {marketplace_contract_link} 以您的名义操作 MANA",
-    "authorize": "您{action} {marketplace_contract_link} 以您的名义操作 LAND",
     "buy": "您购买了 {parcel_link} 地块",
     "buy_mana": "您已经买了 {mana} MANA",
     "cancel": "您取消了 {parcel_link} 上的 {publication_link}",
@@ -354,7 +350,6 @@
     "claim_mortgage_resolution": "您认领了 {parcel_link}",
     "create_estate": "您创建了连块土地 {name}",
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
-    "disapproved": "您未授权{marketplace_contract_link}以您的名义操作 MANA",
     "dissolve_estate": "你解散了连块土地 {name}",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
     "edit_estate_metadata":

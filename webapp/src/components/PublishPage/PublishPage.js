@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Container, Message } from 'semantic-ui-react'
+import { Loader, Container, Message } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Parcel from 'components/Parcel'
@@ -9,7 +9,7 @@ import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
-import { publicationType, walletType } from 'components/types'
+import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
 import { formatMana } from 'lib/utils'
@@ -20,24 +20,39 @@ import './PublishPage.css'
 export default class PublishPage extends React.PureComponent {
   static propTypes = {
     publication: publicationType,
-    wallet: walletType,
+    authorization: authorizationType,
     isTxIdle: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
+  renderLoading() {
+    return (
+      <div>
+        <Loader active size="massive" />
+      </div>
+    )
+  }
+
   render() {
     const {
-      wallet,
       x,
       y,
+      authorization,
       publication,
       isTxIdle,
+      isLoading,
       onPublish,
       onCancel
     } = this.props
 
-    const { isLandAuthorized } = wallet
+    if (isLoading) {
+      return this.renderLoading()
+    }
+
+    const { approvals } = authorization
+    const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
 
     return (
       <Parcel x={x} y={y} ownerOnly>
@@ -54,7 +69,7 @@ export default class PublishPage extends React.PureComponent {
                 />
               </Container>
             ) : null}
-            {!isLandAuthorized ? (
+            {!isMarketplaceApproved ? (
               <Container text>
                 <Message
                   warning
@@ -90,7 +105,7 @@ export default class PublishPage extends React.PureComponent {
                 isTxIdle={isTxIdle}
                 onPublish={onPublish}
                 onCancel={onCancel}
-                isDisabled={!isLandAuthorized}
+                isDisabled={!isMarketplaceApproved}
               />
               <TxStatus.Asset
                 asset={parcel}

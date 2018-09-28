@@ -1,6 +1,7 @@
 import { txUtils } from 'decentraland-eth'
 import {
   arrayOf,
+  objectOf,
   shape,
   object,
   string,
@@ -78,6 +79,7 @@ export const transactionType = shape({
   blockNumber: number,
   timestamp: number,
   status: oneOf(Object.values(txUtils.TRANSACTION_TYPES)),
+  payload: object,
   action: object,
   error: string
 })
@@ -86,11 +88,12 @@ export const walletType = shape({
   network: string, // TODO: Maybe use eth.getNetworks().map(name) to validate here
   address: string,
   balance: number,
-  approvedBalance: number,
-  isLandAuthorized: bool,
-  approveManaTransactions: arrayOf(transactionType),
-  authorizeLandTransactions: arrayOf(transactionType),
   parcels: arrayOf(parcelType).isRequired
+})
+
+export const authorizationType = shape({
+  allowances: objectOf(objectOf(number)),
+  approvals: objectOf(objectOf(bool))
 })
 
 export const transferType = shape({

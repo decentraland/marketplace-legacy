@@ -121,7 +121,7 @@ const main = {
           const id = Parcel.buildId(x, y)
           const tokenId = await Parcel.encodeTokenId(x, y)
 
-          const contract = eth.getContract('Marketplace')
+          const contract = eth.getContract('LegacyMarketplace')
           const publication = await contract.auctionByAssetId(tokenId)
 
           const pubDb = (await Publication.findByAssetId(id))[0]
@@ -372,7 +372,9 @@ if (require.main === module) {
       return eth.connect({
         contracts: [
           new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-          new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
+          new contracts.LegacyMarketplace(
+            env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
+          )
         ],
         provider: env.get('RPC_URL')
       })

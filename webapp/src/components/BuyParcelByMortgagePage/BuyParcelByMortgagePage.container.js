@@ -2,26 +2,39 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import BuyParcelByMortgagePage from './BuyParcelByMortgagePage'
-import { createMortgageRequest } from 'modules/mortgage/actions'
 import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
-import { isRequestingMortgageTransactionIdle } from 'modules/mortgage/selectors'
-import { getPublicationByCoordinate } from 'modules/publication/selectors'
+import { createMortgageRequest } from 'modules/mortgage/actions'
+import {
+  isRequestingMortgageTransactionIdle,
+  getError as getMortgageError
+} from 'modules/mortgage/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
-import { getError as getMortgageError } from 'modules/mortgage/selectors'
+import {
+  getData as getAuthorizations,
+  isLoading
+} from 'modules/authorization/selectors'
+import { getPublicationByCoordinate } from 'modules/publication/selectors'
+import BuyParcelByMortgagePage from './BuyParcelByMortgagePage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+  const wallet = getWallet(state)
+
+  let authorization
+
+  if (wallet) {
+    authorization = getAuthorizations(state)[wallet.address]
+  }
 
   return {
     x,
     y,
+    authorization,
     publication: getPublicationByCoordinate(state, x, y),
     isTxIdle: isRequestingMortgageTransactionIdle(state),
-    wallet: getWallet(state),
     isConnected: isConnected(state),
-    isLoading: isConnecting(state),
+    isLoading: isConnecting(state) || isLoading(state),
     error: getMortgageError(state)
   }
 }

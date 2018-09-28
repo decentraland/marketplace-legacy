@@ -24,6 +24,18 @@
     "your_estate": "당신의 재산",
     "your_parcel": "당신의 토지"
   },
+  "authorization": {
+    "allow": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
+    "allowed":
+      "귀하는 {contract_link}이 귀하를 대신하여 {symbol}을 운영하도록 승인했습니다",
+    "approve": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
+    "approved":
+      "귀하는 {contract_link}이 귀하를 대신하여 {symbol}을 운영하도록 승인했습니다",
+    "disallowed":
+      "당신은 {contract_link}을 당신을 대신하여 {symbol}을 조작하도록 승인하지 않았습니다.",
+    "disapproved":
+      "당신은 {contract_link}을 당신을 대신하여 {symbol}을 조작하도록 승인하지 않았습니다."
+  },
   "buy_mana": {
     "action": "더 사",
     "amount_too_big": "이 금액은 Bancor Network에 비해 너무 큽니다.",
@@ -97,7 +109,6 @@
     "add": "더하다",
     "address_placeholder": "0x...",
     "atlas": "지도",
-    "authorized": "허가",
     "balance": "밸런스",
     "blog": "블로그",
     "cancel": "취소",
@@ -146,7 +157,6 @@
     "the_parcel": "소포",
     "time_left": "남은 시간",
     "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
-    "unauthorized": "무단",
     "undo": "끄르다",
     "wallet_address": "지갑 주소",
     "website": "웹 사이트"
@@ -225,12 +235,17 @@
   },
   "parcel_buy": {
     "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
-    "approved_balance": "승인 된 잔액은 {approved_balance}입니다.",
+    "allowed_balance": "수당은 {allowance}입니다.",
     "buy_land": "토지 구입",
     "buy_mana": "MANA를 사기 위해 {click_here}.",
-    "didnt_approve": "당신은 MANA를 승인하지 않았습니다",
+    "didnt_allow": "MANA 사용 권한을 허가하지 않았습니다.",
+    "didnt_allow_new_marketplace":
+      "마켓 플레이스의 새 버전에 대한 MANA 사용을 승인하지 않았습니다.",
     "needs_at_least": "이 토지를 사려면 적어도 {mana}가 필요합니다.",
-    "please_approve": "{settings_link} (으)로 이동하여 MANA를 승인하십시오.",
+    "please_allow":
+      "{settings_link}로 이동하여 LegacyMarketplace 계약이 MANA를 대신하여 작동하도록 허용하십시오.",
+    "please_allow_new_marketplace":
+      "{settings_link}로 이동하여 마켓 플레이스 계약이 귀하를 대신하여 MANA를 운영하도록 허용하십시오.",
     "total_balance": "Your balance is {balance}"
   },
   "parcel_cancel": {
@@ -321,32 +336,14 @@
     "view": "보기"
   },
   "settings": {
-    "approve_mana":
-      "{marketplace_contract_link}에게 MANA를 대신하여 귀하를 대신하여 운영하도록 승인합니다.",
-    "approve_mana_check": "{mana_to_approve} MANA 승인을 위해 확인하십시오.",
-    "approve_mortgage_mana":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 MANA를 운영하도록 승인하십시오.",
-    "approve_mortgage_rcn":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인하십시오.",
     "authorization": "권한 부여",
-    "authorize":
-      "{marketplace_contract_link}에게 귀하를 대신하여 토지를 운영하도록 승인하십시오.",
-    "authorize_land_check": "선택하면 시장 계약에 대한 토지 사용을 허가합니다",
-    "disapprove_mana_check":
-      "선택 해제하면 마켓 플레이스 계약에 대한 MANA 사용 권한이 승인되지 않음",
-    "mana_approved":
-      "{marketplace_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "marketplace_contract": "시장 계약",
-    "mortgage_helper_contract": "모기지 크리에이터 계약",
-    "mortgage_manager_contract": "모기지 매니저 계약",
-    "pending_tx": "보류중인 거래가 있습니다.",
-    "unauthorize_land_check":
-      "선택 해제하면 시장 계약에 대한 토지 사용 권한이 없어 집니다",
-    "you_approved_mortgage_mana":
-      "{mortgage_contract_link}이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "you_approved_mortgage_rcn":
-      "{mortgage_contract_link}이 (가) 귀하를 대신하여 RCN을 운영하도록 승인했습니다.",
-    "you_authorized": "{marketplace_contract_link}을(를) 승인했습니다."
+    "authorization_error": "승인을로드 할 수 없습니다. 다시 시도하십시오.",
+    "authorization_error_contact":
+      "오류가 지속되면 언제든지 Google에 문의하십시오.",
+    "for_buying": "구매를 위해",
+    "for_selling": "판매용",
+    "legacy_authorization": "레거시 인증",
+    "pending_tx": "보류중인 거래가 있습니다."
   },
   "sign_in": {
     "account_unlocked": "계정이 잠금 해제되어 있는지 확인하십시오.",
@@ -360,10 +357,6 @@
     }
   },
   "transaction": {
-    "approved":
-      "{marketplace_contract_link} 이 (가) MANA를 대신하여 귀하를 대신하여 운영하도록 승인했습니다.",
-    "authorize":
-      "귀하를 대신하여 토지를 운영하기위한 {action} {marketplace_contract_link} 이 있습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}의 {publication_link}을 취소했습니다.",
@@ -371,8 +364,6 @@
     "claim_mortgage_resolution": "당신은 {parcel_link}을 주장했습니다.",
     "create_estate": "부동산 {name}을 만들었습니다.",
     "create_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 요청했습니다.",
-    "disapproved":
-      "귀하를 대신하여 {marketplace_contract_link}의 MANA 운영을 허가받지 않았습니다.",
     "dissolve_estate": "너는 재산을 해산했다. {name}",
     "edit":
       "{parcel_link}을(를) \"{name}\" 이름 및 설명 \"{description}\" (으)로 수정했습니다.",

@@ -1,32 +1,54 @@
 import { connect } from 'react-redux'
 
+import { isPending as isTransactionPending } from '@dapps/modules/transaction/utils'
 import { getWallet, isConnecting, isConnected } from 'modules/wallet/selectors'
 import {
-  approveManaRequest,
-  authorizeLandRequest,
-  updateDerivationPath,
-  approveMortgageForManaRequest,
-  approveMortgageForRCNRequest
-} from 'modules/wallet/actions'
+  getData as getAuthorizations,
+  isLoading,
+  getAllowTransactions,
+  getApproveTransactions
+} from 'modules/authorization/selectors'
+import {
+  allowTokenRequest,
+  approveTokenRequest
+} from 'modules/authorization/actions'
+import { updateDerivationPath } from 'modules/wallet/actions'
 import SettingsPage from './SettingsPage'
 
 const mapState = state => {
+  const wallet = getWallet(state)
+
+  let authorization
+  let pendingAllowTransactions = []
+  let pendingApproveTransactions = []
+
+  if (wallet) {
+    authorization = getAuthorizations(state)[wallet.address]
+    pendingAllowTransactions = getAllowTransactions(state).filter(transaction =>
+      isTransactionPending(transaction.status)
+    )
+    pendingApproveTransactions = getApproveTransactions(state).filter(
+      transaction => isTransactionPending(transaction.status)
+    )
+  }
+
   return {
-    wallet: getWallet(state),
-    isLoading: isConnecting(state),
+    wallet,
+    authorization,
+    pendingAllowTransactions,
+    pendingApproveTransactions,
+    isLoading: isConnecting(state) || isLoading(state),
     isConnected: isConnected(state)
   }
 }
 
 const mapDispatch = dispatch => ({
-  onApproveMana: mana => dispatch(approveManaRequest(mana)),
-  onAuthorizeLand: isAuthorized => dispatch(authorizeLandRequest(isAuthorized)),
   onUpdateDerivationPath: derivationPath =>
     dispatch(updateDerivationPath(derivationPath)),
-  onAuthorizeMortgageForMana: isAuthorized =>
-    dispatch(approveMortgageForManaRequest(isAuthorized)),
-  onAuthorizeMortgageForRCN: isAuthorized =>
-    dispatch(approveMortgageForRCNRequest(isAuthorized))
+  onAllowToken: (amount, contractName, tokenContractName) =>
+    dispatch(allowTokenRequest(amount, contractName, tokenContractName)),
+  onApproveToken: (isApproved, contractName, tokenContractName) =>
+    dispatch(approveTokenRequest(isApproved, contractName, tokenContractName))
 })
 
 export default connect(mapState, mapDispatch)(SettingsPage)

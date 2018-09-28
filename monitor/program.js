@@ -17,7 +17,9 @@ export async function main(getActions = createMonitorActions) {
   await eth.connect({
     contracts: [
       new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-      new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS')),
+      new contracts.LegacyMarketplace(
+        env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
+      ),
       new contracts.MortgageHelper(env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS')),
       new contracts.RCNEngine(env.get('RCN_ENGINE_CONTRACT_ADDRESS')),
       new contracts.MortgageManager(
@@ -32,7 +34,11 @@ export async function main(getActions = createMonitorActions) {
   const monitorActions = getActions(
     handlers,
     {
-      Marketplace: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled'],
+      LegacyMarketplace: [
+        'AuctionCreated',
+        'AuctionSuccessful',
+        'AuctionCancelled'
+      ],
       LANDRegistry: ['Update', 'Transfer', 'EstateRegistrySet'],
       MortgageHelper: ['NewMortgage'],
       MortgageManager: [

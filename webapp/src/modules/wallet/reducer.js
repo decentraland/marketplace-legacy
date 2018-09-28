@@ -2,17 +2,13 @@ import {
   CONNECT_WALLET_REQUEST,
   CONNECT_WALLET_SUCCESS,
   CONNECT_WALLET_FAILURE,
-  APPROVE_MANA_SUCCESS,
-  AUTHORIZE_LAND_SUCCESS,
   TRANSFER_MANA_SUCCESS,
   UPDATE_DERIVATION_PATH,
   UPDATE_BALANCE,
   UPDATE_ETH_BALANCE,
   BUY_MANA_REQUEST,
   BUY_MANA_SUCCESS,
-  BUY_MANA_FAILURE,
-  APPROVE_MORTGAGE_FOR_MANA_SUCCESS,
-  APPROVE_MORTGAGE_FOR_RCN_SUCCESS
+  BUY_MANA_FAILURE
 } from './actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import {
@@ -24,16 +20,14 @@ import { BUY_SUCCESS } from 'modules/publication/actions'
 
 const INITIAL_STATE = {
   data: {
+    locale: null,
     network: null,
     address: null,
     balance: null,
-    ethBalance: null,
-    approvedBalance: null,
-    isLandAuthorized: null,
     derivationPath: null,
-    locale: null,
-    isMortgageApprovedForMana: null,
-    isMortgageApprovedForRCN: null
+    ethBalance: null,
+    allowances: {},
+    approvals: {}
   },
   loading: [],
   error: null
@@ -68,30 +62,13 @@ export function walletReducer(state = INITIAL_STATE, action) {
       const { transaction } = action.payload
 
       switch (transaction.actionType) {
-        case APPROVE_MANA_SUCCESS:
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              approvedBalance: transaction.payload.mana
-            }
-          }
-        case AUTHORIZE_LAND_SUCCESS:
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              isLandAuthorized: transaction.payload.isAuthorized
-            }
-          }
         case TRANSFER_MANA_SUCCESS: {
           const mana = parseFloat(transaction.payload.mana)
           return {
             ...state,
             data: {
               ...state.data,
-              balance: state.data.balance - mana,
-              approvedBalance: state.data.approvedBalance - mana
+              balance: state.data.balance - mana
             }
           }
         }
@@ -101,27 +78,10 @@ export function walletReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              balance: state.data.balance - price,
-              approvedBalance: state.data.approvedBalance - price
+              balance: state.data.balance - price
             }
           }
         }
-        case APPROVE_MORTGAGE_FOR_MANA_SUCCESS:
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              isMortgageApprovedForMana: transaction.payload.mana > 0
-            }
-          }
-        case APPROVE_MORTGAGE_FOR_RCN_SUCCESS:
-          return {
-            ...state,
-            data: {
-              ...state.data,
-              isMortgageApprovedForRCN: transaction.payload.rcn > 0
-            }
-          }
         default:
           return state
       }

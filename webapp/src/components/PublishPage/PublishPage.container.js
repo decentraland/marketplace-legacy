@@ -7,20 +7,32 @@ import {
   getPublicationByCoordinate,
   isPublishingIdle
 } from 'modules/publication/selectors'
-import { getWallet } from 'modules/wallet/selectors'
+import { getWallet, isConnecting } from 'modules/wallet/selectors'
+import {
+  getData as getAuthorizations,
+  isLoading
+} from 'modules/authorization/selectors'
 import { publishRequest } from 'modules/publication/actions'
 
 import PublishPage from './PublishPage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
+  const wallet = getWallet(state)
+
+  let authorization
+
+  if (wallet) {
+    authorization = getAuthorizations(state)[wallet.address]
+  }
 
   return {
     x,
     y,
+    authorization,
+    isLoading: isConnecting(state) || isLoading(state),
     publication: getPublicationByCoordinate(state, x, y),
-    isTxIdle: isPublishingIdle(state),
-    wallet: getWallet(state)
+    isTxIdle: isPublishingIdle(state)
   }
 }
 
