@@ -50,7 +50,7 @@ export default class MortgageForm extends React.PureComponent {
     this.debouncedFetchMortgageData = debounce(this.fetchMortgageData, 400)
 
     this.state = {
-      amount: '',
+      amount: 0,
       duration: '',
       payableAt: '',
       expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
@@ -64,7 +64,7 @@ export default class MortgageForm extends React.PureComponent {
   handleChangeNumber = (e, key) => {
     const value = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
-      : ''
+      : 0
     this.setState(
       {
         [key]: value,
@@ -98,7 +98,7 @@ export default class MortgageForm extends React.PureComponent {
   handleChangeAmount = e => {
     const amount = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
-      : ''
+      : 0
     const { balance } = this.props
     const requiredDeposit = this.getRequiredDeposit(amount)
 

@@ -11,17 +11,16 @@ import MortgageActions from './MortgageActions'
 
 const mapState = () => ({})
 
-const mapDispatch = (dispatch, { mortgage }) => ({
-  onCancel: () =>
-    dispatch(cancelMortgageRequest(mortgage.mortgage_id, mortgage.asset_id)),
-  onPay: () =>
-    dispatch(
-      push(locations.payMortgageParcel(...splitCoordinate(mortgage.asset_id)))
-    ),
-  onClaim: () =>
-    dispatch(
-      claimMortgageResolutionRequest(mortgage.loan_id, mortgage.asset_id)
-    )
-})
-
+const mapDispatch = (dispatch, { mortgage }) => {
+  const [x, y] = splitCoordinate(mortgage.asset_id)
+  return {
+    onCancel: () =>
+      dispatch(cancelMortgageRequest(mortgage.mortgage_id, mortgage.asset_id)),
+    onPay: () => dispatch(push(locations.payMortgageParcel(x, y))),
+    onClaim: () =>
+      dispatch(
+        claimMortgageResolutionRequest(mortgage.loan_id, mortgage.asset_id)
+      )
+  }
+}
 export default connect(mapState, mapDispatch)(MortgageActions)
