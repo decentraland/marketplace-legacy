@@ -10,7 +10,7 @@ import AddressBlock from 'components/AddressBlock'
 import { parcelType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
-import { preventDefault, formatDate } from 'lib/utils'
+import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { fetchMortgageData } from './utils'
 
 import './MortgageForm.css'
@@ -346,7 +346,9 @@ export default class MortgageForm extends React.PureComponent {
         {requiredDeposit > 0 && (
           <div>
             <p className="deposit">
-              {t('mortgage.required_deposit', { deposit: requiredDeposit })}
+              {t('mortgage.required_deposit', {
+                deposit: formatMana(requiredDeposit)
+              })}
             </p>
           </div>
         )}

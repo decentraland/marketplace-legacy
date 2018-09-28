@@ -230,7 +230,7 @@
     "request_land":
       "{parcel_name}への担保を{parcel_price}価値で申請しようとしています。",
     "requested": "申請しました。",
-    "required_deposit": "必要なデポジット：{deposit} MANA"
+    "required_deposit": "必要なデポジット：{deposit}"
   },
   "parcel": {
     "no_description": "説明文未設定",

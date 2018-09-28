@@ -229,7 +229,7 @@
     "request_land":
       "Está a punto de solicitar una hipoteca por {parcel_name} valorada en {parcel_price}",
     "requested": "Pedido",
-    "required_deposit": "Depósito requerido: {deposit} MANA"
+    "required_deposit": "Depósito requerido: {deposit}"
   },
   "parcel": {
     "no_description": "Sin descripción",

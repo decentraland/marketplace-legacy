@@ -234,7 +234,7 @@
     "request_land":
       "Vous êtes sur le point de demander un prêt hypothécaire pour {parcel_name} évalué dans {parcel_price}",
     "requested": "Demandé",
-    "required_deposit": "Dépôt requis: {deposit} MANA"
+    "required_deposit": "Dépôt requis: {deposit}"
   },
   "parcel": {
     "no_description": "Sans description",

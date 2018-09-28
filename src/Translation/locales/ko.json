@@ -228,7 +228,7 @@
     "request_land":
       "{parcel_name}에 대한 모기지를 {parcel_price}에 요청하려고합니다.",
     "requested": "요청 됨",
-    "required_deposit": "필수 보증금 : {deposit} MANA"
+    "required_deposit": "필수 보증금 : {deposit}"
   },
   "parcel": {
     "no_description": "설명 없음",

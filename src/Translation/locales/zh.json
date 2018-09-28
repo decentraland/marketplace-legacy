@@ -219,7 +219,7 @@
     "request_land":
       "您将为 {parcel_name} 地块以 {parcel_price} 的价格申请抵押贷款",
     "requested": "已申请",
-    "required_deposit": "所需押金：{deposit} MANA"
+    "required_deposit": "所需押金：{deposit}"
   },
   "parcel": {
     "no_description": "没有说明",

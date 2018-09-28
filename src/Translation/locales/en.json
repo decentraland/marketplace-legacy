@@ -229,7 +229,7 @@
     "request_land":
       "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
     "requested": "Requested",
-    "required_deposit": "Required deposit: {deposit} MANA"
+    "required_deposit": "Required deposit: {deposit}"
   },
   "parcel": {
     "no_description": "No description",
