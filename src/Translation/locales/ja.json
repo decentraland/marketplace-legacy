@@ -339,6 +339,9 @@
   },
   "settings": {
     "authorization": "承認",
+    "authorization_error": "許可を読み込めませんでした。もう一度お試しください",
+    "authorization_error_contact":
+      "エラーが解決しない場合は、お気軽にお問い合わせください",
     "for_buying": "購入のために",
     "for_selling": "販売のため",
     "legacy_authorization": "従来の承認",

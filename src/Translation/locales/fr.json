@@ -347,6 +347,10 @@
   },
   "settings": {
     "authorization": "Autorisation",
+    "authorization_error":
+      "Nous n'avons pas pu charger vos autorisations. Veuillez réessayer.",
+    "authorization_error_contact":
+      "Si l'erreur persiste, n'hésitez pas à nous contacter",
     "for_buying": "Pour acheter",
     "for_selling": "Pour vendre",
     "legacy_authorization": "Autorisation de legs",

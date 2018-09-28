@@ -56,12 +56,12 @@ export default class SettingsPage extends React.PureComponent {
 
   render() {
     const {
-      isLoading,
-      isConnected,
       wallet,
       authorization,
       pendingAllowTransactions,
-      pendingApproveTransactions
+      pendingApproveTransactions,
+      isLoading,
+      isConnected
     } = this.props
 
     if (isLoading) {

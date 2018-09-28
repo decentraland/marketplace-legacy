@@ -339,6 +339,10 @@
   },
   "settings": {
     "authorization": "Authorization",
+    "authorization_error":
+      "We couldn't load your authorizations, please try again",
+    "authorization_error_contact":
+      "If the error persist don't hesitate to contact us",
     "for_buying": "For buying",
     "for_selling": "For selling",
     "legacy_authorization": "Legacy authorization",

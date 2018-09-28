@@ -337,6 +337,9 @@
   },
   "settings": {
     "authorization": "권한 부여",
+    "authorization_error": "승인을로드 할 수 없습니다. 다시 시도하십시오.",
+    "authorization_error_contact":
+      "오류가 지속되면 언제든지 Google에 문의하십시오.",
     "for_buying": "구매를 위해",
     "for_selling": "판매용",
     "legacy_authorization": "레거시 인증",

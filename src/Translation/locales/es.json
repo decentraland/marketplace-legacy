@@ -341,6 +341,10 @@
   },
   "settings": {
     "authorization": "Autorización",
+    "authorization_error":
+      "No pudimos cargar sus autorizaciones, por favor intente de nuevo",
+    "authorization_error_contact":
+      "Si el error persiste no dudes en contactar con nosotros.",
     "for_buying": "Por comprar",
     "for_selling": "Para la venta de",
     "legacy_authorization": "Autorización heredada",

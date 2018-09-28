@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { utils } from 'decentraland-commons'
 import { Link } from 'react-router-dom'
 import { Loader, Form, Checkbox, Button } from 'semantic-ui-react'
 
@@ -230,22 +231,33 @@ export default class SettingsForm extends React.PureComponent {
         </Form.Field>
 
         <div className="authorization-checks-container">
-          <div className="row">
+          {utils.isEmptyObject(authorization) ? (
             <div className="authorization-checks">
-              <label>{t('settings.for_buying')}</label>
-
-              {Object.keys(allowances).map(contractName =>
-                this.renderAllowance(allowances[contractName], contractName)
-              )}
+              <label>{t('settings.authorization')}</label>
+              <p>
+                <T id="settings.authorization_error" />
+                <br />
+                <T id="settings.authorization_error_contact" />
+              </p>
             </div>
-            <div className="authorization-checks">
-              <label>{t('settings.for_selling')}</label>
+          ) : (
+            <div className="row">
+              <div className="authorization-checks">
+                <label>{t('settings.for_buying')}</label>
 
-              {Object.keys(approvals).map(contractName =>
-                this.renderApproval(approvals[contractName], contractName)
-              )}
+                {Object.keys(allowances).map(contractName =>
+                  this.renderAllowance(allowances[contractName], contractName)
+                )}
+              </div>
+              <div className="authorization-checks">
+                <label>{t('settings.for_selling')}</label>
+
+                {Object.keys(approvals).map(contractName =>
+                  this.renderApproval(approvals[contractName], contractName)
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </Form>
     )

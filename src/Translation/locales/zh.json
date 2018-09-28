@@ -325,6 +325,8 @@
   },
   "settings": {
     "authorization": "授权",
+    "authorization_error": "我们无法加载您的授权，请重试",
+    "authorization_error_contact": "如果错误仍然存​​在，请不要犹豫与我们联系",
     "for_buying": "购买",
     "for_selling": "出售",
     "legacy_authorization": "遗产授权",
