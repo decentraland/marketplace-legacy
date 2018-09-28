@@ -196,6 +196,7 @@
     "duration_placeholder": "Duration in days",
     "errors": {
       "amount_minimum": "Amount should be greater than {amount}",
+      "deposit_gt_balance": "Required deposit is greater than your balance",
       "duration_gte_payable":
         "Duration should be greater or equal than payable at days",
       "maximum_interest_rate": "The rate should be lower than {maximum}",
@@ -227,7 +228,8 @@
     "request": "Requesting a Mortgage",
     "request_land":
       "You are about to request a mortgage for {parcel_name} valued in {parcel_price}",
-    "requested": "Requested"
+    "requested": "Requested",
+    "required_deposit": "Required deposit: {deposit} MANA"
   },
   "parcel": {
     "no_description": "No description",
