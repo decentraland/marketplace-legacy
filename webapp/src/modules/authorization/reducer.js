@@ -56,7 +56,7 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        error: action.error
+        error: action.payload.error
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {
