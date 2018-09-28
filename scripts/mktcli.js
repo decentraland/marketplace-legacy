@@ -372,7 +372,9 @@ if (require.main === module) {
       return eth.connect({
         contracts: [
           new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-          new contracts.Marketplace(env.get('MARKETPLACE_CONTRACT_ADDRESS'))
+          new contracts.LegacyMarketplace(
+            env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
+          )
         ],
         provider: env.get('RPC_URL')
       })
