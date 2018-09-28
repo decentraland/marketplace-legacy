@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 
+import { isPending as isTransactionPending } from '@dapps/modules/transaction/utils'
 import { getWallet, isConnecting, isConnected } from 'modules/wallet/selectors'
 import {
   getData as getAuthorizations,
@@ -18,20 +19,24 @@ const mapState = state => {
   const wallet = getWallet(state)
 
   let authorization
-  let allowTransactions = []
-  let approveTransactions = []
+  let pendingAllowTransactions = []
+  let pendingApproveTransactions = []
 
   if (wallet) {
     authorization = getAuthorizations(state)[wallet.address]
-    allowTransactions = getAllowTransactions(state)
-    approveTransactions = getApproveTransactions(state)
+    pendingAllowTransactions = getAllowTransactions(state).filter(transaction =>
+      isTransactionPending(transaction.status)
+    )
+    pendingApproveTransactions = getApproveTransactions(state).filter(
+      transaction => isTransactionPending(transaction.status)
+    )
   }
 
   return {
     wallet,
     authorization,
-    allowTransactions,
-    approveTransactions,
+    pendingAllowTransactions,
+    pendingApproveTransactions,
     isLoading: isConnecting(state) || isLoading(state),
     isConnected: isConnected(state)
   }

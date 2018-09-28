@@ -11,7 +11,6 @@ import {
   transactionType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { isPending as isTransactionPending } from '@dapps/modules/transaction/utils'
 import { isLedgerWallet, getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
 
@@ -21,8 +20,8 @@ export default class SettingsPage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
     authorization: authorizationType,
-    allowTransactions: PropTypes.arrayOf(transactionType),
-    approveTransactions: PropTypes.arrayOf(transactionType),
+    pendingAllowTransactions: PropTypes.arrayOf(transactionType),
+    pendingApproveTransactions: PropTypes.arrayOf(transactionType),
     isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
     onUpdateDerivationPath: PropTypes.func,
@@ -47,16 +46,6 @@ export default class SettingsPage extends React.PureComponent {
     this.props.onApproveToken(checked, contractName, tokenContractName)
   }
 
-  getPendingTransactions() {
-    const { allowTransactions, approveTransactions } = this.props
-    const isPending = transaction => isTransactionPending(transaction.status)
-
-    return {
-      pendingAllowTransactions: allowTransactions.filter(isPending),
-      pendingApproveTransactions: approveTransactions.filter(isPending)
-    }
-  }
-
   renderLoading() {
     return (
       <div>
@@ -66,16 +55,18 @@ export default class SettingsPage extends React.PureComponent {
   }
 
   render() {
-    const { isLoading, isConnected, wallet, authorization } = this.props
+    const {
+      isLoading,
+      isConnected,
+      wallet,
+      authorization,
+      pendingAllowTransactions,
+      pendingApproveTransactions
+    } = this.props
 
     if (isLoading) {
       return this.renderLoading()
     }
-
-    const {
-      pendingAllowTransactions,
-      pendingApproveTransactions
-    } = this.getPendingTransactions()
 
     return (
       <div className="SettingsPage">
