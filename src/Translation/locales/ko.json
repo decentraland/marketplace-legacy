@@ -157,6 +157,7 @@
     "the_parcel": "소포",
     "time_left": "남은 시간",
     "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
+    "unauthorized": "무단",
     "undo": "끄르다",
     "wallet_address": "지갑 주소",
     "website": "웹 사이트"
@@ -387,6 +388,10 @@
     "transfer": "당신은 {asset_type} {asset_link}을 {owner_link}로 옮겼습니다.",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다."
   },
+  "transaction_confirmations": {
+    "count": "{confirmations_count} 가지 확인",
+    "waiting": "확인을 기다리는 중"
+  },
   "transaction_status": {
     "activity_page": "활동 페이지",
     "idle": {
@@ -401,6 +406,23 @@
       "failed": "거래가 실패했습니다. 새 거래를 보낼 수 있습니다.",
       "pending": "거래가 확인되기를 기다리고 있습니다."
     }
+  },
+  "transaction_tooltips": {
+    "dropped": "이 트랜잭션은 네트워크에 의해 삭제되었습니다. ",
+    "loading": "거래 상태를 가져 오는 중입니다. ",
+    "queued":
+      "이전 보류중인 거래가 있기 때문에이 거래를 처리 할 수 ​​없습니다.",
+    "replaced":
+      "이 트랜잭션과 동일한 논스를 가진 다른 트랜잭션이 대신 채굴되었습니다."
+  },
+  "transaction_types": {
+    "confirmed": "수락 됨",
+    "dropped": "떨어 뜨린",
+    "loading": "로드 중",
+    "pending": "대기중인",
+    "queued": "대기 중",
+    "replaced": "대체 됨",
+    "reverted": "실패한"
   },
   "transfer_estate": {
     "about_to_transfer": "부동산 {name}을 양도하려합니다.",

@@ -1,53 +1,73 @@
 .Transaction {
   word-break: break-word;
   font-size: 15px;
+}
+
+.Transaction.with-link:hover {
+  background-color: var(--dark-gray);
+  border-radius: 10px;
   cursor: pointer;
 }
 
-.Transaction:hover {
-  background-color: var(--dark-gray);
-  border-radius: 10px;
+.Transaction .transaction-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.Transaction .ui.loader {
-  left: 12px;
+.Transaction .transaction-container-left {
+  display: flex;
+  align-items: center;
+  flex: 1 0 auto;
+  opacity: 0.5;
 }
 
-.Transaction .mini.circle {
-  width: 8px;
-  height: 8px;
-  border-radius: 50px;
-  top: 46%;
-  left: 12px;
-  position: absolute;
-  background-color: var(--primary);
+.Transaction.with-link .transaction-container-left {
+  opacity: 1;
+}
+
+.Transaction .transaction-container-right {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.Transaction .transaction-text-container {
+  display: flex;
+  align-items: center;
+  font-weight: 100;
+  font-size: 14px;
 }
 
 .Transaction .transaction-text {
-  height: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.Transaction .parcels-link{
+.Transaction .parcels-link {
   margin-right: 10px;
 }
 
-.Transaction .parcels-link:last-child{
+.Transaction .parcels-link:last-child {
   margin-right: 0;
 }
 
 .Transaction .transaction-avatar {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   margin-right: 15px;
-  margin-left: 15px;
   float: left;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
+  flex: none;
 }
 
 .Transaction .transaction-timestamp {
   display: inline-block;
   color: var(--gray);
+  margin-left: 8px;
 }
 
 .Transaction .transaction-icon {
@@ -57,17 +77,26 @@
 }
 
 @media (max-width: 768px) {
-  .Transaction .ui.loader,
-  .Transaction .mini.circle {
-    display: none;
+  .Transaction .transaction-timestamp {
+    margin-left: 0px;
   }
+
   .Transaction .transaction-avatar {
     margin-left: 0px;
   }
-}
 
-@media (min-width: 768px) {
+  .Transaction .transaction-text-container {
+    flex-flow: column;
+    align-items: flex-start;
+  }
+
   .Transaction .transaction-text {
-    margin-top: 12px;
+    width: 100%;
+  }
+  .Transaction .transaction-text-container {
+    width: calc(100% - 108px);
+  }
+  .Transaction .transaction-container-left {
+    width: calc(100% - 196px);
   }
 }

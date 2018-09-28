@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { txUtils } from 'decentraland-eth'
 
 import { locations } from 'locations'
+import { isPending as isTransactionPending } from '@dapps/modules/transaction/utils'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import './TxStatusText.css'
@@ -17,7 +18,7 @@ export default class TxStatusText extends React.PureComponent {
   render() {
     const { txStatus } = this.props
 
-    const isPending = txStatus === txUtils.TRANSACTION_TYPES.pending
+    const isPending = isTransactionPending(txStatus)
     const isFailure = txStatus === txUtils.TRANSACTION_TYPES.reverted
 
     return isPending || isFailure ? (

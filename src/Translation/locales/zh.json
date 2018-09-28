@@ -150,6 +150,7 @@
     "the_parcel": "包裹",
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
+    "unauthorized": "擅自",
     "undo": "撤消",
     "wallet_address": "钱包地址",
     "website": "网站"
@@ -365,6 +366,10 @@
     "transfer": "您将{asset_type} {asset_link}转移到{owner_link}",
     "transfer_mana": "{mana} 个 MANA 已转帐至{address_link}"
   },
+  "transaction_confirmations": {
+    "count": "{confirmations_count}个确认",
+    "waiting": "等待确认"
+  },
   "transaction_status": {
     "activity_page": "活动页面",
     "idle": {
@@ -379,6 +384,21 @@
       "failed": "交易失败，您可以发起新的交易重试。",
       "pending": "交易正在等待确认。"
     }
+  },
+  "transaction_tooltips": {
+    "dropped": "此事务已被网络删除。",
+    "loading": "获取交易状态。",
+    "queued": "无法处理此事务，因为存在先前挂起的事务",
+    "replaced": "另一个具有与此相同的nonce的事务被挖掘"
+  },
+  "transaction_types": {
+    "confirmed": "公认",
+    "dropped": "下降",
+    "loading": "载入中",
+    "pending": "有待",
+    "queued": "排队",
+    "replaced": "更换",
+    "reverted": "失败"
   },
   "transfer_estate": {
     "about_to_transfer": "您即将转让连块土地 {name}。",

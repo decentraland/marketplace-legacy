@@ -1,4 +1,4 @@
-import { txUtils } from 'decentraland-eth'
+import { isPending } from '@dapps/modules/transaction/utils'
 import { buildCoordinate, isParcel } from 'shared/parcel'
 
 export function isAssetPendingTransaction(asset, tx) {
@@ -8,8 +8,5 @@ export function isAssetPendingTransaction(asset, tx) {
     ? buildCoordinate(tx.payload.x, tx.payload.y)
     : tx.payload.id
 
-  return (
-    tx.status === txUtils.TRANSACTION_TYPES.pending &&
-    payloadAssetId === asset.id
-  )
+  return isPending(tx.status) && payloadAssetId === asset.id
 }
