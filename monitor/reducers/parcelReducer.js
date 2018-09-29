@@ -27,6 +27,25 @@ export async function parcelReducer(events, event) {
       }
       break
     }
+    case events.parcelUpdateOperator: {
+      const { operator } = event.args
+      try {
+        log.info(
+          `[${name}] Updating "${parcelId}": new update operator is ${operator}`
+        )
+        await Parcel.update(
+          { update_operator: operator.toLowerCase() },
+          { id: parcelId }
+        )
+      } catch (error) {
+        log.info(
+          `[${name}] Skipping badly formed data for "${parcelId}" -- ${
+            error.stack
+          }`
+        )
+      }
+      break
+    }
     case events.parcelTransfer: {
       const { to } = event.args
 

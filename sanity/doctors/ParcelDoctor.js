@@ -48,6 +48,15 @@ export class ParcelDoctor extends Doctor {
             log.error(error)
             faultyParcels.push({ ...parcel, error })
           }
+
+          const currentUpdateOperator = updatedParcels[index].update_operator
+
+          if (this.isUpdateOperatorMismatch(currentUpdateOperator, parcel)) {
+            const { id, update_operator } = parcel
+            const error = `Mismatch: operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
+            log.error(error)
+            faultyParcels.push({ ...parcel, error })
+          }
         }
       },
       batchSize: env.get('BATCH_SIZE'),
@@ -59,6 +68,13 @@ export class ParcelDoctor extends Doctor {
 
   isOwnerMissmatch(currentOwner, parcel) {
     return !!currentOwner && parcel.owner !== currentOwner
+  }
+
+  isUpdateOperatorMismatch(currentUpdateOperator, parcel) {
+    return (
+      !!currentUpdateOperator &&
+      parcel.update_operator !== currentUpdateOperator
+    )
   }
 }
 

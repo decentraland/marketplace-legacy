@@ -119,6 +119,25 @@ export async function estateReducer(events, event) {
       )
       break
     }
+    case events.estateUpdateOperator: {
+      const { _assetId, _operator } = event.args
+      const estate = await Estate.findByTokenId(_assetId)
+      if (estate) {
+        log.info(
+          `[${name}] Updating Estate with token id "${
+            estate.token_id
+          }" new update operator: ${_operator}`
+        )
+
+        await Estate.update(
+          { update_operator: _operator.toLowerCase() },
+          { token_id: estate.token_id }
+        )
+      } else {
+        log.info(`[${name}] Estate with token id ${_assetId} does not exist`)
+      }
+      break
+    }
     case events.estateUpdate: {
       const { _assetId, _data } = event.args
       const estate = await Estate.findByTokenId(_assetId)

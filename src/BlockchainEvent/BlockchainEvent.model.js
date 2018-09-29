@@ -43,6 +43,10 @@ export class BlockchainEvent extends Model {
         landRegistryAddress,
         'Update'
       ),
+      parcelUpdateOperator: BlockchainEvent.getNormalizedEventName(
+        landRegistryAddress,
+        'UpdateOperator'
+      ),
       estateTransfer: BlockchainEvent.getNormalizedEventName(
         estateRegistryAddress,
         'Transfer'
@@ -50,6 +54,10 @@ export class BlockchainEvent extends Model {
       estateUpdate: BlockchainEvent.getNormalizedEventName(
         estateRegistryAddress,
         'Update'
+      ),
+      estateUpdateOperator: BlockchainEvent.getNormalizedEventName(
+        estateRegistryAddress,
+        'UpdateOperator'
       ),
       addLand: BlockchainEvent.getNormalizedEventName(
         estateRegistryAddress,
