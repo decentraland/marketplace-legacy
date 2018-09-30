@@ -15,7 +15,8 @@ import AtlasPage from 'components/AtlasPage'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import MarketplacePage from 'components/MarketplacePage'
 import ProfilePage from 'components/ProfilePage'
-import PublishPage from 'components/PublishPage'
+import PublishParcelPage from 'components/PublishParcelPage'
+import PublishEstatePage from 'components/PublishEstatePage'
 import EditParcelPage from 'components/EditParcelPage'
 import TransferParcelPage from 'components/TransferParcelPage'
 import EstateDetailPage from 'components/EstateDetailPage'
@@ -49,7 +50,7 @@ export default class Routes extends React.Component {
         <Route
           exact
           path={this.addLegacySupport(locations.sellParcel())}
-          component={PublishPage}
+          component={PublishParcelPage}
         />
         <Route
           exact
@@ -116,6 +117,11 @@ export default class Routes extends React.Component {
           exact
           path={locations.transferEstate()}
           component={TransferEstatePage}
+        />
+        <Route
+          exact
+          path={locations.sellEstate()}
+          component={PublishEstatePage}
         />
 
         {/*Mortgages*/}
