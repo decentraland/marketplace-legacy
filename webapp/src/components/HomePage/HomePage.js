@@ -40,7 +40,7 @@ export default class HomePage extends React.PureComponent {
           <div className="gap" />
           <div className="publications-header">
             <h3>{t('homepage.newest_lands')}</h3>
-            <Link to={locations.marketplace()}>
+            <Link to={locations.marketplacePageDefault()}>
               <span role="button" onClick={this.handleNext}>
                 {t('homepage.view_more')}&nbsp;<Icon name="chevron right" />
               </span>
