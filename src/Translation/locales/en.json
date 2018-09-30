@@ -307,7 +307,7 @@
     "give_permission": "Give permission to update contents of {parcel_name}.",
     "manage_land": "Manage LAND"
   },
-  "parcel_publish": {
+  "asset_publish": {
     "already_sold": "This LAND is already on sale for {value}",
     "errors": {
       "maximum_expiration": "The maximum expiration date is {date}",

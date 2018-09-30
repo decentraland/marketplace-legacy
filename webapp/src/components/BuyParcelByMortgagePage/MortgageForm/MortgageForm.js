@@ -193,7 +193,7 @@ export default class MortgageForm extends React.PureComponent {
 
     if (differenceInDays(expiresAt, today) > MAXIMUM_DAY_INTERVAL) {
       formErrors.push(
-        t('parcel_publish.errors.maximum_expiration', {
+        t('asset_publish.errors.maximum_expiration', {
           date: this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
         })
       )
@@ -201,7 +201,7 @@ export default class MortgageForm extends React.PureComponent {
 
     if (differenceInDays(expiresAt, today) < MINIMUM_DAY_INTERVAL) {
       formErrors.push(
-        t('parcel_publish.errors.minimum_expiration', {
+        t('asset_publish.errors.minimum_expiration', {
           date: this.formatFutureDate(MINIMUM_DAY_INTERVAL + 1)
         })
       )

@@ -31,6 +31,13 @@ export default class EstateActions extends React.PureComponent {
               {t('parcel_detail.actions.transfer')}
             </Button>
           </Link>
+
+          <Link to={locations.sellEstate(id)}>
+            <Button size="tiny">
+              <Icon name="exchange" />
+              {t('parcel_detail.actions.sell')}
+            </Button>
+          </Link>
         </div>
       </div>
     )

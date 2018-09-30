@@ -10,9 +10,12 @@
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix src/",
     "test": "CI=true node scripts/test.js --env=jsdom",
     "analyze": "source-map-explorer build/static/js/main.*",
-    "build": "NODE_ENV=production REACT_APP_VERSION=$(git rev-parse --short HEAD) node scripts/build.js",
-    "postbuild": "export bundle_path=`ls ./build/static/js/*.js` && uglifyjs $bundle_path --compress --mangle reserved=['toParcelObject','normalizeParcel','connectParcel','getParcelPublications','buildCoordinate']  --output $bundle_path",
-    "remotebuild": "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules node scripts/build.js"
+    "build":
+      "NODE_ENV=production REACT_APP_VERSION=$(git rev-parse --short HEAD) node scripts/build.js",
+    "postbuild":
+      "export bundle_path=`ls ./build/static/js/*.js` && uglifyjs $bundle_path --compress --mangle reserved=['toParcelObject','normalizeParcel','connectParcel','getParcelPublications','buildCoordinate']  --output $bundle_path",
+    "remotebuild":
+      "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules node scripts/build.js"
   },
   "dependencies": {
     "autoprefixer": "7.1.6",
@@ -96,12 +99,8 @@
     "source-map-explorer": "^1.5.0"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx,mjs}"],
+    "setupFiles": ["<rootDir>/config/polyfills.js"],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
@@ -111,11 +110,10 @@
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)":
+        "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
-    ],
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
@@ -130,9 +128,7 @@
     ]
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   },
   "eslintConfig": {
     "extends": "react-app"
