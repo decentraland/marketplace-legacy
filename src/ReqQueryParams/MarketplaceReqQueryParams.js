@@ -1,6 +1,7 @@
 import { server } from 'decentraland-commons'
 
-import { Publication } from './Publication.model'
+import { ReqQueryParams } from './ReqQueryParams'
+import { Publication } from '../Publication'
 import {
   PUBLICATION_ASSET_TYPES,
   PUBLICATION_STATUS
@@ -24,16 +25,8 @@ export const DEFAULT_PAGINATION = {
   limit: 20
 }
 
-export class PublicationRequestFilters {
-  static getAllowedValues() {
-    return ALLOWED_SORT_VALUES
-  }
-
-  constructor(req) {
-    this.req = req
-  }
-
-  sanitize(req) {
+export class MarketplaceReqQueryParams extends ReqQueryParams {
+  sanitize() {
     return {
       status: this.getStatus(),
       asset_type: this.getAssetType(),
@@ -43,6 +36,7 @@ export class PublicationRequestFilters {
   }
 
   getStatus() {
+    // TODO: This should be publication_status but that'll break backwards compatibility
     const status = this.getReqParam('status', PUBLICATION_STATUS.open)
     return Publication.isValidStatus(status) ? status : PUBLICATION_STATUS.open
   }
@@ -75,15 +69,6 @@ export class PublicationRequestFilters {
     return {
       limit: Math.max(Math.min(100, limit), 0),
       offset: Math.max(offset, 0)
-    }
-  }
-
-  getReqParam(name, defaultValue) {
-    try {
-      return server.extractFromReq(this.req, name)
-    } catch (error) {
-      if (defaultValue === undefined) throw error
-      return defaultValue
     }
   }
 }

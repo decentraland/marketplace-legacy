@@ -10,7 +10,7 @@ export class PublicationService {
     this.Estate = Estate
   }
 
-  getModelFromAssetType(assetType) {
+  getPublicableAssetFromType(assetType) {
     if (!this.Publication.isValidAssetType(assetType)) {
       throw new Error(`Invalid publication asset_type "${assetType}"`)
     }

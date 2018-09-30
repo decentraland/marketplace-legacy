@@ -1,7 +1,13 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Asset } from './Asset'
-import { PublicationRequestFilters, PublicationService } from '../Publication'
+import { Marketplace } from '../Marketplace'
+import { PublicationService } from '../Publication'
+import {
+  ReqQueryParams,
+  MarketplaceQueryParams,
+  AssetReqQueryParams
+} from '../ReqQueryParams'
 import { blacklist } from '../lib'
 
 export class AssetRouter {
@@ -24,22 +30,37 @@ export class AssetRouter {
   }
 
   async getAssets(req) {
-    const filters = new PublicationRequestFilters(req)
-    const Model = new PublicationService().getModelFromAssetType(
-      filters.getAssetType()
+    const baseQueryParams = new ReqQueryParams(req)
+    const assetType = baseQueryParams.getReqParam('asset_type') // throws if undefined
+
+    const PublicableAsset = new PublicationService().getPublicableAssetFromType(
+      assetType
     )
-    const result = await new Asset(Model).filter(filters)
+    let result
+
+    if (baseQueryParams.has('status')) {
+      const queryParams = new MarketplaceQueryParams(req)
+      result = await new Marketplace().filter(queryParams, PublicableAsset)
+    } else {
+      const queryParams = new AssetReqQueryParams(req)
+      result = await new Asset(PublicableAsset).filter(queryParams)
+    }
 
     return {
-      assets: this.blacklistFilteredAssets(result.assets),
+      assets: this.blacklistAssets(result.assets),
       total: result.total
     }
   }
 
-  blacklistFilteredAssets(assets) {
-    return assets.map(({ publication, ...asset }) => ({
-      ...utils.omit(asset, blacklist.asset),
-      publication: utils.omit(publication, blacklist.publication)
-    }))
+  blacklistAssets(assets) {
+    return assets.map(({ publication, ...asset }) => {
+      const newAsset = utils.omit(asset, blacklist.asset)
+
+      newAsset.publication = publication
+        ? utils.omit(publication, blacklist.publication)
+        : undefined
+
+      return newAsset
+    })
   }
 }
