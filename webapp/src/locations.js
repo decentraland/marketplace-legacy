@@ -47,6 +47,7 @@ export const locations = {
 
   transferEstate: (id = params.id) => `/estates/${id}/transfer`,
   deleteEstate: (id = params.id) => `/estates/${id}/delete-estate`,
+  sellEstate: (id = params.is) => `/estates/${id}/sell-estate`,
 
   // Generic assets
 

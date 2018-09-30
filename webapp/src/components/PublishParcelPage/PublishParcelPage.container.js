@@ -14,7 +14,7 @@ import {
 } from 'modules/authorization/selectors'
 import { publishRequest } from 'modules/publication/actions'
 
-import PublishPage from './PublishPage'
+import PublishParcelPage from './PublishParcelPage'
 
 const mapState = (state, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
@@ -45,4 +45,4 @@ const mapDispatch = (dispatch, ownProps) => {
   }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(PublishPage))
+export default withRouter(connect(mapState, mapDispatch)(PublishParcelPage))

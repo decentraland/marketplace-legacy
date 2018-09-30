@@ -5,11 +5,9 @@ import differenceInDays from 'date-fns/difference_in_days'
 import { Form, Button, Input, Message } from 'semantic-ui-react'
 
 import TxStatus from 'components/TxStatus'
-import { parcelType } from 'components/types'
+import { assetType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
-
-import './PublicationForm.css'
 
 // TODO: Shouldn't this live on the publication module?
 const DEFAULT_DAY_INTERVAL = 31
@@ -19,9 +17,9 @@ const MINIMUM_LAND_PRICE = 1
 
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
-export default class PublicationForm extends React.PureComponent {
+export default class PublishAssetForm extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType,
+    asset: assetType,
     isTxIdle: PropTypes.bool,
     isDisabled: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
@@ -60,7 +58,7 @@ export default class PublicationForm extends React.PureComponent {
   }
 
   handlePublish = () => {
-    const { parcel, onPublish } = this.props
+    const { asset, onPublish } = this.props
     const { price, expiresAt } = this.state
 
     const formErrors = []
@@ -70,7 +68,7 @@ export default class PublicationForm extends React.PureComponent {
 
     if (differenceInDays(expiresAt, today) < MINIMUM_DAY_INTERVAL) {
       formErrors.push(
-        t('parcel_publish.errors.minimum_expiration', {
+        t('asset_publish.errors.minimum_expiration', {
           date: this.formatFutureDate(MINIMUM_DAY_INTERVAL + 1)
         })
       )
@@ -78,7 +76,7 @@ export default class PublicationForm extends React.PureComponent {
 
     if (differenceInDays(expiresAt, today) > MAXIMUM_DAY_INTERVAL) {
       formErrors.push(
-        t('parcel_publish.errors.maximum_expiration', {
+        t('asset_publish.errors.maximum_expiration', {
           date: this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
         })
       )
@@ -86,7 +84,7 @@ export default class PublicationForm extends React.PureComponent {
 
     if (price < MINIMUM_LAND_PRICE) {
       formErrors.push(
-        t('parcel_publish.errors.minimum_land_price', {
+        t('asset_publish.errors.minimum_land_price', {
           value: formatMana(MINIMUM_LAND_PRICE, '')
         })
       )
@@ -94,7 +92,7 @@ export default class PublicationForm extends React.PureComponent {
 
     if (price > Number.MAX_SAFE_INTEGER) {
       formErrors.push(
-        t('parcel_publish.errors.maximum_land_price', {
+        t('asset_publish.errors.maximum_land_price', {
           value: formatMana(Number.MAX_SAFE_INTEGER, '')
         })
       )
@@ -102,7 +100,7 @@ export default class PublicationForm extends React.PureComponent {
 
     if (formErrors.length === 0) {
       onPublish({
-        id: parcel.id,
+        id: asset.id,
         expires_at: new Date(expiresAt).getTime(),
         price: parseFloat(price)
       })
@@ -127,20 +125,20 @@ export default class PublicationForm extends React.PureComponent {
         error={!!formErrors}
       >
         <Form.Field>
-          <label>{t('parcel_publish.price')}</label>
+          <label>{t('asset_publish.price')}</label>
           <Input
             type="number"
-            placeholder={t('parcel_publish.price_placeholder')}
+            placeholder={t('asset_publish.price_placeholder')}
             value={price}
             required={true}
             onChange={this.handlePriceChange}
           />
         </Form.Field>
         <Form.Field>
-          <label>{t('parcel_publish.expiration')}</label>
+          <label>{t('asset_publish.expiration')}</label>
           <Input
             type="date"
-            placeholder={t('parcel_publish.expiration_placeholder')}
+            placeholder={t('asset_publish.expiration_placeholder')}
             value={expiresAt}
             required={true}
             onChange={this.handleExpiresAtChange}

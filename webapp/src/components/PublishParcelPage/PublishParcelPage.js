@@ -13,9 +13,7 @@ import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
 import { formatMana } from 'lib/utils'
-import PublicationForm from './PublicationForm'
-
-import './PublishPage.css'
+import PublishAssetForm from '../PublishAssetForm'
 
 export default class PublishPage extends React.PureComponent {
   static propTypes = {
@@ -63,7 +61,7 @@ export default class PublishPage extends React.PureComponent {
                 <Message
                   warning
                   icon="warning sign"
-                  content={t('parcel_publish.already_sold', {
+                  content={t('asset_publish.already_sold', {
                     value: formatMana(publication.price)
                   })}
                 />
@@ -77,7 +75,7 @@ export default class PublishPage extends React.PureComponent {
                   header={t('global.unauthorized')}
                   content={
                     <T
-                      id="parcel_publish.please_authorize"
+                      id="asset_publish.please_authorize"
                       values={{
                         settings_link: (
                           <Link to={locations.settings()}>Settings</Link>
@@ -91,17 +89,17 @@ export default class PublishPage extends React.PureComponent {
             <ParcelModal
               x={x}
               y={y}
-              title={t('parcel_publish.list_land')}
+              title={t('asset_publish.list_land')}
               subtitle={
                 <T
-                  id="parcel_publish.set_land_price"
+                  id="asset_publish.set_land_price"
                   values={{ parcel_name: <ParcelDetailLink parcel={parcel} /> }}
                 />
               }
               hasCustomFooter
             >
-              <PublicationForm
-                parcel={parcel}
+              <PublishAssetForm
+                asset={parcel}
                 isTxIdle={isTxIdle}
                 onPublish={onPublish}
                 onCancel={onCancel}

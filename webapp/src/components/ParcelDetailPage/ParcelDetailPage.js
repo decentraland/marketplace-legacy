@@ -12,7 +12,7 @@ export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.string.isRequired,
     y: PropTypes.string.isRequired,
-    publications: PropTypes.objectOf(publicationType).isRequired,
+    publications: PropTypes.objectOf(publicationType),
     districts: PropTypes.objectOf(districtType).isRequired,
     mortgage: mortgageType,
     user: PropTypes.string,
