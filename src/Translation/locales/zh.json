@@ -188,6 +188,7 @@
     "duration_placeholder": "持续时间以天计",
     "errors": {
       "amount_minimum": "金额应该大于 {amount}",
+      "deposit_gt_balance": "所需押金大于您的余额",
       "duration_gte_payable": "持续时间应该大于或等于付款期限",
       "maximum_interest_rate": "费率应低于 {maximum}",
       "minimum_duration": "持续时间应该大于 {minimum} 天",
@@ -217,7 +218,8 @@
     "request": "申请抵押",
     "request_land":
       "您将为 {parcel_name} 地块以 {parcel_price} 的价格申请抵押贷款",
-    "requested": "已申请"
+    "requested": "已申请",
+    "required_deposit": "所需押金：{deposit}"
   },
   "parcel": {
     "no_description": "没有说明",

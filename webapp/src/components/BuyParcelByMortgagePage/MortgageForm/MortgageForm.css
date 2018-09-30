@@ -48,3 +48,8 @@
  .MortgageForm .loader-wrapper {
    position: relative;
  }
+
+.MortgageForm .deposit {
+  font-size: 14px;
+  margin: 7px 0;
+}

@@ -10,7 +10,7 @@ import AddressBlock from 'components/AddressBlock'
 import { parcelType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
-import { preventDefault, formatDate } from 'lib/utils'
+import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { fetchMortgageData } from './utils'
 
 import './MortgageForm.css'
@@ -36,7 +36,8 @@ export default class MortgageForm extends React.PureComponent {
     isTxIdle: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-    isDisabled: PropTypes.bool.isRequired
+    isDisabled: PropTypes.bool.isRequired,
+    balance: PropTypes.number.isRequired
   }
 
   static defaultProps = {
@@ -49,7 +50,7 @@ export default class MortgageForm extends React.PureComponent {
     this.debouncedFetchMortgageData = debounce(this.fetchMortgageData, 400)
 
     this.state = {
-      amount: '',
+      amount: 0,
       duration: '',
       payableAt: '',
       expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
@@ -63,7 +64,7 @@ export default class MortgageForm extends React.PureComponent {
   handleChangeNumber = (e, key) => {
     const value = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
-      : ''
+      : 0
     this.setState(
       {
         [key]: value,
@@ -94,12 +95,34 @@ export default class MortgageForm extends React.PureComponent {
     })
   }
 
+  handleChangeAmount = e => {
+    const amount = e.currentTarget.value
+      ? parseInt(e.currentTarget.value, 10)
+      : 0
+    const { balance } = this.props
+    const requiredDeposit = this.getRequiredDeposit(amount)
+
+    this.setState({
+      amount: amount,
+      formErrors:
+        requiredDeposit > balance
+          ? [t('mortgage.errors.deposit_gt_balance')]
+          : []
+    })
+  }
+
+  getRequiredDeposit = amount => {
+    const { publication } = this.props
+    const requiredDeposit = Math.ceil(publication.price * 1.1 - amount)
+    return requiredDeposit > 0 && amount > 0 ? requiredDeposit : 0
+  }
+
   handleClearFormErrors = () => {
     this.setState({ formErrors: [] })
   }
 
   handlePublish = () => {
-    const { parcel, publication, onPublish } = this.props
+    const { parcel, publication, onPublish, balance } = this.props
     const {
       amount,
       duration,
@@ -184,6 +207,12 @@ export default class MortgageForm extends React.PureComponent {
       )
     }
 
+    const requiredDeposit = this.getRequiredDeposit(amount)
+
+    if (requiredDeposit > balance) {
+      formErrors.push(t('mortgage.errors.deposit_gt_balance'))
+    }
+
     if (formErrors.length === 0) {
       onPublish({
         duration: new Date(duration).getTime(),
@@ -217,6 +246,8 @@ export default class MortgageForm extends React.PureComponent {
       isLoading
     } = this.state
 
+    const requiredDeposit = this.getRequiredDeposit(amount)
+
     return (
       <Form
         className="MortgageForm"
@@ -244,7 +275,7 @@ export default class MortgageForm extends React.PureComponent {
                   placeholder={t('mortgage.amount_placeholder')}
                   value={amount}
                   required={true}
-                  onChange={e => this.handleChangeNumber(e, 'amount')}
+                  onChange={this.handleChangeAmount}
                 />
               </Form.Field>
             </Grid.Column>
@@ -312,6 +343,15 @@ export default class MortgageForm extends React.PureComponent {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        {requiredDeposit > 0 && (
+          <div>
+            <p className="deposit">
+              {t('mortgage.required_deposit', {
+                deposit: formatMana(requiredDeposit)
+              })}
+            </p>
+          </div>
+        )}
         <TxStatus.Idle isIdle={isTxIdle} />
         {formErrors.length > 0 ? (
           <Message error onDismiss={this.handleClearFormErrors}>

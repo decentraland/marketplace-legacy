@@ -200,6 +200,7 @@
     "duration_placeholder": "Durée en jours",
     "errors": {
       "amount_minimum": "Le montant doit être supérieur à {amount}",
+      "deposit_gt_balance": "Le dépôt requis est supérieur à votre solde",
       "duration_gte_payable":
         "La durée devrait être supérieure ou égale à payable à des jours",
       "maximum_interest_rate": "Le taux devrait être inférieur à {maximum}",
@@ -232,7 +233,8 @@
     "request": "Demander une hypothèque",
     "request_land":
       "Vous êtes sur le point de demander un prêt hypothécaire pour {parcel_name} évalué dans {parcel_price}",
-    "requested": "Demandé"
+    "requested": "Demandé",
+    "required_deposit": "Dépôt requis: {deposit}"
   },
   "parcel": {
     "no_description": "Sans description",

@@ -195,6 +195,7 @@
     "duration_placeholder": "기간 (일)",
     "errors": {
       "amount_minimum": "금액은 {amount}보다 커야합니다.",
+      "deposit_gt_balance": "필수 입금액이 잔액보다 큽니다.",
       "duration_gte_payable":
         "기간은 며칠에 지불 가능한 것보다 크거나 같아야합니다.",
       "maximum_interest_rate": "비율은 {maximum}보다 낮아야합니다.",
@@ -226,7 +227,8 @@
     "request": "모기지 신청",
     "request_land":
       "{parcel_name}에 대한 모기지를 {parcel_price}에 요청하려고합니다.",
-    "requested": "요청 됨"
+    "requested": "요청 됨",
+    "required_deposit": "필수 보증금 : {deposit}"
   },
   "parcel": {
     "no_description": "설명 없음",

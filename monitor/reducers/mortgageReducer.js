@@ -9,6 +9,7 @@ import { ASSET_TYPES } from '../../shared/asset'
 import { getParcelIdFromEvent } from './utils'
 
 const log = new Log('mortgageReducer')
+const TEN_YEARS_IN_MILISECONDS = 1000 * 10 * 365 * 24 * 60 * 60
 
 export async function mortgageReducer(events, event) {
   const { tx_hash, block_number, name, normalizedName } = event
@@ -54,7 +55,10 @@ export async function mortgageReducer(events, event) {
           punitory_interest_rate: punitoryInterestRate.toNumber(),
           is_due_at: 0,
           payable_at: payableAt.toNumber(),
-          expires_at: expiresAt.toNumber(),
+          expires_at: Math.min(
+            expiresAt.toNumber(),
+            Date.now() + TEN_YEARS_IN_MILISECONDS
+          ),
           mortgage_id: parseInt(mortgageId, 10),
           loan_id: parseInt(loanId, 10),
           block_number,

@@ -19,6 +19,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    balance: PropTypes.number.isRequired,
     authorization: authorizationType,
     publication: publicationType,
     error: PropTypes.string,
@@ -63,6 +64,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     const {
       x,
       y,
+      balance,
       authorization,
       publication,
       isTxIdle,
@@ -146,6 +148,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                 hasCustomFooter
               >
                 <MortgageForm
+                  balance={balance}
                   parcel={parcel}
                   publication={publication}
                   onPublish={onConfirm}

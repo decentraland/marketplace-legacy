@@ -195,6 +195,7 @@
     "duration_placeholder": "Duración en días",
     "errors": {
       "amount_minimum": "La cantidad debe ser mayor que {amount}",
+      "deposit_gt_balance": "El depósito requerido es mayor que su saldo",
       "duration_gte_payable":
         "La duración debe ser mayor o igual que la paga en días",
       "maximum_interest_rate": "La tasa debe ser inferior a {maximum}",
@@ -227,7 +228,8 @@
     "request": "Solicitar una hipoteca",
     "request_land":
       "Está a punto de solicitar una hipoteca por {parcel_name} valorada en {parcel_price}",
-    "requested": "Pedido"
+    "requested": "Pedido",
+    "required_deposit": "Depósito requerido: {deposit}"
   },
   "parcel": {
     "no_description": "Sin descripción",
