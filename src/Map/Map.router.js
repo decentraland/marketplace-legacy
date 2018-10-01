@@ -10,9 +10,8 @@ import { toEstateObject, calculateMapProps } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject } from '../shared/publication'
-import { Parcel, coordinates } from '../Parcel'
-import { Estate, EstateService } from '../Estate'
-import { blacklist, unsafeParseInt } from '../lib'
+import { Parcel, Estate, EstateService } from '../Asset'
+import { blacklist, coordinates, unsafeParseInt } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
@@ -97,7 +96,7 @@ export class MapRouter {
 
     const parcelsRange = await Parcel.inRange(nw, se)
     const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
-    const estates = await EstateService.getByParcels(parcels)
+    const estates = await new EstateService().getByParcels(parcels)
 
     const assets = { parcels, estates }
     const total = parcels.length + estates.length
@@ -151,7 +150,7 @@ export class MapRouter {
       blacklist.parcel
     )
     const parcels = toParcelObject(parcelRange)
-    const estatesRange = await EstateService.getByParcels(parcelRange)
+    const estatesRange = await new EstateService().getByParcels(parcelRange)
     const estates = toEstateObject(estatesRange)
     const publications = toPublicationObject(getParcelPublications(parcelRange))
     return [parcels, estates, publications]

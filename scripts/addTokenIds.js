@@ -4,7 +4,7 @@ import { eth, contracts } from 'decentraland-eth'
 import { env, Log } from 'decentraland-commons'
 
 import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
+import { Parcel } from '../../src/Asset'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
 

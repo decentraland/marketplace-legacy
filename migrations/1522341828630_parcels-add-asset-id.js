@@ -1,4 +1,4 @@
-import { Parcel } from '../src/Parcel'
+import { Parcel } from '../src/Asset'
 
 exports.up = pgm => {
   const tableName = Parcel.tableName

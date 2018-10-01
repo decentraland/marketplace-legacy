@@ -1,11 +1,10 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
-import { ASSET_TYPES } from '../shared/asset'
-import { Bounds } from '../shared/map'
 import { AssetRouter } from '../Asset'
-import { blacklist } from '../lib'
-import { unsafeParseInt } from '../lib/unsafeParseInt'
+import { ASSET_TYPES } from '../../shared/asset'
+import { Bounds } from '../../shared/map'
+import { blacklist, unsafeParseInt } from '../../lib'
 
 export class ParcelRouter {
   constructor(app) {

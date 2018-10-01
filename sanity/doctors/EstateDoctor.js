@@ -3,8 +3,7 @@ import { Log, env } from 'decentraland-commons'
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
-import { Estate } from '../../src/Estate'
-import { Parcel } from '../../src/Parcel'
+import { Parcel, Estate } from '../../src/Asset'
 
 const log = new Log('EstateDoctor')
 

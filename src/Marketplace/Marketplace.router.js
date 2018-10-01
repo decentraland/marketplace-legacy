@@ -25,6 +25,7 @@ export class MarketplaceRouter {
 
   async getMarketplace(req) {
     const queryParams = new MarketplaceReqQueryParams(req)
+
     const result = queryParams.has('asset_type')
       ? await new AssetRouter().getAssets(req)
       : await new Marketplace().filterAll(queryParams)

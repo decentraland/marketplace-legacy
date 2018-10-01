@@ -1,4 +1,4 @@
-import { Parcel } from '../src/Parcel'
+import { Parcel } from '../src/Asset'
 
 const tableName = Parcel.tableName
 

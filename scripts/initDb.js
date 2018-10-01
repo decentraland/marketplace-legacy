@@ -4,7 +4,7 @@ import { execSync } from 'child_process'
 import { Log, cli } from 'decentraland-commons'
 
 import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
+import { Parcel } from '../../src/Asset'
 import { District } from '../src/District'
 import { Contribution } from '../src/Contribution'
 import { renewBlockchainData } from './renewBlockchainData'

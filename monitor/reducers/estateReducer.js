@@ -1,8 +1,7 @@
 import { Log } from 'decentraland-commons'
-import { Estate } from '../../src/Estate'
-import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { getParcelIdFromEvent } from './utils'
-import { Parcel } from '../../src/Parcel'
+import { Parcel, Estate } from '../../src/Asset'
+import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { decodeMetadata } from '../../shared/asset'
 
 const log = new Log('estateReducer')

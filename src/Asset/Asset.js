@@ -80,9 +80,9 @@ export class Asset {
     const [assets, total] = await Promise.all([
       db.query(
         SQL`SELECT model.*
-            FROM ${raw(this.tableName)} as model
-            ORDER BY model.${raw(sort.by)} ${raw(sort.order)}
-            LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
+          FROM ${raw(this.tableName)} as model
+          ORDER BY model.${raw(sort.by)} ${raw(sort.order)}
+          LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
       this.Model.count()
     ])

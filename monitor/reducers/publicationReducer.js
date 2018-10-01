@@ -1,6 +1,6 @@
 import { eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
-import { Parcel } from '../../src/Parcel'
+import { Parcel } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { MarketplaceEvent } from '../../src/MarketplaceEvent'

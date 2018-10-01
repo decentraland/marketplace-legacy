@@ -1,4 +1,4 @@
-import { Parcel } from '../../src/Parcel'
+import { Parcel } from '../../src/Asset'
 
 export async function getParcelIdFromEvent(event) {
   const { assetId, landId, _landId } = event.args

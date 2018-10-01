@@ -1,7 +1,7 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Mortgage } from './Mortgage.model'
-import { Parcel } from '../Parcel'
+import { Parcel } from '../Asset'
 import { blacklist } from '../lib'
 
 export class MortgageRouter {

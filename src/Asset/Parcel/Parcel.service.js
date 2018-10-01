@@ -2,8 +2,8 @@ import { eth, Contract, contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
-import { coordinates } from './coordinates'
-import { isDuplicatedConstraintError } from '../database'
+import { isDuplicatedConstraintError } from '../../database'
+import { coordinates } from '../../lib'
 
 const log = new Log('ParcelService')
 const { LANDRegistry } = contracts

@@ -1,9 +1,8 @@
 import { expect } from 'chai'
 
-import { Parcel } from '../Parcel'
-import { Estate } from '../Estate'
 import { Publication } from './Publication.model'
 import { PublicationService } from './Publication.service'
+import { Parcel, Estate } from '../Asset'
 import { ASSET_TYPES } from '../shared/asset'
 
 describe('Publication', function() {
