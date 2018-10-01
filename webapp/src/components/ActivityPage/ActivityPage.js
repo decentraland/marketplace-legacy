@@ -13,6 +13,7 @@ import './ActivityPage.css'
 
 export default class ActivityPage extends React.PureComponent {
   static propTypes = {
+    address: PropTypes.string,
     authorization: authorizationType,
     transactions: PropTypes.arrayOf(transactionType),
     network: PropTypes.string,
@@ -32,7 +33,9 @@ export default class ActivityPage extends React.PureComponent {
 
   handlePromptConfirm = () => {
     const { onClear, address } = this.props
-    onClear(address)
+    if (address) {
+      onClear(address)
+    }
     this.handlePromptClose()
   }
 

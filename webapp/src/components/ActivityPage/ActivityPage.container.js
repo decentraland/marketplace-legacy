@@ -23,6 +23,7 @@ const mapState = state => {
   const authorization = getAuthorizations(state)[address]
 
   return {
+    address,
     authorization,
     transactions,
     network: getNetwork(state),
@@ -32,7 +33,7 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = (dispatch, props) => ({
+const mapDispatch = dispatch => ({
   onClear: address => dispatch(clearTransactions(address))
 })
 
