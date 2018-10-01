@@ -1,5 +1,3 @@
-import { server } from 'decentraland-commons'
-
 import { ReqQueryParams } from './ReqQueryParams'
 import { MarketplaceReqQueryParams } from './MarketplaceReqQueryParams'
 

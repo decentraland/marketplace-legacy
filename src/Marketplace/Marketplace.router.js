@@ -1,8 +1,8 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Marketplace } from './Marketplace'
-import { MarketplaceReqQueryParams } from '../ReqQueryParams'
-import { AssetRouter } from '../Asset'
+import { PublicationService } from '../Publication'
+import { ReqQueryParams, MarketplaceReqQueryParams } from '../ReqQueryParams'
 
 export class MarketplaceRouter {
   constructor(app) {
@@ -20,15 +20,27 @@ export class MarketplaceRouter {
      * @param  {number} offset
      * @return {array<Estate>}
      */
-    this.app.get('/marketplace', server.handleRequest(this.getMarketplace))
+    this.app.get('/marketplace', server.handleRequest(this.getAssets))
   }
 
-  async getMarketplace(req) {
-    const queryParams = new MarketplaceReqQueryParams(req)
+  async getAssets(req) {
+    // `status` is required but we use the default provided by MarketplaceReqQueryParams
+    const reqQueryParams = new ReqQueryParams(req)
+    const marketplaceReqQueryParams = new MarketplaceReqQueryParams(req)
 
-    const result = queryParams.has('asset_type')
-      ? await new AssetRouter().getAssets(req)
-      : await new Marketplace().filterAll(queryParams)
+    let result
+
+    if (reqQueryParams.has('asset_type')) {
+      const PublicableAsset = new PublicationService().getPublicableAssetFromType(
+        reqQueryParams.get('asset_type')
+      )
+      result = await new Marketplace().filter(
+        marketplaceReqQueryParams,
+        PublicableAsset
+      )
+    } else {
+      result = await new Marketplace().filterAll(marketplaceReqQueryParams)
+    }
 
     return {
       assets: result.assets,

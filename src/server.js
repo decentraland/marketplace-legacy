@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import { env } from 'decentraland-commons'
 
 import { db } from './database'
-import { ParcelRouter, EstateRouter } from './Asset'
+import { AssetRouter, ParcelRouter, EstateRouter } from './Asset'
 import { MortgageRouter } from './Mortgage'
 import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
@@ -44,6 +44,7 @@ if (env.isDevelopment()) {
 const router = new express.Router()
 app.use('/v1', router)
 
+new AssetRouter(router).mount()
 new ParcelRouter(router).mount()
 new EstateRouter(router).mount()
 new MortgageRouter(router).mount()

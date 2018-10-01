@@ -1,5 +1,3 @@
-import { server } from 'decentraland-commons'
-
 import { ReqQueryParams } from './ReqQueryParams'
 import { Publication } from '../Publication'
 import {
@@ -25,7 +23,11 @@ export const DEFAULT_PAGINATION = {
   limit: 20
 }
 
-export class MarketplaceReqQueryParams extends ReqQueryParams {
+export class MarketplaceReqQueryParams {
+  constructor(req) {
+    this.reqQueryParams = new ReqQueryParams(req)
+  }
+
   sanitize() {
     return {
       status: this.getStatus(),
@@ -37,20 +39,23 @@ export class MarketplaceReqQueryParams extends ReqQueryParams {
 
   getStatus() {
     // TODO: This should be publication_status but that'll break backwards compatibility
-    const status = this.getReqParam('status', PUBLICATION_STATUS.open)
+    const status = this.reqQueryParams.get('status', PUBLICATION_STATUS.open)
     return Publication.isValidStatus(status) ? status : PUBLICATION_STATUS.open
   }
 
   getAssetType() {
-    const type = this.getReqParam('asset_type', PUBLICATION_ASSET_TYPES.parcel)
+    const type = this.reqQueryParams.get(
+      'asset_type',
+      PUBLICATION_ASSET_TYPES.parcel
+    )
     return Publication.isValidAssetType(type)
       ? type
       : PUBLICATION_ASSET_TYPES.parcel
   }
 
   getSort() {
-    let by = this.getReqParam('sort_by', DEFAULT_SORT.by)
-    let order = this.getReqParam('sort_order', '')
+    let by = this.reqQueryParams.get('sort_by', DEFAULT_SORT.by)
+    let order = this.reqQueryParams.get('sort_order', '')
 
     by = by in ALLOWED_SORT_VALUES ? by : DEFAULT_SORT.by
 
@@ -63,8 +68,8 @@ export class MarketplaceReqQueryParams extends ReqQueryParams {
   }
 
   getPagination() {
-    const limit = this.getReqParam('limit', DEFAULT_PAGINATION.limit)
-    const offset = this.getReqParam('offset', DEFAULT_PAGINATION.offset)
+    const limit = this.reqQueryParams.get('limit', DEFAULT_PAGINATION.limit)
+    const offset = this.reqQueryParams.get('offset', DEFAULT_PAGINATION.offset)
 
     return {
       limit: Math.max(Math.min(100, limit), 0),

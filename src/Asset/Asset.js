@@ -1,5 +1,4 @@
-import { Publication, PublicationQueries } from '../Publication'
-import { Marketplace } from '../Marketplace'
+import { PublicationQueries } from '../Publication'
 import { db, SQL, raw } from '../database'
 
 export class Asset {

@@ -5,10 +5,6 @@ export class ReqQueryParams {
     this.req = req
   }
 
-  sanitize() {
-    throw new Error('Not implemented')
-  }
-
   has(name) {
     try {
       server.extractFromReq(this.req, name)
@@ -18,7 +14,7 @@ export class ReqQueryParams {
     }
   }
 
-  getReqParam(name, defaultValue) {
+  get(name, defaultValue) {
     try {
       return server.extractFromReq(this.req, name)
     } catch (error) {

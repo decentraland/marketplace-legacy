@@ -1,13 +1,9 @@
 import { server, utils } from 'decentraland-commons'
 
 import { Asset } from './Asset'
-import { Marketplace } from '../Marketplace'
+import { MarketplaceRouter } from '../Marketplace'
 import { PublicationService } from '../Publication'
-import {
-  ReqQueryParams,
-  MarketplaceQueryParams,
-  AssetReqQueryParams
-} from '../ReqQueryParams'
+import { ReqQueryParams, AssetReqQueryParams } from '../ReqQueryParams'
 import { blacklist } from '../lib'
 
 export class AssetRouter {
@@ -26,24 +22,26 @@ export class AssetRouter {
      * @param  {number} offset
      * @return {array<Asset>}
      */
-    this.app.get('/assets', server.handleRequest(this.getAssets))
+    this.app.get('/assets', server.handleRequest(this.getAssets.bind(this)))
   }
 
   async getAssets(req) {
-    const baseQueryParams = new ReqQueryParams(req)
-    const assetType = baseQueryParams.getReqParam('asset_type') // throws if undefined
+    const reqQueryParams = new ReqQueryParams(req)
+    if (!reqQueryParams.has('asset_type')) {
+      throw new Error('The asset_type query param is required to get an asset')
+    }
 
     const PublicableAsset = new PublicationService().getPublicableAssetFromType(
-      assetType
+      reqQueryParams.get('asset_type')
     )
     let result
 
-    if (baseQueryParams.has('status')) {
-      const queryParams = new MarketplaceQueryParams(req)
-      result = await new Marketplace().filter(queryParams, PublicableAsset)
+    if (reqQueryParams.has('status')) {
+      result = await new MarketplaceRouter().getAssets(req)
     } else {
-      const queryParams = new AssetReqQueryParams(req)
-      result = await new Asset(PublicableAsset).filter(queryParams)
+      result = await new Asset(PublicableAsset).filter(
+        new AssetReqQueryParams(req)
+      )
     }
 
     return {
@@ -52,7 +50,7 @@ export class AssetRouter {
     }
   }
 
-  blacklistAssets(assets) {
+  blacklistAssets(assets = []) {
     return assets.map(({ publication, ...asset }) => {
       const newAsset = utils.omit(asset, blacklist.asset)
 
