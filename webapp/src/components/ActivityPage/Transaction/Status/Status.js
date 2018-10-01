@@ -190,11 +190,11 @@ export default class Status extends React.PureComponent {
     const { tx } = this.props
     switch (tx.status) {
       case null:
-        return t('transation_tooltips.loading')
+        return t('transaction_tooltips.loading')
       case txUtils.TRANSACTION_TYPES.dropped:
-        return t('transation_tooltips.dropped')
+        return t('transaction_tooltips.dropped')
       case txUtils.TRANSACTION_TYPES.replaced:
-        return tx.replacedBy ? null : t('transation_tooltips.replaced')
+        return tx.replacedBy ? null : t('transaction_tooltips.replaced')
       case txUtils.TRANSACTION_TYPES.reverted:
         return null
       case txUtils.TRANSACTION_TYPES.confirmed:
@@ -202,7 +202,7 @@ export default class Status extends React.PureComponent {
       case txUtils.TRANSACTION_TYPES.pending:
         return null
       case txUtils.TRANSACTION_TYPES.queued:
-        return t('transation_tooltips.queued')
+        return t('transaction_tooltips.queued')
     }
   }
 
