@@ -71,7 +71,7 @@ export class API {
   }
 
   fetchMortgagedParcels(borrower) {
-    return this.request('get', `/parcels/${borrower}/mortgages`)
+    return this.request('get', `/mortgages/${borrower}/parcels`)
   }
 
   fetchMortgagesByBorrower(borrower, status) {

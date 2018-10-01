@@ -15,13 +15,13 @@ export class PublicationService {
     return ASSETS[assetType]
   }
 
-  getPublicableAssets(assetType) {
+  getPublicableAssets() {
     const publicableAssets = {}
 
     for (const key in PUBLICATION_ASSET_TYPES) {
       publicableAssets[key] = ASSETS[key]
     }
 
-    return publicableAssets
+    return Object.values(publicableAssets)
   }
 }

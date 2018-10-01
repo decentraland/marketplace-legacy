@@ -45,7 +45,6 @@ const router = new express.Router()
 app.use('/v1', router)
 
 new AssetRouter(router).mount()
-new ParcelRouter(router).mount()
 new EstateRouter(router).mount()
 new MortgageRouter(router).mount()
 new DistrictRouter(router).mount()
@@ -54,6 +53,7 @@ new PublicationRouter(router).mount()
 new TranslationRouter(router).mount()
 new MapRouter(router).mount()
 new MarketplaceRouter(router).mount()
+new ParcelRouter(router).mount()
 
 /* Start the server only if run directly */
 if (require.main === module) {

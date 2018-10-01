@@ -16,7 +16,7 @@ export class MortgageRouter {
      * @return {array<Parcel>}
      */
     this.app.get(
-      '/parcels/:address/mortgages',
+      '/mortgages/:address/parcels',
       server.handleRequest(this.getMortgagedParcelsByBorrower)
     )
 
