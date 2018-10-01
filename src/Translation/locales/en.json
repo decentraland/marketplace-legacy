@@ -47,6 +47,23 @@
       "price": "price"
     }
   },
+  "asset_publish": {
+    "already_sold": "This LAND is already on sale for {value}",
+    "errors": {
+      "maximum_expiration": "The maximum expiration date is {date}",
+      "maximum_land_price": "The maximum LAND price is {value} MANA",
+      "minimum_expiration": "The minimum expiration date is {date}",
+      "minimum_land_price": "The minimum LAND price is {value} MANA"
+    },
+    "expiration": "Expiration",
+    "expiration_placeholder": "Expiration date for this publication",
+    "list_asset": "List {asset_name} for sale",
+    "please_authorize":
+      "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
+    "price": "Price",
+    "price_placeholder": "Price in MANA for this {asset_name}",
+    "set_asset_price": "Set a price and an expiration date for {asset_name}."
+  },
   "atlas": {
     "loading": "Loading",
     "no_owner": "No Owner",
@@ -317,23 +334,6 @@
       "This address will be able to update the contents of this parcel.",
     "give_permission": "Give permission to update contents of {parcel_name}.",
     "manage_land": "Manage LAND"
-  },
-  "asset_publish": {
-    "already_sold": "This LAND is already on sale for {value}",
-    "errors": {
-      "maximum_expiration": "The maximum expiration date is {date}",
-      "maximum_land_price": "The maximum LAND price is {value} MANA",
-      "minimum_expiration": "The minimum expiration date is {date}",
-      "minimum_land_price": "The minimum LAND price is {value} MANA"
-    },
-    "expiration": "Expiration",
-    "expiration_placeholder": "Expiration date for this publication",
-    "list_asset": "List {asset_name} for sale",
-    "please_authorize":
-      "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
-    "price": "Price",
-    "price_placeholder": "Price in MANA for this {asset_name}",
-    "set_asset_price": "Set a price and an expiration date for {asset_name}."
   },
   "parcel_tags": {
     "adjacent": "Adjacent",
