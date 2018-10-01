@@ -211,7 +211,12 @@ export default class Status extends React.PureComponent {
     const icon = this.renderIcon()
     const tooltip = this.getTooltip()
     return (
-      <div className="Status" data-balloon-pos="left" data-balloon={tooltip}>
+      <div
+        className="Status"
+        data-balloon-pos="left"
+        data-balloon-length="xlarge"
+        data-balloon={tooltip}
+      >
         <div className="status-text">{text}</div>
         <div className="status-icon">{icon}</div>
       </div>

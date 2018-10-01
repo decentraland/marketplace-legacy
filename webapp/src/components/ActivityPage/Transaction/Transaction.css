@@ -40,12 +40,6 @@
   font-size: 14px;
 }
 
-.Transaction .transaction-text {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .Transaction .parcels-link {
   margin-right: 10px;
 }
@@ -74,6 +68,14 @@
   height: 100%;
   float: right;
   margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .Transaction .transaction-container-right {
+    display: flex;
+    align-items: center;
+    flex: none;
+  }
 }
 
 @media (max-width: 768px) {

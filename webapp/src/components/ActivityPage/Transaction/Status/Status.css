@@ -42,7 +42,10 @@
 }
 
 @media (max-width: 768px) {
-  .Status .status-icon {
-    display: none;
+  .Status[data-balloon]:before {
+    background: none;
+  }
+  .Status[data-balloon]:after {
+    opacity: 0;
   }
 }

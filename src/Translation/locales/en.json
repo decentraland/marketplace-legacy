@@ -419,7 +419,7 @@
     "loading":
       "Fetching transaction status. If this takes too long, you might need to send another transaction with higher gas.",
     "queued":
-      "This transaction can't be processed because there is an earlier pending transaction",
+      "This transaction can't be processed yet because there is an earlier pending transaction",
     "replaced":
       "Another transaction with the same nonce as this one was mined instead"
   },
