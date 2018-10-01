@@ -7,6 +7,6 @@ const BLACKLISTED_PROPERTIES = [
   'updated_at'
 ]
 
-export function blacklistContributions(contributions) {
+export function sanitizeContributions(contributions) {
   return utils.mapOmit(contributions, BLACKLISTED_PROPERTIES)
 }

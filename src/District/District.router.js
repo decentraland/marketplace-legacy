@@ -1,6 +1,6 @@
 import { server, utils } from 'decentraland-commons'
 import { District } from './District.model'
-import { blacklistDistricts } from '../blacklist'
+import { sanitizeDistricts } from '../sanitize'
 
 export class DistrictRouter {
   constructor(app) {
@@ -17,6 +17,6 @@ export class DistrictRouter {
 
   async getDistricts() {
     const districts = await District.findEnabled()
-    return blacklistDistricts(districts)
+    return sanitizeDistricts(districts)
   }
 }

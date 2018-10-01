@@ -11,7 +11,7 @@ import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject } from '../shared/publication'
 import { Parcel, Estate, EstateService } from '../Asset'
-import { blacklistParcels } from '../blacklist'
+import { sanitizeParcels } from '../sanitize'
 import { coordinates, unsafeParseInt } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
@@ -96,7 +96,7 @@ export class MapRouter {
     }
 
     const parcelsRange = await Parcel.inRange(nw, se)
-    const parcels = blacklistParcels(parcelsRange)
+    const parcels = sanitizeParcels(parcelsRange)
     const estates = await new EstateService().getByParcels(parcels)
 
     const assets = { parcels, estates }
@@ -146,7 +146,7 @@ export class MapRouter {
   }
 
   async getAssetsAndPublications(nw, se) {
-    const parcelRange = blacklistParcels(await Parcel.inRange(nw, se))
+    const parcelRange = sanitizeParcels(await Parcel.inRange(nw, se))
     const parcels = toParcelObject(parcelRange)
     const estatesRange = await new EstateService().getByParcels(parcelRange)
     const estates = toEstateObject(estatesRange)

@@ -3,7 +3,7 @@ import { server } from 'decentraland-commons'
 import { Marketplace } from './Marketplace'
 import { PublicationService } from '../Publication'
 import { ReqQueryParams, MarketplaceReqQueryParams } from '../ReqQueryParams'
-import { blacklistAssets } from '../blacklist'
+import { sanitizeAssets } from '../sanitize'
 
 export class MarketplaceRouter {
   constructor(app) {
@@ -35,6 +35,7 @@ export class MarketplaceRouter {
       const PublicableAsset = new PublicationService().getPublicableAssetFromType(
         reqQueryParams.get('asset_type')
       )
+
       result = await new Marketplace().filter(
         marketplaceReqQueryParams,
         PublicableAsset
@@ -44,7 +45,7 @@ export class MarketplaceRouter {
     }
 
     return {
-      assets: blacklistAssets(result.assets),
+      assets: sanitizeAssets(result.assets),
       total: result.total
     }
   }

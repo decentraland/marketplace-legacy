@@ -4,7 +4,7 @@ import { Asset } from './Asset'
 import { MarketplaceRouter } from '../Marketplace'
 import { PublicationService } from '../Publication'
 import { ReqQueryParams, AssetReqQueryParams } from '../ReqQueryParams'
-import { blacklistAssets } from '../blacklist'
+import { sanitizeAssets } from '../sanitize'
 
 export class AssetRouter {
   constructor(app) {
@@ -45,7 +45,7 @@ export class AssetRouter {
     }
 
     return {
-      assets: blacklistAssets(result.assets),
+      assets: sanitizeAssets(result.assets),
       total: result.total
     }
   }

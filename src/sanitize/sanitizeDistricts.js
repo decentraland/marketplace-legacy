@@ -8,6 +8,6 @@ const BLACKLISTED_PROPERTIES = [
   'updated_at'
 ]
 
-export function blacklistDistricts(districts) {
+export function sanitizeDistricts(districts) {
   return utils.mapOmit(districts, BLACKLISTED_PROPERTIES)
 }

@@ -1,6 +1,6 @@
 import { server, utils } from 'decentraland-commons'
 import { Contribution } from './Contribution.model'
-import { blacklistContributions } from '../blacklist'
+import { sanitizeContributions } from '../sanitize'
 
 export class ContributionRouter {
   constructor(app) {
@@ -25,6 +25,6 @@ export class ContributionRouter {
       address.toLowerCase()
     )
 
-    return blacklistContributions(contributions)
+    return sanitizeContributions(contributions)
   }
 }
