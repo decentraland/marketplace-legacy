@@ -102,19 +102,35 @@ function* handleBuyRequest(action) {
     let marketplaceContract, txHash
     if (isLegacyPublication(action.publication)) {
       marketplaceContract = eth.getContract('LegacyMarketplace')
-      txHash = yield call(() => marketplaceContract.cancelOrder(asset.id))
+      txHash = yield call(() =>
+        marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
+      )
     } else {
       marketplaceContract = eth.getContract('Marketplace')
-      // const estateContract = eth.getContract('EstateRegistry')
-      const figerprint = '' //estateContract.getFingerprint(asset.id)
-      txHash = yield call(() =>
-        marketplaceContract.safeExecuteOrder(
-          nftAddress,
-          asset.id,
-          eth.utils.toWei(price),
-          figerprint
+      if (asset_type === ASSET_TYPES.estate) {
+        // get estate fingerprint & call safeExecuteOrder
+        const estateContract = eth.getContract('EstateRegistry')
+        const figerprint = yield call(() =>
+          estateContract.getFingerprint(asset.id)
         )
-      )
+
+        txHash = yield call(() =>
+          marketplaceContract.safeExecuteOrder(
+            nftAddress,
+            asset.id,
+            eth.utils.toWei(price),
+            figerprint
+          )
+        )
+      } else {
+        txHash = yield call(() =>
+          marketplaceContract.executeOrder(
+            nftAddress,
+            asset.id,
+            eth.utils.toWei(price)
+          )
+        )
+      }
     }
 
     const publication = {

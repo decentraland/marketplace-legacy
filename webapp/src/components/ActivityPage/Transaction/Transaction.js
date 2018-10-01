@@ -89,6 +89,14 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
+  getAssetLink(asset) {
+    if (asset.type === ASSET_TYPES.parcel) {
+      return this.renderParcelLink(asset.x, asset.y)
+    } else if (asset.type === ASSET_TYPES.estate) {
+      return this.renderEstateLink(asset)
+    }
+  }
+
   renderText() {
     const { tx } = this.props
     const { payload } = tx
@@ -191,49 +199,32 @@ export default class Transaction extends React.PureComponent {
         )
       }
       case PUBLISH_SUCCESS: {
-        const asset = payload
-        let assetLink
-
-        if (asset.type === ASSET_TYPES.parcel) {
-          assetLink = this.renderParcelLink(asset.x, asset.y)
-        } else if (asset.type === ASSET_TYPES.estate) {
-          assetLink = this.renderEstateLink(asset)
-        }
-
         return (
-          <T id="transaction.publish" values={{ parcel_link: assetLink }} />
+          <T
+            id="transaction.publish"
+            values={{ parcel_link: this.getAssetLink(payload) }}
+          />
         )
       }
       case BUY_SUCCESS: {
-        const { x, y } = payload
-
         return (
           <T
             id="transaction.buy"
-            values={{ parcel_link: this.renderParcelLink(x, y) }}
+            values={{ parcel_link: this.getAssetLink(payload) }}
           />
         )
       }
       case CANCEL_SALE_SUCCESS: {
-        const asset = payload
-        let assetLink
-
-        if (asset.type === ASSET_TYPES.parcel) {
-          assetLink = this.renderParcelLink(asset.x, asset.y)
-        } else if (asset.type === ASSET_TYPES.estate) {
-          assetLink = this.renderEstateLink(asset)
-        }
-
         return (
           <T
             id="transaction.cancel"
             values={{
               publication_link: (
-                <EtherscanLink txHash={asset.tx_hash}>
+                <EtherscanLink txHash={payload.tx_hash}>
                   {t('global.sale').toLowerCase()}
                 </EtherscanLink>
               ),
-              parcel_link: assetLink
+              parcel_link: this.getAssetLink(payload)
             }}
           />
         )

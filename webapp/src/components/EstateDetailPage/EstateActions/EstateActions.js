@@ -13,24 +13,15 @@ export default class EstateActions extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
     isOwner: PropTypes.bool.isRequired,
-    publications: PropTypes.objectOf(publicationType).isRequired,
-    onEditMetadata: PropTypes.func.isRequired
+    publications: PropTypes.objectOf(publicationType).isRequired
   }
 
   render() {
-    const { estate, publications, isOwner, onEditMetadata } = this.props
+    const { estate, publications, isOwner } = this.props
     const { id } = estate
 
     return (
       <div className="EstateActions">
-        {isOwner && (
-          <div>
-            <Button size="tiny" className="link" onClick={onEditMetadata}>
-              <Icon name="pencil" />
-              {t('global.edit')}
-            </Button>
-          </div>
-        )}
         {isOwner ? (
           <React.Fragment>
             <Link to={locations.transferEstate(id)}>
