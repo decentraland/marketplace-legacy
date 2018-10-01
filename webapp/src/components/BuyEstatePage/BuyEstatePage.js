@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { Loader, Container, Header, Grid, Message } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import ParcelModal from 'components/ParcelModal'
-import ParcelDetailLink from 'components/ParcelDetailLink'
-import Parcel from 'components/Parcel'
+import Estate from 'components/Estate'
+import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateModal'
+// import TxStatus from 'components/TxStatus'
+import EstateName from 'components/EstateName'
 import Mana from 'components/Mana'
 import {
   walletType,
@@ -17,12 +18,11 @@ import { t, T } from '@dapps/modules/translation/utils'
 import { isLegacyPublication } from 'modules/publication/utils'
 import { formatMana } from 'lib/utils'
 
-import './BuyParcelPage.css'
+import './BuyEstatePage.css'
 
-export default class BuyParcelPage extends React.PureComponent {
+export default class BuyEstatePage extends React.PureComponent {
   static propTypes = {
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     wallet: walletType,
     authorization: authorizationType,
     publication: publicationType,
@@ -53,7 +53,7 @@ export default class BuyParcelPage extends React.PureComponent {
   renderNotConnected() {
     return (
       <div>
-        <Container text textAlign="center" className="BuyParcelPage">
+        <Container text textAlign="center" className="BuyEstatePage">
           <Header as="h2" size="huge" className="title">
             {t('asset_buy.buy_asset')}
           </Header>
@@ -74,8 +74,7 @@ export default class BuyParcelPage extends React.PureComponent {
 
   renderPage() {
     const {
-      x,
-      y,
+      id,
       wallet,
       publication,
       isDisabled,
@@ -83,55 +82,60 @@ export default class BuyParcelPage extends React.PureComponent {
       onCancel
     } = this.props
     const { balance } = wallet
-    const allowance = this.getCurrentAllowance()
-
-    const price = parseFloat(publication.price)
-
-    const isNotEnoughMana = balance < price
-    const isNotEnoughAllowance = allowance < price
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed>
-        {parcel => (
-          <div className="BuyParcelPage">
-            {isNotEnoughMana || isNotEnoughAllowance
-              ? this.renderMessage()
-              : null}
-            <ParcelModal
-              x={x}
-              y={y}
-              title={t('asset_buy.buy_asset', { asset_type: t('name.parcel') })}
-              subtitle={
-                <T
-                  id="asset_buy.about_to_buy"
-                  values={{
-                    name: <ParcelDetailLink parcel={parcel} />,
-                    price: publication ? (
-                      <React.Fragment>
-                        &nbsp;{t('global.for')}&nbsp;&nbsp;
-                        <span
-                          style={{
-                            display: 'inline-block',
-                            transform: 'translateY(3px)'
-                          }}
-                        >
-                          <Mana amount={publication.price} size={14} />
-                        </span>
-                      </React.Fragment>
-                    ) : (
-                      ''
-                    )
-                  }}
-                />
-              }
-              onCancel={onCancel}
-              onConfirm={this.handleConfirm}
-              isDisabled={isDisabled || isNotEnoughMana || isNotEnoughAllowance}
-              isTxIdle={isTxIdle}
-            />
-          </div>
-        )}
-      </Parcel>
+      <Estate id={id} ownerNotAllowed>
+        {estate => {
+          const allowance = this.getCurrentAllowance()
+
+          const price = parseFloat(publication.price)
+
+          const isNotEnoughMana = balance < price
+          const isNotEnoughAllowance = allowance < price
+          return (
+            <div className="BuyEstatePage">
+              {isNotEnoughMana || isNotEnoughAllowance
+                ? this.renderMessage()
+                : null}
+              <EstateModal
+                parcels={estate.data.parcels}
+                title={t('asset_buy.buy_asset', {
+                  asset_type: t('name.estate')
+                })}
+                subtitle={
+                  <T
+                    id="asset_buy.about_to_buy"
+                    values={{
+                      name: <EstateName estate={estate} />,
+                      price: publication ? (
+                        <React.Fragment>
+                          &nbsp;{t('global.for')}&nbsp;&nbsp;
+                          <span
+                            style={{
+                              display: 'inline-block',
+                              transform: 'translateY(3px)'
+                            }}
+                          >
+                            <Mana amount={publication.price} size={14} />
+                          </span>
+                        </React.Fragment>
+                      ) : (
+                        ''
+                      )
+                    }}
+                  />
+                }
+                onCancel={onCancel}
+                onConfirm={this.handleConfirm}
+                isDisabled={
+                  isDisabled || isNotEnoughMana || isNotEnoughAllowance
+                }
+                isTxIdle={isTxIdle}
+              />
+            </div>
+          )
+        }}
+      </Estate>
     )
   }
 
@@ -168,7 +172,7 @@ export default class BuyParcelPage extends React.PureComponent {
                   <span>
                     {t('asset_buy.needs_at_least', {
                       mana: formatMana(publication.price),
-                      asset_type: t('name.parcel')
+                      asset_type: t('name.estate')
                     })}
                   </span>
                   <br />

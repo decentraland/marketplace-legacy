@@ -5,7 +5,7 @@ import { Icon, Header, Grid, Container, Button } from 'semantic-ui-react'
 import AssetDetailPage from 'components/AssetDetailPage'
 import ParcelCard from 'components/ParcelCard'
 import AddressBlock from 'components/AddressBlock'
-import { estateType, parcelType } from 'components/types'
+import { estateType, parcelType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { buildCoordinate } from 'shared/parcel'
 import EstateActions from './EstateActions'
@@ -17,6 +17,7 @@ const WITHOUT_ACTION_BUTTONS_WIDTH = 16
 export default class EstateDetail extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     allParcels: PropTypes.objectOf(parcelType),
     isOwner: PropTypes.bool.isRequired,
     onViewAssetClick: PropTypes.func.isRequired,
@@ -40,6 +41,7 @@ export default class EstateDetail extends React.PureComponent {
   render() {
     const {
       estate,
+      publications,
       isOwner,
       allParcels,
       onViewAssetClick,
@@ -76,17 +78,16 @@ export default class EstateDetail extends React.PureComponent {
                 </Header>
               </Grid.Column>
               <Grid.Column className="parcel-actions-container" computer={8}>
-                {isOwner ? (
-                  <EstateActions
-                    id={estate.id}
-                    onEditMetadata={onEditMetadata}
-                  />
-                ) : (
-                  <span className="is-address">
-                    <span>{t('global.owned_by')}</span>
-                    <AddressBlock address={estate.owner} scale={4} />
-                  </span>
-                )}
+                <span className="is-address">
+                  <span>{t('global.owned_by')}</span>
+                  <AddressBlock address={estate.owner} scale={4} />
+                </span>
+                <EstateActions
+                  isOwner={isOwner}
+                  publications={publications}
+                  estate={estate}
+                  onEditMetadata={onEditMetadata}
+                />
               </Grid.Column>
               {allParcels && (
                 <React.Fragment>

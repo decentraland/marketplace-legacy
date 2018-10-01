@@ -68,19 +68,18 @@ export const getPublicationByCoordinate = (state, x, y) => {
   return publication
 }
 
-export const getPublicationByAssetId = (state, id) => {
+export const getEstatePublicationById = (state, id) => {
   const estates = getEstates(state)
-  const estate = estates[buildCoordinate(id)]
+  const estate = estates[id]
   let publication = null
-
   if (estate) {
     const publications = getData(state)
-    const parcelPublications = findAssetPublications(
+    const estatePublications = findAssetPublications(
       publications,
       estate,
       PUBLICATION_STATUS.open
     )
-    publication = parcelPublications[0]
+    publication = estatePublications[0]
   }
 
   return publication

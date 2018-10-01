@@ -9,9 +9,22 @@ export function isEstate(asset) {
 }
 
 export function toEstateObject(estatesArray) {
-  return estatesArray
-    .filter(estate => estate.data.parcels.length)
-    .reduce((estates, estate) => ({ ...estates, [estate.id]: estate }), {})
+  return estatesArray.filter(estate => estate.data.parcels.length).reduce(
+    (estates, estate) => ({
+      ...estates,
+      [estate.id]: normalizeEstate(estate)
+    }),
+    {}
+  )
+}
+
+export function normalizeEstate(estate) {
+  const normalizedEstate = {
+    ...estate,
+    publication_tx_hash: estate.publication ? estate.publication.tx_hash : null
+  }
+  delete normalizedEstate.publication
+  return normalizedEstate
 }
 
 export function calculateMapProps(parcels, size = 20) {

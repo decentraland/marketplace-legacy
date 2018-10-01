@@ -43,7 +43,7 @@ export default class ParcelOwner extends React.PureComponent {
           >
             <Button size="tiny" className="link">
               <Icon name="add user" />
-              {t('parcel_detail.actions.permissions')}
+              {t('asset_detail.actions.permissions')}
             </Button>
           </Link>
         </span>

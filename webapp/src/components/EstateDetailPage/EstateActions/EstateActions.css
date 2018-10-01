@@ -1,4 +1,8 @@
-.EstateActions .button + .button {
+.EstateActions {
+  margin-top: 20px;
+}
+
+.EstateActions a + a {
   margin-left: 15px;
 }
 

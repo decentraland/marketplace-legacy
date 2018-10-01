@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Container, Message } from 'semantic-ui-react'
+import { Container, Message, Loader } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Estate from 'components/Estate'
 import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateModal'
 import EstateName from 'components/EstateName'
 import TxStatus from 'components/TxStatus'
-import { publicationType, walletType } from 'components/types'
+import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
 import { formatMana } from 'lib/utils'
@@ -16,24 +16,40 @@ import PublishAssetForm from '../PublishAssetForm'
 
 export default class PublishEstatePage extends React.PureComponent {
   static propTypes = {
+    id: PropTypes.string.isRequired,
+    authorization: authorizationType,
+    isLoading: PropTypes.bool.isRequired,
     publication: publicationType,
-    wallet: walletType,
     isTxIdle: PropTypes.bool.isRequired,
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
+  renderLoading() {
+    return (
+      <div>
+        <Loader active size="massive" />
+      </div>
+    )
+  }
+
   render() {
     const {
-      wallet,
       id,
       publication,
+      isLoading,
+      authorization,
       isTxIdle,
       onPublish,
       onCancel
     } = this.props
 
-    const { isLandAuthorized } = wallet
+    if (isLoading) {
+      return this.renderLoading()
+    }
+
+    const { approvals } = authorization
+    const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
 
     return (
       <Estate id={id} ownerOnly>
@@ -50,12 +66,12 @@ export default class PublishEstatePage extends React.PureComponent {
                 />
               </Container>
             ) : null}
-            {!isLandAuthorized ? (
+            {!isMarketplaceApproved ? (
               <Container text>
                 <Message
                   warning
                   icon="warning sign"
-                  header={t('global.unauthorized')}
+                  header={t('authorization.disallowed')}
                   content={
                     <T
                       id="asset_publish.please_authorize"
@@ -71,21 +87,27 @@ export default class PublishEstatePage extends React.PureComponent {
             ) : null}
             <EstateModal
               parcels={estate.data.parcels}
-              title={t('transfer_estate.transfer_estate')}
+              title={
+                <T
+                  id="asset_publish.list_asset"
+                  values={{ asset_name: t('name.estate') }}
+                />
+              }
               subtitle={
                 <T
-                  id="transfer_estate.about_to_transfer"
-                  values={{ name: estate.data.name }}
+                  id="asset_publish.set_asset_price"
+                  values={{ asset_name: estate.data.name }}
                 />
               }
               hasCustomFooter
             >
               <PublishAssetForm
                 asset={estate}
+                assetName={t('name.estate')}
                 isTxIdle={isTxIdle}
                 onPublish={onPublish}
                 onCancel={onCancel}
-                isDisabled={!isLandAuthorized}
+                isDisabled={!isMarketplaceApproved}
               />
               <TxStatus.Asset
                 asset={estate}

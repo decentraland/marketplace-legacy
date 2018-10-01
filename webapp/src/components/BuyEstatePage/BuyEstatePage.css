@@ -1,0 +1,18 @@
+.BuyEstatePage .subtitle {
+  color: white;
+  font-weight: 100;
+  font-size: 1.2em;
+  margin: 20px;
+  display: inline-block;
+}
+
+.BuyEstatePage .message.warning h3 {
+  font-weight: bolder;
+}
+
+.BuyEstatePage .sign-in {
+  display: block;
+  text-align: center;
+  margin-top: 50px;
+  color: var(--gray);
+}
