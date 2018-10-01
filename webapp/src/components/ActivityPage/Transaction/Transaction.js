@@ -1,17 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Segment, Grid, Loader } from 'semantic-ui-react'
-
+import { Segment, Grid } from 'semantic-ui-react'
 import { locations } from 'locations'
-import TxStatus from 'components/TxStatus'
 import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { getContractAddress } from 'modules/wallet/utils'
-import { getEtherscanHref, isPending } from '@dapps/modules/transaction/utils'
+import { getEtherscanHref } from '@dapps/modules/transaction/utils'
 import {
   ALLOW_TOKEN_SUCCESS,
   APPROVE_TOKEN_SUCCESS
@@ -45,8 +43,9 @@ import { buildCoordinate } from 'shared/parcel'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
 import { token } from 'lib/token'
 import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
-
+import { hasEtherscanLink, getHash } from '../utils'
 import './Transaction.css'
+import Status from './Status'
 
 export default class Transaction extends React.PureComponent {
   static propTypes = {
@@ -55,9 +54,14 @@ export default class Transaction extends React.PureComponent {
   }
 
   handleTransactionClick = e => {
-    if (e.target.nodeName !== 'A' && e.target.nodeName !== 'CANVAS') {
+    const { tx } = this.props
+    if (
+      e.target.nodeName !== 'A' &&
+      e.target.nodeName !== 'CANVAS' &&
+      hasEtherscanLink(tx)
+    ) {
       const { tx, network } = this.props
-      const href = getEtherscanHref({ txHash: tx.hash }, network)
+      const href = getEtherscanHref({ txHash: getHash(tx) }, network)
       window.open(href, '_blank')
     }
   }
@@ -361,8 +365,8 @@ export default class Transaction extends React.PureComponent {
           x={x}
           y={y}
           zoom={zoom}
-          width={64}
-          height={64}
+          width={48}
+          height={48}
           size={size}
           panX={pan.x}
           panY={pan.y}
@@ -379,9 +383,9 @@ export default class Transaction extends React.PureComponent {
         <ParcelPreview
           x={x}
           y={y}
-          width={64}
-          height={64}
-          size={15}
+          width={48}
+          height={48}
+          size={9.6}
           selected={{ x, y }}
         />
       </Link>
@@ -389,7 +393,7 @@ export default class Transaction extends React.PureComponent {
   }
 
   renderMANAPreview() {
-    return <Mana size={64} scale={1} />
+    return <Mana size={48} scale={1} />
   }
 
   render() {
@@ -399,6 +403,10 @@ export default class Transaction extends React.PureComponent {
     }
 
     const { tx } = this.props
+
+    const classnames = `Transaction ${
+      hasEtherscanLink(tx) ? 'with-link' : ''
+    }`.trim()
 
     const isParcelTransaction = [
       EDIT_PARCEL_SUCCESS,
@@ -427,34 +435,30 @@ export default class Transaction extends React.PureComponent {
       <Segment size="large" vertical>
         <Grid>
           <Grid.Column
-            className="Transaction"
+            className={classnames}
             onClick={this.handleTransactionClick}
           >
-            {isPending(tx.status) ? (
-              <Loader active size="mini" />
-            ) : (
-              <div className="mini circle" />
-            )}
+            <div className="transaction-container">
+              <div className="transaction-container-left">
+                <div className="transaction-avatar">
+                  {isParcelTransaction && this.renderParcelPreview(tx)}
+                  {isEstateTransaction && this.renderEstatePreview(tx)}
+                  {isMANATransaction && this.renderMANAPreview()}
+                </div>
 
-            <div className="transaction-avatar">
-              {isParcelTransaction && this.renderParcelPreview(tx)}
-              {isEstateTransaction && this.renderEstatePreview(tx)}
-              {isMANATransaction && this.renderMANAPreview()}
-            </div>
-
-            <div className="transaction-text">
-              <TxStatus.Icon
-                className="transaction-icon"
-                txHash={tx.hash}
-                txStatus={tx.status}
-              />
-              <div>{text}</div>
-              <div
-                className="transaction-timestamp"
-                data-balloon-pos="up"
-                data-balloon={formatDate(tx.timestamp)}
-              >
-                {distanceInWordsToNow(tx.timestamp)}
+                <div className="transaction-text-container">
+                  <div className="transaction-text">{text}.</div>
+                  <div
+                    className="transaction-timestamp"
+                    data-balloon-pos="up"
+                    data-balloon={formatDate(tx.timestamp)}
+                  >
+                    {distanceInWordsToNow(tx.timestamp)}
+                  </div>
+                </div>
+              </div>
+              <div className="transaction-container-right">
+                <Status tx={tx} />
               </div>
             </div>
           </Grid.Column>

@@ -1,10 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import {
-  getPendingTransactions,
-  getTransactionHistory
-} from '@dapps/modules/transaction/selectors'
+import { getTransactions } from '@dapps/modules/transaction/selectors'
 import {
   getNetwork,
   getAddress,
@@ -22,18 +19,14 @@ import ActivityPage from './ActivityPage'
 const mapState = state => {
   const address = getAddress(state)
 
-  const pendingTransactions = getPendingTransactions(state, address)
-  const transactionHistory = getTransactionHistory(state, address)
+  const transactions = getTransactions(state, address)
   const authorization = getAuthorizations(state)[address]
-
-  const totalSent = pendingTransactions.length + transactionHistory.length
 
   return {
     authorization,
-    pendingTransactions,
-    transactionHistory,
+    transactions,
     network: getNetwork(state),
-    isEmpty: totalSent <= 0,
+    isEmpty: transactions.length === 0,
     isLoading: isConnecting(state) || isLoading(state),
     isConnected: isConnected(state)
   }

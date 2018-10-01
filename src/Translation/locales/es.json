@@ -157,6 +157,7 @@
     "time_left": "Tiempo restante",
     "transfer_irreversible":
       "Recuerde que la transferencia es una operación irreversible.",
+    "unauthorized": "No autorizado",
     "undo": "Deshacer",
     "wallet_address": "Dirección de billetera",
     "website": "Website"
@@ -395,6 +396,11 @@
     "transfer": "Has transferido {asset_type} {asset_link} a {owner_link}",
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"
   },
+  "transaction_confirmations": {
+    "count":
+      "{confirmations_count} {confirmations_count, plural, one {confirmación} otro {confirmaciones}}",
+    "waiting": "Esperando confirmaciones"
+  },
   "transaction_status": {
     "activity_page": "página de actividad",
     "idle": {
@@ -411,6 +417,25 @@
         "Tu transacción ha fallado, puedes intentar enviándola nuevamente.",
       "pending": "Tu transacción está esperando ser confirmada."
     }
+  },
+  "transaction_tooltips": {
+    "dropped":
+      "Esta transacción ha sido abandonada por la red. Esto puede ocurrir momentaneamente si acabas de reemplazar una transacción.",
+    "loading":
+      "Obteniendo estado de transacción. En caso de demorar demaciado es recomendable enviar otra transacción con un mayor precio de gas.",
+    "queued":
+      "Esta transacción no se puede procesar porque hay una transacción pendiente anterior",
+    "replaced":
+      "Otra transacción con el mismo nonce que esta se proceso en su lugar"
+  },
+  "transaction_types": {
+    "confirmed": "Aceptado",
+    "dropped": "Caído",
+    "loading": "Cargando",
+    "pending": "Pendiente",
+    "queued": "En cola",
+    "replaced": "Reemplazado",
+    "reverted": "Ha fallado"
   },
   "transfer_estate": {
     "about_to_transfer": "Estás a punto de transferir la propiedad {name}.",

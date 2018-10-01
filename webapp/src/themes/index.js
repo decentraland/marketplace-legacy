@@ -1,5 +1,6 @@
 // Base
 import 'semantic-ui-css/semantic.min.css'
+import 'react-circular-progressbar/dist/styles.css'
 
 // Variables
 import './variables.css'

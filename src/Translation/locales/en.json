@@ -158,6 +158,7 @@
     "time_left": "Time left",
     "transfer_irreversible":
       "Remember that transferring is an irreversible operation.",
+    "unauthorized": "Unauthorized",
     "undo": "Undo",
     "wallet_address": "Wallet address",
     "website": "Website"
@@ -393,6 +394,11 @@
     "transfer": "You transfered {asset_type} {asset_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"
   },
+  "transaction_confirmations": {
+    "count":
+      "{confirmations_count} {confirmations_count, plural, one {confirmation} other {confirmations}}",
+    "waiting": "Waiting for confirmations"
+  },
   "transaction_status": {
     "activity_page": "activity page",
     "idle": {
@@ -408,6 +414,25 @@
       "failed": "Your transaction failed, you can try sending a new one.",
       "pending": "The transaction is waiting to be confirmed."
     }
+  },
+  "transaction_tooltips": {
+    "dropped":
+      "This transaction has been dropped by the network. This could happen temporarily if you've sent a replacement transaction.",
+    "loading":
+      "Fetching transaction status. If this takes too long, you might need to send another transaction with higher gas.",
+    "queued":
+      "This transaction can't be processed yet because there is an earlier pending transaction",
+    "replaced":
+      "Another transaction with the same nonce as this one was mined instead"
+  },
+  "transaction_types": {
+    "confirmed": "Accepted",
+    "dropped": "Dropped",
+    "loading": "Loading",
+    "pending": "Pending",
+    "queued": "Queued",
+    "replaced": "Replaced",
+    "reverted": "Failed"
   },
   "transfer_estate": {
     "about_to_transfer": "You're about to transfer the estate {name}.",

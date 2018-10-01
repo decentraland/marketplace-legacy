@@ -159,6 +159,7 @@
     "the_parcel": "区画",
     "time_left": "残り時間",
     "transfer_irreversible": "転送は元に戻すことができません。",
+    "unauthorized": "無許可",
     "undo": "戻す",
     "wallet_address": "ウォレットアドレス",
     "website": "ウェブサイト"
@@ -391,6 +392,10 @@
     "transfer": "{parcel_link}を{owner_link}へ転送しました。",
     "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
   },
+  "transaction_confirmations": {
+    "count": "{confirmations_count}件の確認",
+    "waiting": "確認を待っている"
+  },
   "transaction_status": {
     "activity_page": "活動ページ",
     "idle": {
@@ -404,6 +409,23 @@
       "failed": "処理に失敗しました。もう一度試してください。",
       "pending": "取引が承認されるのを待っています。"
     }
+  },
+  "transaction_tooltips": {
+    "dropped": "このトランザクションはネットワークによって削除されました。",
+    "loading": "トランザクションのステータスを取得しています。",
+    "queued":
+      "以前の保留中のトランザクションがあるため、このトランザクションは処理できません",
+    "replaced":
+      "このトランザクションと同じナンスを持つ別のトランザクションが代わりにマイニングされました"
+  },
+  "transaction_types": {
+    "confirmed": "受け入れられた",
+    "dropped": "落ちた",
+    "loading": "読み込み中",
+    "pending": "保留中",
+    "queued": "待機中",
+    "replaced": "置き換えられた",
+    "reverted": "失敗"
   },
   "transfer_estate": {
     "about_to_transfer": "あなたはエステート{name}を転送しようとしています。",

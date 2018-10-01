@@ -1,0 +1,51 @@
+.Status {
+  display: flex;
+}
+
+.Status .status-text a {
+  color: var(--gray);
+}
+
+.Status .status-text .no-link {
+  color: var(--gray);
+}
+
+.Status .status-text a.confirmed {
+  color: var(--light-blue);
+}
+
+.Status .status-text a.reverted {
+  color: var(--error);
+}
+
+.Status .status-icon {
+  margin-left: 8px;
+  position: relative;
+  width: 15px;
+}
+
+.Status .status-icon .warning.sign.icon {
+  color: var(--error);
+}
+
+.Status .status-icon .question.icon {
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.Status .status-icon .check.icon {
+  color: var(--light-blue);
+}
+
+.Status .CircularProgressbar {
+  margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+  .Status[data-balloon]:before {
+    background: none;
+  }
+  .Status[data-balloon]:after {
+    opacity: 0;
+  }
+}

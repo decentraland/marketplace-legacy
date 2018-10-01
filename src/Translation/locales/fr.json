@@ -162,6 +162,7 @@
     "time_left": "Temps restant",
     "transfer_irreversible":
       "Rappelez-vous que le transfert est une opération irréversible.",
+    "unauthorized": "Non autorisé",
     "undo": "Annuler",
     "wallet_address": "Adresse du porte-feuille",
     "website": "Site"
@@ -404,6 +405,11 @@
     "transfer": "Vous avez transféré {asset_type} {asset_link} à {owner_link}",
     "transfer_mana": "Vous avez transféré {mana} MANA à {address_link}"
   },
+  "transaction_confirmations": {
+    "count":
+      "{confirmations_count} {confirmations_count, plural, one {confirmation} other {confirmations}}",
+    "waiting": "En attente de confirmation"
+  },
   "transaction_status": {
     "activity_page": "page d'activité",
     "idle": {
@@ -420,6 +426,23 @@
         "Votre transaction a échoué, vous pouvez essayer d'en envoyer une nouvelle.",
       "pending": "La transaction est en attente d'être confirmée."
     }
+  },
+  "transaction_tooltips": {
+    "dropped": "Cette transaction a été abandonnée par le réseau. ",
+    "loading": "Récupération du statut de la transaction ",
+    "queued":
+      "Cette transaction ne peut pas être traitée car il existe une transaction en attente antérieure",
+    "replaced":
+      "Une autre transaction avec le même nonce que celui-ci a été extraite à la place"
+  },
+  "transaction_types": {
+    "confirmed": "Accepté",
+    "dropped": "Chuté",
+    "loading": "Chargement",
+    "pending": "En attendant",
+    "queued": "En file d'attente",
+    "replaced": "Remplacé",
+    "reverted": "Échoué"
   },
   "transfer_estate": {
     "about_to_transfer":
