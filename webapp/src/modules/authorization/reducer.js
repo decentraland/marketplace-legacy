@@ -76,17 +76,9 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
           const addressState = state.data[address] || EMPTY_ADDRESS_STATE
 
           const allowances = {
-<<<<<<< HEAD
             ...addressState.allowances,
             [contractName]: {
               ...addressState.allowances[contractName],
-=======
-            ...(address in state.data ? state.data[address].approvals : {}),
-            [contractName]: {
-              ...(address in state.data
-                ? state.data[address].allowances[contractName]
-                : {}),
->>>>>>> fix: race condition where state.data is empty
               [tokenContractName]: amount
             }
           }
@@ -109,17 +101,9 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
           const addressState = state.data[address] || EMPTY_ADDRESS_STATE
 
           const approvals = {
-<<<<<<< HEAD
             ...addressState.approvals,
             [contractName]: {
               ...addressState.approvals[contractName],
-=======
-            ...(address in state.data ? state.data[address].approvals : {}),
-            [contractName]: {
-              ...(address in state.data
-                ? state.data[address].approvals[contractName]
-                : {}),
->>>>>>> fix: race condition where state.data is empty
               [tokenContractName]: isApproved
             }
           }
