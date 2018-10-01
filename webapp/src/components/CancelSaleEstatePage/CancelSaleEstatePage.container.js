@@ -1,34 +1,32 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+
 import { locations } from 'locations'
-import { getMatchParamsCoordinates } from 'modules/location/selectors'
+import { getMatchParams } from 'modules/location/selectors'
 import {
-  getPublicationByCoordinate,
+  getEstatePublicationById,
   isCancelIdle
 } from 'modules/publication/selectors'
 import { cancelSaleRequest } from 'modules/publication/actions'
-
-import CancelSalePage from './CancelSalePage'
+import CancelSaleEstatePage from './CancelSaleEstatePage'
 
 const mapState = (state, ownProps) => {
-  const { x, y } = getMatchParamsCoordinates(ownProps)
-
+  const { id } = getMatchParams(ownProps)
   return {
-    x,
-    y,
+    id,
     isTxIdle: isCancelIdle(state),
-    publication: getPublicationByCoordinate(state, x, y)
+    publication: getEstatePublicationById(state, id)
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const { x, y } = getMatchParamsCoordinates(ownProps)
+  const { id } = getMatchParams(ownProps)
 
   return {
     onConfirm: publication => dispatch(cancelSaleRequest(publication)),
-    onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
+    onCancel: () => dispatch(push(locations.estateDetail(id)))
   }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(CancelSalePage))
+export default withRouter(connect(mapState, mapDispatch)(CancelSaleEstatePage))

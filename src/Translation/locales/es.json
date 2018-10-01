@@ -237,10 +237,10 @@
     "no_name": "Sin nombre",
     "view": "Ver"
   },
-  "parcel_buy": {
+  "asset_buy": {
     "about_to_buy": "Estas por comprar {parcel_name} {parcel_price}",
     "allowed_balance": "Tu asignación es {allowance}",
-    "buy_land": "Comprar LAND",
+    "buy_asset": "Comprar LAND",
     "buy_mana": "{click_here} para comprar MANA.",
     "didnt_allow": "No has autorizado el uso de MANA",
     "didnt_allow_new_marketplace":
@@ -252,7 +252,7 @@
       "Vaya a {settings_link} y permita que el contrato del Marketplace opere MANA en su nombre",
     "total_balance": "Tu balance es {balance}"
   },
-  "parcel_cancel": {
+  "asset_cancel": {
     "about_to_cancel": "Estás por cancelar la venta de {parcel}.",
     "cancel_land": "Cancelar la venta de LAND",
     "not_for_sale": "La parcela {parcel} no está en venta."

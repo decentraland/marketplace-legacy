@@ -72,7 +72,7 @@ export default class PublishPage extends React.PureComponent {
                 <Message
                   warning
                   icon="warning sign"
-                  header={t('global.unauthorized')}
+                  header={t('authorization.disallowed')}
                   content={
                     <T
                       id="asset_publish.please_authorize"
@@ -89,17 +89,23 @@ export default class PublishPage extends React.PureComponent {
             <ParcelModal
               x={x}
               y={y}
-              title={t('asset_publish.list_land')}
+              title={
+                <T
+                  id="asset_publish.list_asset"
+                  values={{ asset_name: t('name.parcel') }}
+                />
+              }
               subtitle={
                 <T
-                  id="asset_publish.set_land_price"
-                  values={{ parcel_name: <ParcelDetailLink parcel={parcel} /> }}
+                  id="asset_publish.set_asset_price"
+                  values={{ asset_name: <ParcelDetailLink parcel={parcel} /> }}
                 />
               }
               hasCustomFooter
             >
               <PublishAssetForm
                 asset={parcel}
+                assetName={t('name.parcel')}
                 isTxIdle={isTxIdle}
                 onPublish={onPublish}
                 onCancel={onCancel}

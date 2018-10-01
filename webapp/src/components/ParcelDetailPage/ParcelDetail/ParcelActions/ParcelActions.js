@@ -40,7 +40,7 @@ export default class ParcelActions extends React.PureComponent {
             <Link to={locations.transferParcel(x, y)}>
               <Button size="tiny">
                 <Icon name="exchange" />
-                {t('parcel_detail.actions.transfer')}
+                {t('asset_detail.actions.transfer')}
               </Button>
             </Link>
 
@@ -56,14 +56,14 @@ export default class ParcelActions extends React.PureComponent {
               <Link to={locations.cancelSaleParcel(x, y)}>
                 <Button size="tiny" primary>
                   <Icon name="cancel" />
-                  {t('parcel_detail.actions.cancel')}
+                  {t('asset_detail.actions.cancel')}
                 </Button>
               </Link>
             ) : (
               <Link to={locations.sellParcel(x, y)}>
                 <Button size="tiny" primary>
                   <Icon name="tag" />
-                  {t('parcel_detail.actions.sell')}
+                  {t('asset_detail.actions.sell')}
                 </Button>
               </Link>
             )}
@@ -72,7 +72,7 @@ export default class ParcelActions extends React.PureComponent {
           <React.Fragment>
             <Link to={locations.buyParcel(x, y)}>
               <Button primary size="large">
-                {t('parcel_detail.publication.buy')}
+                {t('asset_detail.publication.buy')}
               </Button>
             </Link>
             {isFeatureEnabled('MORTGAGES') && (

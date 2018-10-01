@@ -24,6 +24,7 @@ import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { getEstateIdFromTxReceipt } from './utils'
+import { normalizeEstate } from 'shared/estate'
 
 const INITIAL_STATE = {
   data: {},
@@ -58,7 +59,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           [estate.id]: {
-            ...estate
+            ...normalizeEstate(estate)
           }
         }
       }
@@ -80,7 +81,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         ...state,
         data: action.assets.estates.reduce(
           (acc, estate) => {
-            return { ...acc, [estate.id]: estate }
+            return { ...acc, [estate.id]: normalizeEstate(estate) }
           },
           { ...state.data }
         )

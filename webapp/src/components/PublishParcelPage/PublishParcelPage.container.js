@@ -1,6 +1,8 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+
+import { ASSET_TYPES } from 'shared/asset'
 import { locations } from 'locations'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import {
@@ -40,7 +42,10 @@ const mapDispatch = (dispatch, ownProps) => {
   const { x, y } = getMatchParamsCoordinates(ownProps)
 
   return {
-    onPublish: publication => dispatch(publishRequest(publication)),
+    onPublish: publication =>
+      dispatch(
+        publishRequest({ ...publication, assetType: ASSET_TYPES.parcel })
+      ),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
   }
 }

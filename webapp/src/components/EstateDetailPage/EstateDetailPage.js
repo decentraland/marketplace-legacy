@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Estate from 'components/Estate'
-import { parcelType } from 'components/types'
+import { parcelType, publicationType } from 'components/types'
 import { isNewEstate } from 'shared/estate'
 import EstateDetail from './EstateDetail'
 import EditEstate from './EditEstate'
@@ -20,6 +20,7 @@ export default class EstateDetailPage extends React.PureComponent {
     x: PropTypes.number,
     y: PropTypes.number,
     id: PropTypes.string,
+    publications: PropTypes.objectOf(publicationType).isRequired,
     allParcels: PropTypes.objectOf(parcelType),
     onViewAssetClick: PropTypes.func.isRequired,
     onEditParcels: PropTypes.func.isRequired,
@@ -31,6 +32,7 @@ export default class EstateDetailPage extends React.PureComponent {
       id,
       x,
       y,
+      publications,
       onViewAssetClick,
       allParcels,
       onEditParcels,
@@ -53,6 +55,7 @@ export default class EstateDetailPage extends React.PureComponent {
           ) : (
             <EstateDetail
               estate={estate}
+              publications={publications}
               allParcels={allParcels}
               isOwner={isOwner}
               onViewAssetClick={onViewAssetClick}
