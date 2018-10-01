@@ -14,6 +14,55 @@
   "address": {
     "its_you": "あなたです。"
   },
+  "asset_buy": {
+    "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
+    "allowed_balance": "あなたの手当は{allowance}です",
+    "buy_asset": "ランドを購入",
+    "buy_mana": "MANAを更に購入する{click_here}",
+    "didnt_allow": "あなたはMANAの使用を許可していません",
+    "didnt_allow_new_marketplace":
+      "新しいバージョンのMarketplaceでMANAの使用を許可していない",
+    "needs_at_least": "このランドを購入するには最低{mana}必要です。",
+    "please_allow":
+      "{settings_link}にアクセスし、LegacyMarketplace契約でMANAをあなたのために操作できるようにしてください",
+    "please_allow_new_marketplace":
+      "{settings_link}に行き、Marketplace契約があなたのためにMANAを操作できるようにしてください",
+    "total_balance": "残高：{balance}"
+  },
+  "asset_cancel": {
+    "about_to_cancel": "{parcel}の販売をキャンセルしようとしています。",
+    "cancel_sale": "キャンセルセール",
+    "not_for_sale": "この区画{parcel}は販売されていません。"
+  },
+  "asset_detail": {
+    "actions": {
+      "cancel": "販売をキャンセルする",
+      "permissions": "アクセス許可",
+      "sell": "売る",
+      "transfer": "転送"
+    },
+    "publication": {
+      "buy": "購入",
+      "price": "価格"
+    }
+  },
+  "asset_publish": {
+    "already_sold": "このLANDは既に{value}の販売中です",
+    "errors": {
+      "maximum_expiration": "最大有効期限は{date}です",
+      "maximum_land_price": "最大LAND価格は{value} MANA",
+      "minimum_expiration": "有効期限の最小値は{date}です",
+      "minimum_land_price": "最小LAND価格は{value} MANA"
+    },
+    "expiration": "有効期限",
+    "expiration_placeholder": "この出版物の有効期限",
+    "list_asset": "販売のためのリスト{asset_name}",
+    "please_authorize":
+      "あなたは{settings_link}に行く必要がありますし、あなたがそれを販売する上でリストすることができます前にLANDを操作するMarketplaceを承認します。",
+    "price": "価格",
+    "price_placeholder": "この{asset_name}の価格はMANAです",
+    "set_asset_price": "{asset_name}の価格と有効期限を設定します。"
+  },
   "atlas": {
     "loading": "読込み中",
     "no_owner": "所有者なし",
@@ -233,38 +282,18 @@
     "requested": "申請しました。",
     "required_deposit": "必要なデポジット：{deposit}"
   },
+  "name": {
+    "estate": "エステート",
+    "parcel": "NT1"
+  },
   "parcel": {
     "no_description": "説明文未設定",
     "no_name": "名称未設定",
     "view": "見る"
   },
-  "asset_buy": {
-    "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
-    "allowed_balance": "あなたの手当は{allowance}です",
-    "buy_asset": "ランドを購入",
-    "buy_mana": "MANAを更に購入する{click_here}",
-    "didnt_allow": "あなたはMANAの使用を許可していません",
-    "didnt_allow_new_marketplace":
-      "新しいバージョンのMarketplaceでMANAの使用を許可していない",
-    "needs_at_least": "このランドを購入するには最低{mana}必要です。",
-    "please_allow":
-      "{settings_link}にアクセスし、LegacyMarketplace契約でMANAをあなたのために操作できるようにしてください",
-    "please_allow_new_marketplace":
-      "{settings_link}に行き、Marketplace契約があなたのためにMANAを操作できるようにしてください",
-    "total_balance": "残高：{balance}"
-  },
-  "asset_cancel": {
-    "about_to_cancel": "{parcel}の販売をキャンセルしようとしています。",
-    "cancel_land": "販売をキャンセル",
-    "not_for_sale": "この区画{parcel}は販売されていません。"
-  },
   "parcel_detail": {
     "actions": {
-      "cancel": "販売をキャンセル",
-      "create_estate": "エステートを作成する",
-      "permissions": "権限",
-      "sell": "販売する",
-      "transfer": "転送する"
+      "create_estate": "エステートを作成する"
     },
     "description": "説明",
     "empty_description": "この区画に説明文はありません。",
@@ -283,9 +312,7 @@
       "part_of": "{name}の一部"
     },
     "publication": {
-      "buy": "購入",
-      "mortgage": "担保を申請する",
-      "price": "価格"
+      "mortgage": "担保を申請する"
     },
     "tags": {
       "title": "特徴"
@@ -307,23 +334,6 @@
       "このアドレスの持ち主が指定された区画のコンテンツを更新できるようになります。",
     "give_permission": "{parcel_name}の更新権限を与える.",
     "manage_land": "ランドを管理"
-  },
-  "parcel_publish": {
-    "already_sold": "このランドは既に{value}で販売されています。",
-    "errors": {
-      "maximum_expiration": "有効期限の最長は{date}です。",
-      "maximum_land_price": "ランドの最高価格は{value}MANAです。",
-      "minimum_expiration": "有効期限の最短は{date}です。",
-      "minimum_land_price": "ランドの最低価格は{value}MANAです。"
-    },
-    "expiration": "有効期限",
-    "expiration_placeholder": "この公開区画の有効期限",
-    "list_land": "このランドを販売リストに追加する",
-    "please_authorize":
-      " 販売リストに追加する前に、{settings_link}にてマーケット上でランドを使用することをマーケットコントラクトで承認して下さい。",
-    "price": "価格",
-    "price_placeholder": "このランドにMANAで値段をつけてください。",
-    "set_land_price": "{parcel_name}の価格と締切期限を設置してください。"
   },
   "parcel_tags": {
     "adjacent": "隣接",
