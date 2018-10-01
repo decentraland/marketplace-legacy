@@ -1,4 +1,4 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Mortgage } from './Mortgage.model'
 import { Parcel } from '../Asset'

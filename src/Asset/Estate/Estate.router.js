@@ -1,4 +1,4 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Estate } from './Estate.model'
 import { AssetRouter } from '../Asset.router'

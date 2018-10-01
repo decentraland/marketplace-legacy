@@ -1,4 +1,4 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 import { District } from './District.model'
 import { sanitizeDistricts } from '../sanitize'
 

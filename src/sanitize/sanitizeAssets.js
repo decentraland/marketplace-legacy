@@ -1,4 +1,3 @@
-import { utils } from 'decentraland-commons'
 import { sanitizeParcel } from './sanitizeParcels'
 import { sanitizeEstate } from './sanitizeEstates'
 import { sanitizePublication } from './sanitizePublications'
