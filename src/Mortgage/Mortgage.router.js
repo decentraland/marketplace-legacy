@@ -2,7 +2,7 @@ import { server, utils } from 'decentraland-commons'
 
 import { Mortgage } from './Mortgage.model'
 import { Parcel } from '../Asset'
-import { blacklist } from '../lib'
+import { blacklistParcels } from '../blacklist'
 
 export class MortgageRouter {
   constructor(app) {
@@ -47,7 +47,7 @@ export class MortgageRouter {
   async getMortgagedParcelsByBorrower(req) {
     const borrower = server.extractFromReq(req, 'address')
     const parcels = await Parcel.findWithLastActiveMortgageByBorrower(borrower)
-    return utils.mapOmit(parcels, blacklist.parcel)
+    return blacklistParcels(parcels)
   }
 
   async getMortgagesByBorrower(req) {

@@ -4,7 +4,8 @@ import { Parcel } from './Parcel.model'
 import { AssetRouter } from '../Asset.router'
 import { ASSET_TYPES } from '../../shared/asset'
 import { Bounds } from '../../shared/map'
-import { blacklist, unsafeParseInt } from '../../lib'
+import { blacklistParcels } from '../../blacklist'
+import { unsafeParseInt } from '../../lib'
 
 export class ParcelRouter {
   constructor(app) {
@@ -56,7 +57,7 @@ export class ParcelRouter {
       const se = server.extractFromReq(req, 'se')
       const rangeParcels = await Parcel.inRange(nw, se)
 
-      parcels = utils.mapOmit(rangeParcels, blacklist.parcel)
+      parcels = blacklistParcels(rangeParcels)
       total = parcels.length
     } catch (error) {
       // Force parcel type
@@ -93,7 +94,7 @@ export class ParcelRouter {
     const coords = Parcel.buildId(x, y)
     const range = await Parcel.inRange(coords, coords)
 
-    parcel = utils.omit(range[0], blacklist.parcel)
+    parcel = blacklistParcels(range.slice(0, 1))
 
     return parcel
   }
@@ -110,6 +111,6 @@ export class ParcelRouter {
       parcels = await Parcel.findByOwner(address)
     }
 
-    return utils.mapOmit(parcels, blacklist.parcel)
+    return blacklistParcels(parcels)
   }
 }

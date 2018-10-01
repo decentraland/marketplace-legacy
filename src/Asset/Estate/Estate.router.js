@@ -2,8 +2,8 @@ import { server, utils } from 'decentraland-commons'
 
 import { Estate } from './Estate.model'
 import { AssetRouter } from '../Asset.router'
+import { blacklistEstates } from '../../blacklist'
 import { ASSET_TYPES } from '../../shared/asset'
-import { blacklist } from '../../lib'
 
 export class EstateRouter {
   constructor(app) {
@@ -65,7 +65,7 @@ export class EstateRouter {
       estates = await Estate.findByOwner(address)
     }
 
-    return utils.mapOmit(estates, blacklist.estate)
+    return blacklistEstates(estates)
   }
 
   async getEstate(req) {
@@ -74,6 +74,6 @@ export class EstateRouter {
     if (!estate) {
       throw new Error(`Estate with id ${id} not found`)
     }
-    return utils.omit(estate, blacklist.estate)
+    return blacklistEstates([estate])
   }
 }

@@ -4,7 +4,7 @@ import { Asset } from './Asset'
 import { MarketplaceRouter } from '../Marketplace'
 import { PublicationService } from '../Publication'
 import { ReqQueryParams, AssetReqQueryParams } from '../ReqQueryParams'
-import { blacklist } from '../lib'
+import { blacklistAssets } from '../blacklist'
 
 export class AssetRouter {
   constructor(app) {
@@ -45,20 +45,8 @@ export class AssetRouter {
     }
 
     return {
-      assets: this.blacklistAssets(result.assets),
+      assets: blacklistAssets(result.assets),
       total: result.total
     }
-  }
-
-  blacklistAssets(assets = []) {
-    return assets.map(({ publication, ...asset }) => {
-      const newAsset = utils.omit(asset, blacklist.asset)
-
-      newAsset.publication = publication
-        ? utils.omit(publication, blacklist.publication)
-        : undefined
-
-      return newAsset
-    })
   }
 }

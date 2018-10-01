@@ -3,6 +3,7 @@ import { server } from 'decentraland-commons'
 import { Marketplace } from './Marketplace'
 import { PublicationService } from '../Publication'
 import { ReqQueryParams, MarketplaceReqQueryParams } from '../ReqQueryParams'
+import { blacklistAssets } from '../blacklist'
 
 export class MarketplaceRouter {
   constructor(app) {
@@ -43,7 +44,7 @@ export class MarketplaceRouter {
     }
 
     return {
-      assets: result.assets,
+      assets: blacklistAssets(result.assets),
       total: result.total
     }
   }
