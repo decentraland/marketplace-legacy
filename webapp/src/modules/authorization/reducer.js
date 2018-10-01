@@ -22,6 +22,7 @@ const INITIAL_STATE = {
   loading: [],
   error: null
 }
+const EMPTY_ADDRESS_STATE = { allowances: {}, approvals: {} }
 
 export function authorizationReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -33,6 +34,8 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_AUTHORIZATION_SUCCESS: {
       const { address, authorization } = action.payload
+      const addressState = state.data[address] || EMPTY_ADDRESS_STATE
+
       return {
         loading: loadingReducer(state.loading, action),
         error: null,
@@ -41,11 +44,11 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
           [address]: {
             ...state.data[address],
             allowances: {
-              ...(state.data[address] || {}).allowances,
+              ...addressState.allowances,
               ...authorization.allowances
             },
             approvals: {
-              ...(state.data[address] || {}).approvals,
+              ...addressState.approvals,
               ...authorization.approvals
             }
           }
@@ -70,11 +73,12 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             contractName,
             tokenContractName
           } = transaction.payload
+          const addressState = state.data[address] || EMPTY_ADDRESS_STATE
 
           const allowances = {
-            ...state.data[address].allowances,
+            ...addressState.allowances,
             [contractName]: {
-              ...state.data[address].allowances[contractName],
+              ...addressState.allowances[contractName],
               [tokenContractName]: amount
             }
           }
@@ -83,7 +87,7 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              [address]: { ...state.data[address], allowances }
+              [address]: { approvals: {}, ...state.data[address], allowances }
             }
           }
         }
@@ -94,11 +98,12 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             contractName,
             tokenContractName
           } = transaction.payload
+          const addressState = state.data[address] || EMPTY_ADDRESS_STATE
 
           const approvals = {
-            ...state.data[address].approvals,
+            ...addressState.approvals,
             [contractName]: {
-              ...state.data[address].approvals[contractName],
+              ...addressState.approvals[contractName],
               [tokenContractName]: isApproved
             }
           }
@@ -107,7 +112,7 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              [address]: { ...state.data[address], approvals }
+              [address]: { allowances: {}, ...state.data[address], approvals }
             }
           }
         }
