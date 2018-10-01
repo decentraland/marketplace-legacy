@@ -22,7 +22,9 @@ import TransferParcelPage from 'components/TransferParcelPage'
 import EstateDetailPage from 'components/EstateDetailPage'
 import ManageParcelPage from 'components/ManageParcelPage'
 import BuyParcelPage from 'components/BuyParcelPage'
-import CancelSalePage from 'components/CancelSalePage'
+import BuyEstatePage from 'components/BuyEstatePage'
+import CancelSaleParcelPage from 'components/CancelSaleParcelPage'
+import CancelSaleEstatePage from 'components/CancelSaleEstatePage'
 import ActivityPage from 'components/ActivityPage'
 import SettingsPage from 'components/SettingsPage'
 import SignInPage from 'components/SignInPage'
@@ -75,7 +77,7 @@ export default class Routes extends React.Component {
         <Route
           exact
           path={this.addLegacySupport(locations.cancelSaleParcel())}
-          component={CancelSalePage}
+          component={CancelSaleParcelPage}
         />
         <Route
           exact
@@ -122,6 +124,12 @@ export default class Routes extends React.Component {
           exact
           path={locations.sellEstate()}
           component={PublishEstatePage}
+        />
+        <Route exact path={locations.buyEstate()} component={BuyEstatePage} />
+        <Route
+          exact
+          path={this.addLegacySupport(locations.cancelSaleEstate())}
+          component={CancelSaleEstatePage}
         />
 
         {/*Mortgages*/}

@@ -2,20 +2,22 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { ASSET_TYPES } from 'shared/asset'
 import { locations } from 'locations'
+import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getMatchParams } from 'modules/location/selectors'
-import {
-  getEstatePublicationById,
-  isPublishingIdle
-} from 'modules/publication/selectors'
-import { getWallet, isConnecting } from 'modules/wallet/selectors'
-import { publishRequest } from 'modules/publication/actions'
-import PublishEstatePage from './PublishEstatePage'
+import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import {
   getData as getAuthorizations,
   isLoading
 } from 'modules/authorization/selectors'
+import {
+  getEstatePublicationById,
+  getLoading
+} from 'modules/publication/selectors'
+import { isBuyIdle } from 'modules/publication/selectors'
+import { BUY_REQUEST, buyRequest } from 'modules/publication/actions'
+
+import BuyEstatePage from './BuyEstatePage'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)
@@ -29,9 +31,12 @@ const mapState = (state, ownProps) => {
 
   return {
     id,
+    wallet,
     authorization,
     publication: getEstatePublicationById(state, id),
-    isTxIdle: isPublishingIdle(state),
+    isDisabled: isLoadingType(getLoading(state), BUY_REQUEST),
+    isTxIdle: isBuyIdle(state),
+    isConnected: isConnected(state),
     isLoading: isConnecting(state) || isLoading(state)
   }
 }
@@ -40,12 +45,9 @@ const mapDispatch = (dispatch, ownProps) => {
   const { id } = getMatchParams(ownProps)
 
   return {
-    onPublish: publication =>
-      dispatch(
-        publishRequest({ ...publication, assetType: ASSET_TYPES.estate })
-      ),
+    onConfirm: publication => dispatch(buyRequest(publication)),
     onCancel: () => dispatch(push(locations.estateDetail(id)))
   }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(PublishEstatePage))
+export default withRouter(connect(mapState, mapDispatch)(BuyEstatePage))

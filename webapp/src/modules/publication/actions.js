@@ -74,9 +74,9 @@ export function fetchParcelPublicationsFailure(error) {
 
 // Publish LAND
 
-export const PUBLISH_REQUEST = '[Request] Publish LAND'
-export const PUBLISH_SUCCESS = '[Success] Publish LAND'
-export const PUBLISH_FAILURE = '[Failure] Publish LAND'
+export const PUBLISH_REQUEST = '[Request] Publish Asset' // @nacho: TODO migration?
+export const PUBLISH_SUCCESS = '[Success] Publish Asset'
+export const PUBLISH_FAILURE = '[Failure] Publish Asset'
 
 export function publishRequest(publication = {}) {
   return {
@@ -105,9 +105,9 @@ export function publishFailure(error) {
 
 // Buy LAND
 
-export const BUY_REQUEST = '[Request] Buy LAND'
-export const BUY_SUCCESS = '[Success] Buy LAND'
-export const BUY_FAILURE = '[Failure] Buy LAND'
+export const BUY_REQUEST = '[Request] Buy Asset'
+export const BUY_SUCCESS = '[Success] Buy Asset'
+export const BUY_FAILURE = '[Failure] Buy Asset'
 
 export function buyRequest(publication = {}) {
   return {
@@ -138,9 +138,9 @@ export function buyFailure(error) {
 
 // Cancel LAND Sale
 
-export const CANCEL_SALE_REQUEST = '[Request] Cancel LAND Sale'
-export const CANCEL_SALE_SUCCESS = '[Success] Cancel LAND Sale'
-export const CANCEL_SALE_FAILURE = '[Failure] Cancel LAND Sale'
+export const CANCEL_SALE_REQUEST = '[Request] Cancel Asset Sale'
+export const CANCEL_SALE_SUCCESS = '[Success] Cancel Asset Sale'
+export const CANCEL_SALE_FAILURE = '[Failure] Cancel Asset Sale'
 
 export function cancelSaleRequest(publication = {}) {
   return {

@@ -5,8 +5,6 @@ import TxStatus from 'components/TxStatus'
 import { preventDefault } from 'lib/utils'
 import { t } from '@dapps/modules/translation/utils'
 
-import './CancelSaleForm.css'
-
 export default class CancelSaleForm extends React.PureComponent {
   static propTypes = {
     isTxIdle: PropTypes.bool,

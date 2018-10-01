@@ -14,6 +14,39 @@
   "address": {
     "its_you": "It's you"
   },
+  "asset_buy": {
+    "about_to_buy": "You are about to buy {name} {price}.",
+    "allowed_balance": "Your allowance is {allowance}",
+    "buy_asset": "Buy {asset_type}",
+    "buy_mana": "{click_here} to buy some MANA.",
+    "didnt_allow": "You haven't authorized MANA usage",
+    "didnt_allow_new_marketplace":
+      "You haven't authorized MANA usage for the new version of the Marketplace",
+    "needs_at_least":
+      "You need at least {mana} in order to buy this {asset_type}.",
+    "please_allow":
+      "Please go to {settings_link} and allow the LegacyMarketplace contract to operate MANA on your behalf",
+    "please_allow_new_marketplace":
+      "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
+    "total_balance": "Your balance is {balance}"
+  },
+  "asset_cancel": {
+    "about_to_cancel": "You are about to cancel the sale of {name}.",
+    "cancel_sale": "Cancel Sale",
+    "not_for_sale": "The {asset_name} {asset} is not for sale."
+  },
+  "asset_detail": {
+    "actions": {
+      "cancel": "Cancel sale",
+      "permissions": "Permissions",
+      "sell": "Sell",
+      "transfer": "Transfer"
+    },
+    "publication": {
+      "buy": "Buy",
+      "price": "price"
+    }
+  },
   "atlas": {
     "loading": "Loading",
     "no_owner": "No Owner",
@@ -232,38 +265,18 @@
     "requested": "Requested",
     "required_deposit": "Required deposit: {deposit}"
   },
+  "name": {
+    "estate": "Estate",
+    "parcel": "LAND"
+  },
   "parcel": {
     "no_description": "No description",
     "no_name": "No name",
     "view": "View"
   },
-  "parcel_buy": {
-    "about_to_buy": "You are about to buy {parcel_name} {parcel_price}.",
-    "allowed_balance": "Your allowance is {allowance}",
-    "buy_land": "Buy LAND",
-    "buy_mana": "{click_here} to buy some MANA.",
-    "didnt_allow": "You haven't authorized MANA usage",
-    "didnt_allow_new_marketplace":
-      "You haven't authorized MANA usage for the new version of the Marketplace",
-    "needs_at_least": "You need at least {mana} in order to buy this LAND.",
-    "please_allow":
-      "Please go to {settings_link} and allow the LegacyMarketplace contract to operate MANA on your behalf",
-    "please_allow_new_marketplace":
-      "Please go to {settings_link} and allow the Marketplace contract to operate MANA on your behalf",
-    "total_balance": "Your balance is {balance}"
-  },
-  "parcel_cancel": {
-    "about_to_cancel": "You are about to cancel the sale of {parcel}.",
-    "cancel_land": "Cancel Sale",
-    "not_for_sale": "The parcel {parcel} is not for sale."
-  },
   "parcel_detail": {
     "actions": {
-      "cancel": "Cancel sale",
-      "create_estate": "Create Estate",
-      "permissions": "Permissions",
-      "sell": "Sell",
-      "transfer": "Transfer"
+      "create_estate": "Create Estate"
     },
     "description": "Description",
     "empty_description": "This parcel has no description",
@@ -282,9 +295,7 @@
       "part_of": "Part of {name}"
     },
     "publication": {
-      "buy": "Buy",
-      "mortgage": "Request Mortgage",
-      "price": "Price"
+      "mortgage": "Request Mortgage"
     },
     "tags": {
       "title": "Highlights"
@@ -317,12 +328,12 @@
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Expiration date for this publication",
-    "list_land": "List LAND for sale",
+    "list_asset": "List {asset_name} for sale",
     "please_authorize":
       "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
     "price": "Price",
-    "price_placeholder": "Price in MANA for this LAND",
-    "set_land_price": "Set a price and an expiration date for {parcel_name}."
+    "price_placeholder": "Price in MANA for this {asset_name}",
+    "set_asset_price": "Set a price and an expiration date for {asset_name}."
   },
   "parcel_tags": {
     "adjacent": "Adjacent",

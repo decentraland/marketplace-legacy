@@ -238,10 +238,10 @@
     "no_name": "名称未設定",
     "view": "見る"
   },
-  "parcel_buy": {
+  "asset_buy": {
     "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
     "allowed_balance": "あなたの手当は{allowance}です",
-    "buy_land": "ランドを購入",
+    "buy_asset": "ランドを購入",
     "buy_mana": "MANAを更に購入する{click_here}",
     "didnt_allow": "あなたはMANAの使用を許可していません",
     "didnt_allow_new_marketplace":
@@ -253,7 +253,7 @@
       "{settings_link}に行き、Marketplace契約があなたのためにMANAを操作できるようにしてください",
     "total_balance": "残高：{balance}"
   },
-  "parcel_cancel": {
+  "asset_cancel": {
     "about_to_cancel": "{parcel}の販売をキャンセルしようとしています。",
     "cancel_land": "販売をキャンセル",
     "not_for_sale": "この区画{parcel}は販売されていません。"

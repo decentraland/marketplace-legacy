@@ -22,6 +22,7 @@ import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { toPublicationsObject, PUBLICATION_STATUS } from 'shared/publication'
 import { FETCH_MORTGAGED_PARCELS_SUCCESS } from 'modules/mortgage/actions'
+import { FETCH_ESTATE_SUCCESS } from 'modules/estates/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -60,6 +61,21 @@ export function publicationReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_PARCEL_SUCCESS: {
       const publication = action.parcel.publication
+      if (publication) {
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            [publication.tx_hash]: {
+              ...publication
+            }
+          }
+        }
+      }
+      return state
+    }
+    case FETCH_ESTATE_SUCCESS: {
+      const publication = action.estate.publication
       if (publication) {
         return {
           ...state,

@@ -85,7 +85,7 @@ export default class ParcelDetail extends React.PureComponent {
               {publication ? (
                 <React.Fragment>
                   <Grid.Column width={4}>
-                    <h3>{t('parcel_detail.publication.price')}</h3>
+                    <h3>{t('asset_detail.publication.price')}</h3>
                     <Mana
                       amount={parseFloat(publication.price)}
                       size={20}

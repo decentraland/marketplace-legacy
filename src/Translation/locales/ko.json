@@ -236,10 +236,10 @@
     "no_name": "이름 없음",
     "view": "보기"
   },
-  "parcel_buy": {
+  "asset_buy": {
     "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
     "allowed_balance": "수당은 {allowance}입니다.",
-    "buy_land": "토지 구입",
+    "buy_asset": "토지 구입",
     "buy_mana": "MANA를 사기 위해 {click_here}.",
     "didnt_allow": "MANA 사용 권한을 허가하지 않았습니다.",
     "didnt_allow_new_marketplace":
@@ -251,7 +251,7 @@
       "{settings_link}로 이동하여 마켓 플레이스 계약이 귀하를 대신하여 MANA를 운영하도록 허용하십시오.",
     "total_balance": "Your balance is {balance}"
   },
-  "parcel_cancel": {
+  "asset_cancel": {
     "about_to_cancel": "{parcel}의 판매를 취소하려고합니다.",
     "cancel_land": "토지 판매 취소",
     "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
