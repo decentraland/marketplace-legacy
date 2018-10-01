@@ -20,6 +20,10 @@
   font-size: 15px;
 }
 
+.EstateDetail .estate-owner-container {
+  text-align: right !important;
+}
+
 .EstateDetail .row .parcels.column {
   display: flex;
   align-items: flex-start;
@@ -44,6 +48,20 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-end;
+  color: var(--gray);
+}
+
+.EstateDetail h3 {
+  font-family: var(--font-family) !important;
+}
+
+.EstateDetail .mana-price-icon {
+  font-size: 1.5em;
+}
+
+.EstateDetail .time-left .PublicationExpiration {
+  font-size: 20px;
+  display: block;
   color: var(--gray);
 }
 

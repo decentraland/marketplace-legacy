@@ -14,6 +14,7 @@ export async function main(getActions = createMonitorActions) {
   await db.connect()
 
   log.info('Connecting to Ethereum node')
+
   await eth.connect({
     contracts: [
       new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
