@@ -9,6 +9,9 @@ import { estateType, parcelType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { buildCoordinate } from 'shared/parcel'
 import EstateActions from './EstateActions'
+import { getOpenPublication } from 'shared/asset'
+import Mana from 'components/Mana'
+import Expiration from 'components/Expiration'
 import './EstateDetail.css'
 
 const WITH_ACTION_BUTTONS_WIDTH = 8
@@ -54,6 +57,8 @@ export default class EstateDetail extends React.PureComponent {
       return this.renderEmptyEstate()
     }
 
+    const publication = getOpenPublication(estate, publications)
+
     return (
       <div className="EstateDetail">
         <div className="parcel-preview" title={t('parcel_detail.view')}>
@@ -77,18 +82,58 @@ export default class EstateDetail extends React.PureComponent {
                   )}
                 </Header>
               </Grid.Column>
+              <Grid.Column
+                width={WITH_ACTION_BUTTONS_WIDTH}
+                className="estate-owner-container"
+              >
+                {isOwner ? (
+                  <div>
+                    <Button
+                      size="tiny"
+                      className="link"
+                      onClick={onEditMetadata}
+                    >
+                      <Icon name="pencil" />
+                      {t('global.edit')}
+                    </Button>
+                  </div>
+                ) : (
+                  <span className="is-address">
+                    <span>{t('global.owned_by')}</span>
+                    <AddressBlock address={estate.owner} scale={4} />
+                  </span>
+                )}
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              {publication && (
+                <React.Fragment>
+                  <Grid.Column width={4}>
+                    <h3>{t('asset_detail.publication.price')}</h3>
+                    <Mana
+                      amount={parseFloat(publication.price)}
+                      size={20}
+                      className="mana-price-icon"
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={4} className="time-left">
+                    <h3>{t('global.time_left')}</h3>
+                    <Expiration
+                      expiresAt={parseInt(publication.expires_at, 10)}
+                      className={'PublicationExpiration'}
+                    />
+                  </Grid.Column>
+                </React.Fragment>
+              )}
               <Grid.Column className="parcel-actions-container" computer={8}>
-                <span className="is-address">
-                  <span>{t('global.owned_by')}</span>
-                  <AddressBlock address={estate.owner} scale={4} />
-                </span>
                 <EstateActions
                   isOwner={isOwner}
                   publications={publications}
                   estate={estate}
-                  onEditMetadata={onEditMetadata}
                 />
               </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
               {allParcels && (
                 <React.Fragment>
                   <Grid.Column
