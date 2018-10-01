@@ -1,5 +1,5 @@
 import { Publication } from '../src/Publication'
-import { Parcel } from '../src/Parcel'
+import { Parcel } from '../src/Asset'
 
 exports.up = pgm => {
   pgm.alterColumn(Publication.tableName, 'price', {

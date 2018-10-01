@@ -1,8 +1,10 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Asset } from './Asset'
-import { PublicationRequestFilters, PublicationService } from '../Publication'
-import { blacklist } from '../lib'
+import { MarketplaceRouter } from '../Marketplace'
+import { PublicationService } from '../Publication'
+import { ReqQueryParams, AssetReqQueryParams } from '../ReqQueryParams'
+import { sanitizeAssets } from '../sanitize'
 
 export class AssetRouter {
   constructor(app) {
@@ -20,26 +22,31 @@ export class AssetRouter {
      * @param  {number} offset
      * @return {array<Asset>}
      */
-    this.app.get('/assets', server.handleRequest(this.getAssets))
+    this.app.get('/assets', server.handleRequest(this.getAssets.bind(this)))
   }
 
   async getAssets(req) {
-    const filters = new PublicationRequestFilters(req)
-    const Model = new PublicationService().getModelFromAssetType(
-      filters.getAssetType()
+    const reqQueryParams = new ReqQueryParams(req)
+    if (!reqQueryParams.has('asset_type')) {
+      throw new Error('The asset_type query param is required to get an asset')
+    }
+
+    const PublicableAsset = new PublicationService().getPublicableAssetFromType(
+      reqQueryParams.get('asset_type')
     )
-    const result = await new Asset(Model).filter(filters)
+    let result
+
+    if (reqQueryParams.has('status')) {
+      result = await new MarketplaceRouter().getAssets(req)
+    } else {
+      result = await new Asset(PublicableAsset).filter(
+        new AssetReqQueryParams(req)
+      )
+    }
 
     return {
-      assets: this.blacklistFilteredAssets(result.assets),
+      assets: sanitizeAssets(result.assets),
       total: result.total
     }
-  }
-
-  blacklistFilteredAssets(assets) {
-    return assets.map(({ publication, ...asset }) => ({
-      ...utils.omit(asset, blacklist.asset),
-      publication: utils.omit(publication, blacklist.publication)
-    }))
   }
 }

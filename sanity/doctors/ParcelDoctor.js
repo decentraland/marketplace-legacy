@@ -2,7 +2,7 @@ import { Log, env } from 'decentraland-commons'
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
-import { Parcel, ParcelService } from '../../src/Parcel'
+import { Parcel, ParcelService } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { parseCLICoords } from '../../scripts/utils'
 

@@ -2,8 +2,8 @@ import { env, Model } from 'decentraland-commons'
 
 import { Asset } from '../Asset'
 import { Parcel } from '../Parcel'
-import { BlockchainEvent, BlockchainEventQueries } from '../BlockchainEvent'
-import { SQL } from '../database'
+import { BlockchainEvent, BlockchainEventQueries } from '../../BlockchainEvent'
+import { SQL } from '../../database'
 
 export class Estate extends Model {
   static tableName = 'estates'

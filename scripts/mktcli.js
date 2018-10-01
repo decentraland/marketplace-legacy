@@ -3,7 +3,7 @@
 import { eth, txUtils, contracts } from 'decentraland-eth'
 import { env, Log, cli } from 'decentraland-commons'
 import { db } from '../src/database'
-import { Parcel } from '../src/Parcel'
+import { Parcel } from '../../src/Asset'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { mockModelDbOperations } from '../specs/utils'

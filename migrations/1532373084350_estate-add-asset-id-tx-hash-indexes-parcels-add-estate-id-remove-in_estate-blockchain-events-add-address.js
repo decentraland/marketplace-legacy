@@ -1,5 +1,4 @@
-import { Estate } from '../src/Estate'
-import { Parcel } from '../src/Parcel'
+import { Parcel, Estate } from '../src/Asset'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 
 const estateTableName = Estate.tableName

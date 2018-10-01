@@ -1,4 +1,4 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
 import {
@@ -10,9 +10,9 @@ import { toEstateObject, calculateMapProps } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 import { toPublicationObject } from '../shared/publication'
-import { Parcel, coordinates } from '../Parcel'
-import { Estate, EstateService } from '../Estate'
-import { blacklist, unsafeParseInt } from '../lib'
+import { Parcel, Estate, EstateService } from '../Asset'
+import { sanitizeParcels } from '../sanitize'
+import { coordinates, unsafeParseInt } from '../lib'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
@@ -96,8 +96,8 @@ export class MapRouter {
     }
 
     const parcelsRange = await Parcel.inRange(nw, se)
-    const parcels = utils.mapOmit(parcelsRange, blacklist.parcel)
-    const estates = await EstateService.getByParcels(parcels)
+    const parcels = sanitizeParcels(parcelsRange)
+    const estates = await new EstateService().getByParcels(parcels)
 
     const assets = { parcels, estates }
     const total = parcels.length + estates.length
@@ -146,12 +146,9 @@ export class MapRouter {
   }
 
   async getAssetsAndPublications(nw, se) {
-    const parcelRange = utils.mapOmit(
-      await Parcel.inRange(nw, se),
-      blacklist.parcel
-    )
+    const parcelRange = sanitizeParcels(await Parcel.inRange(nw, se))
     const parcels = toParcelObject(parcelRange)
-    const estatesRange = await EstateService.getByParcels(parcelRange)
+    const estatesRange = await new EstateService().getByParcels(parcelRange)
     const estates = toEstateObject(estatesRange)
     const publications = toPublicationObject(getParcelPublications(parcelRange))
     return [parcels, estates, publications]

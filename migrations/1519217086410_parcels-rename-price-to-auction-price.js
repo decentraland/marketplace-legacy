@@ -1,4 +1,4 @@
-import { Parcel } from '../src/Parcel'
+import { Parcel } from '../src/Asset'
 
 exports.up = pgm => {
   pgm.renameColumn(Parcel.tableName, 'price', 'auction_price')

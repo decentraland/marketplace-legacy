@@ -1,6 +1,6 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 import { Contribution } from './Contribution.model'
-import { blacklist } from '../lib'
+import { sanitizeContributions } from '../sanitize'
 
 export class ContributionRouter {
   constructor(app) {
@@ -25,6 +25,6 @@ export class ContributionRouter {
       address.toLowerCase()
     )
 
-    return utils.mapOmit(contributions, blacklist.contribution)
+    return sanitizeContributions(contributions)
   }
 }

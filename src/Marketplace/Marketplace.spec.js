@@ -1,15 +1,15 @@
 import { expect } from 'chai'
 import { txUtils } from 'decentraland-eth'
 
-import { db } from '../database'
-import { Parcel, ParcelService } from '../Parcel'
+import { Marketplace } from './Marketplace'
+import { Parcel, ParcelService } from '../Asset'
 import { Publication } from '../Publication'
+import { db } from '../database'
 import { ASSET_TYPES } from '../shared/asset'
 import { PUBLICATION_STATUS } from '../shared/publication'
-import { Asset } from './Asset'
 
-describe('Asset', function() {
-  const filters = {
+describe('Marketplace', function() {
+  const queryParams = {
     sanitize() {
       return {
         status: PUBLICATION_STATUS.open,
@@ -27,7 +27,7 @@ describe('Asset', function() {
   }
 
   describe('#filter', function() {
-    it('should filter the published assets using the supplied filters', async function() {
+    it('should filter the published assets using the supplied queryParams', async function() {
       // Setup
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_TYPES.confirmed
@@ -109,7 +109,10 @@ describe('Asset', function() {
       await Promise.all(inserts)
 
       // Filter
-      const { assets, total } = await new Asset(Parcel).filter(filters)
+      const { assets, total } = await new Marketplace().filter(
+        queryParams,
+        Parcel
+      )
 
       expect(assets).to.equalRows([
         {

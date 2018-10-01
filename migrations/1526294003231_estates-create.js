@@ -1,4 +1,4 @@
-import { Estate } from '../src/Estate'
+import { Estate } from '../src/Asset'
 
 const tableName = Estate.tableName
 

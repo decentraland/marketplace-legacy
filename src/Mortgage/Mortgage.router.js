@@ -1,8 +1,8 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Mortgage } from './Mortgage.model'
-import { Parcel } from '../Parcel'
-import { blacklist } from '../lib'
+import { Parcel } from '../Asset'
+import { sanitizeParcels } from '../sanitize'
 
 export class MortgageRouter {
   constructor(app) {
@@ -16,7 +16,7 @@ export class MortgageRouter {
      * @return {array<Parcel>}
      */
     this.app.get(
-      '/parcels/:address/mortgages',
+      '/mortgages/:address/parcels',
       server.handleRequest(this.getMortgagedParcelsByBorrower)
     )
 
@@ -47,7 +47,7 @@ export class MortgageRouter {
   async getMortgagedParcelsByBorrower(req) {
     const borrower = server.extractFromReq(req, 'address')
     const parcels = await Parcel.findWithLastActiveMortgageByBorrower(borrower)
-    return utils.mapOmit(parcels, blacklist.parcel)
+    return sanitizeParcels(parcels)
   }
 
   async getMortgagesByBorrower(req) {

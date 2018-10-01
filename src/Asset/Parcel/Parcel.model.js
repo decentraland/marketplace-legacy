@@ -1,11 +1,11 @@
 import { Model } from 'decentraland-commons'
 
-import { coordinates } from './coordinates'
 import { Asset } from '../Asset'
-import { PublicationQueries } from '../Publication'
-import { District } from '../District'
-import { MortgageQueries } from '../Mortgage'
-import { SQL } from '../database'
+import { PublicationQueries } from '../../Publication'
+import { District } from '../../District'
+import { MortgageQueries } from '../../Mortgage'
+import { SQL } from '../../database'
+import { coordinates } from '../../lib'
 
 export class Parcel extends Model {
   static tableName = 'parcels'

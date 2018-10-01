@@ -1,7 +1,6 @@
 import { contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
-import { Parcel } from '../../src/Parcel'
-import { Estate } from '../../src/Estate'
+import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { getParcelIdFromEvent } from './utils'

@@ -4,14 +4,14 @@ import bodyParser from 'body-parser'
 import { env } from 'decentraland-commons'
 
 import { db } from './database'
+import { AssetRouter, ParcelRouter, EstateRouter } from './Asset'
 import { MortgageRouter } from './Mortgage'
-import { ParcelRouter } from './Parcel'
-import { EstateRouter } from './Estate'
 import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
 import { PublicationRouter } from './Publication'
 import { TranslationRouter } from './Translation'
 import { MapRouter } from './Map'
+import { MarketplaceRouter } from './Marketplace'
 
 env.load()
 
@@ -44,13 +44,15 @@ if (env.isDevelopment()) {
 const router = new express.Router()
 app.use('/v1', router)
 
-new TranslationRouter(router).mount()
-new PublicationRouter(router).mount()
-new MortgageRouter(router).mount()
+new AssetRouter(router).mount()
 new EstateRouter(router).mount()
+new MortgageRouter(router).mount()
 new DistrictRouter(router).mount()
 new ContributionRouter(router).mount()
+new PublicationRouter(router).mount()
+new TranslationRouter(router).mount()
 new MapRouter(router).mount()
+new MarketplaceRouter(router).mount()
 new ParcelRouter(router).mount()
 
 /* Start the server only if run directly */

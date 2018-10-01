@@ -1,11 +1,11 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
-import { ASSET_TYPES } from '../shared/asset'
-import { Bounds } from '../shared/map'
-import { AssetRouter } from '../Asset'
-import { blacklist } from '../lib'
-import { unsafeParseInt } from '../lib/unsafeParseInt'
+import { AssetRouter } from '../Asset.router'
+import { ASSET_TYPES } from '../../shared/asset'
+import { Bounds } from '../../shared/map'
+import { sanitizeParcels, sanitizeParcel } from '../../sanitize'
+import { unsafeParseInt } from '../../lib'
 
 export class ParcelRouter {
   constructor(app) {
@@ -57,7 +57,7 @@ export class ParcelRouter {
       const se = server.extractFromReq(req, 'se')
       const rangeParcels = await Parcel.inRange(nw, se)
 
-      parcels = utils.mapOmit(rangeParcels, blacklist.parcel)
+      parcels = sanitizeParcels(rangeParcels)
       total = parcels.length
     } catch (error) {
       // Force parcel type
@@ -94,7 +94,7 @@ export class ParcelRouter {
     const coords = Parcel.buildId(x, y)
     const range = await Parcel.inRange(coords, coords)
 
-    parcel = utils.omit(range[0], blacklist.parcel)
+    parcel = sanitizeParcel(range[0])
 
     return parcel
   }
@@ -111,6 +111,6 @@ export class ParcelRouter {
       parcels = await Parcel.findByOwner(address)
     }
 
-    return utils.mapOmit(parcels, blacklist.parcel)
+    return sanitizeParcels(parcels)
   }
 }

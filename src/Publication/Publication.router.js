@@ -1,8 +1,8 @@
-import { server, utils } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
-import { Parcel } from '../Parcel'
-import { blacklist } from '../lib'
+import { Parcel } from '../Asset'
+import { sanitizePublications } from '../sanitize'
 
 export class PublicationRouter {
   constructor(app) {
@@ -47,7 +47,7 @@ export class PublicationRouter {
       publications = await Publication.findByAssetId(id)
     }
 
-    return utils.mapOmit(publications, blacklist.publication)
+    return sanitizePublications(publications)
   }
 
   async getPublication(req) {
