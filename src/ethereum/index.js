@@ -28,7 +28,7 @@ export async function connectEth() {
 export function loadContracts() {
   contractsData = Object.freeze({
     LegacyMarketplace: {
-      address: env.get('LAND_REGISTRY_CONTRACT_ADDRESS'),
+      address: env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS'),
       eventNames: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled']
     },
     Marketplace: {
@@ -37,7 +37,7 @@ export function loadContracts() {
     },
     LANDRegistry: {
       address: env.get('LAND_REGISTRY_CONTRACT_ADDRESS'),
-      eventNames: ['Update', 'Transfer', 'EstateRegistrySet', 'UpdateOperator']
+      eventNames: ['Update', 'Transfer', 'UpdateOperator']
     },
     MortgageHelper: {
       address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS'),

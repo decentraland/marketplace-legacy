@@ -27,8 +27,10 @@ async function reduceMarketplace(event) {
   const { tx_hash, block_number, name, address } = event
 
   const assetType = getAssetTypeFromEvent(event)
-  const assetId = await getAssetIdFromEvent(event)
-  const blockTime = await new BlockTimestampService().getBlockTime(block_number)
+  const [assetId, blockTime] = await Promise.all([
+    getAssetIdFromEvent(event),
+    new BlockTimestampService().getBlockTime(block_number)
+  ])
 
   if (!assetId) return log.info(`[${name}] Invalid Asset Id`)
 
@@ -78,6 +80,7 @@ async function reduceMarketplace(event) {
       }
       break
     }
+    case eventNames.AuctionSuccessful:
     case eventNames.OrderSuccessful: {
       const { totalPrice, winner } = event.args
       const contract_id = event.args.id
@@ -104,6 +107,7 @@ async function reduceMarketplace(event) {
       ])
       break
     }
+    case eventNames.AuctionCancelled:
     case eventNames.OrderCancelled: {
       const contract_id = event.args.id
 
