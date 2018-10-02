@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Grid, Message } from 'semantic-ui-react'
 
@@ -6,20 +7,22 @@ import { locations } from 'locations'
 import { walletType, publicationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { formatMana } from 'lib/utils'
+import { isLegacyPublication } from 'modules/publication/utils'
 
 export default class BuyWarningMessage extends React.PureComponent {
   static propTypes = {
     wallet: walletType,
-    publication: publicationType
+    publication: publicationType,
+    allowance: PropTypes.number.isRequired
   }
 
   render() {
-    const { wallet, publication } = this.props
+    const { wallet, publication, allowance } = this.props
     const { balance } = wallet
-    const allowance = this.getCurrentAllowance()
 
     const isNotEnoughMana = balance < parseFloat(publication.price)
     const isMarketplaceAllowed = allowance > 0
+    const isLegacyMarketplace = isLegacyPublication(publication)
 
     return (
       <Container text>
@@ -36,7 +39,7 @@ export default class BuyWarningMessage extends React.PureComponent {
                   ? t('asset_buy.allowed_balance', {
                       allowance: formatMana(allowance)
                     })
-                  : this.isLegacyMarketplace()
+                  : isLegacyMarketplace
                     ? t('asset_buy.didnt_allow')
                     : t('asset_buy.didnt_allow_new_marketplace')
             }
@@ -73,7 +76,7 @@ export default class BuyWarningMessage extends React.PureComponent {
                   ) : null}
                   <T
                     id={
-                      this.isLegacyMarketplace()
+                      isLegacyMarketplace()
                         ? 'asset_buy.please_allow'
                         : 'asset_buy.please_allow_new_marketplace'
                     }

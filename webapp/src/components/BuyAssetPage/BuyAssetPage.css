@@ -1,0 +1,6 @@
+.BuyAssetPage .sign-in {
+  display: block;
+  text-align: center;
+  margin-top: 50px;
+  color: var(--gray);
+}

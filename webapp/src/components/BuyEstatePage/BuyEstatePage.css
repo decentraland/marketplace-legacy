@@ -9,10 +9,3 @@
 .BuyEstatePage .message.warning h3 {
   font-weight: bolder;
 }
-
-.BuyEstatePage .sign-in {
-  display: block;
-  text-align: center;
-  margin-top: 50px;
-  color: var(--gray);
-}

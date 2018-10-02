@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Loader, Container, Header } from 'semantic-ui-react'
 
-import { locations } from 'locations'
 import Estate from 'components/Estate'
 import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateModal'
 import EstateName from 'components/EstateName'
@@ -14,8 +11,12 @@ import {
   publicationType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { isLegacyPublication } from 'modules/publication/utils'
-import BuyWarningMessage from 'components/BuyAssetPage'
+import {
+  BuyWarningMessage,
+  Loading,
+  NotConnected
+} from 'components/BuyAssetPage'
+import { getCurrentAllowance } from 'modules/authorization/utils'
 
 import './BuyEstatePage.css'
 
@@ -41,36 +42,6 @@ export default class BuyEstatePage extends React.PureComponent {
     onConfirm(publication)
   }
 
-  renderLoading() {
-    return (
-      <div>
-        <Loader active size="massive" />
-      </div>
-    )
-  }
-
-  renderNotConnected() {
-    return (
-      <div>
-        <Container text textAlign="center" className="BuyEstatePage">
-          <Header as="h2" size="huge" className="title">
-            {t('asset_buy.buy_asset')}
-          </Header>
-          <p className="sign-in">
-            <T
-              id="global.sign_in_notice"
-              values={{
-                sign_in_link: (
-                  <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-                )
-              }}
-            />
-          </p>
-        </Container>
-      </div>
-    )
-  }
-
   renderPage() {
     const {
       id,
@@ -78,14 +49,15 @@ export default class BuyEstatePage extends React.PureComponent {
       publication,
       isDisabled,
       isTxIdle,
-      onCancel
+      onCancel,
+      authorization
     } = this.props
     const { balance } = wallet
 
     return (
       <Estate id={id} ownerNotAllowed>
         {estate => {
-          const allowance = this.getCurrentAllowance()
+          const allowance = getCurrentAllowance(publication, authorization)
 
           const price = parseFloat(publication.price)
 
@@ -94,7 +66,11 @@ export default class BuyEstatePage extends React.PureComponent {
           return (
             <div className="BuyEstatePage">
               {(isNotEnoughMana || isNotEnoughAllowance) && (
-                <BuyWarningMessage publication={publication} wallet={wallet} />
+                <BuyWarningMessage
+                  publication={publication}
+                  wallet={wallet}
+                  allowance={allowance}
+                />
               )}
               <EstateModal
                 parcels={estate.data.parcels}
@@ -138,27 +114,15 @@ export default class BuyEstatePage extends React.PureComponent {
     )
   }
 
-  getCurrentAllowance() {
-    const { allowances } = this.props.authorization
-
-    return this.isLegacyMarketplace()
-      ? allowances.LegacyMarketplace.MANAToken
-      : allowances.Marketplace.MANAToken
-  }
-
-  isLegacyMarketplace() {
-    return isLegacyPublication(this.props.publication)
-  }
-
   render() {
     const { isConnected, isLoading } = this.props
 
     if (isLoading) {
-      return this.renderLoading()
+      return <Loading />
     }
 
     if (!isConnected) {
-      return this.renderNotConnected()
+      return <NotConnected assetType={t('name.estate')} />
     }
 
     return this.renderPage()
