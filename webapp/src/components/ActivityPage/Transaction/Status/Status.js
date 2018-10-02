@@ -18,9 +18,18 @@ export default class Status extends React.PureComponent {
 
   constructor(props) {
     super(props)
+    this.mounted = false
     this.state = {
       confirmations: null
     }
+  }
+
+  componentDidMount() {
+    this.mounted = true
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
   }
 
   async getConfirmations(tx) {
@@ -30,12 +39,14 @@ export default class Status extends React.PureComponent {
       const txBlock = status.blockNumber
       if (txBlock) {
         const currentBlock = await eth.getBlockNumber()
-        const confirmations = currentBlock - txBlock + 1
-        this.setState({ confirmations: Math.max(confirmations, 1) })
-        if (confirmations < MINIMUM_CONFIRMATIONS) {
-          setTimeout(() => {
-            this.getConfirmations(tx)
-          }, FETCH_CONFIRMATIONS_DELAY)
+        if (this.mounted) {
+          const confirmations = currentBlock - txBlock + 1
+          this.setState({ confirmations: Math.max(confirmations, 1) })
+          if (confirmations < MINIMUM_CONFIRMATIONS) {
+            setTimeout(() => {
+              this.getConfirmations(tx)
+            }, FETCH_CONFIRMATIONS_DELAY)
+          }
         }
         return
       }
@@ -45,7 +56,8 @@ export default class Status extends React.PureComponent {
     if (
       tx.status === txUtils.TRANSACTION_TYPES.confirmed ||
       (tx.status === txUtils.TRANSACTION_TYPES.replaced &&
-        tx.replacedBy != null)
+        tx.replacedBy != null &&
+        this.mounted)
     ) {
       this.setState({ confirmations: 1 })
       setTimeout(() => {
