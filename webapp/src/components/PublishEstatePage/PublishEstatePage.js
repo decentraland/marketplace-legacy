@@ -48,74 +48,75 @@ export default class PublishEstatePage extends React.PureComponent {
       return this.renderLoading()
     }
 
-    const { approvals } = authorization
-    const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
-
     return (
       <Estate id={id} ownerOnly>
-        {estate => (
-          <div className="PublishPage">
-            {isOpen(publication) ? (
-              <Container text>
-                <Message
-                  warning
-                  icon="warning sign"
-                  content={t('asset_publish.already_sold', {
-                    value: formatMana(publication.price)
-                  })}
+        {estate => {
+          const { approvals } = authorization
+          const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
+          return (
+            <div className="PublishPage">
+              {isOpen(publication) ? (
+                <Container text>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    content={t('asset_publish.already_sold', {
+                      value: formatMana(publication.price)
+                    })}
+                  />
+                </Container>
+              ) : null}
+              {!isMarketplaceApproved ? (
+                <Container text>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('authorization.disallowed')}
+                    content={
+                      <T
+                        id="asset_publish.please_authorize"
+                        values={{
+                          settings_link: (
+                            <Link to={locations.settings()}>Settings</Link>
+                          )
+                        }}
+                      />
+                    }
+                  />
+                </Container>
+              ) : null}
+              <EstateModal
+                parcels={estate.data.parcels}
+                title={
+                  <T
+                    id="asset_publish.list_asset"
+                    values={{ asset_name: t('name.estate') }}
+                  />
+                }
+                subtitle={
+                  <T
+                    id="asset_publish.set_asset_price"
+                    values={{ asset_name: estate.data.name }}
+                  />
+                }
+                hasCustomFooter
+              >
+                <PublishAssetForm
+                  asset={estate}
+                  assetName={t('name.estate')}
+                  isTxIdle={isTxIdle}
+                  onPublish={onPublish}
+                  onCancel={onCancel}
+                  isDisabled={!isMarketplaceApproved}
                 />
-              </Container>
-            ) : null}
-            {!isMarketplaceApproved ? (
-              <Container text>
-                <Message
-                  warning
-                  icon="warning sign"
-                  header={t('authorization.disallowed')}
-                  content={
-                    <T
-                      id="asset_publish.please_authorize"
-                      values={{
-                        settings_link: (
-                          <Link to={locations.settings()}>Settings</Link>
-                        )
-                      }}
-                    />
-                  }
+                <TxStatus.Asset
+                  asset={estate}
+                  name={<EstateName estate={estate} />}
                 />
-              </Container>
-            ) : null}
-            <EstateModal
-              parcels={estate.data.parcels}
-              title={
-                <T
-                  id="asset_publish.list_asset"
-                  values={{ asset_name: t('name.estate') }}
-                />
-              }
-              subtitle={
-                <T
-                  id="asset_publish.set_asset_price"
-                  values={{ asset_name: estate.data.name }}
-                />
-              }
-              hasCustomFooter
-            >
-              <PublishAssetForm
-                asset={estate}
-                assetName={t('name.estate')}
-                isTxIdle={isTxIdle}
-                onPublish={onPublish}
-                onCancel={onCancel}
-                isDisabled={!isMarketplaceApproved}
-              />
-              <TxStatus.Asset
-                asset={estate}
-                name={<EstateName estate={estate} />}
-              />
-            </EstateModal>
-          </div>
-        )}
+              </EstateModal>
+            </div>
+          )
+        }}
       </Estate>
     )
   }

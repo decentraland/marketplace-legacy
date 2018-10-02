@@ -8,13 +8,17 @@ import {
   EDIT_ESTATE_METADATA_REQUEST,
   DELETE_ESTATE_REQUEST,
   EDIT_ESTATE_PARCELS_REQUEST,
-  TRANSFER_ESTATE_REQUEST
+  TRANSFER_ESTATE_REQUEST,
+  FETCH_ESTATE_REQUEST
 } from './actions'
 
 export const getState = state => state.estates
 export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
+
+export const isFetchingEstate = state =>
+  isLoadingType(getLoading(state), FETCH_ESTATE_REQUEST)
 
 export const isCreatingEstateTransactionIdle = state =>
   isLoadingType(getLoading(state), CREATE_ESTATE_REQUEST)
