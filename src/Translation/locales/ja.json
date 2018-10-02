@@ -283,8 +283,8 @@
     "required_deposit": "必要なデポジット：{deposit}"
   },
   "name": {
-    "estate": "エステート",
-    "parcel": "NT1"
+    "estate": "Estate",
+    "parcel": "LAND"
   },
   "parcel": {
     "no_description": "説明文未設定",

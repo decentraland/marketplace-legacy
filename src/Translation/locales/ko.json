@@ -281,8 +281,8 @@
     "required_deposit": "필수 보증금 : {deposit}"
   },
   "name": {
-    "estate": "재산",
-    "parcel": "NT1"
+    "estate": "Estate",
+    "parcel": "LAND"
   },
   "parcel": {
     "no_description": "설명 없음",
