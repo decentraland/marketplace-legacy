@@ -25,6 +25,12 @@ import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { getEstateIdFromTxReceipt } from './utils'
 import { normalizeEstate } from 'shared/estate'
+import {
+  BUY_SUCCESS,
+  CANCEL_SALE_SUCCESS,
+  PUBLISH_SUCCESS
+} from 'modules/publication/actions'
+import { ASSET_TYPES } from 'shared/asset'
 
 const INITIAL_STATE = {
   data: {},
@@ -171,6 +177,73 @@ export function estatesReducer(state = INITIAL_STATE, action) {
               }
             }
           }
+        }
+        case BUY_SUCCESS: {
+          const owner = transaction.from
+          const tx_hash = transaction.payload.tx_hash
+          if (transaction.payload.type === ASSET_TYPES.estate) {
+            // unset publication_tx_hash and update owner
+            return {
+              ...state,
+              data: Object.values(state.data).reduce((newEstates, estate) => {
+                if (estate.publication_tx_hash === tx_hash) {
+                  newEstates[estate.id] = {
+                    ...estate,
+                    publication_tx_hash: null,
+                    owner
+                  }
+                } else {
+                  newEstates[estate.id] = { ...estate }
+                }
+                return newEstates
+              }, {})
+            }
+          }
+          return state
+        }
+        case CANCEL_SALE_SUCCESS: {
+          const tx_hash = transaction.payload.tx_hash
+          if (transaction.payload.type === ASSET_TYPES.estate) {
+            // unset publication_tx_hash
+            return {
+              ...state,
+              data: Object.values(state.data).reduce((newEstates, estate) => {
+                if (estate.publication_tx_hash === tx_hash) {
+                  newEstates[estate.id] = {
+                    ...estate,
+                    publication_tx_hash: null
+                  }
+                } else {
+                  newEstates[estate.id] = estate
+                }
+                return newEstates
+              }, {})
+            }
+          }
+          return state
+        }
+        case PUBLISH_SUCCESS: {
+          // set publication_tx_hash
+          const { type, id, tx_hash } = transaction.payload
+
+          if (type === ASSET_TYPES.estate && id in state.data) {
+            const estate = state.data[id]
+            return {
+              ...state,
+              data: {
+                ...state.data,
+                [id]: {
+                  ...estate,
+                  publication_tx_hash: tx_hash,
+                  publication_tx_hash_history: [
+                    tx_hash,
+                    ...(estate.publication_tx_hash_history || [])
+                  ]
+                }
+              }
+            }
+          }
+          return state
         }
         default:
           return state

@@ -89,11 +89,11 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  getAssetLink(asset) {
-    if (asset.type === ASSET_TYPES.parcel) {
-      return this.renderParcelLink(asset.x, asset.y)
-    } else if (asset.type === ASSET_TYPES.estate) {
-      return this.renderEstateLink(asset)
+  getAssetLink(payload) {
+    if (payload.type === ASSET_TYPES.parcel) {
+      return this.renderParcelLink(payload.x, payload.y)
+    } else if (payload.type === ASSET_TYPES.estate) {
+      return this.renderEstateLink(payload)
     }
   }
 
