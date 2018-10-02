@@ -80,8 +80,9 @@ async function reduceLANDRegistry(event, parcelId) {
         Publication.cancelOlder(
           parcelId,
           block_number,
-          eventNames.AuctionCreated // TODO: Ok?
-        )
+          eventNames.AuctionCreated
+        ),
+        Publication.cancelOlder(parcelId, block_number, eventNames.OrderCreated)
       ])
       await Parcel.update(
         { owner: to.toLowerCase(), last_transferred_at },

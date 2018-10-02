@@ -1,5 +1,6 @@
 #!/usr/bin/env babel-node
 
+import { eth } from 'decentraland-eth'
 import { env, Log } from 'decentraland-commons'
 
 import { db } from '../src/database'

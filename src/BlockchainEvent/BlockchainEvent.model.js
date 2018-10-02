@@ -1,4 +1,4 @@
-import { env, Model } from 'decentraland-commons'
+import { Model } from 'decentraland-commons'
 import { BlockchainEventQueries } from './BlockchainEvent.queries'
 import { SQL } from '../database'
 

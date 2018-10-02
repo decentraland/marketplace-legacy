@@ -1,6 +1,7 @@
 import { Log } from 'decentraland-commons'
 import { getParcelIdFromEvent } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
+import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { decodeMetadata } from '../../shared/asset'
@@ -28,7 +29,7 @@ async function reduceEstateRegistry(event) {
     case eventNames.EstateCreate: {
       const { _owner, _estateId, _data } = event.args
 
-      const exists = await Estate.count({ token_id: _estateId })
+      const exists = await Estate.count({ id: _estateId })
       if (exists) {
         log.info(`[${name}] Estate with token id ${_estateId} already exists`)
         return
@@ -105,9 +106,9 @@ async function reduceEstateRegistry(event) {
       const parcel = { x: Number(coordinates[0]), y: Number(coordinates[1]) }
 
       log.info(
-        `[${name}] Updating Estate with token id "${
-          estate.token_id
-        }" remove land (${parcel.x},${parcel.y})`
+        `[${name}] Updating Estate id: "${
+          estate.id
+        }" remove land (${coordinates})`
       )
       await Estate.update(
         {
@@ -116,43 +117,39 @@ async function reduceEstateRegistry(event) {
             parcels: estate.data.parcels.filter(p => !isEqualCoords(p, parcel))
           }
         },
-        { token_id: _estateId }
+        { id: estate.id }
       )
       break
     }
     case eventNames.EstateTransfer: {
-      const { _to, _tokenId } = event.args
+      const { _to } = event.args
+      const estateId = event.args._tokenId
 
       log.info(
-        `[${name}] Transferring Estate with token id "${_tokenId}" ownership to "${_to}"`
+        `[${name}] Transferring Estate with token id "${estateId}" ownership to "${_to}"`
       )
-      const last_transferred_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
+
+      const [last_transferred_at] = await Promise.all([
+        new BlockTimestampService().getBlockTime(block_number),
+        Publication.cancelOlder(estateId, block_number, eventNames.OrderCreated)
+      ])
 
       await Estate.update(
         { owner: _to.toLowerCase(), last_transferred_at },
-        { token_id: _tokenId }
+        { id: estateId }
       )
       break
     }
     case eventNames.EstateUpdateOperator: {
-      const { _assetId, _operator } = event.args
-      const estate = await Estate.findByTokenId(_assetId)
-      if (!estate) {
-        return log.info(
-          `[${name}] Estate with token id ${_assetId} does not exist`
-        )
-      }
+      const { _operator } = event.args
+      const estateId = event.args._assetId
 
       log.info(
-        `[${name}] Updating Estate with token id "${
-          estate.token_id
-        }" new update operator: ${_operator}`
+        `[${name}] Updating Estate id: "${estateId}" operator: ${_operator}`
       )
       await Estate.update(
         { update_operator: _operator.toLowerCase() },
-        { token_id: estate.token_id }
+        { id: estateId }
       )
       break
     }
@@ -165,14 +162,10 @@ async function reduceEstateRegistry(event) {
         )
       }
 
-      log.info(
-        `[${name}] Updating Estate with token id "${
-          estate.token_id
-        }" data: ${_data}`
-      )
+      log.info(`[${name}] Updating Estate id: "${estate.id}" data: ${_data}`)
       await Estate.update(
         { data: { ...estate.data, ...decodeMetadata(_data) } },
-        { token_id: estate.token_id }
+        { id: estate.id }
       )
       break
     }
