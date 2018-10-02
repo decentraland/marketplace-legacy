@@ -125,7 +125,10 @@ export default class EstateDetail extends React.PureComponent {
                   </Grid.Column>
                 </React.Fragment>
               )}
-              <Grid.Column className="parcel-actions-container" computer={8}>
+              <Grid.Column
+                className="parcel-actions-container"
+                computer={publication ? 8 : 16}
+              >
                 <EstateActions
                   isOwner={isOwner}
                   publications={publications}
