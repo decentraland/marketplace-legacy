@@ -74,7 +74,7 @@ export function fetchParcelPublicationsFailure(error) {
 
 // Publish LAND
 
-export const PUBLISH_REQUEST = '[Request] Publish Asset' // @nacho: TODO migration?
+export const PUBLISH_REQUEST = '[Request] Publish Asset'
 export const PUBLISH_SUCCESS = '[Success] Publish Asset'
 export const PUBLISH_FAILURE = '[Failure] Publish Asset'
 
