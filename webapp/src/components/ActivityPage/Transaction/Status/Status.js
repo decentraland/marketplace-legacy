@@ -16,10 +16,9 @@ export default class Status extends React.PureComponent {
     tx: transactionType
   }
 
-  mounted = false
-
   constructor(props) {
     super(props)
+    this.mounted = false
     this.state = {
       confirmations: null
     }
@@ -40,8 +39,8 @@ export default class Status extends React.PureComponent {
       const txBlock = status.blockNumber
       if (txBlock) {
         const currentBlock = await eth.getBlockNumber()
-        const confirmations = currentBlock - txBlock + 1
         if (this.mounted) {
+          const confirmations = currentBlock - txBlock + 1
           this.setState({ confirmations: Math.max(confirmations, 1) })
           if (confirmations < MINIMUM_CONFIRMATIONS) {
             setTimeout(() => {
