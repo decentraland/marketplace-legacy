@@ -3,7 +3,7 @@
 import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
-import { Parcel } from '../../src/Asset'
+import { Parcel } from '../src/Asset'
 import { loadEnv } from './utils'
 
 let BOUNDING_BOX_SIZE

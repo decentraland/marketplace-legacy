@@ -5,7 +5,7 @@ import { Log, cli } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { connectEth } from '../src/ethereum'
-import { Parcel } from '../../src/Asset'
+import { Parcel } from '../src/Asset'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { mockModelDbOperations } from '../specs/utils'

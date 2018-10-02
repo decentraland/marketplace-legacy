@@ -6,12 +6,11 @@ export function getAssetTypeFromEvent(event) {
   const nftAddress = event.args.nftAddress
 
   switch (nftAddress) {
-    case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'):
-      return ASSET_TYPES.parcel
     case env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'):
       return ASSET_TYPES.estate
+    case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'): // Supports the old marketplace, default should be undefined when deprecated
     default:
-      return null
+      return ASSET_TYPES.parcel
   }
 }
 
@@ -19,12 +18,11 @@ export async function getAssetIdFromEvent(event) {
   const nftAddress = event.args.nftAddress
 
   switch (nftAddress) {
-    case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'):
-      return getParcelIdFromEvent(event)
     case env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'):
       return event.args.assetId
+    case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'): // Supports the old marketplace, default should be undefined when deprecated
     default:
-      return null
+      return getParcelIdFromEvent(event)
   }
 }
 
