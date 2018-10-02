@@ -2,6 +2,12 @@ import {
   ALLOW_TOKEN_SUCCESS,
   APPROVE_TOKEN_SUCCESS
 } from 'modules/authorization/actions'
+import {
+  CANCEL_SALE_SUCCESS,
+  BUY_SUCCESS,
+  PUBLISH_SUCCESS
+} from 'modules/publication/actions'
+import { ASSET_TYPES } from 'shared/asset'
 
 export const migrations = {
   2: data => {
@@ -42,6 +48,44 @@ export const migrations = {
         }
 
         return tx
+      })
+    }
+    return { ...data, transaction }
+  },
+  4: data => {
+    const OLD_CANCEL_SALE_SUCCESS = '[Success] Cancel LAND Sale'
+    const OLD_BUY_SUCCESS = '[Success] Buy LAND'
+    const OLD_PUBLISH_SUCCESS = '[Success] Publish LAND'
+
+    const transaction = data.transaction
+
+    if (transaction) {
+      transaction.data = transaction.data.map(tx => {
+        switch (tx.actionType) {
+          case OLD_CANCEL_SALE_SUCCESS:
+            tx.payload = {
+              ...tx.payload,
+              type: ASSET_TYPES.parcel
+            }
+            tx.actionType = CANCEL_SALE_SUCCESS
+            return tx
+          case OLD_BUY_SUCCESS:
+            tx.payload = {
+              ...tx.payload,
+              type: ASSET_TYPES.parcel
+            }
+            tx.actionType = BUY_SUCCESS
+            return tx
+          case OLD_PUBLISH_SUCCESS:
+            tx.payload = {
+              ...tx.payload,
+              type: ASSET_TYPES.parcel
+            }
+            tx.actionType = PUBLISH_SUCCESS
+            return tx
+          default:
+            return tx
+        }
       })
     }
     return { ...data, transaction }
