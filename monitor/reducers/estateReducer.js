@@ -2,16 +2,30 @@ import { Log } from 'decentraland-commons'
 import { getParcelIdFromEvent } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
+import { contractAddresses, eventNames } from '../../src/ethereum'
 import { decodeMetadata } from '../../shared/asset'
+import { isEqualCoords } from '../../shared/parcel'
 
 const log = new Log('estateReducer')
 
-export async function estateReducer(events, event) {
-  const { tx_hash, block_number, name, normalizedName } = event
-  const parcelId = await getParcelIdFromEvent(event)
+export async function estateReducer(event) {
+  const { address } = event
 
-  switch (normalizedName) {
-    case events.estateCreate: {
+  switch (address) {
+    case contractAddresses.EstateRegistry: {
+      await reduceEstateRegistry(event)
+      break
+    }
+    default:
+      break
+  }
+}
+
+async function reduceEstateRegistry(event) {
+  const { tx_hash, block_number, name } = event
+
+  switch (name) {
+    case eventNames.EstateCreate: {
       const { _owner, _estateId, _data } = event.args
 
       const exists = await Estate.count({ token_id: _estateId })
@@ -43,72 +57,75 @@ export async function estateReducer(events, event) {
       })
       break
     }
-    case events.addLand: {
-      if (!parcelId) return
+    case eventNames.AddLand: {
+      const parcelId = await getParcelIdFromEvent(event)
+      if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
 
       const { _estateId } = event.args
       const estate = await Estate.findByTokenId(_estateId)
-      if (estate) {
-        const coordinates = Parcel.splitId(parcelId)
-        const x = parseInt(coordinates[0], 10)
-        const y = parseInt(coordinates[1], 10)
-
-        log.info(
-          `[${name}] Updating Estate with token id "${
-            estate.token_id
-          }" add land (${x},${y})`
+      if (!estate)
+        return log.info(
+          `[${name}] Estate with token id ${_estateId} does not exist`
         )
-        if (!estate.data.parcels.find(p => p.x === x && p.y === y)) {
-          await Estate.update(
-            {
-              data: {
-                ...estate.data,
-                parcels: [...estate.data.parcels, { x, y }]
-              }
-            },
-            { token_id: estate.token_id }
-          )
-        }
-      } else {
-        log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
-      }
-      break
-    }
-    case events.removeLand: {
-      if (!parcelId) return
 
-      const { _estateId } = event.args
-      const estate = await Estate.findByTokenId(_estateId)
-      if (estate) {
-        const [x, y] = Parcel.splitId(parcelId)
-        log.info(
-          `[${name}] Updating Estate with token id "${
-            estate.token_id
-          }" remove land (${x},${y})`
-        )
+      const coordinates = Parcel.splitId(parcelId)
+      const parcel = { x: Number(coordinates[0]), y: Number(coordinates[1]) }
+
+      log.info(
+        `[${name}] Updating Estate with token id "${
+          estate.token_id
+        }" add land (${parcel.x},${parcel.y})`
+      )
+      if (!estate.data.parcels.find(p => isEqualCoords(p, parcel))) {
         await Estate.update(
           {
             data: {
               ...estate.data,
-              parcels: estate.data.parcels.filter(
-                p => p.x !== parseInt(x, 10) || p.y !== parseInt(y, 10)
-              )
+              parcels: [...estate.data.parcels, parcel]
             }
           },
-          { token_id: _estateId }
+          { token_id: estate.token_id }
         )
-      } else {
-        log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
       }
       break
     }
-    case events.estateTransfer: {
+    case eventNames.RemoveLand: {
+      const parcelId = await getParcelIdFromEvent(event)
+      if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
+
+      const { _estateId } = event.args
+      const estate = await Estate.findByTokenId(_estateId)
+      if (!estate) {
+        return log.info(
+          `[${name}] Estate with token id ${_estateId} does not exist`
+        )
+      }
+
+      const coordinates = Parcel.splitId(parcelId)
+      const parcel = { x: Number(coordinates[0]), y: Number(coordinates[1]) }
+
+      log.info(
+        `[${name}] Updating Estate with token id "${
+          estate.token_id
+        }" remove land (${parcel.x},${parcel.y})`
+      )
+      await Estate.update(
+        {
+          data: {
+            ...estate.data,
+            parcels: estate.data.parcels.filter(p => !isEqualCoords(p, parcel))
+          }
+        },
+        { token_id: _estateId }
+      )
+      break
+    }
+    case eventNames.EstateTransfer: {
       const { _to, _tokenId } = event.args
 
       log.info(
         `[${name}] Transferring Estate with token id "${_tokenId}" ownership to "${_to}"`
       )
-
       const last_transferred_at = await new BlockTimestampService().getBlockTime(
         block_number
       )
@@ -119,47 +136,44 @@ export async function estateReducer(events, event) {
       )
       break
     }
-    case events.estateUpdateOperator: {
+    case eventNames.EstateUpdateOperator: {
       const { _assetId, _operator } = event.args
       const estate = await Estate.findByTokenId(_assetId)
-      if (estate) {
-        log.info(
-          `[${name}] Updating Estate with token id "${
-            estate.token_id
-          }" new update operator: ${_operator}`
+      if (!estate) {
+        return log.info(
+          `[${name}] Estate with token id ${_assetId} does not exist`
         )
-
-        await Estate.update(
-          { update_operator: _operator.toLowerCase() },
-          { token_id: estate.token_id }
-        )
-      } else {
-        log.info(`[${name}] Estate with token id ${_assetId} does not exist`)
       }
+
+      log.info(
+        `[${name}] Updating Estate with token id "${
+          estate.token_id
+        }" new update operator: ${_operator}`
+      )
+      await Estate.update(
+        { update_operator: _operator.toLowerCase() },
+        { token_id: estate.token_id }
+      )
       break
     }
-    case events.estateUpdate: {
+    case eventNames.EstateUpdate: {
       const { _assetId, _data } = event.args
       const estate = await Estate.findByTokenId(_assetId)
-      if (estate) {
-        log.info(
-          `[${name}] Updating Estate with token id "${
-            estate.token_id
-          }" data: ${_data}`
+      if (!estate) {
+        return log.info(
+          `[${name}] Estate with token id ${_assetId} does not exist`
         )
-
-        await Estate.update(
-          {
-            data: {
-              ...estate.data,
-              ...decodeMetadata(_data)
-            }
-          },
-          { token_id: estate.token_id }
-        )
-      } else {
-        log.info(`[${name}] Estate with token id ${_assetId} does not exist`)
       }
+
+      log.info(
+        `[${name}] Updating Estate with token id "${
+          estate.token_id
+        }" data: ${_data}`
+      )
+      await Estate.update(
+        { data: { ...estate.data, ...decodeMetadata(_data) } },
+        { token_id: estate.token_id }
+      )
       break
     }
     default:

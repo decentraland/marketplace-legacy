@@ -3,18 +3,39 @@ import { Log } from 'decentraland-commons'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
+import { contractAddresses, eventNames } from '../../src/ethereum'
 import { getParcelIdFromEvent } from './utils'
 
 const log = new Log('parcelReducer')
 
-export async function parcelReducer(events, event) {
-  const { block_number, name, normalizedName } = event
-  const parcelId = await getParcelIdFromEvent(event)
+export async function parcelReducer(event) {
+  const { address, name } = event
 
-  switch (normalizedName) {
-    case events.parcelUpdate: {
+  const parcelId = await getParcelIdFromEvent(event)
+  if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
+
+  switch (address) {
+    case contractAddresses.LANDRegistry: {
+      await reduceLANDRegistry(event, parcelId)
+      break
+    }
+    case contractAddresses.EstateRegistry: {
+      await reduceEstateRegistry(event, parcelId)
+      break
+    }
+    default:
+      break
+  }
+}
+
+async function reduceLANDRegistry(event, parcelId) {
+  const { name, block_number } = event
+
+  switch (name) {
+    case eventNames.Update: {
+      const { data } = event.args
+
       try {
-        const { data } = event.args
         const attributes = {
           data: contracts.LANDRegistry.decodeLandData(data)
         }
@@ -27,8 +48,9 @@ export async function parcelReducer(events, event) {
       }
       break
     }
-    case events.parcelUpdateOperator: {
+    case eventNames.UpdateOperator: {
       const { operator } = event.args
+
       try {
         log.info(
           `[${name}] Updating "${parcelId}": new update operator is ${operator}`
@@ -46,7 +68,7 @@ export async function parcelReducer(events, event) {
       }
       break
     }
-    case events.parcelTransfer: {
+    case eventNames.Transfer: {
       const { to } = event.args
 
       log.info(
@@ -55,18 +77,28 @@ export async function parcelReducer(events, event) {
 
       const [last_transferred_at] = await Promise.all([
         new BlockTimestampService().getBlockTime(block_number),
-        Publication.cancelOlder(parcelId, block_number)
+        Publication.cancelOlder(
+          parcelId,
+          block_number,
+          eventNames.AuctionCreated // TODO: Ok?
+        )
       ])
-
       await Parcel.update(
         { owner: to.toLowerCase(), last_transferred_at },
         { id: parcelId }
       )
       break
     }
-    case events.addLand: {
-      if (!parcelId) return
+    default:
+      break
+  }
+}
 
+async function reduceEstateRegistry(event, parcelId) {
+  const { name } = event
+
+  switch (name) {
+    case eventNames.AddLand: {
       const { _estateId } = event.args
       const estate = await Estate.findByTokenId(_estateId)
       if (estate) {
@@ -80,9 +112,7 @@ export async function parcelReducer(events, event) {
       }
       break
     }
-    case events.removeLand: {
-      if (!parcelId) return
-
+    case eventNames.RemoveLand: {
       const { _estateId } = event.args
       const estate = await Estate.findByTokenId(_estateId)
       if (estate) {

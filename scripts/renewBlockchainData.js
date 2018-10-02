@@ -1,8 +1,9 @@
 #!/usr/bin/env babel-node
-import { eth, contracts } from 'decentraland-eth'
+
 import { Log, env } from 'decentraland-commons'
 
 import { db } from '../src/database'
+import { connectEth } from '../src/ethereum'
 import { Parcel, ParcelService } from '../../src/Asset'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'
@@ -15,12 +16,7 @@ export async function renewBlockchainData() {
   await db.connect()
 
   log.info('Connecting to Ethereum node')
-  await eth.connect({
-    contracts: [
-      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
-    ],
-    provider: env.get('RPC_URL')
-  })
+  await connectEth()
 
   log.info('Storing `parcels` data')
   const parcels = await Parcel.find()

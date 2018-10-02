@@ -103,12 +103,12 @@ export function getParcelPublications(parcels) {
   }, [])
 }
 
-export function isEqualCoords(p1, p2) {
-  return p1.x === p2.x && p1.y === p2.y
+export function getParcelMatcher(parcel) {
+  return parcel2 => parcel.id === parcel2.id || isEqualCoords(parcel, parcel2)
 }
 
-export function getCoordsMatcher(coords) {
-  return coords2 => isEqualCoords(coords, coords2)
+export function isEqualCoords(p1, p2) {
+  return p1.x === p2.x && p1.y === p2.y
 }
 
 /*
@@ -151,9 +151,6 @@ export function hasParcelsConnected({ x, y }, parcels) {
  */
 export function getParcelsNotIncluded(newParcels, allParcels) {
   return newParcels.filter(
-    newParcel =>
-      !allParcels.some(
-        parcel => parcel.x === newParcel.x && parcel.y === newParcel.y
-      )
+    newParcel => !allParcels.some(getParcelMatcher(newParcels))
   )
 }

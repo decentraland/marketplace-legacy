@@ -3,6 +3,7 @@ import { Log } from 'decentraland-commons'
 import { Parcel } from '../../src/Asset'
 import { Mortgage } from '../../src/Mortgage'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
+import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { MORTGAGE_STATUS } from '../../shared/mortgage'
 import { ASSET_TYPES } from '../../shared/asset'
@@ -11,22 +12,43 @@ import { getParcelIdFromEvent } from './utils'
 const log = new Log('mortgageReducer')
 const TEN_YEARS_IN_MILISECONDS = 1000 * 10 * 365 * 24 * 60 * 60
 
-export async function mortgageReducer(events, event) {
-  const { tx_hash, block_number, name, normalizedName } = event
-  const parcelId = await getParcelIdFromEvent(event)
+export async function mortgageReducer(event) {
+  const { address } = event
 
-  switch (normalizedName) {
-    case events.newMortgage: {
+  switch (address) {
+    case contractAddresses.MortgageHelper: {
+      await reduceMortgageHelper(event)
+      break
+    }
+    case contractAddresses.MortgageManager: {
+      await reduceMortgageManager(event)
+      break
+    }
+    case contractAddresses.RCNEngine: {
+      await reduceRCNEngine(event)
+      break
+    }
+    default:
+      break
+  }
+}
+
+async function reduceMortgageHelper(event) {
+  const { tx_hash, block_number, name } = event
+
+  const parcelId = await getParcelIdFromEvent(event)
+  if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
+
+  switch (name) {
+    case eventNames.NewMortgage: {
       const { borrower, loanId, mortgageId } = event.args
 
       const exists = await Mortgage.count({ tx_hash })
       if (exists) {
-        log.info(`[${name}] Mortgage ${tx_hash} already exists`)
-        return
+        return log.info(`[${name}] Mortgage ${tx_hash} already exists`)
       }
       log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
 
-      const [x, y] = Parcel.splitId(parcelId)
       const LoanIdBN = eth.utils.toBigNumber(loanId)
       const rcnEngineContract = eth.getContract('RCNEngine')
 
@@ -35,18 +57,17 @@ export async function mortgageReducer(events, event) {
         expiresAt,
         payableAt,
         interestRate,
-        punitoryInterestRate
+        punitoryInterestRate,
+        block_time_created_at
       ] = await Promise.all([
         rcnEngineContract.getAmount(LoanIdBN),
         rcnEngineContract.getExpirationRequest(LoanIdBN),
         rcnEngineContract.getCancelableAt(LoanIdBN),
         rcnEngineContract.getInterestRate(LoanIdBN),
-        rcnEngineContract.getInterestRatePunitory(LoanIdBN)
+        rcnEngineContract.getInterestRatePunitory(LoanIdBN),
+        new BlockTimestampService().getBlockTime(block_number)
       ])
 
-      const block_time_created_at = await Promise.resolve(
-        new BlockTimestampService().getBlockTime(block_number)
-      )
       try {
         await Mortgage.insert({
           tx_status: txUtils.TRANSACTION_TYPES.confirmed,
@@ -61,13 +82,13 @@ export async function mortgageReducer(events, event) {
           ),
           mortgage_id: parseInt(mortgageId, 10),
           loan_id: parseInt(loanId, 10),
-          block_number,
-          block_time_created_at,
           amount: eth.utils.fromWei(amount),
           outstanding_amount: 0,
-          tx_hash,
-          asset_id: Parcel.buildId(x, y),
+          asset_id: parcelId,
           asset_type: ASSET_TYPES.parcel,
+          block_number,
+          block_time_created_at,
+          tx_hash,
           borrower
         })
       } catch (error) {
@@ -78,17 +99,25 @@ export async function mortgageReducer(events, event) {
       }
       break
     }
-    case events.cancelledMortgage: {
+    default:
+      break
+  }
+}
+
+async function reduceMortgageManager(event) {
+  const { tx_hash, block_number, name } = event
+
+  const blockTime = await new BlockTimestampService().getBlockTime(block_number)
+
+  switch (name) {
+    case eventNames.CancelledMortgage: {
       const { _id } = event.args
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
       try {
         log.info(`[${name}] Cancelling Mortgage ${_id}`)
         await Mortgage.update(
           {
             status: MORTGAGE_STATUS.cancelled,
-            block_time_updated_at
+            block_time_updated_at: blockTime
           },
           { mortgage_id: _id }
         )
@@ -100,7 +129,7 @@ export async function mortgageReducer(events, event) {
       }
       break
     }
-    case events.startedMortgage: {
+    case eventNames.StartedMortgage: {
       const { _id } = event.args
 
       try {
@@ -111,12 +140,7 @@ export async function mortgageReducer(events, event) {
         const rcnEngineContract = eth.getContract('RCNEngine')
         const loanIdBN = eth.utils.toBigNumber(mortgage.loan_id)
 
-        const [
-          block_time_updated_at,
-          outstandingAmount,
-          dueTime
-        ] = await Promise.all([
-          new BlockTimestampService().getBlockTime(block_number),
+        const [outstandingAmount, dueTime] = await Promise.all([
           rcnEngineContract.sendCall('getPendingAmount', loanIdBN),
           rcnEngineContract.getDueTime(loanIdBN)
         ])
@@ -125,8 +149,8 @@ export async function mortgageReducer(events, event) {
           {
             status: MORTGAGE_STATUS.ongoing,
             outstanding_amount: eth.utils.fromWei(outstandingAmount),
-            block_time_updated_at,
-            started_at: block_time_updated_at,
+            block_time_updated_at: blockTime,
+            started_at: blockTime,
             is_due_at: dueTime.toNumber()
           },
           { mortgage_id: _id }
@@ -139,11 +163,40 @@ export async function mortgageReducer(events, event) {
       }
       break
     }
-    case events.partialPayment: {
-      const { _index } = event.args
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
+    case eventNames.PaidMortgage: {
+      const { _id } = event.args
+
+      log.info(`[${name}] Claimed Mortgage ${_id}`)
+      await Mortgage.update(
+        { status: MORTGAGE_STATUS.claimed, block_time_updated_at: blockTime },
+        { mortgage_id: _id }
       )
+      break
+    }
+    case eventNames.DefaultedMortgage: {
+      const { _id } = event.args
+
+      log.info(`[${name}] Defaulted Mortgage ${_id}`)
+      await Mortgage.update(
+        { status: MORTGAGE_STATUS.defaulted, block_time_updated_at: blockTime },
+        { mortgage_id: _id }
+      )
+      break
+    }
+    default:
+      break
+  }
+}
+
+async function reduceRCNEngine(event) {
+  const { block_number, name } = event
+
+  const blockTime = await new BlockTimestampService().getBlockTime(block_number)
+
+  switch (name) {
+    case eventNames.PartialPayment: {
+      const { _index } = event.args
+
       log.info(`[${name}] Partial Payment for loan ${_index}`)
 
       const rcnEngineContract = eth.getContract('RCNEngine')
@@ -159,55 +212,23 @@ export async function mortgageReducer(events, event) {
         {
           outstanding_amount: eth.utils.fromWei(outstandingAmount),
           paid: eth.utils.fromWei(paid),
-          block_time_updated_at
+          block_time_updated_at: blockTime
         },
         { loan_id: _index }
       )
       break
     }
-    case events.totalPayment: {
+    case eventNames.TotalPayment: {
       const { _index } = event.args
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
+
       log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
       await Mortgage.update(
         {
           status: MORTGAGE_STATUS.paid,
           outstanding_amount: 0,
-          block_time_updated_at
+          block_time_updated_at: blockTime
         },
         { loan_id: _index }
-      )
-      break
-    }
-    case events.paidMortgage: {
-      const { _id } = event.args
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
-      log.info(`[${name}] Claimed Mortgage ${_id}`)
-      await Mortgage.update(
-        {
-          status: MORTGAGE_STATUS.claimed,
-          block_time_updated_at
-        },
-        { mortgage_id: _id }
-      )
-      break
-    }
-    case events.defaultedMortgage: {
-      const { _id } = event.args
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
-      log.info(`[${name}] Defaulted Mortgage ${_id}`)
-      await Mortgage.update(
-        {
-          status: MORTGAGE_STATUS.defaulted,
-          block_time_updated_at
-        },
-        { mortgage_id: _id }
       )
       break
     }

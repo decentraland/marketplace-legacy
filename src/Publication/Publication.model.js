@@ -53,9 +53,7 @@ export class Publication extends Model {
     return this.delete({ asset_id: asset.id })
   }
 
-  static async cancelOlder(asset_id, block_number) {
-    const events = BlockchainEvent.getEvents()
-    const name = BlockchainEvent.getEventName(events.publicationCreated)
+  static async cancelOlder(asset_id, block_number, eventName) {
     const status = PUBLICATION_STATUS.open
 
     const rows = await this.db.query(
@@ -63,7 +61,7 @@ export class Publication extends Model {
         FROM ${SQL.raw(this.tableName)} p
         JOIN ${SQL.raw(
           BlockchainEvent.tableName
-        )} b ON p.tx_hash = b.tx_hash AND name = ${name}
+        )} b ON p.tx_hash = b.tx_hash AND name = ${eventName}
         WHERE b.block_number < ${block_number}
           AND p.asset_id = ${asset_id}
           AND p.status = ${status}`

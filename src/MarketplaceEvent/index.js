@@ -1,1 +1,0 @@
-export { MarketplaceEvent } from './MarketplaceEvent'
