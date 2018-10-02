@@ -271,8 +271,8 @@
     "required_deposit": "所需押金：{deposit}"
   },
   "name": {
-    "estate": "房地产",
-    "parcel": "NT1"
+    "estate": "Estate",
+    "parcel": "LAND"
   },
   "parcel": {
     "no_description": "没有说明",

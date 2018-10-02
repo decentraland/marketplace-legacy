@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Loader, Container, Header, Grid, Message } from 'semantic-ui-react'
+import { Loader, Container, Header } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import ParcelModal from 'components/ParcelModal'
@@ -15,7 +15,7 @@ import {
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isLegacyPublication } from 'modules/publication/utils'
-import { formatMana } from 'lib/utils'
+import BuyWarningMessage from 'components/BuyAssetPage'
 
 import './BuyParcelPage.css'
 
@@ -94,9 +94,9 @@ export default class BuyParcelPage extends React.PureComponent {
       <Parcel x={x} y={y} ownerNotAllowed>
         {parcel => (
           <div className="BuyParcelPage">
-            {isNotEnoughMana || isNotEnoughAllowance
-              ? this.renderMessage()
-              : null}
+            {(isNotEnoughMana || isNotEnoughAllowance) && (
+              <BuyWarningMessage publication={publication} wallet={wallet} />
+            )}
             <ParcelModal
               x={x}
               y={y}
@@ -132,87 +132,6 @@ export default class BuyParcelPage extends React.PureComponent {
           </div>
         )}
       </Parcel>
-    )
-  }
-
-  renderMessage() {
-    const { wallet, publication } = this.props
-    const { balance } = wallet
-    const allowance = this.getCurrentAllowance()
-
-    const isNotEnoughMana = balance < parseFloat(publication.price)
-    const isMarketplaceAllowed = allowance > 0
-
-    return (
-      <Container text>
-        <Grid.Column>
-          <Message
-            warning
-            icon="warning sign"
-            header={
-              isNotEnoughMana
-                ? t('asset_buy.total_balance', {
-                    balance: formatMana(balance)
-                  })
-                : isMarketplaceAllowed
-                  ? t('asset_buy.allowed_balance', {
-                      allowance: formatMana(allowance)
-                    })
-                  : this.isLegacyMarketplace()
-                    ? t('asset_buy.didnt_allow')
-                    : t('asset_buy.didnt_allow_new_marketplace')
-            }
-            content={
-              isNotEnoughMana ? (
-                <React.Fragment>
-                  <span>
-                    {t('asset_buy.needs_at_least', {
-                      mana: formatMana(publication.price),
-                      asset_type: t('name.parcel')
-                    })}
-                  </span>
-                  <br />
-                  <T
-                    id="asset_buy.buy_mana"
-                    values={{
-                      click_here: (
-                        <Link to={locations.buyMana()}>
-                          {t('global.click_here')}
-                        </Link>
-                      )
-                    }}
-                  />
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {isMarketplaceAllowed ? (
-                    <span>
-                      {t('asset_buy.needs_at_least', {
-                        mana: formatMana(publication.price)
-                      })}
-                      <br />
-                    </span>
-                  ) : null}
-                  <T
-                    id={
-                      this.isLegacyMarketplace()
-                        ? 'asset_buy.please_allow'
-                        : 'asset_buy.please_allow_new_marketplace'
-                    }
-                    values={{
-                      settings_link: (
-                        <Link to={locations.settings()}>
-                          {t('global.settings')}
-                        </Link>
-                      )
-                    }}
-                  />
-                </React.Fragment>
-              )
-            }
-          />
-        </Grid.Column>
-      </Container>
     )
   }
 

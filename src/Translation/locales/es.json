@@ -283,7 +283,7 @@
     "required_deposit": "Depósito requerido: {deposit}"
   },
   "name": {
-    "estate": "Inmuebles",
+    "estate": "Estate",
     "parcel": "LAND"
   },
   "parcel": {
