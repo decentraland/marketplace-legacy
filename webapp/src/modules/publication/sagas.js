@@ -42,10 +42,10 @@ export function* publicationSaga() {
 
 function* handlePublicationsRequest(action) {
   try {
-    const { parcels, publications, total } = yield call(() =>
+    const { parcels, estates, publications, total } = yield call(() =>
       fetchPublications(action)
     )
-    yield put(fetchPublicationsSuccess(parcels, publications, total))
+    yield put(fetchPublicationsSuccess(parcels, estates, publications, total))
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
   }
@@ -175,10 +175,15 @@ function* handleFetchParcelSuccess(action) {
 function* fetchPublications(action) {
   const { limit, offset, sortBy, sortOrder, status } = action
   const { parcels, total } = yield call(() =>
-    api.fetchParcels({ limit, offset, sortBy, sortOrder, status })
+    api.fetchAssets('parcels', { limit, offset, sortBy, sortOrder, status })
   )
-  const publications = parcels.map(parcel => parcel.publication)
-  return { parcels, publications, total }
+  const { estates } = yield call(() =>
+    api.fetchAssets('estates', { limit, offset, sortBy, sortOrder, status })
+  )
+  const publications = parcels
+    .map(parcel => parcel.publication)
+    .concat(estates.map(estate => estate.publication))
+  return { parcels, estates, publications, total }
 }
 
 function* buildAsset(assetId, assetType) {

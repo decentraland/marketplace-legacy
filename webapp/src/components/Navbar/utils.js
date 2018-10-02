@@ -1,9 +1,13 @@
 import { locations, NAVBAR_PAGES } from 'locations'
-import { isProfilePage, isAtlasPage } from 'modules/location/utils'
+import {
+  isProfilePage,
+  isAtlasPage,
+  isMarketplace
+} from 'modules/location/utils'
 
 export function getActivePage({ pathname, address }) {
   let currentPage = null
-  if (pathname === locations.marketplace()) {
+  if (isMarketplace(pathname)) {
     currentPage = NAVBAR_PAGES.marketplace
   } else if (isProfilePage(pathname, address)) {
     currentPage = NAVBAR_PAGES.profile

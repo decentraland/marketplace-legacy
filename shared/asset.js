@@ -151,6 +151,10 @@ export function getType(asset, publications, wallet) {
   }
 
   if (isEstate(asset)) {
+    //@nacho TODO: check it
+    if (isOnSale(asset, publications)) {
+      return TYPES.myParcelsOnSale
+    }
     return wallet && isOwner(wallet, asset.id) ? TYPES.myEstates : TYPES.taken
   }
 

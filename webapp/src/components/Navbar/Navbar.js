@@ -43,7 +43,7 @@ export default class Navbar extends React.PureComponent {
     const { wallet, center } = this.props
     return {
       [NAVBAR_PAGES.atlas]: locations.parcelMapDetail(center.x, center.y),
-      [NAVBAR_PAGES.marketplace]: locations.marketplace(),
+      [NAVBAR_PAGES.marketplace]: locations.profilePageDefault(),
       [NAVBAR_PAGES.profile]: locations.profilePageDefault(wallet.address),
       [NAVBAR_PAGES.activity]: locations.activity(),
       [NAVBAR_PAGES.signIn]: locations.signIn()

@@ -23,10 +23,16 @@ export function fetchPublicationsRequest({
   }
 }
 
-export function fetchPublicationsSuccess(parcels, publications, total) {
+export function fetchPublicationsSuccess(
+  parcels,
+  estates,
+  publications,
+  total
+) {
   return {
     type: FETCH_PUBLICATIONS_SUCCESS,
     parcels,
+    estates,
     publications,
     total
   }
