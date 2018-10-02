@@ -39,7 +39,12 @@ export async function main(getActions = createMonitorActions) {
         'AuctionSuccessful',
         'AuctionCancelled'
       ],
-      LANDRegistry: ['Update', 'Transfer', 'EstateRegistrySet'],
+      LANDRegistry: [
+        'Update',
+        'Transfer',
+        'EstateRegistrySet',
+        'UpdateOperator'
+      ],
       MortgageHelper: ['NewMortgage'],
       MortgageManager: [
         'CanceledMortgage',
@@ -52,6 +57,7 @@ export async function main(getActions = createMonitorActions) {
         'AddLand',
         'RemoveLand',
         'Update',
+        'UpdateOperator',
         'CreateEstate',
         'Transfer'
       ]

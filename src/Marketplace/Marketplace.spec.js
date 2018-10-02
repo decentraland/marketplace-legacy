@@ -119,6 +119,7 @@ describe('Marketplace', function() {
           x: 1,
           y: 2,
           token_id: null,
+          update_operator: null,
           auction_price: null,
           district_id: null,
           last_transferred_at: null,

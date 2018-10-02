@@ -12,6 +12,7 @@ export class Estate extends Model {
     'tx_hash',
     'token_id',
     'owner',
+    'update_operator',
     'data',
     'last_transferred_at'
   ]
