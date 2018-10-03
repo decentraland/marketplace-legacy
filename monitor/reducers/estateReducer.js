@@ -65,17 +65,13 @@ async function reduceEstateRegistry(event) {
       const { _estateId } = event.args
       const estate = await Estate.findByTokenId(_estateId)
       if (!estate)
-        return log.info(
-          `[${name}] Estate with token id ${_estateId} does not exist`
-        )
+        return log.info(`[${name}] Estate with id: ${_estateId} does not exist`)
 
-      const coordinates = Parcel.splitId(parcelId)
-      const parcel = { x: Number(coordinates[0]), y: Number(coordinates[1]) }
+      const [x, y] = Parcel.splitId(parcelId)
+      const parcel = { x: Number(x), y: Number(y) }
 
       log.info(
-        `[${name}] Updating Estate with token id "${
-          estate.token_id
-        }" add land (${parcel.x},${parcel.y})`
+        `[${name}] Updating Estate id: "${estate.id}" add land (${parcelId})`
       )
       if (!estate.data.parcels.find(p => isEqualCoords(p, parcel))) {
         await Estate.update(
@@ -85,7 +81,7 @@ async function reduceEstateRegistry(event) {
               parcels: [...estate.data.parcels, parcel]
             }
           },
-          { token_id: estate.token_id }
+          { id: estate.id }
         )
       }
       break
@@ -102,13 +98,11 @@ async function reduceEstateRegistry(event) {
         )
       }
 
-      const coordinates = Parcel.splitId(parcelId)
-      const parcel = { x: Number(coordinates[0]), y: Number(coordinates[1]) }
+      const [x, y] = Parcel.splitId(parcelId)
+      const parcel = { x: Number(x), y: Number(y) }
 
       log.info(
-        `[${name}] Updating Estate id: "${
-          estate.id
-        }" remove land (${coordinates})`
+        `[${name}] Updating Estate id: "${estate.id}" remove land (${parcelId})`
       )
       await Estate.update(
         {
