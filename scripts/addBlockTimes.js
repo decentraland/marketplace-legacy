@@ -43,11 +43,11 @@ async function updateBlockTimes(publications) {
     elements: publications,
     callback: async publicationsBatch => {
       const updates = publicationsBatch.map(async publication => {
-        const block_time_created_at = await new BlockTimestampService().getBlockTime(
+        const blockTime = await new BlockTimestampService().getBlockTime(
           publication.block_number
         )
         return Publication.update(
-          { block_time_created_at },
+          { block_time_created_at: blockTime },
           { tx_hash: publication.tx_hash }
         )
       })

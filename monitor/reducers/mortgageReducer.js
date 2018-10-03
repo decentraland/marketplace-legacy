@@ -57,7 +57,7 @@ async function reduceMortgageHelper(event) {
         payableAt,
         interestRate,
         punitoryInterestRate,
-        block_time_created_at
+        blockTime
       ] = await Promise.all([
         rcnEngineContract.getAmount(LoanIdBN),
         rcnEngineContract.getExpirationRequest(LoanIdBN),
@@ -85,8 +85,8 @@ async function reduceMortgageHelper(event) {
           outstanding_amount: 0,
           asset_id: parcelId,
           asset_type: ASSET_TYPES.parcel,
+          block_time_created_at: blockTime,
           block_number,
-          block_time_created_at,
           tx_hash,
           borrower
         })
