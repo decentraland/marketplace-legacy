@@ -11,16 +11,13 @@ const log = new Log('parcelReducer')
 export async function parcelReducer(event) {
   const { address, name } = event
 
-  const parcelId = await getParcelIdFromEvent(event)
-  if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
-
   switch (address) {
     case contractAddresses.LANDRegistry: {
-      await reduceLANDRegistry(event, parcelId)
+      await reduceLANDRegistry(event)
       break
     }
     case contractAddresses.EstateRegistry: {
-      await reduceEstateRegistry(event, parcelId)
+      await reduceEstateRegistry(event)
       break
     }
     default:
@@ -28,8 +25,11 @@ export async function parcelReducer(event) {
   }
 }
 
-async function reduceLANDRegistry(event, parcelId) {
+async function reduceLANDRegistry(event) {
   const { name, block_number } = event
+
+  const parcelId = await getParcelIdFromEvent(event)
+  if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
 
   switch (name) {
     case eventNames.Update: {
@@ -95,8 +95,11 @@ async function reduceLANDRegistry(event, parcelId) {
   }
 }
 
-async function reduceEstateRegistry(event, parcelId) {
+async function reduceEstateRegistry(event) {
   const { name } = event
+
+  const parcelId = await getParcelIdFromEvent(event)
+  if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
 
   switch (name) {
     case eventNames.AddLand: {
