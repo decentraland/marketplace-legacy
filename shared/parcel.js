@@ -151,6 +151,6 @@ export function hasParcelsConnected({ x, y }, parcels) {
  */
 export function getParcelsNotIncluded(newParcels, allParcels) {
   return newParcels.filter(
-    newParcel => !allParcels.some(getParcelMatcher(newParcels))
+    newParcel => !allParcels.some(getParcelMatcher(newParcel))
   )
 }
