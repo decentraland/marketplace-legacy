@@ -104,7 +104,7 @@ export function getParcelPublications(parcels) {
 }
 
 export function getParcelMatcher(parcel) {
-  return parcel2 => parcel.id === parcel2.id || isEqualCoords(parcel, parcel2)
+  return parcel2 => isEqualCoords(parcel, parcel2)
 }
 
 export function isEqualCoords(p1, p2) {
