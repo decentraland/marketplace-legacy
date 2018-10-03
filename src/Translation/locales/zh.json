@@ -14,7 +14,7 @@
     "its_you": "您的"
   },
   "asset_buy": {
-    "about_to_buy": "您即将购买 {parcel_name}",
+    "about_to_buy": "您即将购买 {name}",
     "allowed_balance": "你的津贴是{allowance}",
     "buy_asset": "购买土地",
     "buy_mana": "{click_here}购买一些 MANA。",
@@ -28,7 +28,7 @@
     "total_balance": "您的余额是 {balance}"
   },
   "asset_cancel": {
-    "about_to_cancel": "您即将取消出售 {parcel}。",
+    "about_to_cancel": "您即将取消出售 {name}。",
     "cancel_sale": "取消销售",
     "not_for_sale": "地块 {parcel} 不出售。"
   },

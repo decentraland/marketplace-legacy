@@ -15,7 +15,7 @@
     "its_you": "あなたです。"
   },
   "asset_buy": {
-    "about_to_buy": "{parcel_name}を{parcel_price}で購入しようとしています。",
+    "about_to_buy": "{name}を{price}で購入しようとしています。",
     "allowed_balance": "あなたの手当は{allowance}です",
     "buy_asset": "ランドを購入",
     "buy_mana": "MANAを更に購入する{click_here}",
@@ -30,7 +30,7 @@
     "total_balance": "残高：{balance}"
   },
   "asset_cancel": {
-    "about_to_cancel": "{parcel}の販売をキャンセルしようとしています。",
+    "about_to_cancel": "{name}の販売をキャンセルしようとしています。",
     "cancel_sale": "キャンセルセール",
     "not_for_sale": "この区画{parcel}は販売されていません。"
   },
