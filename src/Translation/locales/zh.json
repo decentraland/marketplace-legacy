@@ -58,23 +58,20 @@
     "proposal": "提案"
   },
   "derivation_path": {
-    "invalid":
-      "您为钱包设置了错误的派生路径。 您的派生路径必须遵循模式 44'/60|61'/x'/n"
+    "invalid": "您为钱包设置了错误的派生路径。 您的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "estate_detail": {
     "dissolve": "解散连块土地",
     "dissolve_desc": "你将解散连块土地 {name}",
     "edit_parcels": "编辑地块",
     "empty_estate": "连块土地 {name} 已经解散",
-    "maximum_parcels_message":
-      "如果您在单个交易中添加或删除超过 {max} 个地块，交易费用可能会不足。您可以先提交此交易，然后在编辑连块土地中再增加或删除地块。",
+    "maximum_parcels_message": "如果您在单个交易中添加或删除超过 {max} 个地块，交易费用可能会不足。您可以先提交此交易，然后在编辑连块土地中再增加或删除地块。",
     "maximum_parcels_title": "您达到了每笔交易的最大土地数",
     "parcels": "包括地块"
   },
   "estate_dissolve": {
     "too_big": "连块土地太大了",
-    "too_big_desc":
-      "如果连块土地超过 {max} 块土地，则解散连块土地的交易有可能引起交易费用不足。您可以在编辑连块土地中移除地块，直到地块少于或等于 {max}， 然后再解散连块土地"
+    "too_big_desc": "如果连块土地超过 {max} 块土地，则解散连块土地的交易有可能引起交易费用不足。您可以在编辑连块土地中移除地块，直到地块少于或等于 {max}， 然后再解散连块土地"
   },
   "estate_edit": {
     "description": "描述",
@@ -107,7 +104,7 @@
     "cancel": "取消",
     "change": "更改",
     "check_address": "请仔细检查地址",
-    "clear": "明确",
+    "clear": "清除记录",
     "click_here": "点击这里",
     "community_chat": "社区聊天",
     "confirm": "确认",
@@ -145,7 +142,7 @@
     "settings": "设置",
     "sign_in": "登录",
     "sign_in_notice": "请登录 {sign_in_link} 后访问此页面",
-    "submit": "提交",
+    "submit": "确定",
     "the_estate": "连块土地",
     "the_parcel": "包裹",
     "time_left": "剩余时间",
@@ -210,15 +207,12 @@
     "payable": "应付",
     "payable_placeholder": "应付天数",
     "pending_tx": "按揭",
-    "please_authorize_MANA":
-      "请转到{settings_link}并授权Mortgage Helper合同代表您运营MANA",
-    "please_authorize_RCN":
-      "请转到{settings_link}并授权抵押贷款经理合同代表您运营RCN",
+    "please_authorize_MANA": "请转到{settings_link}并授权Mortgage Helper合同代表您运营MANA",
+    "please_authorize_RCN": "请转到{settings_link}并授权抵押贷款经理合同代表您运营RCN",
     "punitory_rate": "惩罚性利率",
     "punitory_rate_placeholder": "惩罚性利率",
     "request": "申请抵押",
-    "request_land":
-      "您将为 {parcel_name} 地块以 {parcel_price} 的价格申请抵押贷款",
+    "request_land": "您将为 {parcel_name} 地块以 {parcel_price} 的价格申请抵押贷款",
     "requested": "已申请",
     "required_deposit": "所需押金：{deposit}"
   },
@@ -235,10 +229,8 @@
     "didnt_allow": "您尚未授权使用MANA",
     "didnt_allow_new_marketplace": "您尚未授权新版本的Marketplace使用MANA",
     "needs_at_least": "为了购买这块土地，您至少需要 {mana} MANA。",
-    "please_allow":
-      "请转到{settings_link}并允许LegacyMarketplace合同代表您运行MANA",
-    "please_allow_new_marketplace":
-      "请转到{settings_link}并允许Marketplace合同代表您运行MANA",
+    "please_allow": "请转到{settings_link}并允许LegacyMarketplace合同代表您运行MANA",
+    "please_allow_new_marketplace": "请转到{settings_link}并允许Marketplace合同代表您运行MANA",
     "total_balance": "您的余额是 {balance}"
   },
   "parcel_cancel": {
@@ -305,8 +297,7 @@
     "expiration": "到期时间",
     "expiration_placeholder": "待售截止日期",
     "list_land": "地块上架出售",
-    "please_authorize":
-      "您需要在设置页面{settings_link}授权委托虚拟市场以您的名义操作土地交易，然后才能将其上架出售。",
+    "please_authorize": "您需要在设置页面{settings_link}授权委托虚拟市场以您的名义操作土地交易，然后才能将其上架出售。",
     "price": "价格",
     "price_placeholder": "此地块的 MANA 价格",
     "set_land_price": "为 {parcel_name} 设置价格和截止日期"
@@ -340,8 +331,7 @@
     "get_started": "开始使用",
     "intro": "首先，您需要一个安全的地方来保存所有的LAND。",
     "options": {
-      "desktop":
-        "您可以使用{metamask_link}扩展名或像{ledger_nano_link}这样的硬件钱包。",
+      "desktop": "您可以使用{metamask_link}扩展名或像{ledger_nano_link}这样的硬件钱包。",
       "mobile": "您可以使用移动浏览器，如{coinbase_link}或{imtoken_link}。"
     }
   },
@@ -355,8 +345,7 @@
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
     "dissolve_estate": "你解散了连块土地 {name}",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
-    "edit_estate_metadata":
-      "您编辑了连块土地 {estate_id}，名称为“{name}”，描述为“{description}”",
+    "edit_estate_metadata": "您编辑了连块土地 {estate_id}，名称为“{name}”，描述为“{description}”",
     "edit_estate_parcels_added": "您将 {amount} 地块添加到连块土地 {name}",
     "edit_estate_parcels_removed": "您从连块土地 {name} 中移除了 {amount} 地块",
     "manage": "您授权{address_link}更新{parcel_link}上的内容",
@@ -378,8 +367,7 @@
       "please_confirm": "请确认交易"
     },
     "parcel": {
-      "still_pending":
-        "{parcel_name} 仍然有 {transactions_count} 个待处理的交易。"
+      "still_pending": "{parcel_name} 仍然有 {transactions_count} 个待处理的交易。"
     },
     "see_activity": "要查看您的交易记录，请访问 {activity_link}。",
     "text": {
