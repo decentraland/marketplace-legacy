@@ -33,10 +33,6 @@ export default class BuyParcelPage extends React.PureComponent {
     onCancel: PropTypes.func.isRequired
   }
 
-  static defaultProps = {
-    publication: { price: 0 }
-  }
-
   handleConfirm = () => {
     const { publication, onConfirm } = this.props
     onConfirm(publication)
@@ -56,61 +52,63 @@ export default class BuyParcelPage extends React.PureComponent {
     const { balance } = wallet
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed>
+      <Parcel x={x} y={y} ownerNotAllowed withPublications>
         {parcel => {
-          const allowance = getCurrentAllowance(publication, authorization)
+          if (publication) {
+            // to avoid a race condition we expect a valid publication
+            const allowance = getCurrentAllowance(publication, authorization)
 
-          const price = parseFloat(publication.price)
+            const price = parseFloat(publication.price)
 
-          const isNotEnoughMana = balance < price
-          const isNotEnoughAllowance = allowance < price
-          return (
-            <div className="BuyParcelPage">
-              {(isNotEnoughMana || isNotEnoughAllowance) && (
-                <BuyWarningMessage
-                  publication={publication}
-                  wallet={wallet}
-                  allowance={allowance}
-                />
-              )}
-              <ParcelModal
-                x={x}
-                y={y}
-                title={t('asset_buy.buy_asset', {
-                  asset_type: t('name.parcel')
-                })}
-                subtitle={
-                  <T
-                    id="asset_buy.about_to_buy"
-                    values={{
-                      name: <ParcelDetailLink parcel={parcel} />,
-                      price: publication ? (
-                        <React.Fragment>
-                          &nbsp;{t('global.for')}&nbsp;&nbsp;
-                          <span
-                            style={{
-                              display: 'inline-block',
-                              transform: 'translateY(3px)'
-                            }}
-                          >
-                            <Mana amount={publication.price} size={14} />
-                          </span>
-                        </React.Fragment>
-                      ) : (
-                        ''
-                      )
-                    }}
+            const isNotEnoughMana = balance < price
+            const isNotEnoughAllowance = allowance < price
+            return (
+              <div className="BuyParcelPage">
+                {(isNotEnoughMana || isNotEnoughAllowance) && (
+                  <BuyWarningMessage
+                    publication={publication}
+                    wallet={wallet}
+                    allowance={allowance}
                   />
-                }
-                onCancel={onCancel}
-                onConfirm={this.handleConfirm}
-                isDisabled={
-                  isDisabled || isNotEnoughMana || isNotEnoughAllowance
-                }
-                isTxIdle={isTxIdle}
-              />
-            </div>
-          )
+                )}
+                <ParcelModal
+                  x={x}
+                  y={y}
+                  title={t('asset_buy.buy_asset', {
+                    asset_type: t('name.parcel')
+                  })}
+                  subtitle={
+                    <T
+                      id="asset_buy.about_to_buy"
+                      values={{
+                        name: <ParcelDetailLink parcel={parcel} />,
+                        price: (
+                          <React.Fragment>
+                            &nbsp;{t('global.for')}&nbsp;&nbsp;
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                transform: 'translateY(3px)'
+                              }}
+                            >
+                              <Mana amount={publication.price} size={14} />
+                            </span>
+                          </React.Fragment>
+                        )
+                      }}
+                    />
+                  }
+                  onCancel={onCancel}
+                  onConfirm={this.handleConfirm}
+                  isDisabled={
+                    isDisabled || isNotEnoughMana || isNotEnoughAllowance
+                  }
+                  isTxIdle={isTxIdle}
+                />
+              </div>
+            )
+          }
+          return null
         }}
       </Parcel>
     )

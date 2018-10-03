@@ -16,8 +16,7 @@
     "its_you": "C'est vous"
   },
   "asset_buy": {
-    "about_to_buy":
-      "Vous êtes sur le point d'acheter {parcel_name} {parcel_price}",
+    "about_to_buy": "Vous êtes sur le point d'acheter {name} {price}",
     "allowed_balance": "Votre allocation est {allowance}",
     "buy_asset": "Acheter une LAND",
     "buy_mana": "{click_here} pour acheter du MANA.",
@@ -33,7 +32,7 @@
     "total_balance": "Votre solde est {balance}"
   },
   "asset_cancel": {
-    "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {parcel}.",
+    "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {name}.",
     "cancel_sale": "Annuler la vente",
     "not_for_sale": "La parcelle {parcel} n'est pas à vendre."
   },

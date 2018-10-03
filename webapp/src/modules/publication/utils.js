@@ -1,5 +1,6 @@
 import { getContractAddress } from 'modules/wallet/utils'
 import { ASSET_TYPES } from 'shared/asset'
+
 export function isLegacyPublication(publication) {
   return (
     publication.marketplace_address === getContractAddress('LegacyMarketplace')

@@ -15,7 +15,7 @@
     "its_you": "Eres tú!"
   },
   "asset_buy": {
-    "about_to_buy": "Estas por comprar {parcel_name} {parcel_price}",
+    "about_to_buy": "Estas por comprar {name} {price}",
     "allowed_balance": "Tu asignación es {allowance}",
     "buy_asset": "Comprar LAND",
     "buy_mana": "{click_here} para comprar MANA.",
@@ -30,7 +30,7 @@
     "total_balance": "Tu balance es {balance}"
   },
   "asset_cancel": {
-    "about_to_cancel": "Estás por cancelar la venta de {parcel}.",
+    "about_to_cancel": "Estás por cancelar la venta de {name}.",
     "cancel_sale": "Cancelar venta",
     "not_for_sale": "La parcela {parcel} no está en venta."
   },
@@ -56,7 +56,7 @@
     },
     "expiration": "Vencimiento",
     "expiration_placeholder": "Fecha de caducidad para esta publicación",
-    "list_asset": "List {asset_name} en venta",
+    "list_asset": "Listar {asset_name} en venta",
     "please_authorize":
       "Debe ir a {settings_link} y autorizar que Marketplace opere LAND en su nombre antes de que pueda listarlo en oferta.",
     "price": "Precio",
@@ -408,7 +408,7 @@
   },
   "transaction_confirmations": {
     "count":
-      "{confirmations_count} {confirmations_count, plural, one {confirmación} otro {confirmaciones}}",
+      "{confirmations_count} {confirmations_count, plural, one {confirmación} other {confirmaciones}}",
     "waiting": "Esperando confirmaciones"
   },
   "transaction_status": {

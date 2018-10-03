@@ -14,7 +14,7 @@
     "its_you": "您的"
   },
   "asset_buy": {
-    "about_to_buy": "您即将购买 {parcel_name}",
+    "about_to_buy": "您即将购买 {name}",
     "allowed_balance": "你的津贴是{allowance}",
     "buy_asset": "购买土地",
     "buy_mana": "{click_here}购买一些 MANA。",
@@ -28,7 +28,7 @@
     "total_balance": "您的余额是 {balance}"
   },
   "asset_cancel": {
-    "about_to_cancel": "您即将取消出售 {parcel}。",
+    "about_to_cancel": "您即将取消出售 {name}。",
     "cancel_sale": "取消销售",
     "not_for_sale": "地块 {parcel} 不出售。"
   },
@@ -133,7 +133,7 @@
   "estate_select": {
     "description": "选择彼此相邻的宗地",
     "detail": "连块土地细节",
-    "edit_selection": "在地图上选择宗地",
+    "edit_selection": "在地图上选择地块",
     "new_selection": "请在地图上选择新地块",
     "tx_to_be_send": "您将向 {action} 土块发送交易：{parcels}"
   },
@@ -155,7 +155,7 @@
     "cancel": "取消",
     "change": "更改",
     "check_address": "请仔细检查地址",
-    "clear": "明确",
+    "clear": "清除记录",
     "click_here": "点击这里",
     "community_chat": "社区聊天",
     "confirm": "确认",
@@ -193,9 +193,9 @@
     "settings": "设置",
     "sign_in": "登录",
     "sign_in_notice": "请登录 {sign_in_link} 后访问此页面",
-    "submit": "提交",
+    "submit": "确定",
     "the_estate": "连块土地",
-    "the_parcel": "包裹",
+    "the_parcel": "地块",
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
     "unauthorized": "擅自",
@@ -250,7 +250,7 @@
     "fetching_data": "获取抵押贷款数据",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
-    "oracle": "Oracle合同地址",
+    "oracle": "Oracle 合同地址",
     "outstanding_amount": "杰出的金额",
     "partial_payment": "部分付款",
     "partial_payment_desc": "您即将支付部分抵押贷款购买土地{parcel_name}",
@@ -278,6 +278,25 @@
     "no_description": "没有说明",
     "no_name": "无名",
     "view": "查看"
+  },
+  "asset_buy": {
+    "about_to_buy": "您即将购买 {parcel_name}",
+    "allowed_balance": "你的津贴是{allowance}",
+    "buy_asset": "购买土地",
+    "buy_mana": "{click_here}购买一些 MANA。",
+    "didnt_allow": "您尚未授权使用MANA",
+    "didnt_allow_new_marketplace": "您尚未授权新版本的Marketplace使用MANA",
+    "needs_at_least": "为了购买这块土地，您至少需要 {mana} MANA。",
+    "please_allow":
+      "请转到{settings_link}并允许LegacyMarketplace合同代表您运行MANA",
+    "please_allow_new_marketplace":
+      "请转到{settings_link}并允许Marketplace合同代表您运行MANA",
+    "total_balance": "您的余额是 {balance}"
+  },
+  "asset_cancel": {
+    "about_to_cancel": "您即将取消出售 {parcel}。",
+    "cancel_land": "取消土地出售",
+    "not_for_sale": "地块 {parcel} 不出售。"
   },
   "parcel_detail": {
     "actions": {
@@ -418,7 +437,7 @@
   },
   "transfer_mana": {
     "action": "转帐",
-    "amount": "量",
+    "amount": "数量",
     "current_balance": "您目前的余额是 {balance}",
     "irreversible": "注意，MANA 转帐不能回退或撤消。",
     "is_mana_contract_address": "这是MANA合同地址",
