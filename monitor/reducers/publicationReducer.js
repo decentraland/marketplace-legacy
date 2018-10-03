@@ -52,6 +52,7 @@ async function reduceMarketplace(event) {
 
       await Publication.delete({
         asset_id: assetId,
+        asset_type: assetType,
         owner: seller.toLowerCase(),
         status: PUBLICATION_STATUS.open
       })
