@@ -1,5 +1,6 @@
 import { getContractAddress } from 'modules/wallet/utils'
 import { ASSET_TYPES } from 'shared/asset'
+import { MARKETPLACE_PAGE_TABS } from 'locations'
 
 export function isLegacyPublication(publication) {
   return (
@@ -14,4 +15,12 @@ export function getNFTAddressByType(type) {
     return getContractAddress('EstateRegistry')
   }
   throw Error('invalid asset type')
+}
+
+export function getTypeByMarketplaceTab(tab) {
+  if (tab === MARKETPLACE_PAGE_TABS.parcels) {
+    return ASSET_TYPES.parcel
+  } else if (tab === MARKETPLACE_PAGE_TABS.estates) {
+    return ASSET_TYPES.estate
+  }
 }

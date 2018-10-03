@@ -50,6 +50,7 @@ export const locations = {
   sellEstate: (id = params.id) => `/estates/${id}/sell`,
   buyEstate: (id = params.id) => `/estates/${id}/buy`,
   cancelSaleEstate: (id = params.id) => `/estates/${id}/cancel-sale`,
+
   // Generic assets
 
   assetDetail: function(asset) {

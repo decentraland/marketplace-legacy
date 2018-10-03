@@ -20,6 +20,5 @@ export function getActivePage({ pathname, address }) {
   } else if (pathname === locations.signIn()) {
     currentPage = NAVBAR_PAGES.signIn
   }
-
   return currentPage
 }

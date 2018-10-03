@@ -77,16 +77,21 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case FETCH_PUBLICATIONS_SUCCESS:
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: null,
-        data: {
-          ...state.data,
-          ...toParcelObject(action.parcels, state.data)
+    case FETCH_PUBLICATIONS_SUCCESS: {
+      const { assetType, assets } = action
+      if (assetType === ASSET_TYPES.parcel) {
+        return {
+          ...state,
+          loading: loadingReducer(state.loading, action),
+          error: null,
+          data: {
+            ...state.data,
+            ...toParcelObject(assets, state.data)
+          }
         }
       }
+      return state
+    }
     case FETCH_PARCEL_FAILURE: {
       return {
         ...state,

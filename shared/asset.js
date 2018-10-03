@@ -149,13 +149,15 @@ export function getType(asset, publications, wallet) {
   if (!asset) {
     return TYPES.loading
   }
-
+  const isAssetOwner = wallet && isOwner(wallet, asset.id)
   if (isEstate(asset)) {
-    //@nacho TODO: check it
-    if (isOnSale(asset, publications)) {
+    if (isOnSale(asset, publications) && isAssetOwner) {
       return TYPES.myParcelsOnSale
     }
-    return wallet && isOwner(wallet, asset.id) ? TYPES.myEstates : TYPES.taken
+    if (isOnSale(asset, publications)) {
+      return TYPES.onSale
+    }
+    return isAssetOwner ? TYPES.myEstates : TYPES.taken
   }
 
   if (isDistrict(asset)) {
@@ -171,7 +173,7 @@ export function getType(asset, publications, wallet) {
     return TYPES.district
   }
 
-  if (wallet && isOwner(wallet, asset.id)) {
+  if (isAssetOwner) {
     return isOnSale(asset, publications)
       ? TYPES.myParcelsOnSale
       : TYPES.myParcels

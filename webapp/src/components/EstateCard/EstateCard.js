@@ -85,7 +85,7 @@ export default class EstateCard extends React.PureComponent {
 
             <div className="footer">
               <ParcelTags estate={estate} size="small" />
-              <LandAmount value={estate.parcels.length} />
+              <LandAmount value={estate.parcels ? estate.parcels.length : 0} />
             </div>
           </Card.Content>
         </Link>
