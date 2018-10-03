@@ -56,7 +56,8 @@ export default class Asset extends React.PureComponent {
 
     const ownerIsNotAllowed =
       ownerNotAllowed && value && isOwner(wallet, value.id)
-    const assetShouldBeOnSale = withPublications && value && !value.publication
+    const assetShouldBeOnSale =
+      withPublications && value && !value['publication_tx_hash']
 
     if (isConnecting || isFetchingAsset) {
       return

@@ -51,60 +51,62 @@ export default class BuyEstatePage extends React.PureComponent {
     const { balance } = wallet
 
     return (
-      <Estate id={id} ownerNotAllowed>
+      <Estate id={id} ownerNotAllowed withPublications>
         {estate => {
-          const allowance = getCurrentAllowance(publication, authorization)
+          if (publication) {
+            // to avoid a race condition we expect a valid publication
+            const allowance = getCurrentAllowance(publication, authorization)
 
-          const price = parseFloat(publication.price)
+            const price = parseFloat(publication.price)
 
-          const isNotEnoughMana = balance < price
-          const isNotEnoughAllowance = allowance < price
-          return (
-            <div className="BuyEstatePage">
-              {(isNotEnoughMana || isNotEnoughAllowance) && (
-                <BuyWarningMessage
-                  publication={publication}
-                  wallet={wallet}
-                  allowance={allowance}
-                />
-              )}
-              <EstateModal
-                parcels={estate.data.parcels}
-                title={t('asset_buy.buy_asset', {
-                  asset_type: t('name.estate')
-                })}
-                subtitle={
-                  <T
-                    id="asset_buy.about_to_buy"
-                    values={{
-                      name: <EstateName estate={estate} />,
-                      price: publication ? (
-                        <React.Fragment>
-                          &nbsp;{t('global.for')}&nbsp;&nbsp;
-                          <span
-                            style={{
-                              display: 'inline-block',
-                              transform: 'translateY(3px)'
-                            }}
-                          >
-                            <Mana amount={publication.price} size={14} />
-                          </span>
-                        </React.Fragment>
-                      ) : (
-                        ''
-                      )
-                    }}
+            const isNotEnoughMana = balance < price
+            const isNotEnoughAllowance = allowance < price
+            return (
+              <div className="BuyEstatePage">
+                {(isNotEnoughMana || isNotEnoughAllowance) && (
+                  <BuyWarningMessage
+                    publication={publication}
+                    wallet={wallet}
+                    allowance={allowance}
                   />
-                }
-                onCancel={onCancel}
-                onConfirm={this.handleConfirm}
-                isDisabled={
-                  isDisabled || isNotEnoughMana || isNotEnoughAllowance
-                }
-                isTxIdle={isTxIdle}
-              />
-            </div>
-          )
+                )}
+                <EstateModal
+                  parcels={estate.data.parcels}
+                  title={t('asset_buy.buy_asset', {
+                    asset_type: t('name.estate')
+                  })}
+                  subtitle={
+                    <T
+                      id="asset_buy.about_to_buy"
+                      values={{
+                        name: <EstateName estate={estate} />,
+                        price: (
+                          <React.Fragment>
+                            &nbsp;{t('global.for')}&nbsp;&nbsp;
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                transform: 'translateY(3px)'
+                              }}
+                            >
+                              <Mana amount={publication.price} size={14} />
+                            </span>
+                          </React.Fragment>
+                        )
+                      }}
+                    />
+                  }
+                  onCancel={onCancel}
+                  onConfirm={this.handleConfirm}
+                  isDisabled={
+                    isDisabled || isNotEnoughMana || isNotEnoughAllowance
+                  }
+                  isTxIdle={isTxIdle}
+                />
+              </div>
+            )
+          }
+          return null
         }}
       </Estate>
     )
