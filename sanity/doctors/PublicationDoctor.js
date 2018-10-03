@@ -3,7 +3,7 @@ import { Log, env } from 'decentraland-commons'
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
-import { Parcel } from '../../src/Asset'
+import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { isParcel } from '../../shared/parcel'
@@ -14,13 +14,16 @@ const log = new Log('PublicationDoctor')
 
 export class PublicationDoctor extends Doctor {
   async diagnose(options) {
+    let parcels
+    let estates
+
     if (options.checkParcel) {
       const [x, y] = parseCLICoords(options.checkParcel)
       parcels = await Parcel.find({ x, y })
       estates = []
     } else {
       parcels = await Parcel.find()
-      estates = await Estates.find()
+      estates = await Estate.find()
     }
 
     const assets = parcels.concat(estates)
@@ -51,7 +54,7 @@ export class PublicationDoctor extends Doctor {
 
         await Promise.all(promises)
       },
-      batchSize: ena.get('BATCH_SIZE'),
+      batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
     })
 
@@ -68,7 +71,7 @@ export class PublicationDoctor extends Doctor {
     const order = await marketplace.orderByAssetId(nftAddress, token_id)
     const contractId = order[0]
 
-    return this.getPublicationError(contractId, publication)
+    return this.getPublicationError(id, contractId, publication)
   }
 
   async getLegacyPublicationInconsistencies(parcel) {
@@ -80,20 +83,20 @@ export class PublicationDoctor extends Doctor {
     const auction = await marketplace.auctionByAssetId(token_id)
     const contractId = auction[0]
 
-    return this.getPublicationError(publication, contractId)
+    return this.getPublicationError(id, publication, contractId)
   }
 
-  getPublicationError(publication, contractId) {
+  getPublicationError(assetId, publication, contractId) {
     let error = ''
 
     if (!this.isNullHash(contractId)) {
       if (!publication) {
         // Check if the publication exists in db
-        error = `${id} missing publication in db`
+        error = `${assetId} missing publication in db`
       } else if (publication.contract_id !== contractId) {
         // Check that id matches
         error = [
-          `${id} different id in db`,
+          `${assetId} different id in db`,
           publication.contract_id,
           'vs in blockchain',
           contractId
@@ -101,7 +104,7 @@ export class PublicationDoctor extends Doctor {
       }
     } else if (publication && publication.status === PUBLICATION_STATUS.open) {
       // Check for hanging publication in db
-      error = `${id} open in db and null in blockchain`
+      error = `${assetId} open in db and null in blockchain`
     }
 
     return error
