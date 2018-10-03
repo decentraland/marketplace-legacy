@@ -82,7 +82,7 @@
   "estate_select": {
     "description": "选择彼此相邻的宗地",
     "detail": "连块土地细节",
-    "edit_selection": "在地图上选择宗地",
+    "edit_selection": "在地图上选择地块",
     "new_selection": "请在地图上选择新地块",
     "tx_to_be_send": "您将向 {action} 土块发送交易：{parcels}"
   },
@@ -144,7 +144,7 @@
     "sign_in_notice": "请登录 {sign_in_link} 后访问此页面",
     "submit": "确定",
     "the_estate": "连块土地",
-    "the_parcel": "包裹",
+    "the_parcel": "地块",
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
     "unauthorized": "擅自",
@@ -199,7 +199,7 @@
     "fetching_data": "获取抵押贷款数据",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
-    "oracle": "Oracle合同地址",
+    "oracle": "Oracle 合同地址",
     "outstanding_amount": "杰出的金额",
     "partial_payment": "部分付款",
     "partial_payment_desc": "您即将支付部分抵押贷款购买土地{parcel_name}",
@@ -396,7 +396,7 @@
   },
   "transfer_mana": {
     "action": "转帐",
-    "amount": "量",
+    "amount": "数量",
     "current_balance": "您目前的余额是 {balance}",
     "irreversible": "注意，MANA 转帐不能回退或撤消。",
     "is_mana_contract_address": "这是MANA合同地址",
