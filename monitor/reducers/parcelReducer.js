@@ -9,7 +9,7 @@ import { getParcelIdFromEvent } from './utils'
 const log = new Log('parcelReducer')
 
 export async function parcelReducer(event) {
-  const { address, name } = event
+  const { address } = event
 
   switch (address) {
     case contractAddresses.LANDRegistry: {

@@ -83,8 +83,10 @@ async function reduceMarketplace(event) {
     }
     case eventNames.AuctionSuccessful:
     case eventNames.OrderSuccessful: {
-      const { totalPrice, winner } = event.args
+      const { totalPrice } = event.args
+      const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
+
       const Asset = new PublicationService().getPublicableAssetFromType(
         assetType
       )
@@ -92,19 +94,19 @@ async function reduceMarketplace(event) {
       if (!contract_id) {
         return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
       }
-      log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
+      log.info(`[${name}] Publication ${contract_id} sold to ${buyer}`)
 
       await Promise.all([
         Publication.update(
           {
             status: PUBLICATION_STATUS.sold,
-            buyer: winner.toLowerCase(),
+            buyer: buyer.toLowerCase(),
             price: eth.utils.fromWei(totalPrice),
             block_time_updated_at: blockTime
           },
           { contract_id }
         ),
-        Asset.update({ owner: winner }, { id: assetId })
+        Asset.update({ owner: buyer }, { id: assetId })
       ])
       break
     }
