@@ -2,6 +2,7 @@ import { env } from 'decentraland-commons'
 import { Parcel } from '../../src/Asset'
 import { ASSET_TYPES } from '../../shared/asset'
 
+// TODO: Find a common place for this
 export function getAssetTypeFromEvent(event) {
   const nftAddress = event.args.nftAddress
 
@@ -14,6 +15,7 @@ export function getAssetTypeFromEvent(event) {
   }
 }
 
+// TODO: Find a common place for this
 export async function getAssetIdFromEvent(event) {
   const nftAddress = event.args.nftAddress
 

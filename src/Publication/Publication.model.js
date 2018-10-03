@@ -37,10 +37,12 @@ export class Publication extends Model {
     return this.find({ owner })
   }
 
+  // TODO: Add asset_type
   static findByAssetId(asset_id) {
     return this.find({ asset_id }, { created_at: 'DESC' })
   }
 
+  // TODO: Add asset_type
   static findByAssetIdWithStatus(asset_id, status) {
     if (!this.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
@@ -49,6 +51,7 @@ export class Publication extends Model {
     return this.find({ asset_id, status }, { created_at: 'DESC' })
   }
 
+  // TODO: Add asset_type
   static deleteByAsset(asset) {
     return this.delete({ asset_id: asset.id })
   }

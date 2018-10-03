@@ -7,6 +7,7 @@ export class PublicationService {
     this.Publication = Publication
   }
 
+  // TODO: Find a common place for this
   getPublicableAssetFromType(assetType) {
     if (!this.Publication.isValidAssetType(assetType)) {
       throw new Error(`Invalid publication asset_type "${assetType}"`)
@@ -15,6 +16,7 @@ export class PublicationService {
     return ASSETS[assetType]
   }
 
+  // TODO: Find a common place for this
   getPublicableAssets() {
     const publicableAssets = {}
 
