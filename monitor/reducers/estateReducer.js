@@ -26,7 +26,7 @@ async function reduceEstateRegistry(event) {
   const { tx_hash, block_number, name } = event
 
   switch (name) {
-    case eventNames.EstateCreate: {
+    case eventNames.CreateEstate: {
       const { _owner, _estateId, _data } = event.args
 
       const exists = await Estate.count({ id: _estateId })
@@ -121,7 +121,7 @@ async function reduceEstateRegistry(event) {
       )
       break
     }
-    case eventNames.EstateTransfer: {
+    case eventNames.Transfer: {
       const { _to } = event.args
       const estateId = event.args._tokenId
 
@@ -140,7 +140,7 @@ async function reduceEstateRegistry(event) {
       )
       break
     }
-    case eventNames.EstateUpdateOperator: {
+    case eventNames.UpdateOperator: {
       const { _operator } = event.args
       const estateId = event.args._assetId
 
@@ -153,7 +153,7 @@ async function reduceEstateRegistry(event) {
       )
       break
     }
-    case eventNames.EstateUpdate: {
+    case eventNames.Update: {
       const { _assetId, _data } = event.args
       const estate = await Estate.findByTokenId(_assetId)
       if (!estate) {

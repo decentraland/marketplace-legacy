@@ -59,12 +59,12 @@ export function loadContracts() {
     EstateRegistry: {
       address: env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
       eventNames: [
+        'CreateEstate',
         'AddLand',
         'RemoveLand',
+        'Transfer',
         'Update',
-        'UpdateOperator',
-        'CreateEstate',
-        'Transfer'
+        'UpdateOperator'
       ]
     }
   })
