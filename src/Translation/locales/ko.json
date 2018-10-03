@@ -16,7 +16,7 @@
     "its_you": "너야"
   },
   "asset_buy": {
-    "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
+    "about_to_buy": "{name}을(를) 구입하려고 합니다.",
     "allowed_balance": "수당은 {allowance}입니다.",
     "buy_asset": "토지 구입",
     "buy_mana": "MANA를 사기 위해 {click_here}.",
@@ -31,7 +31,7 @@
     "total_balance": "Your balance is {balance}"
   },
   "asset_cancel": {
-    "about_to_cancel": "{parcel}의 판매를 취소하려고합니다.",
+    "about_to_cancel": "{name}의 판매를 취소하려고합니다.",
     "cancel_sale": "판매 취소",
     "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
   },
