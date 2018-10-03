@@ -33,10 +33,6 @@ export default class BuyParcelPage extends React.PureComponent {
     onCancel: PropTypes.func.isRequired
   }
 
-  static defaultProps = {
-    publication: { price: 0 }
-  }
-
   handleConfirm = () => {
     const { publication, onConfirm } = this.props
     onConfirm(publication)
