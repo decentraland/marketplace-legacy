@@ -121,12 +121,10 @@ export function estatesReducer(state = INITIAL_STATE, action) {
     case FETCH_MAP_SUCCESS: {
       return {
         ...state,
-        data: action.assets.estates.reduce(
-          (acc, estate) => {
-            return { ...acc, [estate.id]: normalizeEstate(estate) }
-          },
-          { ...state.data }
-        )
+        data: {
+          ...state.data,
+          ...action.assets.estates
+        }
       }
     }
     case FETCH_ADDRESS_ESTATES_SUCCESS: {
