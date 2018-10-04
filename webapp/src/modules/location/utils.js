@@ -1,5 +1,6 @@
 const ATLAS_PATHNAME_REGEXP = /^\/-?\d+\/-?\d+$/i
 const PARCEL_PATHNAME_REGEXP = /^\/-?\d+\/-?\d+\/detail$/gi
+const MARKETPLACE_PATHNAME_REGEXP = /^\/marketplace\.*/i
 
 export function isProfilePage(pathname, address) {
   return (
@@ -24,4 +25,8 @@ export function getCenter(pathname) {
   }
 
   return center
+}
+
+export function isMarketplace(pathname) {
+  return MARKETPLACE_PATHNAME_REGEXP.test(pathname)
 }

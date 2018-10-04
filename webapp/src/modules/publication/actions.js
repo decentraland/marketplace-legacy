@@ -11,7 +11,8 @@ export function fetchPublicationsRequest({
   offset,
   sortBy,
   sortOrder,
-  status
+  status,
+  tab
 } = {}) {
   return {
     type: FETCH_PUBLICATIONS_REQUEST,
@@ -19,16 +20,23 @@ export function fetchPublicationsRequest({
     offset,
     sortBy,
     sortOrder,
-    status
+    status,
+    tab
   }
 }
 
-export function fetchPublicationsSuccess(parcels, publications, total) {
+export function fetchPublicationsSuccess({
+  assets,
+  totals,
+  publications,
+  assetType
+}) {
   return {
     type: FETCH_PUBLICATIONS_SUCCESS,
-    parcels,
+    assets,
+    assetType,
     publications,
-    total
+    totals
   }
 }
 

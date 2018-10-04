@@ -16,13 +16,11 @@ import { loadingReducer } from '@dapps/modules/loading/reducer'
 import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS,
-  PUBLISH_SUCCESS
-} from 'modules/publication/actions'
-import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
-import {
+  PUBLISH_SUCCESS,
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_PARCEL_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
+import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { buildCoordinate, normalizeParcel, toParcelObject } from 'shared/parcel'
@@ -79,16 +77,21 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case FETCH_PUBLICATIONS_SUCCESS:
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: null,
-        data: {
-          ...state.data,
-          ...toParcelObject(action.parcels, state.data)
+    case FETCH_PUBLICATIONS_SUCCESS: {
+      const { assetType, assets } = action
+      if (assetType === ASSET_TYPES.parcel) {
+        return {
+          ...state,
+          loading: loadingReducer(state.loading, action),
+          error: null,
+          data: {
+            ...state.data,
+            ...toParcelObject(assets, state.data)
+          }
         }
       }
+      return state
+    }
     case FETCH_PARCEL_FAILURE: {
       return {
         ...state,

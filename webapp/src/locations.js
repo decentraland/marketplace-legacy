@@ -50,6 +50,7 @@ export const locations = {
   sellEstate: (id = params.id) => `/estates/${id}/sell`,
   buyEstate: (id = params.id) => `/estates/${id}/buy`,
   cancelSaleEstate: (id = params.id) => `/estates/${id}/cancel-sale`,
+
   // Generic assets
 
   assetDetail: function(asset) {
@@ -66,7 +67,9 @@ export const locations = {
 
   // General routes
 
-  marketplace: () => '/marketplace',
+  marketplacePageDefault: (tab = MARKETPLACE_PAGE_TABS.parcels) =>
+    locations.marketplace(MARKETPLACE_PAGE_TABS.parcels),
+  marketplace: (tab = ':tab') => `/marketplace/${tab}`,
 
   buyMana: () => '/buy-mana',
   transferMana: () => '/transfer-mana',
@@ -96,4 +99,9 @@ export const NAVBAR_PAGES = Object.freeze({
   profile: 'My Land',
   settings: 'Settings',
   signIn: 'Sign In'
+})
+
+export const MARKETPLACE_PAGE_TABS = Object.freeze({
+  parcels: 'parcels',
+  estates: 'estates'
 })
