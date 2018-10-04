@@ -42,6 +42,16 @@
       "sell": "팔다",
       "transfer": "이전"
     },
+    "history": {
+      "auction": "경매",
+      "event": "행사",
+      "from": "에서",
+      "price": "가격",
+      "sold": "판매 된",
+      "title": "거래 내역",
+      "to": "에",
+      "when": "언제"
+    },
     "publication": {
       "buy": "사다",
       "price": "가격"
@@ -295,16 +305,6 @@
     },
     "description": "설명",
     "empty_description": "이 필지에는 설명이 없습니다",
-    "history": {
-      "auction": "경매",
-      "event": "행사",
-      "from": "에서",
-      "price": "가격",
-      "sold": "판매",
-      "title": "거래 내역",
-      "to": "에",
-      "when": "언제"
-    },
     "owner": {
       "no_owner": "소유자 없음",
       "part_of": "{name}의 일부"

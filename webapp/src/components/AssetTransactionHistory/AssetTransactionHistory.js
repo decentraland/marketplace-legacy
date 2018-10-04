@@ -7,32 +7,32 @@ import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
-import { parcelType, publicationType } from 'components/types'
+import { assetType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import { AUCTION_DATE } from 'shared/parcel'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
-import './ParcelTransactionHistory.css'
+import './AssetTransactionHistory.css'
 
-export default class ParcelTransactionHistory extends React.PureComponent {
+export default class AssetTransactionHistory extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType.isRequired,
+    asset: assetType.isRequired,
     publications: PropTypes.objectOf(publicationType)
   }
 
-  getParcelPublications() {
-    const { parcel, publications } = this.props
+  getAssetPublications() {
+    const { asset, publications } = this.props
     return findAssetPublications(
       publications,
-      parcel,
+      asset,
       PUBLICATION_STATUS.sold
     ).sort((a, b) => (a.block_number > b.block_number ? -1 : 1))
   }
 
   hasAuctionData() {
-    const { parcel } = this.props
-    return parcel.auction_price != null && parcel.auction_owner != null
+    const { asset } = this.props
+    return asset.auction_price != null && asset.auction_owner != null
   }
 
   renderAddress(address) {
@@ -52,10 +52,10 @@ export default class ParcelTransactionHistory extends React.PureComponent {
   }
 
   render() {
-    const { parcel } = this.props
-    const parcelPublications = this.getParcelPublications()
+    const { asset } = this.props
+    const assetPublications = this.getAssetPublications()
 
-    if (!this.hasAuctionData() && parcelPublications.length <= 0) {
+    if (!this.hasAuctionData() && assetPublications.length === 0) {
       return null
     }
 
@@ -64,32 +64,32 @@ export default class ParcelTransactionHistory extends React.PureComponent {
         <Grid.Row>
           <Grid.Column>
             <Grid
-              className="ParcelTransactionHistory parcel-detail-row"
+              className="AssetTransactionHistory asset-detail-row"
               columns="equal"
             >
               <Grid.Row>
                 <Grid.Column>
-                  <h3>{t('parcel_detail.history.title')}</h3>
+                  <h3>{t('asset_detail.history.title')}</h3>
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row className="transaction-history-header">
-                <Grid.Column>{t('parcel_detail.history.price')}</Grid.Column>
-                <Grid.Column>{t('parcel_detail.history.when')}</Grid.Column>
+                <Grid.Column>{t('asset_detail.history.price')}</Grid.Column>
+                <Grid.Column>{t('asset_detail.history.when')}</Grid.Column>
                 <Responsive
                   as={Grid.Column}
                   minWidth={Responsive.onlyTablet.minWidth}
                 >
-                  {t('parcel_detail.history.from')}
+                  {t('asset_detail.history.from')}
                 </Responsive>
                 <Responsive
                   as={Grid.Column}
                   minWidth={Responsive.onlyTablet.minWidth}
                 >
-                  {t('parcel_detail.history.to')}
+                  {t('asset_detail.history.to')}
                 </Responsive>
               </Grid.Row>
 
-              {parcelPublications.map(publication => (
+              {assetPublications.map(publication => (
                 <Grid.Row
                   key={publication.tx_hash}
                   className="transaction-history-entry"
@@ -121,10 +121,10 @@ export default class ParcelTransactionHistory extends React.PureComponent {
                 </Grid.Row>
               ))}
 
-              {parcel.auction_price && parcel.auction_owner ? (
+              {asset.auction_price && asset.auction_owner ? (
                 <Grid.Row className="transaction-history-entry">
                   <Grid.Column>
-                    <Mana amount={parcel.auction_price} />
+                    <Mana amount={asset.auction_price} />
                   </Grid.Column>
                   <Grid.Column>
                     {distanceInWordsToNow(AUCTION_DATE)}
@@ -133,13 +133,13 @@ export default class ParcelTransactionHistory extends React.PureComponent {
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
                   >
-                    {t('parcel_detail.history.auction')}
+                    {t('asset_detail.history.auction')}
                   </Responsive>
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
                   >
-                    {this.renderAddress(parcel.auction_owner)}
+                    {this.renderAddress(asset.auction_owner)}
                   </Responsive>
                 </Grid.Row>
               ) : null}

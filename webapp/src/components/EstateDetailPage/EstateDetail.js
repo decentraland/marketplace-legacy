@@ -12,6 +12,7 @@ import EstateActions from './EstateActions'
 import { getOpenPublication } from 'shared/asset'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
+import AssetTransactionHistory from 'components/AssetTransactionHistory'
 import './EstateDetail.css'
 
 const WITH_ACTION_BUTTONS_WIDTH = 8
@@ -178,6 +179,7 @@ export default class EstateDetail extends React.PureComponent {
               )}
             </Grid.Row>
           </Grid>
+          <AssetTransactionHistory asset={estate} publications={publications} />
         </Container>
       </div>
     )

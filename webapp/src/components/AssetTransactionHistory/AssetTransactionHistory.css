@@ -1,0 +1,42 @@
+.AssetTransactionHistory .transaction-history-header {
+  background-color: var(--darker-gray);
+  border-radius: 10px 10px 0px 0px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.AssetTransactionHistory .transaction-history-entry {
+  background-color: var(--darker-gray);
+}
+
+.AssetTransactionHistory .transaction-history-entry:last-child {
+  border-radius: 0px 0px 10px 10px;
+}
+
+.AssetTransactionHistory .transaction-history-header,
+.AssetTransactionHistory .transaction-history-entry {
+  margin: 0em 1em;
+}
+
+.AssetTransactionHistory .address-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.AssetTransactionHistory .address-wrapper > a {
+  display: flex;
+  align-items: center;
+}
+
+.AssetTransactionHistory .address-wrapper .AddressBlock {
+  flex: none;
+  margin-right: 0.5em;
+}
+
+@media (max-width: 768px) {
+  .AssetTransactionHistory .address-wrapper .short-address {
+    display: none;
+  }
+}

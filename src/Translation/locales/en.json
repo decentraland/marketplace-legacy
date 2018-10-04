@@ -42,6 +42,16 @@
       "sell": "Sell",
       "transfer": "Transfer"
     },
+    "history": {
+      "auction": "Auction",
+      "event": "Event",
+      "from": "From",
+      "price": "Price",
+      "sold": "Sold",
+      "title": "Transaction History",
+      "to": "To",
+      "when": "When"
+    },
     "publication": {
       "buy": "Buy",
       "price": "price"
@@ -297,16 +307,6 @@
     },
     "description": "Description",
     "empty_description": "This parcel has no description",
-    "history": {
-      "auction": "Auction",
-      "event": "Event",
-      "from": "From",
-      "price": "Price",
-      "sold": "Sold",
-      "title": "Transaction History",
-      "to": "To",
-      "when": "When"
-    },
     "owner": {
       "no_owner": "No Owner",
       "part_of": "Part of {name}"

@@ -20,7 +20,7 @@ import { getDistrict, getOpenPublication } from 'shared/asset'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
-import ParcelTransactionHistory from './ParcelTransactionHistory'
+import AssetTransactionHistory from 'components/AssetTransactionHistory'
 import ParcelMortgage from './ParcelMortgage'
 
 export default class ParcelDetail extends React.PureComponent {
@@ -130,7 +130,7 @@ export default class ParcelDetail extends React.PureComponent {
           </Grid>
         )}
 
-        <ParcelTransactionHistory parcel={parcel} publications={publications} />
+        <AssetTransactionHistory asset={parcel} publications={publications} />
       </div>
     )
   }
