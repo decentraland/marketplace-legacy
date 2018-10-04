@@ -1,9 +1,9 @@
 #!/usr/bin/env babel-node
 
-import { eth, contracts } from 'decentraland-eth'
 import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
+import { connectEth } from '../src/ethereum'
 import { Publication } from '../src/Publication'
 import { BlockTimestampService } from '../src/BlockTimestamp'
 import { asyncBatch } from '../src/lib'
@@ -17,12 +17,7 @@ export async function addBlockTimes() {
   await db.connect()
 
   log.info('Connecting to Ethereum node')
-  await eth.connect({
-    contracts: [
-      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS'))
-    ],
-    provider: env.get('RPC_URL')
-  })
+  await connectEth()
 
   await updateAllPublications()
 
@@ -48,11 +43,11 @@ async function updateBlockTimes(publications) {
     elements: publications,
     callback: async publicationsBatch => {
       const updates = publicationsBatch.map(async publication => {
-        const block_time_created_at = await new BlockTimestampService().getBlockTime(
+        const blockTime = await new BlockTimestampService().getBlockTime(
           publication.block_number
         )
         return Publication.update(
-          { block_time_created_at },
+          { block_time_created_at: blockTime },
           { tx_hash: publication.tx_hash }
         )
       })

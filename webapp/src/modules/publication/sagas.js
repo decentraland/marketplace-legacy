@@ -11,6 +11,8 @@ import {
   PUBLISH_REQUEST,
   BUY_REQUEST,
   CANCEL_SALE_REQUEST,
+  FETCH_ALL_PUBLICATIONS_REQUEST,
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
   fetchPublicationsSuccess,
   fetchPublicationsFailure,
   fetchParcelPublicationsSuccess,
@@ -21,9 +23,12 @@ import {
   buyFailure,
   cancelSaleSuccess,
   cancelSaleFailure,
-  fetchParcelPublicationsRequest
+  fetchParcelPublicationsRequest,
+  fetchAllPublicationsSuccess,
+  fetchAllPublicationsFailure,
+  fetchAllMarketplacePublicationsSuccess,
+  fetchAllMarketplacePublicationsFailure
 } from './actions'
-import { getTotals } from 'modules/ui/marketplace/selectors'
 import {
   getNFTAddressByType,
   isLegacyPublication,
@@ -43,37 +48,71 @@ export function* publicationSaga() {
   yield takeEvery(BUY_REQUEST, handleBuyRequest)
   yield takeEvery(CANCEL_SALE_REQUEST, handleCancelSaleRequest)
   yield takeEvery(FETCH_PARCEL_SUCCESS, handleFetchParcelSuccess)
+  yield takeEvery(FETCH_ALL_PUBLICATIONS_REQUEST, handleAllPublicationsRequest)
+  yield takeEvery(
+    FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
+    handleAllMarketplacePublicationsRequest
+  )
 }
 
 function* handlePublicationsRequest(action) {
   try {
-    const { offset } = action
-    let nextTab = action.tab || MARKETPLACE_PAGE_TABS.parcels
-    const totals = yield select(getTotals)
-    if (offset === 0) {
-      for (let page in MARKETPLACE_PAGE_TABS) {
-        if (page !== nextTab) {
-          totals[getTypeByMarketplaceTab(page)] = (yield call(() =>
-            api.fetchAssets(page, action)
-          )).total
-        }
-      }
-    }
     const { assets, total, publications, type } = yield call(() =>
       fetchPublications(action)
     )
-
-    totals[getTypeByMarketplaceTab(nextTab)] = total
     yield put(
       fetchPublicationsSuccess({
         assets,
-        totals,
+        total,
         publications,
         assetType: type
       })
     )
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
+  }
+}
+
+function* handleAllPublicationsRequest(action) {
+  try {
+    const allAssets = [],
+      totals = {},
+      allPublications = []
+    for (let tab in MARKETPLACE_PAGE_TABS) {
+      const { assets, total, publications, type } = yield call(() =>
+        fetchPublications({ ...action, tab })
+      )
+      allAssets.push(...assets)
+      allPublications.push(...publications)
+      totals[type] = total
+    }
+    totals['all'] = allAssets.length
+
+    yield put(
+      fetchAllPublicationsSuccess({
+        totals,
+        publications: allPublications,
+        assets: allAssets
+      })
+    )
+  } catch (error) {
+    yield put(fetchAllPublicationsFailure(error.message))
+  }
+}
+
+function* handleAllMarketplacePublicationsRequest(action) {
+  try {
+    const { assets, total } = yield call(() => api.fetchMarketplace(action))
+
+    yield put(
+      fetchAllMarketplacePublicationsSuccess({
+        assets,
+        total,
+        publications: assets.map(asset => asset.publication)
+      })
+    )
+  } catch (error) {
+    yield put(fetchAllMarketplacePublicationsFailure(error.message))
   }
 }
 
@@ -199,8 +238,8 @@ function* handleFetchParcelSuccess(action) {
 }
 
 function* fetchPublications(action) {
-  const { limit, offset, sortBy, sortOrder, status } = action
-  const nextTab = action.tab || MARKETPLACE_PAGE_TABS.parcels
+  const { limit, offset, sortBy, sortOrder, status, tab } = action
+  const nextTab = tab || MARKETPLACE_PAGE_TABS.parcels
   const response = yield call(() =>
     api.fetchAssets(nextTab, {
       limit,

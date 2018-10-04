@@ -3,9 +3,10 @@ import { Log, env } from 'decentraland-commons'
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
-import { Parcel } from '../../src/Asset'
+import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { isParcel } from '../../shared/parcel'
 import { PUBLICATION_STATUS } from '../../shared/publication'
 import { parseCLICoords } from '../../scripts/utils'
 
@@ -13,61 +14,89 @@ const log = new Log('PublicationDoctor')
 
 export class PublicationDoctor extends Doctor {
   async diagnose(options) {
-    let conditions = null
+    let parcels
+    let estates
 
     if (options.checkParcel) {
       const [x, y] = parseCLICoords(options.checkParcel)
-      conditions = { x, y }
+      parcels = await Parcel.find({ x, y })
+      estates = []
+    } else {
+      parcels = await Parcel.find()
+      estates = await Estate.find()
     }
 
-    const parcels = await Parcel.find(conditions)
-    const faultyParcels = await this.filterInconsistentPublishedParcels(parcels)
+    const assets = parcels.concat(estates)
+    const faultyAssets = await this.filterInconsistentPublishedAssets(assets)
 
-    return new PublicationDiagnosis(faultyParcels)
+    return new PublicationDiagnosis(faultyAssets)
   }
 
-  async filterInconsistentPublishedParcels(allParcels) {
-    const faultyParcels = []
+  async filterInconsistentPublishedAssets(allAssets) {
+    const faultyAssets = []
 
     await asyncBatch({
-      elements: allParcels,
-      callback: async parcelsBatch => {
-        const promises = parcelsBatch.map(async parcel => {
-          const error = await this.getPublicationInconsistencies(parcel)
+      elements: allAssets,
+      callback: async assetsBatch => {
+        const promises = assetsBatch.map(async asset => {
+          const errors = [this.getPublicationInconsistencies(asset)]
 
+          if (isParcel(asset)) {
+            errors.push(this.getLegacyPublicationInconsistencies(asset))
+          }
+
+          const error = await Promise.all(errors).join('\n')
           if (error) {
             log.error(error)
-            faultyParcels.push({ ...parcel, error })
+            faultyAssets.push({ ...asset, error })
           }
         })
+
         await Promise.all(promises)
       },
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
     })
 
-    return faultyParcels
+    return faultyAssets
   }
 
-  async getPublicationInconsistencies(parcel) {
+  async getPublicationInconsistencies(asset) {
+    if (!asset) return ''
+
+    const { id, token_id } = asset
+    const marketplace = eth.getContract('Marketplace')
+    const nftAddress = this.getNFTAddressFromAsset(asset)
+    const publication = (await Publication.findByAssetId(id))[0]
+    const order = await marketplace.orderByAssetId(nftAddress, token_id)
+    const contractId = order[0]
+
+    return this.getPublicationError(id, contractId, publication)
+  }
+
+  async getLegacyPublicationInconsistencies(parcel) {
     if (!parcel) return ''
 
     const { id, token_id } = parcel
     const marketplace = eth.getContract('LegacyMarketplace')
-    const auction = await marketplace.auctionByAssetId(token_id)
     const publication = (await Publication.findByAssetId(id))[0]
+    const auction = await marketplace.auctionByAssetId(token_id)
     const contractId = auction[0]
 
-    let errors = ''
+    return this.getPublicationError(id, publication, contractId)
+  }
+
+  getPublicationError(assetId, publication, contractId) {
+    let error = ''
 
     if (!this.isNullHash(contractId)) {
       if (!publication) {
         // Check if the publication exists in db
-        errors = `${id} missing publication in db`
+        error = `${assetId} missing publication in db`
       } else if (publication.contract_id !== contractId) {
         // Check that id matches
-        errors = [
-          `${id} different id in db`,
+        error = [
+          `${assetId} different id in db`,
           publication.contract_id,
           'vs in blockchain',
           contractId
@@ -75,10 +104,10 @@ export class PublicationDoctor extends Doctor {
       }
     } else if (publication && publication.status === PUBLICATION_STATUS.open) {
       // Check for hanging publication in db
-      errors = `${id} open in db and null in blockchain`
+      error = `${assetId} open in db and null in blockchain`
     }
 
-    return errors
+    return error
   }
 
   isNullHash(hash) {
@@ -87,35 +116,44 @@ export class PublicationDoctor extends Doctor {
     const NULL_PARITY = '0x'
     return hash === NULL || hash === NULL_PARITY
   }
+
+  // TODO: Find a common place for this
+  getNFTAddressFromAsset(asset) {
+    if (isParcel(asset)) {
+      return env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
+    } else {
+      return env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
+    }
+  }
 }
 
 export class PublicationDiagnosis extends Diagnosis {
-  constructor(faultyParcels) {
+  constructor(faultyAssets) {
     super()
-    this.faultyParcels = faultyParcels
+    this.faultyAssets = faultyAssets
   }
 
   hasProblems() {
-    return this.faultyParcels.length > 0
+    return this.faultyAssets.length > 0
   }
 
   async prepare() {
-    const deletes = this.faultyParcels.map(parcel =>
-      BlockchainEvent.deleteByArgs('assetId', parcel.token_id)
+    // TODO: asset_type
+    const deletes = this.faultyAssets.map(asset =>
+      BlockchainEvent.deleteByArgs('assetId', asset.token_id)
     )
     return Promise.all(deletes)
   }
 
   async doTreatment() {
+    // TODO: asset_type
     await Promise.all(
-      this.faultyParcels.map(parcel => Publication.deleteByAsset(parcel))
+      this.faultyAssets.map(parcel => Publication.deleteByAsset(parcel))
     )
 
-    for (const parcel of this.faultyParcels) {
-      const events = await BlockchainEvent.findByArgs(
-        'assetId',
-        parcel.token_id
-      )
+    // TODO: add NFTAddress
+    for (const asset of this.faultyAssets) {
+      const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
       await this.replayEvents(events)
     }
   }

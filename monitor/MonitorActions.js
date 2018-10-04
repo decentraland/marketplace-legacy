@@ -18,7 +18,7 @@ export class MonitorActions {
 
   index = options => {
     for (const contractName in this.contractEvents) {
-      const eventNames = this.contractEvents[contractName]
+      const eventNames = this.contractEvents[contractName].eventNames
 
       this.monitor(contractName, eventNames, options).catch(this.onError)
     }

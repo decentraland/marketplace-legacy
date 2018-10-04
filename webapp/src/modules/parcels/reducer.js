@@ -18,12 +18,19 @@ import {
   CANCEL_SALE_SUCCESS,
   PUBLISH_SUCCESS,
   FETCH_PUBLICATIONS_SUCCESS,
-  FETCH_PARCEL_PUBLICATIONS_SUCCESS
+  FETCH_PARCEL_PUBLICATIONS_SUCCESS,
+  FETCH_ALL_PUBLICATIONS_SUCCESS,
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
-import { buildCoordinate, normalizeParcel, toParcelObject } from 'shared/parcel'
+import {
+  buildCoordinate,
+  normalizeParcel,
+  toParcelObject,
+  isParcel
+} from 'shared/parcel'
 
 import {
   FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
@@ -91,6 +98,20 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         }
       }
       return state
+    }
+    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS:
+    case FETCH_ALL_PUBLICATIONS_SUCCESS: {
+      const { assets } = action
+      const parcels = assets.filter(asset => isParcel(asset))
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          ...toParcelObject(parcels, state.data)
+        }
+      }
     }
     case FETCH_PARCEL_FAILURE: {
       return {

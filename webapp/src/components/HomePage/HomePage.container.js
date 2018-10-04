@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { isLoading } from 'modules/publication/selectors'
 import { getParcels, getEstates } from 'modules/ui/marketplace/selectors'
-import { fetchPublicationsRequest } from 'modules/publication/actions'
+import { fetchAllMarketplacePublicationsRequest } from 'modules/publication/actions'
 import { navigateTo } from 'modules/location/actions'
 
 import HomePage from './HomePage'
@@ -20,8 +20,7 @@ const mapState = (state, { location }) => {
 const mapDispatch = (dispatch, { location }) => ({
   onFetchPublications: () =>
     dispatch(
-      fetchPublicationsRequest({
-        //@nacho TODO: fetch all
+      fetchAllMarketplacePublicationsRequest({
         limit: 20,
         offset: 0
       })

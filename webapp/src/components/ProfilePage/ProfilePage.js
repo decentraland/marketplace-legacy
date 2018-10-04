@@ -11,9 +11,13 @@ import {
 
 import { PROFILE_PAGE_TABS } from 'locations'
 import AddressBlock from 'components/AddressBlock'
-import ParcelCard from 'components/ParcelCard'
-import EstateCard from 'components/EstateCard'
-import { parcelType, contributionType, estateType } from 'components/types'
+import AssetCard from 'components/AssetCard'
+import {
+  parcelType,
+  contributionType,
+  estateType,
+  assetType
+} from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
@@ -28,7 +32,7 @@ export default class ProfilePage extends React.PureComponent {
     parcels: PropTypes.arrayOf(parcelType),
     estates: PropTypes.arrayOf(estateType),
     contributions: PropTypes.arrayOf(contributionType),
-    publishedParcels: PropTypes.arrayOf(parcelType),
+    publishedAssets: PropTypes.arrayOf(assetType),
     mortgagedParcels: PropTypes.arrayOf(parcelType),
     grid: PropTypes.arrayOf(
       PropTypes.oneOfType([parcelType, contributionType])
@@ -84,7 +88,7 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.parcels: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(parcel => <ParcelCard key={parcel.id} parcel={parcel} />)}
+            {grid.map(asset => <AssetCard key={asset.id} asset={asset} />)}
           </Card.Group>
         )
       }
@@ -103,12 +107,8 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.publications: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(parcel => (
-              <ParcelCard
-                key={parcel.id}
-                parcel={parcel}
-                isOwnerVisible={false}
-              />
+            {grid.map(asset => (
+              <AssetCard key={asset.id} asset={asset} isOwnerVisible={false} />
             ))}
           </Card.Group>
         )
@@ -116,7 +116,7 @@ export default class ProfilePage extends React.PureComponent {
       case PROFILE_PAGE_TABS.estates: {
         return (
           <Card.Group stackable={true}>
-            {grid.map(estate => <EstateCard key={estate.id} estate={estate} />)}
+            {grid.map(estate => <AssetCard key={estate.id} asset={estate} />)}
           </Card.Group>
         )
       }
@@ -124,9 +124,9 @@ export default class ProfilePage extends React.PureComponent {
         return (
           <Card.Group stackable={true}>
             {grid.map(parcel => (
-              <ParcelCard
+              <AssetCard
                 key={parcel.id}
-                parcel={parcel}
+                asset={parcel}
                 isOwnerVisible={false}
                 showMortgage={true}
               />
@@ -173,7 +173,7 @@ export default class ProfilePage extends React.PureComponent {
       isEmpty,
       parcels,
       contributions,
-      publishedParcels,
+      publishedAssets,
       estates,
       mortgagedParcels,
       isOwner,
@@ -214,7 +214,7 @@ export default class ProfilePage extends React.PureComponent {
             >
               {t('profile_page.on_sale')}
               {this.renderBadge(
-                publishedParcels,
+                publishedAssets,
                 PROFILE_PAGE_TABS.publications
               )}
             </Menu.Item>

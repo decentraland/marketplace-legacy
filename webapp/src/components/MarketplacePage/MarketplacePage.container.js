@@ -6,7 +6,10 @@ import {
   getEstates,
   getTotals
 } from 'modules/ui/marketplace/selectors'
-import { fetchPublicationsRequest } from 'modules/publication/actions'
+import {
+  fetchPublicationsRequest,
+  fetchAllPublicationsRequest
+} from 'modules/publication/actions'
 import { navigateTo } from 'modules/location/actions'
 import { Pagination } from 'lib/Pagination'
 import { MARKETPLACE_PAGE_TABS } from 'locations'
@@ -57,6 +60,8 @@ const mapState = (state, { location, match }) => {
 const mapDispatch = (dispatch, { location, match }) => {
   let { tab } = match.params
   return {
+    onFetchAllPublications: () =>
+      dispatch(fetchAllPublicationsRequest(getOptionsFromRouter(location))),
     onFetchPublications: () =>
       dispatch(
         fetchPublicationsRequest({ ...getOptionsFromRouter(location), tab })

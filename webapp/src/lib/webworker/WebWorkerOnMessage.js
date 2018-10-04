@@ -9,9 +9,19 @@ export function WebWorkerOnMessage(event) {
     case 'FETCH_ADDRESS_PARCELS_REQUEST': {
       const { parcels, allParcels } = action
       const parcelObject = toParcelObject(parcels, allParcels)
-      const publications = getParcelPublications(parcels)
+      const publications = getAssetPublications(parcels)
       result = {
         parcels: parcelObject,
+        publications
+      }
+      break
+    }
+    case 'FETCH_ADDRESS_ESTATES_REQUEST': {
+      const { estates, allEstates } = action
+      const estateObject = toEstateObject(estates)
+      const publications = getAssetPublications(estates)
+      result = {
+        estates: estateObject,
         publications
       }
       break

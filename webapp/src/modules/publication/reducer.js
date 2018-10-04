@@ -13,12 +13,21 @@ import {
   BUY_FAILURE,
   CANCEL_SALE_REQUEST,
   CANCEL_SALE_SUCCESS,
-  CANCEL_SALE_FAILURE
+  CANCEL_SALE_FAILURE,
+  FETCH_ALL_PUBLICATIONS_REQUEST,
+  FETCH_ALL_PUBLICATIONS_SUCCESS,
+  FETCH_ALL_PUBLICATIONS_FAILURE,
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS,
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_FAILURE
 } from './actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
-import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
+import {
+  FETCH_ADDRESS_PARCELS_SUCCESS,
+  FETCH_ADDRESS_ESTATES_SUCCESS
+} from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { toPublicationsObject, PUBLICATION_STATUS } from 'shared/publication'
 import { FETCH_MORTGAGED_PARCELS_SUCCESS } from 'modules/mortgage/actions'
@@ -33,14 +42,18 @@ const INITIAL_STATE = {
 export function publicationReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_PARCEL_PUBLICATIONS_REQUEST:
-    case FETCH_PUBLICATIONS_REQUEST: {
+    case FETCH_PUBLICATIONS_REQUEST:
+    case FETCH_ALL_PUBLICATIONS_REQUEST:
+    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_PARCEL_PUBLICATIONS_SUCCESS:
-    case FETCH_PUBLICATIONS_SUCCESS: {
+    case FETCH_PUBLICATIONS_SUCCESS:
+    case FETCH_ALL_PUBLICATIONS_SUCCESS:
+    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -52,7 +65,9 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PARCEL_PUBLICATIONS_FAILURE:
-    case FETCH_PUBLICATIONS_FAILURE: {
+    case FETCH_PUBLICATIONS_FAILURE:
+    case FETCH_ALL_PUBLICATIONS_FAILURE:
+    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -91,7 +106,8 @@ export function publicationReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_MORTGAGED_PARCELS_SUCCESS:
     case FETCH_MAP_SUCCESS:
-    case FETCH_ADDRESS_PARCELS_SUCCESS: {
+    case FETCH_ADDRESS_PARCELS_SUCCESS:
+    case FETCH_ADDRESS_ESTATES_SUCCESS: {
       const publications = action.publications
       if (publications.length > 0) {
         return {

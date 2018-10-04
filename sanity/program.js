@@ -1,9 +1,10 @@
 #!/usr/bin/env babel-node
 
-import { eth, contracts } from 'decentraland-eth'
-import { cli, env, Log } from 'decentraland-commons'
+import { cli, Log } from 'decentraland-commons'
+
 import { SanityActions } from './SanityActions'
 import { db } from '../src/database'
+import { connectEth } from '../src/ethereum'
 import { loadEnv } from '../scripts/utils'
 
 const log = new Log('main')
@@ -13,16 +14,7 @@ export async function main(getActions = createSanityActions) {
   await db.connect()
 
   log.info('Connecting to Ethereum node')
-  await eth.connect({
-    contracts: [
-      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-      new contracts.LegacyMarketplace(
-        env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
-      ),
-      new contracts.EstateRegistry(env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'))
-    ],
-    provider: env.get('RPC_URL')
-  })
+  await connectEth()
 
   log.info('Starting CLI')
   const sanityActions = getActions()

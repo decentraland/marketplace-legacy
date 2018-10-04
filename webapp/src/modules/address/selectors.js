@@ -52,6 +52,10 @@ export const getAddresses = createSelector(
         isOpen(allPublications[parcel.publication_tx_hash])
       )
 
+      const publishedEstates = estates.filter(estate =>
+        isOpen(allPublications[estate.publication_tx_hash])
+      )
+
       const mortgagedParcels = allMortgagedParcels.filter(
         parcel => parcel.mortgage.borrower === address
       )
@@ -69,6 +73,7 @@ export const getAddresses = createSelector(
           estatesById,
           contributions,
           publishedParcels,
+          publishedEstates,
           authorization
         }
       }

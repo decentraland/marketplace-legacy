@@ -46,7 +46,7 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   componentWillMount() {
-    this.props.onFetchPublications()
+    this.props.onFetchAllPublications()
   }
 
   componentWillReceiveProps(nextProps) {

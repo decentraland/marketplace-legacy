@@ -46,6 +46,20 @@ export class API {
     })
   }
 
+  fetchMarketplace(options = FILTER_DEFAULTS) {
+    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
+      options
+    )
+
+    return this.request('get', `/marketplace`, {
+      limit,
+      offset,
+      sort_by: sortBy,
+      sort_order: sortOrder,
+      status
+    })
+  }
+
   fetchParcelPublications(x, y, status) {
     return this.request('get', `/parcels/${x}/${y}/publications`, { status })
   }

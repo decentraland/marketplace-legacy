@@ -24,12 +24,14 @@ import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { getEstateIdFromTxReceipt } from './utils'
-import { normalizeEstate } from 'shared/estate'
+import { normalizeEstate, isEstate } from 'shared/estate'
 import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS,
   PUBLISH_SUCCESS,
-  FETCH_PUBLICATIONS_SUCCESS
+  FETCH_PUBLICATIONS_SUCCESS,
+  FETCH_ALL_PUBLICATIONS_SUCCESS,
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { ASSET_TYPES } from 'shared/asset'
 
@@ -80,16 +82,29 @@ export function estatesReducer(state = INITIAL_STATE, action) {
           error: null,
           data: {
             ...state.data,
-            ...assets.reduce(
-              (acc, estate) => {
-                return { ...acc, [estate.id]: normalizeEstate(estate) }
-              },
-              { ...state.data }
-            )
+            ...assets.reduce((acc, estate) => {
+              return { ...acc, [estate.id]: normalizeEstate(estate) }
+            }, state.data)
           }
         }
       }
       return state
+    }
+    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS:
+    case FETCH_ALL_PUBLICATIONS_SUCCESS: {
+      const { assets } = action
+      const estates = assets.filter(asset => isEstate(asset))
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          ...estates.reduce((acc, estate) => {
+            return { ...acc, [estate.id]: normalizeEstate(estate) }
+          }, state.data)
+        }
+      }
     }
     case FETCH_ESTATE_FAILURE:
     case CREATE_ESTATE_FAILURE:

@@ -213,3 +213,10 @@ export function decodeMetadata(data) {
 export function encodeMetadata(data) {
   return contracts.LANDRegistry.encodeLandData(data)
 }
+
+export function getAssetPublications(assets) {
+  return assets.reduce((pubs, asset) => {
+    if (asset.publication) pubs.push(asset.publication)
+    return pubs
+  }, [])
+}

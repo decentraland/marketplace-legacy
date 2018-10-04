@@ -1,9 +1,9 @@
 #!/usr/bin/env babel-node
 
-import { eth, contracts } from 'decentraland-eth'
 import { cli, env, Log } from 'decentraland-commons'
 import * as handlers from './handlers'
 import { MonitorActions } from './MonitorActions'
+import { connectEth } from '../src/ethereum'
 import { db } from '../src/database'
 import { loadEnv } from '../scripts/utils'
 
@@ -14,57 +14,11 @@ export async function main(getActions = createMonitorActions) {
   await db.connect()
 
   log.info('Connecting to Ethereum node')
-
-  await eth.connect({
-    contracts: [
-      new contracts.LANDRegistry(env.get('LAND_REGISTRY_CONTRACT_ADDRESS')),
-      new contracts.LegacyMarketplace(
-        env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
-      ),
-      new contracts.MortgageHelper(env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS')),
-      new contracts.RCNEngine(env.get('RCN_ENGINE_CONTRACT_ADDRESS')),
-      new contracts.MortgageManager(
-        env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS')
-      ),
-      new contracts.EstateRegistry(env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'))
-    ],
-    provider: env.get('RPC_URL')
-  })
+  const contractsData = await connectEth()
 
   log.info('Starting CLI')
-  const monitorActions = getActions(
-    handlers,
-    {
-      LegacyMarketplace: [
-        'AuctionCreated',
-        'AuctionSuccessful',
-        'AuctionCancelled'
-      ],
-      LANDRegistry: [
-        'Update',
-        'Transfer',
-        'EstateRegistrySet',
-        'UpdateOperator'
-      ],
-      MortgageHelper: ['NewMortgage'],
-      MortgageManager: [
-        'CanceledMortgage',
-        'StartedMortgage',
-        'PaidMortgage',
-        'DefaultedMortgage'
-      ],
-      RCNEngine: ['PartialPayment', 'TotalPayment'],
-      EstateRegistry: [
-        'AddLand',
-        'RemoveLand',
-        'Update',
-        'UpdateOperator',
-        'CreateEstate',
-        'Transfer'
-      ]
-    },
-    env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000) // 2 minutes
-  )
+  const eventsDelay = Number(env.get('PROCESS_EVENTS_DELAY', 2 * 60 * 1000)) // 2 minutes
+  const monitorActions = getActions(handlers, contractsData, eventsDelay)
 
   cli.runProgram([getProgram(monitorActions)])
 }

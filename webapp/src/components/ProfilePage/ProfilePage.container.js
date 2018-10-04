@@ -25,10 +25,12 @@ const mapState = (state, { location, match }) => {
   let publishedParcels = []
   let estates = []
   let mortgagedParcels = []
+  let publishedEstates = []
   if (address in addresses) {
     parcels = addresses[address].parcels
     contributions = addresses[address].contributions
     publishedParcels = addresses[address].publishedParcels
+    publishedEstates = addresses[address].publishedEstates
     estates = addresses[address].estates
     mortgagedParcels = addresses[address].mortgagedParcels
   }
@@ -37,10 +39,12 @@ const mapState = (state, { location, match }) => {
     tab = PROFILE_PAGE_TABS.parcels
   }
 
+  const publishedAssets = publishedParcels.concat(publishedEstates)
+
   let pagination
   switch (tab) {
     case PROFILE_PAGE_TABS.publications: {
-      pagination = Pagination.paginate(publishedParcels, page)
+      pagination = Pagination.paginate(publishedAssets, page)
       break
     }
     case PROFILE_PAGE_TABS.contributions: {
@@ -66,7 +70,7 @@ const mapState = (state, { location, match }) => {
     address,
     parcels,
     contributions,
-    publishedParcels,
+    publishedAssets,
     estates,
     mortgagedParcels,
     grid,

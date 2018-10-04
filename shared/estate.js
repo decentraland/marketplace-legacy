@@ -1,3 +1,5 @@
+import { getParcelMatcher } from './parcel'
+
 export const MAX_PARCELS_PER_TX = 12
 
 export function isNewEstate(estate) {
@@ -9,20 +11,22 @@ export function isEstate(asset) {
 }
 
 export function toEstateObject(estatesArray) {
-  return estatesArray.filter(estate => estate.data.parcels.length).reduce(
-    (estates, estate) => ({
-      ...estates,
-      [estate.id]: normalizeEstate(estate)
-    }),
-    {}
-  )
+  const estateObject = {}
+
+  for (const estate of estatesArray) {
+    if (estate.data.parcels.length > 0) {
+      estateObject[estate.id] = normalizeEstate(estate)
+    }
+  }
+
+  return estateObject
 }
 
 export function normalizeEstate(estate) {
-  const normalizedEstate = {
-    ...estate,
+  const normalizedEstate = Object.assign({}, estate, {
     publication_tx_hash: estate.publication ? estate.publication.tx_hash : null
-  }
+  })
+
   delete normalizedEstate.publication
   return normalizedEstate
 }
@@ -60,13 +64,11 @@ export function areConnected(parcels) {
 }
 
 export function visitParcel(parcel, allParcels = [parcel], visited = []) {
-  var isVisited = visited.some(
-    visitedParcel =>
-      visitedParcel.x === parcel.x && visitedParcel.y === parcel.y
-  )
+  const isVisited = visited.some(getParcelMatcher(parcel))
+
   if (!isVisited) {
     visited.push(parcel)
-    var neighbours = getNeighbours(parcel.x, parcel.y, allParcels)
+    const neighbours = getNeighbours(parcel.x, parcel.y, allParcels)
     neighbours.forEach(neighbours =>
       visitParcel(neighbours, allParcels, visited)
     )

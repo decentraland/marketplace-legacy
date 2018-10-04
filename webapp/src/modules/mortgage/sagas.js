@@ -25,7 +25,7 @@ import {
   fetchActiveParcelMortgagesRequest
 } from './actions'
 import { getAddress } from 'modules/wallet/selectors'
-import { getParcelPublications, normalizeParcel } from 'shared/parcel'
+import { normalizeParcel } from 'shared/parcel'
 
 import {
   MORTGAGE_STATUS,
@@ -36,6 +36,7 @@ import {
 import { getKyberOracleAddress, getContractAddress } from 'modules/wallet/utils'
 import { locations } from 'locations'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import { getAssetPublications } from 'shared/asset'
 
 export function* mortgageSaga() {
   if (isFeatureEnabled('MORTGAGES')) {
@@ -76,7 +77,7 @@ function* handleFetchMortgageRequest(action) {
       fetchMortgagedParcelsSuccess(
         parcels.map(normalizeParcel),
         mortgages,
-        getParcelPublications(parcels)
+        getAssetPublications(parcels)
       )
     )
   } catch (error) {
