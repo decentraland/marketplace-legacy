@@ -4,7 +4,7 @@ import { execSync } from 'child_process'
 import { env, Log } from 'decentraland-commons'
 
 import { db } from '../src/database'
-import { Parcel } from '../../src/Asset'
+import { Parcel } from '../src/Asset'
 import { asyncBatch } from '../src/lib'
 import { loadEnv, runpsql } from './utils'
 

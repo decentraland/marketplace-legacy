@@ -17,7 +17,7 @@ import { parcelType, estateType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { isOwner } from 'shared/asset'
 import {
-  getCoordsMatcher,
+  getParcelMatcher,
   isEqualCoords,
   buildCoordinate,
   getParcelsNotIncluded
@@ -63,13 +63,14 @@ export default class EstateSelect extends React.PureComponent {
       return
     }
 
-    const isSelected = parcels.some(getCoordsMatcher({ x, y }))
+    const parcel = { x, y }
+    const isSelected = parcels.some(getParcelMatcher(parcel))
     if (isSelected) {
       if (this.hasReachedRemoveLimit()) {
         return
       }
       const newParcels = parcels.filter(
-        coords => !isEqualCoords(coords, { x, y })
+        coords => !isEqualCoords(coords, parcel)
       )
       if (!areConnected(newParcels)) {
         return

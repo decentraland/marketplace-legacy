@@ -1,3 +1,5 @@
+import { getParcelMatcher } from './parcel'
+
 export const MAX_PARCELS_PER_TX = 12
 
 export function isNewEstate(estate) {
@@ -47,13 +49,11 @@ export function areConnected(parcels) {
 }
 
 export function visitParcel(parcel, allParcels = [parcel], visited = []) {
-  var isVisited = visited.some(
-    visitedParcel =>
-      visitedParcel.x === parcel.x && visitedParcel.y === parcel.y
-  )
+  const isVisited = visited.some(getParcelMatcher(parcel))
+
   if (!isVisited) {
     visited.push(parcel)
-    var neighbours = getNeighbours(parcel.x, parcel.y, allParcels)
+    const neighbours = getNeighbours(parcel.x, parcel.y, allParcels)
     neighbours.forEach(neighbours =>
       visitParcel(neighbours, allParcels, visited)
     )

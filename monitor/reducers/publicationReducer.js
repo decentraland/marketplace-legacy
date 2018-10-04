@@ -1,61 +1,76 @@
 import { eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
-import { Parcel } from '../../src/Asset'
-import { Publication } from '../../src/Publication'
+import { Publication, PublicationService } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
-import { MarketplaceEvent } from '../../src/MarketplaceEvent'
+import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { PUBLICATION_STATUS } from '../../shared/publication'
-import { getParcelIdFromEvent } from './utils'
+import { getAssetTypeFromEvent, getAssetIdFromEvent } from './utils'
 
 const log = new Log('publicationReducer')
 
-export async function publicationReducer(events, event) {
-  const { tx_hash, block_number, name, normalizedName } = event
-  const parcelId = await getParcelIdFromEvent(event)
+export async function publicationReducer(event) {
+  const { address } = event
 
-  switch (normalizedName) {
-    case events.publicationCreated: {
+  switch (address) {
+    case contractAddresses.LegacyMarketplace:
+    case contractAddresses.Marketplace: {
+      await reduceMarketplace(event)
+      break
+    }
+    default:
+      break
+  }
+}
+
+async function reduceMarketplace(event) {
+  const { tx_hash, block_number, name, address } = event
+
+  const assetType = getAssetTypeFromEvent(event)
+  const [assetId, blockTime] = await Promise.all([
+    getAssetIdFromEvent(event),
+    new BlockTimestampService().getBlockTime(block_number)
+  ])
+
+  if (!assetId) return log.info(`[${name}] Invalid Asset Id`)
+
+  switch (name) {
+    case eventNames.AuctionCreated:
+    case eventNames.OrderCreated: {
       const { seller, priceInWei, expiresAt } = event.args
       const contract_id = event.args.id
-      const marketplace = new MarketplaceEvent(event)
 
       if (!contract_id) {
-        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
-        return
+        return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
       }
 
       const exists = await Publication.count({ tx_hash, contract_id })
       if (exists) {
-        log.info(`[${name}] Publication ${tx_hash} already exists`)
-        return
+        return log.info(`[${name}] Publication ${tx_hash} already exists`)
       }
-      log.info(`[${name}] Creating publication ${contract_id} for ${parcelId}`)
+      log.info(`[${name}] Creating publication ${contract_id} for ${assetId}`)
 
-      const [block_time_created_at] = await Promise.all([
-        new BlockTimestampService().getBlockTime(block_number),
-
-        Publication.delete({
-          asset_id: parcelId,
-          owner: seller.toLowerCase(),
-          status: PUBLICATION_STATUS.open
-        })
-      ])
+      await Publication.delete({
+        asset_id: assetId,
+        asset_type: assetType,
+        owner: seller.toLowerCase(),
+        status: PUBLICATION_STATUS.open
+      })
 
       try {
         await Publication.insert({
-          tx_status: txUtils.TRANSACTION_TYPES.confirmed,
+          asset_type: assetType,
+          asset_id: assetId,
+          marketplace_address: address,
           status: PUBLICATION_STATUS.open,
+          tx_status: txUtils.TRANSACTION_TYPES.confirmed,
           owner: seller.toLowerCase(),
           buyer: null,
           price: eth.utils.fromWei(priceInWei),
-          asset_id: parcelId,
           expires_at: expiresAt,
-          marketplace_address: marketplace.getAddress(),
-          asset_type: marketplace.getType(),
+          block_time_created_at: blockTime,
           tx_hash,
           block_number,
-          block_time_created_at,
           contract_id
         })
       } catch (error) {
@@ -66,50 +81,49 @@ export async function publicationReducer(events, event) {
       }
       break
     }
-    case events.publicationSuccessful: {
-      const { totalPrice, winner } = event.args
+    case eventNames.AuctionSuccessful:
+    case eventNames.OrderSuccessful: {
+      const { totalPrice } = event.args
+      const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
 
-      if (!contract_id) {
-        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
-        return
-      }
-
-      log.info(`[${name}] Publication ${contract_id} sold to ${winner}`)
-
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
+      const Asset = new PublicationService().getPublicableAssetFromType(
+        assetType
       )
+
+      if (!contract_id) {
+        return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
+      }
+      log.info(`[${name}] Publication ${contract_id} sold to ${buyer}`)
 
       await Promise.all([
         Publication.update(
           {
             status: PUBLICATION_STATUS.sold,
-            buyer: winner.toLowerCase(),
+            buyer: buyer.toLowerCase(),
             price: eth.utils.fromWei(totalPrice),
-            block_time_updated_at
+            block_time_updated_at: blockTime
           },
           { contract_id }
         ),
-        Parcel.update({ owner: winner }, { id: parcelId })
+        Asset.update({ owner: buyer }, { id: assetId })
       ])
       break
     }
-    case events.publicationCancelled: {
+    case eventNames.AuctionCancelled:
+    case eventNames.OrderCancelled: {
       const contract_id = event.args.id
 
       if (!contract_id) {
-        log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
-        return
+        return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
       }
       log.info(`[${name}] Publication ${contract_id} cancelled`)
 
-      const block_time_updated_at = await new BlockTimestampService().getBlockTime(
-        block_number
-      )
-
       await Publication.update(
-        { status: PUBLICATION_STATUS.cancelled, block_time_updated_at },
+        {
+          status: PUBLICATION_STATUS.cancelled,
+          block_time_updated_at: blockTime
+        },
         { contract_id }
       )
       break

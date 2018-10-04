@@ -12,14 +12,14 @@ export class MarketplaceRouter {
 
   mount() {
     /**
-     * Returns the estates for the supplied params
+     * Returns the assets for the supplied params
      * @param  {string} asset_type - specify an asset type, will return everything if left blank [parcel|estate]
      * @param  {string} status - specify a publication status to retreive: [cancelled|sold|pending].
      * @param  {string} sort_by - Publication prop
      * @param  {string} sort_order - asc or desc
      * @param  {number} limit
      * @param  {number} offset
-     * @return {array<Estate>}
+     * @return {array<Asset>}
      */
     this.app.get('/marketplace', server.handleRequest(this.getAssets))
   }
