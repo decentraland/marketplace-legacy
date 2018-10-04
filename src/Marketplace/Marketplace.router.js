@@ -41,8 +41,6 @@ export class MarketplaceRouter {
         PublicableAsset
       )
     } else {
-      // remove type added by sanitize
-      marketplaceReqQueryParams['asset_type'] = ''
       result = await new Marketplace().filterAll(marketplaceReqQueryParams)
     }
 

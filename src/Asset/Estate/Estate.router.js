@@ -47,8 +47,14 @@ export class EstateRouter {
 
     const result = await new AssetRouter().getAssets(req)
 
-    const estates = result.assets // @nacho TODO: empty estates ??
-    const total = result.total
+    //@nacho TODO: Provisory code until we join parcels table
+    let estatesWithoutParcels = 0
+    const estates = result.assets.filter(asset => {
+      const hasParcels = asset.data.parcels.length > 0
+      if (!hasParcels) estatesWithoutParcels++
+      return hasParcels
+    })
+    const total = result.total - estatesWithoutParcels
 
     return { estates, total }
   }
