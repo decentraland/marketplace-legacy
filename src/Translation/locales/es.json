@@ -14,6 +14,56 @@
   "address": {
     "its_you": "Eres tú!"
   },
+  "asset_buy": {
+    "about_to_buy": "Estas por comprar {name} {price}",
+    "allowed_balance": "Tu asignación es {allowance}",
+    "buy_asset": "Comprar LAND",
+    "buy_mana": "{click_here} para comprar MANA.",
+    "didnt_allow": "No has autorizado el uso de MANA",
+    "didnt_allow_new_marketplace":
+      "No ha autorizado el uso de MANA para la nueva versión de Marketplace",
+    "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
+    "please_allow":
+      "Vaya a {settings_link} y permita que el contrato LegacyMarketplace opere MANA en su nombre",
+    "please_allow_new_marketplace":
+      "Vaya a {settings_link} y permita que el contrato del Marketplace opere MANA en su nombre",
+    "total_balance": "Tu balance es {balance}"
+  },
+  "asset_cancel": {
+    "about_to_cancel": "Estás por cancelar la venta de {name}.",
+    "cancel_sale": "Cancelar venta",
+    "not_for_sale": "La parcela {parcel} no está en venta."
+  },
+  "asset_detail": {
+    "actions": {
+      "cancel": "Cancelar venta",
+      "permissions": "Permisos",
+      "sell": "Vender",
+      "transfer": "Transferir"
+    },
+    "publication": {
+      "buy": "Comprar",
+      "price": "precio"
+    }
+  },
+  "asset_publish": {
+    "already_sold": "Este LAND ya está a la venta para {value}",
+    "errors": {
+      "maximum_expiration": "La fecha de vencimiento máxima es {date}",
+      "maximum_land_price": "El precio máximo LAND es {value} MANA",
+      "minimum_expiration": "La fecha de vencimiento mínima es {date}",
+      "minimum_land_price": "El precio mínimo LAND es {value} MANA"
+    },
+    "expiration": "Vencimiento",
+    "expiration_placeholder": "Fecha de caducidad para esta publicación",
+    "list_asset": "Listar {asset_name} en venta",
+    "please_authorize":
+      "Debe ir a {settings_link} y autorizar que Marketplace opere LAND en su nombre antes de que pueda listarlo en oferta.",
+    "price": "Precio",
+    "price_placeholder": "Precio en MANA para este {asset_name}",
+    "set_asset_price":
+      "Establezca un precio y una fecha de vencimiento para {asset_name}."
+  },
   "atlas": {
     "loading": "Cargando",
     "no_owner": "Sin Dueño",
@@ -232,38 +282,18 @@
     "requested": "Pedido",
     "required_deposit": "Depósito requerido: {deposit}"
   },
+  "name": {
+    "estate": "Estate",
+    "parcel": "LAND"
+  },
   "parcel": {
     "no_description": "Sin descripción",
     "no_name": "Sin nombre",
     "view": "Ver"
   },
-  "parcel_buy": {
-    "about_to_buy": "Estas por comprar {parcel_name} {parcel_price}",
-    "allowed_balance": "Tu asignación es {allowance}",
-    "buy_land": "Comprar LAND",
-    "buy_mana": "{click_here} para comprar MANA.",
-    "didnt_allow": "No has autorizado el uso de MANA",
-    "didnt_allow_new_marketplace":
-      "No ha autorizado el uso de MANA para la nueva versión de Marketplace",
-    "needs_at_least": "Necesitas por lo menos {mana} para comprar esta LAND.",
-    "please_allow":
-      "Vaya a {settings_link} y permita que el contrato LegacyMarketplace opere MANA en su nombre",
-    "please_allow_new_marketplace":
-      "Vaya a {settings_link} y permita que el contrato del Marketplace opere MANA en su nombre",
-    "total_balance": "Tu balance es {balance}"
-  },
-  "parcel_cancel": {
-    "about_to_cancel": "Estás por cancelar la venta de {parcel}.",
-    "cancel_land": "Cancelar la venta de LAND",
-    "not_for_sale": "La parcela {parcel} no está en venta."
-  },
   "parcel_detail": {
     "actions": {
-      "cancel": "Cancelar venta",
-      "create_estate": "Crear Propiedad",
-      "permissions": "Permisos",
-      "sell": "Vender",
-      "transfer": "Transferir"
+      "create_estate": "Crear Propiedad"
     },
     "description": "Descripción",
     "empty_description": "Esta parcela no tiene descripción",
@@ -282,9 +312,7 @@
       "part_of": "Parte de {name}"
     },
     "publication": {
-      "buy": "Comprar",
-      "mortgage": "Solicitar hipoteca",
-      "price": "Precio"
+      "mortgage": "Solicitar hipoteca"
     },
     "tags": {
       "title": "Contexto"
@@ -307,24 +335,6 @@
     "give_permission":
       "Dar permiso para actualizar el contenido de {parcel_name}.",
     "manage_land": "Administrar LAND"
-  },
-  "parcel_publish": {
-    "already_sold": "Esta LAND ya se encuentra en venta a {value}",
-    "errors": {
-      "maximum_expiration": "La fecha máxima de expiración es {date}",
-      "maximum_land_price": "El precio máximo de una LAND es {value} MANA",
-      "minimum_expiration": "La fecha mínima de expiracion es {date}",
-      "minimum_land_price": "El precio mínimo de una LAND es {value} MANA"
-    },
-    "expiration": "Expiración",
-    "expiration_placeholder": "Fecha de expiración para esta publicación",
-    "list_land": "Publicar LAND para la venta",
-    "please_authorize":
-      "Tienes que ir a {settings_link} y autorizar al Mercado para operar LAND por tu cuenta antes de publicarla en venta.",
-    "price": "Precio",
-    "price_placeholder": "Precio en MANA para esta LAND",
-    "set_land_price":
-      "Configura un precio y fecha de expiración para {parcel_name}"
   },
   "parcel_tags": {
     "adjacent": "Adyacente",

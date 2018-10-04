@@ -41,6 +41,7 @@ import {
 } from 'modules/estates/actions'
 import { buildCoordinate } from 'shared/parcel'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
+import { ASSET_TYPES } from 'shared/asset'
 import { token } from 'lib/token'
 import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
 import { hasEtherscanLink, getHash } from '../utils'
@@ -86,6 +87,14 @@ export default class Transaction extends React.PureComponent {
     return (
       <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
     )
+  }
+
+  getAssetLink(payload) {
+    if (payload.type === ASSET_TYPES.parcel) {
+      return this.renderParcelLink(payload.x, payload.y)
+    } else if (payload.type === ASSET_TYPES.estate) {
+      return this.renderEstateLink(payload)
+    }
   }
 
   renderText() {
@@ -190,38 +199,32 @@ export default class Transaction extends React.PureComponent {
         )
       }
       case PUBLISH_SUCCESS: {
-        const { x, y } = payload
-
         return (
           <T
             id="transaction.publish"
-            values={{ parcel_link: this.renderParcelLink(x, y) }}
+            values={{ parcel_link: this.getAssetLink(payload) }}
           />
         )
       }
       case BUY_SUCCESS: {
-        const { x, y } = payload
-
         return (
           <T
             id="transaction.buy"
-            values={{ parcel_link: this.renderParcelLink(x, y) }}
+            values={{ parcel_link: this.getAssetLink(payload) }}
           />
         )
       }
       case CANCEL_SALE_SUCCESS: {
-        const { tx_hash, x, y } = payload
-
         return (
           <T
             id="transaction.cancel"
             values={{
               publication_link: (
-                <EtherscanLink txHash={tx_hash}>
+                <EtherscanLink txHash={payload.tx_hash}>
                   {t('global.sale').toLowerCase()}
                 </EtherscanLink>
               ),
-              parcel_link: this.renderParcelLink(x, y)
+              parcel_link: this.getAssetLink(payload)
             }}
           />
         )
@@ -396,6 +399,20 @@ export default class Transaction extends React.PureComponent {
     return <Mana size={48} scale={1} />
   }
 
+  renderAssetPreview(tx) {
+    const asset = tx.payload
+    if (asset.type === ASSET_TYPES.parcel) {
+      return this.renderParcelPreview(tx)
+    } else if (asset.type === ASSET_TYPES.estate) {
+      // renderEstatePreview expects a property "estate" inside the tx payload
+      return this.renderEstatePreview({
+        payload: {
+          estate: tx.payload
+        }
+      })
+    }
+  }
+
   render() {
     const text = this.renderText()
     if (!text) {
@@ -408,12 +425,15 @@ export default class Transaction extends React.PureComponent {
       hasEtherscanLink(tx) ? 'with-link' : ''
     }`.trim()
 
+    const isAssetTransaction = [
+      PUBLISH_SUCCESS,
+      CANCEL_SALE_SUCCESS,
+      BUY_SUCCESS
+    ].includes(tx.actionType)
+
     const isParcelTransaction = [
       EDIT_PARCEL_SUCCESS,
       TRANSFER_PARCEL_SUCCESS,
-      PUBLISH_SUCCESS,
-      BUY_SUCCESS,
-      CANCEL_SALE_SUCCESS,
       MANAGE_PARCEL_SUCCESS,
       CREATE_MORTGAGE_SUCCESS,
       CANCEL_MORTGAGE_SUCCESS,
@@ -429,7 +449,8 @@ export default class Transaction extends React.PureComponent {
       TRANSFER_ESTATE_SUCCESS
     ].includes(tx.actionType)
 
-    const isMANATransaction = !isParcelTransaction && !isEstateTransaction
+    const isMANATransaction =
+      !isAssetTransaction && !isParcelTransaction && !isEstateTransaction
 
     return (
       <Segment size="large" vertical>
@@ -441,6 +462,7 @@ export default class Transaction extends React.PureComponent {
             <div className="transaction-container">
               <div className="transaction-container-left">
                 <div className="transaction-avatar">
+                  {isAssetTransaction && this.renderAssetPreview(tx)}
                   {isParcelTransaction && this.renderParcelPreview(tx)}
                   {isEstateTransaction && this.renderEstatePreview(tx)}
                   {isMANATransaction && this.renderMANAPreview()}

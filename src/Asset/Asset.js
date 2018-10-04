@@ -35,7 +35,9 @@ export class Asset {
     if (ids.length === 0) return []
 
     return db.query(
-      SQL`SELECT *
+      SQL`SELECT *, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+      ) as publication
         FROM ${raw(this.tableName)}
         WHERE id = ANY(${ids})`
     )
@@ -45,7 +47,9 @@ export class Asset {
     if (tokenIds.length === 0) return []
 
     return db.query(
-      SQL`SELECT *
+      SQL`SELECT *, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
+      ) as publication
         FROM ${raw(this.tableName)}
         WHERE token_id = ANY(${tokenIds})`
     )

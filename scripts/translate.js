@@ -15,7 +15,8 @@ const nonTranslatable = [
   'LAND',
   'MANA',
   'MortgageHelper',
-  'MortgageManager'
+  'MortgageManager',
+  'Estate'
 ]
 
 const TRANSLATION_KEY = 'tk'

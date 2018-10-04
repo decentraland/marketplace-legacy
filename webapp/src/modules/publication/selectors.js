@@ -7,6 +7,7 @@ import {
 } from './actions'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
+import { getData as getEstates } from 'modules/estates/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
 import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
@@ -62,6 +63,23 @@ export const getPublicationByCoordinate = (state, x, y) => {
       PUBLICATION_STATUS.open
     )
     publication = parcelPublications[0]
+  }
+
+  return publication
+}
+
+export const getEstatePublicationById = (state, id) => {
+  const estates = getEstates(state)
+  const estate = estates[id]
+  let publication = null
+  if (estate) {
+    const publications = getData(state)
+    const estatePublications = findAssetPublications(
+      publications,
+      estate,
+      PUBLICATION_STATUS.open
+    )
+    publication = estatePublications[0]
   }
 
   return publication

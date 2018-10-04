@@ -15,6 +15,55 @@
   "address": {
     "its_you": "너야"
   },
+  "asset_buy": {
+    "about_to_buy": "{name}을(를) 구입하려고 합니다.",
+    "allowed_balance": "수당은 {allowance}입니다.",
+    "buy_asset": "토지 구입",
+    "buy_mana": "MANA를 사기 위해 {click_here}.",
+    "didnt_allow": "MANA 사용 권한을 허가하지 않았습니다.",
+    "didnt_allow_new_marketplace":
+      "마켓 플레이스의 새 버전에 대한 MANA 사용을 승인하지 않았습니다.",
+    "needs_at_least": "이 토지를 사려면 적어도 {mana}가 필요합니다.",
+    "please_allow":
+      "{settings_link}로 이동하여 LegacyMarketplace 계약이 MANA를 대신하여 작동하도록 허용하십시오.",
+    "please_allow_new_marketplace":
+      "{settings_link}로 이동하여 마켓 플레이스 계약이 귀하를 대신하여 MANA를 운영하도록 허용하십시오.",
+    "total_balance": "Your balance is {balance}"
+  },
+  "asset_cancel": {
+    "about_to_cancel": "{name}의 판매를 취소하려고합니다.",
+    "cancel_sale": "판매 취소",
+    "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
+  },
+  "asset_detail": {
+    "actions": {
+      "cancel": "판매 취소",
+      "permissions": "권한",
+      "sell": "팔다",
+      "transfer": "이전"
+    },
+    "publication": {
+      "buy": "사다",
+      "price": "가격"
+    }
+  },
+  "asset_publish": {
+    "already_sold": "이 LAND은 이미 {value}에 판매 중입니다.",
+    "errors": {
+      "maximum_expiration": "최대 만기 날짜는 {date}입니다.",
+      "maximum_land_price": "최대 LAND 가격은 {value} MANA입니다.",
+      "minimum_expiration": "최소 만료일은 {date}입니다.",
+      "minimum_land_price": "최소 LAND 가격은 {value} MANA입니다."
+    },
+    "expiration": "만료",
+    "expiration_placeholder": "이 발행물의 만료일",
+    "list_asset": "판매 목록 {asset_name}",
+    "please_authorize":
+      "판매를 위해 목록에 올리기 전에 {settings_link}으로 가서 마켓 플레이스가 귀하를 대신하여 LAND을 운영하도록 승인해야합니다.",
+    "price": "가격",
+    "price_placeholder": "이 {asset_name}에 대한 MANA의 가격",
+    "set_asset_price": "{asset_name}의 가격과 만료 날짜를 설정하십시오."
+  },
   "atlas": {
     "loading": "로드 중",
     "no_owner": "소유자 없음",
@@ -231,38 +280,18 @@
     "requested": "요청 됨",
     "required_deposit": "필수 보증금 : {deposit}"
   },
+  "name": {
+    "estate": "Estate",
+    "parcel": "LAND"
+  },
   "parcel": {
     "no_description": "설명 없음",
     "no_name": "이름 없음",
     "view": "보기"
   },
-  "parcel_buy": {
-    "about_to_buy": "{parcel_name}을(를) 구입하려고 합니다.",
-    "allowed_balance": "수당은 {allowance}입니다.",
-    "buy_land": "토지 구입",
-    "buy_mana": "MANA를 사기 위해 {click_here}.",
-    "didnt_allow": "MANA 사용 권한을 허가하지 않았습니다.",
-    "didnt_allow_new_marketplace":
-      "마켓 플레이스의 새 버전에 대한 MANA 사용을 승인하지 않았습니다.",
-    "needs_at_least": "이 토지를 사려면 적어도 {mana}가 필요합니다.",
-    "please_allow":
-      "{settings_link}로 이동하여 LegacyMarketplace 계약이 MANA를 대신하여 작동하도록 허용하십시오.",
-    "please_allow_new_marketplace":
-      "{settings_link}로 이동하여 마켓 플레이스 계약이 귀하를 대신하여 MANA를 운영하도록 허용하십시오.",
-    "total_balance": "Your balance is {balance}"
-  },
-  "parcel_cancel": {
-    "about_to_cancel": "{parcel}의 판매를 취소하려고합니다.",
-    "cancel_land": "토지 판매 취소",
-    "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
-  },
   "parcel_detail": {
     "actions": {
-      "cancel": "판매취소",
-      "create_estate": "부동산 만들기",
-      "permissions": "권한",
-      "sell": "판매",
-      "transfer": "이전"
+      "create_estate": "부동산 만들기"
     },
     "description": "설명",
     "empty_description": "이 필지에는 설명이 없습니다",
@@ -281,9 +310,7 @@
       "part_of": "{name}의 일부"
     },
     "publication": {
-      "buy": "구매",
-      "mortgage": "모기지 신청",
-      "price": "가격"
+      "mortgage": "모기지 신청"
     },
     "tags": {
       "title": "하이라이트"
@@ -305,23 +332,6 @@
     "give_permission":
       "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
     "manage_land": "토지 관리"
-  },
-  "parcel_publish": {
-    "already_sold": "이 토지는 이미 {value}에 판매 중입니다.",
-    "errors": {
-      "maximum_expiration": "최대 만료일은 {date}입니다.",
-      "maximum_land_price": "최대 LAND 가격은 {value} MANA입니다.",
-      "minimum_expiration": "최소 만료일은 하루입니다.",
-      "minimum_land_price": "최저 가격은 {value} MANA입니다."
-    },
-    "expiration": "만료",
-    "expiration_placeholder": "이 게시물의 만료일",
-    "list_land": "판매용 토지 목록",
-    "please_authorize":
-      "{settings_link}로 이동하여 판매용으로 등록하기 전에 마켓 플레이스에서 토지를 대신 사용하도록 승인해야합니다.",
-    "price": "가격",
-    "price_placeholder": "이 토지의 MANA 가격",
-    "set_land_price": "{parcel_name}의 가격 및 만료일 설정"
   },
   "parcel_tags": {
     "adjacent": "인접한",

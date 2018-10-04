@@ -15,6 +15,57 @@
   "address": {
     "its_you": "C'est vous"
   },
+  "asset_buy": {
+    "about_to_buy": "Vous êtes sur le point d'acheter {name} {price}",
+    "allowed_balance": "Votre allocation est {allowance}",
+    "buy_asset": "Acheter une LAND",
+    "buy_mana": "{click_here} pour acheter du MANA.",
+    "didnt_allow": "Vous n'avez pas autorisé l'utilisation de MANA",
+    "didnt_allow_new_marketplace":
+      "Vous n'avez pas autorisé l'utilisation de MANA pour la nouvelle version du Marketplace",
+    "needs_at_least":
+      "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
+    "please_allow":
+      "Veuillez vous rendre sur {settings_link} et autoriser le contrat LegacyMarketplace à utiliser MANA en votre nom",
+    "please_allow_new_marketplace":
+      "Veuillez vous rendre sur {settings_link} et autoriser le contrat Marketplace à opérer MANA en votre nom",
+    "total_balance": "Votre solde est {balance}"
+  },
+  "asset_cancel": {
+    "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {name}.",
+    "cancel_sale": "Annuler la vente",
+    "not_for_sale": "La parcelle {parcel} n'est pas à vendre."
+  },
+  "asset_detail": {
+    "actions": {
+      "cancel": "Annuler la vente",
+      "permissions": "Autorisations",
+      "sell": "Vendre",
+      "transfer": "Transfert"
+    },
+    "publication": {
+      "buy": "Acheter",
+      "price": "prix"
+    }
+  },
+  "asset_publish": {
+    "already_sold": "Ce LAND est déjà en vente pour {value}",
+    "errors": {
+      "maximum_expiration": "La date d'expiration maximale est {date}",
+      "maximum_land_price": "Le prix maximum de LAND est {value} MANA",
+      "minimum_expiration": "La date d'expiration minimale est {date}",
+      "minimum_land_price": "Le prix minimum LAND est {value} MANA"
+    },
+    "expiration": "Expiration",
+    "expiration_placeholder": "Date d'expiration pour cette publication",
+    "list_asset": "Liste {asset_name} à vendre",
+    "please_authorize":
+      "Vous devez aller sur {settings_link} et autoriser le Marketplace à opérer LAND en votre nom avant de pouvoir le mettre en vente.",
+    "price": "Prix",
+    "price_placeholder": "Prix ​​en NT2 pour ce {asset_name}",
+    "set_asset_price":
+      "Définissez un prix et une date d'expiration pour {asset_name}."
+  },
   "atlas": {
     "loading": "Chargement",
     "no_owner": "Aucun propriétaire",
@@ -237,40 +288,18 @@
     "requested": "Demandé",
     "required_deposit": "Dépôt requis: {deposit}"
   },
+  "name": {
+    "estate": "Estate",
+    "parcel": "LAND"
+  },
   "parcel": {
     "no_description": "Sans description",
     "no_name": "Sans nom",
     "view": "Vue"
   },
-  "parcel_buy": {
-    "about_to_buy":
-      "Vous êtes sur le point d'acheter {parcel_name} {parcel_price}",
-    "allowed_balance": "Votre allocation est {allowance}",
-    "buy_land": "Acheter une LAND",
-    "buy_mana": "{click_here} pour acheter du MANA.",
-    "didnt_allow": "Vous n'avez pas autorisé l'utilisation de MANA",
-    "didnt_allow_new_marketplace":
-      "Vous n'avez pas autorisé l'utilisation de MANA pour la nouvelle version du Marketplace",
-    "needs_at_least":
-      "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
-    "please_allow":
-      "Veuillez vous rendre sur {settings_link} et autoriser le contrat LegacyMarketplace à utiliser MANA en votre nom",
-    "please_allow_new_marketplace":
-      "Veuillez vous rendre sur {settings_link} et autoriser le contrat Marketplace à opérer MANA en votre nom",
-    "total_balance": "Votre solde est {balance}"
-  },
-  "parcel_cancel": {
-    "about_to_cancel": "Vous êtes sur le point d'annuler la vente de {parcel}.",
-    "cancel_land": "Annuler la vente de la LAND",
-    "not_for_sale": "La parcelle {parcel} n'est pas à vendre."
-  },
   "parcel_detail": {
     "actions": {
-      "cancel": "Annuler la vente",
-      "create_estate": "Créer un domaine",
-      "permissions": "Autorisations",
-      "sell": "Vendre",
-      "transfer": "Transferer"
+      "create_estate": "Créer un domaine"
     },
     "description": "Description",
     "empty_description": "Cette parcelle n'a pas de description",
@@ -289,9 +318,7 @@
       "part_of": "Appartient à {name}"
     },
     "publication": {
-      "buy": "Acheter",
-      "mortgage": "Demander une hypothèque",
-      "price": "Prix"
+      "mortgage": "Demander une hypothèque"
     },
     "tags": {
       "title": "Points forts"
@@ -313,24 +340,6 @@
       "Cette adresse pourra mettre à jour le contenu de cette parcelle.",
     "give_permission": "Autoriser la mise à jour du contenu de {parcel_name}",
     "manage_land": "Gérer les terres"
-  },
-  "parcel_publish": {
-    "already_sold": "Cette LAND est déjà en vente pour {value}",
-    "errors": {
-      "maximum_expiration": "La date d'expiration maximale est {date}",
-      "maximum_land_price": "Le prix maximale d'une LAND est de {value} MANA",
-      "minimum_expiration": "La date d'expiration minimale est {date}",
-      "minimum_land_price": "Le prix minimum d'une LAND est de {value} MANA"
-    },
-    "expiration": "Expiration",
-    "expiration_placeholder": "Date d'expiration pour cette publication",
-    "list_land": "Lister les LANDs à vendre",
-    "please_authorize":
-      "Vous devez vous rendre ici : {settings_link} et autoriser la place de marché à gérer les LANDs en votre nom avant de pouvoir les mettre en vente.",
-    "price": "Prix",
-    "price_placeholder": "Prix en MANA pour cette LAND",
-    "set_land_price":
-      "Indiquer un prix et une date d'expiration pour {parcel_name}"
   },
   "parcel_tags": {
     "adjacent": "Adjacent",

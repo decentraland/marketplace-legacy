@@ -23,7 +23,10 @@ import {
   cancelSaleFailure,
   fetchParcelPublicationsRequest
 } from './actions'
+import { getNFTAddressByType, isLegacyPublication } from './utils'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import { ASSET_TYPES } from 'shared/asset'
+import { getData as getEstates } from 'modules/estates/selectors'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
@@ -61,19 +64,24 @@ function* handleParcelPublicationsRequest(action) {
 
 function* handlePublishRequest(action) {
   try {
-    const { id, price, expires_at } = action.publication
+    const { asset_id, assetType, price, expires_at } = action.publication
     const priceInWei = eth.utils.toWei(price)
-    const asset = yield call(() => buildAsset(id))
-
-    const marketplaceContract = eth.getContract('LegacyMarketplace')
+    const nftAddress = getNFTAddressByType(assetType)
+    const asset = yield call(() => buildAsset(asset_id, assetType))
+    const marketplaceContract = eth.getContract('Marketplace')
 
     const txHash = yield call(() =>
-      marketplaceContract.createOrder(asset.id, priceInWei, expires_at)
+      marketplaceContract.createOrder(
+        nftAddress,
+        asset.id,
+        priceInWei,
+        expires_at
+      )
     )
 
     const publication = {
       tx_hash: txHash,
-      asset_id: id,
+      asset_id,
       ...action.publication
     }
 
@@ -86,14 +94,44 @@ function* handlePublishRequest(action) {
 
 function* handleBuyRequest(action) {
   try {
-    const { asset_id, price } = action.publication
-    const asset = yield call(() => buildAsset(asset_id))
+    const { asset_id, asset_type, price } = action.publication
+    const asset = yield call(() => buildAsset(asset_id, asset_type))
+    const nftAddress = getNFTAddressByType(asset_type)
     const buyer = yield select(getAddress)
 
-    const marketplaceContract = eth.getContract('LegacyMarketplace')
-    const txHash = yield call(() =>
-      marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
-    )
+    let marketplaceContract, txHash
+    if (isLegacyPublication(action.publication)) {
+      marketplaceContract = eth.getContract('LegacyMarketplace')
+      txHash = yield call(() =>
+        marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
+      )
+    } else {
+      marketplaceContract = eth.getContract('Marketplace')
+      if (asset_type === ASSET_TYPES.estate) {
+        // get estate fingerprint & call safeExecuteOrder
+        const estateContract = eth.getContract('EstateRegistry')
+        const figerprint = yield call(() =>
+          estateContract.getFingerprint(asset.id)
+        )
+
+        txHash = yield call(() =>
+          marketplaceContract.safeExecuteOrder(
+            nftAddress,
+            asset.id,
+            eth.utils.toWei(price),
+            figerprint
+          )
+        )
+      } else {
+        txHash = yield call(() =>
+          marketplaceContract.executeOrder(
+            nftAddress,
+            asset.id,
+            eth.utils.toWei(price)
+          )
+        )
+      }
+    }
 
     const publication = {
       ...action.publication,
@@ -109,11 +147,19 @@ function* handleBuyRequest(action) {
 
 function* handleCancelSaleRequest(action) {
   try {
-    const { asset_id } = action.publication
-    const asset = yield call(() => buildAsset(asset_id))
-
-    const marketplaceContract = eth.getContract('LegacyMarketplace')
-    const txHash = yield call(() => marketplaceContract.cancelOrder(asset.id))
+    const { asset_id, asset_type } = action.publication
+    const asset = yield call(() => buildAsset(asset_id, asset_type))
+    let marketplaceContract, txHash
+    if (isLegacyPublication(action.publication)) {
+      marketplaceContract = eth.getContract('LegacyMarketplace')
+      txHash = yield call(() => marketplaceContract.cancelOrder(asset.id))
+    } else {
+      const nftAddress = getNFTAddressByType(asset_type)
+      marketplaceContract = eth.getContract('Marketplace')
+      txHash = yield call(() =>
+        marketplaceContract.cancelOrder(nftAddress, asset.id)
+      )
+    }
 
     yield put(cancelSaleSuccess(txHash, action.publication, asset))
     yield put(push(locations.activity()))
@@ -135,20 +181,32 @@ function* fetchPublications(action) {
   return { parcels, publications, total }
 }
 
-function* buildAsset(asset_id) {
-  // TODO: if publication.asset_type === 'parcel' then split and encode
-  //  if publication.asset_type === 'estate' then ??
+function* buildAsset(assetId, assetType) {
+  let asset
+  if (assetType === ASSET_TYPES.parcel) {
+    const [x, y] = splitCoordinate(assetId)
 
-  const [x, y] = splitCoordinate(asset_id)
+    const landRegistryContract = eth.getContract('LANDRegistry')
+    const blockchainId = yield call(() =>
+      landRegistryContract.encodeTokenId(x, y)
+    )
 
-  const landRegistryContract = eth.getContract('LANDRegistry')
-  const blockchainId = yield call(() =>
-    landRegistryContract.encodeTokenId(x, y)
-  )
-
-  return {
-    id: blockchainId.toString(),
-    x: parseInt(x, 10),
-    y: parseInt(y, 10)
+    asset = {
+      id: blockchainId.toString(),
+      x: parseInt(x, 10),
+      y: parseInt(y, 10)
+    }
+  } else if (assetType === ASSET_TYPES.estate) {
+    const estates = yield select(getEstates)
+    const estate = estates[assetId]
+    asset = {
+      id: assetId,
+      data: {
+        name: estate.data.name,
+        parcels: estate.data.parcels
+      }
+    }
   }
+
+  return { ...asset, type: assetType }
 }
