@@ -43,4 +43,4 @@ export const getEstates = createSelector(
       return acc
     }, [])
 )
-export const getTotal = state => getState(state).total
+export const getTotals = state => getState(state).totals

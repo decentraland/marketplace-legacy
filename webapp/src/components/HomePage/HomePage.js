@@ -4,15 +4,17 @@ import { Link } from 'react-router-dom'
 import { Container, Button, Icon } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import { parcelType } from 'components/types'
+import { parcelType, estateType } from 'components/types'
 import ParcelCard from 'components/ParcelCard'
+import EstateCard from 'components/EstateCard'
 import { t } from '@dapps/modules/translation/utils'
 
 import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
   static propTypes = {
-    parcels: PropTypes.arrayOf(parcelType)
+    parcels: PropTypes.arrayOf(parcelType),
+    estates: PropTypes.arrayOf(estateType)
   }
 
   componentWillMount() {
@@ -21,7 +23,7 @@ export default class HomePage extends React.PureComponent {
   }
 
   render() {
-    const { parcels } = this.props
+    const { parcels, estates } = this.props
 
     return (
       <div className="HomePage">
@@ -47,6 +49,9 @@ export default class HomePage extends React.PureComponent {
             </Link>
           </div>
           <div className="publications-scroller">
+            {estates.map(estate => (
+              <EstateCard key={estate.id} estate={estate} />
+            ))}
             {parcels.map(parcel => (
               <ParcelCard key={parcel.id} parcel={parcel} />
             ))}

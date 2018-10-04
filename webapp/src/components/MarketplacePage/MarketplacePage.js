@@ -32,7 +32,7 @@ export default class MarketplacePage extends React.PureComponent {
     tab: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
+    totals: PropTypes.object.isRequired,
     sortBy: PropTypes.string.isRequired,
     sortOrder: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
@@ -50,11 +50,12 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { page, sortBy, sortOrder } = this.props
+    const { page, sortBy, sortOrder, tab } = this.props
     if (
       page !== nextProps.page ||
       sortBy !== nextProps.sortBy ||
-      sortOrder !== nextProps.sortOrder
+      sortOrder !== nextProps.sortOrder ||
+      tab !== nextProps.tab
     ) {
       this.shouldFetchPublications = true
       this.scrollToTop()
@@ -116,7 +117,11 @@ export default class MarketplacePage extends React.PureComponent {
     return (
       <Card.Group stackable={true}>
         {estates.map((estate, index) => (
-          <EstateCard key={estate.id} estate={estate} debounce={index * 100} />
+          <EstateCard
+            key={estate.id + index}
+            estate={estate}
+            debounce={index * 100}
+          />
         ))}
       </Card.Group>
     )
@@ -127,7 +132,11 @@ export default class MarketplacePage extends React.PureComponent {
     return (
       <Card.Group stackable={true}>
         {parcels.map((parcel, index) => (
-          <ParcelCard key={parcel.id} parcel={parcel} debounce={index * 100} />
+          <ParcelCard
+            key={parcel.id + index}
+            parcel={parcel}
+            debounce={index * 100}
+          />
         ))}
       </Card.Group>
     )
@@ -148,13 +157,13 @@ export default class MarketplacePage extends React.PureComponent {
 
   render() {
     const {
-      total,
       page,
       pages,
       isLoading,
       isEmpty,
       sortBy,
-      sortOrder
+      sortOrder,
+      totals
     } = this.props
     const sortType = getSortTypeFromOptions({ sortBy, sortOrder })
 
@@ -169,7 +178,7 @@ export default class MarketplacePage extends React.PureComponent {
             >
               {t('global.parcels')}
               <Label className="active" size="tiny">
-                {total.toLocaleString()}
+                {totals.parcel.toLocaleString()}
               </Label>
             </Menu.Item>
             <Menu.Item
@@ -179,7 +188,7 @@ export default class MarketplacePage extends React.PureComponent {
             >
               {t('global.estates')}
               <Label className="active" size="tiny">
-                {total.toLocaleString()}
+                {totals.estate.toLocaleString()}
               </Label>
             </Menu.Item>
             <Menu.Menu position="right">

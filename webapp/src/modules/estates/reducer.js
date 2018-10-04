@@ -72,21 +72,24 @@ export function estatesReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PUBLICATIONS_SUCCESS: {
-      const { estates } = action
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: null,
-        data: {
-          ...state.data,
-          ...estates.reduce(
-            (acc, estate) => {
-              return { ...acc, [estate.id]: normalizeEstate(estate) }
-            },
-            { ...state.data }
-          )
+      const { assetType, assets } = action
+      if (assetType === ASSET_TYPES.estate) {
+        return {
+          ...state,
+          loading: loadingReducer(state.loading, action),
+          error: null,
+          data: {
+            ...state.data,
+            ...assets.reduce(
+              (acc, estate) => {
+                return { ...acc, [estate.id]: normalizeEstate(estate) }
+              },
+              { ...state.data }
+            )
+          }
         }
       }
+      return state
     }
     case FETCH_ESTATE_FAILURE:
     case CREATE_ESTATE_FAILURE:

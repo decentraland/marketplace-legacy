@@ -47,7 +47,7 @@ export class EstateRouter {
 
     const result = await new AssetRouter().getAssets(req)
 
-    const estates = result.assets
+    const estates = result.assets // @nacho TODO: empty estates ??
     const total = result.total
 
     return { estates, total }

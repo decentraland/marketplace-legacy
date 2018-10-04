@@ -4,7 +4,7 @@ import { isLoading } from 'modules/publication/selectors'
 import {
   getParcels,
   getEstates,
-  getTotal
+  getTotals
 } from 'modules/ui/marketplace/selectors'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
 import { navigateTo } from 'modules/location/actions'
@@ -20,8 +20,16 @@ const mapState = (state, { location, match }) => {
   )
   const parcels = getParcels(state)
   const estates = getEstates(state)
-  const total = getTotal(state)
-  const pagination = new Pagination(total)
+  const totals = getTotals(state)
+
+  let isEmpty, pagination
+  if (tab === MARKETPLACE_PAGE_TABS.parcels) {
+    isEmpty = parcels.length === 0
+    pagination = new Pagination(totals.parcel)
+  } else if (tab === MARKETPLACE_PAGE_TABS.estates) {
+    isEmpty = estates.length === 0
+    pagination = new Pagination(totals.estate)
+  }
   const page = pagination.getCurrentPage(offset)
   const pages = pagination.getPageCount()
 
@@ -37,19 +45,24 @@ const mapState = (state, { location, match }) => {
     status,
     page,
     pages,
-    total,
     parcels,
     estates,
     tab,
-    isEmpty: parcels.length === 0,
+    isEmpty,
+    totals,
     isLoading: isLoading(state)
   }
 }
 
-const mapDispatch = (dispatch, { location }) => ({
-  onFetchPublications: () =>
-    dispatch(fetchPublicationsRequest(getOptionsFromRouter(location))),
-  onNavigate: url => dispatch(navigateTo(url))
-})
+const mapDispatch = (dispatch, { location, match }) => {
+  let { tab } = match.params
+  return {
+    onFetchPublications: () =>
+      dispatch(
+        fetchPublicationsRequest({ ...getOptionsFromRouter(location), tab })
+      ),
+    onNavigate: url => dispatch(navigateTo(url))
+  }
+}
 
 export default withRouter(connect(mapState, mapDispatch)(MarketplacePage))
