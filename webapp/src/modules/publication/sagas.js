@@ -29,11 +29,15 @@ import {
   fetchAllMarketplacePublicationsSuccess,
   fetchAllMarketplacePublicationsFailure
 } from './actions'
+<<<<<<< HEAD
 import {
   getNFTAddressByType,
   isLegacyPublication,
   getTypeByMarketplaceTab
 } from './utils'
+=======
+import { getNFTAddressByType, isLegacyPublication } from './utils'
+>>>>>>> master
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { ASSET_TYPES } from 'shared/asset'
 import { getData as getEstates } from 'modules/estates/selectors'
