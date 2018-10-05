@@ -39,6 +39,16 @@
       "sell": "卖",
       "transfer": "转让"
     },
+    "history": {
+      "auction": "拍卖",
+      "event": "事件",
+      "from": "从",
+      "price": "价钱",
+      "sold": "出售",
+      "title": "交易历史",
+      "to": "至",
+      "when": "什么时候"
+    },
     "publication": {
       "buy": "购买",
       "price": "价钱"
@@ -285,16 +295,6 @@
     },
     "description": "描述",
     "empty_description": "这个地块没有描述",
-    "history": {
-      "auction": "拍卖",
-      "event": "事件",
-      "from": "从",
-      "price": "价格",
-      "sold": "出售",
-      "title": "交易历史",
-      "to": "至",
-      "when": "日期"
-    },
     "owner": {
       "no_owner": "无主",
       "part_of": "{name} 的一部分"

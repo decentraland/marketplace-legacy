@@ -41,6 +41,16 @@
       "sell": "Vender",
       "transfer": "Transferir"
     },
+    "history": {
+      "auction": "Subasta",
+      "event": "Evento",
+      "from": "De",
+      "price": "Precio",
+      "sold": "Vendido",
+      "title": "Historial de transacciones",
+      "to": "A",
+      "when": "Cuando"
+    },
     "publication": {
       "buy": "Comprar",
       "price": "precio"
@@ -297,16 +307,6 @@
     },
     "description": "Descripción",
     "empty_description": "Esta parcela no tiene descripción",
-    "history": {
-      "auction": "Subasta",
-      "event": "Evento",
-      "from": "De",
-      "price": "Precio",
-      "sold": "Venta",
-      "title": "Historial de Transacciones",
-      "to": "A",
-      "when": "Cuando"
-    },
     "owner": {
       "no_owner": "Sin Dueño",
       "part_of": "Parte de {name}"

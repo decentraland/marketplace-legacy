@@ -43,6 +43,16 @@
       "sell": "Vendre",
       "transfer": "Transfert"
     },
+    "history": {
+      "auction": "Enchères",
+      "event": "Un événement",
+      "from": "De",
+      "price": "Prix",
+      "sold": "Vendu",
+      "title": "Historique des transactions",
+      "to": "À",
+      "when": "Quand"
+    },
     "publication": {
       "buy": "Acheter",
       "price": "prix"
@@ -303,16 +313,6 @@
     },
     "description": "Description",
     "empty_description": "Cette parcelle n'a pas de description",
-    "history": {
-      "auction": "Enchères",
-      "event": "Événement",
-      "from": "De",
-      "price": "Prix",
-      "sold": "Vente",
-      "title": "Historique des Transactions",
-      "to": "À",
-      "when": "Quand"
-    },
     "owner": {
       "no_owner": "Pas de propriétaire",
       "part_of": "Appartient à {name}"
