@@ -23,6 +23,17 @@ export class PublicationRouter {
     )
 
     /**
+     * Returns the publications for a estate
+     * @param  {string} id
+     * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+     * @return {array<Publication>}
+     */
+    this.app.get(
+      '/estates/:id/publications',
+      server.handleRequest(this.getEstatePublications)
+    )
+
+    /**
      * Get a publication by transaction hash
      * @param  {string} txHash
      * @return {array}
@@ -37,6 +48,21 @@ export class PublicationRouter {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
     const id = Parcel.buildId(x, y)
+
+    let publications = []
+
+    try {
+      const status = server.extractFromReq(req, 'status')
+      publications = await Publication.findByAssetIdWithStatus(id, status)
+    } catch (error) {
+      publications = await Publication.findByAssetId(id)
+    }
+
+    return sanitizePublications(publications)
+  }
+
+  async getEstatePublications(req) {
+    const id = server.extractFromReq(req, 'id')
 
     let publications = []
 
