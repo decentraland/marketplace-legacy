@@ -96,13 +96,6 @@ export function isSameValue(parcelA, parcelB, prop) {
   )
 }
 
-export function getParcelPublications(parcels) {
-  return parcels.reduce((pubs, parcel) => {
-    if (parcel.publication) pubs.push(parcel.publication)
-    return pubs
-  }, [])
-}
-
 export function getParcelMatcher(parcel) {
   return parcel2 => isEqualCoords(parcel, parcel2)
 }

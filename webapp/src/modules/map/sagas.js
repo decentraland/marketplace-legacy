@@ -14,16 +14,17 @@ function* handleMapRequest(action) {
     const nw = buildCoordinate(action.nw.x, action.nw.y)
     const se = buildCoordinate(action.se.x, action.se.y)
     const { assets } = yield call(() => api.fetchMapInRange(nw, se))
-    const stateParcels = yield select(getParcels)
+    const allParcels = yield select(getParcels)
 
     const result = yield call(() =>
       webworker.postMessage({
         type: 'FETCH_MAP_REQUEST',
-        parcels: assets.parcels,
-        allParcels: stateParcels
+        assets,
+        allParcels
       })
     )
     assets.parcels = result.parcels
+    assets.estates = result.estates
 
     yield put(fetchMapSuccess(assets, result.publications))
   } catch (error) {

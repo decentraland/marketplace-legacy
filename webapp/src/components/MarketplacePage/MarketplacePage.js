@@ -12,7 +12,8 @@ import {
 } from 'semantic-ui-react'
 
 import ParcelCard from 'components/ParcelCard'
-import { parcelType } from 'components/types'
+import EstateCard from 'components/EstateCard'
+import { parcelType, estateType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import {
   getSortOptions,
@@ -20,15 +21,18 @@ import {
   getSortTypeFromOptions,
   buildUrl
 } from './utils'
+import { MARKETPLACE_PAGE_TABS } from 'locations'
 
 import './MarketplacePage.css'
 
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
     parcels: PropTypes.arrayOf(parcelType),
+    estates: PropTypes.arrayOf(estateType),
+    tab: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
+    totals: PropTypes.object.isRequired,
     sortBy: PropTypes.string.isRequired,
     sortOrder: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
@@ -42,15 +46,16 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   componentWillMount() {
-    this.props.onFetchPublications()
+    this.props.onFetchAllPublications()
   }
 
   componentWillReceiveProps(nextProps) {
-    const { page, sortBy, sortOrder } = this.props
+    const { page, sortBy, sortOrder, tab } = this.props
     if (
       page !== nextProps.page ||
       sortBy !== nextProps.sortBy ||
-      sortOrder !== nextProps.sortOrder
+      sortOrder !== nextProps.sortOrder ||
+      tab !== nextProps.tab
     ) {
       this.shouldFetchPublications = true
       this.scrollToTop()
@@ -107,26 +112,58 @@ export default class MarketplacePage extends React.PureComponent {
     )
   }
 
-  renderPublications() {
-    const { parcels } = this.props
+  renderEstatePublications() {
+    const { estates } = this.props
     return (
       <Card.Group stackable={true}>
-        {parcels.map((parcel, index) => (
-          <ParcelCard key={parcel.id} parcel={parcel} debounce={index * 100} />
+        {estates.map((estate, index) => (
+          <EstateCard
+            key={estate.id + index}
+            estate={estate}
+            debounce={index * 100}
+          />
         ))}
       </Card.Group>
     )
   }
 
+  renderParcelPublications() {
+    const { parcels } = this.props
+    return (
+      <Card.Group stackable={true}>
+        {parcels.map((parcel, index) => (
+          <ParcelCard
+            key={parcel.id + index}
+            parcel={parcel}
+            debounce={index * 100}
+          />
+        ))}
+      </Card.Group>
+    )
+  }
+
+  handleItemClick = (event, { name }) => {
+    const { onNavigate } = this.props
+    const url = buildUrl({
+      page: 1,
+      tab: name
+    })
+    onNavigate(url)
+  }
+
+  isActive(tab) {
+    return tab === this.props.tab
+  }
+
   render() {
     const {
-      total,
       page,
       pages,
       isLoading,
       isEmpty,
       sortBy,
-      sortOrder
+      sortOrder,
+      totals
     } = this.props
     const sortType = getSortTypeFromOptions({ sortBy, sortOrder })
 
@@ -134,10 +171,24 @@ export default class MarketplacePage extends React.PureComponent {
       <div className="MarketplacePage">
         <Container>
           <Menu pointing secondary>
-            <Menu.Item active onClick={this.handleItemClick}>
+            <Menu.Item
+              name={MARKETPLACE_PAGE_TABS.parcels}
+              active={this.isActive(MARKETPLACE_PAGE_TABS.parcels)}
+              onClick={this.handleItemClick}
+            >
               {t('global.parcels')}
               <Label className="active" size="tiny">
-                {total.toLocaleString()}
+                {totals.parcel.toLocaleString()}
+              </Label>
+            </Menu.Item>
+            <Menu.Item
+              name={MARKETPLACE_PAGE_TABS.estates}
+              active={this.isActive(MARKETPLACE_PAGE_TABS.estates)}
+              onClick={this.handleItemClick}
+            >
+              {t('global.estates')}
+              <Label className="active" size="tiny">
+                {totals.estate.toLocaleString()}
               </Label>
             </Menu.Item>
             <Menu.Menu position="right">
@@ -154,10 +205,16 @@ export default class MarketplacePage extends React.PureComponent {
           </Menu>
         </Container>
         <Container className={`publications ${isLoading ? 'loading' : ''}`}>
-          {isEmpty && !isLoading
-            ? this.renderEmpty()
-            : this.renderPublications()}
-          {isLoading ? this.renderLoading() : null}
+          {isEmpty && !isLoading && this.renderEmpty()}
+          {!isEmpty &&
+            !isLoading &&
+            this.isActive(MARKETPLACE_PAGE_TABS.parcels) &&
+            this.renderParcelPublications()}
+          {!isEmpty &&
+            !isLoading &&
+            this.isActive(MARKETPLACE_PAGE_TABS.estates) &&
+            this.renderEstatePublications()}
+          {isLoading && this.renderLoading()}
         </Container>
         <Container textAlign="center" className="pagination">
           {!isEmpty && pages > 1 ? (

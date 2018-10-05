@@ -3,6 +3,10 @@
   width: calc(100% - 14px) !important;
 }
 
+.EstateCard .Mana {
+  margin-left: auto;
+}
+
 @media (min-width: 480px) {
   .EstateCard {
     width: calc(50% - 14px) !important;

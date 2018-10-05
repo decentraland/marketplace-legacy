@@ -1,8 +1,7 @@
 import { select, takeEvery, call, put } from 'redux-saga/effects'
 
 import { PUBLICATION_STATUS } from 'shared/publication'
-import { getParcelPublications } from 'shared/parcel'
-import { toEstateObject } from 'shared/estate'
+import { getAssetPublications } from 'shared/asset'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   FETCH_ADDRESS,
@@ -67,10 +66,17 @@ function* handleAddressParcelsRequest(action) {
 function* handleAddressEstatesRequest(action) {
   const { address } = action
   try {
-    const response = yield call(() => api.fetchAddressEstates(address))
-    const estates = toEstateObject(response)
+    const estates = yield call(() => api.fetchAddressEstates(address))
 
-    yield put(fetchAddressEstatesSuccess(address, estates))
+    const result = yield call(() =>
+      webworker.postMessage({
+        type: 'FETCH_ADDRESS_ESTATES_REQUEST',
+        estates
+      })
+    )
+    yield put(
+      fetchAddressEstatesSuccess(address, result.estates, result.publications)
+    )
   } catch (error) {
     yield put(fetchAddressEstatesFailure(address, error.message))
   }
@@ -91,9 +97,15 @@ function* handleAddressContributionsRequest(action) {
 function* handleAddressPublicationsRequest(action) {
   const { address, status } = action
   try {
+    //@nacho TODO: provisory code. We need an endpoint to get all asset with open publications
     const parcels = yield call(() => api.fetchAddressParcels(address, status))
-    const publications = getParcelPublications(parcels)
-    yield put(fetchAddressPublicationsSuccess(address, parcels, publications))
+    const estates = yield call(() => api.fetchAddressEstates(address, status))
+    const parcelPublications = getAssetPublications(parcels)
+    const estatePublications = getAssetPublications(estates)
+
+    const assets = [...parcels, ...estates]
+    const publications = [...parcelPublications, ...estatePublications]
+    yield put(fetchAddressPublicationsSuccess(address, assets, publications))
   } catch (error) {
     yield put(fetchAddressPublicationsFailure(address, error.message))
   }
@@ -103,9 +115,9 @@ function* handleFetchAddress(action) {
   const { address } = action
 
   yield put(fetchAddressParcelsRequest(address))
+  yield put(fetchAddressEstatesRequest(address))
   yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
-  yield put(fetchAddressEstatesRequest(address))
   if (isFeatureEnabled('MORTGAGES')) {
     // Mortgage Feature
     yield put(fetchMortgagedParcelsRequest(address))

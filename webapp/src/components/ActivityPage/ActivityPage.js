@@ -65,7 +65,7 @@ export default class ActivityPage extends React.PureComponent {
               id="activity.start"
               values={{
                 marketplace: (
-                  <Link to={locations.marketplace()}>
+                  <Link to={locations.marketplacePageDefault()}>
                     {t('global.marketplace')}
                   </Link>
                 )

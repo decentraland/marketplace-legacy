@@ -32,12 +32,26 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}`)
   }
 
-  fetchParcels(options = FILTER_DEFAULTS) {
+  fetchAssets(assetName, options = FILTER_DEFAULTS) {
     const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
       options
     )
 
-    return this.request('get', '/parcels', {
+    return this.request('get', `/${assetName}`, {
+      limit,
+      offset,
+      sort_by: sortBy,
+      sort_order: sortOrder,
+      status
+    })
+  }
+
+  fetchMarketplace(options = FILTER_DEFAULTS) {
+    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
+      options
+    )
+
+    return this.request('get', `/marketplace`, {
       limit,
       offset,
       sort_by: sortBy,

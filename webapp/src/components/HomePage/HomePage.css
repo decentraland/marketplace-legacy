@@ -72,7 +72,7 @@
   height: 294px;
 }
 
-.HomePage .publications-scroller .ParcelCard {
+.HomePage .publications-scroller .ParcelCard, .HomePage .publications-scroller .EstateCard {
   flex: none;
   width: 224px !important;
   margin-right: 25px;

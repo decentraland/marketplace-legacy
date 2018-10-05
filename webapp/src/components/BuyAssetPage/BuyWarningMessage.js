@@ -76,7 +76,7 @@ export default class BuyWarningMessage extends React.PureComponent {
                   ) : null}
                   <T
                     id={
-                      isLegacyMarketplace()
+                      isLegacyMarketplace
                         ? 'asset_buy.please_allow'
                         : 'asset_buy.please_allow_new_marketplace'
                     }

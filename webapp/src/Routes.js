@@ -128,7 +128,7 @@ export default class Routes extends React.Component {
         <Route exact path={locations.buyEstate()} component={BuyEstatePage} />
         <Route
           exact
-          path={this.addLegacySupport(locations.cancelSaleEstate())}
+          path={locations.cancelSaleEstate()}
           component={CancelSaleEstatePage}
         />
 

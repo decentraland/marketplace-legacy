@@ -1,7 +1,7 @@
 import { select, call, takeEvery, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
-import { locations } from 'locations'
+import { locations, MARKETPLACE_PAGE_TABS } from 'locations'
 import { getAddress } from 'modules/wallet/selectors'
 import { splitCoordinate } from 'shared/parcel'
 import { api } from 'lib/api'
@@ -11,6 +11,8 @@ import {
   PUBLISH_REQUEST,
   BUY_REQUEST,
   CANCEL_SALE_REQUEST,
+  FETCH_ALL_PUBLICATIONS_REQUEST,
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
   fetchPublicationsSuccess,
   fetchPublicationsFailure,
   fetchParcelPublicationsSuccess,
@@ -21,9 +23,17 @@ import {
   buyFailure,
   cancelSaleSuccess,
   cancelSaleFailure,
-  fetchParcelPublicationsRequest
+  fetchParcelPublicationsRequest,
+  fetchAllPublicationsSuccess,
+  fetchAllPublicationsFailure,
+  fetchAllMarketplacePublicationsSuccess,
+  fetchAllMarketplacePublicationsFailure
 } from './actions'
-import { getNFTAddressByType, isLegacyPublication } from './utils'
+import {
+  getNFTAddressByType,
+  isLegacyPublication,
+  getTypeByMarketplaceTab
+} from './utils'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { ASSET_TYPES } from 'shared/asset'
 import { getData as getEstates } from 'modules/estates/selectors'
@@ -38,16 +48,71 @@ export function* publicationSaga() {
   yield takeEvery(BUY_REQUEST, handleBuyRequest)
   yield takeEvery(CANCEL_SALE_REQUEST, handleCancelSaleRequest)
   yield takeEvery(FETCH_PARCEL_SUCCESS, handleFetchParcelSuccess)
+  yield takeEvery(FETCH_ALL_PUBLICATIONS_REQUEST, handleAllPublicationsRequest)
+  yield takeEvery(
+    FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
+    handleAllMarketplacePublicationsRequest
+  )
 }
 
 function* handlePublicationsRequest(action) {
   try {
-    const { parcels, publications, total } = yield call(() =>
+    const { assets, total, publications, type } = yield call(() =>
       fetchPublications(action)
     )
-    yield put(fetchPublicationsSuccess(parcels, publications, total))
+    yield put(
+      fetchPublicationsSuccess({
+        assets,
+        total,
+        publications,
+        assetType: type
+      })
+    )
   } catch (error) {
     yield put(fetchPublicationsFailure(error.message))
+  }
+}
+
+function* handleAllPublicationsRequest(action) {
+  try {
+    const allAssets = [],
+      totals = {},
+      allPublications = []
+    for (let tab in MARKETPLACE_PAGE_TABS) {
+      const { assets, total, publications, type } = yield call(() =>
+        fetchPublications({ ...action, tab })
+      )
+      allAssets.push(...assets)
+      allPublications.push(...publications)
+      totals[type] = total
+    }
+    totals['all'] = allAssets.length
+
+    yield put(
+      fetchAllPublicationsSuccess({
+        totals,
+        publications: allPublications,
+        assets: allAssets
+      })
+    )
+  } catch (error) {
+    yield put(fetchAllPublicationsFailure(error.message))
+  }
+}
+
+function* handleAllMarketplacePublicationsRequest(action) {
+  try {
+    const { assets, total } = yield call(() => api.fetchMarketplace(action))
+
+    yield put(
+      fetchAllMarketplacePublicationsSuccess({
+        assets,
+        total,
+        publications: assets.map(asset => asset.publication)
+      })
+    )
+  } catch (error) {
+    yield put(fetchAllMarketplacePublicationsFailure(error.message))
   }
 }
 
@@ -173,12 +238,24 @@ function* handleFetchParcelSuccess(action) {
 }
 
 function* fetchPublications(action) {
-  const { limit, offset, sortBy, sortOrder, status } = action
-  const { parcels, total } = yield call(() =>
-    api.fetchParcels({ limit, offset, sortBy, sortOrder, status })
+  const { limit, offset, sortBy, sortOrder, status, tab } = action
+  const nextTab = tab || MARKETPLACE_PAGE_TABS.parcels
+  const response = yield call(() =>
+    api.fetchAssets(nextTab, {
+      limit,
+      offset,
+      sortBy,
+      sortOrder,
+      status
+    })
   )
-  const publications = parcels.map(parcel => parcel.publication)
-  return { parcels, publications, total }
+
+  return {
+    assets: response[nextTab],
+    publications: response[nextTab].map(asset => asset.publication),
+    total: response.total,
+    type: getTypeByMarketplaceTab(nextTab)
+  }
 }
 
 function* buildAsset(assetId, assetType) {

@@ -24,7 +24,8 @@ import {
   REMOVE_PARCELS
 } from 'modules/estates/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate, isParcel } from 'shared/parcel'
+import { isEstate } from 'shared/estate'
 import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 
 const EMPTY_ADDRESS = {
@@ -89,11 +90,16 @@ export function addressReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_ADDRESS_PUBLICATIONS_SUCCESS: {
       const addressData = state.data[action.address] || {}
-      const { parcels, publications } = action
+      const { assets, publications } = action
 
       const parcel_ids = new Set([
         ...(addressData.parcel_ids || []),
-        ...toAddressParcelIds(parcels)
+        ...toAddressParcelIds(assets.filter(asset => isParcel(asset)))
+      ])
+
+      const estate_ids = new Set([
+        ...(addressData.estate_ids || []),
+        ...assets.filter(asset => isEstate(asset)).map(estate => estate.id)
       ])
 
       return {
@@ -104,7 +110,8 @@ export function addressReducer(state = INITIAL_STATE, action) {
           [action.address]: {
             ...addressData,
             publication_ids: toAddressPublicationIds(publications),
-            parcel_ids: Array.from(parcel_ids)
+            parcel_ids: Array.from(parcel_ids),
+            estate_ids: Array.from(estate_ids)
           }
         }
       }

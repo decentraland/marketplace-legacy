@@ -88,15 +88,11 @@ export function fetchAddressPublicationsRequest(address) {
   }
 }
 
-export function fetchAddressPublicationsSuccess(
-  address,
-  parcels,
-  publications
-) {
+export function fetchAddressPublicationsSuccess(address, assets, publications) {
   return {
     type: FETCH_ADDRESS_PUBLICATIONS_SUCCESS,
     address,
-    parcels,
+    assets,
     publications
   }
 }
@@ -122,11 +118,12 @@ export function fetchAddressEstatesRequest(address) {
   }
 }
 
-export function fetchAddressEstatesSuccess(address, estates) {
+export function fetchAddressEstatesSuccess(address, estates, publications) {
   return {
     type: FETCH_ADDRESS_ESTATES_SUCCESS,
     address,
-    estates
+    estates,
+    publications
   }
 }
 

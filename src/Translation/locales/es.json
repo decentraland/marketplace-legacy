@@ -57,18 +57,18 @@
     }
   },
   "asset_publish": {
-    "already_sold": "Este LAND ya está a la venta para {value}",
+    "already_sold": "Este {asset_name} ya está a la venta para {value}",
     "errors": {
       "maximum_expiration": "La fecha de vencimiento máxima es {date}",
-      "maximum_land_price": "El precio máximo LAND es {value} MANA",
+      "maximum_land_price": "El precio máximo {asset_name} es {value} MANA",
       "minimum_expiration": "La fecha de vencimiento mínima es {date}",
-      "minimum_land_price": "El precio mínimo LAND es {value} MANA"
+      "minimum_land_price": "El precio mínimo {asset_name} es {value} MANA"
     },
     "expiration": "Vencimiento",
     "expiration_placeholder": "Fecha de caducidad para esta publicación",
     "list_asset": "Listar {asset_name} en venta",
     "please_authorize":
-      "Debe ir a {settings_link} y autorizar que Marketplace opere LAND en su nombre antes de que pueda listarlo en oferta.",
+      "Debe ir a {settings_link} y autorizar que Marketplace opere {asset_name} en su nombre antes de que pueda listarlo en oferta.",
     "price": "Precio",
     "price_placeholder": "Precio en MANA para este {asset_name}",
     "set_asset_price":

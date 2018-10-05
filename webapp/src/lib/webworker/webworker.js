@@ -6,9 +6,10 @@ import {
   connectParcel,
   areConnected,
   isSameValue,
-  getParcelPublications,
   buildCoordinate
 } from 'shared/parcel'
+import { getAssetPublications } from 'shared/asset'
+import { toEstateObject, normalizeEstate } from 'shared/estate'
 
 const WebWorkerDependencies = {
   toParcelObject,
@@ -16,8 +17,10 @@ const WebWorkerDependencies = {
   connectParcel,
   areConnected,
   isSameValue,
-  getParcelPublications,
-  buildCoordinate
+  getAssetPublications,
+  buildCoordinate,
+  toEstateObject,
+  normalizeEstate
 }
 
 export const webworker = WebWorkerFactory.create(

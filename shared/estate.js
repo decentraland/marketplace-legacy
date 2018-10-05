@@ -11,20 +11,22 @@ export function isEstate(asset) {
 }
 
 export function toEstateObject(estatesArray) {
-  return estatesArray.filter(estate => estate.data.parcels.length).reduce(
-    (estates, estate) => ({
-      ...estates,
-      [estate.id]: normalizeEstate(estate)
-    }),
-    {}
-  )
+  const estateObject = {}
+
+  for (const estate of estatesArray) {
+    if (estate.data.parcels.length > 0) {
+      estateObject[estate.id] = normalizeEstate(estate)
+    }
+  }
+
+  return estateObject
 }
 
 export function normalizeEstate(estate) {
-  const normalizedEstate = {
-    ...estate,
+  const normalizedEstate = Object.assign({}, estate, {
     publication_tx_hash: estate.publication ? estate.publication.tx_hash : null
-  }
+  })
+
   delete normalizedEstate.publication
   return normalizedEstate
 }

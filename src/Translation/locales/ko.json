@@ -58,18 +58,18 @@
     }
   },
   "asset_publish": {
-    "already_sold": "이 LAND은 이미 {value}에 판매 중입니다.",
+    "already_sold": "이 {asset_name}은 이미 {value}에 판매 중입니다.",
     "errors": {
       "maximum_expiration": "최대 만기 날짜는 {date}입니다.",
-      "maximum_land_price": "최대 LAND 가격은 {value} MANA입니다.",
+      "maximum_land_price": "최대 {asset_name} 가격은 {value} MANA입니다.",
       "minimum_expiration": "최소 만료일은 {date}입니다.",
-      "minimum_land_price": "최소 LAND 가격은 {value} MANA입니다."
+      "minimum_land_price": "최소 {asset_name} 가격은 {value} MANA입니다."
     },
     "expiration": "만료",
     "expiration_placeholder": "이 발행물의 만료일",
     "list_asset": "판매 목록 {asset_name}",
     "please_authorize":
-      "판매를 위해 목록에 올리기 전에 {settings_link}으로 가서 마켓 플레이스가 귀하를 대신하여 LAND을 운영하도록 승인해야합니다.",
+      "판매를 위해 목록에 올리기 전에 {settings_link}으로 가서 마켓 플레이스가 귀하를 대신하여 {asset_name}을 운영하도록 승인해야합니다.",
     "price": "가격",
     "price_placeholder": "이 {asset_name}에 대한 MANA의 가격",
     "set_asset_price": "{asset_name}의 가격과 만료 날짜를 설정하십시오."

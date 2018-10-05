@@ -1,11 +1,8 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
-import {
-  toParcelObject,
-  splitCoordinate,
-  getParcelPublications
-} from '../shared/parcel'
+import { toParcelObject, splitCoordinate } from '../shared/parcel'
+import { getAssetPublications } from '../shared/asset'
 import { toEstateObject, calculateMapProps } from '../shared/estate'
 import { Viewport, Bounds } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
@@ -150,7 +147,7 @@ export class MapRouter {
     const parcels = toParcelObject(parcelRange)
     const estatesRange = await new EstateService().getByParcels(parcelRange)
     const estates = toEstateObject(estatesRange)
-    const publications = toPublicationObject(getParcelPublications(parcelRange))
+    const publications = toPublicationObject(getAssetPublications(parcelRange))
     return [parcels, estates, publications]
   }
 

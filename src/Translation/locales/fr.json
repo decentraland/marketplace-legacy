@@ -18,13 +18,13 @@
   "asset_buy": {
     "about_to_buy": "Vous êtes sur le point d'acheter {name} {price}",
     "allowed_balance": "Votre allocation est {allowance}",
-    "buy_asset": "Acheter une LAND",
+    "buy_asset": "Acheter une {asset_name}",
     "buy_mana": "{click_here} pour acheter du MANA.",
     "didnt_allow": "Vous n'avez pas autorisé l'utilisation de MANA",
     "didnt_allow_new_marketplace":
       "Vous n'avez pas autorisé l'utilisation de MANA pour la nouvelle version du Marketplace",
     "needs_at_least":
-      "Vous avez besoin d'au moins {mana} pour acheter cette LAND.",
+      "Vous avez besoin d'au moins {mana} pour acheter cette {asset_name}.",
     "please_allow":
       "Veuillez vous rendre sur {settings_link} et autoriser le contrat LegacyMarketplace à utiliser MANA en votre nom",
     "please_allow_new_marketplace":
@@ -59,18 +59,18 @@
     }
   },
   "asset_publish": {
-    "already_sold": "Ce LAND est déjà en vente pour {value}",
+    "already_sold": "Ce {asset_name} est déjà en vente pour {value}",
     "errors": {
       "maximum_expiration": "La date d'expiration maximale est {date}",
-      "maximum_land_price": "Le prix maximum de LAND est {value} MANA",
+      "maximum_land_price": "Le prix maximum de {asset_name} est {value} MANA",
       "minimum_expiration": "La date d'expiration minimale est {date}",
-      "minimum_land_price": "Le prix minimum LAND est {value} MANA"
+      "minimum_land_price": "Le prix minimum {asset_name} est {value} MANA"
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Date d'expiration pour cette publication",
     "list_asset": "Liste {asset_name} à vendre",
     "please_authorize":
-      "Vous devez aller sur {settings_link} et autoriser le Marketplace à opérer LAND en votre nom avant de pouvoir le mettre en vente.",
+      "Vous devez aller sur {settings_link} et autoriser le Marketplace à opérer {asset_name} en votre nom avant de pouvoir le mettre en vente.",
     "price": "Prix",
     "price_placeholder": "Prix ​​en NT2 pour ce {asset_name}",
     "set_asset_price":
