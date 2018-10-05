@@ -7,7 +7,7 @@ import { splitCoordinate } from 'shared/parcel'
 import { api } from 'lib/api'
 import {
   FETCH_PUBLICATIONS_REQUEST,
-  FETCH_PARCEL_PUBLICATIONS_REQUEST,
+  FETCH_ASSET_PUBLICATIONS_REQUEST,
   PUBLISH_REQUEST,
   BUY_REQUEST,
   CANCEL_SALE_REQUEST,
@@ -15,15 +15,15 @@ import {
   FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
   fetchPublicationsSuccess,
   fetchPublicationsFailure,
-  fetchParcelPublicationsSuccess,
-  fetchParcelPublicationsFailure,
+  fetchAssetPublicationsRequest,
+  fetchAssetPublicationsSuccess,
+  fetchAssetPublicationsFailure,
   publishSuccess,
   publishFailure,
   buySuccess,
   buyFailure,
   cancelSaleSuccess,
   cancelSaleFailure,
-  fetchParcelPublicationsRequest,
   fetchAllPublicationsSuccess,
   fetchAllPublicationsFailure,
   fetchAllMarketplacePublicationsSuccess,
@@ -35,14 +35,15 @@ import {
   getTypeByMarketplaceTab
 } from './utils'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import { FETCH_ESTATE_SUCCESS } from 'modules/estates/actions'
 import { ASSET_TYPES } from 'shared/asset'
 import { getData as getEstates } from 'modules/estates/selectors'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
   yield takeEvery(
-    FETCH_PARCEL_PUBLICATIONS_REQUEST,
-    handleParcelPublicationsRequest
+    FETCH_ASSET_PUBLICATIONS_REQUEST,
+    handleAssetPublicationsRequest
   )
   yield takeEvery(PUBLISH_REQUEST, handlePublishRequest)
   yield takeEvery(BUY_REQUEST, handleBuyRequest)
@@ -53,6 +54,7 @@ export function* publicationSaga() {
     FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
     handleAllMarketplacePublicationsRequest
   )
+  yield takeEvery(FETCH_ESTATE_SUCCESS, handleFetchEstateSuccess)
 }
 
 function* handlePublicationsRequest(action) {
@@ -116,14 +118,16 @@ function* handleAllMarketplacePublicationsRequest(action) {
   }
 }
 
-function* handleParcelPublicationsRequest(action) {
+function* handleAssetPublicationsRequest(action) {
   try {
-    const { x, y } = action
-    const publications = yield call(() => api.fetchParcelPublications(x, y))
+    const { id, assetType } = action
+    const publications = yield call(() =>
+      api.fetchAssetPublications(id, assetType)
+    )
 
-    yield put(fetchParcelPublicationsSuccess(publications, x, y))
+    yield put(fetchAssetPublicationsSuccess(publications, id, assetType))
   } catch (error) {
-    yield put(fetchParcelPublicationsFailure(error.message))
+    yield put(fetchAssetPublicationsFailure(error.message))
   }
 }
 
@@ -234,7 +238,11 @@ function* handleCancelSaleRequest(action) {
 }
 
 function* handleFetchParcelSuccess(action) {
-  yield put(fetchParcelPublicationsRequest(action.x, action.y))
+  yield put(fetchAssetPublicationsRequest(action.id, ASSET_TYPES.parcel))
+}
+
+function* handleFetchEstateSuccess(action) {
+  yield put(fetchAssetPublicationsRequest(action.id, ASSET_TYPES.estate))
 }
 
 function* fetchPublications(action) {

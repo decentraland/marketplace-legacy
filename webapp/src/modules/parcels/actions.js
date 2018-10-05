@@ -50,6 +50,7 @@ export function fetchParcelRequest(x, y) {
 export function fetchParcelSuccess(x, y, parcel) {
   return {
     type: FETCH_PARCEL_SUCCESS,
+    id: parcel.id,
     x,
     y,
     parcel

@@ -60,8 +60,11 @@ export class API {
     })
   }
 
-  fetchParcelPublications(x, y, status) {
-    return this.request('get', `/parcels/${x}/${y}/publications`, { status })
+  fetchAssetPublications(id, asset_type, status) {
+    return this.request('get', `/assets/${id}/publications`, {
+      asset_type,
+      status
+    })
   }
 
   fetchAddressParcels(address, status) {
