@@ -45,18 +45,18 @@
     }
   },
   "asset_publish": {
-    "already_sold": "这个LAND已经在{value}上发售",
+    "already_sold": "这个{asset_name}已经在{value}上发售",
     "errors": {
       "maximum_expiration": "最大到期日期为{date}",
-      "maximum_land_price": "最高LAND价格为{value} MANA",
+      "maximum_land_price": "最高{asset_name}价格为{value} MANA",
       "minimum_expiration": "最短到期日期为{date}",
-      "minimum_land_price": "最低LAND价格为{value} MANA"
+      "minimum_land_price": "最低{asset_name}价格为{value} MANA"
     },
     "expiration": "呼气",
     "expiration_placeholder": "本出版物的截止日期",
     "list_asset": "列出{asset_name}待售",
     "please_authorize":
-      "您需要转到{settings_link}并授权市场代表您运营LAND，然后才能在销售中列出它。",
+      "您需要转到{settings_link}并授权市场代表您运营{asset_name}，然后才能在销售中列出它。",
     "price": "价钱",
     "price_placeholder": "这个{asset_name}的价格在MANA",
     "set_asset_price": "设置{asset_name}的价格和到期日期。"

@@ -8,6 +8,7 @@ import TxStatus from 'components/TxStatus'
 import { assetType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
+import { isParcel } from 'shared/parcel'
 
 // TODO: Shouldn't this live on the publication module?
 const DEFAULT_DAY_INTERVAL = 31
@@ -86,7 +87,8 @@ export default class PublishAssetForm extends React.PureComponent {
     if (price < MINIMUM_LAND_PRICE) {
       formErrors.push(
         t('asset_publish.errors.minimum_land_price', {
-          value: formatMana(MINIMUM_LAND_PRICE, '')
+          value: formatMana(MINIMUM_LAND_PRICE, ''),
+          asset_name: isParcel(asset) ? t('name.parcel') : t('name.estate')
         })
       )
     }
@@ -94,7 +96,8 @@ export default class PublishAssetForm extends React.PureComponent {
     if (price > Number.MAX_SAFE_INTEGER) {
       formErrors.push(
         t('asset_publish.errors.maximum_land_price', {
-          value: formatMana(Number.MAX_SAFE_INTEGER, '')
+          value: formatMana(Number.MAX_SAFE_INTEGER, ''),
+          asset_name: isParcel(asset) ? t('name.parcel') : t('name.estate')
         })
       )
     }

@@ -52,7 +52,7 @@ export default class PublishEstatePage extends React.PureComponent {
       <Estate id={id} ownerOnly>
         {estate => {
           const { approvals } = authorization
-          const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
+          const isMarketplaceApproved = approvals.Marketplace.EstateRegistry
           return (
             <div className="PublishPage">
               {isOpen(publication) ? (
@@ -61,7 +61,8 @@ export default class PublishEstatePage extends React.PureComponent {
                     warning
                     icon="warning sign"
                     content={t('asset_publish.already_sold', {
-                      value: formatMana(publication.price)
+                      value: formatMana(publication.price),
+                      asset_name: t('name.estate')
                     })}
                   />
                 </Container>
@@ -78,7 +79,8 @@ export default class PublishEstatePage extends React.PureComponent {
                         values={{
                           settings_link: (
                             <Link to={locations.settings()}>Settings</Link>
-                          )
+                          ),
+                          asset_name: t('name.estate')
                         }}
                       />
                     }

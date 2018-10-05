@@ -62,7 +62,8 @@ export default class PublishPage extends React.PureComponent {
                     warning
                     icon="warning sign"
                     content={t('asset_publish.already_sold', {
-                      value: formatMana(publication.price)
+                      value: formatMana(publication.price),
+                      asset_name: t('name.parcel')
                     })}
                   />
                 </Container>
@@ -79,7 +80,8 @@ export default class PublishPage extends React.PureComponent {
                         values={{
                           settings_link: (
                             <Link to={locations.settings()}>Settings</Link>
-                          )
+                          ),
+                          asset_name: t('name.parcel')
                         }}
                       />
                     }

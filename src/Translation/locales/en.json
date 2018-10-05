@@ -48,18 +48,18 @@
     }
   },
   "asset_publish": {
-    "already_sold": "This LAND is already on sale for {value}",
+    "already_sold": "This {asset_name} is already on sale for {value}",
     "errors": {
       "maximum_expiration": "The maximum expiration date is {date}",
-      "maximum_land_price": "The maximum LAND price is {value} MANA",
+      "maximum_land_price": "The maximum {asset_name} price is {value} MANA",
       "minimum_expiration": "The minimum expiration date is {date}",
-      "minimum_land_price": "The minimum LAND price is {value} MANA"
+      "minimum_land_price": "The minimum {asset_name} price is {value} MANA"
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Expiration date for this publication",
     "list_asset": "List {asset_name} for sale",
     "please_authorize":
-      "You need to go to {settings_link} and authorize the Marketplace to operate LAND on your behalf before you can list it on sale.",
+      "You need to go to {settings_link} and authorize the Marketplace to operate {asset_name} on your behalf before you can list it on sale.",
     "price": "Price",
     "price_placeholder": "Price in MANA for this {asset_name}",
     "set_asset_price": "Set a price and an expiration date for {asset_name}."
@@ -401,7 +401,7 @@
       "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
     "pay_mortgage":
       "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
-    "publish": "You published {parcel_link}",
+    "publish": "You listed for sale {parcel_link}",
     "transfer": "You transfered {asset_type} {asset_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"
   },

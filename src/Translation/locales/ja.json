@@ -47,18 +47,18 @@
     }
   },
   "asset_publish": {
-    "already_sold": "このLANDは既に{value}の販売中です",
+    "already_sold": "この{asset_name}は既に{value}の販売中です",
     "errors": {
       "maximum_expiration": "最大有効期限は{date}です",
-      "maximum_land_price": "最大LAND価格は{value} MANA",
+      "maximum_land_price": "最大{asset_name}価格は{value} MANA",
       "minimum_expiration": "有効期限の最小値は{date}です",
-      "minimum_land_price": "最小LAND価格は{value} MANA"
+      "minimum_land_price": "最小{asset_name}価格は{value} MANA"
     },
     "expiration": "有効期限",
     "expiration_placeholder": "この出版物の有効期限",
     "list_asset": "販売のためのリスト{asset_name}",
     "please_authorize":
-      "あなたは{settings_link}に行く必要がありますし、あなたがそれを販売する上でリストすることができます前にLANDを操作するMarketplaceを承認します。",
+      "あなたは{settings_link}に行く必要がありますし、あなたがそれを販売する上でリストすることができます前に{asset_name}を操作するMarketplaceを承認します。",
     "price": "価格",
     "price_placeholder": "この{asset_name}の価格はMANAです",
     "set_asset_price": "{asset_name}の価格と有効期限を設定します。"
