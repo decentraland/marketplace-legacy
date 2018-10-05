@@ -124,16 +124,18 @@ export function estatesReducer(state = INITIAL_STATE, action) {
 
       if (assetType === ASSET_TYPES.estate) {
         const estate = state.data[id]
-        return {
-          ...state,
-          loading: loadingReducer(state.loading, action),
-          data: {
-            ...state.data,
-            [id]: {
-              ...estate,
-              publication_tx_hash_history: publications.map(
-                publication => publication.tx_hash
-              )
+        if (estate) {
+          return {
+            ...state,
+            loading: loadingReducer(state.loading, action),
+            data: {
+              ...state.data,
+              [id]: {
+                ...estate,
+                publication_tx_hash_history: publications.map(
+                  publication => publication.tx_hash
+                )
+              }
             }
           }
         }

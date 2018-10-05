@@ -242,7 +242,7 @@ function* handleFetchParcelSuccess(action) {
 }
 
 function* handleFetchEstateSuccess(action) {
-  yield put(fetchAssetPublicationsRequest(action.id, ASSET_TYPES.estate))
+  yield put(fetchAssetPublicationsRequest(action.estate.id, ASSET_TYPES.estate))
 }
 
 function* fetchPublications(action) {
