@@ -17,7 +17,7 @@ export function fetchAllMarketplacePublicationsRequest({
   status
 } = {}) {
   return {
-    type: FETCH_ALL_PUBLICATIONS_REQUEST,
+    type: FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
     limit,
     offset,
     sortBy,
@@ -32,7 +32,7 @@ export function fetchAllMarketplacePublicationsSuccess({
   publications
 }) {
   return {
-    type: FETCH_ALL_PUBLICATIONS_SUCCESS,
+    type: FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS,
     assets,
     publications,
     totals
@@ -41,7 +41,7 @@ export function fetchAllMarketplacePublicationsSuccess({
 
 export function fetchAllMarketplacePublicationsFailure(error) {
   return {
-    type: FETCH_ALL_PUBLICATIONS_FAILURE,
+    type: FETCH_ALL_MARKETPLACE_PUBLICATIONS_FAILURE,
     error
   }
 }

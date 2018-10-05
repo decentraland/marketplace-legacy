@@ -26,6 +26,7 @@ export class Marketplace {
           ${raw(joinAssetsSQL)}
           WHERE ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.whereIsActive()}
+            AND ${PublicationQueries.EstateHasParcels()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -48,7 +49,6 @@ export class Marketplace {
 
   async filter(queryParams, PublicableAsset) {
     const { status, asset_type, sort, pagination } = queryParams.sanitize()
-
     const [assets, total] = await Promise.all([
       db.query(
         SQL`SELECT model.*, row_to_json(pub.*) as publication
@@ -59,6 +59,7 @@ export class Marketplace {
           WHERE ${PublicationQueries.hasAssetType(asset_type)}
             AND ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.whereIsActive()}
+            AND ${PublicationQueries.EstateHasParcels()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -73,10 +74,11 @@ export class Marketplace {
 
     const counts = await db.query(
       SQL`SELECT COUNT(*)
-        FROM ${raw(Publication.tableName)}
-        WHERE status = ${status}
+        FROM ${raw(Publication.tableName)} as pub
+        WHERE pub.status = ${status}
           AND ${PublicationQueries.hasAssetType(asset_type)}
-          AND ${PublicationQueries.whereIsActive()}`
+          AND ${PublicationQueries.whereIsActive()}
+          AND ${PublicationQueries.EstateHasParcels()}`
     )
 
     return parseInt(counts[0].count, 10)
@@ -87,9 +89,10 @@ export class Marketplace {
 
     const counts = await db.query(
       SQL`SELECT COUNT(*)
-        FROM ${raw(Publication.tableName)}
-        WHERE status = ${status}
-          AND ${PublicationQueries.whereIsActive()}`
+        FROM ${raw(Publication.tableName)} as pub
+        WHERE pub.status = ${status}
+          AND ${PublicationQueries.whereIsActive()}
+          AND ${PublicationQueries.EstateHasParcels()}`
     )
 
     return parseInt(counts[0].count, 10)
