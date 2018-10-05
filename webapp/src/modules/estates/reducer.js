@@ -31,7 +31,8 @@ import {
   PUBLISH_SUCCESS,
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_ALL_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS
+  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS,
+  FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { ASSET_TYPES } from 'shared/asset'
 
@@ -117,6 +118,29 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action),
         error: action.error
       }
+    }
+    case FETCH_ASSET_PUBLICATIONS_SUCCESS: {
+      const { id, assetType, publications } = action
+
+      if (assetType === ASSET_TYPES.estate) {
+        const estate = state.data[id]
+        if (estate) {
+          return {
+            ...state,
+            loading: loadingReducer(state.loading, action),
+            data: {
+              ...state.data,
+              [id]: {
+                ...estate,
+                publication_tx_hash_history: publications.map(
+                  publication => publication.tx_hash
+                )
+              }
+            }
+          }
+        }
+      }
+      return state
     }
     case FETCH_MAP_SUCCESS: {
       return {

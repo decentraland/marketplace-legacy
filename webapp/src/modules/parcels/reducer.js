@@ -18,7 +18,7 @@ import {
   CANCEL_SALE_SUCCESS,
   PUBLISH_SUCCESS,
   FETCH_PUBLICATIONS_SUCCESS,
-  FETCH_PARCEL_PUBLICATIONS_SUCCESS,
+  FETCH_ASSET_PUBLICATIONS_SUCCESS,
   FETCH_ALL_PUBLICATIONS_SUCCESS,
   FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
@@ -143,24 +143,26 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action)
       }
     }
-    case FETCH_PARCEL_PUBLICATIONS_SUCCESS: {
-      const { x, y, publications } = action
-      const parcelId = buildCoordinate(x, y)
-      const parcel = state.data[parcelId]
+    case FETCH_ASSET_PUBLICATIONS_SUCCESS: {
+      const { id, assetType, publications } = action
 
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        data: {
-          ...state.data,
-          [parcelId]: {
-            ...parcel,
-            publication_tx_hash_history: publications.map(
-              publication => publication.tx_hash
-            )
+      if (assetType === ASSET_TYPES.parcel) {
+        const parcel = state.data[id]
+        return {
+          ...state,
+          loading: loadingReducer(state.loading, action),
+          data: {
+            ...state.data,
+            [id]: {
+              ...parcel,
+              publication_tx_hash_history: publications.map(
+                publication => publication.tx_hash
+              )
+            }
           }
         }
       }
+      return state
     }
     case FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS: {
       const { x, y, mortgages } = action

@@ -128,35 +128,35 @@ export function fetchPublicationsFailure(error) {
   }
 }
 
-// Fetch Parcel Publications
+// Fetch Asset Publications
 
-export const FETCH_PARCEL_PUBLICATIONS_REQUEST =
-  '[Request] Fetch Parcel Publications'
-export const FETCH_PARCEL_PUBLICATIONS_SUCCESS =
-  '[Success] Fetch Parcel Publications'
-export const FETCH_PARCEL_PUBLICATIONS_FAILURE =
-  '[Failure] Fetch Parcel Publications'
+export const FETCH_ASSET_PUBLICATIONS_REQUEST =
+  '[Request] Fetch Asset Publications'
+export const FETCH_ASSET_PUBLICATIONS_SUCCESS =
+  '[Success] Fetch Asset Publications'
+export const FETCH_ASSET_PUBLICATIONS_FAILURE =
+  '[Failure] Fetch Asset Publications'
 
-export function fetchParcelPublicationsRequest(x, y) {
+export function fetchAssetPublicationsRequest(id, assetType) {
   return {
-    type: FETCH_PARCEL_PUBLICATIONS_REQUEST,
-    x,
-    y
+    type: FETCH_ASSET_PUBLICATIONS_REQUEST,
+    id,
+    assetType
   }
 }
 
-export function fetchParcelPublicationsSuccess(publications, x, y) {
+export function fetchAssetPublicationsSuccess(publications, id, assetType) {
   return {
-    type: FETCH_PARCEL_PUBLICATIONS_SUCCESS,
+    type: FETCH_ASSET_PUBLICATIONS_SUCCESS,
     publications,
-    x,
-    y
+    id,
+    assetType
   }
 }
 
-export function fetchParcelPublicationsFailure(error) {
+export function fetchAssetPublicationsFailure(error) {
   return {
-    type: FETCH_PARCEL_PUBLICATIONS_FAILURE,
+    type: FETCH_ASSET_PUBLICATIONS_FAILURE,
     error
   }
 }
