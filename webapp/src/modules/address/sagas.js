@@ -24,7 +24,6 @@ import {
 } from './actions'
 import { fetchMortgagedParcelsRequest } from 'modules/mortgage/actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import { getData as getEstates } from 'modules/estates/selectors'
 import { api } from 'lib/api'
 import { webworker } from 'lib/webworker'
 
@@ -68,13 +67,11 @@ function* handleAddressEstatesRequest(action) {
   const { address } = action
   try {
     const estates = yield call(() => api.fetchAddressEstates(address))
-    const allEstates = yield select(getEstates)
 
     const result = yield call(() =>
       webworker.postMessage({
         type: 'FETCH_ADDRESS_ESTATES_REQUEST',
-        estates,
-        allEstates
+        estates
       })
     )
     yield put(
