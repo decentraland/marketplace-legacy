@@ -8,5 +8,5 @@ export function isAssetPendingTransaction(asset, tx) {
     ? buildCoordinate(tx.payload.x, tx.payload.y)
     : tx.payload.id
 
-  return isPending(tx.status) && payloadAssetId === asset.id
+  return isPending(tx.status) && asset && payloadAssetId === asset.id
 }
