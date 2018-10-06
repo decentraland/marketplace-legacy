@@ -351,7 +351,7 @@ export default class Transaction extends React.PureComponent {
   }
 
   renderEstatePreview(tx) {
-    const size = 5
+    const size = 9.6
     const { estate } = tx.payload
     const { center, zoom, pan } = calculateMapProps(estate.data.parcels, size)
     const { x, y } = center
