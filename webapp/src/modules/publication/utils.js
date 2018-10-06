@@ -23,4 +23,5 @@ export function getTypeByMarketplaceTab(tab) {
   } else if (tab === MARKETPLACE_PAGE_TABS.estates) {
     return ASSET_TYPES.estate
   }
+  return null
 }

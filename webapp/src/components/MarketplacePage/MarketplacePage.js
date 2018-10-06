@@ -46,7 +46,7 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   componentWillMount() {
-    this.props.onFetchAllPublications()
+    this.fetchAllPublications()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -67,6 +67,17 @@ export default class MarketplacePage extends React.PureComponent {
       this.props.onFetchPublications()
       this.shouldFetchPublications = false
     }
+  }
+
+  fetchAllPublications() {
+    const { onFetchPublications, tab } = this.props
+    for (let type in MARKETPLACE_PAGE_TABS) {
+      if (!this.isActive(type)) {
+        onFetchPublications(type)
+      }
+    }
+    // fetch the active tab after the others
+    onFetchPublications(tab)
   }
 
   scrollToTop() {
@@ -177,7 +188,12 @@ export default class MarketplacePage extends React.PureComponent {
               onClick={this.handleItemClick}
             >
               {t('global.parcels')}
-              <Label className="active" size="tiny">
+              <Label
+                className={
+                  this.isActive(MARKETPLACE_PAGE_TABS.parcels) && 'active'
+                }
+                size="tiny"
+              >
                 {totals.parcel.toLocaleString()}
               </Label>
             </Menu.Item>
@@ -187,7 +203,12 @@ export default class MarketplacePage extends React.PureComponent {
               onClick={this.handleItemClick}
             >
               {t('global.estates')}
-              <Label className="active" size="tiny">
+              <Label
+                className={
+                  this.isActive(MARKETPLACE_PAGE_TABS.estates) && 'active'
+                }
+                size="tiny"
+              >
                 {totals.estate.toLocaleString()}
               </Label>
             </Menu.Item>

@@ -3,27 +3,24 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Button, Icon } from 'semantic-ui-react'
 
+import { assetType } from 'components/types'
 import { locations } from 'locations'
-import { parcelType, estateType } from 'components/types'
-import ParcelCard from 'components/ParcelCard'
-import EstateCard from 'components/EstateCard'
+import AssetCard from 'components/AssetCard'
 import { t } from '@dapps/modules/translation/utils'
 
 import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
   static propTypes = {
-    parcels: PropTypes.arrayOf(parcelType),
-    estates: PropTypes.arrayOf(estateType)
+    assets: PropTypes.arrayOf(assetType)
   }
 
   componentWillMount() {
-    const { onFetchPublications } = this.props
-    onFetchPublications()
+    this.props.onFetchPublications()
   }
 
   render() {
-    const { parcels, estates } = this.props
+    const { assets } = this.props
 
     return (
       <div className="HomePage">
@@ -49,12 +46,7 @@ export default class HomePage extends React.PureComponent {
             </Link>
           </div>
           <div className="publications-scroller">
-            {estates.map(estate => (
-              <EstateCard key={estate.id} estate={estate} />
-            ))}
-            {parcels.map(parcel => (
-              <ParcelCard key={parcel.id} parcel={parcel} />
-            ))}
+            {assets.map(asset => <AssetCard key={asset.id} asset={asset} />)}
           </div>
         </Container>
       </div>

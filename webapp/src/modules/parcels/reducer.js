@@ -18,9 +18,7 @@ import {
   CANCEL_SALE_SUCCESS,
   PUBLISH_SUCCESS,
   FETCH_PUBLICATIONS_SUCCESS,
-  FETCH_ASSET_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS
+  FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
@@ -85,22 +83,6 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PUBLICATIONS_SUCCESS: {
-      const { assetType, assets } = action
-      if (assetType === ASSET_TYPES.parcel) {
-        return {
-          ...state,
-          loading: loadingReducer(state.loading, action),
-          error: null,
-          data: {
-            ...state.data,
-            ...toParcelObject(assets, state.data)
-          }
-        }
-      }
-      return state
-    }
-    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS:
-    case FETCH_ALL_PUBLICATIONS_SUCCESS: {
       const { assets } = action
       const parcels = assets.filter(asset => isParcel(asset))
       return {

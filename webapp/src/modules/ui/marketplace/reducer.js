@@ -1,12 +1,8 @@
-import {
-  FETCH_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS
-} from 'modules/publication/actions'
+import { FETCH_PUBLICATIONS_SUCCESS } from 'modules/publication/actions'
 import { ASSET_TYPES } from 'shared/asset'
 import { isParcel } from 'shared/parcel'
 
-const initTotals = { all: 0 }
+const initTotals = {}
 for (let type in ASSET_TYPES) {
   initTotals[type] = 0
 }
@@ -20,38 +16,23 @@ export function marketplaceReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_PUBLICATIONS_SUCCESS: {
       const { assetType, total, assets } = action
-      return {
-        ...state,
-        grid: assets.map(asset => ({ type: assetType, id: asset.id })),
-        totals: {
+      let newTotals = state.totals
+      if (assetType) {
+        newTotals = {
           ...state.totals,
           [assetType]: total
         }
       }
-    }
-    case FETCH_ALL_PUBLICATIONS_SUCCESS: {
-      const { totals, assets } = action
       return {
         ...state,
-        grid: assets.map(asset => ({
-          type: isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate,
-          id: asset.id
-        })),
-        totals
-      }
-    }
-    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS: {
-      const { total, assets } = action
-      return {
-        ...state,
-        grid: assets.map(asset => ({
-          type: isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate,
-          id: asset.id
-        })),
-        totals: {
-          ...state.totals,
-          all: total
-        }
+        grid: assets.map(asset => {
+          let type = assetType
+          if (!type) {
+            type = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
+          }
+          return { id: asset.id, type }
+        }),
+        totals: newTotals
       }
     }
     default:

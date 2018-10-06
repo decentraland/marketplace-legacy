@@ -32,21 +32,7 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}`)
   }
 
-  fetchAssets(assetName, options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
-      options
-    )
-
-    return this.request('get', `/${assetName}`, {
-      limit,
-      offset,
-      sort_by: sortBy,
-      sort_order: sortOrder,
-      status
-    })
-  }
-
-  fetchMarketplace(options = FILTER_DEFAULTS) {
+  fetchMarketplace(assetType, options = FILTER_DEFAULTS) {
     const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
       options
     )
@@ -54,9 +40,10 @@ export class API {
     return this.request('get', `/marketplace`, {
       limit,
       offset,
+      status,
+      asset_type: assetType,
       sort_by: sortBy,
-      sort_order: sortOrder,
-      status
+      sort_order: sortOrder
     })
   }
 
