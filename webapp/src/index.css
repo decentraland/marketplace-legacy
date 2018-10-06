@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html {
+  background: var(--dark-background);
+}
+
 html,
 body {
   height: 100%;
