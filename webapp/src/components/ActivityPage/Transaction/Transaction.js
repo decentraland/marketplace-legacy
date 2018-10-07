@@ -48,6 +48,10 @@ import { hasEtherscanLink, getHash } from '../utils'
 import './Transaction.css'
 import Status from './Status'
 
+const PREVIEW_SIZE = 48
+const NUM_PARCELS = 5
+const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
+
 export default class Transaction extends React.PureComponent {
   static propTypes = {
     tx: transactionType,
@@ -351,9 +355,11 @@ export default class Transaction extends React.PureComponent {
   }
 
   renderEstatePreview(tx) {
-    const size = 5
     const { estate } = tx.payload
-    const { center, zoom, pan } = calculateMapProps(estate.data.parcels, size)
+    const { center, zoom, pan } = calculateMapProps(
+      estate.data.parcels,
+      PARCEL_SIZE
+    )
     const { x, y } = center
 
     return (
@@ -368,9 +374,9 @@ export default class Transaction extends React.PureComponent {
           x={x}
           y={y}
           zoom={zoom}
-          width={48}
-          height={48}
-          size={size}
+          width={PREVIEW_SIZE}
+          height={PREVIEW_SIZE}
+          size={PARCEL_SIZE}
           panX={pan.x}
           panY={pan.y}
           selected={estate.data.parcels}
@@ -386,9 +392,9 @@ export default class Transaction extends React.PureComponent {
         <ParcelPreview
           x={x}
           y={y}
-          width={48}
-          height={48}
-          size={9.6}
+          width={PREVIEW_SIZE}
+          height={PREVIEW_SIZE}
+          size={PARCEL_SIZE}
           selected={{ x, y }}
         />
       </Link>
