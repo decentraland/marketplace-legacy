@@ -85,6 +85,7 @@
 
   .Transaction .transaction-avatar {
     margin-left: 0px;
+    display: none;
   }
 
   .Transaction .transaction-text-container {
@@ -96,7 +97,7 @@
     width: 100%;
   }
   .Transaction .transaction-text-container {
-    width: calc(100% - 108px);
+    width: calc(100% - 24px);
   }
   .Transaction .transaction-container-left {
     width: calc(100% - 196px);
