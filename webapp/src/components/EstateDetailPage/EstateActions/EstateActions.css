@@ -5,3 +5,14 @@
 .EstateActions div {
   margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+  .EstateActions .button {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+
+  .EstateActions a + a {
+    margin-left: 0px;
+  }
+}

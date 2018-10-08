@@ -1,22 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Icon, Card } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
 import Expiration from 'components/Expiration'
-import ParcelTags from 'components/ParcelTags'
 import { parcelType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { isMortgageActive } from 'shared/mortgage'
 import { AUCTION_DATE } from 'shared/parcel'
 import { getOpenPublication } from 'shared/asset'
 
-import { formatDate } from 'lib/utils'
+import { formatDate, distanceInWordsToNow } from 'lib/utils'
 import { getMortgageStatus } from 'shared/mortgage'
 import './ParcelCard.css'
+import ParcelAttributes from 'components/ParcelAttributes'
 
 export default class ParcelCard extends React.PureComponent {
   static propTypes = {
@@ -72,13 +72,19 @@ export default class ParcelCard extends React.PureComponent {
 
           {!publication &&
             !showMortgage && (
-              <Card.Meta>
-                {t('global.acquired_at', {
-                  date: formatDate(
+              <Card.Meta
+                title={formatDate(
+                  parcel.last_transferred_at
+                    ? parseInt(parcel.last_transferred_at, 10)
+                    : AUCTION_DATE,
+                  'MMMM Do, YYYY'
+                )}
+              >
+                {t('global.acquired_ago', {
+                  date: distanceInWordsToNow(
                     parcel.last_transferred_at
                       ? parseInt(parcel.last_transferred_at, 10)
-                      : AUCTION_DATE,
-                    'MMMM Do, YYYY'
+                      : AUCTION_DATE
                   )
                 })}
               </Card.Meta>
@@ -96,13 +102,7 @@ export default class ParcelCard extends React.PureComponent {
                 </p>
               </React.Fragment>
             )}
-          <div className="footer">
-            <div className="coords">
-              <Icon name="marker" />
-              <span className="coord">{parcel.id}</span>
-            </div>
-            <ParcelTags parcel={parcel} size="small" />
-          </div>
+          <ParcelAttributes parcel={parcel} />
         </Card.Content>
       </React.Fragment>
     )

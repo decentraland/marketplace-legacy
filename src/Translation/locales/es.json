@@ -163,7 +163,7 @@
     "terms": "Términos & Condiciones"
   },
   "global": {
-    "acquired_at": "Adquirido en {date}",
+    "acquired_ago": "Adquirido {date}",
     "activity": "Actividad",
     "add": "añadir",
     "address_placeholder": "0x...",

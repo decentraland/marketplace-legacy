@@ -1,0 +1,29 @@
+.ParcelAttributes {
+  display: flex;
+  flex-direction: row nowrap;
+  align-items: center;
+}
+
+.ParcelAttributes:after {
+  display: none;
+}
+
+.ParcelAttributes .coords {
+  padding: 2px 9px 2px 7px;
+  margin-right: 6px;
+  font-size: 11px;
+  border: 1px solid var(--gray);
+  color: var(--text);
+  border-radius: 4px;
+}
+
+.ParcelAttributes .coords .marker.icon {
+  font-size: 12px;
+  margin-right: 3px;
+  line-height: 0.9;
+}
+
+.ParcelAttributes:hover .coords {
+  color: var(--red);
+  border-color: var(--red);
+}

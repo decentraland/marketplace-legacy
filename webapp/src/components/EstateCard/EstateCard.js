@@ -12,7 +12,7 @@ import Mana from 'components/Mana'
 import { estateType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { calculateMapProps } from 'shared/estate'
-import { formatDate } from 'lib/utils'
+import { formatDate, distanceInWordsToNow } from 'lib/utils'
 import { getOpenPublication } from 'shared/asset'
 
 import './EstateCard.css'
@@ -66,18 +66,21 @@ export default class EstateCard extends React.PureComponent {
             )}
 
             {!publication && (
-              <Card.Meta>
+              <Card.Meta
+                title={formatDate(
+                  parseInt(estate.last_transferred_at || estate.created_at, 10),
+                  'MMMM Do, YYYY'
+                )}
+              >
                 {estate.last_transferred_at
-                  ? t('global.acquired_at', {
-                      date: formatDate(
-                        parseInt(estate.last_transferred_at, 10),
-                        'MMMM Do, YYYY'
+                  ? t('global.acquired_ago', {
+                      date: distanceInWordsToNow(
+                        parseInt(estate.last_transferred_at, 10)
                       )
                     })
                   : t('global.created_at', {
-                      date: formatDate(
-                        parseInt(estate.created_at, 10),
-                        'MMMM Do, YYYY'
+                      date: distanceInWordsToNow(
+                        parseInt(estate.created_at, 10)
                       )
                     })}
               </Card.Meta>
