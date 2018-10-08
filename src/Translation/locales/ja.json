@@ -164,7 +164,7 @@
     "terms": "利用規約"
   },
   "global": {
-    "acquired_at": "{date}に取得済み",
+    "acquired_ago": "{date}に取得済み",
     "activity": "取引履歴",
     "add": "追加する",
     "address_placeholder": "0x...",

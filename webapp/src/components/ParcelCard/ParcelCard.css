@@ -73,33 +73,11 @@
   margin-left: auto;
 }
 
-.ParcelCard .footer {
+.ParcelCard .ParcelAttributes {
   margin-top: 20px;
-  display: flex;
-  flex-direction: row nowrap;
-  align-items: center;
 }
 
-.ParcelCard .footer:after {
-  display: none;
-}
-
-.ParcelCard .coords {
-  padding: 2px 9px 2px 7px;
-  margin-right: 6px;
-  font-size: 11px;
-  border: 1px solid var(--gray);
-  color: var(--text);
-  border-radius: 4px;
-}
-
-.ParcelCard .coords .marker.icon {
-  font-size: 12px;
-  margin-right: 3px;
-  line-height: 0.9;
-}
-
-.ParcelCard:hover .coords {
+.ParcelCard:hover .ParcelAttributes .coords {
   color: var(--red);
   border-color: var(--red);
 }

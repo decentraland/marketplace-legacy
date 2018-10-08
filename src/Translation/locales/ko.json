@@ -163,7 +163,7 @@
     "terms": "이용 약관"
   },
   "global": {
-    "acquired_at": "TK0에서 획득",
+    "acquired_ago": "{date}에서 획득",
     "activity": "활동",
     "add": "더하다",
     "address_placeholder": "0x...",

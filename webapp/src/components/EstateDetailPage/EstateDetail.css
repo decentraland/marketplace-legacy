@@ -1,10 +1,3 @@
-@media (max-width: 768px) {
-  .EstateDetail {
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-}
-
 .Page > .EstateDetail {
   color: var(--text);
   font-size: 15px;
@@ -22,6 +15,7 @@
 .EstateDetail .estate-title .LandAmount {
   display: inline-flex;
   font-size: 20px;
+  transform: translateY(-2px);
 }
 
 .EstateDetail .estate-description {
@@ -120,4 +114,24 @@
 
 .EstateDetail.empty .empty-estate-message {
   color: var(--gray);
+}
+
+.EstateDetail .ParcelAttributes {
+  margin-right: 16px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .EstateDetail {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .EstateDetail .estate-owner-container {
+    text-align: left !important;
+  }
+
+  .EstateDetail .ParcelAttributes {
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
 }

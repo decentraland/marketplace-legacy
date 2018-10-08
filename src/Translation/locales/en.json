@@ -54,7 +54,7 @@
     },
     "publication": {
       "buy": "Buy",
-      "price": "price"
+      "price": "Price"
     }
   },
   "asset_publish": {
@@ -164,7 +164,7 @@
     "terms": "Terms & Conditions"
   },
   "global": {
-    "acquired_at": "Acquired at {date}",
+    "acquired_ago": "Acquired {date}",
     "activity": "Activity",
     "add": "add",
     "address_placeholder": "0x...",

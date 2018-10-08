@@ -40,7 +40,7 @@ export default class EstateActions extends React.PureComponent {
             ) : (
               <Link to={locations.sellEstate(id)}>
                 <Button size="tiny">
-                  <Icon name="exchange" />
+                  <Icon name="tag" />
                   {t('asset_detail.actions.sell')}
                 </Button>
               </Link>

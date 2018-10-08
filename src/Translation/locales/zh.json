@@ -155,7 +155,7 @@
     "terms": "服务条款"
   },
   "global": {
-    "acquired_at": "获得日期 {date}",
+    "acquired_ago": "获得日期 {date}",
     "activity": "活动",
     "add": "加",
     "address_placeholder": "0x...",
