@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import { PUBLICATION_STATUS } from 'shared/publication'
 import { PAGE_SIZE } from './Pagination'
+import { ASSET_TYPES } from '../shared/asset'
 
 export class Location {
   static buildUrl(origin, queryParams) {
@@ -18,6 +19,10 @@ export class Location {
     return this.getOptionFromRouter('page')
   }
 
+  getAssetTypeFromRouter() {
+    return this.getOptionFromRouter('assetType')
+  }
+
   getOptionsFromRouter(optionNames) {
     return optionNames.reduce((result, option) => {
       result[option] = this.getOptionFromRouter(option)
@@ -26,7 +31,7 @@ export class Location {
   }
 
   getOptionFromRouter(optionName) {
-    const { sort_by, sort_order, page } = this.query
+    const { sort_by, sort_order, page, asset_type } = this.query
     let value = null
 
     switch (optionName) {
@@ -47,6 +52,9 @@ export class Location {
         break
       case 'status':
         value = PUBLICATION_STATUS.open
+        break
+      case 'assetType':
+        value = asset_type || ASSET_TYPES.parcel
         break
       default:
         value = null

@@ -13,13 +13,7 @@ import {
   BUY_FAILURE,
   CANCEL_SALE_REQUEST,
   CANCEL_SALE_SUCCESS,
-  CANCEL_SALE_FAILURE,
-  FETCH_ALL_PUBLICATIONS_REQUEST,
-  FETCH_ALL_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_PUBLICATIONS_FAILURE,
-  FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
-  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_MARKETPLACE_PUBLICATIONS_FAILURE
+  CANCEL_SALE_FAILURE
 } from './actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
@@ -42,18 +36,14 @@ const INITIAL_STATE = {
 export function publicationReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_ASSET_PUBLICATIONS_REQUEST:
-    case FETCH_PUBLICATIONS_REQUEST:
-    case FETCH_ALL_PUBLICATIONS_REQUEST:
-    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST: {
+    case FETCH_PUBLICATIONS_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_ASSET_PUBLICATIONS_SUCCESS:
-    case FETCH_PUBLICATIONS_SUCCESS:
-    case FETCH_ALL_PUBLICATIONS_SUCCESS:
-    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS: {
+    case FETCH_PUBLICATIONS_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -65,9 +55,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_ASSET_PUBLICATIONS_FAILURE:
-    case FETCH_PUBLICATIONS_FAILURE:
-    case FETCH_ALL_PUBLICATIONS_FAILURE:
-    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_FAILURE: {
+    case FETCH_PUBLICATIONS_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

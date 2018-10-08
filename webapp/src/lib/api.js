@@ -9,6 +9,7 @@ const FILTER_DEFAULTS = {
   offset: 0,
   sortBy: 'created_at',
   sortOrder: 'asc',
+  assetType: null,
   status: PUBLICATION_STATUS.open
 }
 
@@ -32,31 +33,23 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}`)
   }
 
-  fetchAssets(assetName, options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
-      options
-    )
-
-    return this.request('get', `/${assetName}`, {
+  fetchMarketplace(options = FILTER_DEFAULTS) {
+    const {
       limit,
       offset,
-      sort_by: sortBy,
-      sort_order: sortOrder,
+      sortBy,
+      sortOrder,
+      assetType,
       status
-    })
-  }
-
-  fetchMarketplace(options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
-      options
-    )
+    } = getFilterOptions(options)
 
     return this.request('get', `/marketplace`, {
       limit,
       offset,
+      status,
+      asset_type: assetType,
       sort_by: sortBy,
-      sort_order: sortOrder,
-      status
+      sort_order: sortOrder
     })
   }
 

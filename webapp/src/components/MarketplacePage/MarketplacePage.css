@@ -31,7 +31,12 @@
   opacity: 0.8 !important;
 }
 
-.MarketplacePage .ui.label.active {
+.MarketplacePage .ui.menu .item > .label {
+  background-color: var(--dark-gray);
+  color: white;
+}
+
+.MarketplacePage .ui.menu .item > .label.active {
   background-color: var(--primary);
 }
 

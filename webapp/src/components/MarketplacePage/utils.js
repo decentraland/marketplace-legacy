@@ -67,14 +67,16 @@ export function getOptionsFromRouter(location) {
     'offset',
     'sortBy',
     'sortOrder',
+    'assetType',
     'status'
   ])
 }
 
-export function buildUrl({ tab, page, sortBy, sortOrder }) {
-  return Location.buildUrl(locations.marketplace(tab), {
+export function buildUrl({ page, sortBy, sortOrder, assetType }) {
+  return Location.buildUrl(locations.marketplace(), {
     page,
     sort_by: sortBy,
-    sort_order: sortOrder
+    sort_order: sortOrder,
+    asset_type: assetType
   })
 }

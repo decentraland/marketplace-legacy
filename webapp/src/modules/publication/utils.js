@@ -18,9 +18,12 @@ export function getNFTAddressByType(type) {
 }
 
 export function getTypeByMarketplaceTab(tab) {
-  if (tab === MARKETPLACE_PAGE_TABS.parcels) {
-    return ASSET_TYPES.parcel
-  } else if (tab === MARKETPLACE_PAGE_TABS.estates) {
-    return ASSET_TYPES.estate
+  switch (tab) {
+    case MARKETPLACE_PAGE_TABS.parcels:
+      return ASSET_TYPES.parcel
+    case MARKETPLACE_PAGE_TABS.estates:
+      return ASSET_TYPES.estate
+    default:
+      return ASSET_TYPES.parcel
   }
 }

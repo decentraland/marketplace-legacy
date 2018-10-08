@@ -1,88 +1,6 @@
 import { buildTransactionAction } from 'modules/transaction/utils'
 
 // Fetch Publications
-
-export const FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST =
-  '[Request] Fetch All Marketplace Publications'
-export const FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS =
-  '[Success] Fetch All Marketplace Publications'
-export const FETCH_ALL_MARKETPLACE_PUBLICATIONS_FAILURE =
-  '[Failure] Fetch All Marketplace Publications'
-
-export function fetchAllMarketplacePublicationsRequest({
-  limit,
-  offset,
-  sortBy,
-  sortOrder,
-  status
-} = {}) {
-  return {
-    type: FETCH_ALL_MARKETPLACE_PUBLICATIONS_REQUEST,
-    limit,
-    offset,
-    sortBy,
-    sortOrder,
-    status
-  }
-}
-
-export function fetchAllMarketplacePublicationsSuccess({
-  assets,
-  totals,
-  publications
-}) {
-  return {
-    type: FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS,
-    assets,
-    publications,
-    totals
-  }
-}
-
-export function fetchAllMarketplacePublicationsFailure(error) {
-  return {
-    type: FETCH_ALL_MARKETPLACE_PUBLICATIONS_FAILURE,
-    error
-  }
-}
-
-export const FETCH_ALL_PUBLICATIONS_REQUEST = '[Request] Fetch All Publications'
-export const FETCH_ALL_PUBLICATIONS_SUCCESS = '[Success] Fetch All Publications'
-export const FETCH_ALL_PUBLICATIONS_FAILURE = '[Failure] Fetch All Publications'
-
-export function fetchAllPublicationsRequest({
-  limit,
-  offset,
-  sortBy,
-  sortOrder,
-  status
-} = {}) {
-  return {
-    type: FETCH_ALL_PUBLICATIONS_REQUEST,
-    limit,
-    offset,
-    sortBy,
-    sortOrder,
-    status
-  }
-}
-
-export function fetchAllPublicationsSuccess({ assets, totals, publications }) {
-  return {
-    type: FETCH_ALL_PUBLICATIONS_SUCCESS,
-    assets,
-    publications,
-    totals
-  }
-}
-
-export function fetchAllPublicationsFailure(error) {
-  return {
-    type: FETCH_ALL_PUBLICATIONS_FAILURE,
-    error
-  }
-}
-
 export const FETCH_PUBLICATIONS_REQUEST = '[Request] Fetch Publications'
 export const FETCH_PUBLICATIONS_SUCCESS = '[Success] Fetch Publications'
 export const FETCH_PUBLICATIONS_FAILURE = '[Failure] Fetch Publications'
@@ -93,7 +11,7 @@ export function fetchPublicationsRequest({
   sortBy,
   sortOrder,
   status,
-  tab
+  assetType
 } = {}) {
   return {
     type: FETCH_PUBLICATIONS_REQUEST,
@@ -102,7 +20,7 @@ export function fetchPublicationsRequest({
     sortBy,
     sortOrder,
     status,
-    tab
+    assetType
   }
 }
 
@@ -110,14 +28,16 @@ export function fetchPublicationsSuccess({
   assets,
   total,
   publications,
-  assetType
+  assetType,
+  isGrid
 }) {
   return {
     type: FETCH_PUBLICATIONS_SUCCESS,
     assets,
     assetType,
     publications,
-    total
+    total,
+    isGrid
   }
 }
 

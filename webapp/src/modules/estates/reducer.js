@@ -30,8 +30,6 @@ import {
   CANCEL_SALE_SUCCESS,
   PUBLISH_SUCCESS,
   FETCH_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_PUBLICATIONS_SUCCESS,
-  FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS,
   FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { ASSET_TYPES } from 'shared/asset'
@@ -75,24 +73,6 @@ export function estatesReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_PUBLICATIONS_SUCCESS: {
-      const { assetType, assets } = action
-      if (assetType === ASSET_TYPES.estate) {
-        return {
-          ...state,
-          loading: loadingReducer(state.loading, action),
-          error: null,
-          data: {
-            ...state.data,
-            ...assets.reduce((acc, estate) => {
-              return { ...acc, [estate.id]: normalizeEstate(estate) }
-            }, state.data)
-          }
-        }
-      }
-      return state
-    }
-    case FETCH_ALL_MARKETPLACE_PUBLICATIONS_SUCCESS:
-    case FETCH_ALL_PUBLICATIONS_SUCCESS: {
       const { assets } = action
       const estates = assets.filter(asset => isEstate(asset))
       return {
