@@ -113,7 +113,9 @@ export default class SettingsForm extends React.PureComponent {
             )}
           />
         )}
-        <div className="title">{contractName}</div>
+        <div className="title">
+          {token.getSymbolByContractName(tokenContractName)}
+        </div>
         <div className="description">
           <T
             id="authorization.approve"
