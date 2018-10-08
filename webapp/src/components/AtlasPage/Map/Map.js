@@ -7,9 +7,9 @@ import './Map.css'
 
 export default class MapComponent extends React.Component {
   handleChange = ({ center }) => {
-    const { onChange, selected } = this.props
+    const { onChange } = this.props
     if (center.x !== this.props.center.x || center.y !== this.props.center.y) {
-      onChange(center.x, center.y, selected ? selected.id : null)
+      onChange(center.x, center.y)
     }
   }
 

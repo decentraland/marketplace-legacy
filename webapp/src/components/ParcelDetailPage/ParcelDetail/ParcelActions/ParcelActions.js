@@ -77,7 +77,7 @@ export default class ParcelActions extends React.PureComponent {
             </Link>
             {isFeatureEnabled('MORTGAGES') && (
               <Link to={locations.buyParcelByMortgage(x, y)}>
-                <Button primary size="large">
+                <Button size="large">
                   {t('parcel_detail.publication.mortgage')}
                 </Button>
               </Link>

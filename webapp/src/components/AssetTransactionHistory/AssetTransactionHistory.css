@@ -1,3 +1,7 @@
+.ui.grid.AssetTransactionHistory {
+  margin-bottom: 16px;
+}
+
 .AssetTransactionHistory .transaction-history-header {
   background-color: var(--darker-gray);
   border-radius: 10px 10px 0px 0px;
