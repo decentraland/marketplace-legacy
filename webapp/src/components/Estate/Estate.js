@@ -18,25 +18,6 @@ export default class Estate extends React.PureComponent {
     estate: null
   }
 
-  constructor(props) {
-    super(props)
-    this.shouldRefresh = false
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { estate } = this.props
-    if (estate && nextProps.estate && estate.id !== nextProps.estate.id) {
-      this.shouldRefresh = true
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.shouldRefresh) {
-      this.props.onLoaded()
-      this.shouldRefresh = false
-    }
-  }
-
   isConnected = address => {
     return address.estate_ids && address.estate_ids.length > 0
   }

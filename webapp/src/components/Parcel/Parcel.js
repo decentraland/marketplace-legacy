@@ -15,29 +15,6 @@ export default class Parcel extends React.PureComponent {
     parcel: null
   }
 
-  constructor(props) {
-    super(props)
-    this.shouldRefresh = false
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { parcel } = this.props
-    if (
-      parcel &&
-      nextProps.parcel &&
-      (parcel.x !== nextProps.parcel.x || parcel.y !== nextProps.parcel.y)
-    ) {
-      this.shouldRefresh = true
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.shouldRefresh) {
-      this.props.onLoaded()
-      this.shouldRefresh = false
-    }
-  }
-
   isConnected(address) {
     return address.parcel_ids && address.parcel_ids.length > 0
   }
