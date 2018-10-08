@@ -31,13 +31,13 @@
   opacity: 0.8 !important;
 }
 
-.MarketplacePage .ui.label {
-  background-color: var(--dark-gray) !important;
-  color: white !important;
+.MarketplacePage .ui.menu .item > .label {
+  background-color: var(--dark-gray);
+  color: white;
 }
 
-.MarketplacePage .ui.label.active {
-  background-color: var(--primary) !important;
+.MarketplacePage .ui.menu .item > .label.active {
+  background-color: var(--primary);
 }
 
 .MarketplacePage .menu.right > .item {

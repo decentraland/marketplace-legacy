@@ -23,15 +23,12 @@ import {
   cancelSaleSuccess,
   cancelSaleFailure
 } from './actions'
-import {
-  getNFTAddressByType,
-  isLegacyPublication,
-  getTypeByMarketplaceTab
-} from './utils'
+import { getNFTAddressByType, isLegacyPublication } from './utils'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_ESTATE_SUCCESS } from 'modules/estates/actions'
 import { ASSET_TYPES } from 'shared/asset'
 import { getData as getEstates } from 'modules/estates/selectors'
+import { Location } from 'lib/Location'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
@@ -48,15 +45,18 @@ export function* publicationSaga() {
 
 function* handlePublicationsRequest(action) {
   try {
-    const { assets, total, publications, type } = yield call(() =>
+    const { assets, total, publications, assetType } = yield call(() =>
       fetchPublications(action)
     )
+    const location = yield select(state => state.router.location)
+    const currentAssetType = new Location(location).getAssetTypeFromRouter()
     yield put(
       fetchPublicationsSuccess({
         assets,
         total,
         publications,
-        assetType: type
+        assetType,
+        isGrid: assetType == null || assetType === currentAssetType
       })
     )
   } catch (error) {
@@ -192,23 +192,23 @@ function* handleFetchEstateSuccess(action) {
 }
 
 function* fetchPublications(action) {
-  const { limit, offset, sortBy, sortOrder, status, tab } = action
-  const type = getTypeByMarketplaceTab(tab)
+  const { limit, offset, sortBy, sortOrder, status, assetType } = action
   const { assets, total } = yield call(() =>
-    api.fetchMarketplace(type, {
+    api.fetchMarketplace({
       limit,
       offset,
       sortBy,
       sortOrder,
-      status
+      status,
+      assetType
     })
   )
 
   return {
     publications: assets.map(asset => asset.publication),
-    type,
     total,
-    assets
+    assets,
+    ...action
   }
 }
 

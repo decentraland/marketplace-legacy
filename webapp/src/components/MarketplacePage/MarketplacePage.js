@@ -24,12 +24,13 @@ import {
 import { MARKETPLACE_PAGE_TABS } from 'locations'
 
 import './MarketplacePage.css'
+import { isParcel } from '../../shared/parcel'
+import { getTypeByMarketplaceTab } from 'modules/publication/utils'
 
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
-    parcels: PropTypes.arrayOf(parcelType),
-    estates: PropTypes.arrayOf(estateType),
-    tab: PropTypes.string.isRequired,
+    assets: PropTypes.arrayOf(PropTypes.oneOfType([parcelType, estateType])),
+    assetType: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
     totals: PropTypes.object.isRequired,
@@ -50,12 +51,12 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { page, sortBy, sortOrder, tab } = this.props
+    const { page, sortBy, sortOrder, assetType } = this.props
     if (
       page !== nextProps.page ||
       sortBy !== nextProps.sortBy ||
       sortOrder !== nextProps.sortOrder ||
-      tab !== nextProps.tab
+      assetType !== nextProps.assetType
     ) {
       this.shouldFetchPublications = true
       this.scrollToTop()
@@ -70,14 +71,11 @@ export default class MarketplacePage extends React.PureComponent {
   }
 
   fetchAllPublications() {
-    const { onFetchPublications, tab } = this.props
-    for (let type in MARKETPLACE_PAGE_TABS) {
-      if (!this.isActive(type)) {
-        onFetchPublications(type)
-      }
+    const { onFetchPublications } = this.props
+    for (let tab in MARKETPLACE_PAGE_TABS) {
+      const type = getTypeByMarketplaceTab(tab)
+      onFetchPublications(type)
     }
-    // fetch the active tab after the others
-    onFetchPublications(tab)
   }
 
   scrollToTop() {
@@ -123,32 +121,26 @@ export default class MarketplacePage extends React.PureComponent {
     )
   }
 
-  renderEstatePublications() {
-    const { estates } = this.props
+  renderPublications() {
+    const { assets } = this.props
     return (
       <Card.Group stackable={true}>
-        {estates.map((estate, index) => (
-          <EstateCard
-            key={estate.id + index}
-            estate={estate}
-            debounce={index * 100}
-          />
-        ))}
-      </Card.Group>
-    )
-  }
-
-  renderParcelPublications() {
-    const { parcels } = this.props
-    return (
-      <Card.Group stackable={true}>
-        {parcels.map((parcel, index) => (
-          <ParcelCard
-            key={parcel.id + index}
-            parcel={parcel}
-            debounce={index * 100}
-          />
-        ))}
+        {assets.map(
+          (asset, index) =>
+            isParcel(asset) ? (
+              <ParcelCard
+                key={asset.id}
+                parcel={asset}
+                debounce={index * 100}
+              />
+            ) : (
+              <EstateCard
+                key={asset.id}
+                estate={asset}
+                debounce={index * 100}
+              />
+            )
+        )}
       </Card.Group>
     )
   }
@@ -157,13 +149,14 @@ export default class MarketplacePage extends React.PureComponent {
     const { onNavigate } = this.props
     const url = buildUrl({
       page: 1,
-      tab: name
+      assetType: getTypeByMarketplaceTab(name)
     })
     onNavigate(url)
   }
 
   isActive(tab) {
-    return tab === this.props.tab
+    const assetType = getTypeByMarketplaceTab(tab)
+    return assetType === this.props.assetType
   }
 
   render() {
@@ -227,14 +220,7 @@ export default class MarketplacePage extends React.PureComponent {
         </Container>
         <Container className={`publications ${isLoading ? 'loading' : ''}`}>
           {isEmpty && !isLoading && this.renderEmpty()}
-          {!isEmpty &&
-            !isLoading &&
-            this.isActive(MARKETPLACE_PAGE_TABS.parcels) &&
-            this.renderParcelPublications()}
-          {!isEmpty &&
-            !isLoading &&
-            this.isActive(MARKETPLACE_PAGE_TABS.estates) &&
-            this.renderEstatePublications()}
+          {!isEmpty && !isLoading && this.renderPublications()}
           {isLoading && this.renderLoading()}
         </Container>
         <Container textAlign="center" className="pagination">

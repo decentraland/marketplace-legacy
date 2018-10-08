@@ -1,40 +1,33 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { isLoading } from 'modules/publication/selectors'
-import {
-  getParcels,
-  getEstates,
-  getTotals
-} from 'modules/ui/marketplace/selectors'
+import { getAssets, getTotals } from 'modules/ui/marketplace/selectors'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
 import { navigateTo } from 'modules/location/actions'
 import { Pagination } from 'lib/Pagination'
-import { MARKETPLACE_PAGE_TABS } from 'locations'
 import { getOptionsFromRouter } from './utils'
 import MarketplacePage from './MarketplacePage'
+import { ASSET_TYPES } from '../../shared/asset'
 
-const mapState = (state, { location, match }) => {
-  let { tab } = match.params
-  const { limit, offset, sortBy, sortOrder, status } = getOptionsFromRouter(
-    location
-  )
-  const parcels = getParcels(state)
-  const estates = getEstates(state)
+const mapState = (state, { location }) => {
+  let {
+    limit,
+    offset,
+    sortBy,
+    sortOrder,
+    assetType,
+    status
+  } = getOptionsFromRouter(location)
+  const assets = getAssets(state)
   const totals = getTotals(state)
 
-  let isEmpty, pagination
-  if (tab === MARKETPLACE_PAGE_TABS.parcels) {
-    isEmpty = parcels.length === 0
-    pagination = new Pagination(totals.parcel)
-  } else if (tab === MARKETPLACE_PAGE_TABS.estates) {
-    isEmpty = estates.length === 0
-    pagination = new Pagination(totals.estate)
-  }
+  const isEmpty = assets.length === 0
+  const pagination = new Pagination(assets)
   const page = pagination.getCurrentPage(offset)
   const pages = pagination.getPageCount()
 
-  if (!Object.values(MARKETPLACE_PAGE_TABS).includes(tab)) {
-    tab = MARKETPLACE_PAGE_TABS.parcels
+  if (!Object.values(ASSET_TYPES).includes(assetType)) {
+    assetType = ASSET_TYPES.parcel
   }
 
   return {
@@ -45,25 +38,23 @@ const mapState = (state, { location, match }) => {
     status,
     page,
     pages,
-    parcels,
-    estates,
-    tab,
+    assets,
+    assetType,
     isEmpty,
     totals,
     isLoading: isLoading(state)
   }
 }
 
-const mapDispatch = (dispatch, { location, match }) => {
-  let { tab } = match.params
+const mapDispatch = (dispatch, { location }) => {
   return {
-    onFetchPublications: assetType =>
-      dispatch(
-        fetchPublicationsRequest({
-          ...getOptionsFromRouter(location),
-          tab: assetType || tab
-        })
-      ),
+    onFetchPublications: assetType => {
+      let options = getOptionsFromRouter(location)
+      if (assetType) {
+        options.assetType = assetType // override router option
+      }
+      dispatch(fetchPublicationsRequest(options))
+    },
     onNavigate: url => dispatch(navigateTo(url))
   }
 }

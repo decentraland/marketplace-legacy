@@ -9,6 +9,7 @@ const FILTER_DEFAULTS = {
   offset: 0,
   sortBy: 'created_at',
   sortOrder: 'asc',
+  assetType: null,
   status: PUBLICATION_STATUS.open
 }
 
@@ -32,10 +33,15 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}`)
   }
 
-  fetchMarketplace(assetType, options = FILTER_DEFAULTS) {
-    const { limit, offset, sortBy, sortOrder, status } = getFilterOptions(
-      options
-    )
+  fetchMarketplace(options = FILTER_DEFAULTS) {
+    const {
+      limit,
+      offset,
+      sortBy,
+      sortOrder,
+      assetType,
+      status
+    } = getFilterOptions(options)
 
     return this.request('get', `/marketplace`, {
       limit,
