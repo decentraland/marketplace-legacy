@@ -22,7 +22,7 @@ export function marketplaceReducer(state = INITIAL_STATE, action) {
           [assetType]: total
         }
       }
-      let newGrid = action.isGrid
+      const newGrid = action.isGrid
         ? assets.map(asset => ({
             id: asset.id,
             type: asset.publication.asset_type

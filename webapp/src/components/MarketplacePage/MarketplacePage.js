@@ -10,9 +10,8 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
-
-import ParcelCard from 'components/ParcelCard'
-import EstateCard from 'components/EstateCard'
+import AssetCard from 'components/AssetCard'
+import { getTypeByMarketplaceTab } from 'modules/publication/utils'
 import { parcelType, estateType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import {
@@ -24,8 +23,6 @@ import {
 import { MARKETPLACE_PAGE_TABS } from 'locations'
 
 import './MarketplacePage.css'
-import { isParcel } from '../../shared/parcel'
-import { getTypeByMarketplaceTab } from 'modules/publication/utils'
 
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
@@ -125,22 +122,9 @@ export default class MarketplacePage extends React.PureComponent {
     const { assets } = this.props
     return (
       <Card.Group stackable={true}>
-        {assets.map(
-          (asset, index) =>
-            isParcel(asset) ? (
-              <ParcelCard
-                key={asset.id}
-                parcel={asset}
-                debounce={index * 100}
-              />
-            ) : (
-              <EstateCard
-                key={asset.id}
-                estate={asset}
-                debounce={index * 100}
-              />
-            )
-        )}
+        {assets.map((asset, index) => (
+          <AssetCard key={asset.id} asset={asset} debounce={index * 100} />
+        ))}
       </Card.Group>
     )
   }
