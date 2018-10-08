@@ -32,6 +32,7 @@ export default class Asset extends React.PureComponent {
   constructor(props) {
     super(props)
     this.isNavigatingAway = false
+    this.shouldRefresh = false
   }
 
   componentWillMount() {
@@ -41,6 +42,13 @@ export default class Asset extends React.PureComponent {
     }
 
     onLoaded()
+  }
+
+  componentDidUpdate() {
+    if (this.shouldRefresh) {
+      this.props.onLoaded()
+      this.shouldRefresh = false
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -69,6 +77,10 @@ export default class Asset extends React.PureComponent {
 
     if (ownerIsNotAllowed || assetShouldBeOnSale || !value) {
       this.redirect()
+    }
+
+    if (this.props.value && value && this.props.value.id !== value.id) {
+      this.shouldRefresh = true
     }
   }
 
