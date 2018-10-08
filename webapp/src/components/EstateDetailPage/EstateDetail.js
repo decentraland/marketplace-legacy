@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { Icon, Header, Grid, Container, Button } from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
@@ -14,6 +15,9 @@ import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
 import AssetTransactionHistory from 'components/AssetTransactionHistory'
 import './EstateDetail.css'
+import LandAmount from 'components/LandAmount'
+import { locations } from 'locations'
+import { calculateMapProps } from '../../shared/estate'
 
 const WITH_ACTION_BUTTONS_WIDTH = 8
 const WITHOUT_ACTION_BUTTONS_WIDTH = 16
@@ -59,7 +63,7 @@ export default class EstateDetail extends React.PureComponent {
     }
 
     const publication = getOpenPublication(estate, publications)
-
+    const { center } = calculateMapProps(estate.data.parcels)
     return (
       <div className="EstateDetail">
         <div className="parcel-preview" title={t('parcel_detail.view')}>
@@ -74,7 +78,16 @@ export default class EstateDetail extends React.PureComponent {
               >
                 <Header size="large">
                   <p className="estate-title">
-                    {estate.data.name || t('estate_select.detail')}
+                    {estate.data.name || t('estate_select.detail')}{' '}
+                    <Link
+                      to={locations.parcelMapDetail(
+                        center.x,
+                        center.y,
+                        estate.id
+                      )}
+                    >
+                      <LandAmount value={estate.data.parcels.length} />
+                    </Link>
                   </p>
                   {estate.data.description && (
                     <p className="estate-description">

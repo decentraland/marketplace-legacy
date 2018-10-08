@@ -15,6 +15,12 @@
   margin-bottom: 5px;
 }
 
+.EstateDetail .estate-title .LandAmount {
+  display: inline-flex;
+  margin-left: 16px;
+  font-size: 20px;
+}
+
 .EstateDetail .estate-description {
   color: var(--gray);
   font-size: 15px;
@@ -94,7 +100,7 @@
 .EstateDetail .details .selected-parcels.column {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .selected-parcels .ParcelCard {
@@ -111,4 +117,10 @@
 
 .EstateDetail.empty .empty-estate-message {
   color: var(--gray);
+}
+
+@media (max-width: 768px) {
+  .EstateDetail .estate-title .LandAmount {
+    margin-left: 0px;
+  }
 }
