@@ -78,7 +78,7 @@ export default class EstateDetail extends React.PureComponent {
               >
                 <Header size="large">
                   <p className="estate-title">
-                    {estate.data.name || t('estate_select.detail')}{' '}
+                    <span>{estate.data.name || t('estate_select.detail')}</span>
                     <Link
                       to={locations.parcelMapDetail(
                         center.x,
@@ -112,7 +112,7 @@ export default class EstateDetail extends React.PureComponent {
                     </Button>
                   </div>
                 ) : (
-                  <span className="is-address">
+                  <span className="owned-by">
                     <span>{t('global.owned_by')}</span>
                     <AddressBlock address={estate.owner} scale={4} />
                   </span>
