@@ -72,7 +72,7 @@ export default class PublishEstatePage extends React.PureComponent {
                   <Message
                     warning
                     icon="warning sign"
-                    header={t('authorization.disallowed')}
+                    header={t('global.unauthorized')}
                     content={
                       <T
                         id="asset_publish.please_authorize"
