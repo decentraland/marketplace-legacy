@@ -48,21 +48,6 @@
   margin-bottom: 0px;
 }
 
-.selected-parcels .ParcelCard {
-  margin-top: 20px !important;
-  margin-bottom: 0;
-  margin-right: 25px;
-}
-
-.ParcelCard .name {
-  color: var(--text);
-}
-
-.ParcelCard:hover .coords {
-  color: var(--text);
-  border: 1px solid var(--gray);
-}
-
 .tx-label {
   text-align: left;
   font-size: 14px;
@@ -70,7 +55,12 @@
   color: var(--text);
 }
 
+.EstateSelect .ParcelAttributes {
+  margin-right: 16px;
+  margin-top: 20px;
+}
+
 .EstateSelect .selected-parcels-headline.column {
   margin-top: 20px;
-  text-align: right
+  text-align: right;
 }

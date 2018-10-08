@@ -23,7 +23,7 @@
   line-height: 0.9;
 }
 
-.ParcelAttributes:hover .coords {
+a .ParcelAttributes:hover .coords {
   color: var(--red);
   border-color: var(--red);
 }

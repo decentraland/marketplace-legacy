@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 
 import AssetDetailPage from 'components/AssetDetailPage'
-import ParcelCard from 'components/ParcelCard'
+import ParcelAttributes from 'components/ParcelAttributes'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'
@@ -239,10 +239,9 @@ export default class EstateSelect extends React.PureComponent {
                   parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelCard
+                      <ParcelAttributes
                         key={parcel.id}
                         parcel={parcel}
-                        withMap={false}
                         withLink={false}
                       />
                     ) : null
