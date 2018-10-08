@@ -65,10 +65,7 @@ export const locations = {
   payMortgageParcel: (x = params.x, y = params.y) => `/mortgages/${x}/${y}/pay`,
 
   // General routes
-
-  marketplacePageDefault: (tab = MARKETPLACE_PAGE_TABS.parcels) =>
-    locations.marketplace(MARKETPLACE_PAGE_TABS.parcels),
-  marketplace: (tab = ':tab') => `/marketplace/${tab}`,
+  marketplace: () => `/marketplace`,
 
   buyMana: () => '/buy-mana',
   transferMana: () => '/transfer-mana',

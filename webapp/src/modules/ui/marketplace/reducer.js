@@ -1,6 +1,5 @@
 import { FETCH_PUBLICATIONS_SUCCESS } from 'modules/publication/actions'
 import { ASSET_TYPES } from 'shared/asset'
-import { isParcel } from 'shared/parcel'
 
 const initTotals = {}
 for (let type in ASSET_TYPES) {
@@ -23,15 +22,15 @@ export function marketplaceReducer(state = INITIAL_STATE, action) {
           [assetType]: total
         }
       }
+      const newGrid = action.isGrid
+        ? assets.map(asset => ({
+            id: asset.id,
+            type: asset.publication.asset_type
+          }))
+        : state.grid
       return {
         ...state,
-        grid: assets.map(asset => {
-          let type = assetType
-          if (!type) {
-            type = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
-          }
-          return { id: asset.id, type }
-        }),
+        grid: newGrid,
         totals: newTotals
       }
     }

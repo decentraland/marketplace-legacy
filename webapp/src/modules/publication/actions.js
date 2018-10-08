@@ -11,7 +11,7 @@ export function fetchPublicationsRequest({
   sortBy,
   sortOrder,
   status,
-  tab
+  assetType
 } = {}) {
   return {
     type: FETCH_PUBLICATIONS_REQUEST,
@@ -20,7 +20,7 @@ export function fetchPublicationsRequest({
     sortBy,
     sortOrder,
     status,
-    tab
+    assetType
   }
 }
 
@@ -28,14 +28,16 @@ export function fetchPublicationsSuccess({
   assets,
   total,
   publications,
-  assetType
+  assetType,
+  isGrid
 }) {
   return {
     type: FETCH_PUBLICATIONS_SUCCESS,
     assets,
     assetType,
     publications,
-    total
+    total,
+    isGrid
   }
 }
 
