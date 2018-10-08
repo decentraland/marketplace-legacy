@@ -13,6 +13,7 @@ import {
   transactionType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
+import { getContractAddress } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { token } from 'lib/token'
 import DerivationPathDropdown from './DerivationPathDropdown'
@@ -37,7 +38,11 @@ export default class SettingsForm extends React.PureComponent {
   }
 
   renderContractLink(contractName) {
-    return <EtherscanLink name={contractName}>{contractName}</EtherscanLink>
+    return (
+      <EtherscanLink address={getContractAddress(contractName)}>
+        {contractName}
+      </EtherscanLink>
+    )
   }
 
   renderLoading() {

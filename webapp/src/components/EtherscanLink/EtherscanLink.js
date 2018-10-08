@@ -1,14 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { getEtherscanHref } from '@dapps/modules/transaction/utils'
-import { getContractAddress } from 'modules/wallet/utils'
 
 export default class EtherscanLink extends React.PureComponent {
   static propTypes = {
     network: PropTypes.string,
     address: PropTypes.string,
-    name: PropTypes.string,
     txHash: PropTypes.string,
     className: PropTypes.string,
     target: PropTypes.string,
@@ -23,9 +20,9 @@ export default class EtherscanLink extends React.PureComponent {
   }
 
   render() {
-    const { address, name, txHash } = this.props
+    const { address, txHash } = this.props
 
-    if (!address && !txHash & !name) {
+    if (!address && !txHash) {
       console.warn(
         'Tried to render an EtherscanLink without either an address or tx hash. Please supply one of those'
       )
@@ -34,13 +31,7 @@ export default class EtherscanLink extends React.PureComponent {
 
     const { network, className, target, text, children } = this.props
 
-    const href = getEtherscanHref(
-      {
-        address: !address && name ? getContractAddress(name) : address,
-        txHash
-      },
-      network
-    )
+    const href = getEtherscanHref({ address, txHash }, network)
 
     return (
       <a className={className} href={href} target={target}>

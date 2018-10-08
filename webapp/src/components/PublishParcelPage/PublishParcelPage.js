@@ -14,10 +14,6 @@ import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
 import { formatMana } from 'lib/utils'
 import PublishAssetForm from '../PublishAssetForm'
-import EtherscanLink from 'components/EtherscanLink'
-import { token } from 'lib/token'
-
-const LAND_CONTRACT_NAME = 'LANDRegistry'
 
 export default class PublishPage extends React.PureComponent {
   static propTypes = {
@@ -77,23 +73,7 @@ export default class PublishPage extends React.PureComponent {
                   <Message
                     warning
                     icon="warning sign"
-                    header={
-                      <p style={{ opacity: 1 }}>
-                        <T
-                          id="authorization.allow"
-                          values={{
-                            contract_link: (
-                              <EtherscanLink name={'Marketplace'}>
-                                {'Marketplace'}
-                              </EtherscanLink>
-                            ),
-                            symbol: token.getSymbolByContractName(
-                              LAND_CONTRACT_NAME
-                            )
-                          }}
-                        />
-                      </p>
-                    }
+                    header={t('global.unauthorized')}
                     content={
                       <T
                         id="asset_publish.please_authorize"

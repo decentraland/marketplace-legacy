@@ -8,6 +8,7 @@ import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
+import { getContractAddress } from 'modules/wallet/utils'
 import { getEtherscanHref } from '@dapps/modules/transaction/utils'
 import {
   ALLOW_TOKEN_SUCCESS,
@@ -71,7 +72,11 @@ export default class Transaction extends React.PureComponent {
   }
 
   renderContractLink(contractName) {
-    return <EtherscanLink name={contractName}>{contractName}</EtherscanLink>
+    return (
+      <EtherscanLink address={getContractAddress(contractName)}>
+        {contractName}
+      </EtherscanLink>
+    )
   }
 
   renderParcelLink(x, y) {
