@@ -143,6 +143,14 @@ export default class MarketplacePage extends React.PureComponent {
     return assetType === this.props.assetType
   }
 
+  renderBadge(total, tab) {
+    return (
+      <Label className={this.isActive(tab) ? 'active' : ''} size="tiny">
+        {total.toLocaleString()}
+      </Label>
+    )
+  }
+
   render() {
     const {
       page,
@@ -165,14 +173,7 @@ export default class MarketplacePage extends React.PureComponent {
               onClick={this.handleItemClick}
             >
               {t('global.parcels')}
-              <Label
-                className={
-                  this.isActive(MARKETPLACE_PAGE_TABS.parcels) && 'active'
-                }
-                size="tiny"
-              >
-                {totals.parcel.toLocaleString()}
-              </Label>
+              {this.renderBadge(totals.parcel, MARKETPLACE_PAGE_TABS.parcels)}
             </Menu.Item>
             <Menu.Item
               name={MARKETPLACE_PAGE_TABS.estates}
@@ -180,14 +181,7 @@ export default class MarketplacePage extends React.PureComponent {
               onClick={this.handleItemClick}
             >
               {t('global.estates')}
-              <Label
-                className={
-                  this.isActive(MARKETPLACE_PAGE_TABS.estates) && 'active'
-                }
-                size="tiny"
-              >
-                {totals.estate.toLocaleString()}
-              </Label>
+              {this.renderBadge(totals.estate, MARKETPLACE_PAGE_TABS.estates)}
             </Menu.Item>
             <Menu.Menu position="right">
               <Menu.Item>
