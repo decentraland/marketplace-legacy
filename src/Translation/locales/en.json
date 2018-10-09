@@ -358,6 +358,8 @@
     "authorization_error_contact":
       "If the error persist don't hesitate to contact us",
     "for_buying": "For buying",
+    "for_buying_LegacyMarketplace": "Assets using MANA (legacy)",
+    "for_buying_Marketplace": "Assets using MANA",
     "for_selling": "For selling",
     "legacy_authorization": "Legacy authorization",
     "pending_tx":

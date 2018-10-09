@@ -79,7 +79,7 @@ export default class SettingsForm extends React.PureComponent {
             )}
           />
         )}
-        <div className="title">{contractName}</div>
+        <div className="title">{t(`settings.for_buying_${contractName}`)}</div>
         <div className="description">
           <T
             id="authorization.allow"
@@ -189,77 +189,85 @@ export default class SettingsForm extends React.PureComponent {
 
     return (
       <Form className="SettingsForm">
-        {isLedgerWallet ? (
+        <div className="form-group">
+          <div className="subtitle">WALLET</div>
+
+          {isLedgerWallet ? (
+            <Form.Field>
+              <DerivationPathDropdown
+                value={wallet.derivationPath}
+                onChange={onDerivationPathChange}
+              />
+            </Form.Field>
+          ) : null}
+
           <Form.Field>
-            <DerivationPathDropdown
-              value={wallet.derivationPath}
-              onChange={onDerivationPathChange}
-            />
+            <label htmlFor="wallet-address">{t('global.wallet_address')}</label>
+            <label id="wallet-address">{wallet.address}</label>
           </Form.Field>
-        ) : null}
 
-        <Form.Field>
-          <label htmlFor="wallet-address">{t('global.wallet_address')}</label>
-          <label id="wallet-address">{wallet.address}</label>
-        </Form.Field>
-
-        <Form.Field>
-          <label htmlFor="mana-balance">{t('global.balance')}</label>
-          <div className="mana">
-            <span id="mana-balance">
-              <Mana amount={wallet.balance} unit="MANA" />
-            </span>
-            <span className="mana-actions">
-              {isFeatureEnabled('BUY_MANA') ? (
-                <Link to={locations.buyMana()} replace>
-                  <Button className="buy-more">{t('buy_mana.action')}</Button>
+          <Form.Field>
+            <label htmlFor="mana-balance">{t('global.balance')}</label>
+            <div className="mana">
+              <span id="mana-balance">
+                <Mana amount={wallet.balance} unit="MANA" />
+              </span>
+              <span className="mana-actions">
+                {isFeatureEnabled('BUY_MANA') ? (
+                  <Link to={locations.buyMana()} replace>
+                    <Button className="buy-more">{t('buy_mana.action')}</Button>
+                  </Link>
+                ) : (
+                  <span
+                    className="disabled-buy-more"
+                    data-balloon={t('global.service_unavailable')}
+                    data-balloon-pos="up"
+                  >
+                    <Button disabled className="buy-more">
+                      {t('buy_mana.action')}
+                    </Button>
+                  </span>
+                )}
+                <Link to={locations.transferMana()} replace>
+                  <Button>{t('transfer_mana.action')}</Button>
                 </Link>
-              ) : (
-                <span
-                  className="disabled-buy-more"
-                  data-balloon={t('global.service_unavailable')}
-                  data-balloon-pos="up"
-                >
-                  <Button disabled className="buy-more">
-                    {t('buy_mana.action')}
-                  </Button>
-                </span>
-              )}
-              <Link to={locations.transferMana()} replace>
-                <Button>{t('transfer_mana.action')}</Button>
-              </Link>
-            </span>
+              </span>
+            </div>
+          </Form.Field>
+        </div>
+
+        <div className="form-group">
+          <div className="subtitle">AUTHORIZATIONS</div>
+
+          <div className="authorization-checks-container">
+            {utils.isEmptyObject(authorization) ? (
+              <div className="authorization-checks">
+                <label>{t('settings.authorization')}</label>
+                <p>
+                  <T id="settings.authorization_error" />
+                  <br />
+                  <T id="settings.authorization_error_contact" />
+                </p>
+              </div>
+            ) : (
+              <div className="row">
+                <div className="authorization-checks">
+                  <label>{t('settings.for_buying')}</label>
+
+                  {Object.keys(allowances).map(contractName =>
+                    this.renderAllowance(allowances[contractName], contractName)
+                  )}
+                </div>
+                <div className="authorization-checks">
+                  <label>{t('settings.for_selling')}</label>
+
+                  {Object.keys(approvals).map(contractName =>
+                    this.renderApproval(approvals[contractName], contractName)
+                  )}
+                </div>
+              </div>
+            )}
           </div>
-        </Form.Field>
-
-        <div className="authorization-checks-container">
-          {utils.isEmptyObject(authorization) ? (
-            <div className="authorization-checks">
-              <label>{t('settings.authorization')}</label>
-              <p>
-                <T id="settings.authorization_error" />
-                <br />
-                <T id="settings.authorization_error_contact" />
-              </p>
-            </div>
-          ) : (
-            <div className="row">
-              <div className="authorization-checks">
-                <label>{t('settings.for_buying')}</label>
-
-                {Object.keys(allowances).map(contractName =>
-                  this.renderAllowance(allowances[contractName], contractName)
-                )}
-              </div>
-              <div className="authorization-checks">
-                <label>{t('settings.for_selling')}</label>
-
-                {Object.keys(approvals).map(contractName =>
-                  this.renderApproval(approvals[contractName], contractName)
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </Form>
     )

@@ -354,6 +354,8 @@
     "authorization_error_contact":
       "오류가 지속되면 언제든지 Google에 문의하십시오.",
     "for_buying": "구매를 위해",
+    "for_buying_LegacyMarketplace": "MANA (기존)를 사용하는 애셋",
+    "for_buying_Marketplace": "MANA를 사용하는 저작물",
     "for_selling": "판매용",
     "legacy_authorization": "레거시 인증",
     "pending_tx": "보류중인 거래가 있습니다."
