@@ -19,7 +19,8 @@ import {
   CREATE_ESTATE_SUCCESS,
   EDIT_ESTATE_METADATA_SUCCESS,
   EDIT_ESTATE_PARCELS_SUCCESS,
-  DELETE_ESTATE_SUCCESS
+  DELETE_ESTATE_SUCCESS,
+  TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { txUtils } from 'decentraland-eth'
 
@@ -108,11 +109,12 @@ add(MANAGE_PARCEL_SUCCESS, 'Manage LAND Permissions', action => ({
   y: action.parcel.y,
   address: action.address,
   revoked: action.revoked
-})),
-  add(CREATE_ESTATE_SUCCESS, 'Create Estate', action => ({
-    parcels: action.estate.data.parcels.map(p => `(${p.x}, ${p.y})`).join(', '),
-    address: action.owner
-  }))
+}))
+
+add(CREATE_ESTATE_SUCCESS, 'Create Estate', action => ({
+  parcels: action.estate.data.parcels.map(p => `(${p.x}, ${p.y})`).join(', '),
+  address: action.owner
+}))
 
 add(EDIT_ESTATE_METADATA_SUCCESS, 'Edit Estate Metadata', action => ({
   token_id: action.estate.id,
@@ -131,4 +133,9 @@ add(EDIT_ESTATE_PARCELS_SUCCESS, 'Edit Estate Parcels', action => ({
 add(DELETE_ESTATE_SUCCESS, 'Delete Estate', action => ({
   token_id: action.estate.id,
   address: action.estate.owner
+}))
+
+add(TRANSFER_ESTATE_SUCCESS, 'Transfer Estate', action => ({
+  token_id: action.transfer.estate.id,
+  to: action.transfer.to
 }))

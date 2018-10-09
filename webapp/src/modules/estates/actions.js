@@ -187,7 +187,8 @@ export function transferEstateSuccess(txHash, transfer) {
   return {
     type: TRANSFER_ESTATE_SUCCESS,
     ...buildTransactionAction(txHash, transfer),
-    estate: transfer.estate
+    estate: transfer.estate,
+    transfer
   }
 }
 
