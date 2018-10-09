@@ -16,17 +16,6 @@
   width: 100%;
 }
 
-.Transaction .transaction-container-left {
-  display: flex;
-  align-items: center;
-  flex: 1 0 auto;
-  opacity: 0.5;
-}
-
-.Transaction.with-link .transaction-container-left {
-  opacity: 1;
-}
-
 .Transaction .transaction-container-right {
   display: flex;
   align-items: center;
@@ -38,6 +27,7 @@
   align-items: center;
   font-weight: 100;
   font-size: 14px;
+  width: calc(100% - 64px);
 }
 
 .Transaction .parcels-link {
@@ -68,6 +58,34 @@
   height: 100%;
   float: right;
   margin-top: 10px;
+}
+
+.Transaction .transaction-container-left {
+  display: flex;
+  align-items: center;
+  flex: 1 0 auto;
+  opacity: 0.5;
+}
+
+.Transaction.with-link .transaction-container-left {
+  opacity: 1;
+}
+
+.Transaction .transaction-text {
+  max-width: calc(100% - 130px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1200px) {
+  .Transaction .transaction-container-left {
+    max-width: calc(100% - 120px);
+  }
+
+  .Transaction .transaction-text {
+    max-width: calc(100% - 165px);
+  }
 }
 
 @media (min-width: 768px) {
@@ -101,5 +119,12 @@
   }
   .Transaction .transaction-container-left {
     width: calc(100% - 196px);
+    max-width: 100%;
+  }
+  .Transaction .transaction-text {
+    max-width: 100%;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
   }
 }
