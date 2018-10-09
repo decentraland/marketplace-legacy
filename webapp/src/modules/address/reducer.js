@@ -153,36 +153,40 @@ export function addressReducer(state = INITIAL_STATE, action) {
           }
         }
         case BUY_SUCCESS: {
-          if (transaction.payload.type === ASSET_TYPES.parcel) {
-            const { x, y } = transaction.payload
-            const parcelId = buildCoordinate(x, y)
-            return {
-              ...state,
-              data: {
-                ...state.data,
-                [transaction.from]: {
-                  ...state.data[transaction.from],
-                  parcel_ids: [
-                    ...state.data[transaction.from].parcel_ids,
-                    parcelId
-                  ]
+          switch (transaction.payload.type) {
+            case ASSET_TYPES.parcel: {
+              const { x, y } = transaction.payload
+              const parcelId = buildCoordinate(x, y)
+              return {
+                ...state,
+                data: {
+                  ...state.data,
+                  [transaction.from]: {
+                    ...state.data[transaction.from],
+                    parcel_ids: [
+                      ...state.data[transaction.from].parcel_ids,
+                      parcelId
+                    ]
+                  }
                 }
               }
             }
-          } else if (transaction.payload.type === ASSET_TYPES.estate) {
-            const { id } = transaction.payload
-            return {
-              ...state,
-              data: {
-                ...state.data,
-                [transaction.from]: {
-                  ...state.data[transaction.from],
-                  estate_ids: [...state.data[transaction.from].estate_ids, id]
+            case ASSET_TYPES.estate: {
+              const { id } = transaction.payload
+              return {
+                ...state,
+                data: {
+                  ...state.data,
+                  [transaction.from]: {
+                    ...state.data[transaction.from],
+                    estate_ids: [...state.data[transaction.from].estate_ids, id]
+                  }
                 }
               }
             }
+            default:
+              return state
           }
-          return state
         }
         case EDIT_ESTATE_PARCELS_SUCCESS: {
           const { parcels, type } = transaction.payload
