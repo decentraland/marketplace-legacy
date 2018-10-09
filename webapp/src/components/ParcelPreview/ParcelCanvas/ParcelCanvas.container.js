@@ -3,7 +3,7 @@ import { getWallet } from 'modules/wallet/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getEstates } from 'modules/estates/selectors'
 import { getDistricts } from 'modules/districts/selectors'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import { fetchMapRequest } from 'modules/map/actions'
 
 import ParcelCanvas from './ParcelCanvas'

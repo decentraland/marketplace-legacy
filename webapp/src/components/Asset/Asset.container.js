@@ -9,7 +9,7 @@ import {
 } from 'modules/address/selectors'
 import { isFetchingParcel } from 'modules/parcels/selectors'
 import { isFetchingEstate } from 'modules/estates/selectors'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 
 import Asset from './Asset'
 

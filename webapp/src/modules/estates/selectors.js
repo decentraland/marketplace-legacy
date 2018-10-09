@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'shared/parcel'
 import {
   CREATE_ESTATE_REQUEST,

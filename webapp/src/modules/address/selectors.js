@@ -4,7 +4,7 @@ import {
   getData as getParcels,
   getMortgagedParcels
 } from 'modules/parcels/selectors'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
 import { getData as getAuthorizations } from 'modules/authorization/selectors'

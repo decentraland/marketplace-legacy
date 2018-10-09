@@ -1,15 +1,7 @@
-import { createSelector } from 'reselect'
-import {
-  PUBLISH_REQUEST,
-  PUBLISH_SUCCESS,
-  BUY_REQUEST,
-  CANCEL_SALE_REQUEST
-} from './actions'
+import { PUBLISH_REQUEST, BUY_REQUEST, CANCEL_SALE_REQUEST } from './actions'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getEstates } from 'modules/estates/selectors'
-import { getAddress } from 'modules/wallet/selectors'
-import { getTransactionsByType } from '@dapps/modules/transaction/selectors'
 import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
 import { buildCoordinate } from 'shared/parcel'
 
@@ -26,29 +18,6 @@ export const isBuyIdle = state => isLoadingType(getLoading(state), BUY_REQUEST)
 
 export const isCancelIdle = state =>
   isLoadingType(getLoading(state), CANCEL_SALE_REQUEST)
-
-export const getPublications = createSelector(
-  state => getData(state),
-  state => getTransactionsByType(state, getAddress(state), PUBLISH_SUCCESS),
-  (publications = {}, publishTransactions) => {
-    const txPublications = {}
-
-    for (const transaction of publishTransactions) {
-      const publication = transaction.payload
-
-      txPublications[publication.tx_hash] = {
-        ...publications[publication.tx_hash],
-        ...publication,
-        tx_status: transaction.status
-      }
-    }
-
-    return {
-      ...publications,
-      ...txPublications
-    }
-  }
-)
 
 export const getPublicationByCoordinate = (state, x, y) => {
   const parcels = getParcels(state)
