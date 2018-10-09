@@ -43,3 +43,13 @@
 .MarketplacePage .menu.right > .item {
   padding-bottom: 0px !important;
 }
+
+@media (max-width: 768px) {
+  .MarketplacePage .ui.secondary.pointing.menu .active.item {
+    border: none;
+  }
+
+  .MarketplacePage .ui.selection.dropdown {
+    width: 100%;
+  }
+}
