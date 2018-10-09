@@ -66,6 +66,21 @@ const main = {
       )
 
     program
+      .command('land-estate <coord>')
+      .description('Get estate info for a LAND (x,y)')
+      .action(
+        asSafeAction(async coord => {
+          const [x, y] = parseCLICoords(coord)
+          const contract = eth.getContract('EstateRegistry')
+          const tokenId = await Parcel.encodeTokenId(x, y)
+
+          const estateId = await contract.getLandEstateId(tokenId)
+
+          log.info(`(land-estate) coords:(${x},${y}) => estateId: ${estateId}`)
+        })
+      )
+
+    program
       .command('land-update-operator <coord>')
       .description('Get the LAND operator of a (x,y) coordinate')
       .action(
