@@ -166,7 +166,7 @@ export default class MarketplacePage extends React.PureComponent {
     return (
       <div className="MarketplacePage">
         <Container>
-          <Menu pointing secondary>
+          <Menu pointing secondary stackable>
             <Menu.Item
               name={MARKETPLACE_PAGE_TABS.parcels}
               active={this.isActive(MARKETPLACE_PAGE_TABS.parcels)}
