@@ -13,13 +13,22 @@
   float: left;
 }
 
+.SettingsForm .form-group {
+  margin-bottom: 3.2em;
+}
+
+.SettingsForm .form-group .subtitle {
+  font-size: 16px;
+  color: var(--white);
+}
+
 .SettingsForm .TxStatusText {
   font-size: 16px;
   font-style: italic;
 }
 
 .SettingsForm .Mana {
-  font-size: 16px !important;
+  font-size: 16px;
   margin-top: 8px;
 }
 
@@ -40,6 +49,7 @@
   margin-bottom: 2em;
 }
 
+.SettingsForm .subtitle,
 .SettingsForm .authorization-checks label {
   margin-bottom: 1em;
   color: var(--gray);
@@ -63,7 +73,7 @@
 }
 
 .SettingsForm .description {
-  margin-top: 1em;
+  margin-top: 0.8em;
   color: var(--gray);
   font-size: 14px;
 }
@@ -94,6 +104,10 @@
 @media (min-width: 767px) {
   .SettingsForm .mana-actions {
     margin-left: 88px;
+  }
+
+  .SettingsForm .description {
+    width: 70%;
   }
 
   .SettingsForm .authorization-checks {

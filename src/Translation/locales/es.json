@@ -359,6 +359,8 @@
     "authorization_error_contact":
       "Si el error persiste no dudes en contactar con nosotros.",
     "for_buying": "Por comprar",
+    "for_buying_LegacyMarketplace": "Activos utilizando MANA (legado)",
+    "for_buying_Marketplace": "Activos utilizando MANA",
     "for_selling": "Para la venta de",
     "legacy_authorization": "Autorización heredada",
     "pending_tx": "Tienes una transacción pendiente"

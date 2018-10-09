@@ -356,6 +356,8 @@
     "authorization_error_contact":
       "エラーが解決しない場合は、お気軽にお問い合わせください",
     "for_buying": "購入のために",
+    "for_buying_LegacyMarketplace": "MANA（レガシー）を使用するアセット",
+    "for_buying_Marketplace": "MANAを使用するアセット",
     "for_selling": "販売のため",
     "legacy_authorization": "従来の承認",
     "pending_tx": "　処理中の取引があります。"
