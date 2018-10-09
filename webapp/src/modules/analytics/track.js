@@ -23,30 +23,45 @@ import {
 } from 'modules/estates/actions'
 import { txUtils } from 'decentraland-eth'
 
-add(BUY_SUCCESS, 'Buy', action => ({
-  assetId: action.publication.asset_id,
-  price: action.publication.price,
-  seller: action.publication.owner
-}))
+const addAssetType = (actionName, assetType) =>
+  `${actionName} ${assetType[0].toUpperCase() + assetType.slice(1)}`
 
-add(PUBLISH_SUCCESS, 'Publish', action => ({
-  assetId: action.publication.asset_id,
-  price: action.publication.price
-}))
+add(
+  BUY_SUCCESS,
+  action => addAssetType('Buy', action.assetType),
+  action => ({
+    assetId: action.publication.asset_id,
+    price: action.publication.price,
+    seller: action.publication.owner
+  })
+)
 
-add(CANCEL_SALE_SUCCESS, 'Cancel Sale', action => ({
-  assetId: action.publication.asset_id,
-  price: action.publication.price
-}))
+add(
+  PUBLISH_SUCCESS,
+  action => addAssetType('Publish', action.assetType),
+  action => ({
+    assetId: action.publication.asset_id,
+    price: action.publication.price
+  })
+)
 
-add(TRANSFER_PARCEL_SUCCESS, 'Transfer', action => ({
+add(
+  CANCEL_SALE_SUCCESS,
+  action => addAssetType('Cancel Sale', action.assetType),
+  action => ({
+    assetId: action.publication.asset_id,
+    price: action.publication.price
+  })
+)
+
+add(TRANSFER_PARCEL_SUCCESS, 'Transfer Parcel', action => ({
   assetId: action.transfer.parcelId,
   x: action.transfer.x,
   y: action.transfer.y,
   to: action.transfer.newOwner
 }))
 
-add(EDIT_PARCEL_SUCCESS, 'Edit', action => ({
+add(EDIT_PARCEL_SUCCESS, 'Edit Parcel', action => ({
   assetId: action.parcel.id,
   x: action.parcel.x,
   y: action.parcel.y,
