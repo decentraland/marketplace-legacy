@@ -10,12 +10,29 @@ import { getAssetTypeFromEvent, getAssetIdFromEvent } from './utils'
 const log = new Log('publicationReducer')
 
 export async function publicationReducer(event) {
-  const { address } = event
+  const { address, name } = event
 
   switch (address) {
-    case contractAddresses.LegacyMarketplace:
+    case contractAddresses.LegacyMarketplace: {
+      switch (name) {
+        case eventNames.AuctionCreated:
+        case eventNames.AuctionCancelled:
+        case eventNames.AuctionSuccessful: {
+          await reduceMarketplace(event)
+          break
+        }
+      }
+      break
+    }
     case contractAddresses.Marketplace: {
-      await reduceMarketplace(event)
+      switch (name) {
+        case eventNames.OrderCreated:
+        case eventNames.OrderCancelled:
+        case eventNames.OrderSuccessful: {
+          await reduceMarketplace(event)
+          break
+        }
+      }
       break
     }
     default:
