@@ -29,7 +29,7 @@ const addAssetType = (actionName, assetType) =>
 
 add(
   BUY_SUCCESS,
-  action => addAssetType('Buy', action.assetType),
+  action => addAssetType('Buy', action.publication.asset_type),
   action => ({
     assetId: action.publication.asset_id,
     price: action.publication.price,
@@ -39,7 +39,7 @@ add(
 
 add(
   PUBLISH_SUCCESS,
-  action => addAssetType('Publish', action.assetType),
+  action => addAssetType('Publish', action.publication.asset_type),
   action => ({
     assetId: action.publication.asset_id,
     price: action.publication.price
@@ -48,7 +48,7 @@ add(
 
 add(
   CANCEL_SALE_SUCCESS,
-  action => addAssetType('Cancel Sale', action.assetType),
+  action => addAssetType('Cancel Sale', action.publication.asset_type),
   action => ({
     assetId: action.publication.asset_id,
     price: action.publication.price

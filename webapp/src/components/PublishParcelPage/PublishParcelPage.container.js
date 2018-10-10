@@ -44,7 +44,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     onPublish: publication =>
       dispatch(
-        publishRequest({ ...publication, assetType: ASSET_TYPES.parcel })
+        publishRequest({ ...publication, asset_type: ASSET_TYPES.parcel })
       ),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
   }
