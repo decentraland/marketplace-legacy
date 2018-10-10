@@ -380,7 +380,7 @@
   "transaction": {
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
-    "cancel": "You cancelled the {publication_link} on {parcel_link}",
+    "cancel": "You cancelled the sale on {parcel_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
     "claim_mortgage_resolution": "You claimed {parcel_link}",
     "create_estate": "You created the estate {name}",
@@ -399,9 +399,9 @@
     "manage_revoked":
       "You revoked {address_link} permission to update the contents of {parcel_link}",
     "mortgage_mana":
-      "You {action} the {mortgage_contract_link} to operate MANA on your behalf.",
+      "You {action} the {mortgage_contract_link} to operate MANA on your behalf",
     "mortgage_rcn":
-      "You {action} the {mortgage_contract_link} to operate RCN on your behalf.",
+      "You {action} the {mortgage_contract_link} to operate RCN on your behalf",
     "pay_mortgage":
       "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
     "publish": "You listed {parcel_link} for sale",

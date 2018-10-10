@@ -386,8 +386,7 @@
   "transaction": {
     "buy": "Vous avez acheté {parcel_link}",
     "buy_mana": "Vous avez acheté {mana} MANA",
-    "cancel":
-      "Vous avez annulé l'offre {publication_link} sur le LAND {parcel_link}",
+    "cancel": "Vous avez annulé la vente sur {parcel_link}",
     "cancel_mortgage":
       "Vous annulez une hypothèque pour acheter la parcelle {parcel_link}",
     "claim_mortgage_resolution": "Vous avez réclamé {parcel_link}",
@@ -408,9 +407,9 @@
     "manage_revoked":
       "Vous avez révoqué {address_link} l'autorisation de mettre à jour le contenu de {parcel_link}",
     "mortgage_mana":
-      "Vous {action} gérez le {mortgage_contract_link} pour exploiter MANA en votre nom.",
+      "Vous {action} gérez le {mortgage_contract_link} pour exploiter MANA en votre nom",
     "mortgage_rcn":
-      "Vous {action} le {mortgage_contract_link} pour exploiter RCN en votre nom.",
+      "Vous {action} le {mortgage_contract_link} pour exploiter RCN en votre nom",
     "pay_mortgage":
       "Vous avez effectué un paiement partiel de {amount} MANA pour l'hypothèque pour acheter la parcelle {parcel_link}",
     "publish": "Vous avez publié l'offre {parcel_link}",
