@@ -9,7 +9,7 @@ import {
   Button
 } from 'semantic-ui-react'
 
-import AssetDetailPage from 'components/AssetDetailPage'
+import AssetPreviewHeader from 'components/AssetPreviewHeader'
 import ParcelAttributes from 'components/ParcelAttributes'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
@@ -181,7 +181,7 @@ export default class EstateSelect extends React.PureComponent {
     return (
       <div className="EstateSelect">
         <div className="parcel-preview" title={t('parcel_detail.view')}>
-          <AssetDetailPage
+          <AssetPreviewHeader
             asset={estate}
             showMiniMap={false}
             showControls={false}

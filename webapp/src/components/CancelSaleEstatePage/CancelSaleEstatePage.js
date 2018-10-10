@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Estate from 'components/Estate'
-import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { t, T } from '@dapps/modules/translation/utils'

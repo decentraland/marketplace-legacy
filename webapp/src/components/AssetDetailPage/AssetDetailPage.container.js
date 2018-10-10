@@ -1,25 +1,20 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import { getCenterCoords } from 'shared/asset'
 import { locations } from 'locations'
 import { navigateTo } from 'modules/location/actions'
-import { getError, isLoading } from 'modules/parcels/selectors'
-
 import AssetDetailPage from './AssetDetailPage'
+import { buildCoordinate } from 'shared/parcel'
 
-const mapState = (state, { asset }) => {
-  const { x, y } = getCenterCoords(asset)
+const mapState = (state, { match }) => {
+  const id = match.params.id || buildCoordinate(match.params.x, match.params.y)
   return {
-    x,
-    y,
-    isLoading: isLoading(state),
-    error: getError(state)
+    id
   }
 }
 
 const mapDispatch = dispatch => ({
-  onError: () => dispatch(navigateTo(locations.root()))
+  onAssetClick: asset => dispatch(navigateTo(locations.assetDetail(asset)))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(AssetDetailPage))

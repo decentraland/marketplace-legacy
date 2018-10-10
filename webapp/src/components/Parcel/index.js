@@ -1,2 +1,2 @@
-import Parcel from './Parcel.container'
+import Parcel from './Parcel'
 export default Parcel

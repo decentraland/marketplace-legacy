@@ -12,14 +12,12 @@ import Page from 'components/Page'
 
 import HomePage from 'components/HomePage'
 import AtlasPage from 'components/AtlasPage'
-import ParcelDetailPage from 'components/ParcelDetailPage'
 import MarketplacePage from 'components/MarketplacePage'
 import ProfilePage from 'components/ProfilePage'
 import PublishParcelPage from 'components/PublishParcelPage'
 import PublishEstatePage from 'components/PublishEstatePage'
 import EditParcelPage from 'components/EditParcelPage'
 import TransferParcelPage from 'components/TransferParcelPage'
-import EstateDetailPage from 'components/EstateDetailPage'
 import ManageParcelPage from 'components/ManageParcelPage'
 import BuyParcelPage from 'components/BuyParcelPage'
 import BuyEstatePage from 'components/BuyEstatePage'
@@ -35,6 +33,9 @@ import PayMortgagePage from 'components/PayMortgagePage'
 import ColorKeyPage from 'components/ColorKeyPage'
 import DeleteEstatePage from 'components/DeleteEstatePage'
 import TransferEstatePage from 'components/TransferEstatePage'
+import AssetDetailPage from 'components/AssetDetailPage'
+import EditEstatePage from 'components/EditEstatePage'
+import { ASSET_TYPES } from './shared/asset'
 
 export default class Routes extends React.Component {
   renderRoutes() {
@@ -47,7 +48,9 @@ export default class Routes extends React.Component {
         <Route
           exact
           path={this.addLegacySupport(locations.parcelDetail())}
-          component={ParcelDetailPage}
+          render={props => (
+            <AssetDetailPage assetType={ASSET_TYPES.parcel} {...props} />
+          )}
         />
         <Route
           exact
@@ -89,26 +92,24 @@ export default class Routes extends React.Component {
         <Route
           exact
           path={locations.createEstate()}
-          component={EstateDetailPage}
+          component={EditEstatePage}
         />
         <Route
           exact
           path={locations.estateDetail()}
-          component={EstateDetailPage}
+          render={props => (
+            <AssetDetailPage assetType={ASSET_TYPES.estate} {...props} />
+          )}
         />
         <Route
           exact
           path={locations.editEstateParcels()}
-          component={props => (
-            <EstateDetailPage isSelecting={true} isEditing={true} {...props} />
-          )}
+          component={EditEstatePage}
         />
         <Route
           exact
           path={locations.editEstateMetadata()}
-          component={props => (
-            <EstateDetailPage isSelecting={false} isEditing={true} {...props} />
-          )}
+          render={props => <EditEstatePage isSelecting={false} {...props} />}
         />
         <Route
           exact

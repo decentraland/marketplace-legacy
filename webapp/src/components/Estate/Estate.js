@@ -1,31 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { estateType } from 'components/types'
-import Asset from 'components/Asset'
+import AssetLoader from 'components/AssetLoader'
+import { ASSET_TYPES } from 'shared/asset'
 
 export default class Estate extends React.PureComponent {
   static propTypes = {
-    estate: estateType,
-    id: PropTypes.string,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    onAccessDenied: PropTypes.func.isRequired,
-    children: PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    estate: null
-  }
-
-  isConnected = address => {
-    return address.estate_ids && address.estate_ids.length > 0
+    id: PropTypes.string.isRequired
   }
 
   render() {
-    const { estate } = this.props
+    const { id } = this.props
     return (
-      <Asset value={estate} isConnected={this.isConnected} {...this.props} />
+      <AssetLoader id={id} assetType={ASSET_TYPES.estate} {...this.props} />
     )
   }
 }

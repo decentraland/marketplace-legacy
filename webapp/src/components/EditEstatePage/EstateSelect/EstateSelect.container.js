@@ -9,7 +9,7 @@ import {
   getData as getEstates,
   isEstateTransactionIdle
 } from 'modules/estates/selectors'
-import EstateSelect from 'components/EstateDetailPage/EstateSelect/EstateSelect'
+import EstateSelect from './EstateSelect'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)

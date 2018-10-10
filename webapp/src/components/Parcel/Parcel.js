@@ -1,28 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { parcelType } from 'components/types'
-import Asset from 'components/Asset'
+import { buildCoordinate } from 'shared/parcel'
+import AssetLoader from 'components/AssetLoader'
+import { ASSET_TYPES } from 'shared/asset'
 
 export default class Parcel extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType,
-    onAccessDenied: PropTypes.func.isRequired,
-    children: PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    parcel: null
-  }
-
-  isConnected(address) {
-    return address.parcel_ids && address.parcel_ids.length > 0
+    id: PropTypes.string,
+    x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    y: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }
 
   render() {
-    const { parcel } = this.props
+    let { id, x, y } = this.props
+    if (!id && !isNaN(x) && !isNaN(y)) {
+      id = buildCoordinate(x, y)
+    }
     return (
-      <Asset value={parcel} isConnected={this.isConnected} {...this.props} />
+      <AssetLoader id={id} assetType={ASSET_TYPES.parcel} {...this.props} />
     )
   }
 }

@@ -25,8 +25,7 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = dispatch => ({
-  onBuy: ({ x, y }) => dispatch(navigateTo(locations.buyParcel(x, y))),
-  onAssetClick: asset => dispatch(navigateTo(locations.assetDetail(asset)))
+  onBuy: ({ x, y }) => dispatch(navigateTo(locations.buyParcel(x, y)))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(ParcelDetailPage))
