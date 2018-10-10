@@ -42,7 +42,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     onPublish: publication =>
       dispatch(
-        publishRequest({ ...publication, assetType: ASSET_TYPES.estate })
+        publishRequest({ ...publication, asset_type: ASSET_TYPES.estate })
       ),
     onCancel: () => dispatch(push(locations.estateDetail(id)))
   }

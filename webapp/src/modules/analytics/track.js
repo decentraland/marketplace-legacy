@@ -39,7 +39,7 @@ add(
 
 add(
   PUBLISH_SUCCESS,
-  action => addAssetType('Publish', action.publication.assetType),
+  action => addAssetType('Publish', action.publication.asset_type),
   action => ({
     assetId: action.publication.asset_id,
     price: action.publication.price

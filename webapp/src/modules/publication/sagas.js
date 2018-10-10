@@ -79,10 +79,10 @@ function* handleAssetPublicationsRequest(action) {
 
 function* handlePublishRequest(action) {
   try {
-    const { asset_id, assetType, price, expires_at } = action.publication
+    const { asset_id, asset_type, price, expires_at } = action.publication
     const priceInWei = eth.utils.toWei(price)
-    const nftAddress = getNFTAddressByType(assetType)
-    const asset = yield call(() => buildAsset(asset_id, assetType))
+    const nftAddress = getNFTAddressByType(asset_type)
+    const asset = yield call(() => buildAsset(asset_id, asset_type))
     const marketplaceContract = eth.getContract('Marketplace')
 
     const txHash = yield call(() =>
