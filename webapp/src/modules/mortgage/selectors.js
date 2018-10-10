@@ -8,7 +8,7 @@ import {
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import { getActiveMortgageByBorrower } from 'shared/mortgage'
 import { buildCoordinate } from 'shared/parcel'
 

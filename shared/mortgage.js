@@ -68,9 +68,10 @@ export function getActiveMortgages(
 
 /**
  * filter actibe mortgages by borrower
- * @param {object} - obj with status & tx_status fields
- * @param  {array} - parcels
- * @returns {object} - mortgage
+ * @param {array} - mortgages
+ * @param  {object} - parcels
+ * @param  {object} - publications
+ * @returns {array} - mortgages (active)
  */
 export function getActiveMortgageByBorrower(
   mortgages = [],

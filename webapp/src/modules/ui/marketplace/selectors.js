@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { getData as getAllParcels } from 'modules/parcels/selectors'
 import { getEstates as getAllEstates } from 'modules/estates/selectors'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import { ASSET_TYPES } from 'shared/asset'
 
 export const getState = state => state.ui.marketplace

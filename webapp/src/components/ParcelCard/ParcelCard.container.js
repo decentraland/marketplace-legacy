@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import ParcelCard from './ParcelCard'
 
 const mapState = state => ({

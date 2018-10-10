@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { getPublications } from 'modules/publication/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import { isTransferIdle } from 'modules/parcels/selectors'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { transferParcelRequest } from 'modules/parcels/actions'

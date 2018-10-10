@@ -6,7 +6,7 @@ import {
   TRANSFER_PARCEL_REQUEST
 } from './actions'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
-import { getPublications as getAllPublications } from 'modules/publication/selectors'
+import { getData as getAllPublications } from 'modules/publication/selectors'
 import { getMortgagesArray } from 'modules/mortgage/selectors'
 import { buildCoordinate } from 'shared/parcel'
 import { getActiveMortgages } from 'shared/mortgage'
