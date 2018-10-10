@@ -406,8 +406,7 @@
     "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
   },
   "transaction_confirmations": {
-    "count": "{confirmations_count}件の確認",
-    "waiting": "承認待ち"
+    "count": "{confirmations_count}件の確認"
   },
   "transaction_status": {
     "activity_page": "活動ページ",

@@ -81,11 +81,7 @@ export default class Status extends React.PureComponent {
   renderConfirmations(hash, status) {
     const { confirmations } = this.state
     if (confirmations == null) {
-      return (
-        <span className="no-link">
-          {t('transaction_confirmations.waiting')}&nbsp;
-        </span>
-      )
+      return null
     }
     if (confirmations < MINIMUM_CONFIRMATIONS) {
       return (
@@ -152,7 +148,7 @@ export default class Status extends React.PureComponent {
   renderConfirmationIcon() {
     const { confirmations } = this.state
     if (confirmations == null) {
-      return <Loader active size="mini" />
+      return null
     }
     if (confirmations >= MINIMUM_CONFIRMATIONS) {
       return <Icon name="check" />
