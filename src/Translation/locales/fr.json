@@ -119,7 +119,8 @@
     "taken": "Non disponibles",
     "title": "Code couleur",
     "unowned": "Non achetées",
-    "yours": "Les votres"
+    "yours": "Les votres",
+    "yours_on_sale": "Le vôtre"
   },
   "contribution": {
     "proposal": "Proposition"

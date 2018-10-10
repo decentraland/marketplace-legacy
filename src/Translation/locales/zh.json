@@ -110,7 +110,8 @@
     "taken": "有主地",
     "title": "图示",
     "unowned": "无主地",
-    "yours": "您的土地"
+    "yours": "您的土地",
+    "yours_on_sale": "你的特价"
   },
   "contribution": {
     "proposal": "提案"

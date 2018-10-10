@@ -117,7 +117,8 @@
     "taken": "Asignada",
     "title": "Mapa de colores",
     "unowned": "Sin dueño",
-    "yours": "Tuya"
+    "yours": "Tuya",
+    "yours_on_sale": "Tuya a la venta"
   },
   "contribution": {
     "proposal": "propuesta"
