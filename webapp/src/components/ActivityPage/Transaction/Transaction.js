@@ -222,14 +222,7 @@ export default class Transaction extends React.PureComponent {
         return (
           <T
             id="transaction.cancel"
-            values={{
-              publication_link: (
-                <EtherscanLink txHash={payload.tx_hash}>
-                  {t('global.sale').toLowerCase()}
-                </EtherscanLink>
-              ),
-              parcel_link: this.getAssetLink(payload)
-            }}
+            values={{ parcel_link: this.getAssetLink(payload) }}
           />
         )
       }

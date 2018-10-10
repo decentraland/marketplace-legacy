@@ -377,31 +377,31 @@
   "transaction": {
     "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
-    "cancel": "{parcel_link}の{publication_link}の公開をキャンセルしました。",
-    "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました。",
-    "claim_mortgage_resolution": "{parcel_link}へ請求しました。",
+    "cancel": "あなたは{parcel_link}での販売をキャンセルしました",
+    "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました",
+    "claim_mortgage_resolution": "{parcel_link}へ請求しました",
     "create_estate": "あなたはエステート{name}を作成しました",
-    "create_mortgage": "区画{parcel_link}を購入するのに担保を申請しました。",
-    "dissolve_estate": "エステート{name}を解散しました。",
+    "create_mortgage": "区画{parcel_link}を購入するのに担保を申請しました",
+    "dissolve_estate": "エステート{name}を解散しました",
     "edit":
-      "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",
+      "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました",
     "edit_estate_metadata":
-      "エステート{estate_id}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました。",
+      "エステート{estate_id}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました",
     "edit_estate_parcels_added": "エステート{name}に{amount}区画を追加しました",
     "edit_estate_parcels_removed":
       "エステート{name}から{amount}区画を取り除いた",
     "manage":
-      "{parcel_link}のコンテンツを更新する権限を{address_link}に与えました。",
+      "{parcel_link}のコンテンツを更新する権限を{address_link}に与えました",
     "manage_revoked":
-      "{parcel_link}のコンテンツを更新する権限を{address_link}から取り消しました。",
+      "{parcel_link}のコンテンツを更新する権限を{address_link}から取り消しました",
     "mortgage_mana":
-      "{mortgage_contract_link}でMANAを使用することを{action}しました。",
+      "{mortgage_contract_link}でMANAを使用することを{action}しました",
     "mortgage_rcn":
-      "{mortgage_contract_link}でRCNを使用することを{action}しました。",
+      "{mortgage_contract_link}でRCNを使用することを{action}しました",
     "pay_mortgage":
-      "区画{parcel_link}を購入する担保への一部払いで{amount}MANAを支払いました。",
-    "publish": "{parcel_link}を公開しました。",
-    "transfer": "{parcel_link}を{owner_link}へ転送しました。",
+      "区画{parcel_link}を購入する担保への一部払いで{amount}MANAを支払いました",
+    "publish": "{parcel_link}を公開しました",
+    "transfer": "{parcel_link}を{owner_link}へ転送しました",
     "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
   },
   "transaction_confirmations": {

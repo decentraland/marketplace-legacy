@@ -380,7 +380,7 @@
   "transaction": {
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
-    "cancel": "Has cancelado {publication_link} de {parcel_link}",
+    "cancel": "Cancelaste la venta en {parcel_link}",
     "cancel_mortgage":
       "Usted cancela una hipoteca para comprar el paquete {parcel_link}",
     "claim_mortgage_resolution": "Usted afirmó {parcel_link}",
@@ -399,9 +399,9 @@
     "manage_revoked":
       "Ha revocado el permiso {address_link} para actualizar el contenido de {parcel_link}",
     "mortgage_mana":
-      "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre.",
+      "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre",
     "mortgage_rcn":
-      "Usted {action} el {mortgage_contract_link} para operar RCN en su nombre.",
+      "Usted {action} el {mortgage_contract_link} para operar RCN en su nombre",
     "pay_mortgage":
       "Hizo un pago parcial de {amount} MANA por la hipoteca para comprar el paquete {parcel_link}",
     "publish": "Has publicado {parcel_link}",
