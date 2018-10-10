@@ -17,8 +17,6 @@
 }
 
 .Transaction .transaction-text-container {
-  display: flex;
-  align-items: center;
   font-weight: 100;
   font-size: 14px;
   width: 100%;
@@ -43,9 +41,9 @@
 }
 
 .Transaction .transaction-timestamp {
-  display: inline-block;
+  display: inline;
   color: var(--gray);
-  margin-left: 8px;
+  white-space: nowrap;
 }
 
 .Transaction .transaction-icon {
@@ -63,7 +61,7 @@
 }
 
 .Transaction .transaction-text {
-  max-width: 100%;
+  margin-right: 8px;
 }
 
 .Transaction.with-link .transaction-container-left {
@@ -82,8 +80,6 @@
   }
 
   .Transaction .transaction-text-container {
-    flex-flow: column;
-    align-items: flex-start;
   }
 
   .Transaction .transaction-text-container {

@@ -477,15 +477,13 @@ export default class Transaction extends React.PureComponent {
                 </div>
 
                 <div className="transaction-text-container">
-                  <div className="transaction-text">
-                    {text}.
-                    <div
-                      className="transaction-timestamp"
-                      data-balloon-pos="up"
-                      data-balloon={formatDate(tx.timestamp)}
-                    >
-                      {distanceInWordsToNow(tx.timestamp)}
-                    </div>
+                  <span className="transaction-text">{text}.</span>
+                  <div
+                    className="transaction-timestamp"
+                    data-balloon-pos="up"
+                    data-balloon={formatDate(tx.timestamp)}
+                  >
+                    {distanceInWordsToNow(tx.timestamp)}
                   </div>
                 </div>
               </div>
