@@ -73,6 +73,7 @@
 @media (max-width: 768px) {
   .Transaction .transaction-timestamp {
     margin-left: 0px;
+    display: block;
   }
 
   .Transaction .transaction-avatar {
