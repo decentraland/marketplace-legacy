@@ -48,7 +48,7 @@ import { hasEtherscanLink, getHash } from '../utils'
 import './Transaction.css'
 import Status from './Status'
 
-const PREVIEW_SIZE = 48
+const PREVIEW_SIZE = 54
 const NUM_PARCELS = 5
 const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 
@@ -477,13 +477,15 @@ export default class Transaction extends React.PureComponent {
                 </div>
 
                 <div className="transaction-text-container">
-                  <div className="transaction-text">{text}.</div>
-                  <div
-                    className="transaction-timestamp"
-                    data-balloon-pos="up"
-                    data-balloon={formatDate(tx.timestamp)}
-                  >
-                    {distanceInWordsToNow(tx.timestamp)}
+                  <div className="transaction-text">
+                    {text}.
+                    <div
+                      className="transaction-timestamp"
+                      data-balloon-pos="up"
+                      data-balloon={formatDate(tx.timestamp)}
+                    >
+                      {distanceInWordsToNow(tx.timestamp)}
+                    </div>
                   </div>
                 </div>
               </div>

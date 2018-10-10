@@ -21,7 +21,7 @@
   align-items: center;
   font-weight: 100;
   font-size: 14px;
-  width: calc(100% - 64px);
+  width: 100%;
 }
 
 .Transaction .parcels-link {
@@ -33,8 +33,8 @@
 }
 
 .Transaction .transaction-avatar {
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
   margin-right: 15px;
   float: left;
   border-radius: 8px;
@@ -59,18 +59,15 @@
   align-items: center;
   flex: 1 0 auto;
   opacity: 0.5;
-  max-width: calc(100% - 135px);
+  max-width: calc(100% - 140px);
+}
+
+.Transaction .transaction-text {
+  max-width: 100%;
 }
 
 .Transaction.with-link .transaction-container-left {
   opacity: 1;
-}
-
-.Transaction .transaction-text {
-  max-width: calc(100% - 165px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 @media (max-width: 768px) {
@@ -88,20 +85,11 @@
     align-items: flex-start;
   }
 
-  .Transaction .transaction-text {
-    width: 100%;
-  }
   .Transaction .transaction-text-container {
     width: calc(100% - 24px);
   }
   .Transaction .transaction-container-left {
     width: calc(100% - 196px);
     max-width: 100%;
-  }
-  .Transaction .transaction-text {
-    max-width: 100%;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
   }
 }
