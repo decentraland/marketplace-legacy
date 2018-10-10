@@ -117,7 +117,8 @@
     "taken": "점유된",
     "title": "색상 키",
     "unowned": "소유자가 없는",
-    "yours": "당신 토지"
+    "yours": "당신 토지",
+    "yours_on_sale": "판매중인 제품"
   },
   "contribution": {
     "proposal": "제안"

@@ -17,6 +17,10 @@ export default function ColorKey() {
             <div className="text">{t('color_key.yours')}</div>
           </div>
           <div className="land">
+            <div className="key yours-on-sale" />
+            <div className="text">{t('color_key.yours_on_sale')}</div>
+          </div>
+          <div className="land">
             <div className="key taken" />
             <div className="text">{t('color_key.taken')}</div>
           </div>
