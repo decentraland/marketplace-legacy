@@ -16,12 +16,6 @@
   width: 100%;
 }
 
-.Transaction .transaction-container-right {
-  display: flex;
-  align-items: center;
-  flex: none;
-}
-
 .Transaction .transaction-text-container {
   display: flex;
   align-items: center;
@@ -65,6 +59,7 @@
   align-items: center;
   flex: 1 0 auto;
   opacity: 0.5;
+  max-width: calc(100% - 135px);
 }
 
 .Transaction.with-link .transaction-container-left {
@@ -72,28 +67,10 @@
 }
 
 .Transaction .transaction-text {
-  max-width: calc(100% - 130px);
+  max-width: calc(100% - 165px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-@media (max-width: 1200px) {
-  .Transaction .transaction-container-left {
-    max-width: calc(100% - 120px);
-  }
-
-  .Transaction .transaction-text {
-    max-width: calc(100% - 165px);
-  }
-}
-
-@media (min-width: 768px) {
-  .Transaction .transaction-container-right {
-    display: flex;
-    align-items: center;
-    flex: none;
-  }
 }
 
 @media (max-width: 768px) {

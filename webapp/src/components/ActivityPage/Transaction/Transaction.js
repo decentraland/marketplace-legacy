@@ -344,7 +344,9 @@ export default class Transaction extends React.PureComponent {
             values={{
               asset_link: this.renderEstateLink(estate),
               asset_type: t('global.the_estate').toLowerCase(),
-              owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
+              owner_link: (
+                <Link to={locations.profilePageDefault(to)}>{to}</Link>
+              )
             }}
           />
         )
