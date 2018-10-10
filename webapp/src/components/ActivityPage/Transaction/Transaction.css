@@ -16,18 +16,10 @@
   width: 100%;
 }
 
-.Transaction .transaction-container-right {
-  display: flex;
-  align-items: center;
-  flex: none;
-}
-
 .Transaction .transaction-text-container {
-  display: flex;
-  align-items: center;
   font-weight: 100;
   font-size: 14px;
-  width: calc(100% - 64px);
+  width: 100%;
 }
 
 .Transaction .parcels-link {
@@ -39,8 +31,8 @@
 }
 
 .Transaction .transaction-avatar {
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
   margin-right: 15px;
   float: left;
   border-radius: 8px;
@@ -49,9 +41,9 @@
 }
 
 .Transaction .transaction-timestamp {
-  display: inline-block;
+  display: inline;
   color: var(--gray);
-  margin-left: 8px;
+  white-space: nowrap;
 }
 
 .Transaction .transaction-icon {
@@ -65,40 +57,21 @@
   align-items: center;
   flex: 1 0 auto;
   opacity: 0.5;
+  max-width: calc(100% - 140px);
+}
+
+.Transaction .transaction-text {
+  margin-right: 8px;
 }
 
 .Transaction.with-link .transaction-container-left {
   opacity: 1;
 }
 
-.Transaction .transaction-text {
-  max-width: calc(100% - 130px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-@media (max-width: 1200px) {
-  .Transaction .transaction-container-left {
-    max-width: calc(100% - 120px);
-  }
-
-  .Transaction .transaction-text {
-    max-width: calc(100% - 165px);
-  }
-}
-
-@media (min-width: 768px) {
-  .Transaction .transaction-container-right {
-    display: flex;
-    align-items: center;
-    flex: none;
-  }
-}
-
 @media (max-width: 768px) {
   .Transaction .transaction-timestamp {
     margin-left: 0px;
+    display: block;
   }
 
   .Transaction .transaction-avatar {
@@ -107,24 +80,13 @@
   }
 
   .Transaction .transaction-text-container {
-    flex-flow: column;
-    align-items: flex-start;
   }
 
-  .Transaction .transaction-text {
-    width: 100%;
-  }
   .Transaction .transaction-text-container {
     width: calc(100% - 24px);
   }
   .Transaction .transaction-container-left {
     width: calc(100% - 196px);
     max-width: 100%;
-  }
-  .Transaction .transaction-text {
-    max-width: 100%;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
   }
 }

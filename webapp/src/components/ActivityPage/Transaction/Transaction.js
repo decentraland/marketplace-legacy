@@ -48,7 +48,7 @@ import { hasEtherscanLink, getHash } from '../utils'
 import './Transaction.css'
 import Status from './Status'
 
-const PREVIEW_SIZE = 48
+const PREVIEW_SIZE = 54
 const NUM_PARCELS = 5
 const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 
@@ -337,7 +337,9 @@ export default class Transaction extends React.PureComponent {
             values={{
               asset_link: this.renderEstateLink(estate),
               asset_type: t('global.the_estate').toLowerCase(),
-              owner_link: <Link to={locations.profilePage(to)}>{to}</Link>
+              owner_link: (
+                <Link to={locations.profilePageDefault(to)}>{to}</Link>
+              )
             }}
           />
         )
@@ -468,7 +470,7 @@ export default class Transaction extends React.PureComponent {
                 </div>
 
                 <div className="transaction-text-container">
-                  <div className="transaction-text">{text}.</div>
+                  <span className="transaction-text">{text}.</span>
                   <div
                     className="transaction-timestamp"
                     data-balloon-pos="up"
