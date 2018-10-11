@@ -22,7 +22,7 @@ const mapState = (state, { location }) => {
   const totals = getTotals(state)
 
   const isEmpty = assets.length === 0
-  const pagination = new Pagination(assets)
+  const pagination = new Pagination(totals[assetType])
   const page = pagination.getCurrentPage(offset)
   const pages = pagination.getPageCount()
 
