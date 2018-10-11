@@ -72,18 +72,18 @@ add(EDIT_PARCEL_SUCCESS, 'Edit Parcel', action => ({
 
 add(
   ALLOW_TOKEN_SUCCESS,
-  action =>
-    action.amount > 0
-      ? `Authorize ${action.contractName} for ${action.tokenContractName}`
-      : `Unauthorize ${action.contractName} for ${action.tokenContractName}`
+  ({ payload }) =>
+    payload.amount > 0
+      ? `Authorize ${payload.contractName} for ${payload.tokenContractName}`
+      : `Unauthorize ${payload.contractName} for ${payload.tokenContractName}`
 )
 
 add(
   APPROVE_TOKEN_SUCCESS,
-  action =>
-    action.isApproved
-      ? `Authorize ${action.contractName} for ${action.tokenContractName}`
-      : `Unauthorize ${action.contractName} for ${action.tokenContractName}`
+  ({ payload }) =>
+    payload.isApproved
+      ? `Authorize ${payload.contractName} for ${payload.tokenContractName}`
+      : `Unauthorize ${payload.contractName} for ${payload.tokenContractName}`
 )
 
 add(TRANSFER_MANA_SUCCESS, 'Transfer MANA', action => ({
