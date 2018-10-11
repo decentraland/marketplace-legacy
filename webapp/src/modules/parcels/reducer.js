@@ -260,7 +260,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           const { type, x, y, tx_hash } = transaction.payload
           const parcelId = buildCoordinate(x, y)
 
-          if (type === ASSET_TYPES.estate && parcelId in state.data) {
+          if (type === ASSET_TYPES.parcel && parcelId in state.data) {
             const parcel = state.data[parcelId]
             return {
               ...state,
