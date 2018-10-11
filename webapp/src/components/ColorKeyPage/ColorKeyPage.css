@@ -44,6 +44,10 @@
 }
 
 @media (min-width: 768px) {
+  .ColorKeyPage .land-color-keys {
+    padding: 35px 0 20px 80px;
+  }
+
   .ColorKeyPage .message {
     width: 770px;
     max-width: 100%;
