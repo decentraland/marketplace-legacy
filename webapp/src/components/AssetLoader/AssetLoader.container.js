@@ -31,7 +31,7 @@ const mapState = (state, { id, assetType }) => {
 
 const mapDispatch = (dispatch, { id, assetType }) => {
   const isParcel = assetType === ASSET_TYPES.parcel
-  const [x, y] = isParcel ? splitCoordinate(id) : [null, null]
+  const [x, y] = splitCoordinate(id)
   return {
     onLoaded: () =>
       dispatch(isParcel ? fetchParcelRequest(x, y) : fetchEstateRequest(id)),
