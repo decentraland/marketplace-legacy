@@ -3,24 +3,29 @@ import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
 import { fetchParcelRequest } from 'modules/parcels/actions'
-import { getData as getParcels, getLoading } from 'modules/parcels/selectors'
+import {
+  getData as getParcels,
+  isFetchingParcel
+} from 'modules/parcels/selectors'
 import { splitCoordinate } from 'shared/parcel'
-import { getEstates } from 'modules/estates/selectors'
+import { getEstates, isFetchingEstate } from 'modules/estates/selectors'
 import { fetchEstateRequest } from 'modules/estates/actions'
 import AssetLoader from './AssetLoader'
 import { ASSET_TYPES } from 'shared/asset'
 
 const mapState = (state, { id, assetType }) => {
   let assets
+  let isLoading
   switch (assetType) {
     case ASSET_TYPES.parcel:
       assets = getParcels(state)
+      isLoading = isFetchingParcel(state)
       break
     case ASSET_TYPES.estate:
       assets = getEstates(state)
+      isLoading = isFetchingEstate(state)
       break
   }
-  const isLoading = getLoading(state).some(asset => asset.id === id)
   const asset = assets[id]
 
   return {
@@ -30,17 +35,24 @@ const mapState = (state, { id, assetType }) => {
 }
 
 const mapDispatch = (dispatch, { id, assetType }) => {
-  const isParcel = assetType === ASSET_TYPES.parcel
-  const [x, y] = splitCoordinate(id)
+  let onFetchAsset
+  let onAccessDenied
+  switch (assetType) {
+    case ASSET_TYPES.parcel: {
+      const [x, y] = splitCoordinate(id)
+      onFetchAsset = () => dispatch(fetchParcelRequest(x, y))
+      onAccessDenied = () => dispatch(push(locations.parcelDetail(x, y)))
+      break
+    }
+    case ASSET_TYPES.estate:
+      onFetchAsset = () => dispatch(fetchEstateRequest(id))
+      onAccessDenied = () => dispatch(push(locations.estateDetail(id)))
+      break
+  }
+
   return {
-    onLoaded: () =>
-      dispatch(isParcel ? fetchParcelRequest(x, y) : fetchEstateRequest(id)),
-    onAccessDenied: () =>
-      dispatch(
-        push(
-          isParcel ? locations.parcelDetail(x, y) : locations.estateDetail(id)
-        )
-      )
+    onFetchAsset,
+    onAccessDenied
   }
 }
 
