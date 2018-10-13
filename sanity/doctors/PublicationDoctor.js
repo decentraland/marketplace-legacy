@@ -45,7 +45,7 @@ export class PublicationDoctor extends Doctor {
             errors.push(this.getLegacyPublicationInconsistencies(asset))
           }
 
-          const error = (await Promise.all(errors)).join('\n')
+          const error = (await Promise.all(errors)).join('')
           if (error) {
             log.error(error)
             faultyAssets.push({ ...asset, error })
