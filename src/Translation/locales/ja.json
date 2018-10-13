@@ -188,7 +188,7 @@
     "estate": "エステート",
     "estates": "エステート",
     "expired_at": "{time}に締切済み",
-    "expires_in": "締切: {time}",
+    "expires_in": "締切：{time}",
     "expires_in_more_than_years": "締切まであと{years}年以上",
     "for": "for",
     "loading": "読込み中",
