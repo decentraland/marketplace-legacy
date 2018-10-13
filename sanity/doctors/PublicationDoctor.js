@@ -71,7 +71,7 @@ export class PublicationDoctor extends Doctor {
     const order = await marketplace.orderByAssetId(nftAddress, token_id)
     const contractId = order[0]
 
-    return this.getPublicationError(id, contractId, publication)
+    return this.getPublicationError(id, publication, contractId)
   }
 
   async getLegacyPublicationInconsistencies(parcel) {
