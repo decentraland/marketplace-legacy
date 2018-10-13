@@ -304,7 +304,7 @@ const main = {
       .description('Reset database data')
       .action(
         asSafeAction(async () => {
-          log.info(`(reset-db) deleting database data`)
+          log.info('(reset-db) deleting database data')
           const truncateTableNames = [
             'blockchain_events',
             'publications',
