@@ -17,12 +17,12 @@
   "asset_buy": {
     "about_to_buy": "{name}を{price}で購入しようとしています。",
     "allowed_balance": "あなたの手当は{allowance}です",
-    "buy_asset": "{asset_name}を購入",
+    "buy_asset": "{asset_type}を購入",
     "buy_mana": "MANAを更に購入する{click_here}",
     "didnt_allow": "あなたはMANAの使用を許可していません",
     "didnt_allow_new_marketplace":
       "新しいバージョンのマーケットでMANAの使用を許可していません",
-    "needs_at_least": "この{asset_name}を購入するには最低{mana}必要です。",
+    "needs_at_least": "この{asset_type}を購入するには最低 {mana} 必要です。",
     "please_allow":
       "{settings_link}にてLegacyMarketplace契約でMANAを操作できるようにしてください。",
     "please_allow_new_marketplace":
@@ -104,7 +104,7 @@
     "pay_with": "支払い",
     "powered_by": "powered by {bancor_link}",
     "rate": "レート",
-    "receive": "受け取る",
+    "receive": "受け取り",
     "slippage": "スリッページ",
     "title": "ETHからMANAへ変換"
   },
@@ -188,7 +188,7 @@
     "estate": "エステート",
     "estates": "エステート",
     "expired_at": "{time}に締切済み",
-    "expires_in": "締切まであと{time}",
+    "expires_in": "締切: {time}",
     "expires_in_more_than_years": "締切まであと{years}年以上",
     "for": "for",
     "loading": "読込み中",
