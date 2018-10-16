@@ -18,13 +18,13 @@
   "asset_buy": {
     "about_to_buy": "Vous êtes sur le point d'acheter {name} {price}",
     "allowed_balance": "Votre allocation est {allowance}",
-    "buy_asset": "Acheter une {asset_name}",
+    "buy_asset": "Acheter une {asset_type}",
     "buy_mana": "{click_here} pour acheter du MANA.",
     "didnt_allow": "Vous n'avez pas autorisé l'utilisation de MANA",
     "didnt_allow_new_marketplace":
       "Vous n'avez pas autorisé l'utilisation de MANA pour la nouvelle version du Marketplace",
     "needs_at_least":
-      "Vous avez besoin d'au moins {mana} pour acheter cette {asset_name}.",
+      "Vous avez besoin d'au moins {mana} pour acheter cette {asset_type}.",
     "please_allow":
       "Veuillez vous rendre sur {settings_link} et autoriser le contrat LegacyMarketplace à utiliser MANA en votre nom",
     "please_allow_new_marketplace":
