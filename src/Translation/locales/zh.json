@@ -14,8 +14,8 @@
     "its_you": "您的"
   },
   "asset_buy": {
-    "about_to_buy": "您即将购买 {parcel_name}",
-    "allowed_balance": "你的限额是{allowance}",
+    "about_to_buy": "您即将以 {price} 的价格购买 {name}",
+    "allowed_balance": "你的限额是 {allowance}",
     "buy_asset": "购买{asset_type}",
     "buy_mana": "{click_here} 购买一些 MANA。",
     "didnt_allow": "您尚未授权虚拟市场使用 MANA",
@@ -40,12 +40,12 @@
     "history": {
       "auction": "拍卖",
       "event": "事件",
-      "from": "从",
+      "from": "来源",
       "price": "价格",
       "sold": "出售",
       "title": "交易历史",
-      "to": "至",
-      "when": "什么时候"
+      "to": "接收人",
+      "when": "时间"
     },
     "publication": {
       "buy": "购买",
