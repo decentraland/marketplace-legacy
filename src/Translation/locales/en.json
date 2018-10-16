@@ -57,6 +57,13 @@
       "price": "Price"
     }
   },
+  "asset_manage": {
+    "address": "Operator address",
+    "address_permission":
+      "This address will be able to update the contents of this {asset_type}.",
+    "give_permission": "Give permission to update contents of {asset_name}.",
+    "manage_asset": "Manage {asset_type}"
+  },
   "asset_publish": {
     "already_sold": "This {asset_name} is already on sale for {value}",
     "errors": {
@@ -328,13 +335,6 @@
     "set_name_and_desc": "Set a name and description for {parcel_name}.",
     "warning_tooltip":
       "This will be used to show your scene. Update only if you know what you are doing."
-  },
-  "parcel_manage": {
-    "address": "Operator address",
-    "address_permission":
-      "This address will be able to update the contents of this parcel.",
-    "give_permission": "Give permission to update contents of {parcel_name}.",
-    "manage_land": "Manage LAND"
   },
   "parcel_tags": {
     "adjacent": "Adjacent",

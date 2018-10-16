@@ -8,6 +8,10 @@
   margin-bottom: 5px;
 }
 
+.EstateDetail .manage-button {
+  margin-left: 25px;
+}
+
 .EstateDetail .estate-title > span {
   margin-right: 16px;
 }

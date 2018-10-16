@@ -58,6 +58,14 @@
       "price": "prix"
     }
   },
+  "asset_manage": {
+    "address": "Adresse de l'opérateur",
+    "address_permission":
+      "Cette adresse pourra mettre à jour le contenu de ce {asset_type}.",
+    "give_permission":
+      "Donnez la permission de mettre à jour le contenu de {asset_name}.",
+    "manage_asset": "Gérer {asset_type}"
+  },
   "asset_publish": {
     "already_sold": "Ce {asset_name} est déjà en vente pour {value}",
     "errors": {
@@ -334,13 +342,6 @@
     "set_name_and_desc": "Ajouter un nom et une description à {parcel_name}",
     "warning_tooltip":
       "Ceci sera utilisé pour montrer votre scène. Mettre à jour seulement si vous savez ce que vous faites."
-  },
-  "parcel_manage": {
-    "address": "Adresse de l'opérateur",
-    "address_permission":
-      "Cette adresse pourra mettre à jour le contenu de cette parcelle.",
-    "give_permission": "Autoriser la mise à jour du contenu de {parcel_name}",
-    "manage_land": "Gérer les terres"
   },
   "parcel_tags": {
     "adjacent": "Adjacent",

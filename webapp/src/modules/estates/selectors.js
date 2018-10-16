@@ -9,7 +9,8 @@ import {
   DELETE_ESTATE_REQUEST,
   EDIT_ESTATE_PARCELS_REQUEST,
   TRANSFER_ESTATE_REQUEST,
-  FETCH_ESTATE_REQUEST
+  FETCH_ESTATE_REQUEST,
+  MANAGE_ESTATE_REQUEST
 } from './actions'
 
 export const getState = state => state.estates
@@ -40,6 +41,9 @@ export const isEstateTransactionIdle = state =>
   isEditingMetadataTransactionIdle(state) ||
   isEditingParcelTransactionIdle(state) ||
   isDeletingEstateTransactionIdle(state)
+
+export const isManageTransactionIdle = state =>
+  isLoadingType(getLoading(state), MANAGE_ESTATE_REQUEST)
 
 export const getEstates = createSelector(
   state => getData(state),

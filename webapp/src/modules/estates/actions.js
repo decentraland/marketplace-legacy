@@ -198,3 +198,42 @@ export function transferEstateFailure(error) {
     error
   }
 }
+
+// Manage Estate
+
+export const MANAGE_ESTATE_REQUEST = '[Request] Manage Estate'
+export const MANAGE_ESTATE_SUCCESS = '[Success] Manage Estate'
+export const MANAGE_ESTATE_FAILURE = '[Failure] Manage Estate'
+
+export function manageEstateRequest(estate, address, revoked) {
+  return {
+    type: MANAGE_ESTATE_REQUEST,
+    estate,
+    address,
+    revoked
+  }
+}
+
+export function manageEstateSuccess(txHash, estate, address, revoked) {
+  return {
+    type: MANAGE_ESTATE_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      id: estate.id,
+      address,
+      revoked
+    }),
+    estate,
+    address,
+    revoked
+  }
+}
+
+export function manageEstateFailure(estate, address, revoked, error) {
+  return {
+    type: MANAGE_ESTATE_FAILURE,
+    estate,
+    address,
+    revoked,
+    error
+  }
+}

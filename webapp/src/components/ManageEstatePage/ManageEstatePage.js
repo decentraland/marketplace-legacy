@@ -2,58 +2,55 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { t, T } from '@dapps/modules/translation/utils'
 
-import Parcel from 'components/Parcel'
-import ParcelModal from 'components/ParcelModal'
+import Estate from 'components/Estate'
+import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
 import TxStatus from 'components/TxStatus'
-import ParcelName from 'components/ParcelName'
-import ParcelDetailLink from 'components/ParcelDetailLink'
+import EstateName from 'components/EstateName'
 import ManageAssetForm from 'components/ManageAssetForm'
 
-export default class ManageParcelPage extends React.PureComponent {
+export default class ManageEstatePage extends React.PureComponent {
   static propTypes = {
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const { x, y, isTxIdle } = this.props
+    const { id, isTxIdle } = this.props
     const { onSubmit, onCancel } = this.props
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
-        {parcel => (
+      <Estate id={id} ownerOnly>
+        {estate => (
           <div className="ManageParcelPage">
-            <ParcelModal
-              x={x}
-              y={y}
+            <EstateModal
+              parcels={estate.data.parcels}
               title={t('asset_manage.manage_asset', {
-                asset_type: t('name.parcel')
+                asset_type: t('name.estate')
               })}
               subtitle={
                 <T
                   id="asset_manage.give_permission"
-                  values={{ asset_name: <ParcelDetailLink parcel={parcel} /> }}
+                  values={{ asset_name: <EstateName estate={estate} /> }}
                 />
               }
               hasCustomFooter
             >
               <ManageAssetForm
-                asset={parcel}
+                asset={estate}
                 isTxIdle={isTxIdle}
                 onSubmit={onSubmit}
                 onCancel={onCancel}
               />
               <TxStatus.Asset
-                asset={parcel}
-                name={<ParcelName parcel={parcel} />}
+                asset={estate}
+                name={<EstateName estate={estate} />}
               />
-            </ParcelModal>
+            </EstateModal>
           </div>
         )}
-      </Parcel>
+      </Estate>
     )
   }
 }

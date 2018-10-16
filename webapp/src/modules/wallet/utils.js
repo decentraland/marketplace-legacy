@@ -2,6 +2,8 @@ import { eth, contracts, wallets, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
 import { isMobile } from 'lib/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
+import { isParcel } from 'shared/parcel'
+import { isEstate } from 'shared/estate'
 
 export async function connectEthereumWallet(options = {}, retries = 0) {
   try {
@@ -100,19 +102,35 @@ export async function fetchBalance(address) {
   return balance
 }
 
-export async function getUpdateOperator(x, y) {
+export async function getAssetUpdateOperator(asset) {
   try {
-    const contract = eth.getContract('LANDRegistry')
-    const tokenId = await contract.encodeTokenId(x, y)
-    const address = await contract.updateOperator(tokenId)
-    if (
-      eth.utils.isValidAddress(address) &&
-      !Contract.isEmptyAddress(address)
-    ) {
-      return address
+    if (isParcel(asset)) {
+      return getParcelUpdateOperator(asset.x, asset.y)
+    } else if (isEstate(asset)) {
+      return getEstateUpdateOperator(asset.id)
     }
   } catch (error) {
     // 🌈
   }
+  return null
+}
+
+async function getParcelUpdateOperator(x, y) {
+  const contract = eth.getContract('LANDRegistry')
+  const tokenId = await contract.encodeTokenId(x, y)
+  const address = await contract.updateOperator(tokenId)
+  if (eth.utils.isValidAddress(address) && !Contract.isEmptyAddress(address)) {
+    return address
+  }
+  return null
+}
+
+async function getEstateUpdateOperator(tokenId) {
+  const contract = eth.getContract('EstateRegistry')
+  const address = await contract.updateOperator(tokenId)
+  if (eth.utils.isValidAddress(address) && !Contract.isEmptyAddress(address)) {
+    return address
+  }
+
   return null
 }

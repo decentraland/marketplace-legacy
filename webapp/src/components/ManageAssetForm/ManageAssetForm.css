@@ -1,15 +1,15 @@
-.ManageParcelForm .transfer-warning {
+.ManageAssetForm .transfer-warning {
   color: var(--gray);
   font-style: italic;
 }
 
-.ManageParcelForm .address-wrapper {
+.ManageAssetForm .address-wrapper {
   display: flex;
   flex-flow: row nowrap;
   padding: 5px;
 }
 
-.ManageParcelForm .address-input {
+.ManageAssetForm .address-input {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -18,16 +18,16 @@
   padding-bottom: 5px;
 }
 
-.ManageParcelForm .address-wrapper .AddressBlock {
+.ManageAssetForm .address-wrapper .AddressBlock {
   flex: none;
   margin-right: 10px;
 }
 
-.ManageParcelForm .address-label {
+.ManageAssetForm .address-label {
   color: white;
 }
 
-.ManageParcelForm .address-input.revoked .address-label {
+.ManageAssetForm .address-input.revoked .address-label {
   color: var(--gray);
   text-decoration: line-through;
 }
@@ -38,6 +38,6 @@
   height: 100px;
 }
 
-.ManageParcelForm .address-actions .ui.button + .ui.button {
+.ManageAssetForm .address-actions .ui.button + .ui.button {
   margin-left: 20px;
 }

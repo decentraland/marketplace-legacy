@@ -56,6 +56,13 @@
       "price": "価格"
     }
   },
+  "asset_manage": {
+    "address": "オペレータアドレス",
+    "address_permission":
+      "このアドレスは、この{asset_type}の内容を更新することができます。",
+    "give_permission": "{asset_name}の内容を更新する権限を与えます。",
+    "manage_asset": "{asset_type}を管理する"
+  },
   "asset_publish": {
     "already_sold": "この{asset_name}は既に{value}の販売中です",
     "errors": {
@@ -83,14 +90,10 @@
     "your_parcel": "あなたの区画"
   },
   "authorization": {
-    "allow":
-      "{contract_link}に準じて{symbol}を操作することを許可する",
-    "allowed":
-      "{contract_link}に準じて{symbol}を操作することを許可しました",
-    "approve":
-      "{contract_link}に準じて{symbol}を操作することを許可する",
-    "approved":
-      "{contract_link}に準じて{symbol}を操作することを許可しました",
+    "allow": "{contract_link}に準じて{symbol}を操作することを許可する",
+    "allowed": "{contract_link}に準じて{symbol}を操作することを許可しました",
+    "approve": "{contract_link}に準じて{symbol}を操作することを許可する",
+    "approved": "{contract_link}に準じて{symbol}を操作することを許可しました",
     "disallowed":
       "{contract_link}に準じて{symbol}を操作することを許可しませんでした",
     "disapproved":
@@ -328,13 +331,6 @@
     "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。",
     "warning_tooltip":
       "あなたのシーンを反映する為に使用されます。必要な場合のみ更新して下さい。"
-  },
-  "parcel_manage": {
-    "address": "編集者のアドレス",
-    "address_permission":
-      "このアドレスの持ち主が指定された区画のコンテンツを更新できるようになります。",
-    "give_permission": "{parcel_name}の更新権限を与える.",
-    "manage_land": "ランドを管理"
   },
   "parcel_tags": {
     "adjacent": "隣接",

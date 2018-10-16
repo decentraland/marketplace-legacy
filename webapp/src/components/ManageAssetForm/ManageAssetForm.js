@@ -3,19 +3,20 @@ import PropTypes from 'prop-types'
 import { eth } from 'decentraland-eth'
 import { Button, Form, Loader } from 'semantic-ui-react'
 
-import { parcelType } from 'components/types'
+import { assetType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import AddressInput from 'components/AddressInput'
 import { t } from '@dapps/modules/translation/utils'
-import { getUpdateOperator } from 'modules/wallet/utils'
+import { getAssetUpdateOperator } from 'modules/wallet/utils'
 import { preventDefault, shortenAddress } from 'lib/utils'
+import { isParcel } from 'shared/parcel'
 
-import './ManageParcelForm.css'
+import './ManageAssetForm.css'
 import AddressBlock from 'components/AddressBlock'
 
-export default class ManageParcelForm extends React.PureComponent {
+export default class ManageAssetForm extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType,
+    asset: assetType,
     isTxIdle: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
@@ -35,8 +36,8 @@ export default class ManageParcelForm extends React.PureComponent {
 
   async componentWillMount() {
     this.setState({ loading: true })
-    const { parcel } = this.props
-    const address = await getUpdateOperator(parcel.x, parcel.y)
+    const { asset } = this.props
+    const address = await getAssetUpdateOperator(asset)
     if (address != null) {
       this.setState({ address, loading: false, editing: true })
     } else {
@@ -68,10 +69,10 @@ export default class ManageParcelForm extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    const { parcel } = this.props
+    const { asset } = this.props
     const { address, revoked } = this.state
     const safeAddress = address.trim().toLowerCase()
-    this.props.onSubmit(parcel, safeAddress, revoked)
+    this.props.onSubmit(asset, safeAddress, revoked)
   }
 
   handleCancel = () => {
@@ -94,7 +95,7 @@ export default class ManageParcelForm extends React.PureComponent {
     const { address, revoked } = this.state
     return (
       <React.Fragment>
-        <label>{t('parcel_manage.address')}</label>
+        <label>{t('asset_manage.address')}</label>
         <div className={revoked ? 'address-input revoked' : 'address-input'}>
           <div className="address-wrapper">
             <AddressBlock
@@ -142,16 +143,20 @@ export default class ManageParcelForm extends React.PureComponent {
 
   renderSetOperatorForm() {
     const { address, loading } = this.state
+    const { asset } = this.props
+
     return (
       <React.Fragment>
         <AddressInput
-          label={t('parcel_manage.address')}
+          label={t('asset_manage.address')}
           address={address}
           onChange={this.handleAddressChange}
           disabled={loading}
         />
         <span className="transfer-warning">
-          {t('parcel_manage.address_permission')}
+          {t('asset_manage.address_permission', {
+            asset_type: isParcel(asset) ? t('name.parcel') : t('name.estate')
+          })}
         </span>
         <br />
         <span className="transfer-warning">{t('global.check_address')}</span>
@@ -170,7 +175,7 @@ export default class ManageParcelForm extends React.PureComponent {
 
     return (
       <Form
-        className="ManageParcelForm"
+        className="ManageAssetForm"
         onSubmit={preventDefault(this.handleSubmit)}
       >
         <Form.Field>

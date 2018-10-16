@@ -35,6 +35,7 @@ import DeleteEstatePage from 'components/DeleteEstatePage'
 import TransferEstatePage from 'components/TransferEstatePage'
 import AssetDetailPage from 'components/AssetDetailPage'
 import EditEstatePage from 'components/EditEstatePage'
+import ManageEstatePage from 'components/ManageEstatePage'
 import { ASSET_TYPES } from './shared/asset'
 
 export default class Routes extends React.Component {
@@ -131,6 +132,11 @@ export default class Routes extends React.Component {
           exact
           path={locations.cancelSaleEstate()}
           component={CancelSaleEstatePage}
+        />
+        <Route
+          exact
+          path={locations.manageEstate()}
+          component={ManageEstatePage}
         />
 
         {/*Mortgages*/}
