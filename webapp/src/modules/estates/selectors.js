@@ -48,7 +48,7 @@ export const getEstates = createSelector(
   (estates, parcels, publications) =>
     Object.keys(estates).reduce((acc, estateId) => {
       const estate = estates[estateId]
-      if (estate && estate.data.parcels.length > 0) {
+      if (estate) {
         acc[estateId] = {
           ...estate,
           parcels: estate.data.parcels

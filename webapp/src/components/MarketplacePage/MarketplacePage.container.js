@@ -7,7 +7,7 @@ import { navigateTo } from 'modules/location/actions'
 import { Pagination } from 'lib/Pagination'
 import { getOptionsFromRouter } from './utils'
 import MarketplacePage from './MarketplacePage'
-import { ASSET_TYPES } from '../../shared/asset'
+import { ASSET_TYPES } from 'shared/asset'
 
 const mapState = (state, { location }) => {
   let {

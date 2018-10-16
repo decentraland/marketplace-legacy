@@ -1,4 +1,11 @@
-import { takeLatest, call, put, select, all } from 'redux-saga/effects'
+import {
+  takeLatest,
+  call,
+  put,
+  select,
+  all,
+  takeEvery
+} from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
 import { isFeatureEnabled } from 'lib/featureUtils'
@@ -47,7 +54,7 @@ export function* mortgageSaga() {
       handleFetchMortgageRequest
     )
     yield takeLatest(PAY_MORTGAGE_REQUEST, handlePayMortgageRequest)
-    yield takeLatest(
+    yield takeEvery(
       FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
       handleFetchActiveParcelMortgagesRequest
     )

@@ -12,7 +12,6 @@ export default class EditEstate extends React.PureComponent {
     wallet: walletType.isRequired,
     isOwner: PropTypes.bool.isRequired,
     isCreation: PropTypes.bool.isRequired,
-    isSelecting: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onEditEstateParcels: PropTypes.func.isRequired,
     onCreateEstate: PropTypes.func.isRequired,

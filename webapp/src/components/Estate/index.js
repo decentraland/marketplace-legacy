@@ -1,2 +1,2 @@
-import Estate from './Estate.container'
+import Estate from './Estate'
 export default Estate

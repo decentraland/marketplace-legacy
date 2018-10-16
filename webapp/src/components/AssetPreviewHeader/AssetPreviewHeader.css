@@ -1,0 +1,21 @@
+.Page > .AssetPreviewHeader {
+  padding-top: 0;
+}
+
+.AssetPreviewHeader {
+  color: var(--text);
+}
+
+.AssetPreviewHeader > .Loading {
+  font-size: 10px;
+  top: 35%;
+}
+
+.AssetPreviewHeader .title {
+  margin-top: 20px;
+  margin-bottom: 30px !important;
+}
+
+.AssetPreviewHeader .parcel-preview {
+  height: 400px;
+}

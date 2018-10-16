@@ -9,7 +9,10 @@ export function buildCoordinate(x, y) {
 export function splitCoordinate(id) {
   let ids = [0, 0]
   if (id) {
-    ids = id.split(',').map(coord => parseInt(coord, 10))
+    ids = id
+      .toString()
+      .split(',')
+      .map(coord => parseInt(coord, 10))
   }
   return ids
 }

@@ -7,26 +7,15 @@ import {
   isLoading as isAddressLoading,
   getData as getAddresses
 } from 'modules/address/selectors'
-import { isFetchingParcel } from 'modules/parcels/selectors'
-import { isFetchingEstate } from 'modules/estates/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 
 import Asset from './Asset'
 
-const mapState = (state, { value, isConnected }) => {
+const mapState = (state, { value }) => {
   const wallet = getWallet(state)
   const addresses = getAddresses(state)
 
   let isConnecting = isWalletConnecting(state) || isAddressLoading(state)
-
-  if (
-    wallet &&
-    wallet.address &&
-    addresses[wallet.address] &&
-    isConnected(addresses[wallet.address])
-  ) {
-    isConnecting = false
-  }
 
   let publication = null
   let asset = value
@@ -40,8 +29,7 @@ const mapState = (state, { value, isConnected }) => {
     wallet,
     addresses,
     asset,
-    isConnecting,
-    isFetchingAsset: isFetchingParcel(state) || isFetchingEstate(state)
+    isConnecting
   }
 }
 

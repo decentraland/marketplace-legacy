@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import AssetDetailPage from 'components/AssetDetailPage'
 import Parcel from 'components/Parcel'
 import ParcelDetail from './ParcelDetail'
 import { publicationType, districtType, mortgageType } from 'components/types'
@@ -16,8 +15,7 @@ export default class ParcelDetailPage extends React.PureComponent {
     districts: PropTypes.objectOf(districtType).isRequired,
     mortgage: mortgageType,
     user: PropTypes.string,
-    onBuy: PropTypes.func.isRequired,
-    onAssetClick: PropTypes.func.isRequired
+    onBuy: PropTypes.func.isRequired
   }
 
   render() {
@@ -35,18 +33,16 @@ export default class ParcelDetailPage extends React.PureComponent {
       <div className="ParcelDetailPage">
         <Parcel x={x} y={y}>
           {(parcel, isOwner, wallet) => (
-            <AssetDetailPage asset={parcel} {...this.props}>
-              <ParcelDetail
-                wallet={wallet}
-                parcel={parcel}
-                isOwner={isOwner}
-                publications={publications}
-                districts={districts}
-                estates={estates}
-                onBuy={onBuy}
-                mortgage={mortgage}
-              />
-            </AssetDetailPage>
+            <ParcelDetail
+              wallet={wallet}
+              parcel={parcel}
+              isOwner={isOwner}
+              publications={publications}
+              districts={districts}
+              estates={estates}
+              onBuy={onBuy}
+              mortgage={mortgage}
+            />
           )}
         </Parcel>
       </div>

@@ -9,13 +9,11 @@ import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 
 const mapState = (state, ownProps) => {
-  const { id, x, y } = getMatchParams(ownProps)
+  const { id } = getMatchParams(ownProps)
 
   return {
     id,
     publications: getPublications(state),
-    x: parseInt(x, 10),
-    y: parseInt(y, 10),
     allParcels: getParcels(state)
   }
 }
@@ -24,8 +22,6 @@ const mapDispatch = (dispatch, ownProps) => {
   const { id } = getMatchParams(ownProps)
 
   return {
-    onViewAssetClick: asset =>
-      dispatch(navigateTo(locations.assetDetail(asset))),
     onEditParcels: () => dispatch(navigateTo(locations.editEstateParcels(id))),
     onEditMetadata: () => dispatch(navigateTo(locations.editEstateMetadata(id)))
   }

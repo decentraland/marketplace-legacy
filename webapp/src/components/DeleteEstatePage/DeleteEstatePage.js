@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Message } from 'semantic-ui-react'
-import EstateModal from 'components/EstateDetailPage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
 import Estate from 'components/Estate'
 import { t } from '@dapps/modules/translation/utils'
 import { isNewEstate, MAX_PARCELS_PER_TX } from 'shared/estate'

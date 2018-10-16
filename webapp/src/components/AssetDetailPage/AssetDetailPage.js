@@ -1,66 +1,66 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container } from 'semantic-ui-react'
-
-import { assetType } from 'components/types'
-import ParcelPreview from 'components/ParcelPreview'
-import { isParcel } from 'shared/parcel'
-
+import { ASSET_TYPES } from 'shared/asset'
+import AssetLoader from 'components/AssetLoader'
+import ParcelDetailPage from 'components/ParcelDetailPage'
+import EstateDetailPage from 'components/EstateDetailPage'
+import AssetPreviewHeader from 'components/AssetPreviewHeader'
 import './AssetDetailPage.css'
+
+const assetTypeArray = Object.keys(ASSET_TYPES).map(key => ASSET_TYPES[key])
 
 export default class AssetDetailPage extends React.PureComponent {
   static propTypes = {
-    asset: assetType.isRequired,
-    isLoading: PropTypes.bool,
-    error: PropTypes.string,
-    onError: PropTypes.func.isRequired,
-    onAssetClick: PropTypes.func.isRequired,
-    showMiniMap: PropTypes.bool,
-    showControls: PropTypes.bool
+    assetType: PropTypes.string.isRequired,
+    onAssetClick: PropTypes.func.isRequired
   }
 
-  static defaultProps = {
-    showMiniMap: true,
-    showControls: true
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
-      return this.props.onError(nextProps.error)
+  hasPreviewHeader(asset, assetType) {
+    // here we can decide wether to have a preview header or not
+    // depending on the asset or the assetType (for future types of assets)
+    switch (assetType) {
+      case ASSET_TYPES.parcel:
+        return asset != null
+      case ASSET_TYPES.estate:
+        return asset != null && asset.data.parcels.length > 0
+      default:
+        return false
     }
   }
 
   render() {
-    const {
-      children,
-      x,
-      y,
-      error,
-      asset,
-      onAssetClick,
-      showMiniMap,
-      showControls
-    } = this.props
+    const { id, assetType, onAssetClick } = this.props
 
-    if (error) {
-      return null
+    if (assetTypeArray.indexOf(assetType) === -1) {
+      throw new Error(
+        `[AssetDetailPage] You must provide one of the following asset types: [${assetTypeArray.join(
+          ', '
+        )}] but received "${assetType}" instead`
+      )
     }
+
+    let DetailPage
+    switch (assetType) {
+      case ASSET_TYPES.parcel:
+        DetailPage = ParcelDetailPage
+        break
+      case ASSET_TYPES.estate:
+        DetailPage = EstateDetailPage
+        break
+    }
+
     return (
-      <div className="AssetDetailPage">
-        <div className="parcel-preview">
-          <ParcelPreview
-            x={x}
-            y={y}
-            selected={isParcel(asset) ? asset : asset.data.parcels}
-            isDraggable
-            showPopup
-            showControls={showControls}
-            showMinimap={showMiniMap}
-            onClick={onAssetClick}
-          />
-        </div>
-        <Container>{children}</Container>
-      </div>
+      <AssetLoader id={id} assetType={assetType}>
+        {asset =>
+          this.hasPreviewHeader(asset, assetType) ? (
+            <AssetPreviewHeader asset={asset} onAssetClick={onAssetClick}>
+              <DetailPage />
+            </AssetPreviewHeader>
+          ) : (
+            <DetailPage />
+          )
+        }
+      </AssetLoader>
     )
   }
 }
