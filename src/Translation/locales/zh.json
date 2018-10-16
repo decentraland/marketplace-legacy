@@ -371,8 +371,7 @@
     "transfer_mana": "{mana} MANA 已转帐至 {address_link}"
   },
   "transaction_confirmations": {
-    "count": "{confirmations_count}个确认",
-    "waiting": "等待确认"
+    "count": "{confirmations_count}个确认"
   },
   "transaction_status": {
     "activity_page": "活动页面",

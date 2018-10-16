@@ -411,8 +411,7 @@
   },
   "transaction_confirmations": {
     "count":
-      "{confirmations_count} {confirmations_count, plural, one {confirmación} other {confirmaciones}}",
-    "waiting": "Esperando confirmaciones"
+      "{confirmations_count} {confirmations_count, plural, one {confirmación} other {confirmaciones}}"
   },
   "transaction_status": {
     "activity_page": "página de actividad",
