@@ -26,7 +26,7 @@ export class Marketplace {
           ${raw(joinAssetsSQL)}
           WHERE ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.whereIsActive()}
-            AND ${PublicationQueries.EstateHasParcels()}
+            AND ${PublicationQueries.estateHasParcels()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -59,7 +59,7 @@ export class Marketplace {
           WHERE ${PublicationQueries.hasAssetType(asset_type)}
             AND ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.whereIsActive()}
-            AND ${PublicationQueries.EstateHasParcels()}
+            AND ${PublicationQueries.estateHasParcels()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -78,7 +78,7 @@ export class Marketplace {
         WHERE pub.status = ${status}
           AND ${PublicationQueries.hasAssetType(asset_type)}
           AND ${PublicationQueries.whereIsActive()}
-          AND ${PublicationQueries.EstateHasParcels()}`
+          AND ${PublicationQueries.estateHasParcels()}`
     )
 
     return parseInt(counts[0].count, 10)

@@ -11,12 +11,12 @@ export const PublicationQueries = Object.freeze({
   hasAssetType: asset_type =>
     asset_type ? SQL`asset_type = ${asset_type}` : SQL`1 = 1`,
   hasStatus: status => (status ? SQL`status = ${status}` : SQL`1 = 1`),
-  EstateHasParcels: () =>
-    SQL`(pub.asset_type = ${ASSET_TYPES.estate} AND EXISTS(select 1 from ${raw(
-      Parcel.tableName
-    )} as p where p.estate_id = pub.asset_id) OR pub.asset_type != ${
-      ASSET_TYPES.estate
-    })`,
+
+  // prettier-ignore
+  estateHasParcels: () =>
+    SQL`(pub.asset_type = ${ASSET_TYPES.estate}
+      AND EXISTS(SELECT 1 FROM ${raw(Parcel.tableName)} AS p WHERE p.estate_id = pub.asset_id)
+      OR pub.asset_type != ${ASSET_TYPES.estate})`,
 
   findByStatusSql: (status = null) => {
     if (!Publication.isValidStatus(status)) {
