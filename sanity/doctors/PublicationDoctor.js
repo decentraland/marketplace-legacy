@@ -46,7 +46,7 @@ export class PublicationDoctor extends Doctor {
           }
 
           const error = (await Promise.all(errors)).join('\n')
-          if (error) {
+          if (error.trim()) {
             log.error(error)
             faultyAssets.push({ ...asset, error })
           }
