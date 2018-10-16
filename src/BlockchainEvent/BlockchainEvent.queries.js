@@ -1,4 +1,3 @@
-import { BlockchainEvent } from './BlockchainEvent.model'
 import { SQL, raw } from '../database'
 
 export const BlockchainEventQueries = Object.freeze({
