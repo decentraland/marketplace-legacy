@@ -40,7 +40,8 @@
       "cancel": "Cancel sale",
       "permissions": "Permissions",
       "sell": "Sell",
-      "transfer": "Transfer"
+      "transfer": "Transfer",
+      "update_price": "Update price"
     },
     "history": {
       "auction": "Auction",
@@ -87,7 +88,10 @@
       "You need to go to {settings_link} and authorize the Marketplace to operate {asset_name} on your behalf before you can list it on sale.",
     "price": "Price",
     "price_placeholder": "Price in MANA for this {asset_name}",
-    "set_asset_price": "Set a price and an expiration date for {asset_name}."
+    "set_asset_price": "Set a price and an expiration date for {asset_name}.",
+    "set_new_asset_price":
+      "Set the new price or expiration date for {asset_name}.",
+    "update_asset": "Update {asset_name} publication"
   },
   "atlas": {
     "loading": "Loading",

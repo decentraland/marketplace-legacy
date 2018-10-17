@@ -39,7 +39,8 @@
       "cancel": "Cancelar venta",
       "permissions": "Permisos",
       "sell": "Vender",
-      "transfer": "Transferir"
+      "transfer": "Transferir",
+      "update_price": "Actualizar precio"
     },
     "history": {
       "auction": "Subasta",
@@ -88,7 +89,10 @@
     "price": "Precio",
     "price_placeholder": "Precio en MANA para este {asset_name}",
     "set_asset_price":
-      "Establezca un precio y una fecha de vencimiento para {asset_name}."
+      "Establezca un precio y una fecha de vencimiento para {asset_name}.",
+    "set_new_asset_price":
+      "Establezca el nuevo precio o la fecha de vencimiento para {asset_name}.",
+    "update_asset": "Actualizar la publicación {asset_name}"
   },
   "atlas": {
     "loading": "Cargando",

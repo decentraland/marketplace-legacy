@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Loader, Container, Message } from 'semantic-ui-react'
+import { Loader, Container, Message } from 'semantic-ui-react/dist/commonjs'
 
 import { locations } from 'locations'
 import Parcel from 'components/Parcel'
@@ -13,7 +13,7 @@ import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
 import { formatMana } from 'lib/utils'
-import PublishAssetForm from '../PublishAssetForm'
+import PublishAssetForm from 'components/PublishAssetForm'
 
 export default class PublishPage extends React.PureComponent {
   static propTypes = {
@@ -54,9 +54,10 @@ export default class PublishPage extends React.PureComponent {
         {parcel => {
           const { approvals } = authorization
           const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
+          const isOnSale = isOpen(publication)
           return (
             <div className="PublishPage">
-              {isOpen(publication) ? (
+              {isOnSale ? (
                 <Container text>
                   <Message
                     warning
@@ -93,13 +94,21 @@ export default class PublishPage extends React.PureComponent {
                 y={y}
                 title={
                   <T
-                    id="asset_publish.list_asset"
+                    id={
+                      isOnSale
+                        ? 'asset_publish.update_asset'
+                        : 'asset_publish.list_asset'
+                    }
                     values={{ asset_name: t('name.parcel') }}
                   />
                 }
                 subtitle={
                   <T
-                    id="asset_publish.set_asset_price"
+                    id={
+                      isOnSale
+                        ? 'asset_publish.set_new_asset_price'
+                        : 'asset_publish.set_asset_price'
+                    }
                     values={{
                       asset_name: <ParcelDetailLink parcel={parcel} />
                     }}

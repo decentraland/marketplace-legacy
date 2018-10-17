@@ -39,7 +39,8 @@
       "cancel": "販売をキャンセルする",
       "permissions": "アクセス許可",
       "sell": "販売",
-      "transfer": "転送"
+      "transfer": "転送",
+      "update_price": "アップデート価格"
     },
     "history": {
       "auction": "オークション",
@@ -85,7 +86,10 @@
       "販売の前に{settings_link}にてマーケットで{asset_name}を操作することを承認してください。",
     "price": "価格",
     "price_placeholder": "この{asset_name}の価格はMANAです",
-    "set_asset_price": "{asset_name}の価格と有効期限を設定します。"
+    "set_asset_price": "{asset_name}の価格と有効期限を設定します。",
+    "set_new_asset_price":
+      "{asset_name}の新しい価格または有効期限を設定します。",
+    "update_asset": "{asset_name}のパブリッシュを更新する"
   },
   "atlas": {
     "loading": "読込み中",

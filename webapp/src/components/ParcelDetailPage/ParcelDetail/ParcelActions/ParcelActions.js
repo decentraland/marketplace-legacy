@@ -32,7 +32,7 @@ export default class ParcelActions extends React.PureComponent {
       return null
     }
     const { x, y } = parcel
-
+    const isListed = isOnSale(parcel, publications)
     return (
       <div className="ParcelActions">
         {isOwner ? (
@@ -43,7 +43,6 @@ export default class ParcelActions extends React.PureComponent {
                 {t('asset_detail.actions.transfer')}
               </Button>
             </Link>
-
             {this.canCreateEstate() && (
               <Link to={locations.createEstate(x, y)}>
                 <Button size="tiny">
@@ -52,23 +51,26 @@ export default class ParcelActions extends React.PureComponent {
                 </Button>
               </Link>
             ) /* Estate Feature */}
-            {isOnSale(parcel, publications) ? (
+            {isListed && (
               <Link to={locations.cancelSaleParcel(x, y)}>
                 <Button size="tiny" primary>
                   <Icon name="cancel" />
                   {t('asset_detail.actions.cancel')}
                 </Button>
               </Link>
-            ) : (
-              <Link to={locations.sellParcel(x, y)}>
-                <Button size="tiny" primary>
-                  <Icon name="tag" />
-                  {t('asset_detail.actions.sell')}
-                </Button>
-              </Link>
             )}
+            <Link to={locations.sellParcel(x, y)}>
+              <Button size="tiny" primary>
+                <Icon name="tag" />
+                {t(
+                  isListed
+                    ? 'asset_detail.actions.update_price'
+                    : 'asset_detail.actions.sell'
+                )}
+              </Button>
+            </Link>
           </React.Fragment>
-        ) : isOnSale(parcel, publications) && !mortgage ? (
+        ) : isListed && !mortgage ? (
           <React.Fragment>
             <Link to={locations.buyParcel(x, y)}>
               <Button primary size="large">

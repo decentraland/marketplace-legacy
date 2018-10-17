@@ -53,9 +53,10 @@ export default class PublishEstatePage extends React.PureComponent {
         {estate => {
           const { approvals } = authorization
           const isMarketplaceApproved = approvals.Marketplace.EstateRegistry
+          const isOnSale = isOpen(publication)
           return (
             <div className="PublishPage">
-              {isOpen(publication) ? (
+              {isOnSale ? (
                 <Container text>
                   <Message
                     warning
@@ -91,13 +92,21 @@ export default class PublishEstatePage extends React.PureComponent {
                 parcels={estate.data.parcels}
                 title={
                   <T
-                    id="asset_publish.list_asset"
+                    id={
+                      isOnSale
+                        ? 'asset_publish.update_asset'
+                        : 'asset_publish.list_asset'
+                    }
                     values={{ asset_name: t('name.estate') }}
                   />
                 }
                 subtitle={
                   <T
-                    id="asset_publish.set_asset_price"
+                    id={
+                      isOnSale
+                        ? 'asset_publish.set_new_asset_price'
+                        : 'asset_publish.set_asset_price'
+                    }
                     values={{ asset_name: estate.data.name }}
                   />
                 }
