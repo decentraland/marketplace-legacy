@@ -148,7 +148,7 @@ export class PublicationDiagnosis extends Diagnosis {
   async doTreatment() {
     // TODO: asset_type
     await Promise.all(
-      this.faultyAssets.map(parcel => Publication.deleteByAsset(parcel))
+      this.faultyAssets.map(parcel => Publication.deleteByAssetId(parcel.id))
     )
 
     // TODO: add NFTAddress

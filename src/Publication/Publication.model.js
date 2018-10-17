@@ -52,8 +52,8 @@ export class Publication extends Model {
   }
 
   // TODO: Add asset_type
-  static deleteByAsset(asset) {
-    return this.delete({ asset_id: asset.id })
+  static deleteByAssetId(assetId) {
+    return this.delete({ asset_id: assetId })
   }
 
   static async cancelOlder(asset_id, block_number, eventName) {
