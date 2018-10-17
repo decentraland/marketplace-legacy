@@ -404,9 +404,9 @@
     "edit_estate_parcels_removed":
       "Vous avez supprimé les parcelles {amount} au domaine {name}",
     "manage":
-      "Vous avez donné {address_link} la permission de mettre à jour le contenu de {parcel_link}",
+      "Vous avez donné {address_link} la permission de mettre à jour le contenu de {asset_link}",
     "manage_revoked":
-      "Vous avez révoqué {address_link} l'autorisation de mettre à jour le contenu de {parcel_link}",
+      "Vous avez révoqué {address_link} l'autorisation de mettre à jour le contenu de {asset_link}",
     "mortgage_mana":
       "Vous {action} gérez le {mortgage_contract_link} pour exploiter MANA en votre nom",
     "mortgage_rcn":

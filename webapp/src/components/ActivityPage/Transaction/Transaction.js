@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Segment, Grid } from 'semantic-ui-react'
+import { Segment, Grid } from 'semantic-ui-react/dist/commonjs'
 import { locations } from 'locations'
 import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
@@ -37,16 +37,17 @@ import {
   EDIT_ESTATE_METADATA_SUCCESS,
   ADD_PARCELS,
   DELETE_ESTATE_SUCCESS,
-  TRANSFER_ESTATE_SUCCESS
+  TRANSFER_ESTATE_SUCCESS,
+  MANAGE_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { buildCoordinate } from 'shared/parcel'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
 import { ASSET_TYPES } from 'shared/asset'
 import { token } from 'lib/token'
 import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
-import { hasEtherscanLink, getHash } from '../utils'
+import { hasEtherscanLink, getHash } from 'components/ActivityPage/utils'
 import './Transaction.css'
-import Status from './Status'
+import Status from 'components/ActivityPage/Transaction/Status'
 
 const PREVIEW_SIZE = 54
 const NUM_PARCELS = 5
@@ -174,7 +175,7 @@ export default class Transaction extends React.PureComponent {
           <T
             id={revoked ? 'transaction.manage_revoked' : 'transaction.manage'}
             values={{
-              parcel_link: this.renderParcelLink(x, y),
+              asset_link: this.renderParcelLink(x, y),
               address_link: (
                 <Link to={locations.profilePageDefault(address)}>
                   {address}
@@ -344,6 +345,22 @@ export default class Transaction extends React.PureComponent {
           />
         )
       }
+      case MANAGE_ESTATE_SUCCESS: {
+        const { estate, address, revoked } = payload
+        return (
+          <T
+            id={revoked ? 'transaction.manage_revoked' : 'transaction.manage'}
+            values={{
+              asset_link: this.renderEstateLink(estate),
+              address_link: (
+                <Link to={locations.profilePageDefault(address)}>
+                  {address}
+                </Link>
+              )
+            }}
+          />
+        )
+      }
       default:
         return null
     }
@@ -447,7 +464,8 @@ export default class Transaction extends React.PureComponent {
       EDIT_ESTATE_PARCELS_SUCCESS,
       EDIT_ESTATE_METADATA_SUCCESS,
       DELETE_ESTATE_SUCCESS,
-      TRANSFER_ESTATE_SUCCESS
+      TRANSFER_ESTATE_SUCCESS,
+      MANAGE_ESTATE_SUCCESS
     ].includes(tx.actionType)
 
     const isMANATransaction =

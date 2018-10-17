@@ -396,9 +396,9 @@
     "edit_estate_parcels_added": "Agregaste {amount} parcelas a {name}",
     "edit_estate_parcels_removed": "Has eliminado {amount} parcelas de {name}",
     "manage":
-      "Has dado a {address_link} permiso para actualizar el contenido de {parcel_link}",
+      "Has dado a {address_link} permiso para actualizar el contenido de {asset_link}",
     "manage_revoked":
-      "Ha revocado el permiso {address_link} para actualizar el contenido de {parcel_link}",
+      "Ha revocado el permiso {address_link} para actualizar el contenido de {asset_link}",
     "mortgage_mana":
       "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre",
     "mortgage_rcn":

@@ -390,9 +390,9 @@
     "edit_estate_parcels_removed":
       "부동산 {name}에서 {amount} 소포를 제거했습니다",
     "manage":
-      "{address_link}에게 {parcel_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다",
+      "{address_link}에게 {asset_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다",
     "manage_revoked":
-      "{parcel_link}의 내용을 업데이트 할 권한을 취소했습니다 (1)",
+      "{asset_link}의 내용을 업데이트 할 권한을 취소했습니다 (1)",
     "mortgage_mana":
       "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}",
     "mortgage_rcn":

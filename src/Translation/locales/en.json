@@ -395,9 +395,9 @@
     "edit_estate_parcels_removed":
       "You removed {amount} parcels from estate {name}",
     "manage":
-      "You gave {address_link} permission to update the contents of {parcel_link}",
+      "You gave {address_link} permission to update the contents of {asset_link}",
     "manage_revoked":
-      "You revoked {address_link} permission to update the contents of {parcel_link}",
+      "You revoked {address_link} permission to update the contents of {asset_link}",
     "mortgage_mana":
       "You {action} the {mortgage_contract_link} to operate MANA on your behalf",
     "mortgage_rcn":

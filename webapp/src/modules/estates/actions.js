@@ -218,7 +218,10 @@ export function manageEstateSuccess(txHash, estate, address, revoked) {
   return {
     type: MANAGE_ESTATE_SUCCESS,
     ...buildTransactionAction(txHash, {
-      id: estate.id,
+      estate: {
+        id: estate.id,
+        data: { name: estate.data.name, parcels: estate.data.parcels } // array of {x, y}
+      },
       address,
       revoked
     }),

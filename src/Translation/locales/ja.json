@@ -388,9 +388,9 @@
     "edit_estate_parcels_removed":
       "エステート{name}から{amount}区画を取り消しました。",
     "manage":
-      "{parcel_link}のコンテンツを更新する権限を{address_link}に与えました",
+      "{asset_link}のコンテンツを更新する権限を{address_link}に与えました",
     "manage_revoked":
-      "{parcel_link}のコンテンツを更新する権限を{address_link}から取り消しました",
+      "{asset_link}のコンテンツを更新する権限を{address_link}から取り消しました",
     "mortgage_mana":
       "{mortgage_contract_link}でMANAを使用することを{action}しました",
     "mortgage_rcn":
