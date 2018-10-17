@@ -9,8 +9,8 @@ export const PublicationQueries = Object.freeze({
   // These two, `hasAssetType` and `hasStatus`, can be abstracted into one method
   // but for now, they're accidental repetition. No need to overcomplicate things.
   hasAssetType: asset_type =>
-    asset_type != null ? SQL`asset_type = ${asset_type}` : SQL`1 = 1`,
-  hasStatus: status => (status != null ? SQL`status = ${status}` : SQL`1 = 1`),
+    asset_type ? SQL`asset_type = ${asset_type}` : SQL`1 = 1`,
+  hasStatus: status => (status ? SQL`status = ${status}` : SQL`1 = 1`),
   EstateHasParcels: () =>
     SQL`(pub.asset_type = ${ASSET_TYPES.estate} AND EXISTS(select 1 from ${raw(
       Parcel.tableName

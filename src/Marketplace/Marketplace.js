@@ -30,7 +30,7 @@ export class Marketplace {
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
-      this.countAllAssetPublications(filters)
+      this.countAssetPublications(filters)
     ])
 
     // Keep only the model that had a publication defined from the Assets list
@@ -77,20 +77,6 @@ export class Marketplace {
         FROM ${raw(Publication.tableName)} as pub
         WHERE pub.status = ${status}
           AND ${PublicationQueries.hasAssetType(asset_type)}
-          AND ${PublicationQueries.whereIsActive()}
-          AND ${PublicationQueries.EstateHasParcels()}`
-    )
-
-    return parseInt(counts[0].count, 10)
-  }
-
-  async countAllAssetPublications(queryParams) {
-    const { status } = queryParams.sanitize()
-
-    const counts = await db.query(
-      SQL`SELECT COUNT(*)
-        FROM ${raw(Publication.tableName)} as pub
-        WHERE pub.status = ${status}
           AND ${PublicationQueries.whereIsActive()}
           AND ${PublicationQueries.EstateHasParcels()}`
     )
