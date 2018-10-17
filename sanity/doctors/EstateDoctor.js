@@ -98,9 +98,13 @@ export class EstateDiagnosis extends Diagnosis {
   }
 
   async prepare() {
-    const deletes = this.faultyEstates.map(estate =>
-      Estate.deleteBlockchainEvents(estate.id)
-    )
+    let deletes = []
+    for (const estate of this.faultyEstates) {
+      deletes = deletes.concat([
+        Estate.deleteBlockchainEvents(estate.id),
+        Estate.update({ update_operator: null }, { id: estate.id })
+      ])
+    }
     return Promise.all(deletes)
   }
 

@@ -94,7 +94,10 @@ export class ParcelDiagnosis extends Diagnosis {
       deletes = deletes.concat([
         BlockchainEvent.deleteByArgs('assetId', parcel.token_id),
         BlockchainEvent.deleteByArgs('_landId', parcel.token_id),
-        Parcel.update({ estate_id: null }, { id: parcel.id })
+        Parcel.update(
+          { estate_id: null, update_operator: null },
+          { id: parcel.id }
+        )
       ])
     }
     return Promise.all(deletes)
