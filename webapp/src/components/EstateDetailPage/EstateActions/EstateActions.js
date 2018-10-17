@@ -31,16 +31,8 @@ export default class EstateActions extends React.PureComponent {
                 {t('asset_detail.actions.transfer')}
               </Button>
             </Link>
-            {isListed && (
-              <Link to={locations.cancelSaleEstate(id)}>
-                <Button size="tiny" primary>
-                  <Icon name="cancel" />
-                  {t('asset_detail.actions.cancel')}
-                </Button>
-              </Link>
-            )}
             <Link to={locations.sellEstate(id)}>
-              <Button size="tiny" primary>
+              <Button size="tiny" primary={!isListed}>
                 <Icon name="tag" />
                 {t(
                   isListed
@@ -49,6 +41,14 @@ export default class EstateActions extends React.PureComponent {
                 )}
               </Button>
             </Link>
+            {isListed && (
+              <Link to={locations.cancelSaleEstate(id)}>
+                <Button size="tiny" primary>
+                  <Icon name="cancel" />
+                  {t('asset_detail.actions.cancel')}
+                </Button>
+              </Link>
+            )}
           </React.Fragment>
         ) : (
           isOnSale(estate, publications) && (

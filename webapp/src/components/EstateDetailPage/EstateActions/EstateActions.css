@@ -6,7 +6,7 @@
   margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .EstateActions .button {
     width: 100%;
     margin-bottom: 1em;

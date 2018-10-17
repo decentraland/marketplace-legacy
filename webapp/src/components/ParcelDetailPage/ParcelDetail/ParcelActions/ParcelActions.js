@@ -51,16 +51,8 @@ export default class ParcelActions extends React.PureComponent {
                 </Button>
               </Link>
             ) /* Estate Feature */}
-            {isListed && (
-              <Link to={locations.cancelSaleParcel(x, y)}>
-                <Button size="tiny" primary>
-                  <Icon name="cancel" />
-                  {t('asset_detail.actions.cancel')}
-                </Button>
-              </Link>
-            )}
             <Link to={locations.sellParcel(x, y)}>
-              <Button size="tiny" primary>
+              <Button size="tiny" primary={!isListed}>
                 <Icon name="tag" />
                 {t(
                   isListed
@@ -69,6 +61,14 @@ export default class ParcelActions extends React.PureComponent {
                 )}
               </Button>
             </Link>
+            {isListed && (
+              <Link to={locations.cancelSaleParcel(x, y)}>
+                <Button size="tiny" primary>
+                  <Icon name="cancel" />
+                  {t('asset_detail.actions.cancel')}
+                </Button>
+              </Link>
+            )}
           </React.Fragment>
         ) : isListed && !mortgage ? (
           <React.Fragment>
