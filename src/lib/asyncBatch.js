@@ -15,10 +15,12 @@ export async function asyncBatch(options = {}) {
     batchSize = Number(batchSize)
 
     if (isNaN(batchSize)) {
-      batchSize = elements.length / 2
+      batchSize = Math.min(150, elements.length / 2)
 
       console.warn(
-        `[asyncBatch] ${batchSize} as batch size, got ${options.batchSize}`
+        `[asyncBatch] Defaulting to ${batchSize} as batch size, got ${
+          options.batchSize
+        }`
       )
     }
   }
