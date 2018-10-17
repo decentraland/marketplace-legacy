@@ -44,11 +44,9 @@ export class MarketplaceReqQueryParams {
   }
 
   getAssetType() {
-    const type = this.reqQueryParams.get(
-      'asset_type',
-      PUBLICATION_ASSET_TYPES.parcel
-    )
-    return Publication.isValidAssetType(type)
+    const type = this.reqQueryParams.get('asset_type', '')
+
+    return !type || Publication.isValidAssetType(type)
       ? type
       : PUBLICATION_ASSET_TYPES.parcel
   }
