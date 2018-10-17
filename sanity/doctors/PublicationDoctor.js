@@ -46,7 +46,7 @@ export class PublicationDoctor extends Doctor {
           }
 
           const error = (await Promise.all(errors)).join('\n')
-          if (error) {
+          if (error.trim()) {
             log.error(error)
             faultyAssets.push({ ...asset, error })
           }
@@ -71,7 +71,7 @@ export class PublicationDoctor extends Doctor {
     const order = await marketplace.orderByAssetId(nftAddress, token_id)
     const contractId = order[0]
 
-    return this.getPublicationError(id, contractId, publication)
+    return this.getPublicationError(id, publication, contractId)
   }
 
   async getLegacyPublicationInconsistencies(parcel) {
@@ -148,7 +148,7 @@ export class PublicationDiagnosis extends Diagnosis {
   async doTreatment() {
     // TODO: asset_type
     await Promise.all(
-      this.faultyAssets.map(parcel => Publication.deleteByAsset(parcel))
+      this.faultyAssets.map(parcel => Publication.deleteByAssetId(parcel.id))
     )
 
     // TODO: add NFTAddress

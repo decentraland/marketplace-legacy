@@ -102,6 +102,7 @@ async function reduceEstateRegistry(event) {
     case eventNames.AddLand: {
       const parcelId = await getParcelIdFromEvent(event)
       if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
+
       const { _estateId } = event.args
       const estate = await Estate.findByTokenId(_estateId)
       if (estate) {
@@ -118,6 +119,7 @@ async function reduceEstateRegistry(event) {
     case eventNames.RemoveLand: {
       const parcelId = await getParcelIdFromEvent(event)
       if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
+
       const { _estateId } = event.args
       const estate = await Estate.findByTokenId(_estateId)
       if (estate) {

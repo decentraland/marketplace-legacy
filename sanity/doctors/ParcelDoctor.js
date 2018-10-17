@@ -89,16 +89,24 @@ export class ParcelDiagnosis extends Diagnosis {
   }
 
   async prepare() {
-    const deletes = this.faultyParcels.map(parcel =>
-      BlockchainEvent.deleteByArgs('assetId', parcel.token_id)
-    )
+    let deletes = []
+    for (const parcel of this.faultyParcels) {
+      deletes = deletes.concat([
+        BlockchainEvent.deleteByArgs('assetId', parcel.token_id),
+        BlockchainEvent.deleteByArgs('_landId', parcel.token_id),
+        Parcel.update(
+          { estate_id: null, update_operator: null },
+          { id: parcel.id }
+        )
+      ])
+    }
     return Promise.all(deletes)
   }
 
   async doTreatment() {
     for (const parcel of this.faultyParcels) {
-      const events = await BlockchainEvent.findByArgs(
-        'assetId',
+      const events = await BlockchainEvent.findByAnyArgs(
+        ['assetId', '_landId'],
         parcel.token_id
       )
       await this.replayEvents(events)
