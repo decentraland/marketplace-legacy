@@ -300,6 +300,35 @@ const main = {
       )
 
     program
+      .command('delete-monitor-data')
+      .description('Reset database data')
+      .action(
+        asSafeAction(async () => {
+          log.info('(delete-monitor-data) deleting database data')
+          const truncateTableNames = [
+            'blockchain_events',
+            'publications',
+            'mortgages'
+          ]
+          const deleteTableNames = ['estates']
+
+          await db.query(
+            `UPDATE ${
+              Parcel.tableName
+            } SET estate_id = NULL WHERE estate_id IS NOT NULL`
+          )
+          await Promise.all(
+            truncateTableNames.map(tableName => db.truncate(tableName))
+          )
+          await Promise.all(
+            deleteTableNames.map(tableName =>
+              db.query(`DELETE FROM ${tableName}`)
+            )
+          )
+        })
+      )
+
+    program
       .command('tx-status <txHash>')
       .description(
         'Fetch information about the transaction hash from the blockchain'
