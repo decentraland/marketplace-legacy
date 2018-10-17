@@ -300,11 +300,11 @@ const main = {
       )
 
     program
-      .command('reset-db')
+      .command('delete-monitor-data')
       .description('Reset database data')
       .action(
         asSafeAction(async () => {
-          log.info('(reset-db) deleting database data')
+          log.info('(delete-monitor-data) deleting database data')
           const truncateTableNames = [
             'blockchain_events',
             'publications',
