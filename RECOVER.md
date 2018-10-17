@@ -52,7 +52,7 @@ The recommended procedure to perform a full refresh is the following:
 
 2.  Reset the current db data:
 
-`npm run cli reset-db`
+`npm run cli delete-monitor-data`
 
 3.  Start the monitor process. As there is no data the latest block will be 0 and will process events from start:
 
