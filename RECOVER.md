@@ -2,7 +2,7 @@
 
 ## Database out of sync
 
-The Marketplace app relies on storing events from the Blockchain for use as a cache, this enables faster querying, providing an API for multiple third-party services, and ease of reporting.
+The Marketplace app relies on storing events from the Blockchain that we use as a cache. This not only enables faster querying, but also lets us provide an API used by multiple third party services, and gives us easy reporting.
 
 For that purpose we created a process that we call **"The Monitor"** to listen, store and process relevant events from the contracts we are interested in.
 
@@ -52,7 +52,7 @@ The recommended procedure to perform a full refresh is the following:
 
 2.  Reset the current db data:
 
-`npm run cli -- reset-db`
+`npm run cli reset-db`
 
 3.  Start the monitor process. As there is no data the latest block will be 0 and will process events from start:
 
