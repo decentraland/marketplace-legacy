@@ -57,6 +57,12 @@
       "price": "가격"
     }
   },
+  "asset_edit": {
+    "errors": {
+      "description_limit": "설명은 {length} 자보다 낮아야합니다.",
+      "name_limit": "이름은 {length} 자보다 낮아야합니다."
+    }
+  },
   "asset_manage": {
     "address": "운영자 주소",
     "address_permission":

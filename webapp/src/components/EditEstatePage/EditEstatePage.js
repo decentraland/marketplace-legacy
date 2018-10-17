@@ -10,8 +10,8 @@ import { getInitialEstate } from 'shared/estate'
 export default class EditEstatePage extends React.PureComponent {
   static propTypes = {
     id: PropTypes.string,
-    x: PropTypes.string,
-    y: PropTypes.string,
+    x: PropTypes.number,
+    y: PropTypes.number,
     isSelecting: PropTypes.bool
   }
 

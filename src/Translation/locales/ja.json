@@ -56,6 +56,12 @@
       "price": "価格"
     }
   },
+  "asset_edit": {
+    "errors": {
+      "description_limit": "説明は{length}文字より小さくする必要があります",
+      "name_limit": "名前は{length}文字よりも小さくする必要があります"
+    }
+  },
   "asset_manage": {
     "address": "オペレータアドレス",
     "address_permission":

@@ -41,6 +41,9 @@ export const ASSET_TYPES = Object.freeze({
   parcel: 'parcel'
 })
 
+export const MAX_NAME_LENGTH = 50
+export const MAX_DESCRIPTION_LENGTH = 140
+
 export function isExpired(expires_at) {
   return parseInt(expires_at, 10) < Date.now()
 }
@@ -186,11 +189,11 @@ export function getType(asset, publications, wallet) {
 }
 
 export function isValidName(name = '') {
-  return name.length > 0 && name.length <= 50
+  return name.length > 0 && name.length <= MAX_NAME_LENGTH
 }
 
 export function isValidDescription(description = '') {
-  return description.length <= 140
+  return description.length <= MAX_DESCRIPTION_LENGTH
 }
 
 export function getCenterCoords(asset) {

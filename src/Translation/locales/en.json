@@ -57,6 +57,13 @@
       "price": "Price"
     }
   },
+  "asset_edit": {
+    "errors": {
+      "description_limit":
+        "The description should be lower than {length} characters",
+      "name_limit": "The name should be lower than {length} characters"
+    }
+  },
   "asset_manage": {
     "address": "Operator address",
     "address_permission":

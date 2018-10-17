@@ -1,11 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Form, Input } from 'semantic-ui-react'
+import { Button, Form, Input, Message } from 'semantic-ui-react'
 
 import { parcelType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import { t } from '@dapps/modules/translation/utils'
-import { isValidName, isValidDescription } from 'shared/asset'
+import {
+  isValidName,
+  isValidDescription,
+  MAX_NAME_LENGTH,
+  MAX_DESCRIPTION_LENGTH
+} from 'shared/asset'
 import { preventDefault } from 'lib/utils'
 
 import './EditParcelForm.css'
@@ -25,20 +30,21 @@ export default class EditParcelForm extends React.PureComponent {
     this.state = {
       name: data.name || '',
       description: data.description || '',
-      ipns: data.ipns || ''
+      ipns: data.ipns || '',
+      formErrors: []
     }
   }
 
   handleNameChange = event => {
-    this.setState({ name: event.target.value })
+    this.setState({ name: event.target.value, formErrors: [] })
   }
 
   handleDescriptionChange = event => {
-    this.setState({ description: event.target.value })
+    this.setState({ description: event.target.value, formErrors: [] })
   }
 
   handleIpnsChange = event => {
-    this.setState({ ipns: event.target.value })
+    this.setState({ ipns: event.target.value, formErrors: [] })
   }
 
   handleCancel = () => {
@@ -59,15 +65,36 @@ export default class EditParcelForm extends React.PureComponent {
     if (this.hasChanged()) {
       const { parcel, onSubmit } = this.props
       const { name, description, ipns } = this.state
-      onSubmit({
-        ...parcel,
-        data: {
-          ...parcel.data,
-          name,
-          description,
-          ipns
-        }
-      })
+      const formErrors = []
+
+      if (!this.isValidName(name)) {
+        formErrors.push(
+          t('asset_edit.errors.name_limit', {
+            length: MAX_NAME_LENGTH
+          })
+        )
+      }
+
+      if (!this.isValidDescription(description)) {
+        formErrors.push(
+          t('asset_edit.errors.description_limit', {
+            length: MAX_DESCRIPTION_LENGTH
+          })
+        )
+      }
+      if (formErrors.length === 0) {
+        onSubmit({
+          ...parcel,
+          data: {
+            ...parcel.data,
+            name,
+            description,
+            ipns
+          }
+        })
+      } else {
+        this.setState({ formErrors })
+      }
     }
   }
 
@@ -79,16 +106,18 @@ export default class EditParcelForm extends React.PureComponent {
     return !this.hasChanged() || isValidDescription(description)
   }
 
+  handleClearFormErrors = () => {
+    this.setState({ formErrors: [] })
+  }
+
   render() {
     const { isTxIdle } = this.props
-    const { name, description, ipns } = this.state
-
-    const isValidName = this.isValidName(name)
-    const isValidDescription = this.isValidDescription(description)
+    const { name, description, ipns, formErrors } = this.state
 
     return (
       <Form
         className="EditParcelForm"
+        error={!!formErrors}
         onSubmit={preventDefault(this.handleSubmit)}
       >
         <Form.Field>
@@ -97,7 +126,6 @@ export default class EditParcelForm extends React.PureComponent {
             type="text"
             value={name}
             onChange={this.handleNameChange}
-            error={!isValidName}
             autoFocus
           />
         </Form.Field>
@@ -107,7 +135,6 @@ export default class EditParcelForm extends React.PureComponent {
             type="text"
             value={description}
             onChange={this.handleDescriptionChange}
-            error={!isValidDescription}
           />
         </Form.Field>
         <Form.Field>
@@ -126,6 +153,11 @@ export default class EditParcelForm extends React.PureComponent {
           />
         </Form.Field>
         <TxStatus.Idle isIdle={isTxIdle} />
+        {formErrors.length > 0 ? (
+          <Message error onDismiss={this.handleClearFormErrors}>
+            {formErrors.map((error, index) => <div key={index}>{error}</div>)}
+          </Message>
+        ) : null}
         <div className="modal-buttons">
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
