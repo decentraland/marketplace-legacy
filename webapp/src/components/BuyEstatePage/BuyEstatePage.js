@@ -82,7 +82,7 @@ export default class BuyEstatePage extends React.PureComponent {
                         name: <EstateName estate={estate} />,
                         price: (
                           <React.Fragment>
-                            &nbsp;{t('global.for')}&nbsp;&nbsp;
+                            {t('global.for')}&nbsp;&nbsp;
                             <span
                               style={{
                                 display: 'inline-block',
