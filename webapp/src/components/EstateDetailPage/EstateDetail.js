@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Icon, Header, Grid, Button } from 'semantic-ui-react'
+import { utils } from 'decentraland-commons'
+import { t } from '@dapps/modules/translation/utils'
+
 import AddressBlock from 'components/AddressBlock'
 import { estateType, parcelType, publicationType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { buildCoordinate } from 'shared/parcel'
 import EstateActions from './EstateActions'
 import { getOpenPublication } from 'shared/asset'
@@ -15,6 +17,7 @@ import LandAmount from 'components/LandAmount'
 import { locations } from 'locations'
 import { calculateMapProps } from 'shared/estate'
 import ParcelAttributes from 'components/ParcelAttributes'
+import ParcelTags from 'components/ParcelTags'
 import './EstateDetail.css'
 
 const WITH_ACTION_BUTTONS_WIDTH = 8
@@ -146,6 +149,15 @@ export default class EstateDetail extends React.PureComponent {
               />
             </Grid.Column>
           </Grid.Row>
+          {estate.parcels.filter(parcel => !utils.isEmptyObject(parcel.tags))
+            .length > 0 && (
+            <Grid.Row>
+              <Grid.Column className={'highlights'}>
+                <h3>{t('parcel_detail.tags.title')}</h3>
+                <ParcelTags estate={estate} showDetails={true} />
+              </Grid.Column>
+            </Grid.Row>
+          )}
           <Grid.Row>
             {allParcels && (
               <React.Fragment>
@@ -176,7 +188,11 @@ export default class EstateDetail extends React.PureComponent {
                   {parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelAttributes key={parcel.id} parcel={parcel} />
+                      <ParcelAttributes
+                        key={parcel.id}
+                        parcel={parcel}
+                        withTags={false}
+                      />
                     ) : null
                   })}
                 </Grid.Column>

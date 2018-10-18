@@ -125,6 +125,10 @@
   margin-top: 20px;
 }
 
+.EstateDetail .row .column.highlights {
+  margin-top: 20px
+}
+
 @media (max-width: 768px) {
   .EstateDetail {
     overflow-x: hidden;

@@ -10,15 +10,17 @@ import { locations } from 'locations'
 export default class ParcelAttributes extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    withLink: PropTypes.bool
+    withLink: PropTypes.bool,
+    withTags: PropTypes.bool
   }
 
   static defaultProps = {
-    withLink: true
+    withLink: true,
+    withTags: true
   }
 
   render() {
-    const { parcel, withLink } = this.props
+    const { parcel, withLink, withTags } = this.props
     const Wrapper = withLink ? Link : React.Fragment
     const wrapperProps = withLink
       ? { to: locations.parcelDetail(parcel.x, parcel.y) }
@@ -30,7 +32,7 @@ export default class ParcelAttributes extends React.PureComponent {
             <Icon name="marker" />
             <span className="coord">{parcel.id}</span>
           </div>
-          <ParcelTags parcel={parcel} size="small" />
+          {withTags && <ParcelTags parcel={parcel} size="small" />}
         </div>
       </Wrapper>
     )
