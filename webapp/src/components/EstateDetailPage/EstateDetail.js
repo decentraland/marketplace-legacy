@@ -27,7 +27,8 @@ export default class EstateDetail extends React.PureComponent {
     allParcels: PropTypes.objectOf(parcelType),
     isOwner: PropTypes.bool.isRequired,
     onEditParcels: PropTypes.func.isRequired,
-    onEditMetadata: PropTypes.func.isRequired
+    onEditMetadata: PropTypes.func.isRequired,
+    onManageEstate: PropTypes.func.isRequired
   }
 
   renderEmptyEstate() {
@@ -50,7 +51,8 @@ export default class EstateDetail extends React.PureComponent {
       isOwner,
       allParcels,
       onEditParcels,
-      onEditMetadata
+      onEditMetadata,
+      onManageEstate
     } = this.props
     const { parcels } = estate.data
 
@@ -95,6 +97,14 @@ export default class EstateDetail extends React.PureComponent {
                   <Button size="tiny" className="link" onClick={onEditMetadata}>
                     <Icon name="pencil" />
                     {t('global.edit')}
+                  </Button>
+                  <Button
+                    size="tiny"
+                    className="link manage-button"
+                    onClick={onManageEstate}
+                  >
+                    <Icon name="add user" />
+                    {t('asset_detail.actions.permissions')}
                   </Button>
                 </div>
               ) : (

@@ -13,7 +13,8 @@ export default class EstateDetailPage extends React.PureComponent {
     publications: PropTypes.objectOf(publicationType).isRequired,
     allParcels: PropTypes.objectOf(parcelType),
     onEditParcels: PropTypes.func.isRequired,
-    onEditMetadata: PropTypes.func.isRequired
+    onEditMetadata: PropTypes.func.isRequired,
+    onManageEstate: PropTypes.func.isRequired
   }
 
   render() {
@@ -22,7 +23,8 @@ export default class EstateDetailPage extends React.PureComponent {
       publications,
       allParcels,
       onEditParcels,
-      onEditMetadata
+      onEditMetadata,
+      onManageEstate
     } = this.props
     return (
       <Estate id={id}>
@@ -34,6 +36,7 @@ export default class EstateDetailPage extends React.PureComponent {
             isOwner={isOwner}
             onEditParcels={onEditParcels}
             onEditMetadata={onEditMetadata}
+            onManageEstate={onManageEstate}
           />
         )}
       </Estate>

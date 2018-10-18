@@ -57,6 +57,14 @@
       "price": "가격"
     }
   },
+  "asset_manage": {
+    "address": "운영자 주소",
+    "address_permission":
+      "이 주소는이 {asset_type}의 내용을 갱신 할 수 있습니다.",
+    "give_permission":
+      "{asset_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
+    "manage": "{asset_type} 관리"
+  },
   "asset_publish": {
     "already_sold": "이 {asset_name}은 이미 {value}에 판매 중입니다.",
     "errors": {
@@ -327,13 +335,6 @@
     "warning_tooltip":
       "이것은 당신의 장면을 보여주기 위해 사용됩니다. 자신이하는 일을 알고있는 경우에만 업데이트하십시오."
   },
-  "parcel_manage": {
-    "address": "운영자 주소",
-    "address_permission": "이 주소는이 소포의 내용을 업데이트 할 수 있습니다.",
-    "give_permission":
-      "{parcel_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
-    "manage_land": "토지 관리"
-  },
   "parcel_tags": {
     "adjacent": "인접한",
     "district": "지구",
@@ -389,9 +390,9 @@
     "edit_estate_parcels_removed":
       "부동산 {name}에서 {amount} 소포를 제거했습니다",
     "manage":
-      "{address_link}에게 {parcel_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다",
+      "{address_link}에게 {asset_link}의 내용을 업데이트 할 수있는 권한을 주셨습니다",
     "manage_revoked":
-      "{parcel_link}의 내용을 업데이트 할 권한을 취소했습니다 (1)",
+      "{asset_link}의 내용을 업데이트 할 권한을 취소했습니다 (1)",
     "mortgage_mana":
       "{action} 귀하를 대신하여 MANA를 운영하는 {mortgage_contract_link}",
     "mortgage_rcn":

@@ -1,3 +1,6 @@
+import { loadingReducer } from '@dapps/modules/loading/reducer'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
+
 import {
   FETCH_PARCEL_REQUEST,
   FETCH_PARCEL_SUCCESS,
@@ -5,14 +8,15 @@ import {
   EDIT_PARCEL_REQUEST,
   EDIT_PARCEL_SUCCESS,
   EDIT_PARCEL_FAILURE,
-  MANAGE_PARCEL_REQUEST,
-  MANAGE_PARCEL_SUCCESS,
-  MANAGE_PARCEL_FAILURE,
   TRANSFER_PARCEL_REQUEST,
   TRANSFER_PARCEL_SUCCESS,
   TRANSFER_PARCEL_FAILURE
 } from './actions'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
+import {
+  MANAGE_ASSET_REQUEST,
+  MANAGE_ASSET_SUCCESS,
+  MANAGE_ASSET_FAILURE
+} from 'modules/management/actions'
 import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS,
@@ -21,7 +25,6 @@ import {
   FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
-import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import {
   buildCoordinate,
@@ -114,16 +117,20 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     case EDIT_PARCEL_REQUEST:
     case EDIT_PARCEL_FAILURE:
     case EDIT_PARCEL_SUCCESS:
-    case MANAGE_PARCEL_REQUEST:
-    case MANAGE_PARCEL_SUCCESS:
-    case MANAGE_PARCEL_FAILURE:
+    case MANAGE_ASSET_REQUEST:
+    case MANAGE_ASSET_SUCCESS:
+    case MANAGE_ASSET_FAILURE:
     case TRANSFER_PARCEL_REQUEST:
     case TRANSFER_PARCEL_SUCCESS:
     case TRANSFER_PARCEL_FAILURE: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action)
+      const { asset_type } = action
+      if (asset_type === ASSET_TYPES.parcel || !asset_type) {
+        return {
+          ...state,
+          loading: loadingReducer(state.loading, action)
+        }
       }
+      return state
     }
     case FETCH_ASSET_PUBLICATIONS_SUCCESS: {
       const { id, assetType, publications } = action

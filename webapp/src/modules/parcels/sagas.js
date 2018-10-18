@@ -5,14 +5,11 @@ import { locations } from 'locations'
 import {
   FETCH_PARCEL_REQUEST,
   EDIT_PARCEL_REQUEST,
-  MANAGE_PARCEL_REQUEST,
   TRANSFER_PARCEL_REQUEST,
   fetchParcelSuccess,
   fetchParcelFailure,
   editParcelSuccess,
   editParcelFailure,
-  manageParcelSuccess,
-  manageParcelFailure,
   transferParcelSuccess,
   transferParcelFailure
 } from './actions'
@@ -24,7 +21,6 @@ import { buildCoordinate } from 'shared/parcel'
 export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
   yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
-  yield takeEvery(MANAGE_PARCEL_REQUEST, handleManageParcelsRequest)
   yield takeEvery(TRANSFER_PARCEL_REQUEST, handleTransferRequest)
 }
 
@@ -56,29 +52,6 @@ function* handleEditParcelsRequest(action) {
     const { x, y } = action.parcel
     const parcel = parcels[buildCoordinate(x, y)]
     yield put(editParcelFailure(parcel, error.message))
-  }
-}
-
-function* handleManageParcelsRequest(action) {
-  const { x, y } = action.parcel
-  try {
-    const { parcel, address, revoked } = action
-
-    const contract = eth.getContract('LANDRegistry')
-    // @cazala TODO: this line should be removed once the method setUpdateOperator accepts x,y instead of assetId
-    const tokenId = yield call(() => contract.encodeTokenId(x, y))
-    const txHash = yield call(() =>
-      contract.setUpdateOperator(tokenId, revoked ? null : address)
-    )
-
-    yield put(manageParcelSuccess(txHash, parcel, address, revoked))
-    yield put(push(locations.activity()))
-  } catch (error) {
-    const parcels = yield select(getParcels)
-    const parcel = parcels[buildCoordinate(x, y)]
-    yield put(
-      manageParcelFailure(parcel, action.address, action.revoked, error.message)
-    )
   }
 }
 

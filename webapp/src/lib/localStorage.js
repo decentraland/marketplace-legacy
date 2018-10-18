@@ -7,6 +7,7 @@ import {
   BUY_SUCCESS,
   PUBLISH_SUCCESS
 } from 'modules/publication/actions'
+import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
 import { ASSET_TYPES } from 'shared/asset'
 
 export const migrations = {
@@ -86,6 +87,25 @@ export const migrations = {
           default:
             return tx
         }
+      })
+    }
+    return { ...data, transaction }
+  },
+  5: data => {
+    const MANAGE_PARCEL_SUCCESS = '[Success] Manage Parcel'
+
+    const transaction = data.transaction
+
+    if (transaction) {
+      transaction.data = transaction.data.map(tx => {
+        if (tx.actionType === MANAGE_PARCEL_SUCCESS) {
+          tx.payload = {
+            ...tx.payload,
+            type: ASSET_TYPES.parcel
+          }
+          tx.actionType = MANAGE_ASSET_SUCCESS
+        }
+        return tx
       })
     }
     return { ...data, transaction }

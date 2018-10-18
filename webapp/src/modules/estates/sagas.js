@@ -24,9 +24,9 @@ import {
   TRANSFER_ESTATE_REQUEST,
   transferEstateSuccess,
   transferEstateFailure
-} from './actions'
-import { validateCoords } from './utils'
-import { getEstates } from './selectors'
+} from 'modules/estates/actions'
+import { validateCoords } from 'modules/estates/utils'
+import { getEstates } from 'modules/estates/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { getParcelsNotIncluded } from 'shared/parcel'
 import { encodeMetadata } from 'shared/asset'

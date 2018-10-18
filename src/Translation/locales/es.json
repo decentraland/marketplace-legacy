@@ -56,6 +56,14 @@
       "price": "precio"
     }
   },
+  "asset_manage": {
+    "address": "Dirección del operador",
+    "address_permission":
+      "Esta dirección podrá actualizar el contenido de este {asset_type}.",
+    "give_permission":
+      "Dar permiso para actualizar contenidos de {asset_name}.",
+    "manage": "Gestionar {asset_type}"
+  },
   "asset_publish": {
     "already_sold": "Este {asset_name} ya está a la venta para {value}",
     "errors": {
@@ -329,14 +337,6 @@
     "warning_tooltip":
       "Esto será usado para mostrar tu escena. Actualiza sólo si sabes lo que estas haciendo."
   },
-  "parcel_manage": {
-    "address": "Dirección del operador",
-    "address_permission":
-      "Esta dirección podrá actualizar el contenido de este paquete.",
-    "give_permission":
-      "Dar permiso para actualizar el contenido de {parcel_name}.",
-    "manage_land": "Administrar LAND"
-  },
   "parcel_tags": {
     "adjacent": "Adyacente",
     "district": "Distrito",
@@ -396,9 +396,9 @@
     "edit_estate_parcels_added": "Agregaste {amount} parcelas a {name}",
     "edit_estate_parcels_removed": "Has eliminado {amount} parcelas de {name}",
     "manage":
-      "Has dado a {address_link} permiso para actualizar el contenido de {parcel_link}",
+      "Has dado a {address_link} permiso para actualizar el contenido de {asset_link}",
     "manage_revoked":
-      "Ha revocado el permiso {address_link} para actualizar el contenido de {parcel_link}",
+      "Ha revocado el permiso {address_link} para actualizar el contenido de {asset_link}",
     "mortgage_mana":
       "Usted {action} el {mortgage_contract_link} para operar MANA en su nombre",
     "mortgage_rcn":

@@ -13,6 +13,7 @@ import { walletSaga } from 'modules/wallet/sagas'
 import { estateSaga } from 'modules/estates/sagas'
 import { mortgageSaga } from 'modules/mortgage/sagas'
 import { mapSaga } from 'modules/map/sagas'
+import { managementSaga } from 'modules/management/sagas'
 
 import { api } from 'lib/api'
 
@@ -34,6 +35,7 @@ export function* rootSaga() {
     walletSaga(),
     estateSaga(),
     mortgageSaga(),
-    mapSaga()
+    mapSaga(),
+    managementSaga()
   ])
 }

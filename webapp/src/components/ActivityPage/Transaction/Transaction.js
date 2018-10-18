@@ -2,14 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Segment, Grid } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
+import { getEtherscanHref } from '@dapps/modules/transaction/utils'
+
 import { locations } from 'locations'
 import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
 import { getContractAddress } from 'modules/wallet/utils'
-import { getEtherscanHref } from '@dapps/modules/transaction/utils'
 import {
   ALLOW_TOKEN_SUCCESS,
   APPROVE_TOKEN_SUCCESS
@@ -17,7 +18,6 @@ import {
 import { TRANSFER_MANA_SUCCESS, BUY_MANA_SUCCESS } from 'modules/wallet/actions'
 import {
   EDIT_PARCEL_SUCCESS,
-  MANAGE_PARCEL_SUCCESS,
   TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
 import {
@@ -39,14 +39,15 @@ import {
   DELETE_ESTATE_SUCCESS,
   TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
+import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
 import { buildCoordinate } from 'shared/parcel'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
 import { ASSET_TYPES } from 'shared/asset'
 import { token } from 'lib/token'
 import { formatDate, formatMana, distanceInWordsToNow } from 'lib/utils'
-import { hasEtherscanLink, getHash } from '../utils'
+import { hasEtherscanLink, getHash } from 'components/ActivityPage/utils'
+import Status from 'components/ActivityPage/Transaction/Status'
 import './Transaction.css'
-import Status from './Status'
 
 const PREVIEW_SIZE = 54
 const NUM_PARCELS = 5
@@ -168,13 +169,13 @@ export default class Transaction extends React.PureComponent {
           />
         )
       }
-      case MANAGE_PARCEL_SUCCESS: {
-        const { x, y, address, revoked } = payload
+      case MANAGE_ASSET_SUCCESS: {
+        const { address, revoked } = payload
         return (
           <T
             id={revoked ? 'transaction.manage_revoked' : 'transaction.manage'}
             values={{
-              parcel_link: this.renderParcelLink(x, y),
+              asset_link: this.getAssetLink(payload),
               address_link: (
                 <Link to={locations.profilePageDefault(address)}>
                   {address}
@@ -429,13 +430,13 @@ export default class Transaction extends React.PureComponent {
     const isAssetTransaction = [
       PUBLISH_SUCCESS,
       CANCEL_SALE_SUCCESS,
-      BUY_SUCCESS
+      BUY_SUCCESS,
+      MANAGE_ASSET_SUCCESS
     ].includes(tx.actionType)
 
     const isParcelTransaction = [
       EDIT_PARCEL_SUCCESS,
       TRANSFER_PARCEL_SUCCESS,
-      MANAGE_PARCEL_SUCCESS,
       CREATE_MORTGAGE_SUCCESS,
       CANCEL_MORTGAGE_SUCCESS,
       PAY_MORTGAGE_SUCCESS,
