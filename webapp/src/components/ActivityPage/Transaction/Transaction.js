@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Segment, Grid } from 'semantic-ui-react/dist/commonjs'
+import { Segment, Grid } from 'semantic-ui-react'
 import { locations } from 'locations'
 import EtherscanLink from 'components/EtherscanLink'
 import ParcelPreview from 'components/ParcelPreview'
