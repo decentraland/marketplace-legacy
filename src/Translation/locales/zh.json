@@ -53,6 +53,13 @@
       "price": "价格"
     }
   },
+  "asset_edit": {
+    "errors": {
+      "description_limit": "描述应低于{length}字符",
+      "name_max_limit": "名称应低于{length}字符",
+      "name_min_limit": "名称不能为空"
+    }
+  },
   "asset_manage": {
     "address": "运营商地址",
     "address_permission": "该地址将能够更新此{asset_type}的内容。",

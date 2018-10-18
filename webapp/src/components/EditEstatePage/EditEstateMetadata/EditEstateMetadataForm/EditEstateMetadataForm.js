@@ -1,12 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Form, Input } from 'semantic-ui-react'
+import { Button, Form, Input, Message } from 'semantic-ui-react'
 
 import TxStatus from 'components/TxStatus'
 import { estateType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { preventDefault } from 'lib/utils'
-import { isValidName, isValidDescription } from 'shared/asset'
+import {
+  isValidName,
+  isValidDescription,
+  MAX_NAME_LENGTH,
+  MAX_DESCRIPTION_LENGTH
+} from 'shared/asset'
 import './EditEstateMetadataForm.css'
 
 export default class EditEstateMetadataForm extends React.PureComponent {
@@ -21,6 +26,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
     super(props)
     const { estate } = this.props
     this.initialEstate = estate
+    this.state = { formErrors: [] }
   }
 
   componentWillUnmount() {
@@ -44,6 +50,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
         name: event.target.value
       }
     })
+    this.setState({ formErrors: [] })
   }
 
   handleDescriptionChange = event => {
@@ -55,6 +62,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
         description: event.target.value
       }
     })
+    this.setState({ formErrors: [] })
   }
 
   hasChanged() {
@@ -75,17 +83,49 @@ export default class EditEstateMetadataForm extends React.PureComponent {
     return !this.hasChanged() || isValidDescription(description)
   }
 
-  render() {
-    const { onCancel, onSubmit, estate, isTxIdle } = this.props
-    const { name, description } = estate.data
+  onSubmit = () => {
+    const { name, description } = this.props.estate.data
+    const formErrors = []
 
-    const isValidName = this.isValidName(name)
-    const isValidDescription = this.isValidDescription(description)
+    if (!this.isValidName(name)) {
+      formErrors.push(
+        name.length === 0
+          ? t('asset_edit.errors.name_min_limit')
+          : t('asset_edit.errors.name_max_limit', {
+              length: MAX_NAME_LENGTH
+            })
+      )
+    }
+
+    if (!this.isValidDescription(description)) {
+      formErrors.push(
+        t('asset_edit.errors.description_limit', {
+          length: MAX_DESCRIPTION_LENGTH
+        })
+      )
+    }
+
+    if (formErrors.length === 0) {
+      this.props.onSubmit()
+    } else {
+      this.setState({ formErrors })
+    }
+  }
+
+  handleClearFormErrors = () => {
+    this.setState({ formErrors: [] })
+  }
+
+  render() {
+    const { formErrors } = this.state
+    const { onCancel, estate, isTxIdle } = this.props
+    const { name, description } = estate.data
 
     return (
       <Form
         className="EditEstateMetadataForm"
-        onSubmit={preventDefault(onSubmit)}
+        error={!!formErrors}
+        onSubmit={preventDefault(this.onSubmit)}
       >
         <Form.Field>
           <label>{t('estate_edit.name')}</label>
@@ -93,7 +133,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
             type="text"
             value={name}
             onChange={this.handleNameChange}
-            error={!isValidName}
+            error={!this.isValidName(name)}
             autoFocus
           />
         </Form.Field>
@@ -103,19 +143,20 @@ export default class EditEstateMetadataForm extends React.PureComponent {
             type="text"
             value={description}
             onChange={this.handleDescriptionChange}
-            error={!isValidDescription}
+            error={!this.isValidDescription(description)}
           />
         </Form.Field>
         <TxStatus.Idle isIdle={isTxIdle} />
+        {formErrors.length > 0 ? (
+          <Message error onDismiss={this.handleClearFormErrors}>
+            {formErrors.map((error, index) => <div key={index}>{error}</div>)}
+          </Message>
+        ) : null}
         <div className="modal-buttons">
           <Button type="button" onClick={onCancel}>
             {t('global.cancel')}
           </Button>
-          <Button
-            type="submit"
-            primary={true}
-            disabled={!this.hasChanged() || !isValidName || !isValidDescription}
-          >
+          <Button type="submit" primary={true} disabled={!this.hasChanged()}>
             {t('global.submit')}
           </Button>
         </div>

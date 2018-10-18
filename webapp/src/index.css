@@ -196,6 +196,10 @@ button {
   cursor: pointer;
 }
 
+.ui.message > .close.icon {
+  margin: 4px;
+}
+
 /* ------------
   Intercom  */
 

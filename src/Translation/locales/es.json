@@ -56,6 +56,14 @@
       "price": "precio"
     }
   },
+  "asset_edit": {
+    "errors": {
+      "description_limit":
+        "La descripción debe ser inferior a {length} caracteres",
+      "name_max_limit": "El nombre debe ser inferior a {length} caracteres",
+      "name_min_limit": "El nombre no puede estar vacío"
+    }
+  },
   "asset_manage": {
     "address": "Dirección del operador",
     "address_permission":
