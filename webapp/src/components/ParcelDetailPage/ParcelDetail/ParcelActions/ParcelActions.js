@@ -54,11 +54,9 @@ export default class ParcelActions extends React.PureComponent {
             <Link to={locations.sellParcel(x, y)}>
               <Button size="tiny" primary={!isListed}>
                 <Icon name="tag" />
-                {t(
-                  isListed
-                    ? 'asset_detail.actions.update_price'
-                    : 'asset_detail.actions.sell'
-                )}
+                {isListed
+                  ? t('asset_detail.actions.update_price')
+                  : t('asset_detail.actions.sell')}
               </Button>
             </Link>
             {isListed && (

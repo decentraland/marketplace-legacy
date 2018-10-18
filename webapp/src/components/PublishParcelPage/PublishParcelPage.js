@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Loader, Container, Message } from 'semantic-ui-react/dist/commonjs'
+import { Loader, Container, Message } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Parcel from 'components/Parcel'
@@ -12,7 +12,6 @@ import ParcelDetailLink from 'components/ParcelDetailLink'
 import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
-import { formatMana } from 'lib/utils'
 import PublishAssetForm from 'components/PublishAssetForm'
 
 export default class PublishPage extends React.PureComponent {
@@ -57,18 +56,6 @@ export default class PublishPage extends React.PureComponent {
           const isOnSale = isOpen(publication)
           return (
             <div className="PublishPage">
-              {isOnSale ? (
-                <Container text>
-                  <Message
-                    warning
-                    icon="warning sign"
-                    content={t('asset_publish.already_sold', {
-                      value: formatMana(publication.price),
-                      asset_name: t('name.parcel')
-                    })}
-                  />
-                </Container>
-              ) : null}
               {!isMarketplaceApproved ? (
                 <Container text>
                   <Message

@@ -11,7 +11,6 @@ import TxStatus from 'components/TxStatus'
 import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
-import { formatMana } from 'lib/utils'
 import PublishAssetForm from '../PublishAssetForm'
 
 export default class PublishEstatePage extends React.PureComponent {
@@ -56,18 +55,6 @@ export default class PublishEstatePage extends React.PureComponent {
           const isOnSale = isOpen(publication)
           return (
             <div className="PublishPage">
-              {isOnSale ? (
-                <Container text>
-                  <Message
-                    warning
-                    icon="warning sign"
-                    content={t('asset_publish.already_sold', {
-                      value: formatMana(publication.price),
-                      asset_name: t('name.estate')
-                    })}
-                  />
-                </Container>
-              ) : null}
               {!isMarketplaceApproved ? (
                 <Container text>
                   <Message
