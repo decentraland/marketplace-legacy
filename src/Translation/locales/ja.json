@@ -66,8 +66,8 @@
   "asset_manage": {
     "address": "オペレータアドレス",
     "address_permission":
-      "このアドレスは、この{asset_type}の内容を更新することができます。",
-    "give_permission": "{asset_name}の内容を更新する権限を与えます。",
+      "このアドレスは、この{asset_type}の内容を更新することができます",
+    "give_permission": "{asset_name}の内容を更新する権限を与えます",
     "manage": "{asset_type}を管理する"
   },
   "asset_publish": {

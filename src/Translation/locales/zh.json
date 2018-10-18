@@ -62,8 +62,8 @@
   },
   "asset_manage": {
     "address": "运营商地址",
-    "address_permission": "该地址将能够更新此{asset_type}的内容。",
-    "give_permission": "授予更新{asset_name}内容的权限。",
+    "address_permission": "该地址将能够更新此{asset_type}的内容",
+    "give_permission": "授予更新{asset_name}内容的权限",
     "manage": "管理{asset_type}"
   },
   "asset_publish": {

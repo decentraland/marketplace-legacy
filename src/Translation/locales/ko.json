@@ -67,9 +67,9 @@
   "asset_manage": {
     "address": "운영자 주소",
     "address_permission":
-      "이 주소는이 {asset_type}의 내용을 갱신 할 수 있습니다.",
+      "이 주소는이 {asset_type}의 내용을 갱신 할 수 있습니다",
     "give_permission":
-      "{asset_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
+      "{asset_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오",
     "manage": "{asset_type} 관리"
   },
   "asset_publish": {

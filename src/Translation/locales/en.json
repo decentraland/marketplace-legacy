@@ -68,8 +68,8 @@
   "asset_manage": {
     "address": "Operator address",
     "address_permission":
-      "This address will be able to update the contents of this {asset_type}.",
-    "give_permission": "Give permission to update contents of {asset_name}.",
+      "This address will be able to update the contents of this {asset_type}",
+    "give_permission": "Give permission to update contents of {asset_name}",
     "manage": "Manage {asset_type}"
   },
   "asset_publish": {

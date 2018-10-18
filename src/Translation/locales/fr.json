@@ -69,9 +69,9 @@
   "asset_manage": {
     "address": "Adresse de l'opérateur",
     "address_permission":
-      "Cette adresse pourra mettre à jour le contenu de ce {asset_type}.",
+      "Cette adresse pourra mettre à jour le contenu de ce {asset_type}",
     "give_permission":
-      "Donnez la permission de mettre à jour le contenu de {asset_name}.",
+      "Donnez la permission de mettre à jour le contenu de {asset_name}",
     "manage": "Gérer {asset_type}"
   },
   "asset_publish": {

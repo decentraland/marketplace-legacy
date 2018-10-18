@@ -16,8 +16,12 @@ export function* managementSaga() {
 
 function* handleManageAssetRequest(action) {
   const { asset, asset_type, address, revoked } = action
+
   try {
-    let contract, assetId, txAsset
+    let contract
+    let assetId
+    let txAsset
+
     switch (asset_type) {
       case ASSET_TYPES.parcel: {
         const { x, y } = asset
