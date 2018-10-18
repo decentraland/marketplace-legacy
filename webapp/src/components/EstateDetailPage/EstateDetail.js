@@ -2,12 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Icon, Header, Grid, Button } from 'semantic-ui-react'
-import { utils } from 'decentraland-commons'
 import { t } from '@dapps/modules/translation/utils'
 
 import AddressBlock from 'components/AddressBlock'
 import { estateType, parcelType, publicationType } from 'components/types'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate, hasTags } from 'shared/parcel'
 import EstateActions from './EstateActions'
 import { getOpenPublication } from 'shared/asset'
 import Mana from 'components/Mana'
@@ -149,8 +148,7 @@ export default class EstateDetail extends React.PureComponent {
               />
             </Grid.Column>
           </Grid.Row>
-          {estate.parcels.filter(parcel => !utils.isEmptyObject(parcel.tags))
-            .length > 0 && (
+          {estate.parcels.filter(hasTags).length > 0 && (
             <Grid.Row>
               <Grid.Column className={'highlights'}>
                 <h3>{t('parcel_detail.tags.title')}</h3>

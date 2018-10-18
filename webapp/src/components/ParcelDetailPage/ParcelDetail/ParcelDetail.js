@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header, Grid } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import { utils } from 'decentraland-commons'
+import { t } from '@dapps/modules/translation/utils'
 
 import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
@@ -15,8 +15,8 @@ import {
   walletType,
   estateType
 } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { getDistrict, getOpenPublication } from 'shared/asset'
+import { hasTags } from 'shared/parcel'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
@@ -119,7 +119,7 @@ export default class ParcelDetail extends React.PureComponent {
 
         {mortgage && <ParcelMortgage mortgage={mortgage} />}
 
-        {utils.isEmptyObject(parcel.tags) ? null : (
+        {hasTags(parcel) && (
           <Grid stackable className="parcel-detail-row">
             <Grid.Row>
               <Grid.Column>
