@@ -62,7 +62,7 @@
       "Esta dirección podrá actualizar el contenido de este {asset_type}.",
     "give_permission":
       "Dar permiso para actualizar contenidos de {asset_name}.",
-    "manage_asset": "Gestionar {asset_type}"
+    "manage": "Gestionar {asset_type}"
   },
   "asset_publish": {
     "already_sold": "Este {asset_name} ya está a la venta para {value}",

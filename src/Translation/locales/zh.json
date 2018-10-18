@@ -57,7 +57,7 @@
     "address": "运营商地址",
     "address_permission": "该地址将能够更新此{asset_type}的内容。",
     "give_permission": "授予更新{asset_name}内容的权限。",
-    "manage_asset": "管理{asset_type}"
+    "manage": "管理{asset_type}"
   },
   "asset_publish": {
     "already_sold": "{asset_name} 已经以 {value} 出售中",

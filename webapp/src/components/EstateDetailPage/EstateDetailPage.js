@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Estate from 'components/Estate'
 import { parcelType, publicationType } from 'components/types'
-import EstateDetail from 'components/EstateDetailPage/EstateDetail'
+import EstateDetail from './EstateDetail'
 
 export default class EstateDetailPage extends React.PureComponent {
   static propTypes = {

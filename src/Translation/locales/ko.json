@@ -63,7 +63,7 @@
       "이 주소는이 {asset_type}의 내용을 갱신 할 수 있습니다.",
     "give_permission":
       "{asset_name}의 내용을 업데이트 할 수있는 권한을 부여하십시오.",
-    "manage_asset": "{asset_type} 관리"
+    "manage": "{asset_type} 관리"
   },
   "asset_publish": {
     "already_sold": "이 {asset_name}은 이미 {value}에 판매 중입니다.",

@@ -26,7 +26,7 @@ export default class ManageEstatePage extends React.PureComponent {
           <div className="ManageParcelPage">
             <EstateModal
               parcels={estate.data.parcels}
-              title={t('asset_manage.manage_asset', {
+              title={t('asset_manage.manage', {
                 asset_type: t('name.estate')
               })}
               subtitle={

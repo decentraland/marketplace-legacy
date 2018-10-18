@@ -4,9 +4,9 @@ import { push } from 'react-router-redux'
 
 import { isManageTransactionIdle } from 'modules/parcels/selectors'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
-import { manageParcelRequest } from 'modules/parcels/actions'
+import { manageAssetRequest } from 'modules/management/actions'
 import { locations } from 'locations'
-
+import { ASSET_TYPES } from 'shared/asset'
 import ManageParcelPage from './ManageParcelPage'
 
 const mapState = (state, ownProps) => {
@@ -24,7 +24,9 @@ const mapDispatch = (dispatch, ownProps) => {
 
   return {
     onSubmit: (parcel, address, revoked) =>
-      dispatch(manageParcelRequest(parcel, address, revoked)),
+      dispatch(
+        manageAssetRequest(parcel, ASSET_TYPES.parcel, address, revoked)
+      ),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
   }
 }

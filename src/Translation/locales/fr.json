@@ -64,7 +64,7 @@
       "Cette adresse pourra mettre à jour le contenu de ce {asset_type}.",
     "give_permission":
       "Donnez la permission de mettre à jour le contenu de {asset_name}.",
-    "manage_asset": "Gérer {asset_type}"
+    "manage": "Gérer {asset_type}"
   },
   "asset_publish": {
     "already_sold": "Ce {asset_name} est déjà en vente pour {value}",

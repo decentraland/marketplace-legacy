@@ -23,10 +23,7 @@ import {
   deleteEstateFailure,
   TRANSFER_ESTATE_REQUEST,
   transferEstateSuccess,
-  transferEstateFailure,
-  MANAGE_ESTATE_REQUEST,
-  manageEstateSuccess,
-  manageEstateFailure
+  transferEstateFailure
 } from 'modules/estates/actions'
 import { validateCoords } from 'modules/estates/utils'
 import { getEstates } from 'modules/estates/selectors'
@@ -42,7 +39,6 @@ export function* estateSaga() {
   yield takeEvery(EDIT_ESTATE_METADATA_REQUEST, handleEditEstateMetadataRequest)
   yield takeEvery(DELETE_ESTATE_REQUEST, handleDeleteEstate)
   yield takeEvery(TRANSFER_ESTATE_REQUEST, handleTransferRequest)
-  yield takeEvery(MANAGE_ESTATE_REQUEST, handleManageEstateRequest)
 }
 
 function* handleCreateEstateRequest(action) {
@@ -209,25 +205,5 @@ function* handleTransferRequest({ estate, to }) {
     yield put(transferEstateSuccess(txHash, transfer))
   } catch (error) {
     yield put(transferEstateFailure(error.message))
-  }
-}
-
-function* handleManageEstateRequest(action) {
-  const { estate } = action
-  try {
-    const { address, revoked } = action
-
-    const contract = eth.getContract('EstateRegistry')
-
-    const txHash = yield call(() =>
-      contract.setUpdateOperator(estate.id, revoked ? null : address)
-    )
-
-    yield put(manageEstateSuccess(txHash, estate, address, revoked))
-    yield put(push(locations.activity()))
-  } catch (error) {
-    yield put(
-      manageEstateFailure(estate, action.address, action.revoked, error.message)
-    )
   }
 }

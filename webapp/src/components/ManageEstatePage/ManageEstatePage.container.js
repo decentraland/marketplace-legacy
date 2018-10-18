@@ -4,9 +4,10 @@ import { push } from 'react-router-redux'
 
 import { isManageTransactionIdle } from 'modules/estates/selectors'
 import { getMatchParams } from 'modules/location/selectors'
-import { manageEstateRequest } from 'modules/estates/actions'
+import { manageAssetRequest } from 'modules/management/actions'
 import { locations } from 'locations'
 import ManageEstatePage from './ManageEstatePage'
+import { ASSET_TYPES } from 'shared/asset'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)
@@ -21,7 +22,9 @@ const mapDispatch = (dispatch, ownProps) => {
 
   return {
     onSubmit: (estate, address, revoked) =>
-      dispatch(manageEstateRequest(estate, address, revoked)),
+      dispatch(
+        manageAssetRequest(estate, ASSET_TYPES.estate, address, revoked)
+      ),
     onCancel: () => dispatch(push(locations.estateDetail(id)))
   }
 }

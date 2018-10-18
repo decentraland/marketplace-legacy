@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
+
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { buildCoordinate } from 'shared/parcel'
@@ -9,10 +10,9 @@ import {
   DELETE_ESTATE_REQUEST,
   EDIT_ESTATE_PARCELS_REQUEST,
   TRANSFER_ESTATE_REQUEST,
-  FETCH_ESTATE_REQUEST,
-  MANAGE_ESTATE_REQUEST
+  FETCH_ESTATE_REQUEST
 } from './actions'
-
+import { MANAGE_ASSET_REQUEST } from 'modules/management/actions'
 export const getState = state => state.estates
 export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
@@ -43,7 +43,7 @@ export const isEstateTransactionIdle = state =>
   isDeletingEstateTransactionIdle(state)
 
 export const isManageTransactionIdle = state =>
-  isLoadingType(getLoading(state), MANAGE_ESTATE_REQUEST)
+  isLoadingType(getLoading(state), MANAGE_ASSET_REQUEST)
 
 export const getEstates = createSelector(
   state => getData(state),

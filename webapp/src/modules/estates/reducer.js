@@ -1,4 +1,7 @@
+import { loadingReducer } from '@dapps/modules/loading/reducer'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { utils } from 'decentraland-commons'
+
 import {
   CREATE_ESTATE_REQUEST,
   CREATE_ESTATE_SUCCESS,
@@ -19,10 +22,8 @@ import {
   TRANSFER_ESTATE_SUCCESS,
   TRANSFER_ESTATE_FAILURE
 } from './actions'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
-import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { getEstateIdFromTxReceipt } from './utils'
 import { normalizeEstate, isEstate } from 'shared/estate'
 import {
@@ -33,6 +34,11 @@ import {
   FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { ASSET_TYPES } from 'shared/asset'
+import {
+  MANAGE_ASSET_REQUEST,
+  MANAGE_ASSET_SUCCESS,
+  MANAGE_ASSET_FAILURE
+} from 'modules/management/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -49,14 +55,20 @@ export function estatesReducer(state = INITIAL_STATE, action) {
     case EDIT_ESTATE_PARCELS_SUCCESS:
     case EDIT_ESTATE_METADATA_REQUEST:
     case EDIT_ESTATE_METADATA_SUCCESS:
+    case MANAGE_ASSET_REQUEST:
+    case MANAGE_ASSET_SUCCESS:
     case DELETE_ESTATE_REQUEST:
     case DELETE_ESTATE_SUCCESS:
     case TRANSFER_ESTATE_REQUEST:
     case TRANSFER_ESTATE_SUCCESS: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action)
+      const { asset_type } = action
+      if (asset_type === ASSET_TYPES.estate || !asset_type) {
+        return {
+          ...state,
+          loading: loadingReducer(state.loading, action)
+        }
       }
+      return state
     }
     case FETCH_ESTATE_SUCCESS: {
       const { estate } = action
@@ -92,12 +104,17 @@ export function estatesReducer(state = INITIAL_STATE, action) {
     case EDIT_ESTATE_PARCELS_FAILURE:
     case EDIT_ESTATE_METADATA_FAILURE:
     case DELETE_ESTATE_FAILURE:
-    case TRANSFER_ESTATE_FAILURE: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: action.error
+    case TRANSFER_ESTATE_FAILURE:
+    case MANAGE_ASSET_FAILURE: {
+      const { asset_type } = action
+      if (asset_type === ASSET_TYPES.estate || !asset_type) {
+        return {
+          ...state,
+          loading: loadingReducer(state.loading, action),
+          error: action.error
+        }
       }
+      return state
     }
     case FETCH_ASSET_PUBLICATIONS_SUCCESS: {
       const { id, assetType, publications } = action

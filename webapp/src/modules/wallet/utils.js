@@ -104,33 +104,31 @@ export async function fetchBalance(address) {
 
 export async function getAssetUpdateOperator(asset) {
   try {
+    let address
     if (isParcel(asset)) {
-      return getParcelUpdateOperator(asset.x, asset.y)
+      address = await getParcelUpdateOperator(asset.x, asset.y)
     } else if (isEstate(asset)) {
-      return getEstateUpdateOperator(asset.id)
+      address = await getEstateUpdateOperator(asset.id)
+    }
+
+    if (
+      eth.utils.isValidAddress(address) &&
+      !Contract.isEmptyAddress(address)
+    ) {
+      return address
     }
   } catch (error) {
-    // 🌈
+    return null
   }
-  return null
 }
 
 async function getParcelUpdateOperator(x, y) {
   const contract = eth.getContract('LANDRegistry')
   const tokenId = await contract.encodeTokenId(x, y)
-  const address = await contract.updateOperator(tokenId)
-  if (eth.utils.isValidAddress(address) && !Contract.isEmptyAddress(address)) {
-    return address
-  }
-  return null
+  return contract.updateOperator(tokenId)
 }
 
 async function getEstateUpdateOperator(tokenId) {
   const contract = eth.getContract('EstateRegistry')
-  const address = await contract.updateOperator(tokenId)
-  if (eth.utils.isValidAddress(address) && !Contract.isEmptyAddress(address)) {
-    return address
-  }
-
-  return null
+  return contract.updateOperator(tokenId)
 }

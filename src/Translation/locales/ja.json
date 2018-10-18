@@ -61,7 +61,7 @@
     "address_permission":
       "このアドレスは、この{asset_type}の内容を更新することができます。",
     "give_permission": "{asset_name}の内容を更新する権限を与えます。",
-    "manage_asset": "{asset_type}を管理する"
+    "manage": "{asset_type}を管理する"
   },
   "asset_publish": {
     "already_sold": "この{asset_name}は既に{value}の販売中です",

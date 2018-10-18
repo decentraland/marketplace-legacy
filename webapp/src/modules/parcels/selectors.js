@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect'
+import { isLoadingType } from '@dapps/modules/loading/selectors'
+
 import {
   EDIT_PARCEL_REQUEST,
   FETCH_PARCEL_REQUEST,
-  MANAGE_PARCEL_REQUEST,
   TRANSFER_PARCEL_REQUEST
 } from './actions'
-import { isLoadingType } from '@dapps/modules/loading/selectors'
+import { MANAGE_ASSET_REQUEST } from 'modules/management/actions'
 import { getData as getAllPublications } from 'modules/publication/selectors'
 import { getMortgagesArray } from 'modules/mortgage/selectors'
 import { buildCoordinate } from 'shared/parcel'
@@ -21,7 +22,7 @@ export const isEditTransactionIdle = state =>
   isLoadingType(getLoading(state), EDIT_PARCEL_REQUEST)
 
 export const isManageTransactionIdle = state =>
-  isLoadingType(getLoading(state), MANAGE_PARCEL_REQUEST)
+  isLoadingType(getLoading(state), MANAGE_ASSET_REQUEST)
 
 export const isTransferIdle = state =>
   isLoadingType(getLoading(state), TRANSFER_PARCEL_REQUEST)

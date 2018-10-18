@@ -29,7 +29,7 @@ export default class ManageParcelPage extends React.PureComponent {
             <ParcelModal
               x={x}
               y={y}
-              title={t('asset_manage.manage_asset', {
+              title={t('asset_manage.manage', {
                 asset_type: t('name.parcel')
               })}
               subtitle={

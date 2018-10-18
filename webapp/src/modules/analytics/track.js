@@ -1,3 +1,6 @@
+import { txUtils } from 'decentraland-eth'
+import { FETCH_TRANSACTION_FAILURE } from '@dapps/modules/transaction/actions'
+
 import { add } from './utils'
 import {
   BUY_SUCCESS,
@@ -6,7 +9,6 @@ import {
 } from 'modules/publication/actions'
 import {
   EDIT_PARCEL_SUCCESS,
-  MANAGE_PARCEL_SUCCESS,
   TRANSFER_PARCEL_SUCCESS
 } from 'modules/parcels/actions'
 import {
@@ -14,7 +16,6 @@ import {
   APPROVE_TOKEN_SUCCESS
 } from 'modules/authorization/actions'
 import { TRANSFER_MANA_SUCCESS, BUY_MANA_SUCCESS } from 'modules/wallet/actions'
-import { FETCH_TRANSACTION_FAILURE } from '@dapps/modules/transaction/actions'
 import {
   CREATE_ESTATE_SUCCESS,
   EDIT_ESTATE_METADATA_SUCCESS,
@@ -22,7 +23,7 @@ import {
   DELETE_ESTATE_SUCCESS,
   TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
-import { txUtils } from 'decentraland-eth'
+import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
 
 const addAssetType = (actionName, assetType) =>
   `${actionName} ${assetType[0].toUpperCase() + assetType.slice(1)}`
@@ -104,12 +105,15 @@ add(
   action => action.payload
 )
 
-add(MANAGE_PARCEL_SUCCESS, 'Manage LAND Permissions', action => ({
-  x: action.parcel.x,
-  y: action.parcel.y,
-  address: action.address,
-  revoked: action.revoked
-}))
+add(
+  MANAGE_ASSET_SUCCESS,
+  action => addAssetType('Manage Asset Permissions', action.asset_type),
+  action => ({
+    asset_id: action.asset_id,
+    address: action.address,
+    revoked: action.revoked
+  })
+)
 
 add(CREATE_ESTATE_SUCCESS, 'Create Estate', action => ({
   parcels: action.estate.data.parcels.map(p => `(${p.x}, ${p.y})`).join(', '),
