@@ -136,7 +136,7 @@ async function reduceEstateRegistry(event) {
     }
     case eventNames.UpdateOperator: {
       const { _operator } = event.args
-      const estateId = event.args._assetId
+      const estateId = event.args._estateId
 
       log.info(
         `[${name}] Updating Estate id: "${estateId}" operator: ${_operator}`
