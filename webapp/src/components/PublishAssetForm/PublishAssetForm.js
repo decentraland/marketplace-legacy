@@ -9,12 +9,13 @@ import { assetType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { isParcel } from 'shared/parcel'
+import './PublishAssetForm.css'
 
 // TODO: Shouldn't this live on the publication module?
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
-const MINIMUM_LAND_PRICE = 1
+const MINIMUM_LAND_PRICE = 1000
 
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
