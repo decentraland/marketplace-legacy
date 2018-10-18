@@ -64,20 +64,10 @@ const main = {
       .action(
         asSafeAction(async (assetId, assetType) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
-          let contract
 
-          switch (assetType) {
-            case ASSET_TYPES.parcel: {
-              contract = eth.getContract('LANDRegistry')
-              break
-            }
-            case ASSET_TYPES.estate: {
-              contract = eth.getContract('EstateRegistry')
-              break
-            }
-          }
-
+          const contract = getContractByAssetType(assetType)
           const owner = await contract.ownerOf(asset.token_id)
+
           const dbOwner = asset.owner || asset.district_id || 'empty'
 
           log.info(`(asset-owner) id:(${asset.id})`)
@@ -92,11 +82,29 @@ const main = {
       .action(
         asSafeAction(async (assetId, assetType) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
-          const contract = eth.getContract('LANDRegistry')
+          const contract = getContractByAssetType(assetType)
+
           const operator = await contract.updateOperator(asset.token_id)
 
           log.info(`(asset-update-operator) id:(${asset.id})`)
           log.info(`blockchain => ${operator}`)
+        })
+      )
+
+    program
+      .command('asset-data <assetId> <assetType>')
+      .description('Get the data for an asset')
+      .action(
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+          const contract = getContractByAssetType(assetType)
+
+          const data = await contract.tokenMetadata(asset.token_id)
+          const dbData = toDataLog(asset.data)
+
+          log.info(`(land-data) coords:(${x},${y})`)
+          log.info(`blockchain => ${data}`)
+          log.info(`db         => ${dbData}`)
         })
       )
 
@@ -112,24 +120,6 @@ const main = {
           const estateId = await contract.getLandEstateId(tokenId)
 
           log.info(`(land-estate) coords:(${x},${y}) => estateId: ${estateId}`)
-        })
-      )
-
-    program
-      .command('land-data <coord>')
-      .description('Get the land data for a (x,y) coordinate')
-      .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          const contract = eth.getContract('LANDRegistry')
-          const data = await contract.landData(x, y)
-
-          const parcel = await Parcel.findOne({ x, y })
-          const dbData = toDataLog(parcel.data)
-
-          log.info(`(land-data) coords:(${x},${y})`)
-          log.info(`blockchain => ${data}`)
-          log.info(`db         => ${dbData}`)
         })
       )
 
@@ -161,27 +151,14 @@ const main = {
 
           // publication[1] === owner. See `toPublicationLog`
           if (Contract.isEmptyAddress(publication[1].toString())) {
-            const landRegistry = eth.getContract('LANDRegistry')
-            const estateRegistry = eth.getContract('EstateRegistry')
+            const registryContract = getContractByAssetType(assetType)
 
             contract = eth.getContract('Marketplace')
 
-            switch (assetType) {
-              case ASSET_TYPES.parcel: {
-                publication = await contract.orderByAssetId(
-                  landRegistry.address,
-                  asset.token_id
-                )
-                break
-              }
-              case ASSET_TYPES.estate: {
-                publication = await contract.orderByAssetId(
-                  estateRegistry.address,
-                  asset.token_id
-                )
-                break
-              }
-            }
+            publication = await contract.orderByAssetId(
+              registryContract.address,
+              asset.token_id
+            )
           }
 
           const pubDb = (await Publication.findByAssetId(asset.id))[0]
@@ -210,23 +187,32 @@ const main = {
       )
 
     program
-      .command('publication-cancel <assetId> <assetType> <contractName>')
-      .description(
-        'Cancel a publication. `contractName` defaults to `Marketplace`'
-      )
+      .command('publication-cancel <assetId> <assetType>')
+      .description('Cancel a publication')
+      .option('--is-legacy', 'You are using the legacy marketplace')
       .action(
-        asSafeAction(
-          async (assetId, assetType, contractName = 'Marketplace') => {
-            const asset = await getAssetFromCLIArgs(assetId, assetType)
-            const contract = eth.getContract(contractName)
+        asSafeAction(async (assetId, assetType, options) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+          const registryContract = getContractByAssetType(assetType)
 
-            await unlockAccountWithPrompt()
-            const txHash = await contract.cancelOrder(asset.token_id)
+          const contractName = options.isLegacy
+            ? 'LegacyMarketplace'
+            : 'Marketplace'
+          const contract = eth.getContract(contractName)
 
-            log.info(`(publication-cancel) id:(${asset.id})`)
-            log.info(`(publication-cancel) tx:${txHash}`)
-          }
-        )
+          await unlockAccountWithPrompt()
+
+          const txHash = options.isLegacy
+            ? await contract.cancelOrder(asset.token_id)
+            : await contract.cancelOrder(
+                registryContract.address,
+                asset.token_id
+              )
+
+          log.info(`(publication-cancel) id:(${asset.id})`)
+          log.info(`(publication-cancel) contract:(${contractName})`)
+          log.info(`(publication-cancel) tx:${txHash}`)
+        })
       )
 
     program
@@ -460,7 +446,22 @@ async function getAssetFromCLIArgs(assetId, assetType) {
       return Estate.findOne(assetId)
     }
     default:
-      throw new Error('You must supply a `assetType` as second argument')
+      throw new Error(`The assetType ${assetType} is invalid`)
+  }
+}
+
+function getContractByAssetType(assetType) {
+  switch (assetType) {
+    case ASSET_TYPES.parcel: {
+      return eth.getContract('LANDRegistry')
+      break
+    }
+    case ASSET_TYPES.estate: {
+      return eth.getContract('EstateRegistry')
+      break
+    }
+    default:
+      throw new Error(`The assetType ${assetType} is invalid`)
   }
 }
 
