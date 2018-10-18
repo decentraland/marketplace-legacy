@@ -94,7 +94,7 @@ export default class Transaction extends React.PureComponent {
     )
   }
 
-  getAssetLink(payload) {
+  renderAssetLink(payload) {
     if (payload.type === ASSET_TYPES.parcel) {
       return this.renderParcelLink(payload.x, payload.y)
     } else if (payload.type === ASSET_TYPES.estate) {
@@ -175,7 +175,7 @@ export default class Transaction extends React.PureComponent {
           <T
             id={revoked ? 'transaction.manage_revoked' : 'transaction.manage'}
             values={{
-              asset_link: this.getAssetLink(payload),
+              asset_link: this.renderAssetLink(payload),
               address_link: (
                 <Link to={locations.profilePageDefault(address)}>
                   {address}
@@ -207,7 +207,7 @@ export default class Transaction extends React.PureComponent {
         return (
           <T
             id="transaction.publish"
-            values={{ parcel_link: this.getAssetLink(payload) }}
+            values={{ parcel_link: this.renderAssetLink(payload) }}
           />
         )
       }
@@ -215,7 +215,7 @@ export default class Transaction extends React.PureComponent {
         return (
           <T
             id="transaction.buy"
-            values={{ parcel_link: this.getAssetLink(payload) }}
+            values={{ parcel_link: this.renderAssetLink(payload) }}
           />
         )
       }
@@ -223,7 +223,7 @@ export default class Transaction extends React.PureComponent {
         return (
           <T
             id="transaction.cancel"
-            values={{ parcel_link: this.getAssetLink(payload) }}
+            values={{ parcel_link: this.renderAssetLink(payload) }}
           />
         )
       }
