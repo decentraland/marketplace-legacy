@@ -102,7 +102,7 @@ const main = {
           const data = await contract.tokenMetadata(asset.token_id)
           const dbData = toDataLog(asset.data)
 
-          log.info(`(land-data) coords:(${x},${y})`)
+          log.info(`(asset-data) id:(${asset.id})`)
           log.info(`blockchain => ${data}`)
           log.info(`db         => ${dbData}`)
         })
@@ -454,11 +454,9 @@ function getContractByAssetType(assetType) {
   switch (assetType) {
     case ASSET_TYPES.parcel: {
       return eth.getContract('LANDRegistry')
-      break
     }
     case ASSET_TYPES.estate: {
       return eth.getContract('EstateRegistry')
-      break
     }
     default:
       throw new Error(`The assetType ${assetType} is invalid`)
