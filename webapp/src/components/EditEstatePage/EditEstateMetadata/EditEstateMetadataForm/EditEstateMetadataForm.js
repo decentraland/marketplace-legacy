@@ -131,6 +131,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
             type="text"
             value={name}
             onChange={this.handleNameChange}
+            error={!this.isValidName(name)}
             autoFocus
           />
         </Form.Field>
@@ -140,6 +141,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
             type="text"
             value={description}
             onChange={this.handleDescriptionChange}
+            error={!this.isValidDescription(description)}
           />
         </Form.Field>
         <TxStatus.Idle isIdle={isTxIdle} />

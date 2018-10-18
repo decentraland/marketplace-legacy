@@ -189,7 +189,7 @@ export function getType(asset, publications, wallet) {
 }
 
 export function isValidName(name = '') {
-  return name.length > 0 && name.length <= MAX_NAME_LENGTH
+  return name.length <= MAX_NAME_LENGTH
 }
 
 export function isValidDescription(description = '') {
