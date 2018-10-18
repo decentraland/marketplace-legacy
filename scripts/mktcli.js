@@ -3,7 +3,7 @@
 import { eth, txUtils, contracts } from 'decentraland-eth'
 import { Log, cli } from 'decentraland-commons'
 
-import { db } from '../src/database'
+import { SQL, db } from '../src/database'
 import { connectEth } from '../src/ethereum'
 import { Parcel } from '../src/Asset'
 import { Publication } from '../src/Publication'
@@ -313,9 +313,9 @@ const main = {
           const deleteTableNames = ['estates']
 
           await db.query(
-            `UPDATE ${
+            SQL`UPDATE ${SQL.raw(
               Parcel.tableName
-            } SET estate_id = NULL WHERE estate_id IS NOT NULL`
+            )} SET estate_id = NULL WHERE estate_id IS NOT NULL`
           )
           await Promise.all(
             truncateTableNames.map(tableName => db.truncate(tableName))
