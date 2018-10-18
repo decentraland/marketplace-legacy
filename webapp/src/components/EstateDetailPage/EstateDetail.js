@@ -15,6 +15,7 @@ import LandAmount from 'components/LandAmount'
 import { locations } from 'locations'
 import { calculateMapProps } from 'shared/estate'
 import ParcelAttributes from 'components/ParcelAttributes'
+import ParcelTags from 'components/ParcelTags'
 import './EstateDetail.css'
 
 const WITH_ACTION_BUTTONS_WIDTH = 8
@@ -137,6 +138,12 @@ export default class EstateDetail extends React.PureComponent {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
+            <Grid.Column className={'highlights'}>
+              <h3>{t('parcel_detail.tags.title')}</h3>
+              <ParcelTags estate={estate} showDetails={true} />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
             {allParcels && (
               <React.Fragment>
                 <Grid.Column
@@ -166,7 +173,11 @@ export default class EstateDetail extends React.PureComponent {
                   {parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelAttributes key={parcel.id} parcel={parcel} />
+                      <ParcelAttributes
+                        key={parcel.id}
+                        parcel={parcel}
+                        withTags={false}
+                      />
                     ) : null
                   })}
                 </Grid.Column>
