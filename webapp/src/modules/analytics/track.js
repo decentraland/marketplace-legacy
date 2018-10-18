@@ -107,7 +107,7 @@ add(
 
 add(
   MANAGE_ASSET_SUCCESS,
-  action => addAssetType('Manage Asset Permissions', action.asset_type),
+  action => addAssetType('Manage Permissions for', action.asset_type),
   action => ({
     asset_id: action.asset_id,
     address: action.address,

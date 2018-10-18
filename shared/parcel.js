@@ -1,4 +1,5 @@
 import { Bounds } from './map'
+import { utils } from 'decentraland-commons'
 
 export const AUCTION_DATE = new Date('2018-01-31T00:00:00Z')
 
@@ -149,4 +150,13 @@ export function getParcelsNotIncluded(newParcels, allParcels) {
   return newParcels.filter(
     newParcel => !allParcels.some(getParcelMatcher(newParcel))
   )
+}
+
+/**
+ * Check if parcel has tags
+ * @param parcel
+ * @return boolean - whether has tags or not
+ */
+export function hasTags(parcel) {
+  return parcel && !utils.isEmptyObject(parcel.tags)
 }
