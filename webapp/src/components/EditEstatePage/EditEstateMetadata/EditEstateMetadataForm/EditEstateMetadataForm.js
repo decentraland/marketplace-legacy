@@ -89,9 +89,11 @@ export default class EditEstateMetadataForm extends React.PureComponent {
 
     if (!this.isValidName(name)) {
       formErrors.push(
-        t('asset_edit.errors.name_limit', {
-          length: MAX_NAME_LENGTH
-        })
+        name.length === 0
+          ? t('asset_edit.errors.name_min_limit')
+          : t('asset_edit.errors.name_max_limit', {
+              length: MAX_NAME_LENGTH
+            })
       )
     }
 

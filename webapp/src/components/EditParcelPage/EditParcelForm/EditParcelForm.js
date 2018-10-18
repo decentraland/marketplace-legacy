@@ -69,9 +69,11 @@ export default class EditParcelForm extends React.PureComponent {
 
       if (!this.isValidName(name)) {
         formErrors.push(
-          t('asset_edit.errors.name_limit', {
-            length: MAX_NAME_LENGTH
-          })
+          name.length === 0
+            ? t('asset_edit.errors.name_min_limit')
+            : t('asset_edit.errors.name_max_limit', {
+                length: MAX_NAME_LENGTH
+              })
         )
       }
 
@@ -164,11 +166,7 @@ export default class EditParcelForm extends React.PureComponent {
           <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>
-          <Button
-            type="submit"
-            primary={true}
-            disabled={!this.hasChanged() || !isValidName || !isValidDescription}
-          >
+          <Button type="submit" primary={true} disabled={!this.hasChanged()}>
             {t('global.submit')}
           </Button>
         </div>

@@ -60,7 +60,8 @@
   "asset_edit": {
     "errors": {
       "description_limit": "설명은 {length} 자보다 낮아야합니다.",
-      "name_limit": "이름은 {length} 자보다 낮아야합니다."
+      "name_max_limit": "이름은 {length} 자보다 낮아야합니다.",
+      "name_min_limit": "이름은 비워 둘 수 없습니다."
     }
   },
   "asset_manage": {

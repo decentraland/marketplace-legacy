@@ -61,7 +61,8 @@
     "errors": {
       "description_limit":
         "The description should be lower than {length} characters",
-      "name_limit": "The name should be lower than {length} characters"
+      "name_max_limit": "The name should be lower than {length} characters",
+      "name_min_limit": "The name can't be empty"
     }
   },
   "asset_manage": {
