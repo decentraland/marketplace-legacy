@@ -146,27 +146,25 @@ const main = {
         asSafeAction(async (assetId, assetType) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
 
-          let contract = eth.getContract('LegacyMarketplace')
-          let publication = await contract.auctionByAssetId(asset.token_id)
+          const legacyContract = eth.getContract('LegacyMarketplace')
+          const legacyPublication = await legacyContract.auctionByAssetId(
+            asset.token_id
+          )
 
-          // publication[1] === owner. See `toPublicationLog`
-          if (Contract.isEmptyAddress(publication[1].toString())) {
-            const registryContract = getContractByAssetType(assetType)
-
-            contract = eth.getContract('Marketplace')
-
-            publication = await contract.orderByAssetId(
-              registryContract.address,
-              asset.token_id
-            )
-          }
+          const registryContract = getContractByAssetType(assetType)
+          const contract = eth.getContract('Marketplace')
+          const publication = await contract.orderByAssetId(
+            registryContract.address,
+            asset.token_id
+          )
 
           const pubDb = (await Publication.findByAssetId(asset.id))[0]
           const publicationDb = toPublicationLog(pubDb)
 
           log.info(`(publication) id:(${asset.id})`)
-          log.info(`blockchain => ${publication}`)
-          log.info(`db         => ${publicationDb}`)
+          log.info(`blockchain legacy => ${legacyPublication}`)
+          log.info(`blockchain        => ${publication}`)
+          log.info(`db                => ${publicationDb}`)
         })
       )
 
