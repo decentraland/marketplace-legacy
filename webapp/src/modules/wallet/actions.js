@@ -32,6 +32,7 @@ export function transferManaFailure(error) {
   }
 }
 
+<<<<<<< HEAD
 // Update derivation path
 
 export const UPDATE_DERIVATION_PATH = 'Update derivation path'
@@ -43,6 +44,8 @@ export function updateDerivationPath(derivationPath) {
   }
 }
 
+=======
+>>>>>>> feat: add wallet
 // Buy MANA
 
 export const BUY_MANA_REQUEST = '[Request] Buy MANA'

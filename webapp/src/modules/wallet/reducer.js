@@ -1,6 +1,5 @@
 import {
   TRANSFER_MANA_SUCCESS,
-  UPDATE_DERIVATION_PATH,
   UPDATE_BALANCE,
   UPDATE_ETH_BALANCE,
   BUY_MANA_REQUEST,
@@ -19,7 +18,14 @@ const INITIAL_STATE = {
   ...BASE_INITIAL_STATE,
   data: {
     ...BASE_INITIAL_STATE.data,
+<<<<<<< HEAD
     ethBalance: null
+=======
+    balance: null,
+    ethBalance: null,
+    allowances: {},
+    approvals: {}
+>>>>>>> feat: add wallet
   }
 }
 
@@ -60,14 +66,6 @@ export function walletReducer(state = INITIAL_STATE, action) {
           return state
       }
     }
-    case UPDATE_DERIVATION_PATH:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          derivationPath: action.derivationPath
-        }
-      }
     case UPDATE_BALANCE:
       return {
         ...state,
