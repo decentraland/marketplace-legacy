@@ -1,22 +1,10 @@
 import { createSelector } from 'reselect'
-import {
-  CONNECT_WALLET_REQUEST,
-  TRANSFER_MANA_REQUEST,
-  BUY_MANA_REQUEST
-} from './actions'
+import { TRANSFER_MANA_REQUEST, BUY_MANA_REQUEST } from './actions'
+import { getData, getLoading } from '@dapps/modules/wallet/selectors'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getAddresses } from 'modules/address/selectors'
 
-export const getState = state => state.wallet
-export const getData = state => getState(state).data
-export const getLoading = state => getState(state).loading
-export const getError = state => getState(state).error
-export const getNetwork = state => getData(state).network
-export const getAddress = state => getData(state).address
-export const getLocale = state => getData(state).locale
-export const isConnected = state => !!getData(state).address
-export const isConnecting = state =>
-  isLoadingType(getLoading(state), CONNECT_WALLET_REQUEST)
+export * from '@dapps/modules/wallet/selectors'
 
 export const getWallet = createSelector(
   state => getData(state),

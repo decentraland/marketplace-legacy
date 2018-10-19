@@ -1,30 +1,6 @@
 import { buildTransactionAction } from 'modules/transaction/utils'
 
-// Connect Wallet
-
-export const CONNECT_WALLET_REQUEST = '[Request] Connect Wallet'
-export const CONNECT_WALLET_SUCCESS = '[Success] Connect Wallet'
-export const CONNECT_WALLET_FAILURE = '[Failure] Connect Wallet'
-
-export function connectWalletRequest() {
-  return {
-    type: CONNECT_WALLET_REQUEST
-  }
-}
-
-export function connectWalletSuccess(wallet) {
-  return {
-    type: CONNECT_WALLET_SUCCESS,
-    wallet
-  }
-}
-
-export function connectWalletFailure(error) {
-  return {
-    type: CONNECT_WALLET_FAILURE,
-    error
-  }
-}
+export * from '@dapps/modules/wallet/actions'
 
 // Transfer MANA
 
@@ -55,21 +31,6 @@ export function transferManaFailure(error) {
     error
   }
 }
-
-// Update derivation path
-
-export const UPDATE_DERIVATION_PATH = 'Update derivation path'
-
-export function updateDerivationPath(derivationPath) {
-  return {
-    type: UPDATE_DERIVATION_PATH,
-    derivationPath
-  }
-}
-
-// Clear error
-
-export const CLEAR_WALLET_ERROR = 'Clear Wallet Error'
 
 // Buy MANA
 

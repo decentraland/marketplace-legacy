@@ -103,13 +103,6 @@ export const transferType = shape({
   parcelId: string
 })
 
-export const toastType = shape({
-  id: string.isRequired,
-  kind: oneOf(['info', 'success', 'error', 'warning']),
-  message: string,
-  delay: number
-})
-
 export const mortgageType = shape({
   status: string,
   asset_id: string,

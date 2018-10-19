@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { isConnecting, isConnected } from 'modules/wallet/selectors'
-import { connectWalletRequest } from 'modules/wallet/actions'
+import { connectWalletRequest } from '@dapps/modules/wallet/actions'
 import { navigateTo } from '@dapps/modules/location/actions'
 
 import SignInPage from './SignInPage'

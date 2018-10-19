@@ -1,25 +1,15 @@
 import { eth } from 'decentraland-eth'
 import { delay } from 'redux-saga'
-import {
-  call,
-  select,
-  takeLatest,
-  takeEvery,
-  all,
-  put
-} from 'redux-saga/effects'
+import { call, takeLatest, takeEvery, all, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
+import { createWalletSaga } from '@dapps/modules/wallet/sagas'
+import { CONNECT_WALLET_SUCCESS } from '@dapps/modules/wallet/actions'
 import {
-  CONNECT_WALLET_REQUEST,
   TRANSFER_MANA_REQUEST,
   BUY_MANA_REQUEST,
-  UPDATE_DERIVATION_PATH,
   BUY_MANA_SUCCESS,
-  connectWalletRequest,
-  connectWalletSuccess,
-  connectWalletFailure,
   transferManaSuccess,
   transferManaFailure,
   buyManaSuccess,
@@ -27,58 +17,23 @@ import {
   updateBalance,
   updateEthBalance
 } from './actions'
-import { isLoading as isStorageLoading } from '@dapps/modules/storage/selectors'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { fetchAddress } from 'modules/address/actions'
 import { fetchAuthorizationRequest } from 'modules/authorization/actions'
 import { isFeatureEnabled } from 'lib/featureUtils'
-import { getData } from './selectors'
-import { connectEthereumWallet, sendTransaction, fetchBalance } from './utils'
+import { getWalletSagaOptions, sendTransaction, fetchBalance } from './utils'
+
+const baseWalletSaga = createWalletSaga(getWalletSagaOptions())
 
 export function* walletSaga() {
-  yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
-  yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
-  yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
-  yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
-  yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
+  yield all([baseWalletSaga(), fullWalletSaga()])
 }
 
-function* handleConnectWalletRequest(action = {}) {
-  while (yield select(isStorageLoading)) yield delay(5)
-  try {
-    const walletData = yield select(getData)
-
-    yield call(() =>
-      connectEthereumWallet({
-        address: walletData.address,
-        derivationPath: walletData.derivationPath
-      })
-    )
-    const manaTokenContract = eth.getContract('MANAToken')
-
-    let address = yield call(() => eth.getAddress())
-    address = address.toLowerCase()
-
-    const [network, balance, ethBalance] = yield all([
-      eth.getNetwork(),
-      manaTokenContract.balanceOf(address),
-      fetchBalance(address)
-    ])
-
-    const wallet = {
-      network: network.name,
-      type: eth.wallet.type,
-      derivationPath: eth.wallet.derivationPath,
-      address,
-      balance,
-      ethBalance
-    }
-
-    yield handleConnectWalletSuccess(address)
-    yield put(connectWalletSuccess(wallet))
-  } catch (error) {
-    yield put(connectWalletFailure(error.message))
-  }
+function* fullWalletSaga() {
+  yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
+  yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
+  yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
+  yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
 }
 
 function* handleConnectWalletSuccess(address) {
@@ -129,11 +84,6 @@ function* handleBuyManaRequest(action) {
   } catch (error) {
     yield put(buyManaFailure(error.message))
   }
-}
-
-function* handleUpdateDerivationPath(action) {
-  eth.disconnect()
-  yield put(connectWalletRequest())
 }
 
 function* handleTransactionSuccess(action) {

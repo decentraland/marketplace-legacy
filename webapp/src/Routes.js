@@ -6,8 +6,6 @@ import { locations } from 'locations'
 
 import Intercom from 'components/Intercom'
 import Modal from 'components/Modal'
-import Toast from 'components/Toast'
-import Wallet from 'components/Wallet'
 import Page from 'components/Page'
 
 import HomePage from 'components/HomePage'
@@ -181,12 +179,11 @@ export default class Routes extends React.Component {
 
   render() {
     return (
-      <Wallet>
+      <React.Fragment>
         <Page>{this.renderRoutes()}</Page>
         <Modal />
-        <Toast />
         <Intercom />
-      </Wallet>
+      </React.Fragment>
     )
   }
 }

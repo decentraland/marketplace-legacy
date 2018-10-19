@@ -1,56 +1,31 @@
 import { eth, contracts, wallets, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
-import { isMobile } from 'lib/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { isParcel } from 'shared/parcel'
 import { isEstate } from 'shared/estate'
 
-export async function connectEthereumWallet(options = {}, retries = 0) {
-  try {
-    const {
-      MANAToken,
-      LANDRegistry,
-      LegacyMarketplace,
-      Marketplace,
-      EstateRegistry
-    } = contracts
+export async function getWalletSagaOptions() {
+  const {
+    MANAToken,
+    LANDRegistry,
+    LegacyMarketplace,
+    Marketplace,
+    EstateRegistry
+  } = contracts
 
-    const { LedgerWallet, NodeWallet } = wallets
-    const { address, derivationPath } = options
-
-    await eth.connect({
-      provider: env.get('REACT_APP_PROVIDER_URL'),
-      contracts: [
-        new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
-        new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
-        new LegacyMarketplace(
-          env.get('REACT_APP_LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
-        ),
-        new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
-        new EstateRegistry(
-          env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')
-        ),
-        ...getMortgageContracts()
-      ],
-      wallets: isMobile()
-        ? [new NodeWallet(address)]
-        : [
-            retries < 3
-              ? new NodeWallet(address)
-              : new LedgerWallet(address, derivationPath)
-          ]
-    })
-    eth.wallet.getAccount() // throws on empty accounts
-  } catch (error) {
-    if (retries >= 5) {
-      console.warn(
-        `Error trying to connect to Ethereum for the ${retries}th time`,
-        error
-      )
-      throw error
-    }
-    await utils.sleep(125)
-    return connectEthereumWallet(options, retries + 1)
+  return {
+    provider: env.get('REACT_APP_PROVIDER_URL'),
+    contracts: [
+      new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
+      new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
+      new LegacyMarketplace(
+        env.get('REACT_APP_LEGACY_MARKETPLACE_CONTRACT_ADDRESS')
+      ),
+      new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
+      new EstateRegistry(env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')),
+      ...getMortgageContracts()
+    ],
+    eth
   }
 }
 
