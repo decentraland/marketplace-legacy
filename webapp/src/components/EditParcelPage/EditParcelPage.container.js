@@ -1,10 +1,11 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { getMatchParamsCoordinates } from 'modules/location/selectors'
+
+import { locations } from 'locations'
+import { getMatchParamsCoordinates } from '@dapps/modules/location/selectors'
 import { isEditTransactionIdle } from 'modules/parcels/selectors'
 import { editParcelRequest } from 'modules/parcels/actions'
-import { locations } from 'locations'
 
 import EditParcelPage from './EditParcelPage'
 

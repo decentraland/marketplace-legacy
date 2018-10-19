@@ -2,11 +2,12 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { locations } from 'locations'
-import { navigateTo } from 'modules/location/actions'
 import { getMatchParams } from 'modules/location/selectors'
-import EstateDetailPage from 'components/EstateDetailPage/EstateDetailPage'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
+import { navigateTo } from '@dapps/modules/location/actions'
+
+import EstateDetailPage from './EstateDetailPage'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)

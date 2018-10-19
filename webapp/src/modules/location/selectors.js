@@ -1,15 +1,6 @@
 import { STATIC_PAGES } from 'locations'
+import { getPathname, getPathAction } from '@dapps/modules/location/selectors'
 
-export const getLocation = state => hasRouter(state) && state.router.location
-export const getPathname = state =>
-  hasRouter(state) && getLocation(state).pathname
-export const getPathAction = state =>
-  hasRouter(state) &&
-  getPathname(state)
-    .split('/')
-    .pop()
-
-export const hasRouter = state => !!state.router
 export const isStaticPage = state => STATIC_PAGES.includes(getPathname(state))
 export const isModalPage = state => {
   const lastPartOfUrl = getPathAction(state)

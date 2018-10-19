@@ -1,18 +1,15 @@
 import { connect } from 'react-redux'
 import { goBack } from 'react-router-redux'
 
+import { getLocation } from '@dapps/modules/location/selectors'
+import { isStaticPage, isModalPage } from 'modules/location/selectors'
 import { getWallet } from 'modules/wallet/selectors'
-import {
-  getLocation,
-  isStaticPage,
-  isModalPage
-} from 'modules/location/selectors'
 import { isConnected, isConnecting } from 'modules/wallet/selectors'
 import { isLoading } from 'modules/ui/loading/selectors'
 import { isLoading as isLoadingParcels } from 'modules/parcels/selectors'
 import { getPendingTransactions } from '@dapps/modules/transaction/selectors'
+import { navigateTo } from '@dapps/modules/location/actions'
 import { getCenter } from 'modules/location/utils'
-import { navigateTo } from 'modules/location/actions'
 import { getActivePage } from './utils'
 
 import Navbar from './Navbar'

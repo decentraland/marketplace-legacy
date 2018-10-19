@@ -1,5 +1,6 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+
 import { getMatchParams } from 'modules/location/selectors'
 import EditEstatePage from './EditEstatePage'
 

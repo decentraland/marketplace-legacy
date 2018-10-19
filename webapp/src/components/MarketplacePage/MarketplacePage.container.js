@@ -1,13 +1,15 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+
 import { isLoading } from 'modules/publication/selectors'
 import { getAssets, getTotals } from 'modules/ui/marketplace/selectors'
+import { navigateTo } from '@dapps/modules/location/actions'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
-import { navigateTo } from 'modules/location/actions'
 import { Pagination } from 'lib/Pagination'
-import { getOptionsFromRouter } from './utils'
-import MarketplacePage from './MarketplacePage'
 import { ASSET_TYPES } from 'shared/asset'
+import { getOptionsFromRouter } from './utils'
+
+import MarketplacePage from './MarketplacePage'
 
 const mapState = (state, { location }) => {
   let {

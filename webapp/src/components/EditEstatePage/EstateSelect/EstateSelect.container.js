@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 
 import { locations } from 'locations'
 import { getMatchParams } from 'modules/location/selectors'
-import { navigateTo } from 'modules/location/actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import {
   getData as getEstates,
   isEstateTransactionIdle
 } from 'modules/estates/selectors'
+import { navigateTo } from '@dapps/modules/location/actions'
+
 import EstateSelect from './EstateSelect'
 
 const mapState = (state, ownProps) => {

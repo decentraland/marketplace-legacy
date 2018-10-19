@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
+
 import { isLoading } from 'modules/publication/selectors'
 import { getAssets } from 'modules/ui/marketplace/selectors'
+import { navigateTo } from '@dapps/modules/location/actions'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
-import { navigateTo } from 'modules/location/actions'
 
 import HomePage from './HomePage'
 

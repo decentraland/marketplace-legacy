@@ -2,7 +2,6 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { ASSET_TYPES } from 'shared/asset'
 import { locations } from 'locations'
 import { getMatchParams } from 'modules/location/selectors'
 import {
@@ -10,12 +9,14 @@ import {
   isPublishingIdle
 } from 'modules/publication/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
-import { publishRequest } from 'modules/publication/actions'
-import PublishEstatePage from './PublishEstatePage'
 import {
   getData as getAuthorizations,
   isLoading
 } from 'modules/authorization/selectors'
+import { publishRequest } from 'modules/publication/actions'
+import { ASSET_TYPES } from 'shared/asset'
+
+import PublishEstatePage from './PublishEstatePage'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)
