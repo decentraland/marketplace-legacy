@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { eth, txUtils, contracts, Contract } from 'decentraland-eth'
+import { eth, txUtils, contracts } from 'decentraland-eth'
 import { Log, cli } from 'decentraland-commons'
 
 import { db } from '../src/database'
