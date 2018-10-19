@@ -5,16 +5,20 @@ import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
 import { createWalletSaga } from '@dapps/modules/wallet/sagas'
-import { CONNECT_WALLET_SUCCESS } from '@dapps/modules/wallet/actions'
+import {
+  CONNECT_WALLET_SUCCESS,
+  connectWalletRequest
+} from '@dapps/modules/wallet/actions'
 import {
   TRANSFER_MANA_REQUEST,
   BUY_MANA_REQUEST,
+  UPDATE_DERIVATION_PATH,
   BUY_MANA_SUCCESS,
   transferManaSuccess,
   transferManaFailure,
   buyManaSuccess,
   buyManaFailure,
-  updateBalance,
+  updateManaBalance,
   updateEthBalance
 } from './actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
@@ -33,10 +37,13 @@ function* fullWalletSaga() {
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
   yield takeLatest(TRANSFER_MANA_REQUEST, handleTransferManaRequest)
   yield takeLatest(BUY_MANA_REQUEST, handleBuyManaRequest)
+  yield takeLatest(UPDATE_DERIVATION_PATH, handleUpdateDerivationPath)
   yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
 }
 
-function* handleConnectWalletSuccess(address) {
+function* handleConnectWalletSuccess(action) {
+  const { address } = action.payload.wallet
+
   const authorization = {
     allowances: {
       Marketplace: ['MANAToken'],
@@ -86,6 +93,11 @@ function* handleBuyManaRequest(action) {
   }
 }
 
+function* handleUpdateDerivationPath(action) {
+  eth.disconnect()
+  yield put(connectWalletRequest())
+}
+
 function* handleTransactionSuccess(action) {
   const { transaction } = action.payload
   switch (transaction.actionType) {
@@ -96,10 +108,10 @@ function* handleTransactionSuccess(action) {
       address = address.toLowerCase()
 
       const manaTokenContract = eth.getContract('MANAToken')
-      const balance = yield call(() => manaTokenContract.balanceOf(address))
+      const mana = yield call(() => manaTokenContract.balanceOf(address))
       const ethBalance = yield call(() => fetchBalance(address))
 
-      yield put(updateBalance(balance))
+      yield put(updateManaBalance(mana))
       yield put(updateEthBalance(ethBalance))
       break
     }

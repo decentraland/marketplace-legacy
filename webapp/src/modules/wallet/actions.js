@@ -32,6 +32,17 @@ export function transferManaFailure(error) {
   }
 }
 
+// Update derivation path
+
+export const UPDATE_DERIVATION_PATH = 'Update derivation path'
+
+export function updateDerivationPath(derivationPath) {
+  return {
+    type: UPDATE_DERIVATION_PATH,
+    derivationPath
+  }
+}
+
 // Buy MANA
 
 export const BUY_MANA_REQUEST = '[Request] Buy MANA'
@@ -63,12 +74,12 @@ export function buyManaFailure(error) {
 
 // Update Balance
 
-export const UPDATE_BALANCE = 'Update Balance'
+export const UPDATE_MANA_BALANCE = 'Update Mana Balance'
 
-export function updateBalance(balance) {
+export function updateManaBalance(mana) {
   return {
-    type: UPDATE_BALANCE,
-    balance
+    type: UPDATE_MANA_BALANCE,
+    mana
   }
 }
 

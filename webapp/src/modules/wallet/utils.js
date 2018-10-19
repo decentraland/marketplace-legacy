@@ -1,10 +1,10 @@
-import { eth, contracts, wallets, Contract } from 'decentraland-eth'
+import { eth, contracts, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { isParcel } from 'shared/parcel'
 import { isEstate } from 'shared/estate'
 
-export async function getWalletSagaOptions() {
+export function getWalletSagaOptions() {
   const {
     MANAToken,
     LANDRegistry,
@@ -48,10 +48,6 @@ function getMortgageContracts() {
   ]
 }
 
-export function isLedgerWallet() {
-  return eth.wallet instanceof wallets.LedgerWallet
-}
-
 export function getTokenAmountToApprove() {
   return Math.pow(2, 180)
 }
@@ -73,8 +69,7 @@ export async function sendTransaction(tx) {
 export async function fetchBalance(address) {
   const web3 = eth.wallet.getWeb3()
   const balanceInWei = await utils.promisify(web3.eth.getBalance)(address)
-  const balance = eth.utils.fromWei(balanceInWei.toString(10))
-  return balance
+  return eth.utils.fromWei(balanceInWei.toString(10))
 }
 
 export async function getAssetUpdateOperator(asset) {

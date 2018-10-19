@@ -10,7 +10,7 @@ import './PayMortgageForm.css'
 
 export default class PayMortgageForm extends React.PureComponent {
   static propTypes = {
-    balance: PropTypes.number,
+    mana: PropTypes.number,
     mortgage: mortgageType,
     isTxIdle: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -27,10 +27,10 @@ export default class PayMortgageForm extends React.PureComponent {
   }
 
   handleAmountChange = e => {
-    const { balance } = this.props
+    const { mana } = this.props
     const amount = e.target.value ? parseInt(e.target.value, 10) : 0
     this.setState({
-      amount: amount > 0 ? Math.min(balance, amount) : ''
+      amount: amount > 0 ? Math.min(mana, amount) : ''
     })
   }
 

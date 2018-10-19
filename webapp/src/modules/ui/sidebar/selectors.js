@@ -9,8 +9,8 @@ export const getStats = createSelector(
   state => getWallet(state),
   state => isLoading(state),
   (wallet, loading) => {
-    const balance = wallet.balance
-    const loaded = balance !== null && !loading
+    const mana = wallet.mana
+    const loaded = mana !== null && !loading
     const parcels = loaded ? wallet.parcels.length : null
     const contribDistricts = loaded ? wallet.contributions.length : null
     const contribMana = loaded
@@ -21,7 +21,7 @@ export const getStats = createSelector(
         )
       : null
     return {
-      balance,
+      mana,
       parcels,
       contribDistricts,
       contribMana

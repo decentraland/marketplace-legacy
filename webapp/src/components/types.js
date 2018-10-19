@@ -87,7 +87,7 @@ export const transactionType = shape({
 export const walletType = shape({
   network: string, // TODO: Maybe use eth.getNetworks().map(name) to validate here
   address: string,
-  balance: number,
+  mana: number,
   parcels: arrayOf(parcelType).isRequired
 })
 

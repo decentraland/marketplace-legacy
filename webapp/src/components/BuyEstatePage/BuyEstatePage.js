@@ -48,7 +48,7 @@ export default class BuyEstatePage extends React.PureComponent {
       onCancel,
       authorization
     } = this.props
-    const { balance } = wallet
+    const { mana } = wallet
 
     return (
       <Estate id={id} ownerNotAllowed withPublications>
@@ -59,7 +59,7 @@ export default class BuyEstatePage extends React.PureComponent {
 
             const price = parseFloat(publication.price)
 
-            const isNotEnoughMana = balance < price
+            const isNotEnoughMana = mana < price
             const isNotEnoughAllowance = allowance < price
             return (
               <div className="BuyEstatePage">

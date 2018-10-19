@@ -13,13 +13,13 @@ export default class Account extends React.PureComponent {
   }
   render() {
     const { wallet } = this.props
-    if (!wallet || !wallet.address || wallet.balance == null) {
+    if (!wallet || !wallet.address || wallet.mana == null) {
       return null
     }
     return (
       <span className="Account">
         <Link to={locations.settings()}>
-          <Mana amount={wallet.balance} />
+          <Mana amount={wallet.mana} />
         </Link>
         <AddressBlock
           scale={6}
