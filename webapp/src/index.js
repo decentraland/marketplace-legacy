@@ -12,11 +12,13 @@ import { env } from 'decentraland-commons'
 import { store, history } from './store'
 import Routes from './Routes'
 import { getAvailableLocales } from './lib/translation'
+import { track } from './modules/analytics/track'
 
 import './rollbar'
 import './index.css'
 
 env.load()
+track()
 
 ReactDOM.render(
   <Provider store={store}>
