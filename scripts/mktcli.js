@@ -5,17 +5,28 @@ import { Log, cli } from 'decentraland-commons'
 
 import { SQL, db } from '../src/database'
 import { connectEth } from '../src/ethereum'
-import { Parcel } from '../src/Asset'
+import { Parcel, Estate } from '../src/Asset'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { mockModelDbOperations } from '../specs/utils'
-import { loadEnv, parseCLICoords } from './utils'
+import { ASSET_TYPES } from '../shared/asset'
 import { processEvent } from '../monitor/processEvents'
+import { loadEnv, parseCLICoords } from './utils'
 
 const log = new Log('mktcli')
 
 const main = {
   addCommands(program) {
+    program
+      .command('asset <assetId> <assetType>')
+      .description('Get the db representation of an asset')
+      .action(
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+          log.info(asset)
+        })
+      )
+
     program
       .command('decode <tokenId>')
       .description('Decode an asset id')
@@ -48,20 +59,52 @@ const main = {
       )
 
     program
-      .command('land-owner <coord>')
-      .description('Get the land owner of a (x,y) coordinate')
+      .command('asset-owner <assetId> <assetType>')
+      .description('Get the owner of an asset')
       .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          const contract = eth.getContract('LANDRegistry')
-          const owner = await contract.ownerOfLand(x, y)
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
 
-          const parcel = await Parcel.findOne({ x, y })
-          const dbOwner = parcel.owner || parcel.district_id || 'empty'
+          const contract = getContractByAssetType(assetType)
+          const owner = await contract.ownerOf(asset.token_id)
 
-          log.info(`(land-owner) coords:(${x},${y})`)
+          const dbOwner = asset.owner || asset.district_id || 'empty'
+
+          log.info(`(asset-owner) id:(${asset.id})`)
           log.info(`blockchain => ${owner}`)
           log.info(`db         => ${dbOwner}`)
+        })
+      )
+
+    program
+      .command('asset-update-operator <assetId> <assetType>')
+      .description('Get the update operator of an asset')
+      .action(
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+          const contract = getContractByAssetType(assetType)
+
+          const operator = await contract.updateOperator(asset.token_id)
+
+          log.info(`(asset-update-operator) id:(${asset.id})`)
+          log.info(`blockchain => ${operator}`)
+        })
+      )
+
+    program
+      .command('asset-data <assetId> <assetType>')
+      .description('Get the data for an asset')
+      .action(
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+          const contract = getContractByAssetType(assetType)
+
+          const data = await contract.tokenMetadata(asset.token_id)
+          const dbData = toDataLog(asset.data)
+
+          log.info(`(asset-data) id:(${asset.id})`)
+          log.info(`blockchain => ${data}`)
+          log.info(`db         => ${dbData}`)
         })
       )
 
@@ -77,39 +120,6 @@ const main = {
           const estateId = await contract.getLandEstateId(tokenId)
 
           log.info(`(land-estate) coords:(${x},${y}) => estateId: ${estateId}`)
-        })
-      )
-
-    program
-      .command('land-update-operator <coord>')
-      .description('Get the LAND operator of a (x,y) coordinate')
-      .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          const contract = eth.getContract('LANDRegistry')
-          const tokenId = await contract.encodeTokenId(x, y)
-          const operator = await contract.updateOperator(tokenId)
-
-          log.info(`(land-update-operator) coords:(${x},${y})`)
-          log.info(`blockchain => ${operator}`)
-        })
-      )
-
-    program
-      .command('land-data <coord>')
-      .description('Get the land data for a (x,y) coordinate')
-      .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          const contract = eth.getContract('LANDRegistry')
-          const data = await contract.landData(x, y)
-
-          const parcel = await Parcel.findOne({ x, y })
-          const dbData = toDataLog(parcel.data)
-
-          log.info(`(land-data) coords:(${x},${y})`)
-          log.info(`blockchain => ${data}`)
-          log.info(`db         => ${dbData}`)
         })
       )
 
@@ -130,36 +140,43 @@ const main = {
       )
 
     program
-      .command('publication <coord>')
-      .description('Get the current publication of a (x,y) coordinate')
+      .command('publication <assetId> <assetType>')
+      .description('Get the current publication of an asset')
       .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          const id = Parcel.buildId(x, y)
-          const tokenId = await Parcel.encodeTokenId(x, y)
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
 
-          const contract = eth.getContract('LegacyMarketplace')
-          const publication = await contract.auctionByAssetId(tokenId)
+          const legacyContract = eth.getContract('LegacyMarketplace')
+          const legacyPublication = await legacyContract.auctionByAssetId(
+            asset.token_id
+          )
 
-          const pubDb = (await Publication.findByAssetId(id))[0]
+          const registryContract = getContractByAssetType(assetType)
+          const contract = eth.getContract('Marketplace')
+          const publication = await contract.orderByAssetId(
+            registryContract.address,
+            asset.token_id
+          )
+
+          const pubDb = (await Publication.findByAssetId(asset.id))[0]
           const publicationDb = toPublicationLog(pubDb)
 
-          log.info(`(publication) coords:(${x},${y})`)
-          log.info(`blockchain => ${publication}`)
-          log.info(`db         => ${publicationDb}`)
+          log.info(`(publication) id:(${asset.id})`)
+          log.info(`blockchain legacy => ${legacyPublication}`)
+          log.info(`blockchain        => ${publication}`)
+          log.info(`db                => ${publicationDb}`)
         })
       )
 
     program
-      .command('publications <coord>')
-      .description('Get the DB publication history of a (x,y) coordinate')
+      .command('publications <assetId> <assetType>')
+      .description('Get the DB publication history of an asset')
       .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          const id = Parcel.buildId(x, y)
-          const publications = await Publication.findByAssetId(id)
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+          const publications = await Publication.findByAssetId(asset.id)
 
-          log.info(`(publications) coords:(${x},${y})`)
+          log.info(`(publications) id:(${asset.id})`)
 
           for (const publication of publications) {
             log.info(toPublicationLog(publication))
@@ -168,36 +185,47 @@ const main = {
       )
 
     program
-      .command('publication-cancel <coord>')
-      .description('Cancel a publication (x,y)')
+      .command('publication-cancel <assetId> <assetType>')
+      .description('Cancel a publication')
+      .option('--is-legacy', 'You are using the legacy marketplace')
       .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          const tokenId = await Parcel.encodeTokenId(x, y)
-          const contract = eth.getContract('Marketplace')
+        asSafeAction(async (assetId, assetType, options) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+          const registryContract = getContractByAssetType(assetType)
+
+          const contractName = options.isLegacy
+            ? 'LegacyMarketplace'
+            : 'Marketplace'
+          const contract = eth.getContract(contractName)
 
           await unlockAccountWithPrompt()
-          const txHash = await contract.cancelOrder(tokenId)
 
-          log.info(`(publication-cancel) coords:(${x},${y})`)
+          const txHash = options.isLegacy
+            ? await contract.cancelOrder(asset.token_id)
+            : await contract.cancelOrder(
+                registryContract.address,
+                asset.token_id
+              )
+
+          log.info(`(publication-cancel) id:(${asset.id})`)
+          log.info(`(publication-cancel) contract:(${contractName})`)
           log.info(`(publication-cancel) tx:${txHash}`)
         })
       )
 
     program
-      .command('blockchain-events <coord>')
+      .command('blockchain-events <assetId> <assetType>')
       .option('--show-table-header', 'Show the format for each row')
       .option('--show-tx-hash', 'Show the transaction hash')
-      .description('Get chronological blockchain events of a (x,y) coordinate')
+      .description('Get chronological blockchain events of an asset')
       .action(
-        asSafeAction(async (coord, options) => {
+        asSafeAction(async (assetId, assetType, options) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
           const events = BlockchainEvent.getEvents()
-          const [x, y] = parseCLICoords(coord)
-          const tokenId = await Parcel.encodeTokenId(x, y)
 
           const blockchainEvents = await BlockchainEvent.findByArgs(
             'assetId',
-            tokenId
+            asset.token_id
           )
           blockchainEvents.reverse()
 
@@ -244,29 +272,32 @@ const main = {
             eventLog.unshift(header)
           }
 
-          log.info(`(blockchain-events) coords:(${x},${y})`)
+          log.info(`(blockchain-events) id:(${asset.id})`)
           log.info('\n- ' + eventLog.join('\n- '))
         })
       )
 
     program
-      .command('replay <coord>')
+      .command('replay <assetId> <assetType>')
       .option('--persist', 'Persist replay on the database')
       .option('--clean', 'Clean publications before replaying')
       .description('Replay blockchain events in order')
       .action(
-        asSafeAction(async (coord, options) => {
-          const [x, y] = parseCLICoords(coord)
-          const tokenId = await Parcel.encodeTokenId(x, y)
-          const events = await BlockchainEvent.findByArgs('assetId', tokenId)
+        asSafeAction(async (assetId, assetType, options) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+
+          const events = await BlockchainEvent.findByAnyArgs(
+            ['assetId', '_landId'],
+            asset.token_id
+          )
 
           if (!options.persist) {
             mockModelDbOperations()
           }
 
           if (options.clean) {
-            log.info(`Cleaning publications for ${coord}`)
-            await Publication.deleteByAsset({ id: Parcel.buildId(x, y) })
+            log.info(`Cleaning publications for ${asset.id}`)
+            await Publication.deleteByAssetId(asset.id)
           }
 
           for (let i = 0; i < events.length; i++) {
@@ -277,14 +308,15 @@ const main = {
       )
 
     program
-      .command('clean-publications <coord>')
-      .description('Remove all publications for a (x,y) coordinate')
+      .command('clean-publications <assetId> <assetType>')
+      .description('Remove all publications for an asset')
       .action(
-        asSafeAction(async coord => {
-          const [x, y] = parseCLICoords(coord)
-          await Publication.delete({ x, y })
+        asSafeAction(async (assetId, assetType) => {
+          const asset = await getAssetFromCLIArgs(assetId, assetType)
+
+          await Publication.deleteByAssetId(asset.id)
           log.info(
-            `(clean-publications) publications deleted. coords:(${x},${y})`
+            `(clean-publications) publications deleted. id:(${asset.id})`
           )
         })
       )
@@ -400,6 +432,33 @@ async function unlockAccountWithPrompt() {
     }
   ])
   await eth.wallet.unlockAccount(answers['password'])
+}
+
+async function getAssetFromCLIArgs(assetId, assetType) {
+  switch (assetType) {
+    case ASSET_TYPES.parcel: {
+      const [x, y] = parseCLICoords(assetId)
+      return Parcel.findOne({ x, y })
+    }
+    case ASSET_TYPES.estate: {
+      return Estate.findOne(assetId)
+    }
+    default:
+      throw new Error(`The assetType ${assetType} is invalid`)
+  }
+}
+
+function getContractByAssetType(assetType) {
+  switch (assetType) {
+    case ASSET_TYPES.parcel: {
+      return eth.getContract('LANDRegistry')
+    }
+    case ASSET_TYPES.estate: {
+      return eth.getContract('EstateRegistry')
+    }
+    default:
+      throw new Error(`The assetType ${assetType} is invalid`)
+  }
 }
 
 //
