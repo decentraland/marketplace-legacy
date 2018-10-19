@@ -1,6 +1,5 @@
 import {
   TRANSFER_MANA_SUCCESS,
-  UPDATE_DERIVATION_PATH,
   UPDATE_BALANCE,
   UPDATE_ETH_BALANCE,
   BUY_MANA_REQUEST,
@@ -60,14 +59,6 @@ export function walletReducer(state = INITIAL_STATE, action) {
           return state
       }
     }
-    case UPDATE_DERIVATION_PATH:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          derivationPath: action.derivationPath
-        }
-      }
     case UPDATE_BALANCE:
       return {
         ...state,
