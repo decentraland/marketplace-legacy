@@ -30,9 +30,8 @@ export default class ParcelMortgage extends React.PureComponent {
 
     return (
       <Grid
-        className={`stackable ParcelMortgageDetail ${getMortgageStatus(
-          mortgage
-        )}`}
+        stackable
+        className={`ParcelMortgageDetail ${getMortgageStatus(mortgage)}`}
       >
         <Grid.Row>
           <Grid.Column width={2} className={getMortgageStatus(mortgage)}>

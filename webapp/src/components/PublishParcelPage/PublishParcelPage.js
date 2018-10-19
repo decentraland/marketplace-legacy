@@ -106,6 +106,7 @@ export default class PublishPage extends React.PureComponent {
                 <PublishAssetForm
                   asset={parcel}
                   assetName={t('name.parcel')}
+                  publication={isOnSale ? publication : null}
                   isTxIdle={isTxIdle}
                   onPublish={onPublish}
                   onCancel={onCancel}

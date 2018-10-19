@@ -102,6 +102,7 @@ export default class PublishEstatePage extends React.PureComponent {
                 <PublishAssetForm
                   asset={estate}
                   assetName={t('name.estate')}
+                  publication={isOnSale ? publication : null}
                   isTxIdle={isTxIdle}
                   onPublish={onPublish}
                   onCancel={onCancel}
