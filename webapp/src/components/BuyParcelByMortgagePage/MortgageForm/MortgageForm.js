@@ -4,6 +4,7 @@ import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
 import { Form, Button, Input, Message, Grid, Icon } from 'semantic-ui-react'
 import debounce from 'lodash.debounce'
+import { env } from 'decentraland-commons'
 
 import TxStatus from 'components/TxStatus'
 import AddressBlock from 'components/AddressBlock'
@@ -64,7 +65,7 @@ export default class MortgageForm extends React.PureComponent {
   handleChangeNumber = (e, key) => {
     const value = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
-      : 0
+      : ''
     this.setState(
       {
         [key]: value,
@@ -98,7 +99,7 @@ export default class MortgageForm extends React.PureComponent {
   handleChangeAmount = e => {
     const amount = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
-      : 0
+      : ''
     const { balance } = this.props
     const requiredDeposit = this.getRequiredDeposit(amount)
 
@@ -113,8 +114,16 @@ export default class MortgageForm extends React.PureComponent {
 
   getRequiredDeposit = amount => {
     const { publication } = this.props
-    const requiredDeposit = Math.ceil(publication.price * 1.1 - amount)
-    return requiredDeposit > 0 && amount > 0 ? requiredDeposit : 0
+    const depositPercentage = parseInt(
+      env.get('REACT_APP_MORTGAGES_DEPOSIT_PERCENTAGE'),
+      10
+    )
+    const requiredAmount = amount || 0
+
+    const requiredDeposit = Math.ceil(
+      publication.price * (100 + depositPercentage) / 100 - requiredAmount
+    )
+    return requiredDeposit > 0 && requiredAmount > 0 ? requiredDeposit : 0
   }
 
   handleClearFormErrors = () => {

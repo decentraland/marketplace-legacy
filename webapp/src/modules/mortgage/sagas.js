@@ -205,8 +205,7 @@ function* handlePayMortgageRequest(action) {
       mortgageHelperContract.pay(
         rcnEngineAddress,
         loanId,
-        eth.utils.toWei(amount),
-        { gasPrice: eth.utils.toWei(4, 'gwei') }
+        eth.utils.toWei(amount)
       )
     )
 

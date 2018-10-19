@@ -369,6 +369,8 @@
     "for_buying": "구매를 위해",
     "for_buying_LegacyMarketplace": "MANA (기존)를 사용하는 애셋",
     "for_buying_Marketplace": "MANA를 사용하는 저작물",
+    "for_buying_MortgageHelper": "모기지의 LAND",
+    "for_buying_MortgageManager": "모기지의 LAND",
     "for_selling": "판매용",
     "legacy_authorization": "레거시 인증",
     "pending_tx": "보류중인 거래가 있습니다."

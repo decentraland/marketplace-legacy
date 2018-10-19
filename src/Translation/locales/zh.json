@@ -353,6 +353,8 @@
     "for_buying": "购买",
     "for_buying_LegacyMarketplace": "使用 MANA（遗留功能）",
     "for_buying_Marketplace": "使用 MANA",
+    "for_buying_MortgageHelper": "LAND按抵押贷款",
+    "for_buying_MortgageManager": "LAND按抵押贷款",
     "for_selling": "出售",
     "legacy_authorization": "遗留功能授权",
     "pending_tx": "等待交易完成，请点击查看详情"

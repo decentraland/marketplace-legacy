@@ -366,6 +366,8 @@
     "for_buying": "購入に関わる契約",
     "for_buying_LegacyMarketplace": "MANA（レガシー）を使用する資産",
     "for_buying_Marketplace": "MANAを使用する資産",
+    "for_buying_MortgageHelper": "住宅ローンによるLAND",
+    "for_buying_MortgageManager": "住宅ローンによるLAND",
     "for_selling": "販売に関わる契約",
     "legacy_authorization": "従来の承認",
     "pending_tx": "　処理中の取引があります。"

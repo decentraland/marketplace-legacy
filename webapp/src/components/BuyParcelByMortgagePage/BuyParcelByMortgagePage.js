@@ -97,7 +97,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                   <Message
                     warning
                     icon="warning sign"
-                    header={t('global.disallowed')}
+                    header={t('global.unauthorized')}
                     content={
                       <T
                         id="mortgage.please_authorize_MANA"
@@ -116,7 +116,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                   <Message
                     warning
                     icon="warning sign"
-                    header={t('global.disallowed')}
+                    header={t('global.unauthorized')}
                     content={
                       <T
                         id="mortgage.please_authorize_RCN"
