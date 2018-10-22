@@ -12,8 +12,7 @@ import ParcelDetailLink from 'components/ParcelDetailLink'
 import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
-import { formatMana } from 'lib/utils'
-import PublishAssetForm from '../PublishAssetForm'
+import PublishAssetForm from 'components/PublishAssetForm'
 
 export default class PublishPage extends React.PureComponent {
   static propTypes = {
@@ -54,20 +53,9 @@ export default class PublishPage extends React.PureComponent {
         {parcel => {
           const { approvals } = authorization
           const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
+          const isOnSale = isOpen(publication)
           return (
             <div className="PublishPage">
-              {isOpen(publication) ? (
-                <Container text>
-                  <Message
-                    warning
-                    icon="warning sign"
-                    content={t('asset_publish.already_sold', {
-                      value: formatMana(publication.price),
-                      asset_name: t('name.parcel')
-                    })}
-                  />
-                </Container>
-              ) : null}
               {!isMarketplaceApproved ? (
                 <Container text>
                   <Message
@@ -93,13 +81,21 @@ export default class PublishPage extends React.PureComponent {
                 y={y}
                 title={
                   <T
-                    id="asset_publish.list_asset"
+                    id={
+                      isOnSale
+                        ? 'asset_publish.update_asset'
+                        : 'asset_publish.list_asset'
+                    }
                     values={{ asset_name: t('name.parcel') }}
                   />
                 }
                 subtitle={
                   <T
-                    id="asset_publish.set_asset_price"
+                    id={
+                      isOnSale
+                        ? 'asset_publish.set_new_asset_price'
+                        : 'asset_publish.set_asset_price'
+                    }
                     values={{
                       asset_name: <ParcelDetailLink parcel={parcel} />
                     }}
@@ -110,6 +106,7 @@ export default class PublishPage extends React.PureComponent {
                 <PublishAssetForm
                   asset={parcel}
                   assetName={t('name.parcel')}
+                  publication={isOnSale ? publication : null}
                   isTxIdle={isTxIdle}
                   onPublish={onPublish}
                   onCancel={onCancel}

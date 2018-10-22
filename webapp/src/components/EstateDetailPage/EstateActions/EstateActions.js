@@ -19,6 +19,7 @@ export default class EstateActions extends React.PureComponent {
   render() {
     const { estate, publications, isOwner } = this.props
     const { id } = estate
+    const isListed = isOnSale(estate, publications)
 
     return (
       <div className="EstateActions">
@@ -30,18 +31,19 @@ export default class EstateActions extends React.PureComponent {
                 {t('asset_detail.actions.transfer')}
               </Button>
             </Link>
-            {isOnSale(estate, publications) ? (
+            <Link to={locations.sellEstate(id)}>
+              <Button size="tiny" primary={!isListed}>
+                <Icon name="tag" />
+                {isListed
+                  ? t('asset_detail.actions.update_price')
+                  : t('asset_detail.actions.sell')}
+              </Button>
+            </Link>
+            {isListed && (
               <Link to={locations.cancelSaleEstate(id)}>
                 <Button size="tiny" primary>
                   <Icon name="cancel" />
                   {t('asset_detail.actions.cancel')}
-                </Button>
-              </Link>
-            ) : (
-              <Link to={locations.sellEstate(id)}>
-                <Button size="tiny">
-                  <Icon name="tag" />
-                  {t('asset_detail.actions.sell')}
                 </Button>
               </Link>
             )}

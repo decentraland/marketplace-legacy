@@ -36,7 +36,8 @@
       "cancel": "取消出售",
       "permissions": "权限",
       "sell": "出售",
-      "transfer": "转让"
+      "transfer": "转让",
+      "update_price": "更新价格"
     },
     "history": {
       "auction": "拍卖",
@@ -81,7 +82,9 @@
       "您需要转到{settings_link}并授权市场使用 {asset_name}，然后才能出售。",
     "price": "价格",
     "price_placeholder": "{asset_name}的 MANA 价格",
-    "set_asset_price": "设置{asset_name}的价格和到期日期。"
+    "set_asset_price": "设置{asset_name}的价格和到期日期。",
+    "set_new_asset_price": "设置{asset_name}的新价格或到期日期。",
+    "update_asset": "更新{asset_name}发布"
   },
   "atlas": {
     "loading": "载入中",

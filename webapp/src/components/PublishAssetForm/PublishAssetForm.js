@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import addDays from 'date-fns/add_days'
+import dateFnsFormat from 'date-fns/format'
 import differenceInDays from 'date-fns/difference_in_days'
 import { Form, Button, Input, Message } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import TxStatus from 'components/TxStatus'
-import { assetType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
+import { assetType, publicationType } from 'components/types'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { isParcel } from 'shared/parcel'
 
@@ -22,6 +23,7 @@ export default class PublishAssetForm extends React.PureComponent {
   static propTypes = {
     asset: assetType,
     assetName: PropTypes.string,
+    publication: publicationType,
     isTxIdle: PropTypes.bool,
     isDisabled: PropTypes.bool,
     onPublish: PropTypes.func.isRequired,
@@ -30,10 +32,13 @@ export default class PublishAssetForm extends React.PureComponent {
 
   constructor(props) {
     super(props)
+    const { publication } = props
 
     this.state = {
-      price: '',
-      expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
+      price: publication ? publication.price : '',
+      expiresAt: publication
+        ? dateFnsFormat(parseInt(publication.expires_at, 10), INPUT_FORMAT)
+        : this.formatFutureDate(DEFAULT_DAY_INTERVAL),
       formErrors: []
     }
   }
@@ -105,12 +110,17 @@ export default class PublishAssetForm extends React.PureComponent {
     if (formErrors.length === 0) {
       onPublish({
         asset_id: asset.id,
-        expires_at: new Date(expiresAt).getTime(),
+        expires_at: this.toUTCTimestamp(expiresAt),
         price: parseFloat(price)
       })
     } else {
       this.setState({ formErrors })
     }
+  }
+
+  toUTCTimestamp(expiresAt) {
+    const date = new Date(expiresAt)
+    return date.getTime() + date.getTimezoneOffset() * 60000
   }
 
   formatFutureDate(addedDays, date = new Date()) {

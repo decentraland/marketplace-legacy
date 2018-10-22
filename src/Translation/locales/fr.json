@@ -41,7 +41,8 @@
       "cancel": "Annuler la vente",
       "permissions": "Autorisations",
       "sell": "Vendre",
-      "transfer": "Transfert"
+      "transfer": "Transfert",
+      "update_price": "Mise à jour du prix"
     },
     "history": {
       "auction": "Enchères",
@@ -90,7 +91,10 @@
     "price": "Prix",
     "price_placeholder": "Prix ​​en NT2 pour ce {asset_name}",
     "set_asset_price":
-      "Définissez un prix et une date d'expiration pour {asset_name}."
+      "Définissez un prix et une date d'expiration pour {asset_name}.",
+    "set_new_asset_price":
+      "Définissez le nouveau prix ou la date d'expiration pour {asset_name}.",
+    "update_asset": "Mise à jour de la publication {asset_name}"
   },
   "atlas": {
     "loading": "Chargement",

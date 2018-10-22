@@ -68,7 +68,11 @@ export default class EstateDetail extends React.PureComponent {
       <div className="EstateDetail">
         <Grid className="details" stackable>
           <Grid.Row>
-            <Grid.Column computer={8} mobile={16} className="parcels">
+            <Grid.Column
+              computer={WITH_ACTION_BUTTONS_WIDTH}
+              mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
+              className="estate-data"
+            >
               <Header size="large">
                 <p className="estate-title">
                   <span>{estate.data.name || t('estate_select.detail')}</span>
@@ -90,8 +94,8 @@ export default class EstateDetail extends React.PureComponent {
               </Header>
             </Grid.Column>
             <Grid.Column
-              computer={8}
-              mobile={16}
+              computer={WITH_ACTION_BUTTONS_WIDTH}
+              mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
               className="estate-owner-container"
             >
               {isOwner ? (
@@ -120,7 +124,7 @@ export default class EstateDetail extends React.PureComponent {
           <Grid.Row>
             {publication && (
               <React.Fragment>
-                <Grid.Column width={4}>
+                <Grid.Column mobile={4} tablet={3} computer={4}>
                   <h3>{t('asset_detail.publication.price')}</h3>
                   <Mana
                     amount={parseFloat(publication.price)}
@@ -128,7 +132,12 @@ export default class EstateDetail extends React.PureComponent {
                     className="mana-price-icon"
                   />
                 </Grid.Column>
-                <Grid.Column width={4} className="time-left">
+                <Grid.Column
+                  mobile={4}
+                  tablet={3}
+                  computer={4}
+                  className="time-left"
+                >
                   <h3>{t('global.time_left')}</h3>
                   <Expiration
                     expiresAt={parseInt(publication.expires_at, 10)}
@@ -138,8 +147,17 @@ export default class EstateDetail extends React.PureComponent {
               </React.Fragment>
             )}
             <Grid.Column
-              className="parcel-actions-container"
-              computer={publication ? 8 : 16}
+              className="estate-actions-container"
+              tablet={
+                publication
+                  ? WITH_ACTION_BUTTONS_WIDTH + 2
+                  : WITHOUT_ACTION_BUTTONS_WIDTH
+              }
+              computer={
+                publication
+                  ? WITH_ACTION_BUTTONS_WIDTH
+                  : WITHOUT_ACTION_BUTTONS_WIDTH
+              }
             >
               <EstateActions
                 isOwner={isOwner}
@@ -182,7 +200,10 @@ export default class EstateDetail extends React.PureComponent {
                     )}
                   </h3>
                 </Grid.Column>
-                <Grid.Column width={16} className={'selected-parcels'}>
+                <Grid.Column
+                  width={WITHOUT_ACTION_BUTTONS_WIDTH}
+                  className="selected-parcels"
+                >
                   {parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (

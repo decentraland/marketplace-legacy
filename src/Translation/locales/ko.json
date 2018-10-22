@@ -40,7 +40,8 @@
       "cancel": "판매 취소",
       "permissions": "권한",
       "sell": "팔다",
-      "transfer": "이전"
+      "transfer": "이전",
+      "update_price": "가격 업데이트"
     },
     "history": {
       "auction": "경매",
@@ -87,7 +88,10 @@
       "판매를 위해 목록에 올리기 전에 {settings_link}으로 가서 마켓 플레이스가 귀하를 대신하여 {asset_name}을 운영하도록 승인해야합니다.",
     "price": "가격",
     "price_placeholder": "이 {asset_name}에 대한 MANA의 가격",
-    "set_asset_price": "{asset_name}의 가격과 만료 날짜를 설정하십시오."
+    "set_asset_price": "{asset_name}의 가격과 만료 날짜를 설정하십시오.",
+    "set_new_asset_price":
+      "{asset_name}의 새 가격 또는 만료 날짜를 설정하십시오.",
+    "update_asset": "{asset_name} 출판물 업데이트"
   },
   "atlas": {
     "loading": "로드 중",
