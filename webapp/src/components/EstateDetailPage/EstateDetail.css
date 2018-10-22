@@ -31,22 +31,22 @@
   text-align: right !important;
 }
 
-.EstateDetail .row .parcels.column {
+.EstateDetail .row .estate-data.column {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   align-content: center;
 }
 
-.EstateDetail .parcels h3 {
+.EstateDetail .estate-data h3 {
   margin: auto 0 15px 0;
 }
 
-.EstateDetail .parcels .description {
+.EstateDetail .estate-data .description {
   margin: 0 0 auto 0;
 }
 
-.EstateDetail .parcel-actions-container {
+.EstateDetail .estate-actions-container {
   text-align: right;
 }
 
@@ -126,10 +126,10 @@
 }
 
 .EstateDetail .row .column.highlights {
-  margin-top: 20px
+  margin-top: 20px;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .EstateDetail .estate-owner-container {
     text-align: left !important;
   }
@@ -137,24 +137,5 @@
   .EstateDetail .ParcelAttributes {
     margin-top: 0px;
     margin-bottom: 20px;
-  }
-
-  .EstateDetail .ui.stackable.grid {
-    width: auto;
-    margin-left: 0!important;
-    margin-right: 0!important;
-  }
-
-  .EstateDetail .ui.stackable.grid:not(.vertically)>.row {
-      margin: 0;
-      padding: 0;
-  }
-
-  .EstateDetail .ui.stackable.grid>.row>.column, .EstateDetail .ui.stackable.grid>.row>.wide.column{
-    width: 100%!important;
-    margin: 0 0!important;
-    -webkit-box-shadow: none!important;
-    box-shadow: none!important;
-    padding: 1rem 1rem!important;
   }
 }

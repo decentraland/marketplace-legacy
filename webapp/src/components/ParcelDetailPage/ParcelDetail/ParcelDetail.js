@@ -84,7 +84,7 @@ export default class ParcelDetail extends React.PureComponent {
             <Grid.Row className="parcel-detail-row">
               {publication ? (
                 <React.Fragment>
-                  <Grid.Column width={4}>
+                  <Grid.Column mobile={4} tablet={3} computer={4}>
                     <h3>{t('asset_detail.publication.price')}</h3>
                     <Mana
                       amount={parseFloat(publication.price)}
@@ -92,7 +92,12 @@ export default class ParcelDetail extends React.PureComponent {
                       className="mana-price-icon"
                     />
                   </Grid.Column>
-                  <Grid.Column width={4} className="time-left">
+                  <Grid.Column
+                    mobile={4}
+                    tablet={3}
+                    computer={4}
+                    className="time-left"
+                  >
                     <h3>{t('global.time_left')}</h3>
                     <Expiration
                       expiresAt={parseInt(publication.expires_at, 10)}
@@ -103,7 +108,8 @@ export default class ParcelDetail extends React.PureComponent {
               ) : null}
               <Grid.Column
                 className="parcel-actions-container"
-                width={publication ? 8 : 16}
+                tablet={publication ? 10 : 16}
+                computer={publication ? 8 : 16}
               >
                 <ParcelActions
                   wallet={wallet}
