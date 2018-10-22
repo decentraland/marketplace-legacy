@@ -1,0 +1,6 @@
+apps:
+  - script   : server-node.js
+    cwd      : src/
+    name     : 'marketplace'
+    instances: 2
+    exec_mode: cluster
