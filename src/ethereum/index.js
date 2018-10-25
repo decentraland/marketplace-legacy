@@ -28,23 +28,23 @@ export async function connectEth() {
 export function loadContracts() {
   contractsData = Object.freeze({
     LegacyMarketplace: {
-      address: env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS'),
+      address: env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled']
     },
     Marketplace: {
-      address: env.get('MARKETPLACE_CONTRACT_ADDRESS'),
+      address: env.get('MARKETPLACE_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['OrderCreated', 'OrderSuccessful', 'OrderCancelled']
     },
     LANDRegistry: {
-      address: env.get('LAND_REGISTRY_CONTRACT_ADDRESS'),
+      address: env.get('LAND_REGISTRY_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['Update', 'Transfer', 'UpdateOperator']
     },
     MortgageHelper: {
-      address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS'),
+      address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['NewMortgage']
     },
     MortgageManager: {
-      address: env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS'),
+      address: env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: [
         'CanceledMortgage',
         'StartedMortgage',
@@ -53,11 +53,11 @@ export function loadContracts() {
       ]
     },
     RCNEngine: {
-      address: env.get('RCN_ENGINE_CONTRACT_ADDRESS'),
+      address: env.get('RCN_ENGINE_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['PartialPayment', 'TotalPayment']
     },
     EstateRegistry: {
-      address: env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
+      address: env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: [
         'CreateEstate',
         'AddLand',
@@ -74,7 +74,7 @@ export function loadContracts() {
   contractAddresses = contractNames.reduce(
     (contractAddresses, contractName) => ({
       ...contractAddresses,
-      [contractName]: contractsData[contractName].address.toLowerCase()
+      [contractName]: contractsData[contractName].address
     }),
     {}
   )
