@@ -52,12 +52,12 @@ export default class MortgageForm extends React.PureComponent {
     this.requiredDepositPercentage = 0
 
     this.state = {
-      amount: 0,
+      amount: '',
       duration: '',
       payableAt: '',
       expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
-      interestRate: 0,
-      punitoryRate: 0,
+      interestRate: '',
+      punitoryRate: '',
       formErrors: [],
       isLoading: false
     }
@@ -73,7 +73,7 @@ export default class MortgageForm extends React.PureComponent {
       : 0
     this.setState(
       {
-        [key]: value || '',
+        [key]: value > 0 ? value : '',
         formErrors: []
       },
       async () =>
@@ -109,7 +109,7 @@ export default class MortgageForm extends React.PureComponent {
     const requiredDeposit = this.getRequiredDeposit(amount)
 
     this.setState({
-      amount: amount || '',
+      amount: amount > 0 ? amount : '',
       formErrors:
         requiredDeposit > balance
           ? [t('mortgage.errors.deposit_gt_balance')]
@@ -385,7 +385,7 @@ export default class MortgageForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={isTxIdle || isLoading || isDisabled}
+            disabled={isTxIdle || isLoading || isDisabled || amount <= 0}
           >
             {t('global.request')}
           </Button>
