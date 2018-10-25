@@ -41,7 +41,7 @@ export default class ParcelActions extends React.PureComponent {
     }
     const { x, y } = parcel
     const publication = getOpenPublication(parcel, publications)
-    const isOnSale = !!publication
+    const isOnSale = publication != null
 
     return (
       <div className="ParcelActions">
