@@ -11,7 +11,8 @@ import {
   transactionType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { isLedgerWallet, getTokenAmountToApprove } from 'modules/wallet/utils'
+import { isLedgerWallet } from '@dapps/modules/wallet/utils'
+import { getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
 
 import './SettingsPage.css'
