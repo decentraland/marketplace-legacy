@@ -28,14 +28,10 @@ export default class PayMortgageForm extends React.PureComponent {
 
   handleAmountChange = e => {
     const { balance } = this.props
-    const amount = e.currentTarget.value
-    if (amount === '') {
-      this.setState({ amount })
-    } else {
-      this.setState({
-        amount: Math.min(balance, amount)
-      })
-    }
+    const amount = e.target.value ? parseInt(e.target.value, 10) : 0
+    this.setState({
+      amount: amount > 0 ? Math.min(balance, amount) : ''
+    })
   }
 
   handleSubmit = () => {
@@ -60,11 +56,11 @@ export default class PayMortgageForm extends React.PureComponent {
             id="amount-input"
             className="amount-input"
             type="number"
-            placeholder="1,000 MANA"
+            placeholder={t('mortgage.amount_placeholder')}
             value={amount}
             onChange={this.handleAmountChange}
-            autoComplete="off"
             autoFocus={true}
+            required={true}
           />
         </Form.Field>
         <br />
@@ -75,7 +71,11 @@ export default class PayMortgageForm extends React.PureComponent {
             {t('global.cancel')}
           </Button>
 
-          <Button type="submit" primary={true} disabled={isDisabled}>
+          <Button
+            type="submit"
+            primary={true}
+            disabled={isDisabled || amount <= 0}
+          >
             {t('global.submit')}
           </Button>
         </div>

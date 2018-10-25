@@ -4,7 +4,7 @@ import { Mortgage } from '../../src/Mortgage'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
-import { MORTGAGE_STATUS } from '../../shared/mortgage'
+import { MORTGAGE_STATUS, LOAN_STATUS_OP_CODES } from '../../shared/mortgage'
 import { ASSET_TYPES } from '../../shared/asset'
 import { getParcelIdFromEvent } from './utils'
 
@@ -13,7 +13,6 @@ const TEN_YEARS_IN_MILISECONDS = 1000 * 10 * 365 * 24 * 60 * 60
 
 export async function mortgageReducer(event) {
   const { address } = event
-
   switch (address) {
     case contractAddresses.MortgageHelper: {
       await reduceMortgageHelper(event)
@@ -46,7 +45,9 @@ async function reduceMortgageHelper(event) {
       if (exists) {
         return log.info(`[${name}] Mortgage ${tx_hash} already exists`)
       }
-      log.info(`[${name}] Creating Mortgage ${mortgageId} for ${parcelId}`)
+      log.info(
+        `[${name}] Creating Mortgage ${mortgageId} for ${parcelId} with loanId ${loanId}`
+      )
 
       const LoanIdBN = eth.utils.toBigNumber(loanId)
       const rcnEngineContract = eth.getContract('RCNEngine')
@@ -138,9 +139,12 @@ async function reduceMortgageManager(event) {
 
         const rcnEngineContract = eth.getContract('RCNEngine')
         const loanIdBN = eth.utils.toBigNumber(mortgage.loan_id)
+        const status = await rcnEngineContract.getStatus(mortgage.loan_id)
 
         const [outstandingAmount, dueTime] = await Promise.all([
-          rcnEngineContract.sendCall('getPendingAmount', loanIdBN),
+          status.toNumber() === LOAN_STATUS_OP_CODES.lent
+            ? rcnEngineContract.sendCall('getPendingAmount', loanIdBN)
+            : 0,
           rcnEngineContract.getDueTime(loanIdBN)
         ])
 
@@ -167,7 +171,11 @@ async function reduceMortgageManager(event) {
 
       log.info(`[${name}] Claimed Mortgage ${_id}`)
       await Mortgage.update(
-        { status: MORTGAGE_STATUS.claimed, block_time_updated_at: blockTime },
+        {
+          outstanding_amount: 0,
+          status: MORTGAGE_STATUS.claimed,
+          block_time_updated_at: blockTime
+        },
         { mortgage_id: _id }
       )
       break
@@ -194,17 +202,21 @@ async function reduceRCNEngine(event) {
 
   switch (name) {
     case eventNames.PartialPayment: {
-      const { _index } = event.args
-
-      log.info(`[${name}] Partial Payment for loan ${_index}`)
-
+      const { _index, _amount } = event.args
+      const mortgage = await Mortgage.findByLoanId(_index)
+      if (!mortgage) return
+      log.info(
+        `[${name}] Partial Payment for loan ${_index} of ${eth.utils.fromWei(
+          _amount
+        )}`
+      )
       const rcnEngineContract = eth.getContract('RCNEngine')
+      const status = await rcnEngineContract.getStatus(_index)
+
+      if (status.toNumber() !== LOAN_STATUS_OP_CODES.lent) return
       const [outstandingAmount, paid] = await Promise.all([
-        rcnEngineContract.sendCall(
-          'getPendingAmount',
-          eth.utils.toBigNumber(_index)
-        ),
-        rcnEngineContract.getPaid(eth.utils.toBigNumber(_index))
+        rcnEngineContract.sendCall('getPendingAmount', _index),
+        rcnEngineContract.getPaid(_index)
       ])
 
       await Mortgage.update(
@@ -215,10 +227,13 @@ async function reduceRCNEngine(event) {
         },
         { loan_id: _index }
       )
+
       break
     }
     case eventNames.TotalPayment: {
       const { _index } = event.args
+      const mortgage = await Mortgage.findByLoanId(_index)
+      if (!mortgage) return
 
       log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
       await Mortgage.update(

@@ -380,6 +380,8 @@
     "for_buying": "Pour acheter",
     "for_buying_LegacyMarketplace": "Actifs utilisant MANA (hérité)",
     "for_buying_Marketplace": "Actifs utilisant MANA",
+    "for_buying_MortgageHelper": "LAND par hypothèque",
+    "for_buying_MortgageManager": "LAND par hypothèque",
     "for_selling": "Pour vendre",
     "legacy_authorization": "Autorisation de legs",
     "pending_tx": "Vous avez une transaction en attente"

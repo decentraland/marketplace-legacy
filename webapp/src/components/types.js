@@ -111,16 +111,16 @@ export const toastType = shape({
 })
 
 export const mortgageType = shape({
-  status: string.isRequired,
-  asset_id: string.isRequired,
-  type: string.isRequired,
-  borrower: string.isRequired,
+  status: string,
+  asset_id: string,
+  type: string,
+  borrower: string,
   lender: string,
-  loan_id: number.isRequired,
-  mortgage_id: number.isRequired,
-  amount: number.isRequired,
-  expires_at: string.isRequired,
-  is_due_at: string.isRequired,
-  payable_at: string.isRequired,
-  outstanding_amount: number.isRequired
+  loan_id: number,
+  mortgage_id: number,
+  amount: number,
+  expires_at: string,
+  is_due_at: string,
+  payable_at: string,
+  outstanding_amount: number
 })

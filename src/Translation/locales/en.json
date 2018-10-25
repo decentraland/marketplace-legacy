@@ -373,6 +373,8 @@
     "for_buying": "For buying",
     "for_buying_LegacyMarketplace": "Assets using MANA (legacy)",
     "for_buying_Marketplace": "Assets using MANA",
+    "for_buying_MortgageHelper": "LAND by Mortgage",
+    "for_buying_MortgageManager": "LAND by Mortgage",
     "for_selling": "For selling",
     "legacy_authorization": "Legacy authorization",
     "pending_tx":

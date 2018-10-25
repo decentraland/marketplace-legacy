@@ -74,7 +74,7 @@ export function loadContracts() {
   contractAddresses = contractNames.reduce(
     (contractAddresses, contractName) => ({
       ...contractAddresses,
-      [contractName]: contractsData[contractName].address
+      [contractName]: contractsData[contractName].address.toLowerCase()
     }),
     {}
   )

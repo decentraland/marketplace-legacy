@@ -44,6 +44,10 @@ export class Mortgage extends Model {
     )
   }
 
+  static async findByLoanId(loan_id) {
+    return this.findOne({ loan_id })
+  }
+
   static findInCoordinate(assetId, status = Object.values(MORTGAGE_STATUS)) {
     return this.db.query(
       SQL`SELECT *

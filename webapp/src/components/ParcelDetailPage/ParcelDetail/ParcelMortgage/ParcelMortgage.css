@@ -9,6 +9,19 @@
   align-items: center;
 }
 
+
+.ParcelMortgageDetail.ui.grid > .row .column {
+  text-align: left;
+}
+
+.ParcelMortgageDetail.ui.grid > .row .column.cta {
+  text-align: right;
+}
+
+.ParcelMortgageDetail h3 {
+  color: var(--gray);
+}
+
 .ParcelMortgageDetail.paid {
   border: solid 2px transparent;
   background-image: linear-gradient(#181f33, #181f33),
@@ -37,11 +50,11 @@
 }
 
 .ParcelMortgageDetail .mortgage-amount-icon {
-  font-size: 18px;
+  font-size: 1em;
 }
 
 .ParcelMortgageDetail .expires-at span {
-  color: var(--gray);
+  color: white;
 }
 
 .ParcelMortgageDetail p::first-letter {
@@ -55,6 +68,10 @@
 @media(max-width: 768px) {
   .ParcelMortgageDetail.ui.grid {
     margin: 1rem;
+  }
+
+  .ParcelMortgageDetail.ui.grid > .row .column, .ParcelMortgageDetail.ui.grid > .row .column.cta {
+    text-align: center;
   }
 }
 

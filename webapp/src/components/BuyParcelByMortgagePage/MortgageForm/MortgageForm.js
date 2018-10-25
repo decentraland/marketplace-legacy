@@ -12,6 +12,7 @@ import { t } from '@dapps/modules/translation/utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { fetchMortgageData } from './utils'
+import { getRequiredDeposit } from 'modules/mortgage/utils'
 
 import './MortgageForm.css'
 
@@ -48,17 +49,22 @@ export default class MortgageForm extends React.PureComponent {
     super(props)
 
     this.debouncedFetchMortgageData = debounce(this.fetchMortgageData, 400)
+    this.requiredDepositPercentage = 0
 
     this.state = {
-      amount: 0,
+      amount: '',
       duration: '',
       payableAt: '',
       expiresAt: this.formatFutureDate(DEFAULT_DAY_INTERVAL),
-      interestRate: 0,
-      punitoryRate: 0,
+      interestRate: '',
+      punitoryRate: '',
       formErrors: [],
       isLoading: false
     }
+  }
+
+  async componentWillMount() {
+    this.requiredDepositPercentage = await getRequiredDeposit()
   }
 
   handleChangeNumber = (e, key) => {
@@ -67,7 +73,7 @@ export default class MortgageForm extends React.PureComponent {
       : 0
     this.setState(
       {
-        [key]: value,
+        [key]: value > 0 ? value : '',
         formErrors: []
       },
       async () =>
@@ -103,7 +109,7 @@ export default class MortgageForm extends React.PureComponent {
     const requiredDeposit = this.getRequiredDeposit(amount)
 
     this.setState({
-      amount: amount,
+      amount: amount > 0 ? amount : '',
       formErrors:
         requiredDeposit > balance
           ? [t('mortgage.errors.deposit_gt_balance')]
@@ -113,8 +119,12 @@ export default class MortgageForm extends React.PureComponent {
 
   getRequiredDeposit = amount => {
     const { publication } = this.props
-    const requiredDeposit = Math.ceil(publication.price * 1.1 - amount)
-    return requiredDeposit > 0 && amount > 0 ? requiredDeposit : 0
+    const requiredAmount = amount || 0
+
+    const requiredDeposit = Math.ceil(
+      publication.price * this.requiredDepositPercentage / 100 - requiredAmount
+    )
+    return requiredDeposit > 0 && requiredAmount > 0 ? requiredDeposit : 0
   }
 
   handleClearFormErrors = () => {
@@ -375,7 +385,7 @@ export default class MortgageForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={isTxIdle || isLoading || isDisabled}
+            disabled={isTxIdle || isLoading || isDisabled || amount <= 0}
           >
             {t('global.request')}
           </Button>
