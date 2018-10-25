@@ -213,7 +213,7 @@ async function reduceRCNEngine(event) {
       const rcnEngineContract = eth.getContract('RCNEngine')
       const status = await rcnEngineContract.getStatus(_index)
 
-      if (status.toNumber() === LOAN_STATUS_OP_CODES.lent) {
+      if (status.toNumber() !== LOAN_STATUS_OP_CODES.lent) return
         const [outstandingAmount, paid] = await Promise.all([
           rcnEngineContract.sendCall('getPendingAmount', _index),
           rcnEngineContract.getPaid(_index)
