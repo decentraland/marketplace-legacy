@@ -45,8 +45,7 @@ export class Mortgage extends Model {
   }
 
   static async findByLoanId(loan_id) {
-    const res = await this.find({ loan_id })
-    return res[0]
+    return this.findOne({ loan_id })
   }
 
   static findInCoordinate(assetId, status = Object.values(MORTGAGE_STATUS)) {

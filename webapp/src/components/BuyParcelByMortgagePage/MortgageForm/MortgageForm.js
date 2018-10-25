@@ -70,10 +70,10 @@ export default class MortgageForm extends React.PureComponent {
   handleChangeNumber = (e, key) => {
     const value = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
-      : ''
+      : 0
     this.setState(
       {
-        [key]: value,
+        [key]: value || '',
         formErrors: []
       },
       async () =>
@@ -104,12 +104,12 @@ export default class MortgageForm extends React.PureComponent {
   handleChangeAmount = e => {
     const amount = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
-      : ''
+      : 0
     const { balance } = this.props
     const requiredDeposit = this.getRequiredDeposit(amount)
 
     this.setState({
-      amount: amount,
+      amount: amount || '',
       formErrors:
         requiredDeposit > balance
           ? [t('mortgage.errors.deposit_gt_balance')]
