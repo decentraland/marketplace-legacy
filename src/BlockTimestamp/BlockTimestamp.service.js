@@ -24,7 +24,7 @@ export class BlockTimestampService {
     return new Promise((resolve, reject) => {
       web3.eth.getBlock(blockNumber, (error, block) => {
         if (error || !block) {
-          reject(error)
+          reject(error || `Could not find block ${blockNumber}`)
         } else {
           resolve(block.timestamp * 1000)
         }

@@ -230,24 +230,22 @@ async function reduceRCNEngine(event) {
 
       break
     }
-    case eventNames.TotalPayment:
-      {
-        const { _index } = event.args
-        const mortgage = await Mortgage.findByLoanId(_index)
-        if (!mortgage) return
+    case eventNames.TotalPayment: {
+      const { _index } = event.args
+      const mortgage = await Mortgage.findByLoanId(_index)
+      if (!mortgage) return
 
-        log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
-        await Mortgage.update(
-          {
-            status: MORTGAGE_STATUS.paid,
-            outstanding_amount: 0,
-            block_time_updated_at: blockTime
-          },
-          { loan_id: _index }
-        )
-      }
+      log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
+      await Mortgage.update(
+        {
+          status: MORTGAGE_STATUS.paid,
+          outstanding_amount: 0,
+          block_time_updated_at: blockTime
+        },
+        { loan_id: _index }
+      )
       break
-
+    }
     default:
       break
   }
