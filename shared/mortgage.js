@@ -12,6 +12,10 @@ export const MORTGAGE_STATUS = Object.freeze({
   claimed: 'claimed'
 })
 
+export const LOAN_STATUS_OP_CODES = Object.freeze({
+  lent: 1
+})
+
 export const isMortgagePending = mortgage =>
   hasStatus(mortgage, MORTGAGE_STATUS.pending)
 export const isMortgageOngoing = mortgage =>

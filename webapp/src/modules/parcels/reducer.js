@@ -171,19 +171,26 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_MORTGAGED_PARCELS_SUCCESS: {
+      const { mortgages } = action
       return {
         ...state,
-        data: action.parcels.reduce(
-          (parcels, parcel) => ({
+        data: action.parcels.reduce((parcels, parcel) => {
+          const parcelId = buildCoordinate(parcel.x, parcel.y)
+          return {
             ...parcels,
-            [buildCoordinate(parcel.x, parcel.y)]: Object.assign(
-              {},
-              parcels[buildCoordinate(parcel.x, parcel.y)],
-              parcel
-            )
-          }),
-          state.data
-        )
+            [parcelId]: {
+              ...parcels[parcelId],
+              ...parcel,
+              mortgages_tx_hashes: mortgages
+                .filter(
+                  mortgage =>
+                    mortgage.asset_type === ASSET_TYPES.parcel &&
+                    mortgage.asset_id === parcelId
+                )
+                .map(mortgage => mortgage.tx_hash)
+            }
+          }
+        }, state.data)
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {

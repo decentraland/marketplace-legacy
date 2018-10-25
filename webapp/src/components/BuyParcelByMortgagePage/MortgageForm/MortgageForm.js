@@ -4,7 +4,6 @@ import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
 import { Form, Button, Input, Message, Grid, Icon } from 'semantic-ui-react'
 import debounce from 'lodash.debounce'
-import { env } from 'decentraland-commons'
 
 import TxStatus from 'components/TxStatus'
 import AddressBlock from 'components/AddressBlock'
@@ -13,6 +12,7 @@ import { t } from '@dapps/modules/translation/utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
 import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import { fetchMortgageData } from './utils'
+import { getRequiredDeposit } from 'modules/mortgage/utils'
 
 import './MortgageForm.css'
 
@@ -49,6 +49,7 @@ export default class MortgageForm extends React.PureComponent {
     super(props)
 
     this.debouncedFetchMortgageData = debounce(this.fetchMortgageData, 400)
+    this.requiredDepositPercentage = 0
 
     this.state = {
       amount: 0,
@@ -60,6 +61,10 @@ export default class MortgageForm extends React.PureComponent {
       formErrors: [],
       isLoading: false
     }
+  }
+
+  async componentWillMount() {
+    this.requiredDepositPercentage = await getRequiredDeposit()
   }
 
   handleChangeNumber = (e, key) => {
@@ -114,14 +119,10 @@ export default class MortgageForm extends React.PureComponent {
 
   getRequiredDeposit = amount => {
     const { publication } = this.props
-    const depositPercentage = parseInt(
-      env.get('REACT_APP_MORTGAGES_DEPOSIT_PERCENTAGE'),
-      10
-    )
     const requiredAmount = amount || 0
 
     const requiredDeposit = Math.ceil(
-      publication.price * (100 + depositPercentage) / 100 - requiredAmount
+      publication.price * this.requiredDepositPercentage / 100 - requiredAmount
     )
     return requiredDeposit > 0 && requiredAmount > 0 ? requiredDeposit : 0
   }
