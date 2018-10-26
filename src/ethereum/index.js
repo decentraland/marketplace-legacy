@@ -14,6 +14,9 @@ export async function connectEth() {
   const contractsToConnect = []
   for (const contractName in contractsData) {
     const contract = contractsData[contractName]
+    if (!contracts[contractName]) {
+      throw new Error(`Contract ${contractName} does not exist`)
+    }
     contractsToConnect.push(new contracts[contractName](contract.address))
   }
 
@@ -50,12 +53,12 @@ export function loadContracts() {
         'UpdateOperator'
       ]
     },
-    // LANDAuction: {
-    //   address: env.get('LAND_AUCTION_CONTRACT_ADDRESS').toLowerCase(),
-    //   eventNames: [
-    //     // TODO: Listen to bid event
-    //   ]
-    // },
+    LANDAuction: {
+      address: env.get('LAND_AUCTION_CONTRACT_ADDRESS').toLowerCase(),
+      eventNames: [
+        // TODO: Listen to bid event
+      ]
+    },
     MortgageHelper: {
       address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['NewMortgage']

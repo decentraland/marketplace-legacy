@@ -1,20 +1,23 @@
 import { connect } from 'react-redux'
 
+import { isConnected } from 'modules/wallet/selectors'
+import { getAuthorizations } from 'modules/authorization/selectors'
+import { getParams } from 'modules/auction/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import { isConnecting } from 'modules/wallet/selectors'
-import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { openModal } from 'modules/ui/actions'
-
+import { fetchAuctionParamsRequest } from 'modules/auction/actions'
 import AuctionPage from './AuctionPage'
 
 const mapState = state => ({
+  isConnected: isConnected(state),
   authorization: getAuthorizations(state),
-  isAuthorizationLoading: isConnecting(state) || isLoading(state),
+  auctionParams: getParams(state),
   allParcels: getParcels(state)
 })
 
-const mapDispatch = (dispatch, ownProps) => ({
-  onShowAuctionModal: () => dispatch(openModal('AuctionModal'))
+const mapDispatch = dispatch => ({
+  onShowAuctionModal: () => dispatch(openModal('AuctionModal')),
+  fetchAuctionParams: () => dispatch(fetchAuctionParamsRequest())
 })
 
 export default connect(mapState, mapDispatch)(AuctionPage)

@@ -68,9 +68,9 @@ function* handleCreateEstateRequest(action) {
     }
     const data = yield call(() => encodeMetadata(metadata))
     const owner = yield select(getAddress)
-    const land = eth.getContract('LANDRegistry')
+    const landRegistry = eth.getContract('LANDRegistry')
     const txHash = yield call(() =>
-      land.createEstateWithMetadata(x, y, owner, data)
+      landRegistry.createEstateWithMetadata(x, y, owner, data)
     )
     yield put(createEstateSuccess(txHash, { ...estate, owner }))
     yield put(push(locations.activity()))

@@ -12,7 +12,11 @@ import { utils } from 'decentraland-commons'
 
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelAttributes from 'components/ParcelAttributes'
-import { authorizationType, parcelType } from 'components/types'
+import {
+  authorizationType,
+  auctionParamsType,
+  parcelType
+} from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { hasSeenAuctionModal, isAuthorized } from 'modules/auction/utils'
 
@@ -23,15 +27,20 @@ const MAX_PARCELS_PER_TX = 20
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
+    isConnected: PropTypes.bool.isRequired,
     authorization: authorizationType,
+    auctionParams: auctionParamsType,
     allParcels: PropTypes.objectOf(parcelType),
+    fetchAuctionParams: PropTypes.func.isRequired,
     onShowAuctionModal: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
 
+    this.areParamsFetched = false
     this.parcelPrice = 3000 // TODO: use the contract to get this value
+
     this.state = {
       selectedCoordsById: {}
     }
@@ -43,6 +52,11 @@ export default class AuctionPage extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     this.showAuctionModal(nextProps)
+
+    if (nextProps.isConnected && this.areParamsFetched) {
+      this.props.fetchAuctionParams()
+      this.areParamsFetched = true
+    }
   }
 
   showAuctionModal(props) {
@@ -63,7 +77,7 @@ export default class AuctionPage extends React.PureComponent {
   selectUnownedParcel = ({ asset, x, y }) => {
     const { selectedCoordsById } = this.state
 
-    // TODO: Check ownership with contract
+    // TODO: Check ownership with contract => fire a record parcel owner action
     if (asset.owner != null || asset.district_id != null) return
 
     let newSelectedCoordsById = {}

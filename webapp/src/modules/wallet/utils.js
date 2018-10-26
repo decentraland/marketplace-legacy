@@ -13,14 +13,6 @@ export function getWalletSagaOptions() {
     EstateRegistry
   } = contracts
 
-  // TODO: Remove this once LANDAuction exists on decentraland-eth
-  const LANDAuction = Object.create(
-    new Contract(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS'), [])
-  )
-  LANDAuction.getContractName = () => 'LANDAuction'
-  LANDAuction.getCurrentPrice = () => Promise.resolve(5500)
-  LANDAuction.bid = (x, y) => Promise.resolve()
-
   return {
     provider: env.get('REACT_APP_PROVIDER_URL'),
     contracts: [
@@ -31,11 +23,19 @@ export function getWalletSagaOptions() {
       ),
       new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
       new EstateRegistry(env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')),
-      LANDAuction,
+      ...getLandAuctionContract(),
       ...getMortgageContracts()
     ],
     eth
   }
+}
+
+function getLandAuctionContract() {
+  const { LANDAuction } = contracts
+
+  return isFeatureEnabled('AUCTION')
+    ? [new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS'))]
+    : []
 }
 
 function getMortgageContracts() {
@@ -105,12 +105,12 @@ export async function getAssetUpdateOperator(asset) {
 }
 
 async function getParcelUpdateOperator(x, y) {
-  const contract = eth.getContract('LANDRegistry')
-  const tokenId = await contract.encodeTokenId(x, y)
-  return contract.updateOperator(tokenId)
+  const landRegistry = eth.getContract('LANDRegistry')
+  const tokenId = await landRegistry.encodeTokenId(x, y)
+  return landRegistry.updateOperator(tokenId)
 }
 
 async function getEstateUpdateOperator(tokenId) {
-  const contract = eth.getContract('EstateRegistry')
-  return contract.updateOperator(tokenId)
+  const estateRegistry = eth.getContract('EstateRegistry')
+  return estateRegistry.updateOperator(tokenId)
 }
