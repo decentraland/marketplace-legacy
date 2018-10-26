@@ -53,6 +53,11 @@ function* handleConnectWalletSuccess(action) {
       Marketplace: ['LANDRegistry', 'EstateRegistry']
     }
   }
+  if (isFeatureEnabled('AUCTION')) {
+    Object.assign(authorization.allowances, {
+      LANDAuction: ['MANAToken']
+    })
+  }
   if (isFeatureEnabled('MORTGAGES')) {
     Object.assign(authorization.allowances, {
       MortgageHelper: ['MANAToken'],

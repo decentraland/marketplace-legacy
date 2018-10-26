@@ -390,6 +390,7 @@
     "authorization_error_contact":
       "Si l'erreur persiste, n'hésitez pas à nous contacter",
     "for_buying": "Pour acheter",
+    "for_buying_LANDAuction": "Enchère des parcelles avec MANA",
     "for_buying_LegacyMarketplace": "Actifs utilisant MANA (hérité)",
     "for_buying_Marketplace": "Actifs utilisant MANA",
     "for_buying_MortgageHelper": "LAND par hypothèque",

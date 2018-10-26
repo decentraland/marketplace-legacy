@@ -353,6 +353,7 @@
     "authorization_error": "我们无法加载您的授权，请重试",
     "authorization_error_contact": "如果错误仍然存​​在，请不要犹豫与我们联系",
     "for_buying": "购买",
+    "for_buying_LANDAuction": "使用MANA拍卖包裹",
     "for_buying_LegacyMarketplace": "使用 MANA（遗留功能）",
     "for_buying_Marketplace": "使用 MANA",
     "for_buying_MortgageHelper": "LAND 抵押贷款",

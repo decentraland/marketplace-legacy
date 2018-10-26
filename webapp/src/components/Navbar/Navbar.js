@@ -130,7 +130,7 @@ export default class Navbar extends React.PureComponent {
         {isConnected ? (
           <React.Fragment>
             {this.renderMenuItem('profile')}
-            {isFeatureEnabled('auction')
+            {isFeatureEnabled('AUCTION')
               ? this.renderMenuItem('auction')
               : null}
             <Responsive
