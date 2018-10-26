@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Message, Header, Grid, Container } from 'semantic-ui-react'
+import { Message, Header, Grid, Container, Button } from 'semantic-ui-react'
 import { utils } from 'decentraland-commons'
 
 import { parcelType } from 'components/types'
