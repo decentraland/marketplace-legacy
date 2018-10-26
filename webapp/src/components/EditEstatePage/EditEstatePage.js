@@ -15,14 +15,13 @@ export default class EditEstatePage extends React.PureComponent {
     isSelecting: PropTypes.bool
   }
 
-  renderEditEstate = (estate, isOwner, wallet) => {
+  renderEditEstate = (estate, wallet) => {
     const { isSelecting } = this.props
     return (
       <EditEstate
         estate={estate}
         isCreation={isNewEstate(estate)}
         isSelecting={isNewEstate(estate) || isSelecting}
-        isOwner={isOwner}
         wallet={wallet}
       />
     )
@@ -33,12 +32,16 @@ export default class EditEstatePage extends React.PureComponent {
     if (!id) {
       return (
         <Parcel x={x} y={y}>
-          {(_, isOwner, wallet) =>
-            this.renderEditEstate(getInitialEstate(x, y), isOwner, wallet)
+          {(parcel, isOwner, wallet) =>
+            this.renderEditEstate(getInitialEstate(x, y), wallet)
           }
         </Parcel>
       )
     }
-    return <Estate id={id}>{this.renderEditEstate}</Estate>
+    return (
+      <Estate id={id}>
+        {(estate, _, wallet) => this.renderEditEstate(estate, wallet)}
+      </Estate>
+    )
   }
 }

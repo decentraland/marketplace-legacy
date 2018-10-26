@@ -105,6 +105,14 @@
     "your_estate": "Votre domaine",
     "your_parcel": "Votre parcelle"
   },
+  "auction_page": {
+    "description": "Sélectionner les colis à acheter",
+    "maximum_parcels_message":
+      "Si vous essayez d'acheter plus de {max} colis en une seule transaction, il risque de manquer de gaz. ",
+    "maximum_parcels_title":
+      "Vous avez atteint le nombre maximum de colis par transaction",
+    "title": "Acheter des colis non possédés"
+  },
   "authorization": {
     "allow": "Autoriser le {contract_link} à utiliser {symbol} en votre nom",
     "allowed":
@@ -194,6 +202,7 @@
     "add": "ajouter",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
+    "auction": "Enchères",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Annuler",

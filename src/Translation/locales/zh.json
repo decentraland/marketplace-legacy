@@ -93,6 +93,13 @@
     "your_estate": "您的连块土地",
     "your_parcel": "您的地块"
   },
+  "auction_page": {
+    "description": "选择要购买的包裹",
+    "maximum_parcels_message":
+      "如果你试图在一次交易中购买超过{max}的包裹，它可能会耗尽汽油。",
+    "maximum_parcels_title": "您达到了每笔交易的最大包裹数",
+    "title": "购买无主的包裹"
+  },
   "authorization": {
     "allow": "授权 {contract_link} 使用 {symbol}",
     "allowed": "您授权 {contract_link} 使用 {symbol}",
@@ -171,6 +178,7 @@
     "add": "加",
     "address_placeholder": "0x...",
     "atlas": "地图",
+    "auction": "拍卖",
     "balance": "余额",
     "blog": "博客",
     "cancel": "取消",

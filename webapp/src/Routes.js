@@ -11,6 +11,7 @@ import Page from 'components/Page'
 import HomePage from 'components/HomePage'
 import AtlasPage from 'components/AtlasPage'
 import MarketplacePage from 'components/MarketplacePage'
+import AuctionPage from 'components/AuctionPage'
 import ProfilePage from 'components/ProfilePage'
 import PublishParcelPage from 'components/PublishParcelPage'
 import PublishEstatePage from 'components/PublishEstatePage'
@@ -41,8 +42,10 @@ export default class Routes extends React.Component {
     return (
       <Switch>
         <Route exact path={locations.root()} component={HomePage} />
+
         {/*Addresses*/}
         <Route exact path={locations.profilePage()} component={ProfilePage} />
+
         {/*Parcels*/}
         <Route
           exact
@@ -152,6 +155,12 @@ export default class Routes extends React.Component {
             component={PayMortgagePage}
           />
         )}
+
+        {/*Auction*/}
+        {isFeatureEnabled('AUCTION') && (
+          <Route exact path={locations.auction()} component={AuctionPage} />
+        )}
+
         {/*General routes*/}
         <Route
           exact

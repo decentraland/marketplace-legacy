@@ -1,17 +1,15 @@
 import { connect } from 'react-redux'
 import { goBack } from 'react-router-redux'
 
-import EditState from './EditEstate'
-import { getData as getParcels } from 'modules/parcels/selectors'
 import { isEstateTransactionIdle } from 'modules/estates/selectors'
 import {
   createEstateRequest,
   editEstateParcelsRequest,
   editEstateMetadataRequest
 } from 'modules/estates/actions'
+import EditState from './EditEstate'
 
 const mapState = state => ({
-  allParcels: getParcels(state),
   isTxIdle: isEstateTransactionIdle(state)
 })
 

@@ -102,6 +102,13 @@
     "your_estate": "당신의 재산",
     "your_parcel": "당신의 토지"
   },
+  "auction_page": {
+    "description": "구입할 소포 선택",
+    "maximum_parcels_message":
+      "단일 거래에서 {max} 소포를 초과하여 구매하려고하면 가스가 고갈 될 수 있습니다. ",
+    "maximum_parcels_title": "거래 당 최대 소포에 도달했습니다.",
+    "title": "소유되지 않은 소포 구입"
+  },
   "authorization": {
     "allow": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
     "allowed":
@@ -188,6 +195,7 @@
     "add": "더하다",
     "address_placeholder": "0x...",
     "atlas": "지도",
+    "auction": "경매",
     "balance": "밸런스",
     "blog": "블로그",
     "cancel": "취소",

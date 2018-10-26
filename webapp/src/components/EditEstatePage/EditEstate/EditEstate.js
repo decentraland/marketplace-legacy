@@ -10,7 +10,6 @@ export default class EditEstate extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
     wallet: walletType.isRequired,
-    isOwner: PropTypes.bool.isRequired,
     isCreation: PropTypes.bool.isRequired,
     onCancel: PropTypes.func.isRequired,
     onEditEstateParcels: PropTypes.func.isRequired,
@@ -36,6 +35,7 @@ export default class EditEstate extends React.PureComponent {
 
   handleChangeParcels = parcels => {
     const { estate } = this.state
+
     this.setState({
       estate: {
         ...estate,

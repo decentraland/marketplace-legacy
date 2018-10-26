@@ -100,6 +100,14 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "auction_page": {
+    "description": "購入する小包を選択",
+    "maximum_parcels_message":
+      "単一の取引で{max}小包以上を購入しようとすると、ガスがなくなる可能性があります。",
+    "maximum_parcels_title":
+      "あなたはトランザクションごとに最大の小包に達しました",
+    "title": "未所有の小包を購入する"
+  },
   "authorization": {
     "allow": "{contract_link}に準じて{symbol}を操作することを許可する",
     "allowed": "{contract_link}に準じて{symbol}を操作することを許可しました",
@@ -184,6 +192,7 @@
     "add": "追加する",
     "address_placeholder": "0x...",
     "atlas": "地図",
+    "auction": "オークション",
     "balance": "残高",
     "blog": "ブログ",
     "cancel": "キャンセル",

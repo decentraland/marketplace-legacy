@@ -21,10 +21,12 @@ export default class ParcelAttributes extends React.PureComponent {
 
   render() {
     const { parcel, withLink, withTags } = this.props
+
     const Wrapper = withLink ? Link : React.Fragment
     const wrapperProps = withLink
       ? { to: locations.parcelDetail(parcel.x, parcel.y) }
       : {}
+
     return (
       <Wrapper {...wrapperProps}>
         <div className="ParcelAttributes">

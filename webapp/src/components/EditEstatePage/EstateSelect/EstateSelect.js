@@ -47,7 +47,9 @@ export default class EstateSelect extends React.PureComponent {
     onDeleteEstate: PropTypes.func.isRequired
   }
 
-  getParcelClickHandler = wallet => (asset, { x, y }) => {
+  parcelClickHandler = (asset, { x, y }) => {
+    const { wallet } = this.props
+
     if (!isOwner(wallet, buildCoordinate(x, y)) && !isOwner(wallet, asset.id)) {
       return
     }
@@ -180,14 +182,12 @@ export default class EstateSelect extends React.PureComponent {
 
     return (
       <div className="EstateSelect">
-        <div className="parcel-preview" title={t('parcel_detail.view')}>
-          <AssetPreviewHeader
-            asset={estate}
-            showMiniMap={false}
-            showControls={false}
-            onAssetClick={this.getParcelClickHandler(wallet)}
-          />
-        </div>
+        <AssetPreviewHeader
+          asset={estate}
+          showMiniMap={false}
+          showControls={false}
+          onAssetClick={this.parcelClickHandler}
+        />
         <Container>
           <Grid className="estate-selection">
             {this.hasReachedAddLimit() || this.hasReachedRemoveLimit() ? (
@@ -205,6 +205,7 @@ export default class EstateSelect extends React.PureComponent {
                 </Grid.Column>
               </Grid.Row>
             ) : null}
+
             <Grid.Row>
               <Grid.Column width={isCreation ? 16 : 8}>
                 <Header size="large">
@@ -231,19 +232,15 @@ export default class EstateSelect extends React.PureComponent {
                     </Button>
                   </Grid.Column>
                 )}
-              <Grid.Column width={16} className={'selected-parcels'}>
-                <p className="parcels-included">
+              <Grid.Column width={16} className="selected-parcels">
+                <p className="parcels-included-description">
                   {t('estate_select.description')}
                 </p>
                 {allParcels &&
                   parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelAttributes
-                        key={parcel.id}
-                        parcel={parcel}
-                        withLink={false}
-                      />
+                      <ParcelAttributes key={parcel.id} parcel={parcel} />
                     ) : null
                   })}
               </Grid.Column>

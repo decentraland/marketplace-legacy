@@ -8,6 +8,7 @@ import Badge from 'components/Badge'
 import { default as DecentralandIcon } from 'components/Icon'
 import { walletType, coordsType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 import Account from './Account'
 
 import './Navbar.css'
@@ -45,6 +46,7 @@ export default class Navbar extends React.PureComponent {
       [NAVBAR_PAGES.atlas]: locations.parcelMapDetail(center.x, center.y),
       [NAVBAR_PAGES.marketplace]: locations.marketplace(),
       [NAVBAR_PAGES.profile]: locations.profilePageDefault(wallet.address),
+      [NAVBAR_PAGES.auction]: locations.auction(),
       [NAVBAR_PAGES.activity]: locations.activity(),
       [NAVBAR_PAGES.signIn]: locations.signIn()
     }
@@ -128,6 +130,9 @@ export default class Navbar extends React.PureComponent {
         {isConnected ? (
           <React.Fragment>
             {this.renderMenuItem('profile')}
+            {isFeatureEnabled('auction')
+              ? this.renderMenuItem('auction')
+              : null}
             <Responsive
               as={Menu.Item}
               maxWidth={Responsive.onlyTablet.minWidth}

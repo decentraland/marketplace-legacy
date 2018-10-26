@@ -103,6 +103,14 @@
     "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
+  "auction_page": {
+    "description": "Seleccione parcelas para comprar",
+    "maximum_parcels_message":
+      "Si intenta comprar más de {max} parcelas en una sola transacción, puede quedarse sin gas. ",
+    "maximum_parcels_title":
+      "Has alcanzado el máximo de parcelas por transacción.",
+    "title": "Comprar parcelas sin dueño"
+  },
   "authorization": {
     "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",
     "allowed":
@@ -189,6 +197,7 @@
     "add": "añadir",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
+    "auction": "Subasta",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancelar",

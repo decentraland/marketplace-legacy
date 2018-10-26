@@ -13,6 +13,8 @@ export function getActivePage({ pathname, address }) {
     currentPage = NAVBAR_PAGES.profile
   } else if (isAtlasPage(pathname)) {
     currentPage = NAVBAR_PAGES.atlas
+  } else if (pathname === locations.auction()) {
+    currentPage = NAVBAR_PAGES.auction
   } else if (pathname === locations.activity()) {
     currentPage = NAVBAR_PAGES.activity
   } else if (pathname === locations.settings()) {
