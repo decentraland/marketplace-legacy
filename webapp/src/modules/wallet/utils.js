@@ -18,7 +18,7 @@ export function getWalletSagaOptions() {
     new Contract(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS'), [])
   )
   LANDAuction.getContractName = () => 'LANDAuction'
-  LANDAuction.getCurrentPrice = () => Promise.resolve(5500)
+  LANDAuction.getCurrentLandPrice = () => Promise.resolve(5500)
   LANDAuction.bid = (x, y) => Promise.resolve()
 
   return {
