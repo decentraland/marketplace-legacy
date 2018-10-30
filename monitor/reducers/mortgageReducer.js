@@ -110,10 +110,10 @@ async function reduceMortgageManager(event) {
   const blockTime = await new BlockTimestampService().getBlockTime(block_number)
 
   switch (name) {
-    case eventNames.CancelledMortgage: {
+    case eventNames.CanceledMortgage: {
       const { _id } = event.args
       try {
-        log.info(`[${name}] Cancelling Mortgage ${_id}`)
+        log.info(`[${name}] Cancelled Mortgage ${_id}`)
         await Mortgage.update(
           {
             status: MORTGAGE_STATUS.cancelled,
@@ -133,7 +133,7 @@ async function reduceMortgageManager(event) {
       const { _id } = event.args
 
       try {
-        log.info(`[${name}] Starting Mortgage ${_id}`)
+        log.info(`[${name}] Started Mortgage ${_id}`)
         const mortgage = (await Mortgage.findByMortgageId(_id))[0]
         if (!mortgage) return
 
