@@ -214,9 +214,10 @@ async function reduceRCNEngine(event) {
       const status = await rcnEngineContract.getStatus(_index)
 
       if (status.toNumber() !== LOAN_STATUS_OP_CODES.lent) return
-      const [outstandingAmount, paid] = await Promise.all([
+      const [outstandingAmount, paid, borrower] = await Promise.all([
         rcnEngineContract.sendCall('getPendingAmount', _index),
-        rcnEngineContract.getPaid(_index)
+        rcnEngineContract.getPaid(_index),
+        rcnEngineContract.getBorrower(_index)
       ])
 
       await Mortgage.update(
@@ -225,7 +226,7 @@ async function reduceRCNEngine(event) {
           paid: eth.utils.fromWei(paid),
           block_time_updated_at: blockTime
         },
-        { loan_id: _index }
+        { loan_id: _index, borrower }
       )
 
       break
@@ -236,13 +237,16 @@ async function reduceRCNEngine(event) {
       if (!mortgage) return
 
       log.info(`[${name}] Total Payment Mortgage for loan ${_index}`)
+
+      const rcnEngineContract = eth.getContract('RCNEngine')
+      const borrower = await rcnEngineContract.getBorrower(_index)
       await Mortgage.update(
         {
           status: MORTGAGE_STATUS.paid,
           outstanding_amount: 0,
           block_time_updated_at: blockTime
         },
-        { loan_id: _index }
+        { loan_id: _index, borrower }
       )
       break
     }
