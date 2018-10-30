@@ -9,7 +9,7 @@ import {
 import { MANAGE_ASSET_REQUEST } from 'modules/management/actions'
 import { getData as getAllPublications } from 'modules/publication/selectors'
 import { getMortgagesArray } from 'modules/mortgage/selectors'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 import { getActiveMortgages } from 'shared/mortgage'
 
 export const getState = state => state.parcels

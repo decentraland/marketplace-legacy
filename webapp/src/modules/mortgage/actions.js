@@ -1,5 +1,5 @@
 import { buildTransactionAction } from 'modules/transaction/utils'
-import { splitCoordinate } from 'shared/parcel'
+import { splitCoordinate } from 'shared/coordinates'
 
 export const CREATE_MORTGAGE_REQUEST = '[Request] Create Mortgage'
 export const CREATE_MORTGAGE_SUCCESS = '[Success] Create Mortgage'

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { locations } from 'locations'
 import { navigateTo } from '@dapps/modules/location/actions'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 import AssetDetailPage from './AssetDetailPage'
 
 const mapState = (state, { match }) => {

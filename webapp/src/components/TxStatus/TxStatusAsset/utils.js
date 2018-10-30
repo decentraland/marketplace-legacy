@@ -1,5 +1,6 @@
 import { isPending } from '@dapps/modules/transaction/utils'
-import { buildCoordinate, isParcel } from 'shared/parcel'
+import { isParcel } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 
 export function isAssetPendingTransaction(asset, tx) {
   if (!asset) return false

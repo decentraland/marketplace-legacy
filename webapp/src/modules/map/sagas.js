@@ -1,9 +1,10 @@
 import { takeEvery, select, call, put } from 'redux-saga/effects'
-import { buildCoordinate } from 'shared/parcel'
-import { api } from 'lib/api'
-import { webworker } from 'lib/webworker'
+
 import { FETCH_MAP_REQUEST, fetchMapSuccess, fetchMapFailure } from './actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
+import { buildCoordinate } from 'shared/coordinates'
+import { api } from 'lib/api'
+import { webworker } from 'lib/webworker'
 
 export function* mapSaga() {
   yield takeEvery(FETCH_MAP_REQUEST, handleMapRequest)

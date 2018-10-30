@@ -2,9 +2,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import Minimap from './Minimap'
-import Popup from './Popup'
-import Controls from './Controls'
+import debounce from 'lodash.debounce'
 import {
   walletType,
   parcelType,
@@ -12,7 +10,6 @@ import {
   districtType,
   publicationType
 } from 'components/types'
-import debounce from 'lodash.debounce'
 import { isMobileWidth } from 'lib/utils'
 import {
   getMapAsset,
@@ -20,11 +17,19 @@ import {
   getColorByType,
   getOpenPublication
 } from 'shared/asset'
+import { buildCoordinate } from 'shared/coordinates'
 import { Map as MapRenderer } from 'shared/map/render'
 import { Bounds, Viewport } from 'shared/map'
-import { buildCoordinate } from 'shared/parcel'
-import { getLabel, getTextColor, getDescription, getConnections } from './utils'
-import { panzoom } from './utils'
+import {
+  getLabel,
+  getTextColor,
+  getDescription,
+  getConnections,
+  panzoom
+} from './utils'
+import Minimap from './Minimap'
+import Popup from './Popup'
+import Controls from './Controls'
 
 import './ParcelCanvas.css'
 

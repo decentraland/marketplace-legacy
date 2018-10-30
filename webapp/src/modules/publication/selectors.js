@@ -3,7 +3,7 @@ import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getEstates } from 'modules/estates/selectors'
 import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 
 export const getState = state => state.publication
 export const getData = state => getState(state).data

@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { buildCoordinate } from 'shared/parcel'
+
 import AssetLoader from 'components/AssetLoader'
 import { ASSET_TYPES } from 'shared/asset'
+import { buildCoordinate } from 'shared/coordinates'
 
 export default class Parcel extends React.PureComponent {
   static propTypes = {

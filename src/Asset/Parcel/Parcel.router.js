@@ -86,11 +86,8 @@ export class ParcelRouter {
       throw new Error('Invalid coordinate "y" must be an integer')
     }
 
-    if (!Bounds.inBounds(x, y)) {
-      throw new Error(
-        `Coords are out of bounds: ${JSON.stringify(Bounds.getBounds())}`
-      )
-    }
+    Bounds.validateInBounds(x, y)
+
     const coords = Parcel.buildId(x, y)
     const range = await Parcel.inRange(coords, coords)
 

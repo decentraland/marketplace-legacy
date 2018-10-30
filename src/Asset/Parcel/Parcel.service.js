@@ -3,7 +3,7 @@ import { Log } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
 import { isDuplicatedConstraintError } from '../../database'
-import { coordinates } from '../../lib'
+import { splitCoodinatePairs } from '../../shared/coordinates'
 
 const log = new Log('ParcelService')
 const { LANDRegistry } = contracts
@@ -150,7 +150,7 @@ export class ParcelService {
   }
 
   async getOwnerOfLandMany(parcels) {
-    const { x, y } = coordinates.splitPairs(parcels)
+    const { x, y } = splitCoodinatePairs(parcels)
     const contract = this.getLANDRegistryContract()
     return contract.ownerOfLandMany(x, y)
   }
