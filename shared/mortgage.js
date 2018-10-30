@@ -1,5 +1,4 @@
 import { hasStatus } from './utils'
-import { isOpen } from './publication'
 
 const MORTGAGE_DEFAULT_IN_DAYS = 60 * 60 * 24 * 7 // 7 days
 
@@ -44,11 +43,13 @@ export function getLoanMetadata(mortgageManagerAddress) {
   return `#mortgage #required-cosigner:${mortgageManagerAddress}`
 }
 
-export function isMortgageActive(mortgage, parcel, publications) {
+export function isMortgageActive(mortgage, parcel) {
   if (mortgage && parcel) {
-    const publication = publications[parcel.publication_tx_hash]
-    const isPending = isMortgagePending(mortgage) && isOpen(publication)
-    return isPending || isMortgageOngoing(mortgage) || isMortgagePaid(mortgage)
+    return (
+      isMortgagePending(mortgage) ||
+      isMortgageOngoing(mortgage) ||
+      isMortgagePaid(mortgage)
+    )
   }
   return false
 }
@@ -59,14 +60,10 @@ export function isMortgageActive(mortgage, parcel, publications) {
  * @param  {array} - parcels
  * @returns {array} - mortgages
  */
-export function getActiveMortgages(
-  mortgages = [],
-  parcels = {},
-  publications = {}
-) {
+export function getActiveMortgages(mortgages = [], parcels = {}) {
   return mortgages.filter(mortgage => {
     const parcel = parcels[mortgage.asset_id]
-    return isMortgageActive(mortgage, parcel, publications)
+    return isMortgageActive(mortgage, parcel)
   })
 }
 
