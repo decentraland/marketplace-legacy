@@ -1,12 +1,12 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import { getCenterCoords } from 'shared/asset'
 import { locations } from 'locations'
-import { navigateTo } from 'modules/location/actions'
 import { getError, isLoading } from 'modules/parcels/selectors'
+import { navigateTo } from '@dapps/modules/location/actions'
+import { getCenterCoords } from 'shared/asset'
 
-import AssetPreviewHeader from 'components/AssetPreviewHeader/AssetPreviewHeader'
+import AssetPreviewHeader from './AssetPreviewHeader'
 
 const mapState = (state, { asset }) => {
   const { x, y } = getCenterCoords(asset)

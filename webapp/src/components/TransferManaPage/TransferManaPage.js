@@ -60,7 +60,7 @@ export default class TransferManaPage extends React.PureComponent {
                 balance: (
                   <span className="mana-icon-wrapper">
                     &nbsp;
-                    <Mana amount={wallet.balance} />
+                    <Mana amount={wallet.mana} />
                   </span>
                 )
               }}
@@ -71,7 +71,7 @@ export default class TransferManaPage extends React.PureComponent {
       >
         <TransferManaForm
           address={wallet.address}
-          balance={wallet.balance}
+          mana={wallet.mana}
           isTxIdle={isTxIdle}
           onSubmit={onSubmit}
           onCancel={onCancel}

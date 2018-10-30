@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 
 import { locations } from 'locations'
 import { getMatchParams } from 'modules/location/selectors'
-import { navigateTo } from 'modules/location/actions'
 import { getParcelMortgageFactory } from 'modules/mortgage/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
+import { navigateTo } from '@dapps/modules/location/actions'
 
 import ParcelDetailPage from './ParcelDetailPage'
 

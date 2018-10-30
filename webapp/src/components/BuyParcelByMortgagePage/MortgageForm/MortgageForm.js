@@ -38,7 +38,7 @@ export default class MortgageForm extends React.PureComponent {
     onPublish: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     isDisabled: PropTypes.bool.isRequired,
-    balance: PropTypes.number.isRequired
+    mana: PropTypes.number.isRequired
   }
 
   static defaultProps = {
@@ -105,15 +105,13 @@ export default class MortgageForm extends React.PureComponent {
     const amount = e.currentTarget.value
       ? parseInt(e.currentTarget.value, 10)
       : 0
-    const { balance } = this.props
+    const { mana } = this.props
     const requiredDeposit = this.getRequiredDeposit(amount)
 
     this.setState({
       amount: amount > 0 ? amount : '',
       formErrors:
-        requiredDeposit > balance
-          ? [t('mortgage.errors.deposit_gt_balance')]
-          : []
+        requiredDeposit > mana ? [t('mortgage.errors.deposit_gt_balance')] : []
     })
   }
 
@@ -132,7 +130,7 @@ export default class MortgageForm extends React.PureComponent {
   }
 
   handlePublish = () => {
-    const { parcel, publication, onPublish, balance } = this.props
+    const { parcel, publication, onPublish, mana } = this.props
     const {
       amount,
       duration,
@@ -219,7 +217,7 @@ export default class MortgageForm extends React.PureComponent {
 
     const requiredDeposit = this.getRequiredDeposit(amount)
 
-    if (requiredDeposit > balance) {
+    if (requiredDeposit > mana) {
       formErrors.push(t('mortgage.errors.deposit_gt_balance'))
     }
 

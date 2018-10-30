@@ -49,7 +49,7 @@ export default class BuyParcelPage extends React.PureComponent {
       isTxIdle,
       onCancel
     } = this.props
-    const { balance } = wallet
+    const { mana } = wallet
 
     return (
       <Parcel x={x} y={y} ownerNotAllowed withPublications>
@@ -60,7 +60,7 @@ export default class BuyParcelPage extends React.PureComponent {
 
             const price = parseFloat(publication.price)
 
-            const isNotEnoughMana = balance < price
+            const isNotEnoughMana = mana < price
             const isNotEnoughAllowance = allowance < price
             return (
               <div className="BuyParcelPage">

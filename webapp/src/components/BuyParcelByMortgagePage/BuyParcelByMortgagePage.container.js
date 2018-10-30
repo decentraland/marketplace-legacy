@@ -22,17 +22,17 @@ const mapState = (state, ownProps) => {
   const wallet = getWallet(state)
 
   let authorization
-  let balance = 0
+  let mana = 0
 
   if (wallet) {
     authorization = getAuthorizations(state)[wallet.address]
-    balance = wallet.balance
+    mana = wallet.mana
   }
 
   return {
     x,
     y,
-    balance,
+    mana,
     authorization,
     publication: getPublicationByCoordinate(state, x, y),
     isTxIdle: isRequestingMortgageTransactionIdle(state),

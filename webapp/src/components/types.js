@@ -87,7 +87,7 @@ export const transactionType = shape({
 export const walletType = shape({
   network: string, // TODO: Maybe use eth.getNetworks().map(name) to validate here
   address: string,
-  balance: number,
+  mana: number,
   parcels: arrayOf(parcelType).isRequired
 })
 
@@ -101,13 +101,6 @@ export const transferType = shape({
   oldOwner: string,
   newOwner: string,
   parcelId: string
-})
-
-export const toastType = shape({
-  id: string.isRequired,
-  kind: oneOf(['info', 'success', 'error', 'warning']),
-  message: string,
-  delay: number
 })
 
 export const mortgageType = shape({

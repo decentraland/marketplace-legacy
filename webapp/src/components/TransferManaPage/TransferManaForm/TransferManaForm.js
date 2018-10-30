@@ -14,7 +14,7 @@ import './TransferManaForm.css'
 export default class TransferManaForm extends React.PureComponent {
   static propTypes = {
     address: PropTypes.string,
-    balance: PropTypes.number,
+    mana: PropTypes.number,
     isTxIdle: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
@@ -30,12 +30,13 @@ export default class TransferManaForm extends React.PureComponent {
   }
 
   handleAmountChange = e => {
-    const { balance } = this.props
+    const { mana } = this.props
     const amount = e.currentTarget.value
+
     if (amount === '') {
       this.setState({ amount })
     } else {
-      this.setState({ amount: Math.max(Math.min(balance, amount), 0) })
+      this.setState({ amount: Math.max(Math.min(mana, amount), 0) })
     }
   }
 
@@ -72,10 +73,10 @@ export default class TransferManaForm extends React.PureComponent {
   }
 
   isDisabled() {
-    const { balance } = this.props
+    const { mana } = this.props
     const { amount, address } = this.state
 
-    const isValidAmount = !isNaN(amount) && amount > 0 && amount <= balance
+    const isValidAmount = !isNaN(amount) && amount > 0 && amount <= mana
     const isValidAddress =
       !this.isOwnAddress() && eth.utils.isValidAddress(address)
 

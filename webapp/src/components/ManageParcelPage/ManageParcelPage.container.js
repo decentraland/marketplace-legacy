@@ -2,11 +2,12 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
+import { locations } from 'locations'
 import { isManageTransactionIdle } from 'modules/parcels/selectors'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { manageAssetRequest } from 'modules/management/actions'
-import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
+
 import ManageParcelPage from './ManageParcelPage'
 
 const mapState = (state, ownProps) => {

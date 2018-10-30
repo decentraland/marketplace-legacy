@@ -112,7 +112,7 @@ export default class PayMortgagePage extends React.PureComponent {
               hasCustomFooter
             >
               <PayMortgageForm
-                balance={wallet.balance}
+                mana={wallet.mana}
                 mortgage={mortgage}
                 onSubmit={onSubmit}
                 onCancel={onCancel}

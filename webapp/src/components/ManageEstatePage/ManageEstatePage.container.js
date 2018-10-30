@@ -2,12 +2,13 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
+import { locations } from 'locations'
 import { isManageTransactionIdle } from 'modules/estates/selectors'
 import { getMatchParams } from 'modules/location/selectors'
 import { manageAssetRequest } from 'modules/management/actions'
-import { locations } from 'locations'
-import ManageEstatePage from './ManageEstatePage'
 import { ASSET_TYPES } from 'shared/asset'
+
+import ManageEstatePage from './ManageEstatePage'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)

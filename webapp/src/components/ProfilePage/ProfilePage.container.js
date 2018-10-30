@@ -6,7 +6,7 @@ import { getLoading } from 'modules/address/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
 import { fetchAddress } from 'modules/address/actions'
-import { navigateTo } from 'modules/location/actions'
+import { navigateTo } from '@dapps/modules/location/actions'
 import { Location } from 'lib/Location'
 import { Pagination } from 'lib/Pagination'
 

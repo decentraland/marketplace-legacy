@@ -2,9 +2,9 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { locations } from 'locations'
-import { navigateTo } from 'modules/location/actions'
-import AssetDetailPage from './AssetDetailPage'
+import { navigateTo } from '@dapps/modules/location/actions'
 import { buildCoordinate } from 'shared/parcel'
+import AssetDetailPage from './AssetDetailPage'
 
 const mapState = (state, { match }) => {
   const id = match.params.id || buildCoordinate(match.params.x, match.params.y)

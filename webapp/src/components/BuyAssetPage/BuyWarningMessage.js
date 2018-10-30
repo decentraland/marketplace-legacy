@@ -18,9 +18,9 @@ export default class BuyWarningMessage extends React.PureComponent {
 
   render() {
     const { wallet, publication, allowance } = this.props
-    const { balance } = wallet
+    const { mana } = wallet
 
-    const isNotEnoughMana = balance < parseFloat(publication.price)
+    const isNotEnoughMana = mana < parseFloat(publication.price)
     const isMarketplaceAllowed = allowance > 0
     const isLegacyMarketplace = isLegacyPublication(publication)
 
@@ -33,7 +33,7 @@ export default class BuyWarningMessage extends React.PureComponent {
             header={
               isNotEnoughMana
                 ? t('asset_buy.total_balance', {
-                    balance: formatMana(balance)
+                    balance: formatMana(mana)
                   })
                 : isMarketplaceAllowed
                   ? t('asset_buy.allowed_balance', {

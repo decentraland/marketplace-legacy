@@ -1,7 +1,4 @@
 import {
-  CONNECT_WALLET_REQUEST,
-  CONNECT_WALLET_SUCCESS,
-  CONNECT_WALLET_FAILURE,
   TRANSFER_MANA_SUCCESS,
   UPDATE_DERIVATION_PATH,
   UPDATE_BALANCE,
@@ -10,27 +7,20 @@ import {
   BUY_MANA_SUCCESS,
   BUY_MANA_FAILURE
 } from './actions'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
 import {
-  CHANGE_LOCALE,
-  FETCH_TRANSLATIONS_SUCCESS
-} from '@dapps/modules/translation/actions'
+  walletReducer as baseWallerReducer,
+  INITIAL_STATE as BASE_INITIAL_STATE
+} from '@dapps/modules/wallet/reducer'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
 
 const INITIAL_STATE = {
+  ...BASE_INITIAL_STATE,
   data: {
-    locale: null,
-    network: null,
-    address: null,
-    balance: null,
-    derivationPath: null,
-    ethBalance: null,
-    allowances: {},
-    approvals: {}
-  },
-  loading: [],
-  error: null
+    ...BASE_INITIAL_STATE.data,
+    ethBalance: null
+  }
 }
 
 export function walletReducer(state = INITIAL_STATE, action) {
@@ -38,25 +28,9 @@ export function walletReducer(state = INITIAL_STATE, action) {
     case BUY_MANA_REQUEST:
     case BUY_MANA_FAILURE:
     case BUY_MANA_SUCCESS:
-    case CONNECT_WALLET_REQUEST:
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
-      }
-    case CONNECT_WALLET_SUCCESS:
-      return {
-        loading: loadingReducer(state.loading, action),
-        error: null,
-        data: {
-          ...state.data,
-          ...action.wallet
-        }
-      }
-    case CONNECT_WALLET_FAILURE:
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: action.error
       }
     case FETCH_TRANSACTION_SUCCESS: {
       const { transaction } = action.payload
@@ -68,7 +42,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              balance: state.data.balance - mana
+              mana: state.data.mana - mana
             }
           }
         }
@@ -78,7 +52,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
             ...state,
             data: {
               ...state.data,
-              balance: state.data.balance - price
+              mana: state.data.mana - price
             }
           }
         }
@@ -99,7 +73,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
         ...state,
         data: {
           ...state.data,
-          balance: action.balance
+          mana: action.mana
         }
       }
     case UPDATE_ETH_BALANCE:
@@ -110,16 +84,7 @@ export function walletReducer(state = INITIAL_STATE, action) {
           ethBalance: action.ethBalance
         }
       }
-    case CHANGE_LOCALE:
-    case FETCH_TRANSLATIONS_SUCCESS:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          locale: action.payload.locale
-        }
-      }
     default:
-      return state
+      return baseWallerReducer(state, action)
   }
 }

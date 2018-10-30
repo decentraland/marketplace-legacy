@@ -210,7 +210,7 @@ export default class SettingsForm extends React.PureComponent {
             <label htmlFor="mana-balance">{t('global.balance')}</label>
             <div className="mana">
               <span id="mana-balance">
-                <Mana amount={wallet.balance} unit="MANA" />
+                <Mana amount={wallet.mana} unit="MANA" />
               </span>
               <span className="mana-actions">
                 {isFeatureEnabled('BUY_MANA') ? (
