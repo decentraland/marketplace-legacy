@@ -19,18 +19,7 @@ const INITIAL_STATE = {
   ...BASE_INITIAL_STATE,
   data: {
     ...BASE_INITIAL_STATE.data,
-<<<<<<< HEAD
-<<<<<<< HEAD
     ethBalance: null
-=======
-    balance: null,
-    ethBalance: null,
-    allowances: {},
-    approvals: {}
->>>>>>> feat: add wallet
-=======
-    ethBalance: null
->>>>>>> feat: add wallet
   }
 }
 

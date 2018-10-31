@@ -5,20 +5,10 @@ import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
 import { createWalletSaga } from '@dapps/modules/wallet/sagas'
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feat: add wallet
 import {
   CONNECT_WALLET_SUCCESS,
   connectWalletRequest
 } from '@dapps/modules/wallet/actions'
-<<<<<<< HEAD
-=======
-import { CONNECT_WALLET_SUCCESS } from '@dapps/modules/wallet/actions'
->>>>>>> feat: add wallet
-=======
->>>>>>> feat: add wallet
 import {
   TRANSFER_MANA_REQUEST,
   BUY_MANA_REQUEST,
@@ -51,19 +41,9 @@ function* fullWalletSaga() {
   yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 function* handleConnectWalletSuccess(action) {
   const { address } = action.payload.wallet
 
-=======
-function* handleConnectWalletSuccess(address) {
->>>>>>> feat: add wallet
-=======
-function* handleConnectWalletSuccess(action) {
-  const { address } = action.payload.wallet
-
->>>>>>> feat: add wallet
   const authorization = {
     allowances: {
       Marketplace: ['MANAToken'],

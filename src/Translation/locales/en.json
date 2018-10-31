@@ -280,6 +280,7 @@
       "deposit_gt_balance": "Required deposit is greater than your balance",
       "duration_gte_payable":
         "Duration should be greater or equal than payable at days",
+      "insufficient_funds": "You don't have anought MANA. Required: {amount}",
       "maximum_interest_rate": "The rate should be lower than {maximum}",
       "minimum_duration": "Duration should be greater than {minimum} days",
       "minimum_interest_rate": "The rate should be greater than {minimum}",
@@ -291,6 +292,8 @@
     "fetching_data": "Fetching mortgage data",
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
+    "network_fee":
+      "You need at least {amount} in your balance due to network fees",
     "oracle": "Oracle contract address",
     "outstanding_amount": "Outstanding amount",
     "partial_payment": "Partial payment",

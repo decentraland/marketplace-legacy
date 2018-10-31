@@ -19,7 +19,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    mana: PropTypes.number.isRequired,
+    mana: PropTypes.number,
     authorization: authorizationType,
     publication: publicationType,
     error: PropTypes.string,
@@ -83,14 +83,17 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
       return this.renderNotConnected()
     }
 
-    const { allowances } = authorization
-    const isMortgageApprovedForMana = allowances.MortgageHelper.MANAToken > 0
-    const isMortgageApprovedForRCN = allowances.MortgageManager.RCNToken > 0
-
     return (
       <Parcel x={x} y={y} ownerNotAllowed>
-        {parcel =>
-          isOpen(publication) ? (
+        {parcel => {
+          const { allowances } = authorization
+
+          const isMortgageApprovedForMana =
+            allowances.MortgageHelper.MANAToken > 0
+          const isMortgageApprovedForRCN =
+            allowances.MortgageManager.RCNToken > 0
+
+          return isOpen(publication) ? (
             <div className="BuyParcelByMortgage">
               {!isMortgageApprovedForMana ? (
                 <Container text>
@@ -171,7 +174,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
               </ParcelModal>
             </div>
           ) : null
-        }
+        }}
       </Parcel>
     )
   }

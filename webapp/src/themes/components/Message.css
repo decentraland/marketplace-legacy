@@ -1,6 +1,7 @@
 .ui.message {
   background-color: var(--dark-gray);
   color: white !important;
+  padding: 1em 2em 1em 1.5em;
 }
 
 .ui.warning.message {

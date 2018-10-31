@@ -4,15 +4,7 @@ import { isFeatureEnabled } from 'lib/featureUtils'
 import { isParcel } from 'shared/parcel'
 import { isEstate } from 'shared/estate'
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 export function getWalletSagaOptions() {
-=======
-export async function getWalletSagaOptions() {
->>>>>>> feat: add wallet
-=======
-export function getWalletSagaOptions() {
->>>>>>> feat: add wallet
   const {
     MANAToken,
     LANDRegistry,
