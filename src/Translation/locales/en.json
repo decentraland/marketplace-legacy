@@ -284,13 +284,16 @@
       "minimum_duration": "Duration should be greater than {minimum} days",
       "minimum_interest_rate": "The rate should be greater than {minimum}",
       "minimum_payable": "Payable at should be greater than {minimum} days",
-      "parcel_price": "Amount required should be less than parcel price"
+      "parcel_price": "Amount required should be less than parcel price",
+      "insufficient_funds": "You don't have anought MANA. Required: {amount}"
     },
     "expiration": "Request expiration",
     "expiration_placeholder": "Expiration date for the mortgage",
     "fetching_data": "Fetching mortgage data",
     "interest_rate": "Interest rate",
     "interest_rate_placeholder": "Interest rate",
+    "network_fee":
+      "You need at least {amount} in your balance due to network fees",
     "oracle": "Oracle contract address",
     "outstanding_amount": "Outstanding amount",
     "partial_payment": "Partial payment",

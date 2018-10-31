@@ -2,3 +2,26 @@
   color: var(--gray);
   font-style: italic;
 }
+
+.PayMortgageForm .ui.error.message{
+  max-width: 500px;
+}
+
+.PayMortgageForm .ui.error.message div {
+   word-wrap: break-word;
+ }
+
+.PayMortgageForm .network-fee {
+  max-width: 420px;
+  font-size: 14px;
+  letter-spacing: .5px;
+  color: #fff;
+}
+
+.PayMortgageForm.ui.error .network-fee {
+  margin-bottom: 40px;
+}
+
+.PayMortgageForm .network-fee .Mana {
+  vertical-align: bottom
+}
