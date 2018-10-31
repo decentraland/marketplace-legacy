@@ -286,7 +286,7 @@
       "deposit_gt_balance": "Le dépôt requis est supérieur à votre solde",
       "duration_gte_payable":
         "La durée devrait être supérieure ou égale à payable à des jours",
-      "insufficient_funds": "Vous n'avez pas nought2. ",
+      "insufficient_funds": "Vous n'avez pas assez de MANA. ",
       "maximum_interest_rate": "Le taux devrait être inférieur à {maximum}",
       "minimum_duration": "La durée devrait être supérieure à {minimum} jours",
       "minimum_interest_rate": "Le taux devrait être supérieur à {minimum}",

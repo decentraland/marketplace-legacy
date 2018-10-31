@@ -275,7 +275,7 @@
       "deposit_gt_balance": "必要なデポジットが残高よりも大きい",
       "duration_gte_payable":
         "有効期間は支払期間と同じか、それよりも長くなければなりません。",
-      "insufficient_funds": "あなたはMANAを買収していません。",
+      "insufficient_funds": "あなたは十分なMANAを持っていません。",
       "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
       "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
       "minimum_interest_rate": "レートは{minimum}以上で設定してください。",

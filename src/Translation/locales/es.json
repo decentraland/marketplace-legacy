@@ -280,7 +280,7 @@
       "deposit_gt_balance": "El depósito requerido es mayor que su saldo",
       "duration_gte_payable":
         "La duración debe ser mayor o igual que la paga en días",
-      "insufficient_funds": "No tienes nada MANA. ",
+      "insufficient_funds": "No tienes suficiente MANA. ",
       "maximum_interest_rate": "La tasa debe ser inferior a {maximum}",
       "minimum_duration": "La duración debe ser mayor a {minimum} días",
       "minimum_interest_rate": "La tasa debe ser mayor que {minimum}",

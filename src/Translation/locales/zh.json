@@ -265,7 +265,7 @@
       "amount_minimum": "金额应该大于 {amount}",
       "deposit_gt_balance": "所需押金大于您的余额",
       "duration_gte_payable": "持续时间应该大于或等于付款期限",
-      "insufficient_funds": "你没有aought MANA。",
+      "insufficient_funds": "你没有足够的MANA。",
       "maximum_interest_rate": "费率应低于 {maximum}",
       "minimum_duration": "持续时间应该大于 {minimum} 天",
       "minimum_interest_rate": "费率应该大于 {minimum}",

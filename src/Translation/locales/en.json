@@ -280,13 +280,12 @@
       "deposit_gt_balance": "Required deposit is greater than your balance",
       "duration_gte_payable":
         "Duration should be greater or equal than payable at days",
-      "insufficient_funds": "You don't have anought MANA. Required: {amount}",
+      "insufficient_funds": "You don't have enough MANA. Required: {amount}",
       "maximum_interest_rate": "The rate should be lower than {maximum}",
       "minimum_duration": "Duration should be greater than {minimum} days",
       "minimum_interest_rate": "The rate should be greater than {minimum}",
       "minimum_payable": "Payable at should be greater than {minimum} days",
-      "parcel_price": "Amount required should be less than parcel price",
-      "insufficient_funds": "You don't have anought MANA. Required: {amount}"
+      "parcel_price": "Amount required should be less than parcel price"
     },
     "expiration": "Request expiration",
     "expiration_placeholder": "Expiration date for the mortgage",
