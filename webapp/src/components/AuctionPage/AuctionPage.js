@@ -126,6 +126,7 @@ export default class AuctionPage extends React.PureComponent {
                       key={parcel.id}
                       parcel={parcel}
                       withLink={false}
+                      withTags={false}
                     />
                   ))}
                 </div>
