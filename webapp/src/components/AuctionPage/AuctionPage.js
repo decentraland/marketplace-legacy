@@ -12,7 +12,7 @@ import { getParcelSorter } from 'shared/parcel'
 import './AuctionPage.css'
 
 // TODO: Real number here
-const MAX_PARCELS_PER_TX = Infinity
+const MAX_PARCELS_PER_TX = 20
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
@@ -21,6 +21,8 @@ export default class AuctionPage extends React.PureComponent {
 
   constructor(props) {
     super(props)
+
+    this.parcelPrice = 3000 // TODO: use the contract to get this value
     this.state = {
       selectedCoordsById: {}
     }
@@ -113,13 +115,47 @@ export default class AuctionPage extends React.PureComponent {
             ) : null}
 
             <Grid.Row>
-              <Grid.Column width={16}>
+              <Grid.Column mobile={16} computer={6}>
                 <Header size="large">{t('auction_page.title')}</Header>
-              </Grid.Column>
-              <Grid.Column width={16} className="selected-parcels">
-                <p className="parcels-included-description">
+                <p className="subtitle parcels-included-description">
                   {t('auction_page.description')}
                 </p>
+              </Grid.Column>
+              <Grid.Column mobile={16} computer={10}>
+                <div className="information-blocks">
+                  <div className="information-block">
+                    <p className="subtitle">GAS PRICE</p>
+                    <Header size="large">300wei</Header>
+                  </div>
+                  <div className="information-block">
+                    <p className="subtitle">PARCEL PRICE</p>
+                    <Header size="large">{this.parcelPrice}</Header>
+                  </div>
+                  <div className="information-block">
+                    <p className="subtitle">PARCELS</p>
+                    <Header size="large">
+                      {selected.length}/{MAX_PARCELS_PER_TX}
+                    </Header>
+                  </div>
+                  <div className="information-block">
+                    <p className="subtitle">TOTAL PRICE</p>
+                    <Header size="large">
+                      {this.parcelPrice * selected.length}
+                    </Header>
+                  </div>
+                  <div className="information-block">
+                    <Button
+                      type="submit"
+                      primary={true}
+                      disabled={selected.length === 0}
+                    >
+                      {t('auction_page.bid')}
+                    </Button>
+                  </div>
+                </div>
+              </Grid.Column>
+
+              <Grid.Column width={16} className="selected-parcels">
                 <div className="parcels-included">
                   {this.getParcels().map(parcel => (
                     <ParcelAttributes

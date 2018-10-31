@@ -106,6 +106,7 @@
     "your_parcel": "Votre parcelle"
   },
   "auction_page": {
+    "bid": "Offre",
     "description": "Sélectionnez LAND à acheter",
     "maximum_parcels_message":
       "Si vous essayez d'acheter plus de {max} colis en une seule transaction, vous échouerez. ",

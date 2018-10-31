@@ -103,6 +103,7 @@
     "your_parcel": "Your parcel"
   },
   "auction_page": {
+    "bid": "Bid",
     "description": "Select LAND to buy",
     "maximum_parcels_message":
       "If you try to buy more than {max} parcels in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",

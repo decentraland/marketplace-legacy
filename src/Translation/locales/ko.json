@@ -103,6 +103,7 @@
     "your_parcel": "당신의 토지"
   },
   "auction_page": {
+    "bid": "매기다",
     "description": "구매할 LAND 선택",
     "maximum_parcels_message":
       "단일 트랜잭션에서 {max} 소포를 초과하여 구매하려고하면 실패합니다. ",
