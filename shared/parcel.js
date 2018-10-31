@@ -10,6 +10,16 @@ export function isParcel(asset) {
   )
 }
 
+export function getParcelSorter() {
+  return (parcel1, parcel2) => {
+    if (parcel1.x !== parcel2.x) {
+      return parcel1.x > parcel2.x ? -1 : 1
+    } else {
+      return parcel1.y > parcel2.y ? 1 : -1
+    }
+  }
+}
+
 export function toParcelObject(parcelArray, prevParcels = {}) {
   const parcelObject = {}
   for (const parcel of parcelArray) {

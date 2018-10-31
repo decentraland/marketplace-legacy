@@ -7,6 +7,7 @@ import { parcelType } from 'components/types'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelAttributes from 'components/ParcelAttributes'
 import { t } from '@dapps/modules/translation/utils'
+import { getParcelSorter } from 'shared/parcel'
 
 import './AuctionPage.css'
 
@@ -54,11 +55,28 @@ export default class AuctionPage extends React.PureComponent {
 
   handleSubmit = () => {}
 
-  render() {
+  getParcels() {
     const { allParcels } = this.props
     const { selectedCoordsById } = this.state
 
+    if (!allParcels) return []
+
     const parcelIds = Object.keys(selectedCoordsById)
+    const parcels = []
+
+    for (const parcelId of parcelIds) {
+      const parcel = allParcels[parcelId]
+      if (parcel) {
+        parcels.push(parcel)
+      }
+    }
+
+    return parcels.sort(getParcelSorter())
+  }
+
+  render() {
+    const { selectedCoordsById } = this.state
+
     const selected = Object.values(selectedCoordsById)
 
     return (
@@ -102,17 +120,15 @@ export default class AuctionPage extends React.PureComponent {
                 <p className="parcels-included-description">
                   {t('auction_page.description')}
                 </p>
-                {allParcels &&
-                  parcelIds.map(parcelId => {
-                    const parcel = allParcels[parcelId]
-                    return parcel ? (
-                      <ParcelAttributes
-                        key={parcel.id}
-                        parcel={parcel}
-                        withLink={false}
-                      />
-                    ) : null
-                  })}
+                <div className="parcels-included">
+                  {this.getParcels().map(parcel => (
+                    <ParcelAttributes
+                      key={parcel.id}
+                      parcel={parcel}
+                      withLink={false}
+                    />
+                  ))}
+                </div>
               </Grid.Column>
             </Grid.Row>
           </Grid>

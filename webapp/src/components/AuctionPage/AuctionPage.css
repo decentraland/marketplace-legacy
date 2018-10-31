@@ -18,7 +18,13 @@
   flex-wrap: wrap;
 }
 
+.AuctionPage .parcels-included {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .AuctionPage .ParcelAttributes {
-  margin-right: 16px;
   margin-top: 20px;
+  flex-basis: 5%;
 }
