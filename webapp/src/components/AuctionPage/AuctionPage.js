@@ -30,7 +30,7 @@ export default class AuctionPage extends React.PureComponent {
     const { selectedCoordsById } = this.state
 
     // TODO: Check ownership with contract
-    if (asset.owner != null) return
+    if (asset.owner != null || asset.district_id != null) return
 
     let newSelectedCoordsById = {}
 
