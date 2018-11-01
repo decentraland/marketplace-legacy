@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
+
 import { fetchDistrictsRequest } from 'modules/districts/actions'
 import { openModal } from 'modules/ui/actions'
-import { isStaticPage } from 'modules/location/selectors'
+import { isRootPage } from 'modules/location/selectors'
 
 import Page from './Page'
 
 const mapState = state => ({
-  isStatic: isStaticPage(state)
+  isRootPage: isRootPage(state)
 })
 
 const mapDispatch = dispatch => ({

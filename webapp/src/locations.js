@@ -84,8 +84,6 @@ export const locations = {
   signIn: () => '/sign-in'
 }
 
-export const STATIC_PAGES = [locations.root()]
-
 export const PROFILE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',
   contributions: 'contributions',

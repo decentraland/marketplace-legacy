@@ -1,7 +1,7 @@
-import { STATIC_PAGES } from 'locations'
+import { locations } from 'locations'
 import { getPathname, getPathAction } from '@dapps/modules/location/selectors'
 
-export const isStaticPage = state => STATIC_PAGES.includes(getPathname(state))
+export const isRootPage = state => getPathname(state) === locations.root()
 export const isModalPage = state => {
   const lastPartOfUrl = getPathAction(state)
   switch (lastPartOfUrl) {
@@ -22,7 +22,7 @@ export const isModalPage = state => {
   }
 }
 
-// leverages state injected by react-routers withRouter
+// Leverages state injected by react-routers withRouter
 export const getMatch = state => state.match
 export const getMatchParams = state => getMatch(state).params
 export const getMatchParamsCoordinates = state => {

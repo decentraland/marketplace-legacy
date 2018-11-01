@@ -18,6 +18,7 @@ export default class Navbar extends React.PureComponent {
     wallet: walletType,
     center: coordsType,
     activePage: PropTypes.oneOf(Object.values(NAVBAR_PAGES)),
+    isRootPage: PropTypes.bool,
     isLoading: PropTypes.bool,
     isConnected: PropTypes.bool,
     isConnecting: PropTypes.bool,
@@ -76,7 +77,7 @@ export default class Navbar extends React.PureComponent {
     this.setState({ toggle: false })
   }
 
-  renderStaticPage() {
+  renderRootPage() {
     return (
       <div className="Navbar" role="navigation">
         {this.renderLogoHeader()}
@@ -174,13 +175,13 @@ export default class Navbar extends React.PureComponent {
       activePage,
       isConnected,
       isConnecting,
-      isStatic,
+      isRootPage,
       isModal
     } = this.props
     const navigationPaths = this.getNavigationPaths()
 
-    if (isStatic) {
-      return this.renderStaticPage()
+    if (isRootPage) {
+      return this.renderRootPage()
     }
 
     if (isModal) {
