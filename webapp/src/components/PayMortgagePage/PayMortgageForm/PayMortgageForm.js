@@ -53,7 +53,7 @@ export default class PayMortgageForm extends React.PureComponent {
       )
     }
 
-    if (formErrors.lenght === 0) {
+    if (formErrors.length === 0) {
       onSubmit({ loanId: loan_id, assetId: asset_id, amount })
     } else {
       this.setState({ formErrors })
