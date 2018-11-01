@@ -409,6 +409,18 @@
         "Puedes usar navegadores móviles como {coinbase_link} o {imtoken_link}."
     }
   },
+  "terms_modal": {
+    "also_agree":
+      "También acepta nuestro {privacy_policy_link}, que describe cómo procesamos su información.",
+    "by_agreeing":
+      "Al seleccionar \"Acepto\" a continuación, acepta nuestro {terms_of_service_link}.",
+    "explanation":
+      "Este dApp interactúa con un intercambio descentralizado que se ejecuta en la cadena de bloques Ethereum.",
+    "i_agree": "Estoy de acuerdo",
+    "privacy_policy": "Política de privacidad",
+    "terms_of_service": "Términos de servicio",
+    "title": "Bienvenido a Decentraland's LAND Marketplace"
+  },
   "transaction": {
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",

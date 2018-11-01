@@ -416,6 +416,18 @@
         "Vous pouvez utiliser des navigateurs mobiles tels que {coinbase_link} ou {imtoken_link}."
     }
   },
+  "terms_modal": {
+    "also_agree":
+      "Vous acceptez également notre {privacy_policy_link}, qui décrit comment nous traitons vos informations.",
+    "by_agreeing":
+      "En choisissant \"Je suis d'accord\" ci-dessous, vous acceptez notre {terms_of_service_link}.",
+    "explanation":
+      "Cette application interagit avec un échange décentralisé qui s'exécute sur la blockchain Ethereum.",
+    "i_agree": "Je suis d'accord",
+    "privacy_policy": "Politique de confidentialité",
+    "terms_of_service": "Conditions d'utilisation",
+    "title": "Bienvenue sur le marché LAND de Decentraland"
+  },
   "transaction": {
     "buy": "Vous avez acheté {parcel_link}",
     "buy_mana": "Vous avez acheté {mana} MANA",
