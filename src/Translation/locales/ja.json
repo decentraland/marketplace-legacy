@@ -275,6 +275,7 @@
       "deposit_gt_balance": "必要なデポジットが残高よりも大きい",
       "duration_gte_payable":
         "有効期間は支払期間と同じか、それよりも長くなければなりません。",
+      "insufficient_funds": "あなたは十分なMANAを持っていません。",
       "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
       "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
       "minimum_interest_rate": "レートは{minimum}以上で設定してください。",
@@ -286,6 +287,7 @@
     "fetching_data": "住宅ローンデータの取得",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
+    "network_fee": "ネットワーク料金のため、残高が少なくとも{amount}必要です",
     "oracle": "オクラルコントラクトのアドレス",
     "outstanding_amount": "未払い残高",
     "partial_payment": "部分払い",

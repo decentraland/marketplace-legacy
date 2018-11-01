@@ -286,6 +286,7 @@
       "deposit_gt_balance": "Le dépôt requis est supérieur à votre solde",
       "duration_gte_payable":
         "La durée devrait être supérieure ou égale à payable à des jours",
+      "insufficient_funds": "Vous n'avez pas assez de MANA. ",
       "maximum_interest_rate": "Le taux devrait être inférieur à {maximum}",
       "minimum_duration": "La durée devrait être supérieure à {minimum} jours",
       "minimum_interest_rate": "Le taux devrait être supérieur à {minimum}",
@@ -298,6 +299,8 @@
     "fetching_data": "Récupération des données hypothécaires",
     "interest_rate": "Taux d'intérêt",
     "interest_rate_placeholder": "Taux d'intérêt",
+    "network_fee":
+      "Vous avez besoin d'au moins {amount} dans votre solde en raison des frais de réseau.",
     "oracle": "Adresse du contrat Oracle",
     "outstanding_amount": "Encours",
     "partial_payment": "Paiement partiel",
