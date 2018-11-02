@@ -12,7 +12,8 @@ export default class BaseModal extends React.PureComponent {
     footer: PropTypes.node,
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired,
-    isCloseable: PropTypes.bool
+    isCloseable: PropTypes.bool,
+    data: PropTypes.any
   }
 
   static defaultProps = {
@@ -53,8 +54,8 @@ export default class BaseModal extends React.PureComponent {
         >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
-              <div className="modal-header">
-                {isCloseable ? (
+              {isCloseable ? (
+                <div className="modal-header">
                   <button
                     type="button"
                     className="close"
@@ -63,9 +64,9 @@ export default class BaseModal extends React.PureComponent {
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
-                ) : null}
-                {title && <h4 className="modal-title">{title}</h4>}
-              </div>
+                </div>
+              ) : null}
+              {title && <h4 className="modal-title">{title}</h4>}
               {body && <div className="modal-body">{body}</div>}
               {footer && <div className="modal-footer">{footer}</div>}
               {children}

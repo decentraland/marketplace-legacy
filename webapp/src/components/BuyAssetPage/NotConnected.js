@@ -4,11 +4,11 @@ import { Container, Header } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import './BuyAssetPage.css'
+import './NotConnected.css'
 
 export const NotConnected = ({ assetType }) => (
   <div>
-    <Container text textAlign="center" className="BuyAssetPage">
+    <Container text textAlign="center" className="NotConnected">
       <Header as="h2" size="huge" className="title">
         {t('asset_buy.buy_asset', { asset_type: assetType })}
       </Header>

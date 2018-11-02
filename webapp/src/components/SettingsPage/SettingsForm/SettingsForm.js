@@ -6,14 +6,13 @@ import { Loader, Form, Checkbox, Button } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
-import EtherscanLink from 'components/EtherscanLink'
+import ContractLink from 'components/ContractLink'
 import {
   walletType,
   authorizationType,
   transactionType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { getContractAddress } from 'modules/wallet/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { token } from 'lib/token'
 import DerivationPathDropdown from './DerivationPathDropdown'
@@ -35,14 +34,6 @@ export default class SettingsForm extends React.PureComponent {
   static defaultProps = {
     wallet: {},
     authorization: {}
-  }
-
-  renderContractLink(contractName) {
-    return (
-      <EtherscanLink address={getContractAddress(contractName)}>
-        {contractName}
-      </EtherscanLink>
-    )
   }
 
   renderLoading() {
@@ -84,7 +75,7 @@ export default class SettingsForm extends React.PureComponent {
           <T
             id="authorization.allow"
             values={{
-              contract_link: this.renderContractLink(contractName),
+              contract_link: <ContractLink contractName={contractName} />,
               symbol: token.getSymbolByContractName(tokenContractName)
             }}
           />
@@ -120,7 +111,7 @@ export default class SettingsForm extends React.PureComponent {
           <T
             id="authorization.approve"
             values={{
-              contract_link: this.renderContractLink(contractName),
+              contract_link: <ContractLink contractName={contractName} />,
               symbol: token.getSymbolByContractName(tokenContractName)
             }}
           />

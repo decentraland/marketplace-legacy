@@ -1,80 +1,12 @@
 .AuctionModal {
+  text-align: center;
   color: var(--text);
-  user-select: text;
 }
 
-.AuctionModal .modal-header {
-  padding: 15px 15px 0;
-  border: none;
-  background-color: var(--background);
-}
-
-.AuctionModal .modal-header .close {
-  display: none;
-}
-
-.AuctionModal .text {
-  text-align: center;
-}
-
-.AuctionModal .banner {
-  padding: 25px 0 0;
-  background-color: var(--background);
-  text-align: center;
-}
-
-.AuctionModal h3 {
-  margin-top: 0;
-  margin-bottom: 50px;
-  font-size: 20pt;
-}
-
-.AuctionModal h4 {
-  font-size: 14pt;
-  font-weight: bold;
-}
-
-.AuctionModal .banner h2 {
-  font-size: 28px;
-  margin-top: 0;
-  padding-top: 0;
-}
-
-.AuctionModal .banner .Icon-decentraland {
-  width: 40px;
-  height: 40px;
-  top: 10px;
-  position: relative;
-  right: 7px;
-}
-
-.AuctionModal .modal-body {
-  padding: 30px 50px;
-  background-color: var(--background);
+.AuctionModal .modal-loader-container {
+  padding: 100px 380px;
 }
 
 .AuctionModal .modal-body p {
   font-size: 16px;
-  font-family: 'Source Sans Pro Light', Helvetica, sans-serif;
-}
-
-.little-value {
-  top: 0;
-  left: 0;
-  border-right: 32px solid transparent;
-}
-.big-value {
-  bottom: 0;
-  right: 0;
-  border-left: 32px solid transparent;
-}
-
-.AuctionModal .get-started {
-  margin-top: 50px;
-  text-align: center;
-}
-
-.AuctionModal .get-started .button {
-  padding: 11px 44px;
-  border-radius: 20px;
 }

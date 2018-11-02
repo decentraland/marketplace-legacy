@@ -1,12 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Message, Header, Grid, Container, Button } from 'semantic-ui-react'
+import {
+  Message,
+  Header,
+  Grid,
+  Container,
+  Loader,
+  Button
+} from 'semantic-ui-react'
 import { utils } from 'decentraland-commons'
 
-import { parcelType } from 'components/types'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelAttributes from 'components/ParcelAttributes'
+import { authorizationType, parcelType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
+import { hasSeenAuctionModal, isAuthorized } from 'modules/auction/utils'
 
 import './AuctionPage.css'
 
@@ -15,7 +23,9 @@ const MAX_PARCELS_PER_TX = 20
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
-    allParcels: PropTypes.objectOf(parcelType)
+    authorization: authorizationType,
+    allParcels: PropTypes.objectOf(parcelType),
+    onShowAuctionModal: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -24,6 +34,25 @@ export default class AuctionPage extends React.PureComponent {
     this.parcelPrice = 3000 // TODO: use the contract to get this value
     this.state = {
       selectedCoordsById: {}
+    }
+  }
+
+  componentWillMount() {
+    this.showAuctionModal(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.showAuctionModal(nextProps)
+  }
+
+  showAuctionModal(props) {
+    const { authorization, onShowAuctionModal } = props
+
+    if (
+      !hasSeenAuctionModal() ||
+      (authorization && !isAuthorized(authorization))
+    ) {
+      onShowAuctionModal()
     }
   }
 
@@ -76,9 +105,18 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   render() {
+    const { authorization } = this.props
     const { selectedCoordsById } = this.state
 
     const selected = Object.values(selectedCoordsById)
+
+    if (!authorization) {
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
+    }
 
     return (
       <div className="AuctionPage">

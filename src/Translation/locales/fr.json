@@ -105,6 +105,15 @@
     "your_estate": "Votre domaine",
     "your_parcel": "Votre parcelle"
   },
+  "auction_modal": {
+    "authorize_contract": "Autoriser le contrat",
+    "authorized_explanation": "Vous êtes prêt à commencer! ",
+    "blog_post": "Article de blog",
+    "first_time_explanation":
+      "Pour participer à cette nouvelle vente aux enchères, vous devez autoriser le nouveau contrat {contract_link}. ",
+    "lets_go": "Allons-y!",
+    "title": "Decentraland Enchère"
+  },
   "auction_page": {
     "bid": "Offre",
     "description": "Sélectionnez LAND à acheter",

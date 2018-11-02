@@ -1,9 +1,11 @@
 import React from 'react'
-import { Button } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
+import { Loader, Button } from 'semantic-ui-react'
 
-import { locations } from 'locations'
-import DecentralandLogo from 'components/DecentralandLogo'
-import { getLocalStorage } from '@dapps/lib/localStorage'
+import ContractLink from 'components/ContractLink'
+import { t } from '@dapps/modules/translation/utils'
+import { dismissAuctionModal, isAuthorized } from 'modules/auction/utils'
+import { authorizationType } from 'components/types'
 
 import BaseModal from '../BaseModal'
 
@@ -11,79 +13,91 @@ import './AuctionModal.css'
 
 export default class AuctionModal extends React.PureComponent {
   static propTypes = {
-    ...BaseModal.propTypes
+    ...BaseModal.propTypes,
+    authorization: authorizationType,
+    onAuthorize: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      acceptedTerms: false
-    }
+  handleOnAuthorize = () => {
+    const { onClose, onAuthorize } = this.props
+    onClose()
+    onAuthorize()
   }
 
-  handleOnClose = () => {
-    if (this.state.acceptedTerms) {
-      this.props.onClose()
-      const localStorage = getLocalStorage()
-      localStorage.setItem('seenTermsModal', new Date().getTime())
-    }
+  handleOnDismiss = () => {
+    dismissAuctionModal()
+    this.props.onClose()
   }
 
-  onAgree = () => {
-    this.setState({ acceptedTerms: true }, this.handleOnClose)
+  renderBlogPostLink() {
+    return (
+      <a
+        href="https://blog.decentraland.org"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {t('auction_modal.blog_post')}
+      </a>
+    )
+  }
+
+  renderAuthorizedModalBody() {
+    return (
+      <React.Fragment>
+        <p>
+          {t('auction_modal.authorized_explanation', {
+            blog_post_link: this.renderBlogPostLink()
+          })}
+        </p>
+        <br />
+        <Button primary={true} onClick={this.handleOnDismiss}>
+          {t('auction_modal.lets_go')}
+        </Button>
+      </React.Fragment>
+    )
+  }
+
+  renderFirstTimeModalBody() {
+    return (
+      <React.Fragment>
+        <p>
+          {t('auction_modal.first_time_explanation', {
+            contract_link: <ContractLink contractName="LANDAuction" />,
+            blog_post_link: this.renderBlogPostLink()
+          })}
+        </p>
+        <br />
+        <Button primary={true} onClick={this.handleOnAuthorize}>
+          {t('auction_modal.authorize_contract')}
+        </Button>
+      </React.Fragment>
+    )
   }
 
   render() {
-    const { pathname } = this.props.location
-    if (pathname === locations.root()) {
-      return null
-    }
+    const { authorization } = this.props
+
     return (
       <BaseModal
         className="AuctionModal modal-lg"
+        isCloseable={false}
         {...this.props}
-        onClose={this.handleOnClose}
       >
-        <div className="banner">
-          <h2>
-            <DecentralandLogo />
-          </h2>
-        </div>
-
         <div className="modal-body">
-          <div className="text">
-            <h3>Welcome to Decentraland&apos;s LAND Marketplace</h3>
-            <p>
-              This dApp interacts with a <strong>decentralized exchange</strong>{' '}
-              that runs on the Ethereum blockchain.
-            </p>
-            <p>
-              By choosing &quot;I agree&quot; below, you agree to our{' '}
-              <a
-                href="https://decentraland.org/terms"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Terms of Service
-              </a>.
-            </p>
-            <p>
-              You also agree to our{' '}
-              <a
-                href="https://decentraland.org/privacy"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Privacy Policy
-              </a>, which describes how we process your information.
-            </p>
-          </div>
+          {authorization == null ? (
+            <div className="modal-loader-container">
+              <Loader active size="massive" />
+            </div>
+          ) : (
+            <React.Fragment>
+              <h1>{t('auction_modal.title')}</h1>
+              <br />
 
-          <div className="get-started">
-            <Button primary={true} onClick={this.onAgree}>
-              I AGREE
-            </Button>
-          </div>
+              {isAuthorized(authorization)
+                ? this.renderAuthorizedModalBody()
+                : this.renderFirstTimeModalBody()}
+            </React.Fragment>
+          )}
         </div>
       </BaseModal>
     )

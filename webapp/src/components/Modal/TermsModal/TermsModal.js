@@ -53,29 +53,28 @@ export default class TermsModal extends React.PureComponent {
         <DecentralandLogo />
 
         <div className="modal-body">
-          <div className="text">
-            <h2>{t('terms_modal.title')}</h2>
-            <br />
-            <p>
-              <T id="terms_modal.explanation" />
-            </p>
-            <p>
-              <T
-                id="terms_modal.by_agreeing"
-                values={{
-                  terms_of_service_link: this.renderTermsOfServiceLink()
-                }}
-              />
-            </p>
-            <p>
-              <T
-                id="terms_modal.also_agree"
-                values={{ privacy_policy_link: this.renderPrivacyPolicyLink() }}
-              />
-            </p>
-            <br />
-            <br />
-          </div>
+          <h1>{t('terms_modal.title')}</h1>
+
+          <br />
+          <p>
+            <T id="terms_modal.explanation" />
+          </p>
+          <p>
+            <T
+              id="terms_modal.by_agreeing"
+              values={{
+                terms_of_service_link: this.renderTermsOfServiceLink()
+              }}
+            />
+          </p>
+          <p>
+            <T
+              id="terms_modal.also_agree"
+              values={{ privacy_policy_link: this.renderPrivacyPolicyLink() }}
+            />
+          </p>
+          <br />
+          <br />
 
           <div className="agree-to-terms">
             <Button primary={true} onClick={this.handleOnAgree}>

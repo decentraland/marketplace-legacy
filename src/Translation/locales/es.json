@@ -103,6 +103,15 @@
     "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
+  "auction_modal": {
+    "authorize_contract": "Contrato de autorización",
+    "authorized_explanation": "Estás listo para comenzar! ",
+    "blog_post": "Entrada en el blog",
+    "first_time_explanation":
+      "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}. ",
+    "lets_go": "¡Vamonos!",
+    "title": "Decentraland Subasta"
+  },
   "auction_page": {
     "bid": "Ofertar",
     "description": "Seleccione LAND para comprar",

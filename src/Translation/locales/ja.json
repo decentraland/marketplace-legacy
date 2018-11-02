@@ -100,6 +100,15 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "auction_modal": {
+    "authorize_contract": "契約を承認する",
+    "authorized_explanation": "あなたはすべて始める準備ができています！",
+    "blog_post": "ブログの投稿",
+    "first_time_explanation":
+      "この新しいオークションに参加するには、新しい{contract_link}契約を承認する必要があります。",
+    "lets_go": "行こう！",
+    "title": "NTオークション"
+  },
   "auction_page": {
     "bid": "入札",
     "description": "購入するLANDを選択",

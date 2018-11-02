@@ -102,6 +102,15 @@
     "your_estate": "당신의 재산",
     "your_parcel": "당신의 토지"
   },
+  "auction_modal": {
+    "authorize_contract": "계약 승인",
+    "authorized_explanation": "당신은 모두 시작할 준비가되어 있습니다! ",
+    "blog_post": "블로그 게시물",
+    "first_time_explanation":
+      "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다. ",
+    "lets_go": "가자!",
+    "title": "NT 옥션"
+  },
   "auction_page": {
     "bid": "매기다",
     "description": "구매할 LAND 선택",

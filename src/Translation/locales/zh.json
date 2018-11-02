@@ -95,6 +95,15 @@
     "your_estate": "您的连块土地",
     "your_parcel": "您的地块"
   },
+  "auction_modal": {
+    "authorize_contract": "授权合同",
+    "authorized_explanation": "你们都准备好了！",
+    "blog_post": "博客文章",
+    "first_time_explanation":
+      "要参与此次新拍卖，您需要授权新的{contract_link}合约。",
+    "lets_go": "我们走吧！",
+    "title": "Decentraland拍卖"
+  },
   "auction_page": {
     "bid": "出价",
     "description": "选择LAND购买",
