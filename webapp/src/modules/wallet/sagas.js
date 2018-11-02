@@ -1,6 +1,6 @@
 import { eth } from 'decentraland-eth'
 import { delay } from 'redux-saga'
-import { call, takeLatest, takeEvery, all, put } from 'redux-saga/effects'
+import { call, fork, takeLatest, takeEvery, all, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
@@ -62,6 +62,9 @@ function* handleConnectWalletSuccess(action) {
 
   yield put(fetchAddress(address))
   yield put(fetchAuthorizationRequest(address, authorization))
+  yield put(fetchAuthorizationRequest(address, authorization))
+
+  yield fork(refreshEthBalance, address)
 }
 
 function* handleTransferManaRequest(action) {
@@ -119,4 +122,9 @@ function* handleTransactionSuccess(action) {
       break
   }
   yield null
+}
+
+function* refreshEthBalance(address) {
+  const ethBalance = yield call(() => fetchBalance(address))
+  yield put(updateEthBalance(ethBalance))
 }
