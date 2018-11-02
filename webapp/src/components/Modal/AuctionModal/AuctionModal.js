@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Loader, Button } from 'semantic-ui-react'
 
 import ContractLink from 'components/ContractLink'
-import { t } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 import { dismissAuctionModal, isAuthorized } from 'modules/auction/utils'
 import { authorizationType } from 'components/types'
 
@@ -45,9 +45,12 @@ export default class AuctionModal extends React.PureComponent {
     return (
       <React.Fragment>
         <p>
-          {t('auction_modal.authorized_explanation', {
-            blog_post_link: this.renderBlogPostLink()
-          })}
+          {
+            <T
+              id="auction_modal.authorized_explanation"
+              values={{ blog_post_link: this.renderBlogPostLink() }}
+            />
+          }
         </p>
         <br />
         <Button primary={true} onClick={this.handleOnDismiss}>
@@ -61,10 +64,15 @@ export default class AuctionModal extends React.PureComponent {
     return (
       <React.Fragment>
         <p>
-          {t('auction_modal.first_time_explanation', {
-            contract_link: <ContractLink contractName="LANDAuction" />,
-            blog_post_link: this.renderBlogPostLink()
-          })}
+          {
+            <T
+              id="auction_modal.first_time_explanation"
+              values={{
+                contract_link: <ContractLink contractName="LANDAuction" />,
+                blog_post_link: this.renderBlogPostLink()
+              }}
+            />
+          }
         </p>
         <br />
         <Button primary={true} onClick={this.handleOnAuthorize}>
