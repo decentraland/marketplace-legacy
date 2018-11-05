@@ -132,7 +132,7 @@
     "taken": "取得済",
     "title": "カラーガイド",
     "unowned": "未所有",
-    "yours": "マイランド",
+    "yours": "マイLAND",
     "yours_on_sale": "あなたの販売している"
   },
   "contribution": {
@@ -215,7 +215,7 @@
     "owner_address_warning": "このアドレスはすでに所有されています！",
     "paid_at": "支払済み",
     "parcels": "パーセル区画",
-    "profile": "マイランド",
+    "profile": "プロフィール",
     "publications": "公開中の区画",
     "recipient_address": "受信者アドレス",
     "remove": "削除する",
@@ -242,7 +242,7 @@
     "get_started": "始める",
     "hero_subtitle": "分散型の土地取引所。手数料無料。",
     "hero_title": "ジェネシスシティで、あなたの理想の土地を選ぼう",
-    "newest_lands": "新着ランド",
+    "newest_lands": "新着LAND",
     "view_more": "もっと見る",
     "watch_tutorial": "チュートリアルを観る"
   },
@@ -292,7 +292,7 @@
     "outstanding_amount": "未払い残高",
     "partial_payment": "部分払い",
     "partial_payment_desc":
-      "{parcel_name}のランドを購入する為のローンへの部分払いを行おうとしています。 未払い残高:{outstanding_amount}",
+      "{parcel_name}のLANDを購入する為のローンへの部分払いを行おうとしています。 未払い残高:{outstanding_amount}",
     "pay": "支払う",
     "payable": "支払い方法",
     "payable_placeholder": "数日で支払い可能",
@@ -338,7 +338,7 @@
   },
   "parcel_edit": {
     "description": "説明",
-    "edit_land": "ランドを編集",
+    "edit_land": "LANDを編集",
     "ipns": "コンテンツリンク",
     "name": "名称",
     "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。",
@@ -368,8 +368,8 @@
     "for_buying": "購入に関わる契約",
     "for_buying_LegacyMarketplace": "MANAによる資産の扱い（従来）",
     "for_buying_Marketplace": "MANAによる資産の扱い",
-    "for_buying_MortgageHelper": "ローンによるランドの扱い",
-    "for_buying_MortgageManager": "ローンによるランドの扱い",
+    "for_buying_MortgageHelper": "ローンによるLANDの扱い",
+    "for_buying_MortgageManager": "ローンによるLANDの扱い",
     "for_selling": "販売に関わる契約",
     "legacy_authorization": "従来の承認",
     "pending_tx": "　処理中の取引があります。"
@@ -378,7 +378,7 @@
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
     "get_started": "始める",
     "intro":
-      "まず始めにあなたのランド(土地)を安全に保管する環境を整えてください。",
+      "まず始めにあなたのLAND(土地)を安全に保管する環境を整えてください。",
     "options": {
       "desktop":
         "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます。",
@@ -465,7 +465,7 @@
   },
   "transfer_parcel": {
     "about_to_transfer": "あなたは区画{parcel_name}を転送しようとしています。",
-    "cant_transfer": "このランドは販売中であるため、転送できません。",
-    "transfer_land": "転送ランド"
+    "cant_transfer": "このLANDは販売中であるため、転送できません。",
+    "transfer_land": "転送LAND"
   }
 }
