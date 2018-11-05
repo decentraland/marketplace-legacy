@@ -7,15 +7,12 @@ import {
   FETCH_PARCEL_REQUEST,
   EDIT_PARCEL_REQUEST,
   TRANSFER_PARCEL_REQUEST,
-  FETCH_PARCEL_OWNER_REQUEST,
   fetchParcelSuccess,
   fetchParcelFailure,
   editParcelSuccess,
   editParcelFailure,
   transferParcelSuccess,
-  transferParcelFailure,
-  fetchParcelOwnerSuccess,
-  fetchParcelOwnerFailure
+  transferParcelFailure
 } from './actions'
 import { getData as getParcels } from './selectors'
 import { getAddress } from 'modules/wallet/selectors'
@@ -26,7 +23,6 @@ export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
   yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
   yield takeEvery(TRANSFER_PARCEL_REQUEST, handleTransferRequest)
-  yield takeEvery(FETCH_PARCEL_OWNER_REQUEST, handleParcelOwnerRequest)
 }
 
 function* handleParcelRequest(action) {
@@ -97,17 +93,5 @@ function* handleTransferRequest(action) {
     yield put(transferParcelSuccess(txHash, transfer))
   } catch (error) {
     yield put(transferParcelFailure(error.message))
-  }
-}
-
-function* handleParcelOwnerRequest(action) {
-  const { parcel } = action
-  try {
-    const landRegistry = eth.getContract('LANDRegistry')
-    const owner = yield call(() => landRegistry.ownerOfLand(parcel.x, parcel.y))
-
-    yield put(fetchParcelOwnerSuccess(parcel, owner))
-  } catch (error) {
-    yield put(fetchParcelOwnerFailure(parcel, error.message))
   }
 }

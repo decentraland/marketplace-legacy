@@ -25,12 +25,8 @@ function* handleAuctionParamsRequest(action) {
     const params = {
       gasPriceLimit: gasPriceLimit.toNumber(),
       landsLimitPerBid: landsLimitPerBid.toNumber(),
-      currentPrice: currentPrice.toNumber()
+      currentPrice: eth.utils.fromWei(currentPrice)
     }
-
-    console.log('*********************************************')
-    console.log({ params })
-    console.log('*********************************************')
 
     yield put(fetchAuctionParamsSuccess(params))
   } catch (error) {

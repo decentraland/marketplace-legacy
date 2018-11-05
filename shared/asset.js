@@ -1,4 +1,4 @@
-import { contracts } from 'decentraland-eth'
+import { eth, contracts } from 'decentraland-eth'
 import { isOpen } from './publication'
 import { isParcel } from './parcel'
 import { calculateMapProps } from './estate'
@@ -73,4 +73,22 @@ export function getAssetPublications(assets) {
     if (asset.publication) pubs.push(asset.publication)
     return pubs
   }, [])
+}
+
+export async function getAssetOnChainOwner(assetType, assetTokenId) {
+  const contract = getContractByAssetType(assetType)
+  return contract.ownerOf(assetTokenId)
+}
+
+export function getContractByAssetType(assetType) {
+  switch (assetType) {
+    case ASSET_TYPES.parcel: {
+      return eth.getContract('LANDRegistry')
+    }
+    case ASSET_TYPES.estate: {
+      return eth.getContract('EstateRegistry')
+    }
+    default:
+      throw new Error(`The assetType ${assetType} is invalid`)
+  }
 }

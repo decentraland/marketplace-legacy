@@ -23,3 +23,15 @@ export function fetchAuctionParamsFailure(error) {
     error
   }
 }
+
+// Set new parcel owner
+
+export const SET_ON_CHAIN_PARCEL_OWNER = 'Set on-chain parcel owner'
+
+export function setParcelOnChainOwner(parcelId, owner) {
+  return {
+    type: SET_ON_CHAIN_PARCEL_OWNER,
+    parcelId,
+    owner
+  }
+}

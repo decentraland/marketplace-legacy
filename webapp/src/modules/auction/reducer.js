@@ -1,13 +1,9 @@
 import {
   FETCH_AUCTION_PARAMS_REQUEST,
   FETCH_AUCTION_PARAMS_SUCCESS,
-  FETCH_AUCTION_PARAMS_FAILURE
+  FETCH_AUCTION_PARAMS_FAILURE,
+  SET_ON_CHAIN_PARCEL_OWNER
 } from './actions'
-import {
-  FETCH_PARCEL_OWNER_REQUEST,
-  FETCH_PARCEL_OWNER_SUCCESS,
-  FETCH_PARCEL_OWNER_FAILURE
-} from 'modules/parcels/actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 
 const INITIAL_STATE = {
@@ -17,7 +13,7 @@ const INITIAL_STATE = {
       landsLimitPerBid: null,
       currentPrice: null
     },
-    parcelOwners: {
+    parcelOnChainOwners: {
       /* [parcelId]: owner */
     }
   },
@@ -27,8 +23,7 @@ const INITIAL_STATE = {
 
 export function auctionReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_AUCTION_PARAMS_REQUEST:
-    case FETCH_PARCEL_OWNER_REQUEST: {
+    case FETCH_AUCTION_PARAMS_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
@@ -50,20 +45,22 @@ export function auctionReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case FETCH_PARCEL_OWNER_SUCCESS: {
-      const { parcel, owner } = action
+    case SET_ON_CHAIN_PARCEL_OWNER: {
+      const { parcelId, owner } = action
 
       return {
         loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
-          [parcel.id]: owner
+          parcelOnChainOwners: {
+            ...state.data.parcelOnChainOwners,
+            [parcelId]: owner
+          }
         }
       }
     }
-    case FETCH_AUCTION_PARAMS_FAILURE:
-    case FETCH_PARCEL_OWNER_FAILURE: {
+    case FETCH_AUCTION_PARAMS_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

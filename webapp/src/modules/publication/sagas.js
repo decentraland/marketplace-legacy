@@ -223,13 +223,11 @@ function* buildAsset(assetId, assetType) {
   if (assetType === ASSET_TYPES.parcel) {
     const [x, y] = splitCoordinate(assetId)
 
-    const landRegistryContract = eth.getContract('LANDRegistry')
-    const blockchainId = yield call(() =>
-      landRegistryContract.encodeTokenId(x, y)
-    )
+    const landRegistry = eth.getContract('LANDRegistry')
+    const tokenId = yield call(() => landRegistry.encodeTokenId(x, y))
 
     asset = {
-      id: blockchainId.toString(),
+      id: tokenId.toString(),
       x: parseInt(x, 10),
       y: parseInt(y, 10)
     }
@@ -245,5 +243,6 @@ function* buildAsset(assetId, assetType) {
     }
   }
 
+  // TODO: asset.id should be asset.token_id
   return { ...asset, type: assetType }
 }

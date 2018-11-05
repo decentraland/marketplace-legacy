@@ -107,11 +107,11 @@ function* handleEditEstateParcelsRequest({ estate }) {
 
     if (parcelsToRemove.length) {
       const estateRegistry = eth.getContract('EstateRegistry')
-      const landIds = yield all(
+      const tokenIds = yield all(
         parcelsToRemove.map(({ x, y }) => landRegistry.encodeTokenId(x, y))
       )
       const txHash = yield call(() =>
-        estateRegistry.transferManyLands(estate.id, landIds, owner)
+        estateRegistry.transferManyLands(estate.id, tokenIds, owner)
       )
       yield put(
         editEstateParcelsSuccess(
@@ -161,11 +161,11 @@ function* handleDeleteEstate({ estateId }) {
     const estate = estates[estateId]
     const parcelsToRemove = estate.data.parcels
 
-    const landIds = yield all(
+    const tokenIds = yield all(
       parcelsToRemove.map(({ x, y }) => landRegistry.encodeTokenId(x, y))
     )
     const txHash = yield call(() =>
-      estateRegistry.transferManyLands(estateId, landIds, owner)
+      estateRegistry.transferManyLands(estateId, tokenIds, owner)
     )
     yield put(deleteEstateSuccess(txHash, estate))
     yield put(push(locations.activity()))
@@ -190,9 +190,9 @@ function* handleTransferRequest({ estate, to }) {
       throw new Error('Invalid estate')
     } //@nacho TODO: on translations?
 
-    const contract = eth.getContract('EstateRegistry')
+    const estateRegistry = eth.getContract('EstateRegistry')
     const txHash = yield call(() =>
-      contract.safeTransferFrom(oldOwner, to, estate.id)
+      estateRegistry.safeTransferFrom(oldOwner, to, estate.id)
     )
 
     const transfer = {

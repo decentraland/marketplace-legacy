@@ -99,32 +99,3 @@ export function transferParcelFailure(error) {
     error
   }
 }
-
-// Fetch parcel owner
-
-export const FETCH_PARCEL_OWNER_REQUEST = '[Request] Fetch parcel owner'
-export const FETCH_PARCEL_OWNER_SUCCESS = '[Success] Fetch parcel owner'
-export const FETCH_PARCEL_OWNER_FAILURE = '[Failure] Fetch parcel owner'
-
-export function fetchParcelOwnerRequest(parcel) {
-  return {
-    type: FETCH_PARCEL_OWNER_REQUEST,
-    parcel
-  }
-}
-
-export function fetchParcelOwnerSuccess(parcel, owner) {
-  return {
-    type: FETCH_PARCEL_OWNER_SUCCESS,
-    parcel,
-    owner
-  }
-}
-
-export function fetchParcelOwnerFailure(parcel, error) {
-  return {
-    type: FETCH_PARCEL_OWNER_FAILURE,
-    parcel,
-    error
-  }
-}
