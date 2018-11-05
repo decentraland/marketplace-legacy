@@ -132,8 +132,8 @@
     "taken": "取得済",
     "title": "カラーガイド",
     "unowned": "未所有",
-    "yours": "マイLAND",
-    "yours_on_sale": "あなたの販売している"
+    "yours": "あなたが所有中",
+    "yours_on_sale": "あなたが販売中"
   },
   "contribution": {
     "proposal": "提案"
@@ -144,7 +144,7 @@
   },
   "estate_detail": {
     "dissolve": "エステートを解散する",
-    "dissolve_desc": "あなたはエステート{name}を解散しようとしています。",
+    "dissolve_desc": "エステート{name}を解散しようとしています。",
     "edit_parcels": "区画の編集",
     "empty_estate": "エステート{name}を解散しました。",
     "maximum_parcels_message":
@@ -162,7 +162,7 @@
     "description": "説明",
     "edit_estate": "エステートを編集",
     "name": "名称",
-    "subtitle": "あなたのエステートの区画の名称と説明の設定・編集ができます。"
+    "subtitle": "エステートの区画の名称と説明の設定・編集ができます。"
   },
   "estate_select": {
     "description": "互いに隣接する区画を選択してください。",
