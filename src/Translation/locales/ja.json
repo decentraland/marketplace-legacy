@@ -16,7 +16,7 @@
   },
   "asset_buy": {
     "about_to_buy": "{name}を{price}で購入しようとしています。",
-    "allowed_balance": "あなたの手当は{allowance}です",
+    "allowed_balance": "{allowance}まで利用可能です。",
     "buy_asset": "{asset_type}を購入",
     "buy_mana": "MANAを更に購入する{click_here}",
     "didnt_allow": "あなたはMANAの使用を許可していません",
@@ -72,7 +72,7 @@
     "manage": "{asset_type}を管理する"
   },
   "asset_publish": {
-    "already_sold": "この{asset_name}は既に{value}の販売中です",
+    "already_sold": "この{asset_name}は既に{value}で販売中です",
     "errors": {
       "maximum_expiration": "最大販売期限は{date}です",
       "maximum_land_price": "最大{asset_name}価格は{value} MANA",
@@ -111,7 +111,7 @@
       "{contract_link}に準じて{symbol}を操作することを許可しませんでした"
   },
   "buy_mana": {
-    "action": "もっと購入する",
+    "action": "更に購入する",
     "amount_too_big": "Bancor Networkには額が大き過ぎます。",
     "available_eth": "利用可能額: {eth}ETH",
     "not_enough": "購入するのにETHが不足しています。",
@@ -132,8 +132,8 @@
     "taken": "取得済",
     "title": "カラーガイド",
     "unowned": "未所有",
-    "yours": "マイランド",
-    "yours_on_sale": "あなたの販売している"
+    "yours": "あなたが所有中",
+    "yours_on_sale": "あなたが販売中"
   },
   "contribution": {
     "proposal": "提案"
@@ -144,7 +144,7 @@
   },
   "estate_detail": {
     "dissolve": "エステートを解散する",
-    "dissolve_desc": "あなたはエステート{name}を解散しようとしています。",
+    "dissolve_desc": "エステート{name}を解散しようとしています。",
     "edit_parcels": "区画の編集",
     "empty_estate": "エステート{name}を解散しました。",
     "maximum_parcels_message":
@@ -162,7 +162,7 @@
     "description": "説明",
     "edit_estate": "エステートを編集",
     "name": "名称",
-    "subtitle": "あなたのエステートの区画の名称と説明の設定・編集ができます。"
+    "subtitle": "エステートの区画の名称と説明の設定・編集ができます。"
   },
   "estate_select": {
     "description": "互いに隣接する区画を選択してください。",
@@ -207,15 +207,15 @@
     "for": "for",
     "loading": "読込み中",
     "marketplace": "マーケット",
-    "mortgage": "担保",
-    "mortgages": "担保",
+    "mortgage": "ローン",
+    "mortgages": "ローン",
     "own_address_warning": "これはあなた自身のアドレスです！",
     "owned_by": "所有者",
     "owned_by_link": "所有者：{address_link}",
     "owner_address_warning": "このアドレスはすでに所有されています！",
     "paid_at": "支払済み",
     "parcels": "パーセル区画",
-    "profile": "マイランド",
+    "profile": "プロフィール",
     "publications": "公開中の区画",
     "recipient_address": "受信者アドレス",
     "remove": "削除する",
@@ -242,7 +242,7 @@
     "get_started": "始める",
     "hero_subtitle": "分散型の土地取引所。手数料無料。",
     "hero_title": "ジェネシスシティで、あなたの理想の土地を選ぼう",
-    "newest_lands": "新着ランド",
+    "newest_lands": "新着LAND",
     "view_more": "もっと見る",
     "watch_tutorial": "チュートリアルを観る"
   },
@@ -265,7 +265,7 @@
   "mortgage": {
     "amount": "総額",
     "amount_placeholder": "MANA総額",
-    "cancel": "担保をキャンセルする",
+    "cancel": "ローンをキャンセルする",
     "claim": "区画を請求する",
     "defaulted_in": "デフォルト",
     "duration": "有効期間",
@@ -283,7 +283,7 @@
       "parcel_price": "総額は区画の価格以下にしなければいけません。"
     },
     "expiration": "有効期限を申請する",
-    "expiration_placeholder": "担保の有効期限",
+    "expiration_placeholder": "ローンの有効期限",
     "fetching_data": "住宅ローンデータの取得",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
@@ -292,20 +292,20 @@
     "outstanding_amount": "未払い残高",
     "partial_payment": "部分払い",
     "partial_payment_desc":
-      "{parcel_name}のランドを購入する為の担保への部分払いを行おうとしています。 未払い残高:{outstanding_amount}",
+      "{parcel_name}のLANDを購入する為のローンへの部分払いを行おうとしています。 未払い残高:{outstanding_amount}",
     "pay": "支払う",
     "payable": "支払い方法",
     "payable_placeholder": "数日で支払い可能",
-    "pending_tx": "次の為の担保",
+    "pending_tx": "次の為のローン",
     "please_authorize_MANA":
       "{settings_link}であなたのためにMANAを運用するための抵当ヘルパー契約を承認してください",
     "please_authorize_RCN":
       "{settings_link}に行き、あなたのためにRCNを運営するモーゲージマネージャー契約を承認してください",
     "punitory_rate": "遅延利息",
     "punitory_rate_placeholder": "遅延利息",
-    "request": "担保を申請しています。",
+    "request": "ローンを申請しています。",
     "request_land":
-      "{parcel_name}への担保を{parcel_price}価値で申請しようとしています。",
+      "{parcel_name}へのローンを{parcel_price}で申請しようとしています。",
     "requested": "申請しました。",
     "required_deposit": "必要なデポジット：{deposit}"
   },
@@ -329,7 +329,7 @@
       "part_of": "{name}の一部"
     },
     "publication": {
-      "mortgage": "担保を申請する"
+      "mortgage": "ローンを申請"
     },
     "tags": {
       "title": "特徴"
@@ -338,7 +338,7 @@
   },
   "parcel_edit": {
     "description": "説明",
-    "edit_land": "ランドを編集",
+    "edit_land": "LANDを編集",
     "ipns": "コンテンツリンク",
     "name": "名称",
     "set_name_and_desc": "{parcel_name}の任意の名称と説明を設定して下さい。",
@@ -366,10 +366,10 @@
     "authorization_error_contact":
       "エラーが解決しない場合は、お手数ですがお問い合わせください",
     "for_buying": "購入に関わる契約",
-    "for_buying_LegacyMarketplace": "MANA（レガシー）を使用する資産",
-    "for_buying_Marketplace": "MANAを使用する資産",
-    "for_buying_MortgageHelper": "住宅ローンによるLAND",
-    "for_buying_MortgageManager": "住宅ローンによるLAND",
+    "for_buying_LegacyMarketplace": "MANAによる資産の扱い（従来）",
+    "for_buying_Marketplace": "MANAによる資産の扱い",
+    "for_buying_MortgageHelper": "ローンによるLANDの扱い",
+    "for_buying_MortgageManager": "ローンによるLANDの扱い",
     "for_selling": "販売に関わる契約",
     "legacy_authorization": "従来の承認",
     "pending_tx": "　処理中の取引があります。"
@@ -378,7 +378,7 @@
     "account_unlocked": "アカウントがアンロックされているか確認してください。",
     "get_started": "始める",
     "intro":
-      "まず始めにあなたのランド(土地)を安全に保管する環境を整えてください。",
+      "まず始めにあなたのLAND(土地)を安全に保管する環境を整えてください。",
     "options": {
       "desktop":
         "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます。",
@@ -390,10 +390,10 @@
     "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "あなたは{parcel_link}での販売をキャンセルしました",
-    "cancel_mortgage": "区画{parcel_link}購入の為の担保をキャンセルしました",
+    "cancel_mortgage": "区画{parcel_link}購入の為のローンをキャンセルしました",
     "claim_mortgage_resolution": "{parcel_link}へ請求しました",
     "create_estate": "あなたはエステート{name}を作成しました",
-    "create_mortgage": "区画{parcel_link}を購入するのに担保を申請しました",
+    "create_mortgage": "区画{parcel_link}を購入するのにローンを申請しました",
     "dissolve_estate": "エステート{name}を解散しました",
     "edit":
       "{parcel_link}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました",
@@ -411,7 +411,7 @@
     "mortgage_rcn":
       "{mortgage_contract_link}でRCNを使用することを{action}しました",
     "pay_mortgage":
-      "区画{parcel_link}を購入する担保への一部払いで{amount}MANAを支払いました",
+      "区画{parcel_link}を購入するローンへの部分払いで{amount}MANAを支払いました",
     "publish": "{parcel_link}を公開しました",
     "transfer": "{parcel_link}を{owner_link}へ転送しました",
     "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
@@ -443,11 +443,11 @@
   },
   "transaction_types": {
     "confirmed": "確認済",
-    "dropped": "中断された",
+    "dropped": "中断済",
     "loading": "読み込み中",
     "pending": "保留中",
     "queued": "待機中",
-    "replaced": "置き換えられた",
+    "replaced": "置換済",
     "reverted": "失敗"
   },
   "transfer_estate": {
@@ -465,7 +465,7 @@
   },
   "transfer_parcel": {
     "about_to_transfer": "あなたは区画{parcel_name}を転送しようとしています。",
-    "cant_transfer": "このランドは販売中であるため、転送できません。",
-    "transfer_land": "転送ランド"
+    "cant_transfer": "このLANDは販売中であるため、転送できません。",
+    "transfer_land": "転送LAND"
   }
 }
