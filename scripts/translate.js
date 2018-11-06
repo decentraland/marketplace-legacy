@@ -123,7 +123,7 @@ async function processBatch(requests, missing) {
     // restore non-translatable words
     nonTranslatable.forEach((word, index) => {
       text = text.replace(
-        new RegExp(`${NON_TRANSLATABLE_KEY}${index}`, 'g'),
+        new RegExp(`${NON_TRANSLATABLE_KEY}${index}`, 'gi'),
         nonTranslatable[index]
       )
     })
