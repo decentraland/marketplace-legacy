@@ -88,7 +88,10 @@ export default class AuctionPage extends React.PureComponent {
     if (!isParcel(asset) || asset.district_id != null) return
 
     const onChainOwner = await this.getOnChainOwner(asset)
-    if (!Contract.isEmptyAddress(onChainOwner)) return
+    if (!Contract.isEmptyAddress(onChainOwner)) {
+      this.props.onSetParcelOnChainOwner(asset.id, onChainOwner)
+      return
+    }
 
     const newSelectedCoordsById = this.getNewSelectedCoordsFor(asset)
     if (this.hasReachedLimit(newSelectedCoordsById)) return
@@ -100,10 +103,6 @@ export default class AuctionPage extends React.PureComponent {
     const landRegistry = eth.getContract('LANDRegistry')
     const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
     const onChainOwner = await getAssetOnChainOwner(ASSET_TYPES.parcel, tokenId)
-
-    setTimeout(() =>
-      this.props.onSetParcelOnChainOwner(parcel.id, onChainOwner)
-    ) // Don't block the UI
 
     return onChainOwner
   }
