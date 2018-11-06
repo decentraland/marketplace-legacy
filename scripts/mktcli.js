@@ -8,6 +8,7 @@ import { connectEth } from '../src/ethereum'
 import { Parcel, Estate } from '../src/Asset'
 import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
+import { eventNames } from '../src/ethereum'
 import { mockModelDbOperations } from '../specs/utils'
 import { ASSET_TYPES } from '../shared/asset'
 import { processEvent } from '../monitor/processEvents'
@@ -221,7 +222,6 @@ const main = {
       .action(
         asSafeAction(async (assetId, assetType, options) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
-          const events = BlockchainEvent.getEvents()
 
           const blockchainEvents = await BlockchainEvent.findByArgs(
             'assetId',
@@ -241,21 +241,24 @@ const main = {
             }
 
             switch (name) {
-              case events.publicationCreated:
+              case eventNames.AuctionCreated:
+              case eventNames.OrderCreated:
                 log += `with id ${args.id} by ${args.seller} for ${
                   args.priceInWei
                 }`
                 break
-              case events.publicationCancelled:
+              case eventNames.AuctionCancelled:
+              case eventNames.OrderCancelled:
                 log += `with id ${args.id}`
                 break
-              case events.publicationSuccessful:
+              case eventNames.AuctionSuccessful:
+              case eventNames.OrderSuccessful:
                 log += `with id ${args.id} and winner ${args.winner}`
                 break
-              case events.parcelUpdate:
+              case eventNames.Update:
                 log += `with data ${args.data}`
                 break
-              case events.parcelTransfer:
+              case eventNames.Transfer:
                 log += `to ${args.to}`
                 break
               default:
