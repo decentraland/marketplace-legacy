@@ -100,6 +100,14 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "auction_page": {
+    "description": "購入するLANDを選択",
+    "maximum_parcels_message":
+      "あなたが単一のトランザクションで{max}パーセル以上を購入しようとすると、それは失敗します。",
+    "maximum_parcels_title":
+      "あなたはトランザクションごとに最大の小包に達しました",
+    "title": "未所有の小包を購入する"
+  },
   "authorization": {
     "allow": "{contract_link}に準じて{symbol}を操作することを許可する",
     "allowed": "{contract_link}に準じて{symbol}を操作することを許可しました",
@@ -184,6 +192,7 @@
     "add": "追加する",
     "address_placeholder": "0x...",
     "atlas": "地図",
+    "auction": "オークション",
     "balance": "残高",
     "blog": "ブログ",
     "cancel": "キャンセル",
@@ -366,6 +375,7 @@
     "authorization_error_contact":
       "エラーが解決しない場合は、お手数ですがお問い合わせください",
     "for_buying": "購入に関わる契約",
+    "for_buying_LANDAuction": "MANAを使用してLANDをオークションしました",
     "for_buying_LegacyMarketplace": "MANAによる資産の扱い（従来）",
     "for_buying_Marketplace": "MANAによる資産の扱い",
     "for_buying_MortgageHelper": "ローンによるLANDの扱い",

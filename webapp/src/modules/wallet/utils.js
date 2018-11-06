@@ -13,6 +13,14 @@ export function getWalletSagaOptions() {
     EstateRegistry
   } = contracts
 
+  // TODO: Remove this once LANDAuction exists on decentraland-eth
+  const LANDAuction = Object.create(
+    new Contract(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS'), [])
+  )
+  LANDAuction.getContractName = () => 'LANDAuction'
+  LANDAuction.getCurrentPrice = () => Promise.resolve(5500)
+  LANDAuction.bid = (x, y) => Promise.resolve()
+
   return {
     provider: env.get('REACT_APP_PROVIDER_URL'),
     contracts: [
@@ -23,6 +31,7 @@ export function getWalletSagaOptions() {
       ),
       new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
       new EstateRegistry(env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')),
+      LANDAuction,
       ...getMortgageContracts()
     ],
     eth

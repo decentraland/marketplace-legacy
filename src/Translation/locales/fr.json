@@ -105,6 +105,14 @@
     "your_estate": "Votre domaine",
     "your_parcel": "Votre parcelle"
   },
+  "auction_page": {
+    "description": "Sélectionnez LAND à acheter",
+    "maximum_parcels_message":
+      "Si vous essayez d'acheter plus de {max} colis en une seule transaction, vous échouerez. ",
+    "maximum_parcels_title":
+      "Vous avez atteint le nombre maximum de colis par transaction",
+    "title": "Acheter des colis non possédés"
+  },
   "authorization": {
     "allow": "Autoriser le {contract_link} à utiliser {symbol} en votre nom",
     "allowed":
@@ -194,6 +202,7 @@
     "add": "ajouter",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
+    "auction": "Enchères",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Annuler",
@@ -225,7 +234,7 @@
     "owner_address_warning": "C'est déjà le propriétaire!",
     "paid_at": "Payé à",
     "parcels": "Parcelles",
-    "profile": "Mes LANDs",
+    "profile": "Mes LAND",
     "publications": "Publications",
     "recipient_address": "Adresse du destinataire",
     "remove": "retirer",
@@ -381,8 +390,9 @@
     "authorization_error_contact":
       "Si l'erreur persiste, n'hésitez pas à nous contacter",
     "for_buying": "Pour acheter",
-    "for_buying_LegacyMarketplace": "Actifs utilisant MANA (hérité)",
-    "for_buying_Marketplace": "Actifs utilisant MANA",
+    "for_buying_LANDAuction": "LAND mis aux enchères à l'aide de MANA",
+    "for_buying_LegacyMarketplace": "ERC721 utilisant MANA (hérité)",
+    "for_buying_Marketplace": "ERC721 utilisant MANA",
     "for_buying_MortgageHelper": "LAND par hypothèque",
     "for_buying_MortgageManager": "LAND par hypothèque",
     "for_selling": "Pour vendre",

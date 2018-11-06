@@ -1,3 +1,3 @@
-import AtlasPage from './AtlasPage.container'
+import AtlasPage from './AtlasPage'
 
 export default AtlasPage

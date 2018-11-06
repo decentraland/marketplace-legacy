@@ -102,6 +102,13 @@
     "your_estate": "당신의 재산",
     "your_parcel": "당신의 토지"
   },
+  "auction_page": {
+    "description": "구매할 LAND 선택",
+    "maximum_parcels_message":
+      "단일 트랜잭션에서 {max} 소포를 초과하여 구매하려고하면 실패합니다. ",
+    "maximum_parcels_title": "거래 당 최대 소포에 도달했습니다.",
+    "title": "소유되지 않은 소포 구입"
+  },
   "authorization": {
     "allow": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
     "allowed":
@@ -188,6 +195,7 @@
     "add": "더하다",
     "address_placeholder": "0x...",
     "atlas": "지도",
+    "auction": "경매",
     "balance": "밸런스",
     "blog": "블로그",
     "cancel": "취소",
@@ -370,8 +378,9 @@
     "authorization_error_contact":
       "오류가 지속되면 언제든지 Google에 문의하십시오.",
     "for_buying": "구매를 위해",
-    "for_buying_LegacyMarketplace": "MANA (기존)를 사용하는 애셋",
-    "for_buying_Marketplace": "MANA를 사용하는 저작물",
+    "for_buying_LANDAuction": "MANA를 사용하여 경매 된 LAND",
+    "for_buying_LegacyMarketplace": "MANA (레거시)를 사용하는 ERC721",
+    "for_buying_Marketplace": "MANA를 사용하는 ERC721s",
     "for_buying_MortgageHelper": "모기지의 LAND",
     "for_buying_MortgageManager": "모기지의 LAND",
     "for_selling": "판매용",

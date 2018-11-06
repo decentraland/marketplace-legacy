@@ -102,6 +102,13 @@
     "your_estate": "Your estate",
     "your_parcel": "Your parcel"
   },
+  "auction_page": {
+    "description": "Select LAND to buy",
+    "maximum_parcels_message":
+      "If you try to buy more than {max} parcels in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
+    "maximum_parcels_title": "You reached the maximum parcels per transaction",
+    "title": "Buy unowned parcels"
+  },
   "authorization": {
     "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",
     "allowed":
@@ -153,7 +160,7 @@
     "edit_parcels": "Edit Parcels",
     "empty_estate": "The estate {name} has been dissolved",
     "maximum_parcels_message":
-      "If you add or removes more than {max} parcels in a single transaction it may run out of gas. You can submit this transaction and then add or remove more parcels in a subsequent transaction by editing the estate.",
+      "If you add or remove more than {max} parcels in a single transaction it may run out of gas. You can submit this transaction and then add or remove more parcels in a subsequent transaction by editing the estate.",
     "maximum_parcels_title": "You reached the maximum parcels per transaction",
     "parcels": "Parcels included"
   },
@@ -189,6 +196,7 @@
     "add": "add",
     "address_placeholder": "0x...",
     "atlas": "Atlas",
+    "auction": "Auction",
     "balance": "Balance",
     "blog": "Blog",
     "cancel": "Cancel",
@@ -374,6 +382,7 @@
     "authorization_error_contact":
       "If the error persist don't hesitate to contact us",
     "for_buying": "For buying",
+    "for_buying_LANDAuction": "Auctioned LAND using MANA",
     "for_buying_LegacyMarketplace": "Assets using MANA (legacy)",
     "for_buying_Marketplace": "Assets using MANA",
     "for_buying_MortgageHelper": "LAND by Mortgage",

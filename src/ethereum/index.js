@@ -39,6 +39,23 @@ export function loadContracts() {
       address: env.get('LAND_REGISTRY_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['Update', 'Transfer', 'UpdateOperator']
     },
+    EstateRegistry: {
+      address: env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS').toLowerCase(),
+      eventNames: [
+        'CreateEstate',
+        'AddLand',
+        'RemoveLand',
+        'Transfer',
+        'Update',
+        'UpdateOperator'
+      ]
+    },
+    // LANDAuction: {
+    //   address: env.get('LAND_AUCTION_CONTRACT_ADDRESS').toLowerCase(),
+    //   eventNames: [
+    //     // TODO: Listen to bid event
+    //   ]
+    // },
     MortgageHelper: {
       address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['NewMortgage']
@@ -55,17 +72,6 @@ export function loadContracts() {
     RCNEngine: {
       address: env.get('RCN_ENGINE_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['PartialPayment', 'TotalPayment']
-    },
-    EstateRegistry: {
-      address: env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS').toLowerCase(),
-      eventNames: [
-        'CreateEstate',
-        'AddLand',
-        'RemoveLand',
-        'Transfer',
-        'Update',
-        'UpdateOperator'
-      ]
     }
   })
 
