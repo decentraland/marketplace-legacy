@@ -104,7 +104,7 @@
     "your_parcel": "Tu parcela"
   },
   "auction_page": {
-    "description": "Seleccione LANDs para comprar",
+    "description": "Seleccione LAND para comprar",
     "maximum_parcels_message":
       "Si intenta comprar más de {max} parcelas en una sola transacción, fallará. ",
     "maximum_parcels_title":

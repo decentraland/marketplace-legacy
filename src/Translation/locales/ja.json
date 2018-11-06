@@ -101,7 +101,7 @@
     "your_parcel": "あなたの区画"
   },
   "auction_page": {
-    "description": "購入するLANDsを選択",
+    "description": "購入するLANDを選択",
     "maximum_parcels_message":
       "あなたが単一のトランザクションで{max}パーセル以上を購入しようとすると、それは失敗します。",
     "maximum_parcels_title":

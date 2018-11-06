@@ -43,7 +43,7 @@ export default class AuctionPage extends React.PureComponent {
       }
     }
 
-    if (this.hasReachedAddLimit(newSelectedCoordsById)) return
+    if (this.hasReachedLimit(newSelectedCoordsById)) return
 
     this.setState({ selectedCoordsById: newSelectedCoordsById })
   }

@@ -32,7 +32,7 @@ export default class EditEstatePage extends React.PureComponent {
     if (!id) {
       return (
         <Parcel x={x} y={y}>
-          {(parcel, isOwner, wallet) =>
+          {(_, isOwner, wallet) =>
             this.renderEditEstate(getInitialEstate(x, y), wallet)
           }
         </Parcel>

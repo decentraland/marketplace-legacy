@@ -106,7 +106,7 @@
     "your_parcel": "Votre parcelle"
   },
   "auction_page": {
-    "description": "Sélectionnez LANDs à acheter",
+    "description": "Sélectionnez LAND à acheter",
     "maximum_parcels_message":
       "Si vous essayez d'acheter plus de {max} colis en une seule transaction, vous échouerez. ",
     "maximum_parcels_title":
@@ -234,7 +234,7 @@
     "owner_address_warning": "C'est déjà le propriétaire!",
     "paid_at": "Payé à",
     "parcels": "Parcelles",
-    "profile": "Mes LANDs",
+    "profile": "Mes LAND",
     "publications": "Publications",
     "recipient_address": "Adresse du destinataire",
     "remove": "retirer",
