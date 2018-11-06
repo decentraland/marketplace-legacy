@@ -1,6 +1,10 @@
 import { txUtils } from 'decentraland-eth'
 
-import { FETCH_TRANSACTION_FAILURE } from '@dapps/modules/transaction/actions'
+import {
+  FETCH_TRANSACTION_FAILURE,
+  FIX_REVERTED_TRANSACTION,
+  REPLACE_TRANSACTION_SUCCESS
+} from '@dapps/modules/transaction/actions'
 import { add } from '@dapps/modules/analytics/utils'
 import {
   BUY_SUCCESS,
@@ -103,6 +107,14 @@ export function track() {
       action.payload.status === txUtils.TRANSACTION_TYPES.reverted
         ? 'Transaction Failed'
         : 'Transaction Dropped',
+    action => action.payload
+  )
+
+  add(FIX_REVERTED_TRANSACTION, 'Transaction Fixed', action => action.payload)
+
+  add(
+    REPLACE_TRANSACTION_SUCCESS,
+    'Transaction Replaced',
     action => action.payload
   )
 
