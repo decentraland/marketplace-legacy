@@ -101,7 +101,7 @@
     "your_parcel": "あなたの区画"
   },
   "auction_page": {
-    "description": "購入する小包を選択",
+    "description": "購入するLANDsを選択",
     "maximum_parcels_message":
       "単一の取引で{max}小包以上を購入しようとすると、ガスがなくなる可能性があります。",
     "maximum_parcels_title":
@@ -375,7 +375,7 @@
     "authorization_error_contact":
       "エラーが解決しない場合は、お手数ですがお問い合わせください",
     "for_buying": "購入に関わる契約",
-    "for_buying_LANDAuction": "MANAを使用したオークションパーセル",
+    "for_buying_LANDAuction": "MANAを使用してLANDをオークションしました",
     "for_buying_LegacyMarketplace": "MANAによる資産の扱い（従来）",
     "for_buying_Marketplace": "MANAによる資産の扱い",
     "for_buying_MortgageHelper": "ローンによるLANDの扱い",

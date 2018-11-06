@@ -94,7 +94,7 @@
     "your_parcel": "您的地块"
   },
   "auction_page": {
-    "description": "选择要购买的包裹",
+    "description": "选择LANDs购买",
     "maximum_parcels_message":
       "如果你试图在一次交易中购买超过{max}的包裹，它可能会耗尽汽油。",
     "maximum_parcels_title": "您达到了每笔交易的最大包裹数",
@@ -353,7 +353,7 @@
     "authorization_error": "我们无法加载您的授权，请重试",
     "authorization_error_contact": "如果错误仍然存​​在，请不要犹豫与我们联系",
     "for_buying": "购买",
-    "for_buying_LANDAuction": "使用MANA拍卖包裹",
+    "for_buying_LANDAuction": "使用MANA拍卖LAND",
     "for_buying_LegacyMarketplace": "使用 MANA（遗留功能）",
     "for_buying_Marketplace": "使用 MANA",
     "for_buying_MortgageHelper": "LAND 抵押贷款",

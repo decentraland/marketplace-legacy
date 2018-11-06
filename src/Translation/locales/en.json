@@ -103,7 +103,7 @@
     "your_parcel": "Your parcel"
   },
   "auction_page": {
-    "description": "Select parcels to buy",
+    "description": "Select LANDs to buy",
     "maximum_parcels_message":
       "If you try to buy more than {max} parcels in a single transaction it may run out of gas. You can submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum parcels per transaction",
@@ -382,9 +382,9 @@
     "authorization_error_contact":
       "If the error persist don't hesitate to contact us",
     "for_buying": "For buying",
-    "for_buying_LANDAuction": "Auction parcels using MANA",
-    "for_buying_LegacyMarketplace": "Assets using MANA (legacy)",
-    "for_buying_Marketplace": "Assets using MANA",
+    "for_buying_LANDAuction": "Auctioned LAND using MANA",
+    "for_buying_LegacyMarketplace": "ERC721s using MANA (legacy)",
+    "for_buying_Marketplace": "ERC721s using MANA",
     "for_buying_MortgageHelper": "LAND by Mortgage",
     "for_buying_MortgageManager": "LAND by Mortgage",
     "for_selling": "For selling",

@@ -106,7 +106,7 @@
     "your_parcel": "Votre parcelle"
   },
   "auction_page": {
-    "description": "Sélectionner les colis à acheter",
+    "description": "Sélectionnez LANDs à acheter",
     "maximum_parcels_message":
       "Si vous essayez d'acheter plus de {max} colis en une seule transaction, il risque de manquer de gaz. ",
     "maximum_parcels_title":
@@ -390,9 +390,9 @@
     "authorization_error_contact":
       "Si l'erreur persiste, n'hésitez pas à nous contacter",
     "for_buying": "Pour acheter",
-    "for_buying_LANDAuction": "Enchère des parcelles avec MANA",
-    "for_buying_LegacyMarketplace": "Actifs utilisant MANA (hérité)",
-    "for_buying_Marketplace": "Actifs utilisant MANA",
+    "for_buying_LANDAuction": "LAND mis aux enchères à l'aide de MANA",
+    "for_buying_LegacyMarketplace": "ERC721 utilisant MANA (hérité)",
+    "for_buying_Marketplace": "ERC721 utilisant MANA",
     "for_buying_MortgageHelper": "LAND par hypothèque",
     "for_buying_MortgageManager": "LAND par hypothèque",
     "for_selling": "Pour vendre",

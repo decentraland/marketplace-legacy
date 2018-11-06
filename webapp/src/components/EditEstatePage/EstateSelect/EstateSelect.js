@@ -240,7 +240,11 @@ export default class EstateSelect extends React.PureComponent {
                   parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelAttributes key={parcel.id} parcel={parcel} />
+                      <ParcelAttributes
+                        key={parcel.id}
+                        parcel={parcel}
+                        withLink={false}
+                      />
                     ) : null
                   })}
               </Grid.Column>
