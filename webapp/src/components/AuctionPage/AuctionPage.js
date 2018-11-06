@@ -48,14 +48,17 @@ export default class AuctionPage extends React.PureComponent {
 
   componentWillMount() {
     this.showAuctionModal(this.props)
+
+    if (this.props.isConnected) {
+      this.fetchAuctionParams()
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     this.showAuctionModal(nextProps)
 
-    if (nextProps.isConnected && this.areParamsFetched) {
-      this.props.onFetchAuctionParams()
-      this.areParamsFetched = true
+    if (nextProps.isConnected) {
+      this.fetchAuctionParams()
     }
   }
 
@@ -72,6 +75,13 @@ export default class AuctionPage extends React.PureComponent {
 
   isAuctionContractAuthorized(authorization) {
     return authorization && !isAuthorized(authorization)
+  }
+
+  fetchAuctionParams() {
+    if (!this.areParamsFetched) {
+      this.props.onFetchAuctionParams()
+      this.areParamsFetched = true
+    }
   }
 
   async handleSelectUnownedParcel(asset) {
@@ -145,7 +155,7 @@ export default class AuctionPage extends React.PureComponent {
 
     const selected = Object.values(selectedCoordsById)
 
-    if (!authorization) {
+    if (!authorization || currentPrice == null) {
       return (
         <div>
           <Loader active size="massive" />
