@@ -23,7 +23,8 @@ export async function fetchManaRate(amount) {
 
 export async function fetchTransaction({ ethAmount, manaAmount, address }) {
   const ethAmountInWei = eth.utils.toWei(ethAmount)
-  const manaAmountInWei = eth.utils.toWei(manaAmount * 0.98) // From Bancor docs: "We recommend setting this value to 2% under the expected return amount." (https://support.bancor.network/hc/en-us/articles/360001455772-Build-a-transaction-using-the-Convert-API)
+  // const manaAmountInWei = eth.utils.toWei(manaAmount * 0.98) // From Bancor docs: "We recommend setting this value to 2% under the expected return amount." (https://support.bancor.network/hc/en-us/articles/360001455772-Build-a-transaction-using-the-Convert-API)
+  const manaAmountInWei = 1 // Temporarily disabling minimumReturn since it breaks Bancor API until we hear back from them.
   const url = 'https://api.bancor.network/0.1/currencies/convert'
   const body = {
     blockchainType: 'ethereum',
