@@ -96,7 +96,7 @@
   "auction_page": {
     "description": "选择LANDs购买",
     "maximum_parcels_message":
-      "如果你试图在一次交易中购买超过{max}的包裹，它可能会耗尽汽油。",
+      "如果您尝试在单笔交易中购买超过{max}的包裹，那么它将失败。",
     "maximum_parcels_title": "您达到了每笔交易的最大包裹数",
     "title": "购买无主的包裹"
   },

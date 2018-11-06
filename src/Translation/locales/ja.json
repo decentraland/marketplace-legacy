@@ -103,7 +103,7 @@
   "auction_page": {
     "description": "購入するLANDsを選択",
     "maximum_parcels_message":
-      "単一の取引で{max}小包以上を購入しようとすると、ガスがなくなる可能性があります。",
+      "あなたが単一のトランザクションで{max}パーセル以上を購入しようとすると、それは失敗します。",
     "maximum_parcels_title":
       "あなたはトランザクションごとに最大の小包に達しました",
     "title": "未所有の小包を購入する"

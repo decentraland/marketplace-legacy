@@ -106,7 +106,7 @@
   "auction_page": {
     "description": "Seleccione LANDs para comprar",
     "maximum_parcels_message":
-      "Si intenta comprar más de {max} parcelas en una sola transacción, puede quedarse sin gas. ",
+      "Si intenta comprar más de {max} parcelas en una sola transacción, fallará. ",
     "maximum_parcels_title":
       "Has alcanzado el máximo de parcelas por transacción.",
     "title": "Comprar parcelas sin dueño"

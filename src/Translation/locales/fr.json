@@ -108,7 +108,7 @@
   "auction_page": {
     "description": "Sélectionnez LANDs à acheter",
     "maximum_parcels_message":
-      "Si vous essayez d'acheter plus de {max} colis en une seule transaction, il risque de manquer de gaz. ",
+      "Si vous essayez d'acheter plus de {max} colis en une seule transaction, vous échouerez. ",
     "maximum_parcels_title":
       "Vous avez atteint le nombre maximum de colis par transaction",
     "title": "Acheter des colis non possédés"
