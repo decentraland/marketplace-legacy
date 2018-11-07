@@ -22,9 +22,9 @@ export default class ParcelActions extends React.PureComponent {
     isLoading: PropTypes.bool.isRequired
   }
 
-  canCreateEstate = () => {
+  canCreateEstate = isOnSale => {
     const { wallet, parcel } = this.props
-    return hasParcelsConnected(parcel, wallet.parcelsById)
+    return hasParcelsConnected(parcel, wallet.parcelsById) && !isOnSale
   }
 
   render() {
@@ -53,7 +53,7 @@ export default class ParcelActions extends React.PureComponent {
                 {t('asset_detail.actions.transfer')}
               </Button>
             </Link>
-            {this.canCreateEstate() && (
+            {this.canCreateEstate(isOnSale) && (
               <Link to={locations.createEstate(x, y)}>
                 <Button size="tiny">
                   <Icon name="object group" />
