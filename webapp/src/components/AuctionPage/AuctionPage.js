@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Message, Header, Grid, Container } from 'semantic-ui-react'
+import { Message, Header, Grid, Container, Button } from 'semantic-ui-react'
 import { utils } from 'decentraland-commons'
 
 import { parcelType } from 'components/types'
@@ -11,7 +11,7 @@ import { t } from '@dapps/modules/translation/utils'
 import './AuctionPage.css'
 
 // TODO: Real number here
-const MAX_PARCELS_PER_TX = Infinity
+const MAX_PARCELS_PER_TX = 20
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
@@ -20,6 +20,8 @@ export default class AuctionPage extends React.PureComponent {
 
   constructor(props) {
     super(props)
+
+    this.parcelPrice = 3000 // TODO: use the contract to get this value
     this.state = {
       selectedCoordsById: {}
     }
@@ -29,7 +31,7 @@ export default class AuctionPage extends React.PureComponent {
     const { selectedCoordsById } = this.state
 
     // TODO: Check ownership with contract
-    if (asset.owner != null) return
+    if (asset.owner != null || asset.district_id != null) return
 
     let newSelectedCoordsById = {}
 
@@ -54,16 +56,33 @@ export default class AuctionPage extends React.PureComponent {
 
   handleSubmit = () => {}
 
-  render() {
+  getParcels() {
     const { allParcels } = this.props
     const { selectedCoordsById } = this.state
 
+    if (!allParcels) return []
+
     const parcelIds = Object.keys(selectedCoordsById)
+    const parcels = []
+
+    for (const parcelId of parcelIds) {
+      const parcel = allParcels[parcelId]
+      if (parcel) {
+        parcels.push(parcel)
+      }
+    }
+
+    return parcels
+  }
+
+  render() {
+    const { selectedCoordsById } = this.state
+
     const selected = Object.values(selectedCoordsById)
 
     return (
       <div className="AuctionPage">
-        <div className="parcel-preview">
+        <div className="parcel-review">
           <ParcelPreview
             x={0}
             y={0}
@@ -95,24 +114,63 @@ export default class AuctionPage extends React.PureComponent {
             ) : null}
 
             <Grid.Row>
-              <Grid.Column width={16}>
+              <Grid.Column mobile={16} computer={6}>
                 <Header size="large">{t('auction_page.title')}</Header>
-              </Grid.Column>
-              <Grid.Column width={16} className="selected-parcels">
-                <p className="parcels-included-description">
+                <p className="subtitle parcels-included-description">
                   {t('auction_page.description')}
                 </p>
-                {allParcels &&
-                  parcelIds.map(parcelId => {
-                    const parcel = allParcels[parcelId]
-                    return parcel ? (
-                      <ParcelAttributes
-                        key={parcel.id}
-                        parcel={parcel}
-                        withLink={false}
-                      />
-                    ) : null
-                  })}
+              </Grid.Column>
+              <Grid.Column mobile={16} computer={10}>
+                <div className="information-blocks">
+                  <div className="information-block">
+                    <p className="subtitle">
+                      {t('auction_page.gas_price').toUpperCase()}
+                    </p>
+                    <Header size="large">300wei</Header>
+                  </div>
+                  <div className="information-block">
+                    <p className="subtitle">
+                      {t('auction_page.land_price').toUpperCase()}
+                    </p>
+                    <Header size="large">{this.parcelPrice}</Header>
+                  </div>
+                  <div className="information-block">
+                    <p className="subtitle">{t('global.land')}</p>
+                    <Header size="large">
+                      {selected.length}/{MAX_PARCELS_PER_TX}
+                    </Header>
+                  </div>
+                  <div className="information-block">
+                    <p className="subtitle">
+                      {t('auction_page.total_price').toUpperCase()}
+                    </p>
+                    <Header size="large">
+                      {this.parcelPrice * selected.length}
+                    </Header>
+                  </div>
+                  <div className="information-block">
+                    <Button
+                      type="submit"
+                      primary={true}
+                      disabled={selected.length === 0}
+                    >
+                      {t('auction_page.bid')}
+                    </Button>
+                  </div>
+                </div>
+              </Grid.Column>
+
+              <Grid.Column width={16} className="selected-parcels">
+                <div className="parcels-included">
+                  {this.getParcels().map(parcel => (
+                    <ParcelAttributes
+                      key={parcel.id}
+                      parcel={parcel}
+                      withLink={false}
+                      withTags={false}
+                    />
+                  ))}
+                </div>
               </Grid.Column>
             </Grid.Row>
           </Grid>
