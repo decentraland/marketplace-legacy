@@ -2,17 +2,13 @@ import { connect } from 'react-redux'
 
 import { locations } from 'locations'
 import { navigateTo } from '@dapps/modules/location/actions'
-import { getAddress } from 'modules/wallet/selectors'
-import { getData as getAuthorizations } from 'modules/authorization/selectors'
+import { getAuthorizations } from 'modules/authorization/selectors'
 
 import AuctionModal from './AuctionModal'
 
-const mapState = state => {
-  const address = getAddress(state)
-  const authorization = getAuthorizations(state)[address]
-
-  return { authorization }
-}
+const mapState = state => ({
+  authorization: getAuthorizations(state)
+})
 
 const mapDispatch = dispatch => ({
   onAuthorize: () => dispatch(navigateTo(locations.settings()))

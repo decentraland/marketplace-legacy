@@ -6,10 +6,7 @@ import { locations } from 'locations'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
-import {
-  getData as getAuthorizations,
-  isLoading
-} from 'modules/authorization/selectors'
+import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import {
   getPublicationByCoordinate,
   getLoading
@@ -26,7 +23,7 @@ const mapState = (state, ownProps) => {
   let authorization
 
   if (wallet) {
-    authorization = getAuthorizations(state)[wallet.address]
+    authorization = getAuthorizations(state)
   }
 
   return {

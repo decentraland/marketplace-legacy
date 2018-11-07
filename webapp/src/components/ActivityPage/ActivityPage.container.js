@@ -8,10 +8,7 @@ import {
   isConnecting,
   isConnected
 } from 'modules/wallet/selectors'
-import {
-  getData as getAuthorizations,
-  isLoading
-} from 'modules/authorization/selectors'
+import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { clearTransactions } from '@dapps/modules/transaction/actions'
 
 import ActivityPage from './ActivityPage'
@@ -20,7 +17,7 @@ const mapState = state => {
   const address = getAddress(state)
 
   const transactions = getTransactions(state, address)
-  const authorization = getAuthorizations(state)[address]
+  const authorization = getAuthorizations(state)
 
   return {
     address,

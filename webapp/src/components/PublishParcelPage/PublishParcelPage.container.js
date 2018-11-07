@@ -9,10 +9,7 @@ import {
   isPublishingIdle
 } from 'modules/publication/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
-import {
-  getData as getAuthorizations,
-  isLoading
-} from 'modules/authorization/selectors'
+import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { publishRequest } from 'modules/publication/actions'
 import { ASSET_TYPES } from 'shared/asset'
 
@@ -25,7 +22,7 @@ const mapState = (state, ownProps) => {
   let authorization
 
   if (wallet) {
-    authorization = getAuthorizations(state)[wallet.address]
+    authorization = getAuthorizations(state)
   }
 
   return {
