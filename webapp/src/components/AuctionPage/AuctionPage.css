@@ -50,7 +50,15 @@
 }
 
 @media (max-width: 992px) {
+  .AuctionPage .information-block:first-child {
+    margin-top: 30px;
+  }
+
   .AuctionPage .information-block {
     margin-top: 20px;
+  }
+
+  .AuctionPage .parcels-included {
+    margin-top: 10px;
   }
 }
