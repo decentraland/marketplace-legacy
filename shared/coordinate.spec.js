@@ -24,6 +24,8 @@ describe('coordinates', function() {
       expect(() => coordinates.validateCoordinate('1,-2')).not.to.throw()
       expect(() => coordinates.validateCoordinate([22, 23])).not.to.throw()
       expect(() => coordinates.validateCoordinate('1,   2')).not.to.throw()
+      expect(() => coordinates.validateCoordinate('0,1')).not.to.throw()
+      expect(() => coordinates.validateCoordinate([1, 0])).not.to.throw()
     })
   })
 
@@ -44,7 +46,10 @@ describe('coordinates', function() {
 
   describe('.splitCoordinate', function() {
     it('should return an array composed from the supplied coordinates', function() {
-      expect(coordinates.splitCoordinate('1,  2')).to.deep.equal([1, 2])
+      expect(coordinates.splitCoordinate('1,2')).to.deep.equal([1, 2])
+      expect(coordinates.splitCoordinate('0,2')).to.deep.equal([0, 2])
+      expect(coordinates.splitCoordinate('2,0')).to.deep.equal([2, 0])
+      expect(coordinates.splitCoordinate('-2,1')).to.deep.equal([-2, 1])
     })
 
     it('should throw if the coordinate is invalid', function() {
