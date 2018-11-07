@@ -83,7 +83,7 @@ function* handleEditEstateParcelsRequest({ estate }) {
     const owner = yield select(getAddress)
 
     if (parcelsToAdd.length) {
-      const { x, y } = splitCoodinatePairs(estate.data.parcels)
+      const { x, y } = splitCoodinatePairs(parcelsToAdd)
 
       const txHash = yield call(() =>
         landRegistry.transferManyLandToEstate(x, y, estate.id)

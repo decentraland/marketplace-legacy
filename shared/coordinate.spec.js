@@ -3,18 +3,18 @@ import * as coordinates from './coordinates'
 
 describe('coordinates', function() {
   describe('.validateCoordinate', function() {
-    it('should throw if the supplied coordinates are invalid', function() {
+    it('should throw if the supplied coordinate is invalid', function() {
       expect(() => coordinates.validateCoordinate('a,b')).to.throw(
-        'The coordinate "a,b" are not valid'
+        'The coordinate "a,b" is not valid'
       )
       expect(() => coordinates.validateCoordinate([1, null])).to.throw(
-        'The coordinate "1," are not valid'
+        'The coordinate "1," is not valid'
       )
       expect(() => coordinates.validateCoordinate('1,2  b')).to.throw(
-        'The coordinate "1,2  b" are not valid'
+        'The coordinate "1,2  b" is not valid'
       )
       expect(() => coordinates.validateCoordinate('')).to.throw(
-        'The coordinate "" are not valid'
+        'The coordinate "" is not valid'
       )
     })
 
@@ -47,9 +47,9 @@ describe('coordinates', function() {
       expect(coordinates.splitCoordinate('1,  2')).to.deep.equal([1, 2])
     })
 
-    it('should throw if the coordinates are invalid', function() {
+    it('should throw if the coordinate is invalid', function() {
       expect(() => coordinates.splitCoordinate('a,  2')).to.throw(
-        'The coordinate "a,  2" are not valid'
+        'The coordinate "a,  2" is not valid'
       )
     })
   })

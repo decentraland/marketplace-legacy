@@ -56,7 +56,7 @@ export function splitCoodinatePairs(pairs) {
  */
 export function validateCoordinate(coordinate) {
   if (!isValid(coordinate)) {
-    throw new Error(`The coordinate "${coordinate}" are not valid`)
+    throw new Error(`The coordinate "${coordinate}" is not valid`)
   }
 }
 
