@@ -1,15 +1,16 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
-import { toParcelObject, splitCoordinate } from '../shared/parcel'
-import { getAssetPublications } from '../shared/asset'
-import { toEstateObject, calculateMapProps } from '../shared/estate'
-import { Viewport, Bounds } from '../shared/map'
-import { Map as MapRenderer } from '../shared/map/render'
-import { toPublicationObject } from '../shared/publication'
 import { Parcel, Estate, EstateService } from '../Asset'
 import { sanitizeParcels } from '../sanitize'
-import { coordinates, unsafeParseInt } from '../lib'
+import { unsafeParseInt } from '../lib'
+import { getAssetPublications } from '../shared/asset'
+import { toParcelObject } from '../shared/parcel'
+import { toEstateObject, calculateMapProps } from '../shared/estate'
+import { toPublicationObject } from '../shared/publication'
+import * as coordinates from '../shared/coordinates'
+import { Viewport, Bounds } from '../shared/map'
+import { Map as MapRenderer } from '../shared/map/render'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
 const MAX_AREA = 15000
@@ -216,7 +217,7 @@ export class MapRouter {
       value = unsafeParseInt(param)
     } catch (e) {
       throw new Error(
-        `Invalid param "${name}" should be a integer but got "${param}".`
+        `Invalid param "${name}" should be a integer but got "${param}"`
       )
     }
     return value > max ? max : value < min ? min : value
@@ -229,12 +230,10 @@ export class MapRouter {
     } catch (error) {
       return defaultValue
     }
+
     let coords
     try {
-      if (!coordinates.isValid(param)) {
-        throw new Error('Invalid coords')
-      }
-      const [x, y] = splitCoordinate(param)
+      const [x, y] = coordinates.splitCoordinate(param)
       coords = { x, y }
     } catch (error) {
       throw new Error(
@@ -255,10 +254,7 @@ export class MapRouter {
     let coordsArray = []
     try {
       coordsArray = param.split(';').map(pair => {
-        const [x, y] = splitCoordinate(pair)
-        if (!coordinates.isValid(pair)) {
-          throw new Error('Invalid coords')
-        }
+        const [x, y] = coordinates.splitCoordinate(pair)
         return { x, y }
       })
     } catch (error) {

@@ -24,10 +24,11 @@ import {
   REMOVE_PARCELS
 } from 'modules/estates/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
-import { buildCoordinate, isParcel } from 'shared/parcel'
-import { isEstate } from 'shared/estate'
-import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 import { ASSET_TYPES } from 'shared/asset'
+import { isParcel } from 'shared/parcel'
+import { isEstate } from 'shared/estate'
+import { buildCoordinate } from 'shared/coordinates'
+import { toAddressParcelIds, toAddressPublicationIds } from './utils'
 
 const EMPTY_ADDRESS = {
   contributions: [],

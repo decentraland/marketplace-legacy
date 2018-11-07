@@ -1,6 +1,7 @@
 import { takeEvery, select, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth, contracts } from 'decentraland-eth'
+
 import { locations } from 'locations'
 import {
   FETCH_PARCEL_REQUEST,
@@ -16,7 +17,7 @@ import {
 import { getData as getParcels } from './selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 
 export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)

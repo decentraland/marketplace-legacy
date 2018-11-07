@@ -19,7 +19,6 @@ import { isOwner } from 'shared/asset'
 import {
   getParcelMatcher,
   isEqualCoords,
-  buildCoordinate,
   getParcelsNotIncluded
 } from 'shared/parcel'
 import {
@@ -28,6 +27,7 @@ import {
   isEstate,
   MAX_PARCELS_PER_TX
 } from 'shared/estate'
+import { buildCoordinate } from 'shared/coordinates'
 import EstateSelectActions from './EstateSelectActions'
 import './EstateSelect.css'
 

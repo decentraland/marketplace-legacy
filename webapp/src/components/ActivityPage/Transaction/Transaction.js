@@ -40,7 +40,7 @@ import {
   TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
 import { ASSET_TYPES } from 'shared/asset'
 import { token } from 'lib/token'

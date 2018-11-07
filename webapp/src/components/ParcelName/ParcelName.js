@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-
 import { Icon } from 'semantic-ui-react'
+
 import { locations } from 'locations'
 import { parcelType, districtType } from 'components/types'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 
 import './ParcelName.css'
 

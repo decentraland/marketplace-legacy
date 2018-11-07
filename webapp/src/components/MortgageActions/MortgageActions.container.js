@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { splitCoordinate } from 'shared/parcel'
 import { locations } from 'locations'
 import {
   cancelMortgageRequest,
   claimMortgageResolutionRequest
 } from 'modules/mortgage/actions'
+import { splitCoordinate } from 'shared/coordinates'
 import MortgageActions from './MortgageActions'
 
 const mapState = () => ({})

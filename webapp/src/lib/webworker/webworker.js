@@ -1,14 +1,13 @@
 import { WebWorkerFactory } from './WebWorkerFactory'
 import { WebWorkerOnMessage } from './WebWorkerOnMessage'
+import { getAssetPublications } from 'shared/asset'
 import {
   toParcelObject,
   normalizeParcel,
   connectParcel,
   areConnected,
-  isSameValue,
-  buildCoordinate
+  isSameValue
 } from 'shared/parcel'
-import { getAssetPublications } from 'shared/asset'
 import { toEstateObject, normalizeEstate } from 'shared/estate'
 
 const WebWorkerDependencies = {
@@ -18,7 +17,6 @@ const WebWorkerDependencies = {
   areConnected,
   isSameValue,
   getAssetPublications,
-  buildCoordinate,
   toEstateObject,
   normalizeEstate
 }

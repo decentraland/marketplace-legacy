@@ -1,10 +1,7 @@
 import { select, call, takeEvery, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
-import { locations } from 'locations'
-import { getAddress } from 'modules/wallet/selectors'
-import { splitCoordinate } from 'shared/parcel'
-import { api } from 'lib/api'
+
 import {
   FETCH_PUBLICATIONS_REQUEST,
   FETCH_ASSET_PUBLICATIONS_REQUEST,
@@ -24,11 +21,15 @@ import {
   cancelSaleFailure
 } from './actions'
 import { getNFTAddressByType, isLegacyPublication } from './utils'
+import { locations } from 'locations'
+import { getAddress } from 'modules/wallet/selectors'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_ESTATE_SUCCESS } from 'modules/estates/actions'
-import { ASSET_TYPES } from 'shared/asset'
 import { getData as getEstates } from 'modules/estates/selectors'
+import { api } from 'lib/api'
 import { Location } from 'lib/Location'
+import { ASSET_TYPES } from 'shared/asset'
+import { splitCoordinate } from 'shared/coordinates'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)

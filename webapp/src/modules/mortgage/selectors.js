@@ -10,7 +10,7 @@ import { getAddress } from 'modules/wallet/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { getActiveMortgageByBorrower } from 'shared/mortgage'
-import { buildCoordinate } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 
 export const getState = state => state.mortgages
 export const getData = state => getState(state).data

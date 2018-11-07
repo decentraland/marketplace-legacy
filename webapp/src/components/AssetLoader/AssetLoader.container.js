@@ -7,11 +7,11 @@ import {
   getData as getParcels,
   isFetchingParcel
 } from 'modules/parcels/selectors'
-import { splitCoordinate } from 'shared/parcel'
 import { getEstates, isFetchingEstate } from 'modules/estates/selectors'
 import { fetchEstateRequest } from 'modules/estates/actions'
-import AssetLoader from './AssetLoader'
 import { ASSET_TYPES } from 'shared/asset'
+import { splitCoordinate } from 'shared/coordinates'
+import AssetLoader from './AssetLoader'
 
 const mapState = (state, { id, assetType }) => {
   let assets
@@ -50,10 +50,7 @@ const mapDispatch = (dispatch, { id, assetType }) => {
       break
   }
 
-  return {
-    onFetchAsset,
-    onAccessDenied
-  }
+  return { onFetchAsset, onAccessDenied }
 }
 
 export default connect(mapState, mapDispatch)(AssetLoader)

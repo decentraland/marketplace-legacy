@@ -5,7 +5,7 @@ import { PublicationQueries } from '../../Publication'
 import { District } from '../../District'
 import { MortgageQueries } from '../../Mortgage'
 import { SQL } from '../../database'
-import { coordinates } from '../../lib'
+import { buildCoordinate, splitCoordinate } from '../../shared/coordinates'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
@@ -26,23 +26,11 @@ export class Parcel extends Model {
   ]
 
   static buildId(x, y) {
-    if (x == null || y == null) {
-      throw new Error(
-        `You need to supply both coordinates to be able to hash them. x = ${x} y = ${y}`
-      )
-    }
-
-    return `${x},${y}`
+    return buildCoordinate(x, y)
   }
 
-  static splitId(id = '') {
-    const coordinates = id.split(',')
-
-    if (coordinates.length !== 2) {
-      throw new Error(`You need to supply a valid id to split. id = ${id}`)
-    }
-
-    return coordinates
+  static splitId(id) {
+    return splitCoordinate(id)
   }
 
   static findByIds(ids) {
@@ -85,9 +73,9 @@ export class Parcel extends Model {
 
   static async inRange(min, max) {
     const [minx, maxy] =
-      typeof min === 'string' ? coordinates.toArray(min) : [min.x, min.y]
+      typeof min === 'string' ? splitCoordinate(min) : [min.x, min.y]
     const [maxx, miny] =
-      typeof max === 'string' ? coordinates.toArray(max) : [max.x, max.y]
+      typeof max === 'string' ? splitCoordinate(max) : [max.x, max.y]
 
     return this.db.query(SQL`SELECT *, (
       ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}

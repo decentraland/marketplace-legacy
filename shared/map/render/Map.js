@@ -1,6 +1,6 @@
 import { Selection, Parcel } from '.'
 import { COLORS, getColor, getMapAsset } from '../../asset'
-import { buildCoordinate } from '../../parcel'
+import { buildCoordinate } from '../../coordinates'
 
 export class Map {
   static draw({

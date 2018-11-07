@@ -1,3 +1,4 @@
+import { eth } from 'decentraland-eth'
 import {
   takeLatest,
   call,
@@ -6,10 +7,8 @@ import {
   all,
   takeEvery
 } from 'redux-saga/effects'
-import { eth } from 'decentraland-eth'
 import { push } from 'react-router-redux'
-import { isFeatureEnabled } from 'lib/featureUtils'
-import { api } from 'lib/api'
+
 import {
   CREATE_MORTGAGE_REQUEST,
   CANCEL_MORTGAGE_REQUEST,
@@ -31,19 +30,20 @@ import {
   claimMortgageResolutionFailure,
   fetchActiveParcelMortgagesRequest
 } from './actions'
+import { locations } from 'locations'
 import { getAddress } from 'modules/wallet/selectors'
-import { normalizeParcel } from 'shared/parcel'
-
+import { getKyberOracleAddress, getContractAddress } from 'modules/wallet/utils'
+import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import { isFeatureEnabled } from 'lib/featureUtils'
+import { api } from 'lib/api'
+import { getAssetPublications } from 'shared/asset'
 import {
   MORTGAGE_STATUS,
   toInterestRate,
   getLoanMetadata,
   daysToSeconds
 } from 'shared/mortgage'
-import { getKyberOracleAddress, getContractAddress } from 'modules/wallet/utils'
-import { locations } from 'locations'
-import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
-import { getAssetPublications } from 'shared/asset'
+import { normalizeParcel } from 'shared/parcel'
 
 export function* mortgageSaga() {
   if (isFeatureEnabled('MORTGAGES')) {

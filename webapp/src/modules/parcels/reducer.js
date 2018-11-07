@@ -27,17 +27,6 @@ import {
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
 import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import {
-  buildCoordinate,
-  normalizeParcel,
-  toParcelObject,
-  isParcel
-} from 'shared/parcel'
-
-import {
-  FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
-  FETCH_MORTGAGED_PARCELS_SUCCESS
-} from '../mortgage/actions'
-import {
   ADD_PARCELS,
   EDIT_ESTATE_PARCELS_SUCCESS,
   DELETE_ESTATE_SUCCESS,
@@ -46,6 +35,12 @@ import {
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { ASSET_TYPES } from 'shared/asset'
+import { normalizeParcel, toParcelObject, isParcel } from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
+import {
+  FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
+  FETCH_MORTGAGED_PARCELS_SUCCESS
+} from '../mortgage/actions'
 
 const INITIAL_STATE = {
   data: {},

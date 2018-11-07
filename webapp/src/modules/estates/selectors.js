@@ -1,9 +1,6 @@
 import { createSelector } from 'reselect'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 
-import { getData as getParcels } from 'modules/parcels/selectors'
-import { getData as getPublications } from 'modules/publication/selectors'
-import { buildCoordinate } from 'shared/parcel'
 import {
   CREATE_ESTATE_REQUEST,
   EDIT_ESTATE_METADATA_REQUEST,
@@ -12,7 +9,11 @@ import {
   TRANSFER_ESTATE_REQUEST,
   FETCH_ESTATE_REQUEST
 } from './actions'
+import { getData as getParcels } from 'modules/parcels/selectors'
+import { getData as getPublications } from 'modules/publication/selectors'
 import { MANAGE_ASSET_REQUEST } from 'modules/management/actions'
+import { buildCoordinate } from 'shared/coordinates'
+
 export const getState = state => state.estates
 export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
