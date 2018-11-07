@@ -104,13 +104,13 @@
     "your_parcel": "Tu parcela"
   },
   "auction_modal": {
-    "authorize_contract": "Contrato de autorización",
-    "authorized_explanation": "Estás listo para comenzar! ",
+    "authorize_contract": "Autorizar contrato",
+    "authorized_explanation": "Estás listo para comenzar!",
     "blog_post": "Entrada en el blog",
     "first_time_explanation":
       "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}. ",
-    "lets_go": "¡Vamonos!",
-    "title": "Decentraland Subasta"
+    "lets_go": "¡Adelante!",
+    "title": "Subasta de Decentraland"
   },
   "auction_page": {
     "bid": "Ofertar",
@@ -424,11 +424,11 @@
     "by_agreeing":
       "Al seleccionar \"Acepto\" a continuación, acepta nuestro {terms_of_service_link}.",
     "explanation":
-      "Este dApp interactúa con un intercambio descentralizado que se ejecuta en la cadena de bloques Ethereum.",
+      "Este dApp interactúa con un exchange descentralizado que se ejecuta en la cadena de bloques Ethereum.",
     "i_agree": "Estoy de acuerdo",
     "privacy_policy": "Política de privacidad",
     "terms_of_service": "Términos de servicio",
-    "title": "Bienvenido a Decentraland's LAND Marketplace"
+    "title": "Bienvenido al Mercado de LAND de Decentaland"
   },
   "transaction": {
     "buy": "Has comprado {parcel_link}",

@@ -50,10 +50,14 @@ export default class AuctionPage extends React.PureComponent {
 
     if (
       !hasSeenAuctionModal() ||
-      (authorization && !isAuthorized(authorization))
+      this.isAuctionContractAuthorized(authorization)
     ) {
       onShowAuctionModal()
     }
+  }
+
+  isAuctionContractAuthorized(authorization) {
+    return authorization && !isAuthorized(authorization)
   }
 
   selectUnownedParcel = (asset, { x, y }) => {
