@@ -103,11 +103,13 @@
   "auction_page": {
     "bid": "入札",
     "description": "購入するLANDを選択",
+    "gas_price": "ガス価格",
+    "land_price": "LAND価格",
     "maximum_parcels_message":
-      "あなたが単一のトランザクションで{max}パーセル以上を購入しようとすると、それは失敗します。",
-    "maximum_parcels_title":
-      "あなたはトランザクションごとに最大の小包に達しました",
-    "title": "未所有の小包を購入する"
+      "単一のトランザクションで{max} LAND以上を購入しようとすると失敗します。",
+    "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
+    "title": "未所有のLANDを購入する",
+    "total_price": "合計金額"
   },
   "authorization": {
     "allow": "{contract_link}に準じて{symbol}を操作することを許可する",
@@ -215,6 +217,7 @@
     "expires_in": "締切：{time}",
     "expires_in_more_than_years": "締切まであと{years}年以上",
     "for": "for",
+    "land": "LAND",
     "loading": "読込み中",
     "marketplace": "マーケット",
     "mortgage": "ローン",

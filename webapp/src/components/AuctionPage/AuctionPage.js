@@ -124,21 +124,27 @@ export default class AuctionPage extends React.PureComponent {
               <Grid.Column mobile={16} computer={10}>
                 <div className="information-blocks">
                   <div className="information-block">
-                    <p className="subtitle">GAS PRICE</p>
+                    <p className="subtitle">
+                      {t('auction_page.gas_price').toUpperCase()}
+                    </p>
                     <Header size="large">300wei</Header>
                   </div>
                   <div className="information-block">
-                    <p className="subtitle">PARCEL PRICE</p>
+                    <p className="subtitle">
+                      {t('auction_page.land_price').toUpperCase()}
+                    </p>
                     <Header size="large">{this.parcelPrice}</Header>
                   </div>
                   <div className="information-block">
-                    <p className="subtitle">PARCELS</p>
+                    <p className="subtitle">{t('global.land')}</p>
                     <Header size="large">
                       {selected.length}/{MAX_PARCELS_PER_TX}
                     </Header>
                   </div>
                   <div className="information-block">
-                    <p className="subtitle">TOTAL PRICE</p>
+                    <p className="subtitle">
+                      {t('auction_page.total_price').toUpperCase()}
+                    </p>
                     <Header size="large">
                       {this.parcelPrice * selected.length}
                     </Header>

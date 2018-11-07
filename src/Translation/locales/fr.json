@@ -108,11 +108,14 @@
   "auction_page": {
     "bid": "Offre",
     "description": "Sélectionnez LAND à acheter",
+    "gas_price": "Prix ​​du gaz",
+    "land_price": "Prix LAND",
     "maximum_parcels_message":
-      "Si vous essayez d'acheter plus de {max} colis en une seule transaction, vous échouerez. ",
+      "Si vous essayez d'acheter plus de {max} LAND en une seule transaction, vous échouerez. ",
     "maximum_parcels_title":
-      "Vous avez atteint le nombre maximum de colis par transaction",
-    "title": "Acheter des colis non possédés"
+      "Vous avez atteint le maximum LAND par transaction",
+    "title": "Acheter un LAND d'occasion",
+    "total_price": "Prix ​​total"
   },
   "authorization": {
     "allow": "Autoriser le {contract_link} à utiliser {symbol} en votre nom",
@@ -225,6 +228,7 @@
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de {years} ans",
     "for": "pour",
+    "land": "LAND",
     "loading": "Chargement",
     "marketplace": "Marché",
     "mortgage": "Hypothèque",

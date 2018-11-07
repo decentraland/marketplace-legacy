@@ -105,10 +105,13 @@
   "auction_page": {
     "bid": "매기다",
     "description": "구매할 LAND 선택",
+    "gas_price": "가스 가격",
+    "land_price": "LAND 가격",
     "maximum_parcels_message":
-      "단일 트랜잭션에서 {max} 소포를 초과하여 구매하려고하면 실패합니다. ",
-    "maximum_parcels_title": "거래 당 최대 소포에 도달했습니다.",
-    "title": "소유되지 않은 소포 구입"
+      "단일 트랜잭션에서 {max} LAND 이상을 구매하려고 시도하면 실패합니다. ",
+    "maximum_parcels_title": "거래 당 최대 LAND에 도달했습니다.",
+    "title": "소유하지 않은 LAND 구입",
+    "total_price": "총 가격"
   },
   "authorization": {
     "allow": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
@@ -218,6 +221,7 @@
     "expires_in": "만료 {time}",
     "expires_in_more_than_years": "{years} 년 이상 만료 됨",
     "for": "에 대한",
+    "land": "LAND",
     "loading": "로드 중",
     "marketplace": "시장",
     "mortgage": "저당",

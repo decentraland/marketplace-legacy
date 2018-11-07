@@ -105,10 +105,13 @@
   "auction_page": {
     "bid": "Bid",
     "description": "Select LAND to buy",
+    "gas_price": "Gas price",
+    "land_price": "LAND price",
     "maximum_parcels_message":
-      "If you try to buy more than {max} parcels in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
-    "maximum_parcels_title": "You reached the maximum parcels per transaction",
-    "title": "Buy unowned parcels"
+      "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
+    "maximum_parcels_title": "You reached the maximum LAND per transaction",
+    "title": "Buy unowned LAND",
+    "total_price": "Total price"
   },
   "authorization": {
     "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",
@@ -219,6 +222,7 @@
     "expires_in": "Expires {time}",
     "expires_in_more_than_years": "Expires in over {years} years",
     "for": "for",
+    "land": "LAND",
     "loading": "Loading",
     "marketplace": "Marketplace",
     "mortgage": "Mortgage",

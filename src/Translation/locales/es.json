@@ -104,13 +104,15 @@
     "your_parcel": "Tu parcela"
   },
   "auction_page": {
-    "bid": "Oferta",
+    "bid": "Ofertar",
     "description": "Seleccione LAND para comprar",
+    "gas_price": "Precio del gas",
+    "land_price": "Precio LAND",
     "maximum_parcels_message":
-      "Si intenta comprar más de {max} parcelas en una sola transacción, fallará. ",
-    "maximum_parcels_title":
-      "Has alcanzado el máximo de parcelas por transacción.",
-    "title": "Comprar parcelas sin dueño"
+      "Si intentas comprar más de {max} LAND en una sola transacción, fallará. ",
+    "maximum_parcels_title": "Alcanzó la cantidad máxima de LAND por transacción",
+    "title": "Compra sin LAND sin dueño",
+    "total_price": "Precio total"
   },
   "authorization": {
     "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",
@@ -220,6 +222,7 @@
     "expires_in": "Caduca {time}",
     "expires_in_more_than_years": "Caduca en más de {years} años",
     "for": "para",
+    "land": "LAND",
     "loading": "Cargando",
     "marketplace": "Mercado",
     "mortgage": "Hipoteca",
