@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
-import { getMatchParamsCoordinates } from '@dapps/modules/location/selectors'
+import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import { isEditTransactionIdle } from 'modules/parcels/selectors'
 import { editParcelRequest } from 'modules/parcels/actions'
 
