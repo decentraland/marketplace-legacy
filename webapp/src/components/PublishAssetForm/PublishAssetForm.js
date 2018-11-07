@@ -14,7 +14,7 @@ import { isParcel } from 'shared/parcel'
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
-const MINIMUM_LAND_PRICE = 1
+const MINIMUM_LAND_PRICE = 1000
 
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
