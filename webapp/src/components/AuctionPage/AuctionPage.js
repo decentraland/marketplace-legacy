@@ -7,7 +7,6 @@ import { parcelType } from 'components/types'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelAttributes from 'components/ParcelAttributes'
 import { t } from '@dapps/modules/translation/utils'
-import { getParcelSorter } from 'shared/parcel'
 
 import './AuctionPage.css'
 
@@ -73,7 +72,7 @@ export default class AuctionPage extends React.PureComponent {
       }
     }
 
-    return parcels.sort(getParcelSorter())
+    return parcels
   }
 
   render() {
@@ -83,7 +82,7 @@ export default class AuctionPage extends React.PureComponent {
 
     return (
       <div className="AuctionPage">
-        <div className="parcel-preview">
+        <div className="parcel-review">
           <ParcelPreview
             x={0}
             y={0}
