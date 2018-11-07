@@ -223,13 +223,13 @@ const main = {
         asSafeAction(async (assetId, assetType, options) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
 
-          const blockchainEvents = await BlockchainEvent.findByArgs(
-            'assetId',
+          const blockchainEvents = await BlockchainEvent.findByAnyArgs(
+            ['assetId', 'landId', '_landId', '_estateId'],
             asset.token_id
           )
           blockchainEvents.reverse()
 
-          const eventLog = blockchainEvents.map(event => {
+          const eventLogPromises = blockchainEvents.map(async event => {
             const { name, block_number, log_index, tx_hash, args } = event
             let log = `${name} (${block_number},${log_index}): `
 
@@ -241,6 +241,9 @@ const main = {
             }
 
             switch (name) {
+              case eventNames.CreateEstate:
+                log += `with data ${args._data}`
+                break
               case eventNames.AuctionCreated:
               case eventNames.OrderCreated:
                 log += `with id ${args.id} by ${args.seller} for ${
@@ -253,13 +256,23 @@ const main = {
                 break
               case eventNames.AuctionSuccessful:
               case eventNames.OrderSuccessful:
-                log += `with id ${args.id} and winner ${args.winner}`
+                log += `with id ${args.id} and winner ${args.winner ||
+                  args.buyer}`
                 break
               case eventNames.Update:
                 log += `with data ${args.data}`
                 break
               case eventNames.Transfer:
-                log += `to ${args.to}`
+                log += `to ${args.to || args._to}`
+                break
+              case eventNames.AddLand:
+                log += `added ${await Parcel.decodeTokenId(args._landId)}`
+                break
+              case eventNames.RemoveLand:
+                log += `removed ${await Parcel.decodeTokenId(args._landId)}`
+                break
+              case eventNames.UpdateOperator:
+                log += `with operator ${args._operator}`
                 break
               default:
                 break
@@ -267,6 +280,7 @@ const main = {
 
             return log
           })
+          const eventLog = await Promise.all(eventLogPromises)
 
           if (options.showTableHeader) {
             let header = 'Name (block_number,log_index):  desc'
@@ -290,7 +304,7 @@ const main = {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
 
           const events = await BlockchainEvent.findByAnyArgs(
-            ['assetId', '_landId'],
+            ['assetId', 'landId', '_landId', '_estateId'],
             asset.token_id
           )
 
