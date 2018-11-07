@@ -4,4 +4,5 @@ export const getLoading = state => getState(state).loading
 export const isLoading = state => getLoading(state).length > 0
 export const getError = state => getState(state).error
 export const getParams = state => getData(state).params
-export const getParcelOwners = state => getData(state).parcelOwners
+export const getParcelOnChainOwners = state =>
+  getData(state).parcelOnChainOwners

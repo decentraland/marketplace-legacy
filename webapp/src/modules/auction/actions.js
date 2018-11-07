@@ -35,3 +35,29 @@ export function setParcelOnChainOwner(parcelId, owner) {
     owner
   }
 }
+
+// Bid parcels
+
+export const BID_ON_PARCELS_REQUEST = '[Request] Bid on parcels'
+export const BID_ON_PARCELS_SUCCESS = '[Success] Bid on parcels'
+export const BID_ON_PARCELS_FAILURE = '[Failure] Bid on parcels'
+
+export function bidOnParcelsRequest() {
+  return {
+    type: FETCH_AUCTION_PARAMS_REQUEST
+  }
+}
+
+export function bidOnParcelsSuccess(params) {
+  return {
+    type: FETCH_AUCTION_PARAMS_SUCCESS,
+    params
+  }
+}
+
+export function bidOnParcelsFailure(error) {
+  return {
+    type: FETCH_AUCTION_PARAMS_FAILURE,
+    error
+  }
+}

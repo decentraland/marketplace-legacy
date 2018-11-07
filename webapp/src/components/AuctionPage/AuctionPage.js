@@ -84,6 +84,10 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
+  handleSubmit = () => {
+    // Submit
+  }
+
   async handleSelectUnownedParcel(asset) {
     if (!isParcel(asset) || asset.district_id != null) return
 
@@ -148,7 +152,7 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   render() {
-    const { authorization, auctionParams } = this.props
+    const { authorization, auctionParams, allParcels } = this.props
     const { landsLimitPerBid, gasPriceLimit, currentPrice } = auctionParams
     const { selectedCoordsById } = this.state
 
@@ -168,6 +172,7 @@ export default class AuctionPage extends React.PureComponent {
           <ParcelPreview
             x={0}
             y={0}
+            parcels={allParcels}
             selected={selected}
             isDraggable
             showPopup
@@ -203,45 +208,41 @@ export default class AuctionPage extends React.PureComponent {
                 </p>
               </Grid.Column>
               <Grid.Column mobile={16} computer={10}>
-                <div className="information-blocks">
-                  <div className="information-block">
-                    <p className="subtitle">
-                      {t('auction_page.gas_price').toUpperCase()}
-                    </p>
-                    <Header size="large">{gasPriceLimit} GWEI</Header>
+                <form action="POST" onSubmit={this.handleSubmit}>
+                  <div className="information-blocks">
+                    <div className="information-block">
+                      <p className="subtitle">GAS PRICE</p>
+                      <Header size="large">{gasPriceLimit} GWEI</Header>
+                    </div>
+                    <div className="information-block">
+                      <p className="subtitle">PARCEL PRICE</p>
+                      <Header size="large">
+                        {this.roundPrice(currentPrice)}
+                      </Header>
+                    </div>
+                    <div className="information-block">
+                      <p className="subtitle">PARCELS</p>
+                      <Header size="large">
+                        {selected.length}/{landsLimitPerBid}
+                      </Header>
+                    </div>
+                    <div className="information-block">
+                      <p className="subtitle">TOTAL PRICE</p>
+                      <Header size="large">
+                        {this.roundPrice(currentPrice * selected.length)}
+                      </Header>
+                    </div>
+                    <div className="information-block">
+                      <Button
+                        type="submit"
+                        primary={true}
+                        disabled={selected.length === 0}
+                      >
+                        {t('auction_page.bid')}
+                      </Button>
+                    </div>
                   </div>
-                  <div className="information-block">
-                    <p className="subtitle">
-                      {t('auction_page.land_price').toUpperCase()}
-                    </p>
-                    <Header size="large">
-                      {this.roundPrice(currentPrice)}
-                    </Header>
-                  </div>
-                  <div className="information-block">
-                    <p className="subtitle">{t('global.land')}</p>
-                    <Header size="large">
-                      {selected.length}/{landsLimitPerBid}
-                    </Header>
-                  </div>
-                  <div className="information-block">
-                    <p className="subtitle">
-                      {t('auction_page.total_price').toUpperCase()}
-                    </p>
-                    <Header size="large">
-                      {this.roundPrice(currentPrice * selected.length)}
-                    </Header>
-                  </div>
-                  <div className="information-block">
-                    <Button
-                      type="submit"
-                      primary={true}
-                      disabled={selected.length === 0}
-                    >
-                      {t('auction_page.bid')}
-                    </Button>
-                  </div>
-                </div>
+                </form>
               </Grid.Column>
 
               <Grid.Column width={16} className="selected-parcels">

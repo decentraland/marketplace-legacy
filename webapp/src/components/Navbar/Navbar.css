@@ -153,19 +153,14 @@
   margin-top: 5px !important;
 }
 
+.Navbar .navbar-menu .item.close-sidebar {
+  margin: 10px 10px 30px 0px !important;
+  cursor: pointer;
+}
+
 @media (min-width: 500px) {
   .Navbar {
     min-width: 400px;
-  }
-}
-
-@media (max-width: 800px) {
-  .Navbar {
-    justify-content: flex-start;
-  }
-
-  .Navbar .navbar-header:not(.navbar-modal) {
-    display: none;
   }
 }
 
@@ -188,7 +183,12 @@
   }
 }
 
-.Navbar .navbar-menu .item.close-sidebar {
-  margin: 10px 10px 30px 0px !important;
-  cursor: pointer;
+@media (max-width: 920px) {
+  .Navbar {
+    justify-content: flex-start;
+  }
+
+  .Navbar .navbar-header:not(.navbar-modal) {
+    display: none;
+  }
 }
