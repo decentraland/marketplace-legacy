@@ -82,7 +82,7 @@ export default class AuctionPage extends React.PureComponent {
 
     return (
       <div className="AuctionPage">
-        <div className="parcel-review">
+        <div className="parcel-preview">
           <ParcelPreview
             x={0}
             y={0}
