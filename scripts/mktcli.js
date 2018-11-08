@@ -15,6 +15,13 @@ import { processEvent } from '../monitor/processEvents'
 import { loadEnv, parseCLICoords } from './utils'
 
 const log = new Log('mktcli')
+const POSSIBLE_ASSET_EVENT_IDS = [
+  'assetId',
+  'landId',
+  '_landId',
+  '_tokenId',
+  '_estateId'
+]
 
 const main = {
   addCommands(program) {
@@ -224,7 +231,7 @@ const main = {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
 
           const blockchainEvents = await BlockchainEvent.findByAnyArgs(
-            ['assetId', 'landId', '_landId', '_estateId'],
+            POSSIBLE_ASSET_EVENT_IDS,
             asset.token_id
           )
           blockchainEvents.reverse()
@@ -304,7 +311,7 @@ const main = {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
 
           const events = await BlockchainEvent.findByAnyArgs(
-            ['assetId', 'landId', '_landId', '_estateId'],
+            POSSIBLE_ASSET_EVENT_IDS,
             asset.token_id
           )
 
