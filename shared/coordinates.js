@@ -28,7 +28,7 @@ export function splitCoordinate(coordinate) {
     .toString()
     .split(',')
     .map(coordinate => parseInt(coordinate, 10))
-    .filter(coordinate => !!coordinate)
+    .filter(coordinate => !isNaN(coordinate))
 
   return [x, y]
 }
