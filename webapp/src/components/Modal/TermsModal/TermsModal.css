@@ -1,80 +1,12 @@
 .TermsModal {
+  text-align: center;
   color: var(--text);
-  user-select: text;
-}
-
-.TermsModal .modal-header {
-  padding: 15px 15px 0;
-  border: none;
-  background-color: var(--background);
-}
-
-.TermsModal .modal-header .close {
-  display: none;
-}
-
-.TermsModal .text {
-  text-align: center;
-}
-
-.TermsModal .banner {
-  padding: 25px 0 0;
-  background-color: var(--background);
-  text-align: center;
-}
-
-.TermsModal h3 {
-  margin-top: 0;
-  margin-bottom: 50px;
-  font-size: 20pt;
-}
-
-.TermsModal h4 {
-  font-size: 14pt;
-  font-weight: bold;
-}
-
-.TermsModal .banner h2 {
-  font-size: 28px;
-  margin-top: 0;
-  padding-top: 0;
-}
-
-.TermsModal .banner .Icon-decentraland {
-  width: 40px;
-  height: 40px;
-  top: 10px;
-  position: relative;
-  right: 7px;
-}
-
-.TermsModal .modal-body {
-  padding: 30px 50px;
-  background-color: var(--background);
 }
 
 .TermsModal .modal-body p {
   font-size: 16px;
-  font-family: "Source Sans Pro Light", Helvetica, sans-serif;
 }
 
-.little-value {
-  top: 0;
-  left: 0;
-  border-right: 32px solid transparent;
-}
-.big-value {
-  bottom: 0;
-  right: 0;
-  border-left: 32px solid transparent;
-}
-
-.TermsModal .get-started {
-  margin-top: 50px;
-  text-align: center;
-}
-
-.TermsModal .get-started .button {
+.TermsModal .agree-to-terms .button {
   padding: 11px 44px;
-  border-radius: 20px;
 }

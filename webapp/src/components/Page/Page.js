@@ -3,50 +3,44 @@ import PropTypes from 'prop-types'
 
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
-import { getLocalStorage } from '@dapps/lib/localStorage'
+import { hasAgreedToTerms } from 'modules/terms/utils'
 
 import './Page.css'
 
 export default class Page extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    isStatic: PropTypes.bool.isRequired,
+    isRootPage: PropTypes.bool.isRequired,
     onFetchDistricts: PropTypes.func.isRequired,
     onFirstVisit: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     children: null,
-    isStatic: false,
+    isRootPage: false,
     onFetchDistricts: () => {},
     onFirstVisit: () => {}
   }
 
-  get hasAcceptedTerms() {
-    const localStorage = getLocalStorage()
-    return localStorage.getItem('seenTermsModal')
-  }
-
   componentWillMount() {
-    const { onFetchDistricts } = this.props
+    const { onFetchDistricts, isRootPage } = this.props
 
     onFetchDistricts()
-
-    this.checkPopTerms()
+    this.showTermsModal(isRootPage)
   }
 
-  componentWillReceiveProps() {
-    this.checkPopTerms()
+  componentWillReceiveProps(nextProps) {
+    this.showTermsModal(nextProps.isRootPage)
   }
 
-  checkPopTerms() {
-    const { onFirstVisit, isStatic } = this.props
-
-    const shouldTriggerTermsModal = !isStatic && !this.hasAcceptedTerms
-
-    if (shouldTriggerTermsModal) {
-      onFirstVisit()
+  showTermsModal(isRootPage) {
+    if (this.shouldTriggerTermsModal(isRootPage)) {
+      this.props.onFirstVisit()
     }
+  }
+
+  shouldTriggerTermsModal(isRootPage) {
+    return !isRootPage && !hasAgreedToTerms()
   }
 
   render() {

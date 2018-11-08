@@ -14,6 +14,19 @@ export default class Modal extends React.PureComponent {
     onClose: PropTypes.func
   }
 
+  constructor(props) {
+    super(props)
+    this.originalBodyOverflow = document.body.style.overflow
+  }
+
+  componentWillMount() {
+    this.changeBodyScroll(this.props.modal.open)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.changeBodyScroll(nextProps.modal.open)
+  }
+
   handleKeyDown = e => {
     // If ESC key pressed
     if (e.keyCode === 27) {
@@ -26,8 +39,16 @@ export default class Modal extends React.PureComponent {
     this.props.onClose()
   }
 
+  changeBodyScroll(isModalOpen) {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden' // disable
+    } else {
+      document.body.style.overflow = this.originalBodyOverflow // re-enable
+    }
+  }
+
   render() {
-    const { modal, location } = this.props
+    const { modal } = this.props
     const { open, name, data } = modal
 
     let ModalComponent = modals[name]
@@ -45,7 +66,6 @@ export default class Modal extends React.PureComponent {
         isOpen={open}
         onKeyDown={this.handleKeyDown}
         onClose={preventDefault(this.handleClose)}
-        location={location}
       />
     )
   }

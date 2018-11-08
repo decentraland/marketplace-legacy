@@ -1,0 +1,12 @@
+.AuctionModal {
+  text-align: center;
+  color: var(--text);
+}
+
+.AuctionModal .modal-loader-container {
+  padding: 100px 380px;
+}
+
+.AuctionModal .modal-body p {
+  font-size: 16px;
+}

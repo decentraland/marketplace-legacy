@@ -3,87 +3,78 @@ import PropTypes from 'prop-types'
 
 import './BaseModal.css'
 
-export default function BaseModal(props) {
-  const {
-    className,
-    title,
-    isOpen,
-    body,
-    footer,
-    children,
-    onClose,
-    onKeyDown,
-    closeable
-  } = props
+export default class BaseModal extends React.PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    title: PropTypes.string,
+    isOpen: PropTypes.bool.isRequired,
+    body: PropTypes.node,
+    footer: PropTypes.node,
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+    isCloseable: PropTypes.bool,
+    data: PropTypes.any
+  }
 
-  const containerClassName = `${className} ${isOpen ? 'modal-open' : ''}`
-  const modalClassName = `modal fade ${isOpen ? 'in' : ''}`
+  static defaultProps = {
+    className: '',
+    isOpen: false,
+    isCloseable: true
+  }
 
-  return (
-    <div className={containerClassName}>
-      <div
-        className={modalClassName}
-        tabIndex="-1"
-        role="dialog"
-        onKeyDown={onKeyDown}
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <ModalCloseButton onClose={onClose} closeable={closeable}>
-                <span aria-hidden="true">&times;</span>
-              </ModalCloseButton>
-              {title && <ModalTitle title={title} />}
+  getContainerClassName() {
+    const { className, isOpen } = this.props
+    return `${className} ${isOpen ? 'modal-open' : ''}`
+  }
+
+  getModalClassName() {
+    const { isOpen } = this.props
+    return `modal fade ${isOpen ? 'in' : ''}`
+  }
+
+  render() {
+    const {
+      title,
+      isOpen,
+      body,
+      footer,
+      children,
+      onClose,
+      onKeyDown,
+      isCloseable
+    } = this.props
+
+    return (
+      <div className={this.getContainerClassName()}>
+        <div
+          className={this.getModalClassName()}
+          tabIndex="-1"
+          role="dialog"
+          onKeyDown={onKeyDown}
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              {isCloseable ? (
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    onClick={onClose}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              ) : null}
+              {title && <h4 className="modal-title">{title}</h4>}
+              {body && <div className="modal-body">{body}</div>}
+              {footer && <div className="modal-footer">{footer}</div>}
+              {children}
             </div>
-            {body && <ModalBody body={body} />}
-            {footer && <ModalFooter footer={footer} />}
-            {children}
           </div>
         </div>
+        {isOpen && <div className="modal-backdrop fade in" />}
       </div>
-      {isOpen && <div className="modal-backdrop fade in" />}
-    </div>
-  )
-}
-
-BaseModal.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string,
-  isOpen: PropTypes.bool.isRequired,
-  body: PropTypes.node,
-  footer: PropTypes.node,
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-  closeable: PropTypes.bool
-}
-
-BaseModal.defaultProps = {
-  className: '',
-  isOpen: false,
-  closeable: true
-}
-
-export function ModalCloseButton({ onClose, children, closeable }) {
-  return closeable ? (
-    <button
-      type="button"
-      className="close"
-      data-dismiss="modal"
-      onClick={onClose}
-    >
-      {children}
-    </button>
-  ) : null
-}
-
-export function ModalTitle({ title }) {
-  return <h4 className="modal-title">{title}</h4>
-}
-
-export function ModalBody({ body }) {
-  return <div className="modal-body">{body}</div>
-}
-
-export function ModalFooter({ footer }) {
-  return <div className="modal-footer">{footer}</div>
+    )
+  }
 }

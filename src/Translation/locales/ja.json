@@ -100,6 +100,15 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "auction_modal": {
+    "authorize_contract": "契約を承認する",
+    "authorized_explanation": "あなたはすべて始める準備ができています！",
+    "blog_post": "ブログの投稿",
+    "first_time_explanation":
+      "この新しいオークションに参加するには、新しい{contract_link}契約を承認する必要があります。",
+    "lets_go": "行こう！",
+    "title": "NTオークション"
+  },
   "auction_page": {
     "bid": "入札",
     "description": "購入するLANDを選択",
@@ -399,6 +408,18 @@
       "mobile":
         "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます。"
     }
+  },
+  "terms_modal": {
+    "also_agree":
+      "また、お客様の情報をどのように処理するのかについて記述している{privacy_policy_link}に同意するものとします。",
+    "by_agreeing":
+      "下記の \"同意する\"を選択することにより、私たちの{terms_of_service_link}に同意したことになります。",
+    "explanation":
+      "このdAppは、Ethereumブロックチェーン上で実行される分散型エクスチェンジと相互作用します。",
+    "i_agree": "同意する",
+    "privacy_policy": "個人情報保護方針",
+    "terms_of_service": "利用規約",
+    "title": "DecentralandのLANDマーケットプレイスへようこそ"
   },
   "transaction": {
     "buy": "{parcel_link}を購入しました。",

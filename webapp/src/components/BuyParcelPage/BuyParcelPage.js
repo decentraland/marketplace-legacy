@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Loader } from 'semantic-ui-react'
 
 import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
@@ -11,11 +12,7 @@ import {
   publicationType
 } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import {
-  BuyWarningMessage,
-  Loading,
-  NotConnected
-} from 'components/BuyAssetPage'
+import { BuyWarningMessage, NotConnected } from 'components/BuyAssetPage'
 import { getCurrentAllowance } from 'modules/authorization/utils'
 import './BuyParcelPage.css'
 
@@ -118,7 +115,11 @@ export default class BuyParcelPage extends React.PureComponent {
     const { isConnected, isLoading } = this.props
 
     if (isLoading) {
-      return <Loading />
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
     }
 
     if (!isConnected) {

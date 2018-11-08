@@ -6,11 +6,10 @@ import { t, T } from '@dapps/modules/translation/utils'
 import { getEtherscanHref } from '@dapps/modules/transaction/utils'
 
 import { locations } from 'locations'
-import EtherscanLink from 'components/EtherscanLink'
+import ContractLink from 'components/ContractLink'
 import ParcelPreview from 'components/ParcelPreview'
 import Mana from 'components/Mana'
 import { transactionType } from 'components/types'
-import { getContractAddress } from 'modules/wallet/utils'
 import {
   ALLOW_TOKEN_SUCCESS,
   APPROVE_TOKEN_SUCCESS
@@ -72,14 +71,6 @@ export default class Transaction extends React.PureComponent {
     }
   }
 
-  renderContractLink(contractName) {
-    return (
-      <EtherscanLink address={getContractAddress(contractName)}>
-        {contractName}
-      </EtherscanLink>
-    )
-  }
-
   renderParcelLink(x, y) {
     return (
       <Link to={locations.parcelDetail(x, y)}>
@@ -116,7 +107,7 @@ export default class Transaction extends React.PureComponent {
           <T
             id={tkey}
             values={{
-              contract_link: this.renderContractLink(contractName),
+              contract_link: <ContractLink contractName={contractName} />,
               symbol: token.getSymbolByContractName(tokenContractName)
             }}
           />
@@ -132,7 +123,7 @@ export default class Transaction extends React.PureComponent {
           <T
             id={tkey}
             values={{
-              contract_link: this.renderContractLink(contractName),
+              contract_link: <ContractLink contractName={contractName} />,
               symbol: token.getSymbolByContractName(tokenContractName)
             }}
           />

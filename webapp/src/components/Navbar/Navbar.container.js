@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { goBack } from 'react-router-redux'
 
 import { getLocation } from '@dapps/modules/location/selectors'
-import { isStaticPage, isModalPage } from 'modules/location/selectors'
+import { isRootPage, isModalPage } from 'modules/location/selectors'
 import { getWallet } from 'modules/wallet/selectors'
 import { isConnected, isConnecting } from 'modules/wallet/selectors'
 import { isLoading } from 'modules/ui/loading/selectors'
@@ -21,13 +21,12 @@ const mapState = state => {
     pathname,
     address: wallet && wallet.address
   })
-  const isStatic = isStaticPage(state)
   const center = getCenter(pathname)
   return {
     activePage,
     wallet,
     center,
-    isStatic,
+    isRootPage: isRootPage(state),
     isLoading: isLoading(state) || isLoadingParcels(state),
     isConnected: isConnected(state),
     isConnecting: isConnecting(state),

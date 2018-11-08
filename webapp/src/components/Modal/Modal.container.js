@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import { getModal } from 'modules/ui/selectors'
 import { closeModal } from 'modules/ui/actions'
 import Modal from './Modal'
@@ -14,4 +13,4 @@ const mapDispatch = dispatch => ({
   onClose: () => dispatch(closeModal())
 })
 
-export default withRouter(connect(mapState, mapDispatch)(Modal))
+export default connect(mapState, mapDispatch)(Modal)

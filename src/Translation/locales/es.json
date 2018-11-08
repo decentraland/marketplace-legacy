@@ -103,6 +103,15 @@
     "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
+  "auction_modal": {
+    "authorize_contract": "Autorizar contrato",
+    "authorized_explanation": "Estás listo para comenzar!",
+    "blog_post": "Entrada en el blog",
+    "first_time_explanation":
+      "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}. ",
+    "lets_go": "¡Adelante!",
+    "title": "Subasta de Decentraland"
+  },
   "auction_page": {
     "bid": "Ofertar",
     "description": "Seleccione LAND para comprar",
@@ -408,6 +417,18 @@
       "mobile":
         "Puedes usar navegadores móviles como {coinbase_link} o {imtoken_link}."
     }
+  },
+  "terms_modal": {
+    "also_agree":
+      "También acepta nuestro {privacy_policy_link}, que describe cómo procesamos su información.",
+    "by_agreeing":
+      "Al seleccionar \"Acepto\" a continuación, acepta nuestro {terms_of_service_link}.",
+    "explanation":
+      "Este dApp interactúa con un exchange descentralizado que se ejecuta en la cadena de bloques Ethereum.",
+    "i_agree": "Estoy de acuerdo",
+    "privacy_policy": "Política de privacidad",
+    "terms_of_service": "Términos de servicio",
+    "title": "Bienvenido al Mercado de LAND de Decentaland"
   },
   "transaction": {
     "buy": "Has comprado {parcel_link}",

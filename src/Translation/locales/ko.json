@@ -102,6 +102,15 @@
     "your_estate": "당신의 재산",
     "your_parcel": "당신의 토지"
   },
+  "auction_modal": {
+    "authorize_contract": "계약 승인",
+    "authorized_explanation": "당신은 모두 시작할 준비가되어 있습니다! ",
+    "blog_post": "블로그 게시물",
+    "first_time_explanation":
+      "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다. ",
+    "lets_go": "가자!",
+    "title": "NT 옥션"
+  },
   "auction_page": {
     "bid": "매기다",
     "description": "구매할 LAND 선택",
@@ -402,6 +411,18 @@
       "mobile":
         "{coinbase_link} 또는 {imtoken_link}과 같은 모바일 브라우저를 사용할 수 있습니다."
     }
+  },
+  "terms_modal": {
+    "also_agree":
+      "또한 귀하의 정보 처리 방법을 설명하는 당사의 {privacy_policy_link}에 동의합니다.",
+    "by_agreeing":
+      "아래 \"동의합니다\"를 선택하면 우리 {terms_of_service_link}에 동의하는 것입니다.",
+    "explanation":
+      "이 dApp는 Ethereum 블록 체인에서 실행되는 분산 형 교환기와 상호 작용합니다.",
+    "i_agree": "동의한다",
+    "privacy_policy": "개인 정보 정책",
+    "terms_of_service": "서비스 약관",
+    "title": "Decentraland의 LAND 마켓 플레이스에 오신 것을 환영합니다."
   },
   "transaction": {
     "buy": "{parcel_link}을(를) 구입했습니다.",

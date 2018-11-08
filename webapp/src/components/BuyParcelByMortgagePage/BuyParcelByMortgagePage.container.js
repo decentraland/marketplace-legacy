@@ -10,10 +10,7 @@ import {
   getError as getMortgageError
 } from 'modules/mortgage/selectors'
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
-import {
-  getData as getAuthorizations,
-  isLoading
-} from 'modules/authorization/selectors'
+import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { getPublicationByCoordinate } from 'modules/publication/selectors'
 import BuyParcelByMortgagePage from './BuyParcelByMortgagePage'
 
@@ -25,7 +22,7 @@ const mapState = (state, ownProps) => {
   let mana = 0
 
   if (wallet) {
-    authorization = getAuthorizations(state)[wallet.address]
+    authorization = getAuthorizations(state)
     mana = wallet.mana
   }
 

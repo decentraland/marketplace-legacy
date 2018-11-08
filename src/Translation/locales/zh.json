@@ -95,6 +95,15 @@
     "your_estate": "您的连块土地",
     "your_parcel": "您的地块"
   },
+  "auction_modal": {
+    "authorize_contract": "授权合同",
+    "authorized_explanation": "你们都准备好了！",
+    "blog_post": "博客文章",
+    "first_time_explanation":
+      "要参与此次新拍卖，您需要授权新的{contract_link}合约。",
+    "lets_go": "我们走吧！",
+    "title": "Decentraland拍卖"
+  },
   "auction_page": {
     "bid": "出价",
     "description": "选择LAND购买",
@@ -384,6 +393,17 @@
         "您可以使用{metamask_link}扩展或像{ledger_nano_link}这样的硬件钱包。",
       "mobile": "您可以使用移动浏览器，如 {coinbase_link} 或 {imtoken_link}。"
     }
+  },
+  "terms_modal": {
+    "also_agree":
+      "您还同意我们的{privacy_policy_link}，它描述了我们如何处理您的信息。",
+    "by_agreeing":
+      "通过选择下面的“我同意”，即表示您同意我们的{terms_of_service_link}。",
+    "explanation": "这个dApp与在以太坊区块链上运行的分散交换进行交互。",
+    "i_agree": "我同意",
+    "privacy_policy": "隐私政策",
+    "terms_of_service": "服务条款",
+    "title": "欢迎来到Decentraland的LAND市场"
   },
   "transaction": {
     "buy": "您购买了 {parcel_link} 地块",
