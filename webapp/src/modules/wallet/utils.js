@@ -42,12 +42,15 @@ function getMortgageContracts() {
   // Condition should be deleted when mortgages go live
   if (!isFeatureEnabled('MORTGAGES')) return []
 
-  const { MortgageHelper, MortgageManager, RCNEngine, ERC20Token } = contracts
+  const { MortgageHelper, MortgageManager, RCNEngine } = contracts
 
-  const RCNToken = Object.create(
-    new ERC20Token(env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS'))
+  const RCNToken = new contracts.ERC20Token(
+    env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS')
   )
-  RCNToken.getContractName = () => 'RCNToken'
+
+  RCNToken.getContractName = () => {
+    return 'RCNToken'
+  }
 
   return [
     new MortgageHelper(env.get('REACT_APP_MORTGAGE_HELPER_CONTRACT_ADDRESS')),
