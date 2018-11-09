@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { parcelType, districtType, estateType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
-import { getDistrict, isRoad, isPlaza } from 'shared/asset'
+import { getDistrict, isRoad, isPlaza } from 'shared/district'
 
 import './ParcelTags.css'
 

@@ -8,7 +8,7 @@ import * as wheel from 'mouse-wheel'
 import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
 import { t } from '@dapps/modules/translation/utils'
-import { TYPES } from 'shared/asset'
+import { TYPES } from 'shared/map'
 import { shortenAddress } from 'lib/utils'
 
 export function panzoom(target, cb) {

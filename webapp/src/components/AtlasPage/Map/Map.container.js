@@ -36,7 +36,7 @@ const mapDispatch = (dispatch, { location }) => ({
   onLoading: () => dispatch(setLoading(true)),
   onChange: (x, y) =>
     dispatch(push(locations.parcelMapDetail(x, y, getMarker(location)))),
-  onSelect: asset => dispatch(push(locations.assetDetail(asset)))
+  onSelect: ({ asset }) => dispatch(push(locations.assetDetail(asset)))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(MapComponent))
