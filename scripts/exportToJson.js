@@ -81,6 +81,7 @@ const exportToJson = {
           writeParcels(parcelsToWrite, filepath)
 
           parcelsIndex += parcelsPerFile
+          fileIndex += 1
         }
 
         log.info('All done!')
