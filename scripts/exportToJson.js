@@ -91,6 +91,8 @@ const exportToJson = {
 }
 
 function writeParcels(parcels, filepath) {
+  if (parcels.length === 0) return
+
   const parcelsToWrite = parcels.map(parcel => ({ x: parcel.x, y: parcel.y }))
   log.info(`Writing file ${filepath} with ${parcelsToWrite.length} parcels`)
   writeJSON(filepath, parcelsToWrite)
