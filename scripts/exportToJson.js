@@ -35,59 +35,67 @@ const exportToJson = {
         '--outDir [outDir]',
         'Where to write the resulting files. Defaults to .'
       )
-      .action(async options => {
-        const { id, name } = options
-        if (!id && !name) {
-          throw new Error('You need to supply a district `name` or an `id`')
-        }
+      .action(
+        asSafeAction(async options => {
+          const { id, name } = options
+          if (!id && (!name || typeof name === 'function')) {
+            throw new Error('You need to supply a district `name` or an `id`')
+          }
 
-        const districtQuery = id ? { id } : { name }
-        const district = await District.findOne(districtQuery)
+          const districtQuery = id ? { id } : { name }
+          const district = await District.findOne(districtQuery)
 
-        if (!district) {
-          throw new Error(
-            `Could not find a district for id: ${id} or name: ${name}`
-          )
-        }
+          if (!district) {
+            throw new Error(
+              `Could not find a district for id: ${id} or name: ${name}`
+            )
+          }
 
-        log.info(`Found district ${district.id}: ${district.name}`)
+          log.info(`Found district ${district.id}: ${district.name}`)
 
-        const parcels = await Parcel.find({ district_id: district.id })
-        log.info(`Found ${parcels.length} parcels for ${district.name}`)
+          const parcels = await Parcel.find({ district_id: district.id })
+          log.info(`Found ${parcels.length} parcels for ${district.name}`)
 
-        let parcelsPerFile
+          let parcelsPerFile
 
-        if (options.parcelsPerFile) {
-          parcelsPerFile = options.parcelsPerFile
-        } else if (options.parts) {
-          parcelsPerFile = Math.round(parcels.length / options.parts)
-        } else {
-          parcelsPerFile = parcels.length
-        }
+          if (options.parcelsPerFile) {
+            parcelsPerFile = Number(options.parcelsPerFile)
+          } else if (options.parts) {
+            parcelsPerFile = Math.round(parcels.length / Number(options.parts))
+          } else {
+            parcelsPerFile = parcels.length
+          }
 
-        log.info(`Writing ${parcelsPerFile} parcels per file`)
+          log.info(`Writing ${parcelsPerFile} parcels per file`)
+          if (!parcelsPerFile) {
+            throw new Error(
+              `Wrong parcels per file ${parcelsPerFile}. parts parcelsPerFile might not be valid`
+            )
+          }
 
-        const outDir = options.outDir || '.'
-        let fileIndex = 1
-        let parcelsIndex = 0
+          const outDir = options.outDir || '.'
+          const basePath = `${outDir}/${district.name.replace(/\s/g, '-')}`
+          let fileIndex = 1
+          let parcelsIndex = 0
 
-        while (parcelsIndex <= parcels.length) {
-          const parcelsToWrite = parcels.slice(
-            parcelsIndex,
-            parcelsIndex + parcelsPerFile
-          )
-          const filepath = `${outDir}/${district.name}-${fileIndex}.json`
+          while (parcelsIndex <= parcels.length) {
+            const parcelsToWrite = parcels.slice(
+              parcelsIndex,
+              parcelsIndex + parcelsPerFile
+            )
+            const filepath = `${basePath}-${fileIndex}.json`
 
-          writeParcels(parcelsToWrite, filepath)
+            writeParcels(parcelsToWrite, filepath)
 
-          parcelsIndex += parcelsPerFile
-          fileIndex += 1
-        }
+            parcelsIndex += parcelsPerFile
+            fileIndex += 1
+          }
 
-        log.info('All done!')
+          log.info('All done!')
 
-        process.exit()
-      })
+          process.exit()
+        })
+      )
   }
 }
 
@@ -101,6 +109,19 @@ function writeParcels(parcels, filepath) {
 
 function writeJSON(filepath, data) {
   return fs.writeFileSync(filepath, JSON.stringify(data, null, 2))
+}
+
+function asSafeAction(callback) {
+  return async function(...args) {
+    try {
+      await callback(...args)
+    } catch (error) {
+      log.error(error.message)
+      console.log(error)
+    } finally {
+      process.exit()
+    }
+  }
 }
 
 if (require.main === module) {
