@@ -34,12 +34,6 @@
   color: var(--gray);
 }
 
-.ActivityPage .sign-in {
-  display: block;
-  text-align: center;
-  margin-top: 50px;
-}
-
 .ActivityPage .transaction-list {
   margin-top: 48px;
 }

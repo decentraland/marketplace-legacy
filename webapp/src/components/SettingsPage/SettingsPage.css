@@ -11,12 +11,6 @@
   top: 25%;
 }
 
-.SettingsPage .sign-in {
-  display: block;
-  text-align: center;
-  margin-top: 50px;
-}
-
 .SettingsPage .row {
   display: flex;
   flex-flow: row nowrap;

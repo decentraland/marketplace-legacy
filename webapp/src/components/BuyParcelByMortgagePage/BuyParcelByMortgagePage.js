@@ -9,6 +9,7 @@ import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
+import SignInNotice from 'components/SignInNotice'
 import { authorizationType, publicationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/publication'
@@ -45,16 +46,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
           <Header as="h2" size="huge" className="title">
             {t('mortgage.request')}
           </Header>
-          <p className="sign-in">
-            <T
-              id="global.sign_in_notice"
-              values={{
-                sign_in_link: (
-                  <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-                )
-              }}
-            />
-          </p>
+          <SignInNotice />
         </Container>
       </div>
     )
