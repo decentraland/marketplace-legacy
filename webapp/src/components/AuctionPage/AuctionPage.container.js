@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { isConnected } from 'modules/wallet/selectors'
+import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import { getAuthorizations } from 'modules/authorization/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getParams, getParcelOnChainOwners } from 'modules/auction/selectors'
@@ -13,6 +13,8 @@ import {
 import AuctionPage from './AuctionPage'
 
 const mapState = state => {
+  const wallet = getWallet(state)
+
   const parcelOnChainOwners = getParcelOnChainOwners(state)
   const allParcels = getParcels(state)
 
@@ -23,8 +25,10 @@ const mapState = state => {
 
   return {
     isConnected: isConnected(state),
+    isConnecting: isConnecting(state),
     authorization: getAuthorizations(state),
     auctionParams: getParams(state),
+    wallet,
     allParcels
   }
 }
@@ -34,7 +38,8 @@ const mapDispatch = dispatch => ({
   onFetchAuctionParams: () => dispatch(fetchAuctionParamsRequest()),
   onSetParcelOnChainOwner: (parcelId, owner) =>
     dispatch(setParcelOnChainOwner(parcelId, owner)),
-  onSubmit: parcels => dispatch(bidOnParcelsRequest(parcels))
+  onSubmit: (parcels, beneficiary) =>
+    dispatch(bidOnParcelsRequest(parcels, beneficiary))
 })
 
 export default connect(mapState, mapDispatch)(AuctionPage)

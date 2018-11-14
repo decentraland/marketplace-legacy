@@ -39,6 +39,7 @@ import {
   TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
+import { BID_ON_PARCELS_SUCCESS } from 'modules/auction/actions'
 import { buildCoordinate } from 'shared/coordinates'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
 import { ASSET_TYPES } from 'shared/asset'
@@ -335,6 +336,11 @@ export default class Transaction extends React.PureComponent {
             }}
           />
         )
+      }
+      case BID_ON_PARCELS_SUCCESS: {
+        const { parcelCount } = payload
+
+        return <T id="transaction.bid" values={{ parcel_count: parcelCount }} />
       }
       default:
         return null

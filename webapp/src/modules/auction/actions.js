@@ -1,3 +1,5 @@
+import { buildTransactionAction } from 'modules/transaction/utils'
+
 // Fetch auction parameters
 
 export const FETCH_AUCTION_PARAMS_REQUEST = '[Request] Fetch auction params'
@@ -42,22 +44,29 @@ export const BID_ON_PARCELS_REQUEST = '[Request] Bid on parcels'
 export const BID_ON_PARCELS_SUCCESS = '[Success] Bid on parcels'
 export const BID_ON_PARCELS_FAILURE = '[Failure] Bid on parcels'
 
-export function bidOnParcelsRequest() {
+export function bidOnParcelsRequest(parcels, beneficiary) {
   return {
-    type: FETCH_AUCTION_PARAMS_REQUEST
+    type: BID_ON_PARCELS_REQUEST,
+    parcels,
+    beneficiary
   }
 }
 
-export function bidOnParcelsSuccess(params) {
+export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary) {
   return {
-    type: FETCH_AUCTION_PARAMS_SUCCESS,
-    params
+    type: BID_ON_PARCELS_SUCCESS,
+    ...buildTransactionAction(txHash, {
+      parcelCount: xs.length
+    }),
+    xs,
+    ys,
+    beneficiary
   }
 }
 
 export function bidOnParcelsFailure(error) {
   return {
-    type: FETCH_AUCTION_PARAMS_FAILURE,
+    type: BID_ON_PARCELS_FAILURE,
     error
   }
 }

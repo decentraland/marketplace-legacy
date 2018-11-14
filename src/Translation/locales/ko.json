@@ -425,6 +425,7 @@
     "title": "Decentraland의 LAND 마켓 플레이스에 오신 것을 환영합니다."
   },
   "transaction": {
+    "bid": "경매에서 {parcel_count} 소포를 구입했습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
     "cancel": "{parcel_link}에서 판매를 취소했습니다",

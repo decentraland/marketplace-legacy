@@ -1,19 +1,23 @@
-import { all, takeEvery, put } from 'redux-saga/effects'
+import { all, takeEvery, put, call } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 
 import {
   FETCH_AUCTION_PARAMS_REQUEST,
+  BID_ON_PARCELS_REQUEST,
   fetchAuctionParamsSuccess,
-  fetchAuctionParamsFailure
+  fetchAuctionParamsFailure,
+  bidOnParcelsSuccess,
+  bidOnParcelsFailure
 } from './actions'
+import { splitCoodinatePairs } from 'shared/coordinates'
 
 export function* auctionSaga() {
   yield takeEvery(FETCH_AUCTION_PARAMS_REQUEST, handleAuctionParamsRequest)
+  yield takeEvery(BID_ON_PARCELS_REQUEST, handleBidRequest)
 }
 
 function* handleAuctionParamsRequest(action) {
   try {
-    console.log('eth.contracts', eth.contracts)
     const landAuction = eth.getContract('LANDAuction')
 
     const [gasPriceLimit, landsLimitPerBid, currentPrice] = yield all([
@@ -31,5 +35,19 @@ function* handleAuctionParamsRequest(action) {
     yield put(fetchAuctionParamsSuccess(params))
   } catch (error) {
     yield put(fetchAuctionParamsFailure(error.message))
+  }
+}
+
+function* handleBidRequest(action) {
+  try {
+    const { parcels, beneficiary } = action
+    const { xs, ys } = splitCoodinatePairs(parcels)
+    const landAuction = eth.getContract('LANDAuction')
+
+    const txHash = yield call(() => landAuction.bid(xs, ys, beneficiary))
+
+    yield put(bidOnParcelsSuccess(txHash, parcels, beneficiary))
+  } catch (error) {
+    yield put(bidOnParcelsFailure(error.message))
   }
 }

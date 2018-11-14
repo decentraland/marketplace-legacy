@@ -406,6 +406,7 @@
     "title": "欢迎来到Decentraland的LAND市场"
   },
   "transaction": {
+    "bid": "你在拍卖会上买了{parcel_count}包裹",
     "buy": "您购买了 {parcel_link} 地块",
     "buy_mana": "您已经买了 {mana} MANA",
     "cancel": "你在{parcel_link}取消了这笔交易",
