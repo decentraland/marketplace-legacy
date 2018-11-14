@@ -119,7 +119,10 @@ function* handleBuyRequest(action) {
     if (isLegacyPublication(action.publication)) {
       marketplaceContract = eth.getContract('LegacyMarketplace')
       txHash = yield call(() =>
-        marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
+        marketplaceContract.executeOrder['uint256,uint256'](
+          asset.id,
+          eth.utils.toWei(price)
+        )
       )
     } else {
       marketplaceContract = eth.getContract('Marketplace')
@@ -140,7 +143,7 @@ function* handleBuyRequest(action) {
         )
       } else {
         txHash = yield call(() =>
-          marketplaceContract.executeOrder(
+          marketplaceContract.executeOrder['address,uint256,uint256'](
             nftAddress,
             asset.id,
             eth.utils.toWei(price)
