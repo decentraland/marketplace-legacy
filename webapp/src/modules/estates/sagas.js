@@ -59,7 +59,7 @@ function* handleCreateEstateRequest(action) {
   try {
     estate.data.parcels.forEach(({ x, y }) => Bounds.validateInBounds(x, y))
 
-    const { x, y } = splitCoodinatePairs(estate.data.parcels)
+    const { xs, ys } = splitCoodinatePairs(estate.data.parcels)
     const metadata = {
       version: 0,
       name: estate.data.name,
@@ -70,7 +70,7 @@ function* handleCreateEstateRequest(action) {
     const owner = yield select(getAddress)
     const landRegistry = eth.getContract('LANDRegistry')
     const txHash = yield call(() =>
-      landRegistry.createEstateWithMetadata(x, y, owner, data)
+      landRegistry.createEstateWithMetadata(xs, ys, owner, data)
     )
     yield put(createEstateSuccess(txHash, { ...estate, owner }))
     yield put(push(locations.activity()))
@@ -95,10 +95,10 @@ function* handleEditEstateParcelsRequest({ estate }) {
     const owner = yield select(getAddress)
 
     if (parcelsToAdd.length) {
-      const { x, y } = splitCoodinatePairs(parcelsToAdd)
+      const { xs, ys } = splitCoodinatePairs(parcelsToAdd)
 
       const txHash = yield call(() =>
-        landRegistry.transferManyLandToEstate(x, y, estate.id)
+        landRegistry.transferManyLandToEstate(xs, ys, estate.id)
       )
       yield put(
         editEstateParcelsSuccess(txHash, estate, parcelsToAdd, ADD_PARCELS)

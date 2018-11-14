@@ -39,15 +39,15 @@ export function splitCoordinate(coordinate) {
  * @return {Object} coordinates  - Object with a x[] and y[] properties
  */
 export function splitCoodinatePairs(pairs) {
-  const x = []
-  const y = []
+  const xs = []
+  const ys = []
 
   for (const pair of pairs) {
-    x.push(pair.x)
-    y.push(pair.y)
+    xs.push(pair.x)
+    ys.push(pair.y)
   }
 
-  return { x, y }
+  return { xs, ys }
 }
 
 /**

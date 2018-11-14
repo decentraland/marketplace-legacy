@@ -150,9 +150,9 @@ export class ParcelService {
   }
 
   async getOwnerOfLandMany(parcels) {
-    const { x, y } = splitCoodinatePairs(parcels)
+    const { xs, ys } = splitCoodinatePairs(parcels)
     const contract = this.getLANDRegistryContract()
-    return contract.ownerOfLandMany(x, y)
+    return contract.ownerOfLandMany(xs, ys)
   }
 
   async getTokenId(parcel) {

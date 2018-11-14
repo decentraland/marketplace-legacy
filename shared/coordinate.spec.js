@@ -38,8 +38,8 @@ describe('coordinates', function() {
         { x: 9, y: -7 }
       ])
       expect(result).to.deep.equal({
-        x: [1, 5, -1, 9],
-        y: [2, 3, -2, -7]
+        xs: [1, 5, -1, 9],
+        ys: [2, 3, -2, -7]
       })
     })
   })
