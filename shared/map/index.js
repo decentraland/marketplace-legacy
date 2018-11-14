@@ -1,3 +1,3 @@
 export * from './Bounds'
-export * from './Tile'
+export * from './tile'
 export * from './Viewport'

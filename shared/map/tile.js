@@ -103,9 +103,6 @@ export function getType(parcel, estates, publications, wallet) {
   const isEstate = !!parcel.estate_id
   const isAssetOwner =
     wallet && isOwner(wallet, isEstate ? parcel.estate_id : parcel.id)
-  if (parcel.estate_id == '60') {
-    debugger
-  }
   const isAssetOnSale = isOnSale(
     isEstate ? estates[parcel.estate_id] : parcel,
     publications

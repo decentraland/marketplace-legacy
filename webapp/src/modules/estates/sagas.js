@@ -1,4 +1,11 @@
-import { takeEvery, put, select, call, all } from 'redux-saga/effects'
+import {
+  takeEvery,
+  takeLatest,
+  put,
+  select,
+  call,
+  all
+} from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
 
@@ -23,15 +30,19 @@ import {
   deleteEstateFailure,
   TRANSFER_ESTATE_REQUEST,
   transferEstateSuccess,
-  transferEstateFailure
+  transferEstateFailure,
+  FETCH_ESTATE_SUCCESS
 } from 'modules/estates/actions'
-import { getEstates } from 'modules/estates/selectors'
+import { getEstates, areParcelsLoaded } from 'modules/estates/selectors'
+import { getData as getParcels } from 'modules/parcels/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
 import { encodeMetadata } from 'shared/asset'
 import { getParcelsNotIncluded } from 'shared/parcel'
 import { splitCoodinatePairs } from 'shared/coordinates'
 import { Bounds } from 'shared/map'
+import { fetchParcelRequest } from 'modules/parcels/actions'
+import { buildCoordinate } from 'shared/coordinates'
 
 export function* estateSaga() {
   yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
@@ -40,6 +51,7 @@ export function* estateSaga() {
   yield takeEvery(EDIT_ESTATE_METADATA_REQUEST, handleEditEstateMetadataRequest)
   yield takeEvery(DELETE_ESTATE_REQUEST, handleDeleteEstate)
   yield takeEvery(TRANSFER_ESTATE_REQUEST, handleTransferRequest)
+  yield takeLatest(FETCH_ESTATE_SUCCESS, handleFetchEstateSuccess)
 }
 
 function* handleCreateEstateRequest(action) {
@@ -201,5 +213,18 @@ function* handleTransferRequest({ estate, to }) {
     yield put(transferEstateSuccess(txHash, transfer))
   } catch (error) {
     yield put(transferEstateFailure(error.message))
+  }
+}
+
+function* handleFetchEstateSuccess({ estate }) {
+  const areLoaded = yield select(state => areParcelsLoaded(state, estate))
+  if (!areLoaded) {
+    const parcels = yield select(state => getParcels(state))
+    for (const { x, y } of estate.data.parcels) {
+      const isLoaded = buildCoordinate(x, y) in parcels
+      if (!isLoaded) {
+        yield put(fetchParcelRequest(x, y))
+      }
+    }
   }
 }

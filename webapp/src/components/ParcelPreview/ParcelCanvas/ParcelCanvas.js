@@ -372,12 +372,7 @@ export default class ParcelPreview extends React.PureComponent {
           asset = parcel
           break
       }
-      onClick({
-        type,
-        asset,
-        x,
-        y
-      })
+      onClick({ type, asset, x, y })
     }
   }
 

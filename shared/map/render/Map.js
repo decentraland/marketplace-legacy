@@ -1,5 +1,6 @@
-import { Selection, Parcel } from '.'
-import { COLORS, getColor } from '../'
+import { Parcel } from './Parcel'
+import { Selection } from './Selection'
+import { COLORS, getColor } from '../tile'
 import { buildCoordinate } from '../../coordinates'
 
 export class Map {
