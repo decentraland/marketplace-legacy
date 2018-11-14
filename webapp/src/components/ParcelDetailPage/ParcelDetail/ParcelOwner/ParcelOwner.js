@@ -7,7 +7,7 @@ import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import { parcelType, districtType, estateType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { getDistrict, isDistrict } from 'shared/asset'
+import { getDistrict, isDistrict } from 'shared/district'
 
 import './ParcelOwner.css'
 

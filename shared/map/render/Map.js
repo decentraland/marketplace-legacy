@@ -1,5 +1,6 @@
-import { Selection, Parcel } from '.'
-import { COLORS, getColor, getMapAsset } from '../../asset'
+import { Parcel } from './Parcel'
+import { Selection } from './Selection'
+import { COLORS, getColor } from '../tile'
 import { buildCoordinate } from '../../coordinates'
 
 export class Map {
@@ -35,8 +36,7 @@ export class Map {
         const ry = cy - offsetY
         const id = buildCoordinate(px, py)
         const parcel = parcels[id]
-        const { asset } = getMapAsset(id, parcels, estates)
-        const color = getColor(px, py, asset, publications, wallet)
+        const color = getColor(px, py, parcel, estates, publications, wallet)
 
         const connectedLeft = parcel ? parcel.connectedLeft : false
         const connectedTop = parcel ? parcel.connectedTop : false

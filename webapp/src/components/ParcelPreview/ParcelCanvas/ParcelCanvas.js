@@ -11,15 +11,18 @@ import {
   publicationType
 } from 'components/types'
 import { isMobileWidth } from 'lib/utils'
+import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
+import { buildCoordinate } from 'shared/coordinates'
 import {
+  Bounds,
+  Viewport,
   getMapAsset,
   getType,
   getColorByType,
-  getOpenPublication
-} from 'shared/asset'
-import { buildCoordinate } from 'shared/coordinates'
+  TYPES
+} from 'shared/map'
 import { Map as MapRenderer } from 'shared/map/render'
-import { Bounds, Viewport } from 'shared/map'
+import { isParcel } from 'shared/parcel'
 import {
   getLabel,
   getTextColor,
@@ -351,14 +354,25 @@ export default class ParcelPreview extends React.PureComponent {
 
     const parcelId = buildCoordinate(x, y)
     const { onClick, parcels, estates } = this.props
-    const { asset } = getMapAsset(parcelId, parcels, estates)
+
+    let asset = getMapAsset(parcelId, parcels, estates)
 
     if (
       onClick &&
       Date.now() - this.mousedownTimestamp < 200 &&
       asset != null
     ) {
-      onClick(asset, parcels[parcelId])
+      const type = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
+      const parcel = parcels[parcelId]
+      // if the parcel clicked is a district/plaza/road, send the parcel to the callback
+      switch (getType(parcel, estates)) {
+        case TYPES.district:
+        case TYPES.plaza:
+        case TYPES.roads:
+          asset = parcel
+          break
+      }
+      onClick({ type, asset, x, y })
     }
   }
 
@@ -444,10 +458,11 @@ export default class ParcelPreview extends React.PureComponent {
     }
 
     const { wallet, parcels, districts, publications, estates } = this.props
-    const { asset } = getMapAsset(parcelId, parcels, estates)
+    const asset = getMapAsset(parcelId, parcels, estates)
+    const parcel = parcels[parcelId]
     const publication = getOpenPublication(asset, publications)
 
-    const type = getType(asset, publications, wallet)
+    const type = getType(parcel, estates, publications, wallet)
     const color = getTextColor(type)
     const label = getLabel(type, asset, districts)
     const description = getDescription(type, asset)

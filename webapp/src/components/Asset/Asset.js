@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 import { walletType } from 'components/types'
+import NotFound from 'components/NotFound'
 import { isOwner } from 'shared/asset'
 
 export let shouldRefresh = false
@@ -38,6 +39,10 @@ export default class Asset extends React.PureComponent {
     onFetchAsset()
   }
 
+  componentWillUnmount() {
+    isNavigatingAway = false
+  }
+
   componentDidUpdate() {
     if (shouldRefresh) {
       shouldRefresh = false
@@ -70,7 +75,7 @@ export default class Asset extends React.PureComponent {
       this.checkOwnership(wallet, value.id)
     }
 
-    if (ownerIsNotAllowed || assetShouldBeOnSale || !value) {
+    if (ownerIsNotAllowed || assetShouldBeOnSale) {
       this.redirect()
     }
 
@@ -88,10 +93,8 @@ export default class Asset extends React.PureComponent {
   }
 
   checkOwnership(wallet, assetId) {
-    const { onAccessDenied } = this.props
-    if (!isNavigatingAway && !isOwner(wallet, assetId)) {
-      isNavigatingAway = true
-      return onAccessDenied()
+    if (!isOwner(wallet, assetId)) {
+      this.redirect()
     }
   }
 
@@ -102,16 +105,26 @@ export default class Asset extends React.PureComponent {
       isConnecting,
       children,
       ownerOnly,
-      ownerNotAllowed
+      ownerNotAllowed,
+      isLoading
     } = this.props
     const shouldBeConnected = ownerOnly || ownerNotAllowed
 
-    return (shouldBeConnected && isConnecting) || isNavigatingAway || !value ? (
-      <div>
-        <Loader active size="massive" />
-      </div>
-    ) : (
-      children(value, isOwner(wallet, value.id), wallet)
-    )
+    if (!value || isLoading) {
+      if (
+        (shouldBeConnected && isConnecting) ||
+        isNavigatingAway ||
+        isLoading
+      ) {
+        return (
+          <div>
+            <Loader active size="massive" />
+          </div>
+        )
+      } else {
+        return <NotFound />
+      }
+    }
+    return children(value, isOwner(wallet, value.id), wallet)
   }
 }

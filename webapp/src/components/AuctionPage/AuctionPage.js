@@ -60,7 +60,7 @@ export default class AuctionPage extends React.PureComponent {
     return authorization && !isAuthorized(authorization)
   }
 
-  selectUnownedParcel = (asset, { x, y }) => {
+  selectUnownedParcel = ({ asset, x, y }) => {
     const { selectedCoordsById } = this.state
 
     // TODO: Check ownership with contract

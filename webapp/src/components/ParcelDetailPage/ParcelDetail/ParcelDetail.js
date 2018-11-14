@@ -15,7 +15,8 @@ import {
   walletType,
   estateType
 } from 'components/types'
-import { getDistrict, getOpenPublication } from 'shared/asset'
+import { getOpenPublication } from 'shared/asset'
+import { getDistrict } from 'shared/district'
 import { hasTags } from 'shared/parcel'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
