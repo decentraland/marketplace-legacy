@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { eth, Contract } from 'decentraland-eth'
+import { Contract } from 'decentraland-eth'
 import { utils } from 'decentraland-commons'
 import {
   Form,
@@ -95,10 +95,10 @@ export default class AuctionPage extends React.PureComponent {
     onSubmit(this.getSelectedParcels(), wallet.address)
   }
 
-  handleSelectUnownedParcel = async asset => {
+  handleSelectUnownedParcel = async ({ asset }) => {
     if (!isParcel(asset) || asset.district_id != null) return
 
-    const onChainOwner = await this.getOnChainOwner(asset)
+    const onChainOwner = await getAssetOnChainOwner(ASSET_TYPES.parcel, asset)
     if (!Contract.isEmptyAddress(onChainOwner)) {
       this.props.onSetParcelOnChainOwner(asset.id, onChainOwner)
       return
@@ -108,14 +108,6 @@ export default class AuctionPage extends React.PureComponent {
     if (this.hasReachedLimit(newSelectedCoordsById)) return
 
     this.setState({ selectedCoordinatesById: newSelectedCoordsById })
-  }
-
-  async getOnChainOwner(parcel) {
-    const landRegistry = eth.getContract('LANDRegistry')
-    const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
-    const onChainOwner = await getAssetOnChainOwner(ASSET_TYPES.parcel, tokenId)
-
-    return onChainOwner
   }
 
   getNewSelectedCoordsFor(parcel) {

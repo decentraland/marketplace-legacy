@@ -75,9 +75,28 @@ export function getAssetPublications(assets) {
   }, [])
 }
 
-export async function getAssetOnChainOwner(assetType, assetTokenId) {
+export async function getAssetOnChainOwner(assetType, asset) {
+  const tokenId = await getAssetTokenId(assetType, asset)
+  return getOnChainOwnerByTokenId(assetType, tokenId)
+}
+
+export async function getOnChainOwnerByTokenId(assetType, assetTokenId) {
   const contract = getContractByAssetType(assetType)
   return contract.ownerOf(assetTokenId)
+}
+
+export async function getAssetTokenId(assetType, asset) {
+  switch (assetType) {
+    case ASSET_TYPES.parcel: {
+      const landRegistry = eth.getContract('LANDRegistry')
+      return landRegistry.encodeTokenId(asset.x, asset.y)
+    }
+    case ASSET_TYPES.estate: {
+      return asset.id
+    }
+    default:
+      throw new Error(`The assetType ${assetType} is invalid`)
+  }
 }
 
 export function getContractByAssetType(assetType) {

@@ -13,7 +13,7 @@ import { mockModelDbOperations } from '../specs/utils'
 import {
   ASSET_TYPES,
   getContractByAssetType,
-  getAssetOnChainOwner
+  getOnChainOwnerByTokenId
 } from '../shared/asset'
 import { processEvent } from '../monitor/processEvents'
 import { loadEnv, parseCLICoords } from './utils'
@@ -76,7 +76,10 @@ const main = {
       .action(
         asSafeAction(async (assetId, assetType) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
-          const owner = await getAssetOnChainOwner(assetType, asset.token_id)
+          const owner = await getOnChainOwnerByTokenId(
+            assetType,
+            asset.token_id
+          )
 
           const dbOwner = asset.owner || asset.district_id || 'empty'
 
