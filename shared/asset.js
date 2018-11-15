@@ -80,9 +80,9 @@ export async function getAssetOnChainOwner(assetType, asset) {
   return getOnChainOwnerByTokenId(assetType, tokenId)
 }
 
-export async function getOnChainOwnerByTokenId(assetType, assetTokenId) {
+export async function getOnChainOwnerByTokenId(assetType, tokenId) {
   const contract = getContractByAssetType(assetType)
-  return contract.ownerOf(assetTokenId)
+  return contract.ownerOf(tokenId)
 }
 
 export async function getAssetTokenId(assetType, asset) {
