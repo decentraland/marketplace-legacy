@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader, Container } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import ParcelModal from 'components/ParcelModal'
 import Mana from 'components/Mana'
 import SignInNotice from 'components/SignInNotice'
 import { walletType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import BuyManaForm from './BuyManaForm'
 import './BuyManaPage.css'
 

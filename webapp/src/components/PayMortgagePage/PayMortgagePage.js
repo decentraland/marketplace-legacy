@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container, Header } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import Parcel from 'components/Parcel'
 import { walletType, mortgageType } from 'components/types'
@@ -9,7 +10,6 @@ import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import SignInNotice from 'components/SignInNotice'
-import { t, T } from '@dapps/modules/translation/utils'
 import {
   isMortgageOngoing,
   getMortgageOutstandingAmount

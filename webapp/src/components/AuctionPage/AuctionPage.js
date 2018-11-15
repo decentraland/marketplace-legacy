@@ -11,6 +11,7 @@ import {
   Loader,
   Button
 } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelAttributes from 'components/ParcelAttributes'
@@ -21,7 +22,6 @@ import {
   walletType,
   parcelType
 } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { hasSeenAuctionModal, isAuthorized } from 'modules/auction/utils'
 import { isParcel } from 'shared/parcel'
 import { ASSET_TYPES, getAssetOnChainOwner } from 'shared/asset'
@@ -46,9 +46,10 @@ export default class AuctionPage extends React.PureComponent {
     super(props)
 
     this.areParamsFetched = false
+    this.handleSelectUnownedParcel = this.selectUnownedParcel.bind(this)
 
     this.state = {
-      selectedParcelsById: {}
+      selectedCoordinatesById: {}
     }
   }
 
@@ -91,12 +92,11 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    const { wallet } = this.props
-    const { selectedParcelsById } = this.state
-    this.props.onSubmit(Object.values(selectedParcelsById), wallet.address)
+    const { wallet, onSubmit } = this.props
+    onSubmit(this.getSelectedParcels(), wallet.address)
   }
 
-  async handleSelectUnownedParcel(asset) {
+  async selectUnownedParcel(asset) {
     if (!isParcel(asset) || asset.district_id != null) return
 
     const onChainOwner = await this.getOnChainOwner(asset)
@@ -108,7 +108,7 @@ export default class AuctionPage extends React.PureComponent {
     const newSelectedCoordsById = this.getNewSelectedCoordsFor(asset)
     if (this.hasReachedLimit(newSelectedCoordsById)) return
 
-    this.setState({ selectedParcelsById: newSelectedCoordsById })
+    this.setState({ selectedCoordinatesById: newSelectedCoordsById })
   }
 
   async getOnChainOwner(parcel) {
@@ -120,13 +120,13 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   getNewSelectedCoordsFor(parcel) {
-    const { selectedParcelsById } = this.state
-    const { id } = parcel
-    const isSelected = selectedParcelsById[id] !== undefined
+    const { selectedCoordinatesById } = this.state
+    const { id, x, y } = parcel
+    const isSelected = selectedCoordinatesById[id] !== undefined
 
     return isSelected
-      ? utils.omit(selectedParcelsById, id)
-      : { ...selectedParcelsById, [id]: parcel }
+      ? utils.omit(selectedCoordinatesById, id)
+      : { ...selectedCoordinatesById, [id]: { x, y } }
   }
 
   hasReachedLimit(selected) {
@@ -136,11 +136,11 @@ export default class AuctionPage extends React.PureComponent {
 
   getSelectedParcels() {
     const { allParcels } = this.props
-    const { selectedParcelsById } = this.state
+    const { selectedCoordinatesById } = this.state
 
     if (!allParcels) return []
 
-    const parcelIds = Object.keys(selectedParcelsById)
+    const parcelIds = Object.keys(selectedCoordinatesById)
     const parcels = []
 
     for (const parcelId of parcelIds) {
@@ -163,9 +163,7 @@ export default class AuctionPage extends React.PureComponent {
     const { authorization, auctionParams, allParcels } = this.props
     const { isConnecting, isConnected } = this.props
     const { landsLimitPerBid, gasPriceLimit, currentPrice } = auctionParams
-    const { selectedParcelsById } = this.state
-
-    const selected = Object.values(selectedParcelsById)
+    const { selectedCoordinatesById } = this.state
 
     if (!isConnecting && !isConnected) {
       return (
@@ -183,6 +181,8 @@ export default class AuctionPage extends React.PureComponent {
       )
     }
 
+    const selectedParcels = this.getSelectedParcels()
+
     return (
       <div className="AuctionPage">
         <div className="parcel-preview">
@@ -190,18 +190,18 @@ export default class AuctionPage extends React.PureComponent {
             x={0}
             y={0}
             parcels={allParcels}
-            selected={selected}
+            selected={selectedParcels}
             isDraggable
             showPopup
             showControls={true}
             showMinimap={true}
-            onClick={this.handleSelectUnownedParcel.bind(this)}
+            onClick={this.handleSelectUnownedParcel}
           />
         </div>
 
         <Container>
           <Grid className="auction-details">
-            {this.hasReachedLimit(selectedParcelsById) ? (
+            {this.hasReachedLimit(selectedCoordinatesById) ? (
               <Grid.Row>
                 <Grid.Column width={16}>
                   <Message
@@ -240,20 +240,20 @@ export default class AuctionPage extends React.PureComponent {
                     <div className="information-block">
                       <p className="subtitle">PARCELS</p>
                       <Header size="large">
-                        {selected.length}/{landsLimitPerBid}
+                        {selectedParcels.length}/{landsLimitPerBid}
                       </Header>
                     </div>
                     <div className="information-block">
                       <p className="subtitle">TOTAL PRICE</p>
                       <Header size="large">
-                        {this.roundPrice(currentPrice * selected.length)}
+                        {this.roundPrice(currentPrice * selectedParcels.length)}
                       </Header>
                     </div>
                     <div className="information-block">
                       <Button
                         type="submit"
                         primary={true}
-                        disabled={selected.length === 0}
+                        disabled={selectedParcels.length === 0}
                       >
                         {t('auction_page.bid')}
                       </Button>

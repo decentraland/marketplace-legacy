@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container, Loader } from 'semantic-ui-react'
+import { isLedgerWallet } from '@dapps/modules/wallet/utils'
 
 import AddressBlock from 'components/AddressBlock'
 import SignInNotice from 'components/SignInNotice'
@@ -9,7 +10,6 @@ import {
   authorizationType,
   transactionType
 } from 'components/types'
-import { isLedgerWallet } from '@dapps/modules/wallet/utils'
 import { getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
 

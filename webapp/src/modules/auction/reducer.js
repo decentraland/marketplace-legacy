@@ -1,10 +1,10 @@
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import {
   FETCH_AUCTION_PARAMS_REQUEST,
   FETCH_AUCTION_PARAMS_SUCCESS,
   FETCH_AUCTION_PARAMS_FAILURE,
   SET_ON_CHAIN_PARCEL_OWNER
 } from './actions'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
 
 const INITIAL_STATE = {
   data: {

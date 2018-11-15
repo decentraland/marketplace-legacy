@@ -1,6 +1,9 @@
 import { compose, createStore, applyMiddleware } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { env } from 'decentraland-commons'
+import { createAnalyticsMiddleware } from '@dapps/modules/analytics/middleware'
+import { createTransactionMiddleware } from '@dapps/modules/transaction/middleware'
+import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
 
 import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
@@ -8,10 +11,6 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
-
-import { createAnalyticsMiddleware } from '@dapps/modules/analytics/middleware'
-import { createTransactionMiddleware } from '@dapps/modules/transaction/middleware'
-import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
 
 import { SET_ON_CHAIN_PARCEL_OWNER } from 'modules/auction/actions'
 

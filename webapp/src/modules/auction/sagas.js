@@ -1,4 +1,4 @@
-import { all, takeEvery, put, call } from 'redux-saga/effects'
+import { all, takeLatest, put, call } from 'redux-saga/effects'
 import { eth } from 'decentraland-eth'
 
 import {
@@ -12,8 +12,8 @@ import {
 import { splitCoodinatePairs } from 'shared/coordinates'
 
 export function* auctionSaga() {
-  yield takeEvery(FETCH_AUCTION_PARAMS_REQUEST, handleAuctionParamsRequest)
-  yield takeEvery(BID_ON_PARCELS_REQUEST, handleBidRequest)
+  yield takeLatest(FETCH_AUCTION_PARAMS_REQUEST, handleAuctionParamsRequest)
+  yield takeLatest(BID_ON_PARCELS_REQUEST, handleBidRequest)
 }
 
 function* handleAuctionParamsRequest(action) {
