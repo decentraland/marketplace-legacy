@@ -267,21 +267,23 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         case PUBLISH_SUCCESS: {
           // set publication_tx_hash
           const { type, x, y, tx_hash } = transaction.payload
-          const parcelId = buildCoordinate(x, y)
 
-          if (type === ASSET_TYPES.parcel && parcelId in state.data) {
+          if (type === ASSET_TYPES.parcel) {
+            const parcelId = buildCoordinate(x, y)
             const parcel = state.data[parcelId]
-            return {
-              ...state,
-              data: {
-                ...state.data,
-                [parcelId]: {
-                  ...parcel,
-                  publication_tx_hash: tx_hash,
-                  publication_tx_hash_history: [
-                    tx_hash,
-                    ...(parcel.publication_tx_hash_history || [])
-                  ]
+            if (parcel) {
+              return {
+                ...state,
+                data: {
+                  ...state.data,
+                  [parcelId]: {
+                    ...parcel,
+                    publication_tx_hash: tx_hash,
+                    publication_tx_hash_history: [
+                      tx_hash,
+                      ...(parcel.publication_tx_hash_history || [])
+                    ]
+                  }
                 }
               }
             }
