@@ -46,7 +46,6 @@ export default class AuctionPage extends React.PureComponent {
     super(props)
 
     this.areParamsFetched = false
-    this.handleSelectUnownedParcel = this.selectUnownedParcel.bind(this)
 
     this.state = {
       selectedCoordinatesById: {}
@@ -96,7 +95,7 @@ export default class AuctionPage extends React.PureComponent {
     onSubmit(this.getSelectedParcels(), wallet.address)
   }
 
-  async selectUnownedParcel(asset) {
+  handleSelectUnownedParcel = async asset => {
     if (!isParcel(asset) || asset.district_id != null) return
 
     const onChainOwner = await this.getOnChainOwner(asset)
