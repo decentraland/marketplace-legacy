@@ -75,12 +75,12 @@ export function getAssetPublications(assets) {
   }, [])
 }
 
-export async function getAssetOnChainOwner(assetType, asset) {
+export async function getAssetOwnerOnChain(assetType, asset) {
   const tokenId = await getAssetTokenId(assetType, asset)
-  return getOnChainOwnerByTokenId(assetType, tokenId)
+  return getAssetOwnerOnChainByTokenId(assetType, tokenId)
 }
 
-export async function getOnChainOwnerByTokenId(assetType, tokenId) {
+export async function getAssetOwnerOnChainByTokenId(assetType, tokenId) {
   const contract = getContractByAssetType(assetType)
   return contract.ownerOf(tokenId)
 }

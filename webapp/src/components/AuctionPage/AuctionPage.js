@@ -24,7 +24,7 @@ import {
 } from 'components/types'
 import { hasSeenAuctionModal, isAuthorized } from 'modules/auction/utils'
 import { isParcel } from 'shared/parcel'
-import { ASSET_TYPES, getAssetOnChainOwner } from 'shared/asset'
+import { ASSET_TYPES, getAssetOwnerOnChain } from 'shared/asset'
 import { preventDefault } from 'lib/utils'
 
 import './AuctionPage.css'
@@ -98,9 +98,9 @@ export default class AuctionPage extends React.PureComponent {
   handleSelectUnownedParcel = async ({ asset }) => {
     if (!isParcel(asset) || asset.district_id != null) return
 
-    const onChainOwner = await getAssetOnChainOwner(ASSET_TYPES.parcel, asset)
-    if (!Contract.isEmptyAddress(onChainOwner)) {
-      this.props.onSetParcelOnChainOwner(asset.id, onChainOwner)
+    const ownerOnChain = await getAssetOwnerOnChain(ASSET_TYPES.parcel, asset)
+    if (!Contract.isEmptyAddress(ownerOnChain)) {
+      this.props.onSetParcelOnChainOwner(asset.id, ownerOnChain)
       return
     }
 
