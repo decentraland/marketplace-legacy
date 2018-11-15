@@ -87,7 +87,7 @@ function* handlePublishRequest(action) {
     const marketplaceContract = eth.getContract('Marketplace')
 
     const txHash = yield call(() =>
-      marketplaceContract.createOrder(
+      marketplaceContract.createOrder['address,uint256,uint256,uint256'](
         nftAddress,
         asset.id,
         priceInWei,
@@ -119,7 +119,10 @@ function* handleBuyRequest(action) {
     if (isLegacyPublication(action.publication)) {
       marketplaceContract = eth.getContract('LegacyMarketplace')
       txHash = yield call(() =>
-        marketplaceContract.executeOrder(asset.id, eth.utils.toWei(price))
+        marketplaceContract.executeOrder['uint256,uint256'](
+          asset.id,
+          eth.utils.toWei(price)
+        )
       )
     } else {
       marketplaceContract = eth.getContract('Marketplace')
@@ -140,7 +143,7 @@ function* handleBuyRequest(action) {
         )
       } else {
         txHash = yield call(() =>
-          marketplaceContract.executeOrder(
+          marketplaceContract.executeOrder['address,uint256,uint256'](
             nftAddress,
             asset.id,
             eth.utils.toWei(price)
@@ -168,12 +171,14 @@ function* handleCancelSaleRequest(action) {
     let marketplaceContract, txHash
     if (isLegacyPublication(action.publication)) {
       marketplaceContract = eth.getContract('LegacyMarketplace')
-      txHash = yield call(() => marketplaceContract.cancelOrder(asset.id))
+      txHash = yield call(() =>
+        marketplaceContract.cancelOrder['uint256'](asset.id)
+      )
     } else {
       const nftAddress = getNFTAddressByType(asset_type)
       marketplaceContract = eth.getContract('Marketplace')
       txHash = yield call(() =>
-        marketplaceContract.cancelOrder(nftAddress, asset.id)
+        marketplaceContract.cancelOrder['address,uint256'](nftAddress, asset.id)
       )
     }
 

@@ -209,8 +209,8 @@ const main = {
           await unlockAccountWithPrompt()
 
           const txHash = options.isLegacy
-            ? await contract.cancelOrder(asset.token_id)
-            : await contract.cancelOrder(
+            ? await contract.cancelOrder['uint256'](asset.token_id)
+            : await contract.cancelOrder['address,uint256'](
                 registryContract.address,
                 asset.token_id
               )
