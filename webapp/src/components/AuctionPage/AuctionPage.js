@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Contract } from 'decentraland-eth'
+import { eth, Contract } from 'decentraland-eth'
 import { utils } from 'decentraland-commons'
 import {
   Form,
@@ -24,7 +24,6 @@ import {
 } from 'components/types'
 import { hasSeenAuctionModal, isAuthorized } from 'modules/auction/utils'
 import { isParcel } from 'shared/parcel'
-import { ASSET_TYPES, getAssetOwnerOnChain } from 'shared/asset'
 import { preventDefault } from 'lib/utils'
 
 import './AuctionPage.css'
@@ -98,7 +97,7 @@ export default class AuctionPage extends React.PureComponent {
   handleSelectUnownedParcel = async ({ asset }) => {
     if (!isParcel(asset) || asset.district_id != null) return
 
-    const ownerOnChain = await getAssetOwnerOnChain(ASSET_TYPES.parcel, asset)
+    const ownerOnChain = await this.getParcelOwnerOnChain(asset)
     if (!Contract.isEmptyAddress(ownerOnChain)) {
       this.props.onSetParcelOnChainOwner(asset.id, ownerOnChain)
       return
@@ -108,6 +107,16 @@ export default class AuctionPage extends React.PureComponent {
     if (this.hasReachedLimit(newSelectedCoordsById)) return
 
     this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+  }
+
+  async getParcelOwnerOnChain(parcel) {
+    // Warn: this code is duplicated on shared/asset.js it's the same as calling
+    // `await getAssetOwnerOnChain(ASSET_TYPE.parcel, parcel)`
+    // It's repeated here because we can't use `eth` from the webapp, because shared will use the singleton from the parent folder.
+    // Fixing this is a issue on it's own so we'll leave this code here for now.
+    const landRegistry = eth.getContract('LANDRegistry')
+    const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
+    return landRegistry.ownerOf(tokenId)
   }
 
   getNewSelectedCoordsFor(parcel) {
