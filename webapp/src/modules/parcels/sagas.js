@@ -32,7 +32,6 @@ function* handleParcelRequest(action) {
 
     yield put(fetchParcelSuccess(x, y, parcel))
   } catch (error) {
-    console.warn(error)
     yield put(fetchParcelFailure(x, y, error.message))
   }
 }
@@ -42,9 +41,11 @@ function* handleEditParcelsRequest(action) {
     const parcel = action.parcel
     const { x, y, data } = parcel
 
-    const contract = eth.getContract('LANDRegistry')
+    const landRegistry = eth.getContract('LANDRegistry')
     const dataString = contracts.LANDRegistry.encodeLandData(data)
-    const txHash = yield call(() => contract.updateLandData(x, y, dataString))
+    const txHash = yield call(() =>
+      landRegistry.updateLandData(x, y, dataString)
+    )
 
     yield put(editParcelSuccess(txHash, parcel))
     yield put(push(locations.activity()))
@@ -74,9 +75,9 @@ function* handleTransferRequest(action) {
       throw new Error('Invalid parcel')
     }
 
-    const contract = eth.getContract('LANDRegistry')
+    const landRegistry = eth.getContract('LANDRegistry')
     const txHash = yield call(() =>
-      contract.transferLand(parcel.x, parcel.y, newOwner)
+      landRegistry.transferLand(parcel.x, parcel.y, newOwner)
     )
 
     const transfer = {

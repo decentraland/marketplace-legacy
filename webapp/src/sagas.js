@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects'
 
 import { createTranslationSaga } from '@dapps/modules/translation/sagas'
 import { addressSaga } from 'modules/address/sagas'
+import { auctionSaga } from 'modules/auction/sagas'
 import { authorizationSaga } from 'modules/authorization/sagas'
 import { analyticsSaga } from '@dapps/modules/analytics/sagas'
 import { districtsSaga } from 'modules/districts/sagas'
@@ -25,6 +26,7 @@ export function* rootSaga() {
   yield all([
     analyticsSaga(),
     addressSaga(),
+    auctionSaga(),
     authorizationSaga(),
     districtsSaga(),
     locationSaga(),

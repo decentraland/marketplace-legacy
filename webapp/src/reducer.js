@@ -7,6 +7,7 @@ import {
 } from '@dapps/modules/storage/reducer'
 import { translationReducer as translation } from '@dapps/modules/translation/reducer'
 import { addressReducer as address } from 'modules/address/reducer'
+import { auctionReducer as auction } from 'modules/auction/reducer'
 import { authorizationReducer as authorization } from 'modules/authorization/reducer'
 import { districtsReducer as districts } from 'modules/districts/reducer'
 import { parcelsReducer as parcels } from 'modules/parcels/reducer'
@@ -20,6 +21,7 @@ import mortgages from 'modules/mortgage/reducer'
 export const rootReducer = storageReducerWrapper(
   combineReducers({
     address,
+    auction,
     authorization,
     districts,
     parcels,

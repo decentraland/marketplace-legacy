@@ -119,7 +119,8 @@
     "land_price": "Precio LAND",
     "maximum_parcels_message":
       "Si intentas comprar más de {max} LAND en una sola transacción, fallará. ",
-    "maximum_parcels_title": "Alcanzó la cantidad máxima de LAND por transacción",
+    "maximum_parcels_title":
+      "Alcanzó la cantidad máxima de LAND por transacción",
     "title": "Compra sin LAND sin dueño",
     "total_price": "Precio total"
   },
@@ -431,6 +432,7 @@
     "title": "Bienvenido al Mercado de LAND de Decentaland"
   },
   "transaction": {
+    "bid": "Usted compró {parcel_count} parcelas en la subasta",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "cancel": "Cancelaste la venta en {parcel_link}",

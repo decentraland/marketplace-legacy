@@ -32,6 +32,7 @@ import {
   DELETE_ESTATE_SUCCESS,
   CREATE_ESTATE_SUCCESS
 } from 'modules/estates/actions'
+import { BID_ON_PARCELS_SUCCESS } from 'modules/auction/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { ASSET_TYPES } from 'shared/asset'
@@ -218,6 +219,21 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
                 owner: newOwner.toLowerCase()
               }
             }
+          }
+        }
+        case BID_ON_PARCELS_SUCCESS: {
+          const { parcels, beneficiary } = transaction.payload
+          const owner = beneficiary.toLowerCase()
+
+          return {
+            ...state,
+            data: parcels.reduce(
+              (data, parcel) => ({
+                ...data,
+                [parcel.id]: { ...parcel, owner }
+              }),
+              { ...state.data }
+            )
           }
         }
         case BUY_SUCCESS: {

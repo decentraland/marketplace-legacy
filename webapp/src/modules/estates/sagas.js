@@ -59,7 +59,7 @@ function* handleCreateEstateRequest(action) {
   try {
     estate.data.parcels.forEach(({ x, y }) => Bounds.validateInBounds(x, y))
 
-    const { x, y } = splitCoodinatePairs(estate.data.parcels)
+    const { xs, ys } = splitCoodinatePairs(estate.data.parcels)
     const metadata = {
       version: 0,
       name: estate.data.name,
@@ -68,9 +68,9 @@ function* handleCreateEstateRequest(action) {
     }
     const data = yield call(() => encodeMetadata(metadata))
     const owner = yield select(getAddress)
-    const land = eth.getContract('LANDRegistry')
+    const landRegistry = eth.getContract('LANDRegistry')
     const txHash = yield call(() =>
-      land.createEstateWithMetadata(x, y, owner, data)
+      landRegistry.createEstateWithMetadata(xs, ys, owner, data)
     )
     yield put(createEstateSuccess(txHash, { ...estate, owner }))
     yield put(push(locations.activity()))
@@ -95,10 +95,10 @@ function* handleEditEstateParcelsRequest({ estate }) {
     const owner = yield select(getAddress)
 
     if (parcelsToAdd.length) {
-      const { x, y } = splitCoodinatePairs(parcelsToAdd)
+      const { xs, ys } = splitCoodinatePairs(parcelsToAdd)
 
       const txHash = yield call(() =>
-        landRegistry.transferManyLandToEstate(x, y, estate.id)
+        landRegistry.transferManyLandToEstate(xs, ys, estate.id)
       )
       yield put(
         editEstateParcelsSuccess(txHash, estate, parcelsToAdd, ADD_PARCELS)
@@ -107,11 +107,11 @@ function* handleEditEstateParcelsRequest({ estate }) {
 
     if (parcelsToRemove.length) {
       const estateRegistry = eth.getContract('EstateRegistry')
-      const landIds = yield all(
+      const tokenIds = yield all(
         parcelsToRemove.map(({ x, y }) => landRegistry.encodeTokenId(x, y))
       )
       const txHash = yield call(() =>
-        estateRegistry.transferManyLands(estate.id, landIds, owner)
+        estateRegistry.transferManyLands(estate.id, tokenIds, owner)
       )
       yield put(
         editEstateParcelsSuccess(
@@ -161,11 +161,11 @@ function* handleDeleteEstate({ estateId }) {
     const estate = estates[estateId]
     const parcelsToRemove = estate.data.parcels
 
-    const landIds = yield all(
+    const tokenIds = yield all(
       parcelsToRemove.map(({ x, y }) => landRegistry.encodeTokenId(x, y))
     )
     const txHash = yield call(() =>
-      estateRegistry.transferManyLands(estateId, landIds, owner)
+      estateRegistry.transferManyLands(estateId, tokenIds, owner)
     )
     yield put(deleteEstateSuccess(txHash, estate))
     yield put(push(locations.activity()))
@@ -190,9 +190,9 @@ function* handleTransferRequest({ estate, to }) {
       throw new Error('Invalid estate')
     } //@nacho TODO: on translations?
 
-    const contract = eth.getContract('EstateRegistry')
+    const estateRegistry = eth.getContract('EstateRegistry')
     const txHash = yield call(() =>
-      contract.safeTransferFrom(oldOwner, to, estate.id)
+      estateRegistry.safeTransferFrom(oldOwner, to, estate.id)
     )
 
     const transfer = {

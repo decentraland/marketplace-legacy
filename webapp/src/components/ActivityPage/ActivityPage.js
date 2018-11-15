@@ -5,6 +5,7 @@ import { Container, Loader, Button } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Prompt from 'components/Prompt'
+import SignInNotice from 'components/SignInNotice'
 import { authorizationType, transactionType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import Transaction from './Transaction'
@@ -129,16 +130,7 @@ export default class ActivityPage extends React.PureComponent {
   }
 
   renderNotConnected() {
-    return (
-      <T
-        id="global.sign_in_notice"
-        values={{
-          sign_in_link: (
-            <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-          )
-        }}
-      />
-    )
+    return <SignInNotice />
   }
 
   render() {

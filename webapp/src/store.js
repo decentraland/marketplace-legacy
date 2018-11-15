@@ -1,6 +1,9 @@
 import { compose, createStore, applyMiddleware } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { env } from 'decentraland-commons'
+import { createAnalyticsMiddleware } from '@dapps/modules/analytics/middleware'
+import { createTransactionMiddleware } from '@dapps/modules/transaction/middleware'
+import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
 
 import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
@@ -9,9 +12,7 @@ import { createLogger } from 'redux-logger'
 
 import { api } from 'lib/api'
 
-import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
-import { createTransactionMiddleware } from '@dapps/modules/transaction/middleware'
-import { createAnalyticsMiddleware } from '@dapps/modules/analytics/middleware'
+import { SET_ON_CHAIN_PARCEL_OWNER } from 'modules/auction/actions'
 
 import { migrations } from 'lib/localStorage'
 
@@ -36,6 +37,8 @@ const analyticsMiddleware = createAnalyticsMiddleware(
 
 const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   migrations,
+  paths: [['auction', 'parcelOnChainOwners']],
+  action: [SET_ON_CHAIN_PARCEL_OWNER],
   storageKey: env.get('REACT_APP_LOCAL_STORAGE_KEY')
 })
 

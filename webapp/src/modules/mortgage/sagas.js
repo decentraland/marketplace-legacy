@@ -110,7 +110,7 @@ function* handleCreateMortgageRequest(action) {
     const kyberOrcaleAddress = getKyberOracleAddress()
     const manaCurrency = eth.utils.fromAscii('MANA')
 
-    const landId = yield call(() =>
+    const tokenId = yield call(() =>
       landRegistryContract.encodeTokenId(parcel.x, parcel.y)
     )
     const borrower = yield select(getAddress)
@@ -149,7 +149,7 @@ function* handleCreateMortgageRequest(action) {
       mortgageHelperContract.requestMortgage(
         loanParams, // Configuration of the loan request
         loanMetadata, // Metadata of the loan
-        landId, // Id of the loan to buy
+        tokenId, // Id of the loan to buy
         v, // Signature of the loan
         r, // Signature of the loan
         s // Signature of the loan

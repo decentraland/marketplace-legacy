@@ -10,7 +10,11 @@ import { Publication } from '../src/Publication'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { eventNames } from '../src/ethereum'
 import { mockModelDbOperations } from '../specs/utils'
-import { ASSET_TYPES } from '../shared/asset'
+import {
+  ASSET_TYPES,
+  getContractByAssetType,
+  getAssetOwnerOnChainByTokenId
+} from '../shared/asset'
 import { processEvent } from '../monitor/processEvents'
 import { loadEnv, parseCLICoords } from './utils'
 
@@ -72,9 +76,10 @@ const main = {
       .action(
         asSafeAction(async (assetId, assetType) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
-
-          const contract = getContractByAssetType(assetType)
-          const owner = await contract.ownerOf(asset.token_id)
+          const owner = await getAssetOwnerOnChainByTokenId(
+            assetType,
+            asset.token_id
+          )
 
           const dbOwner = asset.owner || asset.district_id || 'empty'
 
@@ -466,19 +471,6 @@ async function getAssetFromCLIArgs(assetId, assetType) {
     }
     case ASSET_TYPES.estate: {
       return Estate.findOne(assetId)
-    }
-    default:
-      throw new Error(`The assetType ${assetType} is invalid`)
-  }
-}
-
-function getContractByAssetType(assetType) {
-  switch (assetType) {
-    case ASSET_TYPES.parcel: {
-      return eth.getContract('LANDRegistry')
-    }
-    case ASSET_TYPES.estate: {
-      return eth.getContract('EstateRegistry')
     }
     default:
       throw new Error(`The assetType ${assetType} is invalid`)

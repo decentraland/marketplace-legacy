@@ -422,6 +422,7 @@
     "title": "DecentralandのLANDマーケットプレイスへようこそ"
   },
   "transaction": {
+    "bid": "オークションで{parcel_count}小包を買った",
     "buy": "{parcel_link}を購入しました。",
     "buy_mana": "{mana} MANAを購入しました。",
     "cancel": "あなたは{parcel_link}での販売をキャンセルしました",

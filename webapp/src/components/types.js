@@ -117,3 +117,9 @@ export const mortgageType = shape({
   payable_at: string,
   outstanding_amount: number
 })
+
+export const auctionParamsType = shape({
+  gasPriceLimit: number,
+  landsLimitPerBid: number,
+  currentPrice: number
+})

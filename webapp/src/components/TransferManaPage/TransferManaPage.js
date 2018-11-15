@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { Loader, Container } from 'semantic-ui-react'
-import { locations } from 'locations'
+
 import ParcelModal from 'components/ParcelModal'
 import Mana from 'components/Mana'
+import SignInNotice from 'components/SignInNotice'
 import { walletType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
 import TransferManaForm from './TransferManaForm'
@@ -30,16 +30,7 @@ export default class TransferManaPage extends React.PureComponent {
   }
 
   renderNotConnected() {
-    return (
-      <T
-        id="global.sign_in_notice"
-        values={{
-          sign_in_link: (
-            <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-          )
-        }}
-      />
-    )
+    return <SignInNotice />
   }
 
   renderContent() {

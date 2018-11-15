@@ -438,6 +438,7 @@
     "title": "Bienvenue sur le marché LAND de Decentraland"
   },
   "transaction": {
+    "bid": "Vous avez acheté des colis {parcel_count} aux enchères",
     "buy": "Vous avez acheté {parcel_link}",
     "buy_mana": "Vous avez acheté {mana} MANA",
     "cancel": "Vous avez annulé la vente sur {parcel_link}",

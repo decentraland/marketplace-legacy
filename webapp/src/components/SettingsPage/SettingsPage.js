@@ -1,17 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { Container, Loader } from 'semantic-ui-react'
+import { isLedgerWallet } from '@dapps/modules/wallet/utils'
 
-import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
+import SignInNotice from 'components/SignInNotice'
 import {
   walletType,
   authorizationType,
   transactionType
 } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
-import { isLedgerWallet } from '@dapps/modules/wallet/utils'
 import { getTokenAmountToApprove } from 'modules/wallet/utils'
 import SettingsForm from './SettingsForm'
 
@@ -96,18 +94,7 @@ export default class SettingsPage extends React.PureComponent {
                   onTokenApprovedChange={this.handleTokenApproval}
                 />
               ) : (
-                <p className="sign-in">
-                  <T
-                    id="global.sign_in_notice"
-                    values={{
-                      sign_in_link: (
-                        <Link to={locations.signIn()}>
-                          {t('global.sign_in')}
-                        </Link>
-                      )
-                    }}
-                  />
-                </p>
+                <SignInNotice />
               )}
             </div>
           </div>
