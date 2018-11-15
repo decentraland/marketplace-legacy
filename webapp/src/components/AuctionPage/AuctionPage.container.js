@@ -18,9 +18,13 @@ const mapState = state => {
   const parcelOnChainOwners = getParcelOnChainOwners(state)
   const allParcels = getParcels(state)
 
+  // Side-effect!
+  // This particular piece of code mutates the state adding more up to date owners.
   for (const parcelId in parcelOnChainOwners) {
     const parcel = allParcels[parcelId]
-    allParcels[parcelId] = { ...parcel, owner: parcelOnChainOwners[parcelId] }
+    if (!parcel.owner) {
+      parcel.owner = parcelOnChainOwners[parcelId]
+    }
   }
 
   return {
