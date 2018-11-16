@@ -113,8 +113,11 @@
     "title": "Decentraland Auction"
   },
   "auction_page": {
+    "available_parcels": "Available parcels",
     "bid": "Bid",
     "description": "Select LAND to buy",
+    "fetching": "Fetching...",
+    "find_available_parcel": "Find available parcel",
     "gas_price": "Gas price",
     "land_price": "LAND price",
     "maximum_parcels_message":

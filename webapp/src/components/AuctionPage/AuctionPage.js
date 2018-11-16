@@ -32,8 +32,13 @@ export default class AuctionPage extends React.PureComponent {
   static propTypes = {
     isConnected: PropTypes.bool.isRequired,
     isConnecting: PropTypes.bool.isRequired,
+    isAvailableParcelLoading: PropTypes.bool.isRequired,
     authorization: authorizationType,
     auctionParams: auctionParamsType,
+    auctionCenter: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number
+    }).isRequired,
     wallet: walletType,
     allParcels: PropTypes.objectOf(parcelType),
     onShowAuctionModal: PropTypes.func.isRequired,
@@ -45,7 +50,7 @@ export default class AuctionPage extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.areParamsFetched = false
+    this.hasFetchedParams = false
 
     this.state = {
       selectedCoordinatesById: {}
@@ -53,9 +58,11 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   componentWillMount() {
+    const { onFetchAvailableParcel, isConnected } = this.props
     this.showAuctionModal(this.props)
+    onFetchAvailableParcel()
 
-    if (this.props.isConnected) {
+    if (isConnected) {
       this.fetchAuctionParams()
     }
   }
@@ -84,9 +91,9 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   fetchAuctionParams() {
-    if (!this.areParamsFetched) {
+    if (!this.hasFetchedParams) {
       this.props.onFetchAuctionParams()
-      this.areParamsFetched = true
+      this.hasFetchedParams = true
     }
   }
 
@@ -137,7 +144,7 @@ export default class AuctionPage extends React.PureComponent {
 
   hasReachedLimit(selected) {
     const { landsLimitPerBid } = this.props.auctionParams
-    return Object.keys(selected).length > landsLimitPerBid
+    return Object.keys(selected).length >= landsLimitPerBid
   }
 
   getSelectedParcels() {
@@ -166,10 +173,21 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   render() {
-    const { authorization, auctionParams, allParcels } = this.props
-    const { isConnecting, isConnected } = this.props
-    const { landsLimitPerBid, gasPriceLimit, currentPrice } = auctionParams
+    const {
+      authorization,
+      auctionParams,
+      auctionCenter,
+      allParcels
+    } = this.props
+    const { isConnecting, isConnected, isAvailableParcelLoading } = this.props
     const { selectedCoordinatesById } = this.state
+    const {
+      availableParcelCount,
+      landsLimitPerBid,
+      gasPriceLimit,
+      currentPrice
+    } = auctionParams
+    const { x, y } = auctionCenter
 
     if (!isConnecting && !isConnected) {
       return (
@@ -179,7 +197,7 @@ export default class AuctionPage extends React.PureComponent {
       )
     }
 
-    if (!authorization || currentPrice == null) {
+    if (!authorization || currentPrice == null || x == null) {
       return (
         <div>
           <Loader active size="massive" />
@@ -193,8 +211,8 @@ export default class AuctionPage extends React.PureComponent {
       <div className="AuctionPage">
         <div className="parcel-preview">
           <ParcelPreview
-            x={0}
-            y={0}
+            x={x}
+            y={y}
             parcels={allParcels}
             selected={selectedParcels}
             isDraggable
@@ -230,27 +248,34 @@ export default class AuctionPage extends React.PureComponent {
                   {t('auction_page.description')}
                 </p>
               </Grid.Column>
+
               <Grid.Column mobile={16} computer={10}>
                 <Form onSubmit={preventDefault(this.handleSubmit)}>
                   <div className="information-blocks">
                     <div className="information-block">
-                      <p className="subtitle">GAS PRICE</p>
+                      <p className="subtitle">
+                        {t('auction_page.gas_price').toUpperCase()}
+                      </p>
                       <Header size="large">{gasPriceLimit} GWEI</Header>
                     </div>
                     <div className="information-block">
-                      <p className="subtitle">PARCEL PRICE</p>
+                      <p className="subtitle">
+                        {t('auction_page.land_price').toUpperCase()}
+                      </p>
                       <Header size="large">
                         {this.roundPrice(currentPrice)}
                       </Header>
                     </div>
                     <div className="information-block">
-                      <p className="subtitle">PARCELS</p>
+                      <p className="subtitle">{t('global.land')}</p>
                       <Header size="large">
                         {selectedParcels.length}/{landsLimitPerBid}
                       </Header>
                     </div>
                     <div className="information-block">
-                      <p className="subtitle">TOTAL PRICE</p>
+                      <p className="subtitle">
+                        {t('auction_page.total_price').toUpperCase()}
+                      </p>
                       <Header size="large">
                         {this.roundPrice(currentPrice * selectedParcels.length)}
                       </Header>
@@ -268,24 +293,39 @@ export default class AuctionPage extends React.PureComponent {
                 </Form>
               </Grid.Column>
 
-              <Grid.Column width={16} className="selected-parcels">
-                <div className="parcels-included">
-                  {this.getSelectedParcels().map(parcel => (
-                    <ParcelAttributes
-                      key={parcel.id}
-                      parcel={parcel}
-                      withLink={false}
-                      withTags={false}
-                    />
-                  ))}
-                </div>
-              </Grid.Column>
+              {selectedParcels.length > 0 ? (
+                <Grid.Column width={16} className="selected-parcels">
+                  <div className="parcels-included">
+                    {selectedParcels.map(parcel => (
+                      <ParcelAttributes
+                        key={parcel.id}
+                        parcel={parcel}
+                        withLink={false}
+                        withTags={false}
+                      />
+                    ))}
+                  </div>
+                </Grid.Column>
+              ) : null}
 
-              <Grid.Column width={16} className="actions">
-                <span className="link" onClick={this.handleFindAvailableParcel}>
-                  Find available parcel
-                </span>
-              </Grid.Column>
+              {availableParcelCount > 0 ? (
+                <Grid.Column width={16}>
+                  <footer>
+                    <span className="available-parcels">
+                      {availableParcelCount}{' '}
+                      {t('auction_page.available_parcels')}
+                    </span>
+                    <span
+                      className="link"
+                      onClick={this.handleFindAvailableParcel}
+                    >
+                      {isAvailableParcelLoading
+                        ? t('auction_page.fetching')
+                        : t('auction_page.find_available_parcel')}
+                    </span>
+                  </footer>
+                </Grid.Column>
+              ) : null}
             </Grid.Row>
           </Grid>
         </Container>

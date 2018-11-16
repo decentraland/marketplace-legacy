@@ -7,12 +7,15 @@ import {
   FETCH_PARCEL_REQUEST,
   EDIT_PARCEL_REQUEST,
   TRANSFER_PARCEL_REQUEST,
+  FETCH_AVAILABLE_PARCEL_REQUEST,
   fetchParcelSuccess,
   fetchParcelFailure,
   editParcelSuccess,
   editParcelFailure,
   transferParcelSuccess,
-  transferParcelFailure
+  transferParcelFailure,
+  fetchAvailableParcelSuccess,
+  fetchAvailableParcelFailure
 } from './actions'
 import { getData as getParcels } from './selectors'
 import { getAddress } from 'modules/wallet/selectors'
@@ -23,6 +26,7 @@ export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
   yield takeEvery(EDIT_PARCEL_REQUEST, handleEditParcelsRequest)
   yield takeEvery(TRANSFER_PARCEL_REQUEST, handleTransferRequest)
+  yield takeEvery(FETCH_AVAILABLE_PARCEL_REQUEST, handleFetchAvailableParcel)
 }
 
 function* handleParcelRequest(action) {
@@ -93,5 +97,19 @@ function* handleTransferRequest(action) {
     yield put(transferParcelSuccess(txHash, transfer))
   } catch (error) {
     yield put(transferParcelFailure(error.message))
+  }
+}
+
+function* handleFetchAvailableParcel() {
+  try {
+    const parcel = yield call(() => api.fetchAvailableParcel())
+
+    if (!parcel) {
+      throw new Error('There are no more available parcels')
+    }
+
+    yield put(fetchAvailableParcelSuccess(parcel))
+  } catch (error) {
+    yield put(fetchAvailableParcelFailure(error.message))
   }
 }

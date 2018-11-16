@@ -61,16 +61,6 @@ export class Parcel extends Model {
     )
   }
 
-  static async findAvailable() {
-    return this.db.query(
-      SQL`SELECT *
-        FROM ${SQL.raw(this.tableName)}
-        WHERE owner IS NULL
-        ORDER BY RANDOM()
-        LIMIT 1`
-    )
-  }
-
   static findWithLastActiveMortgageByBorrower(borrower) {
     return this.db.query(
       SQL`SELECT *, (
@@ -79,6 +69,28 @@ export class Parcel extends Model {
         FROM ${SQL.raw(this.tableName)}
         WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
     )
+  }
+
+  static async findAvailable() {
+    const parcels = await this.db.query(
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE owner IS NULL
+          AND district_id IS NULL
+        ORDER BY RANDOM()
+        LIMIT 1`
+    )
+    return parcels[0]
+  }
+
+  static async countAvailable() {
+    const result = await this.db.query(
+      SQL`SELECT COUNT(*)
+        FROM ${SQL.raw(this.tableName)}
+        WHERE owner IS NULL
+          AND district_id IS NULL`
+    )
+    return parseInt(result[0].count, 10)
   }
 
   static async inRange(min, max) {

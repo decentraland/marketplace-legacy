@@ -113,8 +113,11 @@
     "title": "Subasta de Decentraland"
   },
   "auction_page": {
+    "available_parcels": "Parcelas disponibles",
     "bid": "Ofertar",
     "description": "Seleccione LAND para comprar",
+    "fetching": "Atractivo...",
+    "find_available_parcel": "Encuentra parcelas disponibles",
     "gas_price": "Precio del gas",
     "land_price": "Precio LAND",
     "maximum_parcels_message":

@@ -42,6 +42,15 @@
   flex-basis: 8%;
 }
 
+.AuctionPage footer {
+  margin-top: 20px;
+  color: var(--gray);
+}
+
+.AuctionPage footer .available-parcels {
+  margin-right: 20px;
+}
+
 @media (max-width: 768px) {
   .AuctionPage .information-block:first-child {
     margin-top: 30px;
@@ -54,11 +63,15 @@
 }
 
 @media (max-width: 992px) {
+  .AuctionPage .information-block:first-child {
+    margin-top: 30px;
+  }
+
   .AuctionPage .information-block {
     margin-top: 20px;
   }
 
   .AuctionPage .parcels-included {
-    margin-top: 15px;
+    margin-top: 10px;
   }
 }

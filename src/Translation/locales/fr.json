@@ -115,8 +115,11 @@
     "title": "Decentraland Enchère"
   },
   "auction_page": {
+    "available_parcels": "Colis disponibles",
     "bid": "Offre",
     "description": "Sélectionnez LAND à acheter",
+    "fetching": "Aller chercher...",
+    "find_available_parcel": "Trouver un colis disponible",
     "gas_price": "Prix ​​du gaz",
     "land_price": "Prix LAND",
     "maximum_parcels_message":

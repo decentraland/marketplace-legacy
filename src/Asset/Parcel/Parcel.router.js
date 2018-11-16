@@ -46,6 +46,15 @@ export class ParcelRouter {
     )
 
     /**
+     * Returns the amount of available parcels left
+     * @return {Parcel}
+     */
+    this.app.get(
+      '/parcels/availableCount',
+      server.handleRequest(this.getAvailableParcelCount)
+    )
+
+    /**
      * Returns the parcels an address owns
      * @param  {string} address  - Parcel owner
      * @param  {string} [status] - specify a publication status to retreive: [cancelled|sold|pending].
@@ -106,7 +115,14 @@ export class ParcelRouter {
   }
 
   async getAvailableParcel() {
-    return Parcel.findAvailable()
+    const parcel = await Parcel.findAvailable()
+    if (parcel) {
+      return sanitizeParcel(parcel)
+    }
+  }
+
+  async getAvailableParcelCount() {
+    return Parcel.countAvailable()
   }
 
   async getAddressParcels(req) {

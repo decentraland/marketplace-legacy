@@ -9,6 +9,7 @@ import {
   bidOnParcelsSuccess,
   bidOnParcelsFailure
 } from './actions'
+import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
 
 export function* auctionSaga() {
@@ -20,13 +21,20 @@ function* handleAuctionParamsRequest(action) {
   try {
     const landAuction = eth.getContract('LANDAuction')
 
-    const [gasPriceLimit, landsLimitPerBid, currentPrice] = yield all([
+    const [
+      availableParcelCount,
+      gasPriceLimit,
+      landsLimitPerBid,
+      currentPrice
+    ] = yield all([
+      api.fetchAvaialableParcelCount(),
       landAuction.gasPriceLimit(),
       landAuction.landsLimitPerBid(),
       landAuction.getCurrentPrice()
     ])
 
     const params = {
+      availableParcelCount,
       gasPriceLimit: gasPriceLimit.toNumber(),
       landsLimitPerBid: landsLimitPerBid.toNumber(),
       currentPrice: eth.utils.fromWei(currentPrice)

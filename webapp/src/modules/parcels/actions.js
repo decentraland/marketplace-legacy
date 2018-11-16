@@ -112,9 +112,10 @@ export function fetchAvailableParcelRequest() {
   }
 }
 
-export function fetchAvailableParcelSuccess() {
+export function fetchAvailableParcelSuccess(parcel) {
   return {
-    type: FETCH_AVAILABLE_PARCEL_SUCCESS
+    type: FETCH_AVAILABLE_PARCEL_SUCCESS,
+    parcel
   }
 }
 
