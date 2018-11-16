@@ -31,18 +31,6 @@ export class Asset {
     return assets[0]
   }
 
-  findByIds(ids) {
-    if (ids.length === 0) return []
-
-    return db.query(
-      SQL`SELECT *, (
-        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-      ) as publication
-        FROM ${raw(this.tableName)}
-        WHERE id = ANY(${ids})`
-    )
-  }
-
   findByTokenIds(tokenIds) {
     if (tokenIds.length === 0) return []
 

@@ -10,7 +10,6 @@ import Expiration from 'components/Expiration'
 import { parcelType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { isMortgageActive } from 'shared/mortgage'
-import { AUCTION_DATE } from 'shared/parcel'
 import { getOpenPublication } from 'shared/asset'
 
 import { formatDate, distanceInWordsToNow } from 'lib/utils'
@@ -38,6 +37,10 @@ export default class ParcelCard extends React.PureComponent {
 
     const parcelName = this.props.parcel.data.name || 'Parcel'
     const publication = getOpenPublication(parcel, publications)
+    const date = parseInt(
+      parcel.last_transferred_at || parcel.auction_timestamp,
+      10
+    )
 
     return (
       <React.Fragment>
@@ -72,20 +75,9 @@ export default class ParcelCard extends React.PureComponent {
 
           {!publication &&
             !showMortgage && (
-              <Card.Meta
-                title={formatDate(
-                  parcel.last_transferred_at
-                    ? parseInt(parcel.last_transferred_at, 10)
-                    : AUCTION_DATE,
-                  'MMMM Do, YYYY'
-                )}
-              >
+              <Card.Meta title={formatDate(date, 'MMMM Do, YYYY')}>
                 {t('global.acquired_ago', {
-                  date: distanceInWordsToNow(
-                    parcel.last_transferred_at
-                      ? parseInt(parcel.last_transferred_at, 10)
-                      : AUCTION_DATE
-                  )
+                  date: distanceInWordsToNow(date)
                 })}
               </Card.Meta>
             )}

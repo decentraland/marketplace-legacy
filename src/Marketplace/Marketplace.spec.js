@@ -121,11 +121,12 @@ describe('Marketplace', function() {
           token_id: null,
           update_operator: null,
           auction_price: null,
+          auction_owner: null,
+          auction_timestamp: null,
           district_id: null,
           last_transferred_at: null,
           owner: null,
           data: null,
-          auction_owner: null,
           tags: {},
           estate_id: null,
           publication: {
