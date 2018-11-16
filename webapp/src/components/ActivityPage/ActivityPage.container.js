@@ -8,7 +8,7 @@ import {
   isConnecting,
   isConnected
 } from 'modules/wallet/selectors'
-import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
+import { getAuthorizations } from 'modules/authorization/selectors'
 import { clearTransactions } from '@dapps/modules/transaction/actions'
 
 import ActivityPage from './ActivityPage'
@@ -25,7 +25,7 @@ const mapState = state => {
     transactions,
     network: getNetwork(state),
     isEmpty: transactions.length === 0,
-    isLoading: isConnecting(state) || isLoading(state),
+    isLoading: isConnecting(state) || authorization == null,
     isConnected: isConnected(state)
   }
 }

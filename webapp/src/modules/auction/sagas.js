@@ -1,4 +1,5 @@
-import { all, takeLatest, put, call } from 'redux-saga/effects'
+import { all, takeLatest, put, call, select } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
 
 import {
@@ -9,7 +10,11 @@ import {
   bidOnParcelsSuccess,
   bidOnParcelsFailure
 } from './actions'
+import { getParams } from './selectors'
+import { locations } from 'locations'
 import { splitCoodinatePairs } from 'shared/coordinates'
+
+const ONE_BILLION = 1000000000 // 1.000.000.000
 
 export function* auctionSaga() {
   yield takeLatest(FETCH_AUCTION_PARAMS_REQUEST, handleAuctionParamsRequest)
@@ -27,7 +32,7 @@ function* handleAuctionParamsRequest(action) {
     ])
 
     const params = {
-      gasPriceLimit: gasPriceLimit.toNumber(),
+      gasPriceLimit: gasPriceLimit.toNumber() / ONE_BILLION,
       landsLimitPerBid: landsLimitPerBid.toNumber(),
       currentPrice: eth.utils.fromWei(currentPrice)
     }
@@ -44,9 +49,15 @@ function* handleBidRequest(action) {
     const { xs, ys } = splitCoodinatePairs(parcels)
     const landAuction = eth.getContract('LANDAuction')
 
-    const txHash = yield call(() => landAuction.bid(xs, ys, beneficiary))
+    const { gasPriceLimit } = yield select(getParams)
+    const gasPrice = gasPriceLimit * ONE_BILLION
 
-    yield put(bidOnParcelsSuccess(txHash, parcels, beneficiary))
+    const txHash = yield call(() =>
+      landAuction.bid(xs, ys, beneficiary, { gasPrice })
+    )
+
+    yield put(bidOnParcelsSuccess(txHash, xs, ys, beneficiary))
+    yield put(push(locations.activity()))
   } catch (error) {
     yield put(bidOnParcelsFailure(error.message))
   }

@@ -431,7 +431,7 @@
     "title": "Welcome to Decentraland's LAND Marketplace"
   },
   "transaction": {
-    "bid": "You bought {parcel_count} parcels on the auction",
+    "bid": "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} on the auction",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the sale on {parcel_link}",
