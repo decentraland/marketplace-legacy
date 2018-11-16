@@ -110,9 +110,10 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   async getParcelOwnerOnChain(parcel) {
-    // Warn: this code is duplicated on shared/asset.js it's the same as calling
-    // `await getAssetOwnerOnChain(ASSET_TYPE.parcel, parcel)`
-    // It's repeated here because we can't use `eth` from the webapp, because shared will use the singleton from the parent folder.
+    // WARN: this code is duplicated on shared/asset.js. It's the same as calling:
+    //   `await getAssetOwnerOnChain(ASSET_TYPE.parcel, parcel)`
+    // It's repeated here because if we try to use `eth` on shared/ from webapp/ it won't work because
+    // it'll try to use the singleton from the parent folder.
     // Fixing this is a issue on it's own so we'll leave this code here for now.
     const landRegistry = eth.getContract('LANDRegistry')
     const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
