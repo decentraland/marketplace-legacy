@@ -56,10 +56,10 @@ export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary) {
   return {
     type: BID_ON_PARCELS_SUCCESS,
     ...buildTransactionAction(txHash, {
-      parcelCount: xs.length
+      xs,
+      ys,
+      beneficiary
     }),
-    xs,
-    ys,
     beneficiary
   }
 }

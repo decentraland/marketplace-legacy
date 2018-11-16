@@ -338,9 +338,9 @@ export default class Transaction extends React.PureComponent {
         )
       }
       case BID_ON_PARCELS_SUCCESS: {
-        const { parcelCount } = payload
+        const { xs } = payload
 
-        return <T id="transaction.bid" values={{ parcel_count: parcelCount }} />
+        return <T id="transaction.bid" values={{ parcel_count: xs.length }} />
       }
       default:
         return null

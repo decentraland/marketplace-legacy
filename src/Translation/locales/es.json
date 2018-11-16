@@ -432,7 +432,7 @@
     "title": "Bienvenido al Mercado de LAND de Decentaland"
   },
   "transaction": {
-    "bid": "Usted compró {parcel_count} parcelas en la subasta",
+    "bid": "Usted compró {parcel_count} {parcel_count, plural, one {parcela} other {parcelas}} en la subasta",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "cancel": "Cancelaste la venta en {parcel_link}",
