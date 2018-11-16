@@ -112,8 +112,11 @@
     "title": "NT 옥션"
   },
   "auction_page": {
+    "available_parcels": "사용 가능한 소포",
     "bid": "매기다",
     "description": "구매할 LAND 선택",
+    "fetching": "가져 오는 중 ...",
+    "find_available_parcel": "사용 가능한 소포 찾기",
     "gas_price": "가스 가격",
     "land_price": "LAND 가격",
     "maximum_parcels_message":

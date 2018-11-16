@@ -72,7 +72,7 @@ export class Marketplace {
   async countAssetPublications(queryParams) {
     const { status, asset_type } = queryParams.sanitize()
 
-    const counts = await db.query(
+    const result = await db.query(
       SQL`SELECT COUNT(*)
         FROM ${raw(Publication.tableName)} as pub
         WHERE pub.status = ${status}
@@ -81,6 +81,6 @@ export class Marketplace {
           AND ${PublicationQueries.estateHasParcels()}`
     )
 
-    return parseInt(counts[0].count, 10)
+    return parseInt(result[0].count, 10)
   }
 }

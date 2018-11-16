@@ -110,8 +110,11 @@
     "title": "NTオークション"
   },
   "auction_page": {
+    "available_parcels": "利用可能な小包",
     "bid": "入札",
     "description": "購入するLANDを選択",
+    "fetching": "取得中...",
+    "find_available_parcel": "利用可能な小包を見つける",
     "gas_price": "ガス価格",
     "land_price": "LAND価格",
     "maximum_parcels_message":

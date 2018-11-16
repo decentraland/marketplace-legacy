@@ -5,10 +5,20 @@ import {
   FETCH_AUCTION_PARAMS_FAILURE,
   SET_ON_CHAIN_PARCEL_OWNER
 } from './actions'
+import {
+  FETCH_AVAILABLE_PARCEL_REQUEST,
+  FETCH_AVAILABLE_PARCEL_SUCCESS,
+  FETCH_AVAILABLE_PARCEL_FAILURE
+} from 'modules/parcels/actions'
 
 const INITIAL_STATE = {
   data: {
+    center: {
+      x: null,
+      y: null
+    },
     params: {
+      availableParcelCount: null,
       gasPriceLimit: null,
       landsLimitPerBid: null,
       currentPrice: null
@@ -23,10 +33,26 @@ const INITIAL_STATE = {
 
 export function auctionReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case FETCH_AVAILABLE_PARCEL_REQUEST:
     case FETCH_AUCTION_PARAMS_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
+      }
+    }
+    case FETCH_AVAILABLE_PARCEL_SUCCESS: {
+      const { parcel } = action
+
+      return {
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          center: {
+            x: parcel.x,
+            y: parcel.y
+          }
+        }
       }
     }
     case FETCH_AUCTION_PARAMS_SUCCESS: {
@@ -38,6 +64,7 @@ export function auctionReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           params: {
+            availableParcelCount: params.availableParcelCount,
             gasPriceLimit: params.gasPriceLimit,
             landsLimitPerBid: params.landsLimitPerBid,
             currentPrice: params.currentPrice
@@ -60,6 +87,7 @@ export function auctionReducer(state = INITIAL_STATE, action) {
         }
       }
     }
+    case FETCH_AVAILABLE_PARCEL_FAILURE:
     case FETCH_AUCTION_PARAMS_FAILURE: {
       return {
         ...state,

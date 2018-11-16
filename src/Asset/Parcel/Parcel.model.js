@@ -71,6 +71,28 @@ export class Parcel extends Model {
     )
   }
 
+  static async findAvailable() {
+    const parcels = await this.db.query(
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE owner IS NULL
+          AND district_id IS NULL
+        ORDER BY RANDOM()
+        LIMIT 1`
+    )
+    return parcels[0]
+  }
+
+  static async countAvailable() {
+    const result = await this.db.query(
+      SQL`SELECT COUNT(*)
+        FROM ${SQL.raw(this.tableName)}
+        WHERE owner IS NULL
+          AND district_id IS NULL`
+    )
+    return parseInt(result[0].count, 10)
+  }
+
   static async inRange(min, max) {
     const [minx, maxy] =
       typeof min === 'string' ? splitCoordinate(min) : [min.x, min.y]

@@ -10,8 +10,10 @@ import {
   bidOnParcelsSuccess,
   bidOnParcelsFailure
 } from './actions'
-import { getParams } from './selectors'
 import { locations } from 'locations'
+import { api } from 'lib/api'
+import { getParams } from './selectors'
+
 import { splitCoodinatePairs } from 'shared/coordinates'
 
 const ONE_BILLION = 1000000000 // 1.000.000.000
@@ -25,13 +27,20 @@ function* handleAuctionParamsRequest(action) {
   try {
     const landAuction = eth.getContract('LANDAuction')
 
-    const [gasPriceLimit, landsLimitPerBid, currentPrice] = yield all([
+    const [
+      availableParcelCount,
+      gasPriceLimit,
+      landsLimitPerBid,
+      currentPrice
+    ] = yield all([
+      api.fetchAvaialableParcelCount(),
       landAuction.gasPriceLimit(),
       landAuction.landsLimitPerBid(),
       landAuction.getCurrentPrice()
     ])
 
     const params = {
+      availableParcelCount,
       gasPriceLimit: gasPriceLimit.toNumber() / ONE_BILLION,
       landsLimitPerBid: landsLimitPerBid.toNumber(),
       currentPrice: eth.utils.fromWei(currentPrice)
