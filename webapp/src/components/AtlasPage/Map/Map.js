@@ -23,8 +23,8 @@ export default class MapComponent extends React.Component {
     return (
       <div className="map-container">
         <ParcelPreview
-          x={center.x}
-          y={center.y}
+          initialX={center.x}
+          initialY={center.y}
           selected={selected}
           isDraggable
           showMinimap

@@ -49,8 +49,8 @@ export default class AssetPreviewHeader extends React.PureComponent {
       <div className="AssetPreviewHeader">
         <div className="parcel-preview">
           <ParcelPreview
-            x={x}
-            y={y}
+            initialX={x}
+            initialY={y}
             selected={isParcel(asset) ? asset : asset.data.parcels}
             isDraggable
             showPopup

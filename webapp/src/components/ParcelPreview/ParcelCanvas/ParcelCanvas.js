@@ -50,6 +50,10 @@ export default class ParcelPreview extends React.PureComponent {
     x: PropTypes.number.isRequired,
     /** where to position the map in the Y axis */
     y: PropTypes.number.isRequired,
+    /** where to position the map in the X axis */
+    initialX: PropTypes.number.isRequired,
+    /** where to position the map in the Y axis */
+    initialY: PropTypes.number.isRequired,
     /** size of each parcel, i.e: size=5 makes each parcel of 5x5 pixels */
     size: PropTypes.number,
     /** width of the canvas in pixels */
@@ -91,8 +95,8 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   static defaultProps = {
-    x: 0,
-    y: 0,
+    initialX: 0,
+    initialY: 0,
     size: 14,
     width: 100,
     height: 100,
@@ -116,10 +120,13 @@ export default class ParcelPreview extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    const { x, y, size, zoom, panX, panY } = props
+    const { x, y, initialX, initialY, size, zoom, panX, panY } = props
     const initialState = {
       pan: { x: panX, y: panY },
-      center: { x, y },
+      center: {
+        x: x == null ? initialX : x,
+        y: y == null ? initialY : y
+      },
       size: zoom * size,
       zoom,
       popup: null
@@ -165,24 +172,22 @@ export default class ParcelPreview extends React.PureComponent {
   componentWillUpdate(nextProps, nextState) {
     const { x, y, parcels, useCache, selected } = this.props
 
-    // @cazala: i'm commenting this out cos it makes the parcel detail lagg when you click on parcel in the map
-    // the coords changed from props (controlled)
-    // if (
-    //   (x !== nextProps.x || y !== nextProps.y) &&
-    //   (nextProps.x !== nextState.center.x || nextProps.y !== nextState.center.y)
-    // ) {
-    //   nextState = {
-    //     ...nextState,
-    //     center: {
-    //       x: nextProps.x,
-    //       y: nextProps.y
-    //     },
-    //     pan: {
-    //       x: 0,
-    //       y: 0
-    //     }
-    //   }
-    // }
+    if (
+      (x !== nextProps.x || y !== nextProps.y) &&
+      (nextProps.x !== nextState.center.x || nextProps.y !== nextState.center.y)
+    ) {
+      nextState = {
+        ...nextState,
+        center: {
+          x: nextProps.x,
+          y: nextProps.y
+        },
+        pan: {
+          x: 0,
+          y: 0
+        }
+      }
+    }
 
     const newState = this.getDimensions(nextProps, nextState)
     const isViewportDifferent =
