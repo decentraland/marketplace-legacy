@@ -222,16 +222,17 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
           }
         }
         case BID_ON_PARCELS_SUCCESS: {
-          const { parcels, beneficiary } = transaction.payload
+          const { xs, ys, beneficiary } = transaction.payload
           const owner = beneficiary.toLowerCase()
 
           return {
             ...state,
-            data: parcels.reduce(
-              (data, parcel) => ({
-                ...data,
-                [parcel.id]: { ...parcel, owner }
-              }),
+            data: xs.reduce(
+              (data, x, index) => {
+                const parcelId = buildCoordinate(x, ys[index])
+                const parcel = { ...state.data[parcelId], owner }
+                return { ...data, [parcelId]: parcel }
+              },
               { ...state.data }
             )
           }
