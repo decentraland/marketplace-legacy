@@ -5,6 +5,7 @@ import { getAuthorizations } from 'modules/authorization/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getParams, getParcelOnChainOwners } from 'modules/auction/selectors'
 import { openModal } from 'modules/ui/actions'
+import { fetchAvailableParcelRequest } from 'modules/parcels/actions'
 import {
   fetchAuctionParamsRequest,
   setParcelOnChainOwner,
@@ -42,6 +43,7 @@ const mapDispatch = dispatch => ({
   onFetchAuctionParams: () => dispatch(fetchAuctionParamsRequest()),
   onSetParcelOnChainOwner: (parcelId, owner) =>
     dispatch(setParcelOnChainOwner(parcelId, owner)),
+  onFetchAvailableParcel: () => dispatch(fetchAvailableParcelRequest()),
   onSubmit: (parcels, beneficiary) =>
     dispatch(bidOnParcelsRequest(parcels, beneficiary))
 })

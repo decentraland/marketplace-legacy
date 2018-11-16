@@ -33,6 +33,10 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}`)
   }
 
+  fetchAvailableParcel() {
+    return this.request('get', '/parcels/available')
+  }
+
   fetchMarketplace(options = FILTER_DEFAULTS) {
     const {
       limit,

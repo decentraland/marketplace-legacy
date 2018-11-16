@@ -61,6 +61,16 @@ export class Parcel extends Model {
     )
   }
 
+  static async findAvailable() {
+    return this.db.query(
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE owner IS NULL
+        ORDER BY RANDOM()
+        LIMIT 1`
+    )
+  }
+
   static findWithLastActiveMortgageByBorrower(borrower) {
     return this.db.query(
       SQL`SELECT *, (

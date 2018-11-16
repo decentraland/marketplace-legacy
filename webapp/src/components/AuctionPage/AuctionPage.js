@@ -38,7 +38,8 @@ export default class AuctionPage extends React.PureComponent {
     allParcels: PropTypes.objectOf(parcelType),
     onShowAuctionModal: PropTypes.func.isRequired,
     onFetchAuctionParams: PropTypes.func.isRequired,
-    onSetParcelOnChainOwner: PropTypes.func.isRequired
+    onSetParcelOnChainOwner: PropTypes.func.isRequired,
+    onFetchAvailableParcel: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -89,11 +90,6 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
-  handleSubmit = () => {
-    const { wallet, onSubmit } = this.props
-    onSubmit(this.getSelectedParcels(), wallet.address)
-  }
-
   handleSelectUnownedParcel = async ({ asset }) => {
     if (!isParcel(asset) || asset.district_id != null) return
 
@@ -109,10 +105,20 @@ export default class AuctionPage extends React.PureComponent {
     this.setState({ selectedCoordinatesById: newSelectedCoordsById })
   }
 
+  handleFindAvailableParcel = () => {
+    this.props.onFetchAvailableParcel()
+  }
+
+  handleSubmit = () => {
+    const { wallet, onSubmit } = this.props
+    onSubmit(this.getSelectedParcels(), wallet.address)
+  }
+
   async getParcelOwnerOnChain(parcel) {
-    // Warn: this code is duplicated on shared/asset.js it's the same as calling
-    // `await getAssetOwnerOnChain(ASSET_TYPE.parcel, parcel)`
-    // It's repeated here because we can't use `eth` from the webapp, because shared will use the singleton from the parent folder.
+    // WARN: this code is duplicated on shared/asset.js. It's the same as calling:
+    //   `await getAssetOwnerOnChain(ASSET_TYPE.parcel, parcel)`
+    // It's repeated here because if we try to use `eth` on shared/ from webapp/ it won't work because
+    // it'll try to use the singleton from the parent folder.
     // Fixing this is a issue on it's own so we'll leave this code here for now.
     const landRegistry = eth.getContract('LANDRegistry')
     const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
@@ -273,6 +279,12 @@ export default class AuctionPage extends React.PureComponent {
                     />
                   ))}
                 </div>
+              </Grid.Column>
+
+              <Grid.Column width={16} className="actions">
+                <span className="link" onClick={this.handleFindAvailableParcel}>
+                  Find available parcel
+                </span>
               </Grid.Column>
             </Grid.Row>
           </Grid>

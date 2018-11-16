@@ -99,3 +99,28 @@ export function transferParcelFailure(error) {
     error
   }
 }
+
+// Fetch available parcel
+
+export const FETCH_AVAILABLE_PARCEL_REQUEST = '[Request] Fetch available parcel'
+export const FETCH_AVAILABLE_PARCEL_SUCCESS = '[Success] Fetch available parcel'
+export const FETCH_AVAILABLE_PARCEL_FAILURE = '[Failure] Fetch available parcel'
+
+export function fetchAvailableParcelRequest() {
+  return {
+    type: FETCH_AVAILABLE_PARCEL_REQUEST
+  }
+}
+
+export function fetchAvailableParcelSuccess() {
+  return {
+    type: FETCH_AVAILABLE_PARCEL_SUCCESS
+  }
+}
+
+export function fetchAvailableParcelFailure(error) {
+  return {
+    type: FETCH_AVAILABLE_PARCEL_FAILURE,
+    error
+  }
+}
