@@ -103,13 +103,14 @@
     "your_parcel": "당신의 토지"
   },
   "auction_modal": {
-    "authorize_contract": "계약 승인",
-    "authorized_explanation": "당신은 모두 시작할 준비가되어 있습니다! ",
-    "blog_post": "블로그 게시물",
-    "first_time_explanation":
-      "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다. ",
-    "lets_go": "가자!",
-    "title": "NT 옥션"
+    "description":
+      "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다.",
+    "i_agree_with_terms": "나는 {terms_link}에 동의한다.",
+    "start": "스타트",
+    "terms_and_conditions": "이용 약관",
+    "title": "NT 옥션",
+    "video_tutorial": "비디오 자습서",
+    "watch_tutorial": "비디오 자습서보기"
   },
   "auction_page": {
     "available_parcels": "사용 가능한 소포",

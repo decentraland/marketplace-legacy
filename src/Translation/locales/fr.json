@@ -106,13 +106,14 @@
     "your_parcel": "Votre parcelle"
   },
   "auction_modal": {
-    "authorize_contract": "Autoriser le contrat",
-    "authorized_explanation": "Vous êtes prêt à commencer! ",
-    "blog_post": "Article de blog",
-    "first_time_explanation":
-      "Pour participer à cette nouvelle vente aux enchères, vous devez autoriser le nouveau contrat {contract_link}. ",
-    "lets_go": "Allons-y!",
-    "title": "Decentraland Enchère"
+    "description":
+      "Pour participer à cette nouvelle vente aux enchères, vous devez autoriser le nouveau contrat {contract_link}.",
+    "i_agree_with_terms": "Je suis d'accord avec le {terms_link}",
+    "start": "Début",
+    "terms_and_conditions": "Termes et conditions",
+    "title": "Decentraland Enchère",
+    "video_tutorial": "Didacticiel vidéo",
+    "watch_tutorial": "Regarder le tutoriel vidéo"
   },
   "auction_page": {
     "available_parcels": "Colis disponibles",

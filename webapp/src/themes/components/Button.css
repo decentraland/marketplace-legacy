@@ -20,7 +20,7 @@
 .ui.button.primary:focus,
 .ui.button.primary:active {
   background-color: var(--primary) !important;
-  color: #fff;
+  color: var(--text);
   border: none;
 }
 
@@ -30,10 +30,15 @@
   box-shadow: 0 8px 30px var(--dark-red);
 }
 
-.ui.button:hover,
-.ui.button:visited {
+.ui.button:hover {
   background-color: var(--primary);
-  color: #fff;
+  color: var(--text);
+}
+
+.ui.button:visited,
+.ui.button:active {
+  background-color: transparent;
+  color: var(--primary);
 }
 
 .ui.button.link {

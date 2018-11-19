@@ -101,13 +101,14 @@
     "your_parcel": "あなたの区画"
   },
   "auction_modal": {
-    "authorize_contract": "契約を承認する",
-    "authorized_explanation": "あなたはすべて始める準備ができています！",
-    "blog_post": "ブログの投稿",
-    "first_time_explanation":
+    "description":
       "この新しいオークションに参加するには、新しい{contract_link}契約を承認する必要があります。",
-    "lets_go": "行こう！",
-    "title": "NTオークション"
+    "i_agree_with_terms": "私は{terms_link}に同意します",
+    "start": "開始",
+    "terms_and_conditions": "規約と条件",
+    "title": "NTオークション",
+    "video_tutorial": "ビデオチュートリアル",
+    "watch_tutorial": "ビデオチュートリアルを見る"
   },
   "auction_page": {
     "available_parcels": "利用可能な小包",

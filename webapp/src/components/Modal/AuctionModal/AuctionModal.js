@@ -1,11 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Loader, Button } from 'semantic-ui-react'
+import { Checkbox, Button } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import ContractLink from 'components/ContractLink'
-import { t, T } from '@dapps/modules/translation/utils'
-import { dismissAuctionModal, isAuthorized } from 'modules/auction/utils'
-import { authorizationType } from 'components/types'
+import { dismissAuctionModal } from 'modules/auction/utils'
 
 import BaseModal from '../BaseModal'
 
@@ -13,77 +11,117 @@ import './AuctionModal.css'
 
 export default class AuctionModal extends React.PureComponent {
   static propTypes = {
-    ...BaseModal.propTypes,
-    authorization: authorizationType,
-    onAuthorize: PropTypes.func.isRequired
+    ...BaseModal.propTypes
   }
 
-  handleOnAuthorize = () => {
-    const { onClose, onAuthorize } = this.props
-    onClose()
-    onAuthorize()
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      hasAgreedToTerms: false,
+      isWatchingTutorial: false
+    }
   }
 
-  handleOnDismiss = () => {
+  handleTermsAgreement = (_, data) => {
+    this.setState({ hasAgreedToTerms: data.checked })
+  }
+
+  handleWatchTutorial = () => {
+    this.setState({ isWatchingTutorial: true })
+  }
+
+  handleCloseTutorial = () => {
+    this.setState({ isWatchingTutorial: false })
+  }
+
+  handleSubmit = () => {
     dismissAuctionModal()
     this.props.onClose()
   }
 
-  renderBlogPostLink() {
+  renderTermsOfServiceLink() {
     return (
       <a
-        href="https://blog.decentraland.org"
+        href="https://decentraland.org/terms"
         rel="noopener noreferrer"
         target="_blank"
       >
-        {t('auction_modal.blog_post')}
+        {t('auction_modal.terms_and_conditions')}
       </a>
     )
   }
 
-  renderAuthorizedModalBody() {
+  renderTutorial() {
     return (
-      <React.Fragment>
-        <p>
-          {
-            <T
-              id="auction_modal.authorized_explanation"
-              values={{ blog_post_link: this.renderBlogPostLink() }}
-            />
-          }
-        </p>
-        <br />
-        <Button primary={true} onClick={this.handleOnDismiss}>
-          {t('auction_modal.lets_go')}
-        </Button>
-      </React.Fragment>
+      <div className="modal-body tutorial">
+        <header>
+          <span className="go-back" onClick={this.handleCloseTutorial}>
+            &lsaquo;
+          </span>
+          {t('auction_modal.video_tutorial')}
+        </header>
+        <div className="video-container">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/-HmXrOTEmxg?controls=0"
+            frameBorder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </div>
     )
   }
 
-  renderFirstTimeModalBody() {
+  renderWelcome() {
+    const { hasAgreedToTerms } = this.state
+
     return (
-      <React.Fragment>
-        <p>
-          {
-            <T
-              id="auction_modal.first_time_explanation"
-              values={{
-                contract_link: <ContractLink contractName="LANDAuction" />,
-                blog_post_link: this.renderBlogPostLink()
-              }}
-            />
-          }
-        </p>
-        <br />
-        <Button primary={true} onClick={this.handleOnAuthorize}>
-          {t('auction_modal.authorize_contract')}
-        </Button>
-      </React.Fragment>
+      <div className="modal-body">
+        <h1 className="title">{t('auction_modal.title')}</h1>
+
+        <div className="description">
+          <T
+            id="auction_modal.description"
+            values={{
+              contract_link: <ContractLink contractName="LANDAuction" />
+            }}
+          />
+        </div>
+
+        <div className="agree-to-terms">
+          <Checkbox
+            checked={hasAgreedToTerms}
+            onChange={this.handleTermsAgreement}
+            label={
+              <label>
+                <T
+                  id="auction_modal.i_agree_with_terms"
+                  values={{ terms_link: this.renderTermsOfServiceLink() }}
+                />
+              </label>
+            }
+          />
+        </div>
+
+        <div className="actions">
+          <Button
+            primary={true}
+            disabled={!hasAgreedToTerms}
+            onClick={this.handleSubmit}
+          >
+            {t('auction_modal.start').toUpperCase()}
+          </Button>
+          <Button onClick={this.handleWatchTutorial}>
+            {t('auction_modal.watch_tutorial').toUpperCase()}
+          </Button>
+        </div>
+      </div>
     )
   }
 
   render() {
-    const { authorization } = this.props
+    const { isWatchingTutorial } = this.state
 
     return (
       <BaseModal
@@ -91,22 +129,7 @@ export default class AuctionModal extends React.PureComponent {
         isCloseable={false}
         {...this.props}
       >
-        <div className="modal-body">
-          {authorization == null ? (
-            <div className="modal-loader-container">
-              <Loader active size="massive" />
-            </div>
-          ) : (
-            <React.Fragment>
-              <h1>{t('auction_modal.title')}</h1>
-              <br />
-
-              {isAuthorized(authorization)
-                ? this.renderAuthorizedModalBody()
-                : this.renderFirstTimeModalBody()}
-            </React.Fragment>
-          )}
-        </div>
+        {isWatchingTutorial ? this.renderTutorial() : this.renderWelcome()}
       </BaseModal>
     )
   }

@@ -103,14 +103,14 @@
     "your_parcel": "Your parcel"
   },
   "auction_modal": {
-    "authorize_contract": "Authorize contract",
-    "authorized_explanation":
-      "You're all set to begin! If you need more information on how to use the auction, you can read the {blog_post_link}.",
-    "blog_post": "Blog post",
-    "first_time_explanation":
-      "To participate in this new auction, you'll need to authorize the new {contract_link} contract. You can read all about it on the {blog_post_link}.",
-    "lets_go": "Lets go!",
-    "title": "Decentraland Auction"
+    "description":
+      "To participate in this new auction, you'll need to authorize the new {contract_link} contract.",
+    "i_agree_with_terms": "I agree with the {terms_link}",
+    "start": "Start",
+    "terms_and_conditions": "Terms and Conditions",
+    "title": "Decentraland Auction",
+    "video_tutorial": "Video Tutorial",
+    "watch_tutorial": "Watch video tutorial"
   },
   "auction_page": {
     "available_parcels": "Available parcels",
@@ -434,7 +434,8 @@
     "title": "Welcome to Decentraland's LAND Marketplace"
   },
   "transaction": {
-    "bid": "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} on the auction",
+    "bid":
+      "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} on the auction",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the sale on {parcel_link}",

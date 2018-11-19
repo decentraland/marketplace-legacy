@@ -1,3 +1,3 @@
-import AuctionModal from './AuctionModal.container'
+import AuctionModal from './AuctionModal'
 
 export default AuctionModal

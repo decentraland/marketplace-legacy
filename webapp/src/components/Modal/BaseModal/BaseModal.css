@@ -69,9 +69,9 @@
   filter: alpha(opacity=50);
 }
 .modal-header {
-  padding: 15px;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 .modal-header .close {
   float: right;
@@ -82,8 +82,8 @@
   font-size: 30px;
   font-weight: 700;
   line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
+  color: var(--text);
+  text-shadow: 0 1px 0 #000;
   filter: alpha(opacity=20);
   opacity: 0.5;
   cursor: pointer;

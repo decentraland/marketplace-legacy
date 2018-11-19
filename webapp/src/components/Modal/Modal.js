@@ -28,9 +28,10 @@ export default class Modal extends React.PureComponent {
   }
 
   handleKeyDown = e => {
+    const { isCloseable, onClose } = this.props
+
     // If ESC key pressed
-    if (e.keyCode === 27) {
-      const { onClose } = this.props
+    if (isCloseable && e.keyCode === 27) {
       onClose()
     }
   }

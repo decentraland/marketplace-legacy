@@ -104,13 +104,14 @@
     "your_parcel": "Tu parcela"
   },
   "auction_modal": {
-    "authorize_contract": "Autorizar contrato",
-    "authorized_explanation": "Estás listo para comenzar!",
-    "blog_post": "Entrada en el blog",
-    "first_time_explanation":
-      "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}. ",
-    "lets_go": "¡Adelante!",
-    "title": "Subasta de Decentraland"
+    "description":
+      "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}.",
+    "i_agree_with_terms": "Estoy de acuerdo con el {terms_link}",
+    "start": "Comienzo",
+    "terms_and_conditions": "Términos y Condiciones",
+    "title": "Decentraland Subasta",
+    "video_tutorial": "Video Tutorial",
+    "watch_tutorial": "Ver video tutorial"
   },
   "auction_page": {
     "available_parcels": "Parcelas disponibles",
@@ -435,7 +436,8 @@
     "title": "Bienvenido al Mercado de LAND de Decentaland"
   },
   "transaction": {
-    "bid": "Usted compró {parcel_count} {parcel_count, plural, one {parcela} other {parcelas}} en la subasta",
+    "bid":
+      "Usted compró {parcel_count} {parcel_count, plural, one {parcela} other {parcelas}} en la subasta",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "cancel": "Cancelaste la venta en {parcel_link}",

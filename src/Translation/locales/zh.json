@@ -96,13 +96,13 @@
     "your_parcel": "您的地块"
   },
   "auction_modal": {
-    "authorize_contract": "授权合同",
-    "authorized_explanation": "你们都准备好了！",
-    "blog_post": "博客文章",
-    "first_time_explanation":
-      "要参与此次新拍卖，您需要授权新的{contract_link}合约。",
-    "lets_go": "我们走吧！",
-    "title": "Decentraland拍卖"
+    "description": "要参与此次新拍卖，您需要授权新的{contract_link}合约。",
+    "i_agree_with_terms": "我同意{terms_link}",
+    "start": "开始",
+    "terms_and_conditions": "条款和条件",
+    "title": "Decentraland拍卖",
+    "video_tutorial": "视频教程",
+    "watch_tutorial": "观看视频教程"
   },
   "auction_page": {
     "available_parcels": "可用包裹",
