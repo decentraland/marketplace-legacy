@@ -116,13 +116,13 @@
     "available_parcels": "Available parcels",
     "bid": "Bid",
     "description": "Select LAND to buy",
-    "fetching": "Fetching...",
     "find_available_parcel": "Find available parcel",
     "gas_price": "Gas price",
     "land_price": "LAND price",
     "maximum_parcels_message":
       "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum LAND per transaction",
+    "searching": "Searching...",
     "title": "Buy unowned LAND",
     "total_price": "Total price"
   },
@@ -434,7 +434,8 @@
     "title": "Welcome to Decentraland's LAND Marketplace"
   },
   "transaction": {
-    "bid": "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} on the auction",
+    "bid":
+      "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} on the auction",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the sale on {parcel_link}",

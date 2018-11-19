@@ -118,7 +118,6 @@
     "available_parcels": "Colis disponibles",
     "bid": "Offre",
     "description": "Sélectionnez LAND à acheter",
-    "fetching": "Aller chercher...",
     "find_available_parcel": "Trouver un colis disponible",
     "gas_price": "Prix ​​du gaz",
     "land_price": "Prix LAND",
@@ -126,6 +125,7 @@
       "Si vous essayez d'acheter plus de {max} LAND en une seule transaction, vous échouerez. ",
     "maximum_parcels_title":
       "Vous avez atteint le maximum LAND par transaction",
+    "searching": "Recherche...",
     "title": "Acheter un LAND d'occasion",
     "total_price": "Prix ​​total"
   },

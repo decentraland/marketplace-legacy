@@ -320,7 +320,7 @@ export default class AuctionPage extends React.PureComponent {
                       onClick={this.handleFindAvailableParcel}
                     >
                       {isAvailableParcelLoading
-                        ? t('auction_page.fetching')
+                        ? t('auction_page.searching')
                         : t('auction_page.find_available_parcel')}
                     </span>
                   </footer>

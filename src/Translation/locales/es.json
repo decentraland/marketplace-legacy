@@ -116,7 +116,6 @@
     "available_parcels": "Parcelas disponibles",
     "bid": "Ofertar",
     "description": "Seleccione LAND para comprar",
-    "fetching": "Atractivo...",
     "find_available_parcel": "Encuentra parcelas disponibles",
     "gas_price": "Precio del gas",
     "land_price": "Precio LAND",
@@ -124,6 +123,7 @@
       "Si intentas comprar más de {max} LAND en una sola transacción, fallará. ",
     "maximum_parcels_title":
       "Alcanzó la cantidad máxima de LAND por transacción",
+    "searching": "Buscando...",
     "title": "Compra sin LAND sin dueño",
     "total_price": "Precio total"
   },
@@ -435,7 +435,8 @@
     "title": "Bienvenido al Mercado de LAND de Decentaland"
   },
   "transaction": {
-    "bid": "Usted compró {parcel_count} {parcel_count, plural, one {parcela} other {parcelas}} en la subasta",
+    "bid":
+      "Usted compró {parcel_count} {parcel_count, plural, one {parcela} other {parcelas}} en la subasta",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
     "cancel": "Cancelaste la venta en {parcel_link}",
