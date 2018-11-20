@@ -11,25 +11,21 @@ export default class ParcelAttributes extends React.PureComponent {
     onClick: PropTypes.func
   }
 
-  static defaultProps = {
-    onClick: () => {}
-  }
-
   handleOnClick = () => {
     const { onClick, parcel } = this.props
-    onClick(parcel)
+    if (onClick) {
+      onClick(parcel)
+    }
   }
 
   render() {
-    const { parcel } = this.props
-
-    // const Wrapper = withLink ? Link : React.Fragment
-    // const wrapperProps = withLink
-    //   ? { to: locations.parcelDetail(parcel.x, parcel.y) }
-    //   : {}
+    const { parcel, onClick } = this.props
 
     return (
-      <div className="ParcelAttributes" onClick={this.handleOnClick}>
+      <div
+        className={`ParcelAttributes ${onClick ? 'clickeable' : ''}`}
+        onClick={this.handleOnClick}
+      >
         <div className="coords">
           <Icon name="map marker alternate" />
           <span className="coord">{parcel.id}</span>

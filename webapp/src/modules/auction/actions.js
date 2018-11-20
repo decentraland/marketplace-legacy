@@ -38,6 +38,17 @@ export function setParcelOnChainOwner(parcelId, owner) {
   }
 }
 
+// Change the auction center
+
+export const CHANGE_AUCTION_CENTER_PARCEL = 'Change auction center parcel'
+
+export function changeAuctionCenterParcel(parcel) {
+  return {
+    type: CHANGE_AUCTION_CENTER_PARCEL,
+    parcel
+  }
+}
+
 // Bid parcels
 
 export const BID_ON_PARCELS_REQUEST = '[Request] Bid on parcels'

@@ -7,7 +7,8 @@ import {
   FETCH_AUCTION_RATE_REQUEST,
   FETCH_AUCTION_RATE_SUCCESS,
   FETCH_AUCTION_RATE_FAILURE,
-  SET_ON_CHAIN_PARCEL_OWNER
+  SET_ON_CHAIN_PARCEL_OWNER,
+  CHANGE_AUCTION_CENTER_PARCEL
 } from './actions'
 import {
   FETCH_AVAILABLE_PARCEL_REQUEST,
@@ -48,7 +49,8 @@ export function auctionReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action)
       }
     }
-    case FETCH_AVAILABLE_PARCEL_SUCCESS: {
+    case FETCH_AVAILABLE_PARCEL_SUCCESS:
+    case CHANGE_AUCTION_CENTER_PARCEL: {
       const { parcel } = action
 
       return {

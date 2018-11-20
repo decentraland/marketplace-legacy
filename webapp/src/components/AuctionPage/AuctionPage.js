@@ -23,7 +23,7 @@ import {
   parcelType
 } from 'components/types'
 import { hasSeenAuctionModal, TOKEN_SYMBOLS } from 'modules/auction/utils'
-import { isParcel } from 'shared/parcel'
+import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
@@ -36,8 +36,8 @@ export default class AuctionPage extends React.PureComponent {
     isConnecting: PropTypes.bool.isRequired,
     isAvailableParcelLoading: PropTypes.bool.isRequired,
     authorization: authorizationType,
-    auctionParams: auctionParamsType,
-    auctionCenter: PropTypes.shape({
+    params: auctionParamsType,
+    center: PropTypes.shape({
       x: PropTypes.number,
       y: PropTypes.number
     }).isRequired,
@@ -47,6 +47,7 @@ export default class AuctionPage extends React.PureComponent {
     onFetchAuctionParams: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
+    onChangeAuctionCenterParcel: PropTypes.func.isRequired,
     token: PropTypes.oneOf(TOKEN_SYMBOLS),
     rate: PropTypes.number
   }
@@ -119,6 +120,13 @@ export default class AuctionPage extends React.PureComponent {
     this.props.onFetchAvailableParcel()
   }
 
+  handleParcelClick = parcel => {
+    const { center, onChangeAuctionCenterParcel } = this.props
+    if (isEqualCoords(parcel, center)) {
+      onChangeAuctionCenterParcel(parcel)
+    }
+  }
+
   handleSubmit = () => {
     const { wallet, onSubmit } = this.props
     onSubmit(this.getSelectedParcels(), wallet.address)
@@ -146,7 +154,7 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   hasReachedLimit(selected) {
-    const { landsLimitPerBid } = this.props.auctionParams
+    const { landsLimitPerBid } = this.props.params
     return Object.keys(selected).length >= landsLimitPerBid
   }
 
@@ -178,8 +186,8 @@ export default class AuctionPage extends React.PureComponent {
   render() {
     const {
       authorization,
-      auctionParams,
-      auctionCenter,
+      params,
+      center,
       allParcels,
       token,
       rate,
@@ -192,8 +200,8 @@ export default class AuctionPage extends React.PureComponent {
       landsLimitPerBid,
       gasPriceLimit,
       currentPrice
-    } = auctionParams
-    const { x, y } = auctionCenter
+    } = params
+    const { x, y } = center
 
     if (!isConnecting && !isConnected) {
       return (
@@ -319,6 +327,7 @@ export default class AuctionPage extends React.PureComponent {
                         key={parcel.id}
                         parcel={parcel}
                         withLink={false}
+                        onClick={this.handleParcelClick}
                       />
                     ))}
                   </div>

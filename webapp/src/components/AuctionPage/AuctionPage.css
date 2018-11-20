@@ -113,4 +113,8 @@
   .AuctionPage .parcels-included {
     margin-top: 10px;
   }
+
+  .AuctionPage .ParcelAttributes {
+    flex-basis: 20%;
+  }
 }

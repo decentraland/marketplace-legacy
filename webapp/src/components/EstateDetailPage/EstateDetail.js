@@ -31,7 +31,8 @@ export default class EstateDetail extends React.PureComponent {
     isOwner: PropTypes.bool.isRequired,
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
-    onManageEstate: PropTypes.func.isRequired
+    onManageEstate: PropTypes.func.isRequired,
+    onParcelClick: PropTypes.func.isRequired
   }
 
   renderEmptyEstate() {
@@ -55,7 +56,8 @@ export default class EstateDetail extends React.PureComponent {
       allParcels,
       onEditParcels,
       onEditMetadata,
-      onManageEstate
+      onManageEstate,
+      onParcelClick
     } = this.props
     const { parcels } = estate.data
 
@@ -208,7 +210,11 @@ export default class EstateDetail extends React.PureComponent {
                   {parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelAttributes key={parcel.id} parcel={parcel} />
+                      <ParcelAttributes
+                        key={parcel.id}
+                        parcel={parcel}
+                        onClick={onParcelClick}
+                      />
                     ) : null
                   })}
                 </Grid.Column>
