@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Checkbox, Button } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
@@ -11,7 +12,8 @@ import './AuctionModal.css'
 
 export default class AuctionModal extends React.PureComponent {
   static propTypes = {
-    ...BaseModal.propTypes
+    ...BaseModal.propTypes,
+    onNavigateAway: PropTypes.func
   }
 
   constructor(props) {
@@ -38,6 +40,16 @@ export default class AuctionModal extends React.PureComponent {
   handleSubmit = () => {
     dismissAuctionModal()
     this.props.onClose()
+  }
+
+  handleOnClose = () => {
+    if (this.state.hasAgreedToTerms) {
+      this.handleSubmit()
+    } else {
+      const { onNavigateAway, onClose } = this.props
+      onNavigateAway()
+      onClose()
+    }
   }
 
   renderTermsOfServiceLink() {
@@ -78,6 +90,16 @@ export default class AuctionModal extends React.PureComponent {
 
     return (
       <div className="modal-body">
+        <div className="modal-header">
+          <button
+            type="button"
+            className="close"
+            data-dismiss="modal"
+            onClick={this.handleOnClose}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <h1 className="title">{t('auction_modal.title')}</h1>
 
         <div className="description">
