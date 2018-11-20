@@ -33,10 +33,6 @@ export class Parcel extends Model {
     return splitCoordinate(id)
   }
 
-  static findByIds(ids) {
-    return new Asset(this).findByIds(ids)
-  }
-
   static async findByOwner(owner) {
     return new Asset(this).findByOwner(owner)
   }
@@ -127,6 +123,16 @@ export class Parcel extends Model {
         LIMIT 1`
     )
     return rows.length ? rows[0].id : null
+  }
+
+  static async updateAuctionData(price, owner, timestamp, ids) {
+    return this.db.query(
+      SQL`UPDATE ${SQL.raw(this.tableName)}
+        SET auction_price = ${price},
+          auction_owner = ${owner},
+          auction_timestamp = ${timestamp}
+        WHERE id = ANY(${ids})`
+    )
   }
 
   static async insert(parcel) {

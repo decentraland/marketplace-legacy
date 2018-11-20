@@ -55,9 +55,7 @@ export function loadContracts() {
     },
     LANDAuction: {
       address: env.get('LAND_AUCTION_CONTRACT_ADDRESS').toLowerCase(),
-      eventNames: [
-        // TODO: Listen to bid event
-      ]
+      eventNames: ['BidSuccessful']
     },
     MortgageHelper: {
       address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS').toLowerCase(),

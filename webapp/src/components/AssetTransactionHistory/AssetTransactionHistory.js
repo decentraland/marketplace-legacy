@@ -10,7 +10,6 @@ import Mana from 'components/Mana'
 import { assetType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
-import { AUCTION_DATE } from 'shared/parcel'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
 import './AssetTransactionHistory.css'
@@ -121,13 +120,15 @@ export default class AssetTransactionHistory extends React.PureComponent {
                 </Grid.Row>
               ))}
 
-              {asset.auction_price && asset.auction_owner ? (
+              {this.hasAuctionData() ? (
                 <Grid.Row className="transaction-history-entry">
                   <Grid.Column>
                     <Mana amount={asset.auction_price} />
                   </Grid.Column>
                   <Grid.Column>
-                    {distanceInWordsToNow(AUCTION_DATE)}
+                    {distanceInWordsToNow(
+                      parseInt(asset.auction_timestamp, 10)
+                    )}
                   </Grid.Column>
                   <Responsive
                     as={Grid.Column}

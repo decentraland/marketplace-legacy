@@ -1,6 +1,6 @@
 import { Model } from 'decentraland-commons'
 
-import { SQL, toRawStrings } from '../database'
+import { SQL } from '../database'
 import { MORTGAGE_STATUS } from '../shared/mortgage'
 
 export class Mortgage extends Model {
@@ -39,7 +39,7 @@ export class Mortgage extends Model {
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE borrower = ${borrower}
-          AND status IN (${toRawStrings(status)})
+          AND status = ANY(${status})
           ORDER BY created_at DESC`
     )
   }
@@ -53,7 +53,7 @@ export class Mortgage extends Model {
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE asset_id = ${assetId}
-          AND status IN (${toRawStrings(status)})
+          AND status = ANY(${status})
           ORDER BY created_at DESC`
     )
   }

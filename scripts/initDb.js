@@ -7,6 +7,7 @@ import { db } from '../src/database'
 import { Parcel } from '../src/Asset'
 import { District } from '../src/District'
 import { Contribution } from '../src/Contribution'
+import { FIRST_AUCTION_DATE } from '../shared/parcel'
 import { renewBlockchainData } from './renewBlockchainData'
 import { tagParcels } from './tag'
 import { loadEnv, runpsql } from './utils'
@@ -80,6 +81,7 @@ async function normalizeParcelStates() {
       y: parcelState.y,
       auction_price: parcelState.amount,
       auction_owner: parcelState.address,
+      auction_timestamp: FIRST_AUCTION_DATE.getTime(),
       district_id: parcelState.projectId,
       created_at: parcelState.createdAt,
       updated_at: parcelState.updatedAt

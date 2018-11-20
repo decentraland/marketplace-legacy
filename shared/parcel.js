@@ -2,7 +2,7 @@ import { utils } from 'decentraland-commons'
 import { Bounds } from './map'
 import { buildCoordinate } from './coordinates'
 
-export const AUCTION_DATE = new Date('2018-01-31T00:00:00Z')
+export const FIRST_AUCTION_DATE = new Date('2018-01-31T00:00:00Z')
 
 export function isParcel(asset) {
   return (
