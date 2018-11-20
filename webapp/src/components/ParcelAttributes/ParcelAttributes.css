@@ -16,13 +16,13 @@
   color: var(--text);
   border-radius: 4px;
 }
-
-.ParcelAttributes .coords .marker.icon {
+/*
+.ParcelAttributes .coords .Icon-marker {
   font-size: 12px;
   margin-right: 3px;
   line-height: 0.9;
 }
-
+*/
 a .ParcelAttributes:hover .coords {
   color: var(--red);
   border-color: var(--red);

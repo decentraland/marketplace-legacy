@@ -40,12 +40,29 @@
   cursor: pointer;
 }
 
+.Navbar .navbar-icon .Icon {
+  background-position: 0 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.Navbar .navbar-icon .Icon-decentraland {
+  width: 58px;
+  height: 58px;
+  left: -1px;
+  top: -1px;
+  position: relative;
+  background-image: url('../../images/logo.svg');
+}
+
 .Navbar .navbar-icon .Icon-decentraland-loading {
   width: 77px;
   height: 77px;
-  position: absolute;
   top: -10px;
   left: -11px;
+  position: absolute;
+  background-image: url('../../images/decentraland-loading.gif');
 }
 
 .Navbar .navbar-logo > h1 {
@@ -54,14 +71,6 @@
   line-height: 50px;
   color: #232323;
   font-family: 'Source Sans Pro SemiBold', Helvetica, sans-serif;
-}
-
-.Navbar .navbar-logo .Icon-decentraland {
-  width: 58px;
-  height: 58px;
-  left: -1px;
-  top: -1px;
-  position: relative;
 }
 
 .Navbar .navbar-menu .item,

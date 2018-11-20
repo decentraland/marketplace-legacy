@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Icon } from 'semantic-ui-react'
 
 import { locations } from 'locations'
-import Icon from 'components/Icon'
 import { t } from '@dapps/modules/translation/utils'
 import LocalesDropdown from './LocalesDropdown'
 
@@ -73,35 +73,28 @@ export default class Footer extends React.PureComponent {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="twitter" />
-            </a>
-            <a
-              href="https://chat.decentraland.org/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Icon name="rocketchat" />
+              <Icon name="twitter" size="normal" />
             </a>
             <a
               href="https://github.com/decentraland/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="github" />
+              <Icon name="github" size="normal" />
             </a>
             <a
               href="https://reddit.com/r/decentraland/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="reddit" />
+              <Icon name="reddit" size="normal" />
             </a>
             <a
               href="https://www.facebook.com/decentraland/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="facebook" />
+              <Icon name="facebook" size="normal" />
             </a>
           </div>
         </div>

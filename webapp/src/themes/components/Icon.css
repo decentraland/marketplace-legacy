@@ -1,3 +1,9 @@
+i.normal.icon,
+i.normal.icons {
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 1.2em;
+}
 i.icon.loading {
   background: transparent;
   color: inherit;

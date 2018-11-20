@@ -1,40 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Icon } from 'semantic-ui-react'
 
-import { locations } from 'locations'
 import { parcelType } from 'components/types'
-import ParcelTags from 'components/ParcelTags/ParcelTags'
-import Icon from 'components/Icon'
 import './ParcelAttributes.css'
 
 export default class ParcelAttributes extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    withLink: PropTypes.bool
+    onClick: PropTypes.func
   }
 
   static defaultProps = {
-    withLink: true
+    onClick: () => {}
+  }
+
+  handleOnClick = () => {
+    const { onClick, parcel } = this.props
+    onClick(parcel)
   }
 
   render() {
-    const { parcel, withLink } = this.props
+    const { parcel } = this.props
 
-    const Wrapper = withLink ? Link : React.Fragment
-    const wrapperProps = withLink
-      ? { to: locations.parcelDetail(parcel.x, parcel.y) }
-      : {}
+    // const Wrapper = withLink ? Link : React.Fragment
+    // const wrapperProps = withLink
+    //   ? { to: locations.parcelDetail(parcel.x, parcel.y) }
+    //   : {}
 
     return (
-      <Wrapper {...wrapperProps}>
-        <div className="ParcelAttributes">
-          <div className="coords">
-            <Icon name="marker" />
-            <span className="coord">{parcel.id}</span>
-          </div>
+      <div className="ParcelAttributes" onClick={this.handleOnClick}>
+        <div className="coords">
+          <Icon name="map marker alternate" />
+          <span className="coord">{parcel.id}</span>
         </div>
-      </Wrapper>
+      </div>
     )
   }
 }
