@@ -1,26 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+
+import { locations } from 'locations'
 import { parcelType } from 'components/types'
 import ParcelTags from 'components/ParcelTags/ParcelTags'
 import Icon from 'components/Icon'
 import './ParcelAttributes.css'
-import { locations } from 'locations'
 
 export default class ParcelAttributes extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    withLink: PropTypes.bool,
-    withTags: PropTypes.bool
+    withLink: PropTypes.bool
   }
 
   static defaultProps = {
-    withLink: true,
-    withTags: true
+    withLink: true
   }
 
   render() {
-    const { parcel, withLink, withTags } = this.props
+    const { parcel, withLink } = this.props
 
     const Wrapper = withLink ? Link : React.Fragment
     const wrapperProps = withLink
@@ -34,7 +33,6 @@ export default class ParcelAttributes extends React.PureComponent {
             <Icon name="marker" />
             <span className="coord">{parcel.id}</span>
           </div>
-          {withTags && <ParcelTags parcel={parcel} size="small" />}
         </div>
       </Wrapper>
     )
