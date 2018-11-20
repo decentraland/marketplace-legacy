@@ -22,7 +22,7 @@ import {
   walletType,
   parcelType
 } from 'components/types'
-import { hasSeenAuctionModal, isAuthorized } from 'modules/auction/utils'
+import { hasSeenAuctionModal } from 'modules/auction/utils'
 import { isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 
@@ -59,35 +59,27 @@ export default class AuctionPage extends React.PureComponent {
 
   componentWillMount() {
     const { onFetchAvailableParcel, isConnected } = this.props
-    this.showAuctionModal(this.props)
     onFetchAvailableParcel()
 
     if (isConnected) {
+      this.showAuctionModal(this.props)
       this.fetchAuctionParams()
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.showAuctionModal(nextProps)
-
-    if (nextProps.isConnected) {
+    if (nextProps.isConnected && !nextProps.modal.open) {
+      this.showAuctionModal(nextProps)
       this.fetchAuctionParams()
     }
   }
 
   showAuctionModal(props) {
-    const { authorization, onShowAuctionModal } = props
+    const { onShowAuctionModal } = props
 
-    if (
-      !hasSeenAuctionModal() ||
-      this.isAuctionContractAuthorized(authorization)
-    ) {
+    if (!hasSeenAuctionModal()) {
       onShowAuctionModal()
     }
-  }
-
-  isAuctionContractAuthorized(authorization) {
-    return authorization && !isAuthorized(authorization)
   }
 
   fetchAuctionParams() {

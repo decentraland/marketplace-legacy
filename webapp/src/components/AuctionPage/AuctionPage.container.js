@@ -10,6 +10,7 @@ import {
   getCenter,
   getLoading
 } from 'modules/auction/selectors'
+import { getModal } from 'modules/ui/selectors'
 import { openModal } from 'modules/ui/actions'
 import {
   FETCH_AVAILABLE_PARCEL_REQUEST,
@@ -47,6 +48,7 @@ const mapState = state => {
     authorization: getAuthorizations(state),
     auctionParams: getParams(state),
     auctionCenter: getCenter(state),
+    modal: getModal(state),
     wallet,
     allParcels
   }

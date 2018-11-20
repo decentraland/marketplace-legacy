@@ -50,9 +50,8 @@ export default class TermsModal extends React.PureComponent {
         isCloseable={false}
         {...this.props}
       >
-        <DecentralandLogo />
-
         <div className="modal-body">
+          <DecentralandLogo />
           <h1>{t('terms_modal.title')}</h1>
 
           <br />
