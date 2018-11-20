@@ -13,6 +13,10 @@
   color: var(--footer-text);
 }
 
+.Footer .social-icons .icon {
+  font-size: 1.2em;
+}
+
 .Footer .footer-column {
   display: flex;
   flex-flow: column nowrap;

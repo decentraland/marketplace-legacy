@@ -21,13 +21,14 @@ export default class ParcelAttributes extends React.PureComponent {
   render() {
     const { parcel, onClick } = this.props
 
+    // We use `className="map alternate"` on Icon because semantic wrongly throws on `name="map marker alternate"`
     return (
       <div
         className={`ParcelAttributes ${onClick ? 'clickeable' : ''}`}
         onClick={this.handleOnClick}
       >
         <div className="coords">
-          <Icon name="map marker alternate" />
+          <Icon name="marker" className="map alternate" />
           <span className="coord">{parcel.id}</span>
         </div>
       </div>

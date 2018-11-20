@@ -73,28 +73,28 @@ export default class Footer extends React.PureComponent {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="twitter" size="normal" />
+              <Icon name="twitter" />
             </a>
             <a
               href="https://github.com/decentraland/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="github" size="normal" />
+              <Icon name="github" />
             </a>
             <a
               href="https://reddit.com/r/decentraland/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="reddit" size="normal" />
+              <Icon name="reddit" />
             </a>
             <a
               href="https://www.facebook.com/decentraland/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon name="facebook" size="normal" />
+              <Icon name="facebook" />
             </a>
           </div>
         </div>

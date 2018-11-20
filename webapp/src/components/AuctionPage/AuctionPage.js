@@ -122,7 +122,7 @@ export default class AuctionPage extends React.PureComponent {
 
   handleParcelClick = parcel => {
     const { center, onChangeAuctionCenterParcel } = this.props
-    if (isEqualCoords(parcel, center)) {
+    if (!isEqualCoords(parcel, center)) {
       onChangeAuctionCenterParcel(parcel)
     }
   }
