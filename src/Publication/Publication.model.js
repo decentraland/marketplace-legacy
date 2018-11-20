@@ -25,6 +25,37 @@ export class Publication extends Model {
     'block_time_updated_at',
     'contract_id'
   ]
+
+  static cachedTable = null
+
+  static async invalidateCache() {
+    this.cachedTable = null
+  }
+
+  static async buildCache() {
+    this.cachedTable = {}
+    for (let i of PUBLICATION_ASSET_TYPES) {
+      this.cachedTable[i] = {}
+    }
+    const results = await this.find({
+      expires_at: '>= EXTRACT(epoch from now()) * 1000'
+    })
+    for (let i of results) {
+      this.cachedTable[i.asset_type][i.asset_uid] = i
+    }
+  }
+
+  static async setupListener() {
+    this.db.client.on('notification', msg => {
+      if (
+        msg.name === 'notification' &&
+        msg.channel === 'publications_updated'
+      ) {
+        this.invalidateCache()
+      }
+    })
+  }
+
   static isValidStatus(status) {
     return Object.values(PUBLICATION_STATUS).includes(status)
   }
@@ -49,6 +80,13 @@ export class Publication extends Model {
     }
 
     return this.find({ asset_id, status }, { created_at: 'DESC' })
+  }
+
+  static async cachedFindLatestActive(assetTableName, assetId) {
+    if (!this.cachedTable) {
+      await this.buildCachedTable()
+    }
+    return this.cachedTable[assetTableName][assetId]
   }
 
   // TODO: Add asset_type

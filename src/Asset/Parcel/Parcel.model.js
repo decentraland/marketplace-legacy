@@ -1,7 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { Asset } from '../Asset'
-import { PublicationQueries } from '../../Publication'
+import { Publication, PublicationQueries } from '../../Publication'
 import { District } from '../../District'
 import { MortgageQueries } from '../../Mortgage'
 import { SQL } from '../../database'
@@ -24,6 +24,28 @@ export class Parcel extends Model {
     'auction_owner',
     'last_transferred_at'
   ]
+
+  static cachedTable = null
+
+  static async invalidateCache() {
+    this.cachedTable = null
+  }
+
+  static async buildCache() {
+    this.cachedTable = {}
+    const results = await this.find()
+    for (let i of results) {
+      this.cachedTable[i.x][i.y] = i
+    }
+  }
+
+  static async setupListener() {
+    this.db.client.on('notification', msg => {
+      if (msg.name === 'notification' && msg.channel === 'parcel_updated') {
+        this.invalidateCache()
+      }
+    })
+  }
 
   static buildId(x, y) {
     return buildCoordinate(x, y)
@@ -99,13 +121,23 @@ export class Parcel extends Model {
     const [maxx, miny] =
       typeof max === 'string' ? splitCoordinate(max) : [max.x, max.y]
 
-    return this.db.query(SQL`SELECT *, (
-      ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-    ) as publication
-      FROM ${SQL.raw(this.tableName)}
-      WHERE x BETWEEN ${minx} AND ${maxx}
-        AND y BETWEEN ${miny} AND ${maxy}
-      ORDER BY x ASC, y DESC`)
+    if (!this.tableCache) {
+      this.tableCache = await this.buildCache()
+    }
+
+    const result = []
+    for (let x = minx; x <= maxx; x++) {
+      for (let y = maxy; y >= miny; y--) {
+        result.push({
+          ...this.tableCache[x][y],
+          publication: Publication.cachedFindLatestActive(
+            this.tableName,
+            this.tableCache[x][y].token_id
+          )
+        })
+      }
+    }
+    return result
   }
 
   static async encodeTokenId(x, y) {
