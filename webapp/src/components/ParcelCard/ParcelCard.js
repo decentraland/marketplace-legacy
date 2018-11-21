@@ -94,7 +94,7 @@ export default class ParcelCard extends React.PureComponent {
                 </p>
               </React.Fragment>
             )}
-          <ParcelAttributes parcel={parcel} withLink={false} />
+          <ParcelAttributes parcel={parcel} />
         </Card.Content>
       </React.Fragment>
     )

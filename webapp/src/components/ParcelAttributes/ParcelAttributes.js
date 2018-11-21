@@ -8,8 +8,13 @@ import './ParcelAttributes.css'
 export default class ParcelAttributes extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
+    status: PropTypes.string,
     onClick: PropTypes.func,
     onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    status: ''
   }
 
   handleOnClick = () => {
@@ -27,14 +32,17 @@ export default class ParcelAttributes extends React.PureComponent {
   }
 
   getClassName() {
-    const { onClick, onDelete } = this.props
+    const { status, onClick, onDelete } = this.props
+    const statusClass = status
+      ? `has-status status-${status.toLowerCase()}`
+      : ''
     const onClickClass = onClick ? 'clickeable' : ''
     const onDeleteClass = onDelete ? 'deleteable' : ''
-    return `ParcelAttributes ${onClickClass} ${onDeleteClass}`
+    return `ParcelAttributes ${statusClass} ${onClickClass} ${onDeleteClass}`
   }
 
   render() {
-    const { parcel, onDelete } = this.props
+    const { parcel, status, onDelete } = this.props
 
     // We use `className="map alternate"` on Icon because semantic wrongly throws on `name="map marker alternate"` as of 0.78.2
     return (
@@ -44,10 +52,13 @@ export default class ParcelAttributes extends React.PureComponent {
             <Icon name="x" />
           </div>
         ) : null}
-        <div className="coords">
+        <div className="attribute coords">
           <Icon name="marker" className="map alternate" />
           <span className="coord">{parcel.id}</span>
         </div>
+        {status ? (
+          <span className="attribute status">{status.toUpperCase()}</span>
+        ) : null}
       </div>
     )
   }

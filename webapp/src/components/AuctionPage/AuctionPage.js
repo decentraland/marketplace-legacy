@@ -329,9 +329,13 @@ export default class AuctionPage extends React.PureComponent {
                       <ParcelAttributes
                         key={parcel.id}
                         parcel={parcel}
-                        withLink={false}
                         onClick={this.handleParcelClick}
                         onDelete={this.handleDeselectUnownedParcel}
+                        status={
+                          Contract.isEmptyAddress(parcel.owner)
+                            ? ''
+                            : t('auction_page.sold')
+                        }
                       />
                     ))}
                   </div>

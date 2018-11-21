@@ -54,6 +54,11 @@
   margin-right: 15px;
 }
 
+.AuctionPage .ParcelAttributes.has-status .attribute {
+  border-color: #676370;
+  color: #676370;
+}
+
 .AuctionPage footer {
   color: var(--gray);
 }
