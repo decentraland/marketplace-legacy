@@ -106,14 +106,17 @@ export default class AuctionPage extends React.PureComponent {
     const wasOverLimit = this.hasReachedLimit(
       this.state.selectedCoordinatesById
     )
-
-    const newSelectedCoordsById = this.getNewSelectedCoordsFor(asset)
-
+    const newSelectedCoordsById = this.buildNewSelectedCoords(asset)
     const isOverLimit = this.hasReachedLimit(newSelectedCoordsById)
 
     if (!wasOverLimit || (wasOverLimit && !isOverLimit)) {
       this.setState({ selectedCoordinatesById: newSelectedCoordsById })
     }
+  }
+
+  handleDeselectUnownedParcel = parcel => {
+    const newSelectedCoordsById = this.buildNewSelectedCoords(parcel)
+    this.setState({ selectedCoordinatesById: newSelectedCoordsById })
   }
 
   handleFindAvailableParcel = () => {
@@ -143,7 +146,7 @@ export default class AuctionPage extends React.PureComponent {
     return landRegistry.ownerOf(tokenId)
   }
 
-  getNewSelectedCoordsFor(parcel) {
+  buildNewSelectedCoords(parcel) {
     const { selectedCoordinatesById } = this.state
     const { id, x, y } = parcel
     const isSelected = selectedCoordinatesById[id] !== undefined
@@ -328,6 +331,7 @@ export default class AuctionPage extends React.PureComponent {
                         parcel={parcel}
                         withLink={false}
                         onClick={this.handleParcelClick}
+                        onDelete={this.handleDeselectUnownedParcel}
                       />
                     ))}
                   </div>

@@ -8,7 +8,8 @@ import './ParcelAttributes.css'
 export default class ParcelAttributes extends React.PureComponent {
   static propTypes = {
     parcel: parcelType,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func
   }
 
   handleOnClick = () => {
@@ -18,15 +19,31 @@ export default class ParcelAttributes extends React.PureComponent {
     }
   }
 
-  render() {
-    const { parcel, onClick } = this.props
+  handleOnDelete = event => {
+    const { onDelete, parcel } = this.props
+    onDelete(parcel)
+    event.stopPropagation()
+    event.nativeEvent.stopImmediatePropagation()
+  }
 
-    // We use `className="map alternate"` on Icon because semantic wrongly throws on `name="map marker alternate"`
+  getClassName() {
+    const { onClick, onDelete } = this.props
+    const onClickClass = onClick ? 'clickeable' : ''
+    const onDeleteClass = onDelete ? 'deleteable' : ''
+    return `ParcelAttributes ${onClickClass} ${onDeleteClass}`
+  }
+
+  render() {
+    const { parcel, onDelete } = this.props
+
+    // We use `className="map alternate"` on Icon because semantic wrongly throws on `name="map marker alternate"` as of 0.78.2
     return (
-      <div
-        className={`ParcelAttributes ${onClick ? 'clickeable' : ''}`}
-        onClick={this.handleOnClick}
-      >
+      <div className={this.getClassName()} onClick={this.handleOnClick}>
+        {onDelete ? (
+          <div className="delete-button" onClick={this.handleOnDelete}>
+            <Icon name="x" />
+          </div>
+        ) : null}
         <div className="coords">
           <Icon name="marker" className="map alternate" />
           <span className="coord">{parcel.id}</span>
