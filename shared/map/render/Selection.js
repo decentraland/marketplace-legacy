@@ -7,7 +7,7 @@ export class Selection {
     scale = 1.2,
     size = 10,
     fill = '#ff9990',
-    stroke = '#ff4130',
+    stroke = '#ff0044',
     width = 1
   }) {
     // border

@@ -7,9 +7,10 @@ import {
   getAddress,
   isConnecting,
   isConnected
-} from 'modules/wallet/selectors'
-import { getAuthorizations } from 'modules/authorization/selectors'
+} from '@dapps/modules/wallet/selectors'
 import { clearTransactions } from '@dapps/modules/transaction/actions'
+
+import { getAuthorizations } from 'modules/authorization/selectors'
 
 import ActivityPage from './ActivityPage'
 

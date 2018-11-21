@@ -118,7 +118,7 @@
   "auction_page": {
     "available_parcels": "Colis disponibles",
     "bid": "Offre",
-    "description": "Sélectionnez LAND à acheter",
+    "description": "Choisissez le LAND que vous voulez acheter",
     "find_available_parcel": "Trouver un colis disponible",
     "gas_price": "Prix ​​du gaz",
     "land_price": "Prix LAND",
@@ -127,7 +127,8 @@
     "maximum_parcels_title":
       "Vous avez atteint le maximum LAND par transaction",
     "searching": "Recherche...",
-    "title": "Acheter un LAND d'occasion",
+    "title": "LAND panier",
+    "token": "Jeton",
     "total_price": "Prix ​​total"
   },
   "authorization": {

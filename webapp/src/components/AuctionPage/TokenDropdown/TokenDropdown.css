@@ -1,0 +1,62 @@
+.TokenDropdown {
+  color: var(--text);
+}
+
+.TokenDropdown .ui.menu {
+  font-family: var(--font-family);
+}
+
+.TokenDropdown .ui.dropdown {
+  background-color: transparent !important;
+}
+
+.TokenDropdown .ui.dropdown.active {
+  border: none !important;
+}
+
+.TokenDropdown .ui.dropdown > .dropdown.icon {
+  color: var(--primary);
+  font-size: 16px;
+  transform: translateY(-2px);
+  margin-left: 16px;
+}
+
+.TokenDropdown .ui.dropdown > .text {
+  color: white;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 30.8571px;
+}
+
+.TokenDropdown .ui.dropdown .menu,
+.TokenDropdown .ui.upward.dropdown > .menu {
+  background-color: var(--card-background);
+  border: solid 1px var(--border);
+  box-shadow: 0 16px 32px 0 var(--shadow);
+  margin-top: 13px;
+  padding: 8px 0px;
+  border-radius: 6px !important;
+}
+
+.TokenDropdown .ui.dropdown .menu > .item {
+  color: var(--text) !important;
+  font-size: 15px;
+  line-height: 24px;
+  padding: 10px 16px !important;
+  font-weight: normal;
+  min-width: 210px;
+}
+
+.TokenDropdown .ui.dropdown .menu > .item:hover {
+  color: var(--text);
+  background-color: var(--hover);
+}
+
+.TokenDropdown .ui.dropdown .menu > .item > .description {
+  color: var(--secondary-text);
+}
+
+.TokenDropdown .ui.dropdown .menu .active.item {
+  font-weight: 500;
+  background-color: var(--hover);
+}

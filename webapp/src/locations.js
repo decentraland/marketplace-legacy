@@ -68,7 +68,7 @@ export const locations = {
 
   // Auction
 
-  auction: () => '/auction',
+  auction: token => '/auction' + (token ? `?token=${token}` : ''),
 
   // General routes
   marketplace: () => '/marketplace',

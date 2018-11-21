@@ -70,3 +70,32 @@ export function bidOnParcelsFailure(error) {
     error
   }
 }
+
+// Fetch auction rate
+
+export const FETCH_AUCTION_RATE_REQUEST = '[Request] Fetch auction rate'
+export const FETCH_AUCTION_RATE_SUCCESS = '[Success] Fetch auction rate'
+export const FETCH_AUCTION_RATE_FAILURE = '[Failure] Fetch auction rate'
+
+export function fetchAuctionRateRequest(token) {
+  return {
+    type: FETCH_AUCTION_RATE_REQUEST,
+    token
+  }
+}
+
+export function fetchAuctionRateSuccess(token, rate) {
+  return {
+    type: FETCH_AUCTION_RATE_SUCCESS,
+    token,
+    rate
+  }
+}
+
+export function fetchAuctionRateFailure(token, error) {
+  return {
+    type: FETCH_AUCTION_RATE_FAILURE,
+    token,
+    error
+  }
+}

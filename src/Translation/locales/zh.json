@@ -107,7 +107,7 @@
   "auction_page": {
     "available_parcels": "可用包裹",
     "bid": "出价",
-    "description": "选择LAND购买",
+    "description": "选择您要购买的LAND",
     "find_available_parcel": "查找可用包裹",
     "gas_price": "天然气价格",
     "land_price": "LAND价格",
@@ -115,7 +115,8 @@
       "如果你试图在一次交易中购买超过{max} LAND，它就会失败。",
     "maximum_parcels_title": "您达到了每笔交易的最高LAND",
     "searching": "搜索...",
-    "title": "购买无主LAND",
+    "title": "LAND购物车",
+    "token": "代币",
     "total_price": "总价"
   },
   "authorization": {

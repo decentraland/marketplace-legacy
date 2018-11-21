@@ -13,8 +13,8 @@ export default class Blockie extends React.PureComponent {
   }
 
   static defaultProps = {
-    color: '#ff4130',
-    bgcolor: '#9f1a10',
+    color: '#ff0044',
+    bgcolor: '#d10038',
     spotcolor: '#00dbef',
     size: 10,
     scale: 2

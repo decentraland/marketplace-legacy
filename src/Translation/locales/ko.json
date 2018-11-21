@@ -115,7 +115,7 @@
   "auction_page": {
     "available_parcels": "사용 가능한 소포",
     "bid": "매기다",
-    "description": "구매할 LAND 선택",
+    "description": "구매할 LAND을 선택하십시오.",
     "find_available_parcel": "사용 가능한 소포 찾기",
     "gas_price": "가스 가격",
     "land_price": "LAND 가격",
@@ -123,7 +123,8 @@
       "단일 트랜잭션에서 {max} LAND 이상을 구매하려고 시도하면 실패합니다. ",
     "maximum_parcels_title": "거래 당 최대 LAND에 도달했습니다.",
     "searching": "수색...",
-    "title": "소유하지 않은 LAND 구입",
+    "title": "장바구니에 넣기",
+    "token": "토큰",
     "total_price": "총 가격"
   },
   "authorization": {

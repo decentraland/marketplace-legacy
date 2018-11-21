@@ -116,7 +116,7 @@
   "auction_page": {
     "available_parcels": "Parcelas disponibles",
     "bid": "Ofertar",
-    "description": "Seleccione LAND para comprar",
+    "description": "Elige la LAND que quieres comprar.",
     "find_available_parcel": "Encuentra parcelas disponibles",
     "gas_price": "Precio del gas",
     "land_price": "Precio LAND",
@@ -125,7 +125,8 @@
     "maximum_parcels_title":
       "Alcanzó la cantidad máxima de LAND por transacción",
     "searching": "Buscando...",
-    "title": "Compra sin LAND sin dueño",
+    "title": "Carro de compras de LAND",
+    "token": "Token",
     "total_price": "Precio total"
   },
   "authorization": {
