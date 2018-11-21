@@ -103,10 +103,17 @@ export default class AuctionPage extends React.PureComponent {
       return
     }
 
-    const newSelectedCoordsById = this.getNewSelectedCoordsFor(asset)
-    if (this.hasReachedLimit(newSelectedCoordsById)) return
+    const wasOverLimit = this.hasReachedLimit(
+      this.state.selectedCoordinatesById
+    )
 
-    this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+    const newSelectedCoordsById = this.getNewSelectedCoordsFor(asset)
+
+    const isOverLimit = this.hasReachedLimit(newSelectedCoordsById)
+
+    if (!wasOverLimit || (wasOverLimit && !isOverLimit)) {
+      this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+    }
   }
 
   handleFindAvailableParcel = () => {
@@ -141,7 +148,9 @@ export default class AuctionPage extends React.PureComponent {
 
   hasReachedLimit(selected) {
     const { landsLimitPerBid } = this.props.auctionParams
-    return Object.keys(selected).length >= landsLimitPerBid
+    const selectedAmount = Object.keys(selected).length
+    debugger
+    return selectedAmount >= landsLimitPerBid
   }
 
   getSelectedParcels() {
