@@ -47,13 +47,13 @@ const { minX, minY, maxX, maxY } = Bounds.getBounds()
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
     /** where to position the map in the X axis */
-    x: PropTypes.number.isRequired,
+    x: PropTypes.number,
     /** where to position the map in the Y axis */
-    y: PropTypes.number.isRequired,
+    y: PropTypes.number,
     /** where to position the map in the X axis */
-    initialX: PropTypes.number.isRequired,
+    initialX: PropTypes.number,
     /** where to position the map in the Y axis */
-    initialY: PropTypes.number.isRequired,
+    initialY: PropTypes.number,
     /** size of each parcel, i.e: size=5 makes each parcel of 5x5 pixels */
     size: PropTypes.number,
     /** width of the canvas in pixels */
