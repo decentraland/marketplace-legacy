@@ -103,7 +103,7 @@
   border-radius: 6px !important;
 }
 
-.AuctionPage .information-block .ui.label.pointing{
+.AuctionPage .information-block .ui.label.pointing {
   background: #676370;
   color: white;
   font-weight: normal;
@@ -117,7 +117,7 @@
   line-height: 20px;
 }
 
-.AuctionPage .information-block .close{
+.AuctionPage .information-block .close {
   position: absolute;
   top: 5px;
   right: 10px;
@@ -127,13 +127,9 @@
   .AuctionPage .information-block {
     margin-top: 20px;
   }
-  
+
   .AuctionPage .parcels-included {
     margin-top: 10px;
-  }
-
-  .AuctionPage .ParcelAttributes {
-    flex-basis: 20%;
   }
 }
 
