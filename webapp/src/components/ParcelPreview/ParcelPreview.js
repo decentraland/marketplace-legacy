@@ -6,8 +6,8 @@ import ParcelCanvas from './ParcelCanvas'
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
     ...ParcelCanvas.propTypes,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    x: PropTypes.number,
+    y: PropTypes.number,
     size: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number
