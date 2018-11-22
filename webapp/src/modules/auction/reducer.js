@@ -115,7 +115,7 @@ export function auctionReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        error: action.payload.error
+        error: action.error
       }
     }
     default:
