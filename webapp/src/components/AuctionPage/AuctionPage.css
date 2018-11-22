@@ -49,9 +49,14 @@
   margin-bottom: 20px;
 }
 
-.AuctionPage .ParcelAttributes {
-  margin-bottom: 20px;
-  flex-basis: 8%;
+.AuctionPage .parcels-included .ParcelCoord {
+  margin-top: 20px;
+  margin-right: 15px;
+}
+
+.AuctionPage .ParcelCoord.has-status .attribute {
+  border-color: #676370;
+  color: #676370;
 }
 
 .AuctionPage footer {
@@ -102,10 +107,6 @@
 }
 
 @media (max-width: 992px) {
-  .AuctionPage .information-block:first-child {
-    margin-top: 30px;
-  }
-
   .AuctionPage .information-block {
     margin-top: 20px;
   }

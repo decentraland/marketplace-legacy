@@ -26,7 +26,9 @@ const mapDispatch = (dispatch, ownProps) => {
     onEditParcels: () => dispatch(navigateTo(locations.editEstateParcels(id))),
     onEditMetadata: () =>
       dispatch(navigateTo(locations.editEstateMetadata(id))),
-    onManageEstate: () => dispatch(navigateTo(locations.manageEstate(id)))
+    onManageEstate: () => dispatch(navigateTo(locations.manageEstate(id))),
+    onParcelClick: parcel =>
+      dispatch(navigateTo(locations.parcelDetail(parcel.x, parcel.y)))
   }
 }
 

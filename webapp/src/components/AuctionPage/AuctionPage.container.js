@@ -22,6 +22,7 @@ import {
   fetchAuctionParamsRequest,
   fetchAuctionRateRequest,
   setParcelOnChainOwner,
+  changeAuctionCenterParcel,
   bidOnParcelsRequest
 } from 'modules/auction/actions'
 import AuctionPage from './AuctionPage'
@@ -49,8 +50,8 @@ const mapState = state => {
       FETCH_AVAILABLE_PARCEL_REQUEST
     ),
     authorization: getAuthorizations(state),
-    auctionParams: getParams(state),
-    auctionCenter: getCenter(state),
+    params: getParams(state),
+    center: getCenter(state),
     modal: getModal(state),
     token: getSelectedToken(state),
     rate: getRate(state),
@@ -65,6 +66,8 @@ const mapDispatch = dispatch => ({
   onSetParcelOnChainOwner: (parcelId, owner) =>
     dispatch(setParcelOnChainOwner(parcelId, owner)),
   onFetchAvailableParcel: () => dispatch(fetchAvailableParcelRequest()),
+  onChangeAuctionCenterParcel: parcel =>
+    dispatch(changeAuctionCenterParcel(parcel)),
   onSubmit: (parcels, beneficiary) =>
     dispatch(bidOnParcelsRequest(parcels, beneficiary)),
   onChangeToken: token => dispatch(fetchAuctionRateRequest(token))

@@ -5,6 +5,8 @@ import { Card } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
+import ParcelCoord from 'components/ParcelCoord'
+import ParcelTags from 'components/ParcelTags'
 import ParcelPreview from 'components/ParcelPreview'
 import Expiration from 'components/Expiration'
 import { parcelType, publicationType } from 'components/types'
@@ -15,7 +17,6 @@ import { getOpenPublication } from 'shared/asset'
 import { formatDate, distanceInWordsToNow } from 'lib/utils'
 import { getMortgageStatus } from 'shared/mortgage'
 import './ParcelCard.css'
-import ParcelAttributes from 'components/ParcelAttributes'
 
 export default class ParcelCard extends React.PureComponent {
   static propTypes = {
@@ -64,13 +65,9 @@ export default class ParcelCard extends React.PureComponent {
           </Card.Description>
 
           {publication && (
-            <React.Fragment>
-              <Card.Meta
-                title={formatDate(parseInt(publication.expires_at, 10))}
-              >
-                <Expiration expiresAt={parseInt(publication.expires_at, 10)} />
-              </Card.Meta>
-            </React.Fragment>
+            <Card.Meta title={formatDate(parseInt(publication.expires_at, 10))}>
+              <Expiration expiresAt={parseInt(publication.expires_at, 10)} />
+            </Card.Meta>
           )}
 
           {!publication &&
@@ -84,17 +81,18 @@ export default class ParcelCard extends React.PureComponent {
 
           {showMortgage &&
             isMortgageActive(parcel.mortgage, parcel) && (
-              <React.Fragment>
-                <p
-                  className={`mortgage-status ${getMortgageStatus(
-                    parcel.mortgage
-                  )}`}
-                >
-                  {getMortgageStatus(parcel.mortgage)}
-                </p>
-              </React.Fragment>
+              <p
+                className={`mortgage-status ${getMortgageStatus(
+                  parcel.mortgage
+                )}`}
+              >
+                {getMortgageStatus(parcel.mortgage)}
+              </p>
             )}
-          <ParcelAttributes parcel={parcel} withLink={false} />
+          <div className="extra">
+            <ParcelCoord size="small" parcel={parcel} />
+            <ParcelTags size="small" parcel={parcel} />
+          </div>
         </Card.Content>
       </React.Fragment>
     )

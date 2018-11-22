@@ -14,7 +14,7 @@ import {
 import { t } from '@dapps/modules/translation/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
-import ParcelAttributes from 'components/ParcelAttributes'
+import ParcelCoord from 'components/ParcelCoord'
 import SignInNotice from 'components/SignInNotice'
 import {
   authorizationType,
@@ -23,7 +23,7 @@ import {
   parcelType
 } from 'components/types'
 import { hasSeenAuctionModal, TOKEN_SYMBOLS } from 'modules/auction/utils'
-import { isParcel } from 'shared/parcel'
+import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
@@ -36,8 +36,8 @@ export default class AuctionPage extends React.PureComponent {
     isConnecting: PropTypes.bool.isRequired,
     isAvailableParcelLoading: PropTypes.bool.isRequired,
     authorization: authorizationType,
-    auctionParams: auctionParamsType,
-    auctionCenter: PropTypes.shape({
+    params: auctionParamsType,
+    center: PropTypes.shape({
       x: PropTypes.number,
       y: PropTypes.number
     }).isRequired,
@@ -47,6 +47,7 @@ export default class AuctionPage extends React.PureComponent {
     onFetchAuctionParams: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
+    onChangeAuctionCenterParcel: PropTypes.func.isRequired,
     token: PropTypes.oneOf(TOKEN_SYMBOLS),
     rate: PropTypes.number
   }
@@ -105,9 +106,7 @@ export default class AuctionPage extends React.PureComponent {
     const wasOverLimit = this.hasReachedLimit(
       this.state.selectedCoordinatesById
     )
-
-    const newSelectedCoordsById = this.getNewSelectedCoordsFor(asset)
-
+    const newSelectedCoordsById = this.buildNewSelectedCoords(asset)
     const isOverLimit = this.hasReachedLimit(newSelectedCoordsById)
 
     if (!wasOverLimit || (wasOverLimit && !isOverLimit)) {
@@ -115,8 +114,20 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
+  handleDeselectUnownedParcel = parcel => {
+    const newSelectedCoordsById = this.buildNewSelectedCoords(parcel)
+    this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+  }
+
   handleFindAvailableParcel = () => {
     this.props.onFetchAvailableParcel()
+  }
+
+  handleParcelClick = parcel => {
+    const { center, onChangeAuctionCenterParcel } = this.props
+    if (!isEqualCoords(parcel, center)) {
+      onChangeAuctionCenterParcel(parcel)
+    }
   }
 
   handleSubmit = () => {
@@ -135,7 +146,7 @@ export default class AuctionPage extends React.PureComponent {
     return landRegistry.ownerOf(tokenId)
   }
 
-  getNewSelectedCoordsFor(parcel) {
+  buildNewSelectedCoords(parcel) {
     const { selectedCoordinatesById } = this.state
     const { id, x, y } = parcel
     const isSelected = selectedCoordinatesById[id] !== undefined
@@ -146,7 +157,7 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   hasReachedLimit(selected) {
-    const { landsLimitPerBid } = this.props.auctionParams
+    const { landsLimitPerBid } = this.props.params
     return Object.keys(selected).length >= landsLimitPerBid
   }
 
@@ -178,8 +189,8 @@ export default class AuctionPage extends React.PureComponent {
   render() {
     const {
       authorization,
-      auctionParams,
-      auctionCenter,
+      params,
+      center,
       allParcels,
       token,
       rate,
@@ -192,8 +203,8 @@ export default class AuctionPage extends React.PureComponent {
       landsLimitPerBid,
       gasPriceLimit,
       currentPrice
-    } = auctionParams
-    const { x, y } = auctionCenter
+    } = params
+    const { x, y } = center
 
     if (!isConnecting && !isConnected) {
       return (
@@ -315,11 +326,16 @@ export default class AuctionPage extends React.PureComponent {
                 <Grid.Column width={16} className="selected-parcels">
                   <div className="parcels-included">
                     {selectedParcels.map(parcel => (
-                      <ParcelAttributes
+                      <ParcelCoord
                         key={parcel.id}
                         parcel={parcel}
-                        withLink={false}
-                        withTags={false}
+                        onClick={this.handleParcelClick}
+                        onDelete={this.handleDeselectUnownedParcel}
+                        status={
+                          Contract.isEmptyAddress(parcel.owner)
+                            ? ''
+                            : t('auction_page.sold')
+                        }
                       />
                     ))}
                   </div>

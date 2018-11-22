@@ -123,6 +123,7 @@
     "searching": "検索中...",
     "title": "カート",
     "token": "トークン",
+    "sold": "売れた",
     "total_price": "合計金額"
   },
   "authorization": {

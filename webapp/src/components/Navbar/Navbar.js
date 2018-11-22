@@ -5,7 +5,6 @@ import { Menu, Icon, Responsive, Sidebar, Label } from 'semantic-ui-react'
 
 import { locations, NAVBAR_PAGES } from 'locations'
 import Badge from 'components/Badge'
-import { default as DecentralandIcon } from 'components/Icon'
 import { walletType, coordsType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
@@ -104,9 +103,10 @@ export default class Navbar extends React.PureComponent {
       <div className="navbar-header">
         <Link to={locations.root()} className="navbar-logo">
           <span className="navbar-icon">
-            <DecentralandIcon
-              name={isLoading ? 'decentraland-loading' : 'decentraland'}
-              className="pull-left"
+            <i
+              className={`pull-left Icon Icon-${
+                isLoading ? 'decentraland-loading' : 'decentraland'
+              }`}
             />
           </span>
         </Link>

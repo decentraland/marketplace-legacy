@@ -5,7 +5,7 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import ParcelAttributes from 'components/ParcelAttributes'
+import ParcelCoord from 'components/ParcelCoord'
 import ParcelTags from 'components/ParcelTags'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
@@ -31,7 +31,8 @@ export default class EstateDetail extends React.PureComponent {
     isOwner: PropTypes.bool.isRequired,
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
-    onManageEstate: PropTypes.func.isRequired
+    onManageEstate: PropTypes.func.isRequired,
+    onParcelClick: PropTypes.func.isRequired
   }
 
   renderEmptyEstate() {
@@ -55,7 +56,8 @@ export default class EstateDetail extends React.PureComponent {
       allParcels,
       onEditParcels,
       onEditMetadata,
-      onManageEstate
+      onManageEstate,
+      onParcelClick
     } = this.props
     const { parcels } = estate.data
 
@@ -185,9 +187,9 @@ export default class EstateDetail extends React.PureComponent {
                       : WITHOUT_ACTION_BUTTONS_WIDTH
                   }
                   mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
-                  className={'selected-parcels-headline'}
+                  className="parcels-included-headline"
                 >
-                  <h3 className="parcels-included">
+                  <h3 className="parcels-included-title">
                     {t('estate_detail.parcels')}
                     {isOwner && (
                       <Button
@@ -203,15 +205,15 @@ export default class EstateDetail extends React.PureComponent {
                 </Grid.Column>
                 <Grid.Column
                   width={WITHOUT_ACTION_BUTTONS_WIDTH}
-                  className="selected-parcels"
+                  className="parcels-included"
                 >
                   {parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelAttributes
+                      <ParcelCoord
                         key={parcel.id}
                         parcel={parcel}
-                        withTags={false}
+                        onClick={onParcelClick}
                       />
                     ) : null
                   })}

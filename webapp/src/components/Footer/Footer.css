@@ -10,6 +10,11 @@
 .Footer .social-icons a {
   margin-right: 24px;
   opacity: 0.5;
+  color: var(--footer-text);
+}
+
+.Footer .social-icons .icon {
+  font-size: 1.2em;
 }
 
 .Footer .footer-column {
@@ -35,7 +40,7 @@
 
 .Footer .links a {
   margin-right: 27px;
-  color: #8f919a;
+  color: var(--footer-text);
 }
 .Footer .links a:last-child {
   margin-right: 0;

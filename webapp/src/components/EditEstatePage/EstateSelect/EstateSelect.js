@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
-import ParcelAttributes from 'components/ParcelAttributes'
+import ParcelCoord from 'components/ParcelCoord'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'
@@ -218,10 +218,7 @@ export default class EstateSelect extends React.PureComponent {
               </Grid.Column>
               {!isCreation &&
                 isOwner(wallet, estate.id) && (
-                  <Grid.Column
-                    width={8}
-                    className={'selected-parcels-headline'}
-                  >
+                  <Grid.Column width={8} className="parcels-included-headline">
                     <Button
                       size="tiny"
                       className="link"
@@ -232,7 +229,7 @@ export default class EstateSelect extends React.PureComponent {
                     </Button>
                   </Grid.Column>
                 )}
-              <Grid.Column width={16} className="selected-parcels">
+              <Grid.Column width={16} className="parcels-included">
                 <p className="parcels-included-description">
                   {t('estate_select.description')}
                 </p>
@@ -240,11 +237,7 @@ export default class EstateSelect extends React.PureComponent {
                   parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelAttributes
-                        key={parcel.id}
-                        parcel={parcel}
-                        withLink={false}
-                      />
+                      <ParcelCoord key={parcel.id} parcel={parcel} />
                     ) : null
                   })}
               </Grid.Column>
