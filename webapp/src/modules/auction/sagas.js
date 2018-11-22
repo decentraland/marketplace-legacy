@@ -27,7 +27,7 @@ import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
 
 import { getParams, getSelectedToken } from './selectors'
-import { TOKENS } from './utils'
+import { TOKEN_ADDRESSES } from './utils'
 
 const ONE_BILLION = 1000000000 // 1.000.000.000
 const REFRESH_INTERVAL = 5000 // five segundos
@@ -81,7 +81,9 @@ function* handleBidRequest(action) {
     const selectedToken = yield select(getSelectedToken)
 
     const txHash = yield call(() =>
-      landAuction.bid(xs, ys, beneficiary, TOKENS[selectedToken], { gasPrice })
+      landAuction.bid(xs, ys, beneficiary, TOKEN_ADDRESSES[selectedToken], {
+        gasPrice
+      })
     )
 
     yield put(bidOnParcelsSuccess(txHash, xs, ys, beneficiary))
@@ -102,12 +104,12 @@ function* handleFetchAuctionRateRequest(action) {
     const landAuction = eth.getContract('LANDAuction')
 
     let rate = 1
-    if (TOKENS.MANA !== TOKENS[selectedToken]) {
+    if (TOKEN_ADDRESSES.MANA !== TOKEN_ADDRESSES[selectedToken]) {
       rate = eth.utils.fromWei(
         yield call(() =>
           landAuction.getRate(
-            TOKENS.MANA,
-            TOKENS[selectedToken],
+            TOKEN_ADDRESSES.MANA,
+            TOKEN_ADDRESSES[selectedToken],
             eth.utils.toWei(currentPrice)
           )
         )

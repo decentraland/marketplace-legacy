@@ -1,18 +1,18 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
-import { SYMBOLS } from 'modules/auction/utils'
+import { TOKEN_SYMBOLS } from 'modules/auction/utils'
 
 import './TokenDropdown.css'
 
-const OPTIONS = SYMBOLS.map(symbol => ({
+const OPTIONS = TOKEN_SYMBOLS.map(symbol => ({
   text: symbol,
   value: symbol
 }))
 
 export default class TokenDropdown extends React.PureComponent {
   static propTypes = {
-    token: PropTypes.oneOf(SYMBOLS),
+    token: PropTypes.oneOf(TOKEN_SYMBOLS),
     onChange: PropTypes.func
   }
 

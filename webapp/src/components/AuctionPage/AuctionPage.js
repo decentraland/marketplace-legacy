@@ -22,7 +22,7 @@ import {
   walletType,
   parcelType
 } from 'components/types'
-import { hasSeenAuctionModal, SYMBOLS } from 'modules/auction/utils'
+import { hasSeenAuctionModal, TOKEN_SYMBOLS } from 'modules/auction/utils'
 import { isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 
@@ -48,7 +48,7 @@ export default class AuctionPage extends React.PureComponent {
     onFetchAuctionParams: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
-    token: PropTypes.oneOf(SYMBOLS),
+    token: PropTypes.oneOf(TOKEN_SYMBOLS),
     rate: PropTypes.number
   }
 
