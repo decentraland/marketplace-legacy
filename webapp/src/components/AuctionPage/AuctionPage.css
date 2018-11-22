@@ -1,6 +1,14 @@
+.AuctionPage {
+  padding-top: 0px !important;
+}
+
 .AuctionPage .subtitle {
   color: var(--gray);
   margin-bottom: 5px;
+}
+
+.AuctionPage .information-block .subtitle {
+  text-transform: uppercase;
 }
 
 .AuctionPage .parcel-preview {
@@ -14,6 +22,7 @@
 .AuctionPage .information-blocks {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .AuctionPage .information-block .ui.header {
@@ -34,21 +43,51 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 40px;
+}
+
+.AuctionPage .ui.warning.message {
+  margin-bottom: 20px;
 }
 
 .AuctionPage .ParcelAttributes {
-  margin-top: 20px;
+  margin-bottom: 20px;
   flex-basis: 8%;
 }
 
 .AuctionPage footer {
-  margin-top: 20px;
   color: var(--gray);
 }
 
 .AuctionPage footer .available-parcels {
   margin-right: 20px;
+}
+
+.AuctionPage footer .footer-left .link {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.AuctionPage footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.AuctionPage .bid-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.AuctionPage .bid-wrapper .ui.button {
+  min-width: 144px;
+}
+.AuctionPage .bid-wrapper {
+  background-color: var(--dark-gray);
+  padding: 12px 16px;
+  border-radius: 10px;
+}
+
+.AuctionPage .bid-wrapper .information-block + .information-block {
+  margin-left: 48px;
 }
 
 @media (max-width: 768px) {

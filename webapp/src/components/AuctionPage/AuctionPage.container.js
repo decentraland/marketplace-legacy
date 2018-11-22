@@ -8,7 +8,9 @@ import {
   getParcelOnChainOwners,
   getParams,
   getCenter,
-  getLoading
+  getLoading,
+  getSelectedToken,
+  getRate
 } from 'modules/auction/selectors'
 import { getModal } from 'modules/ui/selectors'
 import { openModal } from 'modules/ui/actions'
@@ -18,6 +20,7 @@ import {
 } from 'modules/parcels/actions'
 import {
   fetchAuctionParamsRequest,
+  fetchAuctionRateRequest,
   setParcelOnChainOwner,
   bidOnParcelsRequest
 } from 'modules/auction/actions'
@@ -49,6 +52,8 @@ const mapState = state => {
     auctionParams: getParams(state),
     auctionCenter: getCenter(state),
     modal: getModal(state),
+    token: getSelectedToken(state),
+    rate: getRate(state),
     wallet,
     allParcels
   }
@@ -61,7 +66,8 @@ const mapDispatch = dispatch => ({
     dispatch(setParcelOnChainOwner(parcelId, owner)),
   onFetchAvailableParcel: () => dispatch(fetchAvailableParcelRequest()),
   onSubmit: (parcels, beneficiary) =>
-    dispatch(bidOnParcelsRequest(parcels, beneficiary))
+    dispatch(bidOnParcelsRequest(parcels, beneficiary)),
+  onChangeToken: token => dispatch(fetchAuctionRateRequest(token))
 })
 
 export default connect(mapState, mapDispatch)(AuctionPage)

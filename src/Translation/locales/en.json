@@ -115,15 +115,16 @@
   "auction_page": {
     "available_parcels": "Available parcels",
     "bid": "Bid",
-    "description": "Select LAND to buy",
+    "description": "Choose the LAND you want to buy",
     "find_available_parcel": "Find available parcel",
     "gas_price": "Gas price",
-    "land_price": "LAND price",
+    "land_price": "Price per LAND",
     "maximum_parcels_message":
       "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum LAND per transaction",
     "searching": "Searching...",
-    "title": "Buy unowned LAND",
+    "title": "LAND Cart",
+    "token": "Token",
     "total_price": "Total price"
   },
   "authorization": {

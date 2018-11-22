@@ -160,10 +160,10 @@ export default class Status extends React.PureComponent {
         strokeWidth={14}
         styles={{
           path: {
-            stroke: '#ff4130'
+            stroke: '#ff0044'
           },
           trail: {
-            stroke: '#2e3447'
+            stroke: '#2a3246'
           }
         }}
       />

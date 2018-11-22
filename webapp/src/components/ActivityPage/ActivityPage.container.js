@@ -1,16 +1,15 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-
 import { getTransactions } from '@dapps/modules/transaction/selectors'
 import {
   getNetwork,
   getAddress,
   isConnecting,
   isConnected
-} from 'modules/wallet/selectors'
-import { getAuthorizations } from 'modules/authorization/selectors'
+} from '@dapps/modules/wallet/selectors'
 import { clearTransactions } from '@dapps/modules/transaction/actions'
 
+import { getAuthorizations } from 'modules/authorization/selectors'
 import ActivityPage from './ActivityPage'
 
 const mapState = state => {

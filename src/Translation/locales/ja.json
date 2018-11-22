@@ -113,7 +113,7 @@
   "auction_page": {
     "available_parcels": "利用可能な小包",
     "bid": "入札",
-    "description": "購入するLANDを選択",
+    "description": "購入したいLANDを選択してください",
     "find_available_parcel": "利用可能な小包を見つける",
     "gas_price": "ガス価格",
     "land_price": "LAND価格",
@@ -121,7 +121,8 @@
       "単一のトランザクションで{max} LAND以上を購入しようとすると失敗します。",
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
     "searching": "検索中...",
-    "title": "未所有のLANDを購入する",
+    "title": "カート",
+    "token": "トークン",
     "total_price": "合計金額"
   },
   "authorization": {
