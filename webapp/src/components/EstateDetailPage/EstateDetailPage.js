@@ -24,7 +24,8 @@ export default class EstateDetailPage extends React.PureComponent {
       allParcels,
       onEditParcels,
       onEditMetadata,
-      onManageEstate
+      onManageEstate,
+      onParcelClick
     } = this.props
     return (
       <Estate id={id}>
@@ -37,6 +38,7 @@ export default class EstateDetailPage extends React.PureComponent {
             onEditParcels={onEditParcels}
             onEditMetadata={onEditMetadata}
             onManageEstate={onManageEstate}
+            onParcelClick={onParcelClick}
           />
         )}
       </Estate>
