@@ -123,9 +123,10 @@
       "단일 트랜잭션에서 {max} LAND 이상을 구매하려고 시도하면 실패합니다. ",
     "maximum_parcels_title": "거래 당 최대 LAND에 도달했습니다.",
     "searching": "수색...",
+    "sold": "판매 된",
     "title": "장바구니에 넣기",
     "token": "토큰",
-    "sold": "판매 된",
+    "token_tooltip": "토큰을 선택하려면 여기를 클릭하십시오.",
     "total_price": "총 가격"
   },
   "authorization": {

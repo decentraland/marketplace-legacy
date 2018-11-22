@@ -115,9 +115,10 @@
       "如果你试图在一次交易中购买超过{max} LAND，它就会失败。",
     "maximum_parcels_title": "您达到了每笔交易的最高LAND",
     "searching": "搜索...",
+    "sold": "出售",
     "title": "LAND购物车",
     "token": "代币",
-    "sold": "出售",
+    "token_tooltip": "单击此处选择令牌",
     "total_price": "总价"
   },
   "authorization": {

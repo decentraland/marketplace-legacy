@@ -1,5 +1,6 @@
 import { env } from 'decentraland-commons'
-import { getLocalStorage } from '@dapps/lib/localStorage'
+
+import { localStorage } from 'lib/localStorage'
 
 export const TOKEN_ADDRESSES = {
   MANA: env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS'),
@@ -14,16 +15,19 @@ export const TOKEN_ADDRESSES = {
 
 export const TOKEN_SYMBOLS = Object.keys(TOKEN_ADDRESSES)
 
-export function hasSeenAuctionModal() {
-  const localStorage = getLocalStorage()
-  return localStorage.getItem('seenAuctionModal')
-}
+export const AUCTION_HELPERS = Object.freeze({
+  SEEN_AUCTION_MODAL: 'seenAuctionModal',
+  SEEN_AUCTION_TOKEN_TOOLTIP: 'seenAuctionTokenTooltip'
+})
 
 export function isAuthorized(authorization) {
   return authorization && authorization.allowances.LANDAuction.MANAToken > 0
 }
 
-export function dismissAuctionModal() {
-  const localStorage = getLocalStorage()
-  localStorage.setItem('seenAuctionModal', Date.now())
+export function hasSeenAuctionHelper(key) {
+  return localStorage.getItem(key)
+}
+
+export function dismissAuctionHelper(key) {
+  localStorage.setItem(key, Date.now())
 }

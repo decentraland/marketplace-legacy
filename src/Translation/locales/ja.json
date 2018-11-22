@@ -121,9 +121,10 @@
       "単一のトランザクションで{max} LAND以上を購入しようとすると失敗します。",
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
     "searching": "検索中...",
+    "sold": "売れた",
     "title": "カート",
     "token": "トークン",
-    "sold": "売れた",
+    "token_tooltip": "トークンを選択するにはここをクリックしてください",
     "total_price": "合計金額"
   },
   "authorization": {

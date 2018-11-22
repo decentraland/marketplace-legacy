@@ -127,9 +127,10 @@
     "maximum_parcels_title":
       "Vous avez atteint le maximum LAND par transaction",
     "searching": "Recherche...",
+    "sold": "Vendu",
     "title": "LAND panier",
     "token": "Jeton",
-    "sold": "Vendu",
+    "token_tooltip": "Cliquez ici pour sélectionner le jeton",
     "total_price": "Prix ​​total"
   },
   "authorization": {
