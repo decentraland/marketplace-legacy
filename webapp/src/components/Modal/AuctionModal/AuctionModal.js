@@ -4,7 +4,7 @@ import { Checkbox, Button } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import ContractLink from 'components/ContractLink'
-import { dismissAuctionModal } from 'modules/auction/utils'
+import { dismissAuctionHelper, AUCTION_HELPERS } from 'modules/auction/utils'
 
 import BaseModal from '../BaseModal'
 
@@ -38,7 +38,7 @@ export default class AuctionModal extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    dismissAuctionModal()
+    dismissAuctionHelper(AUCTION_HELPERS.SEEN_AUCTION_MODAL)
     this.props.onClose()
   }
 

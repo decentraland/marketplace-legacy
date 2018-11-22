@@ -123,9 +123,10 @@
       "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum LAND per transaction",
     "searching": "Searching...",
+    "sold": "Sold",
     "title": "LAND Cart",
     "token": "Token",
-    "sold": "Sold",
+    "token_tooltip": "Click here to select the token",
     "total_price": "Total price"
   },
   "authorization": {

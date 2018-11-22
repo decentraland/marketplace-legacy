@@ -1,3 +1,5 @@
+import { getLocalStorage } from '@dapps/lib/localStorage'
+
 import {
   ALLOW_TOKEN_SUCCESS,
   APPROVE_TOKEN_SUCCESS
@@ -111,3 +113,5 @@ export const migrations = {
     return { ...data, transaction }
   }
 }
+
+export const localStorage = getLocalStorage()

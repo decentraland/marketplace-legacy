@@ -22,7 +22,12 @@ import {
   walletType,
   parcelType
 } from 'components/types'
-import { hasSeenAuctionModal, TOKEN_SYMBOLS } from 'modules/auction/utils'
+import {
+  hasSeenAuctionHelper,
+  TOKEN_SYMBOLS,
+  AUCTION_HELPERS,
+  dismissAuctionHelper
+} from 'modules/auction/utils'
 import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 import TokenDropdown from './TokenDropdown'
@@ -58,7 +63,10 @@ export default class AuctionPage extends React.PureComponent {
     this.hasFetchedParams = false
 
     this.state = {
-      selectedCoordinatesById: {}
+      selectedCoordinatesById: {},
+      showTokenTooltip: !hasSeenAuctionHelper(
+        AUCTION_HELPERS.SEEN_AUCTION_TOKEN_TOOLTIP
+      )
     }
   }
 
@@ -82,7 +90,7 @@ export default class AuctionPage extends React.PureComponent {
   showAuctionModal(props) {
     const { onShowAuctionModal } = props
 
-    if (!hasSeenAuctionModal()) {
+    if (!hasSeenAuctionHelper(AUCTION_HELPERS.SEEN_AUCTION_MODAL)) {
       onShowAuctionModal()
     }
   }
@@ -133,6 +141,18 @@ export default class AuctionPage extends React.PureComponent {
   handleSubmit = () => {
     const { wallet, onSubmit } = this.props
     onSubmit(this.getSelectedParcels(), wallet.address)
+  }
+
+  handleCloseTooltip = () => {
+    if (this.state.showTokenTooltip) {
+      dismissAuctionHelper(AUCTION_HELPERS.SEEN_AUCTION_TOKEN_TOOLTIP)
+      this.setState({ showTokenTooltip: false })
+    }
+  }
+
+  handleChangeToken = token => {
+    this.handleCloseTooltip()
+    this.props.onChangeToken(token)
   }
 
   async getParcelOwnerOnChain(parcel) {
@@ -193,11 +213,10 @@ export default class AuctionPage extends React.PureComponent {
       center,
       allParcels,
       token,
-      rate,
-      onChangeToken
+      rate
     } = this.props
     const { isConnecting, isConnected, isAvailableParcelLoading } = this.props
-    const { selectedCoordinatesById } = this.state
+    const { selectedCoordinatesById, showTokenTooltip } = this.state
     const {
       availableParcelCount,
       landsLimitPerBid,
@@ -253,9 +272,21 @@ export default class AuctionPage extends React.PureComponent {
               <Grid.Column mobile={16} computer={10}>
                 <Form onSubmit={preventDefault(this.handleSubmit)}>
                   <div className="information-blocks">
-                    <div className="information-block">
+                    <div className="information-block token">
+                      {showTokenTooltip && (
+                        <div className="ui pointing below label">
+                          {t('auction_page.token_tooltip')}
+                          <i
+                            className="icon close"
+                            onClick={this.handleCloseTooltip}
+                          />
+                        </div>
+                      )}
                       <p className="subtitle">{t('auction_page.token')}</p>
-                      <TokenDropdown token={token} onChange={onChangeToken} />
+                      <TokenDropdown
+                        token={token}
+                        onChange={this.handleChangeToken}
+                      />
                     </div>
                     <div className="information-block">
                       <p className="subtitle">{t('auction_page.land_price')}</p>
