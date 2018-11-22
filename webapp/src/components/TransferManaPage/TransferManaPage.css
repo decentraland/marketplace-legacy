@@ -1,14 +1,26 @@
-.TransferManaPage .big-mana-icon .Mana .ManaIcon {
-  margin-right: 0px;
+.TransferManaPage .big-mana-icon .Mana {
+  height: 64px;
+}
+
+.TransferManaPage .big-mana-icon .Mana .symbol {
+  font-size: 96px;
 }
 
 @media (max-width: 768px) {
   .TransferManaPage .big-mana-icon {
-    margin: 0 auto 50px;
+    margin: 0 auto 96px;
+    margin-top: -32px;
+  }
+
+  .TransferManaPage .big-mana-icon .Mana {
+    height: 128px;
+  }
+
+  .TransferManaPage .big-mana-icon .Mana .symbol {
+    font-size: 192px;
   }
 }
 
 .TransferManaPage .mana-icon-wrapper {
   display: inline-block;
-  transform: translateY(3px);
 }
