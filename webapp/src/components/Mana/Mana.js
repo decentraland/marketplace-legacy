@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Icon from './Icon'
 import './Mana.css'
 
 export default class Mana extends React.PureComponent {
@@ -32,10 +31,9 @@ export default class Mana extends React.PureComponent {
   }
 
   render() {
-    const { size, scale, unit, disabled, className, ...rest } = this.props
+    const { unit, disabled, className, ...rest } = this.props
 
-    const iconSize = Math.round(size * scale)
-    const icon = this.props.icon || <Icon width={iconSize} height={iconSize} />
+    const icon = '⏣'
     const amount = this.getLocalizedAmount()
     const classes = `Mana ${className}` + (disabled ? ' disabled' : '')
     return (
@@ -44,7 +42,8 @@ export default class Mana extends React.PureComponent {
         title={amount ? `${amount} MANA` : ''}
         {...rest}
       >
-        {icon} {amount ? `${amount} ${unit}` : null}
+        <span className="symbol">{icon}</span>&nbsp;
+        {amount ? `${amount} ${unit}` : null}
       </span>
     )
   }

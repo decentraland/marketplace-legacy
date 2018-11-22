@@ -39,7 +39,7 @@ export default class TransferManaPage extends React.PureComponent {
       <ParcelModal
         preview={
           <div className="big-mana-icon">
-            <Mana size={132} />
+            <Mana />
           </div>
         }
         title={t('transfer_mana.title')}

@@ -1,9 +1,26 @@
-.big-mana-icon .Mana .ManaIcon {
-  margin-right: 0px;
+.BuyManaPage .big-mana-icon .Mana {
+  height: 64px;
+}
+
+.BuyManaPage .big-mana-icon .Mana .symbol {
+  font-size: 96px;
 }
 
 @media (max-width: 768px) {
-  .big-mana-icon {
-    margin: 0 auto 50px;
+  .BuyManaPage .big-mana-icon {
+    margin: 0 auto 96px;
+    margin-top: -32px;
   }
+
+  .BuyManaPage .big-mana-icon .Mana {
+    height: 128px;
+  }
+
+  .BuyManaPage .big-mana-icon .Mana .symbol {
+    font-size: 192px;
+  }
+}
+
+.BuyManaPage .mana-icon-wrapper {
+  display: inline-block;
 }
