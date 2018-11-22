@@ -1,4 +1,5 @@
 import { loadingReducer } from '@dapps/modules/loading/reducer'
+
 import {
   FETCH_AUCTION_PARAMS_REQUEST,
   FETCH_AUCTION_PARAMS_SUCCESS,

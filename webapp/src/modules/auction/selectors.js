@@ -1,6 +1,5 @@
 import queryString from 'query-string'
 import { createSelector } from 'reselect'
-
 import { getLocation } from '@dapps/modules/location/selectors'
 
 import { TOKEN_SYMBOLS } from './utils'

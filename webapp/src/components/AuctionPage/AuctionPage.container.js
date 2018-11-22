@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'

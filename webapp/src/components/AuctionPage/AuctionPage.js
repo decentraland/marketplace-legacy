@@ -25,7 +25,6 @@ import {
 import { hasSeenAuctionModal, TOKEN_SYMBOLS } from 'modules/auction/utils'
 import { isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
-
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
 

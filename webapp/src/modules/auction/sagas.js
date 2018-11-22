@@ -2,7 +2,6 @@ import { delay } from 'redux-saga'
 import { all, takeLatest, put, call, select } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
-
 import { CONNECT_WALLET_SUCCESS } from '@dapps/modules/wallet/actions'
 import { isConnected } from '@dapps/modules/wallet/selectors'
 import { navigateTo } from '@dapps/modules/location/actions'
@@ -25,7 +24,6 @@ import {
 import { locations } from 'locations'
 import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
-
 import { getParams, getSelectedToken } from './selectors'
 import { TOKEN_ADDRESSES } from './utils'
 
