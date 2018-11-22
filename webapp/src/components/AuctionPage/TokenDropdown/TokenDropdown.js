@@ -11,6 +11,11 @@ const OPTIONS = SYMBOLS.map(symbol => ({
 }))
 
 export default class TokenDropdown extends React.PureComponent {
+  static propTypes = {
+    token: PropTypes.oneOf(SYMBOLS),
+    onChange: PropTypes.func
+  }
+
   handleChange = (_, { value }) => {
     const { token, onChange } = this.props
     if (token !== value && onChange) {
