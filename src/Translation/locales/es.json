@@ -125,9 +125,10 @@
     "maximum_parcels_title":
       "Alcanzó la cantidad máxima de LAND por transacción",
     "searching": "Buscando...",
+    "sold": "Vendido",
     "title": "Carro de compras de LAND",
     "token": "Token",
-    "sold": "Vendido",
+    "token_tooltip": "Haga clic aquí para seleccionar el token",
     "total_price": "Precio total"
   },
   "authorization": {
