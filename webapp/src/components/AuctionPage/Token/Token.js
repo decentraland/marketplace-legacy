@@ -7,7 +7,8 @@ import './Token.css'
 export default class Token extends React.PureComponent {
   static propTypes = {
     symbol: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
+    amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+      .isRequired,
     loading: PropTypes.bool
   }
   render() {
