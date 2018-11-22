@@ -43,7 +43,7 @@
   color: var(--gray);
 }
 
-.EstateSelect .parcels-included .ParcelCoords {
+.EstateSelect .parcels-included .ParcelCoord {
   margin-right: 16px;
   margin-top: 20px;
 }

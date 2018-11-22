@@ -14,7 +14,7 @@ import {
 import { t } from '@dapps/modules/translation/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
-import ParcelCoords from 'components/ParcelCoords'
+import ParcelCoord from 'components/ParcelCoord'
 import SignInNotice from 'components/SignInNotice'
 import {
   authorizationType,
@@ -326,7 +326,7 @@ export default class AuctionPage extends React.PureComponent {
                 <Grid.Column width={16} className="selected-parcels">
                   <div className="parcels-included">
                     {selectedParcels.map(parcel => (
-                      <ParcelCoords
+                      <ParcelCoord
                         key={parcel.id}
                         parcel={parcel}
                         onClick={this.handleParcelClick}

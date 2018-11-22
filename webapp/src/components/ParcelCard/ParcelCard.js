@@ -5,7 +5,7 @@ import { Card } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
-import ParcelCoords from 'components/ParcelCoords'
+import ParcelCoord from 'components/ParcelCoord'
 import ParcelTags from 'components/ParcelTags'
 import ParcelPreview from 'components/ParcelPreview'
 import Expiration from 'components/Expiration'
@@ -90,7 +90,7 @@ export default class ParcelCard extends React.PureComponent {
               </p>
             )}
           <div className="extra">
-            <ParcelCoords size="small" parcel={parcel} />
+            <ParcelCoord size="small" parcel={parcel} />
             <ParcelTags size="small" parcel={parcel} />
           </div>
         </Card.Content>

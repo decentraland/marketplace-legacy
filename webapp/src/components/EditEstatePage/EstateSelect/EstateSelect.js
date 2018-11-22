@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
-import ParcelCoords from 'components/ParcelCoords'
+import ParcelCoord from 'components/ParcelCoord'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'
@@ -237,7 +237,7 @@ export default class EstateSelect extends React.PureComponent {
                   parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelCoords key={parcel.id} parcel={parcel} />
+                      <ParcelCoord key={parcel.id} parcel={parcel} />
                     ) : null
                   })}
               </Grid.Column>

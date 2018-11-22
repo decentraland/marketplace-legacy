@@ -5,7 +5,7 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import ParcelCoords from 'components/ParcelCoords'
+import ParcelCoord from 'components/ParcelCoord'
 import ParcelTags from 'components/ParcelTags'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
@@ -210,7 +210,7 @@ export default class EstateDetail extends React.PureComponent {
                   {parcels.map(({ x, y }) => {
                     const parcel = allParcels[buildCoordinate(x, y)]
                     return parcel ? (
-                      <ParcelCoords
+                      <ParcelCoord
                         key={parcel.id}
                         parcel={parcel}
                         onClick={onParcelClick}

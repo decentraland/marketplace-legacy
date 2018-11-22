@@ -104,7 +104,7 @@
   margin-bottom: 20px;
 }
 
-.EstateDetail .parcels-included .ParcelCoords {
+.EstateDetail .parcels-included .ParcelCoord {
   margin-right: 16px;
   margin-top: 20px;
 }
@@ -128,7 +128,7 @@
     text-align: left !important;
   }
 
-  .EstateDetail .parcels-included .ParcelCoords {
+  .EstateDetail .parcels-included .ParcelCoord {
     margin-top: 0px;
     margin-bottom: 20px;
   }

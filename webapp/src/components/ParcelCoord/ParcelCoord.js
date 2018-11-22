@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { Icon } from 'semantic-ui-react'
 
 import { parcelType } from 'components/types'
-import './ParcelCoords.css'
+import './ParcelCoord.css'
 
-export default class ParcelCoords extends React.PureComponent {
+export default class ParcelCoord extends React.PureComponent {
   static propTypes = {
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     parcel: parcelType,
@@ -40,7 +40,7 @@ export default class ParcelCoords extends React.PureComponent {
       : ''
     const onClickClass = onClick ? 'clickeable' : ''
     const onDeleteClass = onDelete ? 'deleteable' : ''
-    return `ParcelCoords ${size} ${statusClass} ${onClickClass} ${onDeleteClass}`
+    return `ParcelCoord ${size} ${statusClass} ${onClickClass} ${onDeleteClass}`
   }
 
   render() {
