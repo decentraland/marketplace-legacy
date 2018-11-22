@@ -95,7 +95,7 @@ function* handleBidRequest(action) {
 
 function* handleFetchAuctionRateRequest(action) {
   const { token } = action
-  const selectedToken = yield select(state => getSelectedToken(state))
+  const selectedToken = yield select(getSelectedToken)
   if (selectedToken !== token) {
     yield put(navigateTo(locations.auction(token)))
   }
@@ -122,7 +122,7 @@ function* handleFetchAuctionRateRequest(action) {
 }
 
 function* handleFetchAuctionRateSuccess(action) {
-  const token = yield select(state => getSelectedToken(state))
+  const token = yield select(getSelectedToken)
   yield put(fetchAuctionRateRequest(token))
 }
 
@@ -130,11 +130,11 @@ function* handleConnectWalletSuccess(action) {
   let connected = true
   // keep refreshing params and rate while the user is on /auction
   while (connected) {
-    const pathname = yield select(state => getPathname(state))
+    const pathname = yield select(getPathname)
     if (pathname === locations.auction()) {
       yield put(fetchAuctionParamsRequest())
     }
     yield delay(REFRESH_INTERVAL)
-    connected = yield select(state => isConnected(state))
+    connected = yield select(isConnected)
   }
 }
