@@ -49,12 +49,12 @@
   margin-bottom: 20px;
 }
 
-.AuctionPage .ParcelAttributes {
+.AuctionPage .parcels-included .ParcelCoords {
   margin-top: 20px;
   margin-right: 15px;
 }
 
-.AuctionPage .ParcelAttributes.has-status .attribute {
+.AuctionPage .ParcelCoords.has-status .attribute {
   border-color: #676370;
   color: #676370;
 }

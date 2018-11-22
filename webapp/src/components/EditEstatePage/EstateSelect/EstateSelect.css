@@ -31,7 +31,7 @@
   margin-top: 30px;
 }
 
-.EstateSelect .estate-selection .selected-parcels.column {
+.EstateSelect .estate-selection .parcels-included.column {
   display: flex;
   flex-wrap: wrap;
 }
@@ -43,19 +43,19 @@
   color: var(--gray);
 }
 
+.EstateSelect .parcels-included .ParcelCoords {
+  margin-right: 16px;
+  margin-top: 20px;
+}
+
+.EstateSelect .parcels-included-headline.column {
+  margin-top: 20px;
+  text-align: right;
+}
+
 .tx-label {
   text-align: left;
   font-size: 14px;
   margin-top: 15px;
   color: var(--text);
-}
-
-.EstateSelect .ParcelAttributes {
-  margin-right: 16px;
-  margin-top: 20px;
-}
-
-.EstateSelect .selected-parcels-headline.column {
-  margin-top: 20px;
-  text-align: right;
 }

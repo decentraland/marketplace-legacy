@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { Icon } from 'semantic-ui-react'
 
 import { parcelType } from 'components/types'
-import './ParcelAttributes.css'
+import './ParcelCoords.css'
 
-export default class ParcelAttributes extends React.PureComponent {
+export default class ParcelCoords extends React.PureComponent {
   static propTypes = {
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
     parcel: parcelType,
     status: PropTypes.string,
     onClick: PropTypes.func,
@@ -14,6 +15,7 @@ export default class ParcelAttributes extends React.PureComponent {
   }
 
   static defaultProps = {
+    size: 'medium',
     status: ''
   }
 
@@ -32,13 +34,13 @@ export default class ParcelAttributes extends React.PureComponent {
   }
 
   getClassName() {
-    const { status, onClick, onDelete } = this.props
+    const { size, status, onClick, onDelete } = this.props
     const statusClass = status
       ? `has-status status-${status.toLowerCase()}`
       : ''
     const onClickClass = onClick ? 'clickeable' : ''
     const onDeleteClass = onDelete ? 'deleteable' : ''
-    return `ParcelAttributes ${statusClass} ${onClickClass} ${onDeleteClass}`
+    return `ParcelCoords ${size} ${statusClass} ${onClickClass} ${onDeleteClass}`
   }
 
   render() {

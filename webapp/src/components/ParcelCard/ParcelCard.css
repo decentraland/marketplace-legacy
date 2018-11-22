@@ -73,11 +73,15 @@
   margin-left: auto;
 }
 
-.ParcelCard .ParcelAttributes {
-  margin-top: 20px;
+.ParcelCard .meta {
+  margin-bottom: 15px;
 }
 
-.ParcelCard:hover .ParcelAttributes .coords {
-  color: var(--red);
-  border-color: var(--red);
+.ParcelCard .extra {
+  overflow: hidden;
+}
+
+.ParcelCard .ParcelCoords {
+  margin-right: 10px;
+  float: left;
 }

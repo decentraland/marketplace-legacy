@@ -55,12 +55,15 @@
   white-space: nowrap;
 }
 
+.EstateCard .meta {
+  margin-bottom: 20px;
+}
+
 .EstateCard .LandAmount {
   margin-left: auto;
 }
 
 .EstateCard .footer {
-  margin-top: 20px;
   display: flex;
   flex-direction: row nowrap;
   align-items: center;

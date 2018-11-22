@@ -46,7 +46,7 @@ export default class ParcelTags extends React.PureComponent {
     }
 
     return (
-      <div className={`tag ${size}`} key={key}>
+      <div key={key} className={`tag ${size}`}>
         <div
           className={`tag-icon tag-icon-${name}`}
           data-balloon-pos="up"
