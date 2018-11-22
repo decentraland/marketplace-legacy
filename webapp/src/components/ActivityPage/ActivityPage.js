@@ -147,10 +147,6 @@ export default class ActivityPage extends React.PureComponent {
       content = this.renderTransactionLists()
     }
 
-    return (
-      <div>
-        <Container className="ActivityPage">{content}</Container>
-      </div>
-    )
+    return <Container className="ActivityPage">{content}</Container>
   }
 }
