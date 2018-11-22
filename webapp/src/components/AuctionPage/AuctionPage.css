@@ -43,16 +43,18 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 40px;
+}
+
+.AuctionPage .ui.warning.message {
+  margin-bottom: 20px;
 }
 
 .AuctionPage .ParcelAttributes {
-  margin-top: 20px;
+  margin-bottom: 20px;
   flex-basis: 8%;
 }
 
 .AuctionPage footer {
-  margin-top: 20px;
   color: var(--gray);
 }
 

@@ -231,22 +231,6 @@ export default class AuctionPage extends React.PureComponent {
 
         <Container>
           <Grid className="auction-details">
-            {this.hasReachedLimit(selectedCoordinatesById) ? (
-              <Grid.Row>
-                <Grid.Column width={16}>
-                  <Message
-                    warning
-                    icon="warning sign"
-                    header={t('auction_page.maximum_parcels_title')}
-                    content={t('auction_page.maximum_parcels_message', {
-                      max: landsLimitPerBid
-                    })}
-                  />
-                  <p className="warning-parcels-limit" />
-                </Grid.Column>
-              </Grid.Row>
-            ) : null}
-
             <Grid.Row>
               <Grid.Column mobile={16} computer={6}>
                 <Header size="large">{t('auction_page.title')}</Header>
@@ -308,7 +292,25 @@ export default class AuctionPage extends React.PureComponent {
                   </div>
                 </Form>
               </Grid.Column>
+            </Grid.Row>
 
+            {this.hasReachedLimit(selectedCoordinatesById) ? (
+              <Grid.Row>
+                <Grid.Column width={16}>
+                  <Message
+                    warning
+                    icon="warning sign"
+                    header={t('auction_page.maximum_parcels_title')}
+                    content={t('auction_page.maximum_parcels_message', {
+                      max: landsLimitPerBid
+                    })}
+                  />
+                  <p className="warning-parcels-limit" />
+                </Grid.Column>
+              </Grid.Row>
+            ) : null}
+
+            <Grid.Row>
               {selectedParcels.length > 0 ? (
                 <Grid.Column width={16} className="selected-parcels">
                   <div className="parcels-included">
@@ -323,7 +325,9 @@ export default class AuctionPage extends React.PureComponent {
                   </div>
                 </Grid.Column>
               ) : null}
+            </Grid.Row>
 
+            <Grid.Row>
               {availableParcelCount > 0 ? (
                 <Grid.Column width={16}>
                   <footer className="footer">
