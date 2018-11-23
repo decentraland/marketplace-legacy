@@ -1,10 +1,10 @@
 import { Log } from 'decentraland-commons'
 import { contractAddresses, eventNames } from '../../src/ethereum'
-import { contracts } from 'decentraland-eth'
+import { eth } from 'decentraland-eth'
 import { Invite } from '../../src/Invite'
 
 const log = new Log('inviteReducer')
-const inviteContract = new contracts.DecentralandInvite()
+const inviteContract = eth.getContract('DecentralandInvite')
 
 const zero_address = '0x0000000000000000000000000000000000000000'
 
