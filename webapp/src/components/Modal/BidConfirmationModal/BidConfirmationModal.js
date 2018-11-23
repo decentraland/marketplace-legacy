@@ -99,7 +99,9 @@ export default class BidConfirmationModal extends React.PureComponent {
               {t('auction_modal.authorize_token', { token })}
             </Button>
           )}
-          <Button onClick={onClose}>{t('global.cancel')}</Button>
+          <Button disabled={isAuthorizing} onClick={onClose}>
+            {t('global.cancel')}
+          </Button>
         </div>
       </div>
     )

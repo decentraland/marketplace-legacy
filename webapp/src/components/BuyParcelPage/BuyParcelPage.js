@@ -82,12 +82,7 @@ export default class BuyParcelPage extends React.PureComponent {
                         price: (
                           <React.Fragment>
                             &nbsp;{t('global.for')}&nbsp;&nbsp;
-                            <span
-                              style={{
-                                display: 'inline-block',
-                                transform: 'translateY(3px)'
-                              }}
-                            >
+                            <span>
                               <Mana amount={publication.price} size={14} />
                             </span>
                           </React.Fragment>

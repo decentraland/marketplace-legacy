@@ -135,7 +135,7 @@
       "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum LAND per transaction",
     "parcels": "Parcels",
-    "parcels_tooltip": "You can only purchase {max} parcels at a time",
+    "parcels_tooltip": "You can only purchase up to {max} parcels at a time",
     "searching": "Searching...",
     "sold": "Sold",
     "title": "LAND Cart",
@@ -418,7 +418,7 @@
     "authorization_error_contact":
       "If the error persist don't hesitate to contact us",
     "for_buying": "For buying",
-    "for_buying_LANDAuction": "LAND on Auction using {token}",
+    "for_buying_LANDAuction": "LAND at the Auction using {token}",
     "for_buying_LegacyMarketplace": "Assets using MANA (legacy)",
     "for_buying_Marketplace": "Assets using MANA",
     "for_buying_MortgageHelper": "LAND by Mortgage",
@@ -453,7 +453,7 @@
   },
   "transaction": {
     "bid":
-      "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} on the auction",
+      "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} at the auction",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the sale on {parcel_link}",

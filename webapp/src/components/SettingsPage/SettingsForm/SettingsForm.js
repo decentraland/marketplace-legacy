@@ -76,7 +76,7 @@ export default class SettingsForm extends React.PureComponent {
             )}
             <div className="title">
               {t(`settings.for_buying_${contractName}`, {
-                token: tokenContractName.replace('Token', '') // remove the "Token" part
+                token: token.getSymbolByContractName(tokenContractName)
               })}
             </div>
             <div className="description">

@@ -30,64 +30,58 @@ export function getWalletSagaOptions() {
   }
 }
 
+function getNewERC20Token(name, address) {
+  const erc20 = new contracts.ERC20Token(address)
+  erc20.getContractName = () => {
+    return name
+  }
+  return erc20
+}
+
 function getLandAuctionContracts() {
   const { LANDAuction } = contracts
 
   // ZIL
-  const ZILToken = new contracts.ERC20Token(
+  const ZILToken = getNewERC20Token(
+    'ZILToken',
     env.get('REACT_APP_ZIL_TOKEN_CONTRACT_ADDRESS')
   )
-  ZILToken.getContractName = () => {
-    return 'ZILToken'
-  }
 
   // DAI
-  const DAIToken = new contracts.ERC20Token(
+  const DAIToken = getNewERC20Token(
+    'DAIToken',
     env.get('REACT_APP_DAI_TOKEN_CONTRACT_ADDRESS')
   )
-  DAIToken.getContractName = () => {
-    return 'DAIToken'
-  }
 
   // KNC
-  const KNCToken = new contracts.ERC20Token(
+  const KNCToken = getNewERC20Token(
+    'KNCToken',
     env.get('REACT_APP_KNC_TOKEN_CONTRACT_ADDRESS')
   )
-  KNCToken.getContractName = () => {
-    return 'KNCToken'
-  }
 
   // SNT
-  const SNTToken = new contracts.ERC20Token(
+  const SNTToken = getNewERC20Token(
+    'SNTToken',
     env.get('REACT_APP_SNT_TOKEN_CONTRACT_ADDRESS')
   )
-  SNTToken.getContractName = () => {
-    return 'SNTToken'
-  }
 
   // BNB
-  const BNBToken = new contracts.ERC20Token(
+  const BNBToken = getNewERC20Token(
+    'BNBToken',
     env.get('REACT_APP_BNB_TOKEN_CONTRACT_ADDRESS')
   )
-  BNBToken.getContractName = () => {
-    return 'BNBToken'
-  }
 
   // ELF
-  const ELFToken = new contracts.ERC20Token(
+  const ELFToken = getNewERC20Token(
+    'ELFToken',
     env.get('REACT_APP_ELF_TOKEN_CONTRACT_ADDRESS')
   )
-  ELFToken.getContractName = () => {
-    return 'ELFToken'
-  }
 
   // MKR
-  const MKRToken = new contracts.ERC20Token(
+  const MKRToken = getNewERC20Token(
+    'MKRToken',
     env.get('REACT_APP_MKR_TOKEN_CONTRACT_ADDRESS')
   )
-  MKRToken.getContractName = () => {
-    return 'MKRToken'
-  }
 
   return isFeatureEnabled('AUCTION')
     ? [

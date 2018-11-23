@@ -16,6 +16,7 @@ import {
 import { getAuthorizations } from 'modules/authorization/selectors'
 import { getModal } from 'modules/ui/selectors'
 import { getTokenAmountToApprove } from 'modules/wallet/utils'
+import { token as tokenHelper } from 'lib/token'
 import BidConfirmationModal from './BidConfirmationModal'
 
 const mapState = state => {
@@ -28,7 +29,9 @@ const mapState = state => {
   const isAuthorized =
     !!authorizations &&
     !!authorizations.allowances &&
-    authorizations.allowances.LANDAuction[token + 'Token'] > 0
+    authorizations.allowances.LANDAuction[
+      tokenHelper.getContractNameBySymbol(token)
+    ] > 0
 
   // check if is authorizing
   const pendingTransactions = getPendingTransactions(state, address)
@@ -71,7 +74,7 @@ const mapDispatch = dispatch => ({
       allowTokenRequest(
         getTokenAmountToApprove(),
         'LANDAuction',
-        token + 'Token'
+        tokenHelper.getContractNameBySymbol(token)
       )
     ),
   onClose: () => dispatch(closeModal())

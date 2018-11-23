@@ -12,5 +12,5 @@
 }
 
 .Mana .symbol {
-  transform: translateY(-1px);
+  transform: translateY(-0.1em);
 }
