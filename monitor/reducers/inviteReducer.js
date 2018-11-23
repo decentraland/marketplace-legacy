@@ -29,6 +29,6 @@ async function updateAddressInviteStatus(inviteContract, address) {
     log.info(`Updating Invite information for address [${address}]`)
     const balance = await inviteContract.balanceOf(address)
     const hasInvite = balance.toNumber() > 0
-    Invite.createOrUpdate(address, hasInvite)
+    await Invite.createOrUpdate(address, hasInvite)
   }
 }
