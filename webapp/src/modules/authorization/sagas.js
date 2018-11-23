@@ -1,5 +1,9 @@
 import { eth } from 'decentraland-eth'
-import { all, put, call, takeEvery } from 'redux-saga/effects'
+import { all, put, call, takeEvery, select } from 'redux-saga/effects'
+import { getPathname } from '@dapps/modules/location/selectors'
+
+import { locations } from 'locations'
+import { getParams } from 'modules/auction/selectors'
 
 import {
   FETCH_AUTHORIZATION_REQUEST,
@@ -77,8 +81,17 @@ function* handleAllowTokenRequest(action) {
     const contractToApprove = eth.getContract(contractName)
     const tokenContract = eth.getContract(tokenContractName)
 
+    // AUCTION
+    let options
+    const pathname = yield select(getPathname)
+    if (pathname === locations.auction()) {
+      const { gasPriceLimit } = yield select(getParams)
+      const gasPrice = gasPriceLimit * 1000000000
+      options = { gasPrice }
+    }
+
     const txHash = yield call(() =>
-      tokenContract.approve(contractToApprove.address, amount)
+      tokenContract.approve(contractToApprove.address, amount, options)
     )
 
     yield put(

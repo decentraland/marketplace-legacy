@@ -103,12 +103,22 @@
     "your_parcel": "당신의 토지"
   },
   "auction_modal": {
+    "authorization": "권한 부여",
+    "authorization_description":
+      "경매에서 LAND을 구입하려면 먼저 {contract_link} 계약서에 액세스하여 {token}을 조작해야합니다",
+    "authorize_token": "{token} 토큰 권한 부여",
+    "confirmation": "확인",
+    "confirmation_description":
+      "{price} {token}에 대해 {parcels} LAND을 (를) 구매하려고합니다.",
     "description":
       "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다.",
     "i_agree_with_terms": "나는 {terms_link}에 동의한다.",
+    "processing_tx": "거래 처리 중",
     "start": "스타트",
+    "submit": "발하다",
     "terms_and_conditions": "이용 약관",
     "title": "NT 옥션",
+    "tx_failed": "거래 실패",
     "video_tutorial": "비디오 자습서",
     "watch_tutorial": "비디오 자습서보기"
   },
@@ -123,6 +133,8 @@
     "maximum_parcels_message":
       "단일 트랜잭션에서 {max} LAND 이상을 구매하려고 시도하면 실패합니다. ",
     "maximum_parcels_title": "거래 당 최대 LAND에 도달했습니다.",
+    "parcels": "소포",
+    "parcels_tooltip": "한 번에 {max} 소포 만 구입할 수 있습니다.",
     "searching": "수색...",
     "sold": "판매 된",
     "title": "장바구니에 넣기",
@@ -401,7 +413,7 @@
     "authorization_error_contact":
       "오류가 지속되면 언제든지 Google에 문의하십시오.",
     "for_buying": "구매를 위해",
-    "for_buying_LANDAuction": "MANA를 사용하여 경매 된 LAND",
+    "for_buying_LANDAuction": "{token}를 사용하여 경매 된 LAND",
     "for_buying_LegacyMarketplace": "MANA (레거시)를 사용하는 ERC721",
     "for_buying_Marketplace": "MANA를 사용하는 ERC721s",
     "for_buying_MortgageHelper": "모기지의 LAND",

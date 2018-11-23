@@ -103,27 +103,39 @@
     "your_parcel": "Your parcel"
   },
   "auction_modal": {
+    "authorization": "Authorization",
+    "authorization_description":
+      "Before you can purchase any LAND in the auction, you must first authorize the {contract_link} contract to access and operate your {token}",
+    "authorize_token": "Authorize {token} token",
+    "confirmation": "Confirmation",
+    "confirmation_description":
+      "You are about to purchase {parcels} LAND for {price} {token}",
     "description":
       "To participate in this new auction, you'll need to authorize the new {contract_link} contract.",
     "i_agree_with_terms": "I agree with the {terms_link}",
+    "processing_tx": "Processing Transaction",
     "start": "Start",
+    "submit": "Proceed",
     "terms_and_conditions": "Terms and Conditions",
     "title": "Decentraland Auction",
+    "tx_failed": "Transaction Failed",
     "video_tutorial": "Video Tutorial",
     "watch_tutorial": "Watch video tutorial"
   },
   "auction_page": {
     "available_parcels": "Available parcels",
-    "bid": "Bid",
+    "bid": "Purchase",
     "description": "Choose the LAND you want to buy",
     "empty_message":
       "Find the parcels you want to buy, and add them to your cart. For more help, watch the {video_tutorial_link}",
     "find_available_parcel": "Find available parcel",
     "gas_price": "Gas price",
-    "land_price": "Price per LAND",
+    "land_price": "Price per parcel",
     "maximum_parcels_message":
       "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum LAND per transaction",
+    "parcels": "Parcels",
+    "parcels_tooltip": "You can only purchase up to {max} parcels at a time",
     "searching": "Searching...",
     "sold": "Sold",
     "title": "LAND Cart",
@@ -406,7 +418,7 @@
     "authorization_error_contact":
       "If the error persist don't hesitate to contact us",
     "for_buying": "For buying",
-    "for_buying_LANDAuction": "Auctioned LAND using MANA",
+    "for_buying_LANDAuction": "LAND at the Auction using {token}",
     "for_buying_LegacyMarketplace": "Assets using MANA (legacy)",
     "for_buying_Marketplace": "Assets using MANA",
     "for_buying_MortgageHelper": "LAND by Mortgage",
@@ -441,7 +453,7 @@
   },
   "transaction": {
     "bid":
-      "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} on the auction",
+      "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} at the auction",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
     "cancel": "You cancelled the sale on {parcel_link}",

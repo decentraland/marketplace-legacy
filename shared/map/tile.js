@@ -22,16 +22,16 @@ export const COLORS = Object.freeze({
   myParcelsOnSale: '#ff4053',
   myEstates: 'ff9990',
   myEstatesOnSale: 'ff4053',
-  district: '#7773ff',
+  district: '#b556bd',
   contribution: '#4a27d4',
-  roads: '#8188a3',
-  plaza: '#80c290',
-  taken: '#505772',
-  onSale: '#00dbef',
-  unowned: '#1b1e2d',
-  background: '#0d0e18',
-  loadingEven: '#131523',
-  loadingOdd: '#181a29'
+  roads: '#5c5b70',
+  plaza: '#61926c',
+  taken: '#312d37',
+  onSale: '#00d3ff',
+  unowned: '#09080a',
+  background: '#18141a',
+  loadingEven: '#110e13',
+  loadingOdd: '#0d0b0e'
 })
 
 export function getColor(x, y, parcel, estates, publications, wallet) {

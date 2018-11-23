@@ -104,18 +104,28 @@
     "your_parcel": "Tu parcela"
   },
   "auction_modal": {
+    "authorization": "Autorización",
+    "authorization_description":
+      "Antes de poder comprar cualquier LAND en la subasta, primero debe autorizar el contrato {contract_link} para acceder y operar su {token}",
+    "authorize_token": "Autorizar el token {token}",
+    "confirmation": "Confirmación",
+    "confirmation_description":
+      "Está a punto de comprar {parcels} LAND por {price} {token}",
     "description":
       "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}.",
     "i_agree_with_terms": "Estoy de acuerdo con el {terms_link}",
+    "processing_tx": "Procesando Transacción",
     "start": "Comienzo",
+    "submit": "Proceder",
     "terms_and_conditions": "Términos y Condiciones",
     "title": "Decentraland Subasta",
+    "tx_failed": "Transacción fallida",
     "video_tutorial": "Video Tutorial",
     "watch_tutorial": "Ver video tutorial"
   },
   "auction_page": {
     "available_parcels": "Parcelas disponibles",
-    "bid": "Ofertar",
+    "bid": "Comprar",
     "description": "Elige la LAND que quieres comprar.",
     "empty_message":
       "Encuentre las parcelas que desea comprar y agréguelas a su carrito. ",
@@ -126,6 +136,8 @@
       "Si intentas comprar más de {max} LAND en una sola transacción, fallará. ",
     "maximum_parcels_title":
       "Alcanzó la cantidad máxima de LAND por transacción",
+    "parcels": "Parcelas",
+    "parcels_tooltip": "Solo puedes comprar {max} parcelas a la vez",
     "searching": "Buscando...",
     "sold": "Vendido",
     "title": "Carro de compras de LAND",
@@ -408,7 +420,7 @@
     "authorization_error_contact":
       "Si el error persiste no dudes en contactar con nosotros.",
     "for_buying": "Por comprar",
-    "for_buying_LANDAuction": "LAND subastado usando MANA",
+    "for_buying_LANDAuction": "LAND subastado usando {token}",
     "for_buying_LegacyMarketplace": "ERC721s usando MANA (legado)",
     "for_buying_Marketplace": "ERC721s utilizando MANA",
     "for_buying_MortgageHelper": "LAND por hipoteca",

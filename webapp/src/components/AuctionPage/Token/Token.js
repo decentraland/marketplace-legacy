@@ -23,7 +23,9 @@ export default class Token extends React.PureComponent {
     return (
       <Header size="large" className="Token">
         {symbol === 'MANA' ? (
-          <span>⏣ {amount}</span>
+          <span>
+            <span className="symbol">⏣</span> {amount}
+          </span>
         ) : (
           <span>
             {amount} {symbol}

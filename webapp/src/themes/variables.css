@@ -1,24 +1,24 @@
 :root {
   --primary: #ff0044;
-  --secondary: #00dbef;
+  --secondary: #00d3ff;
 
   --radius: 6px;
-  --outline: #181f33;
+  --outline: #272329;
   --border: #00000005;
-  --card-background: #181f33;
-  --hover: #2a3246;
+  --card-background: #272329;
+  --hover: #353135;
   --shadow: #0000001f;
   --brightness: brightness(100);
 
   --text: #ffffff;
-  --background: #0a0f1f;
-  --dark-background: #050813;
+  --background: #18141a;
+  --dark-background: #18141a;
   --error: #ffb208;
 
   --light-gray: #ededed;
-  --gray: #8f9199;
-  --dark-gray: #181f33;
-  --darker-gray: #181f33;
+  --gray: #676370;
+  --dark-gray: #272329;
+  --darker-gray: #272329;
 
   --light-green: #d1eee6;
   --green: #30d7a9;
@@ -32,7 +32,7 @@
 
   --orange: #ef6c00;
 
-  --light-blue: #00dbef;
+  --light-blue: #00d3ff;
   --blue: #1976d2;
 
   --purple: #3e396b;

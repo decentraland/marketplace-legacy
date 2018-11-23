@@ -23,18 +23,77 @@ export function getWalletSagaOptions() {
       ),
       new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
       new EstateRegistry(env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')),
-      ...getLandAuctionContract(),
+      ...getLandAuctionContracts(),
       ...getMortgageContracts()
     ],
     eth
   }
 }
 
-function getLandAuctionContract() {
+function getNewERC20Token(name, address) {
+  const erc20 = new contracts.ERC20Token(address)
+  erc20.getContractName = () => {
+    return name
+  }
+  return erc20
+}
+
+function getLandAuctionContracts() {
   const { LANDAuction } = contracts
 
+  // ZIL
+  const ZILToken = getNewERC20Token(
+    'ZILToken',
+    env.get('REACT_APP_ZIL_TOKEN_CONTRACT_ADDRESS')
+  )
+
+  // DAI
+  const DAIToken = getNewERC20Token(
+    'DAIToken',
+    env.get('REACT_APP_DAI_TOKEN_CONTRACT_ADDRESS')
+  )
+
+  // KNC
+  const KNCToken = getNewERC20Token(
+    'KNCToken',
+    env.get('REACT_APP_KNC_TOKEN_CONTRACT_ADDRESS')
+  )
+
+  // SNT
+  const SNTToken = getNewERC20Token(
+    'SNTToken',
+    env.get('REACT_APP_SNT_TOKEN_CONTRACT_ADDRESS')
+  )
+
+  // BNB
+  const BNBToken = getNewERC20Token(
+    'BNBToken',
+    env.get('REACT_APP_BNB_TOKEN_CONTRACT_ADDRESS')
+  )
+
+  // ELF
+  const ELFToken = getNewERC20Token(
+    'ELFToken',
+    env.get('REACT_APP_ELF_TOKEN_CONTRACT_ADDRESS')
+  )
+
+  // MKR
+  const MKRToken = getNewERC20Token(
+    'MKRToken',
+    env.get('REACT_APP_MKR_TOKEN_CONTRACT_ADDRESS')
+  )
+
   return isFeatureEnabled('AUCTION')
-    ? [new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS'))]
+    ? [
+        new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS')),
+        ZILToken,
+        DAIToken,
+        KNCToken,
+        SNTToken,
+        BNBToken,
+        ELFToken,
+        MKRToken
+      ]
     : []
 }
 
