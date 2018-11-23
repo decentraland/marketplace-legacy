@@ -35,3 +35,7 @@ export function dismissAuctionHelper(key) {
 export function getVideoTutorialLink() {
   return 'https://www.youtube-nocookie.com/embed/-HmXrOTEmxg?controls=0'
 }
+
+export function hasAuctionFinished() {
+  return Date.now() > env.get('REACT_APP_AUCTION_END_TIME')
+}

@@ -247,6 +247,7 @@
     "continue": "Continue",
     "contributions": "Contributions",
     "created_at": "Created at {date}",
+    "duration": "Duration",
     "edit": "Edit",
     "estate": "Estate",
     "estates": "Estates",
@@ -320,7 +321,6 @@
     "cancel": "Cancel Mortgage",
     "claim": "Claim parcel",
     "defaulted_in": "Default",
-    "duration": "Duration",
     "duration_placeholder": "Duration in days",
     "errors": {
       "amount_minimum": "Amount should be greater than {amount}",

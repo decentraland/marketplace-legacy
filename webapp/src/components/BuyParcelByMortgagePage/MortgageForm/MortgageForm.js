@@ -289,7 +289,7 @@ export default class MortgageForm extends React.PureComponent {
             </Grid.Column>
             <Grid.Column mobile={16} computer={5}>
               <Form.Field>
-                <label>{t('mortgage.duration')}</label>
+                <label>{t('global.duration')}</label>
                 <Input
                   type="number"
                   placeholder={t('mortgage.duration_placeholder')}
