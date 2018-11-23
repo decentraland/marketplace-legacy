@@ -123,7 +123,8 @@
     "title": "Decentraland Enchère",
     "tx_failed": "La transaction a échoué",
     "video_tutorial": "Didacticiel vidéo",
-    "watch_tutorial": "Regarder le tutoriel vidéo"
+    "watch_tutorial": "Regarder le tutoriel vidéo",
+    "welcome": "Bienvenue à la vente aux enchères Decentraland LAND!"
   },
   "auction_page": {
     "available_parcels": "Colis disponibles",

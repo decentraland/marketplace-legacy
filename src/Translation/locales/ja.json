@@ -118,7 +118,8 @@
     "title": "NTオークション",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
-    "watch_tutorial": "ビデオチュートリアルを見る"
+    "watch_tutorial": "ビデオチュートリアルを見る",
+    "welcome": "Decentraland LANDオークションへようこそ！"
   },
   "auction_page": {
     "available_parcels": "利用可能な小包",

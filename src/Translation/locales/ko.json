@@ -120,7 +120,8 @@
     "title": "NT 옥션",
     "tx_failed": "거래 실패",
     "video_tutorial": "비디오 자습서",
-    "watch_tutorial": "비디오 자습서보기"
+    "watch_tutorial": "비디오 자습서보기",
+    "welcome": "Decentraland LAND 경매에 오신 것을 환영합니다!"
   },
   "auction_page": {
     "available_parcels": "사용 가능한 소포",

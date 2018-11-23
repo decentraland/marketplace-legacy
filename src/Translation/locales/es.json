@@ -121,7 +121,8 @@
     "title": "Decentraland Subasta",
     "tx_failed": "Transacción fallida",
     "video_tutorial": "Video Tutorial",
-    "watch_tutorial": "Ver video tutorial"
+    "watch_tutorial": "Ver video tutorial",
+    "welcome": "Bienvenido a la subasta Decentraland LAND!"
   },
   "auction_page": {
     "available_parcels": "Parcelas disponibles",

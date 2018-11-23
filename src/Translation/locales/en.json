@@ -111,21 +111,22 @@
     "confirmation_description":
       "You are about to purchase {parcels} LAND for {price} {token}",
     "description":
-      "To participate in this new auction, you'll need to authorize the new {contract_link} contract.",
+      "There are just two things you need to do before you can start. First, you need to select the tokens you want to buy LAND with. Next, you have to authorize a new smart contract to access those tokens when you buy LAND.",
     "i_agree_with_terms": "I agree with the {terms_link}",
     "processing_tx": "Processing Transaction",
-    "start": "Start",
+    "start": "Get Started",
     "submit": "Proceed",
-    "terms_and_conditions": "Terms and Conditions",
-    "title": "Decentraland Auction",
+    "terms_and_conditions": "Terms & Conditions",
+    "title": "Decentraland LAND Auction",
     "tx_failed": "Transaction Failed",
     "video_tutorial": "Video Tutorial",
-    "watch_tutorial": "Watch video tutorial"
+    "watch_tutorial": "Watch video tutorial",
+    "welcome": "Welcome to the Decentraland LAND Auction!"
   },
   "auction_page": {
     "available_parcels": "Available parcels",
     "bid": "Purchase",
-    "description": "Choose the LAND you want to buy",
+    "description": "Find the LAND you want to buy",
     "empty_message":
       "Find the parcels you want to buy, and add them to your cart. For more help, watch the {video_tutorial_link}",
     "find_available_parcel": "Find available parcel",
@@ -140,7 +141,7 @@
     "sold": "Sold",
     "title": "LAND Cart",
     "token": "Token",
-    "token_tooltip": "Click here to select the token",
+    "token_tooltip": "Select the token you want to purchase LAND with",
     "total_price": "Total price",
     "video_tutorial": "video tutorial"
   },
