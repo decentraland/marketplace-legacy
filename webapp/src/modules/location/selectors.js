@@ -2,6 +2,7 @@ import { locations } from 'locations'
 import { getPathname, getPathAction } from '@dapps/modules/location/selectors'
 
 export const isRootPage = state => getPathname(state) === locations.root()
+export const isAuctionPage = state => getPathname(state) === locations.auction()
 export const isModalPage = state => {
   const lastPartOfUrl = getPathAction(state)
   switch (lastPartOfUrl) {
