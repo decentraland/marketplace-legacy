@@ -116,6 +116,7 @@
     "available_parcels": "사용 가능한 소포",
     "bid": "매기다",
     "description": "구매할 LAND을 선택하십시오.",
+    "empty_message": "구입하려는 소포를 찾아 장바구니에 추가하십시오. ",
     "find_available_parcel": "사용 가능한 소포 찾기",
     "gas_price": "가스 가격",
     "land_price": "LAND 가격",
@@ -127,7 +128,8 @@
     "title": "장바구니에 넣기",
     "token": "토큰",
     "token_tooltip": "토큰을 선택하려면 여기를 클릭하십시오.",
-    "total_price": "총 가격"
+    "total_price": "총 가격",
+    "video_tutorial": "비디오 자습서"
   },
   "authorization": {
     "allow": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",

@@ -108,6 +108,7 @@
     "available_parcels": "可用包裹",
     "bid": "出价",
     "description": "选择您要购买的LAND",
+    "empty_message": "找到您要购买的包裹，并将其添加到购物车。",
     "find_available_parcel": "查找可用包裹",
     "gas_price": "天然气价格",
     "land_price": "LAND价格",
@@ -119,7 +120,8 @@
     "title": "LAND购物车",
     "token": "代币",
     "token_tooltip": "单击此处选择令牌",
-    "total_price": "总价"
+    "total_price": "总价",
+    "video_tutorial": "视频教程"
   },
   "authorization": {
     "allow": "授权 {contract_link} 使用 {symbol}",

@@ -44,11 +44,6 @@
   padding-bottom: 0px !important;
 }
 
-.MarketplacePage .ParcelAttributes .coords {
-  font-size: 12px;
-  font-weight: 400;
-}
-
 @media (max-width: 768px) {
   .MarketplacePage .ui.secondary.pointing.menu .active.item {
     border: none;

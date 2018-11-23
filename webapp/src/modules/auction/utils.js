@@ -31,3 +31,7 @@ export function hasSeenAuctionHelper(key) {
 export function dismissAuctionHelper(key) {
   localStorage.setItem(key, Date.now())
 }
+
+export function getVideoTutorialLink() {
+  return 'https://www.youtube-nocookie.com/embed/-HmXrOTEmxg?controls=0'
+}
