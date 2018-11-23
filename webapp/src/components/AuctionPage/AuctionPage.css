@@ -33,12 +33,22 @@
   margin-top: 0;
 }
 
-.AuctionPage .parcels-included-description {
+.AuctionPage .description {
   font-size: 18px;
   margin: 15px 0 0;
 }
 
-.AuctionPage .auction-details .selected-parcels.column {
+.AuctionPage .auction-panel {
+  border-radius: 8px;
+  border: 1px solid var(--gray);
+}
+
+.AuctionPage .empty-parcels-message {
+  padding: 22px 24px 22px;
+  color: var(--gray);
+}
+
+.AuctionPage .auction-details .parcels-included-parcels.column {
   display: flex;
   flex-wrap: wrap;
 }
@@ -47,6 +57,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  padding: 16px 24px 0;
 }
 
 .AuctionPage .ui.warning.message {
@@ -54,8 +65,8 @@
 }
 
 .AuctionPage .parcels-included .ParcelCoord {
-  margin-top: 20px;
-  margin-right: 15px;
+  margin-right: 16px;
+  margin-bottom: 16px;
 }
 
 .AuctionPage .ParcelCoord.has-status .attribute {
@@ -64,6 +75,8 @@
 }
 
 .AuctionPage footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--gray);
   color: var(--gray);
 }
 
@@ -94,6 +107,10 @@
   padding: 12px 16px;
   border-radius: 10px;
 }
+.AuctionPage .bid-wrapper .information-block {
+  margin: 0;
+  flex-grow: 1;
+}
 
 .AuctionPage .bid-wrapper .information-block + .information-block {
   margin-left: 48px;
@@ -103,7 +120,7 @@
   border-radius: 6px !important;
 }
 
-.AuctionPage .information-block .ui.label.pointing{
+.AuctionPage .information-block .ui.label.pointing {
   background: #676370;
   color: white;
   font-weight: normal;
@@ -117,25 +134,26 @@
   line-height: 20px;
 }
 
-.AuctionPage .information-block .close{
+.AuctionPage .information-block .close {
   position: absolute;
   top: 5px;
   right: 10px;
 }
 
 @media (max-width: 992px) {
-  .AuctionPage .information-block {
+  .AuctionPage .information-block,
+  .AuctionPage .bid-wrapper {
     margin-top: 20px;
   }
-  
+
   .AuctionPage .parcels-included {
     margin-top: 10px;
   }
 }
 
 @media (max-width: 768px) {
-  .AuctionPage .information-block:first-child {
-    margin-top: 30px;
+  .AuctionPage .ui.form {
+    margin-bottom: 30px;
   }
 
   .AuctionPage .information-blocks {
@@ -148,5 +166,10 @@
     right: 0;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .AuctionPage footer,
+  .AuctionPage footer .available-parcels {
+    display: block;
   }
 }

@@ -11,7 +11,7 @@ import {
   Loader,
   Button
 } from 'semantic-ui-react'
-import { t } from '@dapps/modules/translation/utils'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelCoord from 'components/ParcelCoord'
@@ -26,7 +26,8 @@ import {
   hasSeenAuctionHelper,
   TOKEN_SYMBOLS,
   AUCTION_HELPERS,
-  dismissAuctionHelper
+  dismissAuctionHelper,
+  getVideoTutorialLink
 } from 'modules/auction/utils'
 import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
@@ -264,7 +265,7 @@ export default class AuctionPage extends React.PureComponent {
             <Grid.Row>
               <Grid.Column mobile={16} computer={6}>
                 <Header size="large">{t('auction_page.title')}</Header>
-                <p className="subtitle parcels-included-description">
+                <p className="subtitle description">
                   {t('auction_page.description')}
                 </p>
               </Grid.Column>
@@ -353,53 +354,66 @@ export default class AuctionPage extends React.PureComponent {
             ) : null}
 
             <Grid.Row>
-              {selectedParcels.length > 0 ? (
-                <Grid.Column width={16} className="selected-parcels">
-                  <div className="parcels-included">
-                    {selectedParcels.map(parcel => (
-                      <ParcelCoord
-                        key={parcel.id}
-                        parcel={parcel}
-                        onClick={this.handleParcelClick}
-                        onDelete={this.handleDeselectUnownedParcel}
-                        status={
-                          Contract.isEmptyAddress(parcel.owner)
-                            ? ''
-                            : t('auction_page.sold')
-                        }
+              <Grid.Column width={16}>
+                <div className="auction-panel">
+                  {selectedParcels.length > 0 ? (
+                    <div className="parcels-included">
+                      {selectedParcels.map(parcel => (
+                        <ParcelCoord
+                          key={parcel.id}
+                          parcel={parcel}
+                          onClick={this.handleParcelClick}
+                          onDelete={this.handleDeselectUnownedParcel}
+                          status={
+                            Contract.isEmptyAddress(parcel.owner)
+                              ? ''
+                              : t('auction_page.sold')
+                          }
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-parcels-message">
+                      <T
+                        id="auction_page.empty_message"
+                        values={{
+                          video_tutorial_link: (
+                            <a
+                              href={getVideoTutorialLink()}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              {t('auction_page.video_tutorial')}
+                            </a>
+                          )
+                        }}
                       />
-                    ))}
-                  </div>
-                </Grid.Column>
-              ) : null}
-            </Grid.Row>
+                    </div>
+                  )}
 
-            <Grid.Row>
-              {availableParcelCount > 0 ? (
-                <Grid.Column width={16}>
-                  <footer className="footer">
-                    <span className="footer-left">
-                      <span className="available-parcels">
-                        {availableParcelCount}{' '}
-                        {t('auction_page.available_parcels')}
-                      </span>
-                      <span
-                        className="link"
-                        onClick={this.handleFindAvailableParcel}
-                      >
-                        {isAvailableParcelLoading
-                          ? t('auction_page.searching')
-                          : t('auction_page.find_available_parcel')}
-                      </span>
-                    </span>
-                    <span className="footer-right">
-                      <span>
+                  {availableParcelCount > 0 ? (
+                    <footer>
+                      <div className="footer-left">
+                        <span className="available-parcels">
+                          {availableParcelCount}{' '}
+                          {t('auction_page.available_parcels')}
+                        </span>
+                        <span
+                          className="link"
+                          onClick={this.handleFindAvailableParcel}
+                        >
+                          {isAvailableParcelLoading
+                            ? t('auction_page.searching')
+                            : t('auction_page.find_available_parcel')}
+                        </span>
+                      </div>
+                      <div className="footer-right">
                         {t('auction_page.gas_price')}: {gasPriceLimit} Gwei
-                      </span>
-                    </span>
-                  </footer>
-                </Grid.Column>
-              ) : null}
+                      </div>
+                    </footer>
+                  ) : null}
+                </div>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>

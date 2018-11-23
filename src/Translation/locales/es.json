@@ -117,6 +117,8 @@
     "available_parcels": "Parcelas disponibles",
     "bid": "Ofertar",
     "description": "Elige la LAND que quieres comprar.",
+    "empty_message":
+      "Encuentre las parcelas que desea comprar y agréguelas a su carrito. ",
     "find_available_parcel": "Encuentra parcelas disponibles",
     "gas_price": "Precio del gas",
     "land_price": "Precio LAND",
@@ -129,7 +131,8 @@
     "title": "Carro de compras de LAND",
     "token": "Token",
     "token_tooltip": "Haga clic aquí para seleccionar el token",
-    "total_price": "Precio total"
+    "total_price": "Precio total",
+    "video_tutorial": "video tutorial"
   },
   "authorization": {
     "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",

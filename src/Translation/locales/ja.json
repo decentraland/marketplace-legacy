@@ -114,6 +114,7 @@
     "available_parcels": "利用可能な小包",
     "bid": "入札",
     "description": "購入したいLANDを選択してください",
+    "empty_message": "購入したい小包を見つけてカートに追加します。",
     "find_available_parcel": "利用可能な小包を見つける",
     "gas_price": "ガス価格",
     "land_price": "LAND価格",
@@ -125,7 +126,8 @@
     "title": "カート",
     "token": "トークン",
     "token_tooltip": "トークンを選択するにはここをクリックしてください",
-    "total_price": "合計金額"
+    "total_price": "合計金額",
+    "video_tutorial": "ビデオチュートリアル"
   },
   "authorization": {
     "allow": "{contract_link}に準じて{symbol}を操作することを許可する",
