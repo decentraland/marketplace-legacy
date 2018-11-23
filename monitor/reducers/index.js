@@ -11,5 +11,5 @@ export const reducers = {
   publication,
   mortgage,
   estates,
-  inviteReducer
+  invites
 }
