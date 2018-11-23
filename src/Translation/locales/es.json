@@ -248,6 +248,7 @@
     "continue": "Continuar",
     "contributions": "Contribuciones",
     "created_at": "Creado en {date}",
+    "duration": "Duración",
     "edit": "Editar",
     "estate": "Propiedad",
     "estates": "Propiedades",
@@ -319,7 +320,6 @@
     "cancel": "Cancelar hipoteca",
     "claim": "Reclamo de paquete",
     "defaulted_in": "Default",
-    "duration": "Duración",
     "duration_placeholder": "Duración en días",
     "errors": {
       "amount_minimum": "La cantidad debe ser mayor que {amount}",

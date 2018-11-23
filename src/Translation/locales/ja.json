@@ -241,6 +241,7 @@
     "continue": "続ける",
     "contributions": "貢献用",
     "created_at": "{date}に作成済み",
+    "duration": "期間",
     "edit": "編集",
     "estate": "エステート",
     "estates": "エステート",
@@ -312,7 +313,6 @@
     "cancel": "ローンをキャンセルする",
     "claim": "区画を請求する",
     "defaulted_in": "デフォルト",
-    "duration": "有効期間",
     "duration_placeholder": "有効期限日数",
     "errors": {
       "amount_minimum": "{amount}より大きい必要があります。",

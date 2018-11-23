@@ -254,6 +254,7 @@
     "continue": "Continuer",
     "contributions": "Contributions",
     "created_at": "Créé le {date}",
+    "duration": "Durée",
     "edit": "Modifier",
     "estate": "Domaine",
     "estates": "Domaines",
@@ -326,7 +327,6 @@
     "cancel": "Annuler l'hypothèque",
     "claim": "Demande de parcelle",
     "defaulted_in": "Défaut",
-    "duration": "Durée",
     "duration_placeholder": "Durée en jours",
     "errors": {
       "amount_minimum": "Le montant doit être supérieur à {amount}",

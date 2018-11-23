@@ -231,6 +231,7 @@
     "continue": "继续",
     "contributions": "小区份额",
     "created_at": "创建于 {date}",
+    "duration": "持续时间",
     "edit": "编辑",
     "estate": "连块土地",
     "estates": "连块土地",
@@ -301,7 +302,6 @@
     "cancel": "取消抵押",
     "claim": "认领土地",
     "defaulted_in": "默认",
-    "duration": "持续时间",
     "duration_placeholder": "持续时间以天计",
     "errors": {
       "amount_minimum": "金额应该大于 {amount}",
