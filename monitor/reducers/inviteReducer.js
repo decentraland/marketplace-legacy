@@ -1,10 +1,10 @@
 import { Log } from 'decentraland-commons'
 import { contractAddresses, eventNames } from '../../src/ethereum'
-import { contracts } from 'decentraland-eth' 
-import { Invite } from '../../src/Invite';
+import { contracts } from 'decentraland-eth'
+import { Invite } from '../../src/Invite'
 
 const log = new Log('inviteReducer')
-const inviteContract =new contracts.DecentralandInvite()
+const inviteContract = new contracts.DecentralandInvite()
 
 const zero_address = '0x0000000000000000000000000000000000000000'
 
@@ -24,7 +24,7 @@ async function reduceInvite(event) {
   }
 }
 
-function updateAddressInviteStatus(address) {
+async function updateAddressInviteStatus(address) {
   if (address !== zero_address) {
     log.info(`Updating Invite information for address [${address}]`)
     const balance = await inviteContract.balanceOf(address)
