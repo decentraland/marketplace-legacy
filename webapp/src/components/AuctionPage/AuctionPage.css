@@ -12,7 +12,8 @@
 }
 
 .AuctionPage .parcel-preview {
-  height: 400px;
+  height: calc(100vh - 400px);
+  min-height: 400px;
 }
 
 .AuctionPage .auction-details {
@@ -33,7 +34,7 @@
   margin-top: 0;
 }
 
-.AuctionPage .description {
+.AuctionPage .subtitle.description {
   font-size: 18px;
   margin: 15px 0 0;
 }
