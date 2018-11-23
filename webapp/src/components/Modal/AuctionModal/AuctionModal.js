@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Checkbox, Button } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
-import ContractLink from 'components/ContractLink'
 import {
   dismissAuctionHelper,
   AUCTION_HELPERS,
@@ -107,12 +106,10 @@ export default class AuctionModal extends React.PureComponent {
         <h1 className="title">{t('auction_modal.title')}</h1>
 
         <div className="description">
-          <T
-            id="auction_modal.description"
-            values={{
-              contract_link: <ContractLink contractName="LANDAuction" />
-            }}
-          />
+          {t('auction_modal.welcome')}
+          <br />
+          <br />
+          {t('auction_modal.description')}
         </div>
 
         <div className="agree-to-terms">
