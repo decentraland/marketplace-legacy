@@ -96,11 +96,20 @@
     "your_parcel": "您的地块"
   },
   "auction_modal": {
+    "authorization": "授权",
+    "authorization_description":
+      "在拍卖中购买任何LAND之前，您必须先授权{contract_link}合同才能访问和操作您的{token}",
+    "authorize_token": "授权{token}令牌",
+    "confirmation": "确认",
+    "confirmation_description": "您即将为{price} {token}购买{parcels} LAND",
     "description": "要参与此次新拍卖，您需要授权新的{contract_link}合约。",
     "i_agree_with_terms": "我同意{terms_link}",
+    "processing_tx": "处理交易",
     "start": "开始",
+    "submit": "继续",
     "terms_and_conditions": "条款和条件",
     "title": "Decentraland拍卖",
+    "tx_failed": "交易失败",
     "video_tutorial": "视频教程",
     "watch_tutorial": "观看视频教程"
   },
@@ -115,6 +124,8 @@
     "maximum_parcels_message":
       "如果你试图在一次交易中购买超过{max} LAND，它就会失败。",
     "maximum_parcels_title": "您达到了每笔交易的最高LAND",
+    "parcels": "包裹",
+    "parcels_tooltip": "您一次只能购买{max}包裹",
     "searching": "搜索...",
     "sold": "出售",
     "title": "LAND购物车",
@@ -383,7 +394,7 @@
     "authorization_error": "我们无法加载您的授权，请重试",
     "authorization_error_contact": "如果错误仍然存​​在，请不要犹豫与我们联系",
     "for_buying": "购买",
-    "for_buying_LANDAuction": "使用MANA拍卖LAND",
+    "for_buying_LANDAuction": "使用{token}拍卖LAND",
     "for_buying_LegacyMarketplace": "使用 MANA（遗留功能）",
     "for_buying_Marketplace": "使用 MANA",
     "for_buying_MortgageHelper": "LAND 抵押贷款",

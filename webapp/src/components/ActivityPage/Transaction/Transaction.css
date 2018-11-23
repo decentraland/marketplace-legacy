@@ -40,6 +40,12 @@
   flex: none;
 }
 
+.Transaction .transaction-avatar .Mana {
+  font-size: 64px;
+  margin-top: 11px;
+  margin-left: -2px;
+}
+
 .Transaction .transaction-timestamp {
   display: inline;
   color: var(--gray);

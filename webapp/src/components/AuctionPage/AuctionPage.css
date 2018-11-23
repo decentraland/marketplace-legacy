@@ -40,7 +40,7 @@
 
 .AuctionPage .auction-panel {
   border-radius: 8px;
-  border: 1px solid var(--gray);
+  border: 2px solid var(--outline);
 }
 
 .AuctionPage .empty-parcels-message {
@@ -70,13 +70,13 @@
 }
 
 .AuctionPage .ParcelCoord.has-status .attribute {
-  border-color: #676370;
-  color: #676370;
+  border-color: var(--gray);
+  color: var(--gray);
 }
 
 .AuctionPage footer {
   padding: 16px 24px;
-  border-top: 1px solid var(--gray);
+  border-top: 2px solid var(--outline);
   color: var(--gray);
 }
 
@@ -116,12 +116,20 @@
   margin-left: 48px;
 }
 
+.AuctionPage .information-block .secondary {
+  color: var(--gray);
+}
+
+.AuctionPage .information-block .secondary .tooltip {
+  top: -2px;
+}
+
 .AuctionPage .ui.label.pointing {
   border-radius: 6px !important;
 }
 
 .AuctionPage .information-block .ui.label.pointing {
-  background: #676370;
+  background: var(--gray);
   color: white;
   font-weight: normal;
   position: absolute;

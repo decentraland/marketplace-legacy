@@ -77,9 +77,9 @@ a:hover,
   fill: #ff9990;
 }
 .district {
-  background-color: #7773ff;
-  color: #7773ff;
-  fill: #7773ff;
+  background-color: #b556bd;
+  color: #b556bd;
+  fill: #b556bd;
 }
 .contribution {
   background-color: #4a27d4;
@@ -87,24 +87,24 @@ a:hover,
   fill: #4a27d4;
 }
 .roads {
-  background-color: #8188a3;
-  color: #8188a3;
-  fill: #8188a3;
+  background-color: #5c5b70;
+  color: #5c5b70;
+  fill: #5c5b70;
 }
 .plaza {
-  background-color: #80c290;
-  color: #80c290;
-  fill: #80c290;
+  background-color: #61926c;
+  color: #61926c;
+  fill: #61926c;
 }
 .taken {
-  background-color: #505772;
-  color: #505772;
-  fill: #505772;
+  background-color: #312d37;
+  color: #312d37;
+  fill: #312d37;
 }
 .on-sale {
-  background-color: #00dbef;
-  color: #00dbef;
-  fill: #00dbef;
+  background-color: #00d3ff;
+  color: #00d3ff;
+  fill: #00d3ff;
 }
 .yours-on-sale {
   background-color: #ff4053;
@@ -112,9 +112,9 @@ a:hover,
   fill: #ff4053;
 }
 .unowned {
-  background-color: #1b1e2d;
-  color: #1b1e2d;
-  fill: #1b1e2d;
+  background-color: #09080a;
+  color: #09080a;
+  fill: #09080a;
 }
 
 /* -----------------------------------------------------------------------

@@ -23,18 +23,83 @@ export function getWalletSagaOptions() {
       ),
       new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
       new EstateRegistry(env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')),
-      ...getLandAuctionContract(),
+      ...getLandAuctionContracts(),
       ...getMortgageContracts()
     ],
     eth
   }
 }
 
-function getLandAuctionContract() {
+function getLandAuctionContracts() {
   const { LANDAuction } = contracts
 
+  // ZIL
+  const ZILToken = new contracts.ERC20Token(
+    env.get('REACT_APP_ZIL_TOKEN_CONTRACT_ADDRESS')
+  )
+  ZILToken.getContractName = () => {
+    return 'ZILToken'
+  }
+
+  // DAI
+  const DAIToken = new contracts.ERC20Token(
+    env.get('REACT_APP_DAI_TOKEN_CONTRACT_ADDRESS')
+  )
+  DAIToken.getContractName = () => {
+    return 'DAIToken'
+  }
+
+  // KNC
+  const KNCToken = new contracts.ERC20Token(
+    env.get('REACT_APP_KNC_TOKEN_CONTRACT_ADDRESS')
+  )
+  KNCToken.getContractName = () => {
+    return 'KNCToken'
+  }
+
+  // SNT
+  const SNTToken = new contracts.ERC20Token(
+    env.get('REACT_APP_SNT_TOKEN_CONTRACT_ADDRESS')
+  )
+  SNTToken.getContractName = () => {
+    return 'SNTToken'
+  }
+
+  // BNB
+  const BNBToken = new contracts.ERC20Token(
+    env.get('REACT_APP_BNB_TOKEN_CONTRACT_ADDRESS')
+  )
+  BNBToken.getContractName = () => {
+    return 'BNBToken'
+  }
+
+  // ELF
+  const ELFToken = new contracts.ERC20Token(
+    env.get('REACT_APP_ELF_TOKEN_CONTRACT_ADDRESS')
+  )
+  ELFToken.getContractName = () => {
+    return 'ELFToken'
+  }
+
+  // MKR
+  const MKRToken = new contracts.ERC20Token(
+    env.get('REACT_APP_MKR_TOKEN_CONTRACT_ADDRESS')
+  )
+  MKRToken.getContractName = () => {
+    return 'MKRToken'
+  }
+
   return isFeatureEnabled('AUCTION')
-    ? [new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS'))]
+    ? [
+        new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS')),
+        ZILToken,
+        DAIToken,
+        KNCToken,
+        SNTToken,
+        BNBToken,
+        ELFToken,
+        MKRToken
+      ]
     : []
 }
 

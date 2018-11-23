@@ -101,12 +101,22 @@
     "your_parcel": "あなたの区画"
   },
   "auction_modal": {
+    "authorization": "承認",
+    "authorization_description":
+      "オークションでLANDを購入する前に、まず{contract_link}にアクセスして操作するtk0契約を承認する必要があります",
+    "authorize_token": "{token}トークンを認可する",
+    "confirmation": "確認",
+    "confirmation_description":
+      "あなたは{price} {token}のために{parcels} LANDを購入しようとしています",
     "description":
       "この新しいオークションに参加するには、新しい{contract_link}契約を承認する必要があります。",
     "i_agree_with_terms": "私は{terms_link}に同意します",
+    "processing_tx": "取引の処理",
     "start": "開始",
+    "submit": "続行する",
     "terms_and_conditions": "規約と条件",
     "title": "NTオークション",
+    "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
     "watch_tutorial": "ビデオチュートリアルを見る"
   },
@@ -121,6 +131,8 @@
     "maximum_parcels_message":
       "単一のトランザクションで{max} LAND以上を購入しようとすると失敗します。",
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
+    "parcels": "小包",
+    "parcels_tooltip": "一度に購入できるのは{max}小包のみです",
     "searching": "検索中...",
     "sold": "売れた",
     "title": "カート",
@@ -397,7 +409,7 @@
     "authorization_error_contact":
       "エラーが解決しない場合は、お手数ですがお問い合わせください",
     "for_buying": "購入に関わる契約",
-    "for_buying_LANDAuction": "MANAを使用してLANDをオークションしました",
+    "for_buying_LANDAuction": "{token}を使用してLANDをオークションしました",
     "for_buying_LegacyMarketplace": "MANAによる資産の扱い（従来）",
     "for_buying_Marketplace": "MANAによる資産の扱い",
     "for_buying_MortgageHelper": "ローンによるLANDの扱い",

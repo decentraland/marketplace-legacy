@@ -106,12 +106,22 @@
     "your_parcel": "Votre parcelle"
   },
   "auction_modal": {
+    "authorization": "Autorisation",
+    "authorization_description":
+      "Avant de pouvoir acheter un LAND dans la vente aux enchères, vous devez au préalable autoriser le contrat {contract_link} à accéder à votre {token} et à l’exploiter.",
+    "authorize_token": "Autoriser le jeton {token}",
+    "confirmation": "Confirmation",
+    "confirmation_description":
+      "Vous êtes sur le point d'acheter {parcels} LAND pour {price} {token}",
     "description":
       "Pour participer à cette nouvelle vente aux enchères, vous devez autoriser le nouveau contrat {contract_link}.",
     "i_agree_with_terms": "Je suis d'accord avec le {terms_link}",
+    "processing_tx": "Traitement de la transaction",
     "start": "Début",
+    "submit": "Procéder",
     "terms_and_conditions": "Termes et conditions",
     "title": "Decentraland Enchère",
+    "tx_failed": "La transaction a échoué",
     "video_tutorial": "Didacticiel vidéo",
     "watch_tutorial": "Regarder le tutoriel vidéo"
   },
@@ -128,6 +138,8 @@
       "Si vous essayez d'acheter plus de {max} LAND en une seule transaction, vous échouerez. ",
     "maximum_parcels_title":
       "Vous avez atteint le maximum LAND par transaction",
+    "parcels": "Colis",
+    "parcels_tooltip": "Vous ne pouvez acheter que des colis {max} à la fois",
     "searching": "Recherche...",
     "sold": "Vendu",
     "title": "LAND panier",
@@ -414,7 +426,7 @@
     "authorization_error_contact":
       "Si l'erreur persiste, n'hésitez pas à nous contacter",
     "for_buying": "Pour acheter",
-    "for_buying_LANDAuction": "LAND mis aux enchères à l'aide de MANA",
+    "for_buying_LANDAuction": "LAND mis aux enchères à l'aide de {token}",
     "for_buying_LegacyMarketplace": "ERC721 utilisant MANA (hérité)",
     "for_buying_Marketplace": "ERC721 utilisant MANA",
     "for_buying_MortgageHelper": "LAND par hypothèque",

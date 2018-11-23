@@ -22,8 +22,7 @@ import {
   fetchAuctionParamsRequest,
   fetchAuctionRateRequest,
   setParcelOnChainOwner,
-  changeAuctionCenterParcel,
-  bidOnParcelsRequest
+  changeAuctionCenterParcel
 } from 'modules/auction/actions'
 import AuctionPage from './AuctionPage'
 
@@ -69,7 +68,7 @@ const mapDispatch = dispatch => ({
   onChangeAuctionCenterParcel: parcel =>
     dispatch(changeAuctionCenterParcel(parcel)),
   onSubmit: (parcels, beneficiary) =>
-    dispatch(bidOnParcelsRequest(parcels, beneficiary)),
+    dispatch(openModal('BidConfirmationModal', { parcels, beneficiary })),
   onChangeToken: token => dispatch(fetchAuctionRateRequest(token))
 })
 

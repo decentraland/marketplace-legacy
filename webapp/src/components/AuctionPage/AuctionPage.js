@@ -9,7 +9,8 @@ import {
   Grid,
   Container,
   Loader,
-  Button
+  Button,
+  Icon
 } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
@@ -290,18 +291,30 @@ export default class AuctionPage extends React.PureComponent {
                       />
                     </div>
                     <div className="information-block">
+                      <p className="subtitle">{t('auction_page.parcels')}</p>
+                      <Header size="large">
+                        {selectedParcels.length}
+                        <span className="secondary">
+                          &nbsp;
+                          <span
+                            className="tooltip"
+                            data-balloon-pos="up"
+                            data-balloon={t('auction_page.parcels_tooltip', {
+                              max: landsLimitPerBid
+                            })}
+                          >
+                            <Icon size="small" name="question circle" />
+                          </span>
+                        </span>
+                      </Header>
+                    </div>
+                    <div className="information-block">
                       <p className="subtitle">{t('auction_page.land_price')}</p>
                       <Token
                         loading={rate == null}
                         symbol={token}
                         amount={this.roundPrice(currentPrice * rate)}
                       />
-                    </div>
-                    <div className="information-block">
-                      <p className="subtitle">{t('global.land')}</p>
-                      <Header size="large">
-                        {selectedParcels.length}/{landsLimitPerBid}
-                      </Header>
                     </div>
                     <div className="bid-wrapper">
                       <div className="information-block">

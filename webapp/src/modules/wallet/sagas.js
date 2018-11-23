@@ -55,7 +55,16 @@ function* handleConnectWalletSuccess(action) {
   }
   if (isFeatureEnabled('AUCTION')) {
     Object.assign(authorization.allowances, {
-      LANDAuction: ['MANAToken']
+      LANDAuction: [
+        'MANAToken',
+        'ZILToken',
+        'DAIToken',
+        'KNCToken',
+        'SNTToken',
+        'BNBToken',
+        'MKRToken',
+        'ELFToken'
+      ]
     })
   }
   if (isFeatureEnabled('MORTGAGES')) {

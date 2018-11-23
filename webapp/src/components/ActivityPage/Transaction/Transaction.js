@@ -395,7 +395,7 @@ export default class Transaction extends React.PureComponent {
   }
 
   renderMANAPreview() {
-    return <Mana size={48} scale={1} />
+    return <Mana />
   }
 
   renderAssetPreview(tx) {

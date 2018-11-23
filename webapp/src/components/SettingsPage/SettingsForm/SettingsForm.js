@@ -53,35 +53,44 @@ export default class SettingsForm extends React.PureComponent {
   renderAllowance(allowance, contractName) {
     const { pendingAllowTransactions } = this.props
 
-    return Object.keys(allowance).map(tokenContractName => (
-      <Form.Field key={tokenContractName}>
-        {this.hasTransactionPending(
-          pendingAllowTransactions,
-          contractName,
-          tokenContractName
-        ) ? (
-          this.renderLoading()
-        ) : (
-          <Checkbox
-            checked={allowance[tokenContractName] > 0}
-            onChange={this.getTokenAllowedChange(
+    return Object.keys(allowance).map(
+      tokenContractName =>
+        // render checked checkboxes from LANDAuction so users can unauthorize them
+        contractName === 'LANDAuction' &&
+        allowance[tokenContractName] === 0 ? null : (
+          <Form.Field key={tokenContractName}>
+            {this.hasTransactionPending(
+              pendingAllowTransactions,
               contractName,
               tokenContractName
+            ) ? (
+              this.renderLoading()
+            ) : (
+              <Checkbox
+                checked={allowance[tokenContractName] > 0}
+                onChange={this.getTokenAllowedChange(
+                  contractName,
+                  tokenContractName
+                )}
+              />
             )}
-          />
-        )}
-        <div className="title">{t(`settings.for_buying_${contractName}`)}</div>
-        <div className="description">
-          <T
-            id="authorization.allow"
-            values={{
-              contract_link: <ContractLink contractName={contractName} />,
-              symbol: token.getSymbolByContractName(tokenContractName)
-            }}
-          />
-        </div>
-      </Form.Field>
-    ))
+            <div className="title">
+              {t(`settings.for_buying_${contractName}`, {
+                token: tokenContractName.replace('Token', '') // remove the "Token" part
+              })}
+            </div>
+            <div className="description">
+              <T
+                id="authorization.allow"
+                values={{
+                  contract_link: <ContractLink contractName={contractName} />,
+                  symbol: token.getSymbolByContractName(tokenContractName)
+                }}
+              />
+            </div>
+          </Form.Field>
+        )
+    )
   }
 
   renderApproval(approval, contractName) {
