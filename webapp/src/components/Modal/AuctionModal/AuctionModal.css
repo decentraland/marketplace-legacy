@@ -67,8 +67,33 @@
   height: 100%;
 }
 
+.AuctionModal .stats {
+  margin: 35px 0;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column
+}
+
+.AuctionModal .stat {
+  margin: 10px 0;
+}
+
+.AuctionModal .stat p:first-child {
+  font-weight: 500;
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
+.AuctionModal .stat p:last-child {
+  color: #5c5c6e;
+}
+
 @media (min-width: 767px) {
   .AuctionModal .modal-body {
     width: 605px;
+  }
+
+  .AuctionModal .stats {
+    flex-direction: row;
   }
 }
