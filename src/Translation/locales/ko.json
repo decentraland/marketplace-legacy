@@ -245,6 +245,7 @@
     "continue": "잇다",
     "contributions": "공헌",
     "created_at": "만든 {date}",
+    "duration": "지속",
     "edit": "편집하다",
     "estate": "재산",
     "estates": "부동산",
@@ -317,7 +318,6 @@
     "cancel": "모기지 취소",
     "claim": "소유권 주장 소포",
     "defaulted_in": "태만",
-    "duration": "지속",
     "duration_placeholder": "기간 (일)",
     "errors": {
       "amount_minimum": "금액은 {amount}보다 커야합니다.",
