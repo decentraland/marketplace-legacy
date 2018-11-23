@@ -8,14 +8,14 @@ export class InviteRouter {
 
   mount() {
     this.app.get(
-      '/invites/validate:address',
+      '/invites/validate/:address',
       server.handleRequest(this.validateAddressInvite)
     )
   }
 
   async validateAddressInvite(req) {
-    const address = server.extractFromReq(req, 'address').toUpperCase()
-    const invite = Invite.hasInvite(address)
+    const address = server.extractFromReq(req, 'address')
+    const invite = await Invite.hasInvite(address)
     return {
       address: address,
       invited: invite

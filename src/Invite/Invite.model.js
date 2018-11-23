@@ -7,13 +7,18 @@ export class Invite extends Model {
   static createOrUpdate(address, invited) {
     return this.db.query(
       SQL`INSERT INTO ${SQL.raw(this.tableName)} (address, invited) 
-          VALUES (${address.toUpperCase()}, ${invited})
+          VALUES (${address}, ${invited})
           ON CONFLICT (address) DO UPDATE
           SET invited = EXCLUDED.invited`
     )
   }
 
-  static hasInvite(address) {
-    return this.findOne({ address: address, invited: true })
+  static async hasInvite(address) {
+    const res = await this.findByAddressAndStatus(address, true)
+    return res !== undefined
+  }
+
+  static findByAddressAndStatus(address, invited) {
+    return this.findOne({ address: address, invited: invited })
   }
 }
