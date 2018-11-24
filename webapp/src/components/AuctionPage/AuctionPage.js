@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
+import { COLORS } from 'shared/map'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelCoord from 'components/ParcelCoord'
 import SignInNotice from 'components/SignInNotice'
@@ -34,6 +35,9 @@ import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
+import { brighten } from './utils'
+
+const GLOW_COLORS = { ...COLORS }
 
 import './AuctionPage.css'
 
@@ -80,6 +84,24 @@ export default class AuctionPage extends React.PureComponent {
       this.showAuctionModal(this.props)
       this.fetchAuctionParams()
     }
+  }
+
+  getColors = () => {
+    const areParcelsSelected =
+      Object.keys(this.state.selectedCoordinatesById).length > 0
+    if (areParcelsSelected) {
+      return COLORS
+    }
+    GLOW_COLORS.unowned = brighten(
+      COLORS.unowned,
+      Math.max(
+        Math.sin(
+          Date.now() / 300 // cycle every 2 * PI / 300 ~= 2 seconds
+        ) * 0.09, // brighten 9%
+        0 // only use half of sine wave (the positive one) for "breath" effect
+      )
+    )
+    return GLOW_COLORS
   }
 
   componentWillReceiveProps(nextProps) {
@@ -258,6 +280,7 @@ export default class AuctionPage extends React.PureComponent {
             showControls={true}
             showMinimap={true}
             onClick={this.handleSelectUnownedParcel}
+            getColors={this.getColors}
           />
         </div>
 
