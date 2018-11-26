@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
-import ParcelCoord from 'components/ParcelCoord'
+import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'

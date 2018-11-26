@@ -5,7 +5,7 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import ParcelCoord from 'components/ParcelCoord'
+import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import ParcelTags from 'components/ParcelTags'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'

@@ -15,7 +15,7 @@ import {
 import { t, T } from '@dapps/modules/translation/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
-import ParcelCoord from 'components/ParcelCoord'
+import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import SignInNotice from 'components/SignInNotice'
 import {
   authorizationType,
