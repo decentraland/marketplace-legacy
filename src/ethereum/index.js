@@ -73,6 +73,10 @@ export function loadContracts() {
     RCNEngine: {
       address: env.get('RCN_ENGINE_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['PartialPayment', 'TotalPayment']
+    },
+    DecentralandInvite: {
+      address: env.get('DECENTRALAND_INVITE_CONTRACT_ADDRESS').toLowerCase(),
+      eventNames: ['Transfer']
     }
   })
 

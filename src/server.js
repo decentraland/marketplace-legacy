@@ -12,6 +12,7 @@ import { PublicationRouter } from './Publication'
 import { TranslationRouter } from './Translation'
 import { MapRouter } from './Map'
 import { MarketplaceRouter } from './Marketplace'
+import { InviteRouter } from './Invite'
 
 env.load()
 
@@ -60,6 +61,7 @@ export async function startServer() {
   new MapRouter(router).mount()
   new MarketplaceRouter(router).mount()
   new ParcelRouter(router).mount()
+  new InviteRouter(router).mount()
 
   console.log('Connecting database')
   await db.connect()
