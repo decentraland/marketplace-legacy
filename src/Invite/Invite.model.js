@@ -15,7 +15,7 @@ export class Invite extends Model {
   }
 
   static async hasInvite(address) {
-    const res = await this.findOne({ address, invited })
+    const res = await this.findOne({ address: address, invited: true })
     return res !== undefined
   }
 }
