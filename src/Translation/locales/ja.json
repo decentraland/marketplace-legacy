@@ -103,18 +103,18 @@
   "auction_modal": {
     "authorization": "承認",
     "authorization_description":
-      "オークションでLANDを購入する前に、まず{contract_link}にアクセスして操作するtk0契約を承認する必要があります",
+      "{token}を使用してオークションでLANDを購入するには、まず{contract_link}契約にアクセスしてそれに代わって操作することを承認する必要があります",
     "authorize_token": "{token}トークンを認可する",
     "confirmation": "確認",
     "confirmation_description":
       "あなたは{price} {token}のために{parcels} LANDを購入しようとしています",
     "description":
-      "この新しいオークションに参加するには、新しい{contract_link}契約を承認する必要があります。",
-    "i_agree_with_terms": "私は{terms_link}に同意します",
+      "あなたが始める前にあなたがしなければならないことは2つあります。",
+    "get_started": "始める",
+    "i_agree_with_terms": "私は{terms_link}を受け入れる",
     "processing_tx": "取引の処理",
-    "start": "開始",
     "submit": "続行する",
-    "terms_and_conditions": "規約と条件",
+    "terms_and_conditions": "利用規約",
     "title": "NTオークション",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
@@ -123,8 +123,8 @@
   },
   "auction_page": {
     "available_parcels": "利用可能な小包",
-    "bid": "入札",
-    "description": "購入したいLANDを選択してください",
+    "bid": "購入",
+    "description": "あなたが購入したいLANDを見つける",
     "empty_message": "購入したい小包を見つけてカートに追加します。",
     "find_available_parcel": "利用可能な小包を見つける",
     "gas_price": "ガス価格",
@@ -138,7 +138,7 @@
     "sold": "売れた",
     "title": "カート",
     "token": "トークン",
-    "token_tooltip": "トークンを選択するにはここをクリックしてください",
+    "token_tooltip": "LANDで購入したいトークンを選択してください",
     "total_price": "合計金額",
     "video_tutorial": "ビデオチュートリアル"
   },

@@ -8,7 +8,6 @@ import {
   AUCTION_HELPERS,
   getVideoTutorialLink
 } from 'modules/auction/utils'
-
 import BaseModal from '../BaseModal'
 
 import './AuctionModal.css'
@@ -133,7 +132,7 @@ export default class AuctionModal extends React.PureComponent {
             disabled={!hasAgreedToTerms}
             onClick={this.handleSubmit}
           >
-            {t('auction_modal.start').toUpperCase()}
+            {t('auction_modal.get_started').toUpperCase()}
           </Button>
           <Button onClick={this.handleWatchTutorial}>
             {t('auction_modal.watch_tutorial').toUpperCase()}

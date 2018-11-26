@@ -105,16 +105,16 @@
   "auction_modal": {
     "authorization": "권한 부여",
     "authorization_description":
-      "경매에서 LAND을 구입하려면 먼저 {contract_link} 계약서에 액세스하여 {token}을 조작해야합니다",
+      "{token}를 사용하여 경매에서 LAND을 구입하기 전에 먼저 {contract_link} 계약을 승인하여 사용자를 대신하여 액세스하고 운영해야합니다",
     "authorize_token": "{token} 토큰 권한 부여",
     "confirmation": "확인",
     "confirmation_description":
       "{price} {token}에 대해 {parcels} LAND을 (를) 구매하려고합니다.",
     "description":
       "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다.",
-    "i_agree_with_terms": "나는 {terms_link}에 동의한다.",
+    "get_started": "시작하다",
+    "i_agree_with_terms": "나는 {terms_link}를 받아 들인다.",
     "processing_tx": "거래 처리 중",
-    "start": "스타트",
     "submit": "발하다",
     "terms_and_conditions": "이용 약관",
     "title": "NT 옥션",
@@ -125,8 +125,8 @@
   },
   "auction_page": {
     "available_parcels": "사용 가능한 소포",
-    "bid": "매기다",
-    "description": "구매할 LAND을 선택하십시오.",
+    "bid": "매수",
+    "description": "구매하려는 LAND을 찾으십시오.",
     "empty_message": "구입하려는 소포를 찾아 장바구니에 추가하십시오. ",
     "find_available_parcel": "사용 가능한 소포 찾기",
     "gas_price": "가스 가격",
@@ -140,7 +140,7 @@
     "sold": "판매 된",
     "title": "장바구니에 넣기",
     "token": "토큰",
-    "token_tooltip": "토큰을 선택하려면 여기를 클릭하십시오.",
+    "token_tooltip": "LAND과 함께 구입할 토큰을 선택하십시오.",
     "total_price": "총 가격",
     "video_tutorial": "비디오 자습서"
   },

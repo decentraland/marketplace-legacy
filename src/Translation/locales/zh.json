@@ -98,14 +98,14 @@
   "auction_modal": {
     "authorization": "授权",
     "authorization_description":
-      "在拍卖中购买任何LAND之前，您必须先授权{contract_link}合同才能访问和操作您的{token}",
+      "在您使用{token}在拍卖中购买任何LAND之前，您必须首先授权{contract_link}合同以您的名义访问和操作",
     "authorize_token": "授权{token}令牌",
     "confirmation": "确认",
     "confirmation_description": "您即将为{price} {token}购买{parcels} LAND",
-    "description": "要参与此次新拍卖，您需要授权新的{contract_link}合约。",
-    "i_agree_with_terms": "我同意{terms_link}",
+    "description": "在开始之前，您只需要做两件事。",
+    "get_started": "开始吧",
+    "i_agree_with_terms": "我接受{terms_link}",
     "processing_tx": "处理交易",
-    "start": "开始",
     "submit": "继续",
     "terms_and_conditions": "条款和条件",
     "title": "Decentraland拍卖",
@@ -116,8 +116,8 @@
   },
   "auction_page": {
     "available_parcels": "可用包裹",
-    "bid": "出价",
-    "description": "选择您要购买的LAND",
+    "bid": "采购",
+    "description": "找到你想要购买的LAND",
     "empty_message": "找到您要购买的包裹，并将其添加到购物车。",
     "find_available_parcel": "查找可用包裹",
     "gas_price": "天然气价格",
@@ -131,7 +131,7 @@
     "sold": "出售",
     "title": "LAND购物车",
     "token": "代币",
-    "token_tooltip": "单击此处选择令牌",
+    "token_tooltip": "选择要购买的令牌LAND",
     "total_price": "总价",
     "video_tutorial": "视频教程"
   },

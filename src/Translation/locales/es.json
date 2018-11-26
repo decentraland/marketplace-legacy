@@ -106,16 +106,16 @@
   "auction_modal": {
     "authorization": "Autorización",
     "authorization_description":
-      "Antes de poder comprar cualquier LAND en la subasta, primero debe autorizar el contrato {contract_link} para acceder y operar su {token}",
+      "Antes de poder comprar cualquier LAND en la subasta usando {token}, primero debe autorizar el contrato {contract_link} para acceder y operarlo en su nombre.",
     "authorize_token": "Autorizar el token {token}",
     "confirmation": "Confirmación",
     "confirmation_description":
       "Está a punto de comprar {parcels} LAND por {price} {token}",
     "description":
       "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}.",
-    "i_agree_with_terms": "Estoy de acuerdo con el {terms_link}",
+    "get_started": "Empezar",
+    "i_agree_with_terms": "Acepto los {terms_link}",
     "processing_tx": "Procesando Transacción",
-    "start": "Comienzo",
     "submit": "Proceder",
     "terms_and_conditions": "Términos y Condiciones",
     "title": "Decentraland Subasta",
@@ -127,7 +127,7 @@
   "auction_page": {
     "available_parcels": "Parcelas disponibles",
     "bid": "Comprar",
-    "description": "Elige la LAND que quieres comprar.",
+    "description": "Encuentra LAND que quieres comprar.",
     "empty_message":
       "Encuentre las parcelas que desea comprar y agréguelas a su carrito. ",
     "find_available_parcel": "Encuentra parcelas disponibles",
@@ -143,7 +143,7 @@
     "sold": "Vendido",
     "title": "Carro de compras de LAND",
     "token": "Token",
-    "token_tooltip": "Haga clic aquí para seleccionar el token",
+    "token_tooltip": "Seleccione el token con el que desea comprar LAND",
     "total_price": "Precio total",
     "video_tutorial": "video tutorial"
   },
