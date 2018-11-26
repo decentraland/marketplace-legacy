@@ -53,7 +53,7 @@ const mapState = state => {
   // compute price
   const { currentPrice } = getParams(state)
   const rate = getRate(state)
-  const price = Number((currentPrice * rate).toFixed(2))
+  const price = Number((currentPrice * rate * parcels.length).toFixed(2))
 
   return {
     token,
