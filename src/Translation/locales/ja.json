@@ -103,7 +103,7 @@
   "auction_modal": {
     "authorization": "承認",
     "authorization_description":
-      "オークションでLANDを購入する前に、まず{contract_link}にアクセスして操作するtk0契約を承認する必要があります",
+      "{token}を使用してオークションでLANDを購入するには、まず{contract_link}契約にアクセスしてそれに代わって操作することを承認する必要があります",
     "authorize_token": "{token}トークンを認可する",
     "confirmation": "確認",
     "confirmation_description":

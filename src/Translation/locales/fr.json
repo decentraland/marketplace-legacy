@@ -108,7 +108,7 @@
   "auction_modal": {
     "authorization": "Autorisation",
     "authorization_description":
-      "Avant de pouvoir acheter un LAND dans la vente aux enchères, vous devez au préalable autoriser le contrat {contract_link} à accéder à votre {token} et à l’exploiter.",
+      "Avant de pouvoir acheter un LAND dans la vente aux enchères à l’aide de {token}, vous devez au préalable autoriser le contrat {contract_link} à y accéder et à l’exploiter en votre nom.",
     "authorize_token": "Autoriser le jeton {token}",
     "confirmation": "Confirmation",
     "confirmation_description":

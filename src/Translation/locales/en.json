@@ -105,7 +105,7 @@
   "auction_modal": {
     "authorization": "Authorization",
     "authorization_description":
-      "Before you can purchase any LAND in the auction, you must first authorize the {contract_link} contract to access and operate your {token}",
+      "Before you can purchase any LAND in the auction using {token}, you must first authorize the {contract_link} contract to access and operate it in your behalf",
     "authorize_token": "Authorize {token} token",
     "confirmation": "Confirmation",
     "confirmation_description":

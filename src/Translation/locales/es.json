@@ -106,7 +106,7 @@
   "auction_modal": {
     "authorization": "Autorización",
     "authorization_description":
-      "Antes de poder comprar cualquier LAND en la subasta, primero debe autorizar el contrato {contract_link} para acceder y operar su {token}",
+      "Antes de poder comprar cualquier LAND en la subasta usando {token}, primero debe autorizar el contrato {contract_link} para acceder y operarlo en su nombre.",
     "authorize_token": "Autorizar el token {token}",
     "confirmation": "Confirmación",
     "confirmation_description":

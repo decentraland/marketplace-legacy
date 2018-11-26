@@ -105,7 +105,7 @@
   "auction_modal": {
     "authorization": "권한 부여",
     "authorization_description":
-      "경매에서 LAND을 구입하려면 먼저 {contract_link} 계약서에 액세스하여 {token}을 조작해야합니다",
+      "{token}를 사용하여 경매에서 LAND을 구입하기 전에 먼저 {contract_link} 계약을 승인하여 사용자를 대신하여 액세스하고 운영해야합니다",
     "authorize_token": "{token} 토큰 권한 부여",
     "confirmation": "확인",
     "confirmation_description":

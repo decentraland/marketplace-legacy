@@ -98,7 +98,7 @@
   "auction_modal": {
     "authorization": "授权",
     "authorization_description":
-      "在拍卖中购买任何LAND之前，您必须先授权{contract_link}合同才能访问和操作您的{token}",
+      "在您使用{token}在拍卖中购买任何LAND之前，您必须首先授权{contract_link}合同以您的名义访问和操作",
     "authorize_token": "授权{token}令牌",
     "confirmation": "确认",
     "confirmation_description": "您即将为{price} {token}购买{parcels} LAND",
