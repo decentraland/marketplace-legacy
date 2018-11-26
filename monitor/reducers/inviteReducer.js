@@ -22,8 +22,8 @@ async function reduceInvite(event) {
   if (name === eventNames.Transfer) {
     const { _to, _from } = event.args
     const inviteContract = eth.getContract('DecentralandInvite')
-    updateAddressInviteStatus(inviteContract, _to)
-    updateAddressInviteStatus(inviteContract, _from)
+    await updateAddressInviteStatus(inviteContract, _to)
+    await updateAddressInviteStatus(inviteContract, _from)
   }
 }
 
@@ -32,6 +32,6 @@ async function updateAddressInviteStatus(inviteContract, address) {
     log.info(`Updating Invite information for address [${address}]`)
     const balance = await inviteContract.balanceOf(address)
     const hasInvite = balance.toNumber() > 0
-    await Invite.createOrUpdate(address, hasInvite)
+    return Invite.createOrUpdate(address, hasInvite)
   }
 }
