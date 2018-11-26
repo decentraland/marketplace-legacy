@@ -2,7 +2,7 @@ import { Model } from 'decentraland-commons'
 import { SQL } from '../database'
 
 export class Invite extends Model {
-  static tableName = 'decentraland_invite'
+  static tableName = 'decentraland_invites'
   static columnNames = ['address', 'invited']
 
   static createOrUpdate(address, invited) {
@@ -20,6 +20,6 @@ export class Invite extends Model {
   }
 
   static findByAddressAndStatus(address, invited) {
-    return this.findOne({ address: address, invited: invited })
+    return this.findOne({ address, invited })
   }
 }

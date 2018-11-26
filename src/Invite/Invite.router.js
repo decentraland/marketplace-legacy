@@ -8,7 +8,7 @@ export class InviteRouter {
 
   mount() {
     this.app.get(
-      '/invites/validate/:address',
+      '/invites/:address/validate',
       server.handleRequest(this.validateAddressInvite)
     )
   }
