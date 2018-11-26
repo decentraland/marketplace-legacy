@@ -11,7 +11,6 @@ import Page from 'components/Page'
 import HomePage from 'components/HomePage'
 import AtlasPage from 'components/AtlasPage'
 import MarketplacePage from 'components/MarketplacePage'
-import AuctionPage from 'components/AuctionPage'
 import ProfilePage from 'components/ProfilePage'
 import PublishParcelPage from 'components/PublishParcelPage'
 import PublishEstatePage from 'components/PublishEstatePage'
@@ -35,8 +34,7 @@ import TransferEstatePage from 'components/TransferEstatePage'
 import AssetDetailPage from 'components/AssetDetailPage'
 import EditEstatePage from 'components/EditEstatePage'
 import ManageEstatePage from 'components/ManageEstatePage'
-import AuctionFinishedPage from 'components/AuctionFinishedPage'
-import { hasAuctionFinished } from 'modules/auction/utils'
+import AuctionRoute from 'components/AuctionRoute'
 import { ASSET_TYPES } from './shared/asset'
 
 export default class Routes extends React.Component {
@@ -160,11 +158,7 @@ export default class Routes extends React.Component {
 
         {/*Auction*/}
         {isFeatureEnabled('AUCTION') && (
-          <Route
-            exact
-            path={locations.auction()}
-            component={hasAuctionFinished() ? AuctionFinishedPage : AuctionPage}
-          />
+          <Route exact path={locations.auction()} component={AuctionRoute} />
         )}
 
         {/*General routes*/}

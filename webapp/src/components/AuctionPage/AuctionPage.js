@@ -55,7 +55,6 @@ export default class AuctionPage extends React.PureComponent {
     wallet: walletType,
     allParcels: PropTypes.objectOf(parcelType),
     onShowAuctionModal: PropTypes.func.isRequired,
-    onFetchAuctionParams: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
     onChangeAuctionCenterParcel: PropTypes.func.isRequired,
@@ -88,7 +87,6 @@ export default class AuctionPage extends React.PureComponent {
 
     if (isConnected) {
       this.showAuctionModal(this.props)
-      this.fetchAuctionParams()
     }
 
     this.mounted = true
@@ -106,24 +104,14 @@ export default class AuctionPage extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isConnected && !nextProps.modal.open) {
       this.showAuctionModal(nextProps)
-      this.fetchAuctionParams()
     }
   }
 
   showAuctionModal(props) {
     const { onShowAuctionModal } = props
-    if (
-      !hasSeenAuctionHelper(AUCTION_HELPERS.SEEN_AUCTION_MODAL) ||
-      hasAuctionFinished()
-    ) {
-      onShowAuctionModal()
-    }
-  }
 
-  fetchAuctionParams() {
-    if (!this.hasFetchedParams) {
-      this.props.onFetchAuctionParams()
-      this.hasFetchedParams = true
+    if (!hasSeenAuctionHelper(AUCTION_HELPERS.SEEN_AUCTION_MODAL)) {
+      onShowAuctionModal()
     }
   }
 
