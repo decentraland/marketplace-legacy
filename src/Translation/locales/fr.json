@@ -105,6 +105,14 @@
     "your_estate": "Votre domaine",
     "your_parcel": "Votre parcelle"
   },
+  "auction_finished": {
+    "cta": "Aller au marché",
+    "description": "Merci d'avoir participé.",
+    "land_sold": "LAND vendu",
+    "mana_burned": "Mana brûlé",
+    "stats_title": "Voici quelques statistiques:",
+    "title": "Enchère terminée"
+  },
   "auction_modal": {
     "authorization": "Autorisation",
     "authorization_description":

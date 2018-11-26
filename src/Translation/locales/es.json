@@ -103,6 +103,14 @@
     "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
+  "auction_finished": {
+    "cta": "Ir al mercado",
+    "description": "Gracias por participar.",
+    "land_sold": "LAND vendido",
+    "mana_burned": "Mana quemada",
+    "stats_title": "Aquí hay algunas estadísticas:",
+    "title": "Subasta terminada"
+  },
   "auction_modal": {
     "authorization": "Autorización",
     "authorization_description":

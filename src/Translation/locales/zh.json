@@ -95,6 +95,14 @@
     "your_estate": "您的连块土地",
     "your_parcel": "您的地块"
   },
+  "auction_finished": {
+    "cta": "去市场",
+    "description": "感谢您的参与。",
+    "land_sold": "LAND已售出",
+    "mana_burned": "玛娜烧了",
+    "stats_title": "以下是一些统计数据：",
+    "title": "拍卖完成"
+  },
   "auction_modal": {
     "authorization": "授权",
     "authorization_description":
