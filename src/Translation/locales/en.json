@@ -102,6 +102,14 @@
     "your_estate": "Your estate",
     "your_parcel": "Your parcel"
   },
+  "auction_finished": {
+    "cta": "Go to marketplace",
+    "description": "Thank you for participating.",
+    "land_sold": "LAND sold",
+    "mana_burned": "Mana burned",
+    "stats_title": "Here are some stats:",
+    "title": "Auction Finished"
+  },
   "auction_modal": {
     "authorization": "Authorization",
     "authorization_description":

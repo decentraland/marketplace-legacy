@@ -46,19 +46,28 @@ function* handleAuctionParamsRequest(action) {
       availableParcelCount,
       gasPriceLimit,
       landsLimitPerBid,
-      currentPrice
+      currentPrice,
+      landsBidded,
+      totalMAnaBurned,
+      endTime
     ] = yield all([
       api.fetchAvaialableParcelCount(),
       landAuction.gasPriceLimit(),
       landAuction.landsLimitPerBid(),
-      landAuction.getCurrentPrice()
+      landAuction.getCurrentPrice(),
+      landAuction.landsBidded(),
+      landAuction.totalManaBurned(),
+      landAuction.endTime()
     ])
 
     const params = {
       availableParcelCount,
       gasPriceLimit: gasPriceLimit.toNumber() / ONE_BILLION,
       landsLimitPerBid: landsLimitPerBid.toNumber(),
-      currentPrice: eth.utils.fromWei(currentPrice)
+      currentPrice: eth.utils.fromWei(currentPrice),
+      landsBidded: landsBidded.toNumber(),
+      totalMAnaBurned: totalMAnaBurned.toNumber(),
+      endTime: endTime.toNumber()
     }
 
     yield put(fetchAuctionParamsSuccess(params))
