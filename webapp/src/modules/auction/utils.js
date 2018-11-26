@@ -1,4 +1,5 @@
 import { env } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 
 import { localStorage } from 'lib/localStorage'
 
@@ -36,6 +37,9 @@ export function getVideoTutorialLink() {
   return 'https://www.youtube-nocookie.com/embed/-HmXrOTEmxg?controls=0'
 }
 
-export function hasAuctionFinished() {
-  return Date.now() > env.get('REACT_APP_AUCTION_END_TIME')
+export async function hasAuctionFinished() {
+  const landAuction = eth.getContract('LANDAuction')
+  const endTime = await landAuction.endTime()
+
+  return endTime.toNumber() > 0 && Date.now() / 1000 >= endTime.toNumber()
 }
