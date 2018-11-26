@@ -100,6 +100,14 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "auction_finished": {
+    "cta": "マーケットプレイスに行く",
+    "description": "ご参加いただきありがとうございます。",
+    "land_sold": "売り上げLAND",
+    "mana_burned": "マナは燃やされた",
+    "stats_title": "ここにいくつかの統計があります：",
+    "title": "オークション終了"
+  },
   "auction_modal": {
     "authorization": "承認",
     "authorization_description":
