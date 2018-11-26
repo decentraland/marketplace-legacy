@@ -5,8 +5,9 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import ParcelTags from 'components/ParcelTags'
+import ParcelCoords from 'components/ParcelCoords'
+// import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
@@ -35,6 +36,17 @@ export default class EstateDetail extends React.PureComponent {
     onParcelClick: PropTypes.func.isRequired
   }
 
+  getEstateParcels() {
+    const { estate, allParcels } = this.props
+    const parcels = []
+
+    for (const { x, y } of estate.data.parcels) {
+      const parcel = allParcels[buildCoordinate(x, y)]
+      if (parcel) parcels.push(parcel)
+    }
+    return parcels
+  }
+
   renderEmptyEstate() {
     const { estate } = this.props
     return (
@@ -59,7 +71,6 @@ export default class EstateDetail extends React.PureComponent {
       onManageEstate,
       onParcelClick
     } = this.props
-    const { parcels } = estate.data
 
     if (estate.data.parcels.length === 0) {
       return this.renderEmptyEstate()
@@ -203,20 +214,11 @@ export default class EstateDetail extends React.PureComponent {
                     )}
                   </h3>
                 </Grid.Column>
-                <Grid.Column
-                  width={WITHOUT_ACTION_BUTTONS_WIDTH}
-                  className="parcels-included"
-                >
-                  {parcels.map(({ x, y }) => {
-                    const parcel = allParcels[buildCoordinate(x, y)]
-                    return parcel ? (
-                      <ParcelCoord
-                        key={parcel.id}
-                        parcel={parcel}
-                        onClick={onParcelClick}
-                      />
-                    ) : null
-                  })}
+                <Grid.Column width={WITHOUT_ACTION_BUTTONS_WIDTH} className="">
+                  <ParcelCoords
+                    parcels={this.getEstateParcels()}
+                    onClick={onParcelClick}
+                  />
                 </Grid.Column>
               </React.Fragment>
             )}

@@ -98,10 +98,10 @@
   text-align: right;
 }
 
-.EstateDetail .details .parcels-included.column {
+.EstateDetail .details .parcels-included {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .EstateDetail .parcels-included .ParcelCoord {
