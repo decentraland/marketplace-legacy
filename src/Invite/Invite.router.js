@@ -15,10 +15,7 @@ export class InviteRouter {
 
   async validateAddressInvite(req) {
     const address = server.extractFromReq(req, 'address')
-    const invite = await Invite.hasInvite(address)
-    return {
-      address: address,
-      invited: invite
-    }
+    const invited = await Invite.hasInvite(address)
+    return { address, invited }
   }
 }
