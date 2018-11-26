@@ -112,9 +112,9 @@
       "You are about to purchase {parcels} LAND for {price} {token}",
     "description":
       "There are just two things you need to do before you can start. First, you need to select the tokens you want to buy LAND with. Next, you have to authorize a new smart contract to access those tokens when you buy LAND.",
-    "i_agree_with_terms": "I agree with the {terms_link}",
+    "get_started": "Get started",
+    "i_agree_with_terms": "I accept the {terms_link}",
     "processing_tx": "Processing Transaction",
-    "start": "Get Started",
     "submit": "Proceed",
     "terms_and_conditions": "Terms & Conditions",
     "title": "Decentraland LAND Auction",

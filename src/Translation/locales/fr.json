@@ -114,10 +114,10 @@
     "confirmation_description":
       "Vous êtes sur le point d'acheter {parcels} LAND pour {price} {token}",
     "description":
-      "Pour participer à cette nouvelle vente aux enchères, vous devez autoriser le nouveau contrat {contract_link}.",
-    "i_agree_with_terms": "Je suis d'accord avec le {terms_link}",
+      "Vous devez juste faire deux choses avant de pouvoir commencer. ",
+    "get_started": "Commencer",
+    "i_agree_with_terms": "J'accepte le {terms_link}",
     "processing_tx": "Traitement de la transaction",
-    "start": "Début",
     "submit": "Procéder",
     "terms_and_conditions": "Termes et conditions",
     "title": "Decentraland Enchère",
@@ -128,8 +128,8 @@
   },
   "auction_page": {
     "available_parcels": "Colis disponibles",
-    "bid": "Offre",
-    "description": "Choisissez le LAND que vous voulez acheter",
+    "bid": "Achat",
+    "description": "Trouvez le LAND que vous voulez acheter",
     "empty_message":
       "Trouvez les colis que vous souhaitez acheter et ajoutez-les à votre panier. ",
     "find_available_parcel": "Trouver un colis disponible",
@@ -145,7 +145,8 @@
     "sold": "Vendu",
     "title": "LAND panier",
     "token": "Jeton",
-    "token_tooltip": "Cliquez ici pour sélectionner le jeton",
+    "token_tooltip":
+      "Sélectionnez le jeton avec lequel vous souhaitez acheter LAND",
     "total_price": "Prix ​​total",
     "video_tutorial": "didacticiel vidéo"
   },
