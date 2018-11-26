@@ -127,7 +127,7 @@
     "welcome": "Bienvenue à la vente aux enchères Decentraland LAND!"
   },
   "auction_page": {
-    "available_parcels": "Colis disponibles",
+    "available_parcels": "colis disponibles",
     "bid": "Achat",
     "description": "Trouvez le LAND que vous voulez acheter",
     "empty_message":

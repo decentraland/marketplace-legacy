@@ -125,7 +125,7 @@
     "welcome": "Bienvenido a la subasta Decentraland LAND!"
   },
   "auction_page": {
-    "available_parcels": "Parcelas disponibles",
+    "available_parcels": "parcelas disponibles",
     "bid": "Comprar",
     "description": "Encuentra LAND que quieres comprar.",
     "empty_message":

@@ -124,7 +124,7 @@
     "welcome": "Welcome to the Decentraland LAND Auction!"
   },
   "auction_page": {
-    "available_parcels": "Available parcels",
+    "available_parcels": "parcels available",
     "bid": "Purchase",
     "description": "Find the LAND you want to buy",
     "empty_message":
