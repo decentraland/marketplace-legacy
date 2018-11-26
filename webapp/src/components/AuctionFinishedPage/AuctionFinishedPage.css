@@ -1,0 +1,53 @@
+.Page {
+  position: relative;
+}
+
+.Page > div.AuctionFinishedPage {
+  color: var(--text);
+  background: #09101fde;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  z-index: 9999;
+}
+
+.Page > div.AuctionFinishedPage .message-wrapper {
+  width: 100%;
+}
+
+.AuctionFinishedPage .description {
+  max-width: 768px;
+  margin: auto;
+}
+
+.AuctionFinishedPage .stats {
+  margin: 35px 0;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column
+}
+
+.AuctionFinishedPage .stat {
+  margin: 10px 0;
+}
+
+.AuctionFinishedPage .stat p:first-child {
+  font-weight: 500;
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
+.AucAuctionFinishedPagetionModal .stat p:last-child {
+  color: #5c5c6e;
+}
+
+@media (min-width: 767px) {
+  .AuctionFinishedPage .stats {
+    flex-direction: row;
+  }
+}

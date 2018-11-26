@@ -15,8 +15,7 @@ import './AuctionModal.css'
 export default class AuctionModal extends React.PureComponent {
   static propTypes = {
     ...BaseModal.propTypes,
-    onNavigateAway: PropTypes.func,
-    auctionFinished: PropTypes.bool.isRequired
+    onNavigateAway: PropTypes.func
   }
 
   constructor(props) {
@@ -53,12 +52,6 @@ export default class AuctionModal extends React.PureComponent {
       onNavigateAway()
       onClose()
     }
-  }
-
-  handleCloseFinishedMessage = () => {
-    const { onGoToMarketplace, onClose } = this.props
-    onGoToMarketplace()
-    onClose()
   }
 
   renderTermsOfServiceLink() {
@@ -149,44 +142,6 @@ export default class AuctionModal extends React.PureComponent {
     )
   }
 
-  renderFinished() {
-    const landSold = 6000
-    const manaBurned = '100,000'
-    const duration = '15 days'
-
-    return (
-      <div className="modal-body">
-        <h1 className="title">{t('auction_modal.finished_title')}</h1>
-
-        <div className="description">
-          {t('auction_modal.finished_description')}
-          <br />
-          {t('auction_modal.stats_title')}
-          <div className="stats">
-            <div className="stat">
-              <p>{landSold}</p>
-              <p>{t('auction_modal.land_sold')}</p>
-            </div>
-            <div className="stat">
-              <p>{manaBurned}</p>
-              <p>{t('auction_modal.mana_burned')}</p>
-            </div>
-            <div className="stat">
-              <p>{duration}</p>
-              <p>{t('global.duration')}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="actions">
-          <Button primary={true} onClick={this.handleCloseFinishedMessage}>
-            {t('auction_modal.finished_cta').toUpperCase()}
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
   render() {
     const { isWatchingTutorial } = this.state
 
@@ -196,11 +151,7 @@ export default class AuctionModal extends React.PureComponent {
         isCloseable={false}
         {...this.props}
       >
-        {hasAuctionFinished()
-          ? this.renderFinished()
-          : isWatchingTutorial
-            ? this.renderTutorial()
-            : this.renderWelcome()}
+        {isWatchingTutorial ? this.renderTutorial() : this.renderWelcome()}
       </BaseModal>
     )
   }
