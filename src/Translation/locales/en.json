@@ -109,7 +109,7 @@
     "authorize_token": "Authorize {token} token",
     "confirmation": "Confirmation",
     "confirmation_description":
-      "You are about to purchase {parcels} LAND for {price} {token}",
+      "You are about to purchase {parcels} parcels of LAND for {price} {token}",
     "description":
       "There are just two things you need to do before you can start. First, you need to select the tokens you want to buy LAND with. Next, you have to authorize a new smart contract to access those tokens when you buy LAND.",
     "get_started": "Get started",
