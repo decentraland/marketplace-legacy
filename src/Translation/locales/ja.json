@@ -1,46 +1,46 @@
 {
   "activity": {
     "approve":
-      "取引を始める前に{settings_link}でMANAの使用承認を行ってください。",
+      "取引を始める前に{settings_link}でMANAの使用承認を行ってください",
     "clear": {
       "body": "一度、取引履歴を削除すると復旧できません。実行しますか？",
       "title": "取引履歴を削除"
     },
     "completed": "完了",
-    "no_activity": "まだ取引がありません。.",
+    "no_activity": "まだ取引がありません",
     "pending": "確認中",
     "start": "{marketplace}で取引が出来るようになりました!"
   },
   "address": {
-    "its_you": "あなたです。"
+    "its_you": "あなたです"
   },
   "asset_buy": {
-    "about_to_buy": "{name}を{price}で購入しようとしています。",
-    "allowed_balance": "{allowance}まで利用可能です。",
+    "about_to_buy": "{name}を{price}で購入しようとしています",
+    "allowed_balance": "{allowance}まで利用可能です",
     "buy_asset": "{asset_type}を購入",
     "buy_mana": "MANAを更に購入する{click_here}",
     "didnt_allow": "あなたはMANAの使用を許可していません",
     "didnt_allow_new_marketplace":
       "新しいバージョンのマーケットでMANAの使用を許可していません",
-    "needs_at_least": "この{asset_type}を購入するには最低 {mana} 必要です。",
+    "needs_at_least": "この{asset_type}を購入するには最低 {mana} MANA必要です",
     "please_allow":
-      "{settings_link}にてLegacyMarketplace契約でMANAを操作できるようにしてください。",
+      "{settings_link}にてLegacyMarketplace契約でMANAを操作できるようにしてください",
     "please_allow_new_marketplace":
-      "{settings_link}にてMarketplace契約でMANAを操作できるようにしてください。",
+      "{settings_link}にてMarketplace契約でMANAを操作できるようにしてください",
     "total_balance": "残高：{balance}"
   },
   "asset_cancel": {
-    "about_to_cancel": "{name}の販売をキャンセルしようとしています。",
+    "about_to_cancel": "{name}の販売をキャンセルしようとしています",
     "cancel_sale": "販売をキャンセル",
-    "not_for_sale": "この区画{parcel}は販売されていません。"
+    "not_for_sale": "この区画{parcel}は販売されていません"
   },
   "asset_detail": {
     "actions": {
-      "cancel": "販売をキャンセルする",
+      "cancel": "販売をキャンセル",
       "permissions": "アクセス許可",
       "sell": "販売",
       "transfer": "転送",
-      "update_price": "アップデート価格"
+      "update_price": "価格を編集する"
     },
     "history": {
       "auction": "オークション",
@@ -59,17 +59,17 @@
   },
   "asset_edit": {
     "errors": {
-      "description_limit": "説明は{length}文字より小さくする必要があります",
-      "name_max_limit": "名前は{length}文字よりも小さくする必要があります",
-      "name_min_limit": "名前は空ではありません"
+      "description_limit": "説明は{length}文字以下にする必要があります",
+      "name_max_limit": "名前は{length}文字以下にする必要があります",
+      "name_min_limit": "名前は空欄にできません"
     }
   },
   "asset_manage": {
     "address": "オペレータアドレス",
     "address_permission":
-      "このアドレスは、この{asset_type}の内容を更新することができます",
-    "give_permission": "{asset_name}の内容を更新する権限を与えます",
-    "manage": "{asset_type}を管理する"
+      "このアドレスは、この {asset_type} の内容を更新することができます",
+    "give_permission": "{asset_name} の内容を更新する権限を与えます",
+    "manage": "{asset_type} を管理する"
   },
   "asset_publish": {
     "already_sold": "この{asset_name}は既に{value}で販売中です",
@@ -80,16 +80,16 @@
       "minimum_land_price": "最小{asset_name}価格は{value} MANA"
     },
     "expiration": "販売期限",
-    "expiration_placeholder": "この公開物の販売期限",
+    "expiration_placeholder": "この公開物件の販売期限",
     "list_asset": "{asset_name}を販売する",
     "please_authorize":
-      "販売の前に{settings_link}にてマーケットで{asset_name}を操作することを承認してください。",
+      "販売の前に{settings_link}にてマーケットで{asset_name}を操作することを承認してください",
     "price": "価格",
     "price_placeholder": "この{asset_name}の価格はMANAです",
-    "set_asset_price": "{asset_name}の価格と有効期限を設定します。",
+    "set_asset_price": "{asset_name}の価格と有効期限を設定します",
     "set_new_asset_price":
-      "{asset_name}の新しい価格または有効期限を設定します。",
-    "update_asset": "{asset_name}のパブリッシュを更新する"
+      "{asset_name}の新しい価格または有効期限を設定します",
+    "update_asset": "{asset_name}の公開物件を更新する"
   },
   "atlas": {
     "loading": "読込み中",
@@ -103,42 +103,42 @@
   "auction_modal": {
     "authorization": "承認",
     "authorization_description":
-      "{token}を使用してオークションでLANDを購入するには、まず{contract_link}契約にアクセスしてそれに代わって操作することを承認する必要があります",
-    "authorize_token": "{token}トークンを認可する",
+      "{token}を使用してオークションでLANDを購入するには、まず{contract_link}契約でトークン使用を承認する必要があります",
+    "authorize_token": "{token}トークンを承認する",
     "confirmation": "確認",
     "confirmation_description":
-      "あなたは{price} {token}のために{parcels} LANDを購入しようとしています",
+      "{parcels} LANDを{price} {token}で購入しようとしています",
     "description":
-      "あなたが始める前にあなたがしなければならないことは2つあります。",
+      "始める前に次の2点を確認してください。まずLAND（土地）購入に使用するトークンを選択します。次にそのトークンがLAND購入に使用できるようにスマートコントラクトで承認してください。",
     "get_started": "始める",
-    "i_agree_with_terms": "私は{terms_link}を受け入れる",
+    "i_agree_with_terms": "{terms_link}に同意する",
     "processing_tx": "取引の処理",
     "submit": "続行する",
     "terms_and_conditions": "利用規約",
-    "title": "NTオークション",
+    "title": "Decentraland LANDオークション",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
     "watch_tutorial": "ビデオチュートリアルを見る",
     "welcome": "Decentraland LANDオークションへようこそ！"
   },
   "auction_page": {
-    "available_parcels": "利用可能な小包",
+    "available_parcels": "販売中の区画",
     "bid": "購入",
-    "description": "あなたが購入したいLANDを見つける",
-    "empty_message": "購入したい小包を見つけてカートに追加します。",
-    "find_available_parcel": "利用可能な小包を見つける",
+    "description": "購入したい土地を選んで下さい",
+    "empty_message": "購入したい土地を選んでカートに追加",
+    "find_available_parcel": "利用可能な区画を表示",
     "gas_price": "ガス価格",
     "land_price": "LAND価格",
     "maximum_parcels_message":
-      "単一のトランザクションで{max} LAND以上を購入しようとすると失敗します。",
+      "単一のトランザクションで{max}LAND以上を購入しようとすると失敗します。",
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
-    "parcels": "小包",
-    "parcels_tooltip": "一度に購入できるのは{max}小包のみです",
+    "parcels": "区画",
+    "parcels_tooltip": "一度に購入できるのは{max}区画までです",
     "searching": "検索中...",
-    "sold": "売れた",
+    "sold": "売却済",
     "title": "カート",
     "token": "トークン",
-    "token_tooltip": "LANDで購入したいトークンを選択してください",
+    "token_tooltip": "購入に使用するトークンを選択してください",
     "total_price": "合計金額",
     "video_tutorial": "ビデオチュートリアル"
   },
@@ -165,7 +165,7 @@
     "title": "ETHからMANAへ変換"
   },
   "color_key": {
-    "contribution": "貢献用",
+    "contribution": "貢献区",
     "district": "地区",
     "loading": "読込み中",
     "on_sale": "販売中",
@@ -239,7 +239,7 @@
     "connect": "接続する",
     "connecting": "接続しています",
     "continue": "続ける",
-    "contributions": "貢献用",
+    "contributions": "貢献区",
     "created_at": "{date}に作成済み",
     "edit": "編集",
     "estate": "エステート",
@@ -258,7 +258,7 @@
     "owned_by_link": "所有者：{address_link}",
     "owner_address_warning": "このアドレスはすでに所有されています！",
     "paid_at": "支払済み",
-    "parcels": "パーセル区画",
+    "parcels": "区画(パーセル)",
     "profile": "プロフィール",
     "publications": "公開中の区画",
     "recipient_address": "受信者アドレス",
@@ -267,16 +267,16 @@
     "retry": "やり直す",
     "revoke": "取り消す",
     "sale": "販売",
-    "service_unavailable": "サービスは利用できません。",
+    "service_unavailable": "サービスは利用できません",
     "settings": "設定",
     "sign_in": "サインイン",
     "sign_in_notice":
-      "アクセスするには、こちらで{sign_in_link}サインインする必要があります。",
+      "アクセスするにはこちらで{sign_in_link}する必要があります",
     "submit": "送信",
     "the_estate": "エステート",
     "the_parcel": "区画",
     "time_left": "残り時間",
-    "transfer_irreversible": "転送は元に戻すことができません。",
+    "transfer_irreversible": "転送は元に戻すことができません",
     "unauthorized": "未承認",
     "undo": "戻す",
     "wallet_address": "ウォレットアドレス",
@@ -284,7 +284,7 @@
   },
   "homepage": {
     "get_started": "始める",
-    "hero_subtitle": "分散型の土地取引所。手数料無料。",
+    "hero_subtitle": "分散型の土地取引所　手数料無料",
     "hero_title": "ジェネシスシティで、あなたの理想の土地を選ぼう",
     "newest_lands": "新着LAND",
     "view_more": "もっと見る",
@@ -299,7 +299,7 @@
     "zh": "中国語"
   },
   "marketplace": {
-    "empty": "Oops... ここには何もありません。",
+    "empty": "おっと...ここには何もありません",
     "filter": {
       "cheapest": "価格が安い順",
       "close_to_expire": "締め切り順",
@@ -319,7 +319,7 @@
       "deposit_gt_balance": "必要なデポジットが残高よりも大きい",
       "duration_gte_payable":
         "有効期間は支払期間と同じか、それよりも長くなければなりません。",
-      "insufficient_funds": "あなたは十分なMANAを持っていません。",
+      "insufficient_funds": "MANAが不足しています",
       "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
       "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
       "minimum_interest_rate": "レートは{minimum}以上で設定してください。",
@@ -328,11 +328,11 @@
     },
     "expiration": "有効期限を申請する",
     "expiration_placeholder": "ローンの有効期限",
-    "fetching_data": "住宅ローンデータの取得",
+    "fetching_data": "ローンデータの取得",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
     "network_fee": "ネットワーク料金のため、残高が少なくとも{amount}必要です",
-    "oracle": "オクラルコントラクトのアドレス",
+    "oracle": "Oracleコントラクトのアドレス",
     "outstanding_amount": "未払い残高",
     "partial_payment": "部分払い",
     "partial_payment_desc":
@@ -342,12 +342,12 @@
     "payable_placeholder": "数日で支払い可能",
     "pending_tx": "次の為のローン",
     "please_authorize_MANA":
-      "{settings_link}であなたのためにMANAを運用するための抵当ヘルパー契約を承認してください",
+      "{settings_link}でMANAを運用するためにMortgageHelper契約を承認してください",
     "please_authorize_RCN":
-      "{settings_link}に行き、あなたのためにRCNを運営するモーゲージマネージャー契約を承認してください",
+      "{settings_link}でRCNを運用するためにMortgageManager契約を承認してください",
     "punitory_rate": "遅延利息",
     "punitory_rate_placeholder": "遅延利息",
-    "request": "ローンを申請しています。",
+    "request": "ローンを申請しています",
     "request_land":
       "{parcel_name}へのローンを{parcel_price}で申請しようとしています。",
     "requested": "申請しました。",
@@ -397,7 +397,7 @@
     "road": "道路"
   },
   "profile_page": {
-    "empty": "このユーザーは{content}がありません。",
+    "empty": "{content}はありません",
     "on_sale": "販売中"
   },
   "publication": {
@@ -410,47 +410,47 @@
     "authorization_error_contact":
       "エラーが解決しない場合は、お手数ですがお問い合わせください",
     "for_buying": "購入に関わる契約",
-    "for_buying_LANDAuction": "{token}を使用してLANDをオークションしました",
+    "for_buying_LANDAuction": "LANDオークションでの{token}使用",
     "for_buying_LegacyMarketplace": "MANAによる資産の扱い（従来）",
     "for_buying_Marketplace": "MANAによる資産の扱い",
     "for_buying_MortgageHelper": "ローンによるLANDの扱い",
     "for_buying_MortgageManager": "ローンによるLANDの扱い",
     "for_selling": "販売に関わる契約",
     "legacy_authorization": "従来の承認",
-    "pending_tx": "　処理中の取引があります。"
+    "pending_tx": "　処理中の取引があります"
   },
   "sign_in": {
-    "account_unlocked": "アカウントがアンロックされているか確認してください。",
+    "account_unlocked": "アカウントがアンロックされているか確認してください",
     "get_started": "始める",
     "intro":
-      "まず始めにあなたのLAND(土地)を安全に保管する環境を整えてください。",
+      "まず始めにあなたのLAND(土地)を安全に保管する環境を整えてください",
     "options": {
       "desktop":
-        "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます。",
+        "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます",
       "mobile":
-        "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます。"
+        "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます"
     }
   },
   "terms_modal": {
     "also_agree":
       "また、お客様の情報をどのように処理するのかについて記述している{privacy_policy_link}に同意するものとします。",
     "by_agreeing":
-      "下記の \"同意する\"を選択することにより、私たちの{terms_of_service_link}に同意したことになります。",
+      "下記の \"同意する\"を選択することにより、{terms_of_service_link}に同意したことになります。",
     "explanation":
-      "このdAppは、Ethereumブロックチェーン上で実行される分散型エクスチェンジと相互作用します。",
+      "このdAppは、Ethereumブロックチェーン上で実行される分散型取引所と同期しています。",
     "i_agree": "同意する",
     "privacy_policy": "個人情報保護方針",
     "terms_of_service": "利用規約",
-    "title": "DecentralandのLANDマーケットプレイスへようこそ"
+    "title": "DecentralandのLANDマーケットへようこそ"
   },
   "transaction": {
-    "bid": "オークションで{parcel_count}小包を買った",
-    "buy": "{parcel_link}を購入しました。",
-    "buy_mana": "{mana} MANAを購入しました。",
-    "cancel": "あなたは{parcel_link}での販売をキャンセルしました",
+    "bid": "オークションで{parcel_count}区画を購入しました",
+    "buy": "{parcel_link}を購入しました",
+    "buy_mana": "{mana} MANAを購入しました",
+    "cancel": "{parcel_link}の販売をキャンセルしました",
     "cancel_mortgage": "区画{parcel_link}購入の為のローンをキャンセルしました",
     "claim_mortgage_resolution": "{parcel_link}へ請求しました",
-    "create_estate": "あなたはエステート{name}を作成しました",
+    "create_estate": "エステート{name}を作成しました",
     "create_mortgage": "区画{parcel_link}を購入するのにローンを申請しました",
     "dissolve_estate": "エステート{name}を解散しました",
     "edit":
@@ -459,7 +459,7 @@
       "エステート{estate_id}の名称を\"{name}\"に、説明文を\"{description}\"に変更しました",
     "edit_estate_parcels_added": "エステート{name}に{amount}区画を追加しました",
     "edit_estate_parcels_removed":
-      "エステート{name}から{amount}区画を取り消しました。",
+      "エステート{name}から{amount}区画を取り消しました",
     "manage":
       "{asset_link}のコンテンツを更新する権限を{address_link}に与えました",
     "manage_revoked":
@@ -471,31 +471,31 @@
     "pay_mortgage":
       "区画{parcel_link}を購入するローンへの部分払いで{amount}MANAを支払いました",
     "publish": "{parcel_link}を公開しました",
-    "transfer": "{parcel_link}を{owner_link}へ転送しました",
-    "transfer_mana": "{mana}MANAを{address_link}へ転送しました。"
+    "transfer": "{asset_type} {asset_link} を {owner_link} へ転送しました",
+    "transfer_mana": "{mana} MANAを {address_link} へ転送しました。"
   },
   "transaction_confirmations": {
     "count": "{confirmations_count}件の確認"
   },
   "transaction_status": {
-    "activity_page": "活動ページ",
+    "activity_page": "取引履歴",
     "idle": {
-      "please_confirm": "取引を確認してください。"
+      "please_confirm": "取引を確認してください"
     },
     "parcel": {
       "still_pending": "{parcel_name}は{transactions_count}件、処理中です。"
     },
-    "see_activity": "取引履歴を表示するには、{activity_link}をご覧ください。",
+    "see_activity": "取引履歴を表示するには{activity_link}をご覧ください",
     "text": {
       "failed": "処理に失敗しました。もう一度試してください。",
-      "pending": "取引が承認されるのを待っています。"
+      "pending": "取引の承認待ち"
     }
   },
   "transaction_tooltips": {
-    "dropped": "このトランザクションはネットワークによって削除されました。",
-    "loading": "トランザクションのステータスを取得しています。",
+    "dropped": "このトランザクションはネットワークによって削除されました",
+    "loading": "トランザクションのステータスを取得中",
     "queued":
-      "以前の保留中のトランザクションがあるため、このトランザクションは処理できません",
+      "以前の保留中のトランザクションがあるため、このトランザクションは処理できません。",
     "replaced":
       "このトランザクションと同じナンスを持つ別のトランザクションが代わりにマイニングされました"
   },
@@ -509,7 +509,7 @@
     "reverted": "失敗"
   },
   "transfer_estate": {
-    "about_to_transfer": "あなたはエステート{name}を転送しようとしています。",
+    "about_to_transfer": "あなたはエステート{name}を転送しようとしています",
     "transfer_estate": "エステートを転送する"
   },
   "transfer_mana": {
@@ -522,8 +522,8 @@
     "title": "MANAを転送する"
   },
   "transfer_parcel": {
-    "about_to_transfer": "あなたは区画{parcel_name}を転送しようとしています。",
-    "cant_transfer": "このLANDは販売中であるため、転送できません。",
-    "transfer_land": "転送LAND"
+    "about_to_transfer": "あなたは区画{parcel_name}を転送しようとしています",
+    "cant_transfer": "このLANDは販売中のため転送できません",
+    "transfer_land": "LANDを転送"
   }
 }
