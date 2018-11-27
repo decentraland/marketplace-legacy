@@ -31,7 +31,7 @@ const INITIAL_STATE = {
       landsLimitPerBid: null,
       currentPrice: null,
       totalManaBurned: null,
-      landsBidded: null,
+      totalLandsBidded: null,
       startTime: null,
       endTime: null
     },
