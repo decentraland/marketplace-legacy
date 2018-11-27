@@ -218,8 +218,13 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   hasReachedLimit(selected) {
-    const { landsLimitPerBid } = this.props.params
-    return Object.keys(selected).length >= landsLimitPerBid
+    const { allParcels, params } = this.props
+    const { landsLimitPerBid } = params
+    return (
+      Object.keys(selected).filter(
+        parcelId => allParcels[parcelId].owner == null
+      ).length >= landsLimitPerBid
+    )
   }
 
   getSelectedParcels() {
