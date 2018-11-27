@@ -58,7 +58,10 @@ const mapState = state => {
     rate: getRate(state),
     selectedCoordinatesById: getSelectedCoordinatesById(state),
     wallet,
-    allParcels
+    allParcels,
+    // this is not used on the AuctionPage, but since we mutate allParcels,
+    // we pass this down to for a re-render down the tree
+    parcelOnChainOwners
   }
 }
 

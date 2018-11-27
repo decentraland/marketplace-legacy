@@ -61,7 +61,8 @@ export default class AuctionPage extends React.PureComponent {
     onChangeCoords: PropTypes.func.isRequired,
     token: PropTypes.oneOf(TOKEN_SYMBOLS),
     rate: PropTypes.number,
-    selectedCoordinatesById: PropTypes.objectOf(coordsType).isRequired
+    selectedCoordinatesById: PropTypes.objectOf(coordsType).isRequired,
+    parcelOnChainOwners: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   constructor(props) {
