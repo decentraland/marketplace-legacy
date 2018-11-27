@@ -70,6 +70,7 @@ export default class AuctionPage extends React.PureComponent {
 
     this.hasFetchedParams = false
     this.mounted = false
+    this.timoutId = null
 
     this.state = {
       showTokenTooltip: !hasSeenAuctionHelper(
@@ -95,6 +96,10 @@ export default class AuctionPage extends React.PureComponent {
 
   componentWillUnmount() {
     this.mounted = false
+    if (this.timoutId != null) {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -199,7 +204,7 @@ export default class AuctionPage extends React.PureComponent {
 
   updateSelectionOwners = async () => {
     await Promise.all(this.getSelectedParcels().map(this.updateOwner))
-    setTimeout(() => {
+    this.timoutId = setTimeout(() => {
       if (!this.mounted) return
       this.updateSelectionOwners()
     }, REFRESH_OWNERS_INTERVAL)
