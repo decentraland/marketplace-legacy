@@ -21,6 +21,8 @@ export const AUCTION_HELPERS = Object.freeze({
   SEEN_AUCTION_TOKEN_TOOLTIP: 'seenAuctionTokenTooltip'
 })
 
+export const AUCTION_DURATION_IN_DAYS = 15
+
 export function isAuthorized(authorization) {
   return authorization && authorization.allowances.LANDAuction.MANAToken > 0
 }
@@ -40,6 +42,5 @@ export function getVideoTutorialLink() {
 export async function hasAuctionFinished() {
   const landAuction = eth.getContract('LANDAuction')
   const endTime = await landAuction.endTime()
-
   return endTime.toNumber() > 0 && Date.now() / 1000 >= endTime.toNumber()
 }

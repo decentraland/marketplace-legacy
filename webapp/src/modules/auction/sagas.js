@@ -43,13 +43,12 @@ export function* auctionSaga() {
 function* handleAuctionParamsRequest(action) {
   try {
     const landAuction = eth.getContract('LANDAuction')
-
     const [
       availableParcelCount,
       gasPriceLimit,
       landsLimitPerBid,
       currentPrice,
-      landsBidded,
+      totalLandsBidded,
       totalManaBurned,
       startTime,
       endTime
@@ -58,7 +57,7 @@ function* handleAuctionParamsRequest(action) {
       landAuction.gasPriceLimit(),
       landAuction.landsLimitPerBid(),
       landAuction.getCurrentPrice(),
-      landAuction.landsBidded(),
+      landAuction.totalLandsBidded(),
       landAuction.totalManaBurned(),
       landAuction.startTime(),
       landAuction.endTime()
@@ -69,7 +68,7 @@ function* handleAuctionParamsRequest(action) {
       gasPriceLimit: gasPriceLimit.toNumber() / ONE_BILLION,
       landsLimitPerBid: landsLimitPerBid.toNumber(),
       currentPrice: eth.utils.fromWei(currentPrice),
-      landsBidded: landsBidded.toNumber(),
+      totalLandsBidded: totalLandsBidded.toNumber(),
       totalManaBurned: totalManaBurned.toNumber(),
       startTime: startTime.toNumber(),
       endTime: endTime.toNumber()

@@ -4,6 +4,7 @@ import { Button, Loader } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { formatMana } from 'lib/utils'
+import { AUCTION_DURATION_IN_DAYS } from 'modules/auction/utils'
 import { auctionParamsType } from 'components/types'
 import AtlasPage from 'components/AtlasPage'
 import SignInNotice from 'components/SignInNotice'
@@ -20,12 +21,18 @@ export default class AuctionFinishedPage extends React.PureComponent {
 
   getAuctionRealDuration = () => {
     const { startTime, endTime } = this.props.params
-    return `${(endTime - startTime) / 60 * 60 * 24} days`
+    const oneDayInSeconds = 60 * 60 * 24
+    const durationInDays = (endTime - startTime) / oneDayInSeconds
+    return `${
+      durationInDays > AUCTION_DURATION_IN_DAYS
+        ? AUCTION_DURATION_IN_DAYS
+        : durationInDays
+    } days`
   }
 
   render() {
     const { params, onGoToMarketplace, isConnecting, isConnected } = this.props
-    const { landsBidded, totalManaBurned } = params
+    const { totalLandsBidded, totalManaBurned } = params
 
     if (!isConnecting && !isConnected) {
       return (
@@ -41,7 +48,7 @@ export default class AuctionFinishedPage extends React.PureComponent {
         <div className="AuctionFinishedPage">
           <div className="message-wrapper">
             {isConnecting ||
-            (landsBidded == null && totalManaBurned == null) ? (
+            (totalLandsBidded == null && totalManaBurned == null) ? (
               <Loader active size="massive" />
             ) : (
               <React.Fragment>
@@ -52,7 +59,7 @@ export default class AuctionFinishedPage extends React.PureComponent {
                   {t('auction_finished.stats_title')}
                   <div className="stats">
                     <div className="stat">
-                      <p>{parseInt(landsBidded)}</p>
+                      <p>{parseInt(totalLandsBidded)}</p>
                       <p>{t('auction_finished.land_sold')}</p>
                     </div>
                     <div className="stat">

@@ -44,10 +44,6 @@ export default class AuctionRoute extends React.PureComponent {
 
   render() {
     const { auctionFinished } = this.state
-    return (
-      <React.Fragment>
-        {auctionFinished ? <AuctionFinishedPage /> : <AuctionPage />}
-      </React.Fragment>
-    )
+    return auctionFinished ? <AuctionFinishedPage /> : <AuctionPage />
   }
 }
