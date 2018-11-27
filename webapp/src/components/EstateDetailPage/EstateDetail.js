@@ -197,9 +197,8 @@ export default class EstateDetail extends React.PureComponent {
                       : WITHOUT_ACTION_BUTTONS_WIDTH
                   }
                   mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
-                  className="parcels-included-headline"
                 >
-                  <h3 className="parcels-included-title">
+                  <h3>
                     {t('estate_detail.parcels')}
                     {isOwner && (
                       <Button
