@@ -298,7 +298,7 @@ export default class AuctionPage extends React.PureComponent {
       )
     }
 
-    const selectedParcels = this.getSelectedParcels(true)
+    const selectedParcels = this.getSelectedParcels()
     const validSelectedParcels = selectedParcels.filter(
       parcel => parcel.owner == null
     )
