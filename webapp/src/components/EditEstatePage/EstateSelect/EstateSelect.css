@@ -7,53 +7,25 @@
   font-size: 15px;
 }
 
-.EstateSelect .select-title {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.EstateSelect > .Loading {
-  font-size: 10px;
-  top: 35%;
-}
-
-.EstateSelect .description {
-  color: var(--gray);
-}
-
 .EstateSelect .estate-selection {
   margin: 30px 0;
-  font-size: 15px;
 }
 
-.EstateSelect .EstateActions {
-  text-align: left;
-  margin-top: 30px;
-}
-
-.EstateSelect .estate-selection .parcels-included.column {
-  display: flex;
-  flex-wrap: wrap;
+.EstateSelect .estate-selection .header {
+  display: inline-block;
 }
 
 .EstateSelect .estate-selection .parcels-included-description {
-  width: 100%;
   font-size: 18px;
-  margin: 15px 0 0;
   color: var(--gray);
 }
 
-.EstateSelect .parcels-included .ParcelCoord {
-  margin-right: 16px;
-  margin-top: 20px;
+.EstateSelect .estate-selection .dissolve-button {
+  padding-top: 6px;
+  float: right;
 }
 
-.EstateSelect .parcels-included-headline.column {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.tx-label {
+.EstateSelect .tx-label {
   text-align: left;
   font-size: 14px;
   margin-top: 15px;

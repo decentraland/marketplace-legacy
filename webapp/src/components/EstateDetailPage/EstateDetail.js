@@ -7,7 +7,6 @@ import { t } from '@dapps/modules/translation/utils'
 import { locations } from 'locations'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
-// import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
@@ -182,7 +181,7 @@ export default class EstateDetail extends React.PureComponent {
           </Grid.Row>
           {estate.parcels.filter(hasTags).length > 0 && (
             <Grid.Row>
-              <Grid.Column className={'highlights'}>
+              <Grid.Column className="highlights">
                 <h3>{t('parcel_detail.tags.title')}</h3>
                 <ParcelTags estate={estate} showDetails={true} />
               </Grid.Column>
@@ -214,7 +213,7 @@ export default class EstateDetail extends React.PureComponent {
                     )}
                   </h3>
                 </Grid.Column>
-                <Grid.Column width={WITHOUT_ACTION_BUTTONS_WIDTH} className="">
+                <Grid.Column width={WITHOUT_ACTION_BUTTONS_WIDTH}>
                   <ParcelCoords
                     parcels={this.getEstateParcels()}
                     onClick={onParcelClick}

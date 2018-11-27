@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import TxStatus from 'components/TxStatus'
-import { t } from '@dapps/modules/translation/utils'
 import './EstateSelectActions.css'
 
 export default class EstateSelectActions extends React.PureComponent {

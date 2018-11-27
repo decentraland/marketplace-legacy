@@ -81,32 +81,8 @@
   margin-top: 20px;
 }
 
-.EstateDetail .details .parcels-included-title {
-  width: 100%;
-  font-size: 18px;
-  color: white;
-  margin-bottom: 0;
-  text-align: left;
-}
-
-.EstateDetail .details .parcels-included-title .button.tiny.link {
+.EstateDetail .details .button.tiny.link {
   margin-left: 16px;
-}
-
-.EstateDetail .details .parcels-included-headline.column {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.EstateDetail .details .parcels-included {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-.EstateDetail .parcels-included .ParcelCoord {
-  margin-right: 16px;
-  margin-top: 20px;
 }
 
 .EstateDetail.empty {
@@ -126,10 +102,5 @@
 @media (max-width: 768px) {
   .EstateDetail .estate-owner-container {
     text-align: left !important;
-  }
-
-  .EstateDetail .parcels-included .ParcelCoord {
-    margin-top: 0px;
-    margin-bottom: 20px;
   }
 }

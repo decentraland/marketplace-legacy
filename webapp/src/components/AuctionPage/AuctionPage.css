@@ -49,30 +49,13 @@
   color: var(--gray);
 }
 
-.AuctionPage .auction-details .parcels-included-parcels.column {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.AuctionPage .parcels-included {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 16px 24px 0;
+.AuctionPage .ParcelCoord.has-status .attribute {
+  border-color: var(--gray);
+  color: var(--gray);
 }
 
 .AuctionPage .ui.warning.message {
   margin-bottom: 20px;
-}
-
-.AuctionPage .parcels-included .ParcelCoord {
-  margin-right: 16px;
-  margin-bottom: 16px;
-}
-
-.AuctionPage .ParcelCoord.has-status .attribute {
-  border-color: var(--gray);
-  color: var(--gray);
 }
 
 .AuctionPage footer {
@@ -153,10 +136,6 @@
   .AuctionPage .information-block,
   .AuctionPage .bid-wrapper {
     margin-top: 20px;
-  }
-
-  .AuctionPage .parcels-included {
-    margin-top: 10px;
   }
 }
 

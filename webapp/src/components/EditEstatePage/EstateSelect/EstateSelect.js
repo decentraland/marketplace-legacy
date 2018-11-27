@@ -8,13 +8,13 @@ import {
   Container,
   Button
 } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
-import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
+import ParcelCoords from 'components/ParcelCoords'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { isOwner } from 'shared/asset'
 import {
   getParcelMatcher,
@@ -47,7 +47,7 @@ export default class EstateSelect extends React.PureComponent {
     onDeleteEstate: PropTypes.func.isRequired
   }
 
-  parcelClickHandler = ({ asset, x, y }) => {
+  handleParcelClick = ({ asset, x, y }) => {
     const { wallet } = this.props
 
     if (!isOwner(wallet, buildCoordinate(x, y)) && !isOwner(wallet, asset.id)) {
@@ -87,7 +87,7 @@ export default class EstateSelect extends React.PureComponent {
     onChange([...parcels, { x, y }])
   }
 
-  hasParcelsChanged = parcels => {
+  haveParcelsChanged = parcels => {
     const { pristineEstate } = this.props
     if (!pristineEstate) {
       return false
@@ -134,6 +134,17 @@ export default class EstateSelect extends React.PureComponent {
   hasReachedRemoveLimit() {
     const parcelsToRemove = this.getParcelsToRemove()
     return parcelsToRemove.length >= MAX_PARCELS_PER_TX
+  }
+
+  getEstateParcels() {
+    const { estate, allParcels } = this.props
+    const parcels = []
+
+    for (const { x, y } of estate.data.parcels) {
+      const parcel = allParcels[buildCoordinate(x, y)]
+      if (parcel) parcels.push(parcel)
+    }
+    return parcels
   }
 
   renderTxLabel = () => {
@@ -186,10 +197,10 @@ export default class EstateSelect extends React.PureComponent {
           asset={estate}
           showMiniMap={false}
           showControls={false}
-          onAssetClick={this.parcelClickHandler}
+          onAssetClick={this.handleParcelClick}
         />
         <Container>
-          <Grid className="estate-selection">
+          <Grid className="estate-selection" stackable>
             {this.hasReachedAddLimit() || this.hasReachedRemoveLimit() ? (
               <Grid.Row>
                 <Grid.Column width={16}>
@@ -201,52 +212,42 @@ export default class EstateSelect extends React.PureComponent {
                       max: MAX_PARCELS_PER_TX
                     })}
                   />
-                  <p className="warning-parcels-limit" />
                 </Grid.Column>
               </Grid.Row>
             ) : null}
 
             <Grid.Row>
-              <Grid.Column width={isCreation ? 16 : 8}>
+              <Grid.Column width={16}>
                 <Header size="large">
-                  <p>
-                    {isCreation
-                      ? t('estate_select.new_selection')
-                      : t('estate_select.edit_selection')}
-                  </p>
+                  {isCreation
+                    ? t('estate_select.new_selection')
+                    : t('estate_select.edit_selection')}
                 </Header>
-              </Grid.Column>
-              {!isCreation &&
-                isOwner(wallet, estate.id) && (
-                  <Grid.Column width={8} className="parcels-included-headline">
+                {!isCreation &&
+                  isOwner(wallet, estate.id) && (
                     <Button
                       size="tiny"
-                      className="link"
+                      className="link dissolve-button"
                       onClick={onDeleteEstate}
                     >
                       <Icon name="trash" />
-                      {t('estate_detail.dissolve')}{' '}
+                      {t('estate_detail.dissolve').toUpperCase()}
                     </Button>
-                  </Grid.Column>
-                )}
-              <Grid.Column width={16} className="parcels-included">
+                  )}
                 <p className="parcels-included-description">
                   {t('estate_select.description')}
                 </p>
-                {allParcels &&
-                  parcels.map(({ x, y }) => {
-                    const parcel = allParcels[buildCoordinate(x, y)]
-                    return parcel ? (
-                      <ParcelCoord key={parcel.id} parcel={parcel} />
-                    ) : null
-                  })}
+              </Grid.Column>
+              <Grid.Column width={16}>
+                {allParcels && (
+                  <ParcelCoords
+                    parcels={this.getEstateParcels()}
+                    isCollapsable={false}
+                  />
+                )}
               </Grid.Column>
               {canEdit && (
-                <Grid.Column
-                  className="parcel-actions-container"
-                  computer={8}
-                  tablet={16}
-                >
+                <Grid.Column width={10}>
                   <EstateSelectActions
                     isTxIdle={isTxIdle}
                     isCreation={isCreation}
@@ -256,7 +257,7 @@ export default class EstateSelect extends React.PureComponent {
                     canContinue={this.hasParcels(parcels)}
                     canSubmit={
                       this.hasParcels(parcels) &&
-                      this.hasParcelsChanged(parcels)
+                      this.haveParcelsChanged(parcels)
                     }
                   />
                   {!isCreation && this.renderTxLabel()}
