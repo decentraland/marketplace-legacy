@@ -21,7 +21,8 @@ import {
   authorizationType,
   auctionParamsType,
   walletType,
-  parcelType
+  parcelType,
+  coordsType
 } from 'components/types'
 import {
   hasSeenAuctionHelper,
@@ -57,8 +58,10 @@ export default class AuctionPage extends React.PureComponent {
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
     onChangeAuctionCenterParcel: PropTypes.func.isRequired,
+    onChangeCoords: PropTypes.func.isRequired,
     token: PropTypes.oneOf(TOKEN_SYMBOLS),
-    rate: PropTypes.number
+    rate: PropTypes.number,
+    selectedCoordinatesById: PropTypes.objectOf(coordsType).isRequired
   }
 
   constructor(props) {
@@ -68,7 +71,6 @@ export default class AuctionPage extends React.PureComponent {
     this.mounted = false
 
     this.state = {
-      selectedCoordinatesById: {},
       showTokenTooltip: !hasSeenAuctionHelper(
         AUCTION_HELPERS.SEEN_AUCTION_TOKEN_TOOLTIP
       )
@@ -130,19 +132,19 @@ export default class AuctionPage extends React.PureComponent {
     this.updateOwner(asset)
 
     const wasOverLimit = this.hasReachedLimit(
-      this.state.selectedCoordinatesById
+      this.props.selectedCoordinatesById
     )
     const newSelectedCoordsById = this.buildNewSelectedCoords(asset)
     const isOverLimit = this.hasReachedLimit(newSelectedCoordsById)
 
     if (!wasOverLimit || (wasOverLimit && !isOverLimit)) {
-      this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+      this.props.onChangeCoords(newSelectedCoordsById)
     }
   }
 
   handleDeselectUnownedParcel = parcel => {
     const newSelectedCoordsById = this.buildNewSelectedCoords(parcel)
-    this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+    this.props.onChangeCoords(newSelectedCoordsById)
   }
 
   handleFindAvailableParcel = () => {
@@ -201,7 +203,7 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   buildNewSelectedCoords(parcel) {
-    const { selectedCoordinatesById } = this.state
+    const { selectedCoordinatesById } = this.props
     const { id, x, y } = parcel
     const isSelected = selectedCoordinatesById[id] !== undefined
 
@@ -211,7 +213,7 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   buildNewSelectionCoordsWithoutParcel(parcel) {
-    const { selectedCoordinatesById } = this.state
+    const { selectedCoordinatesById } = this.props
     return utils.omit(selectedCoordinatesById, parcel.id)
   }
 
@@ -221,8 +223,7 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   getSelectedParcels() {
-    const { allParcels } = this.props
-    const { selectedCoordinatesById } = this.state
+    const { allParcels, selectedCoordinatesById } = this.props
 
     if (!allParcels) return []
 
@@ -252,10 +253,14 @@ export default class AuctionPage extends React.PureComponent {
       center,
       allParcels,
       token,
-      rate
+      rate,
+      selectedCoordinatesById,
+      isConnecting,
+      isConnected,
+      isAvailableParcelLoading
     } = this.props
-    const { isConnecting, isConnected, isAvailableParcelLoading } = this.props
-    const { selectedCoordinatesById, showTokenTooltip } = this.state
+
+    const { showTokenTooltip } = this.state
     const {
       availableParcelCount,
       landsLimitPerBid,

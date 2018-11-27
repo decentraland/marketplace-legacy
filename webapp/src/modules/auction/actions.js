@@ -110,3 +110,14 @@ export function fetchAuctionRateFailure(token, error) {
     error
   }
 }
+
+// Set selecteted coordinates
+
+export const SET_SELECTED_COORDINATES = 'Set selected coordinates'
+
+export function setSelectedCoordinates(selectedCoordinatesById) {
+  return {
+    type: SET_SELECTED_COORDINATES,
+    selectedCoordinatesById
+  }
+}
