@@ -238,16 +238,16 @@ export default class EstateSelect extends React.PureComponent {
                   {t('estate_select.description')}
                 </p>
               </Grid.Column>
-              <Grid.Column width={16}>
-                {allParcels && (
+              {allParcels && (
+                <Grid.Column width={16}>
                   <ParcelCoords
                     parcels={this.getEstateParcels()}
                     isCollapsable={false}
                   />
-                )}
-              </Grid.Column>
+                </Grid.Column>
+              )}
               {canEdit && (
-                <Grid.Column width={10}>
+                <Grid.Column width={14}>
                   <EstateSelectActions
                     isTxIdle={isTxIdle}
                     isCreation={isCreation}

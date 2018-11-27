@@ -31,3 +31,10 @@
   margin-top: 15px;
   color: var(--text);
 }
+
+@media (max-width: 475px) {
+  .EstateSelect .estate-selection .dissolve-button {
+    padding-bottom: 6px;
+    float: none;
+  }
+}
