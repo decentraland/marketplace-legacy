@@ -24,14 +24,14 @@ async function reduceAuction(event) {
 
   switch (name) {
     case eventNames.BidSuccessful: {
-      const { _price, _beneficiary, _xs, _ys } = event.args
+      const { _pricePerLandInMana, _beneficiary, _xs, _ys } = event.args
       const timestamp = await new BlockTimestampService().getBlockTime(
         block_number
       )
       const xs = _xs.split(',')
       const ys = _ys.split(',')
       const ids = xs.map((x, index) => Parcel.buildId(x, ys[index]))
-      const price = eth.utils.fromWei(_price).toFixed(2)
+      const price = eth.utils.fromWei(_pricePerLandInMana).toFixed(2)
 
       log.info(
         `[${name}] Updating auction data for "${ids}" with ${price},${_beneficiary},${timestamp}`
