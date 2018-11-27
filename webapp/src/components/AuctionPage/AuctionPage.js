@@ -80,7 +80,9 @@ export default class AuctionPage extends React.PureComponent {
 
   componentWillMount() {
     const { onFetchAvailableParcel, isConnected } = this.props
-    onFetchAvailableParcel()
+    if (this.getSelectedParcels().length === 0) {
+      onFetchAvailableParcel()
+    }
 
     if (isConnected) {
       this.showAuctionModal(this.props)
