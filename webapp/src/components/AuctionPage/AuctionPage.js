@@ -255,10 +255,12 @@ export default class AuctionPage extends React.PureComponent {
     return parcels
   }
 
-  roundPrice(price) {
-    return parseFloat(price)
-      .toFixed(2)
-      .toLocaleString()
+  roundPrice = price => {
+    const { token } = this.props
+    return (token === 'MANA'
+      ? Math.round(price)
+      : parseFloat(price.toFixed(2))
+    ).toLocaleString()
   }
 
   handleToggle = () => {
