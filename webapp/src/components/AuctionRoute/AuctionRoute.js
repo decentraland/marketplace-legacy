@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { hasAuctionFinished } from 'modules/auction/utils'
+import { hasAuctionFinished, hasAuctionStarted } from 'modules/auction/utils'
 import AuctionPage from 'components/AuctionPage'
 import AuctionFinishedPage from 'components/AuctionFinishedPage'
+import AuctionSplash from 'components/AuctionSplash'
 
 export default class AuctionRoute extends React.PureComponent {
   static proptypes = {
@@ -15,7 +16,10 @@ export default class AuctionRoute extends React.PureComponent {
   constructor(props) {
     super(props)
     this.hasFetchedParams = false
-    this.state = { auctionFinished: false }
+    this.state = {
+      auctionFinished: false,
+      auctionHasStarted: true
+    }
   }
 
   async componentWillMount() {
@@ -23,7 +27,11 @@ export default class AuctionRoute extends React.PureComponent {
     if (isConnected) {
       this.fetchAuctionParams()
       const auctionFinished = await hasAuctionFinished()
-      this.setState({ auctionFinished: auctionFinished })
+      const auctionHasStarted = hasAuctionStarted()
+      this.setState({
+        auctionFinished,
+        auctionHasStarted
+      })
     }
   }
 
@@ -31,7 +39,11 @@ export default class AuctionRoute extends React.PureComponent {
     if (nextProps.isConnected) {
       this.fetchAuctionParams()
       const auctionFinished = await hasAuctionFinished()
-      this.setState({ auctionFinished: auctionFinished })
+      const auctionHasStarted = hasAuctionStarted()
+      this.setState({
+        auctionFinished,
+        auctionHasStarted
+      })
     }
   }
 
@@ -43,7 +55,16 @@ export default class AuctionRoute extends React.PureComponent {
   }
 
   render() {
-    const { auctionFinished } = this.state
-    return auctionFinished ? <AuctionFinishedPage /> : <AuctionPage />
+    const { auctionFinished, auctionHasStarted } = this.state
+
+    if (!auctionHasStarted) {
+      return <AuctionSplash />
+    }
+
+    if (auctionFinished) {
+      return <AuctionFinishedPage />
+    } else {
+      return <AuctionPage />
+    }
   }
 }

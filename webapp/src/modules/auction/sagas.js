@@ -27,7 +27,7 @@ import { locations } from 'locations'
 import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
 import { getParams, getSelectedToken } from './selectors'
-import { TOKEN_ADDRESSES, hasAuctionFinished } from './utils'
+import { TOKEN_ADDRESSES, isAuctionActive } from './utils'
 
 const ONE_BILLION = 1000000000 // 1.000.000.000
 const REFRESH_INTERVAL = 5000 // five segundos
@@ -50,7 +50,6 @@ function* handleAuctionParamsRequest(action) {
       currentPrice,
       totalLandsBidded,
       totalManaBurned,
-      startTime,
       endTime
     ] = yield all([
       api.fetchAvaialableParcelCount(),
@@ -59,7 +58,6 @@ function* handleAuctionParamsRequest(action) {
       landAuction.getCurrentPrice(),
       landAuction.totalLandsBidded(),
       landAuction.totalManaBurned(),
-      landAuction.startTime(),
       landAuction.endTime()
     ])
 
@@ -70,7 +68,6 @@ function* handleAuctionParamsRequest(action) {
       currentPrice: eth.utils.fromWei(currentPrice),
       totalLandsBidded: totalLandsBidded.toNumber(),
       totalManaBurned: totalManaBurned.toNumber(),
-      startTime: startTime.toNumber(),
       endTime: endTime.toNumber()
     }
 
@@ -144,10 +141,12 @@ function* handleConnectWalletSuccess(action) {
   // keep refreshing params and rate while the user is on /auction
   while (connected) {
     const pathname = yield select(getPathname)
-    const hasFinished = yield call(() => hasAuctionFinished())
-    if (pathname === locations.auction() && !hasFinished) {
+    const isActive = yield call(() => isAuctionActive())
+
+    if (isActive && pathname === locations.auction()) {
       yield put(fetchAuctionParamsRequest())
     }
+
     yield delay(REFRESH_INTERVAL)
     connected = yield select(isConnected)
   }

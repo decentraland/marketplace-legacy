@@ -44,3 +44,18 @@ export async function hasAuctionFinished() {
   const endTime = await landAuction.endTime()
   return endTime.toNumber() > 0 && Date.now() / 1000 >= endTime.toNumber()
 }
+
+export function hasAuctionStarted() {
+  return getAuctionStartDate() <= Date.now()
+}
+
+export async function isAuctionActive() {
+  const hasFinished = await hasAuctionFinished()
+  const hasStarted = hasAuctionStarted()
+
+  return !hasFinished && hasStarted
+}
+
+export function getAuctionStartDate() {
+  return 1544400000000 // 10 of December 2018 00:00:00 UTC 0
+}

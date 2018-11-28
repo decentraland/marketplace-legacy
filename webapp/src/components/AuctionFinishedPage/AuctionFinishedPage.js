@@ -6,7 +6,7 @@ import { t } from '@dapps/modules/translation/utils'
 import { formatMana } from 'lib/utils'
 import { AUCTION_DURATION_IN_DAYS } from 'modules/auction/utils'
 import { auctionParamsType } from 'components/types'
-import AtlasPage from 'components/AtlasPage'
+import AuctionStaticPage from 'components/AuctionStaticPage'
 import SignInNotice from 'components/SignInNotice'
 
 import './AuctionFinishedPage.css'
@@ -43,45 +43,40 @@ export default class AuctionFinishedPage extends React.PureComponent {
     }
 
     return (
-      <React.Fragment>
-        <AtlasPage />
-        <div className="AuctionFinishedPage">
-          <div className="message-wrapper">
-            {isConnecting ||
-            (totalLandsBidded == null && totalManaBurned == null) ? (
-              <Loader active size="massive" />
-            ) : (
-              <React.Fragment>
-                <h1 className="title">{t('auction_finished.title')}</h1>
-                <div className="description">
-                  {t('auction_finished.description')}
-                  <br />
-                  {t('auction_finished.stats_title')}
-                  <div className="stats">
-                    <div className="stat">
-                      <p>{parseInt(totalLandsBidded)}</p>
-                      <p>{t('auction_finished.land_sold')}</p>
-                    </div>
-                    <div className="stat">
-                      <p>{formatMana(parseInt(totalManaBurned), '')}</p>
-                      <p>{t('auction_finished.mana_burned')}</p>
-                    </div>
-                    <div className="stat">
-                      <p>{this.getAuctionRealDuration()}</p>
-                      <p>{t('global.duration')}</p>
-                    </div>
-                  </div>
+      <AuctionStaticPage>
+        {isConnecting ||
+        (totalLandsBidded == null && totalManaBurned == null) ? (
+          <Loader active size="massive" />
+        ) : (
+          <div className="AuctionFinishedPage">
+            <h1 className="title">{t('auction_finished.title')}</h1>
+            <div className="description">
+              {t('auction_finished.description')}
+              <br />
+              {t('auction_finished.stats_title')}
+              <div className="stats">
+                <div className="stat">
+                  <p>{parseInt(totalLandsBidded)}</p>
+                  <p>{t('auction_finished.land_sold')}</p>
                 </div>
-                <div className="actions">
-                  <Button primary={true} onClick={onGoToMarketplace}>
-                    {t('auction_finished.cta').toUpperCase()}
-                  </Button>
+                <div className="stat">
+                  <p>{formatMana(parseInt(totalManaBurned), '')}</p>
+                  <p>{t('auction_finished.mana_burned')}</p>
                 </div>
-              </React.Fragment>
-            )}
+                <div className="stat">
+                  <p>{this.getAuctionRealDuration()}</p>
+                  <p>{t('global.duration')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="actions">
+              <Button primary={true} onClick={onGoToMarketplace}>
+                {t('auction_finished.cta').toUpperCase()}
+              </Button>
+            </div>
           </div>
-        </div>
-      </React.Fragment>
+        )}
+      </AuctionStaticPage>
     )
   }
 }

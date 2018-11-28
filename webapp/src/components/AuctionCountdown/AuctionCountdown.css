@@ -1,0 +1,60 @@
+.AuctionCountdown {
+  background: #16141a;
+  max-width: 600px;
+  margin: auto;
+  padding: 25px;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.AuctionCountdown.banner {
+  background: #232027;
+}
+
+.AuctionCountdown .countdown-wrapper {
+  margin: 25px auto;
+}
+
+.AuctionCountdown .cta-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.AuctionCountdown.banner .actions {
+  display: flex;
+  align-items: center;
+}
+
+.AuctionCountdown .cta-wrapper.ui.form .ui.input{
+  padding: 0.2px;
+  flex: 1;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.AuctionCountdown .cta-wrapper .button {
+  margin: 0;
+  padding: 10px 35px;
+}
+
+@media(min-width: 992px) {
+  .AuctionCountdown.banner {
+    display: flex;
+    align-content: flex-start;
+    margin: 50px 0;
+    padding: 20px;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .AuctionCountdown.banner  .countdown-wrapper {
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 400px) {
+  .AuctionCountdown {
+    padding: 50px;
+  }
+}
