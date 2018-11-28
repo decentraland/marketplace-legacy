@@ -17,6 +17,13 @@ export default class ParcelCoord extends React.PureComponent {
     }
   }
 
+  handleOnDelete = () => {
+    const { onDelete, parcel } = this.props
+    if (onDelete) {
+      onDelete(parcel)
+    }
+  }
+
   render() {
     const { parcel, ...chipProps } = this.props
 
@@ -24,7 +31,12 @@ export default class ParcelCoord extends React.PureComponent {
     // semantic wrongly throws on the latter as of version 0.78.2
     return (
       <div className="ParcelCoord">
-        <Chip parcel={parcel} {...chipProps} onClick={this.handleOnClick}>
+        <Chip
+          parcel={parcel}
+          {...chipProps}
+          onClick={this.handleOnClick}
+          onDelete={this.handleOnDelete}
+        >
           <Icon name="marker" className="map alternate" />
           <span>{parcel.id}</span>
         </Chip>

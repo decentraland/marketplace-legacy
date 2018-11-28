@@ -160,6 +160,10 @@
     margin-right: auto;
   }
 
+  .AuctionPage .auction-panel {
+    padding-top: 16px;
+  }
+
   .AuctionPage footer,
   .AuctionPage footer .available-parcels {
     display: block;
