@@ -313,4 +313,8 @@
   .AuctionPage .auction-menu .header {
     cursor: pointer;
   }
+
+  .AuctionPage .output-information .information-block + .information-block {
+    margin-left: 0px;
+  }
 }

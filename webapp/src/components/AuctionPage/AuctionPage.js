@@ -335,7 +335,7 @@ export default class AuctionPage extends React.PureComponent {
         <Container className={auctionMenuClasses}>
           <Grid className="auction-details">
             <Grid.Row>
-              <Grid.Column mobile={16} computer={6}>
+              <Grid.Column mobile={16} computer={5}>
                 <Header size="large" onClick={this.handleToggle}>
                   <span>
                     {t('auction_page.title')}{' '}
@@ -354,7 +354,7 @@ export default class AuctionPage extends React.PureComponent {
 
               <Grid.Column
                 mobile={16}
-                computer={10}
+                computer={11}
                 className="auction-actions"
               >
                 <Form onSubmit={preventDefault(this.handleSubmit)}>

@@ -1,3 +1,7 @@
+.Token {
+  white-space: nowrap;
+}
+
 .Token .loading {
   color: var(--gray);
 }
