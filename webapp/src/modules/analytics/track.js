@@ -28,6 +28,7 @@ import {
   TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
+import { LEARN_MORE_AUCTION } from 'modules/auction/actions'
 
 const addAssetType = (actionName, assetType) =>
   `${actionName} ${assetType[0].toUpperCase() + assetType.slice(1)}`
@@ -156,4 +157,6 @@ export function track() {
     token_id: action.transfer.estate.id,
     to: action.transfer.to
   }))
+
+  add(LEARN_MORE_AUCTION, 'Learn More Auction')
 }

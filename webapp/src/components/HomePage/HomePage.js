@@ -15,16 +15,16 @@ import './HomePage.css'
 
 export default class HomePage extends React.PureComponent {
   static propTypes = {
-    assets: PropTypes.arrayOf(assetType)
+    assets: PropTypes.arrayOf(assetType),
+    onLearnMoreAuction: PropTypes.func.isRequired
   }
 
   componentWillMount() {
     this.props.onFetchPublications()
   }
 
-  onLearnMore = () => {
-    const { onNavigate } = this.props
-    onNavigate(locations.auction())
+  handleLearnMore = () => {
+    this.props.onLearnMoreAuction()
   }
 
   render() {
@@ -49,9 +49,11 @@ export default class HomePage extends React.PureComponent {
             !hasAuctionStarted() && (
               <div className="banner-wrapper">
                 <AuctionCountdown isBanner={true}>
-                  <Button primary={true} onClick={this.onLearnMore}>
-                    {t('global.learn_more').toUpperCase()}
-                  </Button>
+                  <Link to={locations.auction()}>
+                    <Button primary={true} onClick={this.handleLearnMore}>
+                      {t('global.learn_more').toUpperCase()}
+                    </Button>
+                  </Link>
                 </AuctionCountdown>
               </div>
             )}

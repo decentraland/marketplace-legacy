@@ -15,7 +15,7 @@
 }
 
 .Countdown-col-element p, .banner .Countdown-col-element p {
-  font-size: 2em;
+  font-size: 1.5em;
   margin-bottom: 0;
 }
 
@@ -30,5 +30,11 @@
 
   .Countdown-col-element p {
     font-size: 4em;
+  }
+}
+
+@media(min-width: 380px) {
+  .Countdown-col-element p {
+    font-size: 2em;
   }
 }

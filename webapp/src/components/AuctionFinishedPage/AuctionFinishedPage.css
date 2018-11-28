@@ -1,6 +1,7 @@
 .AuctionFinishedPage {
   margin: auto;
   background: var(--background);
+  width: 100%;
   max-width: 600px;
   padding: 50px;
   border-radius: 10px;

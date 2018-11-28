@@ -33,6 +33,8 @@
 
   .AuctionCountdown.banner  .countdown-wrapper {
     margin: 0 auto;
+    display: flex;
+    align-items: center;
   }
 }
 

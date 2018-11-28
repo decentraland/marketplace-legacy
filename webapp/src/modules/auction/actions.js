@@ -121,3 +121,11 @@ export function setSelectedCoordinates(selectedCoordinatesById) {
     selectedCoordinatesById
   }
 }
+
+export const LEARN_MORE_AUCTION = 'learn more auction'
+
+export function learnMoreAuction() {
+  return {
+    type: LEARN_MORE_AUCTION
+  }
+}
