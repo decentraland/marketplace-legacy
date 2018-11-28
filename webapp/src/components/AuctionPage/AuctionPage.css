@@ -53,7 +53,7 @@
   margin-left: 24px;
 }
 
-.AuctionPage .ParcelCoord.has-status .attribute {
+.AuctionPage .Chip.has-status .attribute {
   border-color: var(--gray);
   color: var(--gray);
 }
