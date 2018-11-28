@@ -141,7 +141,7 @@ function* handleConnectWalletSuccess(action) {
   // keep refreshing params and rate while the user is on /auction
   while (connected) {
     const pathname = yield select(getPathname)
-    const isActive = yield call(() => isAuctionActive())
+    const isActive = yield call(isAuctionActive)
 
     if (isActive && pathname === locations.auction()) {
       yield put(fetchAuctionParamsRequest())
