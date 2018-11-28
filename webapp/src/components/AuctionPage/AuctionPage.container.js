@@ -10,7 +10,8 @@ import {
   getCenter,
   getLoading,
   getSelectedToken,
-  getRate
+  getRate,
+  getSelectedCoordinatesById
 } from 'modules/auction/selectors'
 import { getModal } from 'modules/ui/selectors'
 import { openModal } from 'modules/ui/actions'
@@ -22,7 +23,8 @@ import {
   fetchAuctionParamsRequest,
   fetchAuctionRateRequest,
   setParcelOnChainOwner,
-  changeAuctionCenterParcel
+  changeAuctionCenterParcel,
+  setSelectedCoordinates
 } from 'modules/auction/actions'
 import AuctionPage from './AuctionPage'
 
@@ -54,8 +56,12 @@ const mapState = state => {
     modal: getModal(state),
     token: getSelectedToken(state),
     rate: getRate(state),
+    selectedCoordinatesById: getSelectedCoordinatesById(state),
     wallet,
-    allParcels
+    allParcels,
+    // this is not used on the AuctionPage, but since we mutate allParcels,
+    // we pass this down to for a re-render down the tree
+    parcelOnChainOwners
   }
 }
 
@@ -69,7 +75,9 @@ const mapDispatch = dispatch => ({
     dispatch(changeAuctionCenterParcel(parcel)),
   onSubmit: (parcels, beneficiary) =>
     dispatch(openModal('BidConfirmationModal', { parcels, beneficiary })),
-  onChangeToken: token => dispatch(fetchAuctionRateRequest(token))
+  onChangeToken: token => dispatch(fetchAuctionRateRequest(token)),
+  onChangeCoords: selectedCoordinatesById =>
+    dispatch(setSelectedCoordinates(selectedCoordinatesById))
 })
 
 export default connect(mapState, mapDispatch)(AuctionPage)

@@ -110,7 +110,7 @@
     "authorize_token": "Autorizar el token {token}",
     "confirmation": "Confirmación",
     "confirmation_description":
-      "Está a punto de comprar {parcels} LAND por {price} {token}",
+      "Está a punto de comprar {parcels} parcelas de LAND por {price} {token}",
     "description":
       "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}.",
     "get_started": "Empezar",
@@ -125,7 +125,7 @@
     "welcome": "Bienvenido a la subasta Decentraland LAND!"
   },
   "auction_page": {
-    "available_parcels": "Parcelas disponibles",
+    "available_parcels": "parcelas disponibles",
     "bid": "Comprar",
     "description": "Encuentra LAND que quieres comprar.",
     "empty_message":

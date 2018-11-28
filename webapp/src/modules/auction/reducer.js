@@ -8,7 +8,8 @@ import {
   FETCH_AUCTION_RATE_SUCCESS,
   FETCH_AUCTION_RATE_FAILURE,
   SET_ON_CHAIN_PARCEL_OWNER,
-  CHANGE_AUCTION_CENTER_PARCEL
+  CHANGE_AUCTION_CENTER_PARCEL,
+  SET_SELECTED_COORDINATES
 } from './actions'
 import {
   FETCH_AVAILABLE_PARCEL_REQUEST,
@@ -33,6 +34,9 @@ const INITIAL_STATE = {
     },
     parcelOnChainOwners: {
       /* [parcelId]: owner */
+    },
+    selectedCoordinatesById: {
+      /* [parcelId]: true */
     }
   },
   loading: [],
@@ -122,5 +126,15 @@ export function auctionReducer(state = INITIAL_STATE, action) {
     }
     default:
       return state
+
+    case SET_SELECTED_COORDINATES: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          selectedCoordinatesById: action.selectedCoordinatesById
+        }
+      }
+    }
   }
 }

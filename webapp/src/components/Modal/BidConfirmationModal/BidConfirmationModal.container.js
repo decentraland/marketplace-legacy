@@ -8,7 +8,12 @@ import {
 
 import { bidOnParcelsRequest } from 'modules/auction/actions'
 import { closeModal } from 'modules/ui/actions'
-import { getSelectedToken, getParams, getRate } from 'modules/auction/selectors'
+import {
+  getSelectedToken,
+  getParams,
+  getRate,
+  getParcelsForConfirmation
+} from 'modules/auction/selectors'
 import {
   allowTokenRequest,
   ALLOW_TOKEN_SUCCESS
@@ -20,7 +25,8 @@ import { token as tokenHelper } from 'lib/token'
 import BidConfirmationModal from './BidConfirmationModal'
 
 const mapState = state => {
-  const { parcels, beneficiary } = getModal(state).data || {}
+  const { beneficiary } = getModal(state).data || {}
+  const parcels = getParcelsForConfirmation(state)
   const address = getAddress(state)
   const token = getSelectedToken(state)
 
@@ -53,7 +59,7 @@ const mapState = state => {
   // compute price
   const { currentPrice } = getParams(state)
   const rate = getRate(state)
-  const price = Number((currentPrice * rate).toFixed(2))
+  const price = Number((currentPrice * rate * parcels.length).toFixed(2))
 
   return {
     token,

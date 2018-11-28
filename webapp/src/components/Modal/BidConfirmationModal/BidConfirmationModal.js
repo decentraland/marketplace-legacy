@@ -25,9 +25,8 @@ export default class BidConfirmationModal extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    const { parcels, beneficiary, isAuthorized, onClose, onSubmit } = this.props
+    const { parcels, beneficiary, isAuthorized, onSubmit } = this.props
     if (isAuthorized) {
-      onClose()
       onSubmit(parcels, beneficiary)
     }
   }

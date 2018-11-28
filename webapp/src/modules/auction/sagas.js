@@ -7,6 +7,7 @@ import { isConnected } from '@dapps/modules/wallet/selectors'
 import { navigateTo } from '@dapps/modules/location/actions'
 import { getPathname } from '@dapps/modules/location/selectors'
 
+import { closeModal } from 'modules/ui/actions'
 import {
   FETCH_AUCTION_PARAMS_REQUEST,
   FETCH_AUCTION_RATE_REQUEST,
@@ -19,7 +20,8 @@ import {
   fetchAuctionParamsSuccess,
   fetchAuctionParamsFailure,
   bidOnParcelsSuccess,
-  bidOnParcelsFailure
+  bidOnParcelsFailure,
+  setSelectedCoordinates
 } from './actions'
 import { locations } from 'locations'
 import { api } from 'lib/api'
@@ -85,6 +87,8 @@ function* handleBidRequest(action) {
     )
 
     yield put(bidOnParcelsSuccess(txHash, xs, ys, beneficiary))
+    yield put(closeModal())
+    yield put(setSelectedCoordinates({}))
     yield put(push(locations.activity()))
   } catch (error) {
     yield put(bidOnParcelsFailure(error.message))

@@ -2,6 +2,8 @@ import queryString from 'query-string'
 import { createSelector } from 'reselect'
 import { getLocation } from '@dapps/modules/location/selectors'
 
+import { getData as getParcels } from 'modules/parcels/selectors'
+
 import { TOKEN_SYMBOLS } from './utils'
 
 export const getState = state => state.auction
@@ -38,4 +40,18 @@ export const getRate = createSelector(
   getRates,
   (selectedToken, rates) =>
     selectedToken in rates ? rates[selectedToken] : null
+)
+
+export const getSelectedCoordinatesById = state =>
+  getData(state).selectedCoordinatesById
+
+export const getParcelsForConfirmation = createSelector(
+  state => getSelectedCoordinatesById(state),
+  state => getParcelOnChainOwners(state),
+  state => getParcels(state),
+  (selectedCoordinatesById, parcelOnChainOwners, parcels) => {
+    return Object.keys(selectedCoordinatesById)
+      .filter(parcelId => !(parcelId in parcelOnChainOwners))
+      .map(parcelId => parcels[parcelId])
+  }
 )

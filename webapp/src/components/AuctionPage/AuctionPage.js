@@ -21,7 +21,8 @@ import {
   authorizationType,
   auctionParamsType,
   walletType,
-  parcelType
+  parcelType,
+  coordsType
 } from 'components/types'
 import {
   hasSeenAuctionHelper,
@@ -36,6 +37,8 @@ import TokenDropdown from './TokenDropdown'
 import Token from './Token'
 
 import './AuctionPage.css'
+
+const REFRESH_OWNERS_INTERVAL = 10000 // 10 seconds
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
@@ -55,17 +58,21 @@ export default class AuctionPage extends React.PureComponent {
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
     onChangeAuctionCenterParcel: PropTypes.func.isRequired,
+    onChangeCoords: PropTypes.func.isRequired,
     token: PropTypes.oneOf(TOKEN_SYMBOLS),
-    rate: PropTypes.number
+    rate: PropTypes.number,
+    selectedCoordinatesById: PropTypes.objectOf(coordsType).isRequired,
+    parcelOnChainOwners: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   constructor(props) {
     super(props)
 
     this.hasFetchedParams = false
+    this.mounted = false
+    this.timoutId = null
 
     this.state = {
-      selectedCoordinatesById: {},
       showTokenTooltip: !hasSeenAuctionHelper(
         AUCTION_HELPERS.SEEN_AUCTION_TOKEN_TOOLTIP
       )
@@ -74,11 +81,24 @@ export default class AuctionPage extends React.PureComponent {
 
   componentWillMount() {
     const { onFetchAvailableParcel, isConnected } = this.props
-    onFetchAvailableParcel()
+    if (this.getSelectedParcels().length === 0) {
+      onFetchAvailableParcel()
+    }
 
     if (isConnected) {
       this.showAuctionModal(this.props)
       this.fetchAuctionParams()
+    }
+
+    this.mounted = true
+    this.updateSelectionOwners()
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
+    if (this.timoutId != null) {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
     }
   }
 
@@ -107,26 +127,32 @@ export default class AuctionPage extends React.PureComponent {
   handleSelectUnownedParcel = async ({ asset }) => {
     if (!isParcel(asset) || asset.district_id != null) return
 
-    const ownerOnChain = await this.getParcelOwnerOnChain(asset)
-    if (!Contract.isEmptyAddress(ownerOnChain)) {
-      this.props.onSetParcelOnChainOwner(asset.id, ownerOnChain)
+    // if it has an owner, remove it from selection
+    if (asset.owner != null) {
+      this.setState({
+        selectedCoordinatesById: this.buildNewSelectionCoordsWithoutParcel(
+          asset
+        )
+      })
       return
     }
 
+    this.updateOwner(asset)
+
     const wasOverLimit = this.hasReachedLimit(
-      this.state.selectedCoordinatesById
+      this.props.selectedCoordinatesById
     )
     const newSelectedCoordsById = this.buildNewSelectedCoords(asset)
     const isOverLimit = this.hasReachedLimit(newSelectedCoordsById)
 
     if (!wasOverLimit || (wasOverLimit && !isOverLimit)) {
-      this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+      this.props.onChangeCoords(newSelectedCoordsById)
     }
   }
 
   handleDeselectUnownedParcel = parcel => {
     const newSelectedCoordsById = this.buildNewSelectedCoords(parcel)
-    this.setState({ selectedCoordinatesById: newSelectedCoordsById })
+    this.props.onChangeCoords(newSelectedCoordsById)
   }
 
   handleFindAvailableParcel = () => {
@@ -168,8 +194,24 @@ export default class AuctionPage extends React.PureComponent {
     return landRegistry.ownerOf(tokenId)
   }
 
+  updateOwner = async parcel => {
+    return this.getParcelOwnerOnChain(parcel).then(ownerOnChain => {
+      if (!Contract.isEmptyAddress(ownerOnChain)) {
+        this.props.onSetParcelOnChainOwner(parcel.id, ownerOnChain)
+      }
+    })
+  }
+
+  updateSelectionOwners = async () => {
+    await Promise.all(this.getSelectedParcels().map(this.updateOwner))
+    this.timoutId = setTimeout(() => {
+      if (!this.mounted) return
+      this.updateSelectionOwners()
+    }, REFRESH_OWNERS_INTERVAL)
+  }
+
   buildNewSelectedCoords(parcel) {
-    const { selectedCoordinatesById } = this.state
+    const { selectedCoordinatesById } = this.props
     const { id, x, y } = parcel
     const isSelected = selectedCoordinatesById[id] !== undefined
 
@@ -178,14 +220,23 @@ export default class AuctionPage extends React.PureComponent {
       : { ...selectedCoordinatesById, [id]: { x, y } }
   }
 
+  buildNewSelectionCoordsWithoutParcel(parcel) {
+    const { selectedCoordinatesById } = this.props
+    return utils.omit(selectedCoordinatesById, parcel.id)
+  }
+
   hasReachedLimit(selected) {
-    const { landsLimitPerBid } = this.props.params
-    return Object.keys(selected).length >= landsLimitPerBid
+    const { allParcels, params } = this.props
+    const { landsLimitPerBid } = params
+    return (
+      Object.keys(selected).filter(
+        parcelId => allParcels[parcelId].owner == null
+      ).length >= landsLimitPerBid
+    )
   }
 
   getSelectedParcels() {
-    const { allParcels } = this.props
-    const { selectedCoordinatesById } = this.state
+    const { allParcels, selectedCoordinatesById } = this.props
 
     if (!allParcels) return []
 
@@ -215,10 +266,14 @@ export default class AuctionPage extends React.PureComponent {
       center,
       allParcels,
       token,
-      rate
+      rate,
+      selectedCoordinatesById,
+      isConnecting,
+      isConnected,
+      isAvailableParcelLoading
     } = this.props
-    const { isConnecting, isConnected, isAvailableParcelLoading } = this.props
-    const { selectedCoordinatesById, showTokenTooltip } = this.state
+
+    const { showTokenTooltip } = this.state
     const {
       availableParcelCount,
       landsLimitPerBid,
@@ -244,6 +299,9 @@ export default class AuctionPage extends React.PureComponent {
     }
 
     const selectedParcels = this.getSelectedParcels()
+    const validSelectedParcels = selectedParcels.filter(
+      parcel => parcel.owner == null
+    )
 
     return (
       <div className="AuctionPage">
@@ -252,7 +310,7 @@ export default class AuctionPage extends React.PureComponent {
             x={x}
             y={y}
             parcels={allParcels}
-            selected={selectedParcels}
+            selected={validSelectedParcels}
             isDraggable
             showPopup
             showControls={true}
@@ -293,7 +351,7 @@ export default class AuctionPage extends React.PureComponent {
                     <div className="information-block">
                       <p className="subtitle">{t('auction_page.parcels')}</p>
                       <Header size="large">
-                        {selectedParcels.length}
+                        {validSelectedParcels.length}
                         <span className="secondary">
                           &nbsp;
                           <span
@@ -325,7 +383,7 @@ export default class AuctionPage extends React.PureComponent {
                           loading={rate == null}
                           symbol={token}
                           amount={this.roundPrice(
-                            currentPrice * rate * selectedParcels.length
+                            currentPrice * rate * validSelectedParcels.length
                           )}
                         />
                       </div>
@@ -334,7 +392,7 @@ export default class AuctionPage extends React.PureComponent {
                           type="submit"
                           primary={true}
                           disabled={
-                            selectedParcels.length === 0 || rate == null
+                            validSelectedParcels.length === 0 || rate == null
                           }
                         >
                           {rate == null ? (
