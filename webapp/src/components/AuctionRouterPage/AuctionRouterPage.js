@@ -17,8 +17,7 @@ export default class AuctionRouterPage extends React.PureComponent {
     super(props)
     this.hasFetchedParams = false
     this.state = {
-      auctionFinished: false,
-      auctionHasStarted: true
+      auctionFinished: false
     }
   }
 
@@ -38,10 +37,8 @@ export default class AuctionRouterPage extends React.PureComponent {
   fetchData = async () => {
     this.fetchAuctionParams()
     const auctionFinished = await hasAuctionFinished()
-    const auctionHasStarted = hasAuctionStarted()
     this.setState({
-      auctionFinished,
-      auctionHasStarted
+      auctionFinished
     })
   }
 
@@ -53,9 +50,9 @@ export default class AuctionRouterPage extends React.PureComponent {
   }
 
   render() {
-    const { auctionFinished, auctionHasStarted } = this.state
+    const { auctionFinished } = this.state
 
-    if (!auctionHasStarted) {
+    if (!hasAuctionStarted()) {
       return <AuctionSplash />
     }
 
