@@ -82,25 +82,32 @@
   justify-content: space-between;
 }
 
-.AuctionPage .bid-wrapper {
+.AuctionPage .input-information {
+  display: flex;
+  justify-content: space-between;
+  flex: 1 0 auto;
+  margin-right: 30px;
+}
+
+.AuctionPage .output-information {
   display: flex;
   align-items: center;
 }
 
-.AuctionPage .bid-wrapper .ui.button {
+.AuctionPage .output-information .ui.button {
   min-width: 144px;
 }
-.AuctionPage .bid-wrapper {
+.AuctionPage .output-information {
   background-color: var(--dark-gray);
   padding: 12px 16px;
   border-radius: 10px;
 }
-.AuctionPage .bid-wrapper .information-block {
+.AuctionPage .output-information .information-block {
   margin: 0;
   flex-grow: 1;
 }
 
-.AuctionPage .bid-wrapper .information-block + .information-block {
+.AuctionPage .output-information .information-block + .information-block {
   margin-left: 48px;
 }
 
@@ -136,21 +143,69 @@
   right: 10px;
 }
 
+.AuctionPage .chevron.icon {
+  display: none !important;
+}
+
+.AuctionPage .parcel-count {
+  display: none;
+  color: var(--gray);
+}
+
 @media (max-width: 992px) {
   .AuctionPage .information-block,
-  .AuctionPage .bid-wrapper {
+  .AuctionPage .output-information {
     margin-top: 20px;
   }
 }
 
 @media (max-width: 768px) {
+  .AuctionPage .chevron.icon {
+    display: block !important;
+    position: absolute;
+    font-size: 20px !important;
+    right: 10px;
+    top: 0px;
+    cursor: pointer;
+  }
+
+  .AuctionPage {
+    position: absolute !important;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 0px 0px 52px 0px !important;
+  }
+
+  .AuctionPage .parcel-preview {
+    height: 100%;
+  }
+
   .AuctionPage .ui.form {
     margin-bottom: 30px;
   }
 
+  .AuctionPage .output-information {
+    margin-top: 20px;
+    border-radius: 0px;
+  }
+
+  .AuctionPage .output-information .ui.button {
+    width: 100%;
+  }
+
   .AuctionPage .information-blocks {
-    display: block;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .AuctionPage .input-information {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 16px;
+    margin-right: 0px;
   }
 
   .AuctionPage .information-block .ui.label.pointing {
@@ -161,11 +216,109 @@
   }
 
   .AuctionPage .auction-panel {
+    padding-top: 0px;
+  }
+
+  .AuctionPage .ParcelCoords {
     padding-top: 16px;
   }
 
-  .AuctionPage footer,
-  .AuctionPage footer .available-parcels {
-    display: block;
+  .AuctionPage footer {
+    padding: 8px 16px;
+  }
+
+  .AuctionPage footer .footer-left {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .AuctionPage footer .footer-left .available-parcels {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .AuctionPage footer .footer-left .link {
+    white-space: nowrap;
+  }
+
+  .AuctionPage .input-information {
+    display: flex;
+  }
+
+  .ui.container.auction-menu {
+    position: fixed;
+    top: calc(100% - 52px);
+    bottom: auto;
+    background-color: var(--background);
+    margin: 0px !important;
+    z-index: 1;
+  }
+
+  .AuctionPage .auction-menu.open {
+    top: auto;
+    bottom: 0px;
+  }
+
+  .AuctionPage .auction-menu.open .chevron.icon {
+    transform: rotateZ(180deg);
+    top: 4px;
+  }
+
+  .AuctionPage .empty-parcels-message {
+    padding: 16px 16px 16px 16px;
+  }
+
+  .AuctionPage footer .footer-right {
+    display: none;
+  }
+
+  .AuctionPage .ParcelCoords {
+    margin-left: 16px;
+    min-height: 89px;
+    max-height: 156px;
+    overflow: auto;
+  }
+
+  .AuctionPage .auction-details {
+    margin: 0px 0px 180px 0px;
+  }
+
+  .AuctionPage .auction-actions {
+    position: fixed !important;
+    bottom: 0px;
+    padding: 0px !important;
+    z-index: 2;
+    display: none !important;
+  }
+
+  .AuctionPage .auction-menu.open .auction-actions {
+    display: block !important;
+  }
+
+  .AuctionPage .auction-actions .ui.form {
+    margin-bottom: 0px;
+  }
+
+  .AuctionPage .parcel-count {
+    display: inline-block;
+  }
+
+  .AuctionPage .auction-menu.open .parcel-count {
+    display: none;
+  }
+
+  .AuctionPage .auction-menu .header {
+    cursor: pointer;
+  }
+
+  .AuctionPage .output-information .information-block + .information-block {
+    margin-left: 0px;
+  }
+
+  .BidConfirmationModal .modal-body .actions .button {
+    width: 100%;
   }
 }

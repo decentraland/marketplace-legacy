@@ -75,7 +75,8 @@ export default class AuctionPage extends React.PureComponent {
     this.state = {
       showTokenTooltip: !hasSeenAuctionHelper(
         AUCTION_HELPERS.SEEN_AUCTION_TOKEN_TOOLTIP
-      )
+      ),
+      toggle: false
     }
   }
 
@@ -244,10 +245,16 @@ export default class AuctionPage extends React.PureComponent {
     return parcels
   }
 
-  roundPrice(price) {
-    return parseFloat(price)
-      .toFixed(2)
-      .toLocaleString()
+  roundPrice = price => {
+    const { token } = this.props
+    return (token === 'MANA'
+      ? Math.round(price)
+      : parseFloat(price.toFixed(2))
+    ).toLocaleString()
+  }
+
+  handleToggle = () => {
+    this.setState({ toggle: !this.state.toggle })
   }
 
   render() {
@@ -294,6 +301,11 @@ export default class AuctionPage extends React.PureComponent {
       parcel => parcel.owner == null
     )
 
+    let auctionMenuClasses = 'auction-menu'
+    if (this.state.toggle) {
+      auctionMenuClasses += ' open'
+    }
+
     return (
       <div className="AuctionPage">
         <div className="parcel-preview">
@@ -310,62 +322,80 @@ export default class AuctionPage extends React.PureComponent {
           />
         </div>
 
-        <Container>
+        <Container className={auctionMenuClasses}>
           <Grid className="auction-details">
             <Grid.Row>
-              <Grid.Column mobile={16} computer={6}>
-                <Header size="large">{t('auction_page.title')}</Header>
+              <Grid.Column mobile={16} computer={5}>
+                <Header size="large" onClick={this.handleToggle}>
+                  <span>
+                    {t('auction_page.title')}{' '}
+                    {validSelectedParcels.length > 0 ? (
+                      <span className="parcel-count">
+                        &nbsp;({validSelectedParcels.length})
+                      </span>
+                    ) : null}
+                  </span>
+                  <Icon name="chevron down" />
+                </Header>
                 <p className="subtitle description">
                   {t('auction_page.description')}
                 </p>
               </Grid.Column>
 
-              <Grid.Column mobile={16} computer={10}>
+              <Grid.Column
+                mobile={16}
+                computer={11}
+                className="auction-actions"
+              >
                 <Form onSubmit={preventDefault(this.handleSubmit)}>
                   <div className="information-blocks">
-                    <div className="information-block token">
-                      {showTokenTooltip && (
-                        <div className="ui pointing below label">
-                          {t('auction_page.token_tooltip')}
-                          <i
-                            className="icon close"
-                            onClick={this.handleCloseTooltip}
-                          />
-                        </div>
-                      )}
-                      <p className="subtitle">{t('auction_page.token')}</p>
-                      <TokenDropdown
-                        token={token}
-                        onChange={this.handleChangeToken}
-                      />
-                    </div>
-                    <div className="information-block">
-                      <p className="subtitle">{t('auction_page.parcels')}</p>
-                      <Header size="large">
-                        {validSelectedParcels.length}
-                        <span className="secondary">
-                          &nbsp;
-                          <span
-                            className="tooltip"
-                            data-balloon-pos="up"
-                            data-balloon={t('auction_page.parcels_tooltip', {
-                              max: landsLimitPerBid
-                            })}
-                          >
-                            <Icon size="small" name="question circle" />
+                    <div className="input-information">
+                      <div className="information-block token">
+                        {showTokenTooltip && (
+                          <div className="ui pointing below label">
+                            {t('auction_page.token_tooltip')}
+                            <i
+                              className="icon close"
+                              onClick={this.handleCloseTooltip}
+                            />
+                          </div>
+                        )}
+                        <p className="subtitle">{t('auction_page.token')}</p>
+                        <TokenDropdown
+                          token={token}
+                          onChange={this.handleChangeToken}
+                        />
+                      </div>
+                      <div className="information-block">
+                        <p className="subtitle">{t('auction_page.parcels')}</p>
+                        <Header size="large">
+                          {validSelectedParcels.length}
+                          <span className="secondary">
+                            &nbsp;
+                            <span
+                              className="tooltip"
+                              data-balloon-pos="up"
+                              data-balloon={t('auction_page.parcels_tooltip', {
+                                max: landsLimitPerBid
+                              })}
+                            >
+                              <Icon size="small" name="question circle" />
+                            </span>
                           </span>
-                        </span>
-                      </Header>
+                        </Header>
+                      </div>
+                      <div className="information-block">
+                        <p className="subtitle">
+                          {t('auction_page.land_price')}
+                        </p>
+                        <Token
+                          loading={rate == null}
+                          symbol={token}
+                          amount={this.roundPrice(currentPrice * rate)}
+                        />
+                      </div>
                     </div>
-                    <div className="information-block">
-                      <p className="subtitle">{t('auction_page.land_price')}</p>
-                      <Token
-                        loading={rate == null}
-                        symbol={token}
-                        amount={this.roundPrice(currentPrice * rate)}
-                      />
-                    </div>
-                    <div className="bid-wrapper">
+                    <div className="output-information">
                       <div className="information-block">
                         <p className="subtitle">
                           {t('auction_page.total_price')}

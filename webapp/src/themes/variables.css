@@ -48,3 +48,9 @@
 
   --gradient: linear-gradient(var(--background), var(--dark-background));
 }
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: 74px;
+  }
+}
