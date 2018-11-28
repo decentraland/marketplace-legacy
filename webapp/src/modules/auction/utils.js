@@ -57,5 +57,5 @@ export async function isAuctionActive() {
 }
 
 export function getAuctionStartDate() {
-  return 1544400000000 // 10 of December 2018 00:00:00 UTC 0
+  return 1544400000000 // 10th of December 2018 00:00:00 UTC
 }
