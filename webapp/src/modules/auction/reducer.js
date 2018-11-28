@@ -30,7 +30,11 @@ const INITIAL_STATE = {
       availableParcelCount: null,
       gasPriceLimit: null,
       landsLimitPerBid: null,
-      currentPrice: null
+      currentPrice: null,
+      totalManaBurned: null,
+      totalLandsBidded: null,
+      startTime: null,
+      endTime: null
     },
     parcelOnChainOwners: {
       /* [parcelId]: owner */
@@ -85,18 +89,18 @@ export function auctionReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_AUCTION_PARAMS_SUCCESS: {
       const { params } = action
-
       return {
         loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
-          params: {
-            availableParcelCount: params.availableParcelCount,
-            gasPriceLimit: params.gasPriceLimit,
-            landsLimitPerBid: params.landsLimitPerBid,
-            currentPrice: params.currentPrice
-          }
+          params: Object.keys(INITIAL_STATE.data.params).reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: params[key] || 0
+            }),
+            {}
+          )
         }
       }
     }

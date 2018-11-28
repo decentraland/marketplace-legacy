@@ -20,7 +20,6 @@ import {
   fetchAvailableParcelRequest
 } from 'modules/parcels/actions'
 import {
-  fetchAuctionParamsRequest,
   fetchAuctionRateRequest,
   setParcelOnChainOwner,
   changeAuctionCenterParcel,
@@ -67,7 +66,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   onShowAuctionModal: () => dispatch(openModal('AuctionModal')),
-  onFetchAuctionParams: () => dispatch(fetchAuctionParamsRequest()),
   onSetParcelOnChainOwner: (parcelId, owner) =>
     dispatch(setParcelOnChainOwner(parcelId, owner)),
   onFetchAvailableParcel: () => dispatch(fetchAvailableParcelRequest()),

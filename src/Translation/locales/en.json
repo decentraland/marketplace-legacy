@@ -102,6 +102,19 @@
     "your_estate": "Your estate",
     "your_parcel": "Your parcel"
   },
+  "auction": {
+    "description":
+      "Participate in the LAND auction on December 10 and buy LAND!",
+    "title": "Decentraland LAND Auction"
+  },
+  "auction_finished": {
+    "cta": "Go to marketplace",
+    "description": "Thank you for participating.",
+    "land_sold": "LAND sold",
+    "mana_burned": "Mana burned",
+    "stats_title": "Here are some stats:",
+    "title": "Auction Finished"
+  },
   "auction_modal": {
     "authorization": "Authorization",
     "authorization_description":
@@ -117,11 +130,10 @@
     "processing_tx": "Processing Transaction",
     "submit": "Proceed",
     "terms_and_conditions": "Terms & Conditions",
-    "title": "Decentraland LAND Auction",
     "tx_failed": "Transaction Failed",
     "video_tutorial": "Video Tutorial",
     "watch_tutorial": "Watch video tutorial",
-    "welcome": "Welcome to the Decentraland LAND Auction!"
+    "welcome": "Welcome to the {title}!"
   },
   "auction_page": {
     "available_parcels": "parcels available",
@@ -144,6 +156,12 @@
     "token_tooltip": "Select the token you want to purchase LAND with",
     "total_price": "Total price",
     "video_tutorial": "video tutorial"
+  },
+  "auction_splash": {
+    "already_subscribed": "You are already subscribed",
+    "cta": "send",
+    "cta_title": "Enter your mail and we’ll let you know!",
+    "subscribed": "Subscribed succesfully!"
   },
   "authorization": {
     "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",
@@ -247,16 +265,23 @@
     "continue": "Continue",
     "contributions": "Contributions",
     "created_at": "Created at {date}",
+    "day": "day",
+    "days": "days",
+    "duration": "Duration",
     "edit": "Edit",
+    "email": "mail@domain.com",
     "estate": "Estate",
     "estates": "Estates",
     "expired_at": "Expired {time}",
     "expires_in": "Expires {time}",
     "expires_in_more_than_years": "Expires in over {years} years",
     "for": "for",
+    "hours": "hours",
     "land": "LAND",
+    "learn_more": "learn more",
     "loading": "Loading",
     "marketplace": "Marketplace",
+    "minutes": "minutes",
     "mortgage": "Mortgage",
     "mortgages": "Mortgages",
     "own_address_warning": "That's your own address!",
@@ -273,6 +298,7 @@
     "retry": "Retry",
     "revoke": "Revoke",
     "sale": "Sale",
+    "seconds": "seconds",
     "see_less": "See less",
     "see_more": "See more",
     "service_unavailable": "Service unavailable",
@@ -320,7 +346,6 @@
     "cancel": "Cancel Mortgage",
     "claim": "Claim parcel",
     "defaulted_in": "Default",
-    "duration": "Duration",
     "duration_placeholder": "Duration in days",
     "errors": {
       "amount_minimum": "Amount should be greater than {amount}",

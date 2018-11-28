@@ -1,0 +1,40 @@
+.Countdown-col {
+  display: inline-block;
+}
+
+.Countdown-col-element, .banner .Countdown-col-element {
+  display: inline-block;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.Countdown-col-element.dots {
+  margin: 0;
+}
+
+.Countdown-col-element p, .banner .Countdown-col-element p {
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
+
+.Countdown-col-element span {
+  text-transform: capitalize
+}
+
+@media(min-width: 768px) {
+  .Countdown-col-element {
+    margin: 0 20px;
+  }
+
+  .Countdown-col-element p {
+    font-size: 4em;
+  }
+}
+
+@media(min-width: 380px) {
+  .Countdown-col-element p {
+    font-size: 2em;
+  }
+}

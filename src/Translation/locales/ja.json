@@ -87,8 +87,7 @@
     "price": "価格",
     "price_placeholder": "この{asset_name}の価格はMANAです",
     "set_asset_price": "{asset_name}の価格と有効期限を設定します",
-    "set_new_asset_price":
-      "{asset_name}の新しい価格または有効期限を設定します",
+    "set_new_asset_price": "{asset_name}の新しい価格または有効期限を設定します",
     "update_asset": "{asset_name}の公開物件を更新する"
   },
   "atlas": {
@@ -99,6 +98,18 @@
     "road": "道路",
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
+  },
+  "auction": {
+    "description": "12月10日にLANDオークションに参加し、LANDを購入！",
+    "title": "Decentraland LANDオークション"
+  },
+  "auction_finished": {
+    "cta": "マーケットプレイスに行く",
+    "description": "ご参加いただきありがとうございます。",
+    "land_sold": "売り上げLAND",
+    "mana_burned": "マナは燃やされた",
+    "stats_title": "ここにいくつかの統計があります：",
+    "title": "オークション終了"
   },
   "auction_modal": {
     "authorization": "承認",
@@ -115,7 +126,6 @@
     "processing_tx": "取引の処理",
     "submit": "続行する",
     "terms_and_conditions": "利用規約",
-    "title": "Decentraland LANDオークション",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
     "watch_tutorial": "ビデオチュートリアルを見る",
@@ -141,6 +151,12 @@
     "token_tooltip": "購入に使用するトークンを選択してください",
     "total_price": "合計金額",
     "video_tutorial": "ビデオチュートリアル"
+  },
+  "auction_splash": {
+    "already_subscribed": "あなたはすでに加入しています",
+    "cta": "送信する",
+    "cta_title": "あなたのメールを入力し、私たちに知らせてください！",
+    "subscribed": "うまく購読しました！"
   },
   "authorization": {
     "allow": "{contract_link}に準じて{symbol}を操作することを許可する",
@@ -241,16 +257,23 @@
     "continue": "続ける",
     "contributions": "貢献区",
     "created_at": "{date}に作成済み",
+    "day": "日",
+    "days": "日々",
+    "duration": "期間",
     "edit": "編集",
+    "email": "mail@domain.com",
     "estate": "エステート",
     "estates": "エステート",
     "expired_at": "{time}に締切済み",
     "expires_in": "締切：{time}",
     "expires_in_more_than_years": "締切まであと{years}年以上",
     "for": "for",
+    "hours": "時間",
     "land": "LAND",
+    "learn_more": "もっと詳しく知る",
     "loading": "読込み中",
     "marketplace": "マーケット",
+    "minutes": "分",
     "mortgage": "ローン",
     "mortgages": "ローン",
     "own_address_warning": "これはあなた自身のアドレスです！",
@@ -267,6 +290,7 @@
     "retry": "やり直す",
     "revoke": "取り消す",
     "sale": "販売",
+    "seconds": "秒",
     "see_less": "もっと見る",
     "see_more": "続きを見る",
     "service_unavailable": "サービスは利用できません",
@@ -314,7 +338,6 @@
     "cancel": "ローンをキャンセルする",
     "claim": "区画を請求する",
     "defaulted_in": "デフォルト",
-    "duration": "有効期間",
     "duration_placeholder": "有効期限日数",
     "errors": {
       "amount_minimum": "{amount}より大きい必要があります。",
@@ -424,8 +447,7 @@
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください",
     "get_started": "始める",
-    "intro":
-      "まず始めにあなたのLAND(土地)を安全に保管する環境を整えてください",
+    "intro": "まず始めにあなたのLAND(土地)を安全に保管する環境を整えてください",
     "options": {
       "desktop":
         "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます",

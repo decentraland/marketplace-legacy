@@ -1,4 +1,5 @@
 import { env } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 
 import { localStorage } from 'lib/localStorage'
 
@@ -17,8 +18,11 @@ export const TOKEN_SYMBOLS = Object.keys(TOKEN_ADDRESSES)
 
 export const AUCTION_HELPERS = Object.freeze({
   SEEN_AUCTION_MODAL: 'seenAuctionModal',
-  SEEN_AUCTION_TOKEN_TOOLTIP: 'seenAuctionTokenTooltip'
+  SEEN_AUCTION_TOKEN_TOOLTIP: 'seenAuctionTokenTooltip',
+  SUBSCRIBED_TO_AUCTION_BY_EMAIL: 'subscribedToAuction'
 })
+
+export const AUCTION_DURATION_IN_DAYS = 14
 
 export function isAuthorized(authorization) {
   return authorization && authorization.allowances.LANDAuction.MANAToken > 0
@@ -34,4 +38,37 @@ export function dismissAuctionHelper(key) {
 
 export function getVideoTutorialLink() {
   return 'https://www.youtube-nocookie.com/embed/-HmXrOTEmxg?controls=0'
+}
+
+export async function hasAuctionFinished() {
+  const landAuction = eth.getContract('LANDAuction')
+  const endTime = await landAuction.endTime()
+  return endTime.toNumber() > 0 && Date.now() / 1000 >= endTime.toNumber()
+}
+
+export function hasAuctionStarted() {
+  return getAuctionStartDate() <= Date.now()
+}
+
+export async function isAuctionActive() {
+  const hasFinished = await hasAuctionFinished()
+  const hasStarted = hasAuctionStarted()
+
+  return !hasFinished && hasStarted
+}
+
+export function getAuctionStartDate() {
+  return 1544400000000 // 10th of December 2018 00:00:00 UTC
+}
+
+export function getAuctionRealDuration(endTime) {
+  const oneDayInSeconds = 60 * 60 * 24
+  const startTime = getAuctionStartDate()
+  const durationInDays = (endTime - startTime) / oneDayInSeconds
+  // The transaction that ends the auction might take a while to finish so we cap the max duration
+  return `${
+    durationInDays > AUCTION_DURATION_IN_DAYS
+      ? AUCTION_DURATION_IN_DAYS
+      : durationInDays
+  } days`
 }

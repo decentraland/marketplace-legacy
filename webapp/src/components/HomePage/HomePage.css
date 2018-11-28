@@ -48,6 +48,18 @@
   min-height: 125px;
 }
 
+.HomePage .banner-wrapper {
+  margin-bottom: 40px;
+}
+
+.HomePage .banner-wrapper .button {
+  padding: 10px 35px;
+}
+
+.HomePage .banner-wrapper a {
+  margin: auto;
+}
+
 .HomePage .publications-header {
   display: flex;
   justify-content: space-between;

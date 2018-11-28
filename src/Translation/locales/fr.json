@@ -105,6 +105,19 @@
     "your_estate": "Votre domaine",
     "your_parcel": "Votre parcelle"
   },
+  "auction": {
+    "description":
+      "Participez à la vente aux enchères LAND le 10 décembre et achetez LAND!",
+    "title": "Decentraland LAND Enchère"
+  },
+  "auction_finished": {
+    "cta": "Aller au marché",
+    "description": "Merci d'avoir participé.",
+    "land_sold": "LAND vendu",
+    "mana_burned": "Mana brûlé",
+    "stats_title": "Voici quelques statistiques:",
+    "title": "Enchère terminée"
+  },
   "auction_modal": {
     "authorization": "Autorisation",
     "authorization_description":
@@ -120,7 +133,6 @@
     "processing_tx": "Traitement de la transaction",
     "submit": "Procéder",
     "terms_and_conditions": "Termes et conditions",
-    "title": "Decentraland Enchère",
     "tx_failed": "La transaction a échoué",
     "video_tutorial": "Didacticiel vidéo",
     "watch_tutorial": "Regarder le tutoriel vidéo",
@@ -149,6 +161,12 @@
       "Sélectionnez le jeton avec lequel vous souhaitez acheter LAND",
     "total_price": "Prix ​​total",
     "video_tutorial": "didacticiel vidéo"
+  },
+  "auction_splash": {
+    "already_subscribed": "Vous êtes déjà abonné",
+    "cta": "envoyer",
+    "cta_title": "Entrez votre courrier et nous vous le ferons savoir!",
+    "subscribed": "Abonné avec succès!"
   },
   "authorization": {
     "allow": "Autoriser le {contract_link} à utiliser {symbol} en votre nom",
@@ -254,16 +272,23 @@
     "continue": "Continuer",
     "contributions": "Contributions",
     "created_at": "Créé le {date}",
+    "day": "journée",
+    "days": "journées",
+    "duration": "Durée",
     "edit": "Modifier",
+    "email": "mail@domaine.com",
     "estate": "Domaine",
     "estates": "Domaines",
     "expired_at": "Expiré {time}",
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de {years} ans",
     "for": "pour",
+    "hours": "heures",
     "land": "LAND",
+    "learn_more": "apprendre encore plus",
     "loading": "Chargement",
     "marketplace": "Marché",
+    "minutes": "minutes",
     "mortgage": "Hypothèque",
     "mortgages": "Hypothèques",
     "own_address_warning": "C'est ta propre adresse!",
@@ -280,6 +305,7 @@
     "retry": "Recommencez",
     "revoke": "Révoquer",
     "sale": "Vente",
+    "seconds": "secondes",
     "see_less": "Voir moins",
     "see_more": "Voir plus",
     "service_unavailable": "Service indisponible",
@@ -328,7 +354,6 @@
     "cancel": "Annuler l'hypothèque",
     "claim": "Demande de parcelle",
     "defaulted_in": "Défaut",
-    "duration": "Durée",
     "duration_placeholder": "Durée en jours",
     "errors": {
       "amount_minimum": "Le montant doit être supérieur à {amount}",

@@ -27,7 +27,7 @@ import { locations } from 'locations'
 import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
 import { getParams, getSelectedToken } from './selectors'
-import { TOKEN_ADDRESSES } from './utils'
+import { TOKEN_ADDRESSES, isAuctionActive } from './utils'
 
 const ONE_BILLION = 1000000000 // 1.000.000.000
 const REFRESH_INTERVAL = 5000 // five segundos
@@ -43,24 +43,32 @@ export function* auctionSaga() {
 function* handleAuctionParamsRequest(action) {
   try {
     const landAuction = eth.getContract('LANDAuction')
-
     const [
       availableParcelCount,
       gasPriceLimit,
       landsLimitPerBid,
-      currentPrice
+      currentPrice,
+      totalLandsBidded,
+      totalManaBurned,
+      endTime
     ] = yield all([
       api.fetchAvaialableParcelCount(),
       landAuction.gasPriceLimit(),
       landAuction.landsLimitPerBid(),
-      landAuction.getCurrentPrice()
+      landAuction.getCurrentPrice(),
+      landAuction.totalLandsBidded(),
+      landAuction.totalManaBurned(),
+      landAuction.endTime()
     ])
 
     const params = {
       availableParcelCount,
       gasPriceLimit: gasPriceLimit.toNumber() / ONE_BILLION,
       landsLimitPerBid: landsLimitPerBid.toNumber(),
-      currentPrice: eth.utils.fromWei(currentPrice)
+      currentPrice: eth.utils.fromWei(currentPrice),
+      totalLandsBidded: totalLandsBidded.toNumber(),
+      totalManaBurned: totalManaBurned.toNumber(),
+      endTime: endTime.toNumber()
     }
 
     yield put(fetchAuctionParamsSuccess(params))
@@ -133,9 +141,12 @@ function* handleConnectWalletSuccess(action) {
   // keep refreshing params and rate while the user is on /auction
   while (connected) {
     const pathname = yield select(getPathname)
-    if (pathname === locations.auction()) {
+    const isActive = yield call(isAuctionActive)
+
+    if (isActive && pathname === locations.auction()) {
       yield put(fetchAuctionParamsRequest())
     }
+
     yield delay(REFRESH_INTERVAL)
     connected = yield select(isConnected)
   }

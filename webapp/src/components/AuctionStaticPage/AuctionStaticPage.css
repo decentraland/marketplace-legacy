@@ -1,0 +1,22 @@
+.Page > div.AuctionStaticPage {
+  position: relative;
+}
+
+.Page > div.AuctionStaticPage .AtlasPage {
+  position: initial;
+}
+
+.Page > div.AuctionStaticPage .component-wrapper {
+  color: var(--text);
+  background: #09101fde;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  z-index: 9999;
+}
