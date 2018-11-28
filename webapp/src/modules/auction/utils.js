@@ -22,7 +22,7 @@ export const AUCTION_HELPERS = Object.freeze({
   SUBSCRIBED_TO_AUCTION_BY_EMAIL: 'subscribedToAuction'
 })
 
-export const AUCTION_DURATION_IN_DAYS = 15
+export const AUCTION_DURATION_IN_DAYS = 14
 
 export function isAuthorized(authorization) {
   return authorization && authorization.allowances.LANDAuction.MANAToken > 0
