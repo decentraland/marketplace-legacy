@@ -102,6 +102,12 @@
   }
 }
 
+@media (max-width: 768px) {
+  .AuctionPage + .Footer {
+    display: none;
+  }
+}
+
 @media (max-width: 600px) {
   .Footer .footer-column {
     padding: 22px 20px;
