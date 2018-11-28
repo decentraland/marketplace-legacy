@@ -14,6 +14,7 @@
 
 .AuctionCountdown .countdown-wrapper {
   margin: 25px auto;
+  white-space: nowrap;
 }
 
 .AuctionCountdown.banner .actions {
@@ -21,7 +22,13 @@
   align-items: center;
 }
 
-@media(min-width: 992px) {
+@media (min-width: 400px) {
+  .AuctionCountdown {
+    padding: 40px;
+  }
+}
+
+@media (min-width: 992px) {
   .AuctionCountdown.banner {
     display: flex;
     align-content: flex-start;
@@ -31,15 +38,9 @@
     text-align: left;
   }
 
-  .AuctionCountdown.banner  .countdown-wrapper {
+  .AuctionCountdown.banner .countdown-wrapper {
     margin: 0 auto;
     display: flex;
     align-items: center;
-  }
-}
-
-@media (min-width: 400px) {
-  .AuctionCountdown {
-    padding: 50px;
   }
 }
