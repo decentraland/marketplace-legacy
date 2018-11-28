@@ -95,6 +95,10 @@
     "your_estate": "您的连块土地",
     "your_parcel": "您的地块"
   },
+  "auction": {
+    "description": "参加12月10日的LAND拍卖并购买LAND！",
+    "title": "Decentraland LAND拍卖"
+  },
   "auction_finished": {
     "cta": "去市场",
     "description": "感谢您的参与。",
@@ -116,7 +120,6 @@
     "processing_tx": "处理交易",
     "submit": "继续",
     "terms_and_conditions": "条款和条件",
-    "title": "Decentraland拍卖",
     "tx_failed": "交易失败",
     "video_tutorial": "视频教程",
     "watch_tutorial": "观看视频教程",
@@ -145,9 +148,8 @@
   },
   "auction_splash": {
     "cta": "发送",
-    "cta_title": "输入您的邮件，我们会告诉您！",
-    "description": "参加12月10日的LAND拍卖并获得一些LAND！",
-    "title": "Decentraland拍卖V2"
+    "cta_title": "输入您的邮件，我们会通知您！",
+    "subscribed": "你已经订阅了"
   },
   "authorization": {
     "allow": "授权 {contract_link} 使用 {symbol}",

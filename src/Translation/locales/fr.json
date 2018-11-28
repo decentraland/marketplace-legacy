@@ -105,6 +105,11 @@
     "your_estate": "Votre domaine",
     "your_parcel": "Votre parcelle"
   },
+  "auction": {
+    "description":
+      "Participez à la vente aux enchères LAND le 10 décembre et achetez LAND!",
+    "title": "Decentraland LAND Enchère"
+  },
   "auction_finished": {
     "cta": "Aller au marché",
     "description": "Merci d'avoir participé.",
@@ -128,7 +133,6 @@
     "processing_tx": "Traitement de la transaction",
     "submit": "Procéder",
     "terms_and_conditions": "Termes et conditions",
-    "title": "Decentraland Enchère",
     "tx_failed": "La transaction a échoué",
     "video_tutorial": "Didacticiel vidéo",
     "watch_tutorial": "Regarder le tutoriel vidéo",
@@ -161,9 +165,7 @@
   "auction_splash": {
     "cta": "envoyer",
     "cta_title": "Entrez votre courrier et nous vous le ferons savoir!",
-    "description":
-      "Participez à la vente aux enchères LAND le 10 décembre et obtenez quelques LAND!",
-    "title": "Decentraland enchères V2"
+    "subscribed": "Vous êtes déjà abonné"
   },
   "authorization": {
     "allow": "Autoriser le {contract_link} à utiliser {symbol} en votre nom",

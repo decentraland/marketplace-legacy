@@ -27,8 +27,8 @@ export default class Countdown extends React.PureComponent {
   componentDidMount() {
     // update every second
     this.interval = setInterval(() => {
-      const date = this.calculateCountdown(this.props.date)
-      date ? this.setState(date) : this.stop()
+      const timeLeft = this.calculateCountdown(this.props.date)
+      timeLeft ? this.setState(timeLeft) : this.stop()
     }, 1000)
   }
 
@@ -80,7 +80,7 @@ export default class Countdown extends React.PureComponent {
   }
 
   addLeadingZeros(value) {
-    value = String(value)
+    value = value.toString()
     while (value.length < 2) {
       value = '0' + value
     }
@@ -88,22 +88,20 @@ export default class Countdown extends React.PureComponent {
   }
 
   render() {
-    const countDown = this.state
+    const { days, hours, min, sec } = this.state
 
     return (
       <div className="Countdown">
         <span className="Countdown-col">
           <span className="Countdown-col-element">
-            <p>{this.addLeadingZeros(countDown.days)}</p>
-            <span>
-              {countDown.days === 1 ? t('global.day') : t('global.days')}
-            </span>
+            <p>{this.addLeadingZeros(days)}</p>
+            <span>{days === 1 ? t('global.day') : t('global.days')}</span>
           </span>
         </span>
 
         <span className="Countdown-col">
           <span className="Countdown-col-element">
-            <p>{this.addLeadingZeros(countDown.hours)}</p>
+            <p>{this.addLeadingZeros(hours)}</p>
             <span>{t('global.hours')}</span>
           </span>
         </span>
@@ -116,7 +114,7 @@ export default class Countdown extends React.PureComponent {
 
         <span className="Countdown-col">
           <span className="Countdown-col-element">
-            <p>{this.addLeadingZeros(countDown.min)}</p>
+            <p>{this.addLeadingZeros(min)}</p>
             <span>{t('global.minutes')}</span>
           </span>
         </span>
@@ -129,7 +127,7 @@ export default class Countdown extends React.PureComponent {
 
         <span className="Countdown-col">
           <span className="Countdown-col-element">
-            <p>{this.addLeadingZeros(countDown.sec)}</p>
+            <p>{this.addLeadingZeros(sec)}</p>
             <span>{t('global.seconds')}</span>
           </span>
         </span>

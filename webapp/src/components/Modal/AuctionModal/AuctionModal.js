@@ -102,10 +102,12 @@ export default class AuctionModal extends React.PureComponent {
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <h1 className="title">{t('auction_modal.title')}</h1>
+        <h1 className="title">{t('auction.title')}</h1>
 
         <div className="description">
-          {t('auction_modal.welcome')}
+          {t('auction_modal.welcome', {
+            title: t('auction.title')
+          })}
           <br />
           <br />
           {t('auction_modal.description')}

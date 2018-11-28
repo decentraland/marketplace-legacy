@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { isConnected } from 'modules/wallet/selectors'
 import { fetchAuctionParamsRequest } from 'modules/auction/actions'
-import AuctionRoute from './AuctionRoute'
+import AuctionRouterPage from './AuctionRouterPage'
 
 const mapState = state => {
   return {
@@ -14,4 +14,4 @@ const mapDispatch = dispatch => ({
   onFetchAuctionParams: () => dispatch(fetchAuctionParamsRequest())
 })
 
-export default connect(mapState, mapDispatch)(AuctionRoute)
+export default connect(mapState, mapDispatch)(AuctionRouterPage)

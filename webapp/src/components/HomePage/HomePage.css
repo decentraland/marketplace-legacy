@@ -52,6 +52,10 @@
   margin-bottom: 40px;
 }
 
+.HomePage .banner-wrapper .button {
+  padding: 10px 35px;
+}
+
 .HomePage .publications-header {
   display: flex;
   justify-content: space-between;

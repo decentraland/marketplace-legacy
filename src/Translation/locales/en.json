@@ -102,6 +102,11 @@
     "your_estate": "Your estate",
     "your_parcel": "Your parcel"
   },
+  "auction": {
+    "description":
+      "Participate in the LAND auction on December 10 and buy LAND!",
+    "title": "Decentraland LAND Auction"
+  },
   "auction_finished": {
     "cta": "Go to marketplace",
     "description": "Thank you for participating.",
@@ -125,11 +130,10 @@
     "processing_tx": "Processing Transaction",
     "submit": "Proceed",
     "terms_and_conditions": "Terms & Conditions",
-    "title": "Decentraland LAND Auction",
     "tx_failed": "Transaction Failed",
     "video_tutorial": "Video Tutorial",
     "watch_tutorial": "Watch video tutorial",
-    "welcome": "Welcome to the Decentraland LAND Auction!"
+    "welcome": "Welcome to the {title}!"
   },
   "auction_page": {
     "available_parcels": "parcels available",
@@ -155,10 +159,8 @@
   },
   "auction_splash": {
     "cta": "send",
-    "cta_title": "Enter your mail and we’ll let u know!",
-    "description":
-      "Participate in the LAND auction on Dec 10 and get some LAND!",
-    "title": "Decentraland Auction V2"
+    "cta_title": "Enter your mail and we’ll let you know!",
+    "subscribed": "You are already subscribed"
   },
   "authorization": {
     "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",

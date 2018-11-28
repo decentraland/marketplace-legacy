@@ -13,7 +13,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  onGoToMarketplace: () => dispatch(navigateTo(locations.marketplace()))
+  onNavigateToMarketplace: () => dispatch(navigateTo(locations.marketplace()))
 })
 
 export default connect(mapState, mapDispatch)(AuctionFinishedPage)

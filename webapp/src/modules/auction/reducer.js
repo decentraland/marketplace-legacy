@@ -94,10 +94,10 @@ export function auctionReducer(state = INITIAL_STATE, action) {
         error: null,
         data: {
           ...state.data,
-          params: Object.keys(params).reduce(
+          params: Object.keys(INITIAL_STATE.data.params).reduce(
             (acc, key) => ({
               ...acc,
-              [key]: params[key]
+              [key]: params[key] || 0
             }),
             {}
           )

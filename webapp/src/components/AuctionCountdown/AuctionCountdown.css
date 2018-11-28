@@ -1,9 +1,9 @@
 .AuctionCountdown {
-  background: #16141a;
+  background: var(--background);
   max-width: 600px;
   margin: auto;
   padding: 25px;
-  color: white;
+  color: var(--text);
   border-radius: 10px;
   text-align: center;
 }
@@ -16,26 +16,9 @@
   margin: 25px auto;
 }
 
-.AuctionCountdown .cta-wrapper {
-  display: flex;
-  align-items: center;
-}
-
 .AuctionCountdown.banner .actions {
   display: flex;
   align-items: center;
-}
-
-.AuctionCountdown .cta-wrapper.ui.form .ui.input{
-  padding: 0.2px;
-  flex: 1;
-  margin-right: 10px;
-  margin-bottom: 0;
-}
-
-.AuctionCountdown .cta-wrapper .button {
-  margin: 0;
-  padding: 10px 35px;
 }
 
 @media(min-width: 992px) {

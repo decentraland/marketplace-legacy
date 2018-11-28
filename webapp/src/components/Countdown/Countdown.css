@@ -1,4 +1,4 @@
-.Countdown-col{
+.Countdown-col {
   display: inline-block;
 }
 
@@ -14,17 +14,17 @@
   margin: 0;
 }
 
-.Countdown-col-element p, .banner .Countdown-col-element p{
+.Countdown-col-element p, .banner .Countdown-col-element p {
   font-size: 2em;
   margin-bottom: 0;
 }
 
-Countdown-col-element span {
+.Countdown-col-element span {
   text-transform: capitalize
 }
 
 @media(min-width: 768px) {
-  .Countdown-col-element{
+  .Countdown-col-element {
     margin: 0 20px;
   }
 

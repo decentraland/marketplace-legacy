@@ -34,7 +34,7 @@ import TransferEstatePage from 'components/TransferEstatePage'
 import AssetDetailPage from 'components/AssetDetailPage'
 import EditEstatePage from 'components/EditEstatePage'
 import ManageEstatePage from 'components/ManageEstatePage'
-import AuctionRoute from 'components/AuctionRoute'
+import AuctionRouterPage from 'components/AuctionRouterPage'
 import { ASSET_TYPES } from './shared/asset'
 
 export default class Routes extends React.Component {
@@ -158,7 +158,11 @@ export default class Routes extends React.Component {
 
         {/*Auction*/}
         {isFeatureEnabled('AUCTION') && (
-          <Route exact path={locations.auction()} component={AuctionRoute} />
+          <Route
+            exact
+            path={locations.auction()}
+            component={AuctionRouterPage}
+          />
         )}
 
         {/*General routes*/}

@@ -103,6 +103,11 @@
     "your_estate": "Su propiedad",
     "your_parcel": "Tu parcela"
   },
+  "auction": {
+    "description":
+      "¡Participe en la subasta de LAND el 10 de diciembre y compre LAND!",
+    "title": "Subasta Decentraland LAND"
+  },
   "auction_finished": {
     "cta": "Ir al mercado",
     "description": "Gracias por participar.",
@@ -126,7 +131,6 @@
     "processing_tx": "Procesando Transacción",
     "submit": "Proceder",
     "terms_and_conditions": "Términos y Condiciones",
-    "title": "Decentraland Subasta",
     "tx_failed": "Transacción fallida",
     "video_tutorial": "Video Tutorial",
     "watch_tutorial": "Ver video tutorial",
@@ -157,10 +161,8 @@
   },
   "auction_splash": {
     "cta": "enviar",
-    "cta_title": "Ingresa tu correo y te lo haremos saber!",
-    "description":
-      "¡Participe en la subasta LAND el 10 de diciembre y obtenga un poco de LAND!",
-    "title": "Decentraland Subasta V2"
+    "cta_title": "¡Ingresa tu correo y te avisaremos!",
+    "subscribed": "Usted ya está suscrito"
   },
   "authorization": {
     "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",

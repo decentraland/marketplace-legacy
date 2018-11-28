@@ -4,7 +4,7 @@ import { Button, Loader } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { formatMana } from 'lib/utils'
-import { AUCTION_DURATION_IN_DAYS } from 'modules/auction/utils'
+import { getAuctionRealDuration } from 'modules/auction/utils'
 import { auctionParamsType } from 'components/types'
 import AuctionStaticPage from 'components/AuctionStaticPage'
 import SignInNotice from 'components/SignInNotice'
@@ -13,26 +13,20 @@ import './AuctionFinishedPage.css'
 
 export default class AuctionFinishedPage extends React.PureComponent {
   static propTypes = {
-    onGoToMarketplace: PropTypes.func.isRequired,
+    onNavigateToMarketplace: PropTypes.func.isRequired,
     isConnected: PropTypes.bool.isRequired,
     isConnecting: PropTypes.bool.isRequired,
     params: auctionParamsType
   }
 
-  getAuctionRealDuration = () => {
-    const { startTime, endTime } = this.props.params
-    const oneDayInSeconds = 60 * 60 * 24
-    const durationInDays = (endTime - startTime) / oneDayInSeconds
-    return `${
-      durationInDays > AUCTION_DURATION_IN_DAYS
-        ? AUCTION_DURATION_IN_DAYS
-        : durationInDays
-    } days`
-  }
-
   render() {
-    const { params, onGoToMarketplace, isConnecting, isConnected } = this.props
-    const { totalLandsBidded, totalManaBurned } = params
+    const {
+      params,
+      onNavigateToMarketplace,
+      isConnecting,
+      isConnected
+    } = this.props
+    const { totalLandsBidded, totalManaBurned, endTime } = params
 
     if (!isConnecting && !isConnected) {
       return (
@@ -64,13 +58,13 @@ export default class AuctionFinishedPage extends React.PureComponent {
                   <p>{t('auction_finished.mana_burned')}</p>
                 </div>
                 <div className="stat">
-                  <p>{this.getAuctionRealDuration()}</p>
+                  <p>{getAuctionRealDuration(endTime)}</p>
                   <p>{t('global.duration')}</p>
                 </div>
               </div>
             </div>
             <div className="actions">
-              <Button primary={true} onClick={onGoToMarketplace}>
+              <Button primary={true} onClick={onNavigateToMarketplace}>
                 {t('auction_finished.cta').toUpperCase()}
               </Button>
             </div>

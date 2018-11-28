@@ -99,6 +99,10 @@
     "your_estate": "あなたのエステート",
     "your_parcel": "あなたの区画"
   },
+  "auction": {
+    "description": "12月10日にLANDオークションに参加し、LANDを購入！",
+    "title": "Decentraland LANDオークション"
+  },
   "auction_finished": {
     "cta": "マーケットプレイスに行く",
     "description": "ご参加いただきありがとうございます。",
@@ -122,7 +126,6 @@
     "processing_tx": "取引の処理",
     "submit": "続行する",
     "terms_and_conditions": "利用規約",
-    "title": "Decentraland LANDオークション",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
     "watch_tutorial": "ビデオチュートリアルを見る",
@@ -152,8 +155,7 @@
   "auction_splash": {
     "cta": "送信する",
     "cta_title": "あなたのメールを入力し、私たちに知らせてください！",
-    "description": "12月10日にLANDオークションに参加し、LANDを獲得しよう！",
-    "title": "DecentralandオークションV2"
+    "subscribed": "あなたはすでに加入しています"
   },
   "authorization": {
     "allow": "{contract_link}に準じて{symbol}を操作することを許可する",

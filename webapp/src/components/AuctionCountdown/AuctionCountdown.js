@@ -16,17 +16,17 @@ export default class AuctionCountdown extends React.PureComponent {
     isBanner: PropTypes.bool
   }
 
-  getClass = () => {
+  getClassName = () => {
     const { isBanner } = this.props
     return isBanner ? 'banner' : ''
   }
 
   render() {
     return (
-      <div className={`AuctionCountdown ${this.getClass()}`}>
+      <div className={`AuctionCountdown ${this.getClassName()}`}>
         <div>
-          <h1 className="title">{t('auction_splash.title')}</h1>
-          <div className="description">{t('auction_splash.description')}</div>
+          <h1 className="title">{t('auction.title')}</h1>
+          <div className="description">{t('auction.description')}</div>
         </div>
         <div className="countdown-wrapper">
           <Countdown date={getAuctionStartDate()} />

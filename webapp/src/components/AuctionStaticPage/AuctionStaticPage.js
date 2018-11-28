@@ -7,12 +7,10 @@ import './AuctionStaticPage.css'
 export default class AuctionStaticPage extends React.PureComponent {
   render() {
     return (
-      <React.Fragment>
+      <div className="AuctionStaticPage">
         <AtlasPage />
-        <div className="AuctionStaticPage">
-          <div className="component-wrapper">{this.props.children}</div>
-        </div>
-      </React.Fragment>
+        <div className="component-wrapper">{this.props.children}</div>
+      </div>
     )
   }
 }

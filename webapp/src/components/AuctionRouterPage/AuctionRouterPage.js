@@ -6,7 +6,7 @@ import AuctionPage from 'components/AuctionPage'
 import AuctionFinishedPage from 'components/AuctionFinishedPage'
 import AuctionSplash from 'components/AuctionSplash'
 
-export default class AuctionRoute extends React.PureComponent {
+export default class AuctionRouterPage extends React.PureComponent {
   static proptypes = {
     onFetchAuctionParams: PropTypes.func.isRequired,
     isConnected: PropTypes.bool.isRequired,
@@ -25,26 +25,24 @@ export default class AuctionRoute extends React.PureComponent {
   async componentWillMount() {
     const { isConnected } = this.props
     if (isConnected) {
-      this.fetchAuctionParams()
-      const auctionFinished = await hasAuctionFinished()
-      const auctionHasStarted = hasAuctionStarted()
-      this.setState({
-        auctionFinished,
-        auctionHasStarted
-      })
+      await this.fetchData()
     }
   }
 
   async componentWillReceiveProps(nextProps) {
     if (nextProps.isConnected) {
-      this.fetchAuctionParams()
-      const auctionFinished = await hasAuctionFinished()
-      const auctionHasStarted = hasAuctionStarted()
-      this.setState({
-        auctionFinished,
-        auctionHasStarted
-      })
+      await this.fetchData()
     }
+  }
+
+  fetchData = async () => {
+    this.fetchAuctionParams()
+    const auctionFinished = await hasAuctionFinished()
+    const auctionHasStarted = hasAuctionStarted()
+    this.setState({
+      auctionFinished,
+      auctionHasStarted
+    })
   }
 
   fetchAuctionParams() {
