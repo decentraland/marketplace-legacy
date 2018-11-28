@@ -131,13 +131,6 @@
     "watch_tutorial": "Watch video tutorial",
     "welcome": "Welcome to the Decentraland LAND Auction!"
   },
-  "auction_splash": {
-    "cta": "send",
-    "cta_title": "Enter your mail and we’ll let u know!",
-    "description":
-      "Participate in the LAND auction on Dec 10 and get some LAND!",
-    "title": "Decentraland Auction V2"
-  },
   "auction_page": {
     "available_parcels": "parcels available",
     "bid": "Purchase",
@@ -159,6 +152,13 @@
     "token_tooltip": "Select the token you want to purchase LAND with",
     "total_price": "Total price",
     "video_tutorial": "video tutorial"
+  },
+  "auction_splash": {
+    "cta": "send",
+    "cta_title": "Enter your mail and we’ll let u know!",
+    "description":
+      "Participate in the LAND auction on Dec 10 and get some LAND!",
+    "title": "Decentraland Auction V2"
   },
   "authorization": {
     "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",

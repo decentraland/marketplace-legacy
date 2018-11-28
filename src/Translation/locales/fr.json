@@ -158,6 +158,13 @@
     "total_price": "Prix ​​total",
     "video_tutorial": "didacticiel vidéo"
   },
+  "auction_splash": {
+    "cta": "envoyer",
+    "cta_title": "Entrez votre courrier et nous vous le ferons savoir!",
+    "description":
+      "Participez à la vente aux enchères LAND le 10 décembre et obtenez quelques LAND!",
+    "title": "Decentraland enchères V2"
+  },
   "authorization": {
     "allow": "Autoriser le {contract_link} à utiliser {symbol} en votre nom",
     "allowed":
@@ -262,17 +269,23 @@
     "continue": "Continuer",
     "contributions": "Contributions",
     "created_at": "Créé le {date}",
+    "day": "journée",
+    "days": "journées",
     "duration": "Durée",
     "edit": "Modifier",
+    "email": "mail@domaine.com",
     "estate": "Domaine",
     "estates": "Domaines",
     "expired_at": "Expiré {time}",
     "expires_in": "Expire {time}",
     "expires_in_more_than_years": "Expire dans plus de {years} ans",
     "for": "pour",
+    "hours": "heures",
     "land": "LAND",
+    "learn_more": "apprendre encore plus",
     "loading": "Chargement",
     "marketplace": "Marché",
+    "minutes": "minutes",
     "mortgage": "Hypothèque",
     "mortgages": "Hypothèques",
     "own_address_warning": "C'est ta propre adresse!",
@@ -291,6 +304,7 @@
     "sale": "Vente",
     "see_less": "Voir moins",
     "see_more": "Voir plus",
+    "seconds": "secondes",
     "service_unavailable": "Service indisponible",
     "settings": "Paramètres",
     "sign_in": "Se connecter",

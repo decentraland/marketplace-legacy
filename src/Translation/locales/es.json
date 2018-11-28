@@ -155,6 +155,13 @@
     "total_price": "Precio total",
     "video_tutorial": "video tutorial"
   },
+  "auction_splash": {
+    "cta": "enviar",
+    "cta_title": "Ingresa tu correo y te lo haremos saber!",
+    "description":
+      "¡Participe en la subasta LAND el 10 de diciembre y obtenga un poco de LAND!",
+    "title": "Decentraland Subasta V2"
+  },
   "authorization": {
     "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",
     "allowed":
@@ -256,17 +263,23 @@
     "continue": "Continuar",
     "contributions": "Contribuciones",
     "created_at": "Creado en {date}",
+    "day": "día",
+    "days": "dias",
     "duration": "Duración",
     "edit": "Editar",
+    "email": "mail@domain.com",
     "estate": "Propiedad",
     "estates": "Propiedades",
     "expired_at": "Caducado {time}",
     "expires_in": "Caduca {time}",
     "expires_in_more_than_years": "Caduca en más de {years} años",
     "for": "para",
+    "hours": "horas",
     "land": "LAND",
+    "learn_more": "aprende más",
     "loading": "Cargando",
     "marketplace": "Mercado",
+    "minutes": "minutos",
     "mortgage": "Hipoteca",
     "mortgages": "Hipotecas",
     "own_address_warning": "Esa es tu propia dirección!",
@@ -285,6 +298,7 @@
     "sale": "Venta",
     "see_less": "Ver menos",
     "see_more": "Ver más",
+    "seconds": "segundos",
     "service_unavailable": "Servicio no disponible",
     "settings": "Configuración",
     "sign_in": "Conectar",
