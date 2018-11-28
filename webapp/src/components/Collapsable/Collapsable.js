@@ -54,11 +54,12 @@ export default class Collapsable extends React.PureComponent {
   setCollapsableUsingHeight = () => {
     if (!this.wrapperElement) return
 
-    const { maxHeight } = this.props
     const isCollapsable =
-      maxHeight && this.wrapperElement.offsetHeight > maxHeight
+      this.wrapperElement.offsetHeight > this.props.maxHeight
 
-    this.setState({ isCollapsable })
+    if (isCollapsable !== this.state.isCollapsable) {
+      this.setState({ isCollapsable })
+    }
   }
 
   render() {
