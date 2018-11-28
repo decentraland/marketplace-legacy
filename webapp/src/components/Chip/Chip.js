@@ -22,7 +22,9 @@ export default class Chip extends React.PureComponent {
 
   handleOnClick = () => {
     const { onClick } = this.props
-    if (onClick) onClick()
+    if (onClick) {
+      onClick()
+    }
   }
 
   handleOnDelete = event => {
@@ -36,12 +38,15 @@ export default class Chip extends React.PureComponent {
 
   getClassName() {
     const { className, size, status, onClick, onDelete } = this.props
+
+    const sizeClass = size
     const statusClass = status
       ? `has-status status-${status.toLowerCase()}`
       : ''
     const onClickClass = onClick ? 'clickeable' : ''
     const onDeleteClass = onDelete ? 'deleteable' : ''
-    return `Chip ${className} ${size} ${statusClass} ${onClickClass} ${onDeleteClass}`
+
+    return `Chip ${className} ${sizeClass} ${statusClass} ${onClickClass} ${onDeleteClass}`
   }
 
   render() {

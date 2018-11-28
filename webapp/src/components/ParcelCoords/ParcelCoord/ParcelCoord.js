@@ -3,12 +3,18 @@ import { Icon } from 'semantic-ui-react'
 
 import Chip from 'components/Chip'
 import { parcelType } from 'components/types'
-import './ParcelCoord.css'
 
 export default class ParcelCoord extends React.PureComponent {
   static propTypes = {
     ...Chip.propTypes,
     parcel: parcelType
+  }
+
+  handleOnClick = () => {
+    const { onClick, parcel } = this.props
+    if (onClick) {
+      onClick(parcel)
+    }
   }
 
   render() {
@@ -18,7 +24,7 @@ export default class ParcelCoord extends React.PureComponent {
     // semantic wrongly throws on the latter as of version 0.78.2
     return (
       <div className="ParcelCoord">
-        <Chip parcel={parcel} {...chipProps}>
+        <Chip parcel={parcel} {...chipProps} onClick={this.handleOnClick}>
           <Icon name="marker" className="map alternate" />
           <span>{parcel.id}</span>
         </Chip>
