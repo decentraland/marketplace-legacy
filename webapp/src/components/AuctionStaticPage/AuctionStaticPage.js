@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AtlasPage from 'components/AtlasPage'
+import ParcelPreview from 'components/ParcelPreview'
 
 import './AuctionStaticPage.css'
 
@@ -8,7 +8,7 @@ export default class AuctionStaticPage extends React.PureComponent {
   render() {
     return (
       <div className="AuctionStaticPage">
-        <AtlasPage />
+        <ParcelPreview />
         <div className="component-wrapper">{this.props.children}</div>
       </div>
     )
