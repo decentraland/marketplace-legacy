@@ -2,20 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Card } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
-import ParcelCoord from 'components/ParcelCoord'
+import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import ParcelTags from 'components/ParcelTags'
 import ParcelPreview from 'components/ParcelPreview'
 import Expiration from 'components/Expiration'
 import { parcelType, publicationType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { isMortgageActive } from 'shared/mortgage'
 import { getOpenPublication } from 'shared/asset'
-
-import { formatDate, distanceInWordsToNow } from 'lib/utils'
 import { getMortgageStatus } from 'shared/mortgage'
+import { formatDate, distanceInWordsToNow } from 'lib/utils'
 import './ParcelCard.css'
 
 export default class ParcelCard extends React.PureComponent {

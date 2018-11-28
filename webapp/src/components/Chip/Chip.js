@@ -2,51 +2,56 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon } from 'semantic-ui-react'
 
-import { parcelType } from 'components/types'
-import './ParcelCoord.css'
+import './Chip.css'
 
-export default class ParcelCoord extends React.PureComponent {
+export default class Chip extends React.PureComponent {
   static propTypes = {
+    className: PropTypes.string,
     size: PropTypes.oneOf(['small', 'medium', 'large']),
-    parcel: parcelType,
     status: PropTypes.string,
+    children: PropTypes.node,
     onClick: PropTypes.func,
     onDelete: PropTypes.func
   }
 
   static defaultProps = {
+    className: '',
     size: 'medium',
     status: ''
   }
 
   handleOnClick = () => {
-    const { onClick, parcel } = this.props
+    const { onClick } = this.props
     if (onClick) {
-      onClick(parcel)
+      onClick()
     }
   }
 
   handleOnDelete = event => {
-    const { onDelete, parcel } = this.props
-    onDelete(parcel)
-    event.stopPropagation()
-    event.nativeEvent.stopImmediatePropagation()
+    const { onDelete } = this.props
+    if (onDelete) {
+      onDelete()
+      event.stopPropagation()
+      event.nativeEvent.stopImmediatePropagation()
+    }
   }
 
   getClassName() {
-    const { size, status, onClick, onDelete } = this.props
+    const { className, size, status, onClick, onDelete } = this.props
+
+    const sizeClass = size
     const statusClass = status
       ? `has-status status-${status.toLowerCase()}`
       : ''
     const onClickClass = onClick ? 'clickeable' : ''
     const onDeleteClass = onDelete ? 'deleteable' : ''
-    return `ParcelCoord ${size} ${statusClass} ${onClickClass} ${onDeleteClass}`
+
+    return `Chip ${className} ${sizeClass} ${statusClass} ${onClickClass} ${onDeleteClass}`
   }
 
   render() {
-    const { parcel, status, onDelete } = this.props
+    const { children, status, onDelete } = this.props
 
-    // We use `className="map alternate"` on Icon because semantic wrongly throws on `name="map marker alternate"` as of 0.78.2
     return (
       <div className={this.getClassName()} onClick={this.handleOnClick}>
         {onDelete ? (
@@ -54,10 +59,7 @@ export default class ParcelCoord extends React.PureComponent {
             <Icon name="x" />
           </div>
         ) : null}
-        <div className="attribute coords">
-          <Icon name="marker" className="map alternate" />
-          <span className="coord">{parcel.id}</span>
-        </div>
+        <div className="attribute content">{children}</div>
         {status ? (
           <span className="attribute status">{status.toUpperCase()}</span>
         ) : null}

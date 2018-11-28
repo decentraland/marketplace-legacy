@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { t, T } from '@dapps/modules/translation/utils'
+
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
-import { t, T } from '@dapps/modules/translation/utils'
 import EditParcelForm from './EditParcelForm'
 
 import './EditParcelPage.css'

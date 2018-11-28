@@ -15,7 +15,8 @@ import {
 import { t, T } from '@dapps/modules/translation/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
-import ParcelCoord from 'components/ParcelCoord'
+import ParcelCoords from 'components/ParcelCoords'
+import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
 import SignInNotice from 'components/SignInNotice'
 import {
   authorizationType,
@@ -419,7 +420,6 @@ export default class AuctionPage extends React.PureComponent {
                       max: landsLimitPerBid
                     })}
                   />
-                  <p className="warning-parcels-limit" />
                 </Grid.Column>
               </Grid.Row>
             ) : null}
@@ -428,7 +428,7 @@ export default class AuctionPage extends React.PureComponent {
               <Grid.Column width={16}>
                 <div className="auction-panel">
                   {selectedParcels.length > 0 ? (
-                    <div className="parcels-included">
+                    <ParcelCoords isCollapsable={false}>
                       {selectedParcels.map(parcel => (
                         <ParcelCoord
                           key={parcel.id}
@@ -442,7 +442,7 @@ export default class AuctionPage extends React.PureComponent {
                           }
                         />
                       ))}
-                    </div>
+                    </ParcelCoords>
                   ) : (
                     <div className="empty-parcels-message">
                       <T

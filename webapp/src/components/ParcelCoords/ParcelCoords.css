@@ -1,0 +1,17 @@
+.ParcelCoords .collapsable-content,
+.ParcelCoords .coordinates {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.ParcelCoords .ParcelCoord {
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 767px) {
+  .ParcelCoords {
+    margin-top: 20px;
+  }
+}
