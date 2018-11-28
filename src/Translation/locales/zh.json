@@ -147,9 +147,10 @@
     "video_tutorial": "视频教程"
   },
   "auction_splash": {
+    "already_subscribed": "你已经订阅了",
     "cta": "发送",
     "cta_title": "输入您的邮件，我们会通知您！",
-    "subscribed": "你已经订阅了"
+    "subscribed": "订阅成功！"
   },
   "authorization": {
     "allow": "授权 {contract_link} 使用 {symbol}",
@@ -280,9 +281,9 @@
     "retry": "重试",
     "revoke": "撤消",
     "sale": "拍卖",
+    "seconds": "秒",
     "see_less": "少见",
     "see_more": "看更多",
-    "seconds": "秒",
     "service_unavailable": "暂停服务",
     "settings": "设置",
     "sign_in": "登录",

@@ -158,9 +158,10 @@
     "video_tutorial": "video tutorial"
   },
   "auction_splash": {
+    "already_subscribed": "You are already subscribed",
     "cta": "send",
     "cta_title": "Enter your mail and we’ll let you know!",
-    "subscribed": "You are already subscribed"
+    "subscribed": "Subscribed succesfully!"
   },
   "authorization": {
     "allow": "Authorize the {contract_link} to operate {symbol} on your behalf",
@@ -297,9 +298,9 @@
     "retry": "Retry",
     "revoke": "Revoke",
     "sale": "Sale",
+    "seconds": "seconds",
     "see_less": "See less",
     "see_more": "See more",
-    "seconds": "seconds",
     "service_unavailable": "Service unavailable",
     "settings": "Settings",
     "sign_in": "Sign In",

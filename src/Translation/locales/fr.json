@@ -163,9 +163,10 @@
     "video_tutorial": "didacticiel vidéo"
   },
   "auction_splash": {
+    "already_subscribed": "Vous êtes déjà abonné",
     "cta": "envoyer",
     "cta_title": "Entrez votre courrier et nous vous le ferons savoir!",
-    "subscribed": "Vous êtes déjà abonné"
+    "subscribed": "Abonné avec succès!"
   },
   "authorization": {
     "allow": "Autoriser le {contract_link} à utiliser {symbol} en votre nom",
@@ -304,9 +305,9 @@
     "retry": "Recommencez",
     "revoke": "Révoquer",
     "sale": "Vente",
+    "seconds": "secondes",
     "see_less": "Voir moins",
     "see_more": "Voir plus",
-    "seconds": "secondes",
     "service_unavailable": "Service indisponible",
     "settings": "Paramètres",
     "sign_in": "Se connecter",

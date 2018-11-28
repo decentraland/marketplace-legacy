@@ -160,9 +160,10 @@
     "video_tutorial": "video tutorial"
   },
   "auction_splash": {
+    "already_subscribed": "Usted ya está suscrito",
     "cta": "enviar",
     "cta_title": "¡Ingresa tu correo y te avisaremos!",
-    "subscribed": "Usted ya está suscrito"
+    "subscribed": "¡Suscrito con éxito!"
   },
   "authorization": {
     "allow": "Autorice al {contract_link} a operar {symbol} en su nombre",
@@ -298,9 +299,9 @@
     "retry": "Reintentar",
     "revoke": "Revocar",
     "sale": "Venta",
+    "seconds": "segundos",
     "see_less": "Ver menos",
     "see_more": "Ver más",
-    "seconds": "segundos",
     "service_unavailable": "Servicio no disponible",
     "settings": "Configuración",
     "sign_in": "Conectar",

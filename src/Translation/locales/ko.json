@@ -156,9 +156,10 @@
     "video_tutorial": "비디오 자습서"
   },
   "auction_splash": {
+    "already_subscribed": "이미 구독 중입니다.",
     "cta": "보내다",
     "cta_title": "귀하의 메일을 입력하면 알려드립니다.",
-    "subscribed": "이미 구독 중입니다."
+    "subscribed": "성공적으로 구독했습니다."
   },
   "authorization": {
     "allow": "{contract_link}이 {symbol}을 대신하여 작동하도록 승인합니다.",
@@ -294,9 +295,9 @@
     "retry": "다시 해 보다",
     "revoke": "취소",
     "sale": "판매",
+    "seconds": "초",
     "see_less": "적은 것을보십시오",
     "see_more": "더보기",
-    "seconds": "초",
     "service_unavailable": "서비스를 사용할 수 없음",
     "settings": "설정",
     "sign_in": "로그인",

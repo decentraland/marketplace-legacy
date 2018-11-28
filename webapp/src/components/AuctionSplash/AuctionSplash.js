@@ -25,9 +25,7 @@ export default class AuctionFinishedPage extends React.PureComponent {
 
     this.state = {
       email: '',
-      subscribed: hasSeenAuctionHelper(
-        AUCTION_HELPERS.SUBSCRIBED_TO_AUCTION_BY_EMAIL
-      )
+      subscribed: false
     }
   }
 
@@ -46,37 +44,47 @@ export default class AuctionFinishedPage extends React.PureComponent {
     this.setState({ subscribed: true })
   }
 
-  render() {
+  renderFooter = () => {
     const { email, subscribed } = this.state
 
+    if (subscribed) {
+      return <p className="subscribed">{t('auction_splash.subscribed')}</p>
+    }
+
+    if (hasSeenAuctionHelper(AUCTION_HELPERS.SUBSCRIBED_TO_AUCTION_BY_EMAIL)) {
+      return (
+        <p className="subscribed">{t('auction_splash.already_subscribed')}</p>
+      )
+    }
+
+    return (
+      <React.Fragment>
+        <p>{t('auction_splash.cta_title')}</p>
+        <Form
+          onSubmit={preventDefault(this.handleSubmit)}
+          className="cta-wrapper"
+        >
+          <Input
+            type="email"
+            value={email}
+            onChange={this.onChangeEmail}
+            autoFocus
+            placeholder={t('global.email')}
+            required
+          />
+          <Button primary={true}>
+            {t('auction_splash.cta').toUpperCase()}
+          </Button>
+        </Form>
+      </React.Fragment>
+    )
+  }
+
+  render() {
     return (
       <AuctionStaticPage>
         <div className="AuctionSplash">
-          <AuctionCountdown>
-            {subscribed ? (
-              <p className="subscribed">{t('auction_splash.subscribed')}</p>
-            ) : (
-              <React.Fragment>
-                <p>{t('auction_splash.cta_title')}</p>
-                <Form
-                  onSubmit={preventDefault(this.handleSubmit)}
-                  className="cta-wrapper"
-                >
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={this.onChangeEmail}
-                    autoFocus
-                    placeholder={t('global.email')}
-                    required
-                  />
-                  <Button primary={true}>
-                    {t('auction_splash.cta').toUpperCase()}
-                  </Button>
-                </Form>
-              </React.Fragment>
-            )}
-          </AuctionCountdown>
+          <AuctionCountdown>{this.renderFooter()}</AuctionCountdown>
         </div>
       </AuctionStaticPage>
     )
