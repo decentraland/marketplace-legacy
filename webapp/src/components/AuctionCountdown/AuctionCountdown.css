@@ -21,7 +21,13 @@
   align-items: center;
 }
 
-@media(min-width: 992px) {
+@media (min-width: 400px) {
+  .AuctionCountdown {
+    padding: 50px;
+  }
+}
+
+@media (min-width: 992px) {
   .AuctionCountdown.banner {
     display: flex;
     align-content: flex-start;
@@ -35,11 +41,5 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
-  }
-}
-
-@media (min-width: 400px) {
-  .AuctionCountdown {
-    padding: 50px;
   }
 }
