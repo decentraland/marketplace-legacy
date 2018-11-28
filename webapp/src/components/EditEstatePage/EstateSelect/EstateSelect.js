@@ -247,7 +247,7 @@ export default class EstateSelect extends React.PureComponent {
                 </Grid.Column>
               )}
               {canEdit && (
-                <Grid.Column width={14}>
+                <Grid.Column width={16}>
                   <EstateSelectActions
                     isTxIdle={isTxIdle}
                     isCreation={isCreation}

@@ -1,3 +1,9 @@
 .Collapsable .collapsable-wrapper {
   overflow: hidden;
 }
+
+.Collapsable .see-more {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+}

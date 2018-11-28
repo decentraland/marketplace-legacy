@@ -26,12 +26,13 @@ export default class Collapsable extends React.PureComponent {
     }
   }
 
-  toggleSeeMore = () => {
-    this.setState({ isCollapsed: !this.state.isCollapsed })
-  }
-
   componentWillMount() {
     window.addEventListener('resize', this.debouncedSetCollapsableUsingHeight)
+    this.setCollapsableUsingHeight()
+  }
+
+  componentWillReceiveProps() {
+    this.setCollapsableUsingHeight()
   }
 
   componentWillUnmount() {
@@ -39,6 +40,10 @@ export default class Collapsable extends React.PureComponent {
       'resize',
       this.debouncedSetCollapsableUsingHeight
     )
+  }
+
+  handleToggleSeeMore = () => {
+    this.setState({ isCollapsed: !this.state.isCollapsed })
   }
 
   setWrapperElement = wrapperElement => {
@@ -73,7 +78,7 @@ export default class Collapsable extends React.PureComponent {
           </div>
         </div>
         {isCollapsable ? (
-          <div className="link" onClick={this.toggleSeeMore}>
+          <div className="see-more link" onClick={this.handleToggleSeeMore}>
             {isCollapsed ? t('global.see_more') : t('global.see_less')}
           </div>
         ) : null}

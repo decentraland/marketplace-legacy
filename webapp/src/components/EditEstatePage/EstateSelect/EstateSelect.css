@@ -34,7 +34,8 @@
 
 @media (max-width: 475px) {
   .EstateSelect .estate-selection .dissolve-button {
-    padding-bottom: 6px;
+    padding-top: 0;
+    padding-bottom: 10px;
     float: none;
   }
 }
