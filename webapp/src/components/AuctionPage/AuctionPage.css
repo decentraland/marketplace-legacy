@@ -317,4 +317,8 @@
   .AuctionPage .output-information .information-block + .information-block {
     margin-left: 0px;
   }
+
+  .BidConfirmationModal .modal-body .actions .button {
+    width: 100%;
+  }
 }
