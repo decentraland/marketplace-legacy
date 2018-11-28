@@ -1,10 +1,19 @@
+.AuctionFinishedPage {
+  margin: auto;
+  background: var(--background);
+  max-width: 600px;
+  padding: 50px;
+  border-radius: 10px;
+  text-align: center;
+}
+
 .AuctionFinishedPage .description {
   max-width: 768px;
   margin: auto;
 }
 
 .AuctionFinishedPage .stats {
-  margin: 35px 0;
+  margin: 35px 0 40px 0;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column
