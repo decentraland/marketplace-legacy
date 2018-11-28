@@ -49,6 +49,10 @@
   color: var(--gray);
 }
 
+.AuctionPage .ParcelCoords {
+  margin-left: 24px;
+}
+
 .AuctionPage .ParcelCoord.has-status .attribute {
   border-color: var(--gray);
   color: var(--gray);
