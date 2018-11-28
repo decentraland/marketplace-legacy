@@ -1,10 +1,11 @@
-.ParcelCoords .collapsable-content {
+.ParcelCoords .collapsable-content,
+.ParcelCoords .coordinates {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
 
-.ParcelCoords .collapsable-content .ParcelCoord {
+.ParcelCoords .ParcelCoord {
   margin-right: 16px;
   margin-bottom: 16px;
 }

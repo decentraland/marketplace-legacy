@@ -22,16 +22,22 @@ export default class ParcelCoords extends React.PureComponent {
 
   render() {
     const { children, parcels, isCollapsable, ...parcelCoordProps } = this.props
-    const maxHeight = isCollapsable ? MAX_PARCEL_COORD_HEIGHT : Infinity
+
+    const parcelCoordinates =
+      children ||
+      parcels.map((parcel, index) => (
+        <ParcelCoord key={index} parcel={parcel} {...parcelCoordProps} />
+      ))
 
     return (
       <div className="ParcelCoords">
-        <Collapsable maxHeight={maxHeight}>
-          {children ||
-            parcels.map((parcel, index) => (
-              <ParcelCoord key={index} parcel={parcel} {...parcelCoordProps} />
-            ))}
-        </Collapsable>
+        {isCollapsable ? (
+          <Collapsable maxHeight={MAX_PARCEL_COORD_HEIGHT}>
+            {parcelCoordinates}
+          </Collapsable>
+        ) : (
+          <div className="coordinates">{parcelCoordinates}</div>
+        )}
       </div>
     )
   }

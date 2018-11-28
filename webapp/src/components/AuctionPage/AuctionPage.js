@@ -428,7 +428,7 @@ export default class AuctionPage extends React.PureComponent {
               <Grid.Column width={16}>
                 <div className="auction-panel">
                   {selectedParcels.length > 0 ? (
-                    <ParcelCoords>
+                    <ParcelCoords isCollapsable={false}>
                       {selectedParcels.map(parcel => (
                         <ParcelCoord
                           key={parcel.id}
