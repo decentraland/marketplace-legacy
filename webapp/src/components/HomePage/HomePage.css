@@ -47,11 +47,6 @@
   margin-top: 24px;
 }
 
-.HomePage .gap {
-  height: calc(100vh - 500px);
-  min-height: 125px;
-}
-
 .HomePage .banner-wrapper {
   margin-bottom: 40px;
 }
@@ -70,7 +65,7 @@
 }
 
 .HomePage .publications-header h3 {
-  color: white;
+  color: var(--text);
 }
 
 .HomePage .publications-header [role='button'] {
