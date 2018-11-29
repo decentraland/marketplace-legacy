@@ -26,9 +26,9 @@
   align-items: center;
 }
 
-@media (min-width: 400px) {
+@media (min-width: 450px) {
   .AuctionCountdown {
-    padding: 40px;
+    padding: 40px 70px;
   }
 }
 

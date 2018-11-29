@@ -2,7 +2,8 @@
   display: inline-block;
 }
 
-.Countdown-col-element, .banner .Countdown-col-element {
+.Countdown-col-element,
+.banner .Countdown-col-element {
   display: inline-block;
   margin: 0 10px;
   display: flex;
@@ -16,7 +17,8 @@
   width: auto;
 }
 
-.Countdown-col-element p, .banner .Countdown-col-element p {
+.Countdown-col-element p,
+.banner .Countdown-col-element p {
   font-size: 1.5em;
   margin-bottom: 0;
 }
@@ -26,22 +28,22 @@
 }
 
 .Countdown-col-element span {
-  text-transform: capitalize
+  text-transform: capitalize;
 }
 
-@media(min-width: 380px) {
+@media (min-width: 380px) {
   .Countdown-col-element p {
     font-size: 2em;
   }
 }
 
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .Countdown-col-element {
     margin: 0 20px;
     width: 60px;
   }
 
   .Countdown-col-element p {
-    font-size: 4em;
+    font-size: 3.5em;
   }
 }
