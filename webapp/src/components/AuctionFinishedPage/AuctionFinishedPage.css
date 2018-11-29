@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.AuctionFinishedPage .title {
+  font-size: 2.4em;
+}
+
 .AuctionFinishedPage .description {
   max-width: 768px;
   margin: auto;
@@ -17,7 +21,7 @@
   margin: 35px 0 40px 0;
   display: flex;
   justify-content: space-evenly;
-  flex-direction: column
+  flex-direction: column;
 }
 
 .AuctionFinishedPage .stat {

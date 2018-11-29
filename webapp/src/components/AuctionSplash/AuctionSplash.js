@@ -30,16 +30,12 @@ export default class AuctionFinishedPage extends React.PureComponent {
   }
 
   onChangeEmail = e => {
-    this.setState({
-      email: e.target.value
-    })
+    this.setState({ email: e.target.value })
   }
 
   handleSubmit = () => {
     const analytics = getAnalytics()
-    analytics.identify({
-      email: this.state.email
-    })
+    analytics.identify({ email: this.state.email })
     dismissAuctionHelper(AUCTION_HELPERS.SUBSCRIBED_TO_AUCTION_BY_EMAIL)
     this.setState({ subscribed: true })
   }

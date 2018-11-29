@@ -104,14 +104,7 @@ export default class AuctionModal extends React.PureComponent {
         </div>
         <h1 className="title">{t('auction.title')}</h1>
 
-        <div className="description">
-          {t('auction_modal.welcome', {
-            title: t('auction.title')
-          })}
-          <br />
-          <br />
-          {t('auction_modal.description')}
-        </div>
+        <div className="description">{t('auction_modal.description')}</div>
 
         <div className="agree-to-terms">
           <Checkbox

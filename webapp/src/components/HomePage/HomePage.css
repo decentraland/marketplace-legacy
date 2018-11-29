@@ -1,6 +1,10 @@
 .HomePage {
-  padding: 0px !important;
+  padding: 0 !important;
   margin-top: -var(--navbar-height);
+}
+
+.HomePage .hero-container {
+  height: calc(100vh - 500px);
 }
 
 .HomePage .hero-text,
@@ -8,8 +12,8 @@
   position: absolute;
   height: calc(100vh - 440px);
   top: calc(0px - var(--navbar-height));
-  left: 0px;
-  right: 0px;
+  left: 0;
+  right: 0;
   min-height: 200px;
 }
 
@@ -43,11 +47,6 @@
   margin-top: 24px;
 }
 
-.HomePage .gap {
-  height: calc(100vh - 500px);
-  min-height: 125px;
-}
-
 .HomePage .banner-wrapper {
   margin-bottom: 40px;
 }
@@ -66,7 +65,7 @@
 }
 
 .HomePage .publications-header h3 {
-  color: white;
+  color: var(--text);
 }
 
 .HomePage .publications-header [role='button'] {
@@ -84,13 +83,20 @@
   height: 294px;
 }
 
-.HomePage .publications-scroller .ParcelCard, .HomePage .publications-scroller .EstateCard {
+.HomePage .publications-scroller .ParcelCard,
+.HomePage .publications-scroller .EstateCard {
   flex: none;
   width: 224px !important;
   margin-right: 25px;
   overflow: initial;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .HomePage .hero-container {
+    margin-bottom: 15px;
+  }
 }
 
 @media (max-width: 600px) {
