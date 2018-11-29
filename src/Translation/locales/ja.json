@@ -100,16 +100,16 @@
     "your_parcel": "あなたの区画"
   },
   "auction": {
-    "description": "12月10日にLANDオークションに参加し、LANDを購入！",
+    "description": "12月10日から土地を購入できるLANDオークションが開催されます",
     "title": "Decentraland LANDオークション"
   },
   "auction_finished": {
-    "cta": "マーケットプレイスに行く",
-    "description": "ご参加いただきありがとうございます。",
-    "land_sold": "売り上げLAND",
-    "mana_burned": "マナは燃やされた",
-    "stats_title": "ここにいくつかの統計があります：",
-    "title": "オークション終了"
+    "cta": "マーケットに行く",
+    "description": "ご参加いただきありがとうございます",
+    "land_sold": "売却済みLAND",
+    "mana_burned": "MANAは焼却されました",
+    "stats_title": "統計を見る：",
+    "title": "オークションは終了しました"
   },
   "auction_modal": {
     "authorization": "承認",
@@ -153,10 +153,10 @@
     "video_tutorial": "ビデオチュートリアル"
   },
   "auction_splash": {
-    "already_subscribed": "あなたはすでに加入しています",
-    "cta": "送信する",
-    "cta_title": "あなたのメールを入力し、私たちに知らせてください！",
-    "subscribed": "うまく購読しました！"
+    "already_subscribed": "既に登録されています",
+    "cta": "登録する",
+    "cta_title": "最新情報の通知をメールで受け取る",
+    "subscribed": "メール登録完了しました"
   },
   "authorization": {
     "allow": "{contract_link}に準じて{symbol}を操作することを許可する",
@@ -258,7 +258,7 @@
     "contributions": "貢献区",
     "created_at": "{date}に作成済み",
     "day": "日",
-    "days": "日々",
+    "days": "日",
     "duration": "期間",
     "edit": "編集",
     "email": "mail@domain.com",
@@ -279,9 +279,9 @@
     "own_address_warning": "これはあなた自身のアドレスです！",
     "owned_by": "所有者",
     "owned_by_link": "所有者：{address_link}",
-    "owner_address_warning": "このアドレスはすでに所有されています！",
+    "owner_address_warning": "このアドレスはすでに所有者に指定されています",
     "paid_at": "支払済み",
-    "parcels": "区画(パーセル)",
+    "parcels": "パーセル(区画)",
     "profile": "プロフィール",
     "publications": "公開中の区画",
     "recipient_address": "受信者アドレス",
@@ -310,7 +310,7 @@
   },
   "homepage": {
     "get_started": "始める",
-    "hero_subtitle": "分散型の土地取引所　手数料無料",
+    "hero_subtitle": "分散型のLAND取引所　手数料無料",
     "hero_title": "ジェネシスシティで、あなたの理想の土地を選ぼう",
     "newest_lands": "新着LAND",
     "view_more": "もっと見る",
