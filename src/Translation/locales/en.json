@@ -132,8 +132,7 @@
     "terms_and_conditions": "Terms & Conditions",
     "tx_failed": "Transaction Failed",
     "video_tutorial": "Video Tutorial",
-    "watch_tutorial": "Watch video tutorial",
-    "welcome": "Welcome to the {title}!"
+    "watch_tutorial": "Watch video tutorial"
   },
   "auction_page": {
     "available_parcels": "parcels available",

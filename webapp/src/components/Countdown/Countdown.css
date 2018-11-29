@@ -8,10 +8,12 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  width: auto;
 }
 
 .Countdown-col-element.dots {
   margin: 0;
+  width: auto;
 }
 
 .Countdown-col-element p, .banner .Countdown-col-element p {
@@ -36,6 +38,7 @@
 @media(min-width: 768px) {
   .Countdown-col-element {
     margin: 0 20px;
+    width: 60px;
   }
 
   .Countdown-col-element p {
