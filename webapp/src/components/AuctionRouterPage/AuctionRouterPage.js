@@ -21,25 +21,23 @@ export default class AuctionRouterPage extends React.PureComponent {
     }
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     const { isConnected } = this.props
     if (isConnected) {
-      await this.fetchData()
+      this.fetchData()
     }
   }
 
-  async componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.isConnected) {
-      await this.fetchData()
+      this.fetchData()
     }
   }
 
   fetchData = async () => {
     this.fetchAuctionParams()
     const auctionFinished = await hasAuctionFinished()
-    this.setState({
-      auctionFinished
-    })
+    this.setState({ auctionFinished })
   }
 
   fetchAuctionParams() {
