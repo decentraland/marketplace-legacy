@@ -12,20 +12,16 @@ export default class ParcelCoord extends React.PureComponent {
 
   handleOnClick = () => {
     const { onClick, parcel } = this.props
-    if (onClick) {
-      onClick(parcel)
-    }
+    onClick(parcel)
   }
 
   handleOnDelete = () => {
     const { onDelete, parcel } = this.props
-    if (onDelete) {
-      onDelete(parcel)
-    }
+    onDelete(parcel)
   }
 
   render() {
-    const { parcel, ...chipProps } = this.props
+    const { parcel, onClick, onDelete, ...chipProps } = this.props
 
     // We use `className="map alternate"` instead of `name="map marker alternate"` on Icon because
     // semantic wrongly throws on the latter as of version 0.78.2
@@ -33,9 +29,9 @@ export default class ParcelCoord extends React.PureComponent {
       <div className="ParcelCoord">
         <Chip
           parcel={parcel}
+          onClick={onClick ? this.handleOnClick : null}
+          onDelete={onDelete ? this.handleOnDelete : null}
           {...chipProps}
-          onClick={this.handleOnClick}
-          onDelete={this.handleOnDelete}
         >
           <Icon name="marker" className="map alternate" />
           <span>{parcel.id}</span>
