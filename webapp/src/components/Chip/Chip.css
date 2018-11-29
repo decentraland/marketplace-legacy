@@ -75,6 +75,6 @@
 .Chip.deleteable .delete-button i.icon {
   height: inherit;
   width: inherit;
-  margin: 0 0 2px 1px;
+  margin: 0 0 2px 0;
   flex-grow: 1;
 }
