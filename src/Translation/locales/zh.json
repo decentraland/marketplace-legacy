@@ -20,10 +20,9 @@
     "buy_mana": "{click_here} 购买一些 MANA。",
     "didnt_allow": "您尚未授权虚拟市场使用 MANA",
     "didnt_allow_new_marketplace": "您尚未授权新版本的 Marketplace 使用 MANA",
-    "needs_at_least": "为了购买{asset_type}，您至少需要 {mana} MANA。",
-    "please_allow": "请转到{settings_link} 并允许 LegacyMarketplace 使用 MANA",
-    "please_allow_new_marketplace":
-      "请到 {settings_link} 并允许 Marketplace 使用 MANA",
+    "needs_at_least": "为了购买 {asset_type}，您至少需要 {mana} MANA。",
+    "please_allow": "请转到 {settings_link} 并允许 LegacyMarketplace 使用 MANA",
+    "please_allow_new_marketplace": "请到 {settings_link} 并允许 Marketplace 使用 MANA",
     "total_balance": "您的余额是 {balance}"
   },
   "asset_cancel": {
@@ -78,8 +77,7 @@
     "expiration": "期限",
     "expiration_placeholder": "出售的截止日期",
     "list_asset": "出售 {asset_name}",
-    "please_authorize":
-      "您需要到 {settings_link} 并授权市场使用 {asset_name}，然后才能出售。",
+    "please_authorize": "您需要到 {settings_link} 并授权市场使用 {asset_name}，然后才能出售。",
     "price": "价格",
     "price_placeholder": "{asset_name}的 MANA 价格",
     "set_asset_price": "设置 {asset_name} 的价格和到期日期。",
@@ -96,58 +94,56 @@
     "your_parcel": "您的地块"
   },
   "auction": {
-    "description": "参加12月10日的LAND拍卖并购买LAND！",
-    "title": "Decentraland LAND拍卖"
+    "description": "欢迎参加 12 月 10 日的 LAND 拍卖！",
+    "title": "Decentraland LAND 拍卖"
   },
   "auction_finished": {
-    "cta": "去市场",
+    "cta": "转到虚拟市场",
     "description": "感谢您的参与。",
-    "land_sold": "LAND已售出",
-    "mana_burned": "玛娜烧了",
-    "stats_title": "以下是一些统计数据：",
-    "title": "拍卖完成"
+    "land_sold": "LAND 已售出",
+    "mana_burned": "Mana 已销毁",
+    "stats_title": "一些统计数据：",
+    "title": "拍卖已结束"
   },
   "auction_modal": {
     "authorization": "授权",
-    "authorization_description":
-      "在您使用{token}在拍卖中购买任何LAND之前，您必须首先授权{contract_link}合同以您的名义访问和操作",
-    "authorize_token": "授权{token}令牌",
+    "authorization_description": "拍卖中在您用 {token} 购买 LAND 之前，您必须先授权{contract_link}合约访问和操作权限",
+    "authorize_token": "授权{token}通证",
     "confirmation": "确认",
-    "confirmation_description": "您即将为{price} {token}购买{parcels} LAND",
-    "description": "在开始之前，您只需要做两件事。",
+    "confirmation_description": "您即将用 {price} {token} 购买 {parcels} LAND",
+    "description": "在开始之前，您只需要做两件事。首先，选择购买 LAND 的通证，然后授权合约在购买土地时能操作通证",
     "get_started": "开始吧",
     "i_agree_with_terms": "我接受{terms_link}",
     "processing_tx": "处理交易",
-    "submit": "继续",
+    "submit": "确认",
     "terms_and_conditions": "条款和条件",
     "tx_failed": "交易失败",
     "video_tutorial": "视频教程",
     "watch_tutorial": "观看视频教程"
   },
   "auction_page": {
-    "available_parcels": "可用包裹",
-    "bid": "采购",
-    "description": "找到你想要购买的LAND",
-    "empty_message": "找到您要购买的包裹，并将其添加到购物车。",
-    "find_available_parcel": "查找可用包裹",
-    "gas_price": "天然气价格",
-    "land_price": "LAND价格",
-    "maximum_parcels_message":
-      "如果你试图在一次交易中购买超过{max} LAND，它就会失败。",
-    "maximum_parcels_title": "您达到了每笔交易的最高LAND",
-    "parcels": "包裹",
-    "parcels_tooltip": "您一次只能购买{max}包裹",
+    "available_parcels": "可拍土地",
+    "bid": "购买",
+    "description": "找到想要购买的 LAND",
+    "empty_message": "找到您想购买的土地，然后将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
+    "find_available_parcel": "查找拍卖的土地",
+    "gas_price": "Gas 价格",
+    "land_price": "LAND 价格",
+    "maximum_parcels_message": "如果一次交易中购买超过 {max} 块地，交易可能会失败。您可以先提交此次交易，然后再进行购买",
+    "maximum_parcels_title": "您达到了每笔交易最多土地数",
+    "parcels": "土地数",
+    "parcels_tooltip": "您一次最多只能购买 {max} 个地块",
     "searching": "搜索...",
     "sold": "出售",
-    "title": "LAND购物车",
-    "token": "代币",
-    "token_tooltip": "选择要购买的令牌LAND",
+    "title": "LAND 购物车",
+    "token": "通证",
+    "token_tooltip": "选择购买 LAND 所使用的通证",
     "total_price": "总价",
     "video_tutorial": "视频教程"
   },
   "auction_splash": {
-    "already_subscribed": "你已经订阅了",
-    "cta": "发送",
+    "already_subscribed": "您已订阅",
+    "cta": "订阅",
     "cta_title": "输入您的邮件，我们会通知您！",
     "subscribed": "订阅成功！"
   },
@@ -188,23 +184,20 @@
     "proposal": "提案"
   },
   "derivation_path": {
-    "invalid":
-      "您为钱包设置了错误的派生路径。 您的派生路径必须遵循模式 44'/60|61'/x'/n"
+    "invalid": "您为钱包设置了错误的派生路径。 您的派生路径必须遵循模式 44'/60|61'/x'/n"
   },
   "estate_detail": {
     "dissolve": "解散连块土地",
     "dissolve_desc": "你将解散连块土地 {name}",
     "edit_parcels": "编辑地块",
     "empty_estate": "连块土地 {name} 已经解散",
-    "maximum_parcels_message":
-      "如果您在单个交易中添加或删除超过 {max} 个地块，交易费用可能会不足。您可以先提交此交易，然后在编辑连块土地中再增加或删除地块。",
+    "maximum_parcels_message": "如果您在单个交易中添加或删除超过 {max} 个地块，交易费用可能会不足。您可以先提交此交易，然后在编辑连块土地中再增加或删除地块。",
     "maximum_parcels_title": "您达到了每笔交易的最大土地数",
     "parcels": "包含的地块"
   },
   "estate_dissolve": {
     "too_big": "连块土地太大了",
-    "too_big_desc":
-      "如果连块土地超过 {max} 块土地，则解散连块土地的交易有可能引起交易费用不足。您可以在编辑连块土地中移除地块，直到地块少于或等于 {max}， 然后再解散连块土地"
+    "too_big_desc": "如果连块土地超过 {max} 块土地，则解散连块土地的交易有可能引起交易费用不足。您可以在编辑连块土地中移除地块，直到地块少于或等于 {max}， 然后再解散连块土地"
   },
   "estate_edit": {
     "description": "描述",
@@ -314,7 +307,7 @@
     "zh": "中文"
   },
   "marketplace": {
-    "empty": "噢......暂无内容。",
+    "empty": "暂无内容......",
     "filter": {
       "cheapest": "最低价",
       "close_to_expire": "临近到期",
@@ -353,15 +346,12 @@
     "payable": "应付",
     "payable_placeholder": "应付天数",
     "pending_tx": "抵押",
-    "please_authorize_MANA":
-      "请到 {settings_link} 并授权 Mortgage Helper 合约代表您运营 MANA",
-    "please_authorize_RCN":
-      "请到 {settings_link} 并授权抵押贷款合约代表您运营 RCN",
+    "please_authorize_MANA": "请到 {settings_link} 并授权 Mortgage Helper 合约代表您运营 MANA",
+    "please_authorize_RCN": "请到 {settings_link} 并授权抵押贷款合约代表您运营 RCN",
     "punitory_rate": "惩罚性利率",
     "punitory_rate_placeholder": "惩罚性利率",
     "request": "申请抵押贷款",
-    "request_land":
-      "您将为 {parcel_name} 地块以 {parcel_price} 的价格申请抵押贷款",
+    "request_land": "您将为 {parcel_name} 地块以 {parcel_price} 的价格申请抵押贷款",
     "requested": "已申请",
     "required_deposit": "所需押金：{deposit}"
   },
@@ -398,7 +388,7 @@
     "ipns": "内容链接",
     "name": "名称",
     "set_name_and_desc": "为 {parcel_name} 设置名称和描述",
-    "warning_tooltip": "这将用于显示您的场景。仅在您知道自己在做什么时才更新。"
+    "warning_tooltip": "这些设置将用于显示您的场景。请确认自己已明白，再做修改。"
   },
   "parcel_tags": {
     "adjacent": "路边",
@@ -417,16 +407,16 @@
   },
   "settings": {
     "authorization": "授权",
-    "authorization_error": "我们无法加载您的授权，请重试",
-    "authorization_error_contact": "如果错误仍然存​​在，请不要犹豫与我们联系",
-    "for_buying": "购买",
-    "for_buying_LANDAuction": "使用{token}拍卖LAND",
+    "authorization_error": "无法加载授权，请重试",
+    "authorization_error_contact": "如果错误仍然存在，请不要犹豫与我们联系",
+    "for_buying": "购买：",
+    "for_buying_LANDAuction": "在 LAND 拍卖中使用 {token}",
     "for_buying_LegacyMarketplace": "使用 MANA（遗留功能）",
     "for_buying_Marketplace": "使用 MANA",
     "for_buying_MortgageHelper": "LAND 抵押贷款",
     "for_buying_MortgageManager": "LAND 抵押贷款",
-    "for_selling": "出售",
-    "legacy_authorization": "遗留功能授权",
+    "for_selling": "出售：",
+    "legacy_authorization": "授权使用遗留功能",
     "pending_tx": "等待交易完成，请点击查看详情"
   },
   "sign_in": {
@@ -434,24 +424,21 @@
     "get_started": "开始使用",
     "intro": "首先，您需要一个安全的地方来保存所有的 LAND。",
     "options": {
-      "desktop":
-        "您可以使用{metamask_link}扩展或像{ledger_nano_link}这样的硬件钱包。",
+      "desktop": "您可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。",
       "mobile": "您可以使用移动浏览器，如 {coinbase_link} 或 {imtoken_link}。"
     }
   },
   "terms_modal": {
-    "also_agree":
-      "您还同意我们的{privacy_policy_link}，它描述了我们如何处理您的信息。",
-    "by_agreeing":
-      "通过选择下面的“我同意”，即表示您同意我们的{terms_of_service_link}。",
-    "explanation": "这个dApp与在以太坊区块链上运行的分散交换进行交互。",
+    "also_agree": "您还同意我们的{privacy_policy_link}，它说明了我们如何处理您的信息。",
+    "by_agreeing": "通过选择下面的“我同意”，即表示您同意我们的{terms_of_service_link}。",
+    "explanation": "此 dApp 与在以太坊区块链上运行的去中心化交易所进行交互。",
     "i_agree": "我同意",
     "privacy_policy": "隐私政策",
     "terms_of_service": "服务条款",
-    "title": "欢迎来到Decentraland的LAND市场"
+    "title": "欢迎来到 Decentraland 的 LAND 虚拟市场"
   },
   "transaction": {
-    "bid": "你在拍卖会上买了{parcel_count}包裹",
+    "bid": "你在拍卖会上买了 {parcel_count} 块土地",
     "buy": "您购买了 {parcel_link} 地块",
     "buy_mana": "您已经买了 {mana} MANA",
     "cancel": "你在{parcel_link}取消了这笔交易",
@@ -461,8 +448,7 @@
     "create_mortgage": "您要求抵押以购买地块 {parcel_link}",
     "dissolve_estate": "你解散了连块土地 {name}",
     "edit": "您编辑了{parcel_link}地块的名称\"{name}\"和描述\"{description}\"",
-    "edit_estate_metadata":
-      "您编辑了连块土地 {estate_id}，名称为“{name}”，描述为“{description}”",
+    "edit_estate_metadata": "您编辑了连块土地 {estate_id}，名称为“{name}”，描述为“{description}”",
     "edit_estate_parcels_added": "您将 {amount} 地块添加到连块土地 {name}",
     "edit_estate_parcels_removed": "您从连块土地 {name} 中移除了 {amount} 地块",
     "manage": "您授权{address_link}更新{asset_link}上的内容",
@@ -475,7 +461,7 @@
     "transfer_mana": "{mana} MANA 已转帐至 {address_link}"
   },
   "transaction_confirmations": {
-    "count": "{confirmations_count}个确认"
+    "count": "{confirmations_count} 个确认"
   },
   "transaction_status": {
     "activity_page": "活动页面",
@@ -483,8 +469,7 @@
       "please_confirm": "请确认交易"
     },
     "parcel": {
-      "still_pending":
-        "{parcel_name} 仍然有 {transactions_count} 个待处理的交易。"
+      "still_pending": "{parcel_name} 仍然有 {transactions_count} 个待处理的交易。"
     },
     "see_activity": "要查看您的交易记录，请访问 {activity_link}。",
     "text": {
