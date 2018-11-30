@@ -55,8 +55,8 @@
   },
   "asset_edit": {
     "errors": {
-      "description_limit": "描述应低于{length}字符",
-      "name_max_limit": "名称应低于{length}字符",
+      "description_limit": "说明不得多于 {length} 个字符",
+      "name_max_limit": "名称应小于 {length} 个字符",
       "name_min_limit": "名称不能为空"
     }
   },
@@ -236,7 +236,7 @@
     "community_chat": "社区聊天",
     "confirm": "确认",
     "connect": "连接",
-    "connecting": "连接",
+    "connecting": "正在连接",
     "continue": "继续",
     "contributions": "小区份额",
     "created_at": "创建于 {date}",
@@ -253,7 +253,7 @@
     "for": "对于",
     "hours": "小时",
     "land": "LAND",
-    "learn_more": "学到更多",
+    "learn_more": "了解更多",
     "loading": "载入中",
     "marketplace": "虚拟物品市场",
     "minutes": "分钟",
@@ -274,8 +274,8 @@
     "revoke": "撤消",
     "sale": "拍卖",
     "seconds": "秒",
-    "see_less": "少见",
-    "see_more": "看更多",
+    "see_less": "折叠",
+    "see_more": "查看更多",
     "service_unavailable": "暂停服务",
     "settings": "设置",
     "sign_in": "登录",
