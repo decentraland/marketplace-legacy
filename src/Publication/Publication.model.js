@@ -1,4 +1,6 @@
 import { Model } from 'decentraland-commons'
+
+import { PublicationQueries } from './Publication.queries'
 import { BlockchainEvent } from '../BlockchainEvent'
 import { SQL } from '../database'
 import {
@@ -25,6 +27,7 @@ export class Publication extends Model {
     'block_time_updated_at',
     'contract_id'
   ]
+
   static isValidStatus(status) {
     return Object.values(PUBLICATION_STATUS).includes(status)
   }
@@ -49,6 +52,22 @@ export class Publication extends Model {
     }
 
     return this.find({ asset_id, status }, { created_at: 'DESC' })
+  }
+
+  // TODO: Add asset_type
+  static findActiveByAssetIdWithStatus(asset_id, status) {
+    if (!this.isValidStatus(status)) {
+      throw new Error(`Invalid status "${status}"`)
+    }
+
+    return this.db.query(
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE status = ${status}
+          AND asset_id = ${asset_id}
+          AND ${PublicationQueries.whereIsActive()}
+        ORDER BY created_at DESC`
+    )
   }
 
   // TODO: Add asset_type

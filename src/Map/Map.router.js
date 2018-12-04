@@ -1,6 +1,7 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
+import { Atlas } from './Atlas.model'
 import { Parcel, Estate, EstateService } from '../Asset'
 import { sanitizeParcels } from '../sanitize'
 import { unsafeParseInt } from '../lib'
@@ -28,6 +29,7 @@ export class MapRouter {
     )
     this.app.get('/estates/:id/map.png', this.handleRequest(this.getEstatePNG))
     this.app.get('/map', server.handleRequest(this.getMap))
+    this.app.get('/atlas', server.handleRequest(this.getAtlas))
   }
 
   handleRequest(callback) {
@@ -39,6 +41,35 @@ export class MapRouter {
         res.send(error.message)
       }
     }
+  }
+
+  async getAtlas() {
+    let atlas = []
+
+    try {
+      const owner = server.extractFromReq(req, 'owner')
+      atlas = await Atlas.findFromOwnerPerspective(owner)
+    } catch (error) {
+      atlas = await Atlas.find()
+    }
+
+    const map = {}
+    for (const row of atlas) {
+      map[row.id] = {
+        x: row.x,
+        y: row.y,
+        owner: row.owner || '',
+        price: row.price || '',
+        name: row.name || '',
+        type: row.type,
+        color: row.color,
+        left: row.is_connected_left ? 1 : 0,
+        top: row.is_connected_top ? 1 : 0,
+        topleft: row.is_connected_topleft ? 1 : 0
+      }
+    }
+
+    return map
   }
 
   async getMapPNG(req, res) {

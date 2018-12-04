@@ -13,16 +13,9 @@ import {
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
-import {
-  Bounds,
-  Viewport,
-  getMapAsset,
-  getType,
-  getColorByType,
-  TYPES
-} from 'shared/map'
+import { Bounds, Viewport, getType, getColorByType, TYPES } from 'shared/map'
 import { Map as MapRenderer } from 'shared/map/render'
-import { isParcel } from 'shared/parcel'
+import { isParcel, inEstate } from 'shared/parcel'
 import {
   getLabel,
   getTextColor,
@@ -360,7 +353,7 @@ export default class ParcelPreview extends React.PureComponent {
     const parcelId = buildCoordinate(x, y)
     const { onClick, parcels, estates } = this.props
 
-    let asset = getMapAsset(parcelId, parcels, estates)
+    let asset = this.getMapAsset(parcelId, parcels, estates)
 
     if (
       onClick &&
@@ -425,7 +418,16 @@ export default class ParcelPreview extends React.PureComponent {
     this.hidePopup()
   }
 
-  hidePopup = () => {
+  getMapAsset(parcelId, parcels, estates) {
+    const parcel = parcels[parcelId]
+    if (!parcel) {
+      return null
+    }
+
+    return inEstate(parcel) ? estates[parcel.estate_id] : parcel
+  }
+
+  hidePopup() {
     clearTimeout(this.popupTimeout)
 
     if (this.state.popup) {
@@ -463,7 +465,7 @@ export default class ParcelPreview extends React.PureComponent {
     }
 
     const { wallet, parcels, districts, publications, estates } = this.props
-    const asset = getMapAsset(parcelId, parcels, estates)
+    const asset = this.getMapAsset(parcelId, parcels, estates)
     const parcel = parcels[parcelId]
     const publication = getOpenPublication(asset, publications)
 
