@@ -5,6 +5,7 @@
 
 .HomePage .hero-container {
   height: calc(100vh - 500px);
+  min-height: 128px;
 }
 
 .HomePage .hero-text,
@@ -95,7 +96,7 @@
 
 @media (max-width: 768px) {
   .HomePage .hero-container {
-    margin-bottom: 15px;
+    min-height: 160px;
   }
 }
 

@@ -36,7 +36,7 @@
   .AuctionCountdown.banner {
     display: flex;
     align-content: flex-start;
-    margin: 50px 0;
+    margin: 20px 0;
     padding: 20px;
     max-width: 100%;
     text-align: left;
