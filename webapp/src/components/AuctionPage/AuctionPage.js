@@ -331,7 +331,10 @@ export default class AuctionPage extends React.PureComponent {
                     {t('auction_page.title')}{' '}
                     {validSelectedParcels.length > 0 ? (
                       <span className="parcel-count">
-                        &nbsp;({validSelectedParcels.length})
+                        &nbsp;({validSelectedParcels.length}){' '}
+                        {this.hasReachedLimit(selectedCoordinatesById) ? (
+                          <Icon name="warning sign" size="small" />
+                        ) : null}
                       </span>
                     ) : null}
                   </span>
