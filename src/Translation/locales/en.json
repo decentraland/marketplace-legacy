@@ -103,7 +103,10 @@
     "your_parcel": "Your parcel"
   },
   "auction": {
-    "description":
+    "description_after_finish": "The LAND auction has ended!",
+    "description_after_start":
+      "The LAND auction has started, you can now buy LAND!",
+    "description_before_start":
       "Participate in the LAND auction on December 10 and buy LAND!",
     "title": "Decentraland LAND Auction"
   },

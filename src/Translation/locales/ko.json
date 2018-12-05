@@ -103,7 +103,11 @@
     "your_parcel": "당신의 토지"
   },
   "auction": {
-    "description": "12 월 10 일 LAND 경매에 참가하여 LAND을 구입하십시오!",
+    "description_after_finish": "LAND 경매가 끝났습니다!",
+    "description_after_start":
+      "LAND 경매가 시작되었습니다. 이제 LAND을 구입할 수 있습니다!",
+    "description_before_start":
+      "12 월 10 일 LAND 경매에 참가하여 LAND을 구입하십시오!",
     "title": "Decentraland LAND 경매"
   },
   "auction_finished": {

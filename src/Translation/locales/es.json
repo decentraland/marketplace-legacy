@@ -104,8 +104,11 @@
     "your_parcel": "Tu parcela"
   },
   "auction": {
-    "description":
-      "¡Participe en la subasta de LAND el 10 de diciembre y compre LAND!",
+    "description_after_finish": "La subasta de LAND ha terminado!",
+    "description_after_start":
+      "La subasta LAND ha comenzado, ¡ahora puedes comprar LAND!",
+    "description_before_start":
+      "¡Participe en la subasta LAND el 10 de diciembre y compre LAND!",
     "title": "Subasta Decentraland LAND"
   },
   "auction_finished": {

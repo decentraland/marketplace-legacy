@@ -100,7 +100,11 @@
     "your_parcel": "あなたの区画"
   },
   "auction": {
-    "description": "12月10日から土地を購入できるLANDオークションが開催されます",
+    "description_after_finish": "LANDオークションが終了しました！",
+    "description_after_start":
+      "LANDオークションが始まったので、今すぐLANDを買うことができます！",
+    "description_before_start":
+      "12月10日にLANDオークションに参加し、LANDを購入！",
     "title": "Decentraland LANDオークション"
   },
   "auction_finished": {
@@ -134,7 +138,8 @@
     "available_parcels": "販売中の区画",
     "bid": "購入",
     "description": "購入したいLAND(土地)を選んで下さい",
-    "empty_message": "購入したい土地を選んでカートに追加します。 詳しい参加方法を{video_tutorial_link}動画で観る",
+    "empty_message":
+      "購入したい土地を選んでカートに追加します。 詳しい参加方法を{video_tutorial_link}動画で観る",
     "find_available_parcel": "購入可能な区画を表示",
     "gas_price": "ガス価格",
     "land_price": "LAND単価",
@@ -295,8 +300,7 @@
     "service_unavailable": "サービスは利用できません",
     "settings": "設定",
     "sign_in": "サインイン",
-    "sign_in_notice":
-      "アクセスするには{sign_in_link}する必要があります",
+    "sign_in_notice": "アクセスするには{sign_in_link}する必要があります",
     "submit": "送信",
     "the_estate": "エステート",
     "the_parcel": "区画",
@@ -446,7 +450,8 @@
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください",
     "get_started": "始める",
-    "intro": "まず始めにあなたのLAND(土地)を安全に保管する環境を用意して下さい。",
+    "intro":
+      "まず始めにあなたのLAND(土地)を安全に保管する環境を用意して下さい。",
     "options": {
       "desktop":
         "{metamask_link}拡張機能や{ledger_nano_link}などのハードウェアウォレットが使用できます。",
