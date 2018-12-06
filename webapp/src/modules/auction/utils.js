@@ -36,8 +36,8 @@ export function dismissAuctionHelper(key) {
   localStorage.setItem(key, Date.now())
 }
 
-export function getVideoTutorialLink() {
-  return 'https://www.youtube-nocookie.com/embed/-HmXrOTEmxg?controls=0'
+export function getYoutubeTutorialId() {
+  return 'uYESj1OYu24'
 }
 
 export async function hasAuctionFinished() {
