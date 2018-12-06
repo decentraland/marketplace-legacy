@@ -152,6 +152,10 @@
   color: var(--gray);
 }
 
+.AuctionPage .parcel-count .warning.sign.icon {
+  color: var(--error);
+}
+
 @media (max-width: 992px) {
   .AuctionPage .information-block,
   .AuctionPage .output-information {
@@ -320,5 +324,21 @@
 
   .BidConfirmationModal .modal-body .actions .button {
     width: 100%;
+  }
+
+  .AuctionPage .ui.warning.message .warning.sign.icon {
+    transform: scale(0.8);
+  }
+
+  .AuctionPage .ui.warning.message .content .header {
+    margin-bottom: 0px;
+  }
+
+  .AuctionPage .ui.warning.message .content p {
+    display: none;
+  }
+
+  .AuctionPage .ui.warning.message {
+    margin-bottom: 0px;
   }
 }
