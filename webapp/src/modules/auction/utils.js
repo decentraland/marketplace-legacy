@@ -37,7 +37,7 @@ export function dismissAuctionHelper(key) {
 }
 
 export function getVideoTutorialLink() {
-  return 'https://www.youtube-nocookie.com/embed/-HmXrOTEmxg?controls=0'
+  return 'https://www.youtube-nocookie.com/embed/uYESj1OYu24'
 }
 
 export async function hasAuctionFinished() {
