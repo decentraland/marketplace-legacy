@@ -19,12 +19,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   onFetchPublications: () =>
-    dispatch(
-      fetchPublicationsRequest({
-        limit: 20,
-        offset: 0
-      })
-    ),
+    dispatch(fetchPublicationsRequest({ limit: 20, offset: 0 })),
   onNavigate: url => dispatch(navigateTo(url)),
   onLearnMoreAuction: () => dispatch(learnMoreAuction())
 })
