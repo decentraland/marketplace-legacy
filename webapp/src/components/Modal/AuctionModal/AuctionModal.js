@@ -6,7 +6,7 @@ import { t, T } from '@dapps/modules/translation/utils'
 import {
   dismissAuctionHelper,
   AUCTION_HELPERS,
-  getVideoTutorialLink
+  getYoutubeTutorialId
 } from 'modules/auction/utils'
 import BaseModal from '../BaseModal'
 
@@ -77,7 +77,7 @@ export default class AuctionModal extends React.PureComponent {
         </header>
         <div className="video-container">
           <iframe
-            src={getVideoTutorialLink()}
+            src={`https://www.youtube-nocookie.com/embed/${getYoutubeTutorialId()}`}
             frameBorder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

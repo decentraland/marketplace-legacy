@@ -30,7 +30,7 @@ import {
   TOKEN_SYMBOLS,
   AUCTION_HELPERS,
   dismissAuctionHelper,
-  getVideoTutorialLink
+  getYoutubeTutorialId
 } from 'modules/auction/utils'
 import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
@@ -473,7 +473,7 @@ export default class AuctionPage extends React.PureComponent {
                         values={{
                           video_tutorial_link: (
                             <a
-                              href={getVideoTutorialLink()}
+                              href={`https://www.youtube.com/watch?v=${getYoutubeTutorialId()}`}
                               rel="noopener noreferrer"
                               target="_blank"
                             >
