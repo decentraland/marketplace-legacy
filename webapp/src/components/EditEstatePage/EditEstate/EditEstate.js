@@ -73,28 +73,24 @@ export default class EditEstate extends React.PureComponent {
     const { isSelecting, estate } = this.state
     const { wallet, isCreation, onCancel } = this.props
 
-    return (
-      <React.Fragment>
-        {isSelecting ? (
-          <EstateSelect
-            estate={estate}
-            onContinue={this.handleSwitch}
-            onChange={this.handleChangeParcels}
-            onSubmit={this.handleSubmit}
-            onCancel={onCancel}
-            wallet={wallet}
-            isCreation={isCreation}
-          />
-        ) : (
-          <EditEstateMetadata
-            estate={estate}
-            isCreation={isCreation}
-            onCancel={isCreation ? this.handleSwitch : onCancel}
-            onChange={this.handleChange}
-            onSubmit={this.handleSubmit}
-          />
-        )}
-      </React.Fragment>
+    return isSelecting ? (
+      <EstateSelect
+        estate={estate}
+        onContinue={this.handleSwitch}
+        onChange={this.handleChangeParcels}
+        onSubmit={this.handleSubmit}
+        onCancel={onCancel}
+        wallet={wallet}
+        isCreation={isCreation}
+      />
+    ) : (
+      <EditEstateMetadata
+        estate={estate}
+        isCreation={isCreation}
+        onCancel={isCreation ? this.handleSwitch : onCancel}
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
+      />
     )
   }
 }

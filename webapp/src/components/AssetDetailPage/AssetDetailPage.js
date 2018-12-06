@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Loader } from 'semantic-ui-react'
+
 import { ASSET_TYPES } from 'shared/asset'
 import AssetLoader from 'components/AssetLoader'
 import ParcelDetailPage from 'components/ParcelDetailPage'
@@ -26,8 +28,16 @@ export default class AssetDetailPage extends React.PureComponent {
     }
   }
 
-  render() {
-    const { id, assetType, onAssetClick } = this.props
+  renderDetailPage(asset) {
+    if (!asset) {
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
+    }
+
+    const { assetType } = this.props
 
     if (ASSET_TYPES[assetType] == null) {
       const assetTypesStr = Object.values(ASSET_TYPES).join(', ')
@@ -45,16 +55,20 @@ export default class AssetDetailPage extends React.PureComponent {
         DetailPage = EstateDetailPage
         break
     }
+    return <DetailPage />
+  }
 
+  render() {
+    const { id, assetType, onAssetClick } = this.props
     return (
       <AssetLoader id={id} assetType={assetType}>
         {asset =>
           this.hasPreviewHeader(asset, assetType) ? (
             <AssetPreviewHeader asset={asset} onAssetClick={onAssetClick}>
-              <DetailPage />
+              {this.renderDetailPage(asset)}
             </AssetPreviewHeader>
           ) : (
-            <DetailPage />
+            this.renderDetailPage(asset)
           )
         }
       </AssetLoader>
