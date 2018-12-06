@@ -12,7 +12,7 @@ import { getData as getPublications } from 'modules/publication/selectors'
 import { getActiveMortgageByBorrower } from 'shared/mortgage'
 import { buildCoordinate } from 'shared/coordinates'
 
-export const getState = state => state.mortgages
+export const getState = state => state.mortgage
 export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error

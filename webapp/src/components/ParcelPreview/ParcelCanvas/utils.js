@@ -126,35 +126,35 @@ export function panzoom(target, cb) {
   }
 }
 
-export function getLabel(type, asset, districts) {
-  switch (type) {
-    case TYPES.loading:
-      return t('atlas.loading') + '...'
-    case TYPES.district:
-    case TYPES.contribution: {
-      const district = districts[asset.district_id]
-      return district ? district.name : 'District'
-    }
-    case TYPES.plaza:
-      return 'Genesis Plaza'
-    case TYPES.roads:
-      return t('atlas.road')
-    case TYPES.myParcels:
-    case TYPES.myParcelsOnSale:
-    case TYPES.myEstates:
-    case TYPES.myEstatesOnSale:
-    case TYPES.taken:
-    case TYPES.onSale: {
-      return asset.data.name || null
-    }
-    case TYPES.unowned:
-    case TYPES.background:
-    default:
-      return null
-  }
-}
+// export function getLabel(type, asset, districts) {
+//   switch (type) {
+//     case TYPES.loading:
+//       return t('atlas.loading') + '...'
+//     case TYPES.district:
+//     case TYPES.contribution: {
+//       const district = districts[asset.district_id]
+//       return district ? district.name : 'District'
+//     }
+//     case TYPES.plaza:
+//       return 'Genesis Plaza'
+//     case TYPES.roads:
+//       return t('atlas.road')
+//     case TYPES.myParcels:
+//     case TYPES.myParcelsOnSale:
+//     case TYPES.myEstates:
+//     case TYPES.myEstatesOnSale:
+//     case TYPES.taken:
+//     case TYPES.onSale: {
+//       return asset.data.name || null
+//     }
+//     case TYPES.unowned:
+//     case TYPES.background:
+//     default:
+//       return null
+//   }
+// }
 
-export function getDescription(type, asset) {
+export function getDescription(type, owner) {
   switch (type) {
     case TYPES.loading:
     case TYPES.district:
@@ -172,7 +172,7 @@ export function getDescription(type, asset) {
       return t('atlas.your_estate')
     case TYPES.taken:
     case TYPES.onSale: {
-      return t('atlas.owner', { owner: shortenAddress(asset.owner) })
+      return t('atlas.owner', { owner: shortenAddress(owner) })
     }
     case TYPES.background:
     default:
@@ -190,7 +190,6 @@ export function getTextColor(type) {
     case TYPES.unowned:
     case TYPES.background:
       return 'white'
-
     case TYPES.myParcels:
     case TYPES.myParcelsOnSale:
     case TYPES.myEstates:

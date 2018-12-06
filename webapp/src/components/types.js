@@ -124,3 +124,18 @@ export const auctionParamsType = shape({
   landsLimitPerBid: number,
   currentPrice: number
 })
+
+export const atlasType = shape({
+  id: string,
+  x: number,
+  y: number,
+  owner: string,
+  price: string,
+  label: string,
+  type: string,
+  color: string,
+  assetType: string,
+  left: number,
+  top: number,
+  topLeft: number
+})

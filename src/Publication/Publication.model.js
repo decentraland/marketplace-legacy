@@ -55,19 +55,21 @@ export class Publication extends Model {
   }
 
   // TODO: Add asset_type
-  static findActiveByAssetIdWithStatus(asset_id, status) {
+  static async findActiveByAssetIdWithStatus(asset_id, status) {
     if (!this.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }
 
-    return this.db.query(
+    const result = await this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE status = ${status}
           AND asset_id = ${asset_id}
           AND ${PublicationQueries.whereIsActive()}
-        ORDER BY created_at DESC`
+        ORDER BY created_at DESC
+        LIMIT 1`
     )
+    return result[0]
   }
 
   // TODO: Add asset_type

@@ -30,3 +30,7 @@ export const COLORS = Object.freeze({
   loadingEven: '#110e13',
   loadingOdd: '#0d0b0e'
 })
+
+export function getLoadingColor(x, y) {
+  return (x + y) % 2 === 0 ? COLORS.loadingEven : COLORS.loadingOdd
+}

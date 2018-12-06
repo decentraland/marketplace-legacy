@@ -43,14 +43,21 @@ export class MapRouter {
     }
   }
 
-  async getAtlas() {
+  async getAtlas(req) {
     let atlas = []
+    let nw
+    let se
+    try {
+      nw = server.extractFromReq(req, 'nw')
+      se = server.extractFromReq(req, 'se')
+    } catch (_) {}
 
     try {
-      const owner = server.extractFromReq(req, 'owner')
-      atlas = await Atlas.findFromOwnerPerspective(owner)
+      const address = server.extractFromReq(req, 'address')
+
+      atlas = await Atlas.inRangeFromAddressPerspective(nw, se, address)
     } catch (error) {
-      atlas = await Atlas.find()
+      atlas = await Atlas.inRange(nw, se)
     }
 
     const map = {}
@@ -58,15 +65,16 @@ export class MapRouter {
       map[row.id] = {
         x: row.x,
         y: row.y,
-        owner: row.owner || '',
-        price: row.price || '',
-        name: row.name || '',
+        assetType: row.asset_type,
         type: row.type,
         color: row.color,
         left: row.is_connected_left ? 1 : 0,
         top: row.is_connected_top ? 1 : 0,
-        topleft: row.is_connected_topleft ? 1 : 0
+        topLeft: row.is_connected_topleft ? 1 : 0
       }
+      if (row.owner) map[row.id].owner = row.owner
+      if (row.price) map[row.id].price = row.price
+      if (row.label) map[row.id].label = row.label
     }
 
     return map

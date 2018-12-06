@@ -23,7 +23,6 @@ import {
   TRANSFER_ESTATE_FAILURE
 } from './actions'
 import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
-import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import { getEstateIdFromTxReceipt } from './utils'
 import { normalizeEstate, isEstate } from 'shared/estate'
 import {
@@ -138,15 +137,6 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
       }
       return state
-    }
-    case FETCH_MAP_SUCCESS: {
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          ...action.assets.estates
-        }
-      }
     }
     case FETCH_ADDRESS_ESTATES_SUCCESS: {
       return {

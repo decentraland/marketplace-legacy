@@ -10,7 +10,7 @@ export function isParcel(asset) {
   )
 }
 
-export function inEstate(parcel) {
+export function isEstate(parcel) {
   return parcel.estate_id != null
 }
 

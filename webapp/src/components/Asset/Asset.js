@@ -39,10 +39,6 @@ export default class Asset extends React.PureComponent {
     onFetchAsset()
   }
 
-  componentWillUnmount() {
-    isNavigatingAway = false
-  }
-
   componentDidUpdate() {
     if (shouldRefresh) {
       shouldRefresh = false
@@ -78,10 +74,13 @@ export default class Asset extends React.PureComponent {
     if (ownerIsNotAllowed || assetShouldBeOnSale) {
       this.redirect()
     }
-
     if (this.props.value && value && this.props.value.id !== value.id) {
       shouldRefresh = true
     }
+  }
+
+  componentWillUnmount() {
+    isNavigatingAway = false
   }
 
   redirect() {

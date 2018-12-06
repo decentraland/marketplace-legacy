@@ -7,8 +7,6 @@ import EstateDetailPage from 'components/EstateDetailPage'
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
 import './AssetDetailPage.css'
 
-const assetTypeArray = Object.keys(ASSET_TYPES).map(key => ASSET_TYPES[key])
-
 export default class AssetDetailPage extends React.PureComponent {
   static propTypes = {
     assetType: PropTypes.string.isRequired,
@@ -31,11 +29,10 @@ export default class AssetDetailPage extends React.PureComponent {
   render() {
     const { id, assetType, onAssetClick } = this.props
 
-    if (assetTypeArray.indexOf(assetType) === -1) {
+    if (ASSET_TYPES[assetType] == null) {
+      const assetTypesStr = Object.values(ASSET_TYPES).join(', ')
       throw new Error(
-        `[AssetDetailPage] You must provide one of the following asset types: [${assetTypeArray.join(
-          ', '
-        )}] but received "${assetType}" instead`
+        `[AssetDetailPage] You must provide one of the following asset types: [${assetTypesStr}] but received "${assetType}" instead`
       )
     }
 

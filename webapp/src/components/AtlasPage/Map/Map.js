@@ -30,7 +30,6 @@ export default class MapComponent extends React.Component {
           showMinimap
           showPopup
           showControls
-          useCache={false}
           size={this.getSize()}
           onClick={onSelect}
           onChange={this.handleChange}

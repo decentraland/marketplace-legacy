@@ -76,7 +76,6 @@ function* handleConnectWalletSuccess(action) {
 
   yield put(fetchAddress(address))
   yield put(fetchAuthorizationRequest(address, authorization))
-  yield put(fetchAuthorizationRequest(address, authorization))
 
   yield fork(refreshEthBalance, address)
 }

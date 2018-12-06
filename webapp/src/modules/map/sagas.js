@@ -1,10 +1,9 @@
-import { takeEvery, select, call, put } from 'redux-saga/effects'
+import { takeEvery, call, select, put } from 'redux-saga/effects'
 
 import { FETCH_MAP_REQUEST, fetchMapSuccess, fetchMapFailure } from './actions'
-import { getData as getParcels } from 'modules/parcels/selectors'
+import { getAddress } from 'modules/wallet/selectors'
 import { buildCoordinate } from 'shared/coordinates'
 import { api } from 'lib/api'
-import { webworker } from 'lib/webworker'
 
 export function* mapSaga() {
   yield takeEvery(FETCH_MAP_REQUEST, handleMapRequest)
@@ -14,20 +13,10 @@ function* handleMapRequest(action) {
   try {
     const nw = buildCoordinate(action.nw.x, action.nw.y)
     const se = buildCoordinate(action.se.x, action.se.y)
-    const { assets } = yield call(() => api.fetchMapInRange(nw, se))
-    const allParcels = yield select(getParcels)
+    const address = yield select(getAddress)
+    const map = yield call(() => api.fetchMap(nw, se, address))
 
-    const result = yield call(() =>
-      webworker.postMessage({
-        type: 'FETCH_MAP_REQUEST',
-        assets,
-        allParcels
-      })
-    )
-    assets.parcels = result.parcels
-    assets.estates = result.estates
-
-    yield put(fetchMapSuccess(assets, result.publications))
+    yield put(fetchMapSuccess(map))
   } catch (error) {
     yield put(fetchMapFailure(error.message))
   }

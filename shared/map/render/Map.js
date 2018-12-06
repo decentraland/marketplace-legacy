@@ -1,6 +1,6 @@
 import { Parcel } from './Parcel'
 import { Selection } from './Selection'
-import { COLORS, getColor } from '../tile'
+import { COLORS, getLoadingColor } from '../tile'
 import { buildCoordinate } from '../../coordinates'
 
 export class Map {
@@ -13,11 +13,8 @@ export class Map {
     nw,
     se,
     center,
-    parcels,
-    estates,
-    publications,
-    selected,
-    wallet
+    atlas,
+    selected
   }) {
     ctx.fillStyle = COLORS.background
     ctx.fillRect(0, 0, width, height)
@@ -35,12 +32,13 @@ export class Map {
         const rx = cx - offsetX
         const ry = cy - offsetY
         const id = buildCoordinate(px, py)
-        const parcel = parcels[id]
-        const color = getColor(px, py, parcel, estates, publications, wallet)
+        const atlasPlace = atlas[id]
 
-        const connectedLeft = parcel ? parcel.connectedLeft : false
-        const connectedTop = parcel ? parcel.connectedTop : false
-        const connectedTopLeft = parcel ? parcel.connectedTopLeft : false
+        const color = atlasPlace ? atlasPlace.color : getLoadingColor(px, py)
+
+        const connectedLeft = atlasPlace ? atlasPlace.left : false
+        const connectedTop = atlasPlace ? atlasPlace.top : false
+        const connectedTopLeft = atlasPlace ? atlasPlace.topLeft : false
 
         if (isSelected(px, py)) {
           selection.push({ x: rx, y: ry })
@@ -59,11 +57,7 @@ export class Map {
       }
     }
     if (selection.length > 0) {
-      Selection.draw({
-        ctx,
-        selection,
-        size
-      })
+      Selection.draw({ ctx, selection, size })
     }
   }
 }

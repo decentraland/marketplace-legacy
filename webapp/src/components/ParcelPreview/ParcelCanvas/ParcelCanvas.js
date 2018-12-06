@@ -3,19 +3,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
-import {
-  walletType,
-  parcelType,
-  coordsType,
-  districtType,
-  publicationType
-} from 'components/types'
+
+import { atlasType, coordsType } from 'components/types'
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
-import { Bounds, Viewport, getType, getColorByType, TYPES } from 'shared/map'
+import { Bounds, Viewport, TYPES, getLoadingColor } from 'shared/map'
 import { Map as MapRenderer } from 'shared/map/render'
-import { isParcel, inEstate } from 'shared/parcel'
+import { isParcel, isEstate } from 'shared/parcel'
 import {
   getLabel,
   getTextColor,
@@ -53,14 +48,19 @@ export default class ParcelPreview extends React.PureComponent {
     width: PropTypes.number,
     /** height of the canvas in pixels */
     height: PropTypes.number,
+
+    /** atlas from from modules/map */
+    atlas: PropTypes.objectOf(atlasType),
+
     /** wallet from modules/wallet */
-    wallet: walletType,
+    // wallet: walletType,
     /** parcels from modules/parcels */
-    parcels: PropTypes.objectOf(parcelType),
+    // parcels: PropTypes.objectOf(parcelType),
     /** districts from modules/districts */
-    districts: PropTypes.objectOf(districtType),
+    // districts: PropTypes.objectOf(districtType),
     /** publications from modules/publications */
-    publications: PropTypes.objectOf(publicationType),
+    // publications: PropTypes.objectOf(publicationType),
+
     /** zoom level of the map, this changes in the end the size on which parcels are rendered, i.e: size=10 and zoom=0.5 makes each parcel of 5x5 pixels */
     zoom: PropTypes.number,
     /** minimum size that parcels can take (after applying zoom) */
@@ -82,9 +82,7 @@ export default class ParcelPreview extends React.PureComponent {
     /** whether to show or not the popup */
     showPopup: PropTypes.bool,
     /** whether to show or not the zoom/recenter controls */
-    showControls: PropTypes.bool,
-    /** if true, the map will NOT fetch parcels that are already in the state */
-    useCache: PropTypes.bool
+    showControls: PropTypes.bool
   }
 
   static defaultProps = {
@@ -99,16 +97,13 @@ export default class ParcelPreview extends React.PureComponent {
     panX: 0,
     panY: 0,
     selected: null,
-    onFetchMap: () => {},
     onClick: null,
-    onHover: (x, y, parcel) => {},
     onChange: viewport => {},
     debounce: 400,
     isDraggable: false,
     showMinimap: false,
     showPopup: false,
-    showControls: false,
-    useCache: true
+    showControls: false
   }
 
   constructor(props) {
@@ -133,37 +128,17 @@ export default class ParcelPreview extends React.PureComponent {
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
-    this.cache = {}
     this.popupTimeout = null
   }
 
-  getDimensions({ width, height }, { pan, zoom, center, size }) {
-    const dimensions = Viewport.getDimensions({
-      width,
-      height,
-      center,
-      pan,
-      size,
-      padding: LOAD_PADDING
-    })
-    return { ...dimensions, pan, zoom, center, size }
-  }
-
-  clearCache() {
-    this.cache = {}
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.onFetchParcels !== this.props.onFetchParcels) {
-      this.debouncedFetchParcels = debounce(this.nextProps.onFetchParcels, 100)
-    }
     if (nextProps.debounce !== this.props.debounce) {
       this.debouncedRenderMap = debounce(this.renderMap, nextProps.debounce)
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const { x, y, parcels, useCache, selected } = this.props
+    const { x, y, parcels, selected } = this.props
 
     if (
       (x !== nextProps.x || y !== nextProps.y) &&
@@ -199,7 +174,7 @@ export default class ParcelPreview extends React.PureComponent {
       isViewportDifferent
     ) {
       const { nw, se } = newState
-      if (!this.inStore(nw, se, nextProps.parcels) || !useCache) {
+      if (!this.inStore(nw, se, nextProps.atlas)) {
         this.debouncedFetchMap(nw, se)
       }
       this.oldState = newState
@@ -207,30 +182,9 @@ export default class ParcelPreview extends React.PureComponent {
       this.debouncedHandleChange()
     }
 
-    // The dimensions of the canvas or the parcels data changed, so we need to repaint
-    if (nextProps.parcels !== parcels) {
-      this.clearCache()
-    }
-
     if (selected !== nextProps.selected) {
       this.shouldRefreshMap = true
     }
-  }
-
-  inStore(nw, se, parcels) {
-    if (!parcels) {
-      return false
-    }
-    for (let x = nw.x; x < se.x; x++) {
-      for (let y = se.y; y < nw.y; y++) {
-        const parcelId = buildCoordinate(x, y)
-        if (!parcels[parcelId] && Bounds.inBounds(x, y)) {
-          return false
-        }
-      }
-    }
-
-    return true
   }
 
   componentDidUpdate() {
@@ -244,8 +198,9 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.renderMap()
     const { isDraggable } = this.props
+
+    this.renderMap()
     if (isDraggable) {
       this.destroy = panzoom(this.canvas, this.handlePanZoom)
     }
@@ -265,6 +220,34 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.removeEventListener('mousemove', this.handleMouseMove)
     this.canvas.removeEventListener('mouseout', this.handleMouseOut)
     this.mounted = false
+  }
+
+  getDimensions({ width, height }, { pan, zoom, center, size }) {
+    const dimensions = Viewport.getDimensions({
+      width,
+      height,
+      center,
+      pan,
+      size,
+      padding: LOAD_PADDING
+    })
+    return { ...dimensions, pan, zoom, center, size }
+  }
+
+  inStore(nw, se, atlas) {
+    if (!atlas) {
+      return false
+    }
+    for (let x = nw.x; x < se.x; x++) {
+      for (let y = se.y; y < nw.y; y++) {
+        const parcelId = buildCoordinate(x, y)
+        if (!atlas[parcelId] && Bounds.inBounds(x, y)) {
+          return false
+        }
+      }
+    }
+
+    return true
   }
 
   handleChange = () => {
@@ -350,27 +333,30 @@ export default class ParcelPreview extends React.PureComponent {
       return
     }
 
-    const parcelId = buildCoordinate(x, y)
-    const { onClick, parcels, estates } = this.props
+    const { onClick, atlas, parcels, estates } = this.props
 
-    let asset = this.getMapAsset(parcelId, parcels, estates)
+    const parcelId = buildCoordinate(x, y)
+    const atlasPlace = atlas[parcelId] // this.getMapAsset(parcelId, parcels, estates)
 
     if (
+      atlasPlace != null &&
       onClick &&
-      Date.now() - this.mousedownTimestamp < 200 &&
-      asset != null
+      Date.now() - this.mousedownTimestamp < 200
     ) {
-      const type = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
-      const parcel = parcels[parcelId]
+      // const type = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
+      // const parcel = parcels[parcelId]
+
       // if the parcel clicked is a district/plaza/road, send the parcel to the callback
-      switch (getType(parcel, estates)) {
-        case TYPES.district:
-        case TYPES.plaza:
-        case TYPES.roads:
-          asset = parcel
-          break
-      }
-      onClick({ type, asset, x, y })
+      // switch (getType(parcel, estates)) {
+      //   case TYPES.district:
+      //   case TYPES.plaza:
+      //   case TYPES.roads:
+      //     asset = parcel
+      //     break
+      // }
+
+      // TODO: This is cheating, we need to rename this props. It works because the props used are present on atlasPlace
+      onClick({ assetType: atlasPlace.assetType, asset: atlasPlace, x, y })
     }
   }
 
@@ -389,12 +375,8 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
       this.hovered = { x, y }
       const parcelId = buildCoordinate(x, y)
-      const { onHover, parcels, showPopup } = this.props
-      const parcel = parcels[parcelId]
+      const { showPopup } = this.props
 
-      if (onHover) {
-        onHover(x, y, parcel)
-      }
       if (showPopup) {
         this.hidePopup()
         this.popupTimeout = setTimeout(() => {
@@ -418,14 +400,14 @@ export default class ParcelPreview extends React.PureComponent {
     this.hidePopup()
   }
 
-  getMapAsset(parcelId, parcels, estates) {
-    const parcel = parcels[parcelId]
-    if (!parcel) {
-      return null
-    }
+  // getMapAsset(parcelId, parcels, estates) {
+  //   const parcel = parcels[parcelId]
+  //   if (!parcel) {
+  //     return null
+  //   }
 
-    return inEstate(parcel) ? estates[parcel.estate_id] : parcel
-  }
+  //   return isEstate(parcel) ? estates[parcel.estate_id] : parcel
+  // }
 
   hidePopup() {
     clearTimeout(this.popupTimeout)
@@ -460,33 +442,39 @@ export default class ParcelPreview extends React.PureComponent {
   getParcelAttributes = (x, y) => {
     const parcelId = buildCoordinate(x, y)
 
-    if (this.cache[parcelId]) {
-      return this.cache[parcelId]
+    const { atlas } = this.props
+    const atlasPlace = atlas[parcelId] || {
+      type: TYPES.loading,
+      label: '...',
+      color: getLoadingColor(x, y)
     }
 
-    const { wallet, parcels, districts, publications, estates } = this.props
-    const asset = this.getMapAsset(parcelId, parcels, estates)
-    const parcel = parcels[parcelId]
-    const publication = getOpenPublication(asset, publications)
+    const {
+      type,
+      label,
+      price,
+      owner,
+      left,
+      top,
+      topLeft,
+      color: backgroundColor
+    } = atlasPlace
 
-    const type = getType(parcel, estates, publications, wallet)
     const color = getTextColor(type)
-    const label = getLabel(type, asset, districts)
-    const description = getDescription(type, asset)
-    const backgroundColor = getColorByType(type, x, y)
-    const connections = getConnections(asset)
+    const description = getDescription(type, owner)
 
     const result = {
       id: parcelId,
-      publication,
+      connectedTop: top,
+      connectedLeft: left,
+      connectedTopLeft: topLeft,
+      price,
       color,
       label,
       description,
-      backgroundColor,
-      ...connections
+      backgroundColor
     }
 
-    this.cache[parcelId] = result
     return result
   }
 
@@ -502,8 +490,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height, parcels, publications, wallet, estates } = this.props
-
+    const { width, height, atlas } = this.props
     const { nw, se, pan, size, center } = this.state
     const ctx = this.canvas.getContext('2d')
 
@@ -516,11 +503,8 @@ export default class ParcelPreview extends React.PureComponent {
       nw,
       se,
       center,
-      parcels,
-      estates,
-      publications,
-      selected: this.getSelected(),
-      wallet
+      atlas,
+      selected: this.getSelected()
     })
   }
 
@@ -541,12 +525,12 @@ export default class ParcelPreview extends React.PureComponent {
       label,
       backgroundColor,
       description,
-      publication
+      price
     } = this.getParcelAttributes(x, y)
 
     let rows = 1
     if (label) rows += 1
-    if (publication) rows += 1
+    if (price) rows += 1
 
     const popupHeight = rows * POPUP_ROW_HEIGHT + POPUP_HEIGHT + POPUP_PADDING
     const popupTop = popupHeight > top ? top + POPUP_PADDING : top - popupHeight
@@ -570,7 +554,7 @@ export default class ParcelPreview extends React.PureComponent {
           backgroundColor={backgroundColor}
           label={label}
           description={description}
-          publication={publication}
+          price={price}
         />
       </div>
     )

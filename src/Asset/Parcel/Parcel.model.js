@@ -79,6 +79,15 @@ export class Parcel extends Model {
     return parcels[0]
   }
 
+  static async findAssociationIds(id) {
+    const parcels = await this.db.query(
+      SQL`SELECT estate_id, district_id
+        FROM ${SQL.raw(this.tableName)}
+        WHERE id = ${id}`
+    )
+    return parcels[0]
+  }
+
   static async countAvailable() {
     const result = await this.db.query(
       SQL`SELECT COUNT(*)
@@ -89,11 +98,16 @@ export class Parcel extends Model {
     return parseInt(result[0].count, 10)
   }
 
-  static async inRange(min, max) {
+  static async inRange(topLeft, bottomRight) {
     const [minx, maxy] =
-      typeof min === 'string' ? splitCoordinate(min) : [min.x, min.y]
+      typeof topLeft === 'string'
+        ? splitCoordinate(topLeft)
+        : [topLeft.x, topLeft.y]
+
     const [maxx, miny] =
-      typeof max === 'string' ? splitCoordinate(max) : [max.x, max.y]
+      typeof bottomRight === 'string'
+        ? splitCoordinate(bottomRight)
+        : [bottomRight.x, bottomRight.y]
 
     return this.db.query(SQL`SELECT *, (
       ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}

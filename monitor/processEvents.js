@@ -23,6 +23,7 @@ export async function processEvents(fromBlock = 0) {
   }
 }
 
+// TODO: Handle atlas
 export async function processEvent(event) {
   return Promise.all(Object.values(reducers).map(reducer => reducer(event)))
 }

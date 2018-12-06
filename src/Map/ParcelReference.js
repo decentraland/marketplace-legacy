@@ -1,40 +1,20 @@
 import { isDistrict, isPlaza, isRoad } from '../../shared/district'
 import { TYPES, COLORS } from '../../shared/map'
 import { PUBLICATION_STATUS } from '../shared/publication'
-import { inEstate } from '../../shared/parcel'
+import { isEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../../shared/asset'
 
 export class ParcelReference {
-  constructor(parcel, publications = []) {
+  constructor(parcel, traits = {}) {
     this.parcel = parcel
-    this.assetType =
-      parcel.estate_id == null ? ASSET_TYPES.parcel : ASSET_TYPES.estate
-
-    this.setPublications(publications)
-  }
-
-  setPublications(publications = []) {
-    if (
-      publications.length > 0 &&
-      publications[0].asset_type !== this.assetType
-    ) {
-      throw new Error(
-        `You must supply publications for the outer asset, "${this.assetType}"`
-      )
-    }
-    this.publications = publications
-  }
-
-  getColor() {
-    return this.getColorByType(this.getType())
+    this.traits = Object.assign(
+      { isOnSale: false, district: null, estate: null },
+      traits
+    )
   }
 
   getColorByType(type) {
     switch (type) {
-      case TYPES.loading: {
-        const isEven = (this.parcel.x + this.parcel.y) % 2 === 0
-        return isEven ? COLORS.loadingEven : COLORS.loadingOdd
-      }
       case TYPES.myParcels:
         return COLORS.myParcels
       case TYPES.myParcelsOnSale:
@@ -64,10 +44,6 @@ export class ParcelReference {
   }
 
   getType() {
-    if (!this.parcel) {
-      return TYPES.loading
-    }
-
     if (isDistrict(this.parcel)) {
       if (isRoad(this.parcel.district_id)) {
         return TYPES.roads
@@ -78,11 +54,36 @@ export class ParcelReference {
       return TYPES.district
     }
 
-    return this.isOnSale()
+    return this.traits.isOnSale
       ? TYPES.onSale
       : this.parcel.owner
         ? TYPES.taken
         : TYPES.unowned
+  }
+
+  getLabelByType(type) {
+    switch (type) {
+      case TYPES.district:
+      case TYPES.contribution:
+        return this.traits.district ? this.traits.district.name : 'District'
+      case TYPES.plaza:
+        return 'Genesis Plaza'
+      case TYPES.roads:
+        return 'Road'
+      case TYPES.myParcels:
+      case TYPES.myParcelsOnSale:
+      case TYPES.myEstates:
+      case TYPES.myEstatesOnSale:
+      case TYPES.taken:
+      case TYPES.onSale: {
+        const asset = this.traits.estate || this.parcel
+        return asset.data.name || ''
+      }
+      case TYPES.unowned:
+      case TYPES.background:
+      default:
+        return null
+    }
   }
 
   getForContribution() {
@@ -101,13 +102,13 @@ export class ParcelReference {
 
     if (isOnSale) {
       newType = isOwner
-        ? inEstate(this.parcel)
+        ? isEstate(this.parcel)
           ? TYPES.myEstatesOnSale
           : TYPES.myParcelsOnSale
         : TYPES.onSale
     } else {
       newType = isOwner
-        ? inEstate(this.parcel)
+        ? isEstate(this.parcel)
           ? TYPES.myEstates
           : TYPES.myParcels
         : this.parcel.owner
@@ -117,13 +118,8 @@ export class ParcelReference {
 
     return {
       type: newType,
-      color: this.getColorByType(newType)
+      color: this.getColorByType(newType),
+      label: this.getLabelByType(newType)
     }
-  }
-
-  isOnSale() {
-    return this.publications.some(
-      publication => publication.status === PUBLICATION_STATUS.open
-    )
   }
 }

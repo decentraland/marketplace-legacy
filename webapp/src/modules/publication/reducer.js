@@ -17,7 +17,6 @@ import {
 } from './actions'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
-import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import {
   FETCH_ADDRESS_PARCELS_SUCCESS,
   FETCH_ADDRESS_ESTATES_SUCCESS
@@ -93,7 +92,6 @@ export function publicationReducer(state = INITIAL_STATE, action) {
       return state
     }
     case FETCH_MORTGAGED_PARCELS_SUCCESS:
-    case FETCH_MAP_SUCCESS:
     case FETCH_ADDRESS_PARCELS_SUCCESS:
     case FETCH_ADDRESS_ESTATES_SUCCESS: {
       const publications = action.publications

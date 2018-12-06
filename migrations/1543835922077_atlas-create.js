@@ -1,4 +1,5 @@
 import { Atlas } from '../src/Map'
+import { ASSET_TYPES } from '../shared/asset'
 
 const tableName = Atlas.tableName
 
@@ -12,10 +13,10 @@ exports.up = pgm => {
       district_id: 'TEXT',
       owner: 'TEXT',
       price: 'DECIMAL',
-      name: 'TEXT',
+      label: 'TEXT',
       type: { type: 'TEXT', notNull: true },
       color: { type: 'TEXT', notNull: true },
-      in_estate: { type: 'BOOLEAN', default: false, notNull: true },
+      asset_type: { type: 'TEXT', default: ASSET_TYPES.parcel, notNull: true },
       is_connected_left: { type: 'BOOLEAN', default: false, notNull: true },
       is_connected_top: { type: 'BOOLEAN', default: false, notNull: true },
       is_connected_topleft: { type: 'BOOLEAN', default: false, notNull: true },
@@ -24,6 +25,10 @@ exports.up = pgm => {
     },
     { ifNotExists: true }
   )
+
+  pgm.createIndex(tableName, ['x', 'y'], { unique: true })
+  pgm.createIndex(tableName, 'owner')
+  pgm.createIndex(tableName, 'district_id')
 }
 
 exports.down = pgm => {

@@ -11,18 +11,15 @@ export function fetchMapRequest(nw, se) {
   }
 }
 
-export function fetchMapSuccess(assets, publications) {
+export function fetchMapSuccess(map) {
   return {
     type: FETCH_MAP_SUCCESS,
-    assets,
-    publications
+    map
   }
 }
 
-export function fetchMapFailure(assets, publications) {
+export function fetchMapFailure() {
   return {
-    type: FETCH_MAP_FAILURE,
-    assets,
-    publications
+    type: FETCH_MAP_FAILURE
   }
 }
