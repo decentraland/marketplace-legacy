@@ -63,7 +63,7 @@ export function bidOnParcelsRequest(parcels, beneficiary) {
   }
 }
 
-export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary) {
+export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary, params) {
   return {
     type: BID_ON_PARCELS_SUCCESS,
     ...buildTransactionAction(txHash, {
@@ -71,7 +71,10 @@ export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary) {
       ys,
       beneficiary
     }),
-    beneficiary
+    xs,
+    ys,
+    beneficiary,
+    params
   }
 }
 
@@ -122,7 +125,9 @@ export function setSelectedCoordinates(selectedCoordinatesById) {
   }
 }
 
-export const LEARN_MORE_AUCTION = 'learn more auction'
+// Click `learn more` on the auction
+
+export const LEARN_MORE_AUCTION = 'Learn more auction'
 
 export function learnMoreAuction() {
   return {

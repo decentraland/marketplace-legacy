@@ -26,7 +26,7 @@ import {
 import { locations } from 'locations'
 import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
-import { getParams, getSelectedToken } from './selectors'
+import { getParams, getRate, getSelectedToken } from './selectors'
 import { TOKEN_ADDRESSES, isAuctionActive } from './utils'
 
 const ONE_BILLION = 1000000000 // 1.000.000.000
@@ -83,7 +83,8 @@ function* handleBidRequest(action) {
     const { xs, ys } = splitCoodinatePairs(parcels)
     const landAuction = eth.getContract('LANDAuction')
 
-    const { gasPriceLimit } = yield select(getParams)
+    const { currentPrice, gasPriceLimit } = yield select(getParams)
+    const rate = yield select(getRate)
     const gasPrice = gasPriceLimit * ONE_BILLION
 
     const selectedToken = yield select(getSelectedToken)
@@ -93,8 +94,9 @@ function* handleBidRequest(action) {
         gasPrice
       })
     )
+    const params = { token: selectedToken, rate, currentPrice }
 
-    yield put(bidOnParcelsSuccess(txHash, xs, ys, beneficiary))
+    yield put(bidOnParcelsSuccess(txHash, xs, ys, beneficiary, params))
     yield put(closeModal())
     yield put(setSelectedCoordinates({}))
     yield put(push(locations.activity()))
