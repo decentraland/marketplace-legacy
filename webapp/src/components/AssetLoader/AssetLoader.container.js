@@ -27,7 +27,7 @@ const mapState = (state, { id, assetType }) => {
     case ASSET_TYPES.parcel:
       assets = getParcels(state)
       isLoaded = id in assets
-      isLoading = !isLoaded && isFetchingParcel(state)
+      isLoading = !isLoaded || isFetchingParcel(state)
       break
     case ASSET_TYPES.estate:
       assets = getEstates(state)
@@ -41,6 +41,7 @@ const mapState = (state, { id, assetType }) => {
   const asset = isHidden ? null : assets[id]
 
   return {
+    isLoaded,
     isLoading,
     asset
   }

@@ -51,6 +51,7 @@ export default class Asset extends React.PureComponent {
     const {
       value,
       isConnecting,
+      isLoaded,
       isLoading,
       ownerOnly,
       wallet,
@@ -62,6 +63,10 @@ export default class Asset extends React.PureComponent {
       ownerNotAllowed && value && isOwner(wallet, value.id)
     const assetShouldBeOnSale =
       withPublications && value && !value['publication_tx_hash']
+
+    if (!isLoaded && isLoading) {
+      shouldRefresh = true
+    }
 
     if (isConnecting || isLoading) {
       return
