@@ -84,7 +84,7 @@ export class Atlas extends Model {
       Object.assign(row, reference)
     }
 
-    return restAtlas.concat(districtAtlas).concat(ownerParcels)
+    return restAtlas.concat(districtAtlas).concat(ownerAtlas)
   }
 
   // TODO: Move to ParcelCoordinates and use in Parcel.inRange

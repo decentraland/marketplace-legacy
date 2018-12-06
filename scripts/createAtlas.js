@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 
-import { Log, env, utils } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Atlas } from '../src/Map'

@@ -45,12 +45,15 @@ export class MapRouter {
 
   async getAtlas(req) {
     let atlas = []
+
     let nw
     let se
     try {
       nw = server.extractFromReq(req, 'nw')
       se = server.extractFromReq(req, 'se')
-    } catch (_) {}
+    } catch (_) {
+      // just use undefined
+    }
 
     try {
       const address = server.extractFromReq(req, 'address')

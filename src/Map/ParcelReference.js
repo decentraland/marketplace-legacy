@@ -1,8 +1,6 @@
 import { isDistrict, isPlaza, isRoad } from '../../shared/district'
 import { TYPES, COLORS } from '../../shared/map'
-import { PUBLICATION_STATUS } from '../shared/publication'
 import { isEstate } from '../../shared/parcel'
-import { ASSET_TYPES } from '../../shared/asset'
 
 export class ParcelReference {
   constructor(parcel, traits = {}) {
