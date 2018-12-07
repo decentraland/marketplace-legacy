@@ -83,7 +83,8 @@ function* handleBidRequest(action) {
     const { xs, ys } = splitCoodinatePairs(parcels)
     const landAuction = eth.getContract('LANDAuction')
 
-    const { currentPrice, gasPriceLimit } = yield select(getParams)
+    const currentPrice = yield select(getPrice)
+    const { gasPriceLimit } = yield select(getParams)
     const rate = yield select(getRate)
     const gasPrice = gasPriceLimit * ONE_BILLION
 
@@ -136,7 +137,7 @@ function* handleFetchAuctionRateRequest(action) {
 function* handleFetchAuctionPriceRequest(action) {
   try {
     const landAuction = eth.getContract('LANDAuction')
-    const currentPrice = yield call(landAuction.getCurrentPrice)
+    const currentPrice = yield call(() => landAuction.getCurrentPrice())
     const price = eth.utils.fromWei(currentPrice)
     yield put(fetchAuctionPriceSuccess(price))
   } catch (error) {

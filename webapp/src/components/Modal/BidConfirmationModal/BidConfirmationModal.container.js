@@ -10,9 +10,9 @@ import { bidOnParcelsRequest } from 'modules/auction/actions'
 import { closeModal } from 'modules/ui/actions'
 import {
   getSelectedToken,
-  getParams,
   getRate,
-  getParcelsForConfirmation
+  getParcelsForConfirmation,
+  getPrice
 } from 'modules/auction/selectors'
 import {
   allowTokenRequest,
@@ -57,9 +57,9 @@ const mapState = state => {
     latestTransaction.status === txUtils.TRANSACTION_TYPES.reverted
 
   // compute price
-  const { currentPrice } = getParams(state)
-  const rate = getRate(state)
-  const price = Number((currentPrice * rate * parcels.length).toFixed(2))
+  const price = Number(
+    (getPrice(state) * getRate(state) * parcels.length).toFixed(2)
+  )
 
   return {
     token,
