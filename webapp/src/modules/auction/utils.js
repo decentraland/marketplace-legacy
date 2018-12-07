@@ -73,3 +73,87 @@ export function getAuctionRealDuration(endTime) {
       : Math.ceil(durationInDays)
   } days`
 }
+
+export const duration = {
+  seconds: function(val) {
+    return val
+  },
+  minutes: function(val) {
+    return val * this.seconds(60)
+  },
+  hours: function(val) {
+    return val * this.minutes(60)
+  },
+  days: function(val) {
+    return val * this.hours(24)
+  },
+  weeks: function(val) {
+    return val * this.days(7)
+  },
+  years: function(val) {
+    return val * this.days(365)
+  }
+}
+
+export const initialPrice = eth.utils.toWei(
+  env.get('REACT_APP_AUCTION_INITIAL_PRICE', 200000),
+  'ether'
+)
+export const endPrice = eth.utils.toWei(
+  env.get('REACT_APP_AUCTION_END_PRICE', 1000),
+  'ether'
+)
+export const prices = [
+  initialPrice,
+  eth.utils.toWei(env.get('REACT_APP_AUCTION_SECOND_PRICE', 100000), 'ether'),
+  eth.utils.toWei(env.get('REACT_APP_AUCTION_THIRD_PRICE', 50000), 'ether'),
+  eth.utils.toWei(env.get('REACT_APP_AUCTION_FOURTH_PRICE', 25000), 'ether'),
+  endPrice
+]
+export const auctionDuration = duration.days(15)
+export const time = [
+  0,
+  duration.days(1),
+  duration.days(2),
+  duration.days(7),
+  auctionDuration
+]
+
+export function getFunc(_time) {
+  for (let i = 0; i < time.length - 1; i++) {
+    const x1 = time[i]
+    const x2 = time[i + 1]
+    const y1 = prices[i]
+    const y2 = prices[i + 1]
+    if (_time < x2) {
+      return { x1, x2, y1, y2 }
+    }
+  }
+}
+
+export function parseFloatWithDecimal(num, decimals = 0) {
+  return parseFloat(parseFloat(num).toFixed(decimals))
+}
+
+export function weiToDecimal(num) {
+  return parseFloatWithDecimal(eth.utils.fromWei(num))
+}
+
+export function getPriceWithLinearFunction(time, toWei = true) {
+  const { x1, x2, y1, y2 } = getFunc(time)
+
+  const b = (x2 * y1 - x1 * y2) * 10 ** 18 / (x2 - x1)
+  const slope = (y1 - y2) * time * 10 ** 18 / (x2 - x1)
+  let price = (b - slope) / 10 ** 18
+
+  if (time <= 0) {
+    price = initialPrice
+  } else if (time >= auctionDuration) {
+    price = endPrice
+  }
+
+  if (toWei) {
+    return eth.utils.fromWei(price)
+  }
+  return price
+}
