@@ -11,7 +11,8 @@ import {
   getLoading,
   getSelectedToken,
   getRate,
-  getSelectedCoordinatesById
+  getSelectedCoordinatesById,
+  getPrice
 } from 'modules/auction/selectors'
 import { getModal } from 'modules/ui/selectors'
 import { openModal } from 'modules/ui/actions'
@@ -20,10 +21,14 @@ import {
   fetchAvailableParcelRequest
 } from 'modules/parcels/actions'
 import {
+  fetchAuctionParamsRequest,
   fetchAuctionRateRequest,
   setParcelOnChainOwner,
   changeAuctionCenterParcel,
-  setSelectedCoordinates
+  setSelectedCoordinates,
+  fetchAuctionPriceRequest,
+  FETCH_AUCTION_RATE_REQUEST,
+  FETCH_AUCTION_PRICE_REQUEST
 } from 'modules/auction/actions'
 import AuctionPage from './AuctionPage'
 
@@ -50,6 +55,7 @@ const mapState = state => {
       FETCH_AVAILABLE_PARCEL_REQUEST
     ),
     authorization: getAuthorizations(state),
+    price: getPrice(state),
     params: getParams(state),
     center: getCenter(state),
     modal: getModal(state),
@@ -57,9 +63,12 @@ const mapState = state => {
     rate: getRate(state),
     selectedCoordinatesById: getSelectedCoordinatesById(state),
     wallet,
+    isRefreshingPrice:
+      isLoadingType(getLoading(state), FETCH_AUCTION_RATE_REQUEST) ||
+      isLoadingType(getLoading(state), FETCH_AUCTION_PRICE_REQUEST),
     allParcels,
     // this is not used on the AuctionPage, but since we mutate allParcels,
-    // we pass this down to for a re-render down the tree
+    // we pass this down to force a re-render down the tree
     parcelOnChainOwners
   }
 }
@@ -73,9 +82,11 @@ const mapDispatch = dispatch => ({
     dispatch(changeAuctionCenterParcel(parcel)),
   onSubmit: (parcels, beneficiary) =>
     dispatch(openModal('BidConfirmationModal', { parcels, beneficiary })),
-  onChangeToken: token => dispatch(fetchAuctionRateRequest(token)),
   onChangeCoords: selectedCoordinatesById =>
-    dispatch(setSelectedCoordinates(selectedCoordinatesById))
+    dispatch(setSelectedCoordinates(selectedCoordinatesById)),
+  onFetchAuctionRate: token => dispatch(fetchAuctionRateRequest(token)),
+  onFetchAuctionParams: () => dispatch(fetchAuctionParamsRequest()),
+  onFetchAuctionPrice: () => dispatch(fetchAuctionPriceRequest())
 })
 
 export default connect(mapState, mapDispatch)(AuctionPage)

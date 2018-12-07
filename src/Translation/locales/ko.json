@@ -146,6 +146,7 @@
     "maximum_parcels_title": "거래 당 최대 LAND에 도달했습니다.",
     "parcels": "소포",
     "parcels_tooltip": "한 번에 {max} 소포 만 구입할 수 있습니다.",
+    "refresh": "새로 고침 가격",
     "searching": "수색...",
     "sold": "판매 된",
     "title": "장바구니에 넣기",

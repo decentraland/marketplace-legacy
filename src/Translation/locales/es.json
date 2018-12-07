@@ -150,6 +150,7 @@
       "Alcanzó la cantidad máxima de LAND por transacción",
     "parcels": "Parcelas",
     "parcels_tooltip": "Solo puedes comprar {max} parcelas a la vez",
+    "refresh": "Precio de actualización",
     "searching": "Buscando...",
     "sold": "Vendido",
     "title": "Carro de compras de LAND",

@@ -114,6 +114,32 @@ export function fetchAuctionRateFailure(token, error) {
   }
 }
 
+// Fetch auction price
+
+export const FETCH_AUCTION_PRICE_REQUEST = '[Request] Fetch auction price'
+export const FETCH_AUCTION_PRICE_SUCCESS = '[Success] Fetch auction price'
+export const FETCH_AUCTION_PRICE_FAILURE = '[Failure] Fetch auction price'
+
+export function fetchAuctionPriceRequest() {
+  return {
+    type: FETCH_AUCTION_PRICE_REQUEST
+  }
+}
+
+export function fetchAuctionPriceSuccess(price) {
+  return {
+    type: FETCH_AUCTION_PRICE_SUCCESS,
+    price
+  }
+}
+
+export function fetchAuctionPriceFailure(error) {
+  return {
+    type: FETCH_AUCTION_PRICE_FAILURE,
+    error
+  }
+}
+
 // Set selecteted coordinates
 
 export const SET_SELECTED_COORDINATES = 'Set selected coordinates'

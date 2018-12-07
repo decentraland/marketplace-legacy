@@ -152,6 +152,7 @@
       "Vous avez atteint le maximum LAND par transaction",
     "parcels": "Colis",
     "parcels_tooltip": "Vous ne pouvez acheter que des colis {max} à la fois",
+    "refresh": "Actualiser le prix",
     "searching": "Recherche...",
     "sold": "Vendu",
     "title": "LAND panier",
