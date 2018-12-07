@@ -129,7 +129,7 @@
       "There are just two things you need to do before you can start. First, you need to select the tokens you want to buy LAND with. Next, you have to authorize a new smart contract to access those tokens when you buy LAND.",
     "get_started": "Get started",
     "i_agree_with_auction_terms": "I accept the {auction_terms_link}",
-    "i_agree_with_other_terms":
+    "i_agree_with_main_terms":
       "I accept the {decentraland_terms_link} and the {privacy_policy_link}",
     "privacy_policy_link": "Privacy Policy",
     "processing_tx": "Processing Transaction",

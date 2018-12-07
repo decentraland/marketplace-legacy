@@ -4,8 +4,8 @@ import { Checkbox, Button } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import {
-  hasAgreedToTerms as hasAgreedToOtherTerms,
-  agreeToTerms as agreeToOtherTerms
+  hasAgreedToTerms as hasAgreedToMainTerms,
+  agreeToTerms as agreeToMainTerms
 } from 'modules/terms/utils'
 import {
   dismissAuctionHelper,
@@ -27,7 +27,7 @@ export default class AuctionModal extends React.PureComponent {
 
     this.state = {
       hasAgreedToTerms: false,
-      hasAgreedToOtherTerms: hasAgreedToOtherTerms(),
+      hasAgreedToMainTerms: hasAgreedToMainTerms(),
       isWatchingTutorial: false
     }
   }
@@ -37,7 +37,7 @@ export default class AuctionModal extends React.PureComponent {
   }
 
   handleOtherTermsAgreement = (_, data) => {
-    this.setState({ hasAgreedToOtherTerms: data.checked })
+    this.setState({ hasAgreedToMainTerms: data.checked })
   }
 
   handleWatchTutorial = () => {
@@ -49,8 +49,8 @@ export default class AuctionModal extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    if (!hasAgreedToOtherTerms()) {
-      agreeToOtherTerms()
+    if (!hasAgreedToMainTerms()) {
+      agreeToMainTerms()
     }
     dismissAuctionHelper(AUCTION_HELPERS.SEEN_AUCTION_MODAL)
     this.props.onClose()
@@ -156,14 +156,14 @@ export default class AuctionModal extends React.PureComponent {
                 </label>
               }
             />
-            {!hasAgreedToOtherTerms() ? (
+            {!hasAgreedToMainTerms() ? (
               <Checkbox
-                checked={this.state.hasAgreedToOtherTerms}
+                checked={this.state.hasAgreedToMainTerms}
                 onChange={this.handleOtherTermsAgreement}
                 label={
                   <label>
                     <T
-                      id={'auction_modal.i_agree_with_other_terms'}
+                      id={'auction_modal.i_agree_with_main_terms'}
                       values={{
                         decentraland_terms_link: this.renderDecentralandTermsLink(),
                         privacy_policy_link: this.renderPrivacyPolicyLink()
@@ -180,7 +180,7 @@ export default class AuctionModal extends React.PureComponent {
           <Button
             primary={true}
             disabled={
-              !this.state.hasAgreedToTerms || !this.state.hasAgreedToOtherTerms
+              !this.state.hasAgreedToTerms || !this.state.hasAgreedToMainTerms
             }
             onClick={this.handleSubmit}
           >

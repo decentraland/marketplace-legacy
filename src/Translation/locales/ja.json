@@ -125,7 +125,7 @@
       "始める前に次の2点を確認してください。LAND（土地）購入に使用するトークンを選択できます。そのトークンがLAND購入に使用できるようにスマートコントラクトで承認してください。",
     "get_started": "始める",
     "i_agree_with_auction_terms": "私は{auction_terms_link}を受け入れる",
-    "i_agree_with_other_terms":
+    "i_agree_with_main_terms":
       "私は{decentraland_terms_link}と{privacy_policy_link}を受け入れます",
     "privacy_policy_link": "個人情報保護方針",
     "processing_tx": "取引処理中",

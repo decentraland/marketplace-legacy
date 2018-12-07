@@ -132,7 +132,7 @@
       "Vous devez juste faire deux choses avant de pouvoir commencer. ",
     "get_started": "Commencer",
     "i_agree_with_auction_terms": "J'accepte le {auction_terms_link}",
-    "i_agree_with_other_terms":
+    "i_agree_with_main_terms":
       "J'accepte le {decentraland_terms_link} et le {privacy_policy_link}",
     "privacy_policy_link": "Politique de confidentialité",
     "processing_tx": "Traitement de la transaction",

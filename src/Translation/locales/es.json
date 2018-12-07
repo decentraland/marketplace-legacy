@@ -130,7 +130,7 @@
       "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}.",
     "get_started": "Empezar",
     "i_agree_with_auction_terms": "Acepto el {auction_terms_link}",
-    "i_agree_with_other_terms":
+    "i_agree_with_main_terms":
       "Acepto el {decentraland_terms_link} y el {privacy_policy_link}",
     "privacy_policy_link": "Política de privacidad",
     "processing_tx": "Procesando Transacción",
