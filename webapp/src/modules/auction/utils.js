@@ -22,7 +22,7 @@ export const AUCTION_HELPERS = Object.freeze({
   SUBSCRIBED_TO_AUCTION_BY_EMAIL: 'subscribedToAuction'
 })
 
-export const AUCTION_DURATION_IN_DAYS = 14
+export const AUCTION_DURATION_IN_DAYS = 15
 
 export function isAuthorized(authorization) {
   return authorization && authorization.allowances.LANDAuction.MANAToken > 0
@@ -64,11 +64,12 @@ export function getAuctionStartDate() {
 export function getAuctionRealDuration(endTime) {
   const oneDayInSeconds = 60 * 60 * 24
   const startTime = getAuctionStartDate()
-  const durationInDays = (endTime - startTime) / oneDayInSeconds
+  const durationInDays = (endTime - startTime / 1000) / oneDayInSeconds
+
   // The transaction that ends the auction might take a while to finish so we cap the max duration
   return `${
     durationInDays > AUCTION_DURATION_IN_DAYS
       ? AUCTION_DURATION_IN_DAYS
-      : durationInDays
+      : Math.ceil(durationInDays)
   } days`
 }

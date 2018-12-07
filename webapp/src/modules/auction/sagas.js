@@ -67,7 +67,8 @@ function* handleAuctionParamsRequest(action) {
       gasPriceLimit,
       landsLimitPerBid,
       totalLandsBidded: totalLandsBidded,
-      totalManaBurned: totalManaBurned.toNumber(),
+      totalManaBurned:
+        totalManaBurned.toNumber() > 0 ? eth.utils.fromWei(totalManaBurned) : 0,
       endTime: endTime.toNumber()
     }
 
