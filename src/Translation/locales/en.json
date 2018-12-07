@@ -148,6 +148,7 @@
     "maximum_parcels_title": "You reached the maximum LAND per transaction",
     "parcels": "Parcels",
     "parcels_tooltip": "You can only purchase up to {max} parcels at a time",
+    "refresh": "Refresh price",
     "searching": "Searching...",
     "sold": "Sold",
     "title": "LAND Cart",

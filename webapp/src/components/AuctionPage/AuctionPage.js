@@ -39,13 +39,14 @@ import Token from './Token'
 
 import './AuctionPage.css'
 
-const REFRESH_OWNERS_INTERVAL = 10000 // 10 seconds
+const REFRESH_OWNERS_INTERVAL = 30000 // 30 seconds
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
     isConnected: PropTypes.bool.isRequired,
     isConnecting: PropTypes.bool.isRequired,
     isAvailableParcelLoading: PropTypes.bool.isRequired,
+    isRefreshingPrice: PropTypes.bool,
     authorization: authorizationType,
     params: auctionParamsType,
     center: PropTypes.shape({
@@ -68,7 +69,6 @@ export default class AuctionPage extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.hasFetchedParams = false
     this.mounted = false
     this.timoutId = null
 
@@ -76,22 +76,23 @@ export default class AuctionPage extends React.PureComponent {
       showTokenTooltip: !hasSeenAuctionHelper(
         AUCTION_HELPERS.SEEN_AUCTION_TOKEN_TOOLTIP
       ),
-      toggle: false
+      toggle: false,
+      refreshingParcelId: null
     }
   }
 
   componentWillMount() {
-    const { onFetchAvailableParcel, isConnected } = this.props
-    if (this.getSelectedParcels().length === 0) {
-      onFetchAvailableParcel()
-    }
-
-    if (isConnected) {
-      this.showAuctionModal(this.props)
-    }
-
+    const { isConnected } = this.props
     this.mounted = true
-    this.updateSelectionOwners()
+    if (isConnected) {
+      this.handleConnect()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.isConnected && nextProps.isConnected) {
+      this.handleConnect()
+    }
   }
 
   componentWillUnmount() {
@@ -102,9 +103,12 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isConnected && !nextProps.modal.open) {
-      this.showAuctionModal(nextProps)
+  handleConnect() {
+    this.showAuctionModal(this.props)
+    // bye bye estella fugaz
+    // this.updateSelectionOwners()
+    if (this.getSelectedParcels().length === 0) {
+      this.props.onFetchAvailableParcel()
     }
   }
 
@@ -172,7 +176,7 @@ export default class AuctionPage extends React.PureComponent {
 
   handleChangeToken = token => {
     this.handleCloseTooltip()
-    this.props.onChangeToken(token)
+    this.props.onFetchAuctionRate(token)
   }
 
   async getParcelOwnerOnChain(parcel) {
@@ -182,8 +186,7 @@ export default class AuctionPage extends React.PureComponent {
     // it'll try to use the singleton from the parent folder.
     // Fixing this is a issue on it's own so we'll leave this code here for now.
     const landRegistry = eth.getContract('LANDRegistry')
-    const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
-    return landRegistry.ownerOf(tokenId)
+    return landRegistry.ownerOfLand(parcel.x, parcel.y)
   }
 
   updateOwner = async parcel => {
@@ -195,7 +198,12 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   updateSelectionOwners = async () => {
-    await Promise.all(this.getSelectedParcels().map(this.updateOwner))
+    const selectedParcels = this.getSelectedParcels()
+    for (const parcel of selectedParcels) {
+      this.setState({ refreshingParcelId: parcel.id })
+      await this.updateOwner(parcel)
+    }
+    this.setState({ refreshingParcelId: null })
     this.timoutId = setTimeout(() => {
       if (!this.mounted) return
       this.updateSelectionOwners()
@@ -257,6 +265,13 @@ export default class AuctionPage extends React.PureComponent {
     this.setState({ toggle: !this.state.toggle })
   }
 
+  handleRefreshPrice = async () => {
+    const { isRefreshingPrice, onFetchAuctionPrice } = this.props
+    if (!isRefreshingPrice) {
+      onFetchAuctionPrice()
+    }
+  }
+
   render() {
     const {
       authorization,
@@ -265,19 +280,16 @@ export default class AuctionPage extends React.PureComponent {
       allParcels,
       token,
       rate,
+      price,
       selectedCoordinatesById,
       isConnecting,
       isConnected,
-      isAvailableParcelLoading
+      isAvailableParcelLoading,
+      isRefreshingPrice
     } = this.props
 
     const { showTokenTooltip } = this.state
-    const {
-      availableParcelCount,
-      landsLimitPerBid,
-      gasPriceLimit,
-      currentPrice
-    } = params
+    const { availableParcelCount, landsLimitPerBid, gasPriceLimit } = params
     const { x, y } = center
 
     if (!isConnecting && !isConnected) {
@@ -288,7 +300,7 @@ export default class AuctionPage extends React.PureComponent {
       )
     }
 
-    if (!authorization || currentPrice == null || x == null) {
+    if (!authorization || price == null || x == null) {
       return (
         <div>
           <Loader active size="massive" />
@@ -394,8 +406,24 @@ export default class AuctionPage extends React.PureComponent {
                         <Token
                           loading={rate == null}
                           symbol={token}
-                          amount={this.roundPrice(currentPrice * rate)}
-                        />
+                          amount={this.roundPrice(price * rate)}
+                        >
+                          <span className="secondary">
+                            &nbsp;
+                            <span
+                              className="tooltip"
+                              data-balloon-pos="up"
+                              data-balloon={t('auction_page.refresh')}
+                            >
+                              <Icon
+                                loading={isRefreshingPrice}
+                                size="small"
+                                name="refresh"
+                                onClick={this.handleRefreshPrice}
+                              />
+                            </span>
+                          </span>
+                        </Token>
                       </div>
                     </div>
                     <div className="output-information">
@@ -407,7 +435,7 @@ export default class AuctionPage extends React.PureComponent {
                           loading={rate == null}
                           symbol={token}
                           amount={this.roundPrice(
-                            currentPrice * rate * validSelectedParcels.length
+                            price * rate * validSelectedParcels.length
                           )}
                         />
                       </div>
@@ -456,6 +484,9 @@ export default class AuctionPage extends React.PureComponent {
                         <ParcelCoord
                           key={parcel.id}
                           parcel={parcel}
+                          isLoading={
+                            this.state.refreshingParcelId === parcel.id
+                          }
                           onClick={this.handleParcelClick}
                           onDelete={this.handleDeselectUnownedParcel}
                           status={

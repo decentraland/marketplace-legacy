@@ -1,11 +1,8 @@
-import { delay } from 'redux-saga'
-import { all, takeLatest, put, call, select } from 'redux-saga/effects'
+import { takeLatest, put, call, select } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
-import { CONNECT_WALLET_SUCCESS } from '@dapps/modules/wallet/actions'
-import { isConnected } from '@dapps/modules/wallet/selectors'
+import { env } from 'decentraland-commons'
 import { navigateTo } from '@dapps/modules/location/actions'
-import { getPathname } from '@dapps/modules/location/selectors'
 
 import { closeModal } from 'modules/ui/actions'
 import {
@@ -16,57 +13,60 @@ import {
   fetchAuctionRateRequest,
   fetchAuctionRateSuccess,
   fetchAuctionRateFailure,
-  fetchAuctionParamsRequest,
   fetchAuctionParamsSuccess,
   fetchAuctionParamsFailure,
+  fetchAuctionPriceRequest,
+  fetchAuctionPriceSuccess,
+  fetchAuctionPriceFailure,
   bidOnParcelsSuccess,
   bidOnParcelsFailure,
-  setSelectedCoordinates
+  setSelectedCoordinates,
+  FETCH_AUCTION_PRICE_REQUEST,
+  FETCH_AUCTION_PRICE_SUCCESS
 } from './actions'
 import { locations } from 'locations'
 import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
-import { getParams, getRate, getSelectedToken } from './selectors'
-import { TOKEN_ADDRESSES, isAuctionActive } from './utils'
+import { getParams, getRate, getSelectedToken, getPrice } from './selectors'
+import { TOKEN_ADDRESSES } from './utils'
 
 const ONE_BILLION = 1000000000 // 1.000.000.000
-const REFRESH_INTERVAL = 5000 // five segundos
 
 export function* auctionSaga() {
   yield takeLatest(FETCH_AUCTION_PARAMS_REQUEST, handleAuctionParamsRequest)
   yield takeLatest(FETCH_AUCTION_RATE_REQUEST, handleFetchAuctionRateRequest)
+  yield takeLatest(FETCH_AUCTION_PRICE_REQUEST, handleFetchAuctionPriceRequest)
   yield takeLatest(BID_ON_PARCELS_REQUEST, handleBidRequest)
-  yield takeLatest(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
-  yield takeLatest(FETCH_AUCTION_PARAMS_SUCCESS, handleFetchAuctionRateSuccess)
+  yield takeLatest(
+    FETCH_AUCTION_PARAMS_SUCCESS,
+    handleFetchAuctionParamsSuccess
+  )
+  yield takeLatest(FETCH_AUCTION_PRICE_SUCCESS, handleFetchAuctionPriceSuccess)
 }
 
 function* handleAuctionParamsRequest(action) {
   try {
     const landAuction = eth.getContract('LANDAuction')
-    const [
-      availableParcelCount,
-      gasPriceLimit,
-      landsLimitPerBid,
-      currentPrice,
-      totalLandsBidded,
-      totalManaBurned,
-      endTime
-    ] = yield all([
-      api.fetchAvaialableParcelCount(),
-      landAuction.gasPriceLimit(),
-      landAuction.landsLimitPerBid(),
-      landAuction.getCurrentPrice(),
-      landAuction.totalLandsBidded(),
-      landAuction.totalManaBurned(),
-      landAuction.endTime()
-    ])
+    const availableParcelCount = yield call(() =>
+      api.fetchAvaialableParcelCount()
+    )
+    const gasPriceLimit = parseInt(
+      env.get('REACT_APP_AUCTION_GAS_PRICE_LIMIT', 40),
+      10
+    )
+    const landsLimitPerBid = parseInt(
+      env.get('REACT_APP_AUCTION_LANDS_LIMIT_PER_BID', 40),
+      10
+    )
+    const totalLandsBidded = yield call(() => landAuction.totalLandsBidded())
+    const totalManaBurned = yield call(() => landAuction.totalManaBurned())
+    const endTime = yield call(() => landAuction.endTime())
 
     const params = {
       availableParcelCount,
-      gasPriceLimit: gasPriceLimit.toNumber() / ONE_BILLION,
-      landsLimitPerBid: landsLimitPerBid.toNumber(),
-      currentPrice: eth.utils.fromWei(currentPrice),
-      totalLandsBidded: totalLandsBidded.toNumber(),
+      gasPriceLimit,
+      landsLimitPerBid,
+      totalLandsBidded: totalLandsBidded,
       totalManaBurned: totalManaBurned.toNumber(),
       endTime: endTime.toNumber()
     }
@@ -83,7 +83,8 @@ function* handleBidRequest(action) {
     const { xs, ys } = splitCoodinatePairs(parcels)
     const landAuction = eth.getContract('LANDAuction')
 
-    const { currentPrice, gasPriceLimit } = yield select(getParams)
+    const currentPrice = yield select(getPrice)
+    const { gasPriceLimit } = yield select(getParams)
     const rate = yield select(getRate)
     const gasPrice = gasPriceLimit * ONE_BILLION
 
@@ -112,44 +113,43 @@ function* handleFetchAuctionRateRequest(action) {
     yield put(navigateTo(locations.auction(token)))
   }
   try {
-    const { currentPrice } = yield select(getParams)
+    const price = yield select(getPrice)
     const landAuction = eth.getContract('LANDAuction')
 
     let rate = 1
-    if (TOKEN_ADDRESSES.MANA !== TOKEN_ADDRESSES[selectedToken]) {
+    if (TOKEN_ADDRESSES.MANA !== TOKEN_ADDRESSES[token]) {
       rate = eth.utils.fromWei(
         yield call(() =>
           landAuction.getRate(
             TOKEN_ADDRESSES.MANA,
-            TOKEN_ADDRESSES[selectedToken],
-            eth.utils.toWei(currentPrice)
+            TOKEN_ADDRESSES[token],
+            eth.utils.toWei(price)
           )
         )
       )
     }
-    yield put(fetchAuctionRateSuccess(selectedToken, rate))
+    yield put(fetchAuctionRateSuccess(token, rate))
   } catch (error) {
-    yield put(fetchAuctionRateFailure(selectedToken, error.message))
+    yield put(fetchAuctionRateFailure(token, error.message))
   }
 }
 
-function* handleFetchAuctionRateSuccess(action) {
+function* handleFetchAuctionPriceRequest(action) {
+  try {
+    const landAuction = eth.getContract('LANDAuction')
+    const currentPrice = yield call(() => landAuction.getCurrentPrice())
+    const price = eth.utils.fromWei(currentPrice)
+    yield put(fetchAuctionPriceSuccess(price))
+  } catch (error) {
+    yield put(fetchAuctionPriceFailure(error.message))
+  }
+}
+
+function* handleFetchAuctionParamsSuccess(action) {
+  yield put(fetchAuctionPriceRequest())
+}
+
+function* handleFetchAuctionPriceSuccess(action) {
   const token = yield select(getSelectedToken)
   yield put(fetchAuctionRateRequest(token))
-}
-
-function* handleConnectWalletSuccess(action) {
-  let connected = true
-  // keep refreshing params and rate while the user is on /auction
-  while (connected) {
-    const pathname = yield select(getPathname)
-    const isActive = yield call(isAuctionActive)
-
-    if (isActive && pathname === locations.auction()) {
-      yield put(fetchAuctionParamsRequest())
-    }
-
-    yield delay(REFRESH_INTERVAL)
-    connected = yield select(isConnected)
-  }
 }
