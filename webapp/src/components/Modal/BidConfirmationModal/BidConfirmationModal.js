@@ -107,14 +107,20 @@ export default class BidConfirmationModal extends React.PureComponent {
   }
 
   render() {
-    const { isAuthorized } = this.props
+    const { isLoading, isAuthorized } = this.props
     return (
       <BaseModal
         className="BidConfirmationModal modal-lg"
         isCloseable={false}
         {...this.props}
       >
-        {isAuthorized ? this.renderConfirmation() : this.renderAuthorization()}
+        {isLoading ? (
+          <Loader active size="massive" />
+        ) : isAuthorized ? (
+          this.renderConfirmation()
+        ) : (
+          this.renderAuthorization()
+        )}
       </BaseModal>
     )
   }

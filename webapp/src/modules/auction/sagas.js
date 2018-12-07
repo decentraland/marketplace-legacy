@@ -4,12 +4,14 @@ import { eth } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 import { navigateTo } from '@dapps/modules/location/actions'
 
-import { closeModal } from 'modules/ui/actions'
 import {
   FETCH_AUCTION_PARAMS_REQUEST,
   FETCH_AUCTION_RATE_REQUEST,
   FETCH_AUCTION_PARAMS_SUCCESS,
   BID_ON_PARCELS_REQUEST,
+  FETCH_AUCTION_PRICE_REQUEST,
+  FETCH_AUCTION_PRICE_SUCCESS,
+  PURCHASE_AUCTION_PARCELS,
   fetchAuctionRateRequest,
   fetchAuctionRateSuccess,
   fetchAuctionRateFailure,
@@ -20,12 +22,13 @@ import {
   fetchAuctionPriceFailure,
   bidOnParcelsSuccess,
   bidOnParcelsFailure,
-  setSelectedCoordinates,
-  FETCH_AUCTION_PRICE_REQUEST,
-  FETCH_AUCTION_PRICE_SUCCESS
+  setSelectedCoordinates
 } from './actions'
+import { closeModal, openModal } from 'modules/ui/actions'
+import { fetchAuthorizationRequest } from 'modules/authorization/actions'
 import { locations } from 'locations'
 import { api } from 'lib/api'
+import { token as tokenHelper } from 'lib/token'
 import { splitCoodinatePairs } from 'shared/coordinates'
 import { getParams, getRate, getSelectedToken, getPrice } from './selectors'
 import { TOKEN_ADDRESSES } from './utils'
@@ -34,6 +37,7 @@ const ONE_BILLION = 1000000000 // 1.000.000.000
 
 export function* auctionSaga() {
   yield takeLatest(FETCH_AUCTION_PARAMS_REQUEST, handleAuctionParamsRequest)
+  yield takeLatest(PURCHASE_AUCTION_PARCELS, handlePurchaseAuctionParcels)
   yield takeLatest(FETCH_AUCTION_RATE_REQUEST, handleFetchAuctionRateRequest)
   yield takeLatest(FETCH_AUCTION_PRICE_REQUEST, handleFetchAuctionPriceRequest)
   yield takeLatest(BID_ON_PARCELS_REQUEST, handleBidRequest)
@@ -75,6 +79,19 @@ function* handleAuctionParamsRequest(action) {
   } catch (error) {
     yield put(fetchAuctionParamsFailure(error.message))
   }
+}
+
+function* handlePurchaseAuctionParcels(action) {
+  const { parcels, beneficiary } = action
+  const token = yield select(getSelectedToken)
+  const contractName = tokenHelper.getContractNameBySymbol(token)
+
+  const authorization = {
+    allowances: { LANDAuction: [contractName] }
+  }
+
+  yield put(fetchAuthorizationRequest(beneficiary, authorization))
+  yield put(openModal('BidConfirmationModal', { parcels, beneficiary }))
 }
 
 function* handleBidRequest(action) {

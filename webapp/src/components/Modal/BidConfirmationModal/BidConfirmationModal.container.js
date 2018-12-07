@@ -15,10 +15,13 @@ import {
   getPrice
 } from 'modules/auction/selectors'
 import {
-  allowTokenRequest,
-  ALLOW_TOKEN_SUCCESS
+  ALLOW_TOKEN_SUCCESS,
+  allowTokenRequest
 } from 'modules/authorization/actions'
-import { getAuthorizations } from 'modules/authorization/selectors'
+import {
+  isLoading as isAuthorizationLoading,
+  getAuthorizations
+} from 'modules/authorization/selectors'
 import { getModal } from 'modules/ui/selectors'
 import { getTokenAmountToApprove } from 'modules/wallet/utils'
 import { token as tokenHelper } from 'lib/token'
@@ -30,16 +33,20 @@ const mapState = state => {
   const address = getAddress(state)
   const token = getSelectedToken(state)
 
-  // check if is authorized
+  // Check if the authorizations map is being fetched
+  const isLoading = isAuthorizationLoading(state)
+
+  // Check if is authorized
   const authorizations = getAuthorizations(state)
   const isAuthorized =
     !!authorizations &&
     !!authorizations.allowances &&
+    !!authorizations.allowances.LANDAuction &&
     authorizations.allowances.LANDAuction[
       tokenHelper.getContractNameBySymbol(token)
     ] > 0
 
-  // check if is authorizing
+  // Check if is authorizing
   const pendingTransactions = getPendingTransactions(state, address)
   const isAuthorizing = pendingTransactions.some(
     tx =>
@@ -48,7 +55,7 @@ const mapState = state => {
       tx.payload.tokenContractName.includes(token)
   )
 
-  // check if it failed
+  // Check if it failed
   const transactionHistory = getTransactionHistory(state, address)
   const latestTransaction = transactionHistory.pop()
   const hasError =
@@ -56,7 +63,7 @@ const mapState = state => {
     latestTransaction != null &&
     latestTransaction.status === txUtils.TRANSACTION_TYPES.reverted
 
-  // compute price
+  // Compute price
   const price = Number(
     (getPrice(state) * getRate(state) * parcels.length).toFixed(2)
   )
@@ -66,6 +73,7 @@ const mapState = state => {
     price,
     parcels,
     beneficiary,
+    isLoading,
     isAuthorizing,
     isAuthorized,
     hasError

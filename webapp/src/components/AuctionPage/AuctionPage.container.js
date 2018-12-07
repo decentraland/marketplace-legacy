@@ -21,14 +21,15 @@ import {
   fetchAvailableParcelRequest
 } from 'modules/parcels/actions'
 import {
+  FETCH_AUCTION_RATE_REQUEST,
+  FETCH_AUCTION_PRICE_REQUEST,
   fetchAuctionParamsRequest,
   fetchAuctionRateRequest,
   setParcelOnChainOwner,
   changeAuctionCenterParcel,
+  purchaseAuctionParcels,
   setSelectedCoordinates,
-  fetchAuctionPriceRequest,
-  FETCH_AUCTION_RATE_REQUEST,
-  FETCH_AUCTION_PRICE_REQUEST
+  fetchAuctionPriceRequest
 } from 'modules/auction/actions'
 import AuctionPage from './AuctionPage'
 
@@ -81,7 +82,7 @@ const mapDispatch = dispatch => ({
   onChangeAuctionCenterParcel: parcel =>
     dispatch(changeAuctionCenterParcel(parcel)),
   onSubmit: (parcels, beneficiary) =>
-    dispatch(openModal('BidConfirmationModal', { parcels, beneficiary })),
+    dispatch(purchaseAuctionParcels(parcels, beneficiary)),
   onChangeCoords: selectedCoordinatesById =>
     dispatch(setSelectedCoordinates(selectedCoordinatesById)),
   onFetchAuctionRate: token => dispatch(fetchAuctionRateRequest(token)),

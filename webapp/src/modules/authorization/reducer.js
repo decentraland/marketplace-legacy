@@ -36,22 +36,28 @@ export function authorizationReducer(state = INITIAL_STATE, action) {
       const { address, authorization } = action.payload
       const addressState = state.data[address] || EMPTY_ADDRESS_STATE
 
+      const allowances = { ...addressState.allowances }
+      const approvals = { ...addressState.approvals }
+
+      for (const contractName in authorization.allowances) {
+        allowances[contractName] = {
+          ...allowances[contractName],
+          ...authorization.allowances[contractName]
+        }
+      }
+      for (const contractName in authorization.approvals) {
+        approvals[contractName] = {
+          ...approvals[contractName],
+          ...authorization.approvals[contractName]
+        }
+      }
+
       return {
         loading: loadingReducer(state.loading, action),
         error: null,
         data: {
           ...state.data,
-          [address]: {
-            ...state.data[address],
-            allowances: {
-              ...addressState.allowances,
-              ...authorization.allowances
-            },
-            approvals: {
-              ...addressState.approvals,
-              ...authorization.approvals
-            }
-          }
+          [address]: { allowances, approvals }
         }
       }
     }

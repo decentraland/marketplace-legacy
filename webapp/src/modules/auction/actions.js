@@ -26,6 +26,18 @@ export function fetchAuctionParamsFailure(error) {
   }
 }
 
+// Purchase parcels
+
+export const PURCHASE_AUCTION_PARCELS = 'Purchase auction parcels'
+
+export function purchaseAuctionParcels(parcels, beneficiary) {
+  return {
+    type: PURCHASE_AUCTION_PARCELS,
+    parcels,
+    beneficiary
+  }
+}
+
 // Set new parcel owner
 
 export const SET_ON_CHAIN_PARCEL_OWNER = 'Set on-chain parcel owner'
