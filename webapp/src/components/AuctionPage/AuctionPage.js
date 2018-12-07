@@ -328,7 +328,7 @@ export default class AuctionPage extends React.PureComponent {
             selected={validSelectedParcels}
             isDraggable
             showPopup
-            showControls={true}
+            showControls={false}
             showMinimap={true}
             onClick={this.handleSelectUnownedParcel}
           />
