@@ -72,6 +72,7 @@ export default class AuctionModal extends React.PureComponent {
         href="https://decentraland.org/terms-auction"
         rel="noopener noreferrer"
         target="_blank"
+        onClick={this.hanleClickExternalLink}
       >
         {t('auction_modal.auction_terms_link')}
       </a>
@@ -84,6 +85,7 @@ export default class AuctionModal extends React.PureComponent {
         href="https://decentraland.org/terms"
         rel="noopener noreferrer"
         target="_blank"
+        onClick={this.hanleClickExternalLink}
       >
         {t('auction_modal.decentraland_terms_link')}
       </a>
@@ -96,10 +98,15 @@ export default class AuctionModal extends React.PureComponent {
         href="https://decentraland.org/privacy"
         rel="noopener noreferrer"
         target="_blank"
+        onClick={this.hanleClickExternalLink}
       >
         {t('auction_modal.privacy_policy_link')}
       </a>
     )
+  }
+
+  hanleClickExternalLink = event => {
+    return event.stopPropagation()
   }
 
   renderTutorial() {
