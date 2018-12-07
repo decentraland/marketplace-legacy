@@ -100,7 +100,11 @@
     "your_parcel": "あなたの区画"
   },
   "auction": {
-    "description": "12月10日から土地を購入できるLANDオークションが開催されます",
+    "description_after_finish": "LANDオークションが終了しました！",
+    "description_after_start":
+      "LANDオークションが始まったので、今すぐLANDを買うことができます！",
+    "description_before_start":
+      "12月10日にLANDオークションに参加し、LANDを購入！",
     "title": "Decentraland LANDオークション"
   },
   "auction_finished": {

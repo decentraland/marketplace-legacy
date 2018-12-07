@@ -6,7 +6,6 @@ import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import { isFeatureEnabled } from 'lib/featureUtils'
-import { hasAuctionStarted } from 'modules/auction/utils'
 import { assetType } from 'components/types'
 import AssetCard from 'components/AssetCard'
 import AuctionCountdown from 'components/AuctionCountdown'
@@ -16,11 +15,13 @@ import './HomePage.css'
 export default class HomePage extends React.PureComponent {
   static propTypes = {
     assets: PropTypes.arrayOf(assetType),
-    onLearnMoreAuction: PropTypes.func.isRequired
+    onLearnMoreAuction: PropTypes.func.isRequired,
+    onCloseModal: PropTypes.func.isRequired
   }
 
   componentWillMount() {
     this.props.onFetchPublications()
+    this.props.onCloseModal()
   }
 
   handleLearnMore = () => {
@@ -46,18 +47,17 @@ export default class HomePage extends React.PureComponent {
           </div>
         </div>
         <Container className="publications">
-          {isFeatureEnabled('AUCTION') &&
-            !hasAuctionStarted() && (
-              <div className="banner-wrapper">
-                <AuctionCountdown isBanner={true}>
-                  <Link to={locations.auction()}>
-                    <Button primary={true} onClick={this.handleLearnMore}>
-                      {t('global.learn_more').toUpperCase()}
-                    </Button>
-                  </Link>
-                </AuctionCountdown>
-              </div>
-            )}
+          {isFeatureEnabled('AUCTION') && (
+            <div className="banner-wrapper">
+              <AuctionCountdown isBanner={true}>
+                <Link to={locations.auction()}>
+                  <Button primary={true} onClick={this.handleLearnMore}>
+                    {t('global.learn_more').toUpperCase()}
+                  </Button>
+                </Link>
+              </AuctionCountdown>
+            </div>
+          )}
           <div className="publications-header">
             <h3>{t('homepage.newest_lands')}</h3>
             <Link to={locations.marketplace()}>

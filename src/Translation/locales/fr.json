@@ -106,7 +106,10 @@
     "your_parcel": "Votre parcelle"
   },
   "auction": {
-    "description":
+    "description_after_finish": "La vente aux enchères LAND est terminée!",
+    "description_after_start":
+      "La vente aux enchères LAND a commencé, vous pouvez maintenant acheter LAND!",
+    "description_before_start":
       "Participez à la vente aux enchères LAND le 10 décembre et achetez LAND!",
     "title": "Decentraland LAND Enchère"
   },

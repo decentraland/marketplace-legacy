@@ -96,7 +96,9 @@
     "your_parcel": "您的地块"
   },
   "auction": {
-    "description": "欢迎参加 12 月 10 日的 LAND 拍卖！",
+    "description_after_finish": "LAND拍卖结束了！",
+    "description_after_start": "LAND拍卖已经开始，你现在可以买到LAND！",
+    "description_before_start": "参加12月10日的LAND拍卖并购买LAND！",
     "title": "Decentraland LAND 拍卖"
   },
   "auction_finished": {
