@@ -110,19 +110,23 @@
     "title": "拍卖已结束"
   },
   "auction_modal": {
+    "auction_terms_link": "LAND拍卖条款和条件",
     "authorization": "授权",
     "authorization_description":
       "拍卖中在您用 {token} 购买 LAND 之前，您必须先授权{contract_link}合约访问和操作权限",
     "authorize_token": "授权{token}通证",
     "confirmation": "确认",
     "confirmation_description": "您即将用 {price} {token} 购买 {parcels} LAND",
+    "decentraland_terms_link": "服务条款",
     "description":
       "在开始之前，您只需要做两件事。首先，选择购买 LAND 的通证，然后授权合约在购买土地时能操作通证",
     "get_started": "开始吧",
-    "i_agree_with_terms": "我接受{terms_link}",
+    "i_agree_with_auction_terms": "我接受{auction_terms_link}",
+    "i_agree_with_main_terms":
+      "我接受{decentraland_terms_link}和{privacy_policy_link}",
+    "privacy_policy_link": "隐私政策",
     "processing_tx": "处理交易",
     "submit": "确认",
-    "terms_and_conditions": "条款和条件",
     "tx_failed": "交易失败",
     "video_tutorial": "视频教程",
     "watch_tutorial": "观看视频教程"

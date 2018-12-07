@@ -119,6 +119,7 @@
     "title": "경매 완료"
   },
   "auction_modal": {
+    "auction_terms_link": "LAND 경매 이용 약관",
     "authorization": "권한 부여",
     "authorization_description":
       "{token}를 사용하여 경매에서 LAND을 구입하기 전에 먼저 {contract_link} 계약을 승인하여 사용자를 대신하여 액세스하고 운영해야합니다",
@@ -126,13 +127,16 @@
     "confirmation": "확인",
     "confirmation_description":
       "{price} {token}에 대해 {parcels} LAND을 (를) 구매하려고합니다.",
+    "decentraland_terms_link": "서비스 약관",
     "description":
       "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다.",
     "get_started": "시작하다",
-    "i_agree_with_terms": "나는 {terms_link}를 받아 들인다.",
+    "i_agree_with_auction_terms": "나는 {auction_terms_link}를 받아 들인다.",
+    "i_agree_with_main_terms":
+      "나는 {decentraland_terms_link}와 {privacy_policy_link}을 받아 들인다.",
+    "privacy_policy_link": "개인 정보 정책",
     "processing_tx": "거래 처리 중",
     "submit": "발하다",
-    "terms_and_conditions": "이용 약관",
     "tx_failed": "거래 실패",
     "video_tutorial": "비디오 자습서",
     "watch_tutorial": "비디오 자습서보기"

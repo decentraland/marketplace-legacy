@@ -120,6 +120,7 @@
     "title": "Subasta terminada"
   },
   "auction_modal": {
+    "auction_terms_link": "Términos y condiciones de la subasta LAND",
     "authorization": "Autorización",
     "authorization_description":
       "Antes de poder comprar cualquier LAND en la subasta usando {token}, primero debe autorizar el contrato {contract_link} para acceder y operarlo en su nombre.",
@@ -127,13 +128,16 @@
     "confirmation": "Confirmación",
     "confirmation_description":
       "Está a punto de comprar {parcels} parcelas de LAND por {price} {token}",
+    "decentraland_terms_link": "Términos de servicio",
     "description":
       "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}.",
     "get_started": "Empezar",
-    "i_agree_with_terms": "Acepto los {terms_link}",
+    "i_agree_with_auction_terms": "Acepto el {auction_terms_link}",
+    "i_agree_with_main_terms":
+      "Acepto el {decentraland_terms_link} y el {privacy_policy_link}",
+    "privacy_policy_link": "Política de privacidad",
     "processing_tx": "Procesando Transacción",
     "submit": "Proceder",
-    "terms_and_conditions": "Términos y Condiciones",
     "tx_failed": "Transacción fallida",
     "video_tutorial": "Video Tutorial",
     "watch_tutorial": "Ver video tutorial"

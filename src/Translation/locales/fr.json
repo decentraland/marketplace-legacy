@@ -122,6 +122,7 @@
     "title": "Enchère terminée"
   },
   "auction_modal": {
+    "auction_terms_link": "Conditions générales de vente LAND",
     "authorization": "Autorisation",
     "authorization_description":
       "Avant de pouvoir acheter un LAND dans la vente aux enchères à l’aide de {token}, vous devez au préalable autoriser le contrat {contract_link} à y accéder et à l’exploiter en votre nom.",
@@ -129,13 +130,16 @@
     "confirmation": "Confirmation",
     "confirmation_description":
       "Vous êtes sur le point d'acheter {parcels} LAND pour {price} {token}",
+    "decentraland_terms_link": "Conditions d'utilisation",
     "description":
       "Vous devez juste faire deux choses avant de pouvoir commencer. ",
     "get_started": "Commencer",
-    "i_agree_with_terms": "J'accepte le {terms_link}",
+    "i_agree_with_auction_terms": "J'accepte le {auction_terms_link}",
+    "i_agree_with_main_terms":
+      "J'accepte le {decentraland_terms_link} et le {privacy_policy_link}",
+    "privacy_policy_link": "Politique de confidentialité",
     "processing_tx": "Traitement de la transaction",
     "submit": "Procéder",
-    "terms_and_conditions": "Termes et conditions",
     "tx_failed": "La transaction a échoué",
     "video_tutorial": "Didacticiel vidéo",
     "watch_tutorial": "Regarder le tutoriel vidéo"
