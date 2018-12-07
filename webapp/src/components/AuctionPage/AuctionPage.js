@@ -105,7 +105,8 @@ export default class AuctionPage extends React.PureComponent {
 
   handleConnect() {
     this.showAuctionModal(this.props)
-    this.updateSelectionOwners()
+    // bye bye estella fugaz
+    // this.updateSelectionOwners()
     if (this.getSelectedParcels().length === 0) {
       this.props.onFetchAvailableParcel()
     }
