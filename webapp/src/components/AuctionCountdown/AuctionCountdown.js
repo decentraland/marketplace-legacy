@@ -2,7 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { t } from '@dapps/modules/translation/utils'
 
-import { getAuctionStartDate, hasAuctionFinished } from 'modules/auction/utils'
+import {
+  getAuctionStartDate,
+  hasAuctionStarted,
+  hasAuctionFinished
+} from 'modules/auction/utils'
 import Countdown from 'components/Countdown'
 
 import './AuctionCountdown.css'
@@ -28,7 +32,7 @@ export default class AuctionCountdown extends React.PureComponent {
 
   componentDidMount() {
     this.stopInterval()
-    if (!this.hasStarted()) {
+    if (!hasAuctionStarted()) {
       this.interval = setInterval(() => this.checkStartDate(), 1000)
     }
     this.checkEndDate()
@@ -42,12 +46,8 @@ export default class AuctionCountdown extends React.PureComponent {
     this.checkEndDate()
   }
 
-  hasStarted() {
-    return Date.now() > getAuctionStartDate()
-  }
-
   checkStartDate() {
-    if (this.hasStarted()) {
+    if (hasAuctionStarted()) {
       window.location.reload()
       this.stopInterval()
     }
@@ -73,7 +73,7 @@ export default class AuctionCountdown extends React.PureComponent {
 
   render() {
     const { hasFinished } = this.state
-    const hasStarted = this.hasStarted()
+    const hasStarted = hasAuctionStarted()
     let description
     if (hasFinished) {
       description = t('auction.description_after_finish')
