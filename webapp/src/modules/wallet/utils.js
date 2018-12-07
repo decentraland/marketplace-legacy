@@ -140,7 +140,7 @@ export async function sendTransaction(tx) {
 export async function fetchBalance(address) {
   const web3 = eth.wallet.getWeb3()
   const balanceInWei = await utils.promisify(web3.eth.getBalance)(address)
-  return eth.utils.fromWei(balanceInWei.toString(10))
+  return balanceInWei ? eth.utils.fromWei(balanceInWei.toString(10)) : '0'
 }
 
 export async function getAssetUpdateOperator(asset) {
