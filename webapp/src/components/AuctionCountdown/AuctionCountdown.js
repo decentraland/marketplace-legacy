@@ -26,7 +26,7 @@ export default class AuctionCountdown extends React.PureComponent {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.stopInterval()
     if (!this.hasStarted()) {
       this.interval = setInterval(() => this.checkStartDate(), 1000)
