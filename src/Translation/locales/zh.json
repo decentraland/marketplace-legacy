@@ -115,6 +115,7 @@
     "authorize_token": "授权{token}通证",
     "confirmation": "确认",
     "confirmation_description": "您即将用 {price} {token} 购买 {parcels} LAND",
+    "decentraland_terms_link": "服务条款",
     "description":
       "在开始之前，您只需要做两件事。首先，选择购买 LAND 的通证，然后授权合约在购买土地时能操作通证",
     "get_started": "开始吧",
