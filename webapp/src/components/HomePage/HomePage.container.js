@@ -5,6 +5,7 @@ import { isLoading } from 'modules/publication/selectors'
 import { getAssets } from 'modules/ui/marketplace/selectors'
 import { fetchPublicationsRequest } from 'modules/publication/actions'
 import { learnMoreAuction } from 'modules/auction/actions'
+import { closeModal } from 'modules/ui/actions'
 
 import HomePage from './HomePage'
 
@@ -26,7 +27,8 @@ const mapDispatch = dispatch => ({
       })
     ),
   onNavigate: url => dispatch(navigateTo(url)),
-  onLearnMoreAuction: () => dispatch(learnMoreAuction())
+  onLearnMoreAuction: () => dispatch(learnMoreAuction()),
+  onCloseModal: () => dispatch(closeModal())
 })
 
 export default connect(mapState, mapDispatch)(HomePage)

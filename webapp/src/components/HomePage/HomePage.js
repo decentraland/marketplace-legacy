@@ -15,11 +15,13 @@ import './HomePage.css'
 export default class HomePage extends React.PureComponent {
   static propTypes = {
     assets: PropTypes.arrayOf(assetType),
-    onLearnMoreAuction: PropTypes.func.isRequired
+    onLearnMoreAuction: PropTypes.func.isRequired,
+    onCloseModal: PropTypes.func.isRequired
   }
 
   componentWillMount() {
     this.props.onFetchPublications()
+    this.props.onCloseModal()
   }
 
   handleLearnMore = () => {
