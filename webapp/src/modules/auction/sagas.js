@@ -28,7 +28,11 @@ import { locations } from 'locations'
 import { api } from 'lib/api'
 import { splitCoodinatePairs } from 'shared/coordinates'
 import { getParams, getRate, getSelectedToken, getPrice } from './selectors'
-import { TOKEN_ADDRESSES } from './utils'
+import {
+  TOKEN_ADDRESSES,
+  getAuctionStartDate,
+  getPriceWithLinearFunction
+} from './utils'
 
 const ONE_BILLION = 1000000000 // 1.000.000.000
 
@@ -138,7 +142,12 @@ function* handleFetchAuctionPriceRequest(action) {
   try {
     const landAuction = eth.getContract('LANDAuction')
     const currentPrice = yield call(() => landAuction.getCurrentPrice())
-    const price = eth.utils.fromWei(currentPrice)
+    let price = eth.utils.fromWei(currentPrice)
+    if (price === 0) {
+      const time = Math.abs((Date.now() - getAuctionStartDate()) / 1000)
+      price = getPriceWithLinearFunction(time)
+      console.warn('Using fallback price', price)
+    }
     yield put(fetchAuctionPriceSuccess(price))
   } catch (error) {
     yield put(fetchAuctionPriceFailure(error.message))
