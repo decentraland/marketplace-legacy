@@ -146,7 +146,8 @@ function* handleFetchAuctionPriceRequest(action) {
     if (price === 0) {
       const time = Math.abs((Date.now() - getAuctionStartDate()) / 1000)
       price = getPriceWithLinearFunction(time)
-      console.warn('Using fallback price', price)
+      console.log('Using computed price', price)
+      window.Rollbar.info('Using computed price', price)
     }
     yield put(fetchAuctionPriceSuccess(price))
   } catch (error) {
