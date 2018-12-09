@@ -100,11 +100,7 @@
     "your_parcel": "あなたの区画"
   },
   "auction": {
-    "description_after_finish": "LANDオークションが終了しました！",
-    "description_after_start":
-      "LANDオークションが始まったので、今すぐLANDを買うことができます！",
-    "description_before_start":
-      "12月10日にLANDオークションに参加し、LANDを購入！",
+    "description": "12月10日から土地を購入できるLANDオークションが開催されます",
     "title": "Decentraland LANDオークション"
   },
   "auction_finished": {
@@ -116,7 +112,6 @@
     "title": "オークションは終了しました"
   },
   "auction_modal": {
-    "auction_terms_link": "LANDオークション利用規約",
     "authorization": "承認",
     "authorization_description":
       "{token}を使用してLANDを購入するには、まず{contract_link}契約でトークンの使用を承認する必要があります。",
@@ -124,27 +119,24 @@
     "confirmation": "確認",
     "confirmation_description":
       "{parcels}LANDを{price} {token}で購入しようとしています",
-    "decentraland_terms_link": "利用規約",
     "description":
       "始める前に次の2点を確認してください。LAND（土地）購入に使用するトークンを選択できます。そのトークンがLAND購入に使用できるようにスマートコントラクトで承認してください。",
     "get_started": "始める",
-    "i_agree_with_auction_terms": "私は{auction_terms_link}を受け入れる",
-    "i_agree_with_main_terms":
-      "私は{decentraland_terms_link}と{privacy_policy_link}を受け入れます",
-    "privacy_policy_link": "個人情報保護方針",
-    "processing_tx": "取引処理中",
+    "i_agree_with_terms": "{terms_link}に同意する",
+    "processing_tx": "処理中",
     "submit": "続ける",
+    "terms_and_conditions": "利用規約",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
     "watch_tutorial": "ビデオチュートリアルを見る"
   },
   "auction_page": {
-    "available_parcels": "販売中の区画",
-    "bid": "購入",
-    "description": "購入したいLAND(土地)を選んで下さい",
+    "available_parcels": "区画が販売中",
+    "bid": "購入する",
+    "description": "購入したい土地(LAND)を選んで下さい",
     "empty_message":
       "購入したい土地を選んでカートに追加します。 詳しい参加方法を{video_tutorial_link}動画で観る",
-    "find_available_parcel": "購入可能な区画を表示",
+    "find_available_parcel": "購入可能な区画を検索",
     "gas_price": "ガス価格",
     "land_price": "LAND単価",
     "maximum_parcels_message":
@@ -152,7 +144,7 @@
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
     "parcels": "区画数",
     "parcels_tooltip": "一度に購入できるのは{max}区画までです",
-    "refresh": "リフレッシュ価格",
+    "refresh": "価格を更新",
     "searching": "検索中...",
     "sold": "売却済",
     "title": "カート",
@@ -295,7 +287,7 @@
     "publications": "公開中の区画",
     "recipient_address": "受信者アドレス",
     "remove": "削除する",
-    "request": "リクエスト",
+    "request": "申請する",
     "retry": "やり直す",
     "revoke": "取り消す",
     "sale": "販売",
@@ -346,21 +338,21 @@
     "cancel": "ローンをキャンセルする",
     "claim": "区画を請求する",
     "defaulted_in": "デフォルト",
-    "duration_placeholder": "有効期限日数",
+    "duration_placeholder": "支払期限日数",
     "errors": {
       "amount_minimum": "{amount}より大きい必要があります。",
-      "deposit_gt_balance": "必要なデポジットが残高よりも大きい",
+      "deposit_gt_balance": "必要なデポジットへ残高が不足しています",
       "duration_gte_payable":
-        "有効期間は支払期間と同じか、それよりも長くなければなりません。",
+        "支払期限日数は支払予定日数と同じか、それよりも長くなければなりません。",
       "insufficient_funds": "MANAが不足しています",
       "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
-      "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
+      "minimum_duration": "支払期限は{minimum}日以上の必要があります。",
       "minimum_interest_rate": "レートは{minimum}以上で設定してください。",
       "minimum_payable": "{minimum}日以上で支払い設定する必要があります。",
       "parcel_price": "総額は区画の価格以下にしなければいけません。"
     },
-    "expiration": "有効期限を申請する",
-    "expiration_placeholder": "ローンの有効期限",
+    "expiration": "リクエスト締切日",
+    "expiration_placeholder": "期日まで有効",
     "fetching_data": "ローンデータの取得",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
@@ -371,8 +363,8 @@
     "partial_payment_desc":
       "{parcel_name}のLANDを購入する為のローンへの部分払いを行おうとしています。 未払い残高:{outstanding_amount}",
     "pay": "支払う",
-    "payable": "支払い方法",
-    "payable_placeholder": "数日で支払い可能",
+    "payable": "支払予定日数",
+    "payable_placeholder": "日数を入力",
     "pending_tx": "次の為のローン",
     "please_authorize_MANA":
       "{settings_link}でMANAを運用するためにMortgageHelper契約を承認してください",
