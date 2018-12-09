@@ -29,7 +29,7 @@
     "css-loader": "0.28.7",
     "date-fns": "^1.29.0",
     "decentraland-commons": "^4.0.1",
-    "decentraland-dapps": "^3.8.2",
+    "decentraland-dapps": "^3.9.1",
     "decentraland-eth": "^8.6.0",
     "decentraland-ui": "^1.13.1",
     "dotenv": "4.0.0",
