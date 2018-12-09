@@ -100,7 +100,11 @@
     "your_parcel": "あなたの区画"
   },
   "auction": {
-    "description": "12月10日から土地を購入できるLANDオークションが開催されます",
+    "description_after_finish": "LANDオークションが終了しました！",
+    "description_after_start":
+      "LANDオークションが始まったので、今すぐLANDを買うことができます！",
+    "description_before_start":
+      "12月10日にLANDオークションに参加し、LANDを購入！",
     "title": "Decentraland LANDオークション"
   },
   "auction_finished": {
@@ -112,6 +116,7 @@
     "title": "オークションは終了しました"
   },
   "auction_modal": {
+    "auction_terms_link": "LANDオークション利用規約",
     "authorization": "承認",
     "authorization_description":
       "{token}を使用してLANDを購入するには、まず{contract_link}契約でトークンの使用を承認する必要があります。",
@@ -119,13 +124,16 @@
     "confirmation": "確認",
     "confirmation_description":
       "{parcels}LANDを{price} {token}で購入しようとしています",
+    "decentraland_terms_link": "利用規約",
     "description":
       "始める前に次の2点を確認してください。LAND（土地）購入に使用するトークンを選択できます。そのトークンがLAND購入に使用できるようにスマートコントラクトで承認してください。",
     "get_started": "始める",
-    "i_agree_with_terms": "{terms_link}に同意する",
+    "i_agree_with_auction_terms": "私は{auction_terms_link}を受け入れる",
+    "i_agree_with_main_terms":
+      "私は{decentraland_terms_link}と{privacy_policy_link}を受け入れます",
+    "privacy_policy_link": "個人情報保護方針",
     "processing_tx": "処理中",
     "submit": "続ける",
-    "terms_and_conditions": "利用規約",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
     "watch_tutorial": "ビデオチュートリアルを見る"
