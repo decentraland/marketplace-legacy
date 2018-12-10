@@ -1,9 +1,12 @@
-.SignInNotice {
-  display: block;
-  text-align: center;
+.SignInNotice h1 {
   margin-top: 50px;
 }
 
 .SignInNotice .content p {
   color: var(--gray);
+  margin-bottom: 0;
+}
+
+.SignInNotice .ui.button {
+  margin-top: 35px;
 }

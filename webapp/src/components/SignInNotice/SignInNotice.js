@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import StaticPage from 'components/StaticPage'
-import WalletIcon from 'components/SignInPage/WalletIcon'
+import WalletIcon from './WalletIcon'
 
 import './SignInNotice.css'
 
