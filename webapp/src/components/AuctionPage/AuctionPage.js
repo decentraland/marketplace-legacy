@@ -315,7 +315,8 @@ export default class AuctionPage extends React.PureComponent {
     )
 
     const landPrice = this.roundPrice(price * rate)
-    const landPriceInMana = this.roundPrice(price)
+    const landPriceInMana = Math.round(price)
+
     const totalPriceInMana = Math.round(price * validSelectedParcels.length)
     const totalPrice = this.roundPrice(totalPriceInMana * rate)
 
