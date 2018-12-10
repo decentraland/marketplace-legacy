@@ -1,12 +1,12 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Button, Loader } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import StaticPage from 'components/StaticPage'
-import { t, T } from '@dapps/modules/translation/utils'
-import WalletIcon from './WalletIcon'
 import { isMobile } from 'lib/utils'
+import WalletIcon from './WalletIcon'
 
 import './SignInPage.css'
 

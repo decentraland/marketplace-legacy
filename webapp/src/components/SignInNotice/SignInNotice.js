@@ -1,24 +1,43 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { PropTypes } from 'prop-types'
+import { Button } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
-import { locations } from 'locations'
-import { t, T } from '@dapps/modules/translation/utils'
+import StaticPage from 'components/StaticPage'
+import WalletIcon from 'components/SignInPage/WalletIcon'
 
 import './SignInNotice.css'
 
 export default class SignInNotice extends React.PureComponent {
+  static propTypes = {
+    message: PropTypes.string,
+    children: PropTypes.node,
+    onConnect: PropTypes.func.isRequired
+  }
+
+  handleConnect = () => {
+    this.props.onConnect()
+  }
+
   render() {
+    const { children, message } = this.props
+
     return (
-      <p className="SignInNotice">
-        <T
-          id="global.sign_in_notice"
-          values={{
-            sign_in_link: (
-              <Link to={locations.signIn()}>{t('global.sign_in')}</Link>
-            )
-          }}
-        />
-      </p>
+      <StaticPage className="SignInNotice">
+        <div className="message">
+          <WalletIcon />
+          <h1>{t('sign_in.get_started')}</h1>
+          {children ? (
+            children
+          ) : (
+            <p>{message || t('sign_in_notice.message')}</p>
+          )}
+
+          <Button type="button" primary onClick={this.handleConnect}>
+            {t('global.connect')}
+          </Button>
+        </div>
+      </StaticPage>
     )
   }
 }

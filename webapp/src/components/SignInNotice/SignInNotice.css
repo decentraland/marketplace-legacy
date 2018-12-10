@@ -2,5 +2,8 @@
   display: block;
   text-align: center;
   margin-top: 50px;
+}
+
+.SignInNotice .content p {
   color: var(--gray);
 }

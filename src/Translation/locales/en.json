@@ -315,7 +315,6 @@
     "service_unavailable": "Service unavailable",
     "settings": "Settings",
     "sign_in": "Sign In",
-    "sign_in_notice": "You need to {sign_in_link} to access this page",
     "submit": "Submit",
     "the_estate": "the estate",
     "the_parcel": "the parcel",
@@ -477,6 +476,9 @@
       "mobile":
         "You can use mobile browsers such as {coinbase_link} or {imtoken_link}."
     }
+  },
+  "sign_in_notice": {
+    "message": "You need to connect your wallet to access this page"
   },
   "terms_modal": {
     "also_agree":

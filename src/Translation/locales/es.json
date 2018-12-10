@@ -316,7 +316,6 @@
     "service_unavailable": "Servicio no disponible",
     "settings": "Configuración",
     "sign_in": "Conectar",
-    "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "submit": "Enviar",
     "the_estate": "la propiedad",
     "the_parcel": "la parcela",
@@ -479,6 +478,9 @@
       "mobile":
         "Puedes usar navegadores móviles como {coinbase_link} o {imtoken_link}."
     }
+  },
+  "sign_in_notice": {
+    "message": "Necesitas conectar tu billetera para acceder a esta página."
   },
   "terms_modal": {
     "also_agree":
