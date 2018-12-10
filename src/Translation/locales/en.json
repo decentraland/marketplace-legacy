@@ -152,6 +152,8 @@
     "find_available_parcel": "Find available parcel",
     "gas_price": "Gas price",
     "land_price": "Price per parcel",
+    "max_amount_disclaimer":
+      "* Kyber reserves for {token} are not enough to trade {amount} MANA",
     "maximum_parcels_message":
       "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum LAND per transaction",

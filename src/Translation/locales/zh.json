@@ -142,6 +142,7 @@
     "find_available_parcel": "查找拍卖的土地",
     "gas_price": "Gas 价格",
     "land_price": "LAND 价格",
+    "max_amount_disclaimer": "* {token}的Kyber储备不足以交易{amount} MANA",
     "maximum_parcels_message":
       "如果一次交易中购买超过 {max} 块地，交易可能会失败。您可以先提交此次交易，然后再进行购买",
     "maximum_parcels_title": "您达到了每笔交易最多土地数",

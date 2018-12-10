@@ -155,6 +155,8 @@
     "find_available_parcel": "Trouver un colis disponible",
     "gas_price": "Prix ​​du gaz",
     "land_price": "Prix LAND",
+    "max_amount_disclaimer":
+      "* Les réserves Kyber pour {token} ne suffisent pas pour échanger {amount} MANA",
     "maximum_parcels_message":
       "Si vous essayez d'acheter plus de {max} LAND en une seule transaction, vous échouerez. ",
     "maximum_parcels_title":
