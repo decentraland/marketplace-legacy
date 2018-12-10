@@ -145,11 +145,12 @@
   "auction_page": {
     "available_parcels": "parcelas disponibles",
     "bid": "Comprar",
+    "blog_post": "entrada en el blog",
     "conversion_disclaimer":
       "* Debe tener al menos {amount} {token} en su saldo debido a las tarifas de conversión",
     "description": "Encuentra LAND que quieres comprar.",
     "empty_message":
-      "Encuentre las parcelas que desea comprar y agréguelas a su carrito. ",
+      "Encuentre las parcelas que desea comprar y agréguelas a su carrito. Para más información, lea el {video_tutorial_link} o lea la {blog_post_link}",
     "find_available_parcel": "Encuentra parcelas disponibles",
     "gas_price": "Precio del gas",
     "land_price": "Precio LAND",

@@ -144,11 +144,12 @@
   "auction_page": {
     "available_parcels": "parcels available",
     "bid": "Purchase",
+    "blog_post": "blog post",
     "conversion_disclaimer":
       "* You must have at least {amount} {token} in your balance due to conversion fees",
     "description": "Find the LAND you want to buy",
     "empty_message":
-      "Find the parcels you want to buy, and add them to your cart. For more help, watch the {video_tutorial_link}",
+      "Find the parcels you want to buy, and add them to your cart. For more information, watch the {video_tutorial_link} or read the {blog_post_link}",
     "find_available_parcel": "Find available parcel",
     "gas_price": "Gas price",
     "land_price": "Price per parcel",
