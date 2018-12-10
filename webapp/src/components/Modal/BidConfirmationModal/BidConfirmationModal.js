@@ -1,14 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Loader } from 'semantic-ui-react'
+import { Button, Loader, Icon } from 'semantic-ui-react'
+import { eth } from 'decentraland-eth'
+import { env } from 'decentraland-commons'
+import axios from 'axios'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import ContractLink from 'components/ContractLink'
 import { parcelType } from 'components/types'
-import { TOKEN_SYMBOLS } from 'modules/auction/utils'
+import { TOKEN_SYMBOLS, TOKEN_ADDRESSES } from 'modules/auction/utils'
+import { token } from 'lib/token'
 import BaseModal from '../BaseModal'
 
 import './BidConfirmationModal.css'
+
+function formatAmount(amount = 0, digits = 2) {
+  return parseFloat(amount.toFixed(digits), 10).toLocaleString()
+}
 
 export default class BidConfirmationModal extends React.PureComponent {
   static propTypes = {
@@ -22,6 +30,60 @@ export default class BidConfirmationModal extends React.PureComponent {
     onClose: PropTypes.func,
     onSubmit: PropTypes.func,
     onAuthorize: PropTypes.func
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoading: false,
+      balance: null
+    }
+  }
+
+  componentWillMount() {
+    const { token, address } = this.props
+    this.fetchBalance(token, address)
+  }
+
+  componentWillReceiveProps({ token, address }) {
+    if (this.props.token !== token || this.props.address !== address) {
+      this.fetchBalance(token, address)
+    }
+  }
+
+  fetchBalance = async (symbol, address) => {
+    this.setState({ balance: null, isLoading: true })
+
+    try {
+      const contractAddress = TOKEN_ADDRESSES[symbol]
+      const response = await axios.get(
+        `https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}&tag=latest&apikey=${env.get(
+          'REACT_APP_ETHERSCAN_API_KEY'
+        )}`
+      )
+      const balance =
+        Number(response.data.result) / (symbol === 'ZIL' ? 10 ** 12 : 10 ** 18)
+      if (isNaN(balance)) {
+        throw new Error('Error fetching balance')
+      }
+      this.setState({
+        balance,
+        isLoading: false
+      })
+    } catch (error) {
+      window.Rollbar.info('Fetching balance via Infura')
+      const contractName = token.getContractNameBySymbol(symbol)
+      const contract = eth.getContract(contractName)
+      const balance = await contract.balanceOf(address)
+
+      this.setState({
+        balance:
+          balance && typeof balance.toNumber === 'function'
+            ? balance.toNumber()
+            : balance,
+        isLoading: false
+      })
+    }
   }
 
   handleSubmit = () => {
@@ -38,6 +100,7 @@ export default class BidConfirmationModal extends React.PureComponent {
 
   renderConfirmation = () => {
     const { parcels, token, price, onClose } = this.props
+    const { balance, isLoading } = this.state
     return (
       <div className="modal-body">
         <h1 className="title">{t('auction_modal.confirmation')}</h1>
@@ -48,14 +111,35 @@ export default class BidConfirmationModal extends React.PureComponent {
             values={{
               parcels: parcels.length,
               token,
-              price
+              price: formatAmount(price)
             }}
           />
         </div>
 
+        {!isLoading && balance != null ? (
+          <React.Fragment>
+            <div className="your-balance">
+              {t('auction_modal.your_balance', {
+                balance: formatAmount(balance),
+                token
+              })}
+            </div>
+            {balance < price ? (
+              <div className="insufficient-funds">
+                <Icon name="warning sign" size="small" />{' '}
+                {t('auction_modal.insufficient_funds')}
+              </div>
+            ) : null}
+          </React.Fragment>
+        ) : null}
+
         <div className="actions">
-          <Button primary onClick={this.handleSubmit}>
-            {t('auction_modal.submit')}
+          <Button
+            primary
+            onClick={this.handleSubmit}
+            disabled={price > balance || isLoading}
+          >
+            {!isLoading ? t('auction_modal.submit') : t('global.loading')}
           </Button>
 
           <Button onClick={onClose}>{t('global.cancel')}</Button>
