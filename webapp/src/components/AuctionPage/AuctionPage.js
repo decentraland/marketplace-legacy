@@ -465,7 +465,7 @@ export default class AuctionPage extends React.PureComponent {
                 <Grid.Column width={16}>
                   <div className="disclaimer">
                     {t('auction_page.conversion_disclaimer', {
-                      amount: (totalPrice * 1.05).toFixed(2),
+                      amount: (totalPrice * 1.05).toFixed(2).toLocaleString(),
                       token
                     })}
                   </div>
