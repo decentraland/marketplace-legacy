@@ -143,6 +143,13 @@
   right: 10px;
 }
 
+.AuctionPage .disclaimer {
+  margin-top: 5px;
+  font-size: 12px;
+  text-align: right;
+  color: var(--gray);
+}
+
 .AuctionPage .chevron.icon {
   display: none !important;
 }
@@ -217,6 +224,10 @@
     right: 0;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .AuctionPage .disclaimer {
+    text-align: left;
   }
 
   .AuctionPage .auction-panel {

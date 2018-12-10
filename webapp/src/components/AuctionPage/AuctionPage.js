@@ -312,6 +312,10 @@ export default class AuctionPage extends React.PureComponent {
     const validSelectedParcels = selectedParcels.filter(
       parcel => parcel.owner == null
     )
+    const totalPrice = this.roundPrice(
+      price * rate * validSelectedParcels.length
+    )
+    const hasConversionFees = totalPrice > 0 && token !== 'MANA'
 
     let auctionMenuClasses = 'auction-menu'
     if (this.state.toggle) {
@@ -430,13 +434,12 @@ export default class AuctionPage extends React.PureComponent {
                       <div className="information-block">
                         <p className="subtitle">
                           {t('auction_page.total_price')}
+                          {hasConversionFees ? ' *' : null}
                         </p>
                         <Token
                           loading={rate == null}
                           symbol={token}
-                          amount={this.roundPrice(
-                            price * rate * validSelectedParcels.length
-                          )}
+                          amount={totalPrice}
                         />
                       </div>
                       <div className="information-block">
@@ -458,6 +461,16 @@ export default class AuctionPage extends React.PureComponent {
                   </div>
                 </Form>
               </Grid.Column>
+              {hasConversionFees ? (
+                <Grid.Column width={16}>
+                  <div className="disclaimer">
+                    {t('auction_page.conversion_disclaimer', {
+                      amount: (totalPrice * 1.05).toFixed(2),
+                      token
+                    })}
+                  </div>
+                </Grid.Column>
+              ) : null}
             </Grid.Row>
 
             {this.hasReachedLimit(selectedCoordinatesById) ? (

@@ -144,6 +144,8 @@
   "auction_page": {
     "available_parcels": "사용 가능한 소포",
     "bid": "매수",
+    "conversion_disclaimer":
+      "* 전환 비용으로 인해 적어도 {amount} {token}의 잔액이 있어야합니다.",
     "description": "구매하려는 LAND을 찾으십시오.",
     "empty_message": "구입하려는 소포를 찾아 장바구니에 추가하십시오. ",
     "find_available_parcel": "사용 가능한 소포 찾기",

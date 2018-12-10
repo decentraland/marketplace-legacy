@@ -145,6 +145,8 @@
   "auction_page": {
     "available_parcels": "parcelas disponibles",
     "bid": "Comprar",
+    "conversion_disclaimer":
+      "* Debe tener al menos {amount} {token} en su saldo debido a las tarifas de conversión",
     "description": "Encuentra LAND que quieres comprar.",
     "empty_message":
       "Encuentre las parcelas que desea comprar y agréguelas a su carrito. ",
