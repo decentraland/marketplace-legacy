@@ -134,17 +134,17 @@
   "auction_page": {
     "available_parcels": "可拍土地",
     "bid": "购买",
+    "blog_post": "博客文章",
     "conversion_disclaimer":
       "*由于转换费用，您的余额必须至少为{amount} {token}",
     "description": "找到想要购买的 LAND",
-    "empty_message":
-      "找到您想购买的土地，然后将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
+    "empty_message": "找到您要购买的包裹，并将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
     "find_available_parcel": "查找拍卖的土地",
     "gas_price": "Gas 价格",
     "land_price": "LAND 价格",
     "max_amount_disclaimer": "* {token}的Kyber储备不足以交易{amount} MANA",
     "maximum_parcels_message":
-      "如果一次交易中购买超过 {max} 块地，交易可能会失败。您可以先提交此次交易，然后再进行购买",
+      "如果你试图在单笔交易中购买超过{max} LAND，它将会失败。",
     "maximum_parcels_title": "您达到了每笔交易最多土地数",
     "parcels": "土地数",
     "parcels_tooltip": "您一次最多只能购买 {max} 个地块",

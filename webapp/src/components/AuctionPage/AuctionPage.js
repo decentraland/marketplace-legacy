@@ -545,6 +545,15 @@ export default class AuctionPage extends React.PureComponent {
                             >
                               {t('auction_page.video_tutorial')}
                             </a>
+                          ),
+                          blog_post_link: (
+                            <a
+                              href="https://decentraland.org/blog/technology/how-will-the-land-auction-work"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              {t('auction_page.blog_post')}
+                            </a>
                           )
                         }}
                       />
