@@ -256,8 +256,11 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   roundPrice = price => {
-    const { token } = this.props
-    return token === 'MKR' ? parseFloat(price) : Math.round(price)
+    return this.isToken('MKR') ? parseFloat(price) : Math.round(price)
+  }
+
+  isToken(token) {
+    return this.props.token === token
   }
 
   handleToggle = () => {
@@ -320,8 +323,8 @@ export default class AuctionPage extends React.PureComponent {
     const totalPriceInMana = Math.round(price * validSelectedParcels.length)
     const totalPrice = this.roundPrice(totalPriceInMana * rate)
 
-    const hasConversionFees = token !== 'MANA'
-    const totalPriceWithMargin = addConversionFee(totalPrice)
+    const hasConversionFees = !this.isToken('MANA')
+    const totalPriceWithMargin = Math.round(addConversionFee(totalPrice))
     const canConvert =
       !hasConversionFees ||
       (price <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0) ||
@@ -478,9 +481,7 @@ export default class AuctionPage extends React.PureComponent {
                   <div className="disclaimer">
                     {canConvert
                       ? t('auction_page.conversion_disclaimer', {
-                          amount: totalPriceWithMargin
-                            .toFixed(2)
-                            .toLocaleString(),
+                          amount: totalPriceWithMargin.toLocaleString(),
                           token
                         })
                       : t('auction_page.max_amount_disclaimer', {
