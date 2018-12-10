@@ -6,14 +6,12 @@ import {
   getTransactionHistory
 } from '@dapps/modules/transaction/selectors'
 
-import { addConversionFee } from 'modules/auction/utils'
-import { bidOnParcelsRequest } from 'modules/auction/actions'
-import { closeModal } from 'modules/ui/actions'
 import {
   getSelectedToken,
   getRate,
   getParcelsForConfirmation,
-  getPrice
+  getPrice,
+  isBidIdle
 } from 'modules/auction/selectors'
 import {
   ALLOW_TOKEN_SUCCESS,
@@ -24,7 +22,10 @@ import {
   getAuthorizations
 } from 'modules/authorization/selectors'
 import { getModal } from 'modules/ui/selectors'
+import { bidOnParcelsRequest } from 'modules/auction/actions'
+import { closeModal } from 'modules/ui/actions'
 import { getTokenAmountToApprove } from 'modules/wallet/utils'
+import { addConversionFee } from 'modules/auction/utils'
 import { token as tokenHelper } from 'lib/token'
 import BidConfirmationModal from './BidConfirmationModal'
 
@@ -33,6 +34,9 @@ const mapState = state => {
   const parcels = getParcelsForConfirmation(state)
   const address = getAddress(state)
   const token = getSelectedToken(state)
+
+  // Check if the user needs to approve/reject the tx
+  const isTxIdle = isBidIdle(state)
 
   // Check if the authorizations map is being fetched
   const isLoading = isAuthorizationLoading(state)
@@ -78,6 +82,7 @@ const mapState = state => {
     price,
     parcels,
     beneficiary,
+    isTxIdle,
     isLoading,
     isAuthorizing,
     isAuthorized,

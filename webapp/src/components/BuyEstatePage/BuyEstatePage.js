@@ -40,7 +40,6 @@ export default class BuyEstatePage extends React.PureComponent {
       id,
       wallet,
       publication,
-      isDisabled,
       isTxIdle,
       onCancel,
       authorization
@@ -91,7 +90,7 @@ export default class BuyEstatePage extends React.PureComponent {
                   onCancel={onCancel}
                   onConfirm={this.handleConfirm}
                   isDisabled={
-                    isDisabled || isNotEnoughMana || isNotEnoughAllowance
+                    isTxIdle || isNotEnoughMana || isNotEnoughAllowance
                   }
                   isTxIdle={isTxIdle}
                 />

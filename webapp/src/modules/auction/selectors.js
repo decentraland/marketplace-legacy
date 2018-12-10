@@ -1,9 +1,10 @@
 import queryString from 'query-string'
 import { createSelector } from 'reselect'
 import { getLocation } from '@dapps/modules/location/selectors'
+import { isLoadingType } from '@dapps/modules/loading/selectors'
 
+import { BID_ON_PARCELS_REQUEST } from 'modules/auction/actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
-
 import { TOKEN_SYMBOLS } from './utils'
 
 export const getState = state => state.auction
@@ -17,6 +18,11 @@ export const getCenter = state => getData(state).center
 export const getParcelOnChainOwners = state =>
   getData(state).parcelOnChainOwners
 export const getRates = state => getData(state).rate
+export const getSelectedCoordinatesById = state =>
+  getData(state).selectedCoordinatesById
+
+export const isBidIdle = state =>
+  isLoadingType(getLoading(state), BID_ON_PARCELS_REQUEST)
 
 export const getSelectedToken = createSelector(
   state => getLocation(state),
@@ -42,9 +48,6 @@ export const getRate = createSelector(
   (selectedToken, rates) =>
     selectedToken in rates ? rates[selectedToken] : null
 )
-
-export const getSelectedCoordinatesById = state =>
-  getData(state).selectedCoordinatesById
 
 export const getParcelsForConfirmation = createSelector(
   state => getSelectedCoordinatesById(state),

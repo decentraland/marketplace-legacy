@@ -5,6 +5,7 @@ import { eth } from 'decentraland-eth'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import ContractLink from 'components/ContractLink'
+import TxStatus from 'components/TxStatus'
 import { parcelType } from 'components/types'
 import {
   TOKEN_SYMBOLS,
@@ -23,6 +24,8 @@ export default class BidConfirmationModal extends React.PureComponent {
     token: PropTypes.oneOf(TOKEN_SYMBOLS),
     parcels: PropTypes.arrayOf(parcelType),
     beneficiary: PropTypes.string,
+    isTxIdle: PropTypes.bool,
+    isLoading: PropTypes.bool,
     isAuthorized: PropTypes.bool,
     isAuthorizing: PropTypes.bool,
     hasError: PropTypes.bool,
@@ -89,9 +92,10 @@ export default class BidConfirmationModal extends React.PureComponent {
   }
 
   renderConfirmation = () => {
-    const { parcels, token, price, onClose } = this.props
+    const { parcels, token, price, isTxIdle, onClose } = this.props
     const { balance, isLoading } = this.state
     const hasEnoughBalance = balance !== null && balance >= price
+
     return (
       <div className="modal-body">
         <h1 className="title">{t('auction_modal.confirmation')}</h1>
@@ -128,13 +132,15 @@ export default class BidConfirmationModal extends React.PureComponent {
           <Button
             primary
             onClick={this.handleSubmit}
-            disabled={!hasEnoughBalance || isLoading}
+            disabled={!hasEnoughBalance || isLoading || isTxIdle}
           >
             {!isLoading ? t('auction_modal.submit') : t('global.loading')}
           </Button>
 
           <Button onClick={onClose}>{t('global.cancel')}</Button>
         </div>
+
+        <TxStatus.Idle isIdle={isTxIdle} />
       </div>
     )
   }
