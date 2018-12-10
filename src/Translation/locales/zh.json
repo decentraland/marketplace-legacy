@@ -138,7 +138,7 @@
     "conversion_disclaimer":
       "*由于转换费用，您的余额必须至少为{amount} {token}",
     "description": "找到想要购买的 LAND",
-    "empty_message": "找到您要购买的包裹，并将其添加到购物车。",
+    "empty_message": "找到您要购买的包裹，并将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
     "find_available_parcel": "查找拍卖的土地",
     "gas_price": "Gas 价格",
     "land_price": "LAND 价格",

@@ -144,7 +144,7 @@
     "blog_post": "ブログ投稿",
     "conversion_disclaimer": "*換算手数料のため、残高が{amount}以上必要です",
     "description": "購入したい土地(LAND)を選んで下さい",
-    "empty_message": "購入したい小包を見つけてカートに追加します。",
+    "empty_message": "購入したい小包を見つけてカートに追加します。詳しい参加方法を{video_tutorial_link}動画で観る",
     "find_available_parcel": "購入可能な区画を検索",
     "gas_price": "ガス価格",
     "land_price": "LAND単価",
