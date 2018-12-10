@@ -260,11 +260,6 @@ export default class AuctionPage extends React.PureComponent {
     return token === 'MANA' ? Math.round(price) : parseFloat(price.toFixed(2))
   }
 
-  hasReachedConversionLimit(price) {
-    const { token, rate } = this.props
-    return price <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0
-  }
-
   handleToggle = () => {
     this.setState({ toggle: !this.state.toggle })
   }
@@ -319,13 +314,17 @@ export default class AuctionPage extends React.PureComponent {
       parcel => parcel.owner == null
     )
 
+    const landPrice = this.roundPrice(price * rate)
+    const landPriceInMana = this.roundPrice(price)
     const totalPriceInMana = Math.round(price * validSelectedParcels.length)
     const totalPrice = this.roundPrice(totalPriceInMana * rate)
 
-    const hasConversionFees = token !== 'MANA' && totalPrice > 0
+    const hasConversionFees = token !== 'MANA'
     const totalPriceWithMargin = addConversionFee(totalPrice)
     const canConvert =
-      !hasConversionFees || this.hasReachedConversionLimit(totalPriceWithMargin)
+      !hasConversionFees ||
+      (price <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0) ||
+      rate > 0
 
     let auctionMenuClasses = 'auction-menu'
     if (this.state.toggle) {
@@ -420,7 +419,7 @@ export default class AuctionPage extends React.PureComponent {
                         <Token
                           loading={isFetchingRate}
                           symbol={token}
-                          amount={this.roundPrice(price * rate)}
+                          amount={landPrice.toLocaleString()}
                         >
                           <span className="secondary">
                             &nbsp;
@@ -449,7 +448,7 @@ export default class AuctionPage extends React.PureComponent {
                         <Token
                           loading={isFetchingRate}
                           symbol={token}
-                          amount={totalPrice}
+                          amount={totalPrice.toLocaleString()}
                         />
                       </div>
                       <div className="information-block">
@@ -484,7 +483,9 @@ export default class AuctionPage extends React.PureComponent {
                           token
                         })
                       : t('auction_page.max_amount_disclaimer', {
-                          amount: totalPriceInMana,
+                          amount: (
+                            totalPriceInMana || landPriceInMana
+                          ).toLocaleString(),
                           token
                         })}
                   </div>

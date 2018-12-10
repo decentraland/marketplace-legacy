@@ -85,6 +85,7 @@ export async function hasAuctionFinished() {
   const landAuction = eth.getContract('LANDAuction')
   const endTime = await landAuction.endTime()
   return endTime.toNumber() > 0 && Date.now() / 1000 >= endTime.toNumber()
+  // return true
 }
 
 export function hasAuctionStarted() {
