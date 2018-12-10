@@ -2,14 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Loader, Icon } from 'semantic-ui-react'
 import { eth } from 'decentraland-eth'
-import { env } from 'decentraland-commons'
-import axios from 'axios'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import ContractLink from 'components/ContractLink'
 import { parcelType } from 'components/types'
 import { TOKEN_SYMBOLS, TOKEN_ADDRESSES } from 'modules/auction/utils'
 import { token } from 'lib/token'
+import { etherscan } from 'lib/EtherscanAPI'
 import BaseModal from '../BaseModal'
 
 import './BidConfirmationModal.css'
@@ -54,36 +53,27 @@ export default class BidConfirmationModal extends React.PureComponent {
   fetchBalance = async (symbol, address) => {
     this.setState({ balance: null, isLoading: true })
 
+    let balance
     try {
       const contractAddress = TOKEN_ADDRESSES[symbol]
-      const response = await axios.get(
-        `https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}&tag=latest&apikey=${env.get(
-          'REACT_APP_ETHERSCAN_API_KEY'
-        )}`
-      )
-      const balance =
-        Number(response.data.result) / (symbol === 'ZIL' ? 10 ** 12 : 10 ** 18)
-      if (isNaN(balance)) {
-        throw new Error('Error fetching balance')
-      }
-      this.setState({
-        balance,
-        isLoading: false
-      })
+      balance = await etherscan.balanceOf(address, contractAddress)
     } catch (error) {
       window.Rollbar.info('Fetching balance via Infura')
       const contractName = token.getContractNameBySymbol(symbol)
       const contract = eth.getContract(contractName)
-      const balance = await contract.balanceOf(address)
-
-      this.setState({
-        balance:
-          balance && typeof balance.toNumber === 'function'
-            ? balance.toNumber()
-            : balance,
-        isLoading: false
-      })
+      balance = await contract.balanceOf(address)
+      if (balance && typeof balance.toNumber === 'function') {
+        balance = balance.toNumber()
+      }
     }
+
+    this.setState({
+      balance:
+        balance != null
+          ? balance / (symbol === 'ZIL' ? 10 ** 12 : 10 ** 18)
+          : null,
+      isLoading: false
+    })
   }
 
   handleSubmit = () => {
@@ -101,6 +91,7 @@ export default class BidConfirmationModal extends React.PureComponent {
   renderConfirmation = () => {
     const { parcels, token, price, onClose } = this.props
     const { balance, isLoading } = this.state
+    const hasEnoughBalance = balance !== null && balance >= price
     return (
       <div className="modal-body">
         <h1 className="title">{t('auction_modal.confirmation')}</h1>
@@ -124,7 +115,7 @@ export default class BidConfirmationModal extends React.PureComponent {
                 token
               })}
             </div>
-            {balance < price ? (
+            {!hasEnoughBalance ? (
               <div className="insufficient-funds">
                 <Icon name="warning sign" size="small" />{' '}
                 {t('auction_modal.insufficient_funds')}
@@ -137,7 +128,7 @@ export default class BidConfirmationModal extends React.PureComponent {
           <Button
             primary
             onClick={this.handleSubmit}
-            disabled={price > balance || isLoading}
+            disabled={!hasEnoughBalance || isLoading}
           >
             {!isLoading ? t('auction_modal.submit') : t('global.loading')}
           </Button>
