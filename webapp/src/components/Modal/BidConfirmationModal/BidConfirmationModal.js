@@ -6,16 +6,16 @@ import { t, T } from '@dapps/modules/translation/utils'
 
 import ContractLink from 'components/ContractLink'
 import { parcelType } from 'components/types'
-import { TOKEN_SYMBOLS, TOKEN_ADDRESSES } from 'modules/auction/utils'
+import {
+  TOKEN_SYMBOLS,
+  TOKEN_ADDRESSES,
+  parseFloatWithDecimal
+} from 'modules/auction/utils'
 import { token } from 'lib/token'
 import { etherscan } from 'lib/EtherscanAPI'
 import BaseModal from '../BaseModal'
 
 import './BidConfirmationModal.css'
-
-function formatAmount(amount = 0, digits = 2) {
-  return parseFloat(amount.toFixed(digits), 10).toLocaleString()
-}
 
 export default class BidConfirmationModal extends React.PureComponent {
   static propTypes = {
@@ -102,7 +102,7 @@ export default class BidConfirmationModal extends React.PureComponent {
             values={{
               parcels: parcels.length,
               token,
-              price: formatAmount(price)
+              price: parseFloatWithDecimal(price, 2).toLocaleString()
             }}
           />
         </div>
@@ -111,7 +111,7 @@ export default class BidConfirmationModal extends React.PureComponent {
           <React.Fragment>
             <div className="your-balance">
               {t('auction_modal.your_balance', {
-                balance: formatAmount(balance),
+                balance: parseFloatWithDecimal(balance, 2).toLocaleString(),
                 token
               })}
             </div>
