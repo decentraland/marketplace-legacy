@@ -260,7 +260,10 @@ export default class AuctionPage extends React.PureComponent {
     return token === 'MANA' ? Math.round(price) : parseFloat(price.toFixed(2))
   }
 
-  hasReachedConversionLimit(conversionPrice) {}
+  hasReachedConversionLimit(price) {
+    const { token, rate } = this.props
+    return price <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0
+  }
 
   handleToggle = () => {
     this.setState({ toggle: !this.state.toggle })
@@ -322,8 +325,7 @@ export default class AuctionPage extends React.PureComponent {
     const hasConversionFees = token !== 'MANA' && totalPrice > 0
     const totalPriceWithMargin = addConversionFee(totalPrice)
     const canConvert =
-      !hasConversionFees ||
-      (totalPriceWithMargin <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0)
+      !hasConversionFees || this.hasReachedConversionLimit(totalPriceWithMargin)
 
     let auctionMenuClasses = 'auction-menu'
     if (this.state.toggle) {
