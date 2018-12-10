@@ -26,11 +26,13 @@ import {
   coordsType
 } from 'components/types'
 import {
-  hasSeenAuctionHelper,
   TOKEN_SYMBOLS,
+  TOKEN_MAX_CONVERSION_AMOUNT,
   AUCTION_HELPERS,
+  hasSeenAuctionHelper,
   dismissAuctionHelper,
-  getYoutubeTutorialId
+  getYoutubeTutorialId,
+  addConversionFee
 } from 'modules/auction/utils'
 import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
@@ -135,11 +137,11 @@ export default class AuctionPage extends React.PureComponent {
 
     this.updateOwner(asset)
 
-    const wasOverLimit = this.hasReachedLimit(
+    const wasOverLimit = this.hasReachedParcelLimit(
       this.props.selectedCoordinatesById
     )
     const newSelectedCoordsById = this.buildNewSelectedCoords(asset)
-    const isOverLimit = this.hasReachedLimit(newSelectedCoordsById)
+    const isOverLimit = this.hasReachedParcelLimit(newSelectedCoordsById)
 
     if (!wasOverLimit || (wasOverLimit && !isOverLimit)) {
       this.props.onChangeCoords(newSelectedCoordsById)
@@ -225,7 +227,7 @@ export default class AuctionPage extends React.PureComponent {
     return utils.omit(selectedCoordinatesById, parcel.id)
   }
 
-  hasReachedLimit(selected) {
+  hasReachedParcelLimit(selected) {
     const { allParcels, params } = this.props
     const { landsLimitPerBid } = params
     return (
@@ -255,11 +257,10 @@ export default class AuctionPage extends React.PureComponent {
 
   roundPrice = price => {
     const { token } = this.props
-    return (token === 'MANA'
-      ? Math.round(price)
-      : parseFloat(price.toFixed(2))
-    ).toLocaleString()
+    return token === 'MANA' ? Math.round(price) : parseFloat(price.toFixed(2))
   }
+
+  hasReachedConversionLimit(conversionPrice) {}
 
   handleToggle = () => {
     this.setState({ toggle: !this.state.toggle })
@@ -308,14 +309,21 @@ export default class AuctionPage extends React.PureComponent {
       )
     }
 
+    const isFetchingRate = rate == null
+
     const selectedParcels = this.getSelectedParcels()
     const validSelectedParcels = selectedParcels.filter(
       parcel => parcel.owner == null
     )
-    const totalPrice = this.roundPrice(
-      price * rate * validSelectedParcels.length
-    )
-    const hasConversionFees = totalPrice > 0 && token !== 'MANA'
+
+    const totalPriceInMana = Math.round(price * validSelectedParcels.length)
+    const totalPrice = this.roundPrice(totalPriceInMana * rate)
+
+    const hasConversionFees = token !== 'MANA' && totalPrice > 0
+    const totalPriceWithMargin = addConversionFee(totalPrice)
+    const canConvert =
+      !hasConversionFees ||
+      (totalPriceWithMargin <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0)
 
     let auctionMenuClasses = 'auction-menu'
     if (this.state.toggle) {
@@ -348,7 +356,7 @@ export default class AuctionPage extends React.PureComponent {
                     {validSelectedParcels.length > 0 ? (
                       <span className="parcel-count">
                         &nbsp;({validSelectedParcels.length}){' '}
-                        {this.hasReachedLimit(selectedCoordinatesById) ? (
+                        {this.hasReachedParcelLimit(selectedCoordinatesById) ? (
                           <Icon name="warning sign" size="small" />
                         ) : null}
                       </span>
@@ -408,7 +416,7 @@ export default class AuctionPage extends React.PureComponent {
                           {t('auction_page.land_price')}
                         </p>
                         <Token
-                          loading={rate == null}
+                          loading={isFetchingRate}
                           symbol={token}
                           amount={this.roundPrice(price * rate)}
                         >
@@ -437,7 +445,7 @@ export default class AuctionPage extends React.PureComponent {
                           {hasConversionFees ? ' *' : null}
                         </p>
                         <Token
-                          loading={rate == null}
+                          loading={isFetchingRate}
                           symbol={token}
                           amount={totalPrice}
                         />
@@ -447,10 +455,12 @@ export default class AuctionPage extends React.PureComponent {
                           type="submit"
                           primary={true}
                           disabled={
-                            validSelectedParcels.length === 0 || rate == null
+                            validSelectedParcels.length === 0 ||
+                            isFetchingRate ||
+                            !canConvert
                           }
                         >
-                          {rate == null ? (
+                          {isFetchingRate ? (
                             <span>{t('global.loading')}&hellip;</span>
                           ) : (
                             t('auction_page.bid')
@@ -464,16 +474,23 @@ export default class AuctionPage extends React.PureComponent {
               {hasConversionFees ? (
                 <Grid.Column width={16}>
                   <div className="disclaimer">
-                    {t('auction_page.conversion_disclaimer', {
-                      amount: (totalPrice * 1.05).toFixed(2).toLocaleString(),
-                      token
-                    })}
+                    {canConvert
+                      ? t('auction_page.conversion_disclaimer', {
+                          amount: totalPriceWithMargin
+                            .toFixed(2)
+                            .toLocaleString(),
+                          token
+                        })
+                      : t('auction_page.max_amount_disclaimer', {
+                          amount: totalPriceInMana,
+                          token
+                        })}
                   </div>
                 </Grid.Column>
               ) : null}
             </Grid.Row>
 
-            {this.hasReachedLimit(selectedCoordinatesById) ? (
+            {this.hasReachedParcelLimit(selectedCoordinatesById) ? (
               <Grid.Row>
                 <Grid.Column width={16}>
                   <Message

@@ -153,6 +153,8 @@
     "find_available_parcel": "Encuentra parcelas disponibles",
     "gas_price": "Precio del gas",
     "land_price": "Precio LAND",
+    "max_amount_disclaimer":
+      "* Las reservas de Kyber para {token} no son suficientes para cambiar {amount} MANA",
     "maximum_parcels_message":
       "Si intentas comprar más de {max} LAND en una sola transacción, fallará. ",
     "maximum_parcels_title":

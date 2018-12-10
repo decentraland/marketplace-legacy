@@ -17,6 +17,38 @@ export const TOKEN_ADDRESSES = {
 
 export const TOKEN_SYMBOLS = Object.keys(TOKEN_ADDRESSES)
 
+export const TOKEN_MAX_CONVERSION_AMOUNT = {
+  BNB: parseInt(
+    env.get('REACT_APP_BNB_MAX_CONVERSION_AMOUNT', 2909855240000),
+    10
+  ),
+  DAI: parseInt(
+    env.get('REACT_APP_DAI_MAX_CONVERSION_AMOUNT', 20000000000000),
+    10
+  ),
+  ELF: parseInt(
+    env.get('REACT_APP_ELF_MAX_CONVERSION_AMOUNT', 120766092000000),
+    10
+  ),
+  KNC: parseInt(
+    env.get('REACT_APP_KNC_MAX_CONVERSION_AMOUNT', 102782086000000),
+    10
+  ),
+  MKR: parseInt(
+    env.get('REACT_APP_MKR_MAX_CONVERSION_AMOUNT', Number.MAX_SAFE_INTEGER),
+    10
+  ),
+  SNT: parseInt(
+    env.get('REACT_APP_SNT_MAX_CONVERSION_AMOUNT', 887995199000000),
+    10
+  ),
+  ZIL: parseInt(env.get('REACT_APP_ZIL_MAX_CONVERSION_AMOUNT', 968084905), 10),
+  RCN: parseInt(
+    env.get('REACT_APP_RCN_MAX_CONVERSION_AMOUNT', 87420000000000),
+    10
+  )
+}
+
 export const AUCTION_HELPERS = Object.freeze({
   SEEN_AUCTION_MODAL: 'seenAuctionModal',
   SEEN_AUCTION_TOKEN_TOOLTIP: 'seenAuctionTokenTooltip',
@@ -39,6 +71,14 @@ export function dismissAuctionHelper(key) {
 
 export function getYoutubeTutorialId() {
   return 'uYESj1OYu24'
+}
+
+export function addConversionFee(price) {
+  const conversionFee = parseInt(
+    env.get('REACT_APP_AUCTION_CONVERSION_FEE', 105),
+    10
+  )
+  return price * conversionFee / 100
 }
 
 export async function hasAuctionFinished() {

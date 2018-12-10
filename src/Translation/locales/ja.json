@@ -148,6 +148,8 @@
     "find_available_parcel": "購入可能な区画を検索",
     "gas_price": "ガス価格",
     "land_price": "LAND単価",
+    "max_amount_disclaimer":
+      "* {token}のためのキーバー準備は、{amount} MANAを取引するには不十分です",
     "maximum_parcels_message":
       "単一のトランザクションで{max}LAND以上を購入しようとすると失敗します。",
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
