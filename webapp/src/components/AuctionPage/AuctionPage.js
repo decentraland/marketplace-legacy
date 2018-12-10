@@ -257,7 +257,7 @@ export default class AuctionPage extends React.PureComponent {
 
   roundPrice = price => {
     const { token } = this.props
-    return token === 'MANA' ? Math.round(price) : parseFloat(price.toFixed(2))
+    return token === 'MKR' ? parseFloat(price) : Math.round(price)
   }
 
   handleToggle = () => {
