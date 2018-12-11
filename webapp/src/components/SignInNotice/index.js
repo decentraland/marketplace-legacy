@@ -1,3 +1,3 @@
-import SignInNotice from './SignInNotice'
+import SignInNotice from './SignInNotice.container'
 
 export default SignInNotice

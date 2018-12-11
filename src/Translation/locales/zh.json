@@ -300,7 +300,6 @@
     "service_unavailable": "暂停服务",
     "settings": "设置",
     "sign_in": "登录",
-    "sign_in_notice": "请登录 {sign_in_link} 后访问此页面",
     "submit": "确定",
     "the_estate": "连块土地",
     "the_parcel": "地块",
@@ -453,6 +452,9 @@
         "您可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。",
       "mobile": "您可以使用移动浏览器，如 {coinbase_link} 或 {imtoken_link}。"
     }
+  },
+  "sign_in_notice": {
+    "message": "您需要连接钱包才能访问此页面"
   },
   "terms_modal": {
     "also_agree":

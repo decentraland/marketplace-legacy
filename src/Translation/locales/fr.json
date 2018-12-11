@@ -325,8 +325,6 @@
     "service_unavailable": "Service indisponible",
     "settings": "Paramètres",
     "sign_in": "Se connecter",
-    "sign_in_notice":
-      "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "submit": "Envoyer",
     "the_estate": "le domaine",
     "the_parcel": "la parcelle",
@@ -489,6 +487,10 @@
       "mobile":
         "Vous pouvez utiliser des navigateurs mobiles tels que {coinbase_link} ou {imtoken_link}."
     }
+  },
+  "sign_in_notice": {
+    "message":
+      "Vous devez connecter votre portefeuille pour accéder à cette page."
   },
   "terms_modal": {
     "also_agree":

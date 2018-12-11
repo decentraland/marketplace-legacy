@@ -45,7 +45,7 @@ export default class ParcelDetail extends React.PureComponent {
       return parcel.data.description
     }
 
-    return null
+    return ''
   }
 
   render() {

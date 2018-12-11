@@ -1,11 +1,10 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import { Button, Loader } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import StaticPage from 'components/StaticPage'
-import { t, T } from '@dapps/modules/translation/utils'
-import WalletIcon from './WalletIcon'
+import SignInNotice from 'components/SignInNotice'
 import { isMobile } from 'lib/utils'
 
 import './SignInPage.css'
@@ -14,7 +13,6 @@ export default class SignInPage extends React.PureComponent {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
-    onConnect: PropTypes.func.isRequired,
     onNavigate: PropTypes.func.isRequired
   }
 
@@ -24,22 +22,16 @@ export default class SignInPage extends React.PureComponent {
     }
   }
 
-  handleRetry = () => {
-    this.props.onConnect()
-  }
-
   render() {
     const { isLoading } = this.props
 
     return (
-      <StaticPage className="SignInPage">
+      <div className="SignInPage">
         {isLoading ? (
           <Loader active size="massive" />
         ) : (
-          <div className="message">
-            <WalletIcon />
-            <h1>{t('sign_in.get_started')}</h1>
-            <p className="sign-in-options">
+          <SignInNotice>
+            <p>
               {t('sign_in.intro')}{' '}
               {isMobile() ? (
                 <T
@@ -100,13 +92,9 @@ export default class SignInPage extends React.PureComponent {
                 />
               )}
             </p>
-            <br />
-            <Button type="button" primary onClick={this.handleRetry}>
-              {t('global.connect')}
-            </Button>
-          </div>
+          </SignInNotice>
         )}
-      </StaticPage>
+      </div>
     )
   }
 }
