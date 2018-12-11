@@ -6,6 +6,7 @@ import {
   getTransactionHistory
 } from '@dapps/modules/transaction/selectors'
 
+import { addConversionFee } from 'modules/auction/utils'
 import { bidOnParcelsRequest } from 'modules/auction/actions'
 import { closeModal } from 'modules/ui/actions'
 import {
@@ -64,9 +65,12 @@ const mapState = state => {
     latestTransaction.status === txUtils.TRANSACTION_TYPES.reverted
 
   // Compute price
-  const price = Number(
-    (getPrice(state) * getRate(state) * parcels.length).toFixed(2)
-  )
+  let price = Math.round(getPrice(state) * getRate(state) * parcels.length)
+
+  const hasConversionFees = token !== 'MANA'
+  if (hasConversionFees) {
+    price = Math.round(addConversionFee(price))
+  }
 
   return {
     address,

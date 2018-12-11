@@ -32,7 +32,8 @@ import {
   hasSeenAuctionHelper,
   dismissAuctionHelper,
   getYoutubeTutorialId,
-  addConversionFee
+  addConversionFee,
+  getConversionFeePercentage
 } from 'modules/auction/utils'
 import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
@@ -321,10 +322,14 @@ export default class AuctionPage extends React.PureComponent {
     const landPriceInMana = Math.round(price)
 
     const totalPriceInMana = Math.round(price * validSelectedParcels.length)
-    const totalPrice = this.roundPrice(totalPriceInMana * rate)
+    let totalPrice = this.roundPrice(totalPriceInMana * rate)
 
     const hasConversionFees = !this.isToken('MANA')
-    const totalPriceWithMargin = Math.round(addConversionFee(totalPrice))
+
+    if (hasConversionFees) {
+      totalPrice = Math.round(addConversionFee(totalPrice))
+    }
+
     const canConvert =
       !hasConversionFees ||
       (price <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0) ||
@@ -334,6 +339,9 @@ export default class AuctionPage extends React.PureComponent {
     if (this.state.toggle) {
       auctionMenuClasses += ' open'
     }
+
+    const shouldShowFootnote =
+      validSelectedParcels.length > 0 && hasConversionFees
 
     return (
       <div className="AuctionPage">
@@ -447,7 +455,7 @@ export default class AuctionPage extends React.PureComponent {
                       <div className="information-block">
                         <p className="subtitle">
                           {t('auction_page.total_price')}
-                          {hasConversionFees ? ' *' : null}
+                          {shouldShowFootnote ? ' *' : null}
                         </p>
                         <Token
                           loading={isFetchingRate}
@@ -476,13 +484,12 @@ export default class AuctionPage extends React.PureComponent {
                   </div>
                 </Form>
               </Grid.Column>
-              {hasConversionFees ? (
+              {shouldShowFootnote ? (
                 <Grid.Column width={16}>
                   <div className="disclaimer">
                     {canConvert
                       ? t('auction_page.conversion_disclaimer', {
-                          amount: totalPriceWithMargin.toLocaleString(),
-                          token
+                          fee: getConversionFeePercentage()
                         })
                       : t('auction_page.max_amount_disclaimer', {
                           amount: (
