@@ -100,18 +100,18 @@
     "your_parcel": "あなたの区画"
   },
   "auction": {
-    "description_after_finish": "LANDオークションが終了しました！",
+    "description_after_finish": "土地オークションは終了しました！",
     "description_after_start":
-      "LANDオークションが始まったので、今すぐLANDを買うことができます！",
+      "土地オークションが始まりました。今すぐLANDを購入できます。",
     "description_before_start":
       "12月10日にLANDオークションに参加し、LANDを購入！",
     "title": "Decentraland LANDオークション"
   },
   "auction_finished": {
     "cta": "マーケットに行く",
-    "description": "ご参加いただきありがとうございます",
+    "description": "参加ありがとうございました",
     "land_sold": "売却済みLAND",
-    "mana_burned": "MANAは焼却されました",
+    "mana_burned": "MANAはバーンされました",
     "stats_title": "統計を見る：",
     "title": "オークションは終了しました"
   },
@@ -128,9 +128,9 @@
     "description":
       "始める前に次の2点を確認してください。LAND（土地）購入に使用するトークンを選択できます。そのトークンがLAND購入に使用できるようにスマートコントラクトで承認してください。",
     "get_started": "始める",
-    "i_agree_with_auction_terms": "私は{auction_terms_link}を受け入れる",
+    "i_agree_with_auction_terms": "私は{auction_terms_link}に同意します",
     "i_agree_with_main_terms":
-      "私は{decentraland_terms_link}と{privacy_policy_link}を受け入れます",
+      "私は{decentraland_terms_link}と{privacy_policy_link}に同意します",
     "insufficient_funds": "残高不足",
     "privacy_policy_link": "個人情報保護方針",
     "processing_tx": "処理中",
@@ -143,16 +143,15 @@
   "auction_page": {
     "available_parcels": "区画が販売中",
     "bid": "購入する",
-    "blog_post": "ブログ投稿",
+    "blog_post": "ブログ",
     "conversion_disclaimer": "*換算手数料のため、残高が{amount}以上必要です",
     "description": "購入したい土地(LAND)を選んで下さい",
-    "empty_message":
-      "購入したい小包を見つけてカートに追加します。詳しい参加方法を{video_tutorial_link}動画で観る",
+    "empty_message": "購入したい区画を選んでカートに追加します。詳しい参加方法を{video_tutorial_link}動画で観る",
     "find_available_parcel": "購入可能な区画を検索",
     "gas_price": "ガス価格",
     "land_price": "LAND単価",
     "max_amount_disclaimer":
-      "* {token}のためのキーバー準備は、{amount} MANAを取引するには不十分です",
+      "* Kyberに{amount} MANAに換金するために充分な{token} トークンがありません。",
     "maximum_parcels_message":
       "単一のトランザクションで{max} LAND以上を購入しようとすると失敗します。",
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
@@ -430,7 +429,7 @@
   },
   "parcel_tags": {
     "adjacent": "隣接",
-    "district": "地区",
+    "district": "ディストリクト",
     "plaza": "プラザ",
     "proximity": "{distance}区画先",
     "road": "道路"
