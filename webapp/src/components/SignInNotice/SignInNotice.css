@@ -10,3 +10,7 @@
 .SignInNotice .ui.button {
   margin-top: 35px;
 }
+
+.SignInNotice .message {
+  padding: 0 38px;
+}
