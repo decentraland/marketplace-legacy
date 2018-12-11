@@ -33,7 +33,7 @@ import {
   dismissAuctionHelper,
   getYoutubeTutorialId,
   addConversionFee,
-  getConversionFee
+  getConversionFeePercentage
 } from 'modules/auction/utils'
 import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
@@ -340,6 +340,9 @@ export default class AuctionPage extends React.PureComponent {
       auctionMenuClasses += ' open'
     }
 
+    const shouldShowConversionFeeDisclaimer =
+      totalPrice > 0 && hasConversionFees
+
     return (
       <div className="AuctionPage">
         <div className="parcel-preview">
@@ -452,7 +455,7 @@ export default class AuctionPage extends React.PureComponent {
                       <div className="information-block">
                         <p className="subtitle">
                           {t('auction_page.total_price')}
-                          {hasConversionFees ? ' *' : null}
+                          {shouldShowConversionFeeDisclaimer ? ' *' : null}
                         </p>
                         <Token
                           loading={isFetchingRate}
@@ -485,9 +488,11 @@ export default class AuctionPage extends React.PureComponent {
                 <Grid.Column width={16}>
                   <div className="disclaimer">
                     {canConvert
-                      ? t('auction_page.conversion_disclaimer', {
-                          fee: getConversionFee()
-                        })
+                      ? shouldShowConversionFeeDisclaimer
+                        ? t('auction_page.conversion_disclaimer', {
+                            fee: getConversionFeePercentage()
+                          })
+                        : null
                       : t('auction_page.max_amount_disclaimer', {
                           amount: (
                             totalPriceInMana || landPriceInMana

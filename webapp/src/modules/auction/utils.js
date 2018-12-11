@@ -74,12 +74,17 @@ export function getYoutubeTutorialId() {
 }
 
 export function getConversionFee() {
-  return parseInt(env.get('REACT_APP_AUCTION_CONVERSION_FEE', 105), 10) / 100
+  return parseInt(env.get('REACT_APP_AUCTION_CONVERSION_FEE', 105), 10)
+}
+
+export function getConversionFeePercentage() {
+  const conversionFee = getConversionFee()
+  return conversionFee - 100
 }
 
 export function addConversionFee(price) {
   const conversionFee = getConversionFee()
-  return price * conversionFee
+  return price * conversionFee / 100
 }
 
 export async function hasAuctionFinished() {
