@@ -106,4 +106,9 @@
   .BidConfirmationModal .modal-body {
     width: 605px;
   }
+
+  .BidConfirmationModal .ui.icon.message {
+    width: 70%;
+    margin: 15px auto 0;
+  }
 }
