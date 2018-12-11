@@ -124,12 +124,14 @@
     "i_agree_with_auction_terms": "我接受{auction_terms_link}",
     "i_agree_with_main_terms":
       "我接受{decentraland_terms_link}和{privacy_policy_link}",
+    "insufficient_funds": "不充足的资金",
     "privacy_policy_link": "隐私政策",
     "processing_tx": "处理交易",
     "submit": "确认",
     "tx_failed": "交易失败",
     "video_tutorial": "视频教程",
-    "watch_tutorial": "观看视频教程"
+    "watch_tutorial": "观看视频教程",
+    "your_balance": "您的余额是：{balance} {token}"
   },
   "auction_page": {
     "available_parcels": "可拍土地",
@@ -138,7 +140,8 @@
     "conversion_disclaimer":
       "*由于转换费用，您的余额必须至少为{amount} {token}",
     "description": "找到想要购买的 LAND",
-    "empty_message": "找到您要购买的包裹，并将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
+    "empty_message":
+      "找到您要购买的包裹，并将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
     "find_available_parcel": "查找拍卖的土地",
     "gas_price": "Gas 价格",
     "land_price": "LAND 价格",

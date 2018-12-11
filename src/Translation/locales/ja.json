@@ -131,12 +131,14 @@
     "i_agree_with_auction_terms": "私は{auction_terms_link}を受け入れる",
     "i_agree_with_main_terms":
       "私は{decentraland_terms_link}と{privacy_policy_link}を受け入れます",
+    "insufficient_funds": "残高不足",
     "privacy_policy_link": "個人情報保護方針",
     "processing_tx": "処理中",
     "submit": "続ける",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
-    "watch_tutorial": "ビデオチュートリアルを見る"
+    "watch_tutorial": "ビデオチュートリアルを見る",
+    "your_balance": "あなたの残高は：{balance} {token}"
   },
   "auction_page": {
     "available_parcels": "区画が販売中",
@@ -144,7 +146,8 @@
     "blog_post": "ブログ投稿",
     "conversion_disclaimer": "*換算手数料のため、残高が{amount}以上必要です",
     "description": "購入したい土地(LAND)を選んで下さい",
-    "empty_message": "購入したい小包を見つけてカートに追加します。詳しい参加方法を{video_tutorial_link}動画で観る",
+    "empty_message":
+      "購入したい小包を見つけてカートに追加します。詳しい参加方法を{video_tutorial_link}動画で観る",
     "find_available_parcel": "購入可能な区画を検索",
     "gas_price": "ガス価格",
     "land_price": "LAND単価",

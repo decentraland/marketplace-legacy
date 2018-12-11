@@ -12,10 +12,17 @@
   font-size: 32px;
 }
 
-.BidConfirmationModal .modal-body .description {
+.BidConfirmationModal .modal-body .description,
+.BidConfirmationModal .modal-body .your-balance,
+.BidConfirmationModal .modal-body .insufficient-funds {
   font-size: 17px;
   line-height: 1.53;
   letter-spacing: -0.2px;
+  margin-bottom: 16px;
+}
+
+.BidConfirmationModal .modal-body .insufficient-funds {
+  color: var(--error);
   margin-bottom: 40px;
 }
 

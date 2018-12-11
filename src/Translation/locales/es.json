@@ -135,12 +135,14 @@
     "i_agree_with_auction_terms": "Acepto el {auction_terms_link}",
     "i_agree_with_main_terms":
       "Acepto el {decentraland_terms_link} y el {privacy_policy_link}",
+    "insufficient_funds": "Fondos insuficientes",
     "privacy_policy_link": "Política de privacidad",
     "processing_tx": "Procesando Transacción",
     "submit": "Proceder",
     "tx_failed": "Transacción fallida",
     "video_tutorial": "Video Tutorial",
-    "watch_tutorial": "Ver video tutorial"
+    "watch_tutorial": "Ver video tutorial",
+    "your_balance": "Tu saldo es: {balance} {token}"
   },
   "auction_page": {
     "available_parcels": "parcelas disponibles",

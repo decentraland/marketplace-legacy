@@ -134,12 +134,14 @@
     "i_agree_with_auction_terms": "나는 {auction_terms_link}를 받아 들인다.",
     "i_agree_with_main_terms":
       "나는 {decentraland_terms_link}와 {privacy_policy_link}을 받아 들인다.",
+    "insufficient_funds": "불충분 한 자금",
     "privacy_policy_link": "개인 정보 정책",
     "processing_tx": "거래 처리 중",
     "submit": "발하다",
     "tx_failed": "거래 실패",
     "video_tutorial": "비디오 자습서",
-    "watch_tutorial": "비디오 자습서보기"
+    "watch_tutorial": "비디오 자습서보기",
+    "your_balance": "잔액 : {balance} {token}"
   },
   "auction_page": {
     "available_parcels": "사용 가능한 소포",
