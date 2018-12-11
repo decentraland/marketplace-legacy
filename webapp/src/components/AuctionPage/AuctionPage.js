@@ -32,7 +32,8 @@ import {
   hasSeenAuctionHelper,
   dismissAuctionHelper,
   getYoutubeTutorialId,
-  addConversionFee
+  addConversionFee,
+  getConversionFee
 } from 'modules/auction/utils'
 import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
@@ -321,10 +322,14 @@ export default class AuctionPage extends React.PureComponent {
     const landPriceInMana = Math.round(price)
 
     const totalPriceInMana = Math.round(price * validSelectedParcels.length)
-    const totalPrice = this.roundPrice(totalPriceInMana * rate)
+    let totalPrice = this.roundPrice(totalPriceInMana * rate)
 
     const hasConversionFees = !this.isToken('MANA')
-    const totalPriceWithMargin = Math.round(addConversionFee(totalPrice))
+
+    if (hasConversionFees) {
+      totalPrice = Math.round(addConversionFee(totalPrice))
+    }
+
     const canConvert =
       !hasConversionFees ||
       (price <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0) ||
@@ -481,8 +486,7 @@ export default class AuctionPage extends React.PureComponent {
                   <div className="disclaimer">
                     {canConvert
                       ? t('auction_page.conversion_disclaimer', {
-                          amount: totalPriceWithMargin.toLocaleString(),
-                          token
+                          fee: getConversionFee()
                         })
                       : t('auction_page.max_amount_disclaimer', {
                           amount: (

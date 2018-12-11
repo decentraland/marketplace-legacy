@@ -147,8 +147,7 @@
     "available_parcels": "parcels available",
     "bid": "Purchase",
     "blog_post": "blog post",
-    "conversion_disclaimer":
-      "* You must have at least {amount} {token} in your balance due to conversion fees",
+    "conversion_disclaimer": "* Price increased {fee}% due to conversion fees",
     "description": "Find the LAND you want to buy",
     "empty_message":
       "Find the parcels you want to buy, and add them to your cart. For more information, watch the {video_tutorial_link} or read the {blog_post_link}",

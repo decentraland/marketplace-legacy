@@ -15,7 +15,7 @@ export const TOKEN_ADDRESSES = {
   RCN: env.get('REACT_APP_RCN_TOKEN_CONTRACT_ADDRESS')
 }
 
-export const TOKEN_SYMBOLS = Object.keys(TOKEN_ADDRESSES)
+export const TOKEN_SYMBOLS = Object.keys(TOKEN_ADDRESSES) // array of token symbols
 
 export const TOKEN_MAX_CONVERSION_AMOUNT = {
   BNB: parseInt(
@@ -73,12 +73,13 @@ export function getYoutubeTutorialId() {
   return 'uYESj1OYu24'
 }
 
+export function getConversionFee() {
+  return parseInt(env.get('REACT_APP_AUCTION_CONVERSION_FEE', 105), 10) / 100
+}
+
 export function addConversionFee(price) {
-  const conversionFee = parseInt(
-    env.get('REACT_APP_AUCTION_CONVERSION_FEE', 105),
-    10
-  )
-  return price * conversionFee / 100
+  const conversionFee = getConversionFee()
+  return price * conversionFee
 }
 
 export async function hasAuctionFinished() {
