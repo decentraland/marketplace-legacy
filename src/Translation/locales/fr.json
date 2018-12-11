@@ -137,12 +137,14 @@
     "i_agree_with_auction_terms": "J'accepte le {auction_terms_link}",
     "i_agree_with_main_terms":
       "J'accepte le {decentraland_terms_link} et le {privacy_policy_link}",
+    "insufficient_funds": "Fonds insuffisants",
     "privacy_policy_link": "Politique de confidentialité",
     "processing_tx": "Traitement de la transaction",
     "submit": "Procéder",
     "tx_failed": "La transaction a échoué",
     "video_tutorial": "Didacticiel vidéo",
-    "watch_tutorial": "Regarder le tutoriel vidéo"
+    "watch_tutorial": "Regarder le tutoriel vidéo",
+    "your_balance": "Votre solde est: {balance} {token}"
   },
   "auction_page": {
     "available_parcels": "colis disponibles",

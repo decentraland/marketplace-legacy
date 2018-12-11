@@ -15,6 +15,7 @@ import { api } from 'lib/api'
 import { SET_ON_CHAIN_PARCEL_OWNER } from 'modules/auction/actions'
 
 import { migrations } from 'lib/localStorage'
+import { etherscan } from 'lib/EtherscanAPI'
 
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
@@ -54,6 +55,7 @@ const middleware = applyMiddleware(
 const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer)
 
+etherscan.setStore(store)
 sagasMiddleware.run(rootSaga)
 loadStorageMiddleware(store)
 

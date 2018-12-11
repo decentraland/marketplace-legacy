@@ -69,6 +69,7 @@ const mapState = state => {
   )
 
   return {
+    address,
     token,
     price,
     parcels,
