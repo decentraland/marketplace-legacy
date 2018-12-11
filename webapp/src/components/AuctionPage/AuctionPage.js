@@ -343,6 +343,9 @@ export default class AuctionPage extends React.PureComponent {
     const shouldShowConversionFeeDisclaimer =
       totalPrice > 0 && hasConversionFees
 
+    const shouldShowFootnote =
+      validSelectedParcels.length > 0 && hasConversionFees
+
     return (
       <div className="AuctionPage">
         <div className="parcel-preview">
@@ -455,7 +458,7 @@ export default class AuctionPage extends React.PureComponent {
                       <div className="information-block">
                         <p className="subtitle">
                           {t('auction_page.total_price')}
-                          {shouldShowConversionFeeDisclaimer ? ' *' : null}
+                          {shouldShowFootnote ? ' *' : null}
                         </p>
                         <Token
                           loading={isFetchingRate}
@@ -484,7 +487,7 @@ export default class AuctionPage extends React.PureComponent {
                   </div>
                 </Form>
               </Grid.Column>
-              {hasConversionFees ? (
+              {shouldShowFootnote ? (
                 <Grid.Column width={16}>
                   <div className="disclaimer">
                     {canConvert
