@@ -10,6 +10,7 @@ import './SignInNotice.css'
 
 export default class SignInNotice extends React.PureComponent {
   static propTypes = {
+    title: PropTypes.string,
     message: PropTypes.string,
     children: PropTypes.node,
     onConnect: PropTypes.func.isRequired
@@ -20,13 +21,13 @@ export default class SignInNotice extends React.PureComponent {
   }
 
   render() {
-    const { children, message } = this.props
+    const { title, message, children } = this.props
 
     return (
       <StaticPage className="SignInNotice">
         <div className="message">
           <WalletIcon />
-          <h1>{t('sign_in.get_started')}</h1>
+          <h1>{title || t('sign_in.get_started')}</h1>
           {children ? (
             children
           ) : (

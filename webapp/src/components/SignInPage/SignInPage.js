@@ -18,8 +18,7 @@ export default class SignInPage extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isConnected) {
-      // this.props.onNavigate(locations.parcelMapDetail(0, 0))
-      console.log(locations)
+      this.props.onNavigate(locations.parcelMapDetail(0, 0))
     }
   }
 
