@@ -340,9 +340,6 @@ export default class AuctionPage extends React.PureComponent {
       auctionMenuClasses += ' open'
     }
 
-    const shouldShowConversionFeeDisclaimer =
-      totalPrice > 0 && hasConversionFees
-
     const shouldShowFootnote =
       validSelectedParcels.length > 0 && hasConversionFees
 
@@ -491,11 +488,9 @@ export default class AuctionPage extends React.PureComponent {
                 <Grid.Column width={16}>
                   <div className="disclaimer">
                     {canConvert
-                      ? shouldShowConversionFeeDisclaimer
-                        ? t('auction_page.conversion_disclaimer', {
-                            fee: getConversionFeePercentage()
-                          })
-                        : null
+                      ? t('auction_page.conversion_disclaimer', {
+                          fee: getConversionFeePercentage()
+                        })
                       : t('auction_page.max_amount_disclaimer', {
                           amount: (
                             totalPriceInMana || landPriceInMana
