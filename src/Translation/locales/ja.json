@@ -91,6 +91,7 @@
     "update_asset": "{asset_name}の公開物件を更新する"
   },
   "atlas": {
+    "available_at_auction": "オークションで入手可能",
     "loading": "読込み中",
     "no_owner": "所有者なし",
     "on_sale": "販売中: ",

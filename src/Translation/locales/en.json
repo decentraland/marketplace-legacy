@@ -94,6 +94,7 @@
     "update_asset": "Update {asset_name} publication"
   },
   "atlas": {
+    "available_at_auction": "Available at auction",
     "loading": "Loading",
     "no_owner": "No Owner",
     "on_sale": "On Sale: ",
