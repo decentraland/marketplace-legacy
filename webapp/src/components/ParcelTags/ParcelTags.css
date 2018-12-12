@@ -45,7 +45,7 @@
 }
 
 .ParcelTags .tag-icon-road {
-  background-color: #5c5b70;
+  background-color: #716c7a;
   background-image: url('../../images/road-icon.svg');
 }
 
@@ -54,12 +54,12 @@
   background-size: 70%;
 }
 .ParcelTags .tag-icon-plaza {
-  background-color: #61926c;
+  background-color: #70ac76;
   background-image: url('../../images/plaza-icon.svg');
 }
 
 .ParcelTags .tag-icon-district {
-  background-color: #83428f;
+  background-color: #5054d4;
   background-image: url('../../images/district-icon.svg');
 }
 

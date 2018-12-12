@@ -148,6 +148,7 @@ export function getLabel(type, asset, districts) {
       return asset.data.name || null
     }
     case TYPES.unowned:
+      return t('atlas.available_at_auction')
     case TYPES.background:
     default:
       return null
@@ -161,9 +162,8 @@ export function getDescription(type, asset) {
     case TYPES.contribution:
     case TYPES.plaza:
     case TYPES.roads:
-      return null
     case TYPES.unowned:
-      return t('atlas.no_owner')
+      return null
     case TYPES.myParcels:
     case TYPES.myParcelsOnSale:
       return t('atlas.your_parcel')

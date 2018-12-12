@@ -95,6 +95,7 @@
     "update_asset": "Actualizar la publicación {asset_name}"
   },
   "atlas": {
+    "available_at_auction": "Disponible en subasta",
     "loading": "Cargando",
     "no_owner": "Sin Dueño",
     "on_sale": "En Venta: ",

@@ -97,6 +97,7 @@
     "update_asset": "Mise à jour de la publication {asset_name}"
   },
   "atlas": {
+    "available_at_auction": "Disponible aux enchères",
     "loading": "Chargement",
     "no_owner": "Aucun propriétaire",
     "on_sale": "A vendre: ",

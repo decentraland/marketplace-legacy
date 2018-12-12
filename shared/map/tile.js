@@ -22,54 +22,54 @@ export const COLORS = Object.freeze({
   myParcelsOnSale: '#ff4053',
   myEstates: '#ff9990',
   myEstatesOnSale: '#ff4053',
-  district: '#83428f',
+  district: '#5054D4',
   contribution: '#563db8',
-  roads: '#5c5b70',
-  plaza: '#61926c',
-  taken: '#312d37',
+  roads: '#716C7A',
+  plaza: '#70AC76',
+  taken: '#3D3A46',
   onSale: '#00d3ff',
-  unowned: '#09080a',
+  unowned: '#09080A',
   background: '#18141a',
   loadingEven: '#110e13',
   loadingOdd: '#0d0b0e'
 })
 
-export function getColor(x, y, parcel, estates, publications, wallet) {
+export function getColor(x, y, parcel, estates, publications, wallet, colors) {
   const type = getType(parcel, estates, publications, wallet)
-  return getColorByType(type, x, y)
+  return getColorByType(type, x, y, colors)
 }
 
-export function getColorByType(type, x, y) {
+export function getColorByType(type, x, y, colors = COLORS) {
   switch (type) {
     case TYPES.loading: {
       const isEven = (x + y) % 2 === 0
-      return isEven ? COLORS.loadingEven : COLORS.loadingOdd
+      return isEven ? colors.loadingEven : colors.loadingOdd
     }
     case TYPES.myParcels:
-      return COLORS.myParcels
+      return colors.myParcels
     case TYPES.myParcelsOnSale:
-      return COLORS.myParcelsOnSale
+      return colors.myParcelsOnSale
     case TYPES.myEstates:
-      return COLORS.myParcels
+      return colors.myParcels
     case TYPES.myEstatesOnSale:
-      return COLORS.myParcelsOnSale
+      return colors.myParcelsOnSale
     case TYPES.district:
-      return COLORS.district
+      return colors.district
     case TYPES.contribution:
-      return COLORS.contribution
+      return colors.contribution
     case TYPES.roads:
-      return COLORS.roads
+      return colors.roads
     case TYPES.plaza:
-      return COLORS.plaza
+      return colors.plaza
     case TYPES.taken:
-      return COLORS.taken
+      return colors.taken
     case TYPES.onSale:
-      return COLORS.onSale
+      return colors.onSale
     case TYPES.unowned:
-      return COLORS.unowned
+      return colors.unowned
     case TYPES.background:
     default:
-      return COLORS.background
+      return colors.background
   }
 }
 

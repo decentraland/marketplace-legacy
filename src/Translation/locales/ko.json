@@ -94,6 +94,7 @@
     "update_asset": "{asset_name} 출판물 업데이트"
   },
   "atlas": {
+    "available_at_auction": "경매에서 사용 가능",
     "loading": "로드 중",
     "no_owner": "소유자 없음",
     "on_sale": "판매 중 :",

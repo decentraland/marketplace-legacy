@@ -87,6 +87,7 @@
     "update_asset": "更新 {asset_name} 发布"
   },
   "atlas": {
+    "available_at_auction": "拍卖会上有售",
     "loading": "载入中",
     "no_owner": "无主地",
     "on_sale": "出售中：",

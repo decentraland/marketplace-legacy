@@ -19,7 +19,8 @@ import {
   getMapAsset,
   getType,
   getColorByType,
-  TYPES
+  TYPES,
+  COLORS
 } from 'shared/map'
 import { Map as MapRenderer } from 'shared/map/render'
 import { isParcel } from 'shared/parcel'
@@ -142,6 +143,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
     this.cache = {}
     this.popupTimeout = null
+    this.interval = null
   }
 
   getDimensions({ width, height }, { pan, zoom, center, size }) {
@@ -272,6 +274,10 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.removeEventListener('mousemove', this.handleMouseMove)
     this.canvas.removeEventListener('mouseout', this.handleMouseOut)
     this.mounted = false
+    if (this.interval) {
+      clearInterval(this.interval)
+      this.interval = null
+    }
   }
 
   handleChange = () => {
@@ -500,7 +506,15 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height, parcels, publications, wallet, estates } = this.props
+    const {
+      width,
+      height,
+      parcels,
+      publications,
+      wallet,
+      estates,
+      getColors
+    } = this.props
 
     const { nw, se, pan, size, center } = this.state
     const ctx = this.canvas.getContext('2d')
@@ -518,7 +532,8 @@ export default class ParcelPreview extends React.PureComponent {
       estates,
       publications,
       selected: this.getSelected(),
-      wallet
+      wallet,
+      colors: typeof getColors === 'function' ? getColors() : COLORS
     })
   }
 
