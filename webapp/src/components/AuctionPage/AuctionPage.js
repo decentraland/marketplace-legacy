@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
+import { COLORS } from 'shared/map'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelCoords from 'components/ParcelCoords'
 import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
@@ -39,6 +40,12 @@ import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
+
+const AUCTION_COLORS = {
+  ...COLORS,
+  unowned: COLORS.onSale,
+  onSale: COLORS.taken
+}
 
 import './AuctionPage.css'
 
@@ -90,6 +97,10 @@ export default class AuctionPage extends React.PureComponent {
     if (isConnected) {
       this.handleConnect()
     }
+  }
+
+  getColors = () => {
+    return AUCTION_COLORS
   }
 
   componentWillReceiveProps(nextProps) {
@@ -356,6 +367,7 @@ export default class AuctionPage extends React.PureComponent {
             showControls={false}
             showMinimap={true}
             onClick={this.handleSelectUnownedParcel}
+            getColors={this.getColors}
           />
         </div>
 
