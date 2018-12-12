@@ -20,6 +20,7 @@ export class Atlas extends Model {
     'x',
     'y',
     'district_id',
+    'estate_id',
     'owner',
     'price',
     'label',
@@ -87,7 +88,7 @@ export class Atlas extends Model {
     return restAtlas.concat(districtAtlas).concat(ownerAtlas)
   }
 
-  // TODO: Move to ParcelCoordinates and use in Parcel.inRange
+  // TODO: Move to ParcelCoordinates and use in Parcel.inRange too
   static getBetweenCoordinatesSQL(topLeft, bottomRight) {
     if (topLeft == null || bottomRight == null) {
       return SQL`1 = 1`
@@ -170,6 +171,7 @@ export class Atlas extends Model {
     return {
       price,
       type,
+      estate_id: parcel.estate_id,
       asset_type: inEstate ? ASSET_TYPES.estate : ASSET_TYPES.parcel,
       owner: inEstate ? estate.owner : parcel.owner,
       label: parcelReference.getLabelByType(type),

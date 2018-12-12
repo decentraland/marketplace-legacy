@@ -15,11 +15,14 @@ import Routes from './Routes'
 import { getAvailableLocales } from './lib/translation'
 import { track } from './modules/analytics/track'
 
-import './rollbar'
 import './index.css'
 
 env.load()
 track()
+
+if (!env.isDevelopment()) {
+  require('./rollbar')
+}
 
 ReactDOM.render(
   <Provider store={store}>

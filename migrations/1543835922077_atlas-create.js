@@ -10,6 +10,7 @@ exports.up = pgm => {
       id: { type: 'TEXT', primaryKey: true, notNull: true },
       x: { type: 'INT', notNull: true },
       y: { type: 'INT', notNull: true },
+      estate_id: 'TEXT',
       district_id: 'TEXT',
       owner: 'TEXT',
       price: 'DECIMAL',

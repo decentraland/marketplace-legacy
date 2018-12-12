@@ -33,7 +33,6 @@ export default class Asset extends React.PureComponent {
     super(props)
     this.shouldRefresh = false
     this.isNavigatingAway = false
-    this.oldValue = null
   }
 
   componentWillMount() {
@@ -41,15 +40,14 @@ export default class Asset extends React.PureComponent {
     if (value || isLoading) {
       return
     }
-    console.log('componentWillMount')
     onFetchAsset()
   }
 
   componentWillReceiveProps(nextProps) {
     const {
+      id,
       value,
       isConnecting,
-      isLoaded,
       isLoading,
       ownerOnly,
       wallet,
@@ -57,20 +55,18 @@ export default class Asset extends React.PureComponent {
       withPublications
     } = nextProps
 
+    if (isConnecting || isLoading) {
+      return
+    }
+
+    if (this.props.id !== id) {
+      this.shouldRefresh = true
+    }
+
     const ownerIsNotAllowed =
       ownerNotAllowed && value && isOwner(wallet, value.id)
     const assetShouldBeOnSale =
       withPublications && value && !value['publication_tx_hash']
-
-    if (!isLoaded && isLoading) {
-      this.shouldRefresh = true
-    } else {
-      this.oldValue = value
-    }
-
-    if (isConnecting || isLoading) {
-      return
-    }
 
     if (ownerOnly) {
       this.checkOwnership(wallet, value.id)
@@ -79,16 +75,12 @@ export default class Asset extends React.PureComponent {
     if (ownerIsNotAllowed || assetShouldBeOnSale) {
       this.redirect()
     }
-    if (this.props.value && value && this.props.value.id !== value.id) {
-      this.shouldRefresh = true
-      this.oldValue = value
-    }
   }
 
   componentDidUpdate() {
     if (this.shouldRefresh) {
-      this.shouldRefresh = false
       this.props.onFetchAsset()
+      this.shouldRefresh = false
     }
   }
 
@@ -97,10 +89,9 @@ export default class Asset extends React.PureComponent {
   }
 
   redirect() {
-    const { onAccessDenied } = this.props
     if (!this.isNavigatingAway) {
       this.isNavigatingAway = true
-      return onAccessDenied()
+      return this.props.onAccessDenied()
     }
   }
 
@@ -133,9 +124,7 @@ export default class Asset extends React.PureComponent {
         this.isNavigatingAway ||
         isLoading
       ) {
-        return this.oldValue ? (
-          this.renderChildren(this.oldValue)
-        ) : (
+        return (
           <div>
             <Loader active size="massive" />
           </div>

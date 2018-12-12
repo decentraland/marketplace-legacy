@@ -14,8 +14,9 @@ const mapState = (state, { match }) => {
 }
 
 const mapDispatch = dispatch => ({
-  onAssetClick: ({ asset }) =>
-    dispatch(navigateTo(locations.assetDetail(asset)))
+  onAssetClick: ({ asset, assetType }) => {
+    dispatch(navigateTo(locations.assetDetail(asset, assetType)))
+  }
 })
 
 export default withRouter(connect(mapState, mapDispatch)(AssetDetailPage))

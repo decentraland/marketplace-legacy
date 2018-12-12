@@ -52,7 +52,7 @@ export class MapRouter {
       nw = server.extractFromReq(req, 'nw')
       se = server.extractFromReq(req, 'se')
     } catch (_) {
-      // just use undefined
+      // keep undefined
     }
 
     try {
@@ -66,6 +66,7 @@ export class MapRouter {
     const map = {}
     for (const row of atlas) {
       map[row.id] = {
+        id: row.estate_id || row.id,
         x: row.x,
         y: row.y,
         assetType: row.asset_type,

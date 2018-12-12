@@ -355,7 +355,8 @@ export default class ParcelPreview extends React.PureComponent {
       //     break
       // }
 
-      // TODO: This is cheating, we need to rename this props. It works because the props used are present on atlasPlace
+      // TODO: This is cheating, we need to rename the `asset` prop here.
+      // It works because the props used are present on atlasPlace
       onClick({ assetType: atlasPlace.assetType, asset: atlasPlace, x, y })
     }
   }
