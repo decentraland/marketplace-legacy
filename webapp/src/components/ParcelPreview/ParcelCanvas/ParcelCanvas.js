@@ -254,7 +254,7 @@ export default class ParcelPreview extends React.PureComponent {
 
   componentDidMount() {
     this.renderMap()
-    const { isDraggable, getColors } = this.props
+    const { isDraggable } = this.props
     if (isDraggable) {
       this.destroy = panzoom(this.canvas, this.handlePanZoom)
     }
@@ -263,9 +263,6 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.addEventListener('mousemove', this.handleMouseMove)
     this.canvas.addEventListener('mouseout', this.handleMouseOut)
     this.mounted = true
-    if (typeof getColors === 'function') {
-      this.interval = setInterval(() => this.renderMap(), 16)
-    }
   }
 
   componentWillUnmount() {
