@@ -251,6 +251,7 @@
     "re-enter": "確認のために価格を再入力してください"
   },
   "footer": {
+    "code_of_ethics": "倫理規定",
     "color_key": "カラーガイド",
     "copyright": "© 2018 Decentraland. All rights reserved.",
     "mini_copyright": "© 2018 Decentraland.",

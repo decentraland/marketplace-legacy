@@ -240,6 +240,7 @@
     "re-enter": "请重新输入价格进行确认"
   },
   "footer": {
+    "code_of_ethics": "道德准则",
     "color_key": "图示",
     "copyright": "© 2018 Decentraland。保留所有权利。",
     "mini_copyright": "© 2018 Decentraland.",

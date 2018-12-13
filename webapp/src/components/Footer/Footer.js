@@ -66,6 +66,13 @@ export default class Footer extends React.PureComponent {
             >
               {t('footer.terms')}
             </a>
+            <a
+              href="https://decentraland.org/ethics"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {t('footer.code_of_ethics')}
+            </a>
           </div>
           <div className="social-icons">
             <a

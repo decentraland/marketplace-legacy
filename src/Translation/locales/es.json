@@ -259,6 +259,7 @@
     "re-enter": "Por favor, vuelva a introducir el precio para confirmar"
   },
   "footer": {
+    "code_of_ethics": "Código de Ética",
     "color_key": "Mapa de Colores",
     "copyright": "© 2018 Decentraland. Todos los derechos reservados.",
     "mini_copyright": "© 2018 Decentraland.",
