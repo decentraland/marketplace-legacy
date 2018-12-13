@@ -18,16 +18,16 @@ export default class AssetDetailPage extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      nextId: props.id,
-      nextAssetType: props.assetType
+      isLoadingNextAsset: false
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ isLoadingNextAsset: false })
+  }
+
   handleAssetClick = ({ asset, assetType }) => {
-    this.setState({
-      nextId: asset.id,
-      nextAssetType: assetType
-    })
+    this.setState({ isLoadingNextAsset: true })
     this.props.onAssetClick(asset, assetType)
   }
 
@@ -53,7 +53,7 @@ export default class AssetDetailPage extends React.PureComponent {
   }
 
   renderDetailPage(asset) {
-    if (!asset || this.isLoadingNextAsset(asset)) {
+    if (!asset || this.state.isLoadingNextAsset) {
       return this.renderLoading()
     }
 
@@ -76,12 +76,6 @@ export default class AssetDetailPage extends React.PureComponent {
         break
     }
     return <DetailPage />
-  }
-
-  isLoadingNextAsset(asset) {
-    const { assetType } = this.props
-    const { nextId, nextAssetType } = this.state
-    return asset.id !== nextId || assetType !== nextAssetType
   }
 
   render() {
