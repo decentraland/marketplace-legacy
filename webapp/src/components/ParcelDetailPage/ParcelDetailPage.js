@@ -32,7 +32,7 @@ export default class ParcelDetailPage extends React.PureComponent {
     return (
       <div className="ParcelDetailPage">
         <Parcel x={x} y={y}>
-          {(parcel, isOwner, wallet) => (
+          {(parcel, { isOwner, wallet }) => (
             <ParcelDetail
               wallet={wallet}
               parcel={parcel}

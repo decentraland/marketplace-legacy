@@ -32,7 +32,7 @@ export default class EstateDetailPage extends React.PureComponent {
 
     return (
       <Estate id={id}>
-        {(estate, isOwner) => (
+        {(estate, { isOwner }) => (
           <EstateDetail
             estate={estate}
             publications={publications}

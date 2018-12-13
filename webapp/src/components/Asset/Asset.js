@@ -126,6 +126,6 @@ export default class Asset extends React.PureComponent {
         return <NotFound />
       }
     }
-    return children(value, isOwner(wallet, value.id), wallet)
+    return children(value, { isOwner: isOwner(wallet, value.id), wallet })
   }
 }

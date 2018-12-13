@@ -52,7 +52,7 @@ export default class AssetDetailPage extends React.PureComponent {
     )
   }
 
-  renderDetailPage(asset) {
+  renderDetailPage(asset, attributes) {
     if (!asset || this.state.isLoadingNextAsset) {
       return this.renderLoading()
     }
@@ -75,23 +75,23 @@ export default class AssetDetailPage extends React.PureComponent {
         DetailPage = EstateDetailPage
         break
     }
-    return <DetailPage />
+    return <DetailPage {...attributes} />
   }
 
   render() {
     const { id, assetType } = this.props
     return (
       <AssetLoader id={id} assetType={assetType}>
-        {asset =>
+        {(asset, attributes) =>
           this.hasPreviewHeader(asset, assetType) ? (
             <AssetPreviewHeader
               asset={asset}
               onAssetClick={this.handleAssetClick}
             >
-              {this.renderDetailPage(asset)}
+              {this.renderDetailPage(asset, attributes)}
             </AssetPreviewHeader>
           ) : (
-            this.renderDetailPage(asset)
+            this.renderDetailPage(asset, attributes)
           )
         }
       </AssetLoader>
