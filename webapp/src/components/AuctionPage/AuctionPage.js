@@ -44,7 +44,7 @@ import Token from './Token'
 const AUCTION_COLORS = {
   ...COLORS,
   unowned: COLORS.onSale,
-  onSale: COLORS.taken
+  onSale: `#306D90`
 }
 
 import './AuctionPage.css'
