@@ -15,18 +15,13 @@ import ParcelCoords from 'components/ParcelCoords'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType } from 'components/types'
-import { isOwner } from 'shared/asset'
+import { ASSET_TYPES, isOwner } from 'shared/asset'
 import {
   getParcelMatcher,
   isEqualCoords,
   getParcelsNotIncluded
 } from 'shared/parcel'
-import {
-  hasNeighbour,
-  areConnected,
-  isEstate,
-  MAX_PARCELS_PER_TX
-} from 'shared/estate'
+import { hasNeighbour, areConnected, MAX_PARCELS_PER_TX } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
 import EstateSelectActions from './EstateSelectActions'
 import './EstateSelect.css'
@@ -47,8 +42,9 @@ export default class EstateSelect extends React.PureComponent {
     onDeleteEstate: PropTypes.func.isRequired
   }
 
-  handleParcelClick = ({ asset, x, y }) => {
+  handleParcelClick = (atlasLocation, { x, y, assetType }) => {
     const { wallet } = this.props
+    const asset = atlasLocation // atlasLocation has enough props from the asset interface to make this work
 
     if (!isOwner(wallet, buildCoordinate(x, y)) && !isOwner(wallet, asset.id)) {
       return
@@ -57,7 +53,7 @@ export default class EstateSelect extends React.PureComponent {
     const { estate, onChange } = this.props
     const parcels = estate.data.parcels
 
-    if (isEstate(asset) && asset.id !== estate.id) {
+    if (assetType === ASSET_TYPES.estate && asset.id !== estate.id) {
       return
     }
 

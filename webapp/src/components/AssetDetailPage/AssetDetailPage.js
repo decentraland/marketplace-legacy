@@ -75,7 +75,7 @@ export default class AssetDetailPage extends React.PureComponent {
         DetailPage = EstateDetailPage
         break
     }
-    return <DetailPage {...attributes} />
+    return <DetailPage asset={asset} {...attributes} />
   }
 
   render() {
