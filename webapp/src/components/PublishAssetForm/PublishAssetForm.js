@@ -111,7 +111,7 @@ export default class PublishAssetForm extends React.PureComponent {
       onPublish({
         asset_id: asset.id,
         expires_at: this.toUTCTimestamp(expiresAt),
-        price: parseFloat(price)
+        price: parseInt(price)
       })
     } else {
       this.setState({ formErrors })

@@ -259,6 +259,11 @@
     "tx_to_be_send":
       "Vous allez envoyer une transaction pour {action} les parcelles: {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "Vous allez publier le {asset_name} pour {price}",
+    "error": "Les prix ne correspondent pas",
+    "re-enter": "Veuillez ré-entrer le prix pour confirmer"
+  },
   "footer": {
     "color_key": "Code Couleur",
     "copyright": "© 2018 Decentraland. Tous droits reservés.",

@@ -51,8 +51,8 @@ export default class PublishPage extends React.PureComponent {
     return (
       <Parcel x={x} y={y} ownerOnly>
         {parcel => {
-          const { approvals } = authorization
-          const isMarketplaceApproved = approvals.Marketplace.LANDRegistry
+          const isMarketplaceApproved =
+            authorization && authorization.approvals.Marketplace.LANDRegistry
           const isOnSale = isOpen(publication)
           return (
             <div className="PublishPage">

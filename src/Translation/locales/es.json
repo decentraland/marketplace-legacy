@@ -253,6 +253,11 @@
     "new_selection": "Seleccione las parcelas en el mapa para su nueva finca",
     "tx_to_be_send": "Enviarás una transacción a {action} parcels: {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "Vas a publicar el {asset_name} por {price}",
+    "error": "Los precios no coinciden",
+    "re-enter": "Por favor, vuelva a introducir el precio para confirmar"
+  },
   "footer": {
     "color_key": "Mapa de Colores",
     "copyright": "© 2018 Decentraland. Todos los derechos reservados.",

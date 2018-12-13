@@ -11,6 +11,7 @@ import {
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { publishRequest } from 'modules/publication/actions'
+import { openModal } from 'modules/ui/actions'
 import { ASSET_TYPES } from 'shared/asset'
 
 import PublishEstatePage from './PublishEstatePage'
@@ -40,7 +41,14 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     onPublish: publication =>
       dispatch(
-        publishRequest({ ...publication, asset_type: ASSET_TYPES.estate })
+        openModal('FatfingerModal', {
+          onSubmit: () =>
+            dispatch(
+              publishRequest({ ...publication, asset_type: ASSET_TYPES.estate })
+            ),
+          assetType: ASSET_TYPES.estate,
+          priceToConfirm: publication.price
+        })
       ),
     onCancel: () => dispatch(push(locations.estateDetail(id)))
   }

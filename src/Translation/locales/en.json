@@ -251,6 +251,11 @@
     "tx_to_be_send":
       "You will send a transaction to {action} parcels: {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "You are going to publish the {asset_name} for {price}",
+    "error": "Prices don't match",
+    "re-enter": "Please re-enter the price to confirm"
+  },
   "footer": {
     "color_key": "Color Key",
     "copyright": "© 2018 Decentraland. All rights reserved.",
