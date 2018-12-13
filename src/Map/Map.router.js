@@ -72,9 +72,9 @@ export class MapRouter {
         assetType: row.asset_type,
         type: row.type,
         color: row.color,
-        left: row.is_connected_left ? 1 : 0,
-        top: row.is_connected_top ? 1 : 0,
-        topLeft: row.is_connected_topleft ? 1 : 0
+        left: row.is_connected_left,
+        top: row.is_connected_top,
+        topLeft: row.is_connected_topleft
       }
       if (row.owner) map[row.id].owner = row.owner
       if (row.price) map[row.id].price = row.price

@@ -12,8 +12,8 @@ import ParcelCanvas from './ParcelCanvas'
 
 export const mapState = state => ({
   isConnecting: isConnecting(state),
-  // wallet: getWallet(state),
   atlas: getAtlas(state)
+  // wallet: getWallet(state),
   // parcels: getParcels(state),
   // estates: getEstates(state),
   // districts: getDistricts(state),

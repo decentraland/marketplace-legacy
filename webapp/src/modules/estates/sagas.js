@@ -12,26 +12,26 @@ import { eth } from 'decentraland-eth'
 import { locations } from 'locations'
 import {
   CREATE_ESTATE_REQUEST,
-  createEstateSuccess,
-  createEstateFailure,
   FETCH_ESTATE_REQUEST,
-  fetchEstateSuccess,
-  fetchEstateFailure,
   EDIT_ESTATE_PARCELS_REQUEST,
-  editEstateParcelsSuccess,
-  editEstateParcelsFailure,
   EDIT_ESTATE_METADATA_REQUEST,
-  editEstateMetadataSuccess,
-  editEstateMetadataFailure,
   ADD_PARCELS,
   REMOVE_PARCELS,
   DELETE_ESTATE_REQUEST,
+  TRANSFER_ESTATE_REQUEST,
+  FETCH_ESTATE_SUCCESS,
+  createEstateSuccess,
+  createEstateFailure,
+  fetchEstateSuccess,
+  fetchEstateFailure,
+  editEstateParcelsSuccess,
+  editEstateParcelsFailure,
+  editEstateMetadataSuccess,
+  editEstateMetadataFailure,
   deleteEstateSuccess,
   deleteEstateFailure,
-  TRANSFER_ESTATE_REQUEST,
   transferEstateSuccess,
-  transferEstateFailure,
-  FETCH_ESTATE_SUCCESS
+  transferEstateFailure
 } from 'modules/estates/actions'
 import { getEstates, areParcelsLoaded } from 'modules/estates/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'

@@ -6,6 +6,9 @@ import { walletType } from 'components/types'
 import NotFound from 'components/NotFound'
 import { isOwner } from 'shared/asset'
 
+let shouldRefresh = false
+let isNavigatingAway = false
+
 export default class Asset extends React.PureComponent {
   static propTypes = {
     wallet: walletType.isRequired,
@@ -27,12 +30,6 @@ export default class Asset extends React.PureComponent {
     withPublications: false,
     value: null,
     publication: null
-  }
-
-  constructor(props) {
-    super(props)
-    this.shouldRefresh = false
-    this.isNavigatingAway = false
   }
 
   componentWillMount() {
@@ -60,7 +57,7 @@ export default class Asset extends React.PureComponent {
     }
 
     if (this.props.id !== id) {
-      this.shouldRefresh = true
+      shouldRefresh = true
     }
 
     const ownerIsNotAllowed =
@@ -78,19 +75,19 @@ export default class Asset extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    if (this.shouldRefresh) {
+    if (shouldRefresh) {
       this.props.onFetchAsset()
-      this.shouldRefresh = false
+      shouldRefresh = false
     }
   }
 
   componentWillUnmount() {
-    this.isNavigatingAway = false
+    isNavigatingAway = false
   }
 
   redirect() {
-    if (!this.isNavigatingAway) {
-      this.isNavigatingAway = true
+    if (!isNavigatingAway) {
+      isNavigatingAway = true
       return this.props.onAccessDenied()
     }
   }
@@ -101,19 +98,15 @@ export default class Asset extends React.PureComponent {
     }
   }
 
-  renderChildren(value) {
-    const { wallet, children } = this.props
-
-    return children(value, isOwner(wallet, value.id), wallet)
-  }
-
   render() {
     const {
       value,
       isConnecting,
       ownerOnly,
       ownerNotAllowed,
-      isLoading
+      isLoading,
+      wallet,
+      children
     } = this.props
 
     if (!value || isLoading) {
@@ -121,7 +114,7 @@ export default class Asset extends React.PureComponent {
 
       if (
         (shouldBeConnected && isConnecting) ||
-        this.isNavigatingAway ||
+        isNavigatingAway ||
         isLoading
       ) {
         return (
@@ -133,6 +126,6 @@ export default class Asset extends React.PureComponent {
         return <NotFound />
       }
     }
-    return this.renderChildren(value)
+    return children(value, isOwner(wallet, value.id), wallet)
   }
 }

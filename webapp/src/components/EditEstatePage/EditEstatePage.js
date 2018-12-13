@@ -40,7 +40,7 @@ export default class EditEstatePage extends React.PureComponent {
     }
     return (
       <Estate id={id}>
-        {(estate, _, wallet) => this.renderEditEstate(estate, wallet)}
+        {(estate, wallet) => this.renderEditEstate(estate, wallet)}
       </Estate>
     )
   }

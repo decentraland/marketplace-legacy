@@ -2,17 +2,33 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 
-import { ASSET_TYPES } from 'shared/asset'
 import AssetLoader from 'components/AssetLoader'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import EstateDetailPage from 'components/EstateDetailPage'
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
+import { ASSET_TYPES } from 'shared/asset'
 import './AssetDetailPage.css'
 
 export default class AssetDetailPage extends React.PureComponent {
   static propTypes = {
     assetType: PropTypes.string.isRequired,
     onAssetClick: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      nextId: props.id,
+      nextAssetType: props.assetType
+    }
+  }
+
+  handleAssetClick = ({ asset, assetType }) => {
+    this.setState({
+      nextId: asset.id,
+      nextAssetType: assetType
+    })
+    this.props.onAssetClick(asset, assetType)
   }
 
   hasPreviewHeader(asset, assetType) {
@@ -28,13 +44,17 @@ export default class AssetDetailPage extends React.PureComponent {
     }
   }
 
+  renderLoading() {
+    return (
+      <div className="asset-detail-loading">
+        <Loader active size="massive" />
+      </div>
+    )
+  }
+
   renderDetailPage(asset) {
-    if (!asset) {
-      return (
-        <div>
-          <Loader active size="massive" />
-        </div>
-      )
+    if (!asset || this.isLoadingNextAsset(asset)) {
+      return this.renderLoading()
     }
 
     const { assetType } = this.props
@@ -58,13 +78,22 @@ export default class AssetDetailPage extends React.PureComponent {
     return <DetailPage />
   }
 
+  isLoadingNextAsset(asset) {
+    const { assetType } = this.props
+    const { nextId, nextAssetType } = this.state
+    return asset.id !== nextId || assetType !== nextAssetType
+  }
+
   render() {
-    const { id, assetType, onAssetClick } = this.props
+    const { id, assetType } = this.props
     return (
       <AssetLoader id={id} assetType={assetType}>
         {asset =>
           this.hasPreviewHeader(asset, assetType) ? (
-            <AssetPreviewHeader asset={asset} onAssetClick={onAssetClick}>
+            <AssetPreviewHeader
+              asset={asset}
+              onAssetClick={this.handleAssetClick}
+            >
               {this.renderDetailPage(asset)}
             </AssetPreviewHeader>
           ) : (

@@ -10,8 +10,7 @@ import {
 import {
   getEstates,
   isFetchingEstate,
-  isHiddenEstate,
-  areParcelsLoaded
+  isHiddenEstate
 } from 'modules/estates/selectors'
 import { fetchEstateRequest } from 'modules/estates/actions'
 import { ASSET_TYPES } from 'shared/asset'
@@ -27,14 +26,12 @@ const mapState = (state, { id, assetType }) => {
     case ASSET_TYPES.parcel:
       assets = getParcels(state)
       isLoaded = id in assets
-      isLoading = !isLoaded && isFetchingParcel(state)
+      isLoading = !isLoaded && isFetchingParcel(state) // TODO: Fetch by id?
       break
     case ASSET_TYPES.estate:
       assets = getEstates(state)
       isLoaded = id in assets
-      isLoading =
-        (!isLoaded && isFetchingEstate(state)) ||
-        (isLoaded && !areParcelsLoaded(state, { id }))
+      isLoading = !isLoaded && isFetchingEstate(state) // TODO: Fetch by id?
       isHidden = !isLoading && isHiddenEstate(state, { id })
       break
   }

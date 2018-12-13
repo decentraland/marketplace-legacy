@@ -16,12 +16,10 @@ export async function createAtlas() {
 
   const allParcels = await Parcel.find()
 
-  // TODO: Upsert data
-  await db.truncate(Atlas.tableName)
-
   await asyncBatch({
     elements: allParcels,
-    callback: parcels => Promise.all(parcels.map(Atlas.insertParcel)),
+    callback: parcels =>
+      Promise.all(parcels.map(parcel => Atlas.upsertParcel(parcel))),
     batchSize: env.get('BATCH_SIZE'),
     retryAttempts: 0
   })

@@ -32,8 +32,33 @@ export class Atlas extends Model {
     'is_connected_topleft'
   ]
 
-  static async insertParcel(parcel) {
-    return Atlas.insert(await Atlas.buildRow(parcel))
+  static async upsertParcel(parcel) {
+    const now = new Date()
+    const row = await this.buildRow(parcel)
+    const values = Object.values(row)
+
+    row.created_at = now
+    row.updated_at = now
+
+    console.log(
+      `INSERT INTO ${this.tableName}(
+       ${this.db.toColumnFields(row)}
+      ) VALUES(
+       ${this.db.toValuePlaceholders(row)}
+      ) ON CONFLICT (id) DO UPDATE SET
+        ${this.toAssignmentFields(row, values.length)};`,
+      values
+    )
+
+    return this.db.query(
+      `INSERT INTO ${this.tableName}(
+       ${this.db.toColumnFields(row)}
+      ) VALUES(
+       ${this.db.toValuePlaceholders(row)}
+      ) ON CONFLICT (id) DO UPDATE SET
+        ${this.toAssignmentFields(row, values.length)};`,
+      values
+    )
   }
 
   static async inRange(topLeft, bottomRight) {
@@ -126,9 +151,9 @@ export class Atlas extends Model {
   static async getConnections(parcel) {
     const parcelLocation = new ParcelLocation(parcel)
 
-    let is_connected_left = false
-    let is_connected_top = false
-    let is_connected_topleft = false
+    let is_connected_left = 0
+    let is_connected_top = 0
+    let is_connected_topleft = 0
 
     if (isEstate(parcel) || isDistrict(parcel)) {
       const { top, left, topLeft } = parcelLocation.getNeigbouringCoordinates()
@@ -137,9 +162,9 @@ export class Atlas extends Model {
         Parcel.findOne(left).then(parcelLocation.isConnected),
         Parcel.findOne(topLeft).then(parcelLocation.isConnected)
       ])
-      is_connected_top = connections[0]
-      is_connected_left = connections[1]
-      is_connected_topleft = connections[2]
+      is_connected_top = connections[0] ? 1 : 0
+      is_connected_left = connections[1] ? 1 : 0
+      is_connected_topleft = connections[2] ? 1 : 0
     }
 
     return { is_connected_left, is_connected_top, is_connected_topleft }

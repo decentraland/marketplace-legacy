@@ -18,9 +18,9 @@ exports.up = pgm => {
       type: { type: 'TEXT', notNull: true },
       color: { type: 'TEXT', notNull: true },
       asset_type: { type: 'TEXT', default: ASSET_TYPES.parcel, notNull: true },
-      is_connected_left: { type: 'BOOLEAN', default: false, notNull: true },
-      is_connected_top: { type: 'BOOLEAN', default: false, notNull: true },
-      is_connected_topleft: { type: 'BOOLEAN', default: false, notNull: true },
+      is_connected_left: { type: 'INT1', default: false, notNull: true },
+      is_connected_top: { type: 'INT1', default: false, notNull: true },
+      is_connected_topleft: { type: 'INT1', default: false, notNull: true },
       created_at: { type: 'TIMESTAMP', notNull: true },
       updated_at: 'TIMESTAMP'
     },
