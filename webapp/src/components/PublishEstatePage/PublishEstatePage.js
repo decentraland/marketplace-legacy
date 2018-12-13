@@ -50,8 +50,8 @@ export default class PublishEstatePage extends React.PureComponent {
     return (
       <Estate id={id} ownerOnly>
         {estate => {
-          const { approvals } = authorization
-          const isMarketplaceApproved = approvals.Marketplace.EstateRegistry
+          const isMarketplaceApproved =
+            authorization && authorization.approvals.Marketplace.EstateRegistry
           const isOnSale = isOpen(publication)
           return (
             <div className="PublishPage">

@@ -1,0 +1,32 @@
+.FatfingerModal {
+  color: var(--text);
+  text-align: center;
+}
+
+.FatfingerModal .title, .FatfingerModal .description, .FatfingerModal  .ui.form .field {
+  margin-bottom: 25px;
+}
+
+.FatfingerModal .ui.error.message {
+  margin-bottom: 30px;
+  margin-top: 0;
+}
+
+.FatfingerModal .description p{
+  font-size: 1em;
+  margin-bottom: 5px;
+}
+
+.FatfingerModal .modal-buttons button + button {
+  margin-left: 15px !important;
+}
+
+@media(min-width: 768px) {
+  .FatfingerModal .modal-body {
+    width: 600px;
+  }
+  
+  .FatfingerModal .description p{
+    font-size: 1.2em;
+  }
+}

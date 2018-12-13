@@ -249,6 +249,11 @@
     "tx_to_be_send":
       "다음과 같이 트랜잭션을 {action} 소포로 보냅니다. {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "{price}에 대한 {asset_name}을 게시하려고합니다.",
+    "error": "가격이 일치하지 않습니다.",
+    "re-enter": "확인을 위해 가격을 다시 입력하십시오."
+  },
   "footer": {
     "color_key": "색상 키",
     "copyright": "© 2018 Decentraland. 판권 소유.",

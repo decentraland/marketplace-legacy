@@ -245,6 +245,11 @@
     "new_selection": "新しいエステートの区画を地図から選択してください。",
     "tx_to_be_send": "トランザクションを{action}した区画{parcels}へ送信します。"
   },
+  "fatfinger_modal": {
+    "description": "{price}の{asset_name}を公開する予定です",
+    "error": "価格は一致しません",
+    "re-enter": "確認のために価格を再入力してください"
+  },
   "footer": {
     "color_key": "カラーガイド",
     "copyright": "© 2018 Decentraland. All rights reserved.",
