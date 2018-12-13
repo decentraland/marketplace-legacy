@@ -12,6 +12,7 @@ export default class EstateDetailPage extends React.PureComponent {
     id: PropTypes.string,
     publications: PropTypes.objectOf(publicationType).isRequired,
     allParcels: PropTypes.objectOf(parcelType),
+    isLoadingEstateParcels: PropTypes.bool.isRequired,
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
     onManageEstate: PropTypes.func.isRequired
@@ -22,11 +23,13 @@ export default class EstateDetailPage extends React.PureComponent {
       id,
       publications,
       allParcels,
+      isLoadingEstateParcels,
       onEditParcels,
       onEditMetadata,
       onManageEstate,
       onParcelClick
     } = this.props
+
     return (
       <Estate id={id}>
         {(estate, isOwner) => (
@@ -34,6 +37,7 @@ export default class EstateDetailPage extends React.PureComponent {
             estate={estate}
             publications={publications}
             allParcels={allParcels}
+            isLoadingEstateParcels={isLoadingEstateParcels}
             isOwner={isOwner}
             onEditParcels={onEditParcels}
             onEditMetadata={onEditMetadata}

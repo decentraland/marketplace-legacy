@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Icon, Header, Grid, Button } from 'semantic-ui-react'
+import { Loader, Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
@@ -28,6 +28,7 @@ export default class EstateDetail extends React.PureComponent {
     estate: estateType.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
     allParcels: PropTypes.objectOf(parcelType),
+    isLoadingEstateParcels: PropTypes.bool,
     isOwner: PropTypes.bool.isRequired,
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
@@ -51,9 +52,7 @@ export default class EstateDetail extends React.PureComponent {
     return (
       <div className="EstateDetail empty">
         <span className="empty-estate-message">
-          {t('estate_detail.empty_estate', {
-            name: estate.data.name
-          })}
+          {t('estate_detail.empty_estate', { name: estate.data.name })}
         </span>
       </div>
     )
@@ -63,8 +62,9 @@ export default class EstateDetail extends React.PureComponent {
     const {
       estate,
       publications,
-      isOwner,
       allParcels,
+      isLoadingEstateParcels,
+      isOwner,
       onEditParcels,
       onEditMetadata,
       onManageEstate,
@@ -213,10 +213,14 @@ export default class EstateDetail extends React.PureComponent {
                   </h3>
                 </Grid.Column>
                 <Grid.Column width={WITHOUT_ACTION_BUTTONS_WIDTH}>
-                  <ParcelCoords
-                    parcels={this.getEstateParcels()}
-                    onClick={onParcelClick}
-                  />
+                  {isLoadingEstateParcels ? (
+                    <Loader active size="small" />
+                  ) : (
+                    <ParcelCoords
+                      parcels={this.getEstateParcels()}
+                      onClick={onParcelClick}
+                    />
+                  )}
                 </Grid.Column>
               </React.Fragment>
             )}

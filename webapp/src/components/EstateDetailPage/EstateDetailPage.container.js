@@ -5,6 +5,7 @@ import { locations } from 'locations'
 import { getMatchParams } from 'modules/location/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
+import { areParcelsLoaded } from 'modules/estates/selectors'
 import { navigateTo } from '@dapps/modules/location/actions'
 
 import EstateDetailPage from './EstateDetailPage'
@@ -15,7 +16,8 @@ const mapState = (state, ownProps) => {
   return {
     id,
     publications: getPublications(state),
-    allParcels: getParcels(state)
+    allParcels: getParcels(state),
+    isLoadingEstateParcels: !areParcelsLoaded(state, { id })
   }
 }
 
