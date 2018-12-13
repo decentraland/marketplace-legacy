@@ -252,6 +252,7 @@
       "You will send a transaction to {action} parcels: {parcels}"
   },
   "footer": {
+    "code_of_ethics": "Code of Ethics",
     "color_key": "Color Key",
     "copyright": "© 2018 Decentraland. All rights reserved.",
     "mini_copyright": "© 2018 Decentraland.",

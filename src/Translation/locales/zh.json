@@ -235,6 +235,7 @@
     "tx_to_be_send": "您将向 {action} 土块发送交易：{parcels}"
   },
   "footer": {
+    "code_of_ethics": "道德准则",
     "color_key": "图示",
     "copyright": "© 2018 Decentraland。保留所有权利。",
     "mini_copyright": "© 2018 Decentraland.",

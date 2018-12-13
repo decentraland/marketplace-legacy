@@ -260,6 +260,7 @@
       "Vous allez envoyer une transaction pour {action} les parcelles: {parcels}"
   },
   "footer": {
+    "code_of_ethics": "Code d'éthique",
     "color_key": "Code Couleur",
     "copyright": "© 2018 Decentraland. Tous droits reservés.",
     "mini_copyright": "© 2018 Decentraland.",

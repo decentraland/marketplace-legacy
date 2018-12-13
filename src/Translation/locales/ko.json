@@ -250,6 +250,7 @@
       "다음과 같이 트랜잭션을 {action} 소포로 보냅니다. {parcels}"
   },
   "footer": {
+    "code_of_ethics": "윤리 강령",
     "color_key": "색상 키",
     "copyright": "© 2018 Decentraland. 판권 소유.",
     "mini_copyright": "© 2018 Decentraland.",

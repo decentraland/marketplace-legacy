@@ -246,6 +246,7 @@
     "tx_to_be_send": "トランザクションを{action}した区画{parcels}へ送信します。"
   },
   "footer": {
+    "code_of_ethics": "倫理規定",
     "color_key": "カラーガイド",
     "copyright": "© 2018 Decentraland. All rights reserved.",
     "mini_copyright": "© 2018 Decentraland.",

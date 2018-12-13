@@ -32,6 +32,7 @@
 
 .Footer .footer-column.right {
   align-items: flex-end;
+  padding-left: 0;
 }
 
 .Footer .links {
@@ -39,9 +40,10 @@
 }
 
 .Footer .links a {
-  margin-right: 27px;
+  margin-right: 15px;
   color: var(--footer-text);
 }
+
 .Footer .links a:last-child {
   margin-right: 0;
 }
