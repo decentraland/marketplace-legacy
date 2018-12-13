@@ -36,8 +36,8 @@ const mapDispatch = (dispatch, { location }) => ({
   onLoading: () => dispatch(setLoading(true)),
   onChange: (x, y) =>
     dispatch(push(locations.parcelMapDetail(x, y, getMarker(location)))),
-  onSelect: ({ asset, assetType }) =>
-    dispatch(push(locations.assetDetail(asset, assetType)))
+  onSelect: (atlasLocation, { assetType }) =>
+    dispatch(push(locations.assetDetail(atlasLocation, assetType))) // atlasLocation has enough props from the asset interface to make this work
 })
 
 export default withRouter(connect(mapState, mapDispatch)(MapComponent))

@@ -116,7 +116,8 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
-  handleSelectUnownedParcel = async ({ asset }) => {
+  handleSelectUnownedParcel = async atlasLocation => {
+    const asset = atlasLocation // atlasLocation has enough props from the asset interface to make this work
     if (!isParcel(asset) || asset.district_id != null) return
 
     // if it has an owner, remove it from selection

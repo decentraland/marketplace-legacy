@@ -336,28 +336,14 @@ export default class ParcelPreview extends React.PureComponent {
     const { onClick, atlas, parcels, estates } = this.props
 
     const parcelId = buildCoordinate(x, y)
-    const atlasPlace = atlas[parcelId] // this.getMapAsset(parcelId, parcels, estates)
+    const atlasLocation = atlas[parcelId]
 
     if (
-      atlasPlace != null &&
+      atlasLocation != null &&
       onClick &&
       Date.now() - this.mousedownTimestamp < 200
     ) {
-      // const type = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
-      // const parcel = parcels[parcelId]
-
-      // if the parcel clicked is a district/plaza/road, send the parcel to the callback
-      // switch (getType(parcel, estates)) {
-      //   case TYPES.district:
-      //   case TYPES.plaza:
-      //   case TYPES.roads:
-      //     asset = parcel
-      //     break
-      // }
-
-      // TODO: This is cheating, we need to rename the `asset` prop here.
-      // It works because the props used are present on atlasPlace
-      onClick({ assetType: atlasPlace.assetType, asset: atlasPlace, x, y })
+      onClick(atlasLocation, { x, y, assetType: atlasLocation.assetType })
     }
   }
 
@@ -401,15 +387,6 @@ export default class ParcelPreview extends React.PureComponent {
     this.hidePopup()
   }
 
-  // getMapAsset(parcelId, parcels, estates) {
-  //   const parcel = parcels[parcelId]
-  //   if (!parcel) {
-  //     return null
-  //   }
-
-  //   return isEstate(parcel) ? estates[parcel.estate_id] : parcel
-  // }
-
   hidePopup() {
     clearTimeout(this.popupTimeout)
 
@@ -444,7 +421,7 @@ export default class ParcelPreview extends React.PureComponent {
     const parcelId = buildCoordinate(x, y)
 
     const { atlas } = this.props
-    const atlasPlace = atlas[parcelId] || {
+    const atlasLocation = atlas[parcelId] || {
       type: TYPES.loading,
       label: '...',
       color: getLoadingColor(x, y)
@@ -459,7 +436,7 @@ export default class ParcelPreview extends React.PureComponent {
       top,
       topLeft,
       color: backgroundColor
-    } = atlasPlace
+    } = atlasLocation
 
     const color = getTextColor(type)
     const description = getDescription(type, owner)

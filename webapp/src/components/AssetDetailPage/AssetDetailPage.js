@@ -26,13 +26,13 @@ export default class AssetDetailPage extends React.PureComponent {
     this.setState({ isLoadingNextAsset: false })
   }
 
-  handleAssetClick = ({ asset, assetType }) => {
+  handleAssetClick = (atlasLocation, { assetType }) => {
     this.setState({ isLoadingNextAsset: true })
-    this.props.onAssetClick(asset, assetType)
+    this.props.onAssetClick(atlasLocation, assetType) // atlasLocation has enough props from the asset interface to make this work
   }
 
   hasPreviewHeader(asset, assetType) {
-    // here we can decide wether to have a preview header or not
+    // Here we can decide wether to have a preview header or not
     // depending on the asset or the assetType (for future types of assets)
     switch (assetType) {
       case ASSET_TYPES.parcel:

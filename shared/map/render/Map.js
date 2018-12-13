@@ -20,8 +20,6 @@ export class Map {
     ctx.fillRect(0, 0, width, height)
 
     const selection = []
-    const isSelected = (x, y) =>
-      selected.some(coords => coords.x === x && coords.y === y)
 
     const cx = width / 2
     const cy = height / 2
@@ -31,18 +29,27 @@ export class Map {
         const offsetY = (py - center.y) * size + (pan ? pan.y : 0)
         const rx = cx - offsetX
         const ry = cy - offsetY
+
         const id = buildCoordinate(px, py)
-        const atlasPlace = atlas[id]
+        const atlasLocation = atlas[id]
+        let color
+        let connectedLeft = false
+        let connectedTop = false
+        let connectedTopLeft = false
 
-        const color = atlasPlace ? atlasPlace.color : getLoadingColor(px, py)
+        if (atlasLocation) {
+          color = atlasLocation.color
+          connectedLeft = atlasLocation.left
+          connectedTop = atlasLocation.top
+          connectedTopLeft = atlasLocation.topLeft
+        } else {
+          color = getLoadingColor(px, py)
+        }
 
-        const connectedLeft = atlasPlace ? atlasPlace.left : false
-        const connectedTop = atlasPlace ? atlasPlace.top : false
-        const connectedTopLeft = atlasPlace ? atlasPlace.topLeft : false
-
-        if (isSelected(px, py)) {
+        if (this.isSelected(selected, px, py)) {
           selection.push({ x: rx, y: ry })
         }
+
         Parcel.draw({
           ctx,
           x: rx + size / 2,
@@ -56,8 +63,13 @@ export class Map {
         })
       }
     }
+
     if (selection.length > 0) {
       Selection.draw({ ctx, selection, size })
     }
+  }
+
+  static isSelected(selected, x, y) {
+    return selected.some(coords => coords.x === x && coords.y === y)
   }
 }
