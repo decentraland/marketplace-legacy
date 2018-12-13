@@ -52,6 +52,8 @@ export default class FatfingerModal extends React.PureComponent {
     }
   }
 
+  onPaste = e => e.preventDefault()
+
   renderFatfingerForm = () => {
     const { onClose, data } = this.props
     const { formErrors, price } = this.state
@@ -82,6 +84,7 @@ export default class FatfingerModal extends React.PureComponent {
               autoFocus={true}
               required={true}
               onChange={this.handlePriceChange}
+              onPaste={this.onPaste}
             />
           </Form.Field>
           {formErrors.length > 0 ? (
