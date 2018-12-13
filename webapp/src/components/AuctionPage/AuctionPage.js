@@ -22,7 +22,7 @@ import {
   authorizationType,
   auctionParamsType,
   walletType,
-  parcelType,
+  atlasType,
   coordsType
 } from 'components/types'
 import {
@@ -53,7 +53,7 @@ export default class AuctionPage extends React.PureComponent {
       y: PropTypes.number
     }).isRequired,
     wallet: walletType,
-    allParcels: PropTypes.objectOf(parcelType),
+    atlas: PropTypes.objectOf(atlasType),
     onShowAuctionModal: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
@@ -219,27 +219,26 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   hasReachedLimit(selected) {
-    const { allParcels, params } = this.props
+    const { atlas, params } = this.props
     const { landsLimitPerBid } = params
     return (
-      Object.keys(selected).filter(
-        parcelId => allParcels[parcelId].owner == null
-      ).length >= landsLimitPerBid
+      Object.keys(selected).filter(parcelId => atlas[parcelId].owner == null)
+        .length >= landsLimitPerBid
     )
   }
 
   getSelectedParcels() {
-    const { allParcels, selectedCoordinatesById } = this.props
+    const { atlas, selectedCoordinatesById } = this.props
 
-    if (!allParcels) return []
+    if (!atlas) return []
 
     const parcelIds = Object.keys(selectedCoordinatesById)
     const parcels = []
 
     for (const parcelId of parcelIds) {
-      const parcel = allParcels[parcelId]
-      if (parcel) {
-        parcels.push(parcel)
+      const atlasLocation = atlas[parcelId]
+      if (atlasLocation) {
+        parcels.push(atlasLocation)
       }
     }
 
@@ -263,7 +262,7 @@ export default class AuctionPage extends React.PureComponent {
       authorization,
       params,
       center,
-      allParcels,
+      atlas,
       token,
       rate,
       selectedCoordinatesById,
@@ -313,7 +312,7 @@ export default class AuctionPage extends React.PureComponent {
           <ParcelPreview
             x={x}
             y={y}
-            parcels={allParcels}
+            atlas={atlas}
             selected={validSelectedParcels}
             isDraggable
             showPopup

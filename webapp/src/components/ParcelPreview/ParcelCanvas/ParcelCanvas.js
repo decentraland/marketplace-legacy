@@ -48,19 +48,8 @@ export default class ParcelPreview extends React.PureComponent {
     width: PropTypes.number,
     /** height of the canvas in pixels */
     height: PropTypes.number,
-
     /** atlas from from modules/map */
     atlas: PropTypes.objectOf(atlasType),
-
-    /** wallet from modules/wallet */
-    // wallet: walletType,
-    /** parcels from modules/parcels */
-    // parcels: PropTypes.objectOf(parcelType),
-    /** districts from modules/districts */
-    // districts: PropTypes.objectOf(districtType),
-    /** publications from modules/publications */
-    // publications: PropTypes.objectOf(publicationType),
-
     /** zoom level of the map, this changes in the end the size on which parcels are rendered, i.e: size=10 and zoom=0.5 makes each parcel of 5x5 pixels */
     zoom: PropTypes.number,
     /** minimum size that parcels can take (after applying zoom) */
@@ -138,7 +127,7 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const { x, y, parcels, selected } = this.props
+    const { x, y, selected } = this.props
 
     if (
       (x !== nextProps.x || y !== nextProps.y) &&
@@ -333,7 +322,7 @@ export default class ParcelPreview extends React.PureComponent {
       return
     }
 
-    const { onClick, atlas, parcels, estates } = this.props
+    const { onClick, atlas } = this.props
 
     const parcelId = buildCoordinate(x, y)
     const atlasLocation = atlas[parcelId]

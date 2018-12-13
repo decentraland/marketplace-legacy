@@ -3,7 +3,7 @@ import { isLoadingType } from '@dapps/modules/loading/selectors'
 
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import { getAuthorizations } from 'modules/authorization/selectors'
-import { getData as getParcels } from 'modules/parcels/selectors'
+import { getData as getAtlas } from 'modules/map/selectors'
 import {
   getParcelOnChainOwners,
   getParams,
@@ -31,14 +31,14 @@ const mapState = state => {
   const wallet = getWallet(state)
 
   const parcelOnChainOwners = getParcelOnChainOwners(state)
-  const allParcels = getParcels(state)
+  const atlas = getAtlas(state)
 
   // Side-effect!
   // This particular piece of code mutates the state adding more up to date owners.
   for (const parcelId in parcelOnChainOwners) {
-    const parcel = allParcels[parcelId]
-    if (!parcel.owner) {
-      parcel.owner = parcelOnChainOwners[parcelId]
+    const atlasLocation = atlas[parcelId]
+    if (!atlasLocation.owner) {
+      atlasLocation.owner = parcelOnChainOwners[parcelId]
     }
   }
 
@@ -57,8 +57,8 @@ const mapState = state => {
     rate: getRate(state),
     selectedCoordinatesById: getSelectedCoordinatesById(state),
     wallet,
-    allParcels,
-    // this is not used on the AuctionPage, but since we mutate allParcels,
+    atlas,
+    // this is not used on the AuctionPage, but since we mutate `atlas`,
     // we pass this down to for a re-render down the tree
     parcelOnChainOwners
   }
