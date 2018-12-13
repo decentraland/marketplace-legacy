@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Form, Button, Input, Message } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
@@ -53,14 +52,7 @@ export default class FatfingerModal extends React.PureComponent {
     }
   }
 
-  refInput = inputWrapper => {
-    const actualInput = inputWrapper
-      ? ReactDOM.findDOMNode(inputWrapper).querySelector('input') // eslint-disable-line
-      : null
-    if (actualInput) {
-      actualInput.onpaste = e => e.preventDefault()
-    }
-  }
+  onPaste = e => e.preventDefault()
 
   renderFatfingerForm = () => {
     const { onClose, data } = this.props
@@ -92,7 +84,7 @@ export default class FatfingerModal extends React.PureComponent {
               autoFocus={true}
               required={true}
               onChange={this.handlePriceChange}
-              ref={this.refInput}
+              onPaste={this.onPaste}
             />
           </Form.Field>
           {formErrors.length > 0 ? (
