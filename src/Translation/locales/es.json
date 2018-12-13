@@ -254,7 +254,7 @@
     "tx_to_be_send": "Enviarás una transacción a {action} parcels: {parcels}"
   },
   "footer": {
-    "code_of_ethics": "Código de ética",
+    "code_of_ethics": "Código de Ética",
     "color_key": "Mapa de Colores",
     "copyright": "© 2018 Decentraland. Todos los derechos reservados.",
     "mini_copyright": "© 2018 Decentraland.",
