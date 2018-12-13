@@ -15,7 +15,7 @@ import { isParcel } from 'shared/parcel'
 const DEFAULT_DAY_INTERVAL = 31
 const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
-const MINIMUM_LAND_PRICE = 1000
+const MINIMUM_ASSET_PRICE = 1
 
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
@@ -89,10 +89,10 @@ export default class PublishAssetForm extends React.PureComponent {
       )
     }
 
-    if (price < MINIMUM_LAND_PRICE) {
+    if (price < MINIMUM_ASSET_PRICE) {
       formErrors.push(
         t('asset_publish.errors.minimum_land_price', {
-          value: formatMana(MINIMUM_LAND_PRICE, ''),
+          value: formatMana(MINIMUM_ASSET_PRICE, ''),
           asset_name: isParcel(asset) ? t('name.parcel') : t('name.estate')
         })
       )
