@@ -35,20 +35,11 @@ export class Atlas extends Model {
   static async upsertParcel(parcel) {
     const now = new Date()
     const row = await this.buildRow(parcel)
-    const values = Object.values(row)
 
     row.created_at = now
     row.updated_at = now
 
-    console.log(
-      `INSERT INTO ${this.tableName}(
-       ${this.db.toColumnFields(row)}
-      ) VALUES(
-       ${this.db.toValuePlaceholders(row)}
-      ) ON CONFLICT (id) DO UPDATE SET
-        ${this.toAssignmentFields(row, values.length)};`,
-      values
-    )
+    const values = Object.values(row)
 
     return this.db.query(
       `INSERT INTO ${this.tableName}(
@@ -56,7 +47,7 @@ export class Atlas extends Model {
       ) VALUES(
        ${this.db.toValuePlaceholders(row)}
       ) ON CONFLICT (id) DO UPDATE SET
-        ${this.toAssignmentFields(row, values.length)};`,
+        ${this.db.toAssignmentFields(row)};`,
       values
     )
   }
