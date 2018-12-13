@@ -7,7 +7,7 @@ import { preventDefault, formatMana } from 'lib/utils'
 import { ASSET_TYPES } from 'shared/asset'
 import BaseModal from '../BaseModal'
 
-import './FatfingerModa.css'
+import './FatfingerModal.css'
 
 export default class FatfingerModal extends React.PureComponent {
   static propTypes = {

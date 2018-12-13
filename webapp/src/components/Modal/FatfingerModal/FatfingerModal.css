@@ -3,11 +3,6 @@
   text-align: center;
 }
 
-.FatfingerModal .modal-body {
-  padding: 30px 45px;
-  width: 380px;
-}
-
 .FatfingerModal .title, .FatfingerModal .description, .FatfingerModal  .ui.form .field {
   margin-bottom: 25px;
 }
@@ -18,7 +13,7 @@
 }
 
 .FatfingerModal .description p{
-  font-size: 1.2em;
+  font-size: 1em;
   margin-bottom: 5px;
 }
 
@@ -29,5 +24,9 @@
 @media(min-width: 768px) {
   .FatfingerModal .modal-body {
     width: 600px;
+  }
+  
+  .FatfingerModal .description p{
+    font-size: 1.2em;
   }
 }
