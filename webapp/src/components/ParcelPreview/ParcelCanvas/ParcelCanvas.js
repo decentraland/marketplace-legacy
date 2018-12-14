@@ -11,13 +11,7 @@ import { buildCoordinate } from 'shared/coordinates'
 import { Bounds, Viewport, TYPES, getLoadingColor } from 'shared/map'
 import { Map as MapRenderer } from 'shared/map/render'
 import { isParcel, isEstate } from 'shared/parcel'
-import {
-  getLabel,
-  getTextColor,
-  getDescription,
-  getConnections,
-  panzoom
-} from './utils'
+import { getTextColor, getLabel, getDescription, panzoom } from './utils'
 import Minimap from './Minimap'
 import Popup from './Popup'
 import Controls from './Controls'
@@ -412,23 +406,24 @@ export default class ParcelPreview extends React.PureComponent {
     const { atlas } = this.props
     const atlasLocation = atlas[parcelId] || {
       type: TYPES.loading,
-      label: '...',
+      label: getLabel('', TYPES.loading),
       color: getLoadingColor(x, y)
     }
 
     const {
       type,
-      label,
+      name,
       price,
       owner,
       left,
       top,
-      topLeft,
-      color: backgroundColor
+      topLeft
     } = atlasLocation
 
     const color = getTextColor(type)
+    const label = getLabel(name, type)
     const description = getDescription(type, owner)
+    const backgroundColor = getColor(type)
 
     const result = {
       id: parcelId,

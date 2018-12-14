@@ -2,11 +2,12 @@ import { Model } from 'decentraland-commons'
 
 import { ParcelLocation } from './ParcelLocation'
 import { ParcelReference } from './ParcelReference'
-import { Parcel, Estate } from '../Asset'
+import { Asset, Parcel, Estate } from '../Asset'
 import { Contribution } from '../Contribution'
 import { District } from '../District'
 import { Publication } from '../Publication'
 import { SQL, raw } from '../database'
+import { asyncPool } from '../lib'
 import { splitCoordinate } from '../../shared/coordinates'
 import { isDistrict } from '../../shared/district'
 import { isEstate } from '../../shared/parcel'
@@ -31,6 +32,28 @@ export class Atlas extends Model {
     'is_connected_top',
     'is_connected_topleft'
   ]
+
+  static async upsertAsset(assetId, assetType) {
+    const asset = await Asset.getModel(assetType).findOne(assetId)
+
+    switch (assetType) {
+      case ASSET_TYPES.parcel:
+        return this.upsertParcel(asset)
+      case ASSET_TYPES.estate:
+        return this.upsertEstate(asset)
+      default:
+        throw new Error(`The asset type ${assetType} is invalid`)
+    }
+  }
+
+  static async upsertEstate(estate) {
+    return asyncPool(
+      estate.data.parcels,
+      ({ x, y }) =>
+        Parcel.findOne({ x, y }).then(parcel => this.upsertParcel(parcel)),
+      10
+    )
+  }
 
   static async upsertParcel(parcel) {
     const now = new Date()
@@ -90,15 +113,15 @@ export class Atlas extends Model {
     for (const row of districtAtlas) {
       if (row.has_contributed) {
         const parcelReference = new ParcelReference({ owner: row.owner })
-        const reference = parcelReference.getForContribution()
-        Object.assign(row, reference)
+        const type = parcelReference.getContributionType()
+        Object.assign(row, { type })
       }
     }
 
     for (const row of ownerAtlas) {
       const parcelReference = new ParcelReference({ owner: row.owner })
-      const reference = parcelReference.getForOwner(owner, row.type)
-      Object.assign(row, reference)
+      const type = parcelReference.getTypeForOwner(owner, row.type)
+      Object.assign(row, { type })
     }
 
     return restAtlas.concat(districtAtlas).concat(ownerAtlas)
@@ -190,8 +213,7 @@ export class Atlas extends Model {
       estate_id: parcel.estate_id,
       asset_type: inEstate ? ASSET_TYPES.estate : ASSET_TYPES.parcel,
       owner: inEstate ? estate.owner : parcel.owner,
-      label: parcelReference.getLabelByType(type),
-      color: parcelReference.getColorByType(type)
+      name: parcelReference.getNameByType(type)
     }
   }
 }

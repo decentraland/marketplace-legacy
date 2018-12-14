@@ -11,36 +11,6 @@ export class ParcelReference {
     )
   }
 
-  getColorByType(type) {
-    switch (type) {
-      case TYPES.myParcels:
-        return COLORS.myParcels
-      case TYPES.myParcelsOnSale:
-        return COLORS.myParcelsOnSale
-      case TYPES.myEstates:
-        return COLORS.myParcels
-      case TYPES.myEstatesOnSale:
-        return COLORS.myParcelsOnSale
-      case TYPES.district:
-        return COLORS.district
-      case TYPES.contribution:
-        return COLORS.contribution
-      case TYPES.roads:
-        return COLORS.roads
-      case TYPES.plaza:
-        return COLORS.plaza
-      case TYPES.taken:
-        return COLORS.taken
-      case TYPES.onSale:
-        return COLORS.onSale
-      case TYPES.unowned:
-        return COLORS.unowned
-      case TYPES.background:
-      default:
-        return COLORS.background
-    }
-  }
-
   getType() {
     if (isDistrict(this.parcel)) {
       if (isRoad(this.parcel.district_id)) {
@@ -59,15 +29,11 @@ export class ParcelReference {
         : TYPES.unowned
   }
 
-  getLabelByType(type) {
+  getNameByType(type) {
     switch (type) {
       case TYPES.district:
       case TYPES.contribution:
-        return this.traits.district ? this.traits.district.name : 'District'
-      case TYPES.plaza:
-        return 'Genesis Plaza'
-      case TYPES.roads:
-        return 'Road'
+        return this.traits.district ? this.traits.district.name : ''
       case TYPES.myParcels:
       case TYPES.myParcelsOnSale:
       case TYPES.myEstates:
@@ -77,22 +43,20 @@ export class ParcelReference {
         const asset = this.traits.estate || this.parcel
         return asset.data.name || ''
       }
+      case TYPES.roads:
+      case TYPES.plaza:
       case TYPES.unowned:
       case TYPES.background:
       default:
-        return null
+        return ''
     }
   }
 
-  getForContribution() {
-    const type = TYPES.contribution
-    return {
-      type,
-      color: this.getColorByType(type)
-    }
+  getContributionType() {
+    return TYPES.contribution
   }
 
-  getForOwner(owner, currentType = null) {
+  getTypeForOwner(owner, currentType = null) {
     const isOwner = this.parcel.owner === owner
     const isOnSale = currentType === TYPES.onSale || this.isOnSale()
 
@@ -114,10 +78,6 @@ export class ParcelReference {
           : TYPES.unowned
     }
 
-    return {
-      type: newType,
-      color: this.getColorByType(newType),
-      label: this.getLabelByType(newType)
-    }
+    return newType
   }
 }

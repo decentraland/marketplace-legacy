@@ -1,7 +1,9 @@
 import { eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
+
 import { Publication, PublicationService } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
+import { Atlas } from '../../src/Map'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { PUBLICATION_STATUS } from '../../shared/publication'
@@ -40,6 +42,7 @@ export async function publicationReducer(event) {
   }
 }
 
+// TODO: Atlas updates here are super wasteful and potentially slow
 async function reduceMarketplace(event) {
   const { tx_hash, block_number, name, address } = event
 
@@ -90,6 +93,7 @@ async function reduceMarketplace(event) {
           block_number,
           contract_id
         })
+        await Atlas.updateAsset(assetId, assetType)
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
         log.info(
@@ -104,9 +108,7 @@ async function reduceMarketplace(event) {
       const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
 
-      const Asset = new PublicationService().getPublicableAssetFromType(
-        assetType
-      )
+      const Asset = new PublicationService().getPublicableAsset(assetType)
 
       if (!contract_id) {
         return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
@@ -125,6 +127,7 @@ async function reduceMarketplace(event) {
         ),
         Asset.update({ owner: buyer }, { id: assetId })
       ])
+      await Atlas.updateAsset(assetId, assetType)
       break
     }
     case eventNames.AuctionCancelled:
@@ -143,6 +146,7 @@ async function reduceMarketplace(event) {
         },
         { contract_id }
       )
+      await Atlas.updateAsset(assetId, assetType)
       break
     }
     default:

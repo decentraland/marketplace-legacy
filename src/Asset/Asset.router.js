@@ -31,7 +31,7 @@ export class AssetRouter {
       throw new Error('The asset_type query param is required to get an asset')
     }
 
-    const PublicableAsset = new PublicationService().getPublicableAssetFromType(
+    const PublicableAsset = new PublicationService().getPublicableAsset(
       reqQueryParams.get('asset_type')
     )
     let result

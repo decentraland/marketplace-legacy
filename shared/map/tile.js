@@ -31,6 +31,29 @@ export const COLORS = Object.freeze({
   loadingOdd: '#0d0b0e'
 })
 
+export function getLabel(name, type) {
+  switch (type) {
+    case TYPES.district:
+    case TYPES.contribution:
+      return name || 'District'
+    case TYPES.plaza:
+      return 'Genesis Plaza'
+    case TYPES.roads:
+      return 'Road'
+    case TYPES.myParcels:
+    case TYPES.myParcelsOnSale:
+    case TYPES.myEstates:
+    case TYPES.myEstatesOnSale:
+    case TYPES.taken:
+    case TYPES.onSale:
+      return name || ''
+    case TYPES.unowned:
+    case TYPES.background:
+    default:
+      return null
+  }
+}
+
 export function getLoadingColor(x, y) {
   return (x + y) % 2 === 0 ? COLORS.loadingEven : COLORS.loadingOdd
 }

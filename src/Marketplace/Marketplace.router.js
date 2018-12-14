@@ -32,7 +32,7 @@ export class MarketplaceRouter {
     let result
 
     if (reqQueryParams.has('asset_type')) {
-      const PublicableAsset = new PublicationService().getPublicableAssetFromType(
+      const PublicableAsset = new PublicationService().getPublicableAsset(
         reqQueryParams.get('asset_type')
       )
 

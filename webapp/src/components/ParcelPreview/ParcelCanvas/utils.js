@@ -126,33 +126,30 @@ export function panzoom(target, cb) {
   }
 }
 
-// export function getLabel(type, asset, districts) {
-//   switch (type) {
-//     case TYPES.loading:
-//       return t('atlas.loading') + '...'
-//     case TYPES.district:
-//     case TYPES.contribution: {
-//       const district = districts[asset.district_id]
-//       return district ? district.name : 'District'
-//     }
-//     case TYPES.plaza:
-//       return 'Genesis Plaza'
-//     case TYPES.roads:
-//       return t('atlas.road')
-//     case TYPES.myParcels:
-//     case TYPES.myParcelsOnSale:
-//     case TYPES.myEstates:
-//     case TYPES.myEstatesOnSale:
-//     case TYPES.taken:
-//     case TYPES.onSale: {
-//       return asset.data.name || null
-//     }
-//     case TYPES.unowned:
-//     case TYPES.background:
-//     default:
-//       return null
-//   }
-// }
+export function getLabel(name, type) {
+  switch (type) {
+    case TYPES.loading:
+      return t('atlas.loading') + '...'
+    case TYPES.district:
+    case TYPES.contribution:
+      return name || 'District'
+    case TYPES.plaza:
+      return 'Genesis Plaza'
+    case TYPES.roads:
+      return t('atlas.road')
+    case TYPES.myParcels:
+    case TYPES.myParcelsOnSale:
+    case TYPES.myEstates:
+    case TYPES.myEstatesOnSale:
+    case TYPES.taken:
+    case TYPES.onSale:
+      return name || null
+    case TYPES.unowned:
+    case TYPES.background:
+    default:
+      return null
+  }
+}
 
 export function getDescription(type, owner) {
   switch (type) {
@@ -180,6 +177,36 @@ export function getDescription(type, owner) {
   }
 }
 
+export function getColor(type) {
+  switch (type) {
+    case TYPES.myParcels:
+      return COLORS.myParcels
+    case TYPES.myParcelsOnSale:
+      return COLORS.myParcelsOnSale
+    case TYPES.myEstates:
+      return COLORS.myParcels
+    case TYPES.myEstatesOnSale:
+      return COLORS.myParcelsOnSale
+    case TYPES.district:
+      return COLORS.district
+    case TYPES.contribution:
+      return COLORS.contribution
+    case TYPES.roads:
+      return COLORS.roads
+    case TYPES.plaza:
+      return COLORS.plaza
+    case TYPES.taken:
+      return COLORS.taken
+    case TYPES.onSale:
+      return COLORS.onSale
+    case TYPES.unowned:
+      return COLORS.unowned
+    case TYPES.background:
+    default:
+      return COLORS.background
+  }
+}
+
 export function getTextColor(type) {
   switch (type) {
     case TYPES.loading:
@@ -198,13 +225,5 @@ export function getTextColor(type) {
     case TYPES.onSale:
     default:
       return 'black'
-  }
-}
-
-export function getConnections(asset) {
-  return {
-    connectedLeft: !!(asset && asset.connectedLeft),
-    connectedTop: !!(asset && asset.connectedTop),
-    connectedTopLeft: !!(asset && asset.connectedTopLeft)
   }
 }

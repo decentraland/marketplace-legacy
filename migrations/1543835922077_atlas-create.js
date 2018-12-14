@@ -14,13 +14,13 @@ exports.up = pgm => {
       district_id: 'TEXT',
       owner: 'TEXT',
       price: 'DECIMAL',
-      label: 'TEXT',
+      name: 'TEXT',
       type: { type: 'TEXT', notNull: true },
       color: { type: 'TEXT', notNull: true },
       asset_type: { type: 'TEXT', default: ASSET_TYPES.parcel, notNull: true },
-      is_connected_left: { type: 'INT1', default: false, notNull: true },
-      is_connected_top: { type: 'INT1', default: false, notNull: true },
-      is_connected_topleft: { type: 'INT1', default: false, notNull: true },
+      is_connected_left: { type: 'SMALLINT', default: 0, notNull: true },
+      is_connected_top: { type: 'SMALLINT', default: 0, notNull: true },
+      is_connected_topleft: { type: 'SMALLINT', default: 0, notNull: true },
       created_at: { type: 'TIMESTAMP', notNull: true },
       updated_at: 'TIMESTAMP'
     },
@@ -30,6 +30,7 @@ exports.up = pgm => {
   pgm.createIndex(tableName, ['x', 'y'], { unique: true })
   pgm.createIndex(tableName, 'owner')
   pgm.createIndex(tableName, 'district_id')
+  pgm.createIndex(tableName, 'estate_id')
 }
 
 exports.down = pgm => {
