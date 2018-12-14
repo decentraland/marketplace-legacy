@@ -36,6 +36,10 @@ const buyAuctionLands = {
         '--retryFailedTxs',
         'If this flag is present, the script will try to retry failed transactions'
       )
+      .option(
+        '--confirm',
+        'If this flag is present the confirm prompt will be skipped'
+      )
       .action(
         asSafeAction(async userOptions => {
           const options = Object.assign(DEFAULT_OPTIONS, userOptions)
@@ -62,6 +66,18 @@ const buyAuctionLands = {
             const web3 = eth.wallet.getWeb3()
             const unlockAccount = utils.promisify(web3.personal.unlockAccount)
             await unlockAccount(account, options.password)
+          }
+
+          if (!options.confirm) {
+            const landAuctionContract = eth.getContract('LANDAuction')
+            const price = eth.utils.fromWei(
+              await landAuctionContract.getCurrentPrice()
+            )
+
+            const shouldBuy = await cli.confirm(
+              `About to bid on ${parcels.length} parcels at ${price} MANA. Run?`
+            )
+            if (!shouldBuy) process.exit()
           }
 
           await bidOnParcels(parcels, account, options.manaTokenAddress, {
