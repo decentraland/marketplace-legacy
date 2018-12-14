@@ -1,7 +1,7 @@
 #!/usr/bin/env babel-node
 
 import fs from 'fs'
-import { eth, Contract } from 'decentraland-eth'
+import { eth, txUtils, Contract } from 'decentraland-eth'
 import { Log, cli, utils } from 'decentraland-commons'
 
 import { connectEth } from '../src/ethereum'
@@ -11,7 +11,10 @@ import { buildCoordinate, splitCoodinatePairs } from '../shared/coordinates'
 import { loadEnv, asSafeAction } from './utils'
 
 const log = new Log('buyAuctionLands')
-const DEFAULT_OPTIONS = {}
+const DEFAULT_OPTIONS = {
+  retryFailedTxs: false,
+  txDelay: 5000
+}
 const requiredOptionNames = ['parcels', 'manaTokenAddress']
 
 const buyAuctionLands = {
@@ -23,7 +26,12 @@ const buyAuctionLands = {
         '--manaTokenAddress [manaTokenAddress]',
         'MANAToken contract address. Required'
       )
+      .option('--account [account]', 'Account address')
       .option('--password [password]', 'Password for the account')
+      .option(
+        '--txDelay [txDelay]',
+        `Delay between txs in milliseconds. Default: ${DEFAULT_OPTIONS.txDelay}`
+      )
       .option(
         '--retryFailedTxs',
         'If this flag is present, the script will try to retry failed transactions'
@@ -36,6 +44,7 @@ const buyAuctionLands = {
           log.info('Connecting to the blockchain')
           await connectEth()
 
+          const account = options.account || eth.getAccount()
           const allParcels = options.parcels
             ? readJSON(expandPath(options.parcels))
             : []
@@ -49,15 +58,16 @@ const buyAuctionLands = {
           }
 
           if (options.password) {
-            log.info(`Unlocking account ${eth.getAddress()}`)
-            await eth.wallet.unlockAccount(options.password)
+            log.info(`Unlocking account ${account}`)
+            const web3 = eth.wallet.getWeb3()
+            const unlockAccount = utils.promisify(web3.personal.unlockAccount)
+            await unlockAccount(account, options.password)
           }
 
-          await bidOnParcels(
-            parcels,
-            options.manaTokenAddress,
-            options.retryFailedTxs
-          )
+          await bidOnParcels(parcels, account, options.manaTokenAddress, {
+            txDelay: options.txDelay,
+            retryFailedTxs: options.retryFailedTxs
+          })
         })
       )
   }
@@ -89,15 +99,24 @@ async function getValidParcels(allParcels) {
   return parcels
 }
 
-async function bidOnParcels(parcels, tokenAddress, shouldRetry = false) {
-  const landAuctionContract = eth.getContract('LANDAuction')
-  const account = eth.getAddress()
+async function bidOnParcels(...args) {
+  const [parcels, account, tokenAddress, { shouldRetry, txDelay }] = args
 
+  const landAuctionContract = eth.getContract('LANDAuction')
   const gasPrice = (await landAuctionContract.gasPriceLimit()).toNumber()
-  const landLimit = (await landAuctionContract.landsLimitPerBid()).toNumber()
-  log.info(
-    `Using ${gasPrice} as gasPrice and ${landLimit} as land limit per bid`
-  )
+  const landsLimit = (await landAuctionContract.landsLimitPerBid()).toNumber()
+
+  if (gasPrice === 0 || landsLimit === 0) {
+    log.info(
+      'Either gasPrice or landsLimit is 0, waiting and retrying in 10 seconds'
+    )
+    await utils.sleep(10000)
+    return bidOnParcels(...args)
+  } else {
+    log.info(
+      `Using ${gasPrice} as gasPrice and ${landsLimit} as land limit per bid`
+    )
+  }
 
   const txs = []
   const parcelsToRetry = []
@@ -114,12 +133,15 @@ async function bidOnParcels(parcels, tokenAddress, shouldRetry = false) {
         ys,
         account,
         tokenAddress,
-        { gasPrice: gasPrice }
+        { gasPrice: gasPrice, from: account }
       )
       log.info(`Got tx hash ${hash} for bidding on ${xs.length} parcels`)
       txs.push({ hash, xs, ys })
+
+      log.info(`Sleeping ${txDelay / 1000} seconds`)
+      await utils.sleep(txDelay)
     },
-    batchSize: landLimit
+    batchSize: landsLimit
   })
 
   for (const tx of txs) {
@@ -138,22 +160,22 @@ async function bidOnParcels(parcels, tokenAddress, shouldRetry = false) {
 
   if (parcelsToRetry.length > 0 && shouldRetry) {
     log.info(`Retrying on ${parcelsToRetry.length} parcels`)
-    return await bidOnParcels(parcelsToRetry, tokenAddress, shouldRetry)
+    return bidOnParcels(...args)
   }
 }
 
 async function getConfirmedTransaction(hash, isRetrying = false) {
   try {
-    return await eth.utils.getConfirmedTransaction(hash)
+    return await txUtils.getConfirmedTransaction(hash)
   } catch (error) {
     if (isRetrying) {
-      log.warn(`tx ${hash} failed: ${error}`)
+      log.warn(`tx ${hash} failed: "${error}"`)
       return null
     } else {
       log.info(
-        `Found an error with tx: ${hash}, retrying in 10 senconds to mitigate false fails`
+        `Found an error with tx: ${hash}, retrying in 10 seconds to mitigate false fails`
       )
-      utils.sleep(10000)
+      await utils.sleep(10000)
       return getConfirmedTransaction(hash, true)
     }
   }
