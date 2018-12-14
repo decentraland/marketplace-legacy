@@ -176,23 +176,23 @@ async function bidOnParcels(...args) {
 
   if (parcelsToRetry.length > 0 && shouldRetry) {
     log.info(`Retrying on ${parcelsToRetry.length} parcels`)
-    return bidOnParcels(...args)
+    return bidOnParcels(parcelsToRetry, ...args.slice(1))
   }
 }
 
-async function getConfirmedTransaction(hash, isRetrying = false) {
+async function getConfirmedTransaction(hash, retries = 0) {
   try {
     return await txUtils.getConfirmedTransaction(hash)
   } catch (error) {
-    if (isRetrying) {
-      log.warn(`tx ${hash} failed: "${error}"`)
+    if (retries >= 3) {
+      log.warn(`tx ${hash} failed after ${retries} retries: "${error}"`)
       return null
     } else {
       log.info(
         `Found an error with tx: ${hash}, retrying in 10 seconds to mitigate false fails`
       )
       await utils.sleep(10000)
-      return getConfirmedTransaction(hash, true)
+      return getConfirmedTransaction(hash, retries + 1)
     }
   }
 }
