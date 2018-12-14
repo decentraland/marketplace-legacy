@@ -29,9 +29,23 @@ function parseCLICoords(coord) {
     .map(coord => parseInt(coord.trim(), 10))
 }
 
+function asSafeAction(callback) {
+  return async function(...args) {
+    try {
+      await callback(...args)
+    } catch (error) {
+      console.error(error.message)
+      console.log(error)
+    } finally {
+      process.exit()
+    }
+  }
+}
+
 module.exports = {
   loadEnv,
   runpsql,
   resolvePath,
-  parseCLICoords
+  parseCLICoords,
+  asSafeAction
 }

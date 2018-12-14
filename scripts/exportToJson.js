@@ -3,10 +3,10 @@
 import fs from 'fs'
 import { Log, cli } from 'decentraland-commons'
 
-import { loadEnv } from './utils'
 import { db } from '../src/database'
 import { District } from '../src/District'
 import { Parcel } from '../src/Asset'
+import { loadEnv, asSafeAction } from './utils'
 
 const log = new Log('exportToJson')
 
@@ -109,19 +109,6 @@ function writeParcels(parcels, filepath) {
 
 function writeJSON(filepath, data) {
   return fs.writeFileSync(filepath, JSON.stringify(data, null, 2))
-}
-
-function asSafeAction(callback) {
-  return async function(...args) {
-    try {
-      await callback(...args)
-    } catch (error) {
-      log.error(error.message)
-      console.log(error)
-    } finally {
-      process.exit()
-    }
-  }
 }
 
 if (require.main === module) {
