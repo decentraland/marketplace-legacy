@@ -2,17 +2,12 @@ import { locations } from 'locations'
 import { t } from '@dapps/modules/translation/utils'
 import { Location } from 'lib/Location'
 
-let SORT_TYPES = null // filled upon the first call to getSortTypes
-
 export function getSortTypes() {
-  if (!SORT_TYPES) {
-    SORT_TYPES = Object.freeze({
-      NEWEST: t('marketplace.filter.newest'),
-      CHEAPEST: t('marketplace.filter.cheapest'),
-      CLOSEST_TO_EXPIRE: t('marketplace.filter.close_to_expire')
-    })
-  }
-  return SORT_TYPES
+  return Object.freeze({
+    NEWEST: t('marketplace.filter.newest'),
+    CHEAPEST: t('marketplace.filter.cheapest'),
+    CLOSEST_TO_EXPIRE: t('marketplace.filter.close_to_expire')
+  })
 }
 
 export function getSortOptions() {
