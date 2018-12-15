@@ -76,10 +76,10 @@ export class Atlas extends Model {
   }
 
   static async inRange(topLeft, bottomRight) {
-    return this.db.query(SQL`
-        SELECT *
-          FROM ${raw(this.tableName)}
-          WHERE ${this.getBetweenCoordinatesSQL(topLeft, bottomRight)}`)
+    return await this.db.query(SQL`
+      SELECT *
+        FROM ${raw(this.tableName)}
+        WHERE ${this.getBetweenCoordinatesSQL(topLeft, bottomRight)}`)
   }
 
   static async inRangeFromAddressPerspective(topLeft, bottomRight, owner) {
@@ -212,7 +212,7 @@ export class Atlas extends Model {
       type,
       estate_id: parcel.estate_id,
       asset_type: inEstate ? ASSET_TYPES.estate : ASSET_TYPES.parcel,
-      owner: inEstate ? estate.owner : parcel.owner,
+      owner: district ? null : inEstate ? estate.owner : parcel.owner,
       name: parcelReference.getNameByType(type)
     }
   }

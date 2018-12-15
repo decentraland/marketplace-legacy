@@ -4,6 +4,8 @@ import { navigateTo } from '@dapps/modules/location/actions'
 import { locations } from 'locations'
 import { getData as getAtlas } from 'modules/map/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
+import { fetchAsset } from 'modules/asset/actions'
+import { ASSET_TYPES } from 'shared/asset'
 
 import EstateDetailPage from './EstateDetailPage'
 
@@ -23,8 +25,7 @@ const mapDispatch = (dispatch, ownProps) => {
     onEditMetadata: () =>
       dispatch(navigateTo(locations.editEstateMetadata(id))),
     onManageEstate: () => dispatch(navigateTo(locations.manageEstate(id))),
-    onParcelClick: parcel =>
-      dispatch(navigateTo(locations.parcelDetail(parcel.x, parcel.y)))
+    onParcelClick: parcel => dispatch(fetchAsset(parcel, ASSET_TYPES.parcel))
   }
 }
 

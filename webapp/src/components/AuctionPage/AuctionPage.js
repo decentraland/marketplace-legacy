@@ -32,8 +32,10 @@ import {
   dismissAuctionHelper,
   getVideoTutorialLink
 } from 'modules/auction/utils'
-import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
+import { isEqualCoords } from 'shared/parcel'
+import { ASSET_TYPES } from 'shared/asset'
+import { TYPES } from 'shared/map'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
 
@@ -116,19 +118,22 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
-  handleSelectUnownedParcel = async atlasLocation => {
-    const asset = atlasLocation // atlasLocation has enough props from the asset interface to make this work
-    if (!isParcel(asset) || asset.district_id != null) return
+  handleSelectUnownedParcel = async ({ id, x, y, type, owner, assetType }) => {
+    if (
+      assetType !== ASSET_TYPES.parcel ||
+      [TYPES.district, TYPES.contribution].include(type)
+    )
+      return
 
     // if it has an owner, remove it from selection
-    if (asset.owner != null) {
+    if (owner != null) {
       this.setState({
-        selectedCoordinatesById: this.buildNewSelectionCoordsWithoutParcel(
-          asset
-        )
+        selectedCoordinatesById: this.buildNewSelectionCoordsWithoutParcel(id)
       })
       return
     }
+
+    const asset = { id, x, y } // {id, x, y} are enough props for the asset interface here
 
     this.updateOwner(asset)
 
@@ -176,6 +181,14 @@ export default class AuctionPage extends React.PureComponent {
     this.props.onChangeToken(token)
   }
 
+  updateOwner = async parcel => {
+    return this.getParcelOwnerOnChain(parcel).then(ownerOnChain => {
+      if (!Contract.isEmptyAddress(ownerOnChain)) {
+        this.props.onSetParcelOnChainOwner(parcel.id, ownerOnChain)
+      }
+    })
+  }
+
   async getParcelOwnerOnChain(parcel) {
     // WARN: this code is duplicated on shared/asset.js. It's the same as calling:
     //   `await getAssetOwnerOnChain(ASSET_TYPE.parcel, parcel)`
@@ -185,14 +198,6 @@ export default class AuctionPage extends React.PureComponent {
     const landRegistry = eth.getContract('LANDRegistry')
     const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
     return landRegistry.ownerOf(tokenId)
-  }
-
-  updateOwner = async parcel => {
-    return this.getParcelOwnerOnChain(parcel).then(ownerOnChain => {
-      if (!Contract.isEmptyAddress(ownerOnChain)) {
-        this.props.onSetParcelOnChainOwner(parcel.id, ownerOnChain)
-      }
-    })
   }
 
   updateSelectionOwners = async () => {
@@ -213,9 +218,9 @@ export default class AuctionPage extends React.PureComponent {
       : { ...selectedCoordinatesById, [id]: { x, y } }
   }
 
-  buildNewSelectionCoordsWithoutParcel(parcel) {
+  buildNewSelectionCoordsWithoutParcel(parcelId) {
     const { selectedCoordinatesById } = this.props
-    return utils.omit(selectedCoordinatesById, parcel.id)
+    return utils.omit(selectedCoordinatesById, parcelId)
   }
 
   hasReachedLimit(selected) {

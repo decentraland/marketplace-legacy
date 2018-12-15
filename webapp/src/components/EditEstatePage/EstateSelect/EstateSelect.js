@@ -42,18 +42,16 @@ export default class EstateSelect extends React.PureComponent {
     onDeleteEstate: PropTypes.func.isRequired
   }
 
-  handleParcelClick = (atlasLocation, { x, y, assetType }) => {
+  handleParcelClick = ({ id, x, y, assetType }) => {
     const { wallet } = this.props
-    const asset = atlasLocation // atlasLocation has enough props from the asset interface to make this work
-
-    if (!isOwner(wallet, buildCoordinate(x, y)) && !isOwner(wallet, asset.id)) {
+    if (!isOwner(wallet, buildCoordinate(x, y)) && !isOwner(wallet, id)) {
       return
     }
 
     const { estate, onChange } = this.props
     const parcels = estate.data.parcels
 
-    if (assetType === ASSET_TYPES.estate && asset.id !== estate.id) {
+    if (assetType === ASSET_TYPES.estate && id !== estate.id) {
       return
     }
 

@@ -1,6 +1,6 @@
 import { Parcel } from './Parcel'
 import { Selection } from './Selection'
-import { COLORS, getLoadingColor } from '../tile'
+import { COLORS, getBackgroundColor, getLoadingColor } from '../tile'
 import { buildCoordinate } from '../../coordinates'
 
 export class Map {
@@ -21,12 +21,16 @@ export class Map {
 
     const selection = []
 
+    const padding = size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2
+    const panX = pan ? pan.x : 0
+    const panY = pan ? pan.y : 0
     const cx = width / 2
     const cy = height / 2
+
     for (let px = nw.x; px < se.x; px++) {
       for (let py = se.y; py < nw.y; py++) {
-        const offsetX = (center.x - px) * size + (pan ? pan.x : 0)
-        const offsetY = (py - center.y) * size + (pan ? pan.y : 0)
+        const offsetX = (center.x - px) * size + panX
+        const offsetY = (py - center.y) * size + panY
         const rx = cx - offsetX
         const ry = cy - offsetY
 
@@ -38,7 +42,7 @@ export class Map {
         let connectedTopLeft = false
 
         if (atlasLocation) {
-          color = atlasLocation.color
+          color = getBackgroundColor(atlasLocation.type)
           connectedLeft = atlasLocation.left
           connectedTop = atlasLocation.top
           connectedTopLeft = atlasLocation.topLeft
@@ -55,7 +59,7 @@ export class Map {
           x: rx + size / 2,
           y: ry + size / 2,
           size,
-          padding: size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2,
+          padding,
           color,
           connectedLeft,
           connectedTop,

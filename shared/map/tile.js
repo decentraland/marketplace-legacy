@@ -1,17 +1,17 @@
 export const TYPES = Object.freeze({
-  myParcels: 'MY_PARCEL_TYPE',
-  myParcelsOnSale: 'MY_PARCEL_ON_SALE_TYPE',
-  myEstates: 'MY_ESTATE_TYPE',
-  myEstatesOnSale: 'MY_ESTATE_ON_SALE_TYPE',
-  district: 'DISTRICT_TYPE',
-  contribution: 'CONTRIBUTION_TYPE',
-  roads: 'ROADS_TYPE',
-  plaza: 'PLAZA_TYPE',
-  taken: 'TAKEN_TYPE',
-  onSale: 'ON_SALE_TYPE',
-  unowned: 'UNOWNED_TYPE',
-  background: 'BACKGROUND_TYPE',
-  loading: 'LOADING_TYPE'
+  myParcels: 0,
+  myParcelsOnSale: 1,
+  myEstates: 2,
+  myEstatesOnSale: 3,
+  district: 4,
+  contribution: 5,
+  roads: 6,
+  plaza: 7,
+  taken: 8,
+  onSale: 9,
+  unowned: 10,
+  background: 11,
+  loading: 12
 })
 
 export const COLORS = Object.freeze({
@@ -31,26 +31,54 @@ export const COLORS = Object.freeze({
   loadingOdd: '#0d0b0e'
 })
 
-export function getLabel(name, type) {
+export function getBackgroundColor(type) {
   switch (type) {
+    case TYPES.myParcels:
+      return COLORS.myParcels
+    case TYPES.myParcelsOnSale:
+      return COLORS.myParcelsOnSale
+    case TYPES.myEstates:
+      return COLORS.myParcels
+    case TYPES.myEstatesOnSale:
+      return COLORS.myParcelsOnSale
+    case TYPES.district:
+      return COLORS.district
+    case TYPES.contribution:
+      return COLORS.contribution
+    case TYPES.roads:
+      return COLORS.roads
+    case TYPES.plaza:
+      return COLORS.plaza
+    case TYPES.taken:
+      return COLORS.taken
+    case TYPES.onSale:
+      return COLORS.onSale
+    case TYPES.unowned:
+      return COLORS.unowned
+    case TYPES.background:
+    default:
+      return COLORS.background
+  }
+}
+
+export function getTextColor(type) {
+  switch (type) {
+    case TYPES.loading:
     case TYPES.district:
     case TYPES.contribution:
-      return name || 'District'
-    case TYPES.plaza:
-      return 'Genesis Plaza'
     case TYPES.roads:
-      return 'Road'
+    case TYPES.taken:
+    case TYPES.unowned:
+    case TYPES.background:
+      return 'white'
     case TYPES.myParcels:
     case TYPES.myParcelsOnSale:
     case TYPES.myEstates:
     case TYPES.myEstatesOnSale:
-    case TYPES.taken:
+    case TYPES.plaza:
     case TYPES.onSale:
-      return name || ''
-    case TYPES.unowned:
-    case TYPES.background:
     default:
-      return null
+      return 'black'
   }
 }
 

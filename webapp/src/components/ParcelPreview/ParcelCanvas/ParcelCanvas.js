@@ -8,10 +8,17 @@ import { atlasType, coordsType } from 'components/types'
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
-import { Bounds, Viewport, TYPES, getLoadingColor } from 'shared/map'
+import {
+  Bounds,
+  Viewport,
+  TYPES,
+  getLoadingColor,
+  getBackgroundColor,
+  getTextColor
+} from 'shared/map'
 import { Map as MapRenderer } from 'shared/map/render'
 import { isParcel, isEstate } from 'shared/parcel'
-import { getTextColor, getLabel, getDescription, panzoom } from './utils'
+import { getLabel, getDescription, panzoom } from './utils'
 import Minimap from './Minimap'
 import Popup from './Popup'
 import Controls from './Controls'
@@ -326,7 +333,15 @@ export default class ParcelPreview extends React.PureComponent {
       onClick &&
       Date.now() - this.mousedownTimestamp < 200
     ) {
-      onClick(atlasLocation, { x, y, assetType: atlasLocation.assetType })
+      onClick({
+        id: atlasLocation.estate_id || parcelId,
+        x,
+        y,
+        type: atlasLocation.type,
+        assetType: atlasLocation.estate_id
+          ? ASSET_TYPES.estate
+          : ASSET_TYPES.parcel
+      })
     }
   }
 
@@ -410,20 +425,12 @@ export default class ParcelPreview extends React.PureComponent {
       color: getLoadingColor(x, y)
     }
 
-    const {
-      type,
-      name,
-      price,
-      owner,
-      left,
-      top,
-      topLeft
-    } = atlasLocation
+    const { type, name, price, owner, left, top, topLeft } = atlasLocation
 
-    const color = getTextColor(type)
     const label = getLabel(name, type)
     const description = getDescription(type, owner)
-    const backgroundColor = getColor(type)
+    const backgroundColor = getBackgroundColor(type)
+    const color = getTextColor(type)
 
     const result = {
       id: parcelId,

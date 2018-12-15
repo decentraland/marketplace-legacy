@@ -26,9 +26,9 @@ export default class AssetDetailPage extends React.PureComponent {
     this.setState({ isLoadingNextAsset: false })
   }
 
-  handleAssetClick = (atlasLocation, { assetType }) => {
+  handleAssetClick = ({ id, x, y, assetType }) => {
     this.setState({ isLoadingNextAsset: true })
-    this.props.onAssetClick(atlasLocation, assetType) // atlasLocation has enough props from the asset interface to make this work
+    this.props.onAssetClick({ id, x, y }, assetType) // {id, x, y} are enough props for the asset interface here
   }
 
   hasPreviewHeader(asset, assetType) {

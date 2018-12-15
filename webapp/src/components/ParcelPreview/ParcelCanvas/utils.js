@@ -9,7 +9,6 @@ import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
 import { t } from '@dapps/modules/translation/utils'
 import { TYPES } from 'shared/map'
-import { shortenAddress } from 'lib/utils'
 
 export function panzoom(target, cb) {
   if (target instanceof Function) {
@@ -169,61 +168,10 @@ export function getDescription(type, owner) {
       return t('atlas.your_estate')
     case TYPES.taken:
     case TYPES.onSale: {
-      return t('atlas.owner', { owner: shortenAddress(owner) })
+      return t('atlas.owner', { owner })
     }
     case TYPES.background:
     default:
       return null
-  }
-}
-
-export function getColor(type) {
-  switch (type) {
-    case TYPES.myParcels:
-      return COLORS.myParcels
-    case TYPES.myParcelsOnSale:
-      return COLORS.myParcelsOnSale
-    case TYPES.myEstates:
-      return COLORS.myParcels
-    case TYPES.myEstatesOnSale:
-      return COLORS.myParcelsOnSale
-    case TYPES.district:
-      return COLORS.district
-    case TYPES.contribution:
-      return COLORS.contribution
-    case TYPES.roads:
-      return COLORS.roads
-    case TYPES.plaza:
-      return COLORS.plaza
-    case TYPES.taken:
-      return COLORS.taken
-    case TYPES.onSale:
-      return COLORS.onSale
-    case TYPES.unowned:
-      return COLORS.unowned
-    case TYPES.background:
-    default:
-      return COLORS.background
-  }
-}
-
-export function getTextColor(type) {
-  switch (type) {
-    case TYPES.loading:
-    case TYPES.district:
-    case TYPES.contribution:
-    case TYPES.roads:
-    case TYPES.taken:
-    case TYPES.unowned:
-    case TYPES.background:
-      return 'white'
-    case TYPES.myParcels:
-    case TYPES.myParcelsOnSale:
-    case TYPES.myEstates:
-    case TYPES.myEstatesOnSale:
-    case TYPES.plaza:
-    case TYPES.onSale:
-    default:
-      return 'black'
   }
 }

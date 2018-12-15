@@ -5,12 +5,9 @@ import { Atlas } from './Atlas.model'
 import { Parcel, Estate, EstateService } from '../Asset'
 import { sanitizeParcels } from '../sanitize'
 import { unsafeParseInt } from '../lib'
-import { getAssetPublications } from '../shared/asset'
-import { toParcelObject } from '../shared/parcel'
-import { toEstateObject, calculateMapProps } from '../shared/estate'
-import { toPublicationObject } from '../shared/publication'
+import { calculateMapProps } from '../shared/estate'
 import * as coordinates from '../shared/coordinates'
-import { Viewport, Bounds } from '../shared/map'
+import { Viewport, Bounds, TYPES } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
@@ -63,25 +60,7 @@ export class MapRouter {
       atlas = await Atlas.inRange(nw, se)
     }
 
-    const map = {}
-    for (const row of atlas) {
-      map[row.id] = {
-        id: row.estate_id || row.id,
-        x: row.x,
-        y: row.y,
-        assetType: row.asset_type,
-        type: row.type,
-        color: row.color,
-        left: row.is_connected_left,
-        top: row.is_connected_top,
-        topLeft: row.is_connected_topleft
-      }
-      if (row.owner) map[row.id].owner = row.owner
-      if (row.price) map[row.id].price = row.price
-      if (row.label) map[row.id].label = row.label
-    }
-
-    return map
+    return this.atlasToMap(atlas)
   }
 
   async getMapPNG(req, res) {
@@ -89,7 +68,7 @@ export class MapRouter {
   }
 
   async getParcelPNG(req, res) {
-    const { x, y, width, height, size, showPublications } = this.sanitize(req)
+    const { x, y, width, height, size, skipPublications } = this.sanitize(req)
     const center = { x, y }
     const mapOptions = {
       width,
@@ -97,13 +76,13 @@ export class MapRouter {
       size,
       center,
       selected: [center],
-      showPublications
+      skipPublications
     }
     return this.sendPNG(res, mapOptions)
   }
 
   async getEstatePNG(req, res) {
-    const { id, width, height, size, showPublications } = this.sanitizeEstate(
+    const { id, width, height, size, skipPublications } = this.sanitizeEstate(
       req
     )
     const estate = await Estate.findByTokenId(id)
@@ -121,7 +100,7 @@ export class MapRouter {
       zoom,
       pan,
       selected: parcels,
-      showPublications
+      skipPublications
     }
     return this.sendPNG(res, mapOptions)
   }
@@ -147,7 +126,7 @@ export class MapRouter {
 
   async sendPNG(
     res,
-    { width, height, size, center, selected, showPublications, zoom, pan }
+    { width, height, size, center, selected, skipPublications, zoom, pan }
   ) {
     const { nw, se, area } = Viewport.getDimensions({
       width,
@@ -176,7 +155,7 @@ export class MapRouter {
         se,
         center,
         selected,
-        showPublications
+        skipPublications
       })
       res.type('png')
       stream.pipe(res)
@@ -184,15 +163,6 @@ export class MapRouter {
       res.status(500)
       res.send(error.message)
     }
-  }
-
-  async getAssetsAndPublications(nw, se) {
-    const parcelRange = sanitizeParcels(await Parcel.inRange(nw, se))
-    const parcels = toParcelObject(parcelRange)
-    const estatesRange = await new EstateService().getByParcels(parcelRange)
-    const estates = toEstateObject(estatesRange)
-    const publications = toPublicationObject(getAssetPublications(parcelRange))
-    return [parcels, estates, publications]
   }
 
   async getStream({
@@ -203,15 +173,14 @@ export class MapRouter {
     se,
     center,
     selected,
-    showPublications
+    skipPublications
   }) {
-    const [
-      parcels,
-      estates,
-      publications
-    ] = await this.getAssetsAndPublications(nw, se)
+    const atlas = this.atlasToMap(await Atlas.inRange(nw, se), {
+      skipPublications
+    })
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
+
     MapRenderer.draw({
       ctx,
       width,
@@ -220,12 +189,37 @@ export class MapRouter {
       nw,
       se,
       center,
-      parcels,
-      estates,
-      publications: showPublications ? publications : {},
+      atlas,
       selected
     })
     return canvas.pngStream()
+  }
+
+  atlasToMap(atlas, { skipPublications } = {}) {
+    const map = {}
+
+    for (const row of atlas) {
+      map[row.id] = {
+        x: row.x,
+        y: row.y
+      }
+      if (skipPublications && row.type === TYPES.onSale) {
+        map[row.id].type = TYPES.taken
+      } else {
+        map[row.id].type = row.type
+      }
+      if (row.owner && [TYPES.taken, TYPES.onSale].includes(row.type)) {
+        map[row.id].owner = row.owner.slice(0, 6)
+      }
+      if (row.price) map[row.id].price = row.price
+      if (row.name) map[row.id].name = row.name
+      if (row.estate_id) map[row.id].estate_id = row.estate_id
+      if (row.is_connected_left) map[row.id].left = 1
+      if (row.is_connected_top) map[row.id].top = 1
+      if (row.is_connected_topleft) map[row.id].topLeft = 1
+    }
+
+    return map
   }
 
   sanitizeEstate(req) {
@@ -244,7 +238,7 @@ export class MapRouter {
       size: this.getInteger(req, 'size', 5, 40, 10),
       center: this.getCoords(req, 'center', { x: 0, y: 0 }),
       selected: this.getCoordsArray(req, 'selected', []),
-      showPublications: this.getBoolean(req, 'publications', false)
+      skipPublications: !this.getBoolean(req, 'publications', false) // Mind the negation here
     }
   }
 

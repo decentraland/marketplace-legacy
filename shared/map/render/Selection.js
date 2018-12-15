@@ -1,3 +1,5 @@
+import { COLORS } from '../tile'
+
 export class Selection {
   static draw({
     ctx,
@@ -6,7 +8,7 @@ export class Selection {
     selection = [],
     scale = 1.2,
     size = 10,
-    fill = '#ff9990',
+    fill = COLORS.myParcels,
     stroke = '#ff0044',
     width = 1
   }) {
@@ -15,12 +17,16 @@ export class Selection {
     ctx.shadowBlur = 20 * scale
     ctx.shadowColor = stroke
     ctx.beginPath()
+
+    const borderOffset = size + width * 2
+    const borderOffsetCoord = borderOffset / 2 * scale
+    const borderSide = borderOffset * scale
     selection.forEach(({ x, y }) => {
       ctx.rect(
-        x - (size + width * 2) / 2 * scale,
-        y - (size + width * 2) / 2 * scale,
-        (size + width * 2) * scale,
-        (size + width * 2) * scale
+        x - borderOffsetCoord,
+        y - borderOffsetCoord,
+        borderSide,
+        borderSide
       )
     })
     ctx.fill()
@@ -30,13 +36,11 @@ export class Selection {
     ctx.fillStyle = fill
     ctx.shadowBlur = 0
     ctx.beginPath()
+
+    const fillOffset = size / 2 * scale
+    const filSide = size * scale
     selection.forEach(({ x, y }) => {
-      ctx.rect(
-        x - size / 2 * scale,
-        y - size / 2 * scale,
-        size * scale,
-        size * scale
-      )
+      ctx.rect(x - fillOffset, y - fillOffset, filSide, filSide)
     })
     ctx.fill()
     ctx.closePath()

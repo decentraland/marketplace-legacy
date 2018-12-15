@@ -131,10 +131,8 @@ export const atlasType = shape({
   y: number,
   owner: string,
   price: string,
-  label: string,
-  type: string,
-  color: string,
-  assetType: string,
+  name: string,
+  type: number,
   left: number,
   top: number,
   topLeft: number
