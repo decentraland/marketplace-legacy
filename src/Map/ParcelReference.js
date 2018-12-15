@@ -1,5 +1,5 @@
 import { isDistrict, isPlaza, isRoad } from '../../shared/district'
-import { TYPES, COLORS } from '../../shared/map'
+import { TYPES } from '../../shared/map'
 import { isEstate } from '../../shared/parcel'
 
 export class ParcelReference {

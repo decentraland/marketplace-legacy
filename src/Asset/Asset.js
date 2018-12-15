@@ -5,7 +5,7 @@ import { ASSETS } from '.'
 export class Asset {
   static getNew(assetType) {
     const Model = this.getModel(assetType)
-    return new Asset(ASSETS[assetType])
+    return new Asset(Model)
   }
 
   static getModel(assetType) {
