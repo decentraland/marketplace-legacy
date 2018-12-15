@@ -16,7 +16,7 @@ import {
   getAssetOwnerOnChainByTokenId
 } from '../shared/asset'
 import { processEvent } from '../monitor/processEvents'
-import { loadEnv, parseCLICoords } from './utils'
+import { loadEnv, parseCLICoords, asSafeAction } from './utils'
 
 const log = new Log('mktcli')
 const POSSIBLE_ASSET_EVENT_IDS = [
@@ -418,18 +418,6 @@ const main = {
           }
         })
       )
-  }
-}
-
-function asSafeAction(callback) {
-  return async function(...args) {
-    try {
-      await callback(...args)
-    } catch (error) {
-      log.error('ERR: ' + error.message)
-      console.log(error)
-    }
-    process.exit()
   }
 }
 
