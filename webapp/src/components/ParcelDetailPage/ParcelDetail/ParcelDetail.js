@@ -39,10 +39,10 @@ export default class ParcelDetail extends React.PureComponent {
     const district = getDistrict(parcel, districts)
 
     if (district) {
-      return district.description
+      return district.description.toString()
     }
     if (parcel.data.description) {
-      return parcel.data.description
+      return parcel.data.description.toString()
     }
 
     return ''
