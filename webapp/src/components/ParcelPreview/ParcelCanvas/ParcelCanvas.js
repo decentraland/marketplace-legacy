@@ -463,6 +463,7 @@ export default class ParcelPreview extends React.PureComponent {
     const { nw, se, pan, size, center } = this.state
     const ctx = this.canvas.getContext('2d')
 
+    // TODO: Cache this instance?
     new MapRenderer(ctx, {
       width,
       height,
@@ -475,10 +476,6 @@ export default class ParcelPreview extends React.PureComponent {
       atlas,
       selected: this.getSelected()
     })
-  }
-
-  computeParcelPadding(size) {
-    return size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2
   }
 
   renderPopup() {
