@@ -54,13 +54,31 @@ export class MapRouter {
 
     try {
       const address = server.extractFromReq(req, 'address')
-
       atlas = await Atlas.inRangeFromAddressPerspective(nw, se, address)
     } catch (error) {
       atlas = await Atlas.inRange(nw, se)
     }
 
-    return this.atlasToMap(atlas)
+    const map = {}
+
+    for (const row of atlas) {
+      map[row.id] = {
+        x: row.x,
+        y: row.y,
+        type: row.type
+      }
+      if (row.owner && [TYPES.taken, TYPES.onSale].includes(row.type)) {
+        map[row.id].owner = row.owner.slice(0, 6)
+      }
+      if (row.price) map[row.id].price = row.price
+      if (row.name) map[row.id].name = row.name
+      if (row.estate_id) map[row.id].estate_id = row.estate_id
+      if (row.is_connected_left) map[row.id].left = 1
+      if (row.is_connected_top) map[row.id].top = 1
+      if (row.is_connected_topleft) map[row.id].topLeft = 1
+    }
+
+    return map
   }
 
   async getMapPNG(req, res) {
@@ -175,51 +193,22 @@ export class MapRouter {
     selected,
     skipPublications
   }) {
-    const atlas = this.atlasToMap(await Atlas.inRange(nw, se), {
-      skipPublications
-    })
+    const atlas = await Atlas.inRangePNG(nw, se)
+
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
 
-    MapRenderer.draw({
-      ctx,
+    new MapRenderer(ctx, {
       width,
       height,
-      size,
-      nw,
-      se,
+      size
+    }).drawFromAtlas({
       center,
       atlas,
-      selected
+      selected,
+      skipPublications
     })
     return canvas.pngStream()
-  }
-
-  atlasToMap(atlas, { skipPublications } = {}) {
-    const map = {}
-
-    for (const row of atlas) {
-      map[row.id] = {
-        x: row.x,
-        y: row.y
-      }
-      if (skipPublications && row.type === TYPES.onSale) {
-        map[row.id].type = TYPES.taken
-      } else {
-        map[row.id].type = row.type
-      }
-      if (row.owner && [TYPES.taken, TYPES.onSale].includes(row.type)) {
-        map[row.id].owner = row.owner.slice(0, 6)
-      }
-      if (row.price) map[row.id].price = row.price
-      if (row.name) map[row.id].name = row.name
-      if (row.estate_id) map[row.id].estate_id = row.estate_id
-      if (row.is_connected_left) map[row.id].left = 1
-      if (row.is_connected_top) map[row.id].top = 1
-      if (row.is_connected_topleft) map[row.id].topLeft = 1
-    }
-
-    return map
   }
 
   sanitizeEstate(req) {

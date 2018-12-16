@@ -1,79 +1,123 @@
 import { Parcel } from './Parcel'
 import { Selection } from './Selection'
-import { COLORS, getBackgroundColor, getLoadingColor } from '../tile'
+import { TYPES, COLORS, getBackgroundColor, getLoadingColor } from '../tile'
 import { buildCoordinate } from '../../coordinates'
 
 export class Map {
-  static draw({
-    ctx,
-    width,
-    height,
-    size,
-    pan,
-    nw,
-    se,
-    center,
-    atlas,
-    selected
-  }) {
-    ctx.fillStyle = COLORS.background
-    ctx.fillRect(0, 0, width, height)
+  static draw({ ctx, ...attributes }) {
+    return new Map(ctx, attributes).draw(attributes)
+  }
 
+  constructor(ctx, { width, height, size, pan, center }) {
+    this.ctx = ctx
+
+    this.width = width
+    this.height = height
+    this.size = size
+    this.pan = pan
+
+    this.padding = size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2
+    this.middle = { x: width / 2, y: height / 2, size: size / 2 }
+    this.pan = pan ? pan : { x: 0, y: 0 }
+
+    this.ctx.fillStyle = COLORS.background
+    this.ctx.fillRect(0, 0, width, height)
+  }
+
+  draw({ nw, se, center, atlas, selected, skipPublications }) {
     const selection = []
 
-    const padding = size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2
-    const panX = pan ? pan.x : 0
-    const panY = pan ? pan.y : 0
-    const cx = width / 2
-    const cy = height / 2
+    for (let x = nw.x; x < se.x; x++) {
+      for (let y = se.y; y < nw.y; y++) {
+        const corner = this.getParcelCorner(x, y, center)
 
-    for (let px = nw.x; px < se.x; px++) {
-      for (let py = se.y; py < nw.y; py++) {
-        const offsetX = (center.x - px) * size + panX
-        const offsetY = (py - center.y) * size + panY
-        const rx = cx - offsetX
-        const ry = cy - offsetY
-
-        const id = buildCoordinate(px, py)
-        const atlasLocation = atlas[id]
-        let color
-        let connectedLeft = false
-        let connectedTop = false
-        let connectedTopLeft = false
-
-        if (atlasLocation) {
-          color = getBackgroundColor(atlasLocation.type)
-          connectedLeft = atlasLocation.left
-          connectedTop = atlasLocation.top
-          connectedTopLeft = atlasLocation.topLeft
-        } else {
-          color = getLoadingColor(px, py)
+        const atlasLocation = atlas[buildCoordinate(x, y)]
+        const attributes = this.getParcelAttributes(x, y, atlasLocation)
+        if (skipPublications && attributes.type === TYPES.onSale) {
+          attributes.type = TYPES.taken
         }
 
-        if (this.isSelected(selected, px, py)) {
-          selection.push({ x: rx, y: ry })
+        if (this.isSelected(selected, x, y)) {
+          selection.push(corner)
         }
 
-        Parcel.draw({
-          ctx,
-          x: rx + size / 2,
-          y: ry + size / 2,
-          size,
-          padding,
-          color,
-          connectedLeft,
-          connectedTop,
-          connectedTopLeft
-        })
+        this.drawParcel(corner, attributes)
       }
     }
 
     if (selection.length > 0) {
-      Selection.draw({ ctx, selection, size })
+      Selection.draw({ ctx: this.ctx, size: this.size, selection })
     }
   }
 
-  static isSelected(selected, x, y) {
+  drawFromAtlas({ center, atlas, selected, skipPublications }) {
+    const selection = []
+
+    for (const atlasLocation of atlas) {
+      const { x, y } = atlasLocation
+      const corner = this.getParcelCorner(x, y, center)
+
+      const attributes = this.getParcelAttributes(x, y, atlasLocation)
+      if (skipPublications && attributes.type === TYPES.onSale) {
+        attributes.type = TYPES.taken
+      }
+
+      if (this.isSelected(selected, x, y)) {
+        selection.push(corner)
+      }
+
+      this.drawParcel(corner, attributes)
+    }
+
+    if (selection.length > 0) {
+      Selection.draw({ ctx: this.ctx, size: this.size, selection })
+    }
+  }
+
+  isSelected(selected, x, y) {
     return selected.some(coords => coords.x === x && coords.y === y)
+  }
+
+  getParcelCorner(x, y, center) {
+    const offsetX = (center.x - x) * this.size + this.pan.x
+    const offsetY = (y - center.y) * this.size + this.pan.y
+    return { x: this.middle.x - offsetX, y: this.middle.y - offsetY }
+  }
+
+  getParcelAttributes(x, y, atlasLocation) {
+    let color = ''
+    let connectedLeft = false
+    let connectedTop = false
+    let connectedTopLeft = false
+
+    if (atlasLocation) {
+      color = getBackgroundColor(atlasLocation.type)
+      connectedLeft = atlasLocation.left
+      connectedTop = atlasLocation.top
+      connectedTopLeft = atlasLocation.topLeft
+    } else {
+      color = getLoadingColor(x, y)
+    }
+
+    return {
+      color,
+      connectedLeft,
+      connectedTop,
+      connectedTopLeft
+    }
+  }
+
+  drawParcel(corner, attributes) {
+    Parcel.draw({
+      ctx: this.ctx,
+      x: corner.x + this.middle.size,
+      y: corner.y + this.middle.size,
+      size: this.size,
+      padding: this.padding,
+      color: attributes.color,
+      connectedLeft: attributes.connectedLeft,
+      connectedTop: attributes.connectedTop,
+      connectedTopLeft: attributes.connectedTopLeft
+    })
   }
 }

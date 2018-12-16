@@ -29,7 +29,7 @@ exports.up = pgm => {
   pgm.createIndex(tableName, ['x', 'y'], { unique: true })
   pgm.createIndex(tableName, 'owner')
   pgm.createIndex(tableName, 'district_id')
-  pgm.createIndex(tableName, 'estate_id')
+  pgm.createIndex(tableName, 'type')
 }
 
 exports.down = pgm => {

@@ -1,5 +1,6 @@
 import { Model } from 'decentraland-commons'
 
+import { ParcelQueries } from './Parcel.queries'
 import { Asset } from '../Asset'
 import { PublicationQueries } from '../../Publication'
 import { District } from '../../District'
@@ -99,22 +100,11 @@ export class Parcel extends Model {
   }
 
   static async inRange(topLeft, bottomRight) {
-    const [minx, maxy] =
-      typeof topLeft === 'string'
-        ? splitCoordinate(topLeft)
-        : [topLeft.x, topLeft.y]
-
-    const [maxx, miny] =
-      typeof bottomRight === 'string'
-        ? splitCoordinate(bottomRight)
-        : [bottomRight.x, bottomRight.y]
-
     return this.db.query(SQL`SELECT *, (
       ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
     ) as publication
       FROM ${SQL.raw(this.tableName)}
-      WHERE x BETWEEN ${minx} AND ${maxx}
-        AND y BETWEEN ${miny} AND ${maxy}
+      WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}
       ORDER BY x ASC, y DESC`)
   }
 

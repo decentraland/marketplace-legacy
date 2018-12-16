@@ -463,12 +463,12 @@ export default class ParcelPreview extends React.PureComponent {
     const { nw, se, pan, size, center } = this.state
     const ctx = this.canvas.getContext('2d')
 
-    MapRenderer.draw({
-      ctx,
+    new MapRenderer(ctx, {
       width,
       height,
       size,
-      pan,
+      pan
+    }).draw({
       nw,
       se,
       center,

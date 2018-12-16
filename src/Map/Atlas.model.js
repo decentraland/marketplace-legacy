@@ -2,7 +2,7 @@ import { Model } from 'decentraland-commons'
 
 import { ParcelLocation } from './ParcelLocation'
 import { ParcelReference } from './ParcelReference'
-import { Asset, Parcel, Estate } from '../Asset'
+import { Asset, Estate, Parcel, ParcelQueries } from '../Asset'
 import { Contribution } from '../Contribution'
 import { District } from '../District'
 import { Publication } from '../Publication'
@@ -20,13 +20,12 @@ export class Atlas extends Model {
     'id',
     'x',
     'y',
-    'district_id',
     'estate_id',
+    'district_id',
     'owner',
     'price',
-    'label',
+    'name',
     'type',
-    'color',
     'asset_type',
     'is_connected_left',
     'is_connected_top',
@@ -76,32 +75,64 @@ export class Atlas extends Model {
   }
 
   static async inRange(topLeft, bottomRight) {
-    return await this.db.query(SQL`
-      SELECT *
+    const columnNames = this.filterColumnNames([
+      'district_id',
+      'asset_type'
+    ]).join(', ')
+
+    return this.db.query(SQL`
+      SELECT ${raw(columnNames)}
         FROM ${raw(this.tableName)}
-        WHERE ${this.getBetweenCoordinatesSQL(topLeft, bottomRight)}`)
+        WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
+  }
+
+  static async inRangePNG(topLeft, bottomRight) {
+    return this.db.query(SQL`
+      SELECT x, y, type, is_connected_left as left, is_connected_top as top, is_connected_topleft as "topLeft"
+        FROM ${raw(this.tableName)}
+        WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
   }
 
   static async inRangeFromAddressPerspective(topLeft, bottomRight, owner) {
-    const betweenSQL = this.getBetweenCoordinatesSQL(topLeft, bottomRight)
+    const betweenSQL = ParcelQueries.whereIsBetweenCoordinates(
+      topLeft,
+      bottomRight
+    )
+
+    const restColumnNames = this.filterColumnNames([
+      'district_id',
+      'asset_type'
+    ]).join(', ')
+    const districtColumnNames = this.filterColumnNames([
+      'price',
+      'owner',
+      'estate_id',
+      'district_id',
+      'asset_type'
+    ]).join(', ')
+    const ownerColumnNames = this.filterColumnNames([
+      'owner',
+      'district_id',
+      'asset_type'
+    ]).join(', ')
 
     let [restAtlas, districtAtlas, ownerAtlas] = await Promise.all([
       this.db.query(SQL`
-        SELECT *
+        SELECT ${raw(restColumnNames)}
           FROM ${raw(this.tableName)}
-          WHERE (owner != ${owner} or owner IS NULL)
+          WHERE (owner != ${owner} OR owner IS NULL)
             AND district_id IS NULL
             AND ${betweenSQL}`),
       // prettier-ignore
       this.db.query(SQL`
-        SELECT *,
+        SELECT ${raw(districtColumnNames)},
             (SELECT 1 FROM ${raw(Contribution.tableName)} c WHERE c.address = ${owner} AND c.district_id = a.district_id) has_contributed
           FROM ${raw(this.tableName)} a
           WHERE (owner != ${owner} or owner IS NULL)
             AND district_id IS NOT NULL
             AND ${betweenSQL}`),
       this.db.query(SQL`
-        SELECT *
+        SELECT ${raw(ownerColumnNames)}
           FROM ${raw(this.tableName)}
           WHERE owner = ${owner}
             AND ${betweenSQL}`)
@@ -127,23 +158,9 @@ export class Atlas extends Model {
     return restAtlas.concat(districtAtlas).concat(ownerAtlas)
   }
 
-  // TODO: Move to ParcelCoordinates and use in Parcel.inRange too
-  static getBetweenCoordinatesSQL(topLeft, bottomRight) {
-    if (topLeft == null || bottomRight == null) {
-      return SQL`1 = 1`
-    }
-
-    const [minx, maxy] =
-      typeof topLeft === 'string'
-        ? splitCoordinate(topLeft)
-        : [topLeft.x, topLeft.y]
-
-    const [maxx, miny] =
-      typeof bottomRight === 'string'
-        ? splitCoordinate(bottomRight)
-        : [bottomRight.x, bottomRight.y]
-
-    return SQL`x BETWEEN ${minx} AND ${maxx} AND y BETWEEN ${miny} AND ${maxy}`
+  static filterColumnNames(names) {
+    const filter = new Set(names)
+    return this.columnNames.filter(columnName => !filter.has(columnName))
   }
 
   static async buildRow(parcel) {
