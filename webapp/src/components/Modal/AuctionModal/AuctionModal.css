@@ -20,8 +20,20 @@
   margin-top: 40px;
 }
 
+.AuctionModal .modal-body .agree-to-terms-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .AuctionModal .modal-body .agree-to-terms {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 40px 0;
+}
+
+.AuctionModal .modal-body .agree-to-terms .ui.checkbox + .ui.checkbox {
+  margin-top: 8px;
 }
 
 .AuctionModal .modal-body .ui.checkbox label,
@@ -60,7 +72,7 @@
 
 .AuctionModal .tutorial .video-container {
   width: 100%;
-  height: 324px;
+  height: 377px;
 }
 
 .AuctionModal .tutorial .video-container iframe {

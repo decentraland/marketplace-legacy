@@ -8,19 +8,20 @@ export class Map {
     return new Map(ctx, attributes).draw(attributes)
   }
 
-  constructor(ctx, { width, height, size, pan, center }) {
+  constructor(ctx, { width, height, size, pan, center, colors }) {
     this.ctx = ctx
 
     this.width = width
     this.height = height
     this.size = size
     this.pan = pan
+    this.colors = colors || COLORS
 
     this.padding = size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2
     this.middle = { x: width / 2, y: height / 2, size: size / 2 }
     this.pan = pan ? pan : { x: 0, y: 0 }
 
-    this.ctx.fillStyle = COLORS.background
+    this.ctx.fillStyle = this.colors.background
     this.ctx.fillRect(0, 0, width, height)
   }
 
@@ -91,12 +92,12 @@ export class Map {
     let connectedTopLeft = false
 
     if (atlasLocation) {
-      color = getBackgroundColor(atlasLocation.type)
+      color = getBackgroundColor(atlasLocation.type, this.colors)
       connectedLeft = atlasLocation.left
       connectedTop = atlasLocation.top
       connectedTopLeft = atlasLocation.topLeft
     } else {
-      color = getLoadingColor(x, y)
+      color = this.colors.loading || getLoadingColor(x, y)
     }
 
     return {

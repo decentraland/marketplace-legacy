@@ -17,6 +17,7 @@ export const isModalPage = state => {
     case 'buy-mana':
     case 'edit-metadata':
     case 'delete-estate':
+    case 'colorKey':
       return true
     default:
       return false

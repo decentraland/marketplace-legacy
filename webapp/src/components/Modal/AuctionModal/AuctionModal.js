@@ -4,9 +4,13 @@ import { Checkbox, Button } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import {
+  hasAgreedToTerms as hasAgreedToMainTerms,
+  agreeToTerms as agreeToMainTerms
+} from 'modules/terms/utils'
+import {
   dismissAuctionHelper,
   AUCTION_HELPERS,
-  getVideoTutorialLink
+  getYoutubeTutorialId
 } from 'modules/auction/utils'
 import BaseModal from '../BaseModal'
 
@@ -23,12 +27,17 @@ export default class AuctionModal extends React.PureComponent {
 
     this.state = {
       hasAgreedToTerms: false,
+      hasAgreedToMainTerms: hasAgreedToMainTerms(),
       isWatchingTutorial: false
     }
   }
 
   handleTermsAgreement = (_, data) => {
     this.setState({ hasAgreedToTerms: data.checked })
+  }
+
+  handleOtherTermsAgreement = (_, data) => {
+    this.setState({ hasAgreedToMainTerms: data.checked })
   }
 
   handleWatchTutorial = () => {
@@ -40,6 +49,9 @@ export default class AuctionModal extends React.PureComponent {
   }
 
   handleSubmit = () => {
+    if (!hasAgreedToMainTerms()) {
+      agreeToMainTerms()
+    }
     dismissAuctionHelper(AUCTION_HELPERS.SEEN_AUCTION_MODAL)
     this.props.onClose()
   }
@@ -54,16 +66,47 @@ export default class AuctionModal extends React.PureComponent {
     }
   }
 
-  renderTermsOfServiceLink() {
+  renderAuctionTermsLink() {
+    return (
+      <a
+        href="https://decentraland.org/terms-auction"
+        rel="noopener noreferrer"
+        target="_blank"
+        onClick={this.hanleClickExternalLink}
+      >
+        {t('auction_modal.auction_terms_link')}
+      </a>
+    )
+  }
+
+  renderDecentralandTermsLink() {
     return (
       <a
         href="https://decentraland.org/terms"
         rel="noopener noreferrer"
         target="_blank"
+        onClick={this.hanleClickExternalLink}
       >
-        {t('auction_modal.terms_and_conditions')}
+        {t('auction_modal.decentraland_terms_link')}
       </a>
     )
+  }
+
+  renderPrivacyPolicyLink() {
+    return (
+      <a
+        href="https://decentraland.org/privacy"
+        rel="noopener noreferrer"
+        target="_blank"
+        onClick={this.hanleClickExternalLink}
+      >
+        {t('auction_modal.privacy_policy_link')}
+      </a>
+    )
+  }
+
+  hanleClickExternalLink = event => {
+    return event.stopPropagation()
   }
 
   renderTutorial() {
@@ -77,7 +120,7 @@ export default class AuctionModal extends React.PureComponent {
         </header>
         <div className="video-container">
           <iframe
-            src={getVideoTutorialLink()}
+            src={`https://www.youtube-nocookie.com/embed/${getYoutubeTutorialId()}`}
             frameBorder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -88,8 +131,6 @@ export default class AuctionModal extends React.PureComponent {
   }
 
   renderWelcome() {
-    const { hasAgreedToTerms } = this.state
-
     return (
       <div className="modal-body">
         <div className="modal-header">
@@ -106,25 +147,48 @@ export default class AuctionModal extends React.PureComponent {
 
         <div className="description">{t('auction_modal.description')}</div>
 
-        <div className="agree-to-terms">
-          <Checkbox
-            checked={hasAgreedToTerms}
-            onChange={this.handleTermsAgreement}
-            label={
-              <label>
-                <T
-                  id="auction_modal.i_agree_with_terms"
-                  values={{ terms_link: this.renderTermsOfServiceLink() }}
-                />
-              </label>
-            }
-          />
+        <div className="agree-to-terms-wrapper">
+          <div className="agree-to-terms">
+            <Checkbox
+              checked={this.state.hasAgreedToTerms}
+              onChange={this.handleTermsAgreement}
+              label={
+                <label>
+                  <T
+                    id="auction_modal.i_agree_with_auction_terms"
+                    values={{
+                      auction_terms_link: this.renderAuctionTermsLink()
+                    }}
+                  />
+                </label>
+              }
+            />
+            {!hasAgreedToMainTerms() ? (
+              <Checkbox
+                checked={this.state.hasAgreedToMainTerms}
+                onChange={this.handleOtherTermsAgreement}
+                label={
+                  <label>
+                    <T
+                      id={'auction_modal.i_agree_with_main_terms'}
+                      values={{
+                        decentraland_terms_link: this.renderDecentralandTermsLink(),
+                        privacy_policy_link: this.renderPrivacyPolicyLink()
+                      }}
+                    />
+                  </label>
+                }
+              />
+            ) : null}
+          </div>
         </div>
 
         <div className="actions">
           <Button
             primary={true}
-            disabled={!hasAgreedToTerms}
+            disabled={
+              !this.state.hasAgreedToTerms || !this.state.hasAgreedToMainTerms
+            }
             onClick={this.handleSubmit}
           >
             {t('auction_modal.get_started').toUpperCase()}

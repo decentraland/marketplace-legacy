@@ -9,7 +9,13 @@ import {
   FETCH_AUCTION_RATE_FAILURE,
   SET_ON_CHAIN_PARCEL_OWNER,
   CHANGE_AUCTION_CENTER_PARCEL,
-  SET_SELECTED_COORDINATES
+  SET_SELECTED_COORDINATES,
+  FETCH_AUCTION_PRICE_REQUEST,
+  FETCH_AUCTION_PRICE_FAILURE,
+  FETCH_AUCTION_PRICE_SUCCESS,
+  BID_ON_PARCELS_REQUEST,
+  BID_ON_PARCELS_SUCCESS,
+  BID_ON_PARCELS_FAILURE
 } from './actions'
 import {
   FETCH_AVAILABLE_PARCEL_REQUEST,
@@ -23,6 +29,7 @@ const INITIAL_STATE = {
       x: null,
       y: null
     },
+    price: null,
     rate: {
       MANA: 1
     },
@@ -30,7 +37,6 @@ const INITIAL_STATE = {
       availableParcelCount: null,
       gasPriceLimit: null,
       landsLimitPerBid: null,
-      currentPrice: null,
       totalManaBurned: null,
       totalLandsBidded: null,
       startTime: null,
@@ -51,7 +57,9 @@ export function auctionReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_AVAILABLE_PARCEL_REQUEST:
     case FETCH_AUCTION_RATE_REQUEST:
-    case FETCH_AUCTION_PARAMS_REQUEST: {
+    case FETCH_AUCTION_PRICE_REQUEST:
+    case FETCH_AUCTION_PARAMS_REQUEST:
+    case BID_ON_PARCELS_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
@@ -70,6 +78,17 @@ export function auctionReducer(state = INITIAL_STATE, action) {
             x: parcel.x,
             y: parcel.y
           }
+        }
+      }
+    }
+    case FETCH_AUCTION_PRICE_SUCCESS: {
+      const { price } = action
+      return {
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          price
         }
       }
     }
@@ -119,18 +138,24 @@ export function auctionReducer(state = INITIAL_STATE, action) {
         }
       }
     }
+    case BID_ON_PARCELS_SUCCESS: {
+      return {
+        ...state,
+        error: null,
+        loading: loadingReducer(state.loading, action)
+      }
+    }
     case FETCH_AVAILABLE_PARCEL_FAILURE:
+    case FETCH_AUCTION_PRICE_FAILURE:
     case FETCH_AUCTION_RATE_FAILURE:
-    case FETCH_AUCTION_PARAMS_FAILURE: {
+    case FETCH_AUCTION_PARAMS_FAILURE:
+    case BID_ON_PARCELS_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: action.error
       }
     }
-    default:
-      return state
-
     case SET_SELECTED_COORDINATES: {
       return {
         ...state,
@@ -140,5 +165,7 @@ export function auctionReducer(state = INITIAL_STATE, action) {
         }
       }
     }
+    default:
+      return state
   }
 }

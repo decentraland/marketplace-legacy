@@ -94,6 +94,7 @@
     "update_asset": "Update {asset_name} publication"
   },
   "atlas": {
+    "available_at_auction": "Available at auction",
     "loading": "Loading",
     "no_owner": "No Owner",
     "on_sale": "On Sale: ",
@@ -103,7 +104,10 @@
     "your_parcel": "Your parcel"
   },
   "auction": {
-    "description":
+    "description_after_finish": "The LAND auction has ended!",
+    "description_after_start":
+      "The LAND auction has started, participate and buy LAND before it ends!",
+    "description_before_start":
       "Participate in the LAND auction on December 10 and buy LAND!",
     "title": "Decentraland LAND Auction"
   },
@@ -116,6 +120,7 @@
     "title": "Auction Finished"
   },
   "auction_modal": {
+    "auction_terms_link": "LAND Auction Terms & Conditions",
     "authorization": "Authorization",
     "authorization_description":
       "Before you can purchase any LAND in the auction using {token}, you must first authorize the {contract_link} contract to access and operate it in your behalf",
@@ -123,31 +128,41 @@
     "confirmation": "Confirmation",
     "confirmation_description":
       "You are about to purchase {parcels} parcels of LAND for {price} {token}",
+    "decentraland_terms_link": "Terms of Service",
     "description":
       "There are just two things you need to do before you can start. First, you need to select the tokens you want to buy LAND with. Next, you have to authorize a new smart contract to access those tokens when you buy LAND.",
     "get_started": "Get started",
-    "i_agree_with_terms": "I accept the {terms_link}",
+    "i_agree_with_auction_terms": "I accept the {auction_terms_link}",
+    "i_agree_with_main_terms":
+      "I accept the {decentraland_terms_link} and the {privacy_policy_link}",
+    "insufficient_funds": "Insufficient funds",
+    "privacy_policy_link": "Privacy Policy",
     "processing_tx": "Processing Transaction",
     "submit": "Proceed",
-    "terms_and_conditions": "Terms & Conditions",
     "tx_failed": "Transaction Failed",
     "video_tutorial": "Video Tutorial",
-    "watch_tutorial": "Watch video tutorial"
+    "watch_tutorial": "Watch video tutorial",
+    "your_balance": "Your balance is: {balance} {token}"
   },
   "auction_page": {
     "available_parcels": "parcels available",
     "bid": "Purchase",
+    "blog_post": "blog post",
+    "conversion_disclaimer": "* Price increased {fee}% due to conversion fees",
     "description": "Find the LAND you want to buy",
     "empty_message":
-      "Find the parcels you want to buy, and add them to your cart. For more help, watch the {video_tutorial_link}",
+      "Find the parcels you want to buy, and add them to your cart. For more information, watch the {video_tutorial_link} or read the {blog_post_link}",
     "find_available_parcel": "Find available parcel",
     "gas_price": "Gas price",
     "land_price": "Price per parcel",
+    "max_amount_disclaimer":
+      "* Kyber reserves for {token} are not enough to trade {amount} MANA",
     "maximum_parcels_message":
       "If you try to buy more than {max} LAND in a single transaction it'll fail. You must submit this transaction and then buy more parcels in a subsequent transaction.",
     "maximum_parcels_title": "You reached the maximum LAND per transaction",
     "parcels": "Parcels",
     "parcels_tooltip": "You can only purchase up to {max} parcels at a time",
+    "refresh": "Refresh price",
     "searching": "Searching...",
     "sold": "Sold",
     "title": "LAND Cart",
@@ -236,7 +251,13 @@
     "tx_to_be_send":
       "You will send a transaction to {action} parcels: {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "You are going to publish the {asset_name} for {price}",
+    "error": "Prices don't match",
+    "re-enter": "Please re-enter the price to confirm"
+  },
   "footer": {
+    "code_of_ethics": "Code of Ethics",
     "color_key": "Color Key",
     "copyright": "© 2018 Decentraland. All rights reserved.",
     "mini_copyright": "© 2018 Decentraland.",
@@ -303,7 +324,6 @@
     "service_unavailable": "Service unavailable",
     "settings": "Settings",
     "sign_in": "Sign In",
-    "sign_in_notice": "You need to {sign_in_link} to access this page",
     "submit": "Submit",
     "the_estate": "the estate",
     "the_parcel": "the parcel",
@@ -465,6 +485,9 @@
       "mobile":
         "You can use mobile browsers such as {coinbase_link} or {imtoken_link}."
     }
+  },
+  "sign_in_notice": {
+    "message": "You need to connect your wallet to access this page"
   },
   "terms_modal": {
     "also_agree":

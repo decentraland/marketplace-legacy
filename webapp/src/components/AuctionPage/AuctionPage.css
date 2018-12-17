@@ -143,6 +143,13 @@
   right: 10px;
 }
 
+.AuctionPage .disclaimer {
+  margin-top: 5px;
+  font-size: 12px;
+  text-align: right;
+  color: var(--gray);
+}
+
 .AuctionPage .chevron.icon {
   display: none !important;
 }
@@ -150,6 +157,10 @@
 .AuctionPage .parcel-count {
   display: none;
   color: var(--gray);
+}
+
+.AuctionPage .parcel-count .warning.sign.icon {
+  color: var(--error);
 }
 
 @media (max-width: 992px) {
@@ -213,6 +224,10 @@
     right: 0;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .AuctionPage .disclaimer {
+    text-align: left;
   }
 
   .AuctionPage .auction-panel {
@@ -320,5 +335,21 @@
 
   .BidConfirmationModal .modal-body .actions .button {
     width: 100%;
+  }
+
+  .AuctionPage .ui.warning.message .warning.sign.icon {
+    transform: scale(0.8);
+  }
+
+  .AuctionPage .ui.warning.message .content .header {
+    margin-bottom: 0px;
+  }
+
+  .AuctionPage .ui.warning.message .content p {
+    display: none;
+  }
+
+  .AuctionPage .ui.warning.message {
+    margin-bottom: 0px;
   }
 }

@@ -192,7 +192,11 @@ function* handleTransferRequest({ estate, to }) {
 
     const estateRegistry = eth.getContract('EstateRegistry')
     const txHash = yield call(() =>
-      estateRegistry.safeTransferFrom(oldOwner, to, estate.id)
+      estateRegistry.safeTransferFrom['address,address,uint256'](
+        oldOwner,
+        to,
+        estate.id
+      )
     )
 
     const transfer = {

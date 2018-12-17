@@ -94,6 +94,7 @@
     "update_asset": "{asset_name} 출판물 업데이트"
   },
   "atlas": {
+    "available_at_auction": "경매에서 사용 가능",
     "loading": "로드 중",
     "no_owner": "소유자 없음",
     "on_sale": "판매 중 :",
@@ -103,7 +104,11 @@
     "your_parcel": "당신의 토지"
   },
   "auction": {
-    "description": "12 월 10 일 LAND 경매에 참가하여 LAND을 구입하십시오!",
+    "description_after_finish": "LAND 경매가 끝났습니다!",
+    "description_after_start":
+      "LAND 경매가 시작되었습니다. 이제 LAND을 구입할 수 있습니다!",
+    "description_before_start":
+      "12 월 10 일 LAND 경매에 참가하여 LAND을 구입하십시오!",
     "title": "Decentraland LAND 경매"
   },
   "auction_finished": {
@@ -115,6 +120,7 @@
     "title": "경매 완료"
   },
   "auction_modal": {
+    "auction_terms_link": "LAND 경매 이용 약관",
     "authorization": "권한 부여",
     "authorization_description":
       "{token}를 사용하여 경매에서 LAND을 구입하기 전에 먼저 {contract_link} 계약을 승인하여 사용자를 대신하여 액세스하고 운영해야합니다",
@@ -122,30 +128,40 @@
     "confirmation": "확인",
     "confirmation_description":
       "{price} {token}에 대해 {parcels} LAND을 (를) 구매하려고합니다.",
+    "decentraland_terms_link": "서비스 약관",
     "description":
       "이 새로운 경매에 참여하려면 새로운 {contract_link} 계약을 승인해야합니다.",
     "get_started": "시작하다",
-    "i_agree_with_terms": "나는 {terms_link}를 받아 들인다.",
+    "i_agree_with_auction_terms": "나는 {auction_terms_link}를 받아 들인다.",
+    "i_agree_with_main_terms":
+      "나는 {decentraland_terms_link}와 {privacy_policy_link}을 받아 들인다.",
+    "insufficient_funds": "불충분 한 자금",
+    "privacy_policy_link": "개인 정보 정책",
     "processing_tx": "거래 처리 중",
     "submit": "발하다",
-    "terms_and_conditions": "이용 약관",
     "tx_failed": "거래 실패",
     "video_tutorial": "비디오 자습서",
-    "watch_tutorial": "비디오 자습서보기"
+    "watch_tutorial": "비디오 자습서보기",
+    "your_balance": "잔액 : {balance} {token}"
   },
   "auction_page": {
     "available_parcels": "사용 가능한 소포",
     "bid": "매수",
+    "blog_post": "블로그 게시물",
+    "conversion_disclaimer": "* 전환료로 인해 가격이 {fee} % 증가했습니다.",
     "description": "구매하려는 LAND을 찾으십시오.",
     "empty_message": "구입하려는 소포를 찾아 장바구니에 추가하십시오. ",
     "find_available_parcel": "사용 가능한 소포 찾기",
     "gas_price": "가스 가격",
     "land_price": "LAND 가격",
+    "max_amount_disclaimer":
+      "* {token}에 대한 Kyber 예비는 {amount} MANA를 거래하기에는 충분하지 않습니다.",
     "maximum_parcels_message":
       "단일 트랜잭션에서 {max} LAND 이상을 구매하려고 시도하면 실패합니다. ",
     "maximum_parcels_title": "거래 당 최대 LAND에 도달했습니다.",
     "parcels": "소포",
     "parcels_tooltip": "한 번에 {max} 소포 만 구입할 수 있습니다.",
+    "refresh": "새로 고침 가격",
     "searching": "수색...",
     "sold": "판매 된",
     "title": "장바구니에 넣기",
@@ -233,7 +249,13 @@
     "tx_to_be_send":
       "다음과 같이 트랜잭션을 {action} 소포로 보냅니다. {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "{price}에 대한 {asset_name}을 게시하려고합니다.",
+    "error": "가격이 일치하지 않습니다.",
+    "re-enter": "확인을 위해 가격을 다시 입력하십시오."
+  },
   "footer": {
+    "code_of_ethics": "윤리 강령",
     "color_key": "색상 키",
     "copyright": "© 2018 Decentraland. 판권 소유.",
     "mini_copyright": "© 2018 Decentraland.",
@@ -300,7 +322,6 @@
     "service_unavailable": "서비스를 사용할 수 없음",
     "settings": "설정",
     "sign_in": "로그인",
-    "sign_in_notice": "이 페이지에 액세스하려면 {sign_in_link}해야합니다.",
     "submit": "제출",
     "the_estate": "재산",
     "the_parcel": "소포",
@@ -458,6 +479,9 @@
       "mobile":
         "{coinbase_link} 또는 {imtoken_link}과 같은 모바일 브라우저를 사용할 수 있습니다."
     }
+  },
+  "sign_in_notice": {
+    "message": "이 페이지에 액세스하려면 지갑을 연결해야합니다."
   },
   "terms_modal": {
     "also_agree":

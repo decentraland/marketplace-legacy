@@ -1,11 +1,11 @@
 import { txUtils } from 'decentraland-eth'
-
 import {
   FETCH_TRANSACTION_FAILURE,
   FIX_REVERTED_TRANSACTION,
   REPLACE_TRANSACTION_SUCCESS
 } from '@dapps/modules/transaction/actions'
 import { add } from '@dapps/modules/analytics/utils'
+
 import {
   BUY_SUCCESS,
   PUBLISH_SUCCESS,
@@ -28,7 +28,11 @@ import {
   TRANSFER_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
-import { LEARN_MORE_AUCTION } from 'modules/auction/actions'
+import {
+  BID_ON_PARCELS_SUCCESS,
+  SET_ON_CHAIN_PARCEL_OWNER,
+  LEARN_MORE_AUCTION
+} from 'modules/auction/actions'
 
 const addAssetType = (actionName, assetType) =>
   `${actionName} ${assetType[0].toUpperCase() + assetType.slice(1)}`
@@ -156,6 +160,21 @@ export function track() {
   add(TRANSFER_ESTATE_SUCCESS, 'Transfer Estate', action => ({
     token_id: action.transfer.estate.id,
     to: action.transfer.to
+  }))
+
+  add(BID_ON_PARCELS_SUCCESS, 'Bid on parcels', action => ({
+    beneficiary: action.beneficiary,
+    parcels: action.xs
+      .map((x, index) => `${x}, ${action.ys[index]}`)
+      .join(', '),
+    currentPrice: action.params.currentPrice,
+    token: action.params.token,
+    rate: action.params.rate
+  }))
+
+  add(SET_ON_CHAIN_PARCEL_OWNER, 'Parcel owner collision', action => ({
+    parcelId: action.parcelId,
+    owner: action.owner
   }))
 
   add(LEARN_MORE_AUCTION, 'Learn More Auction')

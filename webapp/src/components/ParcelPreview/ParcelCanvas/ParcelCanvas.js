@@ -12,6 +12,7 @@ import {
   Bounds,
   Viewport,
   TYPES,
+  COLORS,
   getLoadingColor,
   getBackgroundColor,
   getTextColor
@@ -459,7 +460,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height, atlas } = this.props
+    const { width, height, atlas, getColors } = this.props
     const { nw, se, pan, size, center } = this.state
     const ctx = this.canvas.getContext('2d')
 
@@ -468,7 +469,8 @@ export default class ParcelPreview extends React.PureComponent {
       width,
       height,
       size,
-      pan
+      pan,
+      colors: typeof getColors === 'function' ? getColors() : COLORS
     }).draw({
       nw,
       se,

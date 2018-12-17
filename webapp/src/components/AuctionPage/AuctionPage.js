@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
+import { COLORS } from 'shared/map'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelCoords from 'components/ParcelCoords'
 import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
@@ -26,11 +27,14 @@ import {
   coordsType
 } from 'components/types'
 import {
-  hasSeenAuctionHelper,
   TOKEN_SYMBOLS,
+  TOKEN_MAX_CONVERSION_AMOUNT,
   AUCTION_HELPERS,
+  hasSeenAuctionHelper,
   dismissAuctionHelper,
-  getVideoTutorialLink
+  getYoutubeTutorialId,
+  addConversionFee,
+  getConversionFeePercentage
 } from 'modules/auction/utils'
 import { preventDefault } from 'lib/utils'
 import { isEqualCoords } from 'shared/parcel'
@@ -39,15 +43,22 @@ import { TYPES } from 'shared/map'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
 
+const AUCTION_COLORS = {
+  ...COLORS,
+  unowned: COLORS.onSale,
+  onSale: `#306D90`
+}
+
 import './AuctionPage.css'
 
-const REFRESH_OWNERS_INTERVAL = 10000 // 10 seconds
+const REFRESH_OWNERS_INTERVAL = 30000 // 30 seconds
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
     isConnected: PropTypes.bool.isRequired,
     isConnecting: PropTypes.bool.isRequired,
     isAvailableParcelLoading: PropTypes.bool.isRequired,
+    isRefreshingPrice: PropTypes.bool,
     authorization: authorizationType,
     params: auctionParamsType,
     center: PropTypes.shape({
@@ -70,7 +81,6 @@ export default class AuctionPage extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.hasFetchedParams = false
     this.mounted = false
     this.timoutId = null
 
@@ -78,22 +88,27 @@ export default class AuctionPage extends React.PureComponent {
       showTokenTooltip: !hasSeenAuctionHelper(
         AUCTION_HELPERS.SEEN_AUCTION_TOKEN_TOOLTIP
       ),
-      toggle: false
+      toggle: false,
+      refreshingParcelId: null
     }
   }
 
   componentWillMount() {
-    const { onFetchAvailableParcel, isConnected } = this.props
-    if (this.getSelectedParcels().length === 0) {
-      onFetchAvailableParcel()
-    }
-
-    if (isConnected) {
-      this.showAuctionModal(this.props)
-    }
-
+    const { isConnected } = this.props
     this.mounted = true
-    this.updateSelectionOwners()
+    if (isConnected) {
+      this.handleConnect()
+    }
+  }
+
+  getColors = () => {
+    return AUCTION_COLORS
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.isConnected && nextProps.isConnected) {
+      this.handleConnect()
+    }
   }
 
   componentWillUnmount() {
@@ -104,9 +119,12 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isConnected && !nextProps.modal.open) {
-      this.showAuctionModal(nextProps)
+  handleConnect() {
+    this.showAuctionModal(this.props)
+    // bye bye estella fugaz
+    // this.updateSelectionOwners()
+    if (this.getSelectedParcels().length === 0) {
+      this.props.onFetchAvailableParcel()
     }
   }
 
@@ -137,11 +155,11 @@ export default class AuctionPage extends React.PureComponent {
 
     this.updateOwner(asset)
 
-    const wasOverLimit = this.hasReachedLimit(
+    const wasOverLimit = this.hasReachedParcelLimit(
       this.props.selectedCoordinatesById
     )
     const newSelectedCoordsById = this.buildNewSelectedCoords(asset)
-    const isOverLimit = this.hasReachedLimit(newSelectedCoordsById)
+    const isOverLimit = this.hasReachedParcelLimit(newSelectedCoordsById)
 
     if (!wasOverLimit || (wasOverLimit && !isOverLimit)) {
       this.props.onChangeCoords(newSelectedCoordsById)
@@ -178,7 +196,7 @@ export default class AuctionPage extends React.PureComponent {
 
   handleChangeToken = token => {
     this.handleCloseTooltip()
-    this.props.onChangeToken(token)
+    this.props.onFetchAuctionRate(token)
   }
 
   updateOwner = async parcel => {
@@ -196,12 +214,16 @@ export default class AuctionPage extends React.PureComponent {
     // it'll try to use the singleton from the parent folder.
     // Fixing this is a issue on it's own so we'll leave this code here for now.
     const landRegistry = eth.getContract('LANDRegistry')
-    const tokenId = await landRegistry.encodeTokenId(parcel.x, parcel.y)
-    return landRegistry.ownerOf(tokenId)
+    return landRegistry.ownerOfLand(parcel.x, parcel.y)
   }
 
   updateSelectionOwners = async () => {
-    await Promise.all(this.getSelectedParcels().map(this.updateOwner))
+    const selectedParcels = this.getSelectedParcels()
+    for (const parcel of selectedParcels) {
+      this.setState({ refreshingParcelId: parcel.id })
+      await this.updateOwner(parcel)
+    }
+    this.setState({ refreshingParcelId: null })
     this.timoutId = setTimeout(() => {
       if (!this.mounted) return
       this.updateSelectionOwners()
@@ -251,15 +273,22 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   roundPrice = price => {
-    const { token } = this.props
-    return (token === 'MANA'
-      ? Math.round(price)
-      : parseFloat(price.toFixed(2))
-    ).toLocaleString()
+    return this.isToken('MKR') ? parseFloat(price) : Math.round(price)
+  }
+
+  isToken(token) {
+    return this.props.token === token
   }
 
   handleToggle = () => {
     this.setState({ toggle: !this.state.toggle })
+  }
+
+  handleRefreshPrice = async () => {
+    const { isRefreshingPrice, onFetchAuctionPrice } = this.props
+    if (!isRefreshingPrice) {
+      onFetchAuctionPrice()
+    }
   }
 
   render() {
@@ -270,19 +299,16 @@ export default class AuctionPage extends React.PureComponent {
       atlas,
       token,
       rate,
+      price,
       selectedCoordinatesById,
       isConnecting,
       isConnected,
-      isAvailableParcelLoading
+      isAvailableParcelLoading,
+      isRefreshingPrice
     } = this.props
 
     const { showTokenTooltip } = this.state
-    const {
-      availableParcelCount,
-      landsLimitPerBid,
-      gasPriceLimit,
-      currentPrice
-    } = params
+    const { availableParcelCount, landsLimitPerBid, gasPriceLimit } = params
     const { x, y } = center
 
     if (!isConnecting && !isConnected) {
@@ -293,7 +319,7 @@ export default class AuctionPage extends React.PureComponent {
       )
     }
 
-    if (!authorization || currentPrice == null || x == null) {
+    if (!authorization || price == null || x == null) {
       return (
         <div>
           <Loader active size="massive" />
@@ -301,15 +327,37 @@ export default class AuctionPage extends React.PureComponent {
       )
     }
 
+    const isFetchingRate = rate == null
+
     const selectedParcels = this.getSelectedParcels()
     const validSelectedParcels = selectedParcels.filter(
       parcel => parcel.owner == null
     )
 
+    const landPrice = this.roundPrice(price * rate)
+    const landPriceInMana = Math.round(price)
+
+    const totalPriceInMana = Math.round(price * validSelectedParcels.length)
+    let totalPrice = this.roundPrice(totalPriceInMana * rate)
+
+    const hasConversionFees = !this.isToken('MANA')
+
+    if (hasConversionFees) {
+      totalPrice = Math.round(addConversionFee(totalPrice))
+    }
+
+    const canConvert =
+      !hasConversionFees ||
+      (price <= TOKEN_MAX_CONVERSION_AMOUNT[token] && rate > 0) ||
+      rate > 0
+
     let auctionMenuClasses = 'auction-menu'
     if (this.state.toggle) {
       auctionMenuClasses += ' open'
     }
+
+    const shouldShowFootnote =
+      validSelectedParcels.length > 0 && hasConversionFees
 
     return (
       <div className="AuctionPage">
@@ -321,9 +369,10 @@ export default class AuctionPage extends React.PureComponent {
             selected={validSelectedParcels}
             isDraggable
             showPopup
-            showControls={true}
+            showControls={false}
             showMinimap={true}
             onClick={this.handleSelectUnownedParcel}
+            getColors={this.getColors}
           />
         </div>
 
@@ -336,7 +385,10 @@ export default class AuctionPage extends React.PureComponent {
                     {t('auction_page.title')}{' '}
                     {validSelectedParcels.length > 0 ? (
                       <span className="parcel-count">
-                        &nbsp;({validSelectedParcels.length})
+                        &nbsp;({validSelectedParcels.length}){' '}
+                        {this.hasReachedParcelLimit(selectedCoordinatesById) ? (
+                          <Icon name="warning sign" size="small" />
+                        ) : null}
                       </span>
                     ) : null}
                   </span>
@@ -394,23 +446,38 @@ export default class AuctionPage extends React.PureComponent {
                           {t('auction_page.land_price')}
                         </p>
                         <Token
-                          loading={rate == null}
+                          loading={isFetchingRate}
                           symbol={token}
-                          amount={this.roundPrice(currentPrice * rate)}
-                        />
+                          amount={landPrice.toLocaleString()}
+                        >
+                          <span className="secondary">
+                            &nbsp;
+                            <span
+                              className="tooltip"
+                              data-balloon-pos="up"
+                              data-balloon={t('auction_page.refresh')}
+                            >
+                              <Icon
+                                loading={isRefreshingPrice}
+                                size="small"
+                                name="refresh"
+                                onClick={this.handleRefreshPrice}
+                              />
+                            </span>
+                          </span>
+                        </Token>
                       </div>
                     </div>
                     <div className="output-information">
                       <div className="information-block">
                         <p className="subtitle">
                           {t('auction_page.total_price')}
+                          {shouldShowFootnote ? ' *' : null}
                         </p>
                         <Token
-                          loading={rate == null}
+                          loading={isFetchingRate}
                           symbol={token}
-                          amount={this.roundPrice(
-                            currentPrice * rate * validSelectedParcels.length
-                          )}
+                          amount={totalPrice.toLocaleString()}
                         />
                       </div>
                       <div className="information-block">
@@ -418,10 +485,12 @@ export default class AuctionPage extends React.PureComponent {
                           type="submit"
                           primary={true}
                           disabled={
-                            validSelectedParcels.length === 0 || rate == null
+                            validSelectedParcels.length === 0 ||
+                            isFetchingRate ||
+                            !canConvert
                           }
                         >
-                          {rate == null ? (
+                          {isFetchingRate ? (
                             <span>{t('global.loading')}&hellip;</span>
                           ) : (
                             t('auction_page.bid')
@@ -432,9 +501,25 @@ export default class AuctionPage extends React.PureComponent {
                   </div>
                 </Form>
               </Grid.Column>
+              {shouldShowFootnote ? (
+                <Grid.Column width={16}>
+                  <div className="disclaimer">
+                    {canConvert
+                      ? t('auction_page.conversion_disclaimer', {
+                          fee: getConversionFeePercentage()
+                        })
+                      : t('auction_page.max_amount_disclaimer', {
+                          amount: (
+                            totalPriceInMana || landPriceInMana
+                          ).toLocaleString(),
+                          token
+                        })}
+                  </div>
+                </Grid.Column>
+              ) : null}
             </Grid.Row>
 
-            {this.hasReachedLimit(selectedCoordinatesById) ? (
+            {this.hasReachedParcelLimit(selectedCoordinatesById) ? (
               <Grid.Row>
                 <Grid.Column width={16}>
                   <Message
@@ -458,6 +543,9 @@ export default class AuctionPage extends React.PureComponent {
                         <ParcelCoord
                           key={parcel.id}
                           parcel={parcel}
+                          isLoading={
+                            this.state.refreshingParcelId === parcel.id
+                          }
                           onClick={this.handleParcelClick}
                           onDelete={this.handleDeselectUnownedParcel}
                           status={
@@ -475,11 +563,20 @@ export default class AuctionPage extends React.PureComponent {
                         values={{
                           video_tutorial_link: (
                             <a
-                              href={getVideoTutorialLink()}
+                              href={`https://www.youtube.com/watch?v=${getYoutubeTutorialId()}`}
                               rel="noopener noreferrer"
                               target="_blank"
                             >
                               {t('auction_page.video_tutorial')}
+                            </a>
+                          ),
+                          blog_post_link: (
+                            <a
+                              href="https://decentraland.org/blog/technology/how-will-the-land-auction-work"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              {t('auction_page.blog_post')}
                             </a>
                           )
                         }}

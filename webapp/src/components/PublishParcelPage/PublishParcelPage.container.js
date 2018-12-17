@@ -11,8 +11,8 @@ import {
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { publishRequest } from 'modules/publication/actions'
+import { openModal } from 'modules/ui/actions'
 import { ASSET_TYPES } from 'shared/asset'
-
 import PublishParcelPage from './PublishParcelPage'
 
 const mapState = (state, ownProps) => {
@@ -41,7 +41,14 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     onPublish: publication =>
       dispatch(
-        publishRequest({ ...publication, asset_type: ASSET_TYPES.parcel })
+        openModal('FatfingerModal', {
+          onSubmit: () =>
+            dispatch(
+              publishRequest({ ...publication, asset_type: ASSET_TYPES.parcel })
+            ),
+          assetType: ASSET_TYPES.parcel,
+          priceToConfirm: publication.price
+        })
       ),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))
   }

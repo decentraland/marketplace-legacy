@@ -29,7 +29,7 @@ export default class AuctionRouterPage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isConnected) {
+    if (!this.props.isConnected && nextProps.isConnected) {
       this.fetchData()
     }
   }

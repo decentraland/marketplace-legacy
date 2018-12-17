@@ -53,20 +53,6 @@ function* handleConnectWalletSuccess(action) {
       Marketplace: ['LANDRegistry', 'EstateRegistry']
     }
   }
-  if (isFeatureEnabled('AUCTION')) {
-    Object.assign(authorization.allowances, {
-      LANDAuction: [
-        'MANAToken',
-        'ZILToken',
-        'DAIToken',
-        'KNCToken',
-        'SNTToken',
-        'BNBToken',
-        'MKRToken',
-        'ELFToken'
-      ]
-    })
-  }
   if (isFeatureEnabled('MORTGAGES')) {
     Object.assign(authorization.allowances, {
       MortgageHelper: ['MANAToken'],

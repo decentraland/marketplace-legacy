@@ -91,6 +91,7 @@
     "update_asset": "{asset_name}の公開物件を更新する"
   },
   "atlas": {
+    "available_at_auction": "オークションで入手可能",
     "loading": "読込み中",
     "no_owner": "所有者なし",
     "on_sale": "販売中: ",
@@ -100,49 +101,65 @@
     "your_parcel": "あなたの区画"
   },
   "auction": {
-    "description": "12月10日から土地を購入できるLANDオークションが開催されます",
+    "description_after_finish": "土地オークションは終了しました！",
+    "description_after_start":
+      "土地オークションが始まりました。今すぐLANDを購入できます。",
+    "description_before_start":
+      "12月10日にLANDオークションに参加し、LANDを購入！",
     "title": "Decentraland LANDオークション"
   },
   "auction_finished": {
     "cta": "マーケットに行く",
-    "description": "ご参加いただきありがとうございます",
+    "description": "参加ありがとうございました",
     "land_sold": "売却済みLAND",
-    "mana_burned": "MANAは焼却されました",
+    "mana_burned": "MANAはバーンされました",
     "stats_title": "統計を見る：",
     "title": "オークションは終了しました"
   },
   "auction_modal": {
+    "auction_terms_link": "LANDオークション利用規約",
     "authorization": "承認",
     "authorization_description":
-      "{token}を使用してオークションでLANDを購入するには、まず{contract_link}契約でトークン使用を承認する必要があります",
+      "{token}を使用してLANDを購入するには、まず{contract_link}契約でトークンの使用を承認する必要があります。",
     "authorize_token": "{token}トークンを承認する",
     "confirmation": "確認",
     "confirmation_description":
-      "{parcels} LANDを{price} {token}で購入しようとしています",
+      "{parcels}LANDを{price} {token}で購入しようとしています",
+    "decentraland_terms_link": "利用規約",
     "description":
-      "始める前に次の2点を確認してください。まずLAND（土地）購入に使用するトークンを選択します。次にそのトークンがLAND購入に使用できるようにスマートコントラクトで承認してください。",
+      "始める前に次の2点を確認してください。LAND（土地）購入に使用するトークンを選択できます。そのトークンがLAND購入に使用できるようにスマートコントラクトで承認してください。",
     "get_started": "始める",
-    "i_agree_with_terms": "{terms_link}に同意する",
-    "processing_tx": "取引の処理",
-    "submit": "続行する",
-    "terms_and_conditions": "利用規約",
+    "i_agree_with_auction_terms": "私は{auction_terms_link}に同意します",
+    "i_agree_with_main_terms":
+      "私は{decentraland_terms_link}と{privacy_policy_link}に同意します",
+    "insufficient_funds": "残高不足",
+    "privacy_policy_link": "個人情報保護方針",
+    "processing_tx": "処理中",
+    "submit": "続ける",
     "tx_failed": "処理に失敗しました",
     "video_tutorial": "ビデオチュートリアル",
-    "watch_tutorial": "ビデオチュートリアルを見る"
+    "watch_tutorial": "ビデオチュートリアルを見る",
+    "your_balance": "あなたの残高は：{balance} {token}"
   },
   "auction_page": {
-    "available_parcels": "販売中の区画",
-    "bid": "購入",
-    "description": "購入したい土地を選んで下さい",
-    "empty_message": "購入したい土地を選んでカートに追加",
-    "find_available_parcel": "利用可能な区画を表示",
+    "available_parcels": "区画が販売中",
+    "bid": "購入する",
+    "blog_post": "ブログ",
+    "conversion_disclaimer": "*価格は変換手数料のために{fee}％増加しました",
+    "description": "購入したい土地(LAND)を選んで下さい",
+    "empty_message":
+      "購入したい区画を選んでカートに追加します。詳しい参加方法を{video_tutorial_link}動画で観る",
+    "find_available_parcel": "購入可能な区画を検索",
     "gas_price": "ガス価格",
-    "land_price": "LAND価格",
+    "land_price": "LAND単価",
+    "max_amount_disclaimer":
+      "* Kyberに{amount} MANAに換金するために充分な{token} トークンがありません。",
     "maximum_parcels_message":
-      "単一のトランザクションで{max}LAND以上を購入しようとすると失敗します。",
+      "単一のトランザクションで{max} LAND以上を購入しようとすると失敗します。",
     "maximum_parcels_title": "1トランザクションあたり最大LANDに達しました",
-    "parcels": "区画",
+    "parcels": "区画数",
     "parcels_tooltip": "一度に購入できるのは{max}区画までです",
+    "refresh": "価格を更新",
     "searching": "検索中...",
     "sold": "売却済",
     "title": "カート",
@@ -228,11 +245,17 @@
     "new_selection": "新しいエステートの区画を地図から選択してください。",
     "tx_to_be_send": "トランザクションを{action}した区画{parcels}へ送信します。"
   },
+  "fatfinger_modal": {
+    "description": "{price}の{asset_name}を公開する予定です",
+    "error": "価格は一致しません",
+    "re-enter": "確認のために価格を再入力してください"
+  },
   "footer": {
+    "code_of_ethics": "倫理規定",
     "color_key": "カラーガイド",
     "copyright": "© 2018 Decentraland. All rights reserved.",
     "mini_copyright": "© 2018 Decentraland.",
-    "privacy_policy": "プライバシーポリシー",
+    "privacy_policy": "個人情報保護方針",
     "terms": "利用規約"
   },
   "global": {
@@ -266,7 +289,7 @@
     "expired_at": "{time}に締切済み",
     "expires_in": "締切：{time}",
     "expires_in_more_than_years": "締切まであと{years}年以上",
-    "for": "for",
+    "for": " ",
     "hours": "時間",
     "land": "LAND",
     "learn_more": "もっと詳しく知る",
@@ -281,11 +304,11 @@
     "owner_address_warning": "このアドレスはすでに所有者に指定されています",
     "paid_at": "支払済み",
     "parcels": "パーセル(区画)",
-    "profile": "プロフィール",
+    "profile": "マイLAND",
     "publications": "公開中の区画",
     "recipient_address": "受信者アドレス",
     "remove": "削除する",
-    "request": "リクエスト",
+    "request": "申請する",
     "retry": "やり直す",
     "revoke": "取り消す",
     "sale": "販売",
@@ -295,8 +318,6 @@
     "service_unavailable": "サービスは利用できません",
     "settings": "設定",
     "sign_in": "サインイン",
-    "sign_in_notice":
-      "アクセスするにはこちらで{sign_in_link}する必要があります",
     "submit": "送信",
     "the_estate": "エステート",
     "the_parcel": "区画",
@@ -337,21 +358,21 @@
     "cancel": "ローンをキャンセルする",
     "claim": "区画を請求する",
     "defaulted_in": "デフォルト",
-    "duration_placeholder": "有効期限日数",
+    "duration_placeholder": "支払期限日数",
     "errors": {
       "amount_minimum": "{amount}より大きい必要があります。",
-      "deposit_gt_balance": "必要なデポジットが残高よりも大きい",
+      "deposit_gt_balance": "必要なデポジットへ残高が不足しています",
       "duration_gte_payable":
-        "有効期間は支払期間と同じか、それよりも長くなければなりません。",
+        "支払期限日数は支払予定日数と同じか、それよりも長くなければなりません。",
       "insufficient_funds": "MANAが不足しています",
       "maximum_interest_rate": "レートは{maximum}以下の必要があります。",
-      "minimum_duration": "有効期限は{minimum}日以上の必要があります。",
+      "minimum_duration": "支払期限は{minimum}日以上の必要があります。",
       "minimum_interest_rate": "レートは{minimum}以上で設定してください。",
       "minimum_payable": "{minimum}日以上で支払い設定する必要があります。",
       "parcel_price": "総額は区画の価格以下にしなければいけません。"
     },
-    "expiration": "有効期限を申請する",
-    "expiration_placeholder": "ローンの有効期限",
+    "expiration": "リクエスト締切日",
+    "expiration_placeholder": "期日まで有効",
     "fetching_data": "ローンデータの取得",
     "interest_rate": "利率",
     "interest_rate_placeholder": "利率",
@@ -362,8 +383,8 @@
     "partial_payment_desc":
       "{parcel_name}のLANDを購入する為のローンへの部分払いを行おうとしています。 未払い残高:{outstanding_amount}",
     "pay": "支払う",
-    "payable": "支払い方法",
-    "payable_placeholder": "数日で支払い可能",
+    "payable": "支払予定日数",
+    "payable_placeholder": "日数を入力",
     "pending_tx": "次の為のローン",
     "please_authorize_MANA":
       "{settings_link}でMANAを運用するためにMortgageHelper契約を承認してください",
@@ -415,7 +436,7 @@
   },
   "parcel_tags": {
     "adjacent": "隣接",
-    "district": "地区",
+    "district": "ディストリクト",
     "plaza": "プラザ",
     "proximity": "{distance}区画先",
     "road": "道路"
@@ -446,21 +467,25 @@
   "sign_in": {
     "account_unlocked": "アカウントがアンロックされているか確認してください",
     "get_started": "始める",
-    "intro": "まず始めにあなたのLAND(土地)を安全に保管する環境を整えてください",
+    "intro":
+      "まず始めにあなたのLAND(土地)を安全に保管する環境を用意して下さい。",
     "options": {
       "desktop":
-        "{metamask_link}の拡張機能や{ledger_nano_link}などのハードウェアウォレットを使用できます",
+        "{metamask_link}拡張機能や{ledger_nano_link}などのハードウェアウォレットが使用できます。",
       "mobile":
-        "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます"
+        "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます。"
     }
+  },
+  "sign_in_notice": {
+    "message": "このページにアクセスするにはウォレットに接続する必要があります"
   },
   "terms_modal": {
     "also_agree":
-      "また、お客様の情報をどのように処理するのかについて記述している{privacy_policy_link}に同意するものとします。",
+      "また個人情報を扱いに関する{privacy_policy_link}に同意するものとします。",
     "by_agreeing":
-      "下記の \"同意する\"を選択することにより、{terms_of_service_link}に同意したことになります。",
+      "下記の\"同意する\"を選択することにより、{terms_of_service_link}に同意したことになります。",
     "explanation":
-      "このdAppは、Ethereumブロックチェーン上で実行される分散型取引所と同期しています。",
+      "このdAppはEthereumブロックチェーン上で実行される分散型取引所と同期しています。",
     "i_agree": "同意する",
     "privacy_policy": "個人情報保護方針",
     "terms_of_service": "利用規約",

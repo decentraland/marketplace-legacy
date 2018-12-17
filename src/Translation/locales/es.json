@@ -95,6 +95,7 @@
     "update_asset": "Actualizar la publicación {asset_name}"
   },
   "atlas": {
+    "available_at_auction": "Disponible en subasta",
     "loading": "Cargando",
     "no_owner": "Sin Dueño",
     "on_sale": "En Venta: ",
@@ -104,8 +105,11 @@
     "your_parcel": "Tu parcela"
   },
   "auction": {
-    "description":
-      "¡Participe en la subasta de LAND el 10 de diciembre y compre LAND!",
+    "description_after_finish": "La subasta de LAND ha terminado!",
+    "description_after_start":
+      "La subasta LAND ha comenzado, ¡ahora puedes comprar LAND!",
+    "description_before_start":
+      "¡Participe en la subasta LAND el 10 de diciembre y compre LAND!",
     "title": "Subasta Decentraland LAND"
   },
   "auction_finished": {
@@ -117,6 +121,7 @@
     "title": "Subasta terminada"
   },
   "auction_modal": {
+    "auction_terms_link": "Términos y condiciones de la subasta LAND",
     "authorization": "Autorización",
     "authorization_description":
       "Antes de poder comprar cualquier LAND en la subasta usando {token}, primero debe autorizar el contrato {contract_link} para acceder y operarlo en su nombre.",
@@ -124,32 +129,43 @@
     "confirmation": "Confirmación",
     "confirmation_description":
       "Está a punto de comprar {parcels} parcelas de LAND por {price} {token}",
+    "decentraland_terms_link": "Términos de servicio",
     "description":
       "Para participar en esta nueva subasta, deberá autorizar el nuevo contrato {contract_link}.",
     "get_started": "Empezar",
-    "i_agree_with_terms": "Acepto los {terms_link}",
+    "i_agree_with_auction_terms": "Acepto el {auction_terms_link}",
+    "i_agree_with_main_terms":
+      "Acepto el {decentraland_terms_link} y el {privacy_policy_link}",
+    "insufficient_funds": "Fondos insuficientes",
+    "privacy_policy_link": "Política de privacidad",
     "processing_tx": "Procesando Transacción",
     "submit": "Proceder",
-    "terms_and_conditions": "Términos y Condiciones",
     "tx_failed": "Transacción fallida",
     "video_tutorial": "Video Tutorial",
-    "watch_tutorial": "Ver video tutorial"
+    "watch_tutorial": "Ver video tutorial",
+    "your_balance": "Tu saldo es: {balance} {token}"
   },
   "auction_page": {
     "available_parcels": "parcelas disponibles",
     "bid": "Comprar",
+    "blog_post": "entrada en el blog",
+    "conversion_disclaimer":
+      "* El precio fue aumentado un {fee}% debido a las tarifas de conversión.",
     "description": "Encuentra LAND que quieres comprar.",
     "empty_message":
-      "Encuentre las parcelas que desea comprar y agréguelas a su carrito. ",
+      "Encuentre las parcelas que desea comprar y agréguelas a su carrito. Para más información, vea el {video_tutorial_link} o lea la {blog_post_link}",
     "find_available_parcel": "Encuentra parcelas disponibles",
     "gas_price": "Precio del gas",
     "land_price": "Precio LAND",
+    "max_amount_disclaimer":
+      "* Las reservas de Kyber para {token} no son suficientes para cambiar {amount} MANA",
     "maximum_parcels_message":
       "Si intentas comprar más de {max} LAND en una sola transacción, fallará. ",
     "maximum_parcels_title":
       "Alcanzó la cantidad máxima de LAND por transacción",
     "parcels": "Parcelas",
     "parcels_tooltip": "Solo puedes comprar {max} parcelas a la vez",
+    "refresh": "Precio de actualización",
     "searching": "Buscando...",
     "sold": "Vendido",
     "title": "Carro de compras de LAND",
@@ -237,7 +253,13 @@
     "new_selection": "Seleccione las parcelas en el mapa para su nueva finca",
     "tx_to_be_send": "Enviarás una transacción a {action} parcels: {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "Vas a publicar el {asset_name} por {price}",
+    "error": "Los precios no coinciden",
+    "re-enter": "Por favor, vuelva a introducir el precio para confirmar"
+  },
   "footer": {
+    "code_of_ethics": "Código de Ética",
     "color_key": "Mapa de Colores",
     "copyright": "© 2018 Decentraland. Todos los derechos reservados.",
     "mini_copyright": "© 2018 Decentraland.",
@@ -304,7 +326,6 @@
     "service_unavailable": "Servicio no disponible",
     "settings": "Configuración",
     "sign_in": "Conectar",
-    "sign_in_notice": "Necesitas {sign_in_link} para acceder a esta página",
     "submit": "Enviar",
     "the_estate": "la propiedad",
     "the_parcel": "la parcela",
@@ -467,6 +488,9 @@
       "mobile":
         "Puedes usar navegadores móviles como {coinbase_link} o {imtoken_link}."
     }
+  },
+  "sign_in_notice": {
+    "message": "Necesitas conectar tu billetera para acceder a esta página."
   },
   "terms_modal": {
     "also_agree":

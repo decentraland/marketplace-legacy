@@ -121,8 +121,7 @@ export const mortgageType = shape({
 export const auctionParamsType = shape({
   availableParcelCount: number,
   gasPriceLimit: number,
-  landsLimitPerBid: number,
-  currentPrice: number
+  landsLimitPerBid: number
 })
 
 export const atlasType = shape({

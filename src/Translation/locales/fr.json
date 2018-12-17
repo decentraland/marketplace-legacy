@@ -97,6 +97,7 @@
     "update_asset": "Mise à jour de la publication {asset_name}"
   },
   "atlas": {
+    "available_at_auction": "Disponible aux enchères",
     "loading": "Chargement",
     "no_owner": "Aucun propriétaire",
     "on_sale": "A vendre: ",
@@ -106,7 +107,10 @@
     "your_parcel": "Votre parcelle"
   },
   "auction": {
-    "description":
+    "description_after_finish": "La vente aux enchères LAND est terminée!",
+    "description_after_start":
+      "La vente aux enchères LAND a commencé, vous pouvez maintenant acheter LAND!",
+    "description_before_start":
       "Participez à la vente aux enchères LAND le 10 décembre et achetez LAND!",
     "title": "Decentraland LAND Enchère"
   },
@@ -119,6 +123,7 @@
     "title": "Enchère terminée"
   },
   "auction_modal": {
+    "auction_terms_link": "Conditions générales de vente LAND",
     "authorization": "Autorisation",
     "authorization_description":
       "Avant de pouvoir acheter un LAND dans la vente aux enchères à l’aide de {token}, vous devez au préalable autoriser le contrat {contract_link} à y accéder et à l’exploiter en votre nom.",
@@ -126,32 +131,43 @@
     "confirmation": "Confirmation",
     "confirmation_description":
       "Vous êtes sur le point d'acheter {parcels} LAND pour {price} {token}",
+    "decentraland_terms_link": "Conditions d'utilisation",
     "description":
       "Vous devez juste faire deux choses avant de pouvoir commencer. ",
     "get_started": "Commencer",
-    "i_agree_with_terms": "J'accepte le {terms_link}",
+    "i_agree_with_auction_terms": "J'accepte le {auction_terms_link}",
+    "i_agree_with_main_terms":
+      "J'accepte le {decentraland_terms_link} et le {privacy_policy_link}",
+    "insufficient_funds": "Fonds insuffisants",
+    "privacy_policy_link": "Politique de confidentialité",
     "processing_tx": "Traitement de la transaction",
     "submit": "Procéder",
-    "terms_and_conditions": "Termes et conditions",
     "tx_failed": "La transaction a échoué",
     "video_tutorial": "Didacticiel vidéo",
-    "watch_tutorial": "Regarder le tutoriel vidéo"
+    "watch_tutorial": "Regarder le tutoriel vidéo",
+    "your_balance": "Votre solde est: {balance} {token}"
   },
   "auction_page": {
     "available_parcels": "colis disponibles",
     "bid": "Achat",
+    "blog_post": "article de blog",
+    "conversion_disclaimer":
+      "* Le prix a augmenté de {fee}% en raison des frais de conversion",
     "description": "Trouvez le LAND que vous voulez acheter",
     "empty_message":
       "Trouvez les colis que vous souhaitez acheter et ajoutez-les à votre panier. ",
     "find_available_parcel": "Trouver un colis disponible",
     "gas_price": "Prix ​​du gaz",
     "land_price": "Prix LAND",
+    "max_amount_disclaimer":
+      "* Les réserves Kyber pour {token} ne suffisent pas pour échanger {amount} MANA",
     "maximum_parcels_message":
       "Si vous essayez d'acheter plus de {max} LAND en une seule transaction, vous échouerez. ",
     "maximum_parcels_title":
       "Vous avez atteint le maximum LAND par transaction",
     "parcels": "Colis",
     "parcels_tooltip": "Vous ne pouvez acheter que des colis {max} à la fois",
+    "refresh": "Actualiser le prix",
     "searching": "Recherche...",
     "sold": "Vendu",
     "title": "LAND panier",
@@ -243,7 +259,13 @@
     "tx_to_be_send":
       "Vous allez envoyer une transaction pour {action} les parcelles: {parcels}"
   },
+  "fatfinger_modal": {
+    "description": "Vous allez publier le {asset_name} pour {price}",
+    "error": "Les prix ne correspondent pas",
+    "re-enter": "Veuillez ré-entrer le prix pour confirmer"
+  },
   "footer": {
+    "code_of_ethics": "Code d'éthique",
     "color_key": "Code Couleur",
     "copyright": "© 2018 Decentraland. Tous droits reservés.",
     "mini_copyright": "© 2018 Decentraland.",
@@ -310,8 +332,6 @@
     "service_unavailable": "Service indisponible",
     "settings": "Paramètres",
     "sign_in": "Se connecter",
-    "sign_in_notice":
-      "Vous devez vous connecter sur {sign_in_link} pour acceder a cette page",
     "submit": "Envoyer",
     "the_estate": "le domaine",
     "the_parcel": "la parcelle",
@@ -474,6 +494,10 @@
       "mobile":
         "Vous pouvez utiliser des navigateurs mobiles tels que {coinbase_link} ou {imtoken_link}."
     }
+  },
+  "sign_in_notice": {
+    "message":
+      "Vous devez connecter votre portefeuille pour accéder à cette page."
   },
   "terms_modal": {
     "also_agree":

@@ -26,6 +26,18 @@ export function fetchAuctionParamsFailure(error) {
   }
 }
 
+// Purchase parcels
+
+export const PURCHASE_AUCTION_PARCELS = 'Purchase auction parcels'
+
+export function purchaseAuctionParcels(parcels, beneficiary) {
+  return {
+    type: PURCHASE_AUCTION_PARCELS,
+    parcels,
+    beneficiary
+  }
+}
+
 // Set new parcel owner
 
 export const SET_ON_CHAIN_PARCEL_OWNER = 'Set on-chain parcel owner'
@@ -63,7 +75,7 @@ export function bidOnParcelsRequest(parcels, beneficiary) {
   }
 }
 
-export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary) {
+export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary, params) {
   return {
     type: BID_ON_PARCELS_SUCCESS,
     ...buildTransactionAction(txHash, {
@@ -71,7 +83,10 @@ export function bidOnParcelsSuccess(txHash, xs, ys, beneficiary) {
       ys,
       beneficiary
     }),
-    beneficiary
+    xs,
+    ys,
+    beneficiary,
+    params
   }
 }
 
@@ -111,6 +126,32 @@ export function fetchAuctionRateFailure(token, error) {
   }
 }
 
+// Fetch auction price
+
+export const FETCH_AUCTION_PRICE_REQUEST = '[Request] Fetch auction price'
+export const FETCH_AUCTION_PRICE_SUCCESS = '[Success] Fetch auction price'
+export const FETCH_AUCTION_PRICE_FAILURE = '[Failure] Fetch auction price'
+
+export function fetchAuctionPriceRequest() {
+  return {
+    type: FETCH_AUCTION_PRICE_REQUEST
+  }
+}
+
+export function fetchAuctionPriceSuccess(price) {
+  return {
+    type: FETCH_AUCTION_PRICE_SUCCESS,
+    price
+  }
+}
+
+export function fetchAuctionPriceFailure(error) {
+  return {
+    type: FETCH_AUCTION_PRICE_FAILURE,
+    error
+  }
+}
+
 // Set selecteted coordinates
 
 export const SET_SELECTED_COORDINATES = 'Set selected coordinates'
@@ -122,7 +163,9 @@ export function setSelectedCoordinates(selectedCoordinatesById) {
   }
 }
 
-export const LEARN_MORE_AUCTION = 'learn more auction'
+// Click `learn more` on the auction
+
+export const LEARN_MORE_AUCTION = 'Learn more auction'
 
 export function learnMoreAuction() {
   return {

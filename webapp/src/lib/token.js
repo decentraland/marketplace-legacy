@@ -9,6 +9,7 @@ const CONTRACT_NAME_TO_TOKEN_SYMBOL = Object.freeze({
   KNCToken: 'KNC',
   SNTToken: 'SNT',
   BNBToken: 'BNB',
+  MKRToken: 'MKR',
   ELFToken: 'ELF'
 })
 

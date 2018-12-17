@@ -12,7 +12,7 @@ export default class Token extends React.PureComponent {
     loading: PropTypes.bool
   }
   render() {
-    const { symbol, amount, loading } = this.props
+    const { symbol, amount, loading, children } = this.props
     if (loading) {
       return (
         <Header size="large" className="Token">
@@ -31,6 +31,7 @@ export default class Token extends React.PureComponent {
             {amount} {symbol}
           </span>
         )}
+        {children}
       </Header>
     )
   }

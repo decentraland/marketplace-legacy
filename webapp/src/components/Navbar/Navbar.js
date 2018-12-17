@@ -7,7 +7,6 @@ import { locations, NAVBAR_PAGES } from 'locations'
 import Badge from 'components/Badge'
 import { walletType, coordsType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
-import { isFeatureEnabled } from 'lib/featureUtils'
 import Account from './Account'
 
 import './Navbar.css'
@@ -128,12 +127,10 @@ export default class Navbar extends React.PureComponent {
         </Responsive>
         {this.renderMenuItem('atlas')}
         {this.renderMenuItem('marketplace')}
+        {this.renderMenuItem('auction')}
         {isConnected ? (
           <React.Fragment>
             {this.renderMenuItem('profile')}
-            {isFeatureEnabled('AUCTION')
-              ? this.renderMenuItem('auction')
-              : null}
             <Responsive
               as={Menu.Item}
               maxWidth={Responsive.onlyTablet.minWidth}
