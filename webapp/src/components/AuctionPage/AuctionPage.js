@@ -14,7 +14,6 @@ import {
 } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
-import { COLORS } from 'shared/map'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelCoords from 'components/ParcelCoords'
 import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
@@ -39,14 +38,14 @@ import {
 import { preventDefault } from 'lib/utils'
 import { isEqualCoords } from 'shared/parcel'
 import { ASSET_TYPES } from 'shared/asset'
-import { TYPES } from 'shared/map'
+import { TYPES, COLORS } from 'shared/map'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
 
 const AUCTION_COLORS = {
   ...COLORS,
   unowned: COLORS.onSale,
-  onSale: `#306D90`
+  onSale: '#306D90'
 }
 
 import './AuctionPage.css'
@@ -139,7 +138,7 @@ export default class AuctionPage extends React.PureComponent {
   handleSelectUnownedParcel = async ({ id, x, y, type, owner, assetType }) => {
     if (
       assetType !== ASSET_TYPES.parcel ||
-      [TYPES.district, TYPES.contribution].include(type)
+      [TYPES.district, TYPES.contribution].includes(type)
     )
       return
 
@@ -265,7 +264,7 @@ export default class AuctionPage extends React.PureComponent {
     for (const parcelId of parcelIds) {
       const atlasLocation = atlas[parcelId]
       if (atlasLocation) {
-        parcels.push(atlasLocation)
+        parcels.push({ id: parcelId, ...atlasLocation })
       }
     }
 
