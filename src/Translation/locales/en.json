@@ -153,7 +153,7 @@
     "empty_message":
       "Find the parcels you want to buy, and add them to your cart. For more information, watch the {video_tutorial_link} or read the {blog_post_link}",
     "find_available_parcel": "Find available parcel",
-    "gas_price": "Gas price",
+    "gas_price": "Max gas price",
     "land_price": "Price per parcel",
     "max_amount_disclaimer":
       "* Kyber reserves for {token} are not enough to trade {amount} MANA",

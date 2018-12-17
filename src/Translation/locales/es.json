@@ -155,7 +155,7 @@
     "empty_message":
       "Encuentre las parcelas que desea comprar y agréguelas a su carrito. Para más información, vea el {video_tutorial_link} o lea la {blog_post_link}",
     "find_available_parcel": "Encuentra parcelas disponibles",
-    "gas_price": "Precio del gas",
+    "gas_price": "Precio máximo del gas",
     "land_price": "Precio LAND",
     "max_amount_disclaimer":
       "* Las reservas de Kyber para {token} no son suficientes para cambiar {amount} MANA",

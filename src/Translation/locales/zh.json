@@ -143,7 +143,7 @@
     "empty_message":
       "找到您要购买的包裹，并将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
     "find_available_parcel": "查找拍卖的土地",
-    "gas_price": "Gas 价格",
+    "gas_price": "最高汽油价格",
     "land_price": "LAND 价格",
     "max_amount_disclaimer": "* {token}的Kyber储备不足以交易{amount} MANA",
     "maximum_parcels_message":

@@ -157,7 +157,7 @@
     "empty_message":
       "Trouvez les colis que vous souhaitez acheter et ajoutez-les à votre panier. ",
     "find_available_parcel": "Trouver un colis disponible",
-    "gas_price": "Prix ​​du gaz",
+    "gas_price": "Prix ​​de l'essence max",
     "land_price": "Prix LAND",
     "max_amount_disclaimer":
       "* Les réserves Kyber pour {token} ne suffisent pas pour échanger {amount} MANA",
