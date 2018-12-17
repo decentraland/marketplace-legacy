@@ -245,7 +245,7 @@ export default class AuctionPage extends React.PureComponent {
     return utils.omit(selectedCoordinatesById, parcelId)
   }
 
-  hasReachedLimit(selected) {
+  hasReachedParcelLimit(selected) {
     const { atlas, params } = this.props
     const { landsLimitPerBid } = params
     return (
