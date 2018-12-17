@@ -19,8 +19,10 @@ export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 
-export const isFetchingEstate = state =>
-  isLoadingType(getLoading(state), FETCH_ESTATE_REQUEST)
+export const isFetchingEstate = (state, id) =>
+  getLoading(state).some(
+    action => action.type === FETCH_ESTATE_REQUEST && action.id === id
+  )
 
 export const isCreatingEstateTransactionIdle = state =>
   isLoadingType(getLoading(state), CREATE_ESTATE_REQUEST)

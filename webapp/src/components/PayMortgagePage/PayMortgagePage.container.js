@@ -27,10 +27,10 @@ const mapState = (state, ownProps) => {
     wallet: getWallet(state),
     isConnected: isConnected(state),
     isConnecting: isConnecting(state),
-    isFetchingMortgages: isFetchingParcelMortgages(state),
     isLoading: isLoading(state),
-    mortgage: getMortgage(state),
-    isTxIdle: isPayingMortgageTransactionIdle(state)
+    isFetchingMortgages: isFetchingParcelMortgages(state, x, y),
+    isTxIdle: isPayingMortgageTransactionIdle(state),
+    mortgage: getMortgage(state)
   })
 }
 

@@ -58,7 +58,7 @@ export class ParcelReference {
 
   getTypeForOwner(owner, currentType = null) {
     const isOwner = this.parcel.owner === owner
-    const isOnSale = currentType === TYPES.onSale || this.isOnSale()
+    const isOnSale = currentType === TYPES.onSale || this.traits.isOnSale
 
     let newType = ''
 

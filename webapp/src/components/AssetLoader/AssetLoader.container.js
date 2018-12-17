@@ -18,16 +18,19 @@ const mapState = (state, { id, assetType }) => {
   let isLoaded = false
   let assets = {}
   switch (assetType) {
-    case ASSET_TYPES.parcel:
+    case ASSET_TYPES.parcel: {
+      const [x, y] = splitCoordinate(id)
       assets = getParcels(state)
       isLoaded = id in assets
-      isLoading = !isLoaded && isFetchingParcel(state) // TODO: Fetch by id?
+      isLoading = !isLoaded && isFetchingParcel(state, x, y)
       break
-    case ASSET_TYPES.estate:
+    }
+    case ASSET_TYPES.estate: {
       assets = getEstates(state)
       isLoaded = id in assets
-      isLoading = !isLoaded && isFetchingEstate(state) // TODO: Fetch by id?
+      isLoading = !isLoaded && isFetchingEstate(state, id)
       break
+    }
   }
   const asset = assets[id]
 

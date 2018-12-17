@@ -27,8 +27,11 @@ export const isManageTransactionIdle = state =>
 export const isTransferIdle = state =>
   isLoadingType(getLoading(state), TRANSFER_PARCEL_REQUEST)
 
-export const isFetchingParcel = state =>
-  isLoadingType(getLoading(state), FETCH_PARCEL_REQUEST)
+export const isFetchingParcel = (state, x, y) =>
+  getLoading(state).some(
+    action =>
+      action.type === FETCH_PARCEL_REQUEST && action.x === x && action.y === y
+  )
 
 export const getPublications = (x, y) =>
   createSelector(getData, getAllPublications, (parcels, publications) => {

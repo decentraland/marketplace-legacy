@@ -45,10 +45,10 @@ export default class ParcelDetailPage extends React.PureComponent {
       return district.description
     }
     if (parcel.data.description) {
-      return parcel.data.description
+      return parcel.data.description.toString()
     }
 
-    return null
+    return ''
   }
 
   render() {

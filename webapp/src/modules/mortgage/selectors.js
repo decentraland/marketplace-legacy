@@ -17,14 +17,23 @@ export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 export const getMortgages = state => getData(state).mortgages
-export const isFetchingParcelMortgages = state =>
-  isLoadingType(getLoading(state), FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST)
+
+export const isFetchingParcelMortgages = (state, x, y) =>
+  getLoading(state).some(
+    action =>
+      action.type === FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST &&
+      action.x === x &&
+      action.y === y
+  )
+
 export const isRequestingMortgageTransactionIdle = state =>
   isLoadingType(getLoading(state), CREATE_MORTGAGE_REQUEST)
+
 export const isPayingMortgageTransactionIdle = state =>
   isLoadingType(getLoading(state), PAY_MORTGAGE_REQUEST)
+
 export const getMortgagesArray = createSelector(getMortgages, mortgages =>
-  Object.keys(mortgages).map(key => mortgages[key])
+  Object.values(mortgages)
 )
 
 export const getParcelMortgageFactory = (x, y) =>

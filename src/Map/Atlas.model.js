@@ -137,9 +137,6 @@ export class Atlas extends Model {
             AND ${betweenSQL}`)
     ])
 
-    // TODO: This seems like the wrong way to model this. The idea is to decouple ParcelReference from Models
-    // and Atlas.model.js from TYPES and COLORS. but `getForContribution` and `getForOwner` feel a bit out of place
-
     for (const row of districtAtlas) {
       if (row.has_contributed) {
         const parcelReference = new ParcelReference({ owner: row.owner })

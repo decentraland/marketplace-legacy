@@ -42,7 +42,7 @@ export async function publicationReducer(event) {
   }
 }
 
-// TODO: Atlas updates here are super wasteful and potentially slow
+// TODO: Atlas updates here are potentially slow
 async function reduceMarketplace(event) {
   const { tx_hash, block_number, name, address } = event
 
