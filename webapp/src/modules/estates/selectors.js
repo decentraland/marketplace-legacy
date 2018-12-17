@@ -74,20 +74,6 @@ export const getEstates = createSelector(
 
 export const getEstate = (state, { id }) => getEstates(state)[id]
 
-export const isHiddenEstate = createSelector(
-  (state, props) => getEstate(state, props),
-  state => getParcels(state),
-  (estate, parcels) => {
-    if (estate && estate.data.parcels.length > 0) {
-      return estate.data.parcels.some(({ x, y }) => {
-        const parcelId = buildCoordinate(x, y)
-        const parcel = parcels[parcelId]
-        return parcel != null && parcel.district_id != null // if the Estate contains any parcels with a district_id, it is a hidden Estate
-      })
-    }
-  }
-)
-
 export const areParcelsLoaded = createSelector(
   (state, props) => getEstate(state, props),
   state => getParcels(state),

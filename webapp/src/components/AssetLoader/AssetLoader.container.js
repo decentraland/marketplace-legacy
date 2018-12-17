@@ -7,21 +7,16 @@ import {
   getData as getParcels,
   isFetchingParcel
 } from 'modules/parcels/selectors'
-import {
-  getEstates,
-  isFetchingEstate,
-  isHiddenEstate
-} from 'modules/estates/selectors'
+import { getEstates, isFetchingEstate } from 'modules/estates/selectors'
 import { fetchEstateRequest } from 'modules/estates/actions'
 import { ASSET_TYPES } from 'shared/asset'
 import { splitCoordinate } from 'shared/coordinates'
 import AssetLoader from './AssetLoader'
 
 const mapState = (state, { id, assetType }) => {
-  let assets
-  let isLoading
-  let isLoaded
-  let isHidden
+  let isLoading = false
+  let isLoaded = false
+  let assets = {}
   switch (assetType) {
     case ASSET_TYPES.parcel:
       assets = getParcels(state)
@@ -32,10 +27,9 @@ const mapState = (state, { id, assetType }) => {
       assets = getEstates(state)
       isLoaded = id in assets
       isLoading = !isLoaded && isFetchingEstate(state) // TODO: Fetch by id?
-      isHidden = !isLoading && isHiddenEstate(state, { id })
       break
   }
-  const asset = isHidden ? null : assets[id]
+  const asset = assets[id]
 
   return { isLoading, asset }
 }
