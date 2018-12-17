@@ -1,5 +1,4 @@
-import { Parcel } from '../Asset'
-import { SQL, raw } from '../../database'
+import { SQL } from '../../database'
 import { splitCoordinate } from '../../shared/coordinates'
 
 export const ParcelQueries = Object.freeze({
