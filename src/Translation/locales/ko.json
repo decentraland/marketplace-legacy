@@ -152,7 +152,7 @@
     "description": "구매하려는 LAND을 찾으십시오.",
     "empty_message": "구입하려는 소포를 찾아 장바구니에 추가하십시오. ",
     "find_available_parcel": "사용 가능한 소포 찾기",
-    "gas_price": "가스 가격",
+    "gas_price": "최대 가스 가격",
     "land_price": "LAND 가격",
     "max_amount_disclaimer":
       "* {token}에 대한 Kyber 예비는 {amount} MANA를 거래하기에는 충분하지 않습니다.",
