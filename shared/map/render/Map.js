@@ -34,8 +34,8 @@ export class Map {
 
         const atlasLocation = atlas[buildCoordinate(x, y)]
         const attributes = this.getParcelAttributes(x, y, atlasLocation)
-        if (skipPublications && attributes.type === TYPES.onSale) {
-          attributes.type = TYPES.taken
+        if (skipPublications && this.isOnSale(atlasLocation)) {
+          attributes.color = COLORS.taken
         }
 
         if (this.isSelected(selected, x, y)) {
@@ -59,8 +59,8 @@ export class Map {
       const corner = this.getParcelCorner(x, y, center)
 
       const attributes = this.getParcelAttributes(x, y, atlasLocation)
-      if (skipPublications && attributes.type === TYPES.onSale) {
-        attributes.type = TYPES.taken
+      if (skipPublications && this.isOnSale(atlasLocation)) {
+        attributes.color = COLORS.taken
       }
 
       if (this.isSelected(selected, x, y)) {
@@ -75,14 +75,25 @@ export class Map {
     }
   }
 
-  isSelected(selected, x, y) {
-    return selected.some(coords => coords.x === x && coords.y === y)
-  }
-
   getParcelCorner(x, y, center) {
     const offsetX = (center.x - x) * this.size + this.pan.x
     const offsetY = (y - center.y) * this.size + this.pan.y
     return { x: this.middle.x - offsetX, y: this.middle.y - offsetY }
+  }
+
+  isOnSale(atlasLocation) {
+    if (!atlasLocation) return false
+
+    const type = atlasLocation.type
+    return (
+      type === TYPES.myParcelsOnSale ||
+      type === TYPES.myEstatesOnSale ||
+      type === TYPES.onSale
+    )
+  }
+
+  isSelected(selected, x, y) {
+    return selected.some(coords => coords.x === x && coords.y === y)
   }
 
   getParcelAttributes(x, y, atlasLocation) {
