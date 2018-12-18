@@ -8,7 +8,7 @@ export class Map {
     return new Map(ctx, attributes).draw(attributes)
   }
 
-  constructor(ctx, { width, height, size, pan, center, colors }) {
+  constructor(ctx, { width, height, size, pan, colors }) {
     this.ctx = ctx
 
     this.width = width
