@@ -18,6 +18,7 @@ import { hasTags } from 'shared/parcel'
 import { calculateMapProps } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
 import EstateActions from './EstateActions'
+
 import './EstateDetailPage.css'
 
 const WITH_ACTION_BUTTONS_WIDTH = 8
