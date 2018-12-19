@@ -1,8 +1,8 @@
 import {
-  FETCH_MAP_REQUEST,
-  FETCH_MAP_SUCCESS,
-  FETCH_MAP_FAILURE
-} from 'modules/map/actions'
+  FETCH_TILES_REQUEST,
+  FETCH_TILES_SUCCESS,
+  FETCH_TILES_FAILURE
+} from 'modules/tile/actions'
 import { loadingReducer } from 'modules/ui/loading/reducer'
 
 const INITIAL_STATE = {
@@ -11,26 +11,26 @@ const INITIAL_STATE = {
   error: null
 }
 
-export function mapReducer(state = INITIAL_STATE, action) {
+export function tileReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_MAP_REQUEST: {
+    case FETCH_TILES_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
       }
     }
-    // TODO: Try adding a FETCH_FULL_MAP action
-    case FETCH_MAP_SUCCESS: {
+    // TODO: Try adding a FETCH_FULL_TILES action
+    case FETCH_TILES_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
-          ...action.map
+          ...action.tiles
         }
       }
     }
-    case FETCH_MAP_FAILURE: {
+    case FETCH_TILES_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

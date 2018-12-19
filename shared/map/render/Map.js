@@ -25,16 +25,16 @@ export class Map {
     this.ctx.fillRect(0, 0, width, height)
   }
 
-  draw({ nw, se, center, atlas, selected, skipPublications }) {
+  draw({ nw, se, center, tiles, selected, skipPublications }) {
     const selection = []
 
     for (let x = nw.x; x < se.x; x++) {
       for (let y = se.y; y < nw.y; y++) {
         const corner = this.getParcelCorner(x, y, center)
 
-        const atlasLocation = atlas[buildCoordinate(x, y)]
-        const attributes = this.getParcelAttributes(x, y, atlasLocation)
-        if (skipPublications && this.isOnSale(atlasLocation)) {
+        const tile = tiles[buildCoordinate(x, y)]
+        const attributes = this.getParcelAttributes(x, y, tile)
+        if (skipPublications && this.isOnSale(tile)) {
           attributes.color = COLORS.taken
         }
 
@@ -51,15 +51,15 @@ export class Map {
     }
   }
 
-  drawFromAtlas({ center, atlas, selected, skipPublications }) {
+  drawFromTiles({ center, tiles, selected, skipPublications }) {
     const selection = []
 
-    for (const atlasLocation of atlas) {
-      const { x, y } = atlasLocation
+    for (const tile of tiles) {
+      const { x, y } = tile
       const corner = this.getParcelCorner(x, y, center)
 
-      const attributes = this.getParcelAttributes(x, y, atlasLocation)
-      if (skipPublications && this.isOnSale(atlasLocation)) {
+      const attributes = this.getParcelAttributes(x, y, tile)
+      if (skipPublications && this.isOnSale(tile)) {
         attributes.color = COLORS.taken
       }
 
@@ -81,10 +81,10 @@ export class Map {
     return { x: this.middle.x - offsetX, y: this.middle.y - offsetY }
   }
 
-  isOnSale(atlasLocation) {
-    if (!atlasLocation) return false
+  isOnSale(tile) {
+    if (!tile) return false
 
-    const type = atlasLocation.type
+    const type = tile.type
     return (
       type === TYPES.myParcelsOnSale ||
       type === TYPES.myEstatesOnSale ||
@@ -96,17 +96,17 @@ export class Map {
     return selected.some(coords => coords.x === x && coords.y === y)
   }
 
-  getParcelAttributes(x, y, atlasLocation) {
+  getParcelAttributes(x, y, tile) {
     let color = ''
     let connectedLeft = false
     let connectedTop = false
     let connectedTopLeft = false
 
-    if (atlasLocation) {
-      color = getBackgroundColor(atlasLocation.type, this.colors)
-      connectedLeft = atlasLocation.left
-      connectedTop = atlasLocation.top
-      connectedTopLeft = atlasLocation.topLeft
+    if (tile) {
+      color = getBackgroundColor(tile.type, this.colors)
+      connectedLeft = tile.left
+      connectedTop = tile.top
+      connectedTopLeft = tile.topLeft
     } else {
       color = this.colors.loading || getLoadingColor(x, y)
     }

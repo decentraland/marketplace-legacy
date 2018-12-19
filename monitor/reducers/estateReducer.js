@@ -3,7 +3,7 @@ import { Log } from 'decentraland-commons'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
-import { Atlas } from '../../src/Map'
+import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { decodeMetadata } from '../../shared/asset'
 import { isEqualCoords } from '../../shared/parcel'
@@ -154,7 +154,7 @@ async function reduceEstateRegistry(event) {
       const data = { ...estate.data, ...decodeMetadata(_data) }
       await Promise.all([
         Estate.update({ data }, { id: estate.id }),
-        Atlas.update({ name: data.name }, { estate_id: estate.id })
+        Tile.update({ name: data.name }, { estate_id: estate.id })
       ])
       break
     }

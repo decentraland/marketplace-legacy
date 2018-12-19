@@ -17,7 +17,7 @@ export function isEstate(parcel) {
 export function toParcelObject(parcelArray, prevParcels = {}) {
   const parcelObject = {}
   for (const parcel of parcelArray) {
-    parcelObject[parcel.id] = Object.assign({}, parcel) //connectParcel(parcel, parcelObject, prevParcels)
+    parcelObject[parcel.id] = Object.assign({}, parcel)
   }
   return parcelObject
 }

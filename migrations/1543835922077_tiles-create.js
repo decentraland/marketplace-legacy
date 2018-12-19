@@ -1,7 +1,7 @@
-import { Atlas } from '../src/Map'
+import { Tile } from '../src/Tile'
 import { ASSET_TYPES } from '../shared/asset'
 
-const tableName = Atlas.tableName
+const tableName = Tile.tableName
 
 exports.up = pgm => {
   pgm.createTable(

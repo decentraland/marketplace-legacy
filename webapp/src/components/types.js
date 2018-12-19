@@ -124,7 +124,7 @@ export const auctionParamsType = shape({
   landsLimitPerBid: number
 })
 
-export const atlasType = shape({
+export const tileType = shape({
   id: string,
   x: number,
   y: number,

@@ -5,7 +5,7 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { estateType, atlasType, publicationType } from 'components/types'
+import { estateType, tileType, publicationType } from 'components/types'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
 import AddressBlock from 'components/AddressBlock'
@@ -27,7 +27,7 @@ export default class EstateDetailPage extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
-    atlas: PropTypes.objectOf(atlasType),
+    tiles: PropTypes.objectOf(tileType),
     isOwner: PropTypes.bool.isRequired,
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
@@ -36,17 +36,17 @@ export default class EstateDetailPage extends React.PureComponent {
   }
 
   getEstateParcels() {
-    const { estate, atlas } = this.props
+    const { estate, tiles } = this.props
     const parcels = []
 
     for (const { x, y } of estate.data.parcels) {
       const parcelId = buildCoordinate(x, y)
-      const atlasLocation = atlas[parcelId]
-      if (atlasLocation) {
+      const tile = tiles[parcelId]
+      if (tile) {
         parcels.push({
           id: parcelId,
-          x: atlasLocation.x,
-          y: atlasLocation.y
+          x: tile.x,
+          y: tile.y
         })
       }
     }
@@ -68,7 +68,7 @@ export default class EstateDetailPage extends React.PureComponent {
     const {
       estate,
       publications,
-      atlas,
+      tiles,
       isOwner,
       onEditParcels,
       onEditMetadata,
@@ -194,7 +194,7 @@ export default class EstateDetailPage extends React.PureComponent {
             </Grid.Row>
           )}
           <Grid.Row>
-            {atlas && (
+            {tiles && (
               <React.Fragment>
                 <Grid.Column
                   computer={

@@ -1,20 +1,18 @@
 import { Model } from 'decentraland-commons'
 
-import { ParcelLocation } from './ParcelLocation'
-import { ParcelReference } from './ParcelReference'
-import { Asset, Estate, Parcel, ParcelQueries } from '../Asset'
+import { TileAttributes } from './TileAttributes'
+import { TileType } from './TileType'
+import { Estate, ParcelQueries } from '../Asset'
 import { Contribution } from '../Contribution'
 import { District } from '../District'
 import { Publication } from '../Publication'
 import { SQL, raw } from '../database'
-import { asyncPool } from '../lib'
 import { isDistrict } from '../../shared/district'
 import { isEstate } from '../../shared/parcel'
-import { ASSET_TYPES } from '../../shared/asset'
 import { PUBLICATION_STATUS } from '../shared/publication'
 
-export class Atlas extends Model {
-  static tableName = 'atlas'
+export class Tile extends Model {
+  static tableName = 'tiles'
   static columnNames = [
     'id',
     'x',
@@ -30,28 +28,6 @@ export class Atlas extends Model {
     'is_connected_top',
     'is_connected_topleft'
   ]
-
-  static async upsertAsset(assetId, assetType) {
-    const asset = await Asset.getModel(assetType).findOne(assetId)
-
-    switch (assetType) {
-      case ASSET_TYPES.parcel:
-        return this.upsertParcel(asset)
-      case ASSET_TYPES.estate:
-        return this.upsertEstate(asset)
-      default:
-        throw new Error(`The asset type ${assetType} is invalid`)
-    }
-  }
-
-  static async upsertEstate(estate) {
-    return asyncPool(
-      estate.data.parcels,
-      ({ x, y }) =>
-        Parcel.findOne({ x, y }).then(parcel => this.upsertParcel(parcel)),
-      10
-    )
-  }
 
   static async upsertParcel(parcel) {
     const now = new Date()
@@ -92,6 +68,10 @@ export class Atlas extends Model {
         WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
   }
 
+  /**
+   * Returns the tiles form the database changing the type according to the supplied wallet.
+   * So for example if a tile is on sale the type will be TYPES.taken and changed to TYPES.myParcelsOnSale here
+   */
   static async inRangeFromAddressPerspective(topLeft, bottomRight, owner) {
     const betweenSQL = ParcelQueries.whereIsBetweenCoordinates(
       topLeft,
@@ -115,7 +95,7 @@ export class Atlas extends Model {
       'asset_type'
     ]).join(', ')
 
-    let [restAtlas, districtAtlas, ownerAtlas] = await Promise.all([
+    let [restTiles, districtTiles, ownerTiles] = await Promise.all([
       this.db.query(SQL`
         SELECT ${raw(restColumnNames)}
           FROM ${raw(this.tableName)}
@@ -137,21 +117,25 @@ export class Atlas extends Model {
             AND ${betweenSQL}`)
     ])
 
-    for (const row of districtAtlas) {
-      if (row.has_contributed) {
-        const parcelReference = new ParcelReference({ owner: row.owner })
-        const type = parcelReference.getContributionType()
-        Object.assign(row, { type })
+    for (const tile of districtTiles) {
+      if (tile.has_contributed) {
+        // Mock a contribution for perf reasons
+        const tileAttributes = new TileType({
+          owner: tile.owner,
+          contributions: [1]
+        })
+        const type = tileAttributes.getType()
+        Object.assign(tile, { type })
       }
     }
 
-    for (const row of ownerAtlas) {
-      const parcelReference = new ParcelReference({ owner: row.owner })
-      const type = parcelReference.getTypeForOwner(owner, row.type)
-      Object.assign(row, { type })
+    for (const tile of ownerTiles) {
+      const tileAttributes = new TileType({ owner })
+      const type = tileAttributes.getForOwner(owner, tile.type)
+      Object.assign(tile, { type })
     }
 
-    return restAtlas.concat(districtAtlas).concat(ownerAtlas)
+    return restTiles.concat(districtTiles).concat(ownerTiles)
   }
 
   static filterColumnNames(names) {
@@ -160,9 +144,12 @@ export class Atlas extends Model {
   }
 
   static async buildRow(parcel) {
+    const fullParcel = await this.getFullParcel(parcel)
+    const tileAttributes = new TileAttributes(fullParcel)
+
     const [connections, reference] = await Promise.all([
-      this.getConnections(parcel),
-      this.getReference(parcel)
+      tileAttributes.getConnections(parcel),
+      tileAttributes.getReference(parcel)
     ])
 
     return {
@@ -175,58 +162,44 @@ export class Atlas extends Model {
     }
   }
 
-  static async getConnections(parcel) {
-    const parcelLocation = new ParcelLocation(parcel)
+  static async getFullParcel(parcel) {
+    const assetId = isEstate(parcel) ? parcel.estate_id : parcel.id
 
-    let is_connected_left = 0
-    let is_connected_top = 0
-    let is_connected_topleft = 0
+    const publicationPromise =
+      parcel.publication === undefined
+        ? Publication.findActiveByAssetIdWithStatus(
+            assetId,
+            PUBLICATION_STATUS.open
+          )
+        : Promise.resolve(parcel.publication)
 
-    if (isEstate(parcel) || isDistrict(parcel)) {
-      const { top, left, topLeft } = parcelLocation.getNeigbouringCoordinates()
-      const connections = await Promise.all([
-        Parcel.findOne(top).then(parcelLocation.isConnected),
-        Parcel.findOne(left).then(parcelLocation.isConnected),
-        Parcel.findOne(topLeft).then(parcelLocation.isConnected)
-      ])
-      is_connected_top = connections[0] ? 1 : 0
-      is_connected_left = connections[1] ? 1 : 0
-      is_connected_topleft = connections[2] ? 1 : 0
-    }
+    const estatePromise =
+      parcel.estate === undefined
+        ? isEstate(parcel)
+          ? Estate.findOne(parcel.estate_id)
+          : null
+        : Promise.resolve(parcel.estate)
 
-    return { is_connected_left, is_connected_top, is_connected_topleft }
-  }
+    const districtPromise =
+      parcel.district === undefined
+        ? isDistrict(parcel)
+          ? District.findOne(parcel.district_id)
+          : null
+        : Promise.resolve(parcel.district)
 
-  static async getReference(parcel) {
-    const inEstate = isEstate(parcel)
-    const assetId = inEstate ? parcel.estate_id : parcel.id
-
-    const [openPublication, estate, district] = await Promise.all([
-      Publication.findActiveByAssetIdWithStatus(
-        assetId,
-        PUBLICATION_STATUS.open
-      ),
-      inEstate ? Estate.findOne(parcel.estate_id) : null,
-      isDistrict(parcel) ? District.findOne(parcel.district_id) : null
+    const [publication, estate, district] = await Promise.all([
+      publicationPromise,
+      estatePromise,
+      districtPromise
     ])
 
-    const price = openPublication ? openPublication.price : null
-
-    // TODO: This second argument is super weird
-    const parcelReference = new ParcelReference(parcel, {
-      isOnSale: !!openPublication,
-      district,
-      estate
-    })
-    const type = parcelReference.getType()
-
-    return {
-      price,
-      type,
-      estate_id: parcel.estate_id,
-      asset_type: inEstate ? ASSET_TYPES.estate : ASSET_TYPES.parcel,
-      owner: district ? null : inEstate ? estate.owner : parcel.owner,
-      name: parcelReference.getNameByType(type)
+    if (parcel.id === '-44,-127') {
+      console.log('PARCEL', parcel)
+      console.log('PARCEL publication', publication)
+      console.log('PARCEL estate', estate)
+      console.log('PARCEL district', district)
     }
+
+    return { ...parcel, publication, estate, district }
   }
 }

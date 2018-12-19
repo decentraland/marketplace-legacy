@@ -4,15 +4,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 
-import { atlasType, coordsType } from 'components/types'
+import { tileType, coordsType } from 'components/types'
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
 import {
-  Bounds,
-  Viewport,
   TYPES,
   COLORS,
+  Bounds,
+  Viewport,
   getLoadingColor,
   getBackgroundColor,
   getTextColor
@@ -50,8 +50,8 @@ export default class ParcelPreview extends React.PureComponent {
     width: PropTypes.number,
     /** height of the canvas in pixels */
     height: PropTypes.number,
-    /** atlas from from modules/map */
-    atlas: PropTypes.objectOf(atlasType),
+    /** tiles from from modules/map */
+    tiles: PropTypes.objectOf(tileType),
     /** zoom level of the map, this changes in the end the size on which parcels are rendered, i.e: size=10 and zoom=0.5 makes each parcel of 5x5 pixels */
     zoom: PropTypes.number,
     /** minimum size that parcels can take (after applying zoom) */
@@ -115,7 +115,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.shouldRefreshMap = false
     this.canvas = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
-    this.debouncedFetchMap = debounce(this.props.onFetchMap, 400)
+    this.debouncedFetchTiles = debounce(this.props.onFetchTiles, 400)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
@@ -165,8 +165,8 @@ export default class ParcelPreview extends React.PureComponent {
       isViewportDifferent
     ) {
       const { nw, se } = newState
-      if (!this.inStore(nw, se, nextProps.atlas)) {
-        this.debouncedFetchMap(nw, se)
+      if (!this.inStore(nw, se, nextProps.tiles)) {
+        this.debouncedFetchTiles(nw, se)
       }
       this.oldState = newState
       this.setState(newState)
@@ -225,14 +225,14 @@ export default class ParcelPreview extends React.PureComponent {
     return { ...dimensions, pan, zoom, center, size }
   }
 
-  inStore(nw, se, atlas) {
-    if (!atlas) {
+  inStore(nw, se, tiles) {
+    if (!tiles) {
       return false
     }
     for (let x = nw.x; x < se.x; x++) {
       for (let y = se.y; y < nw.y; y++) {
         const parcelId = buildCoordinate(x, y)
-        if (!atlas[parcelId] && Bounds.inBounds(x, y)) {
+        if (!tiles[parcelId] && Bounds.inBounds(x, y)) {
           return false
         }
       }
@@ -324,24 +324,18 @@ export default class ParcelPreview extends React.PureComponent {
       return
     }
 
-    const { onClick, atlas } = this.props
+    const { onClick, tiles } = this.props
 
     const parcelId = buildCoordinate(x, y)
-    const atlasLocation = atlas[parcelId]
+    const tile = tiles[parcelId]
 
-    if (
-      atlasLocation != null &&
-      onClick &&
-      Date.now() - this.mousedownTimestamp < 200
-    ) {
+    if (tile != null && onClick && Date.now() - this.mousedownTimestamp < 200) {
       onClick({
-        id: atlasLocation.estate_id || parcelId,
+        id: tile.estate_id || parcelId,
         x,
         y,
-        type: atlasLocation.type,
-        assetType: atlasLocation.estate_id
-          ? ASSET_TYPES.estate
-          : ASSET_TYPES.parcel
+        type: tile.type,
+        assetType: tile.estate_id ? ASSET_TYPES.estate : ASSET_TYPES.parcel
       })
     }
   }
@@ -419,14 +413,14 @@ export default class ParcelPreview extends React.PureComponent {
   getParcelAttributes = (x, y) => {
     const parcelId = buildCoordinate(x, y)
 
-    const { atlas } = this.props
-    const atlasLocation = atlas[parcelId] || {
+    const { tiles } = this.props
+    const tile = tiles[parcelId] || {
       type: TYPES.loading,
       label: getLabel('', TYPES.loading),
       color: getLoadingColor(x, y)
     }
 
-    const { type, name, price, owner, left, top, topLeft } = atlasLocation
+    const { type, name, price, owner, left, top, topLeft } = tile
 
     const label = getLabel(name, type)
     const description = getDescription(type, owner)
@@ -460,7 +454,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (!this.canvas) {
       return '🦄'
     }
-    const { width, height, atlas, getColors } = this.props
+    const { width, height, tiles, getColors } = this.props
     const { nw, se, pan, size, center } = this.state
     const ctx = this.canvas.getContext('2d')
 
@@ -475,7 +469,7 @@ export default class ParcelPreview extends React.PureComponent {
       nw,
       se,
       center,
-      atlas,
+      tiles,
       selected: this.getSelected()
     })
   }

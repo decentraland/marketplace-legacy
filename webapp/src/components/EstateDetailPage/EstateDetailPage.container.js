@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
-import { getData as getAtlas } from 'modules/map/selectors'
+import { getData as getTiles } from 'modules/tile/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { fetchAsset } from 'modules/asset/actions'
 import { ASSET_TYPES } from 'shared/asset'
@@ -13,7 +13,7 @@ const mapState = (state, ownProps) => {
   return {
     estate: ownProps.asset,
     publications: getPublications(state),
-    atlas: getAtlas(state)
+    tiles: getTiles(state)
   }
 }
 

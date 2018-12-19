@@ -3,7 +3,7 @@ import { Log } from 'decentraland-commons'
 
 import { Publication, PublicationService } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
-import { Atlas } from '../../src/Map'
+import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { PUBLICATION_STATUS } from '../../shared/publication'
@@ -42,7 +42,7 @@ export async function publicationReducer(event) {
   }
 }
 
-// TODO: Atlas updates here are potentially slow
+// TODO: Tile updates here are potentially slow
 async function reduceMarketplace(event) {
   const { tx_hash, block_number, name, address } = event
 
@@ -93,7 +93,7 @@ async function reduceMarketplace(event) {
           block_number,
           contract_id
         })
-        await Atlas.updateAsset(assetId, assetType)
+        await Tile.updateAsset(assetId, assetType)
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
         log.info(
@@ -127,7 +127,7 @@ async function reduceMarketplace(event) {
         ),
         Asset.update({ owner: buyer }, { id: assetId })
       ])
-      await Atlas.updateAsset(assetId, assetType)
+      await Tile.updateAsset(assetId, assetType)
       break
     }
     case eventNames.AuctionCancelled:
@@ -146,7 +146,7 @@ async function reduceMarketplace(event) {
         },
         { contract_id }
       )
-      await Atlas.updateAsset(assetId, assetType)
+      await Tile.updateAsset(assetId, assetType)
       break
     }
     default:

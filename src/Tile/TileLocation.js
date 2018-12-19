@@ -1,4 +1,4 @@
-export class ParcelLocation {
+export class TileLocation {
   constructor(parcel) {
     this.parcel = parcel
   }

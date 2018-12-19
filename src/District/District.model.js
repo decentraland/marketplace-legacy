@@ -1,8 +1,7 @@
 import { Model } from 'decentraland-commons'
 import uuid from 'uuid'
 
-export const ROADS_ID = 'f77140f9-c7b4-4787-89c9-9fa0e219b079'
-export const PLAZA_ID = '55327350-d9f0-4cae-b0f3-8745a0431099'
+import { isRoad, isPlaza } from '../../shared/district'
 
 export class District extends Model {
   static tableName = 'districts'
@@ -20,11 +19,11 @@ export class District extends Model {
   ]
 
   static isRoad(id) {
-    return ROADS_ID === id
+    return isRoad(id)
   }
 
   static isPlaza(id) {
-    return PLAZA_ID === id
+    return isPlaza(id)
   }
 
   static findEnabled() {

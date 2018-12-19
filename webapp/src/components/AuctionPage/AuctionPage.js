@@ -22,7 +22,7 @@ import {
   authorizationType,
   auctionParamsType,
   walletType,
-  atlasType,
+  tileType,
   coordsType
 } from 'components/types'
 import {
@@ -65,7 +65,7 @@ export default class AuctionPage extends React.PureComponent {
       y: PropTypes.number
     }).isRequired,
     wallet: walletType,
-    atlas: PropTypes.objectOf(atlasType),
+    tiles: PropTypes.objectOf(tileType),
     onShowAuctionModal: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
@@ -245,26 +245,26 @@ export default class AuctionPage extends React.PureComponent {
   }
 
   hasReachedParcelLimit(selected) {
-    const { atlas, params } = this.props
+    const { tiles, params } = this.props
     const { landsLimitPerBid } = params
     return (
-      Object.keys(selected).filter(parcelId => atlas[parcelId].owner == null)
+      Object.keys(selected).filter(parcelId => tiles[parcelId].owner == null)
         .length >= landsLimitPerBid
     )
   }
 
   getSelectedParcels() {
-    const { atlas, selectedCoordinatesById } = this.props
+    const { tiles, selectedCoordinatesById } = this.props
 
-    if (!atlas) return []
+    if (!tiles) return []
 
     const parcelIds = Object.keys(selectedCoordinatesById)
     const parcels = []
 
     for (const parcelId of parcelIds) {
-      const atlasLocation = atlas[parcelId]
-      if (atlasLocation) {
-        parcels.push({ id: parcelId, ...atlasLocation })
+      const tile = tiles[parcelId]
+      if (tile) {
+        parcels.push({ id: parcelId, ...tile })
       }
     }
 
@@ -295,7 +295,7 @@ export default class AuctionPage extends React.PureComponent {
       authorization,
       params,
       center,
-      atlas,
+      tiles,
       token,
       rate,
       price,
@@ -364,7 +364,7 @@ export default class AuctionPage extends React.PureComponent {
           <ParcelPreview
             x={x}
             y={y}
-            atlas={atlas}
+            tiles={tiles}
             selected={validSelectedParcels}
             isDraggable
             showPopup

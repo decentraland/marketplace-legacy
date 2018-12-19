@@ -1,17 +1,13 @@
-import { isDistrict, isPlaza, isRoad } from '../../shared/district'
-import { TYPES } from '../../shared/map'
-import { isEstate } from '../../shared/parcel'
+import { isDistrict, isPlaza, isRoad } from '../shared/district'
+import { TYPES } from '../shared/map'
+import { isEstate } from '../shared/parcel'
 
-export class ParcelReference {
-  constructor(parcel, traits = {}) {
+export class TileType {
+  constructor(parcel) {
     this.parcel = parcel
-    this.traits = Object.assign(
-      { isOnSale: false, district: null, estate: null },
-      traits
-    )
   }
 
-  getType() {
+  get() {
     if (isDistrict(this.parcel)) {
       if (isRoad(this.parcel.district_id)) {
         return TYPES.roads
@@ -19,28 +15,31 @@ export class ParcelReference {
       if (isPlaza(this.parcel.district_id)) {
         return TYPES.plaza
       }
+      if (this.parcel.contributions && this.parcel.contributions.length) {
+        return TYPES.contribution
+      }
       return TYPES.district
     }
 
-    return this.traits.isOnSale
+    return this.isOnSale()
       ? TYPES.onSale
       : this.parcel.owner
         ? TYPES.taken
         : TYPES.unowned
   }
 
-  getNameByType(type) {
+  getName(type) {
     switch (type) {
       case TYPES.district:
       case TYPES.contribution:
-        return this.traits.district ? this.traits.district.name : ''
+        return this.parcel.district ? this.parcel.district.name : ''
       case TYPES.myParcels:
       case TYPES.myParcelsOnSale:
       case TYPES.myEstates:
       case TYPES.myEstatesOnSale:
       case TYPES.taken:
       case TYPES.onSale: {
-        const asset = this.traits.estate || this.parcel
+        const asset = this.parcel.estate || this.parcel
         return asset.data.name || ''
       }
       case TYPES.roads:
@@ -52,13 +51,9 @@ export class ParcelReference {
     }
   }
 
-  getContributionType() {
-    return TYPES.contribution
-  }
-
-  getTypeForOwner(owner, currentType = null) {
+  getForOwner(owner, currentType = null) {
     const isOwner = this.parcel.owner === owner
-    const isOnSale = currentType === TYPES.onSale || this.traits.isOnSale
+    const isOnSale = currentType === TYPES.onSale || this.isOnSale()
 
     let newType = ''
 
@@ -79,5 +74,9 @@ export class ParcelReference {
     }
 
     return newType
+  }
+
+  isOnSale() {
+    return !!this.parcel.publication
   }
 }

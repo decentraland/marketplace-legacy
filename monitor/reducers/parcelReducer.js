@@ -4,7 +4,7 @@ import { Log } from 'decentraland-commons'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
-import { Atlas } from '../../src/Map'
+import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { ASSET_TYPES } from '../../shared/asset'
 import { getParcelIdFromEvent } from './utils'
@@ -43,7 +43,7 @@ async function reduceLANDRegistry(event) {
         log.info(`[${name}] Updating "${parcelId}" with ${args.data}`)
         await Promise.all([
           Parcel.update({ data }, { id: parcelId }),
-          Atlas.update({ name: data.name }, { id: parcelId })
+          Tile.update({ name: data.name }, { id: parcelId })
         ])
       } catch (error) {
         log.info(`[${name}] Skipping badly formed data for "${parcelId}"`)
@@ -90,7 +90,7 @@ async function reduceLANDRegistry(event) {
         { owner: to.toLowerCase(), last_transferred_at },
         { id: parcelId }
       )
-      await Atlas.updateAsset(parcelId, ASSET_TYPES.parcel)
+      await Tile.updateAsset(parcelId, ASSET_TYPES.parcel)
       break
     }
     default:
@@ -114,7 +114,7 @@ async function reduceEstateRegistry(event) {
         )
 
         await Parcel.update({ estate_id: _estateId }, { id: parcelId })
-        await Atlas.updateAsset(parcelId, ASSET_TYPES.parcel)
+        await Tile.updateAsset(parcelId, ASSET_TYPES.parcel)
       } else {
         log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
       }
@@ -132,7 +132,7 @@ async function reduceEstateRegistry(event) {
         )
 
         await Parcel.update({ estate_id: null }, { id: parcelId })
-        await Atlas.updateAsset(parcelId, ASSET_TYPES.parcel)
+        await Tile.updateAsset(parcelId, ASSET_TYPES.parcel)
       } else {
         log.info(`[${name}] Estate with token id  ${_estateId} does not exist`)
       }

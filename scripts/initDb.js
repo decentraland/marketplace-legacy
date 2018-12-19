@@ -10,6 +10,7 @@ import { Contribution } from '../src/Contribution'
 import { FIRST_AUCTION_DATE } from '../shared/parcel'
 import { renewBlockchainData } from './renewBlockchainData'
 import { tagParcels } from './tag'
+import { computeTiles } from './computeTiles'
 import { loadEnv, runpsql } from './utils'
 
 const log = new Log('init')
@@ -59,6 +60,13 @@ Do you wish to continue?`
   const shouldTag = await cli.confirm('Do you want to set parcel tags?')
   if (shouldTag) {
     await tagParcels()
+  }
+
+  const shouldComputeTiles = await cli.confirm(
+    'Do you want to compute the tiles?'
+  )
+  if (shouldComputeTiles) {
+    await computeTiles()
   }
 
   log.info('All done!')
