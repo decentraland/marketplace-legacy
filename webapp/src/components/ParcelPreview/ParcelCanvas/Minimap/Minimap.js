@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { coordsType } from 'components/types'
 import { Bounds } from 'shared/map'
+import { api } from 'lib/api'
 
 import './Minimap.css'
 
@@ -24,6 +26,13 @@ export default class Minimap extends React.Component {
 
   static defaultProps = {
     onChange: () => {}
+  }
+
+  constructor(props) {
+    super(props)
+    this.mapURL = api.getUrl(
+      '/map.png?size=1&width=301&height=301&publications=true'
+    )
   }
 
   componentDidMount() {
@@ -99,6 +108,7 @@ export default class Minimap extends React.Component {
 
     return (
       <div className="Minimap" ref={this.refMap} onMouseDown={this.mouseDown}>
+        <img src={this.mapURL} alt="Minimap" width="150" height="150" />
         <div className="minimap-focus" style={styles} />
       </div>
     )

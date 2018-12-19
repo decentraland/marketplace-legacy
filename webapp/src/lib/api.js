@@ -145,7 +145,7 @@ export class API {
       })
   }
 
-  getUrl(path) {
+  getUrl(path = '') {
     return `${URL}${path}`
   }
 }
