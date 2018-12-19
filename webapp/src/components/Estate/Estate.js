@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import AssetLoader from 'components/AssetLoader'
 import { ASSET_TYPES } from 'shared/asset'
 

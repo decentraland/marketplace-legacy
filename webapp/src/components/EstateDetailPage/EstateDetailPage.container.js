@@ -1,35 +1,32 @@
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
-import { getMatchParams } from 'modules/location/selectors'
-import { getData as getParcels } from 'modules/parcels/selectors'
+import { getData as getTiles } from 'modules/tile/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
-import { navigateTo } from '@dapps/modules/location/actions'
+import { fetchAsset } from 'modules/asset/actions'
+import { ASSET_TYPES } from 'shared/asset'
 
 import EstateDetailPage from './EstateDetailPage'
 
 const mapState = (state, ownProps) => {
-  const { id } = getMatchParams(ownProps)
-
   return {
-    id,
+    estate: ownProps.asset,
     publications: getPublications(state),
-    allParcels: getParcels(state)
+    tiles: getTiles(state)
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const { id } = getMatchParams(ownProps)
+  const id = ownProps.asset.id
 
   return {
     onEditParcels: () => dispatch(navigateTo(locations.editEstateParcels(id))),
     onEditMetadata: () =>
       dispatch(navigateTo(locations.editEstateMetadata(id))),
     onManageEstate: () => dispatch(navigateTo(locations.manageEstate(id))),
-    onParcelClick: parcel =>
-      dispatch(navigateTo(locations.parcelDetail(parcel.x, parcel.y)))
+    onParcelClick: parcel => dispatch(fetchAsset(parcel, ASSET_TYPES.parcel))
   }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(EstateDetailPage))
+export default connect(mapState, mapDispatch)(EstateDetailPage)

@@ -11,6 +11,11 @@ export class Contribution extends Model {
     'timestamp'
   ]
 
+  static async isContributor(address, district_id) {
+    const exists = await this.count({ address, district_id })
+    return exists > 0
+  }
+
   static findByAddress(address) {
     return this.find({ address })
   }

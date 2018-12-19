@@ -3,7 +3,7 @@ import { isLoadingType } from '@dapps/modules/loading/selectors'
 
 import { getWallet, isConnected, isConnecting } from 'modules/wallet/selectors'
 import { getAuthorizations } from 'modules/authorization/selectors'
-import { getData as getParcels } from 'modules/parcels/selectors'
+import { getData as getTiles } from 'modules/tile/selectors'
 import {
   getParcelOnChainOwners,
   getParams,
@@ -37,14 +37,14 @@ const mapState = state => {
   const wallet = getWallet(state)
 
   const parcelOnChainOwners = getParcelOnChainOwners(state)
-  const allParcels = getParcels(state)
+  const tiles = getTiles(state)
 
   // Side-effect!
   // This particular piece of code mutates the state adding more up to date owners.
   for (const parcelId in parcelOnChainOwners) {
-    const parcel = allParcels[parcelId]
-    if (!parcel.owner) {
-      parcel.owner = parcelOnChainOwners[parcelId]
+    const tile = tiles[parcelId]
+    if (!tile.owner) {
+      tile.owner = parcelOnChainOwners[parcelId]
     }
   }
 
@@ -63,13 +63,13 @@ const mapState = state => {
     token: getSelectedToken(state),
     rate: getRate(state),
     selectedCoordinatesById: getSelectedCoordinatesById(state),
-    wallet,
     isRefreshingPrice:
       isLoadingType(getLoading(state), FETCH_AUCTION_RATE_REQUEST) ||
       isLoadingType(getLoading(state), FETCH_AUCTION_PRICE_REQUEST),
-    allParcels,
-    // this is not used on the AuctionPage, but since we mutate allParcels,
-    // we pass this down to force a re-render down the tree
+    wallet,
+    tiles,
+    // this is not used on the AuctionPage, but since we mutate `tiles`,
+    // we pass this down to for a re-render down the tree
     parcelOnChainOwners
   }
 }

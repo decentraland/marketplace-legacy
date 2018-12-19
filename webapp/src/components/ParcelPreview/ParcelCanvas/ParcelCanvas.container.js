@@ -1,25 +1,18 @@
 import { connect } from 'react-redux'
-import { getWallet } from 'modules/wallet/selectors'
-import { getData as getParcels } from 'modules/parcels/selectors'
-import { getEstates } from 'modules/estates/selectors'
-import { getDistricts } from 'modules/districts/selectors'
-import { getData as getPublications } from 'modules/publication/selectors'
-import { fetchMapRequest } from 'modules/map/actions'
+
+import { isConnecting } from 'modules/wallet/selectors'
+import { getData as getTiles } from 'modules/tile/selectors'
+import { fetchTilesRequest } from 'modules/tile/actions'
 
 import ParcelCanvas from './ParcelCanvas'
 
-export const mapState = state => {
-  return {
-    wallet: getWallet(state),
-    parcels: getParcels(state),
-    estates: getEstates(state),
-    districts: getDistricts(state),
-    publications: getPublications(state)
-  }
-}
+export const mapState = state => ({
+  isConnecting: isConnecting(state),
+  tiles: getTiles(state)
+})
 
 export const mapDispatch = dispatch => ({
-  onFetchMap: (nw, se) => dispatch(fetchMapRequest(nw, se))
+  onFetchTiles: (nw, se) => dispatch(fetchTilesRequest(nw, se))
 })
 
 export default connect(mapState, mapDispatch)(ParcelCanvas)

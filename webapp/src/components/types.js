@@ -123,3 +123,16 @@ export const auctionParamsType = shape({
   gasPriceLimit: number,
   landsLimitPerBid: number
 })
+
+export const tileType = shape({
+  id: string,
+  x: number,
+  y: number,
+  owner: string,
+  price: string,
+  name: string,
+  type: number,
+  left: number,
+  top: number,
+  topLeft: number
+})

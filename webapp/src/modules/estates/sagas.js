@@ -1,6 +1,6 @@
 import {
   takeEvery,
-  takeLatest,
+  // takeLatest,
   put,
   select,
   call,
@@ -12,37 +12,37 @@ import { eth } from 'decentraland-eth'
 import { locations } from 'locations'
 import {
   CREATE_ESTATE_REQUEST,
-  createEstateSuccess,
-  createEstateFailure,
   FETCH_ESTATE_REQUEST,
-  fetchEstateSuccess,
-  fetchEstateFailure,
   EDIT_ESTATE_PARCELS_REQUEST,
-  editEstateParcelsSuccess,
-  editEstateParcelsFailure,
   EDIT_ESTATE_METADATA_REQUEST,
-  editEstateMetadataSuccess,
-  editEstateMetadataFailure,
   ADD_PARCELS,
   REMOVE_PARCELS,
   DELETE_ESTATE_REQUEST,
+  TRANSFER_ESTATE_REQUEST,
+  // FETCH_ESTATE_SUCCESS,
+  createEstateSuccess,
+  createEstateFailure,
+  fetchEstateSuccess,
+  fetchEstateFailure,
+  editEstateParcelsSuccess,
+  editEstateParcelsFailure,
+  editEstateMetadataSuccess,
+  editEstateMetadataFailure,
   deleteEstateSuccess,
   deleteEstateFailure,
-  TRANSFER_ESTATE_REQUEST,
   transferEstateSuccess,
-  transferEstateFailure,
-  FETCH_ESTATE_SUCCESS
+  transferEstateFailure
 } from 'modules/estates/actions'
-import { getEstates, areParcelsLoaded } from 'modules/estates/selectors'
-import { getData as getParcels } from 'modules/parcels/selectors'
+import { getEstates /*, areParcelsLoaded*/ } from 'modules/estates/selectors'
+// import { getData as getParcels } from 'modules/parcels/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
 import { encodeMetadata } from 'shared/asset'
 import { getParcelsNotIncluded } from 'shared/parcel'
 import { splitCoodinatePairs } from 'shared/coordinates'
 import { Bounds } from 'shared/map'
-import { fetchParcelRequest } from 'modules/parcels/actions'
-import { buildCoordinate } from 'shared/coordinates'
+// import { fetchParcelRequest } from 'modules/parcels/actions'
+// import { buildCoordinate } from 'shared/coordinates'
 
 export function* estateSaga() {
   yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
@@ -51,7 +51,7 @@ export function* estateSaga() {
   yield takeEvery(EDIT_ESTATE_METADATA_REQUEST, handleEditEstateMetadataRequest)
   yield takeEvery(DELETE_ESTATE_REQUEST, handleDeleteEstate)
   yield takeEvery(TRANSFER_ESTATE_REQUEST, handleTransferRequest)
-  yield takeLatest(FETCH_ESTATE_SUCCESS, handleFetchEstateSuccess)
+  // yield takeLatest(FETCH_ESTATE_SUCCESS, handleFetchEstateSuccess)
 }
 
 function* handleCreateEstateRequest(action) {
@@ -220,15 +220,15 @@ function* handleTransferRequest({ estate, to }) {
   }
 }
 
-function* handleFetchEstateSuccess({ estate }) {
-  const areLoaded = yield select(state => areParcelsLoaded(state, estate))
-  if (!areLoaded) {
-    const parcels = yield select(state => getParcels(state))
-    for (const { x, y } of estate.data.parcels) {
-      const isLoaded = buildCoordinate(x, y) in parcels
-      if (!isLoaded) {
-        yield put(fetchParcelRequest(x, y))
-      }
-    }
-  }
-}
+// function* handleFetchEstateSuccess({ estate }) {
+//   const areLoaded = yield select(state => areParcelsLoaded(state, estate))
+//   if (!areLoaded) {
+//     const parcels = yield select(state => getParcels(state))
+//     for (const { x, y } of estate.data.parcels) {
+//       const isLoaded = buildCoordinate(x, y) in parcels
+//       if (!isLoaded) {
+//         yield put(fetchParcelRequest(x, y))
+//       }
+//     }
+//   }
+// }

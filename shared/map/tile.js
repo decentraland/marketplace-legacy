@@ -1,20 +1,17 @@
-import { isOnSale, isOwner } from '../asset'
-import { isDistrict, isPlaza, isRoad } from '../district'
-
 export const TYPES = Object.freeze({
-  myParcels: 'MY_PARCEL_TYPE',
-  myParcelsOnSale: 'MY_PARCEL_ON_SALE_TYPE',
-  myEstates: 'MY_ESTATE_TYPE',
-  myEstatesOnSale: 'MY_ESTATE_ON_SALE_TYPE',
-  district: 'DISTRICT_TYPE',
-  contribution: 'CONTRIBUTION_TYPE',
-  roads: 'ROADS_TYPE',
-  plaza: 'PLAZA_TYPE',
-  taken: 'TAKEN_TYPE',
-  onSale: 'ON_SALE_TYPE',
-  unowned: 'UNOWNED_TYPE',
-  background: 'BACKGROUND_TYPE',
-  loading: 'LOADING_TYPE'
+  myParcels: 0,
+  myParcelsOnSale: 1,
+  myEstates: 2,
+  myEstatesOnSale: 3,
+  district: 4,
+  contribution: 5,
+  roads: 6,
+  plaza: 7,
+  taken: 8,
+  onSale: 9,
+  unowned: 10,
+  background: 11,
+  loading: 12
 })
 
 export const COLORS = Object.freeze({
@@ -34,17 +31,8 @@ export const COLORS = Object.freeze({
   loadingOdd: '#0d0b0e'
 })
 
-export function getColor(x, y, parcel, estates, publications, wallet, colors) {
-  const type = getType(parcel, estates, publications, wallet)
-  return getColorByType(type, x, y, colors)
-}
-
-export function getColorByType(type, x, y, colors = COLORS) {
+export function getBackgroundColor(type, colors = COLORS) {
   switch (type) {
-    case TYPES.loading: {
-      const isEven = (x + y) % 2 === 0
-      return isEven ? colors.loadingEven : colors.loadingOdd
-    }
     case TYPES.myParcels:
       return colors.myParcels
     case TYPES.myParcelsOnSale:
@@ -73,53 +61,27 @@ export function getColorByType(type, x, y, colors = COLORS) {
   }
 }
 
-export function getMapAsset(parcelId, parcels, estates) {
-  const parcel = parcels[parcelId]
-  if (!parcel) {
-    return null
+export function getTextColor(type) {
+  switch (type) {
+    case TYPES.loading:
+    case TYPES.district:
+    case TYPES.contribution:
+    case TYPES.roads:
+    case TYPES.taken:
+    case TYPES.unowned:
+    case TYPES.background:
+      return 'white'
+    case TYPES.myParcels:
+    case TYPES.myParcelsOnSale:
+    case TYPES.myEstates:
+    case TYPES.myEstatesOnSale:
+    case TYPES.plaza:
+    case TYPES.onSale:
+    default:
+      return 'black'
   }
-
-  return parcel.estate_id ? estates[parcel.estate_id] : parcel
 }
 
-export function getType(parcel, estates, publications, wallet) {
-  if (!parcel) {
-    return TYPES.loading
-  }
-
-  if (isDistrict(parcel)) {
-    if (isRoad(parcel.district_id)) {
-      return TYPES.roads
-    }
-    if (isPlaza(parcel.district_id)) {
-      return TYPES.plaza
-    }
-    if (wallet && wallet.contributionsById[parcel.district_id]) {
-      return TYPES.contribution
-    }
-    return TYPES.district
-  }
-
-  const isEstate = !!parcel.estate_id
-  const isAssetOwner =
-    wallet && isOwner(wallet, isEstate ? parcel.estate_id : parcel.id)
-  const isAssetOnSale = isOnSale(
-    isEstate ? estates[parcel.estate_id] : parcel,
-    publications
-  )
-  if (isAssetOnSale) {
-    return isAssetOwner
-      ? isEstate
-        ? TYPES.myEstatesOnSale
-        : TYPES.myParcelsOnSale
-      : TYPES.onSale
-  } else {
-    return isAssetOwner
-      ? isEstate
-        ? TYPES.myEstates
-        : TYPES.myParcels
-      : parcel.owner
-        ? TYPES.taken
-        : TYPES.unowned
-  }
+export function getLoadingColor(x, y) {
+  return (x + y) % 2 === 0 ? COLORS.loadingEven : COLORS.loadingOdd
 }

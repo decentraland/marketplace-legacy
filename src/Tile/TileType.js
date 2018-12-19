@@ -1,0 +1,82 @@
+import { isDistrict, isPlaza, isRoad } from '../shared/district'
+import { TYPES } from '../shared/map'
+import { isEstate } from '../shared/parcel'
+
+export class TileType {
+  constructor(parcel) {
+    this.parcel = parcel
+  }
+
+  get() {
+    if (isDistrict(this.parcel)) {
+      if (isRoad(this.parcel.district_id)) {
+        return TYPES.roads
+      }
+      if (isPlaza(this.parcel.district_id)) {
+        return TYPES.plaza
+      }
+      if (this.parcel.contributions && this.parcel.contributions.length) {
+        return TYPES.contribution
+      }
+      return TYPES.district
+    }
+
+    return this.isOnSale()
+      ? TYPES.onSale
+      : this.parcel.owner
+        ? TYPES.taken
+        : TYPES.unowned
+  }
+
+  getName(type) {
+    switch (type) {
+      case TYPES.district:
+      case TYPES.contribution:
+        return this.parcel.district ? this.parcel.district.name : ''
+      case TYPES.myParcels:
+      case TYPES.myParcelsOnSale:
+      case TYPES.myEstates:
+      case TYPES.myEstatesOnSale:
+      case TYPES.taken:
+      case TYPES.onSale: {
+        const asset = this.parcel.estate || this.parcel
+        return asset.data.name || ''
+      }
+      case TYPES.roads:
+      case TYPES.plaza:
+      case TYPES.unowned:
+      case TYPES.background:
+      default:
+        return ''
+    }
+  }
+
+  getForOwner(owner, currentType = null) {
+    const isOwner = this.parcel.owner === owner
+    const isOnSale = currentType === TYPES.onSale || this.isOnSale()
+
+    let newType = ''
+
+    if (isOnSale) {
+      newType = isOwner
+        ? isEstate(this.parcel)
+          ? TYPES.myEstatesOnSale
+          : TYPES.myParcelsOnSale
+        : TYPES.onSale
+    } else {
+      newType = isOwner
+        ? isEstate(this.parcel)
+          ? TYPES.myEstates
+          : TYPES.myParcels
+        : this.parcel.owner
+          ? TYPES.taken
+          : TYPES.unowned
+    }
+
+    return newType
+  }
+
+  isOnSale() {
+    return !!this.parcel.publication
+  }
+}

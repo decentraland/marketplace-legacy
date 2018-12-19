@@ -14,20 +14,16 @@ describe('Publication', function() {
 })
 
 describe('PublicationService', function() {
-  describe('#getPublicableAssetFromType', function() {
+  describe('#getPublicableAsset', function() {
     it('should return the model class for the supplied type', function() {
       const service = new PublicationService()
-      expect(
-        service.getPublicableAssetFromType(ASSET_TYPES.parcel)
-      ).to.be.equal(Parcel)
-      expect(
-        service.getPublicableAssetFromType(ASSET_TYPES.estate)
-      ).to.be.equal(Estate)
+      expect(service.getPublicableAsset(ASSET_TYPES.parcel)).to.be.equal(Parcel)
+      expect(service.getPublicableAsset(ASSET_TYPES.estate)).to.be.equal(Estate)
     })
 
     it('should throw if the type is invalid', function() {
       expect(() =>
-        new PublicationService().getPublicableAssetFromType('Nonsense')
+        new PublicationService().getPublicableAsset('Nonsense')
       ).to.throw('Invalid publication asset_type "Nonsense"')
     })
   })

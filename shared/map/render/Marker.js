@@ -13,11 +13,13 @@ export class Marker {
     const innerRadius = 2 * scale
     const lowerRadius = 1 * scale
     const height = 10 * scale
+    const angle = Math.atan2(upperRadius, height)
+
     ctx.fillStyle = fillPrimary
     ctx.strokeStyle = stroke
     ctx.strokeWidth = width
+
     ctx.beginPath()
-    const angle = Math.atan2(upperRadius, height)
     ctx.arc(x, y - height, upperRadius, angle, Math.PI - angle, true)
     ctx.lineTo(
       x - lowerRadius * Math.cos(angle),

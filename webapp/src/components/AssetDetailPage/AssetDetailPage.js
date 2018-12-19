@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ASSET_TYPES } from 'shared/asset'
+import { Loader } from 'semantic-ui-react'
+
 import AssetLoader from 'components/AssetLoader'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import EstateDetailPage from 'components/EstateDetailPage'
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
+import { ASSET_TYPES } from 'shared/asset'
 import './AssetDetailPage.css'
-
-const assetTypeArray = Object.keys(ASSET_TYPES).map(key => ASSET_TYPES[key])
 
 export default class AssetDetailPage extends React.PureComponent {
   static propTypes = {
@@ -15,8 +15,24 @@ export default class AssetDetailPage extends React.PureComponent {
     onAssetClick: PropTypes.func.isRequired
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoadingNextAsset: false
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ isLoadingNextAsset: false })
+  }
+
+  handleAssetClick = ({ id, x, y, assetType }) => {
+    this.setState({ isLoadingNextAsset: true })
+    this.props.onAssetClick({ id, x, y }, assetType) // {id, x, y} are enough props for the asset interface here
+  }
+
   hasPreviewHeader(asset, assetType) {
-    // here we can decide wether to have a preview header or not
+    // Here we can decide wether to have a preview header or not
     // depending on the asset or the assetType (for future types of assets)
     switch (assetType) {
       case ASSET_TYPES.parcel:
@@ -28,14 +44,25 @@ export default class AssetDetailPage extends React.PureComponent {
     }
   }
 
-  render() {
-    const { id, assetType, onAssetClick } = this.props
+  renderLoading() {
+    return (
+      <div className="asset-detail-loading">
+        <Loader active size="massive" />
+      </div>
+    )
+  }
 
-    if (assetTypeArray.indexOf(assetType) === -1) {
+  renderDetailPage(asset, attributes) {
+    if (!asset || this.state.isLoadingNextAsset) {
+      return this.renderLoading()
+    }
+
+    const { assetType } = this.props
+
+    if (ASSET_TYPES[assetType] == null) {
+      const assetTypesStr = Object.values(ASSET_TYPES).join(', ')
       throw new Error(
-        `[AssetDetailPage] You must provide one of the following asset types: [${assetTypeArray.join(
-          ', '
-        )}] but received "${assetType}" instead`
+        `[AssetDetailPage] You must provide one of the following asset types: [${assetTypesStr}] but received "${assetType}" instead`
       )
     }
 
@@ -48,16 +75,23 @@ export default class AssetDetailPage extends React.PureComponent {
         DetailPage = EstateDetailPage
         break
     }
+    return <DetailPage asset={asset} {...attributes} />
+  }
 
+  render() {
+    const { id, assetType } = this.props
     return (
       <AssetLoader id={id} assetType={assetType}>
-        {asset =>
+        {(asset, attributes) =>
           this.hasPreviewHeader(asset, assetType) ? (
-            <AssetPreviewHeader asset={asset} onAssetClick={onAssetClick}>
-              <DetailPage />
+            <AssetPreviewHeader
+              asset={asset}
+              onAssetClick={this.handleAssetClick}
+            >
+              {this.renderDetailPage(asset, attributes)}
             </AssetPreviewHeader>
           ) : (
-            <DetailPage />
+            this.renderDetailPage(asset, attributes)
           )
         }
       </AssetLoader>

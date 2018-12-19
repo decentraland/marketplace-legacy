@@ -19,6 +19,7 @@ export function hasStatus(obj, status) {
   return obj && obj.status === status && !isExpired(obj.expires_at)
 }
 
+// TODO: This shouldn't be on shared, it relies on `publication_tx_hash` which is a front-end only concept
 export function getOpenPublication(asset, publications) {
   if (asset && publications && asset.publication_tx_hash in publications) {
     const publication = publications[asset.publication_tx_hash]
@@ -29,10 +30,12 @@ export function getOpenPublication(asset, publications) {
   return null
 }
 
+// TODO: This shouldn't be on shared, it relies on `publication_tx_hash` which is a front-end only concept
 export function isOnSale(asset, publications) {
   return getOpenPublication(asset, publications) != null
 }
 
+// TODO: This shouldn't be on shared, it relies on `wallet` which is a front-end only concept
 export function isOwner(wallet, assetId) {
   if (!wallet) {
     return false

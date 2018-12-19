@@ -1,5 +1,6 @@
 import { Model } from 'decentraland-commons'
 
+import { ParcelQueries } from './Parcel.queries'
 import { Asset } from '../Asset'
 import { PublicationQueries } from '../../Publication'
 import { District } from '../../District'
@@ -79,6 +80,15 @@ export class Parcel extends Model {
     return parcels[0]
   }
 
+  static async findAssociationIds(id) {
+    const parcels = await this.db.query(
+      SQL`SELECT estate_id, district_id
+        FROM ${SQL.raw(this.tableName)}
+        WHERE id = ${id}`
+    )
+    return parcels[0]
+  }
+
   static async countAvailable() {
     const result = await this.db.query(
       SQL`SELECT COUNT(*)
@@ -89,18 +99,12 @@ export class Parcel extends Model {
     return parseInt(result[0].count, 10)
   }
 
-  static async inRange(min, max) {
-    const [minx, maxy] =
-      typeof min === 'string' ? splitCoordinate(min) : [min.x, min.y]
-    const [maxx, miny] =
-      typeof max === 'string' ? splitCoordinate(max) : [max.x, max.y]
-
+  static async inRange(topLeft, bottomRight) {
     return this.db.query(SQL`SELECT *, (
       ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
     ) as publication
       FROM ${SQL.raw(this.tableName)}
-      WHERE x BETWEEN ${minx} AND ${maxx}
-        AND y BETWEEN ${miny} AND ${maxy}
+      WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}
       ORDER BY x ASC, y DESC`)
   }
 

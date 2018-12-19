@@ -1,19 +1,16 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
+import { Tile } from '../Tile'
 import { Parcel, Estate, EstateService } from '../Asset'
 import { sanitizeParcels } from '../sanitize'
 import { unsafeParseInt } from '../lib'
-import { getAssetPublications } from '../shared/asset'
-import { toParcelObject } from '../shared/parcel'
-import { toEstateObject, calculateMapProps } from '../shared/estate'
-import { toPublicationObject } from '../shared/publication'
+import { calculateMapProps } from '../shared/estate'
 import * as coordinates from '../shared/coordinates'
-import { Viewport, Bounds } from '../shared/map'
+import { Viewport, Bounds, TYPES } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 
 const { minX, maxX, minY, maxY } = Bounds.getBounds()
-const MAX_AREA = 15000
 
 export class MapRouter {
   constructor(app) {
@@ -28,6 +25,7 @@ export class MapRouter {
     )
     this.app.get('/estates/:id/map.png', this.handleRequest(this.getEstatePNG))
     this.app.get('/map', server.handleRequest(this.getMap))
+    this.app.get('/tiles', server.handleRequest(this.getTiles))
   }
 
   handleRequest(callback) {
@@ -41,12 +39,40 @@ export class MapRouter {
     }
   }
 
+  getTiles = async req => {
+    let tiles = []
+
+    let nw
+    let se
+    try {
+      nw = server.extractFromReq(req, 'nw')
+      se = server.extractFromReq(req, 'se')
+    } catch (_) {
+      // keep undefined
+    }
+
+    try {
+      const address = server.extractFromReq(req, 'address').toLowerCase()
+      tiles = await Tile.inRangeFromAddressPerspective(nw, se, address)
+    } catch (error) {
+      tiles = await Tile.inRange(nw, se)
+    }
+
+    const map = {}
+
+    for (const tile of tiles) {
+      map[tile.id] = this.toMapTile(tile)
+    }
+
+    return map
+  }
+
   async getMapPNG(req, res) {
     return this.sendPNG(res, this.sanitize(req))
   }
 
   async getParcelPNG(req, res) {
-    const { x, y, width, height, size, showPublications } = this.sanitize(req)
+    const { x, y, width, height, size, skipPublications } = this.sanitize(req)
     const center = { x, y }
     const mapOptions = {
       width,
@@ -54,13 +80,13 @@ export class MapRouter {
       size,
       center,
       selected: [center],
-      showPublications
+      skipPublications
     }
     return this.sendPNG(res, mapOptions)
   }
 
   async getEstatePNG(req, res) {
-    const { id, width, height, size, showPublications } = this.sanitizeEstate(
+    const { id, width, height, size, skipPublications } = this.sanitizeEstate(
       req
     )
     const estate = await Estate.findByTokenId(id)
@@ -78,7 +104,7 @@ export class MapRouter {
       zoom,
       pan,
       selected: parcels,
-      showPublications
+      skipPublications
     }
     return this.sendPNG(res, mapOptions)
   }
@@ -104,9 +130,9 @@ export class MapRouter {
 
   async sendPNG(
     res,
-    { width, height, size, center, selected, showPublications, zoom, pan }
+    { width, height, size, center, selected, skipPublications, zoom, pan }
   ) {
-    const { nw, se, area } = Viewport.getDimensions({
+    const { nw, se } = Viewport.getDimensions({
       width,
       height,
       center,
@@ -115,14 +141,6 @@ export class MapRouter {
       pan,
       padding: 1
     })
-
-    if (area > MAX_AREA) {
-      res.status(400)
-      res.send(
-        `Too many parcels. You are trying to render ${area} parcels and the maximum allowed is ${MAX_AREA}.`
-      )
-      return
-    }
 
     try {
       const stream = await this.getStream({
@@ -133,7 +151,7 @@ export class MapRouter {
         se,
         center,
         selected,
-        showPublications
+        skipPublications
       })
       res.type('png')
       stream.pipe(res)
@@ -141,15 +159,6 @@ export class MapRouter {
       res.status(500)
       res.send(error.message)
     }
-  }
-
-  async getAssetsAndPublications(nw, se) {
-    const parcelRange = sanitizeParcels(await Parcel.inRange(nw, se))
-    const parcels = toParcelObject(parcelRange)
-    const estatesRange = await new EstateService().getByParcels(parcelRange)
-    const estates = toEstateObject(estatesRange)
-    const publications = toPublicationObject(getAssetPublications(parcelRange))
-    return [parcels, estates, publications]
   }
 
   async getStream({
@@ -160,29 +169,43 @@ export class MapRouter {
     se,
     center,
     selected,
-    showPublications
+    skipPublications
   }) {
-    const [
-      parcels,
-      estates,
-      publications
-    ] = await this.getAssetsAndPublications(nw, se)
+    const tiles = await Tile.inRangePNG(nw, se)
+
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
-    MapRenderer.draw({
-      ctx,
+
+    new MapRenderer(ctx, {
       width,
       height,
-      size,
-      nw,
-      se,
+      size
+    }).drawFromTiles({
       center,
-      parcels,
-      estates,
-      publications: showPublications ? publications : {},
-      selected
+      tiles,
+      selected,
+      skipPublications
     })
     return canvas.pngStream()
+  }
+
+  toMapTile(tile) {
+    const mapTile = {
+      x: tile.x,
+      y: tile.y,
+      type: tile.type
+    }
+    if (tile.owner && [TYPES.taken, TYPES.onSale].includes(tile.type)) {
+      mapTile.owner = tile.owner.slice(0, 6)
+    }
+    if (tile.price) mapTile.price = tile.price
+    if (tile.name) mapTile.name = tile.name
+    if (tile.estate_id) mapTile.estate_id = tile.estate_id
+    if (tile.is_connected_left) mapTile.left = 1
+    if (tile.is_connected_top) mapTile.top = 1
+    if (tile.is_connected_topleft) mapTile.topLeft = 1
+
+    return mapTile
   }
 
   sanitizeEstate(req) {
@@ -198,10 +221,10 @@ export class MapRouter {
       y: this.getInteger(req, 'y', minY, maxY, 0),
       width: this.getInteger(req, 'width', 32, 1024, 500),
       height: this.getInteger(req, 'height', 32, 1024, 500),
-      size: this.getInteger(req, 'size', 5, 40, 10),
+      size: this.getInteger(req, 'size', 1, 40, 10),
       center: this.getCoords(req, 'center', { x: 0, y: 0 }),
       selected: this.getCoordsArray(req, 'selected', []),
-      showPublications: this.getBoolean(req, 'publications', false)
+      skipPublications: !this.getBoolean(req, 'publications', false) // Mind the negation here
     }
   }
 

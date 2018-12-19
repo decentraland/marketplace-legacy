@@ -9,7 +9,6 @@ import * as touchPinch from 'touch-pinch'
 import * as position from 'touch-position'
 import { t } from '@dapps/modules/translation/utils'
 import { TYPES } from 'shared/map'
-import { shortenAddress } from 'lib/utils'
 
 export function panzoom(target, cb) {
   if (target instanceof Function) {
@@ -126,15 +125,13 @@ export function panzoom(target, cb) {
   }
 }
 
-export function getLabel(type, asset, districts) {
+export function getLabel(name, type) {
   switch (type) {
     case TYPES.loading:
       return t('atlas.loading') + '...'
     case TYPES.district:
-    case TYPES.contribution: {
-      const district = districts[asset.district_id]
-      return district ? district.name : 'District'
-    }
+    case TYPES.contribution:
+      return name || 'District'
     case TYPES.plaza:
       return 'Genesis Plaza'
     case TYPES.roads:
@@ -144,9 +141,8 @@ export function getLabel(type, asset, districts) {
     case TYPES.myEstates:
     case TYPES.myEstatesOnSale:
     case TYPES.taken:
-    case TYPES.onSale: {
-      return asset.data.name || null
-    }
+    case TYPES.onSale:
+      return name || null
     case TYPES.unowned:
       return t('atlas.available_at_auction')
     case TYPES.background:
@@ -155,7 +151,7 @@ export function getLabel(type, asset, districts) {
   }
 }
 
-export function getDescription(type, asset) {
+export function getDescription(type, owner) {
   switch (type) {
     case TYPES.loading:
     case TYPES.district:
@@ -172,40 +168,10 @@ export function getDescription(type, asset) {
       return t('atlas.your_estate')
     case TYPES.taken:
     case TYPES.onSale: {
-      return t('atlas.owner', { owner: shortenAddress(asset.owner) })
+      return t('atlas.owner', { owner })
     }
     case TYPES.background:
     default:
       return null
-  }
-}
-
-export function getTextColor(type) {
-  switch (type) {
-    case TYPES.loading:
-    case TYPES.district:
-    case TYPES.contribution:
-    case TYPES.roads:
-    case TYPES.taken:
-    case TYPES.unowned:
-    case TYPES.background:
-      return 'white'
-
-    case TYPES.myParcels:
-    case TYPES.myParcelsOnSale:
-    case TYPES.myEstates:
-    case TYPES.myEstatesOnSale:
-    case TYPES.plaza:
-    case TYPES.onSale:
-    default:
-      return 'black'
-  }
-}
-
-export function getConnections(asset) {
-  return {
-    connectedLeft: !!(asset && asset.connectedLeft),
-    connectedTop: !!(asset && asset.connectedTop),
-    connectedTopLeft: !!(asset && asset.connectedTopLeft)
   }
 }

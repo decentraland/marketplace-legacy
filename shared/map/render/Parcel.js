@@ -1,4 +1,4 @@
-import { COLORS } from '../'
+import { COLORS } from '../tile'
 
 export class Parcel {
   static draw({
@@ -8,17 +8,19 @@ export class Parcel {
     size = 10,
     padding = 2,
     offset = 1,
-    color = '#ff9990',
+    color = COLORS.myParcels,
     connectedLeft,
     connectedTop,
     connectedTopLeft
   }) {
+    const leftOffset = connectedLeft ? -offset : padding
+    const topOffset = connectedTop ? -offset : padding
     ctx.fillStyle = color
     ctx.fillRect(
-      x - size + (connectedLeft ? -offset : padding),
-      y - size + (connectedTop ? -offset : padding),
-      size - (connectedLeft ? -offset : padding),
-      size - (connectedTop ? -offset : padding)
+      x - size + leftOffset,
+      y - size + topOffset,
+      size - leftOffset,
+      size - topOffset
     )
     if (connectedLeft && connectedTop && !connectedTopLeft) {
       ctx.fillStyle = COLORS.unowned

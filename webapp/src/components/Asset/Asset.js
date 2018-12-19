@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
+
 import { walletType } from 'components/types'
 import NotFound from 'components/NotFound'
 import { isOwner } from 'shared/asset'
 
-export let shouldRefresh = false
-export let isNavigatingAway = false
+let shouldRefresh = false
+let isNavigatingAway = false
 
 export default class Asset extends React.PureComponent {
   static propTypes = {
@@ -39,20 +40,9 @@ export default class Asset extends React.PureComponent {
     onFetchAsset()
   }
 
-  componentWillUnmount() {
-    isNavigatingAway = false
-  }
-
-  componentDidUpdate() {
-    if (shouldRefresh) {
-      shouldRefresh = false
-      const { onFetchAsset } = this.props
-      onFetchAsset()
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     const {
+      id,
       value,
       isConnecting,
       isLoading,
@@ -62,14 +52,18 @@ export default class Asset extends React.PureComponent {
       withPublications
     } = nextProps
 
+    if (isConnecting || isLoading) {
+      return
+    }
+
+    if (this.props.id !== id) {
+      shouldRefresh = true
+    }
+
     const ownerIsNotAllowed =
       ownerNotAllowed && value && isOwner(wallet, value.id)
     const assetShouldBeOnSale =
       withPublications && value && !value['publication_tx_hash']
-
-    if (isConnecting || isLoading) {
-      return
-    }
 
     if (ownerOnly) {
       this.checkOwnership(wallet, value.id)
@@ -78,17 +72,23 @@ export default class Asset extends React.PureComponent {
     if (ownerIsNotAllowed || assetShouldBeOnSale) {
       this.redirect()
     }
+  }
 
-    if (this.props.value && value && this.props.value.id !== value.id) {
-      shouldRefresh = true
+  componentDidUpdate() {
+    if (shouldRefresh) {
+      this.props.onFetchAsset()
+      shouldRefresh = false
     }
   }
 
+  componentWillUnmount() {
+    isNavigatingAway = false
+  }
+
   redirect() {
-    const { onAccessDenied } = this.props
     if (!isNavigatingAway) {
       isNavigatingAway = true
-      return onAccessDenied()
+      return this.props.onAccessDenied()
     }
   }
 
@@ -101,16 +101,17 @@ export default class Asset extends React.PureComponent {
   render() {
     const {
       value,
-      wallet,
       isConnecting,
-      children,
       ownerOnly,
       ownerNotAllowed,
-      isLoading
+      isLoading,
+      wallet,
+      children
     } = this.props
-    const shouldBeConnected = ownerOnly || ownerNotAllowed
 
     if (!value || isLoading) {
+      const shouldBeConnected = ownerOnly || ownerNotAllowed
+
       if (
         (shouldBeConnected && isConnecting) ||
         isNavigatingAway ||
@@ -125,6 +126,6 @@ export default class Asset extends React.PureComponent {
         return <NotFound />
       }
     }
-    return children(value, isOwner(wallet, value.id), wallet)
+    return children(value, { isOwner: isOwner(wallet, value.id), wallet })
   }
 }

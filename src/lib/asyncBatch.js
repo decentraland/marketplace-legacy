@@ -1,5 +1,6 @@
 import ProgressBar from 'progress'
 
+// TODO: Document this
 export async function asyncBatch(options = {}) {
   let {
     elements = [],

@@ -5,20 +5,6 @@ export function WebWorkerOnMessage(event) {
   let result = {}
 
   switch (action.type) {
-    case 'FETCH_MAP_REQUEST': {
-      const { assets, allParcels } = action
-      const parcelObject = toParcelObject(assets.parcels, allParcels)
-      const estateObject = toEstateObject(assets.estates)
-      const parcelPublications = getAssetPublications(assets.parcels)
-      const estatePublications = getAssetPublications(assets.estates)
-
-      result = {
-        parcels: parcelObject,
-        estates: estateObject,
-        publications: parcelPublications.concat(estatePublications)
-      }
-      break
-    }
     case 'FETCH_ADDRESS_PARCELS_REQUEST': {
       const { parcels, allParcels } = action
       const parcelObject = toParcelObject(parcels, allParcels)

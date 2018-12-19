@@ -14,7 +14,6 @@ import {
 } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
-import { COLORS } from 'shared/map'
 import ParcelPreview from 'components/ParcelPreview'
 import ParcelCoords from 'components/ParcelCoords'
 import ParcelCoord from 'components/ParcelCoords/ParcelCoord'
@@ -23,7 +22,7 @@ import {
   authorizationType,
   auctionParamsType,
   walletType,
-  parcelType,
+  tileType,
   coordsType
 } from 'components/types'
 import {
@@ -36,15 +35,17 @@ import {
   addConversionFee,
   getConversionFeePercentage
 } from 'modules/auction/utils'
-import { isEqualCoords, isParcel } from 'shared/parcel'
 import { preventDefault } from 'lib/utils'
+import { isEqualCoords } from 'shared/parcel'
+import { ASSET_TYPES } from 'shared/asset'
+import { TYPES, COLORS } from 'shared/map'
 import TokenDropdown from './TokenDropdown'
 import Token from './Token'
 
 const AUCTION_COLORS = {
   ...COLORS,
   unowned: COLORS.onSale,
-  onSale: `#306D90`
+  onSale: '#306D90'
 }
 
 import './AuctionPage.css'
@@ -64,7 +65,7 @@ export default class AuctionPage extends React.PureComponent {
       y: PropTypes.number
     }).isRequired,
     wallet: walletType,
-    allParcels: PropTypes.objectOf(parcelType),
+    tiles: PropTypes.objectOf(tileType),
     onShowAuctionModal: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
@@ -134,18 +135,22 @@ export default class AuctionPage extends React.PureComponent {
     }
   }
 
-  handleSelectUnownedParcel = async ({ asset }) => {
-    if (!isParcel(asset) || asset.district_id != null) return
+  handleSelectUnownedParcel = async ({ id, x, y, type, owner, assetType }) => {
+    if (
+      assetType !== ASSET_TYPES.parcel ||
+      [TYPES.district, TYPES.contribution].includes(type)
+    )
+      return
 
     // if it has an owner, remove it from selection
-    if (asset.owner != null) {
+    if (owner != null) {
       this.setState({
-        selectedCoordinatesById: this.buildNewSelectionCoordsWithoutParcel(
-          asset
-        )
+        selectedCoordinatesById: this.buildNewSelectionCoordsWithoutParcel(id)
       })
       return
     }
+
+    const asset = { id, x, y } // {id, x, y} are enough props for the asset interface here
 
     this.updateOwner(asset)
 
@@ -193,6 +198,14 @@ export default class AuctionPage extends React.PureComponent {
     this.props.onFetchAuctionRate(token)
   }
 
+  updateOwner = async parcel => {
+    return this.getParcelOwnerOnChain(parcel).then(ownerOnChain => {
+      if (!Contract.isEmptyAddress(ownerOnChain)) {
+        this.props.onSetParcelOnChainOwner(parcel.id, ownerOnChain)
+      }
+    })
+  }
+
   async getParcelOwnerOnChain(parcel) {
     // WARN: this code is duplicated on shared/asset.js. It's the same as calling:
     //   `await getAssetOwnerOnChain(ASSET_TYPE.parcel, parcel)`
@@ -201,14 +214,6 @@ export default class AuctionPage extends React.PureComponent {
     // Fixing this is a issue on it's own so we'll leave this code here for now.
     const landRegistry = eth.getContract('LANDRegistry')
     return landRegistry.ownerOfLand(parcel.x, parcel.y)
-  }
-
-  updateOwner = async parcel => {
-    return this.getParcelOwnerOnChain(parcel).then(ownerOnChain => {
-      if (!Contract.isEmptyAddress(ownerOnChain)) {
-        this.props.onSetParcelOnChainOwner(parcel.id, ownerOnChain)
-      }
-    })
   }
 
   updateSelectionOwners = async () => {
@@ -234,33 +239,32 @@ export default class AuctionPage extends React.PureComponent {
       : { ...selectedCoordinatesById, [id]: { x, y } }
   }
 
-  buildNewSelectionCoordsWithoutParcel(parcel) {
+  buildNewSelectionCoordsWithoutParcel(parcelId) {
     const { selectedCoordinatesById } = this.props
-    return utils.omit(selectedCoordinatesById, parcel.id)
+    return utils.omit(selectedCoordinatesById, parcelId)
   }
 
   hasReachedParcelLimit(selected) {
-    const { allParcels, params } = this.props
+    const { tiles, params } = this.props
     const { landsLimitPerBid } = params
     return (
-      Object.keys(selected).filter(
-        parcelId => allParcels[parcelId].owner == null
-      ).length >= landsLimitPerBid
+      Object.keys(selected).filter(parcelId => tiles[parcelId].owner == null)
+        .length >= landsLimitPerBid
     )
   }
 
   getSelectedParcels() {
-    const { allParcels, selectedCoordinatesById } = this.props
+    const { tiles, selectedCoordinatesById } = this.props
 
-    if (!allParcels) return []
+    if (!tiles) return []
 
     const parcelIds = Object.keys(selectedCoordinatesById)
     const parcels = []
 
     for (const parcelId of parcelIds) {
-      const parcel = allParcels[parcelId]
-      if (parcel) {
-        parcels.push(parcel)
+      const tile = tiles[parcelId]
+      if (tile) {
+        parcels.push({ id: parcelId, ...tile })
       }
     }
 
@@ -291,7 +295,7 @@ export default class AuctionPage extends React.PureComponent {
       authorization,
       params,
       center,
-      allParcels,
+      tiles,
       token,
       rate,
       price,
@@ -360,7 +364,7 @@ export default class AuctionPage extends React.PureComponent {
           <ParcelPreview
             x={x}
             y={y}
-            parcels={allParcels}
+            tiles={tiles}
             selected={validSelectedParcels}
             isDraggable
             showPopup

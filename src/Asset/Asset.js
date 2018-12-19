@@ -1,7 +1,20 @@
 import { PublicationQueries } from '../Publication'
 import { db, SQL, raw } from '../database'
+import { ASSETS } from '.'
 
 export class Asset {
+  static getNew(assetType) {
+    const Model = this.getModel(assetType)
+    return new Asset(Model)
+  }
+
+  static getModel(assetType) {
+    if (!ASSETS[assetType]) {
+      throw new Error(`Invalid asset type "${assetType}"`)
+    }
+    return ASSETS[assetType]
+  }
+
   constructor(Model) {
     this.Model = Model
     this.tableName = Model.tableName

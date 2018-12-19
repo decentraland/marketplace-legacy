@@ -1,11 +1,13 @@
 import { Log } from 'decentraland-commons'
-import { getParcelIdFromEvent } from './utils'
+
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
+import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { decodeMetadata } from '../../shared/asset'
 import { isEqualCoords } from '../../shared/parcel'
+import { getParcelIdFromEvent } from './utils'
 
 const log = new Log('estateReducer')
 
@@ -73,14 +75,10 @@ async function reduceEstateRegistry(event) {
       log.info(
         `[${name}] Updating Estate id: "${estate.id}" add land (${parcelId})`
       )
-      if (!estate.data.parcels.find(p => isEqualCoords(p, parcel))) {
+      if (!estate.data.parcels.some(p => isEqualCoords(p, parcel))) {
+        const parcels = [...estate.data.parcels, parcel]
         await Estate.update(
-          {
-            data: {
-              ...estate.data,
-              parcels: [...estate.data.parcels, parcel]
-            }
-          },
+          { data: { ...estate.data, parcels } },
           { id: estate.id }
         )
       }
@@ -104,13 +102,9 @@ async function reduceEstateRegistry(event) {
       log.info(
         `[${name}] Updating Estate id: "${estate.id}" remove land (${parcelId})`
       )
+      const parcels = estate.data.parcels.filter(p => !isEqualCoords(p, parcel))
       await Estate.update(
-        {
-          data: {
-            ...estate.data,
-            parcels: estate.data.parcels.filter(p => !isEqualCoords(p, parcel))
-          }
-        },
+        { data: { ...estate.data, parcels } },
         { id: estate.id }
       )
       break
@@ -157,10 +151,11 @@ async function reduceEstateRegistry(event) {
       }
 
       log.info(`[${name}] Updating Estate id: "${estate.id}" data: ${_data}`)
-      await Estate.update(
-        { data: { ...estate.data, ...decodeMetadata(_data) } },
-        { id: estate.id }
-      )
+      const data = { ...estate.data, ...decodeMetadata(_data) }
+      await Promise.all([
+        Estate.update({ data }, { id: estate.id }),
+        Tile.update({ name: data.name }, { estate_id: estate.id })
+      ])
       break
     }
     default:

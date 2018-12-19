@@ -1,4 +1,4 @@
-import { isParcel } from 'shared/parcel'
+import { ASSET_TYPES } from 'shared/asset'
 
 const asCoordinateParam = key => `:${key}(-?\\d+)`
 const asIntParam = key => `:${key}(\\d+)`
@@ -54,8 +54,11 @@ export const locations = {
 
   // Generic assets
 
-  assetDetail: function(asset) {
-    return isParcel(asset)
+  assetDetail: function(asset, assetType) {
+    if (!assetType) {
+      throw new Error('Undefined assetType provided to locations.assetDetail')
+    }
+    return assetType === ASSET_TYPES.parcel
       ? this.parcelDetail(asset.x, asset.y)
       : this.estateDetail(asset.id)
   },

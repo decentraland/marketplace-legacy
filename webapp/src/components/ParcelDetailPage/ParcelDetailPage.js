@@ -1,50 +1,146 @@
 import React from 'react'
+import { Header, Grid } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { t } from '@dapps/modules/translation/utils'
 
-import Parcel from 'components/Parcel'
-import ParcelDetail from './ParcelDetail'
-import { publicationType, districtType, mortgageType } from 'components/types'
+import ParcelName from 'components/ParcelName'
+import Mana from 'components/Mana'
+import Expiration from 'components/Expiration'
+import ParcelTags from 'components/ParcelTags'
+import {
+  parcelType,
+  districtType,
+  publicationType,
+  mortgageType,
+  walletType,
+  estateType
+} from 'components/types'
+import { getOpenPublication } from 'shared/asset'
+import { getDistrict } from 'shared/district'
+import { hasTags } from 'shared/parcel'
+import ParcelOwner from './ParcelOwner'
+import ParcelActions from './ParcelActions'
+import ParcelDescription from './ParcelDescription'
+import AssetTransactionHistory from 'components/AssetTransactionHistory'
+import ParcelMortgage from './ParcelMortgage'
 
 import './ParcelDetailPage.css'
 
 export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
-    x: PropTypes.string.isRequired,
-    y: PropTypes.string.isRequired,
+    parcel: parcelType.isRequired,
+    wallet: walletType.isRequired,
     publications: PropTypes.objectOf(publicationType),
+    estates: PropTypes.objectOf(estateType),
     districts: PropTypes.objectOf(districtType).isRequired,
     mortgage: mortgageType,
-    user: PropTypes.string,
     onBuy: PropTypes.func.isRequired
+  }
+
+  getDescription() {
+    const { parcel, districts } = this.props
+    const district = getDistrict(parcel, districts)
+
+    if (district) {
+      return district.description
+    }
+    if (parcel.data.description) {
+      return parcel.data.description.toString()
+    }
+
+    return ''
   }
 
   render() {
     const {
-      x,
-      y,
-      publications,
+      parcel,
       districts,
       estates,
+      publications,
+      isOwner,
       mortgage,
-      onBuy
+      wallet
     } = this.props
+
+    const description = this.getDescription()
+    const publication = getOpenPublication(parcel, publications)
 
     return (
       <div className="ParcelDetailPage">
-        <Parcel x={x} y={y}>
-          {(parcel, isOwner, wallet) => (
-            <ParcelDetail
-              wallet={wallet}
-              parcel={parcel}
-              isOwner={isOwner}
-              publications={publications}
-              districts={districts}
-              estates={estates}
-              onBuy={onBuy}
-              mortgage={mortgage}
-            />
-          )}
-        </Parcel>
+        <Grid columns={2} stackable>
+          <Grid.Row className="parcel-detail-row">
+            <Grid.Column>
+              <Header size="large">
+                <ParcelName parcel={parcel} />
+              </Header>
+              <ParcelDescription description={description} />
+            </Grid.Column>
+            <Grid.Column className="parcel-owner-container">
+              <ParcelOwner
+                parcel={parcel}
+                estates={estates}
+                districts={districts}
+                isOwner={isOwner}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          {publication || isOwner ? (
+            <Grid.Row className="parcel-detail-row">
+              {publication ? (
+                <React.Fragment>
+                  <Grid.Column mobile={4} tablet={3} computer={4}>
+                    <h3>{t('asset_detail.publication.price')}</h3>
+                    <Mana
+                      amount={parseFloat(publication.price)}
+                      size={20}
+                      className="mana-price-icon"
+                    />
+                  </Grid.Column>
+                  <Grid.Column
+                    mobile={4}
+                    tablet={3}
+                    computer={4}
+                    className="time-left"
+                  >
+                    <h3>{t('global.time_left')}</h3>
+                    <Expiration
+                      expiresAt={parseInt(publication.expires_at, 10)}
+                      className={'PublicationExpiration'}
+                    />
+                  </Grid.Column>
+                </React.Fragment>
+              ) : null}
+              <Grid.Column
+                className="parcel-actions-container"
+                tablet={publication ? 10 : 16}
+                computer={publication ? 8 : 16}
+              >
+                <ParcelActions
+                  wallet={wallet}
+                  parcel={parcel}
+                  mortgage={mortgage}
+                  publications={publications}
+                  isOwner={isOwner}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          ) : null}
+        </Grid>
+
+        {mortgage && <ParcelMortgage mortgage={mortgage} />}
+
+        {hasTags(parcel) && (
+          <Grid stackable className="parcel-detail-row">
+            <Grid.Row>
+              <Grid.Column>
+                <h3>{t('parcel_detail.tags.title')}</h3>
+                <ParcelTags parcel={parcel} showDetails={true} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        )}
+
+        <AssetTransactionHistory asset={parcel} publications={publications} />
       </div>
     )
   }

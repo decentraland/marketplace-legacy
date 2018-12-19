@@ -25,7 +25,6 @@ import {
   FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
 import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
-import { FETCH_MAP_SUCCESS } from 'modules/map/actions'
 import {
   ADD_PARCELS,
   EDIT_ESTATE_PARCELS_SUCCESS,
@@ -67,17 +66,6 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           [parcelId]: normalizeParcel(action.parcel, parcel)
-        }
-      }
-    }
-    case FETCH_MAP_SUCCESS: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        error: null,
-        data: {
-          ...state.data,
-          ...action.assets.parcels
         }
       }
     }

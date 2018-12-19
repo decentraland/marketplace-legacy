@@ -1,56 +1,56 @@
-.Page > .EstateDetail {
+.Page > .EstateDetailPage {
   color: var(--text);
   font-size: 15px;
   padding-top: 0px;
 }
 
-.EstateDetail .estate-title {
+.EstateDetailPage .estate-title {
   margin-bottom: 5px;
 }
 
-.EstateDetail .manage-button {
+.EstateDetailPage .manage-button {
   margin-left: 25px;
 }
 
-.EstateDetail .estate-title > span {
+.EstateDetailPage .estate-title > span {
   margin-right: 16px;
 }
 
-.EstateDetail .estate-title .LandAmount {
+.EstateDetailPage .estate-title .LandAmount {
   display: inline-flex;
   font-size: 20px;
   transform: translateY(-2px);
 }
 
-.EstateDetail .estate-description {
+.EstateDetailPage .estate-description {
   color: var(--gray);
   font-size: 15px;
 }
 
-.EstateDetail .estate-owner-container {
+.EstateDetailPage .estate-owner-container {
   text-align: right !important;
 }
 
-.EstateDetail .row .estate-data.column {
+.EstateDetailPage .row .estate-data.column {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   align-content: center;
 }
 
-.EstateDetail .estate-data h3 {
+.EstateDetailPage .estate-data h3 {
   margin: auto 0 15px 0;
 }
 
-.EstateDetail .estate-data .description {
+.EstateDetailPage .estate-data .description {
   margin: 0 0 auto 0;
 }
 
-.EstateDetail .estate-actions-container {
+.EstateDetailPage .estate-actions-container {
   text-align: right;
 }
 
-.EstateDetail .owned-by {
+.EstateDetailPage .owned-by {
   display: inline-flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -58,49 +58,49 @@
   color: var(--gray);
 }
 
-.EstateDetail h3 {
+.EstateDetailPage h3 {
   font-family: var(--font-family) !important;
 }
 
-.EstateDetail .mana-price-icon {
+.EstateDetailPage .mana-price-icon {
   font-size: 1.5em;
 }
 
-.EstateDetail .time-left .PublicationExpiration {
+.EstateDetailPage .time-left .PublicationExpiration {
   font-size: 20px;
   display: block;
   color: var(--gray);
 }
 
-.EstateDetail .AddressBlock {
+.EstateDetailPage .AddressBlock {
   height: 24px;
   margin-left: 10px;
 }
 
-.EstateDetail .details {
+.EstateDetailPage .details {
   margin-top: 20px;
 }
 
-.EstateDetail .details .button.tiny.link {
+.EstateDetailPage .details .button.tiny.link {
   margin-left: 16px;
 }
 
-.EstateDetail.empty {
+.EstateDetailPage.empty {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.EstateDetail.empty .empty-estate-message {
+.EstateDetailPage.empty .empty-estate-message {
   color: var(--gray);
 }
 
-.EstateDetail .row .column.highlights {
+.EstateDetailPage .row .column.highlights {
   margin-top: 20px;
 }
 
 @media (max-width: 768px) {
-  .EstateDetail .estate-owner-container {
+  .EstateDetailPage .estate-owner-container {
     text-align: left !important;
   }
 }

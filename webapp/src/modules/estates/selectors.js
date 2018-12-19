@@ -19,8 +19,10 @@ export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 
-export const isFetchingEstate = state =>
-  isLoadingType(getLoading(state), FETCH_ESTATE_REQUEST)
+export const isFetchingEstate = (state, id) =>
+  getLoading(state).some(
+    action => action.type === FETCH_ESTATE_REQUEST && action.id === id
+  )
 
 export const isCreatingEstateTransactionIdle = state =>
   isLoadingType(getLoading(state), CREATE_ESTATE_REQUEST)
@@ -73,20 +75,6 @@ export const getEstates = createSelector(
 )
 
 export const getEstate = (state, { id }) => getEstates(state)[id]
-
-export const isHiddenEstate = createSelector(
-  (state, props) => getEstate(state, props),
-  state => getParcels(state),
-  (estate, parcels) => {
-    if (estate && estate.data.parcels.length > 0) {
-      return estate.data.parcels.some(({ x, y }) => {
-        const parcelId = buildCoordinate(x, y)
-        const parcel = parcels[parcelId]
-        return parcel != null && parcel.district_id != null // if the Estate contains any parcels with a district_id, it is a hidden Estate
-      })
-    }
-  }
-)
 
 export const areParcelsLoaded = createSelector(
   (state, props) => getEstate(state, props),
