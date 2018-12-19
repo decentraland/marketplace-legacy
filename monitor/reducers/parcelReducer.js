@@ -90,7 +90,7 @@ async function reduceLANDRegistry(event) {
         { owner: to.toLowerCase(), last_transferred_at },
         { id: parcelId }
       )
-      await Tile.updateAsset(parcelId, ASSET_TYPES.parcel)
+      await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
       break
     }
     default:
@@ -114,7 +114,7 @@ async function reduceEstateRegistry(event) {
         )
 
         await Parcel.update({ estate_id: _estateId }, { id: parcelId })
-        await Tile.updateAsset(parcelId, ASSET_TYPES.parcel)
+        await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
       } else {
         log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
       }
@@ -132,7 +132,7 @@ async function reduceEstateRegistry(event) {
         )
 
         await Parcel.update({ estate_id: null }, { id: parcelId })
-        await Tile.updateAsset(parcelId, ASSET_TYPES.parcel)
+        await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
       } else {
         log.info(`[${name}] Estate with token id  ${_estateId} does not exist`)
       }

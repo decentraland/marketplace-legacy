@@ -93,7 +93,7 @@ async function reduceMarketplace(event) {
           block_number,
           contract_id
         })
-        await Tile.updateAsset(assetId, assetType)
+        await Tile.upsertAsset(assetId, assetType)
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
         log.info(
@@ -127,7 +127,7 @@ async function reduceMarketplace(event) {
         ),
         Asset.update({ owner: buyer }, { id: assetId })
       ])
-      await Tile.updateAsset(assetId, assetType)
+      await Tile.upsertAsset(assetId, assetType)
       break
     }
     case eventNames.AuctionCancelled:
@@ -146,7 +146,7 @@ async function reduceMarketplace(event) {
         },
         { contract_id }
       )
-      await Tile.updateAsset(assetId, assetType)
+      await Tile.upsertAsset(assetId, assetType)
       break
     }
     default:

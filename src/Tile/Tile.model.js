@@ -2,13 +2,15 @@ import { Model } from 'decentraland-commons'
 
 import { TileAttributes } from './TileAttributes'
 import { TileType } from './TileType'
-import { Estate, ParcelQueries } from '../Asset'
+import { Asset, Parcel, Estate, ParcelQueries } from '../Asset'
 import { Contribution } from '../Contribution'
 import { District } from '../District'
 import { Publication } from '../Publication'
 import { SQL, raw } from '../database'
+import { asyncBatch } from '../lib'
 import { isDistrict } from '../../shared/district'
 import { isEstate } from '../../shared/parcel'
+import { ASSET_TYPES } from '../shared/asset'
 import { PUBLICATION_STATUS } from '../shared/publication'
 
 export class Tile extends Model {
@@ -28,6 +30,37 @@ export class Tile extends Model {
     'is_connected_top',
     'is_connected_topleft'
   ]
+
+  static async upsertAsset(assetId, assetType) {
+    const asset = await Asset.getModel(assetType).findOne(assetId)
+
+    switch (assetType) {
+      case ASSET_TYPES.parcel:
+        return this.upsertParcel(asset)
+      case ASSET_TYPES.estate:
+        return this.upsertEstate(asset)
+      default:
+        throw new Error(`The asset type ${assetType} is invalid`)
+    }
+  }
+
+  static async upsertEstate(estate) {
+    return asyncBatch({
+      elements: estate.data.parcels,
+      callback: async parcelsBatch => {
+        const promises = []
+
+        for (const { x, y } of parcelsBatch) {
+          const parcel = await Parcel.findOne({ x, y })
+          promises.push(this.upsertParcel(parcel))
+        }
+
+        await Promise.all(promises)
+      },
+      batchSize: 10,
+      logFormat: ''
+    })
+  }
 
   static async upsertParcel(parcel) {
     const now = new Date()
@@ -192,13 +225,6 @@ export class Tile extends Model {
       estatePromise,
       districtPromise
     ])
-
-    if (parcel.id === '-44,-127') {
-      console.log('PARCEL', parcel)
-      console.log('PARCEL publication', publication)
-      console.log('PARCEL estate', estate)
-      console.log('PARCEL district', district)
-    }
 
     return { ...parcel, publication, estate, district }
   }

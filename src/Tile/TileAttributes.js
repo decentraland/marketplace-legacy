@@ -41,7 +41,7 @@ export class TileAttributes {
   }
 
   async getReference() {
-    const type = this.getType()
+    const type = this.tileType.get()
 
     return {
       type,
@@ -54,11 +54,10 @@ export class TileAttributes {
   }
 
   getOwner() {
-    const owner = this.parcel.district_id
+    return this.parcel.district_id
       ? null
       : this.isEstate
         ? this.parcel.estate.owner
         : this.parcel.owner
-    return owner.toLowerCase()
   }
 }
