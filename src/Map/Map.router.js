@@ -2,9 +2,10 @@ import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
 import { Tile } from '../Tile'
-import { Parcel, Estate, EstateService } from '../Asset'
+import { Asset, Parcel, Estate, EstateService } from '../Asset'
 import { sanitizeParcels } from '../sanitize'
 import { unsafeParseInt } from '../lib'
+import { db } from '../database'
 import { calculateMapProps } from '../shared/estate'
 import * as coordinates from '../shared/coordinates'
 import { Viewport, Bounds, TYPES } from '../shared/map'
@@ -15,6 +16,8 @@ const { minX, maxX, minY, maxY } = Bounds.getBounds()
 export class MapRouter {
   constructor(app) {
     this.app = app
+
+    this.cache = {}
   }
 
   mount() {
@@ -26,6 +29,21 @@ export class MapRouter {
     this.app.get('/estates/:id/map.png', this.handleRequest(this.getEstatePNG))
     this.app.get('/map', server.handleRequest(this.getMap))
     this.app.get('/tiles', server.handleRequest(this.getTiles))
+
+    db.on('notification', async msg => {
+      if (msg.name === 'notification' && msg.channel === 'tile_updated') {
+        const tile = JSON.parse(msg.payload)
+        this.cache[tile.id] = this.toMapTile(tile)
+      }
+    })
+
+    db.query('LISTEN tile_updated')
+
+    Tile.find().then(tiles => {
+      for (const tile of tiles) {
+        this.cache[tile.id] = this.toMapTile(tile)
+      }
+    })
   }
 
   handleRequest(callback) {
@@ -42,29 +60,24 @@ export class MapRouter {
   getTiles = async req => {
     let tiles = []
 
-    let nw
-    let se
-    try {
-      nw = server.extractFromReq(req, 'nw')
-      se = server.extractFromReq(req, 'se')
-    } catch (_) {
-      // keep undefined
-    }
-
+    console.time('getTiles')
     try {
       const address = server.extractFromReq(req, 'address').toLowerCase()
-      tiles = await Tile.inRangeFromAddressPerspective(nw, se, address)
+      tiles = await Tile.getFromAddressPerspective(address)
     } catch (error) {
-      tiles = await Tile.inRange(nw, se)
+      console.log(error)
     }
+    console.timeEnd('getTiles')
 
-    const map = {}
+    console.time('iterateTiles')
+    const map = this.cache
 
     for (const tile of tiles) {
       map[tile.id] = this.toMapTile(tile)
     }
+    console.timeEnd('iterateTiles')
 
-    return map
+    return map['-43,-127']
   }
 
   async getMapPNG(req, res) {

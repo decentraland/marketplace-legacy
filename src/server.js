@@ -51,6 +51,9 @@ if (require.main === module) {
 }
 
 export async function startServer() {
+  console.log('Connecting database')
+  await db.connect()
+
   new AssetRouter(router).mount()
   new EstateRouter(router).mount()
   new MortgageRouter(router).mount()
@@ -62,9 +65,6 @@ export async function startServer() {
   new MarketplaceRouter(router).mount()
   new ParcelRouter(router).mount()
   new InviteRouter(router).mount()
-
-  console.log('Connecting database')
-  await db.connect()
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)
