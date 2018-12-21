@@ -34,40 +34,16 @@ export class Map {
 
         const tile = tiles[buildCoordinate(x, y)]
         const attributes = this.getParcelAttributes(x, y, tile)
+
         if (skipPublications && this.isOnSale(tile)) {
           attributes.color = COLORS.taken
         }
-
-        if (this.isSelected(selected, x, y)) {
+        if (selected.length > 0 && this.isSelected(selected, x, y)) {
           selection.push(corner)
         }
 
         this.drawParcel(corner, attributes)
       }
-    }
-
-    if (selection.length > 0) {
-      Selection.draw({ ctx: this.ctx, size: this.size, selection })
-    }
-  }
-
-  drawFromTiles({ center, tiles, selected, skipPublications }) {
-    const selection = []
-
-    for (const tile of tiles) {
-      const { x, y } = tile
-      const corner = this.getParcelCorner(x, y, center)
-
-      const attributes = this.getParcelAttributes(x, y, tile)
-      if (skipPublications && this.isOnSale(tile)) {
-        attributes.color = COLORS.taken
-      }
-
-      if (this.isSelected(selected, x, y)) {
-        selection.push(corner)
-      }
-
-      this.drawParcel(corner, attributes)
     }
 
     if (selection.length > 0) {

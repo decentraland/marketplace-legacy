@@ -94,13 +94,6 @@ export class Tile extends Model {
         WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
   }
 
-  static async inRangePNG(topLeft, bottomRight) {
-    return this.db.query(SQL`
-      SELECT x, y, type, is_connected_left as left, is_connected_top as top, is_connected_topleft as "topLeft"
-        FROM ${raw(this.tableName)}
-        WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
-  }
-
   /**
    * Returns the tiles changing the type according to the supplied address.
    * For example if the address has a tile is on sale the db type will be TYPES.taken but will be chaged to TYPES.myParcelsOnSale here
