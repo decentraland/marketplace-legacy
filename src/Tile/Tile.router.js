@@ -14,16 +14,11 @@ export class TileRouter {
   }
 
   getTiles = async req => {
-    let tiles = {}
-
-    console.time('getTiles')
     try {
       const address = server.extractFromReq(req, 'address').toLowerCase()
-      tiles = await tilesObject.getForOwner(address)
+      return tilesObject.getForOwner(address)
     } catch (error) {
-      tiles = await tilesObject.get()
+      return tilesObject.get()
     }
-    console.timeEnd('getTiles')
-    return tiles
   }
 }

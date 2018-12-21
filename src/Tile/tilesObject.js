@@ -9,21 +9,22 @@ const DB_CHANNEL = 'tile_updated'
 class TilesObject {
   constructor() {
     this.cache = {}
+    this.cacheKeys = []
     this.isListening = false
-
-    // TODO: default should be false
-    if (env.get('CACHE_TILES', false)) {
-      db.onConnect(this.listen)
-    }
   }
 
   listen = async () => {
-    const addTileToObject = this.addTileToObject.bind(this, this.cache)
     const tiles = await Tile.find()
 
-    tiles.forEach(addTileToObject)
+    for (const tile of tiles) {
+      this.cache[tile.id] = this.toMapTile(tile)
+    }
+    this.cacheKeys = Object.keys(this.cache)
 
-    db.on(DB_CHANNEL, msg => addTileToObject(JSON.parse(msg.payload)))
+    db.on(DB_CHANNEL, msg => {
+      const tile = JSON.parse(msg.payload)
+      this.cache[tile.id] = this.toMapTile(tile)
+    })
 
     this.isListening = true
   }
@@ -32,6 +33,7 @@ class TilesObject {
     db.off(DB_CHANNEL)
     this.isListening = false
     this.cache = {}
+    this.cacheKeys = []
   }
 
   async get() {
@@ -42,30 +44,33 @@ class TilesObject {
     const tiles = await Tile.find()
     const map = {}
 
-    tiles.forEach(this.addTileToObject.bind(this, map))
+    for (const tile of tiles) {
+      map[tile.id] = this.toMapTile(tile)
+    }
 
     return map
   }
 
   async getForOwner(address) {
     const map = {}
-    const addTileToObject = this.addTileToObject.bind(this, map)
 
     if (this.isListening) {
-      Object.assign(map, this.cache)
+      for (const id of this.cacheKeys) {
+        map[id] = this.cache[id]
+      }
     } else {
       const allTiles = await Tile.find()
-      allTiles.forEach(addTileToObject)
+      for (const tile of allTiles) {
+        map[tile.id] = this.toMapTile(tile)
+      }
     }
 
     const addressTiles = await Tile.getForOwner(address)
-    addressTiles.forEach(addTileToObject)
+    for (const tile of addressTiles) {
+      map[tile.id] = this.toMapTile(tile)
+    }
 
     return map
-  }
-
-  addTileToObject(obj, tile) {
-    obj[tile.id] = this.toMapTile(tile)
   }
 
   toMapTile(tile) {
@@ -88,4 +93,11 @@ class TilesObject {
   }
 }
 
-export const tilesObject = new TilesObject()
+const tilesObject = new TilesObject()
+
+// TODO: default should be false
+if (env.get('CACHE_TILES', true)) {
+  db.onConnect(tilesObject.listen)
+}
+
+export { tilesObject }

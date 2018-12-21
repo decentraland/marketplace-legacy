@@ -1,7 +1,7 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
-import { Tile } from '../Tile'
+import { Tile, tilesObject } from '../Tile'
 import { Asset, Parcel, Estate, EstateService } from '../Asset'
 import { MapReqQueryParams } from '../ReqQueryParams'
 import { sanitizeParcels } from '../sanitize'
@@ -44,21 +44,16 @@ export class MapRouter {
   }
 
   async getParcelPNG(req, res) {
-    const { x, y, width, height, size, skipPublications } = this.sanitize(req)
     const center = { x, y }
     const mapOptions = {
-      width,
-      height,
-      size,
+      ...this.sanitize(req),
       center,
-      selected: [center],
-      skipPublications
+      selected: [center]
     }
     return this.sendPNG(res, mapOptions)
   }
 
   async getEstatePNG(req, res) {
-    const { width, height, size, skipPublications } = this.sanitize(req)
     const id = server.extractFromReq(req, 'id')
     const estate = await Estate.findByTokenId(id)
     if (!estate) {
@@ -67,15 +62,13 @@ export class MapRouter {
 
     const { parcels } = estate.data
     const { center, zoom, pan } = calculateMapProps(parcels, size)
+
     const mapOptions = {
-      width,
-      height,
-      size,
+      ...this.sanitize(req),
       center,
       zoom,
       pan,
-      selected: parcels,
-      skipPublications
+      selected: parcels
     }
     return this.sendPNG(res, mapOptions)
   }
@@ -99,31 +92,21 @@ export class MapRouter {
     return { assets, total }
   }
 
-  async sendPNG(
-    res,
-    { width, height, size, center, selected, skipPublications, zoom, pan }
-  ) {
+  async sendPNG(res, mapOptions) {
+    const { width, height, size, center, zoom, pan } = mapOptions
+
     const { nw, se } = Viewport.getDimensions({
       width,
       height,
-      center,
       size,
+      center,
       zoom,
       pan,
       padding: 1
     })
 
     try {
-      const stream = await this.getStream({
-        width,
-        height,
-        size,
-        nw,
-        se,
-        center,
-        selected,
-        skipPublications
-      })
+      const stream = await this.getStream({ ...mapOptions, nw, se })
       res.type('png')
       stream.pipe(res)
     } catch (error) {
@@ -133,16 +116,19 @@ export class MapRouter {
   }
 
   async getStream({
+    nw,
+    se,
     width,
     height,
     size,
-    nw,
-    se,
     center,
     selected,
+    address,
     skipPublications
   }) {
-    const tiles = await Tile.inRangePNG(nw, se)
+    const tiles = address
+      ? await tilesObject.getForOwner(address)
+      : await tilesObject.get()
 
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
@@ -151,7 +137,9 @@ export class MapRouter {
       width,
       height,
       size
-    }).drawFromTiles({
+    }).draw({
+      nw,
+      se,
       center,
       tiles,
       selected,

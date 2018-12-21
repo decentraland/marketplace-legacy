@@ -1,5 +1,8 @@
 import { ReqQueryParams } from './ReqQueryParams'
+import { Bounds } from '../shared/map'
 import * as coordinates from '../shared/coordinates'
+
+const { minX, minY, maxX, maxY } = Bounds.getBounds()
 
 export class MapReqQueryParams {
   constructor(req) {
@@ -7,22 +10,24 @@ export class MapReqQueryParams {
   }
 
   sanitize() {
+    const qp = this.reqQueryParams
     return {
-      x: this.getInteger('x', minX, maxX, 0),
-      y: this.getInteger('y', minY, maxY, 0),
-      width: this.getInteger('width', 32, 1024, 500),
-      height: this.getInteger('height', 32, 1024, 500),
-      size: this.getInteger('size', 1, 40, 10),
+      x: qp.getInteger('x', minX, maxX, 0),
+      y: qp.getInteger('y', minY, maxY, 0),
+      width: qp.getInteger('width', 32, 1024, 500),
+      height: qp.getInteger('height', 32, 1024, 500),
+      size: qp.getInteger('size', 1, 40, 10),
       center: this.getCoords('center', { x: 0, y: 0 }),
       selected: this.getCoordsArray('selected', []),
-      skipPublications: !this.getBoolean('publications', false) // Mind the negation here
+      address: qp.get('address', ''),
+      skipPublications: !qp.getBoolean('publications', false) // Mind the negation here
     }
   }
 
   getCoords(name, defaultValue) {
     let param
     try {
-      param = this.get(name)
+      param = this.reqQueryParams.get(name)
     } catch (error) {
       return defaultValue
     }
@@ -42,7 +47,7 @@ export class MapReqQueryParams {
   getCoordsArray(name, defaultValue) {
     let param
     try {
-      param = server.extractFromReq(name)
+      param = this.reqQueryParams.get(name)
     } catch (error) {
       return defaultValue
     }
