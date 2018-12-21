@@ -32,7 +32,7 @@ export function loadContracts() {
   contractsData = Object.freeze({
     LegacyMarketplace: {
       address: env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS').toLowerCase(),
-      eventNames: [] //['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled']
+      eventNames: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled']
     },
     Marketplace: {
       address: env.get('MARKETPLACE_CONTRACT_ADDRESS').toLowerCase(),
@@ -59,24 +59,24 @@ export function loadContracts() {
     },
     MortgageHelper: {
       address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS').toLowerCase(),
-      eventNames: [] //['NewMortgage']
+      eventNames: ['NewMortgage']
     },
     MortgageManager: {
       address: env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS').toLowerCase(),
-      eventNames: [] //[
-      //   'CanceledMortgage',
-      //   'StartedMortgage',
-      //   'PaidMortgage',
-      //   'DefaultedMortgage'
-      // ]
+      eventNames: [
+        'CanceledMortgage',
+        'StartedMortgage',
+        'PaidMortgage',
+        'DefaultedMortgage'
+      ]
     },
     RCNEngine: {
       address: env.get('RCN_ENGINE_CONTRACT_ADDRESS').toLowerCase(),
-      eventNames: [] //['PartialPayment', 'TotalPayment']
+      eventNames: ['PartialPayment', 'TotalPayment']
     },
     DecentralandInvite: {
       address: env.get('DECENTRALAND_INVITE_CONTRACT_ADDRESS').toLowerCase(),
-      eventNames: [] //['Transfer']
+      eventNames: ['Transfer']
     }
   })
 
