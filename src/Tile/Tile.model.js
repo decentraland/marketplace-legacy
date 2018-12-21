@@ -102,51 +102,43 @@ export class Tile extends Model {
   }
 
   /**
-   * Returns the tiles form the database changing the type according to the supplied wallet.
-   * So for example if a tile is on sale the type will be TYPES.taken and changed to TYPES.myParcelsOnSale here
+   * Returns the tiles changing the type according to the supplied address.
+   * For example if the address has a tile is on sale the db type will be TYPES.taken but will be chaged to TYPES.myParcelsOnSale here
    */
-  static async getFromAddressPerspective(owner) {
+  static async getForOwner(owner) {
     const districtColumnNames = this.filterColumnNames(
       ['price', 'owner', 'estate_id', 'district_id', 'asset_type'],
       't'
     ).join(', ')
-    const ownerColumnNames = this.filterColumnNames([
-      'owner',
-      'district_id',
-      'asset_type'
-    ]).join(', ')
+    const ownerColumnNames = this.filterColumnNames(
+      ['owner', 'district_id', 'asset_type'],
+      't'
+    ).join(', ')
 
     const [districtTiles, ownerTiles] = await Promise.all([
       // prettier-ignore
       this.db.query(SQL`
-        SELECT ${raw(districtColumnNames)}, COUNT(c.id) contributions_count
+        SELECT ${raw(districtColumnNames)}
           FROM ${raw(this.tableName)} t
-          LEFT JOIN ${raw(Contribution.tableName)} c ON c.address = ${owner} AND c.district_id = t.district_id
+          JOIN ${raw(Contribution.tableName)} c ON c.address = ${owner} AND c.district_id = t.district_id
           WHERE (t.owner != ${owner} OR t.owner IS NULL)
             AND t.district_id IS NOT NULL
-          GROUP BY ${raw(districtColumnNames)}, c.id`),
+          GROUP BY c.id, ${raw(districtColumnNames)}`),
       this.db.query(SQL`
         SELECT ${raw(ownerColumnNames)}
-          FROM ${raw(this.tableName)}
+          FROM ${raw(this.tableName)} t
           WHERE owner = ${owner}`)
     ])
 
     for (const tile of districtTiles) {
-      if (tile.contributions_count > 0) {
-        // Mock a contribution for perf reasons
-        const tileType = new TileType({
-          owner: tile.owner,
-          contributions: [1]
-        })
-        const type = tileType.get()
-        Object.assign(tile, { type })
-      }
+      // Mock a contribution for perf reasons
+      const tileType = new TileType({ owner, contribution: { id: tile.id } })
+      tile.type = tileType.get()
     }
 
     for (const tile of ownerTiles) {
       const tileType = new TileType({ owner })
-      const type = tileType.getForOwner(owner, tile.type)
-      Object.assign(tile, { type })
+      tile.type = tileType.getForOwner(owner, tile.type)
     }
 
     return districtTiles.concat(ownerTiles)

@@ -9,6 +9,7 @@ import { MortgageRouter } from './Mortgage'
 import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
 import { PublicationRouter } from './Publication'
+import { TileRouter } from './Tile'
 import { TranslationRouter } from './Translation'
 import { MapRouter } from './Map'
 import { MarketplaceRouter } from './Marketplace'
@@ -60,6 +61,7 @@ export async function startServer() {
   new DistrictRouter(router).mount()
   new ContributionRouter(router).mount()
   new PublicationRouter(router).mount()
+  new TileRouter(router).mount()
   new TranslationRouter(router).mount()
   new MapRouter(router).mount()
   new MarketplaceRouter(router).mount()

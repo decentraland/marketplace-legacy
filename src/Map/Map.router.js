@@ -3,15 +3,12 @@ import { createCanvas } from 'canvas'
 
 import { Tile } from '../Tile'
 import { Asset, Parcel, Estate, EstateService } from '../Asset'
+import { MapReqQueryParams } from '../ReqQueryParams'
 import { sanitizeParcels } from '../sanitize'
-import { unsafeParseInt } from '../lib'
-import { db } from '../database'
 import { calculateMapProps } from '../shared/estate'
 import * as coordinates from '../shared/coordinates'
-import { Viewport, Bounds, TYPES } from '../shared/map'
+import { Viewport } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
-
-const { minX, maxX, minY, maxY } = Bounds.getBounds()
 
 export class MapRouter {
   constructor(app) {
@@ -27,23 +24,8 @@ export class MapRouter {
       this.handleRequest(this.getParcelPNG)
     )
     this.app.get('/estates/:id/map.png', this.handleRequest(this.getEstatePNG))
+
     this.app.get('/map', server.handleRequest(this.getMap))
-    this.app.get('/tiles', server.handleRequest(this.getTiles))
-
-    db.on('notification', async msg => {
-      if (msg.name === 'notification' && msg.channel === 'tile_updated') {
-        const tile = JSON.parse(msg.payload)
-        this.cache[tile.id] = this.toMapTile(tile)
-      }
-    })
-
-    db.query('LISTEN tile_updated')
-
-    Tile.find().then(tiles => {
-      for (const tile of tiles) {
-        this.cache[tile.id] = this.toMapTile(tile)
-      }
-    })
   }
 
   handleRequest(callback) {
@@ -55,29 +37,6 @@ export class MapRouter {
         res.send(error.message)
       }
     }
-  }
-
-  getTiles = async req => {
-    let tiles = []
-
-    console.time('getTiles')
-    try {
-      const address = server.extractFromReq(req, 'address').toLowerCase()
-      tiles = await Tile.getFromAddressPerspective(address)
-    } catch (error) {
-      console.log(error)
-    }
-    console.timeEnd('getTiles')
-
-    console.time('iterateTiles')
-    const map = this.cache
-
-    for (const tile of tiles) {
-      map[tile.id] = this.toMapTile(tile)
-    }
-    console.timeEnd('iterateTiles')
-
-    return map['-43,-127']
   }
 
   async getMapPNG(req, res) {
@@ -99,9 +58,8 @@ export class MapRouter {
   }
 
   async getEstatePNG(req, res) {
-    const { id, width, height, size, skipPublications } = this.sanitizeEstate(
-      req
-    )
+    const { width, height, size, skipPublications } = this.sanitize(req)
+    const id = server.extractFromReq(req, 'id')
     const estate = await Estate.findByTokenId(id)
     if (!estate) {
       throw new Error(`The estate with token id "${id}" doesn't exist.`)
@@ -202,118 +160,7 @@ export class MapRouter {
     return canvas.pngStream()
   }
 
-  toMapTile(tile) {
-    const mapTile = {
-      x: tile.x,
-      y: tile.y,
-      type: tile.type
-    }
-    if (tile.owner && [TYPES.taken, TYPES.onSale].includes(tile.type)) {
-      mapTile.owner = tile.owner.slice(0, 6)
-    }
-    if (tile.price) mapTile.price = tile.price
-    if (tile.name) mapTile.name = tile.name
-    if (tile.estate_id) mapTile.estate_id = tile.estate_id
-    if (tile.is_connected_left) mapTile.left = 1
-    if (tile.is_connected_top) mapTile.top = 1
-    if (tile.is_connected_topleft) mapTile.topLeft = 1
-
-    return mapTile
-  }
-
-  sanitizeEstate(req) {
-    return {
-      id: server.extractFromReq(req, 'id'),
-      ...this.sanitize(req)
-    }
-  }
-
   sanitize(req) {
-    return {
-      x: this.getInteger(req, 'x', minX, maxX, 0),
-      y: this.getInteger(req, 'y', minY, maxY, 0),
-      width: this.getInteger(req, 'width', 32, 1024, 500),
-      height: this.getInteger(req, 'height', 32, 1024, 500),
-      size: this.getInteger(req, 'size', 1, 40, 10),
-      center: this.getCoords(req, 'center', { x: 0, y: 0 }),
-      selected: this.getCoordsArray(req, 'selected', []),
-      skipPublications: !this.getBoolean(req, 'publications', false) // Mind the negation here
-    }
-  }
-
-  getInteger(req, name, min, max, defaultValue) {
-    let param, value
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-
-    try {
-      value = unsafeParseInt(param)
-    } catch (e) {
-      throw new Error(
-        `Invalid param "${name}" should be a integer but got "${param}"`
-      )
-    }
-    return value > max ? max : value < min ? min : value
-  }
-
-  getCoords(req, name, defaultValue) {
-    let param
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-
-    let coords
-    try {
-      const [x, y] = coordinates.splitCoordinate(param)
-      coords = { x, y }
-    } catch (error) {
-      throw new Error(
-        `Invalid param "${name}" should be a coordinate "x,y" but got "${param}".`
-      )
-    }
-    return coords
-  }
-
-  getCoordsArray(req, name, defaultValue) {
-    let param
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-
-    let coordsArray = []
-    try {
-      coordsArray = param.split(';').map(pair => {
-        const [x, y] = coordinates.splitCoordinate(pair)
-        return { x, y }
-      })
-    } catch (error) {
-      throw new Error(
-        `Invalid param "${name}" should be a list of coordinates "x1,y1;x2,y2" but got "${param}".`
-      )
-    }
-    return coordsArray
-  }
-
-  getBoolean(req, name, defaultValue) {
-    let param
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-    const value = param === 'true' ? true : param === 'false' ? false : null
-    if (value === null) {
-      throw new Error(
-        `Invalid param "${name}" should be a boolean but got "${param}".`
-      )
-    }
-    return value
+    return new MapReqQueryParams(req).sanitize()
   }
 }

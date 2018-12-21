@@ -8,15 +8,16 @@ export class TileType {
   }
 
   get() {
+    if (this.parcel.contribution) {
+      return TYPES.contribution
+    }
+
     if (isDistrict(this.parcel)) {
       if (isRoad(this.parcel.district_id)) {
         return TYPES.roads
       }
       if (isPlaza(this.parcel.district_id)) {
         return TYPES.plaza
-      }
-      if (this.parcel.contributions && this.parcel.contributions.length) {
-        return TYPES.contribution
       }
       return TYPES.district
     }
