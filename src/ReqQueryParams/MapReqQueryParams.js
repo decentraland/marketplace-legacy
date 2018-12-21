@@ -10,18 +10,22 @@ export class MapReqQueryParams {
   }
 
   sanitize() {
-    const qp = this.reqQueryParams
     return {
-      x: qp.getInteger('x', minX, maxX, 0),
-      y: qp.getInteger('y', minY, maxY, 0),
-      width: qp.getInteger('width', 32, 1024, 500),
-      height: qp.getInteger('height', 32, 1024, 500),
-      size: qp.getInteger('size', 1, 40, 10),
+      x: this.getInteger('x', minX, maxX, 0),
+      y: this.getInteger('y', minY, maxY, 0),
+      width: this.getInteger('width', 32, 1024, 500),
+      height: this.getInteger('height', 32, 1024, 500),
+      size: this.getInteger('size', 5, 40, 10),
       center: this.getCoords('center', { x: 0, y: 0 }),
       selected: this.getCoordsArray('selected', []),
-      address: qp.get('address', ''),
-      skipPublications: !qp.getBoolean('publications', false) // Mind the negation here
+      address: this.reqQueryParams.get('address', ''),
+      skipPublications: !this.reqQueryParams.getBoolean('publications', false) // Mind the negation here
     }
+  }
+
+  getInteger(name, min, max, defaultValue) {
+    const value = this.reqQueryParams.getInteger(name, defaultValue)
+    return value > max ? max : value < min ? min : value
   }
 
   getCoords(name, defaultValue) {
