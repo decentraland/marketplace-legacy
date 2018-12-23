@@ -2,6 +2,7 @@ import { env } from 'decentraland-commons'
 import { eth } from 'decentraland-eth'
 
 import { localStorage } from 'lib/localStorage'
+import { api } from 'lib/api'
 
 export const TOKEN_ADDRESSES = {
   MANA: env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS'),
@@ -90,8 +91,11 @@ export function addConversionFee(price) {
 export async function hasAuctionFinished() {
   const landAuction = eth.getContract('LANDAuction')
   const endTime = await landAuction.endTime()
-  return endTime.toNumber() > 0 && Date.now() / 1000 >= endTime.toNumber()
-  // return true
+  const availableParcelCount = await api.fetchAvaialableParcelCount()
+  return (
+    availableParcelCount === 0 ||
+    (endTime.toNumber() > 0 && Date.now() / 1000 >= endTime.toNumber())
+  )
 }
 
 export function hasAuctionStarted() {
@@ -110,6 +114,10 @@ export function getAuctionStartDate() {
 }
 
 export function getAuctionRealDuration(endTime) {
+  if (auctionRealDurationInDays) {
+    return parseInt(auctionRealDurationInDays, 10)
+  }
+
   const oneDayInSeconds = 60 * 60 * 24
   const startTime = getAuctionStartDate()
   const durationInDays = (endTime - startTime / 1000) / oneDayInSeconds
@@ -158,6 +166,9 @@ export const prices = [
   eth.utils.toWei(env.get('REACT_APP_AUCTION_FOURTH_PRICE', 25000), 'ether'),
   endPrice
 ]
+export const auctionRealDurationInDays = env.get(
+  'REACT_APP_AUCTION_REAL_DURATION_IN_DAYS'
+)
 export const auctionDuration = duration.days(15)
 export const time = [
   0,
