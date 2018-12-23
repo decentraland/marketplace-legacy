@@ -36,6 +36,9 @@ export default class AuctionFinishedPage extends React.PureComponent {
       )
     }
 
+    const duration = getAuctionRealDuration(endTime)
+    const realDuration = duration > 0 ? duration : 14
+
     return (
       <AuctionStaticPage>
         {isConnecting ||
@@ -58,7 +61,7 @@ export default class AuctionFinishedPage extends React.PureComponent {
                   <p>{t('auction_finished.mana_burned')}</p>
                 </div>
                 <div className="stat">
-                  <p>{getAuctionRealDuration(endTime)}</p>
+                  <p>{realDuration}</p>
                   <p>{t('global.duration')}</p>
                 </div>
               </div>
