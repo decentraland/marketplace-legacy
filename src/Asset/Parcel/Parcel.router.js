@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { env, server } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
 import { AssetRouter } from '../Asset.router'
@@ -122,6 +122,11 @@ export class ParcelRouter {
   }
 
   async getAvailableParcelCount() {
+    const auctionParcelCount = env.get('AUCTION_PARCEL_COUNT', null)
+    if (auctionParcelCount !== '' && auctionParcelCount != null) {
+      return parseInt(auctionParcelCount, 10)
+    }
+
     return Parcel.countAvailable()
   }
 
