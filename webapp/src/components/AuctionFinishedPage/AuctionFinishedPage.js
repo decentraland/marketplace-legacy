@@ -62,7 +62,7 @@ export default class AuctionFinishedPage extends React.PureComponent {
                 </div>
                 <div className="stat">
                   <p>{realDuration}</p>
-                  <p>{t('global.duration')}</p>
+                  <p>{t('global.days')}</p>
                 </div>
               </div>
             </div>
