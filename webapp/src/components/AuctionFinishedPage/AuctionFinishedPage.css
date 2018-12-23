@@ -34,8 +34,8 @@
   margin-bottom: 0;
 }
 
-.AucAuctionFinishedPagetionModal .stat p:last-child {
-  color: #5c5c6e;
+.AuctionFinishedPage .stat p.days {
+  text-transform: capitalize;
 }
 
 @media (min-width: 767px) {
