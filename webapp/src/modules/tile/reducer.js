@@ -19,7 +19,6 @@ export function tileReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action)
       }
     }
-    // TODO: Try adding a FETCH_FULL_TILES action
     case FETCH_TILES_SUCCESS: {
       return {
         ...state,

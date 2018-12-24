@@ -336,7 +336,7 @@ export default class ParcelPreview extends React.PureComponent {
 
     if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
       this.hovered = { x, y }
-      this.showPopup(x, y, layerX, layerY)
+      this.showPopup(x, y, layerY, layerX)
     }
   }
 
