@@ -1,20 +1,17 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
-import { Tile, tilesObject } from '../Tile'
-import { Asset, Parcel, Estate, EstateService } from '../Asset'
+import { tilesObject } from '../Tile'
+import { Parcel, Estate, EstateService } from '../Asset'
 import { MapReqQueryParams } from '../ReqQueryParams'
 import { sanitizeParcels } from '../sanitize'
 import { calculateMapProps } from '../shared/estate'
-import * as coordinates from '../shared/coordinates'
 import { Viewport } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
 
 export class MapRouter {
   constructor(app) {
     this.app = app
-
-    this.cache = {}
   }
 
   mount() {
@@ -44,12 +41,10 @@ export class MapRouter {
   }
 
   async getParcelPNG(req, res) {
+    const { x, y, ...mapOptions } = this.sanitize(req)
     const center = { x, y }
-    const mapOptions = {
-      ...this.sanitize(req),
-      center,
-      selected: [center]
-    }
+    mapOptions.center = center
+    mapOptions.selected = [center]
     return this.sendPNG(res, mapOptions)
   }
 
@@ -60,16 +55,15 @@ export class MapRouter {
       throw new Error(`The estate with token id "${id}" doesn't exist.`)
     }
 
+    const { size, ...mapOptions } = this.sanitize(req)
     const { parcels } = estate.data
     const { center, zoom, pan } = calculateMapProps(parcels, size)
 
-    const mapOptions = {
-      ...this.sanitize(req),
-      center,
-      zoom,
-      pan,
-      selected: parcels
-    }
+    mapOptions.center = center
+    mapOptions.zoom = zoom
+    mapOptions.pan = pan
+    mapOptions.selected = parcels
+
     return this.sendPNG(res, mapOptions)
   }
 

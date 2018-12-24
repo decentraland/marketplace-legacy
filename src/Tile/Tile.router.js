@@ -2,7 +2,6 @@ import { server } from 'decentraland-commons'
 
 import { Tile } from './Tile.model'
 import { tilesObject } from './tilesObject'
-import { TYPES } from '../shared/map'
 
 export class TileRouter {
   constructor(app) {
