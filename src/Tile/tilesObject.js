@@ -16,9 +16,7 @@ class TilesObject {
   listen = async () => {
     const tiles = await Tile.find()
 
-    for (const tile of tiles) {
-      this.cache[tile.id] = this.toMapTile(tile)
-    }
+    this.cache = this.compute(tiles)
     this.cacheKeys = Object.keys(this.cache)
 
     db.on(DB_CHANNEL, msg => {
@@ -42,17 +40,11 @@ class TilesObject {
     }
 
     const tiles = await Tile.find()
-    const map = {}
-
-    for (const tile of tiles) {
-      map[tile.id] = this.toMapTile(tile)
-    }
-
-    return map
+    return this.compute(tiles)
   }
 
   async getForOwner(address) {
-    const map = {}
+    let map = {}
 
     if (this.isListening) {
       for (const id of this.cacheKeys) {
@@ -60,13 +52,21 @@ class TilesObject {
       }
     } else {
       const allTiles = await Tile.find()
-      for (const tile of allTiles) {
-        map[tile.id] = this.toMapTile(tile)
-      }
+      map = this.compute(allTiles)
     }
 
     const addressTiles = await Tile.getForOwner(address)
     for (const tile of addressTiles) {
+      map[tile.id] = this.toMapTile(tile)
+    }
+
+    return map
+  }
+
+  compute(tiles) {
+    const map = {}
+
+    for (const tile of tiles) {
       map[tile.id] = this.toMapTile(tile)
     }
 

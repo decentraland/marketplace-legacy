@@ -115,13 +115,11 @@ export default class ParcelPreview extends React.PureComponent {
     this.shouldRefreshMap = false
     this.canvas = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
-    this.debouncedFetchTiles = debounce(this.props.onFetchTiles, 400)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
     this.popupTimeout = null
   }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.debounce !== this.props.debounce) {
       this.debouncedRenderMap = debounce(this.renderMap, nextProps.debounce)
@@ -157,7 +155,7 @@ export default class ParcelPreview extends React.PureComponent {
       newState.se.x !== this.oldState.se.x ||
       newState.se.y !== this.oldState.se.y
 
-    // The coords or the amount of parcels changed, so we need to re-fetch and update state
+    // The coords or the amount of parcels changed, so we need to update the state
     if (
       nextProps.x !== x ||
       nextProps.y !== y ||
@@ -165,9 +163,6 @@ export default class ParcelPreview extends React.PureComponent {
       isViewportDifferent
     ) {
       const { nw, se } = newState
-      if (!this.inStore(nw, se, nextProps.tiles)) {
-        this.debouncedFetchTiles(nw, se)
-      }
       this.oldState = newState
       this.setState(newState)
       this.debouncedHandleChange()
@@ -223,22 +218,6 @@ export default class ParcelPreview extends React.PureComponent {
       padding: LOAD_PADDING
     })
     return { ...dimensions, pan, zoom, center, size }
-  }
-
-  inStore(nw, se, tiles) {
-    if (!tiles) {
-      return false
-    }
-    for (let x = nw.x; x < se.x; x++) {
-      for (let y = se.y; y < nw.y; y++) {
-        const parcelId = buildCoordinate(x, y)
-        if (!tiles[parcelId] && Bounds.inBounds(x, y)) {
-          return false
-        }
-      }
-    }
-
-    return true
   }
 
   handleChange = () => {

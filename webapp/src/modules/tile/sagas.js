@@ -1,12 +1,12 @@
-import { takeEvery, call, select, put } from 'redux-saga/effects'
+import { take, takeEvery, select, call, put } from 'redux-saga/effects'
 
 import {
   FETCH_TILES_REQUEST,
   fetchTilesSuccess,
   fetchTilesFailure
 } from './actions'
+import { CONNECT_WALLET_SUCCESS } from 'modules/wallet/actions'
 import { getAddress } from 'modules/wallet/selectors'
-import { buildCoordinate } from 'shared/coordinates'
 import { api } from 'lib/api'
 
 export function* tileSaga() {
@@ -15,12 +15,18 @@ export function* tileSaga() {
 
 function* handleTilesRequest(action) {
   try {
-    const nw = buildCoordinate(action.nw.x, action.nw.y)
-    const se = buildCoordinate(action.se.x, action.se.y)
-    const address = yield select(getAddress)
-    const tiles = yield call(() => api.fetchTiles(nw, se, address))
-
+    const tiles = yield call(() => api.fetchTiles())
     yield put(fetchTilesSuccess(tiles))
+
+    let address = yield select(getAddress)
+
+    if (!address) {
+      const action = yield take(CONNECT_WALLET_SUCCESS)
+      address = action.payload.wallet.address
+    }
+
+    const ownerTiles = yield call(() => api.fetchAddressTiles(address))
+    yield put(fetchTilesSuccess(ownerTiles))
   } catch (error) {
     yield put(fetchTilesFailure(error.message))
   }

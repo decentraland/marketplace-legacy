@@ -12,6 +12,7 @@ export default class Page extends React.PureComponent {
     children: PropTypes.node.isRequired,
     isRootPage: PropTypes.bool.isRequired,
     isAuctionPage: PropTypes.bool.isRequired,
+    onFetchTiles: PropTypes.func.isRequired,
     onFetchDistricts: PropTypes.func.isRequired,
     onFirstVisit: PropTypes.func.isRequired
   }
@@ -20,13 +21,20 @@ export default class Page extends React.PureComponent {
     children: null,
     isRootPage: false,
     isAuctionPage: false,
+    onFetchTiles: () => {},
     onFetchDistricts: () => {},
     onFirstVisit: () => {}
   }
 
   componentWillMount() {
-    const { onFetchDistricts, isRootPage, isAuctionPage } = this.props
+    const {
+      onFetchTiles,
+      onFetchDistricts,
+      isRootPage,
+      isAuctionPage
+    } = this.props
 
+    onFetchTiles()
     onFetchDistricts()
     this.showTermsModal(isRootPage, isAuctionPage)
   }
