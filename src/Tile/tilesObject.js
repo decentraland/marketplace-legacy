@@ -2,7 +2,7 @@ import { env } from 'decentraland-commons'
 
 import { db } from '../database'
 import { Tile } from '../Tile'
-import { TYPES } from '../shared/map'
+import { TYPES, shortenOwner } from '../shared/map'
 
 const DB_CHANNEL = 'tile_updated'
 
@@ -21,7 +21,7 @@ class TilesObject {
 
     db.on(DB_CHANNEL, msg => {
       const tile = JSON.parse(msg.payload)
-      this.cache[tile.id] = this.toMapTile(tile)
+      this.cache[tile.id] = this.trim(tile)
     })
 
     this.isListening = true
@@ -57,7 +57,7 @@ class TilesObject {
 
     const addressTiles = await Tile.getForOwner(address)
     for (const tile of addressTiles) {
-      map[tile.id] = this.toMapTile(tile)
+      map[tile.id] = this.trim(tile)
     }
 
     return map
@@ -67,29 +67,29 @@ class TilesObject {
     const map = {}
 
     for (const tile of tiles) {
-      map[tile.id] = this.toMapTile(tile)
+      map[tile.id] = this.trim(tile)
     }
 
     return map
   }
 
-  toMapTile(tile) {
-    const mapTile = {
+  trim(tile) {
+    const newTile = {
       x: tile.x,
       y: tile.y,
       type: tile.type
     }
     if (tile.owner && [TYPES.taken, TYPES.onSale].includes(tile.type)) {
-      mapTile.owner = tile.owner.slice(0, 6)
+      newTile.owner = shortenOwner(tile.owner)
     }
-    if (tile.price) mapTile.price = tile.price
-    if (tile.name) mapTile.name = tile.name
-    if (tile.estate_id) mapTile.estate_id = tile.estate_id
-    if (tile.is_connected_left) mapTile.left = 1
-    if (tile.is_connected_top) mapTile.top = 1
-    if (tile.is_connected_topleft) mapTile.topLeft = 1
+    if (tile.price) newTile.price = tile.price
+    if (tile.name) newTile.name = tile.name
+    if (tile.estate_id) newTile.estate_id = tile.estate_id
+    if (tile.is_connected_left) newTile.left = 1
+    if (tile.is_connected_top) newTile.top = 1
+    if (tile.is_connected_topleft) newTile.topLeft = 1
 
-    return mapTile
+    return newTile
   }
 }
 

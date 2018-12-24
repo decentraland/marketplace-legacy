@@ -8,6 +8,7 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import { PROFILE_PAGE_TABS } from 'locations'
 import AddressBlock from 'components/AddressBlock'
@@ -18,7 +19,6 @@ import {
   estateType,
   assetType
 } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
 import { buildUrl } from './utils'

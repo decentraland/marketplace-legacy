@@ -225,44 +225,40 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
         case BUY_SUCCESS: {
           const owner = transaction.from
-          const tx_hash = transaction.payload.tx_hash
-          if (transaction.payload.type === ASSET_TYPES.estate) {
+          const { type, id } = transaction.payload
+
+          if (type === ASSET_TYPES.estate) {
             // unset publication_tx_hash and update owner
+            const estate = state.data[id]
             return {
               ...state,
-              data: Object.values(state.data).reduce((newEstates, estate) => {
-                if (estate.publication_tx_hash === tx_hash) {
-                  newEstates[estate.id] = {
-                    ...estate,
-                    publication_tx_hash: null,
-                    owner
-                  }
-                } else {
-                  newEstates[estate.id] = { ...estate }
+              data: {
+                ...state.data,
+                [id]: {
+                  ...estate,
+                  publication_tx_hash: null,
+                  owner
                 }
-                return newEstates
-              }, {})
+              }
             }
           }
           return state
         }
         case CANCEL_SALE_SUCCESS: {
-          const tx_hash = transaction.payload.tx_hash
-          if (transaction.payload.type === ASSET_TYPES.estate) {
+          const { type, id } = transaction.payload
+
+          if (type === ASSET_TYPES.estate) {
             // unset publication_tx_hash
+            const estate = state.data[id]
             return {
               ...state,
-              data: Object.values(state.data).reduce((newEstates, estate) => {
-                if (estate.publication_tx_hash === tx_hash) {
-                  newEstates[estate.id] = {
-                    ...estate,
-                    publication_tx_hash: null
-                  }
-                } else {
-                  newEstates[estate.id] = estate
+              data: {
+                ...state.data,
+                [id]: {
+                  ...estate,
+                  publication_tx_hash: null
                 }
-                return newEstates
-              }, {})
+              }
             }
           }
           return state

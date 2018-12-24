@@ -85,3 +85,7 @@ export function getTextColor(type) {
 export function getLoadingColor(x, y) {
   return (x + y) % 2 === 0 ? COLORS.loadingEven : COLORS.loadingOdd
 }
+
+export function shortenOwner(owner = '') {
+  return owner.slice(0, 6).toLowerCase()
+}

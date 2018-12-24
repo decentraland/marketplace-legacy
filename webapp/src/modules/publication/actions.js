@@ -99,6 +99,7 @@ export function publishSuccess(txHash, publication, asset) {
     type: PUBLISH_SUCCESS,
     ...buildTransactionAction(txHash, {
       tx_hash: publication.tx_hash,
+      price: publication.price,
       ...asset
     }),
     publication
