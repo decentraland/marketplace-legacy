@@ -15,7 +15,7 @@ export class MapReqQueryParams {
       y: this.getInteger('y', minY, maxY, 0),
       width: this.getInteger('width', 32, 1024, 500),
       height: this.getInteger('height', 32, 1024, 500),
-      size: this.getInteger('size', 5, 40, 10),
+      size: this.getInteger('size', 1, 40, 10),
       center: this.getCoords('center', { x: 0, y: 0 }),
       selected: this.getCoordsArray('selected', []),
       address: this.reqQueryParams.get('address', ''),

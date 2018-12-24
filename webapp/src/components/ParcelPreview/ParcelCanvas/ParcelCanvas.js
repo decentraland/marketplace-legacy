@@ -99,6 +99,7 @@ export default class ParcelPreview extends React.PureComponent {
 
   constructor(props) {
     super(props)
+
     const { x, y, initialX, initialY, size, zoom, panX, panY } = props
     const initialState = {
       pan: { x: panX, y: panY },
@@ -113,12 +114,14 @@ export default class ParcelPreview extends React.PureComponent {
     this.state = this.getDimensions(props, initialState)
     this.oldState = this.state
     this.shouldRefreshMap = false
+    this.mounted = false
     this.canvas = null
+    this.hovered = null
+    this.popupTimeout = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
-    this.popupTimeout = null
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.debounce !== this.props.debounce) {
@@ -333,30 +336,27 @@ export default class ParcelPreview extends React.PureComponent {
 
     if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
       this.hovered = { x, y }
-      const parcelId = buildCoordinate(x, y)
-      const { showPopup } = this.props
-
-      if (showPopup) {
-        this.hidePopup()
-        this.popupTimeout = setTimeout(() => {
-          if (this.mounted) {
-            this.setState({
-              popup: {
-                x,
-                y,
-                top: layerY,
-                left: layerX,
-                visible: true
-              }
-            })
-          }
-        }, POPUP_DELAY)
-      }
+      this.showPopup(x, y, layerX, layerY)
     }
   }
 
   handleMouseOut = () => {
     this.hidePopup()
+  }
+
+  showPopup(x, y, top, left) {
+    const { showPopup } = this.props
+
+    if (showPopup) {
+      this.hidePopup()
+      this.popupTimeout = setTimeout(() => {
+        if (this.mounted) {
+          this.setState({
+            popup: { x, y, top, left, visible: true }
+          })
+        }
+      }, POPUP_DELAY)
+    }
   }
 
   hidePopup() {

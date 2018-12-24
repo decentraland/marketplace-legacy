@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 
 import { isConnecting } from 'modules/wallet/selectors'
 import { getData as getTiles } from 'modules/tile/selectors'
-
 import ParcelCanvas from './ParcelCanvas'
 
 export const mapState = state => ({
