@@ -25,8 +25,8 @@ export class API {
     return this.request('get', `/translations/${locale}`, {})
   }
 
-  fetchTiles(nw, se) {
-    return this.request('get', '/tiles', { nw, se })
+  fetchTiles() {
+    return this.request('get', '/tiles', {})
   }
 
   fetchAddressTiles(address) {
