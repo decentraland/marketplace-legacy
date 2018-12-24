@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 
-import { tileType, coordsType } from 'components/types'
+import { coordsType } from 'components/types'
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
@@ -36,6 +36,8 @@ const { minX, minY, maxX, maxY } = Bounds.getBounds()
 
 export default class ParcelPreview extends React.PureComponent {
   static propTypes = {
+    /** tiles from from modules/map */
+    // tiles: PropTypes.objectOf(tileType) Commented out because the object is too big and this check takes 6seconds
     /** where to position the map in the X axis */
     x: PropTypes.number,
     /** where to position the map in the Y axis */
@@ -50,8 +52,6 @@ export default class ParcelPreview extends React.PureComponent {
     width: PropTypes.number,
     /** height of the canvas in pixels */
     height: PropTypes.number,
-    /** tiles from from modules/map */
-    tiles: PropTypes.objectOf(tileType),
     /** zoom level of the map, this changes in the end the size on which parcels are rendered, i.e: size=10 and zoom=0.5 makes each parcel of 5x5 pixels */
     zoom: PropTypes.number,
     /** minimum size that parcels can take (after applying zoom) */

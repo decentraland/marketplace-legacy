@@ -22,7 +22,6 @@ import {
   authorizationType,
   auctionParamsType,
   walletType,
-  tileType,
   coordsType
 } from 'components/types'
 import {
@@ -55,6 +54,7 @@ const REFRESH_OWNERS_INTERVAL = 30000 // 30 seconds
 
 export default class AuctionPage extends React.PureComponent {
   static propTypes = {
+    // tiles: PropTypes.objectOf(tileType) Commented out because the object is too big and this check takes 6seconds
     isConnected: PropTypes.bool.isRequired,
     isConnecting: PropTypes.bool.isRequired,
     isAvailableParcelLoading: PropTypes.bool.isRequired,
@@ -66,7 +66,6 @@ export default class AuctionPage extends React.PureComponent {
       y: PropTypes.number
     }).isRequired,
     wallet: walletType,
-    tiles: PropTypes.objectOf(tileType),
     onShowAuctionModal: PropTypes.func.isRequired,
     onSetParcelOnChainOwner: PropTypes.func.isRequired,
     onFetchAvailableParcel: PropTypes.func.isRequired,
