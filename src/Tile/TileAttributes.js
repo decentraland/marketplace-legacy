@@ -1,7 +1,6 @@
-import { TileLocation } from './TileLocation'
-import { TileType } from './TileType'
 import { Parcel } from '../Asset'
 import { isDistrict } from '../../shared/district'
+import { TileType, TileLocation } from '../../shared/map'
 import { isEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../../shared/asset'
 

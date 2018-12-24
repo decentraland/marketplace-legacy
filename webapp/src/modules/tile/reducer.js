@@ -22,7 +22,7 @@ import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
 import { ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
-import { shortenOwner } from 'shared/map'
+import { TYPES, TileLocation, shortenOwner } from 'shared/map'
 
 const INITIAL_STATE = {
   data: {},
@@ -69,23 +69,30 @@ export function tileReducer(state = INITIAL_STATE, action) {
               ...state.data,
               [parcelId]: {
                 ...state.data[parcelId],
-                owner: shortenOwner(newOwner)
+                owner: shortenOwner(newOwner),
+                type: TYPES.taken
               }
             }
           }
         }
         case TRANSFER_ESTATE_SUCCESS: {
           const { estate, to } = transaction.payload
+          const newData = {}
+
+          // TODO: @perf Super slow, there are a ton of tiles
+          for (const tile of state.data) {
+            if (tile.estate_id == estate.id) {
+              newData[tile.id] = {
+                ...tile,
+                owner: shortenOwner(to),
+                type: TYPES.taken
+              }
+            }
+          }
 
           return {
             ...state,
-            data: {
-              ...state.data,
-              [estate.id]: {
-                ...state.data[estate.id],
-                owner: shortenOwner(to)
-              }
-            }
+            data: { ...state.data, ...newData }
           }
         }
         case BUY_SUCCESS: {
@@ -98,6 +105,7 @@ export function tileReducer(state = INITIAL_STATE, action) {
             newData[parcelId] = {
               ...state.data[parcelId],
               price: null,
+              type: TYPES.myParcels,
               owner
             }
           } else if (type === ASSET_TYPES.estate) {
@@ -107,6 +115,7 @@ export function tileReducer(state = INITIAL_STATE, action) {
                 newData[tile.id] = {
                   ...tile,
                   price: null,
+                  type: TYPES.myEstates,
                   owner
                 }
               }
@@ -125,13 +134,18 @@ export function tileReducer(state = INITIAL_STATE, action) {
             const parcelId = buildCoordinate(x, y)
             newData[parcelId] = {
               ...state.data[parcelId],
-              price: null
+              price: null,
+              type: TYPES.myParcels
             }
           } else if (type === ASSET_TYPES.estate) {
             // TODO: @perf Super slow, there are a ton of tiles
             for (const tile of state.data) {
               if (tile.estate_id == id) {
-                newData[tile.id] = { ...tile, price: null }
+                newData[tile.id] = {
+                  ...tile,
+                  price: null,
+                  type: TYPES.myEstates
+                }
               }
             }
           }
@@ -149,13 +163,18 @@ export function tileReducer(state = INITIAL_STATE, action) {
             const parcelId = buildCoordinate(x, y)
             newData[parcelId] = {
               ...state.data[parcelId],
-              price
+              price,
+              type: TYPES.myParcelsOnSale
             }
           } else if (type === ASSET_TYPES.estate) {
             // TODO: @perf Super slow, there are a ton of tiles
             for (const tile of state.data) {
               if (tile.estate_id == id) {
-                newData[tile.id] = { ...tile, price }
+                newData[tile.id] = {
+                  ...tile,
+                  price,
+                  type: TYPES.myEstatesOnSale
+                }
               }
             }
           }
@@ -170,9 +189,15 @@ export function tileReducer(state = INITIAL_STATE, action) {
 
           for (const parcel of parcels) {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
+            const { top, left, topLeft } = getConnections(parcel, state.data)
+
             newData[parcelId] = {
               ...state.data[parcelId],
-              estate_id: type === ADD_PARCELS ? estate.id : null
+              top,
+              left,
+              topLeft,
+              estate_id: type === ADD_PARCELS ? estate.id : null,
+              type: type === ADD_PARCELS ? TYPES.myEstates : TYPES.myParcels
             }
           }
 
@@ -187,9 +212,15 @@ export function tileReducer(state = INITIAL_STATE, action) {
 
           for (const parcel of estate.data.parcels) {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
+            const { top, left, topLeft } = getConnections(parcel, state.data)
+
             newData[parcelId] = {
               ...state.data[parcelId],
-              estate_id: null
+              top,
+              left,
+              topLeft,
+              estate_id: null,
+              type: TYPES.myParcels
             }
           }
 
@@ -206,9 +237,15 @@ export function tileReducer(state = INITIAL_STATE, action) {
 
           for (const parcel of estate.data.parcels) {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
+            const { top, left, topLeft } = getConnections(parcel, state.data)
+
             newData[parcelId] = {
               ...state.data[parcelId],
-              estate_id: estateId
+              top,
+              left,
+              topLeft,
+              estate_id: estateId,
+              type: TYPES.myEstates
             }
           }
 
@@ -223,5 +260,20 @@ export function tileReducer(state = INITIAL_STATE, action) {
     }
     default:
       return state
+  }
+}
+
+function getConnections(tile, tiles) {
+  const tileLocation = new TileLocation(tile)
+  const coords = tileLocation.getNeigbouringCoordinates()
+
+  const top = tiles[buildCoordinate(coords.top.x, coords.top.y)]
+  const left = tiles[buildCoordinate(coords.left.x, coords.left.y)]
+  const topLeft = tiles[buildCoordinate(coords.topLeft.x, coords.topLeft.y)]
+
+  return {
+    top: tileLocation.isConnected(top),
+    left: tileLocation.isConnected(left),
+    topLeft: tileLocation.isConnected(topLeft)
   }
 }

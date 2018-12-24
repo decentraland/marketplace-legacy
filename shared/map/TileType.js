@@ -1,6 +1,6 @@
-import { isDistrict, isPlaza, isRoad } from '../shared/district'
-import { TYPES } from '../shared/map'
-import { isEstate } from '../shared/parcel'
+import { TYPES } from './tile'
+import { isDistrict, isPlaza, isRoad } from '../district'
+import { isEstate } from '../parcel'
 
 export class TileType {
   constructor(parcel) {
