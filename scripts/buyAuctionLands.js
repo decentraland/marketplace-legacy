@@ -29,15 +29,15 @@ const buyAuctionLands = {
       .option('--account [account]', 'Account address')
       .option('--password [password]', 'Password for the account')
       .option(
-        '--txDelay [txDelay]',
+        '-d, --txDelay [txDelay]',
         `Delay between txs in milliseconds. Default: ${DEFAULT_OPTIONS.txDelay}`
       )
       .option(
-        '--retryFailedTxs',
+        '-r, --retryFailedTxs',
         'If this flag is present, the script will try to retry failed transactions'
       )
       .option(
-        '--confirm',
+        '-y, --yes',
         'If this flag is present the confirm prompt will be skipped'
       )
       .action(
@@ -63,12 +63,11 @@ const buyAuctionLands = {
 
           if (options.password) {
             log.info(`Unlocking account ${account}`)
-            const web3 = eth.wallet.getWeb3()
-            const unlockAccount = utils.promisify(web3.personal.unlockAccount)
-            await unlockAccount(account, options.password)
+            eth.wallet.setAccount(account)
+            await eth.wallet.unlockAccount(options.password)
           }
 
-          if (!options.confirm) {
+          if (!options.yes) {
             const landAuctionContract = eth.getContract('LANDAuction')
             const price = eth.utils.fromWei(
               await landAuctionContract.getCurrentPrice()
@@ -80,7 +79,7 @@ const buyAuctionLands = {
             if (!shouldBuy) process.exit()
           }
 
-          await bidOnParcels(parcels, account, options.manaTokenAddress, {
+          await bidOnParcels(parcels, options.manaTokenAddress, {
             txDelay: options.txDelay,
             retryFailedTxs: options.retryFailedTxs
           })
@@ -116,8 +115,9 @@ async function getValidParcels(allParcels) {
 }
 
 async function bidOnParcels(...args) {
-  const [parcels, account, tokenAddress, { shouldRetry, txDelay }] = args
+  const [parcels, tokenAddress, { shouldRetry, txDelay }] = args
 
+  const account = eth.getAccount()
   const landAuctionContract = eth.getContract('LANDAuction')
   const gasPrice = (await landAuctionContract.gasPriceLimit()).toNumber()
   const landsLimit = (await landAuctionContract.landsLimitPerBid()).toNumber()
