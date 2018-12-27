@@ -3,8 +3,8 @@
 require('babel-polyfill')
 
 const { spawn } = require('child_process')
+const path = require('path')
 const { env } = require('decentraland-commons')
-const { loadEnv, resolvePath } = require('../scripts/utils')
 
 let CONNECTION_STRING = process.env.CONNECTION_STRING
 
@@ -47,3 +47,13 @@ child.stdout.on('data', function(data) {
 child.stderr.on('data', function(data) {
   process.stdout.write(data.toString())
 })
+
+
+function loadEnv() {
+  env.load({ path: resolvePath('../src/.env') })
+}
+
+function resolvePath(destination) {
+  const dirname = path.dirname(require.main.filename)
+  return path.resolve(dirname, destination)
+}

@@ -1,12 +1,16 @@
 #!/usr/bin/env babel-node
 
-import fs from 'fs'
-import { eth, txUtils } from 'decentraland-eth'
-import { Log, cli, utils } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
+import { Log, cli } from 'decentraland-commons'
 
-import { connectEth } from '../src/ethereum'
-import { asyncBatch } from '../src/lib'
-import { loadEnv, asSafeAction } from './utils'
+import {
+  setupEth,
+  executeTransactions,
+  loadEnv,
+  asSafeAction,
+  checkContains,
+  readJSONElements
+} from './utils'
 
 const log = new Log('manageMana')
 const DEFAULT_OPTIONS = {
@@ -52,31 +56,14 @@ const manageMana = {
       .action(
         asSafeAction(async userOptions => {
           const options = Object.assign(DEFAULT_OPTIONS, userOptions)
-          checkRequiredOptions(options, requiredOptionNames)
+          checkContains(options, requiredOptionNames)
 
-          log.info('Connecting to the blockchain')
-          await connectEth()
+          await setupEth(options.account, options.password)
 
-          const account = options.account || eth.getAccount()
-          log.info(`Using ${account} as address`)
-
-          const allRecipients = options.recipients
-            ? readJSON(expandPath(options.recipients))
-            : []
-
-          log.info('Checking for invalid recipients')
-          const recipients = await getValidRecipients(allRecipients)
-
-          if (recipients.length === 0) {
-            log.info('No valid recipients')
-            return
-          }
-
-          if (options.password) {
-            log.info(`Unlocking account ${account}`)
-            eth.wallet.setAccount(account)
-            await eth.wallet.unlockAccount(options.password)
-          }
+          const recipients = await readJSONElements(
+            options.recipients,
+            getValidRecipients
+          )
 
           const totalMana = recipients.reduce(
             (total, recipient) => total + parseFloat(recipient.amount, 10),
@@ -115,7 +102,6 @@ async function getValidRecipients(allRecipients) {
       )
       continue
     }
-
     recipients.push(recipient)
   }
 
@@ -128,14 +114,12 @@ async function transferMana(...args) {
   const account = eth.getAccount()
   const manaTokenContract = eth.getContract('MANAToken')
 
-  const txs = []
-  const recipientsToRetry = []
-
   log.info(`Sending MANA to ${recipients.length} recipients`)
-  await asyncBatch({
-    elements: recipients,
-    callback: async recipientsBatch => {
-      for (const recipient of recipientsBatch) {
+
+  const txsToRetry = await executeTransactions(
+    recipients,
+    recipientsBatch =>
+      recipientsBatch.map(async recipient => {
         const { address, amount } = recipient
         const mana = eth.utils.toWei(amount)
 
@@ -147,32 +131,15 @@ async function transferMana(...args) {
           from: account
         })
 
-        log.info(`Got tx hash ${hash} for transfering ${mana} MANA`)
-        txs.push({ hash, recipient })
+        return { hash, data: recipient }
+      }),
+    { batchSize, txDelay }
+  )
 
-        log.info(`Sleeping ${txDelay / 1000} seconds`)
-        await utils.sleep(txDelay)
-      }
-    },
-    batchSize: batchSize
-  })
+  log.info(`Sent ${recipients.length - txsToRetry.length} transactions`)
 
-  for (const tx of txs) {
-    const { hash, recipient } = tx
-    const { address, amount } = recipient
-    log.info(
-      `Waiting for tx: ${hash} which transfers ${amount} MANA to ${address}`
-    )
-    const transaction = await getConfirmedTransaction(hash)
-
-    if (transaction === null) {
-      recipientsToRetry.push(recipient)
-    }
-  }
-
-  log.info(`Sent ${recipients.length - recipientsToRetry.length} transactions`)
-
-  if (recipientsToRetry.length > 0 && shouldRetry) {
+  if (txsToRetry.length > 0 && shouldRetry) {
+    const recipientsToRetry = txsToRetry.map(tx => tx.data)
     log.info(`Retrying on ${recipientsToRetry.length} recipients`)
     return transferMana(recipientsToRetry, ...args.slice(1))
   }
@@ -188,53 +155,6 @@ async function checkBalance(mana) {
       `Wallet doesn't have enough MANA balance. Current: ${balance}, required: ${mana}`
     )
   }
-}
-
-async function getConfirmedTransaction(hash, retries = 0) {
-  try {
-    return await txUtils.getConfirmedTransaction(hash)
-  } catch (error) {
-    if (retries >= 3) {
-      log.warn(`tx ${hash} failed after ${retries} retries: "${error}"`)
-      return null
-    } else {
-      log.info(
-        `Found an error with tx: ${hash}, retrying in 10 seconds to mitigate false fails`
-      )
-      await utils.sleep(10000)
-      return getConfirmedTransaction(hash, retries + 1)
-    }
-  }
-}
-
-function checkRequiredOptions(opts, requiredOptionNames) {
-  const hasRequiredArgs = requiredOptionNames.every(
-    argName => opts[argName] != null
-  )
-
-  if (!hasRequiredArgs) {
-    throw new Error(
-      `Missing required arguments. Required: "${requiredOptionNames}"`
-    )
-  }
-}
-
-function expandPath(path) {
-  if (!path) throw new Error(`Invalid path ${path}`)
-  return ['.', '/'].includes(path[0]) ? path : `${__dirname}/${path}`
-}
-
-function readJSON(filepath) {
-  let json
-  try {
-    log.debug(`Reading JSON file "${filepath}"`)
-    const fileContent = fs.readFileSync(filepath).toString()
-    json = JSON.parse(fileContent)
-  } catch (error) {
-    log.error(`Error trying to read file "${filepath}"`)
-    throw error
-  }
-  return json
 }
 
 if (require.main === module) {

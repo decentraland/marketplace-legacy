@@ -1,14 +1,18 @@
 #!/usr/bin/env babel-node
 
-import fs from 'fs'
-import { eth, txUtils, Contract } from 'decentraland-eth'
+import { eth, Contract } from 'decentraland-eth'
 import { Log, cli, utils } from 'decentraland-commons'
 
-import { connectEth } from '../src/ethereum'
-import { asyncBatch } from '../src/lib'
 import { Bounds } from '../shared/map'
 import { buildCoordinate, splitCoodinatePairs } from '../shared/coordinates'
-import { loadEnv, asSafeAction } from './utils'
+import {
+  setupEth,
+  executeTransactions,
+  loadEnv,
+  asSafeAction,
+  checkContains,
+  readJSONElements
+} from './utils'
 
 const log = new Log('buyAuctionLands')
 const DEFAULT_OPTIONS = {
@@ -43,29 +47,14 @@ const buyAuctionLands = {
       .action(
         asSafeAction(async userOptions => {
           const options = Object.assign(DEFAULT_OPTIONS, userOptions)
-          checkRequiredOptions(options, requiredOptionNames)
+          checkContains(options, requiredOptionNames)
 
-          log.info('Connecting to the blockchain')
-          await connectEth()
+          await setupEth(options.account, options.password)
 
-          const account = options.account || eth.getAccount()
-          const allParcels = options.parcels
-            ? readJSON(expandPath(options.parcels))
-            : []
-
-          log.info('Checking for invalid parcels')
-          const parcels = await getValidParcels(allParcels)
-
-          if (parcels.length === 0) {
-            log.info('No parcels to bid')
-            return
-          }
-
-          if (options.password) {
-            log.info(`Unlocking account ${account}`)
-            eth.wallet.setAccount(account)
-            await eth.wallet.unlockAccount(options.password)
-          }
+          const parcels = await readJSONElements(
+            options.parcels,
+            getValidParcels
+          )
 
           if (!options.yes) {
             const landAuctionContract = eth.getContract('LANDAuction')
@@ -134,13 +123,9 @@ async function bidOnParcels(...args) {
     )
   }
 
-  const txs = []
-  const parcelsToRetry = []
-
-  log.info(`Buying ${parcels.length} parcels with token ${tokenAddress}`)
-  await asyncBatch({
-    elements: parcels,
-    callback: async parcelsBatch => {
+  const txsToRetry = await executeTransactions(
+    parcels,
+    async parcelsBatch => {
       const { xs, ys } = splitCoodinatePairs(parcelsBatch)
 
       log.info(`Sending tx for ${xs.length} parcels`)
@@ -152,79 +137,21 @@ async function bidOnParcels(...args) {
         { gasPrice: gasPrice, from: account }
       )
       log.info(`Got tx hash ${hash} for bidding on ${xs.length} parcels`)
-      txs.push({ hash, xs, ys })
-
-      log.info(`Sleeping ${txDelay / 1000} seconds`)
-      await utils.sleep(txDelay)
+      return [{ hash, data: parcelsBatch }]
     },
-    batchSize: landsLimit
-  })
+    { batchSize: landsLimit, txDelay }
+  )
 
-  for (const tx of txs) {
-    const { hash, xs, ys } = tx
-    log.info(`Waiting for tx: ${hash} which buys ${xs.length} parcels`)
-    const transaction = await getConfirmedTransaction(hash)
+  log.info(`Bought ${parcels.length - txsToRetry.length} parcels`)
 
-    if (transaction === null) {
-      for (const [index, x] of xs.entries()) {
-        parcelsToRetry.push({ x, y: ys[index] })
-      }
+  if (txsToRetry.length > 0 && shouldRetry) {
+    let parcelsToRetry = []
+    for (const tx of txsToRetry) {
+      parcelsToRetry = parcelsToRetry.concat(tx.data)
     }
-  }
-
-  log.info(`Bought ${parcels.length - parcelsToRetry.length} parcels`)
-
-  if (parcelsToRetry.length > 0 && shouldRetry) {
     log.info(`Retrying on ${parcelsToRetry.length} parcels`)
     return bidOnParcels(parcelsToRetry, ...args.slice(1))
   }
-}
-
-async function getConfirmedTransaction(hash, retries = 0) {
-  try {
-    return await txUtils.getConfirmedTransaction(hash)
-  } catch (error) {
-    if (retries >= 3) {
-      log.warn(`tx ${hash} failed after ${retries} retries: "${error}"`)
-      return null
-    } else {
-      log.info(
-        `Found an error with tx: ${hash}, retrying in 10 seconds to mitigate false fails`
-      )
-      await utils.sleep(10000)
-      return getConfirmedTransaction(hash, retries + 1)
-    }
-  }
-}
-
-function checkRequiredOptions(opts, requiredOptionNames) {
-  const hasRequiredArgs = requiredOptionNames.every(
-    argName => opts[argName] != null
-  )
-
-  if (!hasRequiredArgs) {
-    throw new Error(
-      `Missing required arguments. Required: "${requiredOptionNames}"`
-    )
-  }
-}
-
-function expandPath(path) {
-  if (!path) throw new Error(`Invalid path ${path}`)
-  return ['.', '/'].includes(path[0]) ? path : `${__dirname}/${path}`
-}
-
-function readJSON(filepath) {
-  let json
-  try {
-    log.debug(`Reading JSON file "${filepath}"`)
-    const fileContent = fs.readFileSync(filepath).toString()
-    json = JSON.parse(fileContent)
-  } catch (error) {
-    log.error(`Error trying to read file "${filepath}"`)
-    throw error
-  }
-  return json
 }
 
 if (require.main === module) {
