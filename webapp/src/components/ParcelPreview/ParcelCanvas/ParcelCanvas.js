@@ -113,8 +113,8 @@ export default class ParcelPreview extends React.PureComponent {
     this.state = this.getDimensions(props, initialState)
     this.oldState = this.state
     this.shouldRefreshMap = false
-    this.isMounted = false
     this.isHovered = false
+    this._isMounted = false
     this.canvas = null
     this.popupTimeout = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
@@ -197,7 +197,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
     this.canvas.addEventListener('mousemove', this.handleMouseMove)
     this.canvas.addEventListener('mouseout', this.handleMouseOut)
-    this.isMounted = true
+    this._isMounted = true
   }
 
   componentWillUnmount() {
@@ -208,7 +208,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.removeEventListener('mousedown', this.handleMouseDown)
     this.canvas.removeEventListener('mousemove', this.handleMouseMove)
     this.canvas.removeEventListener('mouseout', this.handleMouseOut)
-    this.isMounted = false
+    this._isMounted = false
   }
 
   getDimensions({ width, height }, { pan, zoom, center, size }) {
@@ -226,7 +226,7 @@ export default class ParcelPreview extends React.PureComponent {
   handleChange = () => {
     const { onChange } = this.props
     const { nw, se, center, zoom } = this.state
-    if (this.isMounted) {
+    if (this._isMounted) {
       onChange({ nw, se, center, zoom })
     }
   }
@@ -352,7 +352,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (showPopup) {
       this.hidePopup()
       this.popupTimeout = setTimeout(() => {
-        if (this.isMounted) {
+        if (this._isMounted) {
           this.setState({
             popup: { x, y, top, left, visible: true }
           })
