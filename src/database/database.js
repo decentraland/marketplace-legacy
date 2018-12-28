@@ -10,7 +10,7 @@ export const database = {
     this.client = await db.postgres.connect(CONNECTION_STRING)
 
     for (const callback of connectCallbacks) {
-      callback(this.client)
+      callback()
     }
 
     return this

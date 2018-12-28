@@ -113,7 +113,12 @@ export default class Minimap extends React.Component {
 
     return (
       <div className="Minimap" ref={this.refMap} onMouseDown={this.mouseDown}>
-        <img src={this.getMapURL()} alt="Minimap" width="150" height="150" />
+        <img
+          src={this.getMapURL()}
+          alt="Minimap"
+          width={MINIMAP_WIDTH - BORDER * 2}
+          height={MINIMAP_HEIGHT - BORDER * 2}
+        />
         <div className="minimap-focus" style={styles} />
       </div>
     )

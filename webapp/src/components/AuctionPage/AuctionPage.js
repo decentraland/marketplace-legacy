@@ -53,8 +53,8 @@ import './AuctionPage.css'
 const REFRESH_OWNERS_INTERVAL = 30000 // 30 seconds
 
 export default class AuctionPage extends React.PureComponent {
+  // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
-    // tiles: PropTypes.objectOf(tileType) Commented out because the object is too big and this check takes 6seconds
     isConnected: PropTypes.bool.isRequired,
     isConnecting: PropTypes.bool.isRequired,
     isAvailableParcelLoading: PropTypes.bool.isRequired,

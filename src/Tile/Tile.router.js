@@ -1,7 +1,7 @@
 import { server } from 'decentraland-commons'
 
+import { indexedTiles } from '.'
 import { Tile } from './Tile.model'
-import { tilesObject } from './tilesObject'
 
 export class TileRouter {
   constructor(app) {
@@ -17,15 +17,15 @@ export class TileRouter {
   getTiles = async req => {
     try {
       const address = server.extractFromReq(req, 'address').toLowerCase()
-      return tilesObject.getForOwner(address)
+      return indexedTiles.getForOwner(address)
     } catch (error) {
-      return tilesObject.get()
+      return indexedTiles.get()
     }
   }
 
   async getAddressTiles(req) {
     const address = server.extractFromReq(req, 'address').toLowerCase()
     const addressTiles = await Tile.getForOwner(address)
-    return tilesObject.compute(addressTiles)
+    return indexedTiles.compute(addressTiles)
   }
 }

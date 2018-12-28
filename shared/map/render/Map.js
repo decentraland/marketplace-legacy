@@ -25,7 +25,7 @@ export class Map {
     this.ctx.fillRect(0, 0, width, height)
   }
 
-  draw({ nw, se, center, tiles, selected, skipPublications }) {
+  draw({ nw, se, center, tiles, selected, skipOnSale }) {
     const selection = []
 
     for (let x = nw.x; x < se.x; x++) {
@@ -35,10 +35,10 @@ export class Map {
         const tile = tiles[buildCoordinate(x, y)]
         const attributes = this.getParcelAttributes(x, y, tile)
 
-        if (skipPublications && this.isOnSale(tile)) {
+        if (skipOnSale && this.isOnSale(tile)) {
           attributes.color = COLORS.taken
         }
-        if (selected.length > 0 && this.isSelected(selected, x, y)) {
+        if (this.isSelected(selected, x, y)) {
           selection.push(corner)
         }
 

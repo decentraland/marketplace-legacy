@@ -4,7 +4,10 @@ import { loadingReducer } from '@dapps/modules/loading/reducer'
 import {
   FETCH_TILES_REQUEST,
   FETCH_TILES_SUCCESS,
-  FETCH_TILES_FAILURE
+  FETCH_TILES_FAILURE,
+  FETCH_ADDRESS_TILES_REQUEST,
+  FETCH_ADDRESS_TILES_SUCCESS,
+  FETCH_ADDRESS_TILES_FAILURE
 } from './actions'
 import {
   BUY_SUCCESS,
@@ -32,13 +35,15 @@ const INITIAL_STATE = {
 
 export function tileReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_TILES_REQUEST: {
+    case FETCH_TILES_REQUEST:
+    case FETCH_ADDRESS_TILES_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
       }
     }
-    case FETCH_TILES_SUCCESS: {
+    case FETCH_TILES_SUCCESS:
+    case FETCH_ADDRESS_TILES_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -48,7 +53,8 @@ export function tileReducer(state = INITIAL_STATE, action) {
         }
       }
     }
-    case FETCH_TILES_FAILURE: {
+    case FETCH_TILES_FAILURE:
+    case FETCH_ADDRESS_TILES_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

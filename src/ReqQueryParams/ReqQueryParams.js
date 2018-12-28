@@ -26,27 +26,26 @@ export class ReqQueryParams {
   }
 
   getInteger(name, defaultValue) {
-    let param, value
+    let param
     try {
-      param = this.get(name)
+      param = server.extractFromReq(this.req, name)
     } catch (error) {
       return defaultValue
     }
 
     try {
-      value = unsafeParseInt(param)
+      return unsafeParseInt(param)
     } catch (_) {
       throw new Error(
         `Invalid param "${name}" should be a integer but got "${param}"`
       )
     }
-    return value
   }
 
   getBoolean(name, defaultValue) {
     let param
     try {
-      param = this.get(name)
+      param = server.extractFromReq(this.req, name)
     } catch (error) {
       return defaultValue
     }

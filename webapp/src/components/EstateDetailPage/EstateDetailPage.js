@@ -25,8 +25,8 @@ const WITH_ACTION_BUTTONS_WIDTH = 8
 const WITHOUT_ACTION_BUTTONS_WIDTH = 16
 
 export default class EstateDetailPage extends React.PureComponent {
+  // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
-    // tiles: PropTypes.objectOf(tileType) Commented out because the object is too big and this check takes 6seconds
     estate: estateType.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
     isOwner: PropTypes.bool.isRequired,

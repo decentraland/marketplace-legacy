@@ -19,7 +19,7 @@ export class MapReqQueryParams {
       center: this.getCoords('center', { x: 0, y: 0 }),
       selected: this.getCoordsArray('selected', []),
       address: this.reqQueryParams.get('address', ''),
-      skipPublications: !this.reqQueryParams.getBoolean('publications', false) // Mind the negation here
+      skipOnSale: !this.reqQueryParams.getBoolean('publications', false) // Mind the negation here
     }
   }
 

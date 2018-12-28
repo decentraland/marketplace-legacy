@@ -1,7 +1,7 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
-import { tilesObject } from '../Tile'
+import { indexedTiles } from '../Tile'
 import { Parcel, Estate, EstateService } from '../Asset'
 import { MapReqQueryParams } from '../ReqQueryParams'
 import { sanitizeParcels } from '../sanitize'
@@ -43,8 +43,10 @@ export class MapRouter {
   async getParcelPNG(req, res) {
     const { x, y, ...mapOptions } = this.sanitize(req)
     const center = { x, y }
+
     mapOptions.center = center
     mapOptions.selected = [center]
+
     return this.sendPNG(res, mapOptions)
   }
 
@@ -55,14 +57,14 @@ export class MapRouter {
       throw new Error(`The estate with token id "${id}" doesn't exist.`)
     }
 
-    const { size, ...mapOptions } = this.sanitize(req)
+    const mapOptions = this.sanitize(req)
     const { parcels } = estate.data
-    const { center, zoom, pan } = calculateMapProps(parcels, size)
+    const { center, zoom, pan } = calculateMapProps(parcels, mapOptions.size)
 
+    mapOptions.selected = parcels
     mapOptions.center = center
     mapOptions.zoom = zoom
     mapOptions.pan = pan
-    mapOptions.selected = parcels
 
     return this.sendPNG(res, mapOptions)
   }
@@ -86,9 +88,10 @@ export class MapRouter {
     return { assets, total }
   }
 
-  async sendPNG(res, mapOptions) {
-    const { width, height, size, center, zoom, pan } = mapOptions
-
+  async sendPNG(
+    res,
+    { width, height, size, center, zoom, pan, selected, address, skipOnSale }
+  ) {
     const { nw, se } = Viewport.getDimensions({
       width,
       height,
@@ -100,7 +103,17 @@ export class MapRouter {
     })
 
     try {
-      const stream = await this.getStream({ ...mapOptions, nw, se })
+      const stream = await this.getStream({
+        nw,
+        se,
+        width,
+        height,
+        size,
+        center,
+        selected,
+        address,
+        skipOnSale
+      })
       res.type('png')
       stream.pipe(res)
     } catch (error) {
@@ -118,11 +131,11 @@ export class MapRouter {
     center,
     selected,
     address,
-    skipPublications
+    skipOnSale
   }) {
     const tiles = address
-      ? await tilesObject.getForOwner(address)
-      : await tilesObject.get()
+      ? await indexedTiles.getForOwner(address)
+      : await indexedTiles.get()
 
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
@@ -137,7 +150,7 @@ export class MapRouter {
       center,
       tiles,
       selected,
-      skipPublications
+      skipOnSale
     })
     return canvas.pngStream()
   }

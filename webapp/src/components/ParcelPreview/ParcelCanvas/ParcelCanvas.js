@@ -35,9 +35,8 @@ const POPUP_DELAY = 400
 const { minX, minY, maxX, maxY } = Bounds.getBounds()
 
 export default class ParcelPreview extends React.PureComponent {
+  // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
-    /** tiles from from modules/map */
-    // tiles: PropTypes.objectOf(tileType) Commented out because the object is too big and this check takes 6seconds
     /** where to position the map in the X axis */
     x: PropTypes.number,
     /** where to position the map in the Y axis */

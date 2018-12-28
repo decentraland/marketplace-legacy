@@ -1,12 +1,9 @@
-import { env } from 'decentraland-commons'
-
-import { db } from '../database'
 import { Tile } from '../Tile'
 import { TYPES, shortenOwner } from '../shared/map'
 
 const DB_CHANNEL = 'tile_updated'
 
-class TilesObject {
+export class IndexedTiles {
   constructor() {
     this.cache = {}
     this.cacheKeys = []
@@ -92,12 +89,3 @@ class TilesObject {
     return newTile
   }
 }
-
-const tilesObject = new TilesObject()
-
-// TODO: default should be false
-if (env.get('CACHE_TILES', true)) {
-  db.onConnect(tilesObject.listen)
-}
-
-export { tilesObject }

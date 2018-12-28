@@ -1,13 +1,14 @@
 .Minimap {
-  width: 154px;
-  height: 154px;
+  width: 150px;
+  height: 149px;
   position: absolute;
   right: 20px;
   bottom: 20px;
   z-index: 1040;
   opacity: 1;
-  border: 2px solid #0d0e18;
   box-shadow: 0 0px 35px rgba(0, 0, 0, 0.4);
+  border: 2px solid #0d0e18;
+  border-bottom: 0;
   border-radius: 5px;
 }
 
