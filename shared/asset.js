@@ -11,14 +11,6 @@ export const ASSET_TYPES = Object.freeze({
 export const MAX_NAME_LENGTH = 50
 export const MAX_DESCRIPTION_LENGTH = 140
 
-export function isExpired(expires_at) {
-  return parseInt(expires_at, 10) < Date.now()
-}
-
-export function hasStatus(obj, status) {
-  return obj && obj.status === status && !isExpired(obj.expires_at)
-}
-
 // TODO: This shouldn't be on shared, it relies on `publication_tx_hash` which is a front-end only concept
 export function getOpenPublication(asset, publications) {
   if (asset && publications && asset.publication_tx_hash in publications) {

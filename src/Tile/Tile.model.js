@@ -32,7 +32,7 @@ export class Tile extends Model {
   ]
 
   static async upsertAsset(assetId, assetType) {
-    const asset = await Asset.getModel(assetType).findOne(assetId)
+    const asset = await Asset.getNew(assetType).findById(assetId)
 
     switch (assetType) {
       case ASSET_TYPES.parcel:
