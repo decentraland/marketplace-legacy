@@ -6,7 +6,7 @@ import { IndexedTiles } from './IndexedTiles'
 const indexedTiles = new IndexedTiles()
 
 if (env.get('CACHE_TILES', false)) {
-  db.onConnect(tiles.listen)
+  db.onConnect(indexedTiles.listen)
 }
 
 export { indexedTiles }

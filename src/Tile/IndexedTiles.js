@@ -1,4 +1,5 @@
 import { Tile } from '../Tile'
+import { db } from '../database'
 import { TYPES, shortenOwner } from '../shared/map'
 
 const DB_CHANNEL = 'tile_updated'
