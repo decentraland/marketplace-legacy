@@ -113,15 +113,16 @@ export default class ParcelPreview extends React.PureComponent {
     this.state = this.getDimensions(props, initialState)
     this.oldState = this.state
     this.shouldRefreshMap = false
-    this.mounted = false
+    this.isMounted = false
+    this.isHovered = false
     this.canvas = null
-    this.hovered = null
     this.popupTimeout = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.debounce !== this.props.debounce) {
       this.debouncedRenderMap = debounce(this.renderMap, nextProps.debounce)
@@ -196,7 +197,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
     this.canvas.addEventListener('mousemove', this.handleMouseMove)
     this.canvas.addEventListener('mouseout', this.handleMouseOut)
-    this.mounted = true
+    this.isMounted = true
   }
 
   componentWillUnmount() {
@@ -207,7 +208,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.removeEventListener('mousedown', this.handleMouseDown)
     this.canvas.removeEventListener('mousemove', this.handleMouseMove)
     this.canvas.removeEventListener('mouseout', this.handleMouseOut)
-    this.mounted = false
+    this.isMounted = false
   }
 
   getDimensions({ width, height }, { pan, zoom, center, size }) {
@@ -225,7 +226,9 @@ export default class ParcelPreview extends React.PureComponent {
   handleChange = () => {
     const { onChange } = this.props
     const { nw, se, center, zoom } = this.state
-    onChange({ nw, se, center, zoom })
+    if (this.isMounted) {
+      onChange({ nw, se, center, zoom })
+    }
   }
 
   handlePanZoom = ({ dx, dy, dz }) => {
@@ -333,8 +336,8 @@ export default class ParcelPreview extends React.PureComponent {
       return
     }
 
-    if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
-      this.hovered = { x, y }
+    if (!this.isHovered || this.isHovered.x !== x || this.isHovered.y !== y) {
+      this.isHovered = { x, y }
       this.showPopup(x, y, layerY, layerX)
     }
   }
@@ -349,7 +352,7 @@ export default class ParcelPreview extends React.PureComponent {
     if (showPopup) {
       this.hidePopup()
       this.popupTimeout = setTimeout(() => {
-        if (this.mounted) {
+        if (this.isMounted) {
           this.setState({
             popup: { x, y, top, left, visible: true }
           })
