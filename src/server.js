@@ -9,6 +9,7 @@ import { MortgageRouter } from './Mortgage'
 import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
 import { PublicationRouter } from './Publication'
+import { TileRouter } from './Tile'
 import { TranslationRouter } from './Translation'
 import { MapRouter } from './Map'
 import { MarketplaceRouter } from './Marketplace'
@@ -51,20 +52,21 @@ if (require.main === module) {
 }
 
 export async function startServer() {
+  console.log('Connecting database')
+  await db.connect()
+
   new AssetRouter(router).mount()
   new EstateRouter(router).mount()
   new MortgageRouter(router).mount()
   new DistrictRouter(router).mount()
   new ContributionRouter(router).mount()
   new PublicationRouter(router).mount()
+  new TileRouter(router).mount()
   new TranslationRouter(router).mount()
   new MapRouter(router).mount()
   new MarketplaceRouter(router).mount()
   new ParcelRouter(router).mount()
   new InviteRouter(router).mount()
-
-  console.log('Connecting database')
-  await db.connect()
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)

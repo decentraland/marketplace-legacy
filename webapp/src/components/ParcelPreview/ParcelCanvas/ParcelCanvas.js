@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 
-import { tileType, coordsType } from 'components/types'
+import { coordsType } from 'components/types'
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
@@ -35,6 +35,7 @@ const POPUP_DELAY = 400
 const { minX, minY, maxX, maxY } = Bounds.getBounds()
 
 export default class ParcelPreview extends React.PureComponent {
+  // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
     /** where to position the map in the X axis */
     x: PropTypes.number,
@@ -50,8 +51,6 @@ export default class ParcelPreview extends React.PureComponent {
     width: PropTypes.number,
     /** height of the canvas in pixels */
     height: PropTypes.number,
-    /** tiles from from modules/map */
-    tiles: PropTypes.objectOf(tileType),
     /** zoom level of the map, this changes in the end the size on which parcels are rendered, i.e: size=10 and zoom=0.5 makes each parcel of 5x5 pixels */
     zoom: PropTypes.number,
     /** minimum size that parcels can take (after applying zoom) */
@@ -99,6 +98,7 @@ export default class ParcelPreview extends React.PureComponent {
 
   constructor(props) {
     super(props)
+
     const { x, y, initialX, initialY, size, zoom, panX, panY } = props
     const initialState = {
       pan: { x: panX, y: panY },
@@ -113,13 +113,14 @@ export default class ParcelPreview extends React.PureComponent {
     this.state = this.getDimensions(props, initialState)
     this.oldState = this.state
     this.shouldRefreshMap = false
+    this.isHovered = false
+    this._isMounted = false
     this.canvas = null
+    this.popupTimeout = null
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
-    this.debouncedFetchTiles = debounce(this.props.onFetchTiles, 400)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
     this.debouncedHandleMinimapChange = debounce(this.handleMinimapChange, 50)
-    this.popupTimeout = null
   }
 
   componentWillReceiveProps(nextProps) {
@@ -157,7 +158,7 @@ export default class ParcelPreview extends React.PureComponent {
       newState.se.x !== this.oldState.se.x ||
       newState.se.y !== this.oldState.se.y
 
-    // The coords or the amount of parcels changed, so we need to re-fetch and update state
+    // The coords or the amount of parcels changed, so we need to update the state
     if (
       nextProps.x !== x ||
       nextProps.y !== y ||
@@ -165,9 +166,6 @@ export default class ParcelPreview extends React.PureComponent {
       isViewportDifferent
     ) {
       const { nw, se } = newState
-      if (!this.inStore(nw, se, nextProps.tiles)) {
-        this.debouncedFetchTiles(nw, se)
-      }
       this.oldState = newState
       this.setState(newState)
       this.debouncedHandleChange()
@@ -199,7 +197,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
     this.canvas.addEventListener('mousemove', this.handleMouseMove)
     this.canvas.addEventListener('mouseout', this.handleMouseOut)
-    this.mounted = true
+    this._isMounted = true
   }
 
   componentWillUnmount() {
@@ -210,7 +208,7 @@ export default class ParcelPreview extends React.PureComponent {
     this.canvas.removeEventListener('mousedown', this.handleMouseDown)
     this.canvas.removeEventListener('mousemove', this.handleMouseMove)
     this.canvas.removeEventListener('mouseout', this.handleMouseOut)
-    this.mounted = false
+    this._isMounted = false
   }
 
   getDimensions({ width, height }, { pan, zoom, center, size }) {
@@ -225,26 +223,12 @@ export default class ParcelPreview extends React.PureComponent {
     return { ...dimensions, pan, zoom, center, size }
   }
 
-  inStore(nw, se, tiles) {
-    if (!tiles) {
-      return false
-    }
-    for (let x = nw.x; x < se.x; x++) {
-      for (let y = se.y; y < nw.y; y++) {
-        const parcelId = buildCoordinate(x, y)
-        if (!tiles[parcelId] && Bounds.inBounds(x, y)) {
-          return false
-        }
-      }
-    }
-
-    return true
-  }
-
   handleChange = () => {
     const { onChange } = this.props
     const { nw, se, center, zoom } = this.state
-    onChange({ nw, se, center, zoom })
+    if (this._isMounted) {
+      onChange({ nw, se, center, zoom })
+    }
   }
 
   handlePanZoom = ({ dx, dy, dz }) => {
@@ -352,32 +336,29 @@ export default class ParcelPreview extends React.PureComponent {
       return
     }
 
-    if (!this.hovered || this.hovered.x !== x || this.hovered.y !== y) {
-      this.hovered = { x, y }
-      const parcelId = buildCoordinate(x, y)
-      const { showPopup } = this.props
-
-      if (showPopup) {
-        this.hidePopup()
-        this.popupTimeout = setTimeout(() => {
-          if (this.mounted) {
-            this.setState({
-              popup: {
-                x,
-                y,
-                top: layerY,
-                left: layerX,
-                visible: true
-              }
-            })
-          }
-        }, POPUP_DELAY)
-      }
+    if (!this.isHovered || this.isHovered.x !== x || this.isHovered.y !== y) {
+      this.isHovered = { x, y }
+      this.showPopup(x, y, layerY, layerX)
     }
   }
 
   handleMouseOut = () => {
     this.hidePopup()
+  }
+
+  showPopup(x, y, top, left) {
+    const { showPopup } = this.props
+
+    if (showPopup) {
+      this.hidePopup()
+      this.popupTimeout = setTimeout(() => {
+        if (this._isMounted) {
+          this.setState({
+            popup: { x, y, top, left, visible: true }
+          })
+        }
+      }, POPUP_DELAY)
+    }
   }
 
   hidePopup() {

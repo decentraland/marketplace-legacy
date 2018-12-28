@@ -5,7 +5,7 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { estateType, tileType, publicationType } from 'components/types'
+import { estateType, publicationType } from 'components/types'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
 import AddressBlock from 'components/AddressBlock'
@@ -25,10 +25,10 @@ const WITH_ACTION_BUTTONS_WIDTH = 8
 const WITHOUT_ACTION_BUTTONS_WIDTH = 16
 
 export default class EstateDetailPage extends React.PureComponent {
+  // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
     estate: estateType.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
-    tiles: PropTypes.objectOf(tileType),
     isOwner: PropTypes.bool.isRequired,
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
@@ -44,11 +44,7 @@ export default class EstateDetailPage extends React.PureComponent {
       const parcelId = buildCoordinate(x, y)
       const tile = tiles[parcelId]
       if (tile) {
-        parcels.push({
-          id: parcelId,
-          x: tile.x,
-          y: tile.y
-        })
+        parcels.push({ id: parcelId, x: tile.x, y: tile.y })
       }
     }
     return parcels

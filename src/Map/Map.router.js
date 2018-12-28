@@ -1,16 +1,13 @@
 import { server } from 'decentraland-commons'
 import { createCanvas } from 'canvas'
 
-import { Tile } from '../Tile'
+import { indexedTiles } from '../Tile'
 import { Parcel, Estate, EstateService } from '../Asset'
+import { MapReqQueryParams } from '../ReqQueryParams'
 import { sanitizeParcels } from '../sanitize'
-import { unsafeParseInt } from '../lib'
 import { calculateMapProps } from '../shared/estate'
-import * as coordinates from '../shared/coordinates'
-import { Viewport, Bounds, TYPES } from '../shared/map'
+import { Viewport } from '../shared/map'
 import { Map as MapRenderer } from '../shared/map/render'
-
-const { minX, maxX, minY, maxY } = Bounds.getBounds()
 
 export class MapRouter {
   constructor(app) {
@@ -24,8 +21,8 @@ export class MapRouter {
       this.handleRequest(this.getParcelPNG)
     )
     this.app.get('/estates/:id/map.png', this.handleRequest(this.getEstatePNG))
+
     this.app.get('/map', server.handleRequest(this.getMap))
-    this.app.get('/tiles', server.handleRequest(this.getTiles))
   }
 
   handleRequest(callback) {
@@ -39,73 +36,36 @@ export class MapRouter {
     }
   }
 
-  getTiles = async req => {
-    let tiles = []
-
-    let nw
-    let se
-    try {
-      nw = server.extractFromReq(req, 'nw')
-      se = server.extractFromReq(req, 'se')
-    } catch (_) {
-      // keep undefined
-    }
-
-    try {
-      const address = server.extractFromReq(req, 'address').toLowerCase()
-      tiles = await Tile.inRangeFromAddressPerspective(nw, se, address)
-    } catch (error) {
-      tiles = await Tile.inRange(nw, se)
-    }
-
-    const map = {}
-
-    for (const tile of tiles) {
-      map[tile.id] = this.toMapTile(tile)
-    }
-
-    return map
-  }
-
   async getMapPNG(req, res) {
     return this.sendPNG(res, this.sanitize(req))
   }
 
   async getParcelPNG(req, res) {
-    const { x, y, width, height, size, skipPublications } = this.sanitize(req)
+    const { x, y, ...mapOptions } = this.sanitize(req)
     const center = { x, y }
-    const mapOptions = {
-      width,
-      height,
-      size,
-      center,
-      selected: [center],
-      skipPublications
-    }
+
+    mapOptions.center = center
+    mapOptions.selected = [center]
+
     return this.sendPNG(res, mapOptions)
   }
 
   async getEstatePNG(req, res) {
-    const { id, width, height, size, skipPublications } = this.sanitizeEstate(
-      req
-    )
+    const id = server.extractFromReq(req, 'id')
     const estate = await Estate.findByTokenId(id)
     if (!estate) {
       throw new Error(`The estate with token id "${id}" doesn't exist.`)
     }
 
+    const mapOptions = this.sanitize(req)
     const { parcels } = estate.data
-    const { center, zoom, pan } = calculateMapProps(parcels, size)
-    const mapOptions = {
-      width,
-      height,
-      size,
-      center,
-      zoom,
-      pan,
-      selected: parcels,
-      skipPublications
-    }
+    const { center, zoom, pan } = calculateMapProps(parcels, mapOptions.size)
+
+    mapOptions.selected = parcels
+    mapOptions.center = center
+    mapOptions.zoom = zoom
+    mapOptions.pan = pan
+
     return this.sendPNG(res, mapOptions)
   }
 
@@ -130,13 +90,13 @@ export class MapRouter {
 
   async sendPNG(
     res,
-    { width, height, size, center, selected, skipPublications, zoom, pan }
+    { width, height, size, center, zoom, pan, selected, address, skipOnSale }
   ) {
     const { nw, se } = Viewport.getDimensions({
       width,
       height,
-      center,
       size,
+      center,
       zoom,
       pan,
       padding: 1
@@ -144,14 +104,15 @@ export class MapRouter {
 
     try {
       const stream = await this.getStream({
+        nw,
+        se,
         width,
         height,
         size,
-        nw,
-        se,
         center,
         selected,
-        skipPublications
+        address,
+        skipOnSale
       })
       res.type('png')
       stream.pipe(res)
@@ -162,16 +123,19 @@ export class MapRouter {
   }
 
   async getStream({
+    nw,
+    se,
     width,
     height,
     size,
-    nw,
-    se,
     center,
     selected,
-    skipPublications
+    address,
+    skipOnSale
   }) {
-    const tiles = await Tile.inRangePNG(nw, se)
+    const tiles = address
+      ? await indexedTiles.getForOwner(address)
+      : await indexedTiles.get()
 
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
@@ -180,127 +144,18 @@ export class MapRouter {
       width,
       height,
       size
-    }).drawFromTiles({
+    }).draw({
+      nw,
+      se,
       center,
       tiles,
       selected,
-      skipPublications
+      skipOnSale
     })
     return canvas.pngStream()
   }
 
-  toMapTile(tile) {
-    const mapTile = {
-      x: tile.x,
-      y: tile.y,
-      type: tile.type
-    }
-    if (tile.owner && [TYPES.taken, TYPES.onSale].includes(tile.type)) {
-      mapTile.owner = tile.owner.slice(0, 6)
-    }
-    if (tile.price) mapTile.price = tile.price
-    if (tile.name) mapTile.name = tile.name
-    if (tile.estate_id) mapTile.estate_id = tile.estate_id
-    if (tile.is_connected_left) mapTile.left = 1
-    if (tile.is_connected_top) mapTile.top = 1
-    if (tile.is_connected_topleft) mapTile.topLeft = 1
-
-    return mapTile
-  }
-
-  sanitizeEstate(req) {
-    return {
-      id: server.extractFromReq(req, 'id'),
-      ...this.sanitize(req)
-    }
-  }
-
   sanitize(req) {
-    return {
-      x: this.getInteger(req, 'x', minX, maxX, 0),
-      y: this.getInteger(req, 'y', minY, maxY, 0),
-      width: this.getInteger(req, 'width', 32, 1024, 500),
-      height: this.getInteger(req, 'height', 32, 1024, 500),
-      size: this.getInteger(req, 'size', 1, 40, 10),
-      center: this.getCoords(req, 'center', { x: 0, y: 0 }),
-      selected: this.getCoordsArray(req, 'selected', []),
-      skipPublications: !this.getBoolean(req, 'publications', false) // Mind the negation here
-    }
-  }
-
-  getInteger(req, name, min, max, defaultValue) {
-    let param, value
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-
-    try {
-      value = unsafeParseInt(param)
-    } catch (e) {
-      throw new Error(
-        `Invalid param "${name}" should be a integer but got "${param}"`
-      )
-    }
-    return value > max ? max : value < min ? min : value
-  }
-
-  getCoords(req, name, defaultValue) {
-    let param
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-
-    let coords
-    try {
-      const [x, y] = coordinates.splitCoordinate(param)
-      coords = { x, y }
-    } catch (error) {
-      throw new Error(
-        `Invalid param "${name}" should be a coordinate "x,y" but got "${param}".`
-      )
-    }
-    return coords
-  }
-
-  getCoordsArray(req, name, defaultValue) {
-    let param
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-
-    let coordsArray = []
-    try {
-      coordsArray = param.split(';').map(pair => {
-        const [x, y] = coordinates.splitCoordinate(pair)
-        return { x, y }
-      })
-    } catch (error) {
-      throw new Error(
-        `Invalid param "${name}" should be a list of coordinates "x1,y1;x2,y2" but got "${param}".`
-      )
-    }
-    return coordsArray
-  }
-
-  getBoolean(req, name, defaultValue) {
-    let param
-    try {
-      param = server.extractFromReq(req, name)
-    } catch (error) {
-      return defaultValue
-    }
-    const value = param === 'true' ? true : param === 'false' ? false : null
-    if (value === null) {
-      throw new Error(
-        `Invalid param "${name}" should be a boolean but got "${param}".`
-      )
-    }
-    return value
+    return new MapReqQueryParams(req).sanitize()
   }
 }

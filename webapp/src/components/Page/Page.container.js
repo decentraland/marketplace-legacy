@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import { fetchDistrictsRequest } from 'modules/districts/actions'
+import { fetchTilesRequest } from 'modules/tile/actions'
 import { openModal } from 'modules/ui/actions'
 import { isRootPage, isAuctionPage } from 'modules/location/selectors'
 
@@ -12,6 +13,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
+  onFetchTiles: () => dispatch(fetchTilesRequest()),
   onFetchDistricts: () => dispatch(fetchDistrictsRequest()),
   onFirstVisit: () => dispatch(openModal('TermsModal'))
 })

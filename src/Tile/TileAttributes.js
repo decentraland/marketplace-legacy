@@ -1,9 +1,9 @@
-import { TileLocation } from './TileLocation'
-import { TileType } from './TileType'
 import { Parcel } from '../Asset'
 import { isDistrict } from '../../shared/district'
+import { TileType, TileLocation } from '../../shared/map'
 import { isEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../../shared/asset'
+import { isExpired } from '../../shared/publication'
 
 export class TileAttributes {
   constructor(parcel) {
@@ -42,6 +42,7 @@ export class TileAttributes {
 
   async getReference() {
     const type = this.tileType.get()
+    const publication = this.parcel.publication
 
     return {
       type,
@@ -49,7 +50,10 @@ export class TileAttributes {
       owner: this.getOwner(),
       estate_id: this.parcel.estate_id,
       asset_type: this.isEstate ? ASSET_TYPES.estate : ASSET_TYPES.parcel,
-      price: this.parcel.publication ? this.parcel.publication.price : null
+      price:
+        publication && !isExpired(publication.expires_at)
+          ? publication.price
+          : null
     }
   }
 

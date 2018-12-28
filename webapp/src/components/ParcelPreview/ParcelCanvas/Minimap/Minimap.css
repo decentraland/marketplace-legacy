@@ -6,16 +6,17 @@
   bottom: 20px;
   z-index: 1040;
   opacity: 1;
-  border: 2px solid #0d0e18;
-  border-bottom: none;
   box-shadow: 0 0px 35px rgba(0, 0, 0, 0.4);
+  border: 2px solid #0d0e18;
+  border-bottom: 0;
   border-radius: 5px;
 }
 
 .Minimap img {
-  position: absolute;
   top: 0;
   left: 0;
+  position: absolute;
+  border-radius: 5px;
 }
 
 .Minimap .minimap-focus {

@@ -5,7 +5,6 @@ import { getLocation } from '@dapps/modules/location/selectors'
 import { isRootPage, isModalPage } from 'modules/location/selectors'
 import { getWallet } from 'modules/wallet/selectors'
 import { isConnected, isConnecting } from 'modules/wallet/selectors'
-import { isLoading } from 'modules/ui/loading/selectors'
 import { isLoading as isLoadingParcels } from 'modules/parcels/selectors'
 import { getPendingTransactions } from '@dapps/modules/transaction/selectors'
 import { navigateTo } from '@dapps/modules/location/actions'
@@ -27,7 +26,7 @@ const mapState = state => {
     wallet,
     center,
     isRootPage: isRootPage(state),
-    isLoading: isLoading(state) || isLoadingParcels(state),
+    isLoading: isLoadingParcels(state),
     isConnected: isConnected(state),
     isConnecting: isConnecting(state),
     isModal: isModalPage(state),

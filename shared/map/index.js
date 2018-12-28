@@ -1,3 +1,5 @@
 export * from './Bounds'
-export * from './tile'
 export * from './Viewport'
+export * from './tile'
+export * from './TileLocation'
+export * from './TileType'

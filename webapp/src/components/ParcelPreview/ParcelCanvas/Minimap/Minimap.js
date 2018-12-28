@@ -21,18 +21,12 @@ export default class Minimap extends React.Component {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     center: coordsType.isRequired,
+    address: PropTypes.string,
     onChange: PropTypes.func
   }
 
   static defaultProps = {
     onChange: () => {}
-  }
-
-  constructor(props) {
-    super(props)
-    this.mapURL = api.getUrl(
-      '/map.png?size=1&width=301&height=301&publications=true'
-    )
   }
 
   componentDidMount() {
@@ -79,6 +73,17 @@ export default class Minimap extends React.Component {
     ]
   }
 
+  getMapURL() {
+    const { address } = this.props
+    let mapURL = '/map.png?size=1&width=301&height=301&publications=true'
+
+    if (address) {
+      mapURL += `&address=${address}`
+    }
+
+    return api.getUrl(mapURL)
+  }
+
   render() {
     const { width, height, center } = this.props
     const styles = {
@@ -108,7 +113,12 @@ export default class Minimap extends React.Component {
 
     return (
       <div className="Minimap" ref={this.refMap} onMouseDown={this.mouseDown}>
-        <img src={this.mapURL} alt="Minimap" width="150" height="150" />
+        <img
+          src={this.getMapURL()}
+          alt="Minimap"
+          width={MINIMAP_WIDTH - BORDER * 2}
+          height={MINIMAP_HEIGHT - BORDER * 2}
+        />
         <div className="minimap-focus" style={styles} />
       </div>
     )

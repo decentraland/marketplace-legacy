@@ -14,7 +14,7 @@ export function isEstate(parcel) {
   return parcel.estate_id != null
 }
 
-export function toParcelObject(parcelArray, prevParcels = {}) {
+export function toParcelObject(parcelArray) {
   const parcelObject = {}
   for (const parcel of parcelArray) {
     parcelObject[parcel.id] = Object.assign({}, parcel)

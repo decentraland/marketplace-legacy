@@ -1,7 +1,6 @@
 import { Model } from 'decentraland-commons'
 
 import { TileAttributes } from './TileAttributes'
-import { TileType } from './TileType'
 import { Asset, Parcel, Estate, ParcelQueries } from '../Asset'
 import { Contribution } from '../Contribution'
 import { District } from '../District'
@@ -9,6 +8,7 @@ import { Publication } from '../Publication'
 import { SQL, raw } from '../database'
 import { asyncBatch } from '../lib'
 import { isDistrict } from '../../shared/district'
+import { TileType } from '../../shared/map'
 import { isEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
 import { PUBLICATION_STATUS } from '../shared/publication'
@@ -32,7 +32,7 @@ export class Tile extends Model {
   ]
 
   static async upsertAsset(assetId, assetType) {
-    const asset = await Asset.getModel(assetType).findOne(assetId)
+    const asset = await Asset.getNew(assetType).findById(assetId)
 
     switch (assetType) {
       case ASSET_TYPES.parcel:
@@ -94,86 +94,58 @@ export class Tile extends Model {
         WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
   }
 
-  static async inRangePNG(topLeft, bottomRight) {
-    return this.db.query(SQL`
-      SELECT x, y, type, is_connected_left as left, is_connected_top as top, is_connected_topleft as "topLeft"
-        FROM ${raw(this.tableName)}
-        WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
-  }
-
   /**
-   * Returns the tiles form the database changing the type according to the supplied wallet.
-   * So for example if a tile is on sale the type will be TYPES.taken and changed to TYPES.myParcelsOnSale here
+   * Returns the tiles changing the type according to the supplied address.
+   * For example if the address has a tile is on sale the db type will be TYPES.taken but will be chaged to TYPES.myParcelsOnSale here
    */
-  static async inRangeFromAddressPerspective(topLeft, bottomRight, owner) {
-    const betweenSQL = ParcelQueries.whereIsBetweenCoordinates(
-      topLeft,
-      bottomRight
-    )
+  static async getForOwner(owner) {
+    const districtColumnNames = this.filterColumnNames(
+      ['price', 'owner', 'estate_id', 'district_id', 'asset_type'],
+      't'
+    ).join(', ')
+    const ownerColumnNames = this.filterColumnNames(
+      ['owner', 'district_id', 'asset_type'],
+      't'
+    ).join(', ')
 
-    const restColumnNames = this.filterColumnNames([
-      'district_id',
-      'asset_type'
-    ]).join(', ')
-    const districtColumnNames = this.filterColumnNames([
-      'price',
-      'owner',
-      'estate_id',
-      'district_id',
-      'asset_type'
-    ]).join(', ')
-    const ownerColumnNames = this.filterColumnNames([
-      'owner',
-      'district_id',
-      'asset_type'
-    ]).join(', ')
-
-    let [restTiles, districtTiles, ownerTiles] = await Promise.all([
-      this.db.query(SQL`
-        SELECT ${raw(restColumnNames)}
-          FROM ${raw(this.tableName)}
-          WHERE (owner != ${owner} OR owner IS NULL)
-            AND district_id IS NULL
-            AND ${betweenSQL}`),
+    const [districtTiles, ownerTiles] = await Promise.all([
       // prettier-ignore
       this.db.query(SQL`
-        SELECT ${raw(districtColumnNames)},
-            (SELECT 1 FROM ${raw(Contribution.tableName)} c WHERE c.address = ${owner} AND c.district_id = a.district_id) has_contributed
-          FROM ${raw(this.tableName)} a
-          WHERE (owner != ${owner} or owner IS NULL)
-            AND district_id IS NOT NULL
-            AND ${betweenSQL}`),
+        SELECT ${raw(districtColumnNames)}
+          FROM ${raw(this.tableName)} t
+          JOIN ${raw(Contribution.tableName)} c ON c.address = ${owner} AND c.district_id = t.district_id
+          WHERE (t.owner != ${owner} OR t.owner IS NULL)
+            AND t.district_id IS NOT NULL
+          GROUP BY c.id, ${raw(districtColumnNames)}`),
       this.db.query(SQL`
         SELECT ${raw(ownerColumnNames)}
-          FROM ${raw(this.tableName)}
-          WHERE owner = ${owner}
-            AND ${betweenSQL}`)
+          FROM ${raw(this.tableName)} t
+          WHERE owner = ${owner}`)
     ])
 
     for (const tile of districtTiles) {
-      if (tile.has_contributed) {
-        // Mock a contribution for perf reasons
-        const tileAttributes = new TileType({
-          owner: tile.owner,
-          contributions: [1]
-        })
-        const type = tileAttributes.getType()
-        Object.assign(tile, { type })
-      }
+      // Mock a contribution for perf reasons
+      const tileType = new TileType({ owner, contribution: { id: tile.id } })
+      tile.type = tileType.get()
     }
 
     for (const tile of ownerTiles) {
-      const tileAttributes = new TileType({ owner })
-      const type = tileAttributes.getForOwner(owner, tile.type)
-      Object.assign(tile, { type })
+      const tileType = new TileType({ owner })
+      tile.type = tileType.getForOwner(owner, tile.type)
     }
 
-    return restTiles.concat(districtTiles).concat(ownerTiles)
+    return districtTiles.concat(ownerTiles)
   }
 
-  static filterColumnNames(names) {
+  static filterColumnNames(names, alias = this.tableName) {
     const filter = new Set(names)
-    return this.columnNames.filter(columnName => !filter.has(columnName))
+    const result = []
+    for (const columnName of this.columnNames) {
+      if (!filter.has(columnName)) {
+        result.push(`${alias}.${columnName}`)
+      }
+    }
+    return result
   }
 
   static async buildRow(parcel) {
