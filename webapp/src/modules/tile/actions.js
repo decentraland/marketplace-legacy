@@ -4,9 +4,10 @@ export const FETCH_TILES_REQUEST = '[Request] Fetch Tiles'
 export const FETCH_TILES_SUCCESS = '[Success] Fetch Tiles'
 export const FETCH_TILES_FAILURE = '[Failure] Fetch Tiles'
 
-export function fetchTilesRequest() {
+export function fetchTilesRequest(from) {
   return {
-    type: FETCH_TILES_REQUEST
+    type: FETCH_TILES_REQUEST,
+    from
   }
 }
 
@@ -20,6 +21,33 @@ export function fetchTilesSuccess(tiles) {
 export function fetchTilesFailure() {
   return {
     type: FETCH_TILES_FAILURE
+  }
+}
+
+// Fetch New Tiles
+
+export const FETCH_NEW_TILES_REQUEST = '[Request] Fetch New Tiles'
+export const FETCH_NEW_TILES_SUCCESS = '[Success] Fetch New Tiles'
+export const FETCH_NEW_TILES_FAILURE = '[Failure] Fetch New Tiles'
+
+export function fetchNewTilesRequest(from, address) {
+  return {
+    type: FETCH_NEW_TILES_REQUEST,
+    from,
+    address
+  }
+}
+
+export function fetchNewTilesSuccess(tiles) {
+  return {
+    type: FETCH_NEW_TILES_SUCCESS,
+    tiles
+  }
+}
+
+export function fetchNewTilesFailure() {
+  return {
+    type: FETCH_NEW_TILES_FAILURE
   }
 }
 

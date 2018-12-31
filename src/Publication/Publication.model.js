@@ -65,7 +65,7 @@ export class Publication extends Model {
         FROM ${SQL.raw(this.tableName)}
         WHERE status = ${status}
           AND asset_id = ${asset_id}
-          AND ${PublicationQueries.whereIsActive()}
+          AND ${PublicationQueries.isActive()}
         ORDER BY created_at DESC
         LIMIT 1`
     )

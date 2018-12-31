@@ -4,7 +4,8 @@ import { SQL, raw } from '../database'
 import { ASSET_TYPES } from '../../shared/asset'
 
 export const PublicationQueries = Object.freeze({
-  whereIsActive: () => SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
+  isActive: () => SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
+  isNotActive: () => SQL`expires_at < EXTRACT(epoch from now()) * 1000`,
 
   // These two, `hasAssetType` and `hasStatus`, can be abstracted into one method
   // but for now, they're accidental repetition. No need to overcomplicate things.
@@ -26,7 +27,7 @@ export const PublicationQueries = Object.freeze({
     return SQL`SELECT *
       FROM ${raw(Publication.tableName)}
       WHERE status = ${status}
-        AND ${PublicationQueries.whereIsActive()}
+        AND ${PublicationQueries.isActive()}
       ORDER BY created_at DESC`
   },
 
@@ -34,7 +35,7 @@ export const PublicationQueries = Object.freeze({
     SQL`SELECT row_to_json(pub.*)
       FROM ${raw(Publication.tableName)} as pub
       WHERE ${raw(assetTableName)}.id = pub.asset_id
-        AND ${PublicationQueries.whereIsActive()}
+        AND ${PublicationQueries.isActive()}
       ORDER BY pub.created_at DESC
       LIMIT 1`
 })

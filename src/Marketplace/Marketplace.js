@@ -25,7 +25,7 @@ export class Marketplace {
           FROM ${raw(Publication.tableName)} as pub
           ${raw(joinAssetsSQL)}
           WHERE ${PublicationQueries.hasStatus(status)}
-            AND ${PublicationQueries.whereIsActive()}
+            AND ${PublicationQueries.isActive()}
             AND ${PublicationQueries.estateHasParcels()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
@@ -58,7 +58,7 @@ export class Marketplace {
           )} as model ON model.id = pub.asset_id
           WHERE ${PublicationQueries.hasAssetType(asset_type)}
             AND ${PublicationQueries.hasStatus(status)}
-            AND ${PublicationQueries.whereIsActive()}
+            AND ${PublicationQueries.isActive()}
             AND ${PublicationQueries.estateHasParcels()}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
@@ -77,7 +77,7 @@ export class Marketplace {
         FROM ${raw(Publication.tableName)} as pub
         WHERE pub.status = ${status}
           AND ${PublicationQueries.hasAssetType(asset_type)}
-          AND ${PublicationQueries.whereIsActive()}
+          AND ${PublicationQueries.isActive()}
           AND ${PublicationQueries.estateHasParcels()}`
     )
 

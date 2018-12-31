@@ -44,16 +44,18 @@ export class TileAttributes {
     const type = this.tileType.get()
     const publication = this.parcel.publication
 
+    const expires_at = publication ? publication.expires_at : null
+    const price =
+      publication && !isExpired(expires_at) ? publication.price : null
+
     return {
       type,
+      expires_at,
+      price,
       name: this.tileType.getName(type),
       owner: this.getOwner(),
       estate_id: this.parcel.estate_id,
-      asset_type: this.isEstate ? ASSET_TYPES.estate : ASSET_TYPES.parcel,
-      price:
-        publication && !isExpired(publication.expires_at)
-          ? publication.price
-          : null
+      asset_type: this.isEstate ? ASSET_TYPES.estate : ASSET_TYPES.parcel
     }
   }
 

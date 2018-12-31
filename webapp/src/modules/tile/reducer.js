@@ -5,6 +5,9 @@ import {
   FETCH_TILES_REQUEST,
   FETCH_TILES_SUCCESS,
   FETCH_TILES_FAILURE,
+  FETCH_NEW_TILES_REQUEST,
+  FETCH_NEW_TILES_SUCCESS,
+  FETCH_NEW_TILES_FAILURE,
   FETCH_ADDRESS_TILES_REQUEST,
   FETCH_ADDRESS_TILES_SUCCESS,
   FETCH_ADDRESS_TILES_FAILURE
@@ -36,6 +39,7 @@ const INITIAL_STATE = {
 export function tileReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_TILES_REQUEST:
+    case FETCH_NEW_TILES_REQUEST:
     case FETCH_ADDRESS_TILES_REQUEST: {
       return {
         ...state,
@@ -43,6 +47,7 @@ export function tileReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_TILES_SUCCESS:
+    case FETCH_NEW_TILES_SUCCESS:
     case FETCH_ADDRESS_TILES_SUCCESS: {
       return {
         ...state,
@@ -54,6 +59,7 @@ export function tileReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_TILES_FAILURE:
+    case FETCH_NEW_TILES_FAILURE:
     case FETCH_ADDRESS_TILES_FAILURE: {
       return {
         ...state,

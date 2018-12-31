@@ -117,6 +117,7 @@ export default class ParcelPreview extends React.PureComponent {
     this._isMounted = false
     this.canvas = null
     this.popupTimeout = null
+    this.debouncedFetchNewTiles = debounce(this.props.onFetchNewTiles, 400)
     this.debouncedRenderMap = debounce(this.renderMap, this.props.debounce)
     this.debouncedUpdateCenter = debounce(this.updateCenter, 50)
     this.debouncedHandleChange = debounce(this.handleChange, 50)
@@ -169,6 +170,7 @@ export default class ParcelPreview extends React.PureComponent {
       this.oldState = newState
       this.setState(newState)
       this.debouncedHandleChange()
+      this.debouncedFetchNewTiles(Date.now())
     }
 
     if (selected !== nextProps.selected) {
@@ -424,11 +426,8 @@ export default class ParcelPreview extends React.PureComponent {
   }
 
   getSelected() {
-    const { selected } = this.props
-    if (Array.isArray(selected)) {
-      return selected
-    }
-    return selected ? [selected] : []
+    const selected = this.props.selected || []
+    return Array.isArray(selected) ? selected : [selected]
   }
 
   renderMap() {

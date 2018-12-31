@@ -1,6 +1,7 @@
 import { Tile } from '../Tile'
 import { db } from '../database'
-import { TYPES, shortenOwner } from '../shared/map'
+import { TileType, TYPES, shortenOwner } from '../shared/map'
+import { isExpired } from '../shared/utils'
 
 const DB_CHANNEL = 'tile_updated'
 
@@ -77,15 +78,19 @@ export class IndexedTiles {
       y: tile.y,
       type: tile.type
     }
-    if (tile.owner && [TYPES.taken, TYPES.onSale].includes(tile.type)) {
-      newTile.owner = shortenOwner(tile.owner)
-    }
     if (tile.price) newTile.price = tile.price
     if (tile.name) newTile.name = tile.name
     if (tile.estate_id) newTile.estate_id = tile.estate_id
     if (tile.is_connected_left) newTile.left = 1
     if (tile.is_connected_top) newTile.top = 1
     if (tile.is_connected_topleft) newTile.topLeft = 1
+    if (tile.owner && [TYPES.taken, TYPES.onSale].includes(tile.type)) {
+      newTile.owner = shortenOwner(tile.owner)
+    }
+    if (tile.expires_at && isExpired(tile.expires_at)) {
+      newTile.price = null
+      newTile.type = TileType.getExpired(tile.type)
+    }
 
     return newTile
   }

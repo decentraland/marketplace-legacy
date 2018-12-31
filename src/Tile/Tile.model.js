@@ -1,10 +1,10 @@
 import { Model } from 'decentraland-commons'
 
 import { TileAttributes } from './TileAttributes'
-import { Asset, Parcel, Estate, ParcelQueries } from '../Asset'
+import { Asset, Parcel, Estate } from '../Asset'
 import { Contribution } from '../Contribution'
 import { District } from '../District'
-import { Publication } from '../Publication'
+import { Publication, PublicationQueries } from '../Publication'
 import { SQL, raw } from '../database'
 import { asyncBatch } from '../lib'
 import { isDistrict } from '../../shared/district'
@@ -12,6 +12,8 @@ import { TileType } from '../../shared/map'
 import { isEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
 import { PUBLICATION_STATUS } from '../shared/publication'
+
+const propertiesBlacklist = ['district_id', 'asset_type']
 
 export class Tile extends Model {
   static tableName = 'tiles'
@@ -26,6 +28,7 @@ export class Tile extends Model {
     'name',
     'type',
     'asset_type',
+    'expires_at',
     'is_connected_left',
     'is_connected_top',
     'is_connected_topleft'
@@ -82,31 +85,32 @@ export class Tile extends Model {
     )
   }
 
-  static async inRange(topLeft, bottomRight) {
-    const columnNames = this.filterColumnNames([
-      'district_id',
-      'asset_type'
-    ]).join(', ')
+  static async findFrom(fromDate) {
+    const columnNames = this.filterColumnNames(propertiesBlacklist).join(', ')
 
     return this.db.query(SQL`
       SELECT ${raw(columnNames)}
         FROM ${raw(this.tableName)}
-        WHERE ${ParcelQueries.whereIsBetweenCoordinates(topLeft, bottomRight)}`)
+        WHERE ${this.getWhereNewSQL(fromDate)}`)
   }
 
   /**
    * Returns the tiles changing the type according to the supplied address.
    * For example if the address has a tile is on sale the db type will be TYPES.taken but will be chaged to TYPES.myParcelsOnSale here
    */
-  static async getForOwner(owner) {
+  static async getForOwner(owner, fromDate) {
     const districtColumnNames = this.filterColumnNames(
-      ['price', 'owner', 'estate_id', 'district_id', 'asset_type'],
+      ['owner', 'price', 'estate_id', ...propertiesBlacklist],
       't'
     ).join(', ')
     const ownerColumnNames = this.filterColumnNames(
-      ['owner', 'district_id', 'asset_type'],
+      ['owner', ...propertiesBlacklist],
       't'
     ).join(', ')
+
+    const whereNewSQL = fromDate
+      ? this.getWhereNewSQL(fromDate, 't')
+      : SQL`1 = 1`
 
     const [districtTiles, ownerTiles] = await Promise.all([
       // prettier-ignore
@@ -116,11 +120,13 @@ export class Tile extends Model {
           JOIN ${raw(Contribution.tableName)} c ON c.address = ${owner} AND c.district_id = t.district_id
           WHERE (t.owner != ${owner} OR t.owner IS NULL)
             AND t.district_id IS NOT NULL
+            AND ${whereNewSQL}
           GROUP BY c.id, ${raw(districtColumnNames)}`),
       this.db.query(SQL`
         SELECT ${raw(ownerColumnNames)}
           FROM ${raw(this.tableName)} t
-          WHERE owner = ${owner}`)
+          WHERE owner = ${owner}
+            AND ${whereNewSQL}`)
     ])
 
     for (const tile of districtTiles) {
@@ -135,6 +141,13 @@ export class Tile extends Model {
     }
 
     return districtTiles.concat(ownerTiles)
+  }
+
+  static getWhereNewSQL(fromDate, alias = this.tableName) {
+    return SQL`(
+      ${raw(alias)}.updated_at >= ${fromDate}
+      OR ${PublicationQueries.isNotActive()}
+    )`
   }
 
   static filterColumnNames(names, alias = this.tableName) {
@@ -170,27 +183,18 @@ export class Tile extends Model {
   static async getFullParcel(parcel) {
     const assetId = isEstate(parcel) ? parcel.estate_id : parcel.id
 
-    const publicationPromise =
-      parcel.publication === undefined
-        ? Publication.findActiveByAssetIdWithStatus(
-            assetId,
-            PUBLICATION_STATUS.open
-          )
-        : Promise.resolve(parcel.publication)
+    const publicationPromise = Publication.findActiveByAssetIdWithStatus(
+      assetId,
+      PUBLICATION_STATUS.open
+    )
 
-    const estatePromise =
-      parcel.estate === undefined
-        ? isEstate(parcel)
-          ? Estate.findOne(parcel.estate_id)
-          : null
-        : Promise.resolve(parcel.estate)
+    const estatePromise = isEstate(parcel)
+      ? Estate.findOne(parcel.estate_id)
+      : null
 
-    const districtPromise =
-      parcel.district === undefined
-        ? isDistrict(parcel)
-          ? District.findOne(parcel.district_id)
-          : null
-        : Promise.resolve(parcel.district)
+    const districtPromise = isDistrict(parcel)
+      ? District.findOne(parcel.district_id)
+      : null
 
     const [publication, estate, district] = await Promise.all([
       publicationPromise,

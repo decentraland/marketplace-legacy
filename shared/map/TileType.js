@@ -3,6 +3,21 @@ import { isDistrict, isPlaza, isRoad } from '../district'
 import { isEstate } from '../parcel'
 
 export class TileType {
+  static getExpired(type) {
+    // We purposefully avoid adding this method to more hollistic methods like `get` or `getForOwner`
+    // so we can have the choice of getting the type with or without the expired publication
+    switch (type) {
+      case TYPES.onSale:
+        return TYPES.taken
+      case TYPES.myParcelsOnSale:
+        return TYPES.myParcels
+      case TYPES.myEstatesOnSale:
+        return TYPES.myEstates
+      default:
+        return type
+    }
+  }
+
   constructor(parcel) {
     this.parcel = parcel
   }
