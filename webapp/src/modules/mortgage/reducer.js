@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 
 import {
   CREATE_MORTGAGE_REQUEST,
@@ -18,76 +18,60 @@ import {
   CANCEL_MORTGAGE_SUCCESS,
   CLAIM_MORTGAGE_RESOLUTION_SUCCESS
 } from './actions'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
 
-const INITIAL_DATA_STATE = {
-  mortgages: {}
+const INITIAL_STATE = {
+  data: {},
+  loading: [],
+  error: null
 }
 
-export function data(state = INITIAL_DATA_STATE, action) {
+export function mortgageReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case CREATE_MORTGAGE_REQUEST:
+    case PAY_MORTGAGE_REQUEST:
+    case FETCH_MORTGAGED_PARCELS_REQUEST:
+    case FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST: {
+      return {
+        ...state,
+        loading: loadingReducer(state, action)
+      }
+    }
     case FETCH_MORTGAGED_PARCELS_SUCCESS:
     case FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS: {
       return {
-        ...state,
-        mortgages: action.mortgages.reduce(
+        loading: loadingReducer(state, action),
+        error: '',
+        data: action.mortgages.reduce(
           (normalizedMortgages, mortgage) => ({
             ...normalizedMortgages,
             [mortgage.tx_hash]: mortgage
           }),
-          state.mortgages
+          state.data
         )
       }
     }
-    default:
-      return state
-  }
-}
-
-export function loading(state = [], action) {
-  switch (action.type) {
-    case CREATE_MORTGAGE_REQUEST:
     case CREATE_MORTGAGE_SUCCESS:
-    case CREATE_MORTGAGE_FAILURE:
-    case FETCH_MORTGAGED_PARCELS_SUCCESS:
-    case FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS:
-    case FETCH_ACTIVE_PARCEL_MORTGAGES_FAILURE:
-    case FETCH_MORTGAGED_PARCELS_FAILURE:
-    case FETCH_MORTGAGED_PARCELS_REQUEST:
-    case PAY_MORTGAGE_REQUEST:
-    case PAY_MORTGAGE_FAILURE:
+    case CANCEL_MORTGAGE_SUCCESS:
     case PAY_MORTGAGE_SUCCESS:
-    case FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST: {
-      return loadingReducer(state, action)
-    }
-    default:
-      return state
-  }
-}
-
-export function error(state = '', action) {
-  switch (action.type) {
+    case CLAIM_MORTGAGE_RESOLUTION_SUCCESS:
+      return {
+        ...state,
+        loading: loadingReducer(state, action),
+        error: ''
+      }
     case FETCH_ACTIVE_PARCEL_MORTGAGES_FAILURE:
     case FETCH_MORTGAGED_PARCELS_FAILURE:
     case CREATE_MORTGAGE_FAILURE:
     case CANCEL_MORTGAGE_FAILURE:
     case PAY_MORTGAGE_FAILURE:
     case CLAIM_MORTGAGE_RESOLUTION_FAILURE:
-      return action.error
-    case FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS:
-    case FETCH_MORTGAGED_PARCELS_SUCCESS:
-    case CREATE_MORTGAGE_SUCCESS:
-    case CANCEL_MORTGAGE_SUCCESS:
-    case PAY_MORTGAGE_SUCCESS:
-    case CLAIM_MORTGAGE_RESOLUTION_SUCCESS:
-      return ''
+      return {
+        ...state,
+        loading: loadingReducer(state, action),
+        error: action.error
+      }
+
     default:
       return state
   }
 }
-
-export default combineReducers({
-  data,
-  loading,
-  error
-})
