@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { utils } from 'decentraland-commons'
 import { Link } from 'react-router-dom'
 import { Loader, Form, Checkbox, Button } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import Mana from 'components/Mana'
@@ -12,12 +13,13 @@ import {
   authorizationType,
   transactionType
 } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { token } from 'lib/token'
 import DerivationPathDropdown from './DerivationPathDropdown'
 
 import './SettingsForm.css'
+
+const DISABLED_CONTRACTS = []
 
 export default class SettingsForm extends React.PureComponent {
   static propTypes = {
@@ -170,10 +172,7 @@ export default class SettingsForm extends React.PureComponent {
   }
 
   isDisabledContract(contractName) {
-    return (
-      !isFeatureEnabled('MORTGAGES') &&
-      ['MortgageHelper', 'MortgageManager'].includes(contractName)
-    )
+    return DISABLED_CONTRACTS.includes(contractName)
   }
 
   render() {

@@ -39,6 +39,8 @@ function getNewERC20Token(name, address) {
 }
 
 function getLandAuctionContracts() {
+  if (!isFeatureEnabled('AUCTION')) return []
+
   const { LANDAuction } = contracts
 
   // ZIL
@@ -83,24 +85,19 @@ function getLandAuctionContracts() {
     env.get('REACT_APP_MKR_TOKEN_CONTRACT_ADDRESS')
   )
 
-  return isFeatureEnabled('AUCTION')
-    ? [
-        new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS')),
-        ZILToken,
-        DAIToken,
-        KNCToken,
-        SNTToken,
-        BNBToken,
-        ELFToken,
-        MKRToken
-      ]
-    : []
+  return [
+    new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS')),
+    ZILToken,
+    DAIToken,
+    KNCToken,
+    SNTToken,
+    BNBToken,
+    ELFToken,
+    MKRToken
+  ]
 }
 
 function getMortgageContracts() {
-  // Condition should be deleted when mortgages go live
-  if (!isFeatureEnabled('MORTGAGES')) return []
-
   const { MortgageHelper, MortgageManager, RCNEngine } = contracts
 
   const RCNToken = new contracts.ERC20Token(

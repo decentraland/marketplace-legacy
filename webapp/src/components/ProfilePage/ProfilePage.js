@@ -19,7 +19,6 @@ import {
   estateType,
   assetType
 } from 'components/types'
-import { isFeatureEnabled } from 'lib/featureUtils'
 import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
 import { buildUrl } from './utils'
 import Contribution from './Contribution'
@@ -226,20 +225,19 @@ export default class ProfilePage extends React.PureComponent {
               {t('global.estates')}
               {this.renderBadge(estates, PROFILE_PAGE_TABS.estates)}
             </Menu.Item>
-            {isFeatureEnabled('MORTGAGES') &&
-              isOwner && (
-                <Menu.Item
-                  name={PROFILE_PAGE_TABS.mortgages}
-                  active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
-                  onClick={this.handleItemClick}
-                >
-                  {t('global.mortgages')}
-                  {this.renderBadge(
-                    mortgagedParcels,
-                    PROFILE_PAGE_TABS.mortgages
-                  )}
-                </Menu.Item>
-              ) /* Mortgage Feature */}
+            {isOwner && (
+              <Menu.Item
+                name={PROFILE_PAGE_TABS.mortgages}
+                active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
+                onClick={this.handleItemClick}
+              >
+                {t('global.mortgages')}
+                {this.renderBadge(
+                  mortgagedParcels,
+                  PROFILE_PAGE_TABS.mortgages
+                )}
+              </Menu.Item>
+            )}
           </Menu>
         </Container>
         <Container className="profile-grid">

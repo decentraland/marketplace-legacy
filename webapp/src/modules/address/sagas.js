@@ -2,7 +2,6 @@ import { select, takeEvery, call, put } from 'redux-saga/effects'
 
 import { PUBLICATION_STATUS } from 'shared/publication'
 import { getAssetPublications } from 'shared/asset'
-import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   FETCH_ADDRESS,
   FETCH_ADDRESS_PARCELS_REQUEST,
@@ -118,8 +117,5 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressEstatesRequest(address))
   yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
-  if (isFeatureEnabled('MORTGAGES')) {
-    // Mortgage Feature
-    yield put(fetchMortgagedParcelsRequest(address))
-  }
+  yield put(fetchMortgagedParcelsRequest(address))
 }
