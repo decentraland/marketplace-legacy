@@ -16,7 +16,6 @@ export const getState = state => state.mortgage
 export const getData = state => getState(state).data
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
-export const getMortgages = state => getData(state).mortgages
 
 export const isFetchingParcelMortgages = (state, x, y) =>
   getLoading(state).some(
@@ -32,7 +31,7 @@ export const isRequestingMortgageTransactionIdle = state =>
 export const isPayingMortgageTransactionIdle = state =>
   isLoadingType(getLoading(state), PAY_MORTGAGE_REQUEST)
 
-export const getMortgagesArray = createSelector(getMortgages, mortgages =>
+export const getMortgagesArray = createSelector(getData, mortgages =>
   Object.values(mortgages)
 )
 
@@ -40,7 +39,7 @@ export const getParcelMortgageFactory = (x, y) =>
   createSelector(
     getAddress,
     getParcels,
-    getMortgages,
+    getData,
     getPublications,
     (userAddress, parcels, allMortgages, publications) => {
       const parcel = parcels[buildCoordinate(x, y)]

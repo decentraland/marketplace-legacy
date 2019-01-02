@@ -2,13 +2,14 @@ import { eth } from 'decentraland-eth'
 import { delay } from 'redux-saga'
 import { call, fork, takeLatest, takeEvery, all, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
-
-import { locations } from 'locations'
 import { createWalletSaga } from '@dapps/modules/wallet/sagas'
 import {
   CONNECT_WALLET_SUCCESS,
   connectWalletRequest
 } from '@dapps/modules/wallet/actions'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
+
+import { locations } from 'locations'
 import {
   TRANSFER_MANA_REQUEST,
   BUY_MANA_REQUEST,
@@ -21,10 +22,8 @@ import {
   updateManaBalance,
   updateEthBalance
 } from './actions'
-import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { fetchAddress } from 'modules/address/actions'
 import { fetchAuthorizationRequest } from 'modules/authorization/actions'
-import { isFeatureEnabled } from 'lib/featureUtils'
 import { getWalletSagaOptions, sendTransaction, fetchBalance } from './utils'
 
 const baseWalletSaga = createWalletSaga(getWalletSagaOptions())
@@ -47,17 +46,13 @@ function* handleConnectWalletSuccess(action) {
   const authorization = {
     allowances: {
       Marketplace: ['MANAToken'],
-      LegacyMarketplace: ['MANAToken']
+      LegacyMarketplace: ['MANAToken'],
+      MortgageHelper: ['MANAToken'],
+      MortgageManager: ['RCNToken']
     },
     approvals: {
       Marketplace: ['LANDRegistry', 'EstateRegistry']
     }
-  }
-  if (isFeatureEnabled('MORTGAGES')) {
-    Object.assign(authorization.allowances, {
-      MortgageHelper: ['MANAToken'],
-      MortgageManager: ['RCNToken']
-    })
   }
 
   yield put(fetchAddress(address))

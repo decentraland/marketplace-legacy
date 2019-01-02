@@ -11,13 +11,13 @@ import { addressReducer as address } from 'modules/address/reducer'
 import { auctionReducer as auction } from 'modules/auction/reducer'
 import { authorizationReducer as authorization } from 'modules/authorization/reducer'
 import { districtsReducer as districts } from 'modules/districts/reducer'
+import { mortgageReducer as mortgage } from 'modules/mortgage/reducer'
 import { estatesReducer as estates } from 'modules/estates/reducer'
 import { tileReducer as tile } from 'modules/tile/reducer'
 import { parcelsReducer as parcels } from 'modules/parcels/reducer'
 import { publicationReducer as publication } from 'modules/publication/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
-import mortgage from 'modules/mortgage/reducer'
 
 export const rootReducer = storageReducerWrapper(
   combineReducers({

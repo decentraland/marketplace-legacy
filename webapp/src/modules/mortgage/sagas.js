@@ -34,8 +34,8 @@ import { locations } from 'locations'
 import { getAddress } from 'modules/wallet/selectors'
 import { getKyberOracleAddress, getContractAddress } from 'modules/wallet/utils'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
-import { isFeatureEnabled } from 'lib/featureUtils'
 import { api } from 'lib/api'
+import { normalizeParcel } from 'shared/parcel'
 import { getAssetPublications } from 'shared/asset'
 import {
   MORTGAGE_STATUS,
@@ -43,27 +43,21 @@ import {
   getLoanMetadata,
   daysToSeconds
 } from 'shared/mortgage'
-import { normalizeParcel } from 'shared/parcel'
 
 export function* mortgageSaga() {
-  if (isFeatureEnabled('MORTGAGES')) {
-    yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
-    yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
-    yield takeLatest(
-      FETCH_MORTGAGED_PARCELS_REQUEST,
-      handleFetchMortgageRequest
-    )
-    yield takeLatest(PAY_MORTGAGE_REQUEST, handlePayMortgageRequest)
-    yield takeEvery(
-      FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
-      handleFetchActiveParcelMortgagesRequest
-    )
-    yield takeLatest(
-      CLAIM_MORTGAGE_RESOLUTION_REQUEST,
-      handleClaimMortgageResolutionRequest
-    )
-    yield takeLatest(FETCH_PARCEL_SUCCESS, handleFetchParcelSuccess)
-  }
+  yield takeLatest(CREATE_MORTGAGE_REQUEST, handleCreateMortgageRequest)
+  yield takeLatest(CANCEL_MORTGAGE_REQUEST, handleCancelMortgageRequest)
+  yield takeLatest(FETCH_MORTGAGED_PARCELS_REQUEST, handleFetchMortgageRequest)
+  yield takeLatest(PAY_MORTGAGE_REQUEST, handlePayMortgageRequest)
+  yield takeEvery(
+    FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST,
+    handleFetchActiveParcelMortgagesRequest
+  )
+  yield takeLatest(
+    CLAIM_MORTGAGE_RESOLUTION_REQUEST,
+    handleClaimMortgageResolutionRequest
+  )
+  yield takeLatest(FETCH_PARCEL_SUCCESS, handleFetchParcelSuccess)
 }
 
 function* handleFetchMortgageRequest(action) {

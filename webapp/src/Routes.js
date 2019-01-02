@@ -141,20 +141,16 @@ export default class Routes extends React.Component {
         />
 
         {/*Mortgages*/}
-        {isFeatureEnabled('MORTGAGES') && (
-          <Route
-            exact
-            path={locations.buyParcelByMortgage()}
-            component={BuyParcelByMortgagePage}
-          />
-        )}
-        {isFeatureEnabled('MORTGAGES') && (
-          <Route
-            exact
-            path={locations.payMortgageParcel()}
-            component={PayMortgagePage}
-          />
-        )}
+        <Route
+          exact
+          path={locations.buyParcelByMortgage()}
+          component={BuyParcelByMortgagePage}
+        />
+        <Route
+          exact
+          path={locations.payMortgageParcel()}
+          component={PayMortgagePage}
+        />
 
         {/*Auction*/}
         {isFeatureEnabled('AUCTION') && (
