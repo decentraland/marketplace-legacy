@@ -15,6 +15,7 @@ import {
 import { CONNECT_WALLET_SUCCESS } from 'modules/wallet/actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
+import { shouldRequestNewTilesFrom } from './utils'
 
 export function* tileSaga() {
   yield takeEvery(FETCH_TILES_REQUEST, handleTilesRequest)
@@ -38,7 +39,10 @@ function* handleNewTilesRequest(action) {
     const { from } = action
     const address = yield select(getAddress)
 
-    const tiles = yield call(() => api.fetchNewTiles(from, address))
+    const tiles = shouldRequestNewTilesFrom(from)
+      ? yield call(() => api.fetchNewTiles(from, address))
+      : {}
+
     yield put(fetchNewTilesSuccess(tiles))
   } catch (error) {
     yield put(fetchNewTilesFailure(error.message))
