@@ -2,7 +2,7 @@ import { Model } from 'decentraland-commons'
 
 import { PublicationQueries } from './Publication.queries'
 import { BlockchainEvent } from '../BlockchainEvent'
-import { SQL } from '../database'
+import { SQL, raw } from '../database'
 import {
   PUBLICATION_STATUS,
   PUBLICATION_ASSET_TYPES
@@ -62,7 +62,7 @@ export class Publication extends Model {
 
     const result = await this.db.query(
       SQL`SELECT *
-        FROM ${SQL.raw(this.tableName)}
+        FROM ${raw(this.tableName)}
         WHERE status = ${status}
           AND asset_id = ${asset_id}
           AND ${PublicationQueries.isActive()}
@@ -77,13 +77,22 @@ export class Publication extends Model {
     return this.delete({ asset_id: assetId })
   }
 
+  static async cancelExpired() {
+    return await this.db.query(SQL`
+      UPDATE ${raw(this.tableName)}
+        SET updated_at = NOW(),
+            status = ${PUBLICATION_STATUS.cancelled}
+      WHERE ${PublicationQueries.isNotActive()}
+        AND ${PublicationQueries.hasStatus(PUBLICATION_STATUS.open)}`)
+  }
+
   static async cancelOlder(asset_id, block_number, eventName) {
     const status = PUBLICATION_STATUS.open
 
     const rows = await this.db.query(
       SQL`SELECT p.tx_hash
-        FROM ${SQL.raw(this.tableName)} p
-        JOIN ${SQL.raw(
+        FROM ${raw(this.tableName)} p
+        JOIN ${raw(
           BlockchainEvent.tableName
         )} b ON p.tx_hash = b.tx_hash AND name = ${eventName}
         WHERE b.block_number < ${block_number}
@@ -106,8 +115,9 @@ export class Publication extends Model {
     }
 
     return this.db.query(
-      SQL`UPDATE ${SQL.raw(this.tableName)}
-        SET status = ${newStatus}
+      SQL`UPDATE ${raw(this.tableName)}
+        SET status = ${newStatus},
+            updated_at = NOW()
         WHERE tx_hash = ANY(${txHashes})`
     )
   }

@@ -133,8 +133,9 @@ export class Parcel extends Model {
     return this.db.query(
       SQL`UPDATE ${SQL.raw(this.tableName)}
         SET auction_price = ${price},
-          auction_owner = ${owner},
-          auction_timestamp = ${timestamp}
+            auction_owner = ${owner},
+            auction_timestamp = ${timestamp},
+            updated_at = NOW()
         WHERE id = ANY(${ids})`
     )
   }

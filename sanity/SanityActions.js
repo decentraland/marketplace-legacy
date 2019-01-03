@@ -6,7 +6,7 @@ import { doctors } from './doctors'
 const log = new Log('Sanity')
 
 export class SanityActions {
-  async run(options) {
+  async run(options = {}) {
     const validations = this.getValidations(options.skip)
     const diagnostics = []
     const total = validations.length
@@ -30,8 +30,6 @@ export class SanityActions {
 
     if (options.selfHeal) {
       await this.selfHeal(diagnostics)
-    } else {
-      process.exit()
     }
   }
 

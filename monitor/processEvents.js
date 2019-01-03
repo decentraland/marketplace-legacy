@@ -1,5 +1,7 @@
 import { Log } from 'decentraland-commons'
+
 import { BlockchainEvent } from '../src/BlockchainEvent'
+import { consolidateProccesedEvents } from './consolidateProccesedEvents'
 import { reducers } from './reducers'
 
 const log = new Log('processEvents')
@@ -11,7 +13,7 @@ export async function processEvents(fromBlock = 0) {
   )
 
   if (blockchainEvents.length) {
-    log.info(`Persisting ${blockchainEvents.length} events`)
+    log.info(`Persisting ${blockchainEvents.length} events from ${fromBlock}`)
 
     for (const event of blockchainEvents) {
       await processEvent(event)
@@ -21,6 +23,9 @@ export async function processEvents(fromBlock = 0) {
     const lastBlockNumber = await BlockchainEvent.findLastBlockNumber()
     log.info(`No new events to persist. Last DB block: ${lastBlockNumber}`)
   }
+
+  log.info('Consolidating processed data')
+  await consolidateProccesedEvents()
 }
 
 export async function processEvent(event) {
