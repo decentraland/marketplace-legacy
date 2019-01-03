@@ -1,7 +1,7 @@
 import { env } from 'decentraland-commons'
 
 const waitTimeBetweenNewTilesRequest =
-  parseInt(env.get('WAIT_TIME_BETWEE_NEW_TILES_REQUEST'), 10) || 10000 // 10 seconds
+  parseInt(env.get('WAIT_TIME_BETWEEN_NEW_TILES_REQUEST'), 10) || 10000 // 10 seconds
 
 let lastTimestamp = Date.now()
 
