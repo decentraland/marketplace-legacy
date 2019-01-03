@@ -46,7 +46,7 @@ export function mortgageReducer(state = INITIAL_STATE, action) {
             ...normalizedMortgages,
             [mortgage.tx_hash]: mortgage
           }),
-          state.mortgages
+          state.data
         ),
         error: ''
       }
