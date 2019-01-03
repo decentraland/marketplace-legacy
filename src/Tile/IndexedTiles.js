@@ -88,7 +88,7 @@ export class IndexedTiles {
       newTile.owner = shortenOwner(tile.owner)
     }
     if (tile.expires_at && isExpired(tile.expires_at)) {
-      newTile.price = null
+      delete newTile.price
       newTile.type = TileType.getExpired(tile.type)
     }
 
