@@ -28,26 +28,27 @@ const INITIAL_STATE = {
 export function mortgageReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CREATE_MORTGAGE_REQUEST:
-    case PAY_MORTGAGE_REQUEST:
     case FETCH_MORTGAGED_PARCELS_REQUEST:
+    case PAY_MORTGAGE_REQUEST:
     case FETCH_ACTIVE_PARCEL_MORTGAGES_REQUEST: {
       return {
         ...state,
-        loading: loadingReducer(state, action)
+        loading: loadingReducer(state.loading, action)
       }
     }
     case FETCH_MORTGAGED_PARCELS_SUCCESS:
     case FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS: {
       return {
-        loading: loadingReducer(state, action),
-        error: '',
+        ...state,
+        loading: loadingReducer(state.loading, action),
         data: action.mortgages.reduce(
           (normalizedMortgages, mortgage) => ({
             ...normalizedMortgages,
             [mortgage.tx_hash]: mortgage
           }),
-          state.data
-        )
+          state.mortgages
+        ),
+        error: ''
       }
     }
     case CREATE_MORTGAGE_SUCCESS:
@@ -56,7 +57,7 @@ export function mortgageReducer(state = INITIAL_STATE, action) {
     case CLAIM_MORTGAGE_RESOLUTION_SUCCESS:
       return {
         ...state,
-        loading: loadingReducer(state, action),
+        loading: loadingReducer(state.loading, action),
         error: ''
       }
     case FETCH_ACTIVE_PARCEL_MORTGAGES_FAILURE:
@@ -67,10 +68,9 @@ export function mortgageReducer(state = INITIAL_STATE, action) {
     case CLAIM_MORTGAGE_RESOLUTION_FAILURE:
       return {
         ...state,
-        loading: loadingReducer(state, action),
+        loading: loadingReducer(state.loading, action),
         error: action.error
       }
-
     default:
       return state
   }
