@@ -1,5 +1,6 @@
 import { env } from 'decentraland-commons'
 import { Parcel } from '../../src/Asset'
+import { Tile } from '../../src/Tile'
 import { ASSET_TYPES } from '../../shared/asset'
 
 // TODO: Find a common place for this
@@ -26,6 +27,18 @@ export async function getAssetIdFromEvent(event) {
     default:
       return getParcelIdFromEvent(event)
   }
+}
+
+// TODO: Find a common place for this
+const upsertTimeouts = {}
+export function debouncedUpsertTileAsset(assetId, assetType, wait = 5000) {
+  const id = `${assetId}-${assetType}`
+  const later = function() {
+    delete upsertTimeouts[id]
+    return Tile.upsertAsset(assetId, assetType)
+  }
+  clearTimeout(upsertTimeouts[id])
+  upsertTimeouts[id] = setTimeout(later, wait)
 }
 
 export async function getParcelIdFromEvent(event) {

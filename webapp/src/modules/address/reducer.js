@@ -192,15 +192,17 @@ export function addressReducer(state = INITIAL_STATE, action) {
         case EDIT_ESTATE_PARCELS_SUCCESS: {
           const { parcels, type } = transaction.payload
           const user = state.data[transaction.from]
+          const parcelIds = user ? user.parcel_ids : []
+
           let updatedParcelIds = []
 
           if (type === REMOVE_PARCELS) {
             updatedParcelIds = [
-              ...user.parcel_ids,
+              ...parcelIds,
               ...parcels.map(p => buildCoordinate(p.x, p.y))
             ]
           } else {
-            updatedParcelIds = user.parcel_ids.filter(
+            updatedParcelIds = parcelIds.filter(
               parcelId =>
                 !parcels.some(
                   estateParcel =>

@@ -153,14 +153,15 @@ export function estatesReducer(state = INITIAL_STATE, action) {
       switch (transaction.actionType) {
         case EDIT_ESTATE_METADATA_SUCCESS: {
           const { estate } = transaction.payload
+          const oldEstate = state.data[estate.id] || { data: { parcels: [] } }
           return {
             ...state,
             data: {
               ...state.data,
               [estate.id]: {
-                ...state.data[estate.id],
+                ...oldEstate,
                 data: {
-                  ...state.data[estate.id].data,
+                  ...oldEstate.data,
                   name: estate.data.name,
                   description: estate.data.description
                 }
@@ -170,7 +171,7 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         }
         case EDIT_ESTATE_PARCELS_SUCCESS: {
           const { estate } = transaction.payload
-          const oldEstate = state.data[estate.id]
+          const oldEstate = state.data[estate.id] || { data: { parcels: [] } }
           return {
             ...state,
             data: {

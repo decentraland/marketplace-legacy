@@ -19,13 +19,13 @@ export async function processEvents(fromBlock = 0) {
       await processEvent(event)
       eventCache.set(event)
     }
+
+    log.info(`Consolidating processed data from ${fromBlock}`)
+    await consolidateProccesedEvents(blockchainEvents)
   } else {
     const lastBlockNumber = await BlockchainEvent.findLastBlockNumber()
     log.info(`No new events to persist. Last DB block: ${lastBlockNumber}`)
   }
-
-  log.info('Consolidating processed data')
-  await consolidateProccesedEvents()
 }
 
 export async function processEvent(event) {

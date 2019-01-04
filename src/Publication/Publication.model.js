@@ -72,17 +72,26 @@ export class Publication extends Model {
     return result[0]
   }
 
+  static async findInactive() {
+    return this.db.query(
+      SQL`SELECT *
+        FROM ${raw(this.tableName)}
+        WHERE status = ${PUBLICATION_STATUS.open}
+          AND ${PublicationQueries.isInactive()}`
+    )
+  }
+
   // TODO: Add asset_type
   static deleteByAssetId(assetId) {
     return this.delete({ asset_id: assetId })
   }
 
-  static async cancelExpired() {
-    return await this.db.query(SQL`
+  static async cancelInactive() {
+    return this.db.query(SQL`
       UPDATE ${raw(this.tableName)}
         SET updated_at = NOW(),
             status = ${PUBLICATION_STATUS.cancelled}
-      WHERE ${PublicationQueries.isNotActive()}
+      WHERE ${PublicationQueries.isInactive()}
         AND ${PublicationQueries.hasStatus(PUBLICATION_STATUS.open)}`)
   }
 

@@ -89,6 +89,13 @@ export class Parcel extends Model {
     return parcels[0]
   }
 
+  static async findFrom(fromDate) {
+    return this.db.query(SQL`
+      SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE updated_at >= ${fromDate}`)
+  }
+
   static async countAvailable() {
     const result = await this.db.query(
       SQL`SELECT COUNT(*)

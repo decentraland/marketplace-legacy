@@ -3,7 +3,6 @@ import { isDistrict } from '../../shared/district'
 import { TileType, TileLocation } from '../../shared/map'
 import { isEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../../shared/asset'
-import { isExpired } from '../../shared/publication'
 
 export class TileAttributes {
   constructor(parcel) {
@@ -44,14 +43,9 @@ export class TileAttributes {
     const type = this.tileType.get()
     const publication = this.parcel.publication
 
-    const expires_at = publication ? publication.expires_at : null
-    const price =
-      publication && !isExpired(expires_at) ? publication.price : null
-
     return {
       type,
-      expires_at,
-      price,
+      price: publication ? publication.price : null,
       name: this.tileType.getName(type),
       owner: this.getOwner(),
       estate_id: this.parcel.estate_id,

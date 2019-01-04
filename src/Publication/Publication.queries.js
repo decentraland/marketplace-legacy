@@ -5,7 +5,7 @@ import { ASSET_TYPES } from '../../shared/asset'
 
 export const PublicationQueries = Object.freeze({
   isActive: () => SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
-  isNotActive: () => SQL`expires_at < EXTRACT(epoch from now()) * 1000`,
+  isInactive: () => SQL`expires_at < EXTRACT(epoch from now()) * 1000`,
 
   // These two, `hasAssetType` and `hasStatus`, can be abstracted into one method
   // but for now, they're accidental repetition. No need to overcomplicate things.

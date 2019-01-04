@@ -40,7 +40,9 @@ export async function asyncBatch(options = {}) {
       batchedCount += batch.length
       elements = elements.slice(batchSize)
 
-      bar.tick(batch.length)
+      if (logFormat) {
+        bar.tick(batch.length)
+      }
     } catch (error) {
       if (retryAttempts <= 0) throw error
       retryAttempts -= 1

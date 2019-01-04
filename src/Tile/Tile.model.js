@@ -4,7 +4,7 @@ import { TileAttributes } from './TileAttributes'
 import { Asset, Parcel, Estate } from '../Asset'
 import { Contribution } from '../Contribution'
 import { District } from '../District'
-import { Publication, PublicationQueries } from '../Publication'
+import { Publication } from '../Publication'
 import { SQL, raw } from '../database'
 import { asyncBatch } from '../lib'
 import { isDistrict } from '../../shared/district'
@@ -28,7 +28,6 @@ export class Tile extends Model {
     'name',
     'type',
     'asset_type',
-    'expires_at',
     'is_connected_left',
     'is_connected_top',
     'is_connected_topleft'
@@ -54,13 +53,14 @@ export class Tile extends Model {
         const promises = []
 
         for (const { x, y } of parcelsBatch) {
-          const parcel = await Parcel.findOne({ x, y })
-          promises.push(this.upsertParcel(parcel))
+          promises.push(
+            Parcel.findOne({ x, y }).then(parcel => this.upsertParcel(parcel))
+          )
         }
 
         await Promise.all(promises)
       },
-      batchSize: 10,
+      batchSize: 20,
       logFormat: ''
     })
   }
@@ -91,7 +91,7 @@ export class Tile extends Model {
     return this.db.query(SQL`
       SELECT ${raw(columnNames)}
         FROM ${raw(this.tableName)}
-        WHERE ${this.getWhereNewSQL(fromDate)}`)
+        WHERE ${this.getWhereUpdatedSQL(fromDate)}`)
   }
 
   /**
@@ -109,7 +109,7 @@ export class Tile extends Model {
     ).join(', ')
 
     const whereNewSQL = fromDate
-      ? this.getWhereNewSQL(fromDate, 't')
+      ? this.getWhereUpdatedSQL(fromDate, 't')
       : SQL`1 = 1`
 
     const [districtTiles, ownerTiles] = await Promise.all([
@@ -143,11 +143,8 @@ export class Tile extends Model {
     return districtTiles.concat(ownerTiles)
   }
 
-  static getWhereNewSQL(fromDate, alias = this.tableName) {
-    return SQL`(
-      ${raw(alias)}.updated_at >= ${fromDate}
-      OR ${PublicationQueries.isNotActive()}
-    )`
+  static getWhereUpdatedSQL(fromDate, alias = this.tableName) {
+    return SQL`(${raw(alias)}.updated_at >= ${fromDate})`
   }
 
   static filterColumnNames(names, alias = this.tableName) {
