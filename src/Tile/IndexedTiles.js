@@ -1,7 +1,6 @@
 import { Tile } from '../Tile'
 import { db } from '../database'
-import { TileType, TYPES, shortenOwner } from '../shared/map'
-import { isExpired } from '../shared/publication'
+import { TYPES, shortenOwner } from '../shared/map'
 
 const DB_CHANNEL = 'tile_updated'
 

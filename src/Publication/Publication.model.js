@@ -76,8 +76,8 @@ export class Publication extends Model {
     return this.db.query(
       SQL`SELECT *
         FROM ${raw(this.tableName)}
-        WHERE status = ${PUBLICATION_STATUS.open}
-          AND ${PublicationQueries.isInactive()}`
+        WHERE ${PublicationQueries.isInactive()}
+          AND ${PublicationQueries.hasStatus(PUBLICATION_STATUS.open)}`
     )
   }
 
