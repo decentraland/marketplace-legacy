@@ -39,9 +39,15 @@ function getNewERC20Token(name, address) {
 }
 
 function getLandAuctionContracts() {
-  if (!isFeatureEnabled('AUCTION')) return []
-
   const { LANDAuction } = contracts
+  const LANDAuctionContract = new LANDAuction(
+    env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS')
+  )
+
+  if (!isFeatureEnabled('AUCTION')) {
+    // If the auction feature is not enable, we should connect only the auction contract
+    return [LANDAuctionContract]
+  }
 
   // ZIL
   const ZILToken = getNewERC20Token(
@@ -86,7 +92,7 @@ function getLandAuctionContracts() {
   )
 
   return [
-    new LANDAuction(env.get('REACT_APP_LAND_AUCTION_CONTRACT_ADDRESS')),
+    LANDAuctionContract,
     ZILToken,
     DAIToken,
     KNCToken,

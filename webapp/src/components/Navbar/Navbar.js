@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Menu, Icon, Responsive, Sidebar, Label } from 'semantic-ui-react'
 
 import { locations, NAVBAR_PAGES } from 'locations'
+import { isFeatureEnabled } from 'lib/featureUtils'
 import Badge from 'components/Badge'
 import { walletType, coordsType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
@@ -127,7 +128,7 @@ export default class Navbar extends React.PureComponent {
         </Responsive>
         {this.renderMenuItem('atlas')}
         {this.renderMenuItem('marketplace')}
-        {this.renderMenuItem('auction')}
+        {isFeatureEnabled('AUCTION') && this.renderMenuItem('auction')}
         {isConnected ? (
           <React.Fragment>
             {this.renderMenuItem('profile')}
