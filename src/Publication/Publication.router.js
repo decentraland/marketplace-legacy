@@ -58,6 +58,22 @@ export class PublicationRouter {
     )
   }
 
+  async getParcelPublications(req) {
+    const x = server.extractFromReq(req, 'x')
+    const y = server.extractFromReq(req, 'y')
+
+    req.params.asset_type = ASSET_TYPES.parcel
+    req.params.id = Parcel.buildId(x, y)
+
+    return this.getAssetPublications(req)
+  }
+
+  async getEstatePublications(req) {
+    req.params.asset_type = ASSET_TYPES.estate
+
+    return this.getAssetPublications(req)
+  }
+
   async getAssetPublications(req) {
     const id = server.extractFromReq(req, 'id')
 
@@ -73,22 +89,6 @@ export class PublicationRouter {
     }
 
     return sanitizePublications(publications)
-  }
-
-  async getParcelPublications(req) {
-    const x = server.extractFromReq(req, 'x')
-    const y = server.extractFromReq(req, 'y')
-
-    req.params.asset_type = ASSET_TYPES.parcel
-    req.params.id = Parcel.buildId(x, y)
-
-    return this.getAssetPublications(req)
-  }
-
-  async getEstatePublications(req) {
-    req.params.asset_type = ASSET_TYPES.estate
-
-    return this.getAssetPublications(req)
   }
 
   async getPublication(req) {

@@ -1,4 +1,5 @@
 import { take, takeEvery, select, call, put } from 'redux-saga/effects'
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 
 import {
   FETCH_TILES_REQUEST,
@@ -6,6 +7,7 @@ import {
   FETCH_ADDRESS_TILES_REQUEST,
   fetchTilesSuccess,
   fetchTilesFailure,
+  fetchNewTilesRequest,
   fetchNewTilesSuccess,
   fetchNewTilesFailure,
   fetchAddressTilesRequest,
@@ -19,6 +21,7 @@ import { api } from 'lib/api'
 export function* tileSaga() {
   yield takeEvery(FETCH_TILES_REQUEST, handleTilesRequest)
   yield takeEvery(FETCH_NEW_TILES_REQUEST, handleNewTilesRequest)
+  yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleTransactionSuccess)
   yield takeEvery(FETCH_ADDRESS_TILES_REQUEST, handleAddressTilesRequest)
 }
 
@@ -37,8 +40,8 @@ function* handleNewTilesRequest(action) {
   try {
     const { from } = action
     const address = yield select(getAddress)
-
     const tiles = yield call(() => api.fetchNewTiles(from, address))
+
     yield put(fetchNewTilesSuccess(tiles))
   } catch (error) {
     yield put(fetchNewTilesFailure(error.message))
@@ -63,4 +66,10 @@ function* handleAddressTilesRequest(action) {
   } catch (error) {
     yield put(fetchAddressTilesFailure(error.message))
   }
+}
+
+function* handleTransactionSuccess() {
+  // We are trying to be safe here by "rewinding" the time a bit
+  const from = Date.now() - 2 * 1000
+  yield put(fetchNewTilesRequest(from))
 }

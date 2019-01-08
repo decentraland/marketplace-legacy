@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 
 import { coordsType } from 'components/types'
+import { shouldRequestNewTilesFrom } from 'modules/tile/utils'
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
@@ -170,7 +171,11 @@ export default class ParcelPreview extends React.PureComponent {
       this.oldState = newState
       this.setState(newState)
       this.debouncedHandleChange()
-      this.debouncedFetchNewTiles(Date.now())
+
+      const now = Date.now()
+      if (shouldRequestNewTilesFrom(now)) {
+        this.debouncedFetchNewTiles(now)
+      }
     }
 
     if (selected !== nextProps.selected) {

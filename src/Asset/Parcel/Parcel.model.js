@@ -89,6 +89,13 @@ export class Parcel extends Model {
     return parcels[0]
   }
 
+  static async findFrom(fromDate) {
+    return this.db.query(SQL`
+      SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE updated_at >= ${fromDate}`)
+  }
+
   static async countAvailable() {
     const result = await this.db.query(
       SQL`SELECT COUNT(*)
@@ -133,8 +140,9 @@ export class Parcel extends Model {
     return this.db.query(
       SQL`UPDATE ${SQL.raw(this.tableName)}
         SET auction_price = ${price},
-          auction_owner = ${owner},
-          auction_timestamp = ${timestamp}
+            auction_owner = ${owner},
+            auction_timestamp = ${timestamp},
+            updated_at = NOW()
         WHERE id = ANY(${ids})`
     )
   }

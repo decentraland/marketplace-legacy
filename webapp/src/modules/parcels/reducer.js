@@ -306,6 +306,7 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             const parcelId = buildCoordinate(parcel.x, parcel.y)
             return {
               ...state.data[parcelId],
+              ...parcel,
               estate_id: type === ADD_PARCELS ? estate.id : null,
               owner:
                 type === ADD_PARCELS
@@ -318,9 +319,13 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             const updatedParcel = updatedParcels.find(
               isEqualCoords.bind(parcel)
             )
+
             if (!updatedParcel) {
               const parcelId = buildCoordinate(parcel.x, parcel.y)
-              updatedParcels.push(state.data[parcelId])
+              const stateParcel = state.data[parcelId]
+              if (stateParcel) {
+                updatedParcels.push(stateParcel)
+              }
             }
           }
 

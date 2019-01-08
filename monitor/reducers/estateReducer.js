@@ -5,9 +5,9 @@ import { Publication } from '../../src/Publication'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
-import { decodeMetadata } from '../../shared/asset'
-import { isEqualCoords } from '../../shared/parcel'
-import { getParcelIdFromEvent } from './utils'
+import { ASSET_TYPES, decodeMetadata } from '../../shared/asset'
+import { getParcelMatcher, isEqualCoords } from '../../shared/parcel'
+import { getParcelIdFromEvent, debouncedUpsertTileAsset } from './utils'
 
 const log = new Log('estateReducer')
 
@@ -75,12 +75,13 @@ async function reduceEstateRegistry(event) {
       log.info(
         `[${name}] Updating Estate id: "${estate.id}" add land (${parcelId})`
       )
-      if (!estate.data.parcels.some(p => isEqualCoords(p, parcel))) {
+      if (!estate.data.parcels.some(getParcelMatcher(parcel))) {
         const parcels = [...estate.data.parcels, parcel]
         await Estate.update(
           { data: { ...estate.data, parcels } },
           { id: estate.id }
         )
+        debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
       }
       break
     }
@@ -107,6 +108,7 @@ async function reduceEstateRegistry(event) {
         { data: { ...estate.data, parcels } },
         { id: estate.id }
       )
+      debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
       break
     }
     case eventNames.Transfer: {

@@ -28,8 +28,9 @@ export class PublicationDoctor extends Doctor {
 
     const assets = parcels.concat(estates)
     const faultyAssets = await this.filterInconsistentPublishedAssets(assets)
+    const inactivePublications = await Publication.findInactive()
 
-    return new PublicationDiagnosis(faultyAssets)
+    return new PublicationDiagnosis(faultyAssets, inactivePublications)
   }
 
   async filterInconsistentPublishedAssets(allAssets) {
@@ -128,13 +129,14 @@ export class PublicationDoctor extends Doctor {
 }
 
 export class PublicationDiagnosis extends Diagnosis {
-  constructor(faultyAssets) {
+  constructor(faultyAssets, inactivePublications) {
     super()
     this.faultyAssets = faultyAssets
+    this.inactivePublications = inactivePublications
   }
 
   hasProblems() {
-    return this.faultyAssets.length > 0
+    return this.faultyAssets.length > 0 || this.inactivePublications.length > 0
   }
 
   async prepare() {
@@ -155,6 +157,10 @@ export class PublicationDiagnosis extends Diagnosis {
     for (const asset of this.faultyAssets) {
       const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
       await this.replayEvents(events)
+    }
+
+    if (this.inactivePublications.length > 0) {
+      await Publication.cancelInactive()
     }
   }
 }

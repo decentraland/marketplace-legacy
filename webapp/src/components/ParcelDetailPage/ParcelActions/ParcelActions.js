@@ -35,6 +35,7 @@ export default class ParcelActions extends React.PureComponent {
       isLoading,
       publications
     } = this.props
+
     if (!parcel || isLoading) {
       return null
     }
