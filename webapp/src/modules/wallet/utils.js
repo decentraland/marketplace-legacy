@@ -45,7 +45,7 @@ function getLandAuctionContracts() {
   )
 
   if (!isFeatureEnabled('AUCTION')) {
-    // If the auction feature is not enable, we should connect only the auction contract
+    // If the auction feature is not enabled, we should connect only the auction contract
     return [LANDAuctionContract]
   }
 
