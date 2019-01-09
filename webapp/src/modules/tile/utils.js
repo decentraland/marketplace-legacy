@@ -5,13 +5,7 @@ const waitTimeBetweenNewTilesRequest =
   parseInt(env.get('REACT_APP_WAIT_TIME_BETWEEN_NEW_TILES_REQUEST'), 10) ||
   DEFAULT_WAIT_TIME
 
-let lastTimestamp = Date.now()
-
-export function shouldRequestNewTilesFrom(timestamp) {
-  const timeSinceLastRequest = timestamp - lastTimestamp
-
-  const result = timeSinceLastRequest >= waitTimeBetweenNewTilesRequest
-  lastTimestamp = timestamp
-
-  return result
+export function shouldRequestNewTiles(lastRequestTimestamp, newTimestamp) {
+  const timeSinceLastRequest = newTimestamp - lastRequestTimestamp
+  return timeSinceLastRequest >= waitTimeBetweenNewTilesRequest
 }
