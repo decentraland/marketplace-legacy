@@ -6,13 +6,13 @@ import { Parcel, ParcelService } from '../Asset'
 import { Publication } from '../Publication'
 import { db } from '../database'
 import { ASSET_TYPES } from '../shared/asset'
-import { PUBLICATION_STATUS } from '../shared/publication'
+import { LISTING_STATUS } from '../shared/listing'
 
 describe('Marketplace', function() {
   const queryParams = {
     sanitize() {
       return {
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         sort: {
           by: 'price',
@@ -31,7 +31,7 @@ describe('Marketplace', function() {
       // Setup
       const owner = '0xasdf'
       const tx_status = txUtils.TRANSACTION_TYPES.confirmed
-      const status = PUBLICATION_STATUS.open
+      const status = LISTING_STATUS.open
       const block_number = 1
       const block_time_created_at = null
       const block_time_updated_at = null
@@ -46,7 +46,7 @@ describe('Marketplace', function() {
         contract_id: '0x1',
         asset_id: '0,0',
         price: 3,
-        status: PUBLICATION_STATUS.sold,
+        status: LISTING_STATUS.sold,
         expires_at,
         owner,
         tx_status,
@@ -134,7 +134,7 @@ describe('Marketplace', function() {
             contract_id: '0x4',
             price: 40,
             buyer: null,
-            status: PUBLICATION_STATUS.open,
+            status: LISTING_STATUS.open,
             asset_type: ASSET_TYPES.parcel,
             asset_id: '1,2',
             expires_at,

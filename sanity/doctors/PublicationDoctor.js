@@ -7,7 +7,7 @@ import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Publication'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { isParcel } from '../../shared/parcel'
-import { PUBLICATION_STATUS } from '../../shared/publication'
+import { LISTING_STATUS } from '../../shared/listing'
 import { parseCLICoords } from '../../scripts/utils'
 
 const log = new Log('PublicationDoctor')
@@ -103,7 +103,7 @@ export class PublicationDoctor extends Doctor {
           contractId
         ].join(' ')
       }
-    } else if (publication && publication.status === PUBLICATION_STATUS.open) {
+    } else if (publication && publication.status === LISTING_STATUS.open) {
       // Check for hanging publication in db
       error = `${assetId} open in db and null in blockchain`
     }

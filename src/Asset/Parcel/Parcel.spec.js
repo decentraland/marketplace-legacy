@@ -9,7 +9,7 @@ import { Mortgage } from '../../Mortgage'
 import { db } from '../../database'
 
 import { ASSET_TYPES } from '../../shared/asset'
-import { PUBLICATION_STATUS } from '../../shared/publication'
+import { LISTING_STATUS } from '../../shared/listing'
 import { MORTGAGE_STATUS } from '../../shared/mortgage'
 
 describe('Parcel', function() {
@@ -57,7 +57,7 @@ describe('Parcel', function() {
       const publication = {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_TYPES.confirmed,
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '3,5',
         owner: '0xdeadbeef33',
@@ -115,7 +115,7 @@ describe('Parcel', function() {
       const publication = {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_TYPES.confirmed,
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '2,5',
         owner: '0xdeadbeef33',
@@ -131,7 +131,7 @@ describe('Parcel', function() {
       const publication2 = {
         tx_hash: '0xdeadabeef',
         tx_status: txUtils.TRANSACTION_TYPES.confirmed,
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '6,5',
         owner: '0xdeadbeef33',

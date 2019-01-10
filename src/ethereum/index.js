@@ -82,8 +82,8 @@ export function loadContracts() {
       address: getEnvAddress('DECENTRALAND_INVITE_CONTRACT_ADDRESS'),
       eventNames: ['Transfer']
     },
-    Bid: {
-      address: env.get('BID_CONTRACT_ADDRESS').toLowerCase(),
+    ERC721Bid: {
+      address: env.get('ERC721_BID_CONTRACT_ADDRESS').toLowerCase(),
       eventNames: ['BidCreated', 'BidAccepted', 'BidCancelled']
     }
   })

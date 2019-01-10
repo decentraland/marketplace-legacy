@@ -8,7 +8,7 @@ import { getData as getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
 import { getData as getAuthorizations } from 'modules/authorization/selectors'
-import { isOpen } from 'shared/publication'
+import { isOpen } from 'shared/listing'
 import { pickAndMap } from './utils'
 
 export const getState = state => state.address

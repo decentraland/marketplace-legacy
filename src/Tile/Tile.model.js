@@ -11,7 +11,7 @@ import { isDistrict } from '../../shared/district'
 import { TileType } from '../../shared/map'
 import { isEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
-import { PUBLICATION_STATUS } from '../shared/publication'
+import { LISTING_STATUS } from '../shared/listing'
 
 const propertiesBlacklist = ['district_id', 'asset_type']
 
@@ -188,7 +188,7 @@ export class Tile extends Model {
 
     const publicationPromise = Publication.findActiveByAssetIdWithStatus(
       assetId,
-      PUBLICATION_STATUS.open
+      LISTING_STATUS.open
     )
 
     const estatePromise = isEstate(parcel)

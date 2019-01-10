@@ -1,6 +1,6 @@
 import { Publication } from './Publication.model'
 import { Asset } from '../Asset'
-import { PUBLICATION_ASSET_TYPES } from '../shared/publication'
+import { LISTING_ASSET_TYPES } from '../shared/listing'
 
 // TODO: We might want to forgo of this class in favour of a better abstraction
 export class PublicationService {
@@ -19,7 +19,7 @@ export class PublicationService {
   getPublicableAssets() {
     const publicableAssets = {}
 
-    for (const key in PUBLICATION_ASSET_TYPES) {
+    for (const key in LISTING_ASSET_TYPES) {
       publicableAssets[key] = Asset.getModel(key)
     }
 

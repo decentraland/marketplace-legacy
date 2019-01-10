@@ -1,5 +1,5 @@
 import { eth, contracts } from 'decentraland-eth'
-import { isOpen } from './publication'
+import { isOpen } from './listing'
 import { isParcel } from './parcel'
 import { calculateMapProps } from './estate'
 

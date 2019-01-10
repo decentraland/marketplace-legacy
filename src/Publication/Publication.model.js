@@ -3,10 +3,7 @@ import { Model } from 'decentraland-commons'
 import { PublicationQueries } from './Publication.queries'
 import { BlockchainEvent } from '../BlockchainEvent'
 import { SQL, raw } from '../database'
-import {
-  PUBLICATION_STATUS,
-  PUBLICATION_ASSET_TYPES
-} from '../shared/publication'
+import { LISTING_STATUS, LISTING_ASSET_TYPES } from '../shared/listing'
 
 export class Publication extends Model {
   static tableName = 'publications'
@@ -29,11 +26,11 @@ export class Publication extends Model {
   ]
 
   static isValidStatus(status) {
-    return Object.values(PUBLICATION_STATUS).includes(status)
+    return Object.values(LISTING_STATUS).includes(status)
   }
 
   static isValidAssetType(assetType) {
-    return Object.values(PUBLICATION_ASSET_TYPES).includes(assetType)
+    return Object.values(LISTING_ASSET_TYPES).includes(assetType)
   }
 
   static findByOwner(owner) {
@@ -77,7 +74,7 @@ export class Publication extends Model {
       SQL`SELECT *
         FROM ${raw(this.tableName)}
         WHERE ${PublicationQueries.isInactive()}
-          AND ${PublicationQueries.hasStatus(PUBLICATION_STATUS.open)}`
+          AND ${PublicationQueries.hasStatus(LISTING_STATUS.open)}`
     )
   }
 
@@ -90,13 +87,13 @@ export class Publication extends Model {
     return this.db.query(SQL`
       UPDATE ${raw(this.tableName)}
         SET updated_at = NOW(),
-            status = ${PUBLICATION_STATUS.cancelled}
+            status = ${LISTING_STATUS.cancelled}
       WHERE ${PublicationQueries.isInactive()}
-        AND ${PublicationQueries.hasStatus(PUBLICATION_STATUS.open)}`)
+        AND ${PublicationQueries.hasStatus(LISTING_STATUS.open)}`)
   }
 
   static async cancelOlder(asset_id, block_number, eventName) {
-    const status = PUBLICATION_STATUS.open
+    const status = LISTING_STATUS.open
 
     const rows = await this.db.query(
       SQL`SELECT p.tx_hash
@@ -111,7 +108,7 @@ export class Publication extends Model {
     const txHashes = rows.map(row => row.tx_hash)
 
     if (txHashes.length) {
-      await this.updateManyStatus(txHashes, PUBLICATION_STATUS.cancelled)
+      await this.updateManyStatus(txHashes, LISTING_STATUS.cancelled)
     }
   }
 

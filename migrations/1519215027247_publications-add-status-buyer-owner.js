@@ -1,10 +1,10 @@
 import { Publication } from '../src/Publication'
-import { PUBLICATION_STATUS } from '../shared/publication'
+import { LISTING_STATUS } from '../shared/listing'
 
 exports.up = pgm => {
   const tableName = Publication.tableName
 
-  const publicationStatus = Object.values(PUBLICATION_STATUS)
+  const publicationStatus = Object.values(LISTING_STATUS)
     .map(val => `'${val}'`)
     .join(', ')
 
@@ -12,7 +12,7 @@ exports.up = pgm => {
     status: {
       type: 'TEXT',
       notNull: true,
-      default: PUBLICATION_STATUS.open,
+      default: LISTING_STATUS.open,
       check: `status IN (${publicationStatus})`
     },
     buyer: {

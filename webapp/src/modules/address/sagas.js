@@ -1,6 +1,6 @@
 import { select, takeEvery, call, put } from 'redux-saga/effects'
 
-import { PUBLICATION_STATUS } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
 import { getAssetPublications } from 'shared/asset'
 import {
   FETCH_ADDRESS,
@@ -115,7 +115,7 @@ function* handleFetchAddress(action) {
 
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressEstatesRequest(address))
-  yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
+  yield put(fetchAddressPublicationsRequest(address, LISTING_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
   yield put(fetchMortgagedParcelsRequest(address))
 }
