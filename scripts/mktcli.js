@@ -383,7 +383,8 @@ const main = {
           const truncateTableNames = [
             'blockchain_events',
             'publications',
-            'mortgages'
+            'mortgages',
+            'decentraland_invites'
           ]
           const deleteTableNames = ['estates']
 
