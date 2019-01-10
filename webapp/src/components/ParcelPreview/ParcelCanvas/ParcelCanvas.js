@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 
 import { coordsType } from 'components/types'
-import { shouldRequestNewTilesFrom } from 'modules/tile/utils'
+import { shouldRequestNewTiles } from 'modules/tile/utils'
 import { isMobileWidth } from 'lib/utils'
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
@@ -34,6 +34,8 @@ const POPUP_PADDING = 20
 const POPUP_DELAY = 400
 
 const { minX, minY, maxX, maxY } = Bounds.getBounds()
+
+let lastNewTilesRequestTimestamp = Date.now()
 
 export default class ParcelPreview extends React.PureComponent {
   // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
@@ -173,8 +175,10 @@ export default class ParcelPreview extends React.PureComponent {
       this.debouncedHandleChange()
 
       const now = Date.now()
-      if (shouldRequestNewTilesFrom(now)) {
-        this.debouncedFetchNewTiles(now)
+
+      if (shouldRequestNewTiles(lastNewTilesRequestTimestamp, now)) {
+        this.debouncedFetchNewTiles(lastNewTilesRequestTimestamp)
+        lastNewTilesRequestTimestamp = now
       }
     }
 
