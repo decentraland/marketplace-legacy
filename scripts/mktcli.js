@@ -376,17 +376,21 @@ const main = {
 
     program
       .command('delete-monitor-data')
+      .option('--clean-events', 'Delete blockchain events')
       .description('Reset database data')
       .action(
-        asSafeAction(async () => {
+        asSafeAction(async options => {
           log.info('(delete-monitor-data) deleting database data')
           const truncateTableNames = [
-            'blockchain_events',
             'publications',
             'mortgages',
             'decentraland_invites'
           ]
           const deleteTableNames = ['estates']
+
+          if (options.cleanEvents) {
+            truncateTableNames.push('blockchain_events')
+          }
 
           await db.query(
             SQL`UPDATE ${SQL.raw(
