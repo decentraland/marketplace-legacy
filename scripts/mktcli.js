@@ -307,6 +307,20 @@ const main = {
       )
 
     program
+      .command('replay-all')
+      .description('Replay all blockchain events in order')
+      .action(
+        asSafeAction(async () => {
+          const events = await BlockchainEvent.findFrom(0)
+
+          for (let i = 0; i < events.length; i++) {
+            log.info(`[${i + 1}/${events.length}] Processing ${events[i].name}`)
+            await processEvent(events[i])
+          }
+        })
+      )
+
+    program
       .command('replay <assetId> <assetType>')
       .option('--persist', 'Persist replay on the database')
       .option('--clean', 'Clean publications before replaying')
