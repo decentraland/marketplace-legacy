@@ -30,20 +30,24 @@ export async function connectEth() {
 
 export function loadContracts() {
   contractsData = Object.freeze({
+    MANAToken: {
+      address: getEnvAddress('MANA_TOKEN_CONTRACT_ADDRESS'),
+      eventNames: []
+    },
     LegacyMarketplace: {
-      address: env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('LEGACY_MARKETPLACE_CONTRACT_ADDRESS'),
       eventNames: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled']
     },
     Marketplace: {
-      address: env.get('MARKETPLACE_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('MARKETPLACE_CONTRACT_ADDRESS'),
       eventNames: ['OrderCreated', 'OrderSuccessful', 'OrderCancelled']
     },
     LANDRegistry: {
-      address: env.get('LAND_REGISTRY_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('LAND_REGISTRY_CONTRACT_ADDRESS'),
       eventNames: ['Update', 'Transfer', 'UpdateOperator']
     },
     EstateRegistry: {
-      address: env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
       eventNames: [
         'CreateEstate',
         'AddLand',
@@ -54,15 +58,15 @@ export function loadContracts() {
       ]
     },
     LANDAuction: {
-      address: env.get('LAND_AUCTION_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('LAND_AUCTION_CONTRACT_ADDRESS'),
       eventNames: ['BidSuccessful']
     },
     MortgageHelper: {
-      address: env.get('MORTGAGE_HELPER_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('MORTGAGE_HELPER_CONTRACT_ADDRESS'),
       eventNames: ['NewMortgage']
     },
     MortgageManager: {
-      address: env.get('MORTGAGE_MANAGER_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('MORTGAGE_MANAGER_CONTRACT_ADDRESS'),
       eventNames: [
         'CanceledMortgage',
         'StartedMortgage',
@@ -71,11 +75,11 @@ export function loadContracts() {
       ]
     },
     RCNEngine: {
-      address: env.get('RCN_ENGINE_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('RCN_ENGINE_CONTRACT_ADDRESS'),
       eventNames: ['PartialPayment', 'TotalPayment']
     },
     DecentralandInvite: {
-      address: env.get('DECENTRALAND_INVITE_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('DECENTRALAND_INVITE_CONTRACT_ADDRESS'),
       eventNames: ['Transfer']
     }
   })
@@ -98,4 +102,12 @@ export function loadContracts() {
   }, {})
 
   isLoaded = true
+}
+
+function getEnvAddress(name) {
+  const value = env.get(name)
+  if (!value) {
+    throw new Error(`Could not find env ${name}`)
+  }
+  return value.toLowerCase()
 }
