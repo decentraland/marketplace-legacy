@@ -5,7 +5,7 @@ import { ASSET_TYPES } from '../../shared/asset'
 
 // TODO: Find a common place for this
 export function getAssetTypeFromEvent(event) {
-  const nftAddress = event.args.nftAddress
+  const nftAddress = event.args.nftAddress || event.args._tokenAddress
 
   switch (nftAddress) {
     case env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'):
@@ -18,11 +18,11 @@ export function getAssetTypeFromEvent(event) {
 
 // TODO: Find a common place for this
 export async function getAssetIdFromEvent(event) {
-  const nftAddress = event.args.nftAddress
+  const nftAddress = event.args.nftAddress || event.args._tokenAddress
 
   switch (nftAddress) {
     case env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'):
-      return event.args.assetId
+      return event.args.assetId || event.args._tokenId
     case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'): // Supports the old marketplace, default should be undefined when deprecated
     default:
       return getParcelIdFromEvent(event)
@@ -42,6 +42,6 @@ export function debouncedUpsertTileAsset(assetId, assetType, wait = 5000) {
 }
 
 export async function getParcelIdFromEvent(event) {
-  const { assetId, landId, _landId } = event.args
-  return Parcel.decodeTokenId(assetId || landId || _landId)
+  const { assetId, landId, _landId, _tokenId } = event.args
+  return Parcel.decodeTokenId(assetId || landId || _landId || _tokenId)
 }

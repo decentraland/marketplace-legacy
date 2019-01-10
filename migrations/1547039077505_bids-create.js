@@ -1,5 +1,5 @@
-import { Bid } from '../src/Bid'
-import { ASSET_TYPES } from '../shared/asset'
+import { Bid } from '../src/Listing'
+import { LISTING_ASSET_TYPES } from '../shared/listing'
 
 const tableName = Bid.tableName
 
@@ -10,7 +10,7 @@ exports.up = pgm => {
     token_id: { type: 'TEXT', notNull: true },
     bidder: { type: 'TEXT', notNull: true },
     seller: 'TEXT',
-    price: { type: 'BIGINT', notNull: true },
+    price: { type: 'FLOAT', notNull: true },
     expires_at: { type: 'BIGINT', notNull: true },
     status: 'TEXT',
     asset_id: {
@@ -19,14 +19,10 @@ exports.up = pgm => {
     },
     asset_type: {
       type: 'TEXT',
-      default: ASSET_TYPES.parcel,
+      default: LISTING_ASSET_TYPES.parcel,
       notNull: true
     },
-    block_number: {
-      type: 'INT',
-      notNull: true
-    },
-    block_time_created_at: { type: 'BIGINT' },
+    block_time_created_at: { type: 'BIGINT', notNull: true },
     block_time_updated_at: { type: 'BIGINT' },
     created_at: { type: 'TIMESTAMP', notNull: true },
     updated_at: 'TIMESTAMP'

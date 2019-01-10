@@ -14,6 +14,7 @@ import { TranslationRouter } from './Translation'
 import { MapRouter } from './Map'
 import { MarketplaceRouter } from './Marketplace'
 import { InviteRouter } from './Invite'
+import { BidRouter } from './Listing'
 
 env.load()
 
@@ -67,6 +68,7 @@ export async function startServer() {
   new MarketplaceRouter(router).mount()
   new ParcelRouter(router).mount()
   new InviteRouter(router).mount()
+  new BidRouter(router).mount()
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)
