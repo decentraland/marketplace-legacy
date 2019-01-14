@@ -1,4 +1,4 @@
-import { Publication } from '../src/Publication'
+import { Publication } from '../src/Listing'
 import { LISTING_STATUS } from '../shared/listing'
 
 exports.up = pgm => {

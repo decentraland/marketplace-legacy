@@ -4,7 +4,7 @@ import { eth, txUtils } from 'decentraland-eth'
 
 import { Parcel } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
-import { Publication } from '../../Publication'
+import { Publication } from '../../Listing'
 import { Mortgage } from '../../Mortgage'
 import { db } from '../../database'
 

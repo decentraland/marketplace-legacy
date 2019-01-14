@@ -1,9 +1,9 @@
 import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
-import { Parcel } from '../Asset'
-import { ASSET_TYPES } from '../../shared/asset'
-import { sanitizePublications } from '../sanitize'
+import { Parcel } from '../../Asset'
+import { ASSET_TYPES } from '../../../shared/asset'
+import { sanitizePublications } from '../../sanitize'
 
 export class PublicationRouter {
   constructor(app) {

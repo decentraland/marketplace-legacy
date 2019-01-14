@@ -1,4 +1,4 @@
-import { Publication } from '../src/Publication'
+import { Publication } from '../src/Listing'
 import { LISTING_ASSET_TYPES } from '../shared/listing'
 
 const tableName = Publication.tableName

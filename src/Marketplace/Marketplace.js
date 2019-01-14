@@ -1,8 +1,4 @@
-import {
-  Publication,
-  PublicationQueries,
-  PublicationService
-} from '../Publication'
+import { Publication, PublicationQueries, PublicationService } from '../Listing'
 import { db, SQL, raw } from '../database'
 
 export class Marketplace {

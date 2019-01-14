@@ -3,7 +3,7 @@ import { txUtils } from 'decentraland-eth'
 
 import { Marketplace } from './Marketplace'
 import { Parcel, ParcelService } from '../Asset'
-import { Publication } from '../Publication'
+import { Publication } from '../Listing'
 import { db } from '../database'
 import { ASSET_TYPES } from '../shared/asset'
 import { LISTING_STATUS } from '../shared/listing'

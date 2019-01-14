@@ -1,5 +1,5 @@
 import { ReqQueryParams } from './ReqQueryParams'
-import { Publication } from '../Publication'
+import { Listing } from '../Listing'
 import { LISTING_ASSET_TYPES, LISTING_STATUS } from '../shared/listing'
 
 export const ALLOWED_SORT_VALUES = Object.freeze({
@@ -37,13 +37,13 @@ export class MarketplaceReqQueryParams {
   getStatus() {
     // TODO: This should be LISTING_STATUS but that'll break backwards compatibility
     const status = this.reqQueryParams.get('status', LISTING_STATUS.open)
-    return Publication.isValidStatus(status) ? status : LISTING_STATUS.open
+    return Listing.isValidStatus(status) ? status : LISTING_STATUS.open
   }
 
   getAssetType() {
     const type = this.reqQueryParams.get('asset_type', '')
 
-    return !type || Publication.isValidAssetType(type)
+    return !type || Listing.isValidAssetType(type)
       ? type
       : LISTING_ASSET_TYPES.parcel
   }

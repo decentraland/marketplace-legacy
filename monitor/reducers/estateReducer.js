@@ -1,7 +1,7 @@
 import { Log } from 'decentraland-commons'
 
 import { Parcel, Estate } from '../../src/Asset'
-import { Publication } from '../../src/Publication'
+import { Publication } from '../../src/Listing'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'

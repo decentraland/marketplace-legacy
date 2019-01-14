@@ -1,4 +1,4 @@
-import { PublicationQueries } from '../Publication'
+import { PublicationQueries } from '../Listing'
 import { db, SQL, raw } from '../database'
 import { ASSETS } from '.'
 

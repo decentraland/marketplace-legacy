@@ -6,7 +6,7 @@ import faker from 'faker'
 
 import { loadEnv } from './utils'
 import { db } from '../src/database'
-import { Publication } from '../src/Publication'
+import { Publication } from '../src/Listing'
 import { LISTING_STATUS } from '../shared/listing'
 
 const log = new Log('seed')

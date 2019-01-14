@@ -1,6 +1,7 @@
+import { Listing } from '../Listing'
 import { Publication } from './Publication.model'
-import { Asset } from '../Asset'
-import { LISTING_ASSET_TYPES } from '../shared/listing'
+import { Asset } from '../../Asset'
+import { LISTING_ASSET_TYPES } from '../../shared/listing'
 
 // TODO: We might want to forgo of this class in favour of a better abstraction
 export class PublicationService {
@@ -9,7 +10,7 @@ export class PublicationService {
   }
 
   getPublicableAsset(assetType) {
-    if (!this.Publication.isValidAssetType(assetType)) {
+    if (!Listing.isValidAssetType(assetType)) {
       throw new Error(`Invalid publication asset_type "${assetType}"`)
     }
 

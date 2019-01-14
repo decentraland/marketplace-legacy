@@ -2,7 +2,7 @@ import { server } from 'decentraland-commons'
 
 import { Asset } from './Asset'
 import { MarketplaceRouter } from '../Marketplace'
-import { PublicationService } from '../Publication'
+import { PublicationService } from '../Listing'
 import { ReqQueryParams, AssetReqQueryParams } from '../ReqQueryParams'
 import { sanitizeAssets } from '../sanitize'
 

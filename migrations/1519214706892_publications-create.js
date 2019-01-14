@@ -1,5 +1,5 @@
 import { txUtils } from 'decentraland-eth'
-import { Publication } from '../src/Publication'
+import { Publication } from '../src/Listing'
 
 const tableName = Publication.tableName
 

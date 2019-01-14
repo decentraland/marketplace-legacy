@@ -8,13 +8,12 @@ import { AssetRouter, ParcelRouter, EstateRouter } from './Asset'
 import { MortgageRouter } from './Mortgage'
 import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
-import { PublicationRouter } from './Publication'
 import { TileRouter } from './Tile'
 import { TranslationRouter } from './Translation'
 import { MapRouter } from './Map'
 import { MarketplaceRouter } from './Marketplace'
 import { InviteRouter } from './Invite'
-import { BidRouter } from './Listing'
+import { BidRouter, PublicationRouter } from './Listing'
 
 env.load()
 

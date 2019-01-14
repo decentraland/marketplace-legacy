@@ -1,9 +1,10 @@
 import { Model } from 'decentraland-commons'
 
+import { Listing } from '../Listing'
 import { PublicationQueries } from './Publication.queries'
-import { BlockchainEvent } from '../BlockchainEvent'
-import { SQL, raw } from '../database'
-import { LISTING_STATUS, LISTING_ASSET_TYPES } from '../shared/listing'
+import { BlockchainEvent } from '../../BlockchainEvent'
+import { SQL, raw } from '../../database'
+import { LISTING_STATUS } from '../../shared/listing'
 
 export class Publication extends Model {
   static tableName = 'publications'
@@ -25,35 +26,27 @@ export class Publication extends Model {
     'contract_id'
   ]
 
-  static isValidStatus(status) {
-    return Object.values(LISTING_STATUS).includes(status)
-  }
-
-  static isValidAssetType(assetType) {
-    return Object.values(LISTING_ASSET_TYPES).includes(assetType)
-  }
-
   static findByOwner(owner) {
-    return this.find({ owner })
+    return new Listing(this).findByOwner(owner)
   }
 
   // TODO: Add asset_type
-  static findByAssetId(asset_id) {
-    return this.find({ asset_id }, { created_at: 'DESC' })
+  static async findByAssetIdWithStatus(asset_id, status) {
+    return new Listing(this).findByAssetIdWithStatus(asset_id, status)
+  }
+
+  static async findByAssetId(asset_id) {
+    return new Listing(this).findByAssetId(asset_id)
   }
 
   // TODO: Add asset_type
-  static findByAssetIdWithStatus(asset_id, status) {
-    if (!this.isValidStatus(status)) {
-      throw new Error(`Invalid status "${status}"`)
-    }
-
-    return this.find({ asset_id, status }, { created_at: 'DESC' })
+  static deleteByAssetId(assetId) {
+    return new Listing(this).delete(assetId)
   }
 
   // TODO: Add asset_type
   static async findActiveByAssetIdWithStatus(asset_id, status) {
-    if (!this.isValidStatus(status)) {
+    if (!Listing.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }
 
@@ -76,11 +69,6 @@ export class Publication extends Model {
         WHERE ${PublicationQueries.isInactive()}
           AND ${PublicationQueries.hasStatus(LISTING_STATUS.open)}`
     )
-  }
-
-  // TODO: Add asset_type
-  static deleteByAssetId(assetId) {
-    return this.delete({ asset_id: assetId })
   }
 
   static async cancelInactive() {
