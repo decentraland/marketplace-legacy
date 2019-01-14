@@ -11,7 +11,7 @@
     "test": "CI=true node scripts/test.js --env=jsdom",
     "analyze": "source-map-explorer build/static/js/main.*",
     "build": "NODE_ENV=production REACT_APP_VERSION=$(git rev-parse --short HEAD) node scripts/build.js",
-    "postbuild": "export bundle_path=`ls ./build/static/js/*.js` && uglifyjs $bundle_path --compress --mangle reserved=['toParcelObject','toEstateObject','normalizeEstate','normalizeParcel','connectParcel','getAssetPublications']  --output $bundle_path",
+    "postbuild": "export bundle_path=`ls ./build/static/js/*.js` && uglifyjs $bundle_path --compress --mangle reserved=['toParcelObject','toEstateObject','normalizeEstate','normalizeParcel','getAssetPublications']  --output $bundle_path",
     "remotebuild": "REACT_APP_VERSION=$(git rev-parse --short HEAD) NODE_PATH=/tmp/auction/webapp/node_modules node scripts/build.js"
   },
   "dependencies": {
