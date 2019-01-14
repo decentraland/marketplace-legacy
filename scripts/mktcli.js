@@ -307,6 +307,20 @@ const main = {
       )
 
     program
+      .command('replay-all')
+      .description('Replay all blockchain events in order')
+      .action(
+        asSafeAction(async () => {
+          const events = await BlockchainEvent.findFrom(0)
+
+          for (let i = 0; i < events.length; i++) {
+            log.info(`[${i + 1}/${events.length}] Processing ${events[i].name}`)
+            await processEvent(events[i])
+          }
+        })
+      )
+
+    program
       .command('replay <assetId> <assetType>')
       .option('--persist', 'Persist replay on the database')
       .option('--clean', 'Clean publications before replaying')
@@ -362,16 +376,21 @@ const main = {
 
     program
       .command('delete-monitor-data')
+      .option('--clean-events', 'Delete blockchain events')
       .description('Reset database data')
       .action(
-        asSafeAction(async () => {
+        asSafeAction(async options => {
           log.info('(delete-monitor-data) deleting database data')
           const truncateTableNames = [
-            'blockchain_events',
             'publications',
-            'mortgages'
+            'mortgages',
+            'decentraland_invites'
           ]
           const deleteTableNames = ['estates']
+
+          if (options.cleanEvents) {
+            truncateTableNames.push('blockchain_events')
+          }
 
           await db.query(
             SQL`UPDATE ${SQL.raw(
