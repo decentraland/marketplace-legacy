@@ -30,21 +30,19 @@ export class Publication extends Model {
     return new Listing(this).findByOwner(owner)
   }
 
-  // TODO: Add asset_type
-  static async findByAssetIdWithStatus(asset_id, status) {
-    return new Listing(this).findByAssetIdWithStatus(asset_id, status)
+  static async findByAssetIdWithStatus(assetId, assetType, status) {
+    return new Listing(this).findByAssetIdWithStatus(assetId, assetType, status)
   }
 
-  static async findByAssetId(asset_id) {
-    return new Listing(this).findByAssetId(asset_id)
+  static async findByAssetId(assetId, assetType) {
+    return new Listing(this).findByAssetId(assetId, assetType)
   }
 
   // TODO: Add asset_type
   static deleteByAssetId(assetId) {
-    return new Listing(this).delete(assetId)
+    return new Listing(this).deleteByAssetId(assetId)
   }
 
-  // TODO: Add asset_type
   static async findActiveByAssetIdWithStatus(asset_id, status) {
     if (!Listing.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)

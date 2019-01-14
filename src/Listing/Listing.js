@@ -1,3 +1,4 @@
+import { Asset } from '../Asset'
 import { LISTING_STATUS, LISTING_ASSET_TYPES } from '../shared/listing'
 
 export class Listing {
@@ -14,26 +15,45 @@ export class Listing {
     return Object.values(LISTING_ASSET_TYPES).includes(assetType)
   }
 
+  static getListableAsset(assetType) {
+    if (!Listing.isValidAssetType(assetType)) {
+      throw new Error(`Invalid publication asset_type "${assetType}"`)
+    }
+
+    return Asset.getModel(assetType)
+  }
+
+  static getListableAssets() {
+    const listableAsset = {}
+
+    for (const key in LISTING_ASSET_TYPES) {
+      listableAsset[key] = Asset.getModel(key)
+    }
+
+    return Object.values(listableAsset)
+  }
+
   static findByOwner(owner) {
     return this.Model.find({ owner })
   }
 
-  // TODO: Add asset_type
-  async findByAssetId(asset_id) {
-    return this.Model.find({ asset_id }, { created_at: 'DESC' })
+  async findByAssetId(asset_id, asset_type) {
+    return this.Model.find({ asset_id, asset_type }, { created_at: 'DESC' })
   }
 
-  // TODO: Add asset_type
-  async findByAssetIdWithStatus(asset_id, status) {
+  async findByAssetIdWithStatus(asset_id, asset_type, status) {
     if (!Listing.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }
 
-    return this.Model.find({ asset_id, status }, { created_at: 'DESC' })
+    return this.Model.find(
+      { asset_id, asset_type, status },
+      { created_at: 'DESC' }
+    )
   }
 
   // TODO: Add asset_type
-  static deleteByAssetId(assetId) {
-    return this.Model.delete({ asset_id: assetId })
+  static deleteByAssetId(asset_id) {
+    return this.Model.delete({ asset_id })
   }
 }

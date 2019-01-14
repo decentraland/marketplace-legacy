@@ -6,6 +6,7 @@ import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { ASSET_TYPES } from '../../shared/asset'
 import { isParcel } from '../../shared/parcel'
 import { LISTING_STATUS } from '../../shared/listing'
 import { parseCLICoords } from '../../scripts/utils'
@@ -68,7 +69,8 @@ export class PublicationDoctor extends Doctor {
     const { id, token_id } = asset
     const marketplace = eth.getContract('Marketplace')
     const nftAddress = this.getNFTAddressFromAsset(asset)
-    const publication = (await Publication.findByAssetId(id))[0]
+    const assetType = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
+    const publication = (await Publication.findByAssetId(id, assetType))[0]
     const order = await marketplace.orderByAssetId(nftAddress, token_id)
     const contractId = order[0]
 
@@ -80,7 +82,10 @@ export class PublicationDoctor extends Doctor {
 
     const { id, token_id } = parcel
     const marketplace = eth.getContract('LegacyMarketplace')
-    const publication = (await Publication.findByAssetId(id))[0]
+    const publication = (await Publication.findByAssetId(
+      id,
+      ASSET_TYPES.parcel
+    ))[0]
     const auction = await marketplace.auctionByAssetId(token_id)
     const contractId = auction[0]
 

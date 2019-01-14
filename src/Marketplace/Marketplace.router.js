@@ -1,7 +1,7 @@
 import { server } from 'decentraland-commons'
 
 import { Marketplace } from './Marketplace'
-import { PublicationService } from '../Listing'
+import { Listing } from '../Listing'
 import { ReqQueryParams, MarketplaceReqQueryParams } from '../ReqQueryParams'
 import { sanitizeAssets } from '../sanitize'
 
@@ -32,7 +32,7 @@ export class MarketplaceRouter {
     let result
 
     if (reqQueryParams.has('asset_type')) {
-      const PublicableAsset = new PublicationService().getPublicableAsset(
+      const PublicableAsset = new Listing.getListableAsset(
         reqQueryParams.get('asset_type')
       )
 

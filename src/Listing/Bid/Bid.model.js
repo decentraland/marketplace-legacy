@@ -26,13 +26,12 @@ export class Bid extends Model {
     'updated_at'
   ]
 
-  // TODO: Add asset_type
-  static async findByAssetIdWithStatus(asset_id, status) {
-    return new Listing(this).findByAssetIdWithStatus(asset_id, status)
+  static async findByAssetIdWithStatus(assetId, assetType, status) {
+    return new Listing(this).findByAssetIdWithStatus(assetId, assetType, status)
   }
 
-  static async findByAssetId(asset_id) {
-    return new Listing(this).findByAssetId(asset_id)
+  static async findByAssetId(assetId, assetType) {
+    return new Listing(this).findByAssetId(assetId, assetType)
   }
 
   static async invalidateBids(tokenAddress, tokenId, blockTime) {

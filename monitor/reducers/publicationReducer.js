@@ -1,7 +1,7 @@
 import { eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 
-import { Publication, PublicationService } from '../../src/Listing'
+import { Publication, Listing } from '../../src/Listing'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
@@ -108,7 +108,7 @@ async function reduceMarketplace(event) {
       const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
 
-      const Asset = new PublicationService().getPublicableAsset(assetType)
+      const Asset = new Listing.getListableAsset(assetType)
 
       if (!contract_id) {
         return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)

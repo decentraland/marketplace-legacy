@@ -71,15 +71,15 @@ export class BidRouter {
   async getAssetBids(req) {
     const id = server.extractFromReq(req, 'id')
 
-    server.extractFromReq(req, 'asset_type') // TODO: Use asset_type on `Bid.findByAsset(...)`. For now just throw if undefined
+    const assetType = server.extractFromReq(req, 'asset_type')
 
     let bids = []
 
     try {
       const status = server.extractFromReq(req, 'status')
-      bids = await Bid.findByAssetIdWithStatus(id, status)
+      bids = await Bid.findByAssetIdWithStatus(id, assetType, status)
     } catch (error) {
-      bids = await Bid.findByAssetId(id)
+      bids = await Bid.findByAssetId(id, assetType)
     }
 
     return sanitizeBids(bids)
