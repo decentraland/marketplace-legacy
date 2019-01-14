@@ -92,7 +92,8 @@ export function tileReducer(state = INITIAL_STATE, action) {
           const newData = {}
 
           // TODO: @perf Super slow, there are a ton of tiles
-          for (const tile of state.data) {
+          for (const tileId in state.data) {
+            const tile = state.data[tileId]
             if (tile.estate_id == estate.id) {
               newData[tile.id] = {
                 ...tile,
@@ -122,7 +123,8 @@ export function tileReducer(state = INITIAL_STATE, action) {
             }
           } else if (type === ASSET_TYPES.estate) {
             // TODO: @perf Super slow, there are a ton of tiles
-            for (const tile of state.data) {
+            for (const tileId in state.data) {
+              const tile = state.data[tileId]
               if (tile.estate_id == id) {
                 newData[tile.id] = {
                   ...tile,
@@ -151,7 +153,8 @@ export function tileReducer(state = INITIAL_STATE, action) {
             }
           } else if (type === ASSET_TYPES.estate) {
             // TODO: @perf Super slow, there are a ton of tiles
-            for (const tile of state.data) {
+            for (const tileId in state.data) {
+              const tile = state.data[tileId]
               if (tile.estate_id == id) {
                 newData[tile.id] = {
                   ...tile,
@@ -180,7 +183,8 @@ export function tileReducer(state = INITIAL_STATE, action) {
             }
           } else if (type === ASSET_TYPES.estate) {
             // TODO: @perf Super slow, there are a ton of tiles
-            for (const tile of state.data) {
+            for (const tileId in state.data) {
+              const tile = state.data[tileId]
               if (tile.estate_id == id) {
                 newData[tile.id] = {
                   ...tile,

@@ -96,7 +96,8 @@ export class Tile extends Model {
 
   /**
    * Returns the tiles changing the type according to the supplied address.
-   * For example if the address has a tile is on sale the db type will be TYPES.taken but will be chaged to TYPES.myParcelsOnSale here
+   * For example if the address has a tile on sale the db type will be TYPES.taken but will be chaged to TYPES.myParcelsOnSale here
+   * @return {array}
    */
   static async getForOwner(owner, fromDate) {
     const districtColumnNames = this.filterColumnNames(
