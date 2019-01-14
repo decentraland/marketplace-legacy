@@ -17,7 +17,7 @@ export function isEstate(parcel) {
 export function toParcelObject(parcelArray) {
   const parcelObject = {}
   for (const parcel of parcelArray) {
-    parcelObject[parcel.id] = Object.assign({}, parcel)
+    parcelObject[parcel.id] = normalizeParcel(parcel)
   }
   return parcelObject
 }
