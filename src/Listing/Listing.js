@@ -25,11 +25,11 @@ export class Listing {
 
   // TODO: Add asset_type
   async findByAssetIdWithStatus(asset_id, status) {
-    if (!this.isValidStatus(status)) {
+    if (!Listing.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }
 
-    return this.find({ asset_id, status }, { created_at: 'DESC' })
+    return this.Model.find({ asset_id, status }, { created_at: 'DESC' })
   }
 
   // TODO: Add asset_type

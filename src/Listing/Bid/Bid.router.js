@@ -3,7 +3,7 @@ import { server } from 'decentraland-commons'
 import { Bid } from './Bid.model'
 import { Parcel } from '../../Asset'
 import { ASSET_TYPES } from '../../../shared/asset'
-// import { sanitizePublications } from '../sanitize'
+import { sanitizeBids } from '../../sanitize'
 
 export class BidRouter {
   constructor(app) {
@@ -17,61 +17,61 @@ export class BidRouter {
      * @param  {string} y
      * @param  {string} asset_type - specify an asset type, it's required
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
-     * @return {array<Publication>}
+     * @return {array<Bid>}
      */
     this.app.get('/assets/:id/bids', server.handleRequest(this.getAssetBids))
 
-    // /**
-    //  * Returns the publications for a parcel
-    //  * @param  {string} x
-    //  * @param  {string} y
-    //  * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
-    //  * @return {array<Publication>}
-    //  */
-    // this.app.get(
-    //   '/parcels/:x/:y/bids',
-    //   server.handleRequest(this.getParcelPublications.bind(this))
-    // )
+    /**
+     * Returns the bids for a parcel
+     * @param  {string} x
+     * @param  {string} y
+     * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+     * @return {array<Bid>}
+     */
+    this.app.get(
+      '/parcels/:x/:y/bids',
+      server.handleRequest(this.getParcelBids.bind(this))
+    )
 
-    // /**
-    //  * Returns the publications for a estate
-    //  * @param  {string} id
-    //  * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
-    //  * @return {array<Publication>}
-    //  */
-    // this.app.get(
-    //   '/estates/:id/bids',
-    //   server.handleRequest(this.getEstatePublications.bind(this))
-    // )
+    /**
+     * Returns the bids for a estate
+     * @param  {string} id
+     * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+     * @return {array<Bid>}
+     */
+    this.app.get(
+      '/estates/:id/bids',
+      server.handleRequest(this.getEstateBids.bind(this))
+    )
 
-    // /**
-    //  * Get a publication by transaction hash
-    //  * @param  {string} id
-    //  * @return {array}
-    //  */
-    // this.app.get('/bids/:id', server.handleRequest(this.getPublication))
+    /**
+     * Get a bid by id
+     * @param  {string} id
+     * @return {array}
+     */
+    this.app.get('/bids/:id', server.handleRequest(this.getBid))
   }
 
-  // async getParcelPublications(req) {
-  //   const x = server.extractFromReq(req, 'x')
-  //   const y = server.extractFromReq(req, 'y')
+  async getParcelBids(req) {
+    const x = server.extractFromReq(req, 'x')
+    const y = server.extractFromReq(req, 'y')
 
-  //   req.params.asset_type = ASSET_TYPES.parcel
-  //   req.params.id = Parcel.buildId(x, y)
+    req.params.asset_type = ASSET_TYPES.parcel
+    req.params.id = Parcel.buildId(x, y)
 
-  //   return this.getAssetPublications(req)
-  // }
+    return this.getAssetBids(req)
+  }
 
-  // async getEstatePublications(req) {
-  //   req.params.asset_type = ASSET_TYPES.estate
+  async getEstateBids(req) {
+    req.params.asset_type = ASSET_TYPES.estate
 
-  //   return this.getAssetPublications(req)
-  // }
+    return this.getAssetBids(req)
+  }
 
   async getAssetBids(req) {
     const id = server.extractFromReq(req, 'id')
 
-    server.extractFromReq(req, 'asset_type') // TODO: Use asset_type on `Publication.findByAsset(...)`. For now just throw if undefined
+    server.extractFromReq(req, 'asset_type') // TODO: Use asset_type on `Bid.findByAsset(...)`. For now just throw if undefined
 
     let bids = []
 
@@ -82,20 +82,17 @@ export class BidRouter {
       bids = await Bid.findByAssetId(id)
     }
 
-    // @TODO: sanitize result
-    return bids // sanitizePublications(publications)
+    return sanitizeBids(bids)
   }
 
-  // async getPublication(req) {
-  //   const txHash = server.extractFromReq(req, 'txHash')
-  //   const publication = await Publication.findOne({ tx_hash: txHash })
+  async getBid(req) {
+    const id = server.extractFromReq(req, 'id')
+    const bid = await Bid.findOne({ id })
 
-  //   if (!publication) {
-  //     throw new Error(
-  //       `Could not find a valid publication for the hash "${txHash}"`
-  //     )
-  //   }
+    if (!bid) {
+      throw new Error(`Could not find a valid bid with the id: "${id}"`)
+    }
 
-  //   return publication
-  // }
+    return sanitizeBids(bid)
+  }
 }

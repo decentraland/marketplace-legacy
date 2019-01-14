@@ -14,6 +14,7 @@ export async function bidReducer(event) {
   const { address } = event
 
   switch (address) {
+    case contractAddresses.EstateRegistry:
     case contractAddresses.ERC721Bid: {
       await reduceBid(event)
       break
@@ -39,7 +40,8 @@ async function reduceBid(event) {
         _tokenId,
         _bidder,
         _price,
-        _expiresAt
+        _expiresAt,
+        _fingerprint
       } = event.args
 
       const exists = await Bid.count({ id: _id })
@@ -66,6 +68,7 @@ async function reduceBid(event) {
           bidder: _bidder,
           price: eth.utils.fromWei(_price),
           expires_at: _expiresAt,
+          fingerprint: _fingerprint,
           asset_type: assetType,
           asset_id: assetId,
           block_time_created_at: blockTime,
@@ -109,6 +112,35 @@ async function reduceBid(event) {
         },
         { id }
       )
+      break
+    }
+    case eventNames.RemoveLand:
+    case eventNames.AddLand: {
+      const { _estateId } = event.args
+
+      const bids = await Bid.getBidsWithStatuses(
+        contractAddresses.EstateRegistry,
+        _estateId,
+        [LISTING_STATUS.open, LISTING_STATUS.fingerprintChanged]
+      )
+
+      const estateHasActiveBids = bids.length > 0
+
+      if (estateHasActiveBids) {
+        log.info(
+          `[${name}] Updating bids for the Estate ${_estateId}, fingerprint changed`
+        )
+
+        const estateContract = eth.getContract('EstateRegistry')
+        const fingerprint = await estateContract.getFingerprint(_estateId)
+
+        await Bid.updateAssetByFingerprintChange(
+          contractAddresses.EstateRegistry,
+          _estateId,
+          fingerprint,
+          blockTime
+        )
+      }
       break
     }
     default:

@@ -12,6 +12,7 @@ exports.up = pgm => {
     seller: 'TEXT',
     price: { type: 'FLOAT', notNull: true },
     expires_at: { type: 'BIGINT', notNull: true },
+    fingerprint: { type: 'TEXT', notNull: true },
     status: 'TEXT',
     asset_id: {
       type: 'TEXT',
