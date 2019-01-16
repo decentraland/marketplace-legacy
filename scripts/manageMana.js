@@ -147,8 +147,7 @@ async function transferMana(...args) {
 
 async function checkBalance(mana) {
   const account = eth.getAccount()
-  const balanceInWei = await eth.getContract('MANAToken').balanceOf(account)
-  const balance = eth.utils.fromWei(balanceInWei)
+  const balance = await eth.getContract('MANAToken').balanceOf(account)
 
   if (mana > balance) {
     throw new Error(
