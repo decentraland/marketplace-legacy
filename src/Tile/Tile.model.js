@@ -48,7 +48,7 @@ export class Tile extends Model {
 
   static async upsertEstate(estate) {
     return asyncBatch({
-      elements: estate.data.parcels,
+      elements: estate ? estate.data.parcels : [], // Some Estates appear as undefined
       callback: async parcelsBatch => {
         const promises = []
 
