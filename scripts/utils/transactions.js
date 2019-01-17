@@ -31,7 +31,7 @@ export async function executeTransactions(
   await asyncBatch({
     elements: elements,
     callback: async elementsBatch => {
-      const elementTxs = await callback(elementsBatch)
+      const elementTxs = await Promise.all(callback(elementsBatch))
 
       for (const tx of elementTxs) {
         console.log(`Got tx hash ${tx.hash}`)
