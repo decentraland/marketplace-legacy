@@ -45,7 +45,7 @@ export default class Footer extends React.PureComponent {
               {t('global.website')}
             </a>
             <a
-              href="https://docs.decentraland.org"
+              href="https://docs.decentraland.org/decentraland/getting-started-marketplace-video/"
               rel="noopener noreferrer"
               target="_blank"
             >
