@@ -34,21 +34,26 @@ export class Tile extends Model {
   ]
 
   static async upsertAsset(assetId, assetType) {
+    // getNew throws if the assetType is invalid
     const asset = await Asset.getNew(assetType).findById(assetId)
 
+    if (!asset) {
+      // Some Estates appear as undefined
+      return
+    }
     switch (assetType) {
       case ASSET_TYPES.parcel:
         return this.upsertParcel(asset)
       case ASSET_TYPES.estate:
         return this.upsertEstate(asset)
       default:
-        throw new Error(`The asset type ${assetType} is invalid`)
+        break
     }
   }
 
   static async upsertEstate(estate) {
     return asyncBatch({
-      elements: estate ? estate.data.parcels : [], // Some Estates appear as undefined
+      elements: estate.data.parcels,
       callback: async parcelsBatch => {
         const promises = []
 
