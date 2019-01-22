@@ -492,7 +492,7 @@
       "desktop":
         "Vous pouvez utiliser l'extension {metamask_link} ou un portefeuille matériel comme {ledger_nano_link}.",
       "mobile":
-        "Vous pouvez utiliser des navigateurs mobiles tels que {coinbase_link} ou {imtoken_link}."
+        "Vous pouvez utiliser des navigateurs mobiles tels que {coinbase_link}, {imtoken_link} ou {trust_link}."
     }
   },
   "sign_in_notice": {
