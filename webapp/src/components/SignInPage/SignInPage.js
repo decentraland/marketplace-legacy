@@ -54,6 +54,15 @@ export default class SignInPage extends React.PureComponent {
                       >
                         imToken
                       </a>
+                    ),
+                    trust_link: (
+                      <a
+                        href="https://trustwallet.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Trust Wallet
+                      </a>
                     )
                   }}
                 />

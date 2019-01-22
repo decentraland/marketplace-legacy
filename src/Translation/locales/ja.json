@@ -473,7 +473,7 @@
       "desktop":
         "{metamask_link}拡張機能や{ledger_nano_link}などのハードウェアウォレットが使用できます。",
       "mobile":
-        "{coinbase_link}や{imtoken_link}などのモバイルブラウザも使用することができます。"
+        "{coinbase_link}や{imtoken_link}や{trust_link}などのモバイルブラウザも使用することができます。"
     }
   },
   "sign_in_notice": {

@@ -483,7 +483,7 @@
       "desktop":
         "You can use the {metamask_link} extension or a hardware wallet like {ledger_nano_link}.",
       "mobile":
-        "You can use mobile browsers such as {coinbase_link} or {imtoken_link}."
+        "You can use mobile browsers such as {coinbase_link}, {imtoken_link} or {trust_link}."
     }
   },
   "sign_in_notice": {

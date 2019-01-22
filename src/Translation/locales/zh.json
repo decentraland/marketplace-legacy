@@ -457,7 +457,8 @@
     "options": {
       "desktop":
         "您可以使用{metamask_link}扩展程序或像{ledger_nano_link}这样的硬件钱包。",
-      "mobile": "您可以使用移动浏览器，如 {coinbase_link} 或 {imtoken_link}。"
+      "mobile":
+        "您可以使用移动浏览器，如 {coinbase_link} 或 {imtoken_link} 或 {trust_link}。"
     }
   },
   "sign_in_notice": {
