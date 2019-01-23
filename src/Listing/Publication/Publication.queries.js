@@ -1,7 +1,8 @@
+import { Listing } from '../Listing'
 import { Publication } from './Publication.model'
-import { Parcel } from '../Asset'
-import { SQL, raw } from '../database'
-import { ASSET_TYPES } from '../../shared/asset'
+import { Parcel } from '../../Asset'
+import { SQL, raw } from '../../database'
+import { ASSET_TYPES } from '../../../shared/asset'
 
 export const PublicationQueries = Object.freeze({
   isActive: () => SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
@@ -20,7 +21,7 @@ export const PublicationQueries = Object.freeze({
       OR pub.asset_type != ${ASSET_TYPES.estate})`,
 
   findByStatusSql: (status = null) => {
-    if (!Publication.isValidStatus(status)) {
+    if (!Listing.isValidStatus(status)) {
       throw new Error(`Invalid status '${status}'`)
     }
 

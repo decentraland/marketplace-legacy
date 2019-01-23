@@ -1,12 +1,12 @@
 import { eth, txUtils } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 
-import { Publication, PublicationService } from '../../src/Publication'
+import { Publication, Listing } from '../../src/Listing'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
-import { PUBLICATION_STATUS } from '../../shared/publication'
+import { LISTING_STATUS } from '../../shared/listing'
 import { getAssetTypeFromEvent, getAssetIdFromEvent } from './utils'
 
 const log = new Log('publicationReducer')
@@ -74,7 +74,7 @@ async function reduceMarketplace(event) {
         asset_id: assetId,
         asset_type: assetType,
         owner: seller.toLowerCase(),
-        status: PUBLICATION_STATUS.open
+        status: LISTING_STATUS.open
       })
 
       try {
@@ -82,7 +82,7 @@ async function reduceMarketplace(event) {
           asset_type: assetType,
           asset_id: assetId,
           marketplace_address: address,
-          status: PUBLICATION_STATUS.open,
+          status: LISTING_STATUS.open,
           tx_status: txUtils.TRANSACTION_TYPES.confirmed,
           owner: seller.toLowerCase(),
           buyer: null,
@@ -108,7 +108,7 @@ async function reduceMarketplace(event) {
       const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
 
-      const Asset = new PublicationService().getPublicableAsset(assetType)
+      const Asset = Listing.getListableAsset(assetType)
 
       if (!contract_id) {
         return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
@@ -118,7 +118,7 @@ async function reduceMarketplace(event) {
       await Promise.all([
         Publication.update(
           {
-            status: PUBLICATION_STATUS.sold,
+            status: LISTING_STATUS.sold,
             buyer: buyer.toLowerCase(),
             price: eth.utils.fromWei(totalPrice),
             block_time_updated_at: blockTime
@@ -141,7 +141,7 @@ async function reduceMarketplace(event) {
 
       await Publication.update(
         {
-          status: PUBLICATION_STATUS.cancelled,
+          status: LISTING_STATUS.cancelled,
           block_time_updated_at: blockTime
         },
         { contract_id }

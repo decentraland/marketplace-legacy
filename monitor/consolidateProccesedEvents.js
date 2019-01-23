@@ -1,6 +1,6 @@
 import { Log } from 'decentraland-commons'
 
-import { Publication } from '../src/Publication'
+import { Publication } from '../src/Listing'
 import { Tile } from '../src/Tile'
 import { asyncBatch } from '../src/lib'
 

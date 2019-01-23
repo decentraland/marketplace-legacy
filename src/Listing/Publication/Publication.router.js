@@ -1,9 +1,9 @@
 import { server } from 'decentraland-commons'
 
 import { Publication } from './Publication.model'
-import { Parcel } from '../Asset'
-import { ASSET_TYPES } from '../../shared/asset'
-import { sanitizePublications } from '../sanitize'
+import { Parcel } from '../../Asset'
+import { ASSET_TYPES } from '../../../shared/asset'
+import { sanitizePublications } from '../../sanitize'
 
 export class PublicationRouter {
   constructor(app) {
@@ -77,15 +77,19 @@ export class PublicationRouter {
   async getAssetPublications(req) {
     const id = server.extractFromReq(req, 'id')
 
-    server.extractFromReq(req, 'asset_type') // TODO: Use asset_type on `Publication.findByAsset(...)`. For now just throw if undefined
+    const assetType = server.extractFromReq(req, 'asset_type')
 
     let publications = []
 
     try {
       const status = server.extractFromReq(req, 'status')
-      publications = await Publication.findByAssetIdWithStatus(id, status)
+      publications = await Publication.findByAssetIdWithStatus(
+        id,
+        assetType,
+        status
+      )
     } catch (error) {
-      publications = await Publication.findByAssetId(id)
+      publications = await Publication.findByAssetId(id, assetType)
     }
 
     return sanitizePublications(publications)

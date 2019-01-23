@@ -9,7 +9,8 @@ import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
 import { assetType, publicationType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
-import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
+import { findAssetPublications } from 'shared/publication'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
 import './AssetTransactionHistory.css'
@@ -22,11 +23,9 @@ export default class AssetTransactionHistory extends React.PureComponent {
 
   getAssetPublications() {
     const { asset, publications } = this.props
-    return findAssetPublications(
-      publications,
-      asset,
-      PUBLICATION_STATUS.sold
-    ).sort((a, b) => (a.block_number > b.block_number ? -1 : 1))
+    return findAssetPublications(publications, asset, LISTING_STATUS.sold).sort(
+      (a, b) => (a.block_number > b.block_number ? -1 : 1)
+    )
   }
 
   hasAuctionData() {

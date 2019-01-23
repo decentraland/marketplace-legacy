@@ -1,7 +1,7 @@
 import { ReqQueryParams } from './ReqQueryParams'
 import { MarketplaceReqQueryParams } from './MarketplaceReqQueryParams'
-import { Publication } from '../Publication'
-import { PUBLICATION_ASSET_TYPES } from '../shared/publication'
+import { Listing } from '../Listing'
+import { LISTING_ASSET_TYPES } from '../shared/listing'
 
 export class AssetReqQueryParams {
   constructor(req) {
@@ -15,9 +15,9 @@ export class AssetReqQueryParams {
       ...queryParams
     } = this.marketplaceReqQueryParams.sanitize()
 
-    queryParams.asset_type = Publication.isValidAssetType(asset_type)
+    queryParams.asset_type = Listing.isValidAssetType(asset_type)
       ? asset_type
-      : PUBLICATION_ASSET_TYPES.parcel
+      : LISTING_ASSET_TYPES.parcel
 
     return queryParams
   }

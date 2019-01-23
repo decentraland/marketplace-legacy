@@ -2,7 +2,7 @@ import { Model } from 'decentraland-commons'
 
 import { ParcelQueries } from './Parcel.queries'
 import { Asset } from '../Asset'
-import { PublicationQueries } from '../../Publication'
+import { PublicationQueries } from '../../Listing'
 import { District } from '../../District'
 import { MortgageQueries } from '../../Mortgage'
 import { SQL } from '../../database'
