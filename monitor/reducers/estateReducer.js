@@ -128,6 +128,8 @@ async function reduceEstateRegistry(event) {
         { owner: _to.toLowerCase(), last_transferred_at },
         { id: estateId }
       )
+
+      await Tile.upsertAsset(estateId, ASSET_TYPES.estate)
       break
     }
     case eventNames.UpdateOperator: {
