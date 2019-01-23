@@ -8,7 +8,6 @@ DB_HOST=''
 DB_USER='marketplace'
 DB_NAME='marketplace'
 DAY_OF_WEEK=`date '+%a' | awk '{print tolower($0)}'`
-DUMP_FILE_NAME='marketplace-mainnet'
 DUMP_FILE_PATH='/tmp/'$(get_filename 'latest')
 DUMP_FILE_DATE=$(get_filename ${DAY_OF_WEEK})
 BUCKET_TARGET='s3://market-prod.decentraland.org/dumps/'
