@@ -108,7 +108,7 @@ async function reduceMarketplace(event) {
       const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
 
-      const Asset = new Listing.getListableAsset(assetType)
+      const Asset = Listing.getListableAsset(assetType)
 
       if (!contract_id) {
         return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)

@@ -35,7 +35,7 @@ export class MarketplaceReqQueryParams {
   }
 
   getStatus() {
-    // TODO: This should be LISTING_STATUS but that'll break backwards compatibility
+    // TODO: This query string param should be called `listing_status` but that'd break backwards compatibility
     const status = this.reqQueryParams.get('status', LISTING_STATUS.open)
     return Listing.isValidStatus(status) ? status : LISTING_STATUS.open
   }

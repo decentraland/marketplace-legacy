@@ -102,7 +102,7 @@ export class Publication extends Model {
     if (txHashes.length === 0) {
       return []
     }
-    if (!this.isValidStatus(newStatus)) {
+    if (!Listing.isValidStatus(newStatus)) {
       throw new Error(`Trying to filter by invalid status "${newStatus}"`)
     }
 

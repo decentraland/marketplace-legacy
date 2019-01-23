@@ -12,7 +12,7 @@ describe('Listing', function() {
     })
 
     it('should throw if the type is invalid', function() {
-      expect(() => new Listing.getListableAsset('Nonsense')).to.throw(
+      expect(() => Listing.getListableAsset('Nonsense')).to.throw(
         'Invalid publication asset_type "Nonsense"'
       )
     })

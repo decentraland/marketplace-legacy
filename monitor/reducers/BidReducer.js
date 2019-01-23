@@ -32,6 +32,10 @@ async function reduceBid(event) {
     new BlockTimestampService().getBlockTime(block_number)
   ])
 
+  if (!assetId) {
+    return log.info(`[${name}] Invalid Asset Id`)
+  }
+
   switch (name) {
     case eventNames.BidCreated: {
       const {
@@ -118,7 +122,7 @@ async function reduceBid(event) {
     case eventNames.AddLand: {
       const { _estateId } = event.args
 
-      const bids = await Bid.getBidsWithStatuses(
+      const bids = await Bid.getWithStatuses(
         contractAddresses.EstateRegistry,
         _estateId,
         [LISTING_STATUS.open, LISTING_STATUS.fingerprintChanged]

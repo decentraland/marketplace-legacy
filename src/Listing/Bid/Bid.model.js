@@ -45,7 +45,7 @@ export class Bid extends Model {
     )
   }
 
-  static async getBidsWithStatuses(tokenAddress, tokenId, statuses) {
+  static async getWithStatuses(tokenAddress, tokenId, statuses) {
     return this.db.query(
       SQL`SELECT * from ${raw(this.tableName)}
         WHERE token_address = ${tokenAddress}

@@ -4,7 +4,7 @@ import { db, SQL, raw } from '../database'
 export class Marketplace {
   async filterAll(filters) {
     const { status, sort, pagination } = filters.sanitize()
-    const Assets = new Listing.getListableAssets()
+    const Assets = Listing.getListableAssets()
 
     const selectAssetsSQL = Assets.map(
       ({ tableName }) => `row_to_json(${tableName}.*) as ${tableName}`

@@ -34,7 +34,7 @@ export class BidRouter {
     )
 
     /**
-     * Returns the bids for a estate
+     * Returns the bids for an estate
      * @param  {string} id
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
      * @return {array<Bid>}
