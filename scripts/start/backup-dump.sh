@@ -1,11 +1,20 @@
 #!/bin/bash
 
+get_filename() {
+  echo 'marketplace-mainnet-'${1}'.sql.gz'
+}
+
 DB_HOST=''
 DB_USER='marketplace'
 DB_NAME='marketplace'
-DUMP_FILEPATH='/tmp/marketplace-mainnet-latest.sql.gz'
+DAY_OF_WEEK=`date '+%a' | awk '{print tolower($0)}'`
+DUMP_FILE_NAME='marketplace-mainnet'
+DUMP_FILE_PATH='/tmp/'$(get_filename 'latest')
+DUMP_FILE_DATE=$(get_filename ${DAY_OF_WEEK})
 BUCKET_TARGET='s3://market-prod.decentraland.org/dumps/'
 
-pg_dump -h ${DB_HOST} -d ${DB_NAME} -U ${DB_USER} | gzip -f > ${DUMP_FILEPATH}
-aws s3 cp ${DUMP_FILEPATH} ${BUCKET_TARGET} --acl public-read
-/bin/rm -f ${DUMP_FILEPATH}
+pg_dump -h ${DB_HOST} -d ${DB_NAME} -U ${DB_USER} | gzip -f > ${DUMP_FILE_PATH}
+aws s3 cp ${DUMP_FILE_PATH} ${BUCKET_TARGET} --acl public-read
+aws s3 cp ${DUMP_FILE_PATH} ${BUCKET_TARGET}${DUMP_FILE_DATE} --acl public-read
+/bin/date '+%a' | awk '{print tolower($0)}'
+/bin/rm -f ${DUMP_FILE_PATH}
