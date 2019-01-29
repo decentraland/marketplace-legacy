@@ -20,7 +20,25 @@ import { etherscan } from 'lib/EtherscanAPI'
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const onlyTypesForActions = env.get('REACT_APP_REDUX_ACTION_ONLY_TYPE', false)
+const storeKeys = env.get('REACT_APP_REDUX_STORE_KEYS', '')
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      actionSanitizer: action =>
+        onlyTypesForActions ? { type: action.type } : action,
+      stateSanitizer: state =>
+        storeKeys.length > 0
+          ? storeKeys.split(',').reduce((sanitizedState, key) => {
+              const value = state[key]
+              if (value) {
+                return { ...sanitizedState, [key]: value }
+              }
+              return sanitizedState
+            }, {})
+          : state
+    })
+  : compose
 
 const history = createHistory()
 
