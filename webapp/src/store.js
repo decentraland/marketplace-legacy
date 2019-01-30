@@ -20,8 +20,11 @@ import { etherscan } from 'lib/EtherscanAPI'
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
 
-const onlyTypesForActions = env.get('REACT_APP_REDUX_ACTION_ONLY_TYPE', false)
-const storeKeys = env.get('REACT_APP_REDUX_STORE_KEYS', '')
+const onlyTypesForActions = env.get(
+  'REACT_APP_DEVTOOLS_EXTENSION_ACTION_ONLY_SHOW_TYPE',
+  false
+)
+const storeKeys = env.get('REACT_APP_DEVTOOLS_EXTENSION_STORE_KEYS', '')
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
