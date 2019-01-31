@@ -10,11 +10,14 @@ export const PUBLICATION_ASSET_TYPES = Object.freeze({
 })
 
 export function isOpen(publication) {
-  return hasStatus(publication, PUBLICATION_STATUS.open)
+  return (
+    hasStatus(publication, PUBLICATION_STATUS.open) &&
+    !isExpired(publication.expires_at)
+  )
 }
 
 export function hasStatus(obj, status) {
-  return obj && obj.status === status && !isExpired(obj.expires_at)
+  return obj && obj.status === status
 }
 
 export function isExpired(expires_at) {
