@@ -1,8 +1,9 @@
-import { hasStatus } from './publication'
+import { hasStatus, isOpen } from './publication'
 
 const MORTGAGE_DEFAULT_IN_DAYS = 60 * 60 * 24 * 7 // 7 days
 
 export const MORTGAGE_STATUS = Object.freeze({
+  expired: 'expired',
   pending: 'pending',
   cancelled: 'cancelled',
   ongoing: 'ongoing',
@@ -174,8 +175,16 @@ export function getMortgageDefaultedStatus() {
   return MORTGAGE_STATUS.defaulted
 }
 
+export function getMortgageExpiredStatus() {
+  return MORTGAGE_STATUS.expired
+}
+
 export function getMortgageStatus(mortgage) {
-  return isMortgageDefaulted(mortgage)
-    ? getMortgageDefaultedStatus()
-    : mortgage.status
+  if (isMortgagePending(mortgage) && !isOpen(mortgage)) {
+    return getMortgageExpiredStatus()
+  } else if (isMortgageDefaulted(mortgage)) {
+    return getMortgageDefaultedStatus()
+  } else {
+    return mortgage.status
+  }
 }
