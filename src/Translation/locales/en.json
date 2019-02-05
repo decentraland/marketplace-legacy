@@ -14,6 +14,29 @@
   "address": {
     "its_you": "It's you"
   },
+  "asset_accept_bid": {
+    "about_to_accept_bid":
+      "You are about to accept the bid of {name} for {price}.",
+    "accept_bid_asset": "Accept bid for {asset_type}"
+  },
+  "asset_bid": {
+    "errors": {
+      "maximum_expiration": "The maximum expiration date is {date} (6 months)",
+      "maximum_land_price": "The maximum {asset_name} price is {value} MANA",
+      "minimum_expiration": "The minimum expiration date is {date}",
+      "minimum_land_price": "The minimum {asset_name} price is {value} MANA"
+    },
+    "expiration": "Expiration",
+    "expiration_placeholder": "Expiration date for this publication",
+    "list_asset": "Place a bid for the {asset_name}",
+    "please_authorize":
+      "You need to go to {settings_link} and authorize the Bid contract to use MANA on your behalf before you can place a bid.",
+    "price_placeholder": "Price in MANA for this {asset_name}",
+    "set_asset_price": "Set a price and an expiration date for {asset_name}.",
+    "set_new_asset_price":
+      "Set the new price or expiration date for {asset_name}.",
+    "update_asset": "Update {asset_name} bid"
+  },
   "asset_buy": {
     "about_to_buy": "You are about to buy {name} {price}.",
     "allowed_balance": "Your allowance is {allowance}",
@@ -32,7 +55,10 @@
   },
   "asset_cancel": {
     "about_to_cancel": "You are about to cancel the sale of {name}.",
+    "about_to_cancel_bid": "You are about to cancel the bid for {name}.",
+    "cancel_bid": "Cancel Bid",
     "cancel_sale": "Cancel Sale",
+    "not_bid": "You don't have an open bid for the {asset_name} {asset}.",
     "not_for_sale": "The {asset_name} {asset} is not for sale."
   },
   "asset_detail": {
@@ -43,19 +69,20 @@
       "transfer": "Transfer",
       "update_price": "Update price"
     },
+    "bid": {
+      "place": "Bid",
+      "title": "Bids"
+    },
     "history": {
       "auction": "Auction",
       "event": "Event",
-      "from": "From",
-      "price": "Price",
       "sold": "Sold",
       "title": "Transaction History",
       "to": "To",
       "when": "When"
     },
     "publication": {
-      "buy": "Buy",
-      "price": "Price"
+      "buy": "Buy"
     }
   },
   "asset_edit": {
@@ -74,7 +101,6 @@
     "manage": "Manage {asset_type}"
   },
   "asset_publish": {
-    "already_sold": "This {asset_name} is already on sale for {value}",
     "errors": {
       "maximum_expiration": "The maximum expiration date is {date}",
       "maximum_land_price": "The maximum {asset_name} price is {value} MANA",
@@ -86,7 +112,6 @@
     "list_asset": "List {asset_name} for sale",
     "please_authorize":
       "You need to go to {settings_link} and authorize the Marketplace to operate {asset_name} on your behalf before you can list it on sale.",
-    "price": "Price",
     "price_placeholder": "Price in MANA for this {asset_name}",
     "set_asset_price": "Set a price and an expiration date for {asset_name}.",
     "set_new_asset_price":
@@ -190,6 +215,11 @@
     "disapproved":
       "You unauthorized the {contract_link} to operate {symbol} on your behalf"
   },
+  "bid": {
+    "bid_asset": "bid ERC721",
+    "placed": "bids placed",
+    "received": "bids received"
+  },
   "buy_mana": {
     "action": "Buy More",
     "amount_too_big": "This amount is too big for the Bancor Network",
@@ -244,6 +274,8 @@
     "subtitle": "Set a name and description for your estate."
   },
   "estate_select": {
+    "bids_warning":
+      "This Estate has active bids. If you add or remove parcels from it, all bids will become invalid",
     "description": "Select parcels adjacent to each other",
     "detail": "Estate detail",
     "edit_selection": "Select the parcels on the map",
@@ -265,6 +297,7 @@
     "terms": "Terms & Conditions"
   },
   "global": {
+    "accept": "Accept",
     "acquired_ago": "Acquired {date}",
     "activity": "Activity",
     "add": "add",
@@ -272,6 +305,7 @@
     "atlas": "Atlas",
     "auction": "Auction",
     "balance": "Balance",
+    "bids": "Bids",
     "blog": "Blog",
     "cancel": "Cancel",
     "change": "Change",
@@ -296,6 +330,7 @@
     "expires_in": "Expires {time}",
     "expires_in_more_than_years": "Expires in over {years} years",
     "for": "for",
+    "from": "from",
     "hours": "hours",
     "land": "LAND",
     "learn_more": "learn more",
@@ -310,6 +345,7 @@
     "owner_address_warning": "That's already the owner!",
     "paid_at": "Paid at",
     "parcels": "Parcels",
+    "price": "price",
     "profile": "My LAND",
     "publications": "Publications",
     "recipient_address": "Recipient address",
@@ -330,10 +366,14 @@
     "time_left": "Time left",
     "transfer_irreversible":
       "Remember that transferring is an irreversible operation.",
+    "type": "Type",
     "unauthorized": "Unauthorized",
     "undo": "Undo",
+    "update": "Update",
     "wallet_address": "Wallet address",
-    "website": "Website"
+    "warning": "Warning",
+    "website": "Website",
+    "you": "you"
   },
   "homepage": {
     "get_started": "Get Started",
@@ -465,9 +505,10 @@
     "authorization_error_contact":
       "If the error persist don't hesitate to contact us",
     "for_buying": "For buying",
+    "for_buying_ERC721Bid": "Assets using MANA (bid)",
     "for_buying_LANDAuction": "LAND at the Auction using {token}",
     "for_buying_LegacyMarketplace": "Assets using MANA (legacy)",
-    "for_buying_Marketplace": "Assets using MANA",
+    "for_buying_Marketplace": "ERC721 using MANA",
     "for_buying_MortgageHelper": "LAND by Mortgage",
     "for_buying_MortgageManager": "LAND by Mortgage",
     "for_selling": "For selling",
@@ -502,11 +543,13 @@
     "title": "Welcome to Decentraland's LAND Marketplace"
   },
   "transaction": {
+    "accept_bid": "You accepted a bid for {asset_link} for {price}",
     "bid":
       "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} at the auction",
     "buy": "You bought {parcel_link}",
     "buy_mana": "You bought {mana} MANA",
-    "cancel": "You cancelled the sale on {parcel_link}",
+    "cancel": "You cancelled the sale on {asset_link}",
+    "cancel_bid": "You cancelled the bid for {asset_link}",
     "cancel_mortgage": "You cancel a Mortgage to buy the parcel {parcel_link}",
     "claim_mortgage_resolution": "You claimed {parcel_link}",
     "create_estate": "You created the estate {name}",
@@ -530,6 +573,7 @@
       "You {action} the {mortgage_contract_link} to operate RCN on your behalf",
     "pay_mortgage":
       "You made a partial payment of {amount} MANA for the mortgage to buy the parcel {parcel_link}",
+    "place_bid": "You bid {asset_link} for {price} MANA",
     "publish": "You listed {parcel_link} for sale",
     "transfer": "You transfered {asset_type} {asset_link} to {owner_link}",
     "transfer_mana": "You transfered {mana} MANA to {address_link}"

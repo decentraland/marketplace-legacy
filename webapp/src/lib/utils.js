@@ -1,5 +1,6 @@
 import dateFnsFormat from 'date-fns/format'
 import dateFnsDistanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import dateFnsDistanceInWordsStrict from 'date-fns/distance_in_words_strict'
 import { env } from 'decentraland-commons'
 import { getCurrentLocale } from '@dapps/modules/translation/utils'
 
@@ -64,6 +65,10 @@ export function distanceInWordsToNow(date) {
   })
 }
 
+export function distanceInWordStrict(date) {
+  return dateFnsDistanceInWordsStrict(Date.now(), date)
+}
+
 /*
 * @dev returns if address is blacklisted or not
 * @param string - address
@@ -76,4 +81,11 @@ export function isBlacklistedAddress(address) {
   }
   const blackListedAddresses = value.split(',')
   return blackListedAddresses.includes(address)
+}
+
+/*
+*
+*/
+export function sanitizePrice(value = '') {
+  return value.replace(/\.|,/g, '')
 }

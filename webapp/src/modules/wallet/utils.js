@@ -1,5 +1,6 @@
 import { eth, contracts, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
+
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { isParcel } from 'shared/parcel'
 import { isEstate } from 'shared/estate'
@@ -13,7 +14,7 @@ export function getWalletSagaOptions() {
     EstateRegistry
   } = contracts
 
-  return {
+  const options = {
     provider: env.get('REACT_APP_PROVIDER_URL'),
     contracts: [
       new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
@@ -24,10 +25,13 @@ export function getWalletSagaOptions() {
       new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS')),
       new EstateRegistry(env.get('REACT_APP_ESTATE_REGISTRY_CONTRACT_ADDRESS')),
       ...getLandAuctionContracts(),
-      ...getMortgageContracts()
+      ...getMortgageContracts(),
+      ...getBidContracts()
     ],
     eth
   }
+
+  return options
 }
 
 function getNewERC20Token(name, address) {
@@ -120,6 +124,14 @@ function getMortgageContracts() {
     new RCNEngine(env.get('REACT_APP_RCN_ENGINE_CONTRACT_ADDRESS')),
     RCNToken
   ]
+}
+
+function getBidContracts() {
+  const { ERC721Bid } = contracts
+
+  return isFeatureEnabled('BIDS')
+    ? [new ERC721Bid(env.get('REACT_APP_ERC721_BID_CONTRACT_ADDRESS'))]
+    : []
 }
 
 export function getTokenAmountToApprove() {

@@ -1,13 +1,12 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
+import { ASSET_TYPES } from 'shared/asset'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { locations } from 'locations'
-
 import Intercom from 'components/Intercom'
 import Modal from 'components/Modal'
 import Page from 'components/Page'
-
 import HomePage from 'components/HomePage'
 import AtlasPage from 'components/AtlasPage'
 import MarketplacePage from 'components/MarketplacePage'
@@ -35,7 +34,9 @@ import AssetDetailPage from 'components/AssetDetailPage'
 import EditEstatePage from 'components/EditEstatePage'
 import ManageEstatePage from 'components/ManageEstatePage'
 import AuctionRouterPage from 'components/AuctionRouterPage'
-import { ASSET_TYPES } from './shared/asset'
+import BidAssetPage from 'components/BidAssetPage'
+import CancelBidAssetPage from 'components/CancelBidAssetPage'
+import AcceptBidAssetPage from 'components/AcceptBidAssetPage'
 
 export default class Routes extends React.Component {
   renderRoutes() {
@@ -89,6 +90,33 @@ export default class Routes extends React.Component {
           path={this.addLegacySupport(locations.parcelMapDetail())}
           component={AtlasPage}
         />
+        {isFeatureEnabled('BIDS') && (
+          <Route
+            exact
+            path={locations.bidParcel()}
+            component={props => (
+              <BidAssetPage assetType={ASSET_TYPES.parcel} {...props} />
+            )}
+          />
+        )}
+        {isFeatureEnabled('BIDS') && (
+          <Route
+            exact
+            path={locations.cancelBidParcel()}
+            component={props => (
+              <CancelBidAssetPage assetType={ASSET_TYPES.parcel} {...props} />
+            )}
+          />
+        )}
+        {isFeatureEnabled('BIDS') && (
+          <Route
+            exact
+            path={locations.acceptBidParcel()}
+            component={props => (
+              <AcceptBidAssetPage assetType={ASSET_TYPES.parcel} {...props} />
+            )}
+          />
+        )}
 
         {/*Estates*/}
         <Route
@@ -139,6 +167,33 @@ export default class Routes extends React.Component {
           path={locations.manageEstate()}
           component={ManageEstatePage}
         />
+        {isFeatureEnabled('BIDS') && (
+          <Route
+            exact
+            path={locations.bidEstate()}
+            component={props => (
+              <BidAssetPage assetType={ASSET_TYPES.estate} {...props} />
+            )}
+          />
+        )}
+        {isFeatureEnabled('BIDS') && (
+          <Route
+            exact
+            path={locations.cancelBidEstate()}
+            component={props => (
+              <CancelBidAssetPage assetType={ASSET_TYPES.estate} {...props} />
+            )}
+          />
+        )}
+        {isFeatureEnabled('BIDS') && (
+          <Route
+            exact
+            path={locations.acceptBidEstate()}
+            component={props => (
+              <AcceptBidAssetPage assetType={ASSET_TYPES.estate} {...props} />
+            )}
+          />
+        )}
 
         {/*Mortgages*/}
         <Route

@@ -88,6 +88,10 @@ export class API {
     return this.request('get', `/addresses/${address}/estates`, {})
   }
 
+  fetchAddressBids(address, status) {
+    return this.request('get', `/addresses/${address}/bids`, { status })
+  }
+
   fetchEstate(id) {
     return this.request('get', `/estates/${id}`)
   }
@@ -106,6 +110,20 @@ export class API {
 
   fetchMortgages(x, y, status) {
     return this.request('get', `/parcels/${x}/${y}/mortgages`, { status })
+  }
+
+  fetchBidsByAsset(assetId, opt) {
+    return this.request('get', `/assets/${assetId}/bids`, opt)
+  }
+
+  fetchBidById(bidId) {
+    return this.request('get', `/bids/${bidId}`)
+  }
+
+  fetchBidAssets(address, status) {
+    return this.request('get', `/bids/${address}/assets`, {
+      status
+    })
   }
 
   request(method, path, params) {

@@ -6,6 +6,7 @@ import EditEstatePage from './EditEstatePage'
 
 const mapState = (state, ownProps) => {
   const { id, x, y } = getMatchParams(ownProps)
+
   return {
     id,
     x: parseInt(x, 10),
@@ -13,6 +14,6 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => ({})
+const mapDispatch = () => ({})
 
 export default withRouter(connect(mapState, mapDispatch)(EditEstatePage))

@@ -20,16 +20,16 @@ import {
   cancelSaleSuccess,
   cancelSaleFailure
 } from './actions'
-import { getNFTAddressByType, isLegacyPublication } from './utils'
+import { isLegacyPublication } from './utils'
 import { locations } from 'locations'
+import { api } from 'lib/api'
+import { Location } from 'lib/Location'
+import { ASSET_TYPES } from 'shared/asset'
 import { getAddress } from 'modules/wallet/selectors'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_ESTATE_SUCCESS } from 'modules/estates/actions'
 import { getData as getEstates } from 'modules/estates/selectors'
-import { api } from 'lib/api'
-import { Location } from 'lib/Location'
-import { ASSET_TYPES } from 'shared/asset'
-import { splitCoordinate } from 'shared/coordinates'
+import { buildAsset, getNFTAddressByType } from 'modules/asset/utils'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
@@ -83,7 +83,8 @@ function* handlePublishRequest(action) {
     const { asset_id, asset_type, price, expires_at } = action.publication
     const priceInWei = eth.utils.toWei(price)
     const nftAddress = getNFTAddressByType(asset_type)
-    const asset = yield call(() => buildAsset(asset_id, asset_type))
+    const estates = yield select(getEstates)
+    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
     const marketplaceContract = eth.getContract('Marketplace')
 
     const txHash = yield call(() =>
@@ -111,7 +112,8 @@ function* handlePublishRequest(action) {
 function* handleBuyRequest(action) {
   try {
     const { asset_id, asset_type, price } = action.publication
-    const asset = yield call(() => buildAsset(asset_id, asset_type))
+    const estates = yield select(getEstates)
+    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
     const nftAddress = getNFTAddressByType(asset_type)
     const buyer = yield select(getAddress)
 
@@ -167,7 +169,8 @@ function* handleBuyRequest(action) {
 function* handleCancelSaleRequest(action) {
   try {
     const { asset_id, asset_type } = action.publication
-    const asset = yield call(() => buildAsset(asset_id, asset_type))
+    const estates = yield select(getEstates)
+    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
     let marketplaceContract, txHash
     if (isLegacyPublication(action.publication)) {
       marketplaceContract = eth.getContract('LegacyMarketplace')
@@ -216,33 +219,4 @@ function* fetchPublications(action) {
     assets,
     ...action
   }
-}
-
-function* buildAsset(assetId, assetType) {
-  let asset
-  if (assetType === ASSET_TYPES.parcel) {
-    const [x, y] = splitCoordinate(assetId)
-
-    const landRegistry = eth.getContract('LANDRegistry')
-    const tokenId = yield call(() => landRegistry.encodeTokenId(x, y))
-
-    asset = {
-      id: tokenId.toString(),
-      x: parseInt(x, 10),
-      y: parseInt(y, 10)
-    }
-  } else if (assetType === ASSET_TYPES.estate) {
-    const estates = yield select(getEstates)
-    const estate = estates[assetId]
-    asset = {
-      id: assetId,
-      data: {
-        name: estate.data.name,
-        parcels: estate.data.parcels
-      }
-    }
-  }
-
-  // TODO: asset.id should be asset.token_id
-  return { ...asset, type: assetType }
 }

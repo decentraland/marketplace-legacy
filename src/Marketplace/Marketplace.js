@@ -1,4 +1,5 @@
 import { Publication, PublicationQueries, Listing } from '../Listing'
+import { EstateQueries } from '../Asset'
 import { db, SQL, raw } from '../database'
 
 export class Marketplace {
@@ -22,7 +23,7 @@ export class Marketplace {
           ${raw(joinAssetsSQL)}
           WHERE ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}
-            AND ${PublicationQueries.estateHasParcels()}
+            AND ${EstateQueries.estateHasParcels('pub')}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -55,7 +56,7 @@ export class Marketplace {
           WHERE ${PublicationQueries.hasAssetType(asset_type)}
             AND ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}
-            AND ${PublicationQueries.estateHasParcels()}
+            AND ${EstateQueries.estateHasParcels('pub')}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -74,7 +75,7 @@ export class Marketplace {
         WHERE pub.status = ${status}
           AND ${PublicationQueries.hasAssetType(asset_type)}
           AND ${PublicationQueries.isActive()}
-          AND ${PublicationQueries.estateHasParcels()}`
+          AND ${EstateQueries.estateHasParcels('pub')}`
     )
 
     return parseInt(result[0].count, 10)

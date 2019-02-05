@@ -134,3 +134,34 @@ export function fetchAddressEstatesFailure(address, error) {
     error
   }
 }
+
+// Fetch Address Bids
+
+export const FETCH_ADDRESS_BIDS_REQUEST = '[Request] Fetch Address Bids'
+export const FETCH_ADDRESS_BIDS_SUCCESS = '[Success] Fetch Address Bids'
+export const FETCH_ADDRESS_BIDS_FAILURE = '[Failure] Fetch Address Bids'
+
+export function fetchAddressBidsRequest(address, status) {
+  return {
+    type: FETCH_ADDRESS_BIDS_REQUEST,
+    address,
+    status
+  }
+}
+
+export function fetchAddressBidsSuccess(address, bids, assets) {
+  return {
+    type: FETCH_ADDRESS_BIDS_SUCCESS,
+    address,
+    bids,
+    assets
+  }
+}
+
+export function fetchAddressBidsFailure(address, error) {
+  return {
+    type: FETCH_ADDRESS_BIDS_FAILURE,
+    address,
+    error
+  }
+}

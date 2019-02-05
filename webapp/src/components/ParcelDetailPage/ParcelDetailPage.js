@@ -13,16 +13,18 @@ import {
   publicationType,
   mortgageType,
   walletType,
-  estateType
+  estateType,
+  bidType
 } from 'components/types'
-import { getOpenPublication } from 'shared/asset'
+import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { getDistrict } from 'shared/district'
 import { hasTags } from 'shared/parcel'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
-import AssetTransactionHistory from 'components/AssetTransactionHistory'
 import ParcelMortgage from './ParcelMortgage'
+import Bid from 'components/Bid'
+import AssetTransactionHistory from 'components/AssetTransactionHistory'
 
 import './ParcelDetailPage.css'
 
@@ -34,7 +36,8 @@ export default class ParcelDetailPage extends React.PureComponent {
     estates: PropTypes.objectOf(estateType),
     districts: PropTypes.objectOf(districtType).isRequired,
     mortgage: mortgageType,
-    onBuy: PropTypes.func.isRequired
+    onBuy: PropTypes.func.isRequired,
+    bids: PropTypes.arrayOf(bidType)
   }
 
   getDescription() {
@@ -59,12 +62,12 @@ export default class ParcelDetailPage extends React.PureComponent {
       publications,
       isOwner,
       mortgage,
-      wallet
+      wallet,
+      bids
     } = this.props
 
     const description = this.getDescription()
     const publication = getOpenPublication(parcel, publications)
-
     return (
       <div className="ParcelDetailPage">
         <Grid columns={2} stackable>
@@ -84,48 +87,61 @@ export default class ParcelDetailPage extends React.PureComponent {
               />
             </Grid.Column>
           </Grid.Row>
-          {publication || isOwner ? (
-            <Grid.Row className="parcel-detail-row">
-              {publication ? (
-                <React.Fragment>
-                  <Grid.Column mobile={4} tablet={3} computer={4}>
-                    <h3>{t('asset_detail.publication.price')}</h3>
-                    <Mana
-                      amount={parseFloat(publication.price)}
-                      size={20}
-                      className="mana-price-icon"
-                    />
-                  </Grid.Column>
-                  <Grid.Column
-                    mobile={4}
-                    tablet={3}
-                    computer={4}
-                    className="time-left"
-                  >
-                    <h3>{t('global.time_left')}</h3>
-                    <Expiration
-                      expiresAt={parseInt(publication.expires_at, 10)}
-                      className={'PublicationExpiration'}
-                    />
-                  </Grid.Column>
-                </React.Fragment>
-              ) : null}
-              <Grid.Column
-                className="parcel-actions-container"
-                tablet={publication ? 10 : 16}
-                computer={publication ? 8 : 16}
-              >
-                <ParcelActions
-                  wallet={wallet}
-                  parcel={parcel}
-                  mortgage={mortgage}
-                  publications={publications}
-                  isOwner={isOwner}
-                />
-              </Grid.Column>
-            </Grid.Row>
-          ) : null}
+          <Grid.Row className="parcel-detail-row">
+            {publication ? (
+              <React.Fragment>
+                <Grid.Column mobile={4} tablet={3} computer={4}>
+                  <h3>{t('global.price')}</h3>
+                  <Mana
+                    amount={parseFloat(publication.price)}
+                    size={20}
+                    className="mana-price-icon"
+                  />
+                </Grid.Column>
+                <Grid.Column
+                  mobile={4}
+                  tablet={3}
+                  computer={4}
+                  className="time-left"
+                >
+                  <h3>{t('global.time_left')}</h3>
+                  <Expiration
+                    expiresAt={parseInt(publication.expires_at, 10)}
+                    className={'PublicationExpiration'}
+                  />
+                </Grid.Column>
+              </React.Fragment>
+            ) : null}
+            <Grid.Column
+              className="parcel-actions-container"
+              tablet={publication ? 10 : 16}
+              computer={publication ? 8 : 16}
+            >
+              <ParcelActions
+                wallet={wallet}
+                parcel={parcel}
+                mortgage={mortgage}
+                publications={publications}
+                isOwner={isOwner}
+                bids={bids}
+              />
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
+
+        {bids &&
+          bids.length > 0 && (
+            <Grid stackable className="parcel-detail-row">
+              <Grid.Row>
+                <Grid.Column>
+                  <h3>{t('asset_detail.bid.title')}</h3>
+                  {bids.map(bid => (
+                    <Bid key={bid.id} bid={bid} isOwner={isOwner} />
+                  ))}
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          )}
 
         {mortgage && <ParcelMortgage mortgage={mortgage} />}
 
@@ -140,7 +156,10 @@ export default class ParcelDetailPage extends React.PureComponent {
           </Grid>
         )}
 
-        <AssetTransactionHistory asset={parcel} publications={publications} />
+        <AssetTransactionHistory
+          asset={{ ...parcel, type: ASSET_TYPES.parcel }}
+          publications={publications}
+        />
       </div>
     )
   }

@@ -14,7 +14,7 @@ import AssetPreviewHeader from 'components/AssetPreviewHeader'
 import ParcelCoords from 'components/ParcelCoords'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
-import { parcelType, estateType } from 'components/types'
+import { parcelType, estateType, bidType } from 'components/types'
 import { ASSET_TYPES, isOwner } from 'shared/asset'
 import {
   getParcelMatcher,
@@ -29,6 +29,7 @@ import './EstateSelect.css'
 export default class EstateSelect extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
+    bids: PropTypes.arrayOf(bidType),
     pristineEstate: estateType,
     allParcels: PropTypes.objectOf(parcelType),
     wallet: PropTypes.object.isRequired,
@@ -144,6 +145,7 @@ export default class EstateSelect extends React.PureComponent {
   renderTxLabel = () => {
     const parcelsToAdd = this.getParcelsToAdd()
     const parcelsToRemove = this.getParcelsToRemove()
+
     return (
       <React.Fragment>
         {!!parcelsToAdd.length && (
@@ -171,6 +173,7 @@ export default class EstateSelect extends React.PureComponent {
   render() {
     const {
       estate,
+      bids,
       onCancel,
       onContinue,
       onSubmit,
@@ -194,6 +197,16 @@ export default class EstateSelect extends React.PureComponent {
           onAssetClick={this.handleParcelClick}
         />
         <Container>
+          {bids.length > 0 && (
+            <Container text className="bids-warning">
+              <Message
+                warning
+                icon="warning sign"
+                header={t('global.warning')}
+                content={t('estate_select.bids_warning')}
+              />
+            </Container>
+          )}
           <Grid className="estate-selection" stackable>
             {this.hasReachedAddLimit() || this.hasReachedRemoveLimit() ? (
               <Grid.Row>

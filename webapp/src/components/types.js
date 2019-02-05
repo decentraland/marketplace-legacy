@@ -136,3 +136,14 @@ export const tileType = shape({
   top: number,
   topLeft: number
 })
+
+export const bidType = shape({
+  id: string,
+  status: oneOf(Object.values(LISTING_STATUS)),
+  price: number,
+  owner: string,
+  buyer: string,
+  asset_id: string,
+  asset_type: string,
+  expires_at: oneOfType([number, string])
+})

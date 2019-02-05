@@ -10,6 +10,6 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => ({})
+const mapDispatch = () => ({})
 
 export default connect(mapState, mapDispatch)(BlockDate)

@@ -1,7 +1,6 @@
 import { utils } from 'decentraland-commons'
 
 const BLACKLISTED_PROPERTIES = [
-  'seller',
   'created_at',
   'updated_at',
   'block_number',
@@ -11,4 +10,8 @@ const BLACKLISTED_PROPERTIES = [
 
 export function sanitizeBids(bids) {
   return utils.mapOmit(bids, BLACKLISTED_PROPERTIES)
+}
+
+export function sanitizeBid(bid) {
+  return utils.omit(bid, BLACKLISTED_PROPERTIES)
 }

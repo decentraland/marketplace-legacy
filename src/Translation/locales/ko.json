@@ -15,6 +15,28 @@
   "address": {
     "its_you": "너야"
   },
+  "asset_accept_bid": {
+    "about_to_accept_bid": "{price}에 대해 {name}의 입찰을 허용하려고합니다.",
+    "accept_bid_asset": "{asset_type}에 대한 입찰 승인"
+  },
+  "asset_bid": {
+    "errors": {
+      "maximum_expiration": "최대 만기 날짜는 {date} (6 개월)입니다.",
+      "maximum_land_price": "최대 {asset_name} 가격은 {value} MANA입니다.",
+      "minimum_expiration": "최소 만료일은 {date}입니다.",
+      "minimum_land_price": "최소 {asset_name} 가격은 {value} MANA입니다."
+    },
+    "expiration": "만료",
+    "expiration_placeholder": "이 발행물의 만료일",
+    "list_asset": "{asset_name}에 입찰하기",
+    "please_authorize":
+      "{settings_link}에 가서 입찰을하기 전에 MANA를 사용하도록 입찰 계약서를 승인해야합니다.",
+    "price_placeholder": "이 {asset_name}에 대한 MANA의 가격",
+    "set_asset_price": "{asset_name}의 가격과 만료 날짜를 설정하십시오.",
+    "set_new_asset_price":
+      "{asset_name}의 새 가격 또는 만료 날짜를 설정하십시오.",
+    "update_asset": "{asset_name} 입찰 업데이트"
+  },
   "asset_buy": {
     "about_to_buy": "{name}을(를) 구입하려고 합니다.",
     "allowed_balance": "수당은 {allowance}입니다.",
@@ -32,7 +54,10 @@
   },
   "asset_cancel": {
     "about_to_cancel": "{name}의 판매를 취소하려고합니다.",
+    "about_to_cancel_bid": "{name}에 대한 입찰가를 취소하려고합니다.",
+    "cancel_bid": "입찰 취소",
     "cancel_sale": "판매 취소",
+    "not_bid": "{asset_name} {asset}에 대한 공개 입찰가가 없습니다.",
     "not_for_sale": "소포 {parcel}은 판매용이 아닙니다."
   },
   "asset_detail": {
@@ -43,19 +68,20 @@
       "transfer": "이전",
       "update_price": "가격 업데이트"
     },
+    "bid": {
+      "place": "매기다",
+      "title": "입찰가"
+    },
     "history": {
       "auction": "경매",
       "event": "행사",
-      "from": "에서",
-      "price": "가격",
       "sold": "판매 된",
       "title": "거래 내역",
       "to": "에",
       "when": "언제"
     },
     "publication": {
-      "buy": "사다",
-      "price": "가격"
+      "buy": "사다"
     }
   },
   "asset_edit": {
@@ -74,7 +100,6 @@
     "manage": "{asset_type} 관리"
   },
   "asset_publish": {
-    "already_sold": "이 {asset_name}은 이미 {value}에 판매 중입니다.",
     "errors": {
       "maximum_expiration": "최대 만기 날짜는 {date}입니다.",
       "maximum_land_price": "최대 {asset_name} 가격은 {value} MANA입니다.",
@@ -86,7 +111,6 @@
     "list_asset": "판매 목록 {asset_name}",
     "please_authorize":
       "판매를 위해 목록에 올리기 전에 {settings_link}으로 가서 마켓 플레이스가 귀하를 대신하여 {asset_name}을 운영하도록 승인해야합니다.",
-    "price": "가격",
     "price_placeholder": "이 {asset_name}에 대한 MANA의 가격",
     "set_asset_price": "{asset_name}의 가격과 만료 날짜를 설정하십시오.",
     "set_new_asset_price":
@@ -188,6 +212,11 @@
     "disapproved":
       "당신은 {contract_link}을 당신을 대신하여 {symbol}을 조작하도록 승인하지 않았습니다."
   },
+  "bid": {
+    "bid_asset": "ERC721 입찰가",
+    "placed": "배치 된 입찰가",
+    "received": "받은 입찰가"
+  },
   "buy_mana": {
     "action": "더 사",
     "amount_too_big": "이 금액은 Bancor Network에 비해 너무 큽니다.",
@@ -242,6 +271,7 @@
     "subtitle": "이름과 설명을 설정하고 재산에 대한 소포를 편집하십시오."
   },
   "estate_select": {
+    "bids_warning": "이 Estate에는 활성 입찰가가 있습니다. ",
     "description": "서로 인접한 소포를 선택하십시오.",
     "detail": "부동산 상세",
     "edit_selection": "지도에서 소포를 선택하십시오.",
@@ -263,6 +293,7 @@
     "terms": "이용 약관"
   },
   "global": {
+    "accept": "동의",
     "acquired_ago": "{date}에서 획득",
     "activity": "활동",
     "add": "더하다",
@@ -270,6 +301,7 @@
     "atlas": "지도",
     "auction": "경매",
     "balance": "밸런스",
+    "bids": "입찰가",
     "blog": "블로그",
     "cancel": "취소",
     "change": "변화",
@@ -294,6 +326,7 @@
     "expires_in": "만료 {time}",
     "expires_in_more_than_years": "{years} 년 이상 만료 됨",
     "for": "에 대한",
+    "from": "...에서",
     "hours": "시간",
     "land": "LAND",
     "learn_more": "더 알아보기",
@@ -308,6 +341,7 @@
     "owner_address_warning": "그것은 이미 소유자입니다!",
     "paid_at": "유료",
     "parcels": "필지",
+    "price": "가격",
     "profile": "나의 토지",
     "publications": "간행물",
     "recipient_address": "수취인 주소",
@@ -327,10 +361,14 @@
     "the_parcel": "소포",
     "time_left": "남은 시간",
     "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
+    "type": "유형",
     "unauthorized": "무단",
     "undo": "끄르다",
+    "update": "최신 정보",
     "wallet_address": "지갑 주소",
-    "website": "웹 사이트"
+    "warning": "경고",
+    "website": "웹 사이트",
+    "you": "당신"
   },
   "homepage": {
     "get_started": "시작하기",
@@ -460,6 +498,7 @@
     "authorization_error_contact":
       "오류가 지속되면 언제든지 Google에 문의하십시오.",
     "for_buying": "구매를 위해",
+    "for_buying_ERC721Bid": "MANA (입찰가)를 사용하는 저작물",
     "for_buying_LANDAuction": "{token}를 사용하여 경매 된 LAND",
     "for_buying_LegacyMarketplace": "MANA (레거시)를 사용하는 ERC721",
     "for_buying_Marketplace": "MANA를 사용하는 ERC721s",
@@ -496,10 +535,12 @@
     "title": "Decentraland의 LAND 마켓 플레이스에 오신 것을 환영합니다."
   },
   "transaction": {
+    "accept_bid": "{price}에 대한 {asset_link}에 대한 입찰을 수락했습니다.",
     "bid": "경매에서 {parcel_count} 소포를 구입했습니다.",
     "buy": "{parcel_link}을(를) 구입했습니다.",
     "buy_mana": "너는 {mana} MANA를 구입했다.",
-    "cancel": "{parcel_link}에서 판매를 취소했습니다",
+    "cancel": "{asset_link}에서 판매를 취소했습니다.",
+    "cancel_bid": "{asset_link}에서 입찰가를 취소했습니다.",
     "cancel_mortgage": "소포 {parcel_link}을 사기 위해 모기지를 취소합니다.",
     "claim_mortgage_resolution": "당신은 {parcel_link}을 주장했습니다",
     "create_estate": "부동산 {name}을 만들었습니다.",
@@ -522,6 +563,7 @@
       "{action} 귀하를 대신하여 RCN을 운영하는 {mortgage_contract_link}",
     "pay_mortgage":
       "소포 {parcel_link}을 구입하기 위해 모기지에 대해 {amount}의 부분 지불을했습니다",
+    "place_bid": "당신은 {price} MANA에 대해 {asset_link}를 입찰합니다.",
     "publish": "{parcel_link}을(를) 게시했습니다",
     "transfer": "당신은 {asset_type} {asset_link}을 {owner_link}로 옮겼습니다",
     "transfer_mana": "{mana} MANA를 {address_link}으로 이전했습니다"

@@ -2,18 +2,25 @@ import { connect } from 'react-redux'
 import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
-import { getData as getTiles } from 'modules/tile/selectors'
-import { getData as getPublications } from 'modules/publication/selectors'
-import { fetchAsset } from 'modules/asset/actions'
 import { ASSET_TYPES } from 'shared/asset'
+import { getData as getTiles } from 'modules/tile/selectors'
+import { fetchAsset } from 'modules/asset/actions'
+import { getData as getPublications } from 'modules/publication/selectors'
+import { getBidsByAssetFactory } from 'modules/bid/selectors'
 
 import EstateDetailPage from './EstateDetailPage'
 
 const mapState = (state, ownProps) => {
+  const getBids = getBidsByAssetFactory(
+    ownProps.isOwner,
+    ASSET_TYPES.estate,
+    ownProps.asset.id
+  )
   return {
     estate: ownProps.asset,
     publications: getPublications(state),
-    tiles: getTiles(state)
+    tiles: getTiles(state),
+    bids: getBids(state)
   }
 }
 

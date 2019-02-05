@@ -14,6 +14,29 @@
   "address": {
     "its_you": "あなたです"
   },
+  "asset_accept_bid": {
+    "about_to_accept_bid":
+      "{price}に対する{name}の入札を承認しようとしています。",
+    "accept_bid_asset": "{asset_type}の入札を承認する"
+  },
+  "asset_bid": {
+    "errors": {
+      "maximum_expiration": "最大有効期限は{date}（6ヶ月）です。",
+      "maximum_land_price": "最大{asset_name}価格は{value} MANAです",
+      "minimum_expiration": "最小有効期限は{date}です",
+      "minimum_land_price": "最小{asset_name}価格は{value} MANAです"
+    },
+    "expiration": "有効期限",
+    "expiration_placeholder": "この出版物の有効期限",
+    "list_asset": "{asset_name}に入札する",
+    "please_authorize":
+      "あなたが入札をすることができる前にあなたは{settings_link}に行き、あなたに代わってMANAを使うために入札契約を承認する必要があります。",
+    "price_placeholder": "この{asset_name}のMANAでの価格",
+    "set_asset_price": "{asset_name}に価格と有効期限を設定します。",
+    "set_new_asset_price":
+      "{asset_name}に新しい価格または有効期限を設定します。",
+    "update_asset": "{asset_name}入札を更新"
+  },
   "asset_buy": {
     "about_to_buy": "{name}を{price}で購入しようとしています",
     "allowed_balance": "{allowance}まで利用可能です",
@@ -31,7 +54,11 @@
   },
   "asset_cancel": {
     "about_to_cancel": "{name}の販売をキャンセルしようとしています",
+    "about_to_cancel_bid": "{name}の入札をキャンセルしようとしています。",
+    "cancel_bid": "入札をキャンセル",
     "cancel_sale": "販売をキャンセル",
+    "not_bid":
+      "あなたは{asset_name} {asset}のための自由な入札を持っていません。",
     "not_for_sale": "この区画{parcel}は販売されていません"
   },
   "asset_detail": {
@@ -42,19 +69,20 @@
       "transfer": "転送",
       "update_price": "価格を編集する"
     },
+    "bid": {
+      "place": "入札",
+      "title": "入札単価"
+    },
     "history": {
       "auction": "オークション",
       "event": "イベント",
-      "from": "送信元",
-      "price": "価格",
       "sold": "売却済",
       "title": "取引履歴",
       "to": "受信者",
       "when": "時期"
     },
     "publication": {
-      "buy": "購入",
-      "price": "価格"
+      "buy": "購入"
     }
   },
   "asset_edit": {
@@ -72,7 +100,6 @@
     "manage": "{asset_type} を管理する"
   },
   "asset_publish": {
-    "already_sold": "この{asset_name}は既に{value}で販売中です",
     "errors": {
       "maximum_expiration": "最大販売期限は{date}です",
       "maximum_land_price": "最大{asset_name}価格は{value} MANA",
@@ -84,7 +111,6 @@
     "list_asset": "{asset_name}を販売する",
     "please_authorize":
       "販売の前に{settings_link}にてマーケットで{asset_name}を操作することを承認してください",
-    "price": "価格",
     "price_placeholder": "この{asset_name}の価格はMANAです",
     "set_asset_price": "{asset_name}の価格と有効期限を設定します",
     "set_new_asset_price": "{asset_name}の新しい価格または有効期限を設定します",
@@ -184,6 +210,11 @@
     "disapproved":
       "{contract_link}に準じて{symbol}を操作することを許可しませんでした"
   },
+  "bid": {
+    "bid_asset": "入札ERC721",
+    "placed": "入札単価",
+    "received": "入札を受けました"
+  },
   "buy_mana": {
     "action": "更に購入する",
     "amount_too_big": "Bancor Networkには額が大き過ぎます。",
@@ -239,6 +270,7 @@
     "subtitle": "エステートの区画の名称と説明の設定・編集ができます。"
   },
   "estate_select": {
+    "bids_warning": "このEstateの入札はアクティブです。",
     "description": "互いに隣接する区画を選択してください。",
     "detail": "エステートの詳細",
     "edit_selection": "地図上の区画を選択する",
@@ -259,6 +291,7 @@
     "terms": "利用規約"
   },
   "global": {
+    "accept": "受け入れる",
     "acquired_ago": "{date}に取得済み",
     "activity": "取引履歴",
     "add": "追加する",
@@ -266,6 +299,7 @@
     "atlas": "地図",
     "auction": "オークション",
     "balance": "残高",
+    "bids": "入札単価",
     "blog": "ブログ",
     "cancel": "キャンセル",
     "change": "変更",
@@ -290,6 +324,7 @@
     "expires_in": "締切：{time}",
     "expires_in_more_than_years": "締切まであと{years}年以上",
     "for": " ",
+    "from": "から",
     "hours": "時間",
     "land": "LAND",
     "learn_more": "もっと詳しく知る",
@@ -304,6 +339,7 @@
     "owner_address_warning": "このアドレスはすでに所有者に指定されています",
     "paid_at": "支払済み",
     "parcels": "パーセル(区画)",
+    "price": "価格",
     "profile": "マイLAND",
     "publications": "公開中の区画",
     "recipient_address": "受信者アドレス",
@@ -323,10 +359,14 @@
     "the_parcel": "区画",
     "time_left": "残り時間",
     "transfer_irreversible": "転送は元に戻すことができません",
+    "type": "タイプ",
     "unauthorized": "未承認",
     "undo": "戻す",
+    "update": "更新",
     "wallet_address": "ウォレットアドレス",
-    "website": "ウェブサイト"
+    "warning": "警告",
+    "website": "ウェブサイト",
+    "you": "君は"
   },
   "homepage": {
     "get_started": "始める",
@@ -455,6 +495,7 @@
     "authorization_error_contact":
       "エラーが解決しない場合は、お手数ですがお問い合わせください",
     "for_buying": "購入に関わる契約",
+    "for_buying_ERC721Bid": "MANA（入札）を使用している資産",
     "for_buying_LANDAuction": "LANDオークションでの{token}使用",
     "for_buying_LegacyMarketplace": "MANAによる資産の扱い（従来）",
     "for_buying_Marketplace": "MANAによる資産の扱い",
@@ -492,10 +533,12 @@
     "title": "DecentralandのLANDマーケットへようこそ"
   },
   "transaction": {
+    "accept_bid": "{price}に対する{asset_link}の入札を承認しました",
     "bid": "オークションで{parcel_count}区画を購入しました",
     "buy": "{parcel_link}を購入しました",
     "buy_mana": "{mana} MANAを購入しました",
-    "cancel": "{parcel_link}の販売をキャンセルしました",
+    "cancel": "{asset_link}にセールをキャンセルしました",
+    "cancel_bid": "{asset_link}の入札をキャンセルしました",
     "cancel_mortgage": "区画{parcel_link}購入の為のローンをキャンセルしました",
     "claim_mortgage_resolution": "{parcel_link}へ請求しました",
     "create_estate": "エステート{name}を作成しました",
@@ -518,6 +561,7 @@
       "{mortgage_contract_link}でRCNを使用することを{action}しました",
     "pay_mortgage":
       "区画{parcel_link}を購入するローンへの部分払いで{amount}MANAを支払いました",
+    "place_bid": "{asset_link}を{price} MANAに入札しました",
     "publish": "{parcel_link}を公開しました",
     "transfer": "{asset_type} {asset_link} を {owner_link} へ転送しました",
     "transfer_mana": "{mana} MANAを {address_link} へ転送しました。"

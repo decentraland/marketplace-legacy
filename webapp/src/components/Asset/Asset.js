@@ -33,8 +33,8 @@ export default class Asset extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { value, isLoading, onFetchAsset } = this.props
-    if (value || isLoading) {
+    const { isLoading, onFetchAsset } = this.props
+    if (isLoading) {
       return
     }
     onFetchAsset()

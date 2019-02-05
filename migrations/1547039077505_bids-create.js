@@ -23,6 +23,7 @@ exports.up = pgm => {
       default: LISTING_ASSET_TYPES.parcel,
       notNull: true
     },
+    block_number: { type: 'INT', notNull: true },
     block_time_created_at: { type: 'BIGINT', notNull: true },
     block_time_updated_at: { type: 'BIGINT' },
     created_at: { type: 'TIMESTAMP', notNull: true },

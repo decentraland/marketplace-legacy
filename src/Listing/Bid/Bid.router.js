@@ -3,7 +3,7 @@ import { server } from 'decentraland-commons'
 import { Bid } from './Bid.model'
 import { Parcel } from '../../Asset'
 import { ASSET_TYPES } from '../../../shared/asset'
-import { sanitizeBids } from '../../sanitize'
+import { sanitizeBids, sanitizeAssets } from '../../sanitize'
 
 export class BidRouter {
   constructor(app) {
@@ -13,10 +13,11 @@ export class BidRouter {
   mount() {
     /**
      * Returns the bids for an asset
-     * @param  {string} x
-     * @param  {string} y
+     * @param  {string} asset_id - id of the asset: [x,y|estateId]
      * @param  {string} asset_type - specify an asset type, it's required
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+     * @param  {string} [bidder] - bidder address
+     * @param  {string} [sanitize] - whether sanitize the result or not
      * @return {array<Bid>}
      */
     this.app.get('/assets/:id/bids', server.handleRequest(this.getAssetBids))
@@ -26,6 +27,8 @@ export class BidRouter {
      * @param  {string} x
      * @param  {string} y
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+     * @param  {string} [bidder] - bidder address
+     * @param  {string} [sanitize] - whether sanitize the result or not
      * @return {array<Bid>}
      */
     this.app.get(
@@ -37,6 +40,8 @@ export class BidRouter {
      * Returns the bids for an estate
      * @param  {string} id
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+     * @param  {string} [bidder] - bidder address
+     * @param  {string} [sanitize] - whether sanitize the result or not
      * @return {array<Bid>}
      */
     this.app.get(
@@ -44,12 +49,28 @@ export class BidRouter {
       server.handleRequest(this.getEstateBids.bind(this))
     )
 
+    this.app.get(
+      '/bids/:address/assets',
+      server.handleRequest(this.getBidAssets)
+    )
+
     /**
      * Get a bid by id
      * @param  {string} id
-     * @return {array}
+     * @return {Bid}
      */
-    this.app.get('/bids/:id', server.handleRequest(this.getBid))
+    this.app.get('/bids/:id', server.handleRequest(this.getBidById))
+
+    /**
+     * Returns the bids where an address is the seller or bidder
+     * @param {string} [seller] - Asset owner
+     * @param  {string} [status] - specify a bid status to retreive: [cancelled|sold|pending].
+     * @return {array<Bid>}
+     */
+    this.app.get(
+      '/addresses/:address/bids',
+      server.handleRequest(this.getAddressBids)
+    )
   }
 
   async getParcelBids(req) {
@@ -82,10 +103,22 @@ export class BidRouter {
       bids = await Bid.findByAssetId(id, assetType)
     }
 
-    return sanitizeBids(bids)
+    try {
+      const bidder = server.extractFromReq(req, 'bidder')
+      bids = bids.filter(bid => bid.bidder === bidder)
+    } catch (errror) {
+      // Do nothing
+    }
+
+    try {
+      const sanitize = server.extractFromReq(req, 'sanitize')
+      return sanitize === 'false' ? bids : sanitizeBids(bids)
+    } catch (errror) {
+      return sanitizeBids(bids)
+    }
   }
 
-  async getBid(req) {
+  async getBidById(req) {
     const id = server.extractFromReq(req, 'id')
     const bid = await Bid.findOne({ id })
 
@@ -93,6 +126,34 @@ export class BidRouter {
       throw new Error(`Could not find a valid bid with the id: "${id}"`)
     }
 
-    return sanitizeBids(bid)
+    return bid
+  }
+
+  async getAddressBids(req) {
+    const address = server.extractFromReq(req, 'address')
+    let bids = []
+
+    try {
+      const status = server.extractFromReq(req, 'status')
+      bids = await Bid.findByAddressAndStatus(address, status)
+    } catch (error) {
+      bids = await Bid.findByAddress(address)
+    }
+
+    return sanitizeBids(bids)
+  }
+
+  async getBidAssets(req) {
+    const address = server.extractFromReq(req, 'address')
+    let assets
+
+    try {
+      const status = server.extractFromReq(req, 'status')
+      assets = await Bid.findBidAssetsByStatuses(address, [status])
+    } catch (error) {
+      assets = await Bid.findBidAssetsByStatuses(address)
+    }
+
+    return sanitizeAssets(assets)
   }
 }

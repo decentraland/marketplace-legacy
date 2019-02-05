@@ -19,6 +19,7 @@ describe('Bid', function() {
       asset_type: LISTING_ASSET_TYPES.parcel,
       asset_id: '1',
       block_time_created_at: timeCreated,
+      block_number: 0,
       status: LISTING_STATUS.open,
       seller: null
     })
@@ -33,6 +34,7 @@ describe('Bid', function() {
       fingerprint: '0x',
       asset_type: LISTING_ASSET_TYPES.parcel,
       asset_id: '1',
+      block_number: 0,
       block_time_created_at: timeCreated,
       status: LISTING_STATUS.open,
       seller: null
@@ -49,6 +51,7 @@ describe('Bid', function() {
       asset_type: LISTING_ASSET_TYPES.parcel,
       asset_id: '1',
       block_time_created_at: timeCreated,
+      block_number: 0,
       status: LISTING_STATUS.sold,
       seller: null
     })
@@ -70,6 +73,7 @@ describe('Bid', function() {
           asset_type: LISTING_ASSET_TYPES.parcel,
           asset_id: '1',
           block_time_created_at: timeCreated.toString(),
+          block_number: 0,
           status: LISTING_STATUS.sold,
           block_time_updated_at: null,
           seller: null
@@ -85,6 +89,7 @@ describe('Bid', function() {
           asset_type: LISTING_ASSET_TYPES.parcel,
           asset_id: '1',
           block_time_created_at: timeCreated.toString(),
+          block_number: 0,
           status: LISTING_STATUS.open,
           block_time_updated_at: null,
           seller: null
@@ -100,6 +105,7 @@ describe('Bid', function() {
           asset_type: LISTING_ASSET_TYPES.parcel,
           asset_id: '1',
           block_time_created_at: timeCreated.toString(),
+          block_number: 0,
           status: LISTING_STATUS.open,
           block_time_updated_at: null,
           seller: null
@@ -129,6 +135,7 @@ describe('Bid', function() {
           asset_type: LISTING_ASSET_TYPES.parcel,
           asset_id: '1',
           block_time_created_at: timeCreated.toString(),
+          block_number: 0,
           status: LISTING_STATUS.open,
           block_time_updated_at: null,
           seller: null
@@ -144,6 +151,7 @@ describe('Bid', function() {
           asset_type: LISTING_ASSET_TYPES.parcel,
           asset_id: '1',
           block_time_created_at: timeCreated.toString(),
+          block_number: 0,
           status: LISTING_STATUS.open,
           block_time_updated_at: null,
           seller: null
@@ -169,6 +177,7 @@ describe('Bid', function() {
           asset_type: LISTING_ASSET_TYPES.parcel,
           asset_id: '1',
           block_time_created_at: timeCreated.toString(),
+          block_number: 0,
           status: LISTING_STATUS.sold,
           block_time_updated_at: null,
           seller: null

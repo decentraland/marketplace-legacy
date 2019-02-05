@@ -7,9 +7,21 @@ export const LISTING_STATUS = Object.freeze({
 
 export const LISTING_ASSET_TYPES = Object.freeze({
   parcel: 'parcel',
-  estate: 'estate',
-  unknow: 'unknow'
+  estate: 'estate'
 })
+
+export const LISTING_TYPES = Object.freeze({
+  PUBLICATION: 'publication',
+  BID: 'bid',
+  AUCTION: 'auction',
+  MORTGAGE: 'mortgage'
+})
+
+export const DEFAULT_DAY_INTERVAL = 31
+export const MINIMUM_DAY_INTERVAL = 1
+export const MAXIMUM_BID_DAY_INTERVAL = 6 * 31 // six month
+export const MAXIMUM_PUBLISH_DAY_INTERVAL = 5 * 365 // 5 years
+export const MINIMUM_ASSET_PRICE = 1
 
 export function isOpen(listing) {
   return hasStatus(listing, LISTING_STATUS.open)
