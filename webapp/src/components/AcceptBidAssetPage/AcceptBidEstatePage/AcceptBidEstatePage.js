@@ -13,6 +13,7 @@ export default class AcceptBidEstatePage extends React.PureComponent {
     id: PropTypes.string.isRequired,
     wallet: walletType,
     bid: bidType,
+    isOpen: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     handleConfirm: PropTypes.func.isRequired,
@@ -20,10 +21,10 @@ export default class AcceptBidEstatePage extends React.PureComponent {
   }
 
   render() {
-    const { id, isTxIdle, onCancel, bid, handleConfirm } = this.props
+    const { id, isTxIdle, onCancel, bid, handleConfirm, isOpen } = this.props
     const { price } = bid
     return (
-      <Estate id={id} onlyOwner>
+      <Estate id={id} ownerOnly>
         {estate => {
           return (
             <div className="BuyEstatePage">
@@ -33,22 +34,26 @@ export default class AcceptBidEstatePage extends React.PureComponent {
                   asset_type: t('name.estate')
                 })}
                 subtitle={
-                  <T
-                    id="asset_accept_bid.about_to_accept_bid"
-                    values={{
-                      name: <EstateName estate={estate} />,
-                      price: (
-                        <React.Fragment>
-                          {t('global.for')}&nbsp;&nbsp;
-                          <Mana amount={price} size={14} />
-                        </React.Fragment>
-                      )
-                    }}
-                  />
+                  !isOpen ? (
+                    t('asset_accept_bid.expired')
+                  ) : (
+                    <T
+                      id="asset_accept_bid.about_to_accept_bid"
+                      values={{
+                        name: <EstateName estate={estate} />,
+                        price: (
+                          <React.Fragment>
+                            {t('global.for')}&nbsp;&nbsp;
+                            <Mana amount={price} size={14} />
+                          </React.Fragment>
+                        )
+                      }}
+                    />
+                  )
                 }
                 onCancel={onCancel}
                 onConfirm={handleConfirm}
-                isDisabled={isTxIdle}
+                isDisabled={isTxIdle || !isOpen}
                 isTxIdle={isTxIdle}
               />
             </div>

@@ -17,7 +17,8 @@
   "asset_accept_bid": {
     "about_to_accept_bid":
       "You are about to accept the bid of {name} for {price}.",
-    "accept_bid_asset": "Accept bid for {asset_type}"
+    "accept_bid_asset": "Accept bid for {asset_type}",
+    "expired": "Bid expired"
   },
   "asset_bid": {
     "errors": {

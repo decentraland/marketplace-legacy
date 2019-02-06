@@ -14,6 +14,7 @@ export default class AcceptBidParcelPage extends React.PureComponent {
     id: PropTypes.string.isRequired,
     wallet: walletType,
     bid: bidType,
+    isOpen: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     handleConfirm: PropTypes.func.isRequired,
@@ -21,12 +22,12 @@ export default class AcceptBidParcelPage extends React.PureComponent {
   }
 
   render() {
-    const { id, bid, isTxIdle, onCancel, handleConfirm } = this.props
+    const { id, bid, isTxIdle, onCancel, handleConfirm, isOpen } = this.props
     const [x, y] = splitCoordinate(id)
     const { price } = bid
 
     return (
-      <Parcel x={x} y={y} onlyOwner>
+      <Parcel x={x} y={y} ownerOnly>
         {parcel => {
           return (
             <div className="BuyParcelPage">
@@ -34,25 +35,29 @@ export default class AcceptBidParcelPage extends React.PureComponent {
                 x={x}
                 y={y}
                 title={t('asset_accept_bid.accept_bid_asset', {
-                  asset_type: t('name.estate')
+                  asset_type: t('name.parcel')
                 })}
                 subtitle={
-                  <T
-                    id="asset_accept_bid.about_to_accept_bid"
-                    values={{
-                      name: <ParcelDetailLink parcel={parcel} />,
-                      price: (
-                        <React.Fragment>
-                          &nbsp;{t('global.for')}&nbsp;&nbsp;
-                          <Mana amount={price} size={14} />
-                        </React.Fragment>
-                      )
-                    }}
-                  />
+                  !isOpen ? (
+                    t('asset_accept_bid.expired')
+                  ) : (
+                    <T
+                      id="asset_accept_bid.about_to_accept_bid"
+                      values={{
+                        name: <ParcelDetailLink parcel={parcel} />,
+                        price: (
+                          <React.Fragment>
+                            &nbsp;{t('global.for')}&nbsp;&nbsp;
+                            <Mana amount={price} size={14} />
+                          </React.Fragment>
+                        )
+                      }}
+                    />
+                  )
                 }
                 onCancel={onCancel}
                 onConfirm={handleConfirm}
-                isDisabled={isTxIdle}
+                isDisabled={isTxIdle || !isOpen}
                 isTxIdle={isTxIdle}
               />
             </div>

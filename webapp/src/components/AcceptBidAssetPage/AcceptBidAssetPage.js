@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 
+import { isOpen } from 'shared/listing'
 import { ASSET_TYPES } from 'shared/asset'
 import AcceptBidParcelPage from './AcceptBidParcelPage'
 import AcceptBidEstatePage from './AcceptBidEstatePage'
@@ -37,6 +38,8 @@ export default class AcceptBidAssetPage extends React.PureComponent {
       return null
     }
 
+    const bidIsOpen = isOpen(bid)
+
     if (isLoading) {
       return (
         <div>
@@ -50,6 +53,7 @@ export default class AcceptBidAssetPage extends React.PureComponent {
         return (
           <AcceptBidParcelPage
             {...this.props}
+            isOpen={bidIsOpen}
             handleConfirm={this.handleConfirm}
           />
         )
@@ -57,6 +61,7 @@ export default class AcceptBidAssetPage extends React.PureComponent {
         return (
           <AcceptBidEstatePage
             {...this.props}
+            isOpen={bidIsOpen}
             handleConfirm={this.handleConfirm}
           />
         )
