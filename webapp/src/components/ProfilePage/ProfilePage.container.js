@@ -93,7 +93,8 @@ const mapState = (state, { location, match }) => {
 }
 
 const mapDispatch = (dispatch, { match }) => ({
-  onFetchAddress: () => dispatch(fetchAddress(match.params.address)),
+  onFetchAddress: address =>
+    dispatch(fetchAddress(address || match.params.address)),
   onNavigate: url => dispatch(navigateTo(url)),
   onAccessDenied: () => dispatch(navigateTo(locations.marketplace()))
 })

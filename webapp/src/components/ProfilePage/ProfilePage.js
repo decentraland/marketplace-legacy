@@ -59,6 +59,27 @@ export default class ProfilePage extends React.PureComponent {
     this.props.onFetchAddress()
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { isLoading, isOwner, address } = nextProps
+
+    if (address !== this.props.address) {
+      this.props.onFetchAddress(address)
+    }
+
+    if (!isLoading && !isOwner && this.onlyOwnerCanAccess()) {
+      this.handleAddressChange(address)
+    }
+  }
+
+  handleAddressChange = address => {
+    const url = buildUrl({
+      page: 1,
+      address,
+      tab: PROFILE_PAGE_TABS.parcels
+    })
+    this.props.onNavigate(url)
+  }
+
   handlePageChange = (event, data) => {
     const { address, tab, onNavigate } = this.props
     const url = buildUrl({
@@ -209,6 +230,10 @@ export default class ProfilePage extends React.PureComponent {
     })
     onNavigate(url)
   }
+
+  onlyOwnerCanAccess = () =>
+    this.isActive(PROFILE_PAGE_TABS.bids) ||
+    this.isActive(PROFILE_PAGE_TABS.mortgages)
 
   render() {
     const {

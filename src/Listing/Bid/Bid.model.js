@@ -30,14 +30,16 @@ export class Bid extends Model {
 
   static async findByAddress(address) {
     return this.db.query(
-      SQL`SELECT * from ${raw(this.tableName)}
+      SQL`SELECT * 
+        FROM ${raw(this.tableName)}
         WHERE ${BidQueries.bidderOrSeller(address)}`
     )
   }
 
   static async findByAddressAndStatus(address, status) {
     return this.db.query(
-      SQL`SELECT * from ${raw(this.tableName)}
+      SQL`SELECT * 
+        FROM ${raw(this.tableName)}
         WHERE ${BidQueries.bidderOrSeller(address)} 
           AND status = ${status}`
     )
@@ -69,7 +71,8 @@ export class Bid extends Model {
 
   static async getWithStatuses(tokenAddress, tokenId, statuses) {
     return this.db.query(
-      SQL`SELECT * from ${raw(this.tableName)}
+      SQL`SELECT *
+        FROM ${raw(this.tableName)}
         WHERE token_address = ${tokenAddress}
           AND token_id = ${tokenId}
           AND status = ANY(${statuses})`
