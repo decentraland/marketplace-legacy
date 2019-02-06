@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Loader } from 'semantic-ui-react'
 
 import { ASSET_TYPES } from 'shared/asset'
 import { bidType } from 'components/types'
@@ -10,17 +11,36 @@ export default class BidAssetPage extends React.PureComponent {
   static propTypes = {
     id: PropTypes.string.isRequired,
     bid: bidType,
-    assetType: PropTypes.string.isRequired
+    assetType: PropTypes.string.isRequired,
+    isLoading: PropTypes.bool.isRequired
   }
 
+  renderLoading() {
+    return (
+      <div>
+        <Loader active size="massive" />
+      </div>
+    )
+  }
+
+  isAllowed = () =>
+    this.props.authorization &&
+    this.props.authorization.allowances.ERC721Bid.MANAToken > 0
+
   render() {
-    const { assetType } = this.props
+    const { assetType, isLoading } = this.props
+
+    if (isLoading) {
+      return this.renderLoading()
+    }
+
+    const isAllowed = !!this.isAllowed()
 
     switch (assetType) {
       case ASSET_TYPES.parcel:
-        return <BidParcelPage {...this.props} />
+        return <BidParcelPage {...this.props} isAllowed={isAllowed} />
       case ASSET_TYPES.estate:
-        return <BidEstatePage {...this.props} />
+        return <BidEstatePage {...this.props} isAllowed={isAllowed} />
       default:
         return null
     }

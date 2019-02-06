@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Container, Message, Loader } from 'semantic-ui-react'
+import { Container, Message } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
@@ -21,35 +21,20 @@ export default class BidEstatePage extends React.PureComponent {
     isLoading: PropTypes.bool.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
     onBid: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    isAllowed: PropTypes.bool.isRequired
   }
-
-  renderLoading() {
-    return (
-      <div>
-        <Loader active size="massive" />
-      </div>
-    )
-  }
-
-  isAllowed = () =>
-    this.props.authorization &&
-    this.props.authorization.allowances.ERC721Bid.MANAToken
 
   render() {
-    const { id, bid, isLoading, isTxIdle, onBid, onCancel } = this.props
+    const { id, bid, isTxIdle, onBid, onCancel, isAllowed } = this.props
 
     const bidIsOpen = isOpen(bid)
-
-    if (isLoading) {
-      return this.renderLoading()
-    }
 
     return (
       <Estate id={id} ownerNotAllowed>
         {estate => (
           <div className="PublishPage">
-            {!this.isAllowed() ? (
+            {!isAllowed ? (
               <Container text>
                 <Message
                   warning
@@ -100,7 +85,7 @@ export default class BidEstatePage extends React.PureComponent {
                 isTxIdle={isTxIdle}
                 onBid={onBid}
                 onCancel={onCancel}
-                isDisabled={!this.isAllowed()}
+                isDisabled={!isAllowed}
               />
               <TxStatus.Asset
                 asset={estate}
