@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Loader } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import { splitCoordinate } from 'shared/coordinates'
@@ -17,17 +16,12 @@ export default class AcceptBidParcelPage extends React.PureComponent {
     bid: bidType,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
-    onConfirm: PropTypes.func.isRequired,
+    handleConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
-  handleConfirm = () => {
-    const { bid, onConfirm } = this.props
-    onConfirm(bid)
-  }
-
-  renderPage() {
-    const { id, bid, isTxIdle, onCancel } = this.props
+  render() {
+    const { id, bid, isTxIdle, onCancel, handleConfirm } = this.props
     const [x, y] = splitCoordinate(id)
     const { price } = bid
 
@@ -57,7 +51,7 @@ export default class AcceptBidParcelPage extends React.PureComponent {
                   />
                 }
                 onCancel={onCancel}
-                onConfirm={this.handleConfirm}
+                onConfirm={handleConfirm}
                 isDisabled={isTxIdle}
                 isTxIdle={isTxIdle}
               />
@@ -66,19 +60,5 @@ export default class AcceptBidParcelPage extends React.PureComponent {
         }}
       </Parcel>
     )
-  }
-
-  render() {
-    const { isLoading } = this.props
-
-    if (isLoading) {
-      return (
-        <div>
-          <Loader active size="massive" />
-        </div>
-      )
-    }
-
-    return this.renderPage()
   }
 }

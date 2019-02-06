@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Loader } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
@@ -16,17 +15,12 @@ export default class AcceptBidEstatePage extends React.PureComponent {
     bid: bidType,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
-    onConfirm: PropTypes.func.isRequired,
+    handleConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
-  handleConfirm = () => {
-    const { bid, onConfirm } = this.props
-    onConfirm(bid)
-  }
-
-  renderPage() {
-    const { id, isTxIdle, onCancel, bid } = this.props
+  render() {
+    const { id, isTxIdle, onCancel, bid, handleConfirm } = this.props
     const { price } = bid
     return (
       <Estate id={id} onlyOwner>
@@ -53,7 +47,7 @@ export default class AcceptBidEstatePage extends React.PureComponent {
                   />
                 }
                 onCancel={onCancel}
-                onConfirm={this.handleConfirm}
+                onConfirm={handleConfirm}
                 isDisabled={isTxIdle}
                 isTxIdle={isTxIdle}
               />
@@ -62,19 +56,5 @@ export default class AcceptBidEstatePage extends React.PureComponent {
         }}
       </Estate>
     )
-  }
-
-  render() {
-    const { isLoading } = this.props
-
-    if (isLoading) {
-      return (
-        <div>
-          <Loader active size="massive" />
-        </div>
-      )
-    }
-
-    return this.renderPage()
   }
 }
