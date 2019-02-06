@@ -34,3 +34,35 @@ export function hasStatus(listing, status) {
 export function isExpired(expires_at) {
   return parseInt(expires_at, 10) < Date.now()
 }
+
+export function normalizePublications(publications) {
+  return publications.map(publication => ({
+    block_number: publication.block_number,
+    price: publication.price,
+    block_time_created_at: publication.block_time_created_at,
+    block_time_updated_at: publication.block_time_updated_at,
+    id: publication.tx_hash,
+    from: publication.owner,
+    to: publication.buyer,
+    type: LISTING_TYPES.PUBLICATION
+  }))
+}
+
+export function normalizeBids(bids) {
+  return bids.map(bid => ({
+    block_number: bid.block_number,
+    price: bid.price,
+    block_time_created_at: bid.block_time_created_at,
+    block_time_updated_at: bid.block_time_updated_at,
+    id: bid.id,
+    from: bid.seller,
+    to: bid.bidder,
+    type: LISTING_TYPES.BID
+  }))
+}
+
+export function sortListings(listings) {
+  return listings.sort(
+    (a, b) => (a.block_time_updated_at > b.block_time_updated_at ? -1 : 1)
+  )
+}

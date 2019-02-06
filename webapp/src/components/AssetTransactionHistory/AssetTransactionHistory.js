@@ -9,7 +9,13 @@ import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
 import { assetType, publicationType, bidType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
-import { LISTING_STATUS, LISTING_TYPES } from 'shared/listing'
+import {
+  normalizePublications,
+  normalizeBids,
+  sortListings,
+  LISTING_STATUS,
+  LISTING_TYPES
+} from 'shared/listing'
 import { shortenOwner } from 'shared/map'
 import { findAssetPublications } from 'shared/publication'
 import { distanceInWordsToNow } from 'lib/utils'
@@ -34,20 +40,10 @@ export default class AssetTransactionHistory extends React.PureComponent {
       asset,
       LISTING_STATUS.sold
     )
-    return [...assetPublications, ...bids]
-      .map(listing => ({
-        block_number: listing.block_number,
-        price: listing.price,
-        block_time_created_at: listing.block_time_created_at,
-        block_time_updated_at: listing.block_time_updated_at,
-        id: listing.tx_hash || listing.id,
-        from: listing.owner || listing.seller,
-        to: listing.buyer || listing.bidder,
-        type: listing.tx_hash ? LISTING_TYPES.PUBLICATION : LISTING_TYPES.BID
-      }))
-      .sort(
-        (a, b) => (a.block_time_updated_at > b.block_time_updated_at ? -1 : 1)
-      )
+
+    const normalizedPublications = normalizePublications(assetPublications)
+    const normalizedBids = normalizeBids(bids)
+    return sortListings(normalizedPublications.concat(normalizedBids))
   }
 
   hasAuctionData() {

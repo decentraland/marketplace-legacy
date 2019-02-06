@@ -53,7 +53,7 @@ export class Bid extends Model {
     return new Listing(this).findByAssetId(assetId, assetType)
   }
 
-  static async invalidateBids(blockNumber, blockTime, tokenAddress, tokenId) {
+  static async invalidateBids(blockTime, blockNumber, tokenAddress, tokenId) {
     return this.db.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET status = ${

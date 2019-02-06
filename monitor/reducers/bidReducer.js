@@ -107,7 +107,7 @@ async function reduceBid(event) {
         { id: _id }
       )
 
-      await Bid.invalidateBids(_tokenAddress, _tokenId, blockTime, block_number)
+      await Bid.invalidateBids(blockTime, block_number, _tokenAddress, _tokenId)
       break
     }
     case eventNames.BidCancelled: {
@@ -143,11 +143,11 @@ async function reduceBid(event) {
         const fingerprint = await estateContract.getFingerprint(assetId)
 
         await Bid.updateAssetByFingerprintChange(
+          blockTime,
+          block_number,
           contractAddresses.EstateRegistry,
           assetId,
-          fingerprint,
-          blockTime,
-          block_number
+          fingerprint
         )
       }
       break
@@ -170,11 +170,11 @@ async function reduceBid(event) {
       )
 
       await Bid.updateAssetOwner(
-        address,
-        asset_id,
         to.toLowerCase(),
         blockTime,
-        block_number
+        block_number,
+        address,
+        asset_id
       )
 
       break
