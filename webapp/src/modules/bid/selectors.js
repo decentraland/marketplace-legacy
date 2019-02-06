@@ -39,7 +39,7 @@ export const getWalletBidsByAsset = (state, asset, assetType) => {
   const walletAddress = getAddress(state)
 
   const isOwner = asset.owner === walletAddress
-  console.log(asset, isOwner)
+
   return Object.values(allBids).reduce((bids, bid) => {
     const isBidderOrSeller =
       (isOwner && bid.seller === walletAddress) ||
