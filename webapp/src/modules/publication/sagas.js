@@ -28,8 +28,8 @@ import { ASSET_TYPES } from 'shared/asset'
 import { getAddress } from 'modules/wallet/selectors'
 import { FETCH_PARCEL_SUCCESS } from 'modules/parcels/actions'
 import { FETCH_ESTATE_SUCCESS } from 'modules/estates/actions'
-import { getData as getEstates } from 'modules/estates/selectors'
-import { buildAsset, getNFTAddressByType } from 'modules/asset/utils'
+import { getNFTAddressByType } from 'modules/asset/utils'
+import { buildAsset } from 'modules/asset/sagas'
 
 export function* publicationSaga() {
   yield takeEvery(FETCH_PUBLICATIONS_REQUEST, handlePublicationsRequest)
@@ -83,8 +83,7 @@ function* handlePublishRequest(action) {
     const { asset_id, asset_type, price, expires_at } = action.publication
     const priceInWei = eth.utils.toWei(price)
     const nftAddress = getNFTAddressByType(asset_type)
-    const estates = yield select(getEstates)
-    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
+    const asset = yield buildAsset(asset_id, asset_type)
     const marketplaceContract = eth.getContract('Marketplace')
 
     const txHash = yield call(() =>
@@ -112,8 +111,7 @@ function* handlePublishRequest(action) {
 function* handleBuyRequest(action) {
   try {
     const { asset_id, asset_type, price } = action.publication
-    const estates = yield select(getEstates)
-    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
+    const asset = yield buildAsset(asset_id, asset_type)
     const nftAddress = getNFTAddressByType(asset_type)
     const buyer = yield select(getAddress)
 
@@ -169,8 +167,7 @@ function* handleBuyRequest(action) {
 function* handleCancelSaleRequest(action) {
   try {
     const { asset_id, asset_type } = action.publication
-    const estates = yield select(getEstates)
-    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
+    const asset = yield buildAsset(asset_id, asset_type)
     let marketplaceContract, txHash
     if (isLegacyPublication(action.publication)) {
       marketplaceContract = eth.getContract('LegacyMarketplace')

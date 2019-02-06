@@ -27,42 +27,46 @@ export const getOpenBids = createSelector(getData, allBids =>
   }, {})
 )
 
-export const getBidByAssetIdFactory = (assetType, assetId) =>
+export const getBidByAssetIdFactory = (assetId, assetType) =>
   createSelector(getAddress, getData, (userAddress, bids) =>
     Object.values(bids).find(
-      bid => isAssetBid(bid, assetType, assetId) && bid.bidder === userAddress
+      bid => isAssetBid(bid, assetId, assetType) && bid.bidder === userAddress
     )
   )
 
-export const getBidsByAssetFactory = (isOwner, assetType, assetId) =>
-  createSelector(getAddress, getData, (userAddress, allBids) =>
-    Object.keys(allBids).reduce((bids, bidId) => {
-      const bid = allBids[bidId]
-      const isBidderOrSeller =
-        (isOwner && bid.seller === userAddress) ||
-        (!isOwner && bid.bidder === userAddress)
+export const getWalletBidsByAsset = (state, asset, assetType) => {
+  const allBids = getData(state)
+  const walletAddress = getAddress(state)
 
-      if (
-        isAssetBid(bid, assetType, assetId) &&
-        bid.status === LISTING_STATUS.open &&
-        isBidderOrSeller
-      ) {
-        return [...bids, bid]
-      }
-      return bids
-    }, [])
-  )
+  const isOwner = asset.owner === walletAddress
+  console.log(asset, isOwner)
+  return Object.values(allBids).reduce((bids, bid) => {
+    const isBidderOrSeller =
+      (isOwner && bid.seller === walletAddress) ||
+      (!isOwner && bid.bidder === walletAddress)
 
-export const getAcceptedBidsByAssetFactory = asset =>
-  createSelector(getData, allBids =>
-    Object.keys(allBids).reduce((bids, bidId) => {
-      const bid = allBids[bidId]
-      if (
-        isAssetBid(bid, asset.type, asset.id) &&
-        bid.status === LISTING_STATUS.sold
-      ) {
-        return [...bids, bid]
-      }
-      return bids
-    }, [])
-  )
+    if (
+      isAssetBid(bid, asset.id, assetType) &&
+      bid.status === LISTING_STATUS.open &&
+      isBidderOrSeller
+    ) {
+      return [...bids, bid]
+    }
+    return bids
+  }, [])
+}
+
+export const getAcceptedBidsByAsset = (state, asset) => {
+  const allBids = getData(state)
+
+  return Object.keys(allBids).reduce((bids, bidId) => {
+    const bid = allBids[bidId]
+    if (
+      isAssetBid(bid, asset.id, asset.type) &&
+      bid.status === LISTING_STATUS.sold
+    ) {
+      return [...bids, bid]
+    }
+    return bids
+  }, [])
+}

@@ -3,7 +3,7 @@ import { Model } from 'decentraland-commons'
 import { Listing } from '../Listing'
 import { BidQueries } from './Bid.queries'
 import { db, SQL, raw } from '../../database'
-import { EstateQueries } from '../../Asset'
+import { AssetQueries, EstateQueries } from '../../Asset'
 import { LISTING_STATUS } from '../../shared/listing'
 
 export class Bid extends Model {
@@ -53,7 +53,7 @@ export class Bid extends Model {
     return new Listing(this).findByAssetId(assetId, assetType)
   }
 
-  static async invalidateBids(tokenAddress, tokenId, blockTime, blockNumber) {
+  static async invalidateBids(blockNumber, blockTime, tokenAddress, tokenId) {
     return this.db.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET status = ${
@@ -87,11 +87,11 @@ export class Bid extends Model {
    * @param {time} blockTime
    */
   static async updateAssetByFingerprintChange(
+    blockTime,
+    blockNumber,
     tokenAddress,
     tokenId,
-    fingerprint,
-    blockTime,
-    blockNumber
+    fingerprint
   ) {
     // Invalidate bids for assets with its fingerprint changed
     await this.db.query(
@@ -100,8 +100,7 @@ export class Bid extends Model {
           LISTING_STATUS.fingerprintChanged
         }, block_time_updated_at = ${blockTime}, block_number = ${blockNumber}
         WHERE block_time_created_at <= ${blockTime}
-          AND token_address = ${tokenAddress}
-          AND token_id = ${tokenId}
+          AND ${BidQueries.isForToken(tokenAddress, tokenId)}
           AND status = ${LISTING_STATUS.open}
           AND fingerprint != ${fingerprint}`
     )
@@ -113,19 +112,18 @@ export class Bid extends Model {
           LISTING_STATUS.open
         }, block_time_updated_at = ${blockTime}, block_number = ${blockNumber}
         WHERE block_time_created_at <= ${blockTime}
-          AND token_address = ${tokenAddress}
-          AND token_id = ${tokenId}
+          AND ${BidQueries.isForToken(tokenAddress, tokenId)}
           AND status = ${LISTING_STATUS.fingerprintChanged}
           AND fingerprint = ${fingerprint}`
     )
   }
 
   static async updateAssetOwner(
-    tokenAddress,
-    assetId,
     seller,
     blockTime,
-    blockNumber
+    blockNumber,
+    tokenAddress,
+    assetId
   ) {
     return this.db.query(
       SQL`UPDATE ${raw(this.tableName)}
@@ -144,37 +142,20 @@ export class Bid extends Model {
     address,
     status = Object.values(LISTING_STATUS)
   ) {
-    const Assets = new Listing.getListableAssets()
-
-    const selectAssetsSQL = Assets.map(
-      ({ tableName }) => `row_to_json(${tableName}.*) as ${tableName}`
-    ).join(', ')
-
-    const joinAssetsSQL = Assets.map(
-      ({ tableName }) =>
-        `LEFT JOIN ${tableName} as ${tableName} ON ${tableName}.id = bid.asset_id`
-    ).join('\n')
+    const Assets = Listing.getListableAssets()
 
     let assets = await db.query(
-      SQL`SELECT row_to_json(bid.*) as bids, ${raw(selectAssetsSQL)}
+      SQL`SELECT row_to_json(bid.*) as bids, ${raw(
+        AssetQueries.selectAssetsSQL(Assets)
+      )}
           FROM ${raw(this.tableName)} as bid
-          ${raw(joinAssetsSQL)}
+          ${raw(AssetQueries.joinAssetsSQL(Assets))}
           WHERE ${BidQueries.bidderOrSeller(address)}
             AND ${EstateQueries.estateHasParcels('bid')}
             AND status = ANY(${status})`
     )
 
     // Keep only the model that had a bid defined from the Assets list
-    assets = assets.map(asset => {
-      for (const Model of Assets) {
-        if (asset[Model.tableName] != null) {
-          Object.assign(asset, asset[Model.tableName])
-        }
-        delete asset[Model.tableName]
-      }
-      return asset
-    })
-
-    return assets
+    return Listing.filterAssetsByModelAssets(assets)
   }
 }

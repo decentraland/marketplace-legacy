@@ -26,10 +26,10 @@ import { locations } from 'locations'
 import { api } from 'lib/api'
 import { ASSET_TYPES } from 'shared/asset'
 import { LISTING_STATUS } from 'shared/listing'
-import { buildAsset, getNFTAddressByType } from 'modules/asset/utils'
+import { getNFTAddressByType } from 'modules/asset/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { getAddress } from 'modules/wallet/selectors'
-import { getData as getEstates } from 'modules/estates/selectors'
+import { buildAsset } from 'modules/asset/sagas'
 
 export function* bidSagas() {
   yield takeLatest(BID_REQUEST, handlePlaceBid)
@@ -48,8 +48,8 @@ function* handlePlaceBid({ bid }) {
     const { price, asset_type, asset_id, expires_at } = bid
     const priceInWei = eth.utils.toWei(price)
     const nftAddress = getNFTAddressByType(asset_type)
-    const estates = yield select(getEstates)
-    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
+    const asset = yield buildAsset(asset_id, asset_type)
+
     const bidder = yield select(getAddress)
 
     let fingerprint = '0x'
@@ -80,8 +80,7 @@ function* handlePlaceBid({ bid }) {
 function* handleCancelBid({ bid }) {
   try {
     const { token_address, token_id, asset_id, asset_type } = bid
-    const estates = yield select(getEstates)
-    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
+    const asset = yield buildAsset(asset_id, asset_type)
 
     const bidContract = eth.getContract('ERC721Bid')
 
@@ -99,8 +98,8 @@ function* handleAcceptBid({ bid }) {
   try {
     const { id, token_id, asset_id, asset_type } = bid
     const erc721BidContractAddress = getContractAddress('ERC721Bid')
-    const estates = yield select(getEstates)
-    const asset = yield call(() => buildAsset(asset_id, asset_type, estates))
+    const asset = yield buildAsset(asset_id, asset_type)
+
     const owner = yield select(getAddress)
 
     let contract
@@ -153,8 +152,7 @@ function* handleFetchAssetAcceptedBidsRequest({ asset }) {
     const bids = yield call(() =>
       api.fetchBidsByAsset(id, {
         asset_type: type,
-        status: LISTING_STATUS.sold,
-        sanitize: false
+        status: LISTING_STATUS.sold
       })
     )
     yield put(fetchAssetAcceptedBidsSuccess(bids))

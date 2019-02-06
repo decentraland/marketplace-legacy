@@ -3,7 +3,7 @@ import { server } from 'decentraland-commons'
 import { Bid } from './Bid.model'
 import { Parcel } from '../../Asset'
 import { ASSET_TYPES } from '../../../shared/asset'
-import { sanitizeBids, sanitizeAssets } from '../../sanitize'
+import { sanitizeAssets } from '../../sanitize'
 
 export class BidRouter {
   constructor(app) {
@@ -17,7 +17,6 @@ export class BidRouter {
      * @param  {string} asset_type - specify an asset type, it's required
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
      * @param  {string} [bidder] - bidder address
-     * @param  {string} [sanitize] - whether sanitize the result or not
      * @return {array<Bid>}
      */
     this.app.get('/assets/:id/bids', server.handleRequest(this.getAssetBids))
@@ -28,7 +27,6 @@ export class BidRouter {
      * @param  {string} y
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
      * @param  {string} [bidder] - bidder address
-     * @param  {string} [sanitize] - whether sanitize the result or not
      * @return {array<Bid>}
      */
     this.app.get(
@@ -41,7 +39,6 @@ export class BidRouter {
      * @param  {string} id
      * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
      * @param  {string} [bidder] - bidder address
-     * @param  {string} [sanitize] - whether sanitize the result or not
      * @return {array<Bid>}
      */
     this.app.get(
@@ -110,12 +107,7 @@ export class BidRouter {
       // Do nothing
     }
 
-    try {
-      const sanitize = server.extractFromReq(req, 'sanitize')
-      return sanitize === 'false' ? bids : sanitizeBids(bids)
-    } catch (errror) {
-      return sanitizeBids(bids)
-    }
+    return bids
   }
 
   async getBidById(req) {
@@ -140,7 +132,7 @@ export class BidRouter {
       bids = await Bid.findByAddress(address)
     }
 
-    return sanitizeBids(bids)
+    return bids
   }
 
   async getBidAssets(req) {

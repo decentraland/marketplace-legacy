@@ -154,8 +154,13 @@ async function reduceBid(event) {
     }
     case eventNames.Transfer: {
       const to = event.args.to || event.args._to
-      let asset_id = event.args._tokenId || assetId
+      // The assetId is the id of the asset based on the address of the token we get from Marketplace or Bid contracts events.
+      // If no token address was extracted from the event, it will default on LANDRegistry
+      // As we need to handle Estates and LANDs Transfer events, we should get the assetId checking
+      // first if the _tokenId is set (Estate) or assetId which is the asset_id for the LAND
+      const asset_id = event.args._tokenId || assetId
 
+      // Skip update for the OnERC721Received
       if (contractAddresses.ERC721Bid === to.toLowerCase()) {
         return
       }

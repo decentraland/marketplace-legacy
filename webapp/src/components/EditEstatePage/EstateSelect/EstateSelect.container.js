@@ -10,21 +10,21 @@ import {
   getData as getEstates,
   isEstateTransactionIdle
 } from 'modules/estates/selectors'
-import { getBidsByAssetFactory } from 'modules/bid/selectors'
+import { getWalletBidsByAsset } from 'modules/bid/selectors'
 import EstateSelect from './EstateSelect'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)
   const estates = getEstates(state)
-  const getBids = getBidsByAssetFactory(true, ASSET_TYPES.estate, id)
+  const estate = estates[id]
 
   // TODO: AllParcels is here because we're using estate.data.parcels which comes from the API. This is not correct.
   //       The API should return estate.parcels, the reducer should split this into their domains and a selector should put it back together.
   return {
     allParcels: getParcels(state),
-    pristineEstate: estates[id],
+    pristineEstate: estate,
     isTxIdle: isEstateTransactionIdle(state),
-    bids: getBids(state)
+    bids: getWalletBidsByAsset(state, estate, ASSET_TYPES.estate)
   }
 }
 

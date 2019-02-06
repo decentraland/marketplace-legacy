@@ -1,8 +1,11 @@
-import { takeEvery, take, put } from 'redux-saga/effects'
+import { takeEvery, take, put, call, select } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
+import { eth } from 'decentraland-eth'
 
 import { locations } from 'locations'
 import { FETCH_ASSET, FETCH_ASSET_LISTING_HISTORY } from './actions'
+import { ASSET_TYPES } from 'shared/asset'
+import { splitCoordinate } from 'shared/coordinates'
 import {
   FETCH_PARCEL_SUCCESS,
   fetchParcelRequest
@@ -12,7 +15,7 @@ import {
   fetchEstateRequest
 } from 'modules/estates/actions'
 import { fetchAssetAcceptedBidsRequest } from 'modules/bid/actions'
-import { ASSET_TYPES } from 'shared/asset'
+import { getData as getEstates } from 'modules/estates/selectors'
 
 export function* assetSaga() {
   yield takeEvery(FETCH_ASSET, handleFetchAsset)
@@ -43,4 +46,31 @@ function* handleFetchAsset(action) {
 function* handleFetchAssetListingHistory({ asset }) {
   // @TODO: fetch publications (?) and mortgages
   yield put(fetchAssetAcceptedBidsRequest(asset))
+}
+
+export function* buildAsset(assetId, assetType) {
+  let asset
+  if (assetType === ASSET_TYPES.parcel) {
+    const [x, y] = splitCoordinate(assetId)
+
+    const landRegistry = eth.getContract('LANDRegistry')
+    const tokenId = yield call(() => landRegistry.encodeTokenId(x, y))
+
+    asset = {
+      id: tokenId.toString(),
+      x: parseInt(x, 10),
+      y: parseInt(y, 10)
+    }
+  } else if (assetType === ASSET_TYPES.estate) {
+    const estate = yield select(getEstates)
+    asset = {
+      id: assetId,
+      data: {
+        name: estate.data.name,
+        parcels: estate.data.parcels
+      }
+    }
+  }
+
+  return { ...asset, type: assetType }
 }

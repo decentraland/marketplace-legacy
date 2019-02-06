@@ -7,24 +7,20 @@ import { getParcelMortgageFactory } from 'modules/mortgage/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
-import { getBidsByAssetFactory } from 'modules/bid/selectors'
+import { getWalletBidsByAsset } from 'modules/bid/selectors'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
   const parcel = ownProps.asset
   const getParcelMortgage = getParcelMortgageFactory(parcel.x, parcel.y)
-  const getBids = getBidsByAssetFactory(
-    ownProps.isOwner,
-    ASSET_TYPES.parcel,
-    parcel.id
-  )
+
   return {
     parcel,
     publications: getPublications(state),
     districts: getDistricts(state),
     mortgage: getParcelMortgage(state),
     estates: getEstates(state),
-    bids: getBids(state)
+    bids: getWalletBidsByAsset(state, ownProps.asset, ASSET_TYPES.parcel)
   }
 }
 

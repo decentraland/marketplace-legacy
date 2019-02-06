@@ -33,7 +33,7 @@ const mapState = (state, ownProps) => {
       break
   }
 
-  const getBidByAssetId = getBidByAssetIdFactory(ownProps.assetType, assetId)
+  const getBidByAssetId = getBidByAssetIdFactory(assetId, ownProps.assetType)
 
   return state => {
     const wallet = getWallet(state)

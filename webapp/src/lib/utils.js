@@ -84,8 +84,8 @@ export function isBlacklistedAddress(address) {
 }
 
 /*
-*
+* Remove dots and commas
 */
 export function sanitizePrice(value = '') {
-  return value.replace(/\.|,/g, '')
+  return value.toString().replace(/\.|,/g, '')
 }

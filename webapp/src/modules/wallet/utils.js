@@ -14,7 +14,7 @@ export function getWalletSagaOptions() {
     EstateRegistry
   } = contracts
 
-  const options = {
+  return {
     provider: env.get('REACT_APP_PROVIDER_URL'),
     contracts: [
       new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
@@ -30,8 +30,6 @@ export function getWalletSagaOptions() {
     ],
     eth
   }
-
-  return options
 }
 
 function getNewERC20Token(name, address) {

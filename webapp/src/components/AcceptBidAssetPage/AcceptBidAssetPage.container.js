@@ -20,8 +20,8 @@ import {
 import AcceptBidAssetPage from './AcceptBidAssetPage'
 
 const mapState = (state, ownProps) => {
-  let assetId
   const { bidId, id } = getMatchParams(ownProps)
+  let assetId
 
   switch (ownProps.assetType) {
     case ASSET_TYPES.parcel: {
@@ -43,7 +43,7 @@ const mapState = (state, ownProps) => {
   return {
     address: getAddress(state),
     isTxIdle: isCancelIdle(state),
-    bid: isAssetBid(bid, ownProps.assetType, assetId) ? bid : null,
+    bid: isAssetBid(bid, assetId, ownProps.assetType) ? bid : null,
     isLoading: isBidLoading(state),
     isConnected: isConnected(state),
     id: assetId
@@ -51,9 +51,8 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
+  const { bidId, id } = getMatchParams(ownProps)
   let onCancel
-
-  const { bidId } = getMatchParams(ownProps)
 
   switch (ownProps.assetType) {
     case ASSET_TYPES.parcel: {
@@ -62,7 +61,6 @@ const mapDispatch = (dispatch, ownProps) => {
       break
     }
     case ASSET_TYPES.estate: {
-      const { id } = getMatchParams(ownProps)
       onCancel = () => dispatch(push(locations.estateDetail(id)))
       break
     }

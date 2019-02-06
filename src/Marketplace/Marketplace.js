@@ -31,15 +31,7 @@ export class Marketplace {
     ])
 
     // Keep only the model that had a publication defined from the Assets list
-    assets = assets.map(asset => {
-      for (const Model of Assets) {
-        if (asset[Model.tableName] != null) {
-          Object.assign(asset, asset[Model.tableName])
-        }
-        delete asset[Model.tableName]
-      }
-      return asset
-    })
+    assets = Listing.filterAssetsByModelAssets(assets)
 
     return { assets, total }
   }
