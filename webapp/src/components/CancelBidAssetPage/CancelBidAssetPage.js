@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Loader } from 'semantic-ui-react'
 
 import { ASSET_TYPES } from 'shared/asset'
 import CancelBidParcelPage from './CancelBidParcelPage'
@@ -36,7 +37,15 @@ export default class CancelBidAssetPage extends React.PureComponent {
   }
 
   render() {
-    const { assetType } = this.props
+    const { assetType, isLoading } = this.props
+
+    if (isLoading) {
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
+    }
 
     switch (assetType) {
       case ASSET_TYPES.parcel:

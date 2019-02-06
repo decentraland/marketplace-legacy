@@ -15,14 +15,6 @@ export default class BidAssetPage extends React.PureComponent {
     isLoading: PropTypes.bool.isRequired
   }
 
-  renderLoading() {
-    return (
-      <div>
-        <Loader active size="massive" />
-      </div>
-    )
-  }
-
   isAllowed = () =>
     this.props.authorization &&
     this.props.authorization.allowances.ERC721Bid.MANAToken > 0
@@ -31,7 +23,11 @@ export default class BidAssetPage extends React.PureComponent {
     const { assetType, isLoading } = this.props
 
     if (isLoading) {
-      return this.renderLoading()
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
     }
 
     const isAllowed = !!this.isAllowed()

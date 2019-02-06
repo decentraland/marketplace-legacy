@@ -1,7 +1,11 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { getAddress, isConnected } from '@dapps/modules/wallet/selectors'
+import {
+  getAddress,
+  isConnected,
+  isConnecting
+} from '@dapps/modules/wallet/selectors'
 
 import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
@@ -12,11 +16,8 @@ import {
   getMatchParamsCoordinates
 } from 'modules/location/selectors'
 import { acceptBidRequest, fetchBidByIdRequest } from 'modules/bid/actions'
-import {
-  getData as getBids,
-  isCancelIdle,
-  isLoading as isBidLoading
-} from 'modules/bid/selectors'
+import { getData as getBids, isAcceptIdle } from 'modules/bid/selectors'
+import { isLoading } from 'modules/authorization/selectors'
 import AcceptBidAssetPage from './AcceptBidAssetPage'
 
 const mapState = (state, ownProps) => {
@@ -42,9 +43,9 @@ const mapState = (state, ownProps) => {
 
   return {
     address: getAddress(state),
-    isTxIdle: isCancelIdle(state),
+    isTxIdle: isAcceptIdle(state),
     bid: isAssetBid(bid, assetId, ownProps.assetType) ? bid : null,
-    isLoading: isBidLoading(state),
+    isLoading: isConnecting(state) || isLoading(state),
     isConnected: isConnected(state),
     id: assetId
   }

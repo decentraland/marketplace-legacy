@@ -62,7 +62,9 @@ export function* buildAsset(assetId, assetType) {
       y: parseInt(y, 10)
     }
   } else if (assetType === ASSET_TYPES.estate) {
-    const estate = yield select(getEstates)
+    const estates = yield select(getEstates)
+    const estate = estates[assetId]
+
     asset = {
       id: assetId,
       data: {
