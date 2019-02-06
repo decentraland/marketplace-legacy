@@ -34,6 +34,7 @@ async function reduceBid(event) {
     new BlockTimestampService().getBlockTime(block_number)
   ])
 
+  // To avoid EstateCreations
   if (contractAddresses.ERC721Bid === address && !assetId) {
     return log.info(`[${name}] Invalid Asset Id`)
   }
@@ -59,12 +60,10 @@ async function reduceBid(event) {
         `[${name}] Creating bid ${_id} for token with address: ${_tokenAddress} and id: ${_tokenId}`
       )
 
-      await Bid.delete({
-        token_address: _tokenAddress,
-        token_id: _tokenId,
-        bidder: _bidder.toLowerCase(),
-        status: LISTING_STATUS.open // @nacho TODO: change it to also delete when fingerprint changed
-      })
+      await Bid.deleteBid(_tokenAddress, _tokenId, _bidder.toLowerCase(), [
+        LISTING_STATUS.open,
+        LISTING_STATUS.fingerprintChanged
+      ])
 
       const asset = await Asset.getNew(assetType).findById(assetId)
 
@@ -142,7 +141,7 @@ async function reduceBid(event) {
         const estateContract = eth.getContract('EstateRegistry')
         const fingerprint = await estateContract.getFingerprint(assetId)
 
-        await Bid.updateAssetByFingerprintChange(
+        await Bid.updateBidsByAssetFingerprintChange(
           blockTime,
           block_number,
           contractAddresses.EstateRegistry,
@@ -154,10 +153,10 @@ async function reduceBid(event) {
     }
     case eventNames.Transfer: {
       const to = event.args.to || event.args._to
-      // The assetId is the id of the asset based on the address of the token we get from Marketplace or Bid contracts events.
-      // If no token address was extracted from the event, it will default on LANDRegistry
-      // As we need to handle Estates and LANDs Transfer events, we should get the assetId checking
-      // first if the _tokenId is set (Estate) or assetId which is the asset_id for the LAND
+      // The assetId is the id of the asset based on the address of the token we get from
+      // Marketplace or Bid contracts events. If no token address is extracted from the event,
+      // it defaults on getParcelIdFromEvent returning 0,1 for the Estate with id 1.
+      // To avoid that, we should get the assetId checking first if the _tokenId is set (Estate)
       const asset_id = event.args._tokenId || assetId
 
       // Skip update for the OnERC721Received

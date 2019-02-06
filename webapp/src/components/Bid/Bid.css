@@ -4,10 +4,7 @@
   margin: 1rem auto !important;
   width: 100%;
   color: white;
-}
-
-.Bid.showAssetDetail{
-  font-size: 100%;
+  font-size: 16px;
 }
 
 .Bid .row .ParcelCanvasWrapper {
