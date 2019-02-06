@@ -17,7 +17,8 @@
   "asset_accept_bid": {
     "about_to_accept_bid":
       "Estás a punto de aceptar la oferta de {name} para {price}.",
-    "accept_bid_asset": "Aceptar oferta para {asset_type}"
+    "accept_bid_asset": "Aceptar oferta para {asset_type}",
+    "expired": "Oferta caducada"
   },
   "asset_bid": {
     "errors": {

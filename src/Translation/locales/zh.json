@@ -15,7 +15,8 @@
   },
   "asset_accept_bid": {
     "about_to_accept_bid": "您即将接受{price}对tk1的出价。",
-    "accept_bid_asset": "接受{asset_type}的出价"
+    "accept_bid_asset": "接受{asset_type}的出价",
+    "expired": "出价过期"
   },
   "asset_bid": {
     "errors": {

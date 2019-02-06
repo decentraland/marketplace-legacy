@@ -17,7 +17,8 @@
   },
   "asset_accept_bid": {
     "about_to_accept_bid": "{price}에 대해 {name}의 입찰을 허용하려고합니다.",
-    "accept_bid_asset": "{asset_type}에 대한 입찰 승인"
+    "accept_bid_asset": "{asset_type}에 대한 입찰 승인",
+    "expired": "입찰가 만료"
   },
   "asset_bid": {
     "errors": {

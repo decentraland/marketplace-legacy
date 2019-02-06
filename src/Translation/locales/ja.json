@@ -17,7 +17,8 @@
   "asset_accept_bid": {
     "about_to_accept_bid":
       "{price}に対する{name}の入札を承認しようとしています。",
-    "accept_bid_asset": "{asset_type}の入札を承認する"
+    "accept_bid_asset": "{asset_type}の入札を承認する",
+    "expired": "期限切れの入札"
   },
   "asset_bid": {
     "errors": {
