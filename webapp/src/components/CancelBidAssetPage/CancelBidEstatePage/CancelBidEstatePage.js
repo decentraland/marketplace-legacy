@@ -14,13 +14,8 @@ export default class CancelBidEstatePage extends React.PureComponent {
     id: PropTypes.string.isRequired,
     bid: bidType,
     isTxIdle: PropTypes.bool.isRequired,
-    onConfirm: PropTypes.func.isRequired,
+    handleConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
-  }
-
-  handleConfirm = () => {
-    const { bid, onConfirm } = this.props
-    onConfirm(bid)
   }
 
   renderSubtitle = estate => {
@@ -41,7 +36,7 @@ export default class CancelBidEstatePage extends React.PureComponent {
   }
 
   render() {
-    const { id, bid, isTxIdle, onCancel } = this.props
+    const { id, bid, isTxIdle, onCancel, handleConfirm } = this.props
 
     return (
       <Estate id={id}>
@@ -55,7 +50,7 @@ export default class CancelBidEstatePage extends React.PureComponent {
             >
               <CancelListingAssetForm
                 onCancel={onCancel}
-                onConfirm={this.handleConfirm}
+                onConfirm={handleConfirm}
                 isTxIdle={isTxIdle}
                 isDisabled={!bid}
               />

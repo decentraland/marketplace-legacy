@@ -12,7 +12,8 @@ export default class CancelBidAssetPage extends React.PureComponent {
     bid: bidType,
     assetType: PropTypes.string.isRequired,
     isConnected: PropTypes.bool,
-    isLoading: PropTypes.bool.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    onConfirm: PropTypes.func.isRequired
   }
 
   isBidFetched = false
@@ -29,14 +30,29 @@ export default class CancelBidAssetPage extends React.PureComponent {
     onFetchBidByAsset()
   }
 
+  handleConfirm = () => {
+    const { bid, onConfirm } = this.props
+    onConfirm(bid)
+  }
+
   render() {
     const { assetType } = this.props
 
     switch (assetType) {
       case ASSET_TYPES.parcel:
-        return <CancelBidParcelPage {...this.props} />
+        return (
+          <CancelBidParcelPage
+            {...this.props}
+            handleConfirm={this.handleConfirm}
+          />
+        )
       case ASSET_TYPES.estate:
-        return <CancelBidEstatePage {...this.props} />
+        return (
+          <CancelBidEstatePage
+            {...this.props}
+            handleConfirm={this.handleConfirm}
+          />
+        )
       default:
         return null
     }

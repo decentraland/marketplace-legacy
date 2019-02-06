@@ -16,13 +16,8 @@ export default class CancelBidParcelPage extends React.PureComponent {
     id: PropTypes.string.isRequired,
     bid: bidType,
     isTxIdle: PropTypes.bool.isRequired,
-    onConfirm: PropTypes.func.isRequired,
+    handleConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
-  }
-
-  handleConfirm = () => {
-    const { bid, onConfirm } = this.props
-    onConfirm(bid)
   }
 
   renderSubtitle = parcel => {
@@ -43,7 +38,7 @@ export default class CancelBidParcelPage extends React.PureComponent {
   }
 
   render() {
-    const { id, bid, isTxIdle, onCancel } = this.props
+    const { id, bid, isTxIdle, onCancel, handleConfirm } = this.props
     const [x, y] = splitCoordinate(id)
 
     return (
@@ -59,7 +54,7 @@ export default class CancelBidParcelPage extends React.PureComponent {
             >
               <CancelListingAssetForm
                 onCancel={onCancel}
-                onConfirm={this.handleConfirm}
+                onConfirm={handleConfirm}
                 isTxIdle={isTxIdle}
                 isDisabled={!bid}
               />
