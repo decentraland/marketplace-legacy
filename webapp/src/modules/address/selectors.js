@@ -65,7 +65,13 @@ export const getAddresses = createSelector(
         parcel => parcel.mortgage.borrower === address
       )
 
-      const bids = bidIds.map(bidId => allBids[bidId])
+      const bids = bidIds.reduce((bids, bidId) => {
+        const bid = allBids[bidId]
+        if (bid) {
+          bids.push(bid)
+        }
+        return bids
+      }, [])
 
       const authorization = allAuthorizations[address]
 

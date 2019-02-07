@@ -2,7 +2,13 @@ import { createSelector } from 'reselect'
 import { getAddress } from '@dapps/modules/wallet/selectors'
 import { isLoadingType } from '@dapps/modules/loading/selectors'
 
-import { BID_REQUEST, CANCEL_BID_REQUEST, ACCEPT_BID_REQUEST } from './actions'
+import {
+  BID_REQUEST,
+  CANCEL_BID_REQUEST,
+  ACCEPT_BID_REQUEST,
+  FETCH_ASSET_BID_REQUEST,
+  FETCH_BID_REQUEST
+} from './actions'
 import { LISTING_STATUS } from 'shared/listing'
 import { isOpen } from 'shared/listing'
 import { isAssetBid } from 'shared/bid'
@@ -13,6 +19,9 @@ export const isLoading = state => getState(state).loading.length > 0
 export const getLoading = state => getState(state).loading
 export const getError = state => getState(state).error
 
+export const isFetchingBids = state =>
+  isLoadingType(getLoading(state), FETCH_ASSET_BID_REQUEST) ||
+  isLoadingType(getLoading(state), FETCH_BID_REQUEST)
 export const isBidIdle = state => isLoadingType(getLoading(state), BID_REQUEST)
 export const isCancelIdle = state =>
   isLoadingType(getLoading(state), CANCEL_BID_REQUEST)

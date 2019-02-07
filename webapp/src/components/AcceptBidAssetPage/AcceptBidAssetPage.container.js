@@ -16,7 +16,11 @@ import {
   getMatchParamsCoordinates
 } from 'modules/location/selectors'
 import { acceptBidRequest, fetchBidByIdRequest } from 'modules/bid/actions'
-import { getData as getBids, isAcceptIdle } from 'modules/bid/selectors'
+import {
+  getData as getBids,
+  isAcceptIdle,
+  isFetchingBids
+} from 'modules/bid/selectors'
 import { isLoading } from 'modules/authorization/selectors'
 import AcceptBidAssetPage from './AcceptBidAssetPage'
 
@@ -46,6 +50,7 @@ const mapState = (state, ownProps) => {
     isTxIdle: isAcceptIdle(state),
     bid: isAssetBid(bid, assetId, ownProps.assetType) ? bid : null,
     isLoading: isConnecting(state) || isLoading(state),
+    isBidLoading: isFetchingBids(state),
     isConnected: isConnected(state),
     id: assetId
   }

@@ -15,7 +15,8 @@ export default class AcceptBidAssetPage extends React.PureComponent {
     onFetchBidById: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     assetType: PropTypes.string.isRequired,
-    isConnected: PropTypes.bool,
+    isConnected: PropTypes.bool.isRequired,
+    isBidLoading: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired
   }
 
@@ -26,26 +27,37 @@ export default class AcceptBidAssetPage extends React.PureComponent {
     }
   }
 
+  componentWillUpdate(nextProps) {
+    const { bid, isConnected, isLoading, isBidLoading } = nextProps
+    if (isConnected && !bid && !isLoading && !isBidLoading) {
+      return this.handleOnAccessDenied()
+    }
+  }
+
   handleConfirm = () => {
     const { bid, onConfirm } = this.props
     onConfirm(bid)
   }
 
-  render() {
-    const { assetType, bid, isLoading } = this.props
+  handleOnAccessDenied = () => {
+    this.props.onCancel()
+  }
 
-    if (!bid) {
-      return null
-    }
+  render() {
+    const { assetType, bid, isLoading, isBidLoading } = this.props
 
     const bidIsOpen = isOpen(bid)
 
-    if (isLoading) {
+    if (isLoading || isBidLoading) {
       return (
         <div>
           <Loader active size="massive" />
         </div>
       )
+    }
+
+    if (!bid) {
+      return null
     }
 
     switch (assetType) {

@@ -128,8 +128,8 @@ export function bidReducer(state = INITIAL_STATE, action) {
           for (const bidId in state.data) {
             const bid = state.data[bidId]
             if (
-              bid.token_address !== contractAddress &&
-              bid.token_id !== id &&
+              bid.token_address !== contractAddress ||
+              bid.token_id !== id ||
               bid.bidder !== bidder
             ) {
               // Remove previous bid from the state when the users update it
