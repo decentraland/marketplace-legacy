@@ -72,7 +72,6 @@ async function reduceLANDRegistry(event) {
     }
     case eventNames.Transfer: {
       const { to } = event.args
-      if (contractAddresses.ERC721Bid === to.toLowerCase()) return // @nacho TODO: temp code until upgrade LANDRegistry contract
 
       log.info(
         `[${name}] Transferring parcel "${parcelId}" ownership to "${to}"`
