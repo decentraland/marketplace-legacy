@@ -41,11 +41,7 @@ export default class AcceptBidEstatePage extends React.PureComponent {
                       id="asset_accept_bid.about_to_accept_bid"
                       values={{
                         name: <EstateName estate={estate} />,
-                        price: (
-                          <React.Fragment>
-                            <Mana amount={price} size={14} />
-                          </React.Fragment>
-                        )
+                        price: <Mana amount={price} size={14} />
                       }}
                     />
                   )

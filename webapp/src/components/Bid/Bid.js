@@ -25,11 +25,13 @@ export default class Bid extends React.PureComponent {
   static propTypes = {
     isOwner: PropTypes.bool.isRequired,
     bid: bidType.isRequired,
-    estates: PropTypes.objectOf(estateType)
+    estates: PropTypes.objectOf(estateType),
+    className: PropTypes.string
   }
 
   static defaultProps = {
-    showAssetDetail: false
+    showAssetDetail: false,
+    className: ''
   }
 
   renderAssetPreview = () => {
@@ -112,30 +114,42 @@ export default class Bid extends React.PureComponent {
   }
 
   render() {
-    const { bid, isOwner, onConfirm, onUpdate, showAssetDetail } = this.props
+    const {
+      bid,
+      isOwner,
+      onConfirm,
+      onUpdate,
+      showAssetDetail,
+      className
+    } = this.props
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const assetDetailLink = this.getDetailLink()
     return (
       <Grid
         stackable
-        className={`Bid ${showAssetDetail ? 'showAssetDetail' : ''}`}
+        className={`Bid ${className} ${
+          showAssetDetail ? 'showAssetDetail' : ''
+        }`}
       >
         <Grid.Row>
           {showAssetDetail && (
             <React.Fragment>
               <Responsive
+                className="asset-details"
                 as={Grid.Column}
                 minWidth={Responsive.onlyTablet.minWidth}
-                width={2}
+                width={4}
               >
-                <Link to={assetDetailLink}>{this.renderAssetPreview()}</Link>
+                <React.Fragment>
+                  <Link to={assetDetailLink}>{this.renderAssetPreview()}</Link>
+                  <div>
+                    <h3>{t('bid.bid_asset')}</h3>
+                    <Link className="asset-name" to={assetDetailLink}>
+                      {this.renderAssetData()}
+                    </Link>
+                  </div>
+                </React.Fragment>
               </Responsive>
-              <Grid.Column width={3}>
-                <h3>{t('bid.bid_asset')}</h3>
-                <Link className="asset-name" to={assetDetailLink}>
-                  {this.renderAssetData()}
-                </Link>
-              </Grid.Column>
             </React.Fragment>
           )}
           {isOwner || !showAssetDetail ? (
@@ -167,7 +181,7 @@ export default class Bid extends React.PureComponent {
               className="mortgage-amount-icon"
             />
           </Grid.Column>
-          <Grid.Column width={showAssetDetail ? 2 : 3}>
+          <Grid.Column width={showAssetDetail ? 3 : 3}>
             <h3>{t('global.time_left')}</h3>
             <p>{distanceInWordStrict(parseInt(bid.expires_at, 10))}</p>
           </Grid.Column>

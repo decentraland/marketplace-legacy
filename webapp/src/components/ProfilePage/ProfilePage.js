@@ -160,6 +160,7 @@ export default class ProfilePage extends React.PureComponent {
                   {bidsReceived.map(bid => (
                     <Bid
                       key={bid.id}
+                      className={'card'}
                       bid={bid}
                       isOwner={true}
                       showAssetDetail={true}
@@ -171,11 +172,12 @@ export default class ProfilePage extends React.PureComponent {
 
             {bidsPlaced.length > 0 && (
               <React.Fragment>
-                <h3 className="bids-title">{t('bid.placed')}</h3>
+                <h3 className="bids-title placed">{t('bid.placed')}</h3>
                 <Card.Group stackable={true}>
                   {bidsPlaced.map(bid => (
                     <Bid
                       key={bid.id}
+                      className={'card'}
                       bid={bid}
                       isOwner={false}
                       showAssetDetail={true}

@@ -1,10 +1,22 @@
 .ui.grid.stackable.grid.Bid {
   background: var(--darker-gray);
   border-radius: 10px;
-  margin: 1rem auto !important;
   width: 100%;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
+}
+
+.ui.grid.stackable.grid.Bid:not(.showAssetDetail) {
+  margin: 1rem auto !important;
+}
+
+.Bid .row .column.asset-details {
+  display: flex;
+  padding: 0;
+}
+
+.Bid .row .column.asset-details a {
+  width: 77px;
 }
 
 .Bid .row .ParcelCanvasWrapper {
@@ -13,6 +25,7 @@
   border-radius: 10px 0 0 10px;
   overflow: hidden;
 }
+
 
 .Bid .row h3 {
   text-transform: uppercase;

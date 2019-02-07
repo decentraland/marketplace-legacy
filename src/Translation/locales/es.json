@@ -221,7 +221,7 @@
       "Usted no ha autorizado el {contract_link} para operar {symbol} en su nombre"
   },
   "bid": {
-    "bid_asset": "ERC721 ofertado",
+    "bid_asset": "ERC721",
     "placed": "ofertas puestas",
     "received": "ofertas recibidas"
   },
