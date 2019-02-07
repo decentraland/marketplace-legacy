@@ -13,12 +13,10 @@ import {
   normalizePublications,
   normalizeBids,
   sortListings,
-  LISTING_STATUS,
-  LISTING_TYPES
+  LISTING_STATUS
 } from 'shared/listing'
-import { shortenOwner } from 'shared/map'
 import { findAssetPublications } from 'shared/publication'
-import { distanceInWordsToNow } from 'lib/utils'
+import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
 import './AssetTransactionHistory.css'
 
@@ -57,11 +55,11 @@ export default class AssetTransactionHistory extends React.PureComponent {
         <Link to={locations.profilePageDefault(address)}>
           <AddressBlock
             address={address}
-            scale={3.4}
+            scale={4}
             hasTooltip={false}
             hasLink={false}
           />&nbsp;
-          <span className="short-address">{shortenOwner(address)}</span>
+          <span className="short-address">{shortenAddress(address)}</span>
         </Link>
       </div>
     )
@@ -89,26 +87,17 @@ export default class AssetTransactionHistory extends React.PureComponent {
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row className="transaction-history-header">
-                <Grid.Column computer={3} tablet={3} mobile={4}>
-                  {t('global.type')}
-                </Grid.Column>
-                <Grid.Column computer={3} tablet={3} mobile={6}>
-                  {t('global.price')}
-                </Grid.Column>
-                <Grid.Column computer={4} tablet={4} mobile={6}>
-                  {t('asset_detail.history.when')}
-                </Grid.Column>
+                <Grid.Column>{t('global.price')}</Grid.Column>
+                <Grid.Column>{t('asset_detail.history.when')}</Grid.Column>
                 <Responsive
                   as={Grid.Column}
                   minWidth={Responsive.onlyTablet.minWidth}
-                  width={3}
                 >
                   {t('global.from')}
                 </Responsive>
                 <Responsive
                   as={Grid.Column}
                   minWidth={Responsive.onlyTablet.minWidth}
-                  width={3}
                 >
                   {t('asset_detail.history.to')}
                 </Responsive>
@@ -119,13 +108,10 @@ export default class AssetTransactionHistory extends React.PureComponent {
                   key={listing.id}
                   className="transaction-history-entry"
                 >
-                  <Grid.Column computer={3} tablet={3} mobile={4}>
-                    <p className="type">{listing.type}</p>
-                  </Grid.Column>
-                  <Grid.Column computer={3} tablet={3} mobile={6}>
+                  <Grid.Column>
                     <Mana amount={listing.price} />
                   </Grid.Column>
-                  <Grid.Column computer={4} tablet={4} mobile={6}>
+                  <Grid.Column>
                     <BlockDate
                       blockNumber={listing.block_number}
                       blockTime={
@@ -137,14 +123,12 @@ export default class AssetTransactionHistory extends React.PureComponent {
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
-                    width={3}
                   >
                     {this.renderAddress(listing.from)}
                   </Responsive>
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
-                    width={3}
                   >
                     {this.renderAddress(listing.to)}
                   </Responsive>
@@ -153,13 +137,10 @@ export default class AssetTransactionHistory extends React.PureComponent {
 
               {this.hasAuctionData() ? (
                 <Grid.Row className="transaction-history-entry">
-                  <Grid.Column computer={3} tablet={3} mobile={4}>
-                    <p className="type">{LISTING_TYPES.AUCTION}</p>
-                  </Grid.Column>
-                  <Grid.Column computer={3} tablet={3} mobile={6}>
+                  <Grid.Column>
                     <Mana amount={asset.auction_price} />
                   </Grid.Column>
-                  <Grid.Column computer={4} tablet={4} mobile={6}>
+                  <Grid.Column>
                     {distanceInWordsToNow(
                       parseInt(asset.auction_timestamp, 10)
                     )}
@@ -167,14 +148,12 @@ export default class AssetTransactionHistory extends React.PureComponent {
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
-                    width={3}
                   >
                     {t('asset_detail.history.auction')}
                   </Responsive>
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
-                    width={3}
                   >
                     {this.renderAddress(asset.auction_owner)}
                   </Responsive>
