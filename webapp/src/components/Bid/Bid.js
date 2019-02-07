@@ -17,7 +17,7 @@ import ParcelPreview from 'components/ParcelPreview'
 
 import './Bid.css'
 
-const PREVIEW_SIZE = 77
+const PREVIEW_SIZE = 75
 const NUM_PARCELS = 5
 const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 
@@ -65,7 +65,7 @@ export default class Bid extends React.PureComponent {
       <ParcelPreview
         x={x}
         y={y}
-        width={PREVIEW_SIZE}
+        width={PREVIEW_SIZE - 5}
         height={PREVIEW_SIZE}
         size={PARCEL_SIZE}
         selected={selected}

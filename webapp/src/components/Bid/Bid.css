@@ -16,12 +16,12 @@
 }
 
 .Bid .row .column.asset-details a {
-  width: 77px;
+  width: 85px;
 }
 
 .Bid .row .ParcelCanvasWrapper {
   margin-top: -1rem;
-  margin-left: -1rem;
+  margin-left: 0;
   border-radius: 10px 0 0 10px;
   overflow: hidden;
 }
