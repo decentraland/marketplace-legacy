@@ -43,7 +43,6 @@ export default class AcceptBidEstatePage extends React.PureComponent {
                         name: <EstateName estate={estate} />,
                         price: (
                           <React.Fragment>
-                            {t('global.for')}&nbsp;&nbsp;
                             <Mana amount={price} size={14} />
                           </React.Fragment>
                         )

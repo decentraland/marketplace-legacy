@@ -47,7 +47,6 @@ export default class AcceptBidParcelPage extends React.PureComponent {
                         name: <ParcelDetailLink parcel={parcel} />,
                         price: (
                           <React.Fragment>
-                            &nbsp;{t('global.for')}&nbsp;&nbsp;
                             <Mana amount={price} size={14} />
                           </React.Fragment>
                         )
