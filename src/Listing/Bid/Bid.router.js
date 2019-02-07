@@ -46,6 +46,12 @@ export class BidRouter {
       server.handleRequest(this.getEstateBids.bind(this))
     )
 
+    /**
+     * Returns bid assets where the seller or bidder is the given address.
+     * @param  {string} address
+     * @param  {string} [status] - specify a status to retreive: [cancelled|sold|pending].
+     * @return {array<Asset>}
+     */
     this.app.get(
       '/bids/:address/assets',
       server.handleRequest(this.getBidAssets)
@@ -59,8 +65,8 @@ export class BidRouter {
     this.app.get('/bids/:id', server.handleRequest(this.getBidById))
 
     /**
-     * Returns the bids where an address is the seller or bidder
-     * @param {string} [seller] - Asset owner
+     * Returns the bids where the seller or bidder is the given address.
+     * @param  {string} address
      * @param  {string} [status] - specify a bid status to retreive: [cancelled|sold|pending].
      * @return {array<Bid>}
      */
