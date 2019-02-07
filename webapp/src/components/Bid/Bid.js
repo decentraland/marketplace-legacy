@@ -18,7 +18,7 @@ import ParcelPreview from 'components/ParcelPreview'
 import './Bid.css'
 
 const PREVIEW_SIZE = 75
-const NUM_PARCELS = 5
+const NUM_PARCELS = 7
 const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 
 export default class Bid extends React.PureComponent {
@@ -159,7 +159,7 @@ export default class Bid extends React.PureComponent {
                 <Link to={locations.profilePageDefault(bid.bidder)}>
                   <AddressBlock
                     address={bid.bidder}
-                    scale={3.4}
+                    scale={3.3}
                     hasTooltip={false}
                     hasLink={false}
                   />&nbsp;

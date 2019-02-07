@@ -55,7 +55,7 @@
 
 .Bid .row .address-wrapper a .AddressBlock {
   flex: 0;
-  height: 20px;
+  height: 19px;
   margin-left: 0;
 }
 
@@ -83,6 +83,10 @@
 }
 
 @media(min-width: 768px) {
+  .ui.grid.stackable.grid.Bid {
+    max-height: 76px;
+  }
+  
   .ui.grid.Bid .row .actions {
     text-align: right;
     display: flex;
