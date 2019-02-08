@@ -2,7 +2,7 @@ import { expect } from 'chai'
 
 import { MarketplaceReqQueryParams } from './MarketplaceReqQueryParams'
 import { ASSET_TYPES } from '../shared/asset'
-import { PUBLICATION_STATUS } from '../shared/publication'
+import { LISTING_STATUS } from '../shared/listing'
 
 describe('MarketplaceReqQueryParams', function() {
   const buildRequest = request => ({
@@ -14,7 +14,7 @@ describe('MarketplaceReqQueryParams', function() {
     it('should return an object obtaining the data from the request', function() {
       const request = buildRequest({
         query: {
-          status: PUBLICATION_STATUS.sold,
+          status: LISTING_STATUS.sold,
           asset_type: ASSET_TYPES.estate,
           sort_by: 'price',
           sort_order: 'desc',
@@ -25,7 +25,7 @@ describe('MarketplaceReqQueryParams', function() {
 
       const filters = new MarketplaceReqQueryParams(request)
       expect(filters.sanitize()).to.deep.equal({
-        status: PUBLICATION_STATUS.sold,
+        status: LISTING_STATUS.sold,
         asset_type: ASSET_TYPES.estate,
         sort: {
           by: 'price',
@@ -52,7 +52,7 @@ describe('MarketplaceReqQueryParams', function() {
 
       const filters = new MarketplaceReqQueryParams(request)
       expect(filters.sanitize()).to.deep.equal({
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         sort: {
           by: 'created_at',

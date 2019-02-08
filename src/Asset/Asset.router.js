@@ -2,7 +2,7 @@ import { server } from 'decentraland-commons'
 
 import { Asset } from './Asset'
 import { MarketplaceRouter } from '../Marketplace'
-import { PublicationService } from '../Publication'
+import { Listing } from '../Listing'
 import { ReqQueryParams, AssetReqQueryParams } from '../ReqQueryParams'
 import { sanitizeAssets } from '../sanitize'
 
@@ -31,7 +31,7 @@ export class AssetRouter {
       throw new Error('The asset_type query param is required to get an asset')
     }
 
-    const PublicableAsset = new PublicationService().getPublicableAsset(
+    const PublicableAsset = Listing.getListableAsset(
       reqQueryParams.get('asset_type')
     )
     let result

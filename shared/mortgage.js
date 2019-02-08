@@ -1,4 +1,4 @@
-import { hasStatus, isOpen } from './publication'
+import { hasStatus, isOpen } from './listing'
 
 const MORTGAGE_DEFAULT_IN_DAYS = 60 * 60 * 24 * 7 // 7 days
 

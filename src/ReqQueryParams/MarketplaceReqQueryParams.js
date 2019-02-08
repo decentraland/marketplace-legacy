@@ -1,9 +1,6 @@
 import { ReqQueryParams } from './ReqQueryParams'
-import { Publication } from '../Publication'
-import {
-  PUBLICATION_ASSET_TYPES,
-  PUBLICATION_STATUS
-} from '../shared/publication'
+import { Listing } from '../Listing'
+import { LISTING_ASSET_TYPES, LISTING_STATUS } from '../shared/listing'
 
 export const ALLOWED_SORT_VALUES = Object.freeze({
   price: ['ASC'],
@@ -11,8 +8,8 @@ export const ALLOWED_SORT_VALUES = Object.freeze({
   block_time_updated_at: ['DESC'],
   expires_at: ['ASC']
 })
-export const DEFAULT_STATUS = PUBLICATION_STATUS.open
-export const DEFAULT_ASSET_TYPE = PUBLICATION_ASSET_TYPES.parcel
+export const DEFAULT_STATUS = LISTING_STATUS.open
+export const DEFAULT_ASSET_TYPE = LISTING_ASSET_TYPES.parcel
 export const DEFAULT_SORT_VALUE = 'created_at'
 export const DEFAULT_SORT = {
   by: DEFAULT_SORT_VALUE,
@@ -38,17 +35,17 @@ export class MarketplaceReqQueryParams {
   }
 
   getStatus() {
-    // TODO: This should be publication_status but that'll break backwards compatibility
-    const status = this.reqQueryParams.get('status', PUBLICATION_STATUS.open)
-    return Publication.isValidStatus(status) ? status : PUBLICATION_STATUS.open
+    // TODO: This query string param should be called `listing_status` but that'd break backwards compatibility
+    const status = this.reqQueryParams.get('status', LISTING_STATUS.open)
+    return Listing.isValidStatus(status) ? status : LISTING_STATUS.open
   }
 
   getAssetType() {
     const type = this.reqQueryParams.get('asset_type', '')
 
-    return !type || Publication.isValidAssetType(type)
+    return !type || Listing.isValidAssetType(type)
       ? type
-      : PUBLICATION_ASSET_TYPES.parcel
+      : LISTING_ASSET_TYPES.parcel
   }
 
   getSort() {

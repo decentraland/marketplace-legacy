@@ -11,7 +11,7 @@ import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import { publicationType, authorizationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { isOpen } from 'shared/publication'
+import { isOpen } from 'shared/listing'
 import PublishAssetForm from 'components/PublishAssetForm'
 
 export default class PublishPage extends React.PureComponent {

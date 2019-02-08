@@ -1,12 +1,10 @@
 import { Model } from 'decentraland-commons'
 
+import { Listing } from '../Listing'
 import { PublicationQueries } from './Publication.queries'
-import { BlockchainEvent } from '../BlockchainEvent'
-import { SQL, raw } from '../database'
-import {
-  PUBLICATION_STATUS,
-  PUBLICATION_ASSET_TYPES
-} from '../shared/publication'
+import { BlockchainEvent } from '../../BlockchainEvent'
+import { SQL, raw } from '../../database'
+import { LISTING_STATUS } from '../../shared/listing'
 
 export class Publication extends Model {
   static tableName = 'publications'
@@ -28,35 +26,25 @@ export class Publication extends Model {
     'contract_id'
   ]
 
-  static isValidStatus(status) {
-    return Object.values(PUBLICATION_STATUS).includes(status)
-  }
-
-  static isValidAssetType(assetType) {
-    return Object.values(PUBLICATION_ASSET_TYPES).includes(assetType)
-  }
-
   static findByOwner(owner) {
-    return this.find({ owner })
+    return new Listing(this).findByOwner(owner)
+  }
+
+  static async findByAssetIdWithStatus(assetId, assetType, status) {
+    return new Listing(this).findByAssetIdWithStatus(assetId, assetType, status)
+  }
+
+  static async findByAssetId(assetId, assetType) {
+    return new Listing(this).findByAssetId(assetId, assetType)
   }
 
   // TODO: Add asset_type
-  static findByAssetId(asset_id) {
-    return this.find({ asset_id }, { created_at: 'DESC' })
+  static deleteByAssetId(assetId) {
+    return new Listing(this).deleteByAssetId(assetId)
   }
 
-  // TODO: Add asset_type
-  static findByAssetIdWithStatus(asset_id, status) {
-    if (!this.isValidStatus(status)) {
-      throw new Error(`Invalid status "${status}"`)
-    }
-
-    return this.find({ asset_id, status }, { created_at: 'DESC' })
-  }
-
-  // TODO: Add asset_type
   static async findActiveByAssetIdWithStatus(asset_id, status) {
-    if (!this.isValidStatus(status)) {
+    if (!Listing.isValidStatus(status)) {
       throw new Error(`Invalid status "${status}"`)
     }
 
@@ -77,26 +65,21 @@ export class Publication extends Model {
       SQL`SELECT *
         FROM ${raw(this.tableName)}
         WHERE ${PublicationQueries.isInactive()}
-          AND ${PublicationQueries.hasStatus(PUBLICATION_STATUS.open)}`
+          AND ${PublicationQueries.hasStatus(LISTING_STATUS.open)}`
     )
-  }
-
-  // TODO: Add asset_type
-  static deleteByAssetId(assetId) {
-    return this.delete({ asset_id: assetId })
   }
 
   static async cancelInactive() {
     return this.db.query(SQL`
       UPDATE ${raw(this.tableName)}
         SET updated_at = NOW(),
-            status = ${PUBLICATION_STATUS.cancelled}
+            status = ${LISTING_STATUS.cancelled}
       WHERE ${PublicationQueries.isInactive()}
-        AND ${PublicationQueries.hasStatus(PUBLICATION_STATUS.open)}`)
+        AND ${PublicationQueries.hasStatus(LISTING_STATUS.open)}`)
   }
 
   static async cancelOlder(asset_id, block_number, eventName) {
-    const status = PUBLICATION_STATUS.open
+    const status = LISTING_STATUS.open
 
     const rows = await this.db.query(
       SQL`SELECT p.tx_hash
@@ -111,7 +94,7 @@ export class Publication extends Model {
     const txHashes = rows.map(row => row.tx_hash)
 
     if (txHashes.length) {
-      await this.updateManyStatus(txHashes, PUBLICATION_STATUS.cancelled)
+      await this.updateManyStatus(txHashes, LISTING_STATUS.cancelled)
     }
   }
 
@@ -119,7 +102,7 @@ export class Publication extends Model {
     if (txHashes.length === 0) {
       return []
     }
-    if (!this.isValidStatus(newStatus)) {
+    if (!Listing.isValidStatus(newStatus)) {
       throw new Error(`Trying to filter by invalid status "${newStatus}"`)
     }
 

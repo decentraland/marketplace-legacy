@@ -22,7 +22,8 @@ import {
   FETCH_ADDRESS_ESTATES_SUCCESS
 } from 'modules/address/actions'
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
-import { toPublicationsObject, PUBLICATION_STATUS } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
+import { toPublicationsObject } from 'shared/publication'
 import { FETCH_MORTGAGED_PARCELS_SUCCESS } from 'modules/mortgage/actions'
 import { FETCH_ESTATE_SUCCESS } from 'modules/estates/actions'
 
@@ -156,7 +157,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
               ...state.data,
               [tx_hash]: {
                 ...state.data[tx_hash],
-                status: PUBLICATION_STATUS.sold,
+                status: LISTING_STATUS.sold,
                 buyer
               }
             }
@@ -171,7 +172,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
               ...state.data,
               [tx_hash]: {
                 ...state.data[tx_hash],
-                status: PUBLICATION_STATUS.cancelled
+                status: LISTING_STATUS.cancelled
               }
             }
           }
@@ -185,7 +186,7 @@ export function publicationReducer(state = INITIAL_STATE, action) {
               ...state.data,
               [tx_hash]: {
                 ...state.data[tx_hash],
-                status: PUBLICATION_STATUS.open
+                status: LISTING_STATUS.open
               }
             }
           }

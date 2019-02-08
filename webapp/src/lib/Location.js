@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { PUBLICATION_STATUS } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
 import { PAGE_SIZE } from './Pagination'
 import { ASSET_TYPES } from '../shared/asset'
 
@@ -51,7 +51,7 @@ export class Location {
         value = +page || 1
         break
       case 'status':
-        value = PUBLICATION_STATUS.open
+        value = LISTING_STATUS.open
         break
       case 'assetType':
         value = asset_type || ASSET_TYPES.parcel

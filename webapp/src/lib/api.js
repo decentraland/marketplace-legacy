@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { env } from 'decentraland-commons'
-import { PUBLICATION_STATUS } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
 
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
@@ -10,7 +10,7 @@ const FILTER_DEFAULTS = {
   sortBy: 'created_at',
   sortOrder: 'asc',
   assetType: null,
-  status: PUBLICATION_STATUS.open
+  status: LISTING_STATUS.open
 }
 
 const getFilterOptions = options => {

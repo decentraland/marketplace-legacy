@@ -4,7 +4,7 @@ import { txUtils } from 'decentraland-eth'
 import { db } from '../database'
 import { Mortgage } from '../Mortgage'
 import { Parcel } from '../Asset'
-import { Publication } from '../Publication'
+import { Publication } from '../Listing'
 import { ASSET_TYPES } from '../shared/asset'
 import { MORTGAGE_STATUS } from '../shared/mortgage'
 

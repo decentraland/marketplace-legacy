@@ -3,7 +3,8 @@ import { isLoadingType } from '@dapps/modules/loading/selectors'
 import { PUBLISH_REQUEST, BUY_REQUEST, CANCEL_SALE_REQUEST } from './actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import { getData as getEstates } from 'modules/estates/selectors'
-import { PUBLICATION_STATUS, findAssetPublications } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
+import { findAssetPublications } from 'shared/publication'
 import { buildCoordinate } from 'shared/coordinates'
 
 export const getState = state => state.publication
@@ -30,7 +31,7 @@ export const getPublicationByCoordinate = (state, x, y) => {
     const parcelPublications = findAssetPublications(
       publications,
       parcel,
-      PUBLICATION_STATUS.open
+      LISTING_STATUS.open
     )
     publication = parcelPublications[0]
   }
@@ -47,7 +48,7 @@ export const getEstatePublicationById = (state, id) => {
     const estatePublications = findAssetPublications(
       publications,
       estate,
-      PUBLICATION_STATUS.open
+      LISTING_STATUS.open
     )
     publication = estatePublications[0]
   }

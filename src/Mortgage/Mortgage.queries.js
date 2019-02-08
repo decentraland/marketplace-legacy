@@ -1,6 +1,6 @@
 import { Mortgage } from './Mortgage.model'
 import { Parcel } from '../Asset'
-import { Publication } from '../Publication'
+import { Publication } from '../Listing'
 import { SQL, raw } from '../database'
 import { MORTGAGE_STATUS } from '../shared/mortgage'
 
