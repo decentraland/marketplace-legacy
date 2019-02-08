@@ -10,12 +10,12 @@ import {
   oneOf,
   oneOfType
 } from 'prop-types'
-import { PUBLICATION_STATUS } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
 
 export const publicationType = shape({
   tx_hash: string,
   tx_status: oneOf(Object.values(txUtils.TRANSACTION_TYPES)),
-  status: oneOf(Object.values(PUBLICATION_STATUS)),
+  status: oneOf(Object.values(LISTING_STATUS)),
   price: number,
   owner: string,
   buyer: string,
@@ -135,4 +135,15 @@ export const tileType = shape({
   left: number,
   top: number,
   topLeft: number
+})
+
+export const bidType = shape({
+  id: string,
+  status: oneOf(Object.values(LISTING_STATUS)),
+  price: number,
+  owner: string,
+  buyer: string,
+  asset_id: string,
+  asset_type: string,
+  expires_at: oneOfType([number, string])
 })

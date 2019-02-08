@@ -12,7 +12,7 @@ import ParcelName from 'components/ParcelName'
 import SignInNotice from 'components/SignInNotice'
 import { authorizationType, publicationType } from 'components/types'
 import { t, T } from '@dapps/modules/translation/utils'
-import { isOpen } from 'shared/publication'
+import { isOpen } from 'shared/listing'
 import { formatMana } from 'lib/utils'
 import MortgageForm from './MortgageForm'
 

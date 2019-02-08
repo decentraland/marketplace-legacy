@@ -1,6 +1,6 @@
-import { select, takeEvery, call, put } from 'redux-saga/effects'
+import { select, takeEvery, call, put, all } from 'redux-saga/effects'
 
-import { PUBLICATION_STATUS } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
 import { getAssetPublications } from 'shared/asset'
 import {
   FETCH_ADDRESS,
@@ -8,6 +8,7 @@ import {
   FETCH_ADDRESS_CONTRIBUTIONS_REQUEST,
   FETCH_ADDRESS_PUBLICATIONS_REQUEST,
   FETCH_ADDRESS_ESTATES_REQUEST,
+  FETCH_ADDRESS_BIDS_REQUEST,
   fetchAddressParcelsRequest,
   fetchAddressParcelsSuccess,
   fetchAddressParcelsFailure,
@@ -19,7 +20,10 @@ import {
   fetchAddressPublicationsFailure,
   fetchAddressEstatesSuccess,
   fetchAddressEstatesFailure,
-  fetchAddressEstatesRequest
+  fetchAddressEstatesRequest,
+  fetchAddressBidsRequest,
+  fetchAddressBidsSuccess,
+  fetchAddressBidsFailure
 } from './actions'
 import { fetchMortgagedParcelsRequest } from 'modules/mortgage/actions'
 import { getData as getParcels } from 'modules/parcels/selectors'
@@ -37,6 +41,8 @@ export function* addressSaga() {
     handleAddressPublicationsRequest
   )
   yield takeEvery(FETCH_ADDRESS_ESTATES_REQUEST, handleAddressEstatesRequest)
+  yield takeEvery(FETCH_ADDRESS_BIDS_REQUEST, handleAddressBidsRequest)
+
   yield takeEvery(FETCH_ADDRESS, handleFetchAddress)
 }
 
@@ -110,12 +116,27 @@ function* handleAddressPublicationsRequest(action) {
   }
 }
 
+function* handleAddressBidsRequest(action) {
+  const { address, status } = action
+  try {
+    const [bids, assets] = yield all([
+      call(() => api.fetchAddressBids(address, status)),
+      call(() => api.fetchBidAssets(address, status))
+    ])
+
+    yield put(fetchAddressBidsSuccess(address, bids, assets))
+  } catch (error) {
+    yield put(fetchAddressBidsFailure(address, error.message))
+  }
+}
+
 function* handleFetchAddress(action) {
   const { address } = action
 
   yield put(fetchAddressParcelsRequest(address))
   yield put(fetchAddressEstatesRequest(address))
-  yield put(fetchAddressPublicationsRequest(address, PUBLICATION_STATUS.open))
+  yield put(fetchAddressPublicationsRequest(address, LISTING_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
   yield put(fetchMortgagedParcelsRequest(address))
+  yield put(fetchAddressBidsRequest(address, LISTING_STATUS.open))
 }

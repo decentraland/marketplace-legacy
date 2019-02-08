@@ -38,6 +38,10 @@
   align-content: center;
 }
 
+.EstateDetailPage h3 {
+  text-transform: capitalize;
+}
+
 .EstateDetailPage .estate-data h3 {
   margin: auto 0 15px 0;
 }

@@ -4,20 +4,19 @@ import addDays from 'date-fns/add_days'
 import differenceInDays from 'date-fns/difference_in_days'
 import { Form, Button, Input, Message, Grid, Icon } from 'semantic-ui-react'
 import debounce from 'lodash.debounce'
+import { t } from '@dapps/modules/translation/utils'
 
+import { fetchMortgageData } from './utils'
+import { DEFAULT_DAY_INTERVAL, MINIMUM_DAY_INTERVAL } from 'shared/listing'
+import { preventDefault, formatDate, formatMana } from 'lib/utils'
 import TxStatus from 'components/TxStatus'
 import AddressBlock from 'components/AddressBlock'
 import { parcelType, publicationType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { getKyberOracleAddress } from 'modules/wallet/utils'
-import { preventDefault, formatDate, formatMana } from 'lib/utils'
-import { fetchMortgageData } from './utils'
 import { getRequiredDeposit } from 'modules/mortgage/utils'
 
 import './MortgageForm.css'
 
-const DEFAULT_DAY_INTERVAL = 31
-const MINIMUM_DAY_INTERVAL = 1
 const MAXIMUM_DAY_INTERVAL = 5 * 365
 const MINIMUM_MORTGAGE_AMOUNT = 1
 const MINIMUM_DURATION_DAYS = 1

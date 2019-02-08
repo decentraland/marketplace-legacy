@@ -13,6 +13,28 @@
   "address": {
     "its_you": "您的"
   },
+  "asset_accept_bid": {
+    "about_to_accept_bid": "您即将接受{price}对tk1的出价。",
+    "accept_bid_asset": "接受{asset_type}的出价",
+    "expired": "出价过期"
+  },
+  "asset_bid": {
+    "errors": {
+      "maximum_expiration": "最长到期日为{date}（6个月）",
+      "maximum_land_price": "最大{asset_name}价格为{value} MANA",
+      "minimum_expiration": "最短到期日期为{date}",
+      "minimum_land_price": "最低{asset_name}价格为{value} MANA"
+    },
+    "expiration": "呼气",
+    "expiration_placeholder": "本出版物的截止日期",
+    "list_asset": "对{asset_name}进行出价",
+    "please_authorize":
+      "您需要转到{settings_link}并授权投标合同代表您使用MANA，然后才能出价。",
+    "price_placeholder": "这个{asset_name}的价格在MANA",
+    "set_asset_price": "设置{asset_name}的价格和到期日期。",
+    "set_new_asset_price": "设置{asset_name}的新价格或到期日期。",
+    "update_asset": "更新{asset_name}出价"
+  },
   "asset_buy": {
     "about_to_buy": "您即将以 {price} 的价格购买 {name}",
     "allowed_balance": "你的限额是 {allowance}",
@@ -28,7 +50,10 @@
   },
   "asset_cancel": {
     "about_to_cancel": "您即将取消 {name} 的出售。",
+    "about_to_cancel_bid": "您即将取消{name}的出价。",
+    "cancel_bid": "取消出价",
     "cancel_sale": "取消出售",
+    "not_bid": "您没有公开竞标{asset_name} {asset}。",
     "not_for_sale": "{asset} {asset_name} 不出售。"
   },
   "asset_detail": {
@@ -39,19 +64,20 @@
       "transfer": "转让",
       "update_price": "更新价格"
     },
+    "bid": {
+      "place": "出价",
+      "title": "投标"
+    },
     "history": {
       "auction": "拍卖",
       "event": "事件",
-      "from": "来源",
-      "price": "价格",
       "sold": "出售",
       "title": "交易历史",
       "to": "接收人",
       "when": "时间"
     },
     "publication": {
-      "buy": "购买",
-      "price": "价格"
+      "buy": "购买"
     }
   },
   "asset_edit": {
@@ -68,7 +94,6 @@
     "manage": "管理{asset_type}"
   },
   "asset_publish": {
-    "already_sold": "{asset_name} 已经以 {value} 出售中",
     "errors": {
       "maximum_expiration": "最迟到期日期为 {date}",
       "maximum_land_price": "{asset_name} 最高价格为 {value} MANA",
@@ -80,7 +105,6 @@
     "list_asset": "出售 {asset_name}",
     "please_authorize":
       "您需要到 {settings_link} 并授权市场使用 {asset_name}，然后才能出售。",
-    "price": "价格",
     "price_placeholder": "{asset_name}的 MANA 价格",
     "set_asset_price": "设置 {asset_name} 的价格和到期日期。",
     "set_new_asset_price": "设置 {asset_name} 的新价格或到期日期。",
@@ -174,6 +198,11 @@
     "disallowed": "您未授权 {contract_link} 使用 {symbol}",
     "disapproved": "您未授权 {contract_link} 使用 {symbol}"
   },
+  "bid": {
+    "bid_asset": "ERC721",
+    "placed": "出价",
+    "received": "收到的出价"
+  },
   "buy_mana": {
     "action": "购买",
     "amount_too_big": "对于 Bancor 网络来说数额太大",
@@ -228,6 +257,7 @@
     "subtitle": "设置名称和说明，及连块土地的相关地块。"
   },
   "estate_select": {
+    "bids_warning": "这个Estate有活跃的出价。",
     "description": "选择彼此相邻的地块",
     "detail": "连块土地细节",
     "edit_selection": "在地图上选择地块",
@@ -248,6 +278,7 @@
     "terms": "服务条款"
   },
   "global": {
+    "accept": "接受",
     "acquired_ago": "获得日期 {date}",
     "activity": "活动",
     "add": "加",
@@ -255,6 +286,7 @@
     "atlas": "地图",
     "auction": "拍卖",
     "balance": "余额",
+    "bids": "投标",
     "blog": "博客",
     "cancel": "取消",
     "change": "更改",
@@ -279,6 +311,7 @@
     "expires_in": "到期时间 {time}",
     "expires_in_more_than_years": "{years} 年以上到期",
     "for": "对于",
+    "from": "从",
     "hours": "小时",
     "land": "LAND",
     "learn_more": "了解更多",
@@ -293,6 +326,7 @@
     "owner_address_warning": "那已是土地所有人了！",
     "paid_at": "付费",
     "parcels": "地块",
+    "price": "价钱",
     "profile": "我的虚拟土地",
     "publications": "发布",
     "recipient_address": "收件人地址",
@@ -312,10 +346,14 @@
     "the_parcel": "地块",
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
+    "type": "类型",
     "unauthorized": "未授权",
     "undo": "撤消",
+    "update": "更新",
     "wallet_address": "钱包地址",
-    "website": "网站"
+    "warning": "警告",
+    "website": "网站",
+    "you": "您"
   },
   "homepage": {
     "get_started": "让我们开始吧",
@@ -441,6 +479,7 @@
     "authorization_error": "无法加载授权，请重试",
     "authorization_error_contact": "如果错误仍然存在，请不要犹豫与我们联系",
     "for_buying": "购买：",
+    "for_buying_ERC721Bid": "使用MANA（出价）的资产",
     "for_buying_LANDAuction": "在 LAND 拍卖中使用 {token}",
     "for_buying_LegacyMarketplace": "使用 MANA（遗留功能）",
     "for_buying_Marketplace": "使用 MANA",
@@ -476,10 +515,12 @@
     "title": "欢迎来到 Decentraland 的 LAND 虚拟市场"
   },
   "transaction": {
+    "accept_bid": "您接受了{price}的{asset_link}出价",
     "bid": "你在拍卖会上买了 {parcel_count} 块土地",
     "buy": "您购买了 {parcel_link} 地块",
     "buy_mana": "您已经买了 {mana} MANA",
-    "cancel": "你在{parcel_link}取消了这笔交易",
+    "cancel": "你在{asset_link}取消了这笔交易",
+    "cancel_bid": "您取消了对{asset_link}的出价",
     "cancel_mortgage": "您取消了购买地块 {parcel_link} 的抵押",
     "claim_mortgage_resolution": "您认领了 {parcel_link}",
     "create_estate": "您创建了连块土地 {name}",
@@ -495,6 +536,7 @@
     "mortgage_mana": "您{action} {mortgage_contract_link}代表您操作 MANA",
     "mortgage_rcn": "您{action} {mortgage_contract_link}代表您运营 RCN",
     "pay_mortgage": "您部分支付了 {amount} 购买{parcel_link}地块",
+    "place_bid": "您为{price} MANA出价{asset_link}",
     "publish": "您发布了 {parcel_link} 地块",
     "transfer": "您将{asset_type} {asset_link} 转让给 {owner_link}",
     "transfer_mana": "{mana} MANA 已转帐至 {address_link}"

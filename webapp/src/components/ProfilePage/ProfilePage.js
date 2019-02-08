@@ -10,18 +10,22 @@ import {
 } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
+import { buildUrl } from './utils'
+import Contribution from './Contribution'
 import { PROFILE_PAGE_TABS } from 'locations'
-import AddressBlock from 'components/AddressBlock'
-import AssetCard from 'components/AssetCard'
+import { isFeatureEnabled } from 'lib/featureUtils'
+import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
 import {
   parcelType,
   contributionType,
   estateType,
-  assetType
+  assetType,
+  bidType
 } from 'components/types'
-import { shortenAddress, isBlacklistedAddress } from 'lib/utils'
-import { buildUrl } from './utils'
-import Contribution from './Contribution'
+import AddressBlock from 'components/AddressBlock'
+import AssetCard from 'components/AssetCard'
+import Bid from 'components/Bid'
+import { getBidsByReceivedAndPlaced } from 'modules/bid/utils'
 
 import './ProfilePage.css'
 
@@ -43,7 +47,8 @@ export default class ProfilePage extends React.PureComponent {
     isEmpty: PropTypes.bool,
     isOwner: PropTypes.bool,
     isConnecting: PropTypes.bool,
-    onNavigate: PropTypes.func.isRequired
+    onNavigate: PropTypes.func.isRequired,
+    bids: PropTypes.arrayOf(bidType)
   }
 
   componentWillMount() {
@@ -52,6 +57,27 @@ export default class ProfilePage extends React.PureComponent {
       onAccessDenied()
     }
     this.props.onFetchAddress()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { isLoading, isOwner, address } = nextProps
+
+    if (address !== this.props.address) {
+      this.props.onFetchAddress(address)
+    }
+
+    if (!isLoading && !isOwner && this.onlyOwnerCanAccess()) {
+      this.handleAddressChange(address)
+    }
+  }
+
+  handleAddressChange = address => {
+    const url = buildUrl({
+      page: 1,
+      address,
+      tab: PROFILE_PAGE_TABS.parcels
+    })
+    this.props.onNavigate(url)
   }
 
   handlePageChange = (event, data) => {
@@ -82,7 +108,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   renderGrid() {
-    const { grid, tab } = this.props
+    const { grid, tab, address } = this.props
     switch (tab) {
       case PROFILE_PAGE_TABS.parcels: {
         return (
@@ -117,6 +143,50 @@ export default class ProfilePage extends React.PureComponent {
           <Card.Group stackable={true}>
             {grid.map(estate => <AssetCard key={estate.id} asset={estate} />)}
           </Card.Group>
+        )
+      }
+      case PROFILE_PAGE_TABS.bids: {
+        const [bidsReceived, bidsPlaced] = getBidsByReceivedAndPlaced(
+          grid,
+          address
+        )
+
+        return (
+          <React.Fragment>
+            {bidsReceived.length > 0 && (
+              <React.Fragment>
+                <h3 className="bids-title">{t('bid.received')}</h3>
+                <Card.Group stackable={true}>
+                  {bidsReceived.map(bid => (
+                    <Bid
+                      key={bid.id}
+                      className={'card'}
+                      bid={bid}
+                      isOwner={true}
+                      showAssetDetail={true}
+                    />
+                  ))}
+                </Card.Group>
+              </React.Fragment>
+            )}
+
+            {bidsPlaced.length > 0 && (
+              <React.Fragment>
+                <h3 className="bids-title placed">{t('bid.placed')}</h3>
+                <Card.Group stackable={true}>
+                  {bidsPlaced.map(bid => (
+                    <Bid
+                      key={bid.id}
+                      className={'card'}
+                      bid={bid}
+                      isOwner={false}
+                      showAssetDetail={true}
+                    />
+                  ))}
+                </Card.Group>
+              </React.Fragment>
+            )}
+          </React.Fragment>
         )
       }
       case PROFILE_PAGE_TABS.mortgages: {
@@ -163,6 +233,10 @@ export default class ProfilePage extends React.PureComponent {
     onNavigate(url)
   }
 
+  onlyOwnerCanAccess = () =>
+    this.isActive(PROFILE_PAGE_TABS.bids) ||
+    this.isActive(PROFILE_PAGE_TABS.mortgages)
+
   render() {
     const {
       address,
@@ -176,8 +250,10 @@ export default class ProfilePage extends React.PureComponent {
       estates,
       mortgagedParcels,
       isOwner,
-      isConnecting
+      isConnecting,
+      bids
     } = this.props
+
     return (
       <div className="ProfilePage">
         {isOwner || isConnecting ? null : (
@@ -226,17 +302,30 @@ export default class ProfilePage extends React.PureComponent {
               {this.renderBadge(estates, PROFILE_PAGE_TABS.estates)}
             </Menu.Item>
             {isOwner && (
-              <Menu.Item
-                name={PROFILE_PAGE_TABS.mortgages}
-                active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
-                onClick={this.handleItemClick}
-              >
-                {t('global.mortgages')}
-                {this.renderBadge(
-                  mortgagedParcels,
-                  PROFILE_PAGE_TABS.mortgages
+              <React.Fragment>
+                {isFeatureEnabled('BIDS') && (
+                  <Menu.Item
+                    name={PROFILE_PAGE_TABS.bids}
+                    active={this.isActive(PROFILE_PAGE_TABS.bids)}
+                    onClick={this.handleItemClick}
+                  >
+                    {t('global.bids')}
+                    {this.renderBadge(bids, PROFILE_PAGE_TABS.bids)}
+                  </Menu.Item>
                 )}
-              </Menu.Item>
+
+                <Menu.Item
+                  name={PROFILE_PAGE_TABS.mortgages}
+                  active={this.isActive(PROFILE_PAGE_TABS.mortgages)}
+                  onClick={this.handleItemClick}
+                >
+                  {t('global.mortgages')}
+                  {this.renderBadge(
+                    mortgagedParcels,
+                    PROFILE_PAGE_TABS.mortgages
+                  )}
+                </Menu.Item>
+              </React.Fragment>
             )}
           </Menu>
         </Container>

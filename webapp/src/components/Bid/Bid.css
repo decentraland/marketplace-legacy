@@ -1,0 +1,96 @@
+.ui.grid.stackable.grid.Bid {
+  background: var(--darker-gray);
+  border-radius: 10px;
+  width: 100%;
+  color: white;
+  font-size: 14px;
+}
+
+.ui.grid.stackable.grid.Bid:not(.showAssetDetail) {
+  margin: 1rem auto !important;
+}
+
+.Bid .row .column.asset-details {
+  display: flex;
+  padding: 0;
+}
+
+.Bid .row .column.asset-details a {
+  width: 85px;
+}
+
+.Bid .row .ParcelCanvasWrapper {
+  margin-top: -1rem;
+  margin-left: 0;
+  border-radius: 10px 0 0 10px;
+  overflow: hidden;
+}
+
+
+.Bid .row h3 {
+  text-transform: uppercase;
+  color: var(--gray);
+  font-size: 14px;
+}
+
+.Bid .row .asset-name:hover {
+  text-decoration: underline;
+}
+
+.Bid .row .asset-name:hover i {
+  text-decoration: none;
+}
+
+.Bid .row .asset-name span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+
+.Bid .row .address-wrapper a {
+  display: flex;
+  align-items: center;
+}
+
+.Bid .row .address-wrapper a .AddressBlock {
+  flex: 0;
+  height: 19px;
+  margin-left: 0;
+}
+
+.Bid .row .address-wrapper a .short-address {
+  margin-left: 7px;
+  text-transform: capitalize;
+}
+
+.ui.grid.Bid .row .actions{
+  text-align: left;
+}
+
+.ui.grid.Bid .row .actions button {
+  margin: 0;
+}
+
+.ui.grid.Bid .row .actions button + button {
+  margin-left: 15px !important;
+}
+
+@media(min-width: 758px) and (max-width: 992px) {
+  .Bid .row h3 {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 768px) {
+  .ui.grid.stackable.grid.Bid {
+    max-height: 76px;
+  }
+  
+  .ui.grid.Bid .row .actions {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}

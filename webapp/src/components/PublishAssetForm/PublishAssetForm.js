@@ -6,16 +6,21 @@ import differenceInDays from 'date-fns/difference_in_days'
 import { Form, Button, Input, Message } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
-import TxStatus from 'components/TxStatus'
 import { assetType, publicationType } from 'components/types'
-import { preventDefault, formatDate, formatMana } from 'lib/utils'
+import {
+  preventDefault,
+  formatDate,
+  formatMana,
+  sanitizePrice
+} from 'lib/utils'
 import { isParcel } from 'shared/parcel'
-
-// TODO: Shouldn't this live on the publication module?
-const DEFAULT_DAY_INTERVAL = 31
-const MINIMUM_DAY_INTERVAL = 1
-const MAXIMUM_DAY_INTERVAL = 5 * 365
-const MINIMUM_ASSET_PRICE = 1
+import {
+  DEFAULT_DAY_INTERVAL,
+  MINIMUM_DAY_INTERVAL,
+  MAXIMUM_PUBLISH_DAY_INTERVAL,
+  MINIMUM_ASSET_PRICE
+} from 'shared/listing'
+import TxStatus from 'components/TxStatus'
 
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
@@ -45,7 +50,7 @@ export default class PublishAssetForm extends React.PureComponent {
 
   handlePriceChange = e => {
     // Dots and commas are not allowed
-    const price = e.currentTarget.value.replace(/\.|,/g, '')
+    const price = sanitizePrice(e.currentTarget.value)
 
     this.setState({
       price,
@@ -81,10 +86,10 @@ export default class PublishAssetForm extends React.PureComponent {
       )
     }
 
-    if (differenceInDays(expiresAt, today) > MAXIMUM_DAY_INTERVAL) {
+    if (differenceInDays(expiresAt, today) > MAXIMUM_PUBLISH_DAY_INTERVAL) {
       formErrors.push(
         t('asset_publish.errors.maximum_expiration', {
-          date: this.formatFutureDate(MAXIMUM_DAY_INTERVAL)
+          date: this.formatFutureDate(MAXIMUM_PUBLISH_DAY_INTERVAL)
         })
       )
     }
@@ -139,7 +144,7 @@ export default class PublishAssetForm extends React.PureComponent {
         error={!!formErrors}
       >
         <Form.Field>
-          <label>{t('asset_publish.price')}</label>
+          <label>{t('global.price')}</label>
           <Input
             type="number"
             placeholder={t('asset_publish.price_placeholder', {

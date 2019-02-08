@@ -1,0 +1,3 @@
+.BidForm.ui.form .field>label {
+  text-transform: capitalize;
+}

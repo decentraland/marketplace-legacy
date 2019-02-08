@@ -38,6 +38,12 @@ export const locations = {
   createEstate: (x = params.x, y = params.y) =>
     `/parcels/${x}/${y}/create-estate`, // this could be /estates/create once it's parcel independent
 
+  bidParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/bid`,
+  cancelBidParcel: (x = params.x, y = params.y) =>
+    `/parcels/${x}/${y}/cancel-bid`,
+  acceptBidParcel: (x = params.x, y = params.y, bidId = ':bidId') =>
+    `/parcels/${x}/${y}/accept-bid/${bidId}`,
+
   // Estates
 
   estateDetail: (id = params.id) => `/estates/${id}/detail`,
@@ -51,6 +57,10 @@ export const locations = {
   buyEstate: (id = params.id) => `/estates/${id}/buy`,
   cancelSaleEstate: (id = params.id) => `/estates/${id}/cancel-sale`,
   manageEstate: (id = params.id) => `/estates/${id}/manage`,
+  bidEstate: (id = params.id) => `/estates/${id}/bid`,
+  cancelBidEstate: (id = params.id) => `/estates/${id}/cancel-bid`,
+  acceptBidEstate: (id = params.id, bidId = ':bidId') =>
+    `/estates/${id}/accept-bid/${bidId}`,
 
   // Generic assets
 
@@ -92,7 +102,8 @@ export const PROFILE_PAGE_TABS = Object.freeze({
   contributions: 'contributions',
   publications: 'publications',
   estates: 'estates',
-  mortgages: 'mortgages'
+  mortgages: 'mortgages',
+  bids: 'bids'
 })
 
 export const NAVBAR_PAGES = Object.freeze({

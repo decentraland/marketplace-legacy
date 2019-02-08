@@ -6,7 +6,7 @@ import { Log, cli } from 'decentraland-commons'
 import { SQL, db } from '../src/database'
 import { connectEth } from '../src/ethereum'
 import { Parcel, Estate } from '../src/Asset'
-import { Publication } from '../src/Publication'
+import { Publication } from '../src/Listing'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { eventNames } from '../src/ethereum'
 import { mockModelDbOperations } from '../specs/utils'
@@ -171,7 +171,10 @@ const main = {
             asset.token_id
           )
 
-          const pubDb = (await Publication.findByAssetId(asset.id))[0]
+          const pubDb = (await Publication.findByAssetId(
+            asset.id,
+            assetType
+          ))[0]
           const publicationDb = toPublicationLog(pubDb)
 
           log.info(`(publication) id:(${asset.id})`)
@@ -187,7 +190,10 @@ const main = {
       .action(
         asSafeAction(async (assetId, assetType) => {
           const asset = await getAssetFromCLIArgs(assetId, assetType)
-          const publications = await Publication.findByAssetId(asset.id)
+          const publications = await Publication.findByAssetId(
+            asset.id,
+            assetType
+          )
 
           log.info(`(publications) id:(${asset.id})`)
 

@@ -10,6 +10,8 @@ import {
 import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 
 import { locations } from 'locations'
+import { getWalletSagaOptions, sendTransaction, fetchBalance } from './utils'
+import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   TRANSFER_MANA_REQUEST,
   BUY_MANA_REQUEST,
@@ -24,7 +26,6 @@ import {
 } from './actions'
 import { fetchAddress } from 'modules/address/actions'
 import { fetchAuthorizationRequest } from 'modules/authorization/actions'
-import { getWalletSagaOptions, sendTransaction, fetchBalance } from './utils'
 
 const baseWalletSaga = createWalletSaga(getWalletSagaOptions())
 
@@ -53,6 +54,10 @@ function* handleConnectWalletSuccess(action) {
     approvals: {
       Marketplace: ['LANDRegistry', 'EstateRegistry']
     }
+  }
+
+  if (isFeatureEnabled('BIDS')) {
+    authorization.allowances['ERC721Bid'] = ['MANAToken']
   }
 
   yield put(fetchAddress(address))

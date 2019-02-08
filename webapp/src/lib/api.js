@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { env } from 'decentraland-commons'
-import { PUBLICATION_STATUS } from 'shared/publication'
+import { LISTING_STATUS } from 'shared/listing'
 
 const httpClient = axios.create()
 const URL = env.get('REACT_APP_API_URL', '')
@@ -10,7 +10,7 @@ const FILTER_DEFAULTS = {
   sortBy: 'created_at',
   sortOrder: 'asc',
   assetType: null,
-  status: PUBLICATION_STATUS.open
+  status: LISTING_STATUS.open
 }
 
 const getFilterOptions = options => {
@@ -88,6 +88,10 @@ export class API {
     return this.request('get', `/addresses/${address}/estates`, {})
   }
 
+  fetchAddressBids(address, status) {
+    return this.request('get', `/addresses/${address}/bids`, { status })
+  }
+
   fetchEstate(id) {
     return this.request('get', `/estates/${id}`)
   }
@@ -106,6 +110,20 @@ export class API {
 
   fetchMortgages(x, y, status) {
     return this.request('get', `/parcels/${x}/${y}/mortgages`, { status })
+  }
+
+  fetchBidsByAsset(assetId, opt) {
+    return this.request('get', `/assets/${assetId}/bids`, opt)
+  }
+
+  fetchBidById(bidId) {
+    return this.request('get', `/bids/${bidId}`)
+  }
+
+  fetchBidAssets(address, status) {
+    return this.request('get', `/bids/${address}/assets`, {
+      status
+    })
   }
 
   request(method, path, params) {

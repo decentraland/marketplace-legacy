@@ -1,15 +1,15 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { navigateTo } from '@dapps/modules/location/actions'
 
 import { PROFILE_PAGE_TABS, locations } from 'locations'
+import { Location } from 'lib/Location'
+import { Pagination } from 'lib/Pagination'
+import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
-import { fetchAddress } from 'modules/address/actions'
-import { navigateTo } from '@dapps/modules/location/actions'
-import { Location } from 'lib/Location'
-import { Pagination } from 'lib/Pagination'
-
+import { orderBids } from 'modules/bid/utils'
 import ProfilePage from './ProfilePage'
 
 const mapState = (state, { location, match }) => {
@@ -26,12 +26,14 @@ const mapState = (state, { location, match }) => {
   let estates = []
   let mortgagedParcels = []
   let publishedEstates = []
+  let bids = []
   if (address in addresses) {
     parcels = addresses[address].parcels
     contributions = addresses[address].contributions
     publishedParcels = addresses[address].publishedParcels
     publishedEstates = addresses[address].publishedEstates
     estates = addresses[address].estates
+    bids = orderBids(addresses[address].bids, address)
     mortgagedParcels = addresses[address].mortgagedParcels
   }
 
@@ -59,6 +61,11 @@ const mapState = (state, { location, match }) => {
       pagination = Pagination.paginate(mortgagedParcels, page)
       break
     }
+    case PROFILE_PAGE_TABS.bids: {
+      bids = orderBids(bids, address)
+      pagination = Pagination.paginate(bids, page)
+      break
+    }
     case PROFILE_PAGE_TABS.parcels:
     default: {
       pagination = Pagination.paginate(parcels, page)
@@ -79,13 +86,15 @@ const mapState = (state, { location, match }) => {
     pages,
     isLoading,
     isEmpty,
+    bids,
     isOwner: wallet.address === address,
     isConnecting: isConnecting(state)
   }
 }
 
 const mapDispatch = (dispatch, { match }) => ({
-  onFetchAddress: () => dispatch(fetchAddress(match.params.address)),
+  onFetchAddress: address =>
+    dispatch(fetchAddress(address || match.params.address)),
   onNavigate: url => dispatch(navigateTo(url)),
   onAccessDenied: () => dispatch(navigateTo(locations.marketplace()))
 })

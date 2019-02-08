@@ -13,6 +13,10 @@
   background-color: var(--darker-gray);
 }
 
+.AssetTransactionHistory .transaction-history-entry .type {
+  text-transform: capitalize;
+}
+
 .AssetTransactionHistory .transaction-history-entry:last-child {
   border-radius: 0px 0px 10px 10px;
 }

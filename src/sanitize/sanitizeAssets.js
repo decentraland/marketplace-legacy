@@ -4,7 +4,7 @@ import { sanitizePublication } from './sanitizePublications'
 import { isParcel } from '../shared/parcel'
 
 export function sanitizeAssets(assets) {
-  return assets.map(({ publication, ...asset }) => {
+  return assets.map(({ publication, bids, ...asset }) => {
     const newAsset = isParcel(asset)
       ? sanitizeParcel(asset)
       : sanitizeEstate(asset)

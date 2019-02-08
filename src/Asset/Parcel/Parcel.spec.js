@@ -4,12 +4,12 @@ import { eth, txUtils } from 'decentraland-eth'
 
 import { Parcel } from './Parcel.model'
 import { ParcelService } from './Parcel.service'
-import { Publication } from '../../Publication'
+import { Publication } from '../../Listing'
 import { Mortgage } from '../../Mortgage'
 import { db } from '../../database'
 
 import { ASSET_TYPES } from '../../shared/asset'
-import { PUBLICATION_STATUS } from '../../shared/publication'
+import { LISTING_STATUS } from '../../shared/listing'
 import { MORTGAGE_STATUS } from '../../shared/mortgage'
 
 describe('Parcel', function() {
@@ -57,7 +57,7 @@ describe('Parcel', function() {
       const publication = {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_TYPES.confirmed,
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '3,5',
         owner: '0xdeadbeef33',
@@ -80,6 +80,7 @@ describe('Parcel', function() {
           token_id: null,
           update_operator: null,
           auction_price: null,
+          auction_timestamp: null,
           owner: null,
           data: null,
           district_id: null,
@@ -95,6 +96,7 @@ describe('Parcel', function() {
           token_id: null,
           update_operator: null,
           auction_price: null,
+          auction_timestamp: null,
           owner: null,
           data: null,
           district_id: null,
@@ -115,7 +117,7 @@ describe('Parcel', function() {
       const publication = {
         tx_hash: '0xdeadbeef',
         tx_status: txUtils.TRANSACTION_TYPES.confirmed,
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '2,5',
         owner: '0xdeadbeef33',
@@ -131,7 +133,7 @@ describe('Parcel', function() {
       const publication2 = {
         tx_hash: '0xdeadabeef',
         tx_status: txUtils.TRANSACTION_TYPES.confirmed,
-        status: PUBLICATION_STATUS.open,
+        status: LISTING_STATUS.open,
         asset_type: ASSET_TYPES.parcel,
         asset_id: '6,5',
         owner: '0xdeadbeef33',
@@ -210,6 +212,7 @@ describe('Parcel', function() {
           y: 5,
           update_operator: null,
           auction_price: null,
+          auction_timestamp: null,
           owner: null,
           data: null,
           district_id: null,
@@ -225,6 +228,7 @@ describe('Parcel', function() {
           y: 5,
           update_operator: null,
           auction_price: null,
+          auction_timestamp: null,
           owner: null,
           data: null,
           district_id: null,

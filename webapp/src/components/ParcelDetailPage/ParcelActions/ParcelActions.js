@@ -5,10 +5,16 @@ import { Button, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { parcelType, publicationType, mortgageType } from 'components/types'
+import { isFeatureEnabled } from 'lib/featureUtils'
+import {
+  parcelType,
+  publicationType,
+  mortgageType,
+  bidType
+} from 'components/types'
 import { isLegacyPublication } from 'modules/publication/utils'
 import { getOpenPublication } from 'shared/asset'
-import { hasParcelsConnected } from 'shared/parcel'
+import { hasParcelsConnected, isListable } from 'shared/parcel'
 
 import './ParcelActions.css'
 
@@ -17,6 +23,7 @@ export default class ParcelActions extends React.PureComponent {
     parcel: parcelType.isRequired,
     isOwner: PropTypes.bool,
     mortgage: mortgageType,
+    bids: PropTypes.arrayOf(bidType),
     publications: PropTypes.objectOf(publicationType).isRequired,
     isLoading: PropTypes.bool.isRequired
   }
@@ -33,7 +40,8 @@ export default class ParcelActions extends React.PureComponent {
       isOwner,
       mortgage,
       isLoading,
-      publications
+      publications,
+      bids
     } = this.props
 
     if (!parcel || isLoading) {
@@ -95,6 +103,19 @@ export default class ParcelActions extends React.PureComponent {
               )}
           </React.Fragment>
         ) : null}
+        {isFeatureEnabled('BIDS') &&
+          !isOwner &&
+          !mortgage &&
+          !bids.length &&
+          isListable(parcel) && (
+            <React.Fragment>
+              <Link to={locations.bidParcel(x, y)}>
+                <Button primary size="large">
+                  {t('asset_detail.bid.place')}
+                </Button>
+              </Link>
+            </React.Fragment>
+          )}
       </div>
     )
   }

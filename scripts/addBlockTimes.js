@@ -4,7 +4,7 @@ import { Log, env, utils } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { connectEth } from '../src/ethereum'
-import { Publication } from '../src/Publication'
+import { Publication } from '../src/Listing'
 import { BlockTimestampService } from '../src/BlockTimestamp'
 import { asyncBatch } from '../src/lib'
 import { loadEnv } from './utils'

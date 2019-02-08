@@ -5,19 +5,20 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { estateType, publicationType } from 'components/types'
+import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
+import { hasTags } from 'shared/parcel'
+import { calculateMapProps } from 'shared/estate'
+import { buildCoordinate } from 'shared/coordinates'
+import { estateType, publicationType, bidType } from 'components/types'
+import EstateActions from './EstateActions'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
-import AssetTransactionHistory from 'components/AssetTransactionHistory'
 import LandAmount from 'components/LandAmount'
-import { getOpenPublication } from 'shared/asset'
-import { hasTags } from 'shared/parcel'
-import { calculateMapProps } from 'shared/estate'
-import { buildCoordinate } from 'shared/coordinates'
-import EstateActions from './EstateActions'
+import Bid from 'components/Bid'
+import AssetTransactionHistory from 'components/AssetTransactionHistory'
 
 import './EstateDetailPage.css'
 
@@ -33,7 +34,8 @@ export default class EstateDetailPage extends React.PureComponent {
     onEditParcels: PropTypes.func.isRequired,
     onEditMetadata: PropTypes.func.isRequired,
     onManageEstate: PropTypes.func.isRequired,
-    onParcelClick: PropTypes.func.isRequired
+    onParcelClick: PropTypes.func.isRequired,
+    bids: PropTypes.arrayOf(bidType)
   }
 
   getEstateParcels() {
@@ -70,7 +72,8 @@ export default class EstateDetailPage extends React.PureComponent {
       onEditParcels,
       onEditMetadata,
       onManageEstate,
-      onParcelClick
+      onParcelClick,
+      bids
     } = this.props
 
     if (estate.data.parcels.length === 0) {
@@ -141,7 +144,7 @@ export default class EstateDetailPage extends React.PureComponent {
             {publication && (
               <React.Fragment>
                 <Grid.Column mobile={4} tablet={3} computer={4}>
-                  <h3>{t('asset_detail.publication.price')}</h3>
+                  <h3>{t('global.price')}</h3>
                   <Mana
                     amount={parseFloat(publication.price)}
                     size={20}
@@ -179,9 +182,23 @@ export default class EstateDetailPage extends React.PureComponent {
                 isOwner={isOwner}
                 publications={publications}
                 estate={estate}
+                bids={bids}
               />
             </Grid.Column>
           </Grid.Row>
+
+          {bids &&
+            bids.length > 0 && (
+              <Grid.Row>
+                <Grid.Column>
+                  <h3>{t('asset_detail.bid.title')}</h3>
+                  {bids.map(bid => (
+                    <Bid key={bid.id} bid={bid} isOwner={isOwner} />
+                  ))}
+                </Grid.Column>
+              </Grid.Row>
+            )}
+
           {estate.parcels.filter(hasTags).length > 0 && (
             <Grid.Row>
               <Grid.Column className="highlights">
@@ -225,7 +242,10 @@ export default class EstateDetailPage extends React.PureComponent {
             )}
           </Grid.Row>
         </Grid>
-        <AssetTransactionHistory asset={estate} publications={publications} />
+        <AssetTransactionHistory
+          asset={{ ...estate, type: ASSET_TYPES.estate }}
+          publications={publications}
+        />
       </div>
     )
   }

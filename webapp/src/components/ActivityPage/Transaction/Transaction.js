@@ -40,6 +40,11 @@ import {
 } from 'modules/estates/actions'
 import { MANAGE_ASSET_SUCCESS } from 'modules/management/actions'
 import { BID_ON_PARCELS_SUCCESS } from 'modules/auction/actions'
+import {
+  BID_SUCCESS,
+  ACCEPT_BID_SUCCESS,
+  CANCEL_BID_SUCCESS
+} from 'modules/bid/actions'
 import { buildCoordinate } from 'shared/coordinates'
 import { isNewEstate, calculateMapProps } from 'shared/estate'
 import { ASSET_TYPES } from 'shared/asset'
@@ -215,7 +220,7 @@ export default class Transaction extends React.PureComponent {
         return (
           <T
             id="transaction.cancel"
-            values={{ parcel_link: this.renderAssetLink(payload) }}
+            values={{ asset_link: this.renderAssetLink(payload) }}
           />
         )
       }
@@ -342,6 +347,36 @@ export default class Transaction extends React.PureComponent {
 
         return <T id="transaction.bid" values={{ parcel_count: xs.length }} />
       }
+      case BID_SUCCESS: {
+        return (
+          <T
+            id="transaction.place_bid"
+            values={{
+              asset_link: this.renderAssetLink(payload),
+              price: payload.price
+            }}
+          />
+        )
+      }
+      case ACCEPT_BID_SUCCESS: {
+        return (
+          <T
+            id="transaction.accept_bid"
+            values={{
+              asset_link: this.renderAssetLink(payload),
+              price: payload.price
+            }}
+          />
+        )
+      }
+      case CANCEL_BID_SUCCESS: {
+        return (
+          <T
+            id="transaction.cancel_bid"
+            values={{ asset_link: this.renderAssetLink(payload) }}
+          />
+        )
+      }
       default:
         return null
     }
@@ -428,7 +463,10 @@ export default class Transaction extends React.PureComponent {
       PUBLISH_SUCCESS,
       CANCEL_SALE_SUCCESS,
       BUY_SUCCESS,
-      MANAGE_ASSET_SUCCESS
+      MANAGE_ASSET_SUCCESS,
+      BID_SUCCESS,
+      ACCEPT_BID_SUCCESS,
+      CANCEL_BID_SUCCESS
     ].includes(tx.actionType)
 
     const isParcelTransaction = [

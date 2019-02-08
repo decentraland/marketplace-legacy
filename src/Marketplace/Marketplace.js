@@ -1,14 +1,11 @@
-import {
-  Publication,
-  PublicationQueries,
-  PublicationService
-} from '../Publication'
+import { Publication, PublicationQueries, Listing } from '../Listing'
+import { EstateQueries } from '../Asset'
 import { db, SQL, raw } from '../database'
 
 export class Marketplace {
   async filterAll(filters) {
     const { status, sort, pagination } = filters.sanitize()
-    const Assets = new PublicationService().getPublicableAssets()
+    const Assets = Listing.getListableAssets()
 
     const selectAssetsSQL = Assets.map(
       ({ tableName }) => `row_to_json(${tableName}.*) as ${tableName}`
@@ -26,7 +23,7 @@ export class Marketplace {
           ${raw(joinAssetsSQL)}
           WHERE ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}
-            AND ${PublicationQueries.estateHasParcels()}
+            AND ${EstateQueries.estateHasParcels('pub')}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -34,15 +31,7 @@ export class Marketplace {
     ])
 
     // Keep only the model that had a publication defined from the Assets list
-    assets = assets.map(asset => {
-      for (const Model of Assets) {
-        if (asset[Model.tableName] != null) {
-          Object.assign(asset, asset[Model.tableName])
-        }
-        delete asset[Model.tableName]
-      }
-      return asset
-    })
+    assets = Listing.filterAssetsByModelAssets(assets)
 
     return { assets, total }
   }
@@ -59,7 +48,7 @@ export class Marketplace {
           WHERE ${PublicationQueries.hasAssetType(asset_type)}
             AND ${PublicationQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}
-            AND ${PublicationQueries.estateHasParcels()}
+            AND ${EstateQueries.estateHasParcels('pub')}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
@@ -78,7 +67,7 @@ export class Marketplace {
         WHERE pub.status = ${status}
           AND ${PublicationQueries.hasAssetType(asset_type)}
           AND ${PublicationQueries.isActive()}
-          AND ${PublicationQueries.estateHasParcels()}`
+          AND ${EstateQueries.estateHasParcels('pub')}`
     )
 
     return parseInt(result[0].count, 10)

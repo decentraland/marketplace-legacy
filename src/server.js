@@ -8,12 +8,12 @@ import { AssetRouter, ParcelRouter, EstateRouter } from './Asset'
 import { MortgageRouter } from './Mortgage'
 import { DistrictRouter } from './District'
 import { ContributionRouter } from './Contribution'
-import { PublicationRouter } from './Publication'
 import { TileRouter } from './Tile'
 import { TranslationRouter } from './Translation'
 import { MapRouter } from './Map'
 import { MarketplaceRouter } from './Marketplace'
 import { InviteRouter } from './Invite'
+import { BidRouter, PublicationRouter } from './Listing'
 
 env.load()
 
@@ -67,6 +67,7 @@ export async function startServer() {
   new MarketplaceRouter(router).mount()
   new ParcelRouter(router).mount()
   new InviteRouter(router).mount()
+  new BidRouter(router).mount()
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)

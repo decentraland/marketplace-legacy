@@ -7,7 +7,7 @@ import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import { t, T } from '@dapps/modules/translation/utils'
-import CancelSaleAssetForm from 'components/CancelSaleAssetForm'
+import CancelListingAssetForm from 'components/CancelListingAssetForm'
 import { publicationType } from 'components/types'
 
 export default class CancelSaleParcelPage extends React.PureComponent {
@@ -56,7 +56,7 @@ export default class CancelSaleParcelPage extends React.PureComponent {
               subtitle={this.renderSubtitle(parcel)}
               hasCustomFooter
             >
-              <CancelSaleAssetForm
+              <CancelListingAssetForm
                 onCancel={onCancel}
                 onConfirm={this.handleConfirm}
                 isTxIdle={isTxIdle}

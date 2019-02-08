@@ -16,6 +16,7 @@ import { estateSaga } from 'modules/estates/sagas'
 import { mortgageSaga } from 'modules/mortgage/sagas'
 import { tileSaga } from 'modules/tile/sagas'
 import { managementSaga } from 'modules/management/sagas'
+import { bidSagas } from 'modules/bid/sagas'
 
 import { api } from 'lib/api'
 
@@ -34,6 +35,7 @@ export function* rootSaga() {
     locationSaga(),
     parcelsSaga(),
     publicationSaga(),
+    bidSagas(),
     transactionSaga(),
     translationSaga(),
     walletSaga(),
