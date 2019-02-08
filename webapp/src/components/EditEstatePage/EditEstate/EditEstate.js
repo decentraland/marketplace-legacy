@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { estateType, walletType } from 'components/types'
+import { isNewEstate } from 'shared/estate'
 import EstateSelect from '../EstateSelect'
 import EditEstateMetadata from '../EditEstateMetadata'
-import { isNewEstate } from 'shared/estate'
+import { estateType, walletType } from 'components/types'
 
 export default class EditEstate extends React.PureComponent {
   static propTypes = {

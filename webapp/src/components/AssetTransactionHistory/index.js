@@ -1,3 +1,3 @@
-import AssetTransactionHistory from './AssetTransactionHistory'
+import AssetTransactionHistory from './AssetTransactionHistory.container'
 
 export default AssetTransactionHistory

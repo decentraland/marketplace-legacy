@@ -33,6 +33,11 @@ import {
   SET_ON_CHAIN_PARCEL_OWNER,
   LEARN_MORE_AUCTION
 } from 'modules/auction/actions'
+import {
+  BID_SUCCESS,
+  CANCEL_BID_SUCCESS,
+  ACCEPT_BID_SUCCESS
+} from 'modules/bid/actions'
 
 const addAssetType = (actionName, assetType) =>
   `${actionName} ${assetType[0].toUpperCase() + assetType.slice(1)}`
@@ -176,6 +181,37 @@ export function track() {
     parcelId: action.parcelId,
     owner: action.owner
   }))
+
+  add(
+    BID_SUCCESS,
+    ({ bid }) => addAssetType('Bid', bid.asset_type),
+    ({ bid }) => ({
+      assetId: bid.asset_id,
+      price: bid.price,
+      bidder: bid.bidder
+    })
+  )
+
+  add(
+    ACCEPT_BID_SUCCESS,
+    ({ bid }) => addAssetType('Accept bid', bid.asset_type),
+    ({ bid }) => ({
+      id: bid.id,
+      assetId: bid.asset_id,
+      bidder: bid.bidder,
+      seller: bid.seller
+    })
+  )
+
+  add(
+    CANCEL_BID_SUCCESS,
+    ({ bid }) => addAssetType('Cancel bid', bid.asset_type),
+    ({ bid }) => ({
+      id: bid.id,
+      assetId: bid.asset_id,
+      bidder: bid.bidder
+    })
+  )
 
   add(LEARN_MORE_AUCTION, 'Learn More Auction')
 }

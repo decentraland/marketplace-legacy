@@ -18,6 +18,7 @@ import { parcelsReducer as parcels } from 'modules/parcels/reducer'
 import { publicationReducer as publication } from 'modules/publication/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
+import { bidReducer as bid } from 'modules/bid/reducer'
 
 export const rootReducer = storageReducerWrapper(
   combineReducers({
@@ -30,6 +31,7 @@ export const rootReducer = storageReducerWrapper(
     mortgage,
     parcels,
     publication,
+    bid,
     transaction,
     translation,
     ui,

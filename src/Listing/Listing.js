@@ -33,6 +33,19 @@ export class Listing {
     return Object.values(listableAsset)
   }
 
+  static filterAssetsByModelAssets(assets) {
+    const Assets = Listing.getListableAssets()
+    return assets.map(asset => {
+      for (const Model of Assets) {
+        if (asset[Model.tableName] != null) {
+          Object.assign(asset, asset[Model.tableName])
+        }
+        delete asset[Model.tableName]
+      }
+      return asset
+    })
+  }
+
   static findByOwner(owner) {
     return this.Model.find({ owner })
   }

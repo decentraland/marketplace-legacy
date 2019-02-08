@@ -12,6 +12,9 @@ import {
   FETCH_ADDRESS_TILES_SUCCESS,
   FETCH_ADDRESS_TILES_FAILURE
 } from './actions'
+import { ASSET_TYPES } from 'shared/asset'
+import { buildCoordinate } from 'shared/coordinates'
+import { TYPES, TileLocation, shortenOwner } from 'shared/map'
 import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS,
@@ -25,10 +28,8 @@ import {
   CREATE_ESTATE_SUCCESS
 } from 'modules/estates/actions'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
+import { ACCEPT_BID_SUCCESS } from 'modules/bid/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
-import { ASSET_TYPES } from 'shared/asset'
-import { buildCoordinate } from 'shared/coordinates'
-import { TYPES, TileLocation, shortenOwner } from 'shared/map'
 
 const INITIAL_STATE = {
   data: {},
@@ -262,6 +263,44 @@ export function tileReducer(state = INITIAL_STATE, action) {
               topLeft,
               estate_id: estateId,
               type: TYPES.myEstates
+            }
+          }
+
+          return {
+            ...state,
+            data: { ...state.data, ...newData }
+          }
+        }
+        case ACCEPT_BID_SUCCESS: {
+          const { bidder, id, type } = transaction.payload
+          const newData = {}
+
+          switch (type) {
+            case ASSET_TYPES.parcel: {
+              const parcelId = buildCoordinate(
+                transaction.payload.x,
+                transaction.payload.y
+              )
+
+              newData[parcelId] = {
+                ...state.data[parcelId],
+                owner: shortenOwner(bidder),
+                type: TYPES.taken
+              }
+              break
+            }
+            case ASSET_TYPES.estate: {
+              for (const tileId in state.data) {
+                const tile = state.data[tileId]
+                if (tile.estate_id == id) {
+                  newData[tile.id] = {
+                    ...tile,
+                    owner: shortenOwner(bidder),
+                    type: TYPES.taken
+                  }
+                }
+              }
+              break
             }
           }
 

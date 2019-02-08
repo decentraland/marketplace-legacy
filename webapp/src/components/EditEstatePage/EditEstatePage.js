@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Estate from 'components/Estate'
 import { isNewEstate } from 'shared/estate'
-import EditEstate from './EditEstate'
-import Parcel from 'components/Parcel'
 import { getInitialEstate } from 'shared/estate'
+import EditEstate from './EditEstate'
+import Estate from 'components/Estate'
+import Parcel from 'components/Parcel'
 
 export default class EditEstatePage extends React.PureComponent {
   static propTypes = {

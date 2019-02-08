@@ -8,6 +8,7 @@ import { getData as getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
 import { getData as getAuthorizations } from 'modules/authorization/selectors'
+import { getOpenBids } from 'modules/bid/selectors'
 import { isOpen } from 'shared/listing'
 import { pickAndMap } from './utils'
 
@@ -24,6 +25,7 @@ export const getAddresses = createSelector(
   state => getEstates(state),
   state => getMortgagedParcels(state),
   state => getAuthorizations(state),
+  state => getOpenBids(state),
   (
     data,
     allDistricts,
@@ -31,7 +33,8 @@ export const getAddresses = createSelector(
     allPublications,
     allEstates,
     allMortgagedParcels,
-    allAuthorizations
+    allAuthorizations,
+    allBids
   ) =>
     Object.keys(data).reduce((map, address) => {
       const parcelIds = data[address].parcel_ids || []
@@ -39,6 +42,8 @@ export const getAddresses = createSelector(
 
       const estatesIds = data[address].estate_ids || []
       const [estates, estatesById] = pickAndMap(allEstates, estatesIds)
+
+      const bidIds = data[address].bid_ids || []
 
       const contributions = (data[address].contributions || []).map(
         contribution => ({
@@ -60,6 +65,14 @@ export const getAddresses = createSelector(
         parcel => parcel.mortgage.borrower === address
       )
 
+      const bids = bidIds.reduce((bids, bidId) => {
+        const bid = allBids[bidId]
+        if (bid) {
+          bids.push(bid)
+        }
+        return bids
+      }, [])
+
       const authorization = allAuthorizations[address]
 
       return {
@@ -74,6 +87,7 @@ export const getAddresses = createSelector(
           contributions,
           publishedParcels,
           publishedEstates,
+          bids,
           authorization
         }
       }

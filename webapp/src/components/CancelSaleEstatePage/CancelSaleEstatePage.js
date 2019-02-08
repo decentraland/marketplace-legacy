@@ -6,7 +6,7 @@ import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModa
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { t, T } from '@dapps/modules/translation/utils'
-import CancelSaleAssetForm from 'components/CancelSaleAssetForm'
+import CancelListingAssetForm from 'components/CancelListingAssetForm'
 import { publicationType } from 'components/types'
 
 export default class CancelSaleEstatePage extends React.PureComponent {
@@ -53,7 +53,7 @@ export default class CancelSaleEstatePage extends React.PureComponent {
               subtitle={this.renderSubtitle(estate)}
               hasCustomFooter
             >
-              <CancelSaleAssetForm
+              <CancelListingAssetForm
                 onCancel={onCancel}
                 onConfirm={this.handleConfirm}
                 isTxIdle={isTxIdle}

@@ -22,9 +22,13 @@ import {
   TRANSFER_ESTATE_SUCCESS,
   TRANSFER_ESTATE_FAILURE
 } from './actions'
-import { FETCH_ADDRESS_ESTATES_SUCCESS } from 'modules/address/actions'
 import { getEstateIdFromTxReceipt } from './utils'
 import { normalizeEstate, isEstate } from 'shared/estate'
+import { ASSET_TYPES } from 'shared/asset'
+import {
+  FETCH_ADDRESS_ESTATES_SUCCESS,
+  FETCH_ADDRESS_BIDS_SUCCESS
+} from 'modules/address/actions'
 import {
   BUY_SUCCESS,
   CANCEL_SALE_SUCCESS,
@@ -32,12 +36,12 @@ import {
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
-import { ASSET_TYPES } from 'shared/asset'
 import {
   MANAGE_ASSET_REQUEST,
   MANAGE_ASSET_SUCCESS,
   MANAGE_ASSET_FAILURE
 } from 'modules/management/actions'
+import { ACCEPT_BID_SUCCESS } from 'modules/bid/actions'
 
 const INITIAL_STATE = {
   data: {},
@@ -92,9 +96,10 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         error: null,
         data: {
           ...state.data,
-          ...estates.reduce((acc, estate) => {
-            return { ...acc, [estate.id]: normalizeEstate(estate) }
-          }, state.data)
+          ...estates.reduce(
+            (acc, estate) => ({ ...acc, [estate.id]: normalizeEstate(estate) }),
+            state.data
+          )
         }
       }
     }
@@ -144,6 +149,25 @@ export function estatesReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           ...action.estates
+        }
+      }
+    }
+    case FETCH_ADDRESS_BIDS_SUCCESS: {
+      const { assets } = action
+      const estates = assets.filter(asset => isEstate(asset))
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          ...estates.reduce(
+            (acc, estate) => ({
+              ...acc,
+              [estate.id]: normalizeEstate(estate)
+            }),
+            state.data
+          )
         }
       }
     }
@@ -286,6 +310,24 @@ export function estatesReducer(state = INITIAL_STATE, action) {
             }
           }
           return state
+        }
+        case ACCEPT_BID_SUCCESS: {
+          const { bidder, type, id } = transaction.payload
+
+          if (type !== ASSET_TYPES.estate) {
+            return state
+          }
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [id]: {
+                ...state.data[id],
+                owner: bidder.toLowerCase()
+              }
+            }
+          }
         }
         default:
           return state

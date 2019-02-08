@@ -4,6 +4,7 @@ import { Estate } from './Estate'
 
 export { Asset } from './Asset'
 export { AssetRouter } from './Asset.router'
+export { AssetQueries } from './Asset.queries'
 
 export * from './Parcel'
 export * from './Estate'

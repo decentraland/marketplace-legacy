@@ -7,9 +7,21 @@ export const LISTING_STATUS = Object.freeze({
 
 export const LISTING_ASSET_TYPES = Object.freeze({
   parcel: 'parcel',
-  estate: 'estate',
-  unknow: 'unknow'
+  estate: 'estate'
 })
+
+export const LISTING_TYPES = Object.freeze({
+  PUBLICATION: 'publication',
+  BID: 'bid',
+  AUCTION: 'auction',
+  MORTGAGE: 'mortgage'
+})
+
+export const DEFAULT_DAY_INTERVAL = 31
+export const MINIMUM_DAY_INTERVAL = 1
+export const MAXIMUM_BID_DAY_INTERVAL = 6 * 31 // six month
+export const MAXIMUM_PUBLISH_DAY_INTERVAL = 5 * 365 // 5 years
+export const MINIMUM_ASSET_PRICE = 1
 
 export function isOpen(publication) {
   return (
@@ -24,4 +36,36 @@ export function hasStatus(obj, status) {
 
 export function isExpired(expires_at) {
   return parseInt(expires_at, 10) < Date.now()
+}
+
+export function normalizePublications(publications) {
+  return publications.map(publication => ({
+    block_number: publication.block_number,
+    price: publication.price,
+    block_time_created_at: publication.block_time_created_at,
+    block_time_updated_at: publication.block_time_updated_at,
+    id: publication.tx_hash,
+    from: publication.owner,
+    to: publication.buyer,
+    type: LISTING_TYPES.PUBLICATION
+  }))
+}
+
+export function normalizeBids(bids) {
+  return bids.map(bid => ({
+    block_number: bid.block_number,
+    price: bid.price,
+    block_time_created_at: bid.block_time_created_at,
+    block_time_updated_at: bid.block_time_updated_at,
+    id: bid.id,
+    from: bid.seller,
+    to: bid.bidder,
+    type: LISTING_TYPES.BID
+  }))
+}
+
+export function sortListings(listings) {
+  return listings.sort(
+    (a, b) => (a.block_time_updated_at > b.block_time_updated_at ? -1 : 1)
+  )
 }

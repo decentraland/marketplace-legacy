@@ -14,6 +14,32 @@
   "address": {
     "its_you": "Eres tú!"
   },
+  "asset_accept_bid": {
+    "about_to_accept_bid":
+      "Estás a punto de aceptar la oferta de {name} para {price}.",
+    "accept_bid_asset": "Aceptar oferta para {asset_type}",
+    "expired": "Oferta caducada"
+  },
+  "asset_bid": {
+    "errors": {
+      "maximum_expiration":
+        "La fecha máxima de vencimiento es {date} (6 meses).",
+      "maximum_land_price": "El precio máximo {asset_name} es {value} MANA.",
+      "minimum_expiration": "La fecha mínima de caducidad es {date}.",
+      "minimum_land_price": "El precio mínimo {asset_name} es {value} MANA."
+    },
+    "expiration": "Vencimiento",
+    "expiration_placeholder": "Fecha de expiración de esta publicación.",
+    "list_asset": "Haz una oferta por el {asset_name}",
+    "please_authorize":
+      "Debe ir a {settings_link} y autorizar el contrato de la Oferta para utilizar MANA en su nombre antes de poder realizar una oferta.",
+    "price_placeholder": "Precio en MANA para este {asset_name}.",
+    "set_asset_price":
+      "Establecer un precio y una fecha de vencimiento para {asset_name}.",
+    "set_new_asset_price":
+      "Establezca el nuevo precio o la fecha de vencimiento para {asset_name}.",
+    "update_asset": "Actualizar {asset_name} bid"
+  },
   "asset_buy": {
     "about_to_buy": "Estas por comprar {name} {price}",
     "allowed_balance": "Tu asignación es {allowance}",
@@ -31,7 +57,10 @@
   },
   "asset_cancel": {
     "about_to_cancel": "Estás por cancelar la venta de {name}.",
+    "about_to_cancel_bid": "Está a punto de cancelar la oferta para {name}.",
+    "cancel_bid": "Cancelar oferta",
     "cancel_sale": "Cancelar venta",
+    "not_bid": "No tienes una oferta abierta para el {asset_name} {asset}.",
     "not_for_sale": "La parcela {parcel} no está en venta."
   },
   "asset_detail": {
@@ -42,19 +71,20 @@
       "transfer": "Transferir",
       "update_price": "Actualizar precio"
     },
+    "bid": {
+      "place": "Oferta",
+      "title": "Ofertas"
+    },
     "history": {
       "auction": "Subasta",
       "event": "Evento",
-      "from": "De",
-      "price": "Precio",
       "sold": "Vendido",
       "title": "Historial de transacciones",
       "to": "A",
       "when": "Cuando"
     },
     "publication": {
-      "buy": "Comprar",
-      "price": "precio"
+      "buy": "Comprar"
     }
   },
   "asset_edit": {
@@ -74,7 +104,6 @@
     "manage": "Gestionar {asset_type}"
   },
   "asset_publish": {
-    "already_sold": "Este {asset_name} ya está a la venta para {value}",
     "errors": {
       "maximum_expiration": "La fecha de vencimiento máxima es {date}",
       "maximum_land_price": "El precio máximo {asset_name} es {value} MANA",
@@ -86,7 +115,6 @@
     "list_asset": "Listar {asset_name} en venta",
     "please_authorize":
       "Debe ir a {settings_link} y autorizar que Marketplace opere {asset_name} en su nombre antes de que pueda listarlo en oferta.",
-    "price": "Precio",
     "price_placeholder": "Precio en MANA para este {asset_name}",
     "set_asset_price":
       "Establezca un precio y una fecha de vencimiento para {asset_name}.",
@@ -192,6 +220,11 @@
     "disapproved":
       "Usted no ha autorizado el {contract_link} para operar {symbol} en su nombre"
   },
+  "bid": {
+    "bid_asset": "ERC721",
+    "placed": "ofertas puestas",
+    "received": "ofertas recibidas"
+  },
   "buy_mana": {
     "action": "Comprar Más",
     "amount_too_big": "Este monto es demaciado grande para la red de Bancor",
@@ -247,6 +280,7 @@
       "Establezca un nombre y una descripción, y edite las parcelas de su propiedad."
   },
   "estate_select": {
+    "bids_warning": "Este Estate tiene ofertas activas. ",
     "description": "Seleccione parcelas adyacentes entre sí",
     "detail": "Detalle de finca",
     "edit_selection": "Seleccione las parcelas en el mapa",
@@ -267,6 +301,7 @@
     "terms": "Términos & Condiciones"
   },
   "global": {
+    "accept": "Aceptar",
     "acquired_ago": "Adquirido {date}",
     "activity": "Actividad",
     "add": "añadir",
@@ -274,6 +309,7 @@
     "atlas": "Atlas",
     "auction": "Subasta",
     "balance": "Balance",
+    "bids": "Ofertas",
     "blog": "Blog",
     "cancel": "Cancelar",
     "change": "Cambiar",
@@ -298,6 +334,7 @@
     "expires_in": "Caduca {time}",
     "expires_in_more_than_years": "Caduca en más de {years} años",
     "for": "para",
+    "from": "desde",
     "hours": "horas",
     "land": "LAND",
     "learn_more": "aprende más",
@@ -312,6 +349,7 @@
     "owner_address_warning": "¡Ese es el dueño!",
     "paid_at": "Pagada el",
     "parcels": "Parcelas",
+    "price": "precio",
     "profile": "Mi LAND",
     "publications": "Publicaciones",
     "recipient_address": "Dirección del receptor",
@@ -332,10 +370,14 @@
     "time_left": "Tiempo restante",
     "transfer_irreversible":
       "Recuerde que la transferencia es una operación irreversible.",
+    "type": "Tipo",
     "unauthorized": "No autorizado",
     "undo": "Deshacer",
+    "update": "Actualizar",
     "wallet_address": "Dirección de billetera",
-    "website": "Website"
+    "warning": "Advertencia",
+    "website": "Website",
+    "you": "tú"
   },
   "homepage": {
     "get_started": "Comenzar",
@@ -468,6 +510,7 @@
     "authorization_error_contact":
       "Si el error persiste no dudes en contactar con nosotros.",
     "for_buying": "Por comprar",
+    "for_buying_ERC721Bid": "ERC721s utilizando MANA (oferta)",
     "for_buying_LANDAuction": "LAND subastado usando {token}",
     "for_buying_LegacyMarketplace": "ERC721s usando MANA (legado)",
     "for_buying_Marketplace": "ERC721s utilizando MANA",
@@ -505,11 +548,13 @@
     "title": "Bienvenido al Mercado de LAND de Decentaland"
   },
   "transaction": {
+    "accept_bid": "Aceptaste una oferta para {asset_link} para {price}",
     "bid":
       "Usted compró {parcel_count} {parcel_count, plural, one {parcela} other {parcelas}} en la subasta",
     "buy": "Has comprado {parcel_link}",
     "buy_mana": "Has comprado {mana} MANA",
-    "cancel": "Cancelaste la venta en {parcel_link}",
+    "cancel": "Cancelaste la venta en {asset_link}.",
+    "cancel_bid": "Cancelaste la oferta en {asset_link}",
     "cancel_mortgage":
       "Usted cancela una hipoteca para comprar el paquete {parcel_link}",
     "claim_mortgage_resolution": "Usted afirmó {parcel_link}",
@@ -533,6 +578,7 @@
       "Usted {action} el {mortgage_contract_link} para operar RCN en su nombre",
     "pay_mortgage":
       "Hizo un pago parcial de {amount} MANA por la hipoteca para comprar el paquete {parcel_link}",
+    "place_bid": "Usted oferta {asset_link} para {price} MANA",
     "publish": "Has publicado {parcel_link}",
     "transfer": "Has transferido {asset_type} {asset_link} a {owner_link}",
     "transfer_mana": "Has transferido {mana} MANA a {address_link}"

@@ -28,6 +28,7 @@
 
 .ParcelDetailPage h3 {
   font-family: var(--font-family) !important;
+  text-transform: capitalize;
 }
 
 .ParcelDetailPage .mana-price-icon {

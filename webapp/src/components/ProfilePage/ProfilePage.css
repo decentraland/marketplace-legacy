@@ -22,6 +22,15 @@
   padding: 1px;
 }
 
+.ProfilePage .profile-grid .bids-title {
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.ProfilePage .profile-grid .bids-title.placed {
+  margin-top: 50px
+}
+
 .ProfilePage .pagination {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -76,5 +85,9 @@
 @media (max-width: 768px) {
   .ProfilePage .profile-menu .menu.secondary .item {
     border-color: transparent !important;
+  }
+
+  .ProfilePage .profile-grid .bids-title {
+    margin-bottom: 30px;
   }
 }

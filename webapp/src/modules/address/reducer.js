@@ -1,3 +1,6 @@
+import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
+
 import {
   FETCH_ADDRESS_PARCELS_REQUEST,
   FETCH_ADDRESS_PARCELS_SUCCESS,
@@ -10,11 +13,17 @@ import {
   FETCH_ADDRESS_PUBLICATIONS_FAILURE,
   FETCH_ADDRESS_ESTATES_REQUEST,
   FETCH_ADDRESS_ESTATES_SUCCESS,
-  FETCH_ADDRESS_ESTATES_FAILURE
+  FETCH_ADDRESS_ESTATES_FAILURE,
+  FETCH_ADDRESS_BIDS_REQUEST,
+  FETCH_ADDRESS_BIDS_SUCCESS,
+  FETCH_ADDRESS_BIDS_FAILURE
 } from './actions'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
+import { toAddressParcelIds, toAddressPublicationIds } from './utils'
+import { ASSET_TYPES } from 'shared/asset'
+import { isParcel } from 'shared/parcel'
+import { isEstate } from 'shared/estate'
+import { buildCoordinate } from 'shared/coordinates'
 import { TRANSFER_PARCEL_SUCCESS } from 'modules/parcels/actions'
-import { FETCH_TRANSACTION_SUCCESS } from '@dapps/modules/transaction/actions'
 import { BUY_SUCCESS } from 'modules/publication/actions'
 import {
   EDIT_ESTATE_PARCELS_SUCCESS,
@@ -23,18 +32,20 @@ import {
   CREATE_ESTATE_SUCCESS,
   REMOVE_PARCELS
 } from 'modules/estates/actions'
+import {
+  BID_SUCCESS,
+  ACCEPT_BID_SUCCESS,
+  CANCEL_BID_SUCCESS
+} from 'modules/bid/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
-import { ASSET_TYPES } from 'shared/asset'
-import { isParcel } from 'shared/parcel'
-import { isEstate } from 'shared/estate'
-import { buildCoordinate } from 'shared/coordinates'
-import { toAddressParcelIds, toAddressPublicationIds } from './utils'
+import { getBidIdFromTxReceipt } from 'modules/bid/utils'
 
 const EMPTY_ADDRESS = {
   contributions: [],
   parcel_ids: [],
   publication_ids: [],
-  estate_ids: []
+  estate_ids: [],
+  bid_ids: []
 }
 
 const INITIAL_STATE = {
@@ -49,6 +60,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
     case FETCH_ADDRESS_CONTRIBUTIONS_REQUEST:
     case FETCH_ADDRESS_PUBLICATIONS_REQUEST:
     case FETCH_ADDRESS_ESTATES_REQUEST:
+    case FETCH_ADDRESS_BIDS_REQUEST:
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
@@ -118,10 +130,51 @@ export function addressReducer(state = INITIAL_STATE, action) {
         }
       }
     }
+    case FETCH_ADDRESS_BIDS_SUCCESS: {
+      const addressData = state.data[action.address] || {}
+      const { bids } = action
+
+      const parcel_ids = new Set([
+        ...(addressData.parcel_ids || []),
+        bids
+          .filter(
+            ({ asset_type, seller }) =>
+              ASSET_TYPES.parcel === asset_type && seller === action.address
+          )
+          .map(({ asset_id }) => asset_id)
+      ])
+
+      const estate_ids = new Set([
+        ...(addressData.estate_ids || []),
+        ...bids
+          .filter(
+            ({ asset_type, seller }) =>
+              ASSET_TYPES.estate === asset_type && seller === action.address
+          )
+          .map(({ asset_id }) => asset_id)
+      ])
+
+      const bid_ids = bids.map(({ id }) => id)
+
+      return {
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          [action.address]: {
+            ...addressData,
+            parcel_ids: Array.from(parcel_ids),
+            estate_ids: Array.from(estate_ids),
+            bid_ids
+          }
+        }
+      }
+    }
     case FETCH_ADDRESS_CONTRIBUTIONS_FAILURE:
     case FETCH_ADDRESS_PUBLICATIONS_FAILURE:
     case FETCH_ADDRESS_PARCELS_FAILURE:
     case FETCH_ADDRESS_ESTATES_FAILURE:
+    case FETCH_ADDRESS_BIDS_FAILURE:
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -283,6 +336,91 @@ export function addressReducer(state = INITIAL_STATE, action) {
                 ...user,
                 parcel_ids: updatedParcelIds,
                 estate_ids: [...user.estate_ids, estateId]
+              }
+            }
+          }
+        }
+        case BID_SUCCESS: {
+          const { receipt } = transaction
+          const bidId = getBidIdFromTxReceipt(receipt)
+          const user = state.data[transaction.from] || { ...EMPTY_ADDRESS }
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [transaction.from]: {
+                ...user,
+                bid_ids: [...user.bid_ids, bidId]
+              }
+            }
+          }
+        }
+        case ACCEPT_BID_SUCCESS: {
+          const { bidId, bidder, type, id } = transaction.payload
+          const fromUser = state.data[transaction.from] || { ...EMPTY_ADDRESS }
+          const toUser = state.data[bidder] || { ...EMPTY_ADDRESS }
+
+          let newFromUserData
+          let newToUserData
+
+          switch (type) {
+            case ASSET_TYPES.parcel: {
+              const parcelId = buildCoordinate(
+                transaction.payload.x,
+                transaction.payload.y
+              )
+
+              newFromUserData = {
+                ...fromUser,
+                parcel_ids: fromUser.parcel_ids.filter(id => id !== parcelId)
+              }
+
+              newToUserData = {
+                ...toUser,
+                parcel_ids: [...toUser.parcel_ids, parcelId]
+              }
+              break
+            }
+            case ASSET_TYPES.estate: {
+              newFromUserData = {
+                ...fromUser,
+                estate_ids: fromUser.estate_ids.filter(
+                  estateId => estateId !== id
+                )
+              }
+
+              newToUserData = {
+                ...toUser,
+                estate_ids: [...toUser.estate_ids, id]
+              }
+              break
+            }
+          }
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [transaction.from]: {
+                ...newFromUserData,
+                bid_ids: fromUser.bid_ids.filter(id => id !== bidId)
+              },
+              [bidder]: {
+                ...newToUserData,
+                bid_ids: toUser.bid_ids.filter(id => id !== bidId)
+              }
+            }
+          }
+        }
+        case CANCEL_BID_SUCCESS: {
+          const { bidId } = transaction.payload
+          const user = state.data[transaction.from] || { ...EMPTY_ADDRESS }
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [transaction.from]: {
+                ...user,
+                bid_ids: user.bid_ids.filter(id => id !== bidId)
               }
             }
           }

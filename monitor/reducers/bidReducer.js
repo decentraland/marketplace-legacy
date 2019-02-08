@@ -5,6 +5,7 @@ import { getAssetTypeFromEvent, getAssetIdFromEvent } from './utils'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
+import { Asset } from '../../src/Asset'
 import { Bid } from '../../src/Listing'
 import { LISTING_STATUS } from '../../shared/listing'
 
@@ -15,6 +16,7 @@ export async function bidReducer(event) {
 
   switch (address) {
     case contractAddresses.EstateRegistry:
+    case contractAddresses.LANDRegistry:
     case contractAddresses.ERC721Bid: {
       await reduceBid(event)
       break
@@ -25,14 +27,15 @@ export async function bidReducer(event) {
 }
 
 async function reduceBid(event) {
-  const { name, block_number } = event
+  const { address, name, block_number } = event
   const assetType = getAssetTypeFromEvent(event)
   const [assetId, blockTime] = await Promise.all([
     getAssetIdFromEvent(event),
     new BlockTimestampService().getBlockTime(block_number)
   ])
 
-  if (!assetId) {
+  // To avoid EstateCreations
+  if (contractAddresses.ERC721Bid === address && !assetId) {
     return log.info(`[${name}] Invalid Asset Id`)
   }
 
@@ -57,12 +60,12 @@ async function reduceBid(event) {
         `[${name}] Creating bid ${_id} for token with address: ${_tokenAddress} and id: ${_tokenId}`
       )
 
-      await Bid.delete({
-        token_address: _tokenAddress,
-        token_id: _tokenId,
-        bidder: _bidder.toLowerCase(),
-        status: LISTING_STATUS.open
-      })
+      await Bid.deleteBid(_tokenAddress, _tokenId, _bidder.toLowerCase(), [
+        LISTING_STATUS.open,
+        LISTING_STATUS.fingerprintChanged
+      ])
+
+      const asset = await Asset.getNew(assetType).findById(assetId)
 
       try {
         await Bid.insert({
@@ -71,13 +74,14 @@ async function reduceBid(event) {
           token_id: _tokenId,
           bidder: _bidder,
           price: eth.utils.fromWei(_price),
-          expires_at: _expiresAt,
+          expires_at: _expiresAt * 1000,
           fingerprint: _fingerprint,
           asset_type: assetType,
           asset_id: assetId,
           block_time_created_at: blockTime,
           status: LISTING_STATUS.open,
-          seller: null
+          seller: asset.owner.toLowerCase(),
+          block_number
         })
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) {
@@ -96,12 +100,13 @@ async function reduceBid(event) {
         {
           seller: _seller,
           status: LISTING_STATUS.sold,
-          block_time_updated_at: blockTime
+          block_time_updated_at: blockTime,
+          block_number
         },
         { id: _id }
       )
 
-      await Bid.invalidateBids(_tokenAddress, _tokenId, blockTime)
+      await Bid.invalidateBids(blockTime, block_number, _tokenAddress, _tokenId)
       break
     }
     case eventNames.BidCancelled: {
@@ -112,7 +117,8 @@ async function reduceBid(event) {
       await Bid.update(
         {
           status: LISTING_STATUS.cancelled,
-          block_time_updated_at: blockTime
+          block_time_updated_at: blockTime,
+          block_number
         },
         { id }
       )
@@ -120,31 +126,56 @@ async function reduceBid(event) {
     }
     case eventNames.RemoveLand:
     case eventNames.AddLand: {
-      const { _estateId } = event.args
-
-      const bids = await Bid.getWithStatuses(
-        contractAddresses.EstateRegistry,
-        _estateId,
-        [LISTING_STATUS.open, LISTING_STATUS.fingerprintChanged]
-      )
+      const bids = await Bid.getWithStatuses(address, assetId, [
+        LISTING_STATUS.open,
+        LISTING_STATUS.fingerprintChanged
+      ])
 
       const estateHasActiveBids = bids.length > 0
 
       if (estateHasActiveBids) {
         log.info(
-          `[${name}] Updating bids for the Estate ${_estateId}, fingerprint changed`
+          `[${name}] Updating bids for the Estate ${assetId}, fingerprint changed`
         )
 
         const estateContract = eth.getContract('EstateRegistry')
-        const fingerprint = await estateContract.getFingerprint(_estateId)
+        const fingerprint = await estateContract.getFingerprint(assetId)
 
-        await Bid.updateAssetByFingerprintChange(
+        await Bid.updateBidsByAssetFingerprintChange(
+          blockTime,
+          block_number,
           contractAddresses.EstateRegistry,
-          _estateId,
-          fingerprint,
-          blockTime
+          assetId,
+          fingerprint
         )
       }
+      break
+    }
+    case eventNames.Transfer: {
+      const to = event.args.to || event.args._to
+      // The assetId is the id of the asset based on the address of the token we get from
+      // Marketplace or Bid contracts events. If no token address is extracted from the event,
+      // it defaults on getParcelIdFromEvent returning 0,1 for the Estate with id 1.
+      // To avoid that, we should get the assetId checking first if the _tokenId is set (Estate)
+      const asset_id = event.args._tokenId || assetId
+
+      // Skip update for the OnERC721Received
+      if (contractAddresses.ERC721Bid === to.toLowerCase()) {
+        return
+      }
+
+      log.info(
+        `[${name}] Updating seller for the asset with token address ${address} and id "${asset_id}" to "${to}"`
+      )
+
+      await Bid.updateAssetOwner(
+        to.toLowerCase(),
+        blockTime,
+        block_number,
+        address,
+        asset_id
+      )
+
       break
     }
     default:

@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { goBack } from 'react-router-redux'
 
-import { isEstateTransactionIdle } from 'modules/estates/selectors'
 import {
   createEstateRequest,
   editEstateParcelsRequest,
   editEstateMetadataRequest
 } from 'modules/estates/actions'
+import { isEstateTransactionIdle } from 'modules/estates/selectors'
 import EditState from './EditEstate'
 
 const mapState = state => ({

@@ -5,19 +5,21 @@ import { Button, Icon } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import { isOnSale } from 'shared/asset'
+import { isFeatureEnabled } from 'lib/featureUtils'
 import { t } from '@dapps/modules/translation/utils'
-import { publicationType, estateType } from 'components/types'
+import { publicationType, estateType, bidType } from 'components/types'
 import './EstateActions.css'
 
 export default class EstateActions extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
     isOwner: PropTypes.bool.isRequired,
-    publications: PropTypes.objectOf(publicationType).isRequired
+    publications: PropTypes.objectOf(publicationType).isRequired,
+    bids: PropTypes.arrayOf(bidType)
   }
 
   render() {
-    const { estate, publications, isOwner } = this.props
+    const { estate, publications, isOwner, bids } = this.props
     const { id } = estate
     const isListed = isOnSale(estate, publications)
 
@@ -49,13 +51,23 @@ export default class EstateActions extends React.PureComponent {
             )}
           </React.Fragment>
         ) : (
-          isOnSale(estate, publications) && (
-            <Link to={locations.buyEstate(id)}>
-              <Button primary size="large">
-                {t('asset_detail.publication.buy')}
-              </Button>
-            </Link>
-          )
+          <React.Fragment>
+            {isOnSale(estate, publications) && (
+              <Link to={locations.buyEstate(id)}>
+                <Button primary size="large">
+                  {t('asset_detail.publication.buy')}
+                </Button>
+              </Link>
+            )}
+            {isFeatureEnabled('BIDS') &&
+              bids.length === 0 && (
+                <Link to={locations.bidEstate(id)}>
+                  <Button primary size="large">
+                    {t('asset_detail.bid.place')}
+                  </Button>
+                </Link>
+              )}
+          </React.Fragment>
         )}
       </div>
     )

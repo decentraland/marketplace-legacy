@@ -7,9 +7,14 @@ import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
-import { assetType, publicationType } from 'components/types'
+import { assetType, publicationType, bidType } from 'components/types'
 import { t } from '@dapps/modules/translation/utils'
-import { LISTING_STATUS } from 'shared/listing'
+import {
+  normalizePublications,
+  normalizeBids,
+  sortListings,
+  LISTING_STATUS
+} from 'shared/listing'
 import { findAssetPublications } from 'shared/publication'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
@@ -18,14 +23,25 @@ import './AssetTransactionHistory.css'
 export default class AssetTransactionHistory extends React.PureComponent {
   static propTypes = {
     asset: assetType.isRequired,
-    publications: PropTypes.objectOf(publicationType)
+    publications: PropTypes.objectOf(publicationType),
+    bids: PropTypes.arrayOf(bidType)
   }
 
-  getAssetPublications() {
-    const { asset, publications } = this.props
-    return findAssetPublications(publications, asset, LISTING_STATUS.sold).sort(
-      (a, b) => (a.block_number > b.block_number ? -1 : 1)
+  componentWillMount() {
+    this.props.onFetchAssetTransactionHistory()
+  }
+
+  getAssetListings() {
+    const { asset, publications, bids } = this.props
+    const assetPublications = findAssetPublications(
+      publications,
+      asset,
+      LISTING_STATUS.sold
     )
+
+    const normalizedPublications = normalizePublications(assetPublications)
+    const normalizedBids = normalizeBids(bids)
+    return sortListings(normalizedPublications.concat(normalizedBids))
   }
 
   hasAuctionData() {
@@ -51,9 +67,9 @@ export default class AssetTransactionHistory extends React.PureComponent {
 
   render() {
     const { asset } = this.props
-    const assetPublications = this.getAssetPublications()
+    const assetListings = this.getAssetListings()
 
-    if (!this.hasAuctionData() && assetPublications.length === 0) {
+    if (!this.hasAuctionData() && assetListings.length === 0) {
       return null
     }
 
@@ -71,13 +87,13 @@ export default class AssetTransactionHistory extends React.PureComponent {
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row className="transaction-history-header">
-                <Grid.Column>{t('asset_detail.history.price')}</Grid.Column>
+                <Grid.Column>{t('global.price')}</Grid.Column>
                 <Grid.Column>{t('asset_detail.history.when')}</Grid.Column>
                 <Responsive
                   as={Grid.Column}
                   minWidth={Responsive.onlyTablet.minWidth}
                 >
-                  {t('asset_detail.history.from')}
+                  {t('global.from')}
                 </Responsive>
                 <Responsive
                   as={Grid.Column}
@@ -87,20 +103,20 @@ export default class AssetTransactionHistory extends React.PureComponent {
                 </Responsive>
               </Grid.Row>
 
-              {assetPublications.map(publication => (
+              {assetListings.map(listing => (
                 <Grid.Row
-                  key={publication.tx_hash}
+                  key={listing.id}
                   className="transaction-history-entry"
                 >
                   <Grid.Column>
-                    <Mana amount={publication.price} />
+                    <Mana amount={listing.price} />
                   </Grid.Column>
                   <Grid.Column>
                     <BlockDate
-                      blockNumber={publication.block_number}
+                      blockNumber={listing.block_number}
                       blockTime={
-                        publication.block_time_updated_at ||
-                        publication.block_time_created_at
+                        listing.block_time_updated_at ||
+                        listing.block_time_created_at
                       }
                     />
                   </Grid.Column>
@@ -108,13 +124,13 @@ export default class AssetTransactionHistory extends React.PureComponent {
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
                   >
-                    {this.renderAddress(publication.owner)}
+                    {this.renderAddress(listing.from)}
                   </Responsive>
                   <Responsive
                     as={Grid.Column}
                     minWidth={Responsive.onlyTablet.minWidth}
                   >
-                    {this.renderAddress(publication.buyer)}
+                    {this.renderAddress(listing.to)}
                   </Responsive>
                 </Grid.Row>
               ))}

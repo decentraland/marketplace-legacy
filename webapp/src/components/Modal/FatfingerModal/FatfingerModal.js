@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Button, Input, Message } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
-import { preventDefault, formatMana } from 'lib/utils'
+import { preventDefault, formatMana, sanitizePrice } from 'lib/utils'
 import { ASSET_TYPES } from 'shared/asset'
 import BaseModal from '../BaseModal'
 
@@ -31,7 +31,7 @@ export default class FatfingerModal extends React.PureComponent {
 
   handlePriceChange = e => {
     // Dots and commas are not allowed
-    const price = e.currentTarget.value.replace(/\.|,/g, '')
+    const price = sanitizePrice(e.currentTarget.value)
 
     this.setState({
       price,

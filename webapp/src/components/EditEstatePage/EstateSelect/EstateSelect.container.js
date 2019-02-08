@@ -1,27 +1,30 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
+import { ASSET_TYPES } from 'shared/asset'
 import { getMatchParams } from 'modules/location/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
 import {
   getData as getEstates,
   isEstateTransactionIdle
 } from 'modules/estates/selectors'
-import { navigateTo } from '@dapps/modules/location/actions'
-
+import { getWalletBidsByAsset } from 'modules/bid/selectors'
 import EstateSelect from './EstateSelect'
 
 const mapState = (state, ownProps) => {
   const { id } = getMatchParams(ownProps)
   const estates = getEstates(state)
+  const estate = estates[id]
 
   // TODO: AllParcels is here because we're using estate.data.parcels which comes from the API. This is not correct.
   //       The API should return estate.parcels, the reducer should split this into their domains and a selector should put it back together.
   return {
     allParcels: getParcels(state),
-    pristineEstate: estates[id],
-    isTxIdle: isEstateTransactionIdle(state)
+    pristineEstate: estate,
+    isTxIdle: isEstateTransactionIdle(state),
+    bids: getWalletBidsByAsset(state, estate, ASSET_TYPES.estate)
   }
 }
 

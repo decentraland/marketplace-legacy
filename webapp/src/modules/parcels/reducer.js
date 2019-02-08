@@ -12,6 +12,14 @@ import {
   TRANSFER_PARCEL_SUCCESS,
   TRANSFER_PARCEL_FAILURE
 } from './actions'
+import { ASSET_TYPES } from 'shared/asset'
+import {
+  normalizeParcel,
+  toParcelObject,
+  isParcel,
+  isEqualCoords
+} from 'shared/parcel'
+import { buildCoordinate } from 'shared/coordinates'
 import {
   MANAGE_ASSET_REQUEST,
   MANAGE_ASSET_SUCCESS,
@@ -24,7 +32,10 @@ import {
   FETCH_PUBLICATIONS_SUCCESS,
   FETCH_ASSET_PUBLICATIONS_SUCCESS
 } from 'modules/publication/actions'
-import { FETCH_ADDRESS_PARCELS_SUCCESS } from 'modules/address/actions'
+import {
+  FETCH_ADDRESS_PARCELS_SUCCESS,
+  FETCH_ADDRESS_BIDS_SUCCESS
+} from 'modules/address/actions'
 import {
   ADD_PARCELS,
   EDIT_ESTATE_PARCELS_SUCCESS,
@@ -35,17 +46,10 @@ import {
   FETCH_ACTIVE_PARCEL_MORTGAGES_SUCCESS,
   FETCH_MORTGAGED_PARCELS_SUCCESS
 } from 'modules/mortgage/actions'
+import { ACCEPT_BID_SUCCESS } from 'modules/bid/actions'
 import { BID_ON_PARCELS_SUCCESS } from 'modules/auction/actions'
 import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
 import { getContractAddress } from 'modules/wallet/utils'
-import { ASSET_TYPES } from 'shared/asset'
-import {
-  normalizeParcel,
-  toParcelObject,
-  isParcel,
-  isEqualCoords
-} from 'shared/parcel'
-import { buildCoordinate } from 'shared/coordinates'
 
 const INITIAL_STATE = {
   data: {},
@@ -100,6 +104,19 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           ...action.parcels
+        }
+      }
+    }
+    case FETCH_ADDRESS_BIDS_SUCCESS: {
+      const { assets } = action
+      const parcels = assets.filter(asset => isParcel(asset))
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          ...toParcelObject(parcels)
         }
       }
     }
@@ -374,6 +391,27 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
             data: {
               ...state.data,
               ...toParcelObject(updatedParcels)
+            }
+          }
+        }
+        case ACCEPT_BID_SUCCESS: {
+          const { bidder, type } = transaction.payload
+          if (type !== ASSET_TYPES.parcel) {
+            return state
+          }
+          const parcelId = buildCoordinate(
+            transaction.payload.x,
+            transaction.payload.y
+          )
+
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              [parcelId]: {
+                ...state.data[parcelId],
+                owner: bidder.toLowerCase()
+              }
             }
           }
         }
