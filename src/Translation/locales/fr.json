@@ -32,6 +32,8 @@
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Date d'expiration pour cette publication",
+    "insufficient_funds":
+      "Le soumissionnaire n'a pas suffisamment de fonds pour payer pour la soumission",
     "list_asset": "Placer une offre pour le {asset_name}",
     "please_authorize":
       "Vous devez vous rendre sur {settings_link} et autoriser le contrat d’offre à utiliser MANA en votre nom avant de pouvoir enchérir.",

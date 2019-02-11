@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Loader } from 'semantic-ui-react'
+import { Loader, Container, Message } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import { isOpen } from 'shared/listing'
 import { ASSET_TYPES } from 'shared/asset'
+import { fetchMANABalance } from 'modules/wallet/utils'
 import AcceptBidParcelPage from './AcceptBidParcelPage'
 import AcceptBidEstatePage from './AcceptBidEstatePage'
 import { bidType } from 'components/types'
@@ -20,10 +22,19 @@ export default class AcceptBidAssetPage extends React.PureComponent {
     isLoading: PropTypes.bool.isRequired
   }
 
+  bidderBalanceFetched = false
+
+  constructor(props) {
+    super(props)
+    this.state = { bidderHasBalance: true }
+  }
+
   componentWillMount() {
     const { bid, onFetchBidById } = this.props
     if (!bid) {
       onFetchBidById()
+    } else {
+      this.fetchBidderBalance(bid)
     }
   }
 
@@ -32,6 +43,22 @@ export default class AcceptBidAssetPage extends React.PureComponent {
     if (isConnected && !bid && !isLoading && !isBidLoading) {
       return this.handleOnAccessDenied()
     }
+
+    if (bid && isConnected && !this.bidderBalanceFetched) {
+      this.fetchBidderBalance(bid)
+    }
+  }
+
+  async fetchBidderBalance(bid) {
+    const { bidder, price } = bid
+
+    const balance = await fetchMANABalance(bidder)
+
+    this.bidderBalanceFetched = true
+
+    this.setState({
+      bidderHasBalance: parseInt(balance, 10) >= parseInt(price, 10)
+    })
   }
 
   handleConfirm = () => {
@@ -43,10 +70,39 @@ export default class AcceptBidAssetPage extends React.PureComponent {
     this.props.onCancel()
   }
 
-  render() {
-    const { assetType, bid, isLoading, isBidLoading } = this.props
+  renderAcceptBidComponent() {
+    const { bidderHasBalance } = this.state
+    const { assetType, bid } = this.props
 
     const bidIsOpen = isOpen(bid)
+
+    switch (assetType) {
+      case ASSET_TYPES.parcel:
+        return (
+          <AcceptBidParcelPage
+            {...this.props}
+            isOpen={bidIsOpen}
+            handleConfirm={this.handleConfirm}
+            bidderHasBalance={bidderHasBalance}
+          />
+        )
+      case ASSET_TYPES.estate:
+        return (
+          <AcceptBidEstatePage
+            {...this.props}
+            isOpen={bidIsOpen}
+            handleConfirm={this.handleConfirm}
+            bidderHasBalance={bidderHasBalance}
+          />
+        )
+      default:
+        return null
+    }
+  }
+
+  render() {
+    const { bidderHasBalance } = this.state
+    const { bid, isLoading, isBidLoading } = this.props
 
     if (isLoading || isBidLoading) {
       return (
@@ -60,25 +116,20 @@ export default class AcceptBidAssetPage extends React.PureComponent {
       return null
     }
 
-    switch (assetType) {
-      case ASSET_TYPES.parcel:
-        return (
-          <AcceptBidParcelPage
-            {...this.props}
-            isOpen={bidIsOpen}
-            handleConfirm={this.handleConfirm}
-          />
-        )
-      case ASSET_TYPES.estate:
-        return (
-          <AcceptBidEstatePage
-            {...this.props}
-            isOpen={bidIsOpen}
-            handleConfirm={this.handleConfirm}
-          />
-        )
-      default:
-        return null
-    }
+    return (
+      <div>
+        {!bidderHasBalance && (
+          <Container text>
+            <Message
+              warning
+              icon="warning sign"
+              header={t('global.warning')}
+              content={t('asset_bid.insufficient_funds')}
+            />
+          </Container>
+        )}
+        {this.renderAcceptBidComponent()}
+      </div>
+    )
   }
 }

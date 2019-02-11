@@ -29,6 +29,8 @@
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Expiration date for this publication",
+    "insufficient_funds":
+      "The bidder has insufficient funds to pay for the bid",
     "list_asset": "Place a bid for the {asset_name}",
     "please_authorize":
       "You need to go to {settings_link} and authorize the Bid contract to use MANA on your behalf before you can place a bid.",
