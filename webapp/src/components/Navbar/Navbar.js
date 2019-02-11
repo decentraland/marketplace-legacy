@@ -98,16 +98,11 @@ export default class Navbar extends React.PureComponent {
   }
 
   renderLogoHeader() {
-    const { isLoading } = this.props
     return (
       <div className="navbar-header">
         <Link to={locations.root()} className="navbar-logo">
           <span className="navbar-icon">
-            <i
-              className={`pull-left Icon Icon-${
-                isLoading ? 'decentraland-loading' : 'decentraland'
-              }`}
-            />
+            <i className="pull-left Icon Icon-decentraland" />
           </span>
         </Link>
       </div>
