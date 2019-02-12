@@ -17,7 +17,7 @@ import ParcelPreview from 'components/ParcelPreview'
 
 import './Bid.css'
 
-const PREVIEW_SIZE = 75
+const PREVIEW_SIZE = 76
 const NUM_PARCELS = 7
 const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 

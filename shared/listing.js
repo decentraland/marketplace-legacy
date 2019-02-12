@@ -17,6 +17,11 @@ export const LISTING_TYPES = Object.freeze({
   MORTGAGE: 'mortgage'
 })
 
+export const LISTING_SORT_BY = Object.freeze({
+  BLOCK_UPDATED: 'block_time_updated_at',
+  BLOCK_CREATED: 'block_time_created_at'
+})
+
 export const DEFAULT_DAY_INTERVAL = 31
 export const MINIMUM_DAY_INTERVAL = 1
 export const MAXIMUM_BID_DAY_INTERVAL = 6 * 31 // six month
@@ -64,8 +69,11 @@ export function normalizeBids(bids) {
   }))
 }
 
-export function sortListings(listings) {
+export function sortListings(listings, key) {
+  if (!Object.values(LISTING_SORT_BY).includes(key)) {
+    throw 'Invalid key'
+  }
   return listings.sort(
-    (a, b) => (a.block_time_updated_at > b.block_time_updated_at ? -1 : 1)
+    (a, b) => (parseInt(a[key], 10) > parseInt(b[key], 10) ? -1 : 1)
   )
 }

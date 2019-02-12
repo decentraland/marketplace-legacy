@@ -13,7 +13,8 @@ import {
   normalizePublications,
   normalizeBids,
   sortListings,
-  LISTING_STATUS
+  LISTING_STATUS,
+  LISTING_SORT_BY
 } from 'shared/listing'
 import { findAssetPublications } from 'shared/publication'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
@@ -41,7 +42,10 @@ export default class AssetTransactionHistory extends React.PureComponent {
 
     const normalizedPublications = normalizePublications(assetPublications)
     const normalizedBids = normalizeBids(bids)
-    return sortListings(normalizedPublications.concat(normalizedBids))
+    return sortListings(
+      normalizedPublications.concat(normalizedBids),
+      LISTING_SORT_BY.BLOCK_UPDATED
+    )
   }
 
   hasAuctionData() {
