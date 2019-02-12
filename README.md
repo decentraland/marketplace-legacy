@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/decentraland/web/gh-pages/img/decentraland.ico)
+![](https://ui.decentraland.org/decentraland_128x128.png)
 
 # Marketplace
 
