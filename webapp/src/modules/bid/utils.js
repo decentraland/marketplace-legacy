@@ -1,3 +1,5 @@
+import { sortListings, LISTING_SORT_BY } from 'shared/listing'
+
 export function getBidIdFromTxReceipt({ logs }) {
   const createBidLog = logs.find(log => log.name === 'BidCreated')
   const bidIdArg = createBidLog.events.find(args => args.name === '_id')
@@ -37,6 +39,9 @@ export function getBidsByReceivedAndPlaced(bids, address) {
  * @returns {array<Bid>}
  */
 export function orderBids(bids, address) {
-  const [bidsReceived, bidsPlaced] = getBidsByReceivedAndPlaced(bids, address)
+  const [bidsReceived, bidsPlaced] = getBidsByReceivedAndPlaced(
+    sortListings(bids, LISTING_SORT_BY.BLOCK_CREATED),
+    address
+  )
   return bidsReceived.concat(bidsPlaced)
 }
