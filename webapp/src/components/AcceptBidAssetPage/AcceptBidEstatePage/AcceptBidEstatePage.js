@@ -16,12 +16,21 @@ export default class AcceptBidEstatePage extends React.PureComponent {
     isOpen: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
+    bidderHasBalance: PropTypes.bool.isRequired,
     handleConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const { id, isTxIdle, onCancel, bid, handleConfirm, isOpen } = this.props
+    const {
+      id,
+      isTxIdle,
+      onCancel,
+      bid,
+      handleConfirm,
+      isOpen,
+      bidderHasBalance
+    } = this.props
     const { price } = bid
     return (
       <Estate id={id} ownerOnly>
@@ -48,7 +57,7 @@ export default class AcceptBidEstatePage extends React.PureComponent {
                 }
                 onCancel={onCancel}
                 onConfirm={handleConfirm}
-                isDisabled={isTxIdle || !isOpen}
+                isDisabled={isTxIdle || !isOpen || !bidderHasBalance}
                 isTxIdle={isTxIdle}
               />
             </div>

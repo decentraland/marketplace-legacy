@@ -17,12 +17,21 @@ export default class AcceptBidParcelPage extends React.PureComponent {
     isOpen: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
+    bidderHasBalance: PropTypes.bool.isRequired,
     handleConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   }
 
   render() {
-    const { id, bid, isTxIdle, onCancel, handleConfirm, isOpen } = this.props
+    const {
+      id,
+      bid,
+      isTxIdle,
+      onCancel,
+      handleConfirm,
+      isOpen,
+      bidderHasBalance
+    } = this.props
     const [x, y] = splitCoordinate(id)
     const { price } = bid
 
@@ -52,7 +61,7 @@ export default class AcceptBidParcelPage extends React.PureComponent {
                 }
                 onCancel={onCancel}
                 onConfirm={handleConfirm}
-                isDisabled={isTxIdle || !isOpen}
+                isDisabled={isTxIdle || !isOpen || !bidderHasBalance}
                 isTxIdle={isTxIdle}
               />
             </div>

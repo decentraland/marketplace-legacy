@@ -30,6 +30,8 @@
     },
     "expiration": "Vencimiento",
     "expiration_placeholder": "Fecha de expiración de esta publicación.",
+    "insufficient_funds":
+      "El ofertante no tiene fondos suficientes para pagar la oferta.",
     "list_asset": "Haz una oferta por el {asset_name}",
     "please_authorize":
       "Debe ir a {settings_link} y autorizar el contrato de la Oferta para utilizar MANA en su nombre antes de poder realizar una oferta.",

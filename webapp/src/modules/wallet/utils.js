@@ -156,6 +156,12 @@ export async function fetchBalance(address) {
   return balanceInWei ? eth.utils.fromWei(balanceInWei.toString(10)) : '0'
 }
 
+export async function fetchMANABalance(address) {
+  const manaContract = eth.getContract('MANAToken')
+  const balanceInWei = await manaContract.balanceOf(address)
+  return balanceInWei ? eth.utils.fromWei(balanceInWei.toString(10)) : '0'
+}
+
 export async function getAssetUpdateOperator(asset) {
   try {
     let address

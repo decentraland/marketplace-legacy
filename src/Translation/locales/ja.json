@@ -29,6 +29,7 @@
     },
     "expiration": "有効期限",
     "expiration_placeholder": "この出版物の有効期限",
+    "insufficient_funds": "入札者が入札のために支払うには資金が足りない",
     "list_asset": "{asset_name}に入札する",
     "please_authorize":
       "あなたが入札をすることができる前にあなたは{settings_link}に行き、あなたに代わってMANAを使うために入札契約を承認する必要があります。",
