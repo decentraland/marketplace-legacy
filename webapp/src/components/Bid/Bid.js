@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Grid, Responsive, Button, Icon } from 'semantic-ui-react'
+import { Grid, Button, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
@@ -65,8 +65,6 @@ export default class Bid extends React.PureComponent {
       <ParcelPreview
         x={x}
         y={y}
-        width={PREVIEW_SIZE - 5}
-        height={PREVIEW_SIZE}
         size={PARCEL_SIZE}
         selected={selected}
         zoom={zoom}
@@ -122,6 +120,7 @@ export default class Bid extends React.PureComponent {
       showAssetDetail,
       className
     } = this.props
+
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const assetDetailLink = this.getDetailLink()
     return (
@@ -134,72 +133,91 @@ export default class Bid extends React.PureComponent {
         <Grid.Row>
           {showAssetDetail && (
             <React.Fragment>
-              <Responsive
-                className="asset-details"
-                as={Grid.Column}
-                minWidth={Responsive.onlyTablet.minWidth}
-                width={4}
-              >
-                <React.Fragment>
-                  <Link to={assetDetailLink}>{this.renderAssetPreview()}</Link>
-                  <div>
-                    <h3>{t('bid.bid_asset')}</h3>
-                    <Link className="asset-name" to={assetDetailLink}>
-                      {this.renderAssetData()}
-                    </Link>
-                  </div>
-                </React.Fragment>
-              </Responsive>
+              <Grid.Column className="asset-details" width={3}>
+                <Link to={assetDetailLink}>{this.renderAssetPreview()}</Link>
+              </Grid.Column>
             </React.Fragment>
           )}
-          {isOwner || !showAssetDetail ? (
-            <Grid.Column width={3}>
-              <h3>{t('global.from')}</h3>
-              <div className="address-wrapper" title={bid.bidder}>
-                <Link to={locations.profilePageDefault(bid.bidder)}>
-                  <AddressBlock
-                    address={bid.bidder}
-                    scale={3.3}
-                    hasTooltip={false}
-                    hasLink={false}
-                  />&nbsp;
-                  <span className="short-address">
-                    {hasSameSellerAndBidder
-                      ? t('global.you')
-                      : shortenOwner(bid.bidder)}
-                  </span>
-                </Link>
-              </div>
-            </Grid.Column>
-          ) : null}
-          <Grid.Column width={showAssetDetail ? 3 : 4}>
-            <h3>{t('global.price')}</h3>
-            <Mana
-              amount={bid.price}
-              size={15}
-              scale={1}
-              className="mortgage-amount-icon"
-            />
-          </Grid.Column>
-          <Grid.Column width={showAssetDetail ? 3 : 3}>
-            <h3>{t('global.time_left')}</h3>
-            <p>{distanceInWordStrict(parseInt(bid.expires_at, 10))}</p>
-          </Grid.Column>
-          <Grid.Column
-            width={isOwner && showAssetDetail ? 3 : 6}
-            className={'actions'}
-          >
-            {!isOwner &&
-              !hasSameSellerAndBidder && (
-                <Button onClick={preventDefault(onUpdate)}>
-                  {t('global.update')}
-                </Button>
+          <Grid.Column width={showAssetDetail ? 13 : 16}>
+            <Grid className="inner-grid">
+              {showAssetDetail && (
+                <Grid.Column computer={4} tablet={4} mobile={8}>
+                  <h3>{t('bid.bid_asset')}</h3>
+                  <Link className="asset-name" to={assetDetailLink}>
+                    {this.renderAssetData()}
+                  </Link>
+                </Grid.Column>
               )}
-            <Button onClick={preventDefault(onConfirm)}>
-              {!isOwner || hasSameSellerAndBidder
-                ? t('global.cancel')
-                : t('global.accept')}
-            </Button>
+              {isOwner || !showAssetDetail ? (
+                <Grid.Column
+                  computer={showAssetDetail ? 4 : 3}
+                  tablet={showAssetDetail ? 4 : 3}
+                  mobile={showAssetDetail ? 8 : 16}
+                >
+                  <h3>{t('global.from')}</h3>
+                  <div className="address-wrapper" title={bid.bidder}>
+                    <Link to={locations.profilePageDefault(bid.bidder)}>
+                      <AddressBlock
+                        address={bid.bidder}
+                        scale={3.3}
+                        hasTooltip={false}
+                        hasLink={false}
+                      />&nbsp;
+                      <span className="short-address">
+                        {hasSameSellerAndBidder
+                          ? t('global.you')
+                          : shortenOwner(bid.bidder)}
+                      </span>
+                    </Link>
+                  </div>
+                </Grid.Column>
+              ) : null}
+              <Grid.Column
+                computer={showAssetDetail ? 4 : 3}
+                tablet={showAssetDetail ? 4 : 3}
+                mobile={showAssetDetail ? 8 : 16}
+              >
+                <h3>{t('global.price')}</h3>
+                <Mana
+                  amount={bid.price}
+                  size={15}
+                  scale={1}
+                  className="mortgage-amount-icon"
+                />
+              </Grid.Column>
+              <Grid.Column
+                computer={showAssetDetail ? 4 : 3}
+                tablet={showAssetDetail ? 4 : 3}
+                mobile={showAssetDetail ? 8 : 16}
+              >
+                <h3>{t('global.time_left')}</h3>
+                <p>{distanceInWordStrict(parseInt(bid.expires_at, 10))}</p>
+              </Grid.Column>
+              <Grid.Column
+                computer={showAssetDetail ? 16 : 7}
+                tablet={showAssetDetail ? 16 : 7}
+                mobile={16}
+                className={'actions'}
+              >
+                <Button
+                  className={`${isOwner ? 'primary' : ''}`}
+                  onClick={preventDefault(onConfirm)}
+                >
+                  {!isOwner || hasSameSellerAndBidder
+                    ? t('global.cancel')
+                    : t('global.accept')}
+                </Button>
+                {!isOwner &&
+                  !hasSameSellerAndBidder && (
+                    <Button
+                      className="primary"
+                      onClick={preventDefault(onUpdate)}
+                    >
+                      {t('global.update')}
+                    </Button>
+                  )}
+              </Grid.Column>
+            </Grid>
           </Grid.Column>
         </Grid.Row>
       </Grid>
