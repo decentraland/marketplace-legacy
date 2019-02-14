@@ -24,7 +24,7 @@ import {
 } from 'components/types'
 import AddressBlock from 'components/AddressBlock'
 import AssetCard from 'components/AssetCard'
-import Bid from 'components/Bid'
+import BidCard from 'components/BidCard'
 import { getBidsByReceivedAndPlaced } from 'modules/bid/utils'
 
 import './ProfilePage.css'
@@ -158,12 +158,10 @@ export default class ProfilePage extends React.PureComponent {
                 <h3 className="bids-title">{t('bid.received')}</h3>
                 <Card.Group stackable={true}>
                   {bidsReceived.map(bid => (
-                    <Bid
+                    <BidCard
                       key={bid.id}
-                      className={'card'}
                       bid={bid}
-                      isOwner={true}
-                      showAssetDetail={true}
+                      isOwner={address === bid.seller}
                     />
                   ))}
                 </Card.Group>
@@ -175,12 +173,10 @@ export default class ProfilePage extends React.PureComponent {
                 <h3 className="bids-title placed">{t('bid.placed')}</h3>
                 <Card.Group stackable={true}>
                   {bidsPlaced.map(bid => (
-                    <Bid
+                    <BidCard
                       key={bid.id}
-                      className={'card'}
                       bid={bid}
-                      isOwner={false}
-                      showAssetDetail={true}
+                      isOwner={address === bid.seller}
                     />
                   ))}
                 </Card.Group>

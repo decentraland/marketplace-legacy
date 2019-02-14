@@ -4,6 +4,7 @@
   width: 100%;
   color: white;
   font-size: 16px;
+  margin: 0;
 }
 
 .ui.grid.stackable.grid.Bid:not(.showAssetDetail) {
@@ -88,15 +89,13 @@
   margin-left: 15px !important;
 }
 
-@media(min-width: 758px) and (max-width: 992px) {
-  .Bid .row h3 {
-    font-size: 13px;
-  }
-}
-
 @media(max-width: 768px) { 
   .Bid .row .column.asset-details a{
     margin: -1rem;
+  }
+
+  .Bid .row .ParcelCanvasWrapper {
+    border-radius: 0;
   }
 
   .ui.grid.Bid .row .actions {
