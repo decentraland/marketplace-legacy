@@ -9,10 +9,10 @@ export function isPlaza(district_id) {
   return district_id === PLAZA_ID
 }
 
-export function isDistrict(parcel) {
-  return !!parcel.district_id
+export function isDistrict(asset) {
+  return !!asset.district_id
 }
 
-export function getDistrict(parcel, districts = {}) {
-  return parcel && districts[parcel.district_id]
+export function getDistrict(asset, districts = {}) {
+  return asset && districts[asset.district_id]
 }

@@ -8,6 +8,7 @@ import { isDuplicatedConstraintError } from '../../src/database'
 import { Asset } from '../../src/Asset'
 import { Bid } from '../../src/Listing'
 import { LISTING_STATUS } from '../../shared/listing'
+import { isDistrict } from '../../shared/district'
 
 const log = new Log('bidReducer')
 
@@ -56,16 +57,21 @@ async function reduceBid(event) {
         return log.info(`[${name}] Bid ${_id} already exist`)
       }
 
-      log.info(
-        `[${name}] Creating bid ${_id} for token with address: ${_tokenAddress} and id: ${_tokenId}`
-      )
-
       await Bid.deleteBid(_tokenAddress, _tokenId, _bidder.toLowerCase(), [
         LISTING_STATUS.open,
         LISTING_STATUS.fingerprintChanged
       ])
 
       const asset = await Asset.getNew(assetType).findById(assetId)
+      if (isDistrict(asset)) {
+        return log.info(
+          `[${name}] Token with address: ${_tokenAddress} and id: ${_tokenId} is part of a district and won't be indexed`
+        )
+      }
+
+      log.info(
+        `[${name}] Creating bid ${_id} for token with address: ${_tokenAddress} and id: ${_tokenId}`
+      )
 
       try {
         await Bid.insert({

@@ -1,7 +1,6 @@
 import { utils } from 'decentraland-commons'
 import { Bounds } from './map'
 import { buildCoordinate } from './coordinates'
-import { isDistrict } from './district'
 
 export const FIRST_AUCTION_DATE = new Date('2018-01-31T00:00:00Z')
 
@@ -96,13 +95,4 @@ export function getParcelsNotIncluded(newParcels, allParcels) {
  */
 export function hasTags(parcel) {
   return parcel && !utils.isEmptyObject(parcel.tags)
-}
-
-/**
- * Check if parcel is listable or not
- * @param parcel
- * @return boolean - whether is listable or not
- */
-export function isListable(parcel) {
-  return !isDistrict(parcel) && parcel.owner
 }

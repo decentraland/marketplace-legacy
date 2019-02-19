@@ -5,9 +5,11 @@ import { Button, Icon } from 'semantic-ui-react'
 
 import { locations } from 'locations'
 import { isOnSale } from 'shared/asset'
+import { isListable } from 'shared/listing'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { t } from '@dapps/modules/translation/utils'
 import { publicationType, estateType, bidType } from 'components/types'
+
 import './EstateActions.css'
 
 export default class EstateActions extends React.PureComponent {
@@ -60,6 +62,7 @@ export default class EstateActions extends React.PureComponent {
               </Link>
             )}
             {isFeatureEnabled('BIDS') &&
+              isListable(estate) &&
               bids.length === 0 && (
                 <Link to={locations.bidEstate(id)}>
                   <Button primary size="large">

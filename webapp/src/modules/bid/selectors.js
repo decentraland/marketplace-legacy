@@ -46,6 +46,10 @@ export const getBidByAssetIdFactory = (assetId, assetType) =>
   )
 
 export const getWalletBidsByAsset = (state, asset, assetType) => {
+  if (!asset) {
+    return []
+  }
+
   const allBids = getData(state)
   const walletAddress = getAddress(state)
 
