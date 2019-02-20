@@ -90,7 +90,7 @@
 }
 
 @media(max-width: 768px) { 
-  .Bid .row .column.asset-details a{
+  .Bid .row .column.asset-details a {
     margin: -1rem;
   }
 

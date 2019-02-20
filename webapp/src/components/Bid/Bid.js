@@ -123,6 +123,12 @@ export default class Bid extends React.PureComponent {
 
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const assetDetailLink = this.getDetailLink()
+    const sizeByResolution = {
+      computer: showAssetDetail ? 4 : 3,
+      tablet: showAssetDetail ? 4 : 3,
+      mobile: showAssetDetail ? 8 : 16
+    }
+
     return (
       <Grid
         stackable
@@ -149,11 +155,7 @@ export default class Bid extends React.PureComponent {
                 </Grid.Column>
               )}
               {isOwner || !showAssetDetail ? (
-                <Grid.Column
-                  computer={showAssetDetail ? 4 : 3}
-                  tablet={showAssetDetail ? 4 : 3}
-                  mobile={showAssetDetail ? 8 : 16}
-                >
+                <Grid.Column {...sizeByResolution}>
                   <h3>{t('global.from')}</h3>
                   <div className="address-wrapper" title={bid.bidder}>
                     <Link to={locations.profilePageDefault(bid.bidder)}>
@@ -172,11 +174,7 @@ export default class Bid extends React.PureComponent {
                   </div>
                 </Grid.Column>
               ) : null}
-              <Grid.Column
-                computer={showAssetDetail ? 4 : 3}
-                tablet={showAssetDetail ? 4 : 3}
-                mobile={showAssetDetail ? 8 : 16}
-              >
+              <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.price')}</h3>
                 <Mana
                   amount={bid.price}
@@ -185,11 +183,7 @@ export default class Bid extends React.PureComponent {
                   className="mortgage-amount-icon"
                 />
               </Grid.Column>
-              <Grid.Column
-                computer={showAssetDetail ? 4 : 3}
-                tablet={showAssetDetail ? 4 : 3}
-                mobile={showAssetDetail ? 8 : 16}
-              >
+              <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.time_left')}</h3>
                 <p>{distanceInWordStrict(parseInt(bid.expires_at, 10))}</p>
               </Grid.Column>
