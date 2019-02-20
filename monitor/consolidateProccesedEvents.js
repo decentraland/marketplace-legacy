@@ -31,5 +31,5 @@ async function cancelInactivePublications() {
 
 async function updateEstateDistrinctIds() {
   log.info('Updating estate district ids')
-  return Estate.updateEstateDistrictIds()
+  return Estate.updateDistrictIds()
 }

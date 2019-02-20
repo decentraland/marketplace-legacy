@@ -65,7 +65,7 @@ export class Estate extends Model {
           OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND address = ${address})`)
   }
 
-  static async updateEstateDistrictIds() {
+  static async updateDistrictIds() {
     return this.db.query(
       SQL`UPDATE ${SQL.raw(this.tableName)} 
       SET district_id = P.district_id
