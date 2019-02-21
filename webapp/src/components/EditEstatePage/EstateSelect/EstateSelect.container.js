@@ -24,7 +24,7 @@ const mapState = (state, ownProps) => {
     allParcels: getParcels(state),
     pristineEstate: estate,
     isTxIdle: isEstateTransactionIdle(state),
-    bids: getWalletBidsByAsset(state, estate, ASSET_TYPES.estate)
+    bids: estate ? getWalletBidsByAsset(state, estate, ASSET_TYPES.estate) : []
   }
 }
 

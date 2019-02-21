@@ -11,11 +11,12 @@ import { getWalletBidsByAsset } from 'modules/bid/selectors'
 import EstateDetailPage from './EstateDetailPage'
 
 const mapState = (state, ownProps) => {
+  const estate = ownProps.asset
   return {
-    estate: ownProps.asset,
     publications: getPublications(state),
     tiles: getTiles(state),
-    bids: getWalletBidsByAsset(state, ownProps.asset, ASSET_TYPES.estate)
+    bids: getWalletBidsByAsset(state, estate, ASSET_TYPES.estate),
+    estate
   }
 }
 
