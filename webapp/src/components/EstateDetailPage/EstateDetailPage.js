@@ -9,6 +9,7 @@ import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { hasTags } from 'shared/parcel'
 import { calculateMapProps } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
+import { isDistrict } from 'shared/district'
 import { estateType, publicationType, bidType } from 'components/types'
 import EstateActions from './EstateActions'
 import ParcelTags from 'components/ParcelTags'
@@ -112,33 +113,39 @@ export default class EstateDetailPage extends React.PureComponent {
                 )}
               </Header>
             </Grid.Column>
-            <Grid.Column
-              computer={WITH_ACTION_BUTTONS_WIDTH}
-              mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
-              className="estate-owner-container"
-            >
-              {isOwner ? (
-                <div>
-                  <Button size="tiny" className="link" onClick={onEditMetadata}>
-                    <Icon name="pencil" />
-                    {t('global.edit')}
-                  </Button>
-                  <Button
-                    size="tiny"
-                    className="link manage-button"
-                    onClick={onManageEstate}
-                  >
-                    <Icon name="add user" />
-                    {t('asset_detail.actions.permissions')}
-                  </Button>
-                </div>
-              ) : (
-                <span className="owned-by">
-                  <span>{t('global.owned_by')}</span>
-                  <AddressBlock address={estate.owner} scale={4} />
-                </span>
-              )}
-            </Grid.Column>
+            {!isDistrict(estate) && (
+              <Grid.Column
+                computer={WITH_ACTION_BUTTONS_WIDTH}
+                mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
+                className="estate-owner-container"
+              >
+                {isOwner ? (
+                  <div>
+                    <Button
+                      size="tiny"
+                      className="link"
+                      onClick={onEditMetadata}
+                    >
+                      <Icon name="pencil" />
+                      {t('global.edit')}
+                    </Button>
+                    <Button
+                      size="tiny"
+                      className="link manage-button"
+                      onClick={onManageEstate}
+                    >
+                      <Icon name="add user" />
+                      {t('asset_detail.actions.permissions')}
+                    </Button>
+                  </div>
+                ) : (
+                  <span className="owned-by">
+                    <span>{t('global.owned_by')}</span>
+                    <AddressBlock address={estate.owner} scale={4} />
+                  </span>
+                )}
+              </Grid.Column>
+            )}
           </Grid.Row>
           <Grid.Row>
             {publication && (

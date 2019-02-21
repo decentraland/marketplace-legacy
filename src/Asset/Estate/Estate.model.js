@@ -11,6 +11,7 @@ export class Estate extends Model {
     'id',
     'tx_hash',
     'token_id',
+    'district_id',
     'owner',
     'update_operator',
     'data',
@@ -62,5 +63,16 @@ export class Estate extends Model {
       SQL`DELETE FROM ${SQL.raw(BlockchainEvent.tableName)}
         WHERE ${BlockchainEventQueries.byArgs('_estateId', estateId)}
           OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND address = ${address})`)
+  }
+
+  static async updateDistrictIds() {
+    return this.db.query(
+      SQL`UPDATE ${SQL.raw(this.tableName)} 
+      SET district_id = P.district_id
+        FROM parcels as P 
+        WHERE ${SQL.raw(this.tableName)}.id = P.estate_id AND 
+        P.estate_id IS NOT NULL AND 
+        P.district_id IS NOT NULL;`
+    )
   }
 }

@@ -1,3 +1,5 @@
+import { isDistrict } from './district'
+
 export const LISTING_STATUS = Object.freeze({
   open: 'open',
   sold: 'sold',
@@ -76,4 +78,13 @@ export function sortListings(listings, key) {
   return listings.sort(
     (a, b) => (parseInt(a[key], 10) > parseInt(b[key], 10) ? -1 : 1)
   )
+}
+
+/**
+ * Check if asset is listable or not
+ * @param asset
+ * @return boolean - whether is listable or not
+ */
+export function isListable(asset) {
+  return !isDistrict(asset) && asset.owner
 }

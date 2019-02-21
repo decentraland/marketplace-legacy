@@ -6,6 +6,9 @@ import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import { isFeatureEnabled } from 'lib/featureUtils'
+import { getOpenPublication } from 'shared/asset'
+import { hasParcelsConnected } from 'shared/parcel'
+import { isListable } from 'shared/listing'
 import {
   parcelType,
   publicationType,
@@ -13,8 +16,6 @@ import {
   bidType
 } from 'components/types'
 import { isLegacyPublication } from 'modules/publication/utils'
-import { getOpenPublication } from 'shared/asset'
-import { hasParcelsConnected, isListable } from 'shared/parcel'
 
 import './ParcelActions.css'
 
