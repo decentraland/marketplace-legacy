@@ -3,29 +3,36 @@
   border-radius: 10px;
   width: 100%;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
+  margin: 0;
 }
 
 .ui.grid.stackable.grid.Bid:not(.showAssetDetail) {
   margin: 1rem auto !important;
 }
 
-.Bid .row .column.asset-details {
-  display: flex;
+.ui.grid.stackable.grid.Bid > .row {
   padding: 0;
 }
 
+.Bid .row .column.asset-details {
+  margin: -1rem;
+}
+
+.ui.grid.stackable.grid.Bid .inner-grid {
+  margin: 0;
+}
+
 .Bid .row .column.asset-details a {
-  width: 85px;
+  display: block;
+  height: 100%;
+  min-height: 150px;
 }
 
 .Bid .row .ParcelCanvasWrapper {
-  margin-top: -1rem;
-  margin-left: 0;
   border-radius: 10px 0 0 10px;
   overflow: hidden;
 }
-
 
 .Bid .row h3 {
   text-transform: uppercase;
@@ -68,6 +75,12 @@
   text-align: left;
 }
 
+.ui.grid.stackable.grid.Bid:not(.showAssetDetail) .row .actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .ui.grid.Bid .row .actions button {
   margin: 0;
 }
@@ -76,21 +89,20 @@
   margin-left: 15px !important;
 }
 
-@media(min-width: 758px) and (max-width: 992px) {
-  .Bid .row h3 {
-    font-size: 13px;
+@media(max-width: 768px) { 
+  .Bid .row .column.asset-details a {
+    margin: -1rem;
   }
-}
 
-@media(min-width: 768px) {
-  .ui.grid.stackable.grid.Bid {
-    max-height: 76px;
+  .Bid .row .ParcelCanvasWrapper {
+    border-radius: 0;
   }
-  
+
   .ui.grid.Bid .row .actions {
-    text-align: right;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    text-align: left;
+  }
+
+  .ui.grid.stackable.grid.Bid:not(.showAssetDetail) .row .actions {
+    justify-content: flex-start;
   }
 }
