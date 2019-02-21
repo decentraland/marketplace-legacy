@@ -54,6 +54,17 @@ export default class ParcelActions extends React.PureComponent {
 
     return (
       <div className="ParcelActions">
+        {isFeatureEnabled('BIDS') &&
+          !isOwner &&
+          !mortgage &&
+          !bids.length &&
+          isListable(parcel) && (
+            <React.Fragment>
+              <Link to={locations.bidParcel(x, y)}>
+                <Button size="large">{t('asset_detail.bid.place')}</Button>
+              </Link>
+            </React.Fragment>
+          )}
         {isOwner ? (
           <React.Fragment>
             <Link to={locations.transferParcel(x, y)}>
@@ -89,11 +100,6 @@ export default class ParcelActions extends React.PureComponent {
           </React.Fragment>
         ) : isOnSale && !mortgage ? (
           <React.Fragment>
-            <Link to={locations.buyParcel(x, y)}>
-              <Button primary size="large">
-                {t('asset_detail.publication.buy')}
-              </Button>
-            </Link>
             {wallet.address &&
               !isLegacyPublication(publication) && (
                 <Link to={locations.buyParcelByMortgage(x, y)}>
@@ -102,21 +108,13 @@ export default class ParcelActions extends React.PureComponent {
                   </Button>
                 </Link>
               )}
+            <Link to={locations.buyParcel(x, y)}>
+              <Button primary size="large">
+                {t('asset_detail.publication.buy')}
+              </Button>
+            </Link>
           </React.Fragment>
         ) : null}
-        {isFeatureEnabled('BIDS') &&
-          !isOwner &&
-          !mortgage &&
-          !bids.length &&
-          isListable(parcel) && (
-            <React.Fragment>
-              <Link to={locations.bidParcel(x, y)}>
-                <Button primary size="large">
-                  {t('asset_detail.bid.place')}
-                </Button>
-              </Link>
-            </React.Fragment>
-          )}
       </div>
     )
   }
