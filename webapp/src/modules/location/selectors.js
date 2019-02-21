@@ -18,6 +18,9 @@ export const isModalPage = state => {
     case 'edit-metadata':
     case 'delete-estate':
     case 'colorKey':
+    case 'bid':
+    case 'accept-bid':
+    case 'cancel-bid':
       return true
     default:
       return false

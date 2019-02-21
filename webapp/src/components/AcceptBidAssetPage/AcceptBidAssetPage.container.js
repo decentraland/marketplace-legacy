@@ -1,13 +1,12 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { goBack } from 'react-router-redux'
 import {
   getAddress,
   isConnected,
   isConnecting
 } from '@dapps/modules/wallet/selectors'
 
-import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
 import { isAssetBid } from 'shared/bid'
 import { buildCoordinate } from 'shared/coordinates'
@@ -57,26 +56,12 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const { bidId, id } = getMatchParams(ownProps)
-  let onCancel
+  const { bidId } = getMatchParams(ownProps)
 
-  switch (ownProps.assetType) {
-    case ASSET_TYPES.parcel: {
-      const { x, y } = getMatchParamsCoordinates(ownProps)
-      onCancel = () => dispatch(push(locations.parcelDetail(x, y)))
-      break
-    }
-    case ASSET_TYPES.estate: {
-      onCancel = () => dispatch(push(locations.estateDetail(id)))
-      break
-    }
-    default:
-      break
-  }
   return {
     onFetchBidById: () => dispatch(fetchBidByIdRequest(bidId)),
     onConfirm: bid => dispatch(acceptBidRequest(bid)),
-    onCancel
+    onCancel: () => dispatch(goBack())
   }
 }
 
