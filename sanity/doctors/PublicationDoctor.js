@@ -165,7 +165,7 @@ export class PublicationDiagnosis extends Diagnosis {
     }
 
     if (this.inactivePublications.length > 0) {
-      await Publication.cancelInactive()
+      await Publication.updateExpired()
     }
   }
 }

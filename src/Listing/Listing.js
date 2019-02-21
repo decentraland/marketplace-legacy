@@ -1,3 +1,5 @@
+import { ListingQueries } from './Listing.queries'
+import { SQL, raw } from '../database'
 import { Asset } from '../Asset'
 import { LISTING_STATUS, LISTING_ASSET_TYPES } from '../shared/listing'
 
@@ -68,5 +70,17 @@ export class Listing {
   // TODO: Add asset_type
   static deleteByAssetId(asset_id) {
     return this.Model.delete({ asset_id })
+  }
+
+  static async updateExpired() {
+    return this.db.query(SQL`
+      UPDATE ${raw(this.tableName)}
+        SET updated_at = NOW(),
+            status = ${LISTING_STATUS.expired}
+      WHERE ${ListingQueries.isInactive()}
+        AND ${ListingQueries.hasStatus([
+          LISTING_STATUS.open,
+          LISTING_STATUS.fingerprintChanged
+        ])}`)
   }
 }

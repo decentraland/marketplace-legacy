@@ -112,7 +112,7 @@ async function reduceBid(event) {
         { id: _id }
       )
 
-      await Bid.invalidateBids(blockTime, block_number, _tokenAddress, _tokenId)
+      await Bid.cancelBids(blockTime, block_number, _tokenAddress, _tokenId)
       break
     }
     case eventNames.BidCancelled: {

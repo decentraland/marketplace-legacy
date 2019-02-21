@@ -4,7 +4,8 @@ export const LISTING_STATUS = Object.freeze({
   open: 'open',
   sold: 'sold',
   cancelled: 'cancelled',
-  fingerprintChanged: 'fingerPrintChanged'
+  fingerprintChanged: 'fingerPrintChanged',
+  expired: 'expired'
 })
 
 export const LISTING_ASSET_TYPES = Object.freeze({

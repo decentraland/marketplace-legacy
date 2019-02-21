@@ -1,6 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { Listing } from '../Listing'
+import { ListingQueries } from '../Listing.queries'
 import { BidQueries } from './Bid.queries'
 import { db, SQL, raw } from '../../database'
 import { AssetQueries, EstateQueries } from '../../Asset'
@@ -33,7 +34,7 @@ export class Bid extends Model {
       SQL`DELETE 
       FROM ${raw(this.tableName)}
       WHERE ${BidQueries.isForToken(tokenAddress, tokenId)}
-        AND ${BidQueries.hasStatus(statuses)}
+        AND ${ListingQueries.hasStatuses(statuses)}
         AND bidder = ${bidder}`
     )
   }
@@ -51,7 +52,7 @@ export class Bid extends Model {
       SQL`SELECT * 
         FROM ${raw(this.tableName)}
         WHERE ${BidQueries.bidderOrSeller(address)} 
-          AND ${BidQueries.hasStatus([status])}`
+          AND ${ListingQueries.hasStatuses([status])}`
     )
   }
 
@@ -63,7 +64,7 @@ export class Bid extends Model {
     return new Listing(this).findByAssetId(assetId, assetType)
   }
 
-  static async invalidateBids(blockTime, blockNumber, tokenAddress, tokenId) {
+  static async cancelBids(blockTime, blockNumber, tokenAddress, tokenId) {
     return this.db.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET status = ${
@@ -72,7 +73,7 @@ export class Bid extends Model {
         WHERE block_time_created_at <= ${blockTime}
           AND token_address = ${tokenAddress}
           AND token_id = ${tokenId}
-          AND ${BidQueries.hasStatus([
+          AND ${ListingQueries.hasStatuses([
             LISTING_STATUS.open,
             LISTING_STATUS.fingerprintChanged
           ])}`
@@ -84,7 +85,7 @@ export class Bid extends Model {
       SQL`SELECT *
         FROM ${raw(this.tableName)}
         WHERE ${BidQueries.isForToken(tokenAddress, tokenId)}
-          AND ${BidQueries.hasStatus(statuses)}`
+          AND ${ListingQueries.hasStatuses(statuses)}`
     )
   }
 
@@ -110,7 +111,7 @@ export class Bid extends Model {
         }, block_time_updated_at = ${blockTime}, block_number = ${blockNumber}
         WHERE block_time_created_at <= ${blockTime}
           AND ${BidQueries.isForToken(tokenAddress, tokenId)}
-          AND ${BidQueries.hasStatus([LISTING_STATUS.open])}
+          AND ${ListingQueries.hasStatuses([LISTING_STATUS.open])}
           AND fingerprint != ${fingerprint}`
     )
 
@@ -122,7 +123,7 @@ export class Bid extends Model {
         }, block_time_updated_at = ${blockTime}, block_number = ${blockNumber}
         WHERE block_time_created_at <= ${blockTime}
           AND ${BidQueries.isForToken(tokenAddress, tokenId)}
-          AND ${BidQueries.hasStatus([LISTING_STATUS.fingerprintChanged])}
+          AND ${ListingQueries.hasStatuses([LISTING_STATUS.fingerprintChanged])}
           AND fingerprint = ${fingerprint}`
     )
   }
@@ -140,7 +141,7 @@ export class Bid extends Model {
         WHERE block_time_created_at <= ${blockTime}
           AND token_address = ${tokenAddress} 
           AND asset_id = ${assetId}
-          AND ${BidQueries.hasStatus([
+          AND ${ListingQueries.hasStatuses([
             LISTING_STATUS.open,
             LISTING_STATUS.fingerprintChanged
           ])}`
@@ -161,10 +162,14 @@ export class Bid extends Model {
           ${raw(AssetQueries.joinAssetsSQL(Assets))}
           WHERE ${BidQueries.bidderOrSeller(address)}
             AND ${EstateQueries.estateHasParcels('bid')}
-            AND ${BidQueries.hasStatus(statuses)}`
+            AND ${ListingQueries.hasStatuses(statuses)}`
     )
 
     // Keep only the model that had a bid defined from the Assets list
     return Listing.filterAssetsByModelAssets(assets)
+  }
+
+  static async updateExpired() {
+    return new Listing(this).updateExpired()
   }
 }
