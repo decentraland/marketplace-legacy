@@ -1,8 +1,7 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { goBack } from 'react-router-redux'
 
-import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
 import { bidRequest } from 'modules/bid/actions'
@@ -58,13 +57,10 @@ const mapState = (state, ownProps) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  let onCancel
   let onBid
 
   switch (ownProps.assetType) {
     case ASSET_TYPES.parcel: {
-      const { x, y } = getMatchParamsCoordinates(ownProps)
-      onCancel = () => dispatch(push(locations.parcelDetail(x, y)))
       onBid = bid =>
         dispatch(
           openModal('FatfingerModal', {
@@ -77,8 +73,6 @@ const mapDispatch = (dispatch, ownProps) => {
       break
     }
     case ASSET_TYPES.estate: {
-      const { id } = getMatchParams(ownProps)
-      onCancel = () => dispatch(push(locations.estateDetail(id)))
       onBid = bid =>
         dispatch(
           openModal('FatfingerModal', {
@@ -94,7 +88,7 @@ const mapDispatch = (dispatch, ownProps) => {
       break
   }
   return {
-    onCancel,
+    onCancel: () => dispatch(goBack()),
     onBid
   }
 }

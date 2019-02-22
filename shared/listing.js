@@ -26,7 +26,7 @@ export const LISTING_SORT_BY = Object.freeze({
 
 export const DEFAULT_DAY_INTERVAL = 31
 export const MINIMUM_DAY_INTERVAL = 1
-export const MAXIMUM_BID_DAY_INTERVAL = 6 * 31 // six month
+export const MAXIMUM_BID_DAY_INTERVAL = 182 // six month
 export const MAXIMUM_PUBLISH_DAY_INTERVAL = 5 * 365 // 5 years
 export const MINIMUM_ASSET_PRICE = 1
 

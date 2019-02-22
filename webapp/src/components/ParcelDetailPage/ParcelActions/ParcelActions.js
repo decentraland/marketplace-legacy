@@ -6,9 +6,6 @@ import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import { isFeatureEnabled } from 'lib/featureUtils'
-import { getOpenPublication } from 'shared/asset'
-import { hasParcelsConnected } from 'shared/parcel'
-import { isListable } from 'shared/listing'
 import {
   parcelType,
   publicationType,
@@ -16,6 +13,9 @@ import {
   bidType
 } from 'components/types'
 import { isLegacyPublication } from 'modules/publication/utils'
+import { getOpenPublication } from 'shared/asset'
+import { hasParcelsConnected } from 'shared/parcel'
+import { isListable } from 'shared/listing'
 
 import './ParcelActions.css'
 
@@ -87,14 +87,10 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : isOnSale && !mortgage ? (
+        ) : !mortgage ? (
           <React.Fragment>
-            <Link to={locations.buyParcel(x, y)}>
-              <Button primary size="large">
-                {t('asset_detail.publication.buy')}
-              </Button>
-            </Link>
-            {wallet.address &&
+            {isOnSale &&
+              wallet.address &&
               !isLegacyPublication(publication) && (
                 <Link to={locations.buyParcelByMortgage(x, y)}>
                   <Button size="large">
@@ -102,21 +98,22 @@ export default class ParcelActions extends React.PureComponent {
                   </Button>
                 </Link>
               )}
-          </React.Fragment>
-        ) : null}
-        {isFeatureEnabled('BIDS') &&
-          !isOwner &&
-          !mortgage &&
-          !bids.length &&
-          isListable(parcel) && (
-            <React.Fragment>
-              <Link to={locations.bidParcel(x, y)}>
+            {isFeatureEnabled('BIDS') &&
+              !bids.length &&
+              isListable(parcel) && (
+                <Link to={locations.bidParcel(x, y)}>
+                  <Button size="large">{t('asset_detail.bid.place')}</Button>
+                </Link>
+              )}
+            {isOnSale && (
+              <Link to={locations.buyParcel(x, y)}>
                 <Button primary size="large">
-                  {t('asset_detail.bid.place')}
+                  {t('asset_detail.publication.buy')}
                 </Button>
               </Link>
-            </React.Fragment>
-          )}
+            )}
+          </React.Fragment>
+        ) : null}
       </div>
     )
   }

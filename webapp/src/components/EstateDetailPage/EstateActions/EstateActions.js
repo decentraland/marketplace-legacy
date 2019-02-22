@@ -27,6 +27,14 @@ export default class EstateActions extends React.PureComponent {
 
     return (
       <div className="EstateActions">
+        {!isOwner &&
+          isFeatureEnabled('BIDS') &&
+          isListable(estate) &&
+          bids.length === 0 && (
+            <Link to={locations.bidEstate(id)}>
+              <Button size="large">{t('asset_detail.bid.place')}</Button>
+            </Link>
+          )}
         {isOwner ? (
           <React.Fragment>
             <Link to={locations.transferEstate(id)}>
@@ -61,15 +69,6 @@ export default class EstateActions extends React.PureComponent {
                 </Button>
               </Link>
             )}
-            {isFeatureEnabled('BIDS') &&
-              isListable(estate) &&
-              bids.length === 0 && (
-                <Link to={locations.bidEstate(id)}>
-                  <Button primary size="large">
-                    {t('asset_detail.bid.place')}
-                  </Button>
-                </Link>
-              )}
           </React.Fragment>
         )}
       </div>

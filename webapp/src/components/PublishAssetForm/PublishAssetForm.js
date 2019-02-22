@@ -22,6 +22,8 @@ import {
 } from 'shared/listing'
 import TxStatus from 'components/TxStatus'
 
+import './PublishAssetForm.css'
+
 const INPUT_FORMAT = 'YYYY-MM-DD'
 
 export default class PublishAssetForm extends React.PureComponent {
