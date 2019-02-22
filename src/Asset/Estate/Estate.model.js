@@ -13,6 +13,7 @@ export class Estate extends Model {
     'token_id',
     'district_id',
     'owner',
+    'operator',
     'update_operator',
     'data',
     'last_transferred_at'

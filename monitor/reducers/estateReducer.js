@@ -128,6 +128,7 @@ async function reduceEstateRegistry(event) {
         {
           owner: _to.toLowerCase(),
           update_operator: null,
+          operator: null,
           last_transferred_at
         },
         { id: estateId }
@@ -164,6 +165,19 @@ async function reduceEstateRegistry(event) {
         Estate.update({ data }, { id: estate.id }),
         Tile.update({ name: data.name }, { estate_id: estate.id })
       ])
+      break
+    }
+    case eventNames.Approval: {
+      const { _approved } = event.args
+      const estateId = event.args._tokenId
+
+      log.info(
+        `[${name}] Updating Estate id: "${estateId}" operator: ${_approved}`
+      )
+      await Estate.update(
+        { operator: _approved.toLowerCase() },
+        { id: estateId }
+      )
       break
     }
     default:
