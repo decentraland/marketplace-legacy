@@ -58,7 +58,7 @@ export class Listing {
         SET updated_at = NOW(),
             status = ${LISTING_STATUS.expired}
       WHERE ${ListingQueries.isInactive()}
-        AND ${ListingQueries.hasStatus([
+        AND ${ListingQueries.hasStatuses([
           LISTING_STATUS.open,
           LISTING_STATUS.fingerprintChanged
         ])}`)
