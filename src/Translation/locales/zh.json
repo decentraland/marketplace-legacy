@@ -267,8 +267,10 @@
     "tx_to_be_send": "您将向 {action} 土块发送交易：{parcels}"
   },
   "fatfinger_modal": {
-    "description": "您将发布{price}的tk1",
+    "bid_type": "出价",
+    "description": "你要为{price} {asset_name} tk1",
     "error": "价格不符合",
+    "publication_type": "名单",
     "re-enter": "请重新输入价格进行确认"
   },
   "footer": {

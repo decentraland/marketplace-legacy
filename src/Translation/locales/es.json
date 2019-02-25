@@ -291,8 +291,10 @@
     "tx_to_be_send": "Enviarás una transacción a {action} parcels: {parcels}"
   },
   "fatfinger_modal": {
-    "description": "Vas a publicar el {asset_name} por {price}",
+    "bid_type": "oferta",
+    "description": "Vas a {listing_type} el {asset_name} por {price}",
     "error": "Los precios no coinciden",
+    "publication_type": "lista",
     "re-enter": "Por favor, vuelva a introducir el precio para confirmar"
   },
   "footer": {

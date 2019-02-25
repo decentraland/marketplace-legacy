@@ -4,6 +4,7 @@ import { Form, Button, Input, Message } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { preventDefault, formatMana, sanitizePrice } from 'lib/utils'
+import { LISTING_TYPES } from 'shared/listing'
 import { ASSET_TYPES } from 'shared/asset'
 import BaseModal from '../BaseModal'
 
@@ -57,7 +58,7 @@ export default class FatfingerModal extends React.PureComponent {
   renderFatfingerForm = () => {
     const { onClose, data } = this.props
     const { formErrors, price } = this.state
-    const { assetType, priceToConfirm } = data
+    const { assetType, priceToConfirm, listingType } = data
     return (
       <div className="modal-body">
         <h1 className="title">{t('global.confirm')}</h1>
@@ -65,7 +66,11 @@ export default class FatfingerModal extends React.PureComponent {
           <p>
             {t('fatfinger_modal.description', {
               price: formatMana(priceToConfirm),
-              asset_name: this.getAssetName(assetType)
+              asset_name: this.getAssetName(assetType),
+              listing_type:
+                listingType === LISTING_TYPES.PUBLICATION
+                  ? t('fatfinger_modal.publication_type')
+                  : t('fatfinger_modal.bid_type')
             })}
           </p>
           <p>{t('fatfinger_modal.re-enter')}</p>

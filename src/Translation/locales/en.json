@@ -288,8 +288,11 @@
       "You will send a transaction to {action} parcels: {parcels}"
   },
   "fatfinger_modal": {
-    "description": "You are going to publish the {asset_name} for {price}",
+    "bid_type": "bid",
+    "description":
+      "You are going to {listing_type} the {asset_name} for {price}",
     "error": "Prices don't match",
+    "publication_type": "list",
     "re-enter": "Please re-enter the price to confirm"
   },
   "footer": {

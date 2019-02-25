@@ -283,8 +283,10 @@
       "다음과 같이 트랜잭션을 {action} 소포로 보냅니다. {parcels}"
   },
   "fatfinger_modal": {
-    "description": "{price}에 대한 {asset_name}을 게시하려고합니다.",
+    "bid_type": "매기다",
+    "description": "당신은 {price}에 대해 {asset_name}을하려고합니다.",
     "error": "가격이 일치하지 않습니다.",
+    "publication_type": "명부",
     "re-enter": "확인을 위해 가격을 다시 입력하십시오."
   },
   "footer": {

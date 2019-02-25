@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
+import { LISTING_TYPES } from 'shared/listing'
+import { ASSET_TYPES } from 'shared/asset'
 import { getMatchParamsCoordinates } from 'modules/location/selectors'
 import {
   getPublicationByCoordinate,
@@ -12,7 +14,6 @@ import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { publishRequest } from 'modules/publication/actions'
 import { openModal } from 'modules/ui/actions'
-import { ASSET_TYPES } from 'shared/asset'
 import PublishParcelPage from './PublishParcelPage'
 
 const mapState = (state, ownProps) => {
@@ -47,7 +48,8 @@ const mapDispatch = (dispatch, ownProps) => {
               publishRequest({ ...publication, asset_type: ASSET_TYPES.parcel })
             ),
           assetType: ASSET_TYPES.parcel,
-          priceToConfirm: publication.price
+          priceToConfirm: publication.price,
+          listingType: LISTING_TYPES.PUBLICATION
         })
       ),
     onCancel: () => dispatch(push(locations.parcelDetail(x, y)))

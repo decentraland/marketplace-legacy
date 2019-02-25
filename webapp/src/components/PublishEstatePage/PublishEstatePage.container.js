@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import { locations } from 'locations'
+import { LISTING_TYPES } from 'shared/listing'
+import { ASSET_TYPES } from 'shared/asset'
 import { getMatchParams } from 'modules/location/selectors'
 import {
   getEstatePublicationById,
@@ -12,7 +14,6 @@ import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { publishRequest } from 'modules/publication/actions'
 import { openModal } from 'modules/ui/actions'
-import { ASSET_TYPES } from 'shared/asset'
 
 import PublishEstatePage from './PublishEstatePage'
 
@@ -47,7 +48,8 @@ const mapDispatch = (dispatch, ownProps) => {
               publishRequest({ ...publication, asset_type: ASSET_TYPES.estate })
             ),
           assetType: ASSET_TYPES.estate,
-          priceToConfirm: publication.price
+          priceToConfirm: publication.price,
+          listingType: LISTING_TYPES.PUBLICATION
         })
       ),
     onCancel: () => dispatch(push(locations.estateDetail(id)))

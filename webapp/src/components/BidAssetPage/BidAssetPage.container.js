@@ -4,6 +4,7 @@ import { goBack } from 'react-router-redux'
 
 import { ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
+import { LISTING_TYPES } from 'shared/listing'
 import { bidRequest } from 'modules/bid/actions'
 import { openModal } from 'modules/ui/actions'
 import {
@@ -67,7 +68,8 @@ const mapDispatch = (dispatch, ownProps) => {
             onSubmit: () =>
               dispatch(bidRequest({ ...bid, asset_type: ASSET_TYPES.parcel })),
             assetType: ASSET_TYPES.parcel,
-            priceToConfirm: bid.price
+            priceToConfirm: bid.price,
+            listingType: LISTING_TYPES.BID
           })
         )
       break
@@ -79,7 +81,8 @@ const mapDispatch = (dispatch, ownProps) => {
             onSubmit: () =>
               dispatch(bidRequest({ ...bid, asset_type: ASSET_TYPES.estate })),
             assetType: ASSET_TYPES.estate,
-            priceToConfirm: bid.price
+            priceToConfirm: bid.price,
+            listingType: LISTING_TYPES.BID
           })
         )
       break

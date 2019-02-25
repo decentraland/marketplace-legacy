@@ -299,8 +299,10 @@
       "Vous allez envoyer une transaction pour {action} les parcelles: {parcels}"
   },
   "fatfinger_modal": {
-    "description": "Vous allez publier le {asset_name} pour {price}",
+    "bid_type": "offre",
+    "description": "Vous allez {listing_type} le {asset_name} pour {price}",
     "error": "Les prix ne correspondent pas",
+    "publication_type": "liste",
     "re-enter": "Veuillez ré-entrer le prix pour confirmer"
   },
   "footer": {
