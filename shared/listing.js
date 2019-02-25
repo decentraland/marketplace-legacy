@@ -4,7 +4,7 @@ export const LISTING_STATUS = Object.freeze({
   open: 'open',
   sold: 'sold',
   cancelled: 'cancelled',
-  fingerprintChanged: 'fingerPrintChanged',
+  fingerprintChanged: 'fingerprintChanged',
   expired: 'expired'
 })
 

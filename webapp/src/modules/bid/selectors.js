@@ -10,8 +10,7 @@ import {
   FETCH_BID_REQUEST
 } from './actions'
 import { LISTING_STATUS } from 'shared/listing'
-import { isOpen } from 'shared/listing'
-import { isAssetBid } from 'shared/bid'
+import { isAssetBid, isActive } from 'shared/bid'
 
 export const getState = state => state.bid
 export const getData = state => getState(state).data
@@ -28,10 +27,10 @@ export const isCancelIdle = state =>
 export const isAcceptIdle = state =>
   isLoadingType(getLoading(state), ACCEPT_BID_REQUEST)
 
-export const getOpenBids = createSelector(getData, allBids =>
+export const getActiveBids = createSelector(getData, allBids =>
   Object.keys(allBids).reduce((bids, bidId) => {
     const bid = allBids[bidId]
-    if (isOpen(bid)) {
+    if (isActive(bid)) {
       return { ...bids, [bidId]: bid }
     }
     return bids

@@ -11,6 +11,7 @@ import { ASSET_TYPES } from 'shared/asset'
 import { shortenOwner } from 'shared/map'
 import { calculateMapProps } from 'shared/estate'
 import { splitCoordinate } from 'shared/coordinates'
+import { fingerprintHasChanged } from 'shared/bid'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
@@ -135,6 +136,7 @@ export default class Bid extends React.PureComponent {
     } = this.props
 
     const hasSameSellerAndBidder = bid.seller === bid.bidder
+    const fingerprintChanged = fingerprintHasChanged(bid)
     const assetDetailLink = this.getDetailLink()
     const sizeByResolution = {
       computer: showAssetDetail ? 4 : 3,
@@ -206,6 +208,10 @@ export default class Bid extends React.PureComponent {
                 mobile={16}
                 className={'actions'}
               >
+                {!isOwner &&
+                  fingerprintChanged && (
+                    <p>{t('asset_bid.fingerprint_changed')}</p>
+                  )}
                 <Button
                   className={`${isOwner ? 'primary' : ''}`}
                   onClick={preventDefault(onConfirm)}
@@ -215,7 +221,8 @@ export default class Bid extends React.PureComponent {
                     : t('global.accept')}
                 </Button>
                 {!isOwner &&
-                  !hasSameSellerAndBidder && (
+                  !hasSameSellerAndBidder &&
+                  !fingerprintChanged && (
                     <Button
                       className="primary"
                       onClick={preventDefault(onUpdate)}

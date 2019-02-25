@@ -1,4 +1,4 @@
-import { sortListings, LISTING_SORT_BY } from 'shared/listing'
+import { sortListings, isOpen, LISTING_SORT_BY } from 'shared/listing'
 
 export function getBidIdFromTxReceipt({ logs }) {
   const createBidLog = logs.find(log => log.name === 'BidCreated')
@@ -18,7 +18,7 @@ export function getBidsByReceivedAndPlaced(bids, address) {
   const bidProccesed = {}
   for (const bid of bids) {
     if (!bidProccesed[bid.id]) {
-      if (bid.seller === address) {
+      if (isOpen(bid) && bid.seller === address) {
         bidsReceived.push(bid)
       }
 

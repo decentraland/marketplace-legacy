@@ -132,7 +132,8 @@ async function reduceBid(event) {
     }
     case eventNames.RemoveLand:
     case eventNames.AddLand: {
-      const bids = await Bid.getWithStatuses(address, assetId, [
+      const tokenId = event.args._estateId
+      const bids = await Bid.getWithStatuses(address, tokenId, [
         LISTING_STATUS.open,
         LISTING_STATUS.fingerprintChanged
       ])
@@ -141,17 +142,17 @@ async function reduceBid(event) {
 
       if (estateHasActiveBids) {
         log.info(
-          `[${name}] Updating bids for the Estate ${assetId}, fingerprint changed`
+          `[${name}] Updating bids for the Estate ${tokenId}, fingerprint changed`
         )
 
         const estateContract = eth.getContract('EstateRegistry')
-        const fingerprint = await estateContract.getFingerprint(assetId)
+        const fingerprint = await estateContract.getFingerprint(tokenId)
 
         await Bid.updateBidsByAssetFingerprintChange(
           blockTime,
           block_number,
-          contractAddresses.EstateRegistry,
-          assetId,
+          address,
+          tokenId,
           fingerprint
         )
       }

@@ -8,7 +8,7 @@ import { getData as getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
 import { getData as getAuthorizations } from 'modules/authorization/selectors'
-import { getOpenBids } from 'modules/bid/selectors'
+import { getActiveBids } from 'modules/bid/selectors'
 import { isOpen } from 'shared/listing'
 import { pickAndMap } from './utils'
 
@@ -25,7 +25,7 @@ export const getAddresses = createSelector(
   state => getEstates(state),
   state => getMortgagedParcels(state),
   state => getAuthorizations(state),
-  state => getOpenBids(state),
+  state => getActiveBids(state),
   (
     data,
     allDistricts,
