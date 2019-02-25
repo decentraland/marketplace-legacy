@@ -4,13 +4,11 @@ import { SQL, raw } from '../../database'
 
 export const PublicationQueries = Object.freeze({
   isActive: () => SQL`expires_at >= EXTRACT(epoch from now()) * 1000`,
-  isInactive: () => SQL`expires_at < EXTRACT(epoch from now()) * 1000`,
 
   // These two, `hasAssetType` and `hasStatus`, can be abstracted into one method
   // but for now, they're accidental repetition. No need to overcomplicate things.
   hasAssetType: asset_type =>
     asset_type ? SQL`asset_type = ${asset_type}` : SQL`1 = 1`,
-  hasStatus: status => (status ? SQL`status = ${status}` : SQL`1 = 1`),
 
   findByStatusSql: (status = null) => {
     if (!Listing.isValidStatus(status)) {

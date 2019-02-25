@@ -1,20 +1,23 @@
 import { Log } from 'decentraland-commons'
 
 import { Estate } from '../src/Asset'
-import { Publication } from '../src/Listing'
+import { Publication, Bid } from '../src/Listing'
 import { Tile } from '../src/Tile'
 import { asyncBatch } from '../src/lib'
 
 const log = new Log('consolidateProccesedEvents')
 
 export async function consolidateProccesedEvents() {
-  await Promise.all([cancelInactivePublications(), updateEstateDistrinctIds()])
+  await Promise.all([updateExpiredListings(), updateEstateDistrinctIds()])
 }
 
-async function cancelInactivePublications() {
-  log.info('Cancelling inactive publications')
+async function updateExpiredListings() {
+  log.info('Cancelling expired listings')
   const inactivePublications = await Publication.findInactive()
-  await Publication.cancelInactive()
+  await Publication.updateExpired()
+
+  log.info('Cancelling expired bids')
+  await Bid.updateExpired()
 
   log.info('Updating tiles')
   return asyncBatch({

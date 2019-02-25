@@ -1,4 +1,9 @@
-import { Publication, PublicationQueries, Listing } from '../Listing'
+import {
+  Publication,
+  PublicationQueries,
+  Listing,
+  ListingQueries
+} from '../Listing'
 import { EstateQueries } from '../Asset'
 import { db, SQL, raw } from '../database'
 
@@ -21,7 +26,7 @@ export class Marketplace {
         SQL`SELECT row_to_json(pub.*) as publication, ${raw(selectAssetsSQL)}
           FROM ${raw(Publication.tableName)} as pub
           ${raw(joinAssetsSQL)}
-          WHERE ${PublicationQueries.hasStatus(status)}
+          WHERE ${ListingQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}
             AND ${EstateQueries.estateHasParcels('pub')}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}
@@ -46,7 +51,7 @@ export class Marketplace {
             PublicableAsset.tableName
           )} as model ON model.id = pub.asset_id
           WHERE ${PublicationQueries.hasAssetType(asset_type)}
-            AND ${PublicationQueries.hasStatus(status)}
+            AND ${ListingQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}
             AND ${EstateQueries.estateHasParcels('pub')}
           ORDER BY pub.${raw(sort.by)} ${raw(sort.order)}

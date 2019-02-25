@@ -1,6 +1,7 @@
 import { Model } from 'decentraland-commons'
 
 import { Listing } from '../Listing'
+import { ListingQueries } from '../Listing.queries'
 import { PublicationQueries } from './Publication.queries'
 import { BlockchainEvent } from '../../BlockchainEvent'
 import { SQL, raw } from '../../database'
@@ -64,18 +65,9 @@ export class Publication extends Model {
     return this.db.query(
       SQL`SELECT *
         FROM ${raw(this.tableName)}
-        WHERE ${PublicationQueries.isInactive()}
-          AND ${PublicationQueries.hasStatus(LISTING_STATUS.open)}`
+        WHERE ${ListingQueries.isInactive()}
+          AND ${ListingQueries.hasStatus(LISTING_STATUS.open)}`
     )
-  }
-
-  static async cancelInactive() {
-    return this.db.query(SQL`
-      UPDATE ${raw(this.tableName)}
-        SET updated_at = NOW(),
-            status = ${LISTING_STATUS.cancelled}
-      WHERE ${PublicationQueries.isInactive()}
-        AND ${PublicationQueries.hasStatus(LISTING_STATUS.open)}`)
   }
 
   static async cancelOlder(asset_id, block_number, eventName) {
@@ -112,5 +104,9 @@ export class Publication extends Model {
             updated_at = NOW()
         WHERE tx_hash = ANY(${txHashes})`
     )
+  }
+
+  static async updateExpired() {
+    return new Listing(this).updateExpired()
   }
 }

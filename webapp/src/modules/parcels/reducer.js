@@ -109,7 +109,9 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_ADDRESS_BIDS_SUCCESS: {
       const { assets } = action
-      const parcels = assets.filter(asset => isParcel(asset))
+      const parcels = assets.filter(
+        asset => isParcel(asset) && !state.data[asset.id]
+      )
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

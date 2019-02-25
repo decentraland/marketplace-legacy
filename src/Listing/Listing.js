@@ -1,3 +1,5 @@
+import { ListingQueries } from './Listing.queries'
+import { SQL, raw, db } from '../database'
 import { Asset } from '../Asset'
 import { LISTING_STATUS, LISTING_ASSET_TYPES } from '../shared/listing'
 
@@ -46,8 +48,20 @@ export class Listing {
     })
   }
 
-  static findByOwner(owner) {
+  async findByOwner(owner) {
     return this.Model.find({ owner })
+  }
+
+  async updateExpired() {
+    return db.query(SQL`
+      UPDATE ${raw(this.tableName)}
+        SET updated_at = NOW(),
+            status = ${LISTING_STATUS.expired}
+      WHERE ${ListingQueries.isInactive()}
+        AND ${ListingQueries.hasStatuses([
+          LISTING_STATUS.open,
+          LISTING_STATUS.fingerprintChanged
+        ])}`)
   }
 
   async findByAssetId(asset_id, asset_type) {
