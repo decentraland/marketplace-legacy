@@ -29,7 +29,8 @@
     },
     "expiration": "만료",
     "expiration_placeholder": "이 발행물의 만료일",
-    "fingerprint_changed": "이 {asset_name}가 수정되었습니다. ",
+    "fingerprint_changed":
+      "이 {asset_name}가 수정되었습니다. 입찰가를 업데이트하거나 취소하십시오.",
     "insufficient_funds": "입찰자가 입찰 비용을 지불하기에 부족합니다.",
     "list_asset": "{asset_name}에 입찰하기",
     "not_enough": "계정에 MANA가 충분하지 않습니다.",

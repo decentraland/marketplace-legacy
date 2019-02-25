@@ -57,7 +57,7 @@ export const getWalletBidsByAsset = (state, asset, assetType) => {
 
     if (
       isAssetBid(bid, asset.id, assetType) &&
-      bid.status === LISTING_STATUS.open &&
+      isActive(bid) &&
       isBidderOrSeller
     ) {
       return [...bids, bid]

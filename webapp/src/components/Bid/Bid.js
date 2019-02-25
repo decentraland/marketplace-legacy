@@ -216,8 +216,7 @@ export default class Bid extends React.PureComponent {
                     : t('global.accept')}
                 </Button>
                 {!isOwner &&
-                  !hasSameSellerAndBidder &&
-                  !fingerprintChanged && (
+                  !hasSameSellerAndBidder && (
                     <Button
                       className="primary"
                       onClick={preventDefault(onUpdate)}

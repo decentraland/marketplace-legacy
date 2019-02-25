@@ -5,7 +5,7 @@ export function isAssetBid(bid, assetId, assetType) {
 }
 
 export function fingerprintHasChanged(bid) {
-  return bid.status === LISTING_STATUS.fingerprintChanged
+  return bid && bid.status === LISTING_STATUS.fingerprintChanged
 }
 
 export function isActive(bid) {
