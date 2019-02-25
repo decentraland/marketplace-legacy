@@ -32,7 +32,7 @@ export default class BidParcelPage extends React.PureComponent {
     const { id, bid, isTxIdle, onBid, onCancel, isAllowed, wallet } = this.props
 
     const [x, y] = splitCoordinate(id)
-    const bidIsOpen = isOpen(bid)
+    const isBidOpen = isOpen(bid)
 
     return (
       <Parcel x={x} y={y} ownerNotAllowed>
@@ -64,7 +64,7 @@ export default class BidParcelPage extends React.PureComponent {
               title={
                 <T
                   id={
-                    bidIsOpen
+                    isBidOpen
                       ? 'asset_bid.update_asset'
                       : 'asset_bid.list_asset'
                   }
@@ -74,7 +74,7 @@ export default class BidParcelPage extends React.PureComponent {
               subtitle={
                 <T
                   id={
-                    bidIsOpen
+                    isBidOpen
                       ? 'asset_bid.set_new_asset_price'
                       : 'asset_bid.set_asset_price'
                   }
@@ -88,7 +88,7 @@ export default class BidParcelPage extends React.PureComponent {
               <BidAssetForm
                 asset={parcel}
                 assetName={t('name.parcel')}
-                bid={bidIsOpen ? bid : null}
+                bid={isBidOpen ? bid : null}
                 isTxIdle={isTxIdle}
                 onBid={onBid}
                 onCancel={onCancel}

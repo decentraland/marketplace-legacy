@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import addDays from 'date-fns/add_days'
 import dateFnsFormat from 'date-fns/format'
 import differenceInDays from 'date-fns/difference_in_days'
-import { Form, Button, Input, Message } from 'semantic-ui-react'
+import { Form, Button, Input, Message, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { assetType, bidType } from 'components/types'
@@ -52,13 +52,12 @@ export default class BidAssetForm extends React.PureComponent {
   }
 
   handlePriceChange = e => {
-    const { balance } = this.props
     // Dots and commas are not allowed
     const price = sanitizePrice(e.currentTarget.value)
 
     this.setState({
-      price: price > balance ? Math.floor(balance) : price,
-      formErrors: []
+      formErrors: [],
+      price
     })
   }
 
@@ -138,8 +137,10 @@ export default class BidAssetForm extends React.PureComponent {
   }
 
   render() {
-    const { isTxIdle, assetName, isDisabled, onCancel } = this.props
+    const { isTxIdle, assetName, isDisabled, onCancel, balance } = this.props
     const { price, expiresAt, formErrors } = this.state
+
+    const canBid = price <= balance
 
     return (
       <Form
@@ -158,6 +159,12 @@ export default class BidAssetForm extends React.PureComponent {
             required={true}
             onChange={this.handlePriceChange}
           />
+          {price > balance ? (
+            <label className="warning">
+              <Icon name="warning sign" />
+              {t('asset_bid.not_enough')}
+            </label>
+          ) : null}
         </Form.Field>
         <Form.Field>
           <label>{t('asset_bid.expiration')}</label>
@@ -182,7 +189,7 @@ export default class BidAssetForm extends React.PureComponent {
           <Button
             type="submit"
             primary={true}
-            disabled={isTxIdle || isDisabled || price <= 0}
+            disabled={isTxIdle || isDisabled || price <= 0 || !canBid}
           >
             {t('global.submit')}
           </Button>

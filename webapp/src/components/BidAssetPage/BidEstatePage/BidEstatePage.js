@@ -29,7 +29,7 @@ export default class BidEstatePage extends React.PureComponent {
   render() {
     const { id, bid, isTxIdle, onBid, onCancel, isAllowed, wallet } = this.props
 
-    const bidIsOpen = isOpen(bid)
+    const isBidOpen = isOpen(bid)
 
     return (
       <Estate id={id} ownerNotAllowed>
@@ -60,7 +60,7 @@ export default class BidEstatePage extends React.PureComponent {
               title={
                 <T
                   id={
-                    bidIsOpen
+                    isBidOpen
                       ? 'asset_bid.update_asset'
                       : 'asset_bid.list_asset'
                   }
@@ -70,7 +70,7 @@ export default class BidEstatePage extends React.PureComponent {
               subtitle={
                 <T
                   id={
-                    bidIsOpen
+                    isBidOpen
                       ? 'asset_bid.set_new_asset_price'
                       : 'asset_bid.set_asset_price'
                   }
@@ -82,7 +82,7 @@ export default class BidEstatePage extends React.PureComponent {
               <BidAssetForm
                 asset={estate}
                 assetName={t('name.estate')}
-                bid={bidIsOpen ? bid : null}
+                bid={isBidOpen ? bid : null}
                 isTxIdle={isTxIdle}
                 onBid={onBid}
                 onCancel={onCancel}
