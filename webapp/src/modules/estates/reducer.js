@@ -154,7 +154,9 @@ export function estatesReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_ADDRESS_BIDS_SUCCESS: {
       const { assets } = action
-      const estates = assets.filter(asset => isEstate(asset))
+      const estates = assets.filter(
+        asset => isEstate(asset) && !state.data[asset.id]
+      )
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
