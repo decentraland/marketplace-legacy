@@ -220,7 +220,6 @@
       "You unauthorized the {contract_link} to operate {symbol} on your behalf"
   },
   "bid": {
-    "bid_asset": "ERC721",
     "placed": "bids placed",
     "received": "bids received"
   },

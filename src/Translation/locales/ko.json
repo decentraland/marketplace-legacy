@@ -216,7 +216,6 @@
       "당신은 {contract_link}을 당신을 대신하여 {symbol}을 조작하도록 승인하지 않았습니다."
   },
   "bid": {
-    "bid_asset": "ERC721",
     "placed": "배치 된 입찰가",
     "received": "받은 입찰가"
   },

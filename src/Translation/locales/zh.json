@@ -201,7 +201,6 @@
     "disapproved": "您未授权 {contract_link} 使用 {symbol}"
   },
   "bid": {
-    "bid_asset": "ERC721",
     "placed": "出价",
     "received": "收到的出价"
   },

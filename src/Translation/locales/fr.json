@@ -229,7 +229,6 @@
       "Vous n'avez pas autorisé le {contract_link} à utiliser {symbol} en votre nom"
   },
   "bid": {
-    "bid_asset": "ERC721",
     "placed": "enchères placées",
     "received": "offres reçues"
   },

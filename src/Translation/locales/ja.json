@@ -214,7 +214,6 @@
       "{contract_link}に準じて{symbol}を操作することを許可しませんでした"
   },
   "bid": {
-    "bid_asset": "ERC721",
     "placed": "入札単価",
     "received": "入札を受けました"
   },
