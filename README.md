@@ -63,3 +63,4 @@ You can translate automatically from English to the other locales by running the
 ## API
 
 We have documentation for our HTTP API that can be [found here](https://docs.decentraland.org/blockchain-interactions/api/).
+
