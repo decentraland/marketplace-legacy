@@ -32,6 +32,7 @@
     "insufficient_funds":
       "The bidder has insufficient funds to pay for the bid",
     "list_asset": "Place a bid for the {asset_name}",
+    "not_enough": "You don't have enough MANA in your account",
     "please_authorize":
       "You need to go to {settings_link} and authorize the Bid contract to use MANA on your behalf before you can place a bid.",
     "price_placeholder": "Price in MANA for this {asset_name}",

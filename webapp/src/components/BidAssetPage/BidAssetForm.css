@@ -1,3 +1,8 @@
 .BidForm.ui.form .field>label {
   text-transform: capitalize;
 }
+
+.BidForm.ui.form .field>label.warning{
+  color: var(--error);
+  text-transform: none;
+}

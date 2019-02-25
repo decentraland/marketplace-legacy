@@ -74,14 +74,14 @@ export default class AcceptBidAssetPage extends React.PureComponent {
     const { bidderHasBalance } = this.state
     const { assetType, bid } = this.props
 
-    const bidIsOpen = isOpen(bid)
+    const isBidOpen = isOpen(bid)
 
     switch (assetType) {
       case ASSET_TYPES.parcel:
         return (
           <AcceptBidParcelPage
             {...this.props}
-            isOpen={bidIsOpen}
+            isOpen={isBidOpen}
             handleConfirm={this.handleConfirm}
             bidderHasBalance={bidderHasBalance}
           />
@@ -90,7 +90,7 @@ export default class AcceptBidAssetPage extends React.PureComponent {
         return (
           <AcceptBidEstatePage
             {...this.props}
-            isOpen={bidIsOpen}
+            isOpen={isBidOpen}
             handleConfirm={this.handleConfirm}
             bidderHasBalance={bidderHasBalance}
           />

@@ -35,6 +35,7 @@
     "insufficient_funds":
       "Le soumissionnaire n'a pas suffisamment de fonds pour payer pour la soumission",
     "list_asset": "Placer une offre pour le {asset_name}",
+    "not_enough": "Vous n'avez pas assez de MANA dans votre compte",
     "please_authorize":
       "Vous devez vous rendre sur {settings_link} et autoriser le contrat d’offre à utiliser MANA en votre nom avant de pouvoir enchérir.",
     "price_placeholder": "Prix ​​en MANA pour ce {asset_name}",
