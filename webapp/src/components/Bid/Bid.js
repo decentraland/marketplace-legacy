@@ -144,13 +144,12 @@ export default class Bid extends React.PureComponent {
       mobile: showAssetDetail ? 8 : 16
     }
 
+    let gridClassName = `Bid ${className}`
+    gridClassName += showAssetDetail ? ' showAssetDetail' : ''
+    gridClassName += fingerprintChanged ? ' fingerprint-changed' : ''
+
     return (
-      <Grid
-        stackable
-        className={`Bid ${className} ${
-          showAssetDetail ? 'showAssetDetail' : ''
-        }`}
-      >
+      <Grid stackable className={gridClassName}>
         <Grid.Row>
           {showAssetDetail && (
             <React.Fragment>
@@ -208,10 +207,6 @@ export default class Bid extends React.PureComponent {
                 mobile={16}
                 className={'actions'}
               >
-                {!isOwner &&
-                  fingerprintChanged && (
-                    <p>{t('asset_bid.fingerprint_changed')}</p>
-                  )}
                 <Button
                   className={`${isOwner ? 'primary' : ''}`}
                   onClick={preventDefault(onConfirm)}
@@ -234,6 +229,18 @@ export default class Bid extends React.PureComponent {
             </Grid>
           </Grid.Column>
         </Grid.Row>
+        {!isOwner &&
+          fingerprintChanged && (
+            <Grid.Row className="fingerprint-changed">
+              <Grid.Column>
+                <p>
+                  {t('asset_bid.fingerprint_changed', {
+                    asset_name: t('name.estate')
+                  })}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          )}
       </Grid>
     )
   }

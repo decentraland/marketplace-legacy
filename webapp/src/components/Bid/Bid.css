@@ -34,6 +34,10 @@
   overflow: hidden;
 }
 
+.Bid.fingerprint-changed .row .ParcelCanvasWrapper {
+  border-radius: 10px 0 0 0;
+}
+
 .Bid .row h3 {
   text-transform: uppercase;
   color: var(--gray);
@@ -87,6 +91,15 @@
 
 .ui.grid.Bid .row .actions button + button {
   margin-left: 15px !important;
+}
+
+.ui.stackable.grid.Bid .row.fingerprint-changed {
+  margin-top: 1rem;
+  border-top: 1px solid var(--background);
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--gray);
 }
 
 @media(max-width: 768px) { 
