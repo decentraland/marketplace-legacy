@@ -549,7 +549,7 @@
     "title": "Welcome to Decentraland's LAND Marketplace"
   },
   "transaction": {
-    "accept_bid": "You accepted a bid for {asset_link} for {price}",
+    "accept_bid": "You accepted a bid for {asset_link} for {price} MANA",
     "bid":
       "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} at the auction",
     "buy": "You bought {parcel_link}",
