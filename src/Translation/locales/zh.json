@@ -29,6 +29,7 @@
     "expiration_placeholder": "本出版物的截止日期",
     "insufficient_funds": "投标人没有足够的资金来支付投标费用",
     "list_asset": "对{asset_name}进行出价",
+    "not_enough": "您的帐户中没有足够的MANA",
     "please_authorize":
       "您需要转到{settings_link}并授权投标合同代表您使用MANA，然后才能出价。",
     "price_placeholder": "这个{asset_name}的价格在MANA",

@@ -31,6 +31,7 @@
     "expiration_placeholder": "이 발행물의 만료일",
     "insufficient_funds": "입찰자가 입찰 비용을 지불하기에 부족합니다.",
     "list_asset": "{asset_name}에 입찰하기",
+    "not_enough": "계정에 MANA가 충분하지 않습니다.",
     "please_authorize":
       "{settings_link}에 가서 입찰을하기 전에 MANA를 사용하도록 입찰 계약서를 승인해야합니다.",
     "price_placeholder": "이 {asset_name}에 대한 MANA의 가격",
