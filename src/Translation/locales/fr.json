@@ -32,6 +32,7 @@
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Date d'expiration pour cette publication",
+    "fingerprint_changed": "Ce {asset_name} a été modifié. ",
     "insufficient_funds":
       "Le soumissionnaire n'a pas suffisamment de fonds pour payer pour la soumission",
     "list_asset": "Placer une offre pour le {asset_name}",

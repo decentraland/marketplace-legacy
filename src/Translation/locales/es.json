@@ -30,6 +30,7 @@
     },
     "expiration": "Vencimiento",
     "expiration_placeholder": "Fecha de expiración de esta publicación.",
+    "fingerprint_changed": "Este {asset_name} ha sido modificado. ",
     "insufficient_funds":
       "El ofertante no tiene fondos suficientes para pagar la oferta.",
     "list_asset": "Haz una oferta por el {asset_name}",
