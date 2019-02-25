@@ -34,7 +34,8 @@ export default class BidAssetForm extends React.PureComponent {
     isTxIdle: PropTypes.bool,
     isDisabled: PropTypes.bool,
     onBid: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    balance: PropTypes.number.isRequired
   }
 
   constructor(props) {
@@ -51,11 +52,12 @@ export default class BidAssetForm extends React.PureComponent {
   }
 
   handlePriceChange = e => {
+    const { balance } = this.props
     // Dots and commas are not allowed
     const price = sanitizePrice(e.currentTarget.value)
 
     this.setState({
-      price,
+      price: price > balance ? Math.floor(balance) : price,
       formErrors: []
     })
   }

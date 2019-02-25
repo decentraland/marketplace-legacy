@@ -8,7 +8,7 @@ import { locations } from 'locations'
 import { isOpen } from 'shared/listing'
 import { splitCoordinate } from 'shared/coordinates'
 import BidAssetForm from '../BidAssetForm'
-import { authorizationType, bidType } from 'components/types'
+import { authorizationType, bidType, walletType } from 'components/types'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
@@ -24,11 +24,12 @@ export default class BidParcelPage extends React.PureComponent {
     isLoading: PropTypes.bool.isRequired,
     onBid: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-    isAllowed: PropTypes.bool.isRequired
+    isAllowed: PropTypes.bool.isRequired,
+    wallet: walletType
   }
 
   render() {
-    const { id, bid, isTxIdle, onBid, onCancel, isAllowed } = this.props
+    const { id, bid, isTxIdle, onBid, onCancel, isAllowed, wallet } = this.props
 
     const [x, y] = splitCoordinate(id)
     const bidIsOpen = isOpen(bid)
@@ -92,6 +93,7 @@ export default class BidParcelPage extends React.PureComponent {
                 onBid={onBid}
                 onCancel={onCancel}
                 isDisabled={!isAllowed}
+                balance={wallet.mana}
               />
               <TxStatus.Asset
                 asset={parcel}

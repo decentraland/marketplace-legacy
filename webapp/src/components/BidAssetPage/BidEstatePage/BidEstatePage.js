@@ -7,7 +7,7 @@ import { t, T } from '@dapps/modules/translation/utils'
 import { locations } from 'locations'
 import { isOpen } from 'shared/listing'
 import BidAssetForm from '../BidAssetForm'
-import { authorizationType, bidType } from 'components/types'
+import { authorizationType, bidType, walletType } from 'components/types'
 import Estate from 'components/Estate'
 import EstateName from 'components/EstateName'
 import TxStatus from 'components/TxStatus'
@@ -22,11 +22,12 @@ export default class BidEstatePage extends React.PureComponent {
     isTxIdle: PropTypes.bool.isRequired,
     onBid: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-    isAllowed: PropTypes.bool.isRequired
+    isAllowed: PropTypes.bool.isRequired,
+    wallet: walletType
   }
 
   render() {
-    const { id, bid, isTxIdle, onBid, onCancel, isAllowed } = this.props
+    const { id, bid, isTxIdle, onBid, onCancel, isAllowed, wallet } = this.props
 
     const bidIsOpen = isOpen(bid)
 
@@ -86,6 +87,7 @@ export default class BidEstatePage extends React.PureComponent {
                 onBid={onBid}
                 onCancel={onCancel}
                 isDisabled={!isAllowed}
+                balance={wallet.mana}
               />
               <TxStatus.Asset
                 asset={estate}
