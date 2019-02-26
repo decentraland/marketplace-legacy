@@ -125,7 +125,11 @@ async function reduceEstateRegistry(event) {
       ])
 
       await Estate.update(
-        { owner: _to.toLowerCase(), last_transferred_at },
+        {
+          owner: _to.toLowerCase(),
+          update_operator: null,
+          last_transferred_at
+        },
         { id: estateId }
       )
 
