@@ -87,7 +87,7 @@ async function reduceLANDRegistry(event) {
         Publication.cancelOlder(parcelId, block_number, eventNames.OrderCreated)
       ])
       await Parcel.update(
-        { owner: to.toLowerCase(), last_transferred_at },
+        { owner: to.toLowerCase(), update_operator: null, last_transferred_at },
         { id: parcelId }
       )
       await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
