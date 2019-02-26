@@ -220,7 +220,6 @@
       "You unauthorized the {contract_link} to operate {symbol} on your behalf"
   },
   "bid": {
-    "bid_asset": "ERC721",
     "placed": "bids placed",
     "received": "bids received"
   },
@@ -288,8 +287,11 @@
       "You will send a transaction to {action} parcels: {parcels}"
   },
   "fatfinger_modal": {
-    "description": "You are going to publish the {asset_name} for {price}",
+    "bid_type": "bid",
+    "description":
+      "You are going to {listing_type} the {asset_name} for {price}",
     "error": "Prices don't match",
+    "publication_type": "list",
     "re-enter": "Please re-enter the price to confirm"
   },
   "footer": {
@@ -547,7 +549,7 @@
     "title": "Welcome to Decentraland's LAND Marketplace"
   },
   "transaction": {
-    "accept_bid": "You accepted a bid for {asset_link} for {price}",
+    "accept_bid": "You accepted a bid for {asset_link} for {price} MANA",
     "bid":
       "You bought {parcel_count} {parcel_count, plural, one {parcel} other {parcels}} at the auction",
     "buy": "You bought {parcel_link}",

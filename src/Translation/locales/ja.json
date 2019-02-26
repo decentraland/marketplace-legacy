@@ -214,7 +214,6 @@
       "{contract_link}に準じて{symbol}を操作することを許可しませんでした"
   },
   "bid": {
-    "bid_asset": "ERC721",
     "placed": "入札単価",
     "received": "入札を受けました"
   },
@@ -281,8 +280,11 @@
     "tx_to_be_send": "トランザクションを{action}した区画{parcels}へ送信します。"
   },
   "fatfinger_modal": {
-    "description": "{price}の{asset_name}を公開する予定です",
+    "bid_type": "入札",
+    "description":
+      "あなたは{price}のために{asset_name}の{listing_type}に行くつもりです",
     "error": "価格は一致しません",
+    "publication_type": "リスト",
     "re-enter": "確認のために価格を再入力してください"
   },
   "footer": {

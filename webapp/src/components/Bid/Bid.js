@@ -111,6 +111,19 @@ export default class Bid extends React.PureComponent {
     }
   }
 
+  getAssetTypeTitle = () => {
+    switch (this.props.bid.asset_type) {
+      case ASSET_TYPES.parcel: {
+        return t('name.parcel')
+      }
+      case ASSET_TYPES.estate: {
+        return t('name.estate')
+      }
+      default:
+        return null
+    }
+  }
+
   render() {
     const {
       bid,
@@ -148,7 +161,7 @@ export default class Bid extends React.PureComponent {
             <Grid className="inner-grid">
               {showAssetDetail && (
                 <Grid.Column computer={4} tablet={4} mobile={8}>
-                  <h3>{t('bid.bid_asset')}</h3>
+                  <h3>{this.getAssetTypeTitle()}</h3>
                   <Link className="asset-name" to={assetDetailLink}>
                     {this.renderAssetData()}
                   </Link>
