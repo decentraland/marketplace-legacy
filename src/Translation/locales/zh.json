@@ -52,10 +52,10 @@
   },
   "asset_cancel": {
     "about_to_cancel": "您即将取消 {name} 的出售。",
-    "about_to_cancel_bid": "您即将取消{name}的出价。",
+    "about_to_cancel_bid": "您即将取消对 {name} 的出价。",
     "cancel_bid": "取消出价",
     "cancel_sale": "取消出售",
-    "not_bid": "您没有公开竞标{asset_name} {asset}。",
+    "not_bid": "您没有对 {asset_name} {asset} 出价。",
     "not_for_sale": "{asset} {asset_name} 不出售。"
   },
   "asset_detail": {
@@ -123,9 +123,9 @@
     "your_parcel": "您的地块"
   },
   "auction": {
-    "description_after_finish": "LAND拍卖结束了！",
-    "description_after_start": "LAND拍卖已经开始，你现在可以买到LAND！",
-    "description_before_start": "参加12月10日的LAND拍卖并购买LAND！",
+    "description_after_finish": "LAND 拍卖结束了！",
+    "description_after_start": "LAND 拍卖已经开始，你现在可以买到 LAND！",
+    "description_before_start": "参加12月10日的 LAND 拍卖并购买 LAND！",
     "title": "Decentraland LAND 拍卖"
   },
   "auction_finished": {
@@ -167,7 +167,7 @@
     "conversion_disclaimer": "*由于转换费用，价格上涨了{fee}％",
     "description": "找到想要购买的 LAND",
     "empty_message":
-      "找到您要购买的包裹，并将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
+      "找到您要购买的土地，并将其添加到购物车。如需更多帮助，可以观看视频教程 {video_tutorial_link}",
     "find_available_parcel": "查找拍卖的土地",
     "gas_price": "最高 Gas 价格",
     "land_price": "LAND 价格",
@@ -176,7 +176,7 @@
       "如果你试图在单笔交易中购买超过{max} LAND，它将会失败。",
     "maximum_parcels_title": "您达到了每笔交易最多土地数",
     "parcels": "土地数",
-    "parcels_tooltip": "您一次最多只能购买 {max} 个地块",
+    "parcels_tooltip": "您一次最多只能购买 {max} 块土地",
     "refresh": "刷新价格",
     "searching": "搜索...",
     "sold": "出售",
