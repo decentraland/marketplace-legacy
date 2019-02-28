@@ -43,7 +43,7 @@ export default class BidAssetForm extends React.PureComponent {
     const { bid } = props
 
     this.state = {
-      price: bid ? bid.price : '',
+      price: bid ? Math.floor(bid.price) : '',
       expiresAt: bid
         ? dateFnsFormat(parseInt(bid.expires_at, 10), INPUT_FORMAT)
         : this.formatFutureDate(DEFAULT_DAY_INTERVAL),

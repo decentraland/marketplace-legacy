@@ -50,7 +50,7 @@ export default class AcceptBidEstatePage extends React.PureComponent {
                       id="asset_accept_bid.about_to_accept_bid"
                       values={{
                         name: <EstateName estate={estate} />,
-                        price: <Mana amount={price} size={14} />
+                        price: <Mana amount={Math.floor(price)} size={14} />
                       }}
                     />
                   )
