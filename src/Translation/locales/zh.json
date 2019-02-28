@@ -14,33 +14,33 @@
     "its_you": "您的"
   },
   "asset_accept_bid": {
-    "about_to_accept_bid": "您即将接受{price}对tk1的出价。",
-    "accept_bid_asset": "接受{asset_type}的出价",
+    "about_to_accept_bid": "您即将接受 {name} 的出价 {price}。",
+    "accept_bid_asset": "接受 {asset_type} 的出价",
     "expired": "出价过期"
   },
   "asset_bid": {
     "errors": {
-      "maximum_expiration": "最长到期日为{date}（6个月）",
-      "maximum_land_price": "最大{asset_name}价格为{value} MANA",
-      "minimum_expiration": "最短到期日期为{date}",
-      "minimum_land_price": "最低{asset_name}价格为{value} MANA"
+      "maximum_expiration": "最迟到期时间为 {date}（6个月）",
+      "maximum_land_price": "{asset_name} 的最高价为 {value} MANA",
+      "minimum_expiration": "最短到期时间 {date}",
+      "minimum_land_price": "{asset_name} 的最低价为 {value} MANA"
     },
-    "expiration": "呼气",
-    "expiration_placeholder": "本出版物的截止日期",
-    "insufficient_funds": "投标人没有足够的资金来支付投标费用",
-    "list_asset": "对{asset_name}进行出价",
-    "not_enough": "您的帐户中没有足够的MANA",
+    "expiration": "到期",
+    "expiration_placeholder": "截止日期",
+    "insufficient_funds": "出价人没有足够的资金支付",
+    "list_asset": "对 {asset_name} 出价",
+    "not_enough": "您的帐户中没有足够的 MANA",
     "please_authorize":
-      "您需要转到{settings_link}并授权投标合同代表您使用MANA，然后才能出价。",
-    "price_placeholder": "这个{asset_name}的价格在MANA",
-    "set_asset_price": "设置{asset_name}的价格和到期日期。",
-    "set_new_asset_price": "设置{asset_name}的新价格或到期日期。",
-    "update_asset": "更新{asset_name}出价"
+      "您需要转到 {settings_link} 页面并授权出价智能合约使用 MANA，然后才能出价。",
+    "price_placeholder": "{asset_name} 的 MANA 价格",
+    "set_asset_price": "设置 {asset_name} 的价格和到期日期。",
+    "set_new_asset_price": "重新设置 {asset_name} 的价格或到期日期。",
+    "update_asset": "更新 {asset_name} 的出价"
   },
   "asset_buy": {
     "about_to_buy": "您即将以 {price} 的价格购买 {name}",
     "allowed_balance": "你的限额是 {allowance}",
-    "buy_asset": "购买{asset_type}",
+    "buy_asset": "购买 {asset_type}",
     "buy_mana": "{click_here} 购买一些 MANA。",
     "didnt_allow": "您尚未授权虚拟市场使用 MANA",
     "didnt_allow_new_marketplace": "您尚未授权新版本的 Marketplace 使用 MANA",
@@ -68,7 +68,7 @@
     },
     "bid": {
       "place": "出价",
-      "title": "投标"
+      "title": "出价"
     },
     "history": {
       "auction": "拍卖",
@@ -171,7 +171,7 @@
     "find_available_parcel": "查找拍卖的土地",
     "gas_price": "最高 Gas 价格",
     "land_price": "LAND 价格",
-    "max_amount_disclaimer": "* {token}的Kyber储备不足以交易{amount} MANA",
+    "max_amount_disclaimer": "* {token}的Kyber储备不足以交易{ amount} MANA",
     "maximum_parcels_message":
       "如果你试图在单笔交易中购买超过{max} LAND，它将会失败。",
     "maximum_parcels_title": "您达到了每笔交易最多土地数",
@@ -258,7 +258,7 @@
     "subtitle": "设置名称和说明，及连块土地的相关地块。"
   },
   "estate_select": {
-    "bids_warning": "这个Estate有活跃的出价。",
+    "bids_warning": "这个连块土地有人出价，如果增加或移除土地，则所有的出价将无效。",
     "description": "选择彼此相邻的地块",
     "detail": "连块土地细节",
     "edit_selection": "在地图上选择地块",
@@ -289,7 +289,7 @@
     "atlas": "地图",
     "auction": "拍卖",
     "balance": "余额",
-    "bids": "投标",
+    "bids": "出价",
     "blog": "博客",
     "cancel": "取消",
     "change": "更改",
@@ -427,7 +427,7 @@
     "required_deposit": "所需押金：{deposit}"
   },
   "name": {
-    "estate": "Estate",
+    "estate": "连块土地",
     "parcel": "LAND"
   },
   "parcel": {
@@ -482,7 +482,7 @@
     "authorization_error": "无法加载授权，请重试",
     "authorization_error_contact": "如果错误仍然存在，请不要犹豫与我们联系",
     "for_buying": "购买：",
-    "for_buying_ERC721Bid": "使用MANA（出价）的资产",
+    "for_buying_ERC721Bid": "使用 MANA（出价）",
     "for_buying_LANDAuction": "在 LAND 拍卖中使用 {token}",
     "for_buying_LegacyMarketplace": "使用 MANA（遗留功能）",
     "for_buying_Marketplace": "使用 MANA",
