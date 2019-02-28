@@ -190,7 +190,7 @@ export default class Bid extends React.PureComponent {
               <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.price')}</h3>
                 <Mana
-                  amount={bid.price}
+                  amount={Math.floor(bid.price)}
                   size={15}
                   scale={1}
                   className="mortgage-amount-icon"
