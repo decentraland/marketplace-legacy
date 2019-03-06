@@ -1,7 +1,9 @@
 import { env } from 'decentraland-commons'
+
 import { Parcel } from '../../src/Asset'
 import { Tile } from '../../src/Tile'
 import { ASSET_TYPES } from '../../shared/asset'
+import { eventNames } from '../../src/ethereum'
 
 // TODO: Find a common place for this
 export function getAssetTypeFromEvent(event) {
@@ -44,4 +46,8 @@ export function debouncedUpsertTileAsset(assetId, assetType, wait = 5000) {
 export async function getParcelIdFromEvent(event) {
   const { assetId, landId, _landId, _tokenId } = event.args
   return Parcel.decodeTokenId(assetId || landId || _landId || _tokenId)
+}
+
+export function omitParcelId(name) {
+  return [eventNames.ApprovalForAll].includes(name)
 }

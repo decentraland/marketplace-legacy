@@ -1,13 +1,15 @@
 import { Log } from 'decentraland-commons'
 
+import { getParcelIdFromEvent, debouncedUpsertTileAsset } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
+import { Approval } from '../../src/Approval'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { ASSET_TYPES, decodeMetadata } from '../../shared/asset'
 import { getParcelMatcher, isEqualCoords } from '../../shared/parcel'
-import { getParcelIdFromEvent, debouncedUpsertTileAsset } from './utils'
+import { isDuplicatedConstraintError } from '../../src/database'
 
 const log = new Log('estateReducer')
 
@@ -25,7 +27,7 @@ export async function estateReducer(event) {
 }
 
 async function reduceEstateRegistry(event) {
-  const { tx_hash, block_number, name } = event
+  const { tx_hash, block_number, name, address } = event
 
   switch (name) {
     case eventNames.CreateEstate: {
@@ -178,6 +180,33 @@ async function reduceEstateRegistry(event) {
         { operator: _approved.toLowerCase() },
         { id: estateId }
       )
+      break
+    }
+    case eventNames.ApprovalForAll: {
+      const { _owner, _operator } = event.args
+      const _approved = event.args._approved === 'true'
+
+      try {
+        log.info(
+          `[${name}] ${_owner} ${
+            _approved ? 'set' : 'remove'
+          } ${_operator} as approved for all`
+        )
+        if (_approved) {
+          await Approval.insertApproval(address, _owner, _operator)
+        } else {
+          await Approval.delete({
+            token_address: address,
+            owner: _owner.toLowerCase(),
+            operator: _operator.toLowerCase()
+          })
+        }
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] ${_owner} has already set ${_operator} as approved for all`
+        )
+      }
       break
     }
     default:

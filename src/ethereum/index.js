@@ -44,7 +44,13 @@ export function loadContracts() {
     },
     LANDRegistry: {
       address: getEnvAddress('LAND_REGISTRY_CONTRACT_ADDRESS'),
-      eventNames: ['Update', 'Transfer', 'UpdateOperator', 'Approval']
+      eventNames: [
+        'Update',
+        'Transfer',
+        'UpdateOperator',
+        'Approval',
+        'ApprovalForAll'
+      ]
     },
     EstateRegistry: {
       address: getEnvAddress('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
@@ -55,7 +61,8 @@ export function loadContracts() {
         'Transfer',
         'Update',
         'UpdateOperator',
-        'Approval'
+        'Approval',
+        'ApprovalForAll'
       ]
     },
     LANDAuction: {

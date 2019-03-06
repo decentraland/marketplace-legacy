@@ -1,13 +1,15 @@
 import { contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 
+import { getParcelIdFromEvent, omitParcelId } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
+import { Approval } from '../../src/Approval'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { ASSET_TYPES } from '../../shared/asset'
-import { getParcelIdFromEvent } from './utils'
+import { isDuplicatedConstraintError } from '../../src/database'
 
 const log = new Log('parcelReducer')
 
@@ -29,10 +31,15 @@ export async function parcelReducer(event) {
 }
 
 async function reduceLANDRegistry(event) {
-  const { name, block_number } = event
+  const { name, block_number, address } = event
+  let parcelId
 
-  const parcelId = await getParcelIdFromEvent(event)
-  if (!parcelId) return log.info(`[${name}] Invalid Parcel Id`)
+  if (!omitParcelId(event.name)) {
+    parcelId = await getParcelIdFromEvent(event)
+    if (!parcelId && omitParcelId(event.name)) {
+      return log.info(`[${name}] Invalid Parcel Id`)
+    }
+  }
 
   switch (name) {
     case eventNames.Update: {
@@ -113,6 +120,36 @@ async function reduceLANDRegistry(event) {
           `[${name}] Skipping badly formed data for "${parcelId}" -- ${
             error.stack
           }`
+        )
+      }
+      break
+    }
+
+    case eventNames.ApprovalForAll: {
+      // operator and holder are inverted in the contact
+      const holder = event.args.operator
+      const operator = event.args.holder
+      const authorized = event.args.authorized === 'true'
+
+      try {
+        log.info(
+          `[${name}] ${holder} ${
+            authorized ? 'set' : 'remove'
+          } ${operator} as approved for all`
+        )
+        if (authorized) {
+          await Approval.insertApproval(address, holder, operator)
+        } else {
+          await Approval.delete({
+            token_address: address,
+            owner: holder.toLowerCase(),
+            operator: operator.toLowerCase()
+          })
+        }
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] ${holder} has already set ${operator} as approved for all`
         )
       }
       break

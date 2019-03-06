@@ -1,4 +1,5 @@
 import { Model } from 'decentraland-commons'
+
 import { SQL } from '../database'
 
 export class Invite extends Model {
