@@ -7,7 +7,7 @@
   margin: 0;
 }
 
-.ui.grid.stackable.grid.Bid:not(.showAssetDetail) {
+.ui.grid.stackable.grid.Bid:not(.show-asset-detail) {
   margin: 1rem auto !important;
 }
 
@@ -79,7 +79,7 @@
   text-align: left;
 }
 
-.ui.grid.stackable.grid.Bid:not(.showAssetDetail) .row .actions {
+.ui.grid.stackable.grid.Bid:not(.show-asset-detail) .row .actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -115,7 +115,7 @@
     text-align: left;
   }
 
-  .ui.grid.stackable.grid.Bid:not(.showAssetDetail) .row .actions {
+  .ui.grid.stackable.grid.Bid:not(.show-asset-detail) .row .actions {
     justify-content: flex-start;
   }
 }

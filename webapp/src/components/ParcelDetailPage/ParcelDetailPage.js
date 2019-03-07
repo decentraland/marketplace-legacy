@@ -19,7 +19,7 @@ import {
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { getDistrict } from 'shared/district'
 import { hasTags } from 'shared/parcel'
-import { isOpen, isActive } from 'shared/listing'
+import { shouldShowBid } from 'shared/bid'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
@@ -137,10 +137,7 @@ export default class ParcelDetailPage extends React.PureComponent {
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
                   {bids
-                    .filter(
-                      bid =>
-                        (isOwner && isOpen(bid)) || (!isOwner && isActive(bid))
-                    )
+                    .filter(bid => shouldShowBid(bid, isOwner))
                     .map(bid => (
                       <Bid key={bid.id} bid={bid} isOwner={isOwner} />
                     ))}

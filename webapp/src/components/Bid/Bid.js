@@ -11,7 +11,7 @@ import { ASSET_TYPES } from 'shared/asset'
 import { shortenOwner } from 'shared/map'
 import { calculateMapProps } from 'shared/estate'
 import { splitCoordinate } from 'shared/coordinates'
-import { fingerprintHasChanged } from 'shared/bid'
+import { hasFingerprintChanged } from 'shared/bid'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
@@ -125,18 +125,20 @@ export default class Bid extends React.PureComponent {
     }
   }
 
+  getClassName = fingerprintChanged => {
+    const { showAssetDetail, className } = this.props
+
+    let gridClassName = `Bid ${className}`
+    gridClassName += showAssetDetail ? ' show-asset-detail' : ''
+    gridClassName += fingerprintChanged ? ' fingerprint-changed' : ''
+    return gridClassName
+  }
+
   render() {
-    const {
-      bid,
-      isOwner,
-      onConfirm,
-      onUpdate,
-      showAssetDetail,
-      className
-    } = this.props
+    const { bid, isOwner, onConfirm, onUpdate, showAssetDetail } = this.props
 
     const hasSameSellerAndBidder = bid.seller === bid.bidder
-    const fingerprintChanged = fingerprintHasChanged(bid)
+    const fingerprintChanged = hasFingerprintChanged(bid)
     const assetDetailLink = this.getDetailLink()
     const sizeByResolution = {
       computer: showAssetDetail ? 4 : 3,
@@ -144,9 +146,7 @@ export default class Bid extends React.PureComponent {
       mobile: showAssetDetail ? 8 : 16
     }
 
-    let gridClassName = `Bid ${className}`
-    gridClassName += showAssetDetail ? ' showAssetDetail' : ''
-    gridClassName += fingerprintChanged ? ' fingerprint-changed' : ''
+    const gridClassName = this.getClassName(fingerprintChanged)
 
     return (
       <Grid stackable className={gridClassName}>
