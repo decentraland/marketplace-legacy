@@ -36,7 +36,7 @@ async function reduceLANDRegistry(event) {
 
   if (!omitParcelId(event.name)) {
     parcelId = await getParcelIdFromEvent(event)
-    if (!parcelId && omitParcelId(event.name)) {
+    if (!parcelId) {
       return log.info(`[${name}] Invalid Parcel Id`)
     }
   }
@@ -127,8 +127,8 @@ async function reduceLANDRegistry(event) {
 
     case eventNames.ApprovalForAll: {
       // operator and holder are inverted in the contact
-      const holder = event.args.operator
-      const operator = event.args.holder
+      const holder = event.args.holder.toLowerCase()
+      const operator = event.args.operator.toLowerCase()
       const authorized = event.args.authorized === 'true'
 
       try {
@@ -142,8 +142,8 @@ async function reduceLANDRegistry(event) {
         } else {
           await Approval.delete({
             token_address: address,
-            owner: holder.toLowerCase(),
-            operator: operator.toLowerCase()
+            owner: holder,
+            operator
           })
         }
       } catch (error) {

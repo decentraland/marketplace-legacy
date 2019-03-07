@@ -11,7 +11,7 @@ export class Approval extends Model {
       SQL`INSERT INTO ${SQL.raw(
         this.tableName
       )} (token_address, owner, operator) 
-          VALUES (${tokenAddress.toLowerCase()}, ${owner.toLowerCase()}, ${operator.toLowerCase()});`
+          VALUES (${tokenAddress}, ${owner}, ${operator});`
     )
   }
 

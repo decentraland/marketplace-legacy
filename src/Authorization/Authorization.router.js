@@ -1,9 +1,10 @@
-import { server, env } from 'decentraland-commons'
+import { server } from 'decentraland-commons'
 
 import { Approval } from '../Approval'
-import { unsafeParseInt } from '../lib'
 import { Parcel, Estate } from '../Asset'
 import { ASSET_TYPES } from '../shared/asset'
+import { ReqQueryParams } from '../ReqQueryParams'
+import { contractAddresses } from '../ethereum'
 
 export class AuthorizationRouter {
   constructor(app) {
@@ -40,11 +41,11 @@ export class AuthorizationRouter {
 
     switch (assetType) {
       case ASSET_TYPES.parcel: {
-        tokenAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
+        tokenAddress = contractAddresses.LANDRegistry
         break
       }
       case ASSET_TYPES.estate: {
-        tokenAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
+        tokenAddress = contractAddresses.EstateRegistry
         break
       }
       default:
@@ -66,21 +67,11 @@ export class AuthorizationRouter {
   }
 
   async getParcelAuthorizations(req) {
-    let x, y
+    const reqQueryParams = new ReqQueryParams(req)
 
-    try {
-      x = unsafeParseInt(server.extractFromReq(req, 'x'))
-    } catch (e) {
-      throw new Error('Invalid coordinate "x" must be an integer')
-    }
-
-    try {
-      y = unsafeParseInt(server.extractFromReq(req, 'y'))
-    } catch (e) {
-      throw new Error('Invalid coordinate "y" must be an integer')
-    }
-
-    const address = server.extractFromReq(req, 'address')
+    const x = reqQueryParams.getInteger('x')
+    const y = reqQueryParams.getInteger('y')
+    const address = reqQueryParams.get('address')
 
     const parcel = await Parcel.findOne({ x, y })
 

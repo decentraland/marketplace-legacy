@@ -183,7 +183,8 @@ async function reduceEstateRegistry(event) {
       break
     }
     case eventNames.ApprovalForAll: {
-      const { _owner, _operator } = event.args
+      const _owner = event.args._owner.toLowerCase()
+      const _operator = event.args._operator.toLowerCase()
       const _approved = event.args._approved === 'true'
 
       try {
@@ -197,8 +198,8 @@ async function reduceEstateRegistry(event) {
         } else {
           await Approval.delete({
             token_address: address,
-            owner: _owner.toLowerCase(),
-            operator: _operator.toLowerCase()
+            owner: _owner,
+            operator: _operator
           })
         }
       } catch (error) {
