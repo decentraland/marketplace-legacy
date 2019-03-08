@@ -1,10 +1,9 @@
-import { server } from 'decentraland-commons'
+import { server, env } from 'decentraland-commons'
 
 import { Approval } from '../Approval'
 import { Parcel, Estate } from '../Asset'
 import { ASSET_TYPES } from '../shared/asset'
 import { ReqQueryParams } from '../ReqQueryParams'
-import { contractAddresses } from '../ethereum'
 
 export class AuthorizationRouter {
   constructor(app) {
@@ -41,11 +40,11 @@ export class AuthorizationRouter {
 
     switch (assetType) {
       case ASSET_TYPES.parcel: {
-        tokenAddress = contractAddresses.LANDRegistry
+        tokenAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
         break
       }
       case ASSET_TYPES.estate: {
-        tokenAddress = contractAddresses.EstateRegistry
+        tokenAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
         break
       }
       default:
@@ -55,7 +54,7 @@ export class AuthorizationRouter {
     const isApprovedForAll = await Approval.isApprovedForAll(
       tokenAddress.toLowerCase(),
       asset.owner,
-      address.toLowerCase()
+      address
     )
 
     return {
@@ -71,7 +70,7 @@ export class AuthorizationRouter {
 
     const x = reqQueryParams.getInteger('x')
     const y = reqQueryParams.getInteger('y')
-    const address = reqQueryParams.get('address')
+    const address = reqQueryParams.get('address').toLowerCase()
 
     const parcel = await Parcel.findOne({ x, y })
 
@@ -79,30 +78,29 @@ export class AuthorizationRouter {
       throw new Error('Parcel does not exist')
     }
 
+    let authorizations
     if (parcel.estate_id) {
       const estate = await Estate.findOne({ id : parcel.estate_id})
-
-      const authorizations = await this.getAuthorizations(
+      
+      authorizations = await this.getAuthorizations(
         estate,
         ASSET_TYPES.estate,
         address
-      )
-
-      return { id: parcel.id, address, ...authorizations }
+        )
     } else {
-      const authorizations = await this.getAuthorizations(
+      authorizations = await this.getAuthorizations(
         parcel,
         ASSET_TYPES.parcel,
         address
       )
 
-      return { id: parcel.id, address, ...authorizations }
     }    
+    return { id: parcel.id, address, ...authorizations }
   }
 
   async getEstateAuthorizations(req) {
     const id = server.extractFromReq(req, 'id')
-    const address = server.extractFromReq(req, 'address')
+    const address = server.extractFromReq(req, 'address').toLowerCase()
 
     const estate = await Estate.findOne({ id })
 
