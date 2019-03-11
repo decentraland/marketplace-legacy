@@ -9,7 +9,7 @@ import { SQL, raw } from '../database'
 import { asyncBatch } from '../lib'
 import { isDistrict } from '../../shared/district'
 import { TileType } from '../../shared/map'
-import { isEstate } from '../../shared/parcel'
+import { isPartOfEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
 import { LISTING_STATUS } from '../shared/listing'
 
@@ -184,14 +184,14 @@ export class Tile extends Model {
   }
 
   static async getFullParcel(parcel) {
-    const assetId = isEstate(parcel) ? parcel.estate_id : parcel.id
+    const assetId = isPartOfEstate(parcel) ? parcel.estate_id : parcel.id
 
     const publicationPromise = Publication.findActiveByAssetIdWithStatus(
       assetId,
       LISTING_STATUS.open
     )
 
-    const estatePromise = isEstate(parcel)
+    const estatePromise = isPartOfEstate(parcel)
       ? Estate.findOne(parcel.estate_id)
       : null
 

@@ -7,7 +7,7 @@ import debounce from 'lodash.debounce'
 import { coordsType } from 'components/types'
 import { shouldRequestNewTiles } from 'modules/tile/utils'
 import { isMobileWidth } from 'lib/utils'
-import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
+import { ASSET_TYPES } from 'shared/asset'
 import { buildCoordinate } from 'shared/coordinates'
 import {
   TYPES,
@@ -19,7 +19,6 @@ import {
   getTextColor
 } from 'shared/map'
 import { Map as MapRenderer } from 'shared/map/render'
-import { isParcel, isEstate } from 'shared/parcel'
 import { getLabel, getDescription, panzoom } from './utils'
 import Minimap from './Minimap'
 import Popup from './Popup'

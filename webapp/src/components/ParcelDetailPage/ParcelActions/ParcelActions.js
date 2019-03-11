@@ -15,7 +15,7 @@ import {
 import { isLegacyPublication } from 'modules/publication/utils'
 import { getOpenPublication } from 'shared/asset'
 import { hasParcelsConnected } from 'shared/parcel'
-import { isListable } from 'shared/listing'
+import { isParcelListable } from 'shared/listing'
 
 import './ParcelActions.css'
 
@@ -100,7 +100,7 @@ export default class ParcelActions extends React.PureComponent {
               )}
             {isFeatureEnabled('BIDS') &&
               !bids.length &&
-              isListable(parcel) && (
+              isParcelListable(parcel) && (
                 <Link to={locations.bidParcel(x, y)}>
                   <Button size="large">{t('asset_detail.bid.place')}</Button>
                 </Link>

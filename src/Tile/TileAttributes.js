@@ -1,13 +1,13 @@
 import { Parcel } from '../Asset'
 import { isDistrict } from '../../shared/district'
 import { TileType, TileLocation } from '../../shared/map'
-import { isEstate } from '../../shared/parcel'
+import { isPartOfEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../../shared/asset'
 
 export class TileAttributes {
   constructor(parcel) {
     this.parcel = parcel
-    this.isEstate = isEstate(parcel)
+    this.isEstate = isPartOfEstate(parcel)
     this.isDistrict = isDistrict(parcel)
 
     this.tileLocation = new TileLocation(parcel)
