@@ -32,9 +32,11 @@ export async function parcelReducer(event) {
 
 async function reduceLANDRegistry(event) {
   const { name, block_number, address } = event
+  const shouldOmitParcelId = event.name === eventNames.ApprovalForAll
+
   let parcelId
 
-  if (!omitParcelId(event.name)) {
+  if (!shouldOmitParcelId) {
     parcelId = await getParcelIdFromEvent(event)
     if (!parcelId) {
       return log.info(`[${name}] Invalid Parcel Id`)
@@ -138,7 +140,7 @@ async function reduceLANDRegistry(event) {
           } ${operator} as approved for all`
         )
         if (authorized) {
-          await Approval.insertApproval(address, holder, operator)
+          await Approval.approveForAll(address, holder, operator)
         } else {
           await Approval.delete({
             token_address: address,

@@ -5,10 +5,10 @@ import { db } from '../database'
 
 describe('Approval', function() {
   beforeEach(async function() {
-    await Approval.insertApproval('0x', '0x1', '0x2')
-    await Approval.insertApproval('0x', '0x1', '0x3')
-    await Approval.insertApproval('0x', '0xa', '0x2')
-    await Approval.insertApproval('0x', '0xa', '0x3')
+    await Approval.approveForAll('0x', '0x1', '0x2')
+    await Approval.approveForAll('0x', '0x1', '0x3')
+    await Approval.approveForAll('0x', '0xa', '0x2')
+    await Approval.approveForAll('0x', '0xa', '0x3')
   })
 
   describe('#isApprovedForAll', function() {

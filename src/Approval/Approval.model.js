@@ -6,7 +6,7 @@ export class Approval extends Model {
   static tableName = 'approvals'
   static columnNames = ['token_address', 'owner', 'operator']
 
-  static async insertApproval(tokenAddress, owner, operator) {
+  static async approveForAll(tokenAddress, owner, operator) {
     return this.db.query(
       SQL`INSERT INTO ${SQL.raw(
         this.tableName
@@ -16,11 +16,12 @@ export class Approval extends Model {
   }
 
   static async isApprovedForAll(tokenAddress, owner, operator) {
-    const res = await this.findOne({
+    const count = await this.count({
       token_address: tokenAddress,
       owner,
       operator
     })
-    return res !== undefined
+
+    return count > 0
   }
 }

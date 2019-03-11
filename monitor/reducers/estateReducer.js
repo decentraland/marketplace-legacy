@@ -194,7 +194,7 @@ async function reduceEstateRegistry(event) {
           } ${_operator} as approved for all`
         )
         if (_approved) {
-          await Approval.insertApproval(address, _owner, _operator)
+          await Approval.approveForAll(address, _owner, _operator)
         } else {
           await Approval.delete({
             token_address: address,

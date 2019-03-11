@@ -47,7 +47,3 @@ export async function getParcelIdFromEvent(event) {
   const { assetId, landId, _landId, _tokenId } = event.args
   return Parcel.decodeTokenId(assetId || landId || _landId || _tokenId)
 }
-
-export function omitParcelId(name) {
-  return [eventNames.ApprovalForAll].includes(name)
-}
