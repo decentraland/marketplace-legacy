@@ -3,7 +3,6 @@ import { env } from 'decentraland-commons'
 import { Parcel } from '../../src/Asset'
 import { Tile } from '../../src/Tile'
 import { ASSET_TYPES } from '../../shared/asset'
-import { eventNames } from '../../src/ethereum'
 
 // TODO: Find a common place for this
 export function getAssetTypeFromEvent(event) {

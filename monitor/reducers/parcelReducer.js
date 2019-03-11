@@ -1,7 +1,7 @@
 import { contracts } from 'decentraland-eth'
 import { Log } from 'decentraland-commons'
 
-import { getParcelIdFromEvent, omitParcelId } from './utils'
+import { getParcelIdFromEvent } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
 import { Approval } from '../../src/Approval'
