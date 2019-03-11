@@ -10,6 +10,7 @@ import { hasTags } from 'shared/parcel'
 import { calculateMapProps } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
 import { isDistrict } from 'shared/district'
+import { shouldShowBid } from 'shared/bid'
 import { estateType, publicationType, bidType } from 'components/types'
 import EstateActions from './EstateActions'
 import ParcelTags from 'components/ParcelTags'
@@ -199,9 +200,11 @@ export default class EstateDetailPage extends React.PureComponent {
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
-                  {bids.map(bid => (
-                    <Bid key={bid.id} bid={bid} isOwner={isOwner} />
-                  ))}
+                  {bids
+                    .filter(bid => shouldShowBid(bid, isOwner))
+                    .map(bid => (
+                      <Bid key={bid.id} bid={bid} isOwner={isOwner} />
+                    ))}
                 </Grid.Column>
               </Grid.Row>
             )}

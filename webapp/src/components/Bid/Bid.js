@@ -11,6 +11,7 @@ import { ASSET_TYPES } from 'shared/asset'
 import { shortenOwner } from 'shared/map'
 import { calculateMapProps } from 'shared/estate'
 import { splitCoordinate } from 'shared/coordinates'
+import { hasFingerprintChanged } from 'shared/bid'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
@@ -124,17 +125,20 @@ export default class Bid extends React.PureComponent {
     }
   }
 
+  getClassName = fingerprintChanged => {
+    const { showAssetDetail, className } = this.props
+
+    let gridClassName = `Bid ${className}`
+    gridClassName += showAssetDetail ? ' show-asset-detail' : ''
+    gridClassName += fingerprintChanged ? ' fingerprint-changed' : ''
+    return gridClassName
+  }
+
   render() {
-    const {
-      bid,
-      isOwner,
-      onConfirm,
-      onUpdate,
-      showAssetDetail,
-      className
-    } = this.props
+    const { bid, isOwner, onConfirm, onUpdate, showAssetDetail } = this.props
 
     const hasSameSellerAndBidder = bid.seller === bid.bidder
+    const fingerprintChanged = hasFingerprintChanged(bid)
     const assetDetailLink = this.getDetailLink()
     const sizeByResolution = {
       computer: showAssetDetail ? 4 : 3,
@@ -142,13 +146,10 @@ export default class Bid extends React.PureComponent {
       mobile: showAssetDetail ? 8 : 16
     }
 
+    const gridClassName = this.getClassName(fingerprintChanged)
+
     return (
-      <Grid
-        stackable
-        className={`Bid ${className} ${
-          showAssetDetail ? 'showAssetDetail' : ''
-        }`}
-      >
+      <Grid stackable className={gridClassName}>
         <Grid.Row>
           {showAssetDetail && (
             <React.Fragment>
@@ -227,6 +228,18 @@ export default class Bid extends React.PureComponent {
             </Grid>
           </Grid.Column>
         </Grid.Row>
+        {!isOwner &&
+          fingerprintChanged && (
+            <Grid.Row className="fingerprint-changed">
+              <Grid.Column>
+                <p>
+                  {t('asset_bid.fingerprint_changed', {
+                    asset_name: t('name.estate')
+                  })}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          )}
       </Grid>
     )
   }

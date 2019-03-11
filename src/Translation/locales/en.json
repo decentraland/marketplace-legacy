@@ -29,6 +29,8 @@
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Expiration date for this publication",
+    "fingerprint_changed":
+      "This {asset_name} has been modified. Plase update or cancel the bid.",
     "insufficient_funds":
       "The bidder has insufficient funds to pay for the bid",
     "list_asset": "Place a bid for the {asset_name}",

@@ -146,5 +146,10 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressPublicationsRequest(address, LISTING_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
   yield put(fetchMortgagedParcelsRequest(address))
-  yield put(fetchAddressBidsRequest(address, LISTING_STATUS.open))
+  yield put(
+    fetchAddressBidsRequest(address, [
+      LISTING_STATUS.open,
+      LISTING_STATUS.fingerprintChanged
+    ])
+  )
 }

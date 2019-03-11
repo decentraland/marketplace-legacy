@@ -27,6 +27,7 @@
     },
     "expiration": "到期",
     "expiration_placeholder": "截止日期",
+    "fingerprint_changed": "此{asset_name}已被修改。 请更新或取消出价。",
     "insufficient_funds": "出价人没有足够的资金支付",
     "list_asset": "对 {asset_name} 出价",
     "not_enough": "您的帐户中没有足够的 MANA",

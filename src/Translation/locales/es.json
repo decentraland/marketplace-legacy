@@ -30,12 +30,14 @@
     },
     "expiration": "Vencimiento",
     "expiration_placeholder": "Fecha de expiración de esta publicación.",
+    "fingerprint_changed":
+      "Este {asset_name} ha sido modificado. Por favor modifica o cancela la oferta.",
     "insufficient_funds":
       "El ofertante no tiene fondos suficientes para pagar la oferta.",
     "list_asset": "Haz una oferta por el {asset_name}",
     "not_enough": "No tienes suficiente MANA en tu cuenta",
     "please_authorize":
-      "Debe ir a {settings_link} y autorizar el contrato de la Oferta para utilizar MANA en su nombre antes de poder realizar una oferta.",
+      "Debe ir a {settings_link} y autorizar el contrato de la oferta para utilizar MANA en su nombre antes de poder realizar una oferta.",
     "price_placeholder": "Precio en MANA para este {asset_name}.",
     "set_asset_price":
       "Establecer un precio y una fecha de vencimiento para {asset_name}.",

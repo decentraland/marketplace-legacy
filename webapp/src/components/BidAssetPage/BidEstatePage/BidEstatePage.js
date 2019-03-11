@@ -5,7 +5,7 @@ import { Container, Message } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { isOpen } from 'shared/listing'
+import { isActive } from 'shared/bid'
 import BidAssetForm from '../BidAssetForm'
 import { authorizationType, bidType, walletType } from 'components/types'
 import Estate from 'components/Estate'
@@ -29,7 +29,7 @@ export default class BidEstatePage extends React.PureComponent {
   render() {
     const { id, bid, isTxIdle, onBid, onCancel, isAllowed, wallet } = this.props
 
-    const isBidOpen = isOpen(bid)
+    const isBidActive = isActive(bid)
 
     return (
       <Estate id={id} ownerNotAllowed>
@@ -60,7 +60,7 @@ export default class BidEstatePage extends React.PureComponent {
               title={
                 <T
                   id={
-                    isBidOpen
+                    isBidActive
                       ? 'asset_bid.update_asset'
                       : 'asset_bid.list_asset'
                   }
@@ -70,7 +70,7 @@ export default class BidEstatePage extends React.PureComponent {
               subtitle={
                 <T
                   id={
-                    isBidOpen
+                    isBidActive
                       ? 'asset_bid.set_new_asset_price'
                       : 'asset_bid.set_asset_price'
                   }
@@ -82,7 +82,7 @@ export default class BidEstatePage extends React.PureComponent {
               <BidAssetForm
                 asset={estate}
                 assetName={t('name.estate')}
-                bid={isBidOpen ? bid : null}
+                bid={isBidActive ? bid : null}
                 isTxIdle={isTxIdle}
                 onBid={onBid}
                 onCancel={onCancel}
