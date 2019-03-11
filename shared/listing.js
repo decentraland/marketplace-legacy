@@ -1,4 +1,5 @@
 import { isDistrict } from './district'
+import { isPartOfEstate } from './parcel'
 
 export const LISTING_STATUS = Object.freeze({
   open: 'open',
@@ -96,5 +97,5 @@ export function isListable(asset) {
  * @return boolean - whether is listable or not
  */
 export function isParcelListable(parcel) {
-  return isListable(parcel) && !parcel.estate_id
+  return isListable(parcel) && !isPartOfEstate(parcel)
 }
