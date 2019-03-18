@@ -50,14 +50,30 @@ export class EstateDoctor extends Doctor {
       error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
     } else {
       const estateSize = await estateRegistry.getEstateSize(estate.id)
-      const currentParcelPromises = []
+      let currentParcelPromises = []
       let currentParcels = []
 
-      for (let index = 0; index < estateSize; index++) {
-        const request = this.buildCurrentEstateParcel(estate.id, index)
-        currentParcelPromises.push(request)
-      }
-      currentParcels = await Promise.all(currentParcelPromises)
+      let index = 0
+      await asyncBatch({
+        elements: new Array(estateSize),
+        callback: async sizeBatch => {
+          const promises = sizeBatch.map(async () => {
+            return this.buildCurrentEstateParcel(estate.id, index++)
+          })
+
+          currentParcelPromises = [
+            ...currentParcelPromises,
+            await Promise.all(promises)
+          ]
+        },
+        batchSize: env.get('BATCH_SIZE'),
+        retryAttempts: 1
+      })
+      // for (let index = 0; index < estateSize; index++) {
+      //   const request = this.buildCurrentEstateParcel(estate.id, index)
+      //   currentParcelPromises.push(request)
+      // }
+      //currentParcels = await Promise.all(currentParcelPromises)
 
       if (!this.isEqualParcels(currentParcels, parcels)) {
         error = `Parcels: db parcels for estate ${id} are different from blockchain`

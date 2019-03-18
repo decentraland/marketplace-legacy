@@ -53,7 +53,7 @@ function getProgram(actions) {
           'Only restore the stored events, without processing each one'
         )
         .allowUnknownOption()
-        .action(options => actions.index(options))
+        .action(async options => await actions.index(options))
     }
   }
 }

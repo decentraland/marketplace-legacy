@@ -36,9 +36,9 @@ function getProgram(actions) {
           '--self-heal',
           'Try to fix found errors. Supports all flags supported by the monitor, except watch'
         )
-        .action(options => {
-          actions.run(options)
-          process.exit()
+        .action(async options => {
+          options.selfHeal = true
+          await actions.run(options)
         })
     }
   }

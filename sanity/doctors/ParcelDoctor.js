@@ -106,7 +106,7 @@ export class ParcelDiagnosis extends Diagnosis {
   async doTreatment() {
     for (const parcel of this.faultyParcels) {
       const events = await BlockchainEvent.findByAnyArgs(
-        ['assetId', '_landId'],
+        ['assetId', '_landId', 'landId', 'tokenId'],
         parcel.token_id
       )
       await this.replayEvents(events)

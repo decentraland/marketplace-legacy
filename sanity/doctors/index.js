@@ -4,6 +4,6 @@ import { EstateDoctor } from './EstateDoctor'
 
 export const doctors = {
   Parcel: ParcelDoctor,
-  Publication: PublicationDoctor,
+  // Publication: PublicationDoctor,
   Estate: EstateDoctor
 }

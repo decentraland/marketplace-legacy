@@ -16,11 +16,13 @@ export class MonitorActions {
     this.isProcessRunning = false
   }
 
-  index = options => {
+  index = async options => {
     for (const contractName in this.contractEvents) {
       const eventNames = this.contractEvents[contractName].eventNames
-
-      this.monitor(contractName, eventNames, options).catch(this.onError)
+      await this.monitor(contractName, eventNames, options).catch(this.onError)
+    }
+    if (options.skipProcess) {
+      this.finish({ monitorFinished: true })
     }
   }
 
@@ -56,10 +58,11 @@ export class MonitorActions {
     if (!handler) throw new Error('Could not find a valid handler')
 
     const fromBlock = await this.getFromBlock(options)
-    const onEnd = () => this.finish(options)
+    const onEnd = eventName =>
+      this.finish({ ...options, contractName, eventName })
     const monitorOptions = { ...options, fromBlock }
 
-    eventMonitor.run(monitorOptions, async (error, logs) => {
+    eventMonitor.run(monitorOptions, eventName => async (error, logs) => {
       if (error) {
         log.error(`Error monitoring "${contractName}" for "${eventNames}"`)
         this.onError(error)
@@ -71,7 +74,7 @@ export class MonitorActions {
         }
 
         if (options.skipProcess) {
-          onEnd()
+          onEnd(eventName)
         } else {
           this.processStoredEvents(fromBlock, onEnd)
         }

@@ -36,7 +36,7 @@ export class EventMonitor {
       )
 
       const event = this.getEvent(eventName)
-      event[action](eventOptions, callback)
+      event[action](eventOptions, callback(eventName))
     }
   }
 

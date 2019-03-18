@@ -8,6 +8,6 @@ export const BlockchainEventQueries = Object.freeze({
       .reduce(
         (query, argName) =>
           query.append(SQL` OR args->>'${raw(argName)}' = ${value}`),
-        BlockchainEventQueries.byArgs(argNames[0])
+        BlockchainEventQueries.byArgs(argNames[0], value)
       )
 })
