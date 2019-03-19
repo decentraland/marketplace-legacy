@@ -1,11 +1,13 @@
 import { eth } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
+
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { eventNames } from '../../src/ethereum'
 import { ASSET_TYPES } from '../../shared/asset'
 import { isParcel } from '../../shared/parcel'
 import { LISTING_STATUS } from '../../shared/listing'
@@ -41,12 +43,7 @@ export class PublicationDoctor extends Doctor {
       elements: allAssets,
       callback: async assetsBatch => {
         const promises = assetsBatch.map(async asset => {
-          let error = await this.getPublicationInconsistencies(asset)
-
-          // If there is an error does not look for legacy publications
-          if (isParcel(asset) && !error.length) {
-            error = await this.getLegacyPublicationInconsistencies(asset)
-          }
+          const error = await this.getPublicationInconsistencies(asset)
 
           if (error.length) {
             log.error(error)
@@ -71,24 +68,34 @@ export class PublicationDoctor extends Doctor {
     const assetType = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
     const publication = (await Publication.findByAssetId(id, assetType))[0]
     const order = await marketplace.orderByAssetId(nftAddress, token_id)
-    const contractId = order[0]
+    let publicationId = order[0]
 
-    return this.getPublicationError(id, publication, contractId)
-  }
+    if (isParcel(asset)) {
+      const legacyMarketplace = eth.getContract('LegacyMarketplace')
+      const auction = await legacyMarketplace.auctionByAssetId(token_id)
+      const contractId = auction[0]
 
-  async getLegacyPublicationInconsistencies(parcel) {
-    if (!parcel) return ''
+      // Check if the last publication was created by the LegacyMarketplace contract or if it is
+      // the only one and was not inserted.
+      if (this.isNullHash(publicationId) && !this.isNullHash(contractId)) {
+        const events = await BlockchainEvent.findByArgs(
+          'assetId',
+          asset.token_id
+        )
+        const lastAuctionCreatedEvent = events
+          .filter(event => event.name === eventNames.AuctionCreated)
+          .pop()
 
-    const { id, token_id } = parcel
-    const marketplace = eth.getContract('LegacyMarketplace')
-    const publication = (await Publication.findByAssetId(
-      id,
-      ASSET_TYPES.parcel
-    ))[0]
-    const auction = await marketplace.auctionByAssetId(token_id)
-    const contractId = auction[0]
+        if (
+          !lastAuctionCreatedEvent ||
+          lastAuctionCreatedEvent.block_number >= publication.block_number
+        ) {
+          publicationId = contractId
+        }
+      }
+    }
 
-    return this.getPublicationError(id, publication, contractId)
+    return this.getPublicationError(id, publication, publicationId)
   }
 
   getPublicationError(assetId, publication, contractId) {

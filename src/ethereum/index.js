@@ -1,6 +1,8 @@
 import { w3cwebsocket } from 'websocket'
 import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
+// @nacho hack: eth-connect expects to have window defined
+global.window = {}
 const providers = require('eth-connect')
 
 let isLoaded = false
