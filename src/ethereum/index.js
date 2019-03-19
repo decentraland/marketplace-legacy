@@ -11,7 +11,7 @@ export let contractNames // [ContractName, ...]
 export let contractAddresses // ContractName: address
 export let eventNames // eventName: eventName
 
-export async function connectEth(isWebSocket) {
+export async function connectEth(options = {}) {
   if (!isLoaded) loadContracts()
 
   const contractsToConnect = []
@@ -25,7 +25,7 @@ export async function connectEth(isWebSocket) {
 
   let provider
 
-  if (isWebSocket) {
+  if (options.isWebSocket) {
     provider = new providers.WebSocketProvider(env.get('WEB_SOCKET_RPC_URL'), {
       WebSocketConstructor: w3cwebsocket
     })

@@ -14,7 +14,7 @@ export async function main(getActions = createSanityActions) {
   await db.connect()
 
   log.info('Connecting to Ethereum node')
-  await connectEth(true)
+  await connectEth({ isWebSocket: true })
 
   log.info('Starting CLI')
   const sanityActions = getActions()
