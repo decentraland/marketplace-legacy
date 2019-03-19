@@ -13,9 +13,6 @@ export async function main(getActions = createSanityActions) {
   log.info('Connecting to database')
   await db.connect()
 
-  log.info('Connecting to Ethereum node')
-  await connectEth({ isWebSocket: true })
-
   log.info('Starting CLI')
   const sanityActions = getActions()
 
@@ -40,7 +37,12 @@ function getProgram(actions) {
           '--self-heal',
           'Try to fix found errors. Supports all flags supported by the monitor, except watch'
         )
+        .option('--websocket', 'Should run doctors in a websocket')
         .action(async options => {
+          log.info('Connecting to Ethereum node')
+          await connectEth({ isWebsocket: options.websocket })
+
+          log.info('Starting sanity')
           await actions.run(options)
         })
     }

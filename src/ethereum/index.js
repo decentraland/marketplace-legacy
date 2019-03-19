@@ -25,7 +25,7 @@ export async function connectEth(options = {}) {
 
   let provider
 
-  if (options.isWebSocket) {
+  if (options.isWebsocket) {
     provider = new providers.WebSocketProvider(env.get('WEB_SOCKET_RPC_URL'), {
       WebSocketConstructor: w3cwebsocket
     })
