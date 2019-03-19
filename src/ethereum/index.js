@@ -1,14 +1,15 @@
+import { w3cwebsocket } from 'websocket'
 import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
+const providers = require('eth-connect')
 
 let isLoaded = false
-
 export let contractsData // { ContractName: { address, eventNames: [] } }
 export let contractNames // [ContractName, ...]
 export let contractAddresses // ContractName: address
 export let eventNames // eventName: eventName
 
-export async function connectEth() {
+export async function connectEth(isWebSocket) {
   if (!isLoaded) loadContracts()
 
   const contractsToConnect = []
@@ -20,9 +21,20 @@ export async function connectEth() {
     contractsToConnect.push(new contracts[contractName](contract.address))
   }
 
+  let provider
+
+  if (isWebSocket) {
+    provider = new providers.WebSocketProvider(env.get('WEB_SOCKET_RPC_URL'), {
+      WebSocketConstructor: w3cwebsocket
+    })
+    await provider.connection
+  } else {
+    provider = env.get('RPC_URL')
+  }
+
   await eth.connect({
     contracts: contractsToConnect,
-    provider: env.get('RPC_URL')
+    provider
   })
 
   return contractsData

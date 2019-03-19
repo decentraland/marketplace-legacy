@@ -32,7 +32,7 @@ export class SanityActions {
     }
 
     if (options.selfHeal) {
-      await this.selfHeal(diagnostics)
+      await this.selfHeal(diagnostics, options.startFromBlock)
     }
   }
 
@@ -44,7 +44,7 @@ export class SanityActions {
     )
   }
 
-  async selfHeal(diagnostics) {
+  async selfHeal(diagnostics, startFromBlock) {
     if (diagnostics.length > 0) {
       log.info('Attempting to heal problems. Re-fetching events')
 
@@ -52,16 +52,19 @@ export class SanityActions {
       process.argv = process.argv.map(arg => (arg === 'run' ? 'index' : arg))
 
       await indexMissingEvents(
-        (...args) => new SanitiyMonitorActions(diagnostics, ...args)
+        (...args) =>
+          new SanitiyMonitorActions(diagnostics, startFromBlock, ...args),
+        true
       )
     }
   }
 }
 
 class SanitiyMonitorActions extends MonitorActions {
-  constructor(diagnostics, ...args) {
+  constructor(diagnostics, startFromBlock, ...args) {
     super(...args)
     this.diagnostics = diagnostics
+    this.startFromBlock = parseInt(startFromBlock, 10) || 0
     this.resolve = {}
   }
 
@@ -70,18 +73,19 @@ class SanitiyMonitorActions extends MonitorActions {
     options.skipProcess = true
 
     const steps = parseInt(env.get('BLOCK_STEP', 50000), 10)
+
     const lastBlock = await eth.getBlockNumber()
-    const times = lastBlock / steps + 1
-    console.log(lastBlock)
+    const times = (lastBlock - this.startFromBlock) / steps + 1
+
     for (let i = 0; i < times; i++) {
-      const fromBlock = steps * i
+      const fromBlock = steps * i + this.startFromBlock
 
       // Stop the loop if last block is achieved
       if (fromBlock >= lastBlock) {
         continue
       }
 
-      let toBlock = steps * (i + 1)
+      let toBlock = steps * (i + 1) + this.startFromBlock
       // Set toBlock to latest if last block is achieved
       if (toBlock >= lastBlock) {
         toBlock = 'latest'
@@ -94,36 +98,24 @@ class SanitiyMonitorActions extends MonitorActions {
       )
 
       for (let eventName of eventNames) {
-        if (!this.resolve[contractName]) {
-          this.resolve[contractName] = {}
-        }
-
-        if (!this.resolve[contractName][eventName]) {
-          this.resolve[contractName][eventName] = {}
-        }
-
-        if (!this.resolve[contractName][eventName][`${fromBlock}-${toBlock}`]) {
-          this.resolve[contractName][eventName][`${fromBlock}-${toBlock}`] = []
+        const key = this.getKey(contractName, eventName, fromBlock, toBlock)
+        if (!this.resolve[key]) {
+          this.resolve[key] = []
         }
 
         const numberTypeEvents = getNumberTypesOfEvents(contractName, eventName)
+
         for (let j = 0; j < numberTypeEvents; j++) {
-          const promise = new Promise(res =>
-            this.resolve[contractName][eventName][
-              `${fromBlock}-${toBlock}`
-            ].push(res)
-          )
+          const promise = new Promise(res => this.resolve[key].push(res))
           promises.push(promise)
         }
+        super.monitor(contractName, [eventName], {
+          ...options,
+          fromBlock,
+          toBlock
+        })
+        await Promise.all(promises)
       }
-
-      super.monitor(contractName, eventNames, {
-        ...options,
-        fromBlock,
-        toBlock
-      })
-
-      await Promise.all(promises)
     }
   }
 
@@ -149,24 +141,28 @@ class SanitiyMonitorActions extends MonitorActions {
     } else {
       const fromBlock = options.fromBlock
       const toBlock = options.toBlock
+      const key = this.getKey(
+        options.contractName,
+        options.eventName,
+        fromBlock,
+        toBlock
+      )
 
       log.info(
         `[${options.contractName}] - ${
           options.eventName
         } Finished events from ${options.fromBlock} to ${options.toBlock}`
       )
-      if (
-        this.resolve[options.contractName][options.eventName][
-          `${fromBlock}-${toBlock}`
-        ]
-      ) {
-        this.resolve[options.contractName][options.eventName][
-          `${fromBlock}-${toBlock}`
-        ][0](true)
-        this.resolve[options.contractName][options.eventName][
-          `${fromBlock}-${toBlock}`
-        ].shift()
+
+      // Resolve promise and shift it
+      if (this.resolve[key]) {
+        this.resolve[key][0](true)
+        this.resolve[key].shift()
       }
     }
+  }
+
+  getKey(contractName, eventName, fromBlock, toBlock) {
+    return `${contractName}-${eventName}-${fromBlock}-${toBlock}`
   }
 }

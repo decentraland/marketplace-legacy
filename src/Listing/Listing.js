@@ -80,7 +80,7 @@ export class Listing {
   }
 
   // TODO: Add asset_type
-  static deleteByAssetId(asset_id) {
+  async deleteByAssetId(asset_id) {
     return this.Model.delete({ asset_id })
   }
 }

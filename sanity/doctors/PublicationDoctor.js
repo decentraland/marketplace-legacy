@@ -41,19 +41,18 @@ export class PublicationDoctor extends Doctor {
       elements: allAssets,
       callback: async assetsBatch => {
         const promises = assetsBatch.map(async asset => {
-          const errors = [this.getPublicationInconsistencies(asset)]
+          let error = await this.getPublicationInconsistencies(asset)
 
-          if (isParcel(asset)) {
-            errors.push(this.getLegacyPublicationInconsistencies(asset))
+          // If there is an error does not look for legacy publications
+          if (isParcel(asset) && !error.length) {
+            error = await this.getLegacyPublicationInconsistencies(asset)
           }
 
-          const error = (await Promise.all(errors)).join('\n')
-          if (error.trim()) {
+          if (error.length) {
             log.error(error)
             faultyAssets.push({ ...asset, error })
           }
         })
-
         await Promise.all(promises)
       },
       batchSize: env.get('BATCH_SIZE'),
@@ -146,17 +145,33 @@ export class PublicationDiagnosis extends Diagnosis {
 
   async prepare() {
     // TODO: asset_type
-    const deletes = this.faultyAssets.map(asset =>
-      BlockchainEvent.deleteByArgs('assetId', asset.token_id)
-    )
-    return Promise.all(deletes)
+    return asyncBatch({
+      elements: this.faultyAssets,
+      callback: async assetsBatch => {
+        const deletes = assetsBatch.map(asset =>
+          BlockchainEvent.deleteByArgs('assetId', asset.token_id)
+        )
+        return Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
   }
 
   async doTreatment() {
     // TODO: asset_type
-    await Promise.all(
-      this.faultyAssets.map(parcel => Publication.deleteByAssetId(parcel.id))
-    )
+    await asyncBatch({
+      elements: this.faultyAssets,
+      callback: async assetsBatch => {
+        const deletes = assetsBatch.map(asset =>
+          Publication.deleteByAssetId(asset.id)
+        )
+
+        return Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
 
     // TODO: add NFTAddress
     for (const asset of this.faultyAssets) {

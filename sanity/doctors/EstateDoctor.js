@@ -50,31 +50,23 @@ export class EstateDoctor extends Doctor {
       error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
     } else {
       const estateSize = await estateRegistry.getEstateSize(estate.id)
-      let currentParcelPromises = []
       let currentParcels = []
 
       let index = 0
       await asyncBatch({
-        elements: new Array(estateSize),
+        elements: new Array(estateSize.toNumber()),
         callback: async sizeBatch => {
-          const promises = sizeBatch.map(async () => {
-            return this.buildCurrentEstateParcel(estate.id, index++)
-          })
+          const promises = []
+          for (let i = 0; i < sizeBatch.length; i++) {
+            promises.push(this.buildCurrentEstateParcel(estate.id, index++))
+          }
 
-          currentParcelPromises = [
-            ...currentParcelPromises,
-            await Promise.all(promises)
-          ]
+          const parcelPromises = await Promise.all(promises)
+          currentParcels = [...currentParcels, ...parcelPromises]
         },
         batchSize: env.get('BATCH_SIZE'),
-        retryAttempts: 1
+        retryAttempts: 20
       })
-      // for (let index = 0; index < estateSize; index++) {
-      //   const request = this.buildCurrentEstateParcel(estate.id, index)
-      //   currentParcelPromises.push(request)
-      // }
-      //currentParcels = await Promise.all(currentParcelPromises)
-
       if (!this.isEqualParcels(currentParcels, parcels)) {
         error = `Parcels: db parcels for estate ${id} are different from blockchain`
       }
@@ -125,9 +117,17 @@ export class EstateDiagnosis extends Diagnosis {
   }
 
   async doTreatment() {
-    await Promise.all(
-      this.faultyEstates.map(estate => Estate.delete({ id: estate.id }))
-    )
+    await asyncBatch({
+      elements: this.faultyEstates,
+      callback: async estatesBatch => {
+        const deletes = estatesBatch.map(estate =>
+          Estate.delete({ id: estate.id })
+        )
+        return Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
 
     for (const estate of this.faultyEstates) {
       const events = await Estate.findBlockchainEvents(estate.id)
