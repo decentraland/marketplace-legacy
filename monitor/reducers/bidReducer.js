@@ -133,14 +133,12 @@ async function reduceBid(event) {
     case eventNames.RemoveLand:
     case eventNames.AddLand: {
       const tokenId = event.args._estateId
-      const bids = await Bid.getWithStatuses(address, tokenId, [
+      const exists = await Bid.hasWithStatuses(address, tokenId, [
         LISTING_STATUS.open,
         LISTING_STATUS.fingerprintChanged
       ])
 
-      const estateHasActiveBids = bids.length > 0
-
-      if (estateHasActiveBids) {
+      if (exists) {
         log.info(
           `[${name}] Updating bids for the Estate ${tokenId}, fingerprint changed`
         )
@@ -175,17 +173,20 @@ async function reduceBid(event) {
         return
       }
 
-      log.info(
-        `[${name}] Updating seller for the asset with token address ${address} and id "${asset_id}" to "${to}"`
-      )
+      const exists = await Bid.count({ token_address: address, asset_id })
+      if (exists) {
+        log.info(
+          `[${name}] Updating seller for the asset with token address ${address} and id "${asset_id}" to "${to}"`
+        )
 
-      await Bid.updateAssetOwner(
-        to.toLowerCase(),
-        blockTime,
-        block_number,
-        address,
-        asset_id
-      )
+        await Bid.updateAssetOwner(
+          to.toLowerCase(),
+          blockTime,
+          block_number,
+          address,
+          asset_id
+        )
+      }
 
       break
     }

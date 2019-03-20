@@ -1,5 +1,5 @@
 import { eth, txUtils } from 'decentraland-eth'
-import { Log } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 
 import { Publication, Listing } from '../../src/Listing'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
@@ -10,6 +10,7 @@ import { LISTING_STATUS } from '../../shared/listing'
 import { getAssetTypeFromEvent, getAssetIdFromEvent } from './utils'
 
 const log = new Log('publicationReducer')
+const shouldUpdateCache = parseInt(env.get('UPDATE_CACHE', 1), 10)
 
 export async function publicationReducer(event) {
   const { address, name } = event
@@ -93,7 +94,9 @@ async function reduceMarketplace(event) {
           block_number,
           contract_id
         })
-        await Tile.upsertAsset(assetId, assetType)
+        if (shouldUpdateCache) {
+          await Tile.upsertAsset(assetId, assetType)
+        }
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
         log.info(
@@ -127,7 +130,9 @@ async function reduceMarketplace(event) {
         ),
         Asset.update({ owner: buyer }, { id: assetId })
       ])
-      await Tile.upsertAsset(assetId, assetType)
+      if (shouldUpdateCache) {
+        await Tile.upsertAsset(assetId, assetType)
+      }
       break
     }
     case eventNames.AuctionCancelled:
@@ -146,7 +151,9 @@ async function reduceMarketplace(event) {
         },
         { contract_id }
       )
-      await Tile.upsertAsset(assetId, assetType)
+      if (shouldUpdateCache) {
+        await Tile.upsertAsset(assetId, assetType)
+      }
       break
     }
     default:

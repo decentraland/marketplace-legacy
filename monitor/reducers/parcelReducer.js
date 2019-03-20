@@ -1,5 +1,5 @@
 import { contracts } from 'decentraland-eth'
-import { Log } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 
 import { getParcelIdFromEvent } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
@@ -12,6 +12,7 @@ import { ASSET_TYPES } from '../../shared/asset'
 import { isDuplicatedConstraintError } from '../../src/database'
 
 const log = new Log('parcelReducer')
+const shouldUpdateCache = parseInt(env.get('UPDATE_CACHE', 1), 10)
 
 export async function parcelReducer(event) {
   const { address } = event
@@ -104,7 +105,9 @@ async function reduceLANDRegistry(event) {
         },
         { id: parcelId }
       )
-      await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+      if (shouldUpdateCache) {
+        await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+      }
       break
     }
     case eventNames.Approval: {
@@ -177,7 +180,9 @@ async function reduceEstateRegistry(event) {
         )
 
         await Parcel.update({ estate_id: _estateId }, { id: parcelId })
-        await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+        if (shouldUpdateCache) {
+          await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+        }
       } else {
         log.info(`[${name}] Estate with token id ${_estateId} does not exist`)
       }
@@ -195,7 +200,9 @@ async function reduceEstateRegistry(event) {
         )
 
         await Parcel.update({ estate_id: null }, { id: parcelId })
-        await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+        if (shouldUpdateCache) {
+          await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+        }
       } else {
         log.info(`[${name}] Estate with token id  ${_estateId} does not exist`)
       }

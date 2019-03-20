@@ -1,5 +1,6 @@
 import { eth } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
+
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
@@ -101,19 +102,29 @@ export class EstateDiagnosis extends Diagnosis {
     this.faultyEstates = faultyEstates
   }
 
+  getFaultyAssets() {
+    return this.faultyEstates
+  }
+
   hasProblems() {
     return this.faultyEstates.length > 0
   }
 
   async prepare() {
-    let deletes = []
-    for (const estate of this.faultyEstates) {
-      deletes = deletes.concat([
-        Estate.deleteBlockchainEvents(estate.id),
-        Estate.update({ update_operator: null }, { id: estate.id })
-      ])
-    }
-    return Promise.all(deletes)
+    await asyncBatch({
+      elements: this.faultyEstates,
+      callback: async estatesBatch => {
+        const deletes = estatesBatch.map(estate =>
+          Promise.all([
+            Estate.deleteBlockchainEvents(estate.id),
+            Estate.update({ update_operator: null }, { id: estate.id })
+          ])
+        )
+        await Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
   }
 
   async doTreatment() {
@@ -123,15 +134,19 @@ export class EstateDiagnosis extends Diagnosis {
         const deletes = estatesBatch.map(estate =>
           Estate.delete({ id: estate.id })
         )
-        return Promise.all(deletes)
+        await Promise.all(deletes)
       },
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
     })
 
+    const total = this.faultyEstates.length
+    let index = 0
     for (const estate of this.faultyEstates) {
+      log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`)
       const events = await Estate.findBlockchainEvents(estate.id)
       await this.replayEvents(events)
+      index++
     }
   }
 }

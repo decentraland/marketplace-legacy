@@ -146,6 +146,10 @@ export class PublicationDiagnosis extends Diagnosis {
     this.inactivePublications = inactivePublications
   }
 
+  getFaultyAssets() {
+    return this.faultyAssets
+  }
+
   hasProblems() {
     return this.faultyAssets.length > 0 || this.inactivePublications.length > 0
   }
@@ -158,7 +162,7 @@ export class PublicationDiagnosis extends Diagnosis {
         const deletes = assetsBatch.map(asset =>
           BlockchainEvent.deleteByArgs('assetId', asset.token_id)
         )
-        return Promise.all(deletes)
+        await Promise.all(deletes)
       },
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
@@ -174,19 +178,24 @@ export class PublicationDiagnosis extends Diagnosis {
           Publication.deleteByAssetId(asset.id)
         )
 
-        return Promise.all(deletes)
+        await Promise.all(deletes)
       },
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
     })
 
     // TODO: add NFTAddress
+    const total = this.faultyAssets.length
+    let index = 0
     for (const asset of this.faultyAssets) {
+      log.info(`[${index + 1}/${total}]: Treatment for asset Id ${asset.id}`)
       const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
       await this.replayEvents(events)
+      index++
     }
 
     if (this.inactivePublications.length > 0) {
+      log.info('Update expired publications')
       await Publication.updateExpired()
     }
   }

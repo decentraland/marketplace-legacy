@@ -5,6 +5,10 @@ import { MonitorActions } from '../monitor/MonitorActions'
 import { main as indexMissingEvents } from '../monitor/program'
 import { doctors } from './doctors'
 import { getNumberTypesOfEvents } from '../src/ethereum'
+import { asyncBatch } from '../src/lib'
+import { isParcel } from '../shared/parcel'
+import { ASSET_TYPES } from '../shared/asset'
+import { Tile } from '../src/Tile'
 
 const log = new Log('Sanity')
 
@@ -12,6 +16,7 @@ export class SanityActions {
   async run(options = {}) {
     const validations = this.getValidations(options.skip)
     const diagnostics = []
+    const faultyAssets = []
     const total = validations.length
 
     for (let i = 0; i < total; i++) {
@@ -21,7 +26,11 @@ export class SanityActions {
       const doctor = new doctors[key]()
       const diagnoses = await doctor.diagnose(options)
 
-      if (!diagnoses.hasProblems()) continue
+      if (!diagnoses.hasProblems()) {
+        continue
+      } else {
+        faultyAssets.push(...diagnoses.getFaultyAssets())
+      }
 
       diagnostics.push(diagnoses)
 
@@ -32,7 +41,7 @@ export class SanityActions {
     }
 
     if (options.selfHeal) {
-      await this.selfHeal(diagnostics, options.startFromBlock)
+      await this.selfHeal(diagnostics, faultyAssets, options.startFromBlock)
     }
   }
 
@@ -44,7 +53,7 @@ export class SanityActions {
     )
   }
 
-  async selfHeal(diagnostics, startFromBlock) {
+  async selfHeal(diagnostics, faultyAssets, startFromBlock) {
     if (diagnostics.length > 0) {
       log.info('Attempting to heal problems. Re-fetching events')
 
@@ -53,18 +62,29 @@ export class SanityActions {
 
       await indexMissingEvents(
         (...args) =>
-          new SanitiyMonitorActions(diagnostics, startFromBlock, ...args),
+          new SanitiyMonitorActions(
+            {
+              diagnostics,
+              faultyAssets,
+              startFromBlock
+            },
+            ...args
+          ),
         true
       )
+    } else {
+      log.info('Everything good. No differences found')
+      process.exit()
     }
   }
 }
 
 class SanitiyMonitorActions extends MonitorActions {
-  constructor(diagnostics, startFromBlock, ...args) {
+  constructor(options, ...args) {
     super(...args)
-    this.diagnostics = diagnostics
-    this.startFromBlock = parseInt(startFromBlock, 10) || 0
+    this.diagnostics = options.diagnostics
+    this.faultyAssets = options.faultyAssets
+    this.startFromBlock = parseInt(options.startFromBlock, 10) || 0
     this.resolve = {}
   }
 
@@ -131,8 +151,40 @@ class SanitiyMonitorActions extends MonitorActions {
       await diagnoses.doTreatment()
     }
 
+    await this.updateTiles()
+
     log.info('All done!')
     process.exit()
+  }
+
+  async updateTiles() {
+    log.info('Tiles')
+
+    log.info('Removing duplicates tiles')
+    const singleAssets = {}
+    const assets = this.faultyAssets.reduce((assets, asset) => {
+      if (!singleAssets[asset.token_id]) {
+        singleAssets[asset.token_id] = true
+        assets.push(asset)
+      }
+      return assets
+    }, [])
+
+    log.info('Updating tiles')
+    await asyncBatch({
+      elements: assets,
+      callback: async assetsBatch => {
+        const promises = assetsBatch.map(asset => {
+          const assetType = isParcel(asset)
+            ? ASSET_TYPES.parcel
+            : ASSET_TYPES.estate
+          return Tile.upsertAsset(asset, assetType)
+        })
+        await Promise.all(promises)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
   }
 
   async finish(options) {

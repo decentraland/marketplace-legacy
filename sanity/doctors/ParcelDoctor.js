@@ -1,4 +1,5 @@
 import { Log, env } from 'decentraland-commons'
+
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
@@ -84,32 +85,46 @@ export class ParcelDiagnosis extends Diagnosis {
     this.faultyParcels = faultyParcels
   }
 
+  getFaultyAssets() {
+    return this.faultyParcels
+  }
+
   hasProblems() {
     return this.faultyParcels.length > 0
   }
 
   async prepare() {
-    let deletes = []
-    for (const parcel of this.faultyParcels) {
-      deletes = deletes.concat([
-        BlockchainEvent.deleteByArgs('assetId', parcel.token_id),
-        BlockchainEvent.deleteByArgs('_landId', parcel.token_id),
-        Parcel.update(
-          { estate_id: null, update_operator: null },
-          { id: parcel.id }
+    await asyncBatch({
+      elements: this.faultyParcels,
+      callback: async parcelsBatch => {
+        const promises = parcelsBatch.map(parcel =>
+          Promise.all([
+            BlockchainEvent.deleteByArgs('assetId', parcel.token_id),
+            BlockchainEvent.deleteByArgs('_landId', parcel.token_id),
+            Parcel.update(
+              { estate_id: null, update_operator: null },
+              { id: parcel.id }
+            )
+          ])
         )
-      ])
-    }
-    return Promise.all(deletes)
+        await Promise.all(promises)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
   }
 
   async doTreatment() {
+    const total = this.faultyParcels.length
+    let index = 0
     for (const parcel of this.faultyParcels) {
+      log.info(`[${index + 1}/${total}]: Treatment for parcel Id ${parcel.id}`)
       const events = await BlockchainEvent.findByAnyArgs(
-        ['assetId', '_landId', 'landId', 'tokenId'],
+        ['assetId', '_landId', 'landId', 'tokenId', '_tokenId'],
         parcel.token_id
       )
       await this.replayEvents(events)
+      index++
     }
   }
 }
