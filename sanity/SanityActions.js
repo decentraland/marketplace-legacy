@@ -9,6 +9,9 @@ import { asyncBatch } from '../src/lib'
 import { isParcel } from '../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
 import { Tile } from '../src/Tile'
+import { BlockchainEvent } from '../src/BlockchainEvent'
+import { eventNames } from '../src/ethereum'
+import { processEvent } from '../monitor/processEvents'
 
 const log = new Log('Sanity')
 
@@ -42,6 +45,11 @@ export class SanityActions {
 
     if (options.selfHeal) {
       await this.selfHeal(diagnostics, faultyAssets, options.startFromBlock)
+    } else {
+      if (faultyAssets.length === 0) {
+        log.info('Everything good. No differences found')
+        process.exit()
+      }
     }
   }
 
@@ -147,6 +155,7 @@ class SanitiyMonitorActions extends MonitorActions {
   async _processEvents() {
     log.info('Replaying events for inconsistent data')
 
+    await this.createEstates()
     for (const diagnoses of this.diagnostics) {
       await diagnoses.doTreatment()
     }
@@ -155,6 +164,25 @@ class SanitiyMonitorActions extends MonitorActions {
 
     log.info('All done!')
     process.exit()
+  }
+
+  async createEstates() {
+    log.info('Creating Estates...')
+    const createEstateEvents = await BlockchainEvent.find({
+      name: eventNames.CreateEstate
+    })
+
+    await asyncBatch({
+      elements: createEstateEvents,
+      callback: async createEstateEventsBatch => {
+        const createEventsPromises = createEstateEventsBatch.map(event =>
+          processEvent(event)
+        )
+        await Promise.all(createEventsPromises)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
   }
 
   async updateTiles() {
