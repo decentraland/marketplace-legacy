@@ -9,6 +9,7 @@ import { asyncBatch } from '../src/lib'
 import { isParcel } from '../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
 import { Tile } from '../src/Tile'
+import { Parcel, Estate } from '../src/Asset'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { eventNames } from '../src/ethereum'
 import { processEvent } from '../monitor/processEvents'
@@ -46,10 +47,12 @@ export class SanityActions {
     if (options.selfHeal) {
       await this.selfHeal(diagnostics, faultyAssets, options.startFromBlock)
     } else {
-      if (faultyAssets.length === 0) {
-        log.info('Everything good. No differences found')
-        process.exit()
-      }
+      log.info(`${faultyAssets.length} found`)
+
+      faultyAssets.forEach(asset =>
+        console.log(`Asset ${asset.id} with error: ${asset.error}`)
+      )
+      process.exit()
     }
   }
 
@@ -155,7 +158,9 @@ class SanitiyMonitorActions extends MonitorActions {
   async _processEvents() {
     log.info('Replaying events for inconsistent data')
 
+    // Create Estates in case they were not created by missing an event
     await this.createEstates()
+
     for (const diagnoses of this.diagnostics) {
       await diagnoses.doTreatment()
     }
@@ -190,13 +195,18 @@ class SanitiyMonitorActions extends MonitorActions {
 
     log.info('Removing duplicates tiles')
     const singleAssets = {}
-    const assets = this.faultyAssets.reduce((assets, asset) => {
+    const assets = []
+    for (const asset of this.faultyAssets) {
       if (!singleAssets[asset.token_id]) {
         singleAssets[asset.token_id] = true
-        assets.push(asset)
+
+        const fixedAsset = await (isParcel(asset)
+          ? Parcel.findOne({ id: asset.id })
+          : Estate.findOne({ id: asset.id }))
+
+        assets.push(fixedAsset)
       }
-      return assets
-    }, [])
+    }
 
     log.info('Updating tiles')
     await asyncBatch({

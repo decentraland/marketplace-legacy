@@ -41,7 +41,11 @@ export class EstateDoctor extends Doctor {
   }
 
   async getEstateInconsistencies(estate) {
-    const { id, owner, parcels } = estate
+    const {
+      id,
+      owner,
+      data: { parcels }
+    } = estate
     let error = ''
 
     const estateRegistry = eth.getContract('EstateRegistry')
@@ -84,7 +88,7 @@ export class EstateDoctor extends Doctor {
     return { x, y }
   }
 
-  isEqualParcels(left, right) {
+  isEqualParcels(left = [], right = []) {
     if (left.length !== right.length) {
       return false
     }
