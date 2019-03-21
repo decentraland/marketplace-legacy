@@ -129,6 +129,7 @@ describe('Marketplace', function() {
           data: null,
           tags: {},
           estate_id: null,
+          operator: null,
           publication: {
             tx_hash: '0x4',
             contract_id: '0x4',
