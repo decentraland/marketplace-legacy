@@ -139,7 +139,7 @@ export class ParcelDiagnosis extends Diagnosis {
 
     estateIds.delete(0) // Remove 0 from the estateIds
 
-    let total = estateIds.length
+    let total = estateIds.size
     let index = 0
     for (const estateId of [...estateIds]) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
