@@ -4,7 +4,7 @@ import { eth } from 'decentraland-eth'
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
-import { Parcel } from '../../src/Asset'
+import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { parseCLICoords } from '../../scripts/utils'
 
@@ -40,6 +40,14 @@ export class ParcelDoctor extends Doctor {
           ])
 
           // @Nacho: Check the 'return', if should play with else or add errors
+          if (this.isPartOfEstateMismatch(currentEstateId.toString(), parcel)) {
+            const { id, estate_id } = parcel
+            const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
+            log.error(error)
+            faultyParcels.push({ ...parcel, currentEstateId, error })
+            return
+          }
+
           if (this.isOwnerMismatch(currentOwner, parcel)) {
             const { id, owner } = parcel
             const error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
@@ -53,14 +61,6 @@ export class ParcelDoctor extends Doctor {
           if (this.isUpdateOperatorMismatch(currentUpdateOperator, parcel)) {
             const { id, update_operator } = parcel
             const error = `Mismatch: operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
-            log.error(error)
-            faultyParcels.push({ ...parcel, error })
-            return
-          }
-
-          if (this.isPartOfEstateMismatch(currentEstateId.toString(), parcel)) {
-            const { id, estate_id } = parcel
-            const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
             log.error(error)
             faultyParcels.push({ ...parcel, error })
             return
@@ -130,8 +130,26 @@ export class ParcelDiagnosis extends Diagnosis {
   }
 
   async doTreatment() {
-    const total = this.faultyParcels.length
+    // Run events for Parcels with different estates
+    const estateIds = new Set(
+      this.faultyParcels.map(({ currentEstateId }) =>
+        parseInt(currentEstateId || 0, 10)
+      )
+    )
+
+    estateIds.delete(0) // Remove 0 from the estateIds
+
+    let total = estateIds.length
     let index = 0
+    for (const estateId of [...estateIds]) {
+      log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
+      const events = await Estate.findBlockchainEvents(estateId)
+      await this.replayEvents(events)
+      index++
+    }
+
+    total = this.faultyParcels.length
+    index = 0
     for (const parcel of this.faultyParcels) {
       log.info(`[${index + 1}/${total}]: Treatment for parcel Id ${parcel.id}`)
       const events = await BlockchainEvent.findByAnyArgs(

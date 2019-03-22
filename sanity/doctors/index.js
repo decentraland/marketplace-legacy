@@ -3,7 +3,7 @@ import { PublicationDoctor } from './PublicationDoctor'
 import { EstateDoctor } from './EstateDoctor'
 
 export const doctors = {
+  Estate: EstateDoctor,
   Parcel: ParcelDoctor,
-  Publication: PublicationDoctor,
-  Estate: EstateDoctor
+  Publication: PublicationDoctor
 }
