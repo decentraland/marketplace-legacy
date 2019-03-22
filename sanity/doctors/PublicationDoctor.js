@@ -31,9 +31,8 @@ export class PublicationDoctor extends Doctor {
 
     const assets = parcels.concat(estates)
     const faultyAssets = await this.filterInconsistentPublishedAssets(assets)
-    const inactivePublications = await Publication.findInactive()
 
-    return new PublicationDiagnosis(faultyAssets, inactivePublications)
+    return new PublicationDiagnosis(faultyAssets)
   }
 
   async filterInconsistentPublishedAssets(allAssets) {
@@ -140,10 +139,9 @@ export class PublicationDoctor extends Doctor {
 }
 
 export class PublicationDiagnosis extends Diagnosis {
-  constructor(faultyAssets, inactivePublications) {
+  constructor(faultyAssets) {
     super()
     this.faultyAssets = faultyAssets
-    this.inactivePublications = inactivePublications
   }
 
   getFaultyAssets() {
@@ -151,7 +149,7 @@ export class PublicationDiagnosis extends Diagnosis {
   }
 
   hasProblems() {
-    return this.faultyAssets.length > 0 || this.inactivePublications.length > 0
+    return this.faultyAssets.length > 0
   }
 
   async prepare() {
@@ -194,9 +192,7 @@ export class PublicationDiagnosis extends Diagnosis {
       index++
     }
 
-    if (this.inactivePublications.length > 0) {
-      log.info('Update expired publications')
-      await Publication.updateExpired()
-    }
+    log.info('Update expired publications')
+    await Publication.updateExpired()
   }
 }

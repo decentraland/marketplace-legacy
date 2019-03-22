@@ -5,6 +5,7 @@ import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
+import { eventNames } from '../../src/ethereum'
 
 const log = new Log('EstateDoctor')
 
@@ -149,7 +150,12 @@ export class EstateDiagnosis extends Diagnosis {
     for (const estate of this.faultyEstates) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`)
       const events = await Estate.findBlockchainEvents(estate.id)
-      await this.replayEvents(events)
+      const filteredEvents = events.filter(
+        event =>
+          event.name !== eventNames.AddLand &&
+          event.name !== eventNames.RemoveLand
+      )
+      await this.replayEvents(filteredEvents)
       index++
     }
   }

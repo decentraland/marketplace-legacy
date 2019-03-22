@@ -1,4 +1,5 @@
 import { Log, env } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
@@ -28,37 +29,112 @@ export class ParcelDoctor extends Doctor {
     const service = new ParcelService()
     const faultyParcels = []
 
+    // await asyncBatch({
+    //   elements: parcels,
+    //   callback: async parcelsBatch => {
+    //     let updatedParcels = []
+
+    //     try {
+    //       updatedParcels = await service.addOwners(parcelsBatch)
+    //     } catch (error) {
+    //       log.info(`Error processing ${parcelsBatch.length} parcels, skipping`)
+    //       return
+    //     }
+
+    //     for (const [index, parcel] of parcelsBatch.entries()) {
+    //       const currentOwner = updatedParcels[index].owner
+
+    //       // @Nacho: Check the 'continue', if should play with else or add errors
+    //       if (this.isOwnerMismatch(currentOwner, parcel)) {
+    //         const { id, owner } = parcel
+    //         const error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
+    //         log.error(error)
+    //         faultyParcels.push({ ...parcel, error })
+    //         continue
+    //       }
+
+    //       const currentUpdateOperator = updatedParcels[index].update_operator
+
+    //       if (this.isUpdateOperatorMismatch(currentUpdateOperator, parcel)) {
+    //         const { id, update_operator } = parcel
+    //         const error = `Mismatch: operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
+    //         log.error(error)
+    //         faultyParcels.push({ ...parcel, error })
+    //         continue
+    //       }
+
+    //       // const estateRegistry = eth.getContract('EstateRegistry')
+    //       // const currentEstateId = (await estateRegistry.landIdEstate(
+    //       //   parcel.token_id
+    //       // )).toString()
+
+    //       // if (this.isPartOfEstateMismatch(currentEstateId, parcel)) {
+    //       //   const { id, estate_id } = parcel
+    //       //   const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
+    //       //   log.error(error)
+    //       //   faultyParcels.push({ ...parcel, error })
+    //       //   continue
+    //       // }
+    //     }
+
+    //     const estateRegistry = eth.getContract('EstateRegistry')
+    //     const promises = parcelsBatch.map(async parcel => {
+    //       const currentEstateId = (await estateRegistry.landIdEstate(
+    //         parcel.token_id
+    //       )).toString()
+
+    //       if (this.isPartOfEstateMismatch(currentEstateId, parcel)) {
+    //         const { id, estate_id } = parcel
+    //         const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
+    //         log.error(error)
+    //         faultyParcels.push({ ...parcel, error })
+    //       }
+    //     })
+    //     await Promise.all(promises)
+    //   },
+    //   batchSize: env.get('BATCH_SIZE'),
+    //   retryAttempts: 20
+    // })
+    const landRegistry = eth.getContract('LANDRegistry')
+    const estateRegistry = eth.getContract('EstateRegistry')
+
     await asyncBatch({
       elements: parcels,
       callback: async parcelsBatch => {
-        let updatedParcels = []
+        const promises = parcelsBatch.map(async parcel => {
+          const [currentOwner, currentEstateId] = await Promise.all([
+            landRegistry.ownerOf(parcel.token_id),
+            estateRegistry.landIdEstate(parcel.token_id)
+          ])
 
-        try {
-          updatedParcels = await service.addOwners(parcelsBatch)
-        } catch (error) {
-          log.info(`Error processing ${parcelsBatch.length} parcels, skipping`)
-          return
-        }
-
-        for (const [index, parcel] of parcelsBatch.entries()) {
-          const currentOwner = updatedParcels[index].owner
-
-          if (this.isOwnerMissmatch(currentOwner, parcel)) {
+          // @Nacho: Check the 'return', if should play with else or add errors
+          if (this.isOwnerMismatch(currentOwner, parcel)) {
             const { id, owner } = parcel
             const error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
             log.error(error)
             faultyParcels.push({ ...parcel, error })
+            return
           }
 
-          const currentUpdateOperator = updatedParcels[index].update_operator
+          const currentUpdateOperator = parcel.update_operator
 
           if (this.isUpdateOperatorMismatch(currentUpdateOperator, parcel)) {
             const { id, update_operator } = parcel
             const error = `Mismatch: operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
             log.error(error)
             faultyParcels.push({ ...parcel, error })
+            return
           }
-        }
+
+          if (this.isPartOfEstateMismatch(currentEstateId.toString(), parcel)) {
+            const { id, estate_id } = parcel
+            const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
+            log.error(error)
+            faultyParcels.push({ ...parcel, error })
+            return
+          }
+        })
+        await Promise.all(promises)
       },
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
@@ -67,7 +143,7 @@ export class ParcelDoctor extends Doctor {
     return faultyParcels
   }
 
-  isOwnerMissmatch(currentOwner, parcel) {
+  isOwnerMismatch(currentOwner, parcel) {
     return !!currentOwner && parcel.owner !== currentOwner
   }
 
@@ -75,6 +151,13 @@ export class ParcelDoctor extends Doctor {
     return (
       !!currentUpdateOperator &&
       parcel.update_operator !== currentUpdateOperator
+    )
+  }
+
+  isPartOfEstateMismatch(currentEstateId, parcel) {
+    return (
+      (parcel.estate_id && parcel.estate_id !== currentEstateId) ||
+      (!parcel.estate_id && parseInt(currentEstateId, 10) > 0)
     )
   }
 }
