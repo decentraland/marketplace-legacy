@@ -5,6 +5,7 @@ import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
+import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { eventNames } from '../../src/ethereum'
 
 const log = new Log('EstateDoctor')
@@ -153,6 +154,16 @@ export class EstateDiagnosis extends Diagnosis {
           event.name !== eventNames.RemoveLand
       )
       await this.replayEvents(filteredEvents)
+
+      for (const parcel of estate.data.parcels) {
+        const tokenId = await Parcel.encodeTokenId(parcel.x, parcel.y)
+        const events = await BlockchainEvent.findByAnyArgs(
+          ['assetId', '_landId', 'landId', 'tokenId', '_tokenId'],
+          tokenId
+        )
+        await this.replayEvents(events)
+      }
+
       index++
     }
   }
