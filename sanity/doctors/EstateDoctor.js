@@ -120,10 +120,7 @@ export class EstateDiagnosis extends Diagnosis {
       elements: this.faultyEstates,
       callback: async estatesBatch => {
         const deletes = estatesBatch.map(estate =>
-          Promise.all([
-            Estate.deleteBlockchainEvents(estate.id),
-            Estate.update({ update_operator: null }, { id: estate.id })
-          ])
+          Estate.deleteBlockchainEvents(estate.id)
         )
         await Promise.all(deletes)
       },
