@@ -7,6 +7,7 @@ import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { parseCLICoords } from '../../scripts/utils'
+import { eventNames } from '../../src/ethereum'
 
 const log = new Log('ParcelDoctor')
 
@@ -145,6 +146,21 @@ export class ParcelDiagnosis extends Diagnosis {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
       const events = await Estate.findBlockchainEvents(estateId)
       await this.replayEvents(events)
+
+      // Replay events on old parcels for that estate
+      for (const event of events) {
+        if (
+          event.name === eventNames.AddLand ||
+          event.name === eventNames.RemoveLand
+        ) {
+          const events = await BlockchainEvent.findByAnyArgs(
+            ['_landId'],
+            event.args._landId
+          )
+          await this.replayEvents(events)
+        }
+      }
+
       index++
     }
 

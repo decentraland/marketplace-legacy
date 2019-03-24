@@ -157,10 +157,7 @@ export class EstateDiagnosis extends Diagnosis {
 
       for (const parcel of estate.data.parcels) {
         const tokenId = await Parcel.encodeTokenId(parcel.x, parcel.y)
-        const events = await BlockchainEvent.findByAnyArgs(
-          ['assetId', '_landId', 'landId', 'tokenId', '_tokenId'],
-          tokenId
-        )
+        const events = await BlockchainEvent.findByAnyArgs(['_landId'], tokenId)
         await this.replayEvents(events)
       }
 
