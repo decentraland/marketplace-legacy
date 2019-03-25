@@ -103,7 +103,8 @@ export const PROFILE_PAGE_TABS = Object.freeze({
   publications: 'publications',
   estates: 'estates',
   mortgages: 'mortgages',
-  bids: 'bids'
+  bids: 'bids',
+  archivebids: 'archive-bids'
 })
 
 export const NAVBAR_PAGES = Object.freeze({

@@ -145,7 +145,8 @@ export default class ProfilePage extends React.PureComponent {
           </Card.Group>
         )
       }
-      case PROFILE_PAGE_TABS.bids: {
+      case PROFILE_PAGE_TABS.bids:
+      case PROFILE_PAGE_TABS.archivebids: {
         const [bidsReceived, bidsPlaced] = getBidsByReceivedAndPlaced(
           grid,
           address
@@ -219,6 +220,18 @@ export default class ProfilePage extends React.PureComponent {
     )
   }
 
+  renderBidBadge(bids) {
+    if (this.isActive(PROFILE_PAGE_TABS.bids)) {
+      return this.renderBadge(bids, PROFILE_PAGE_TABS.bids)
+    }
+
+    if (this.isActive(PROFILE_PAGE_TABS.archivebids)) {
+      return this.renderBadge(bids, PROFILE_PAGE_TABS.archivebids)
+    }
+
+    return this.renderBadge(bids, '')
+  }
+
   handleItemClick = (event, { name }) => {
     const { address, onNavigate } = this.props
     const url = buildUrl({
@@ -232,6 +245,13 @@ export default class ProfilePage extends React.PureComponent {
   onlyOwnerCanAccess = () =>
     this.isActive(PROFILE_PAGE_TABS.bids) ||
     this.isActive(PROFILE_PAGE_TABS.mortgages)
+
+  isBidActive() {
+    return (
+      this.isActive(PROFILE_PAGE_TABS.bids) ||
+      this.isActive(PROFILE_PAGE_TABS.archivebids)
+    )
+  }
 
   render() {
     const {
@@ -302,11 +322,11 @@ export default class ProfilePage extends React.PureComponent {
                 {isFeatureEnabled('BIDS') && (
                   <Menu.Item
                     name={PROFILE_PAGE_TABS.bids}
-                    active={this.isActive(PROFILE_PAGE_TABS.bids)}
+                    active={this.isBidActive()}
                     onClick={this.handleItemClick}
                   >
                     {t('global.bids')}
-                    {this.renderBadge(bids, PROFILE_PAGE_TABS.bids)}
+                    {this.renderBidBadge(bids)}
                   </Menu.Item>
                 )}
 

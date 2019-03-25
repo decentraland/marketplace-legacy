@@ -66,6 +66,11 @@ const mapState = (state, { location, match }) => {
       pagination = Pagination.paginate(bids, page)
       break
     }
+    case PROFILE_PAGE_TABS.archivebids: {
+      bids = orderBids(bids, address)
+      pagination = Pagination.paginate(bids, page)
+      break
+    }
     case PROFILE_PAGE_TABS.parcels:
     default: {
       pagination = Pagination.paginate(parcels, page)
