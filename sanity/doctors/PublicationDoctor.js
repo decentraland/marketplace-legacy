@@ -20,14 +20,14 @@ export class PublicationDoctor extends Doctor {
     let parcels
     let estates
 
-    if (options.checkParcel) {
-      const [x, y] = parseCLICoords(options.checkParcel)
-      parcels = await Parcel.find({ x, y })
-      estates = []
-    } else {
-      parcels = await Parcel.find()
-      estates = await Estate.find()
-    }
+    // if (options.checkParcel) {
+    //   const [x, y] = parseCLICoords(options.checkParcel)
+    //   parcels = await Parcel.find({ x, y })
+    //   estates = []
+    // } else {
+    parcels = await Parcel.find({ id: '-39,-110' })
+    estates = await Estate.find({ id: '1870' })
+    //}
 
     const assets = parcels.concat(estates)
     const faultyAssets = await this.filterInconsistentPublishedAssets(assets)
@@ -187,7 +187,10 @@ export class PublicationDiagnosis extends Diagnosis {
     let index = 0
     for (const asset of this.faultyAssets) {
       log.info(`[${index + 1}/${total}]: Treatment for asset Id ${asset.id}`)
-      const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
+      const events = await BlockchainEvent.findByAnyArgs(
+        ['assetId', '_tokenId'],
+        asset.token_id
+      )
       await this.replayEvents(events)
       index++
     }
