@@ -25,6 +25,7 @@ import {
   transferEstateSuccess,
   transferEstateFailure
 } from 'modules/estates/actions'
+import { fetchBidsByAssetRequest } from 'modules/bid/actions'
 import { getEstates } from 'modules/estates/selectors'
 import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
@@ -32,6 +33,8 @@ import { encodeMetadata } from 'shared/asset'
 import { getParcelsNotIncluded } from 'shared/parcel'
 import { splitCoodinatePairs } from 'shared/coordinates'
 import { Bounds } from 'shared/map'
+import { ASSET_TYPES } from 'shared/asset'
+import { LISTING_STATUS } from 'shared/listing'
 
 export function* estateSaga() {
   yield takeEvery(CREATE_ESTATE_REQUEST, handleCreateEstateRequest)
@@ -133,6 +136,14 @@ function* handleEditEstateMetadataRequest({ estate }) {
 
 function* handleEstateRequest(action) {
   try {
+    // fetch bids
+    yield put(
+      fetchBidsByAssetRequest(
+        action.id,
+        ASSET_TYPES.estate,
+        LISTING_STATUS.open
+      )
+    )
     const estate = yield call(() => api.fetchEstate(action.id))
     yield put(fetchEstateSuccess(estate))
   } catch (error) {

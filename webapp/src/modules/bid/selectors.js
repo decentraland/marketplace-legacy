@@ -55,10 +55,12 @@ export const getWalletBidsByAsset = (state, asset, assetType) => {
     ...Object.values(allBids).reduce((bids, bid) => {
       const isBidder = !isOwner && bid.bidder === walletAddress
 
-      if (isAssetBid(bid, asset.id, assetType) && isActive(bid) && !isBidder) {
-        return [...bids, bid]
-      } else if (isBidder) {
-        firstBid.push(bid)
+      if (isAssetBid(bid, asset.id, assetType) && isActive(bid)) {
+        if (isBidder) {
+          firstBid.push(bid)
+        } else {
+          return [...bids, bid]
+        }
       }
       return bids
     }, [])

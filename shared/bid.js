@@ -15,3 +15,7 @@ export function isActive(bid) {
 export function shouldShowBid(bid, isOwner) {
   return (isOwner && isOpen(bid)) || (!isOwner && isActive(bid))
 }
+
+export function hasBid(bids, bidder) {
+  return bids.some(bid => bid.bidder === bidder)
+}
