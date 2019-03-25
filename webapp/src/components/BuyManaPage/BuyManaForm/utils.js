@@ -30,8 +30,8 @@ export async function fetchTransaction({ ethAmount, manaAmount, address }) {
     blockchainType: 'ethereum',
     fromCurrencyId: BANCOR_ETH_ID,
     toCurrencyId: BANCOR_MANA_ID,
-    amount: ethAmountInWei,
-    minimumReturn: manaAmountInWei,
+    amount: ethAmountInWei.toString(),
+    minimumReturn: manaAmountInWei.toString(),
     ownerAddress: address
   }
   const response = await axios.post(url, body)
