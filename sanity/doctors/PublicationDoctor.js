@@ -187,10 +187,7 @@ export class PublicationDiagnosis extends Diagnosis {
     let index = 0
     for (const asset of this.faultyAssets) {
       log.info(`[${index + 1}/${total}]: Treatment for asset Id ${asset.id}`)
-      const events = await BlockchainEvent.findByAnyArgs(
-        ['assetId', '_tokenId'],
-        asset.token_id
-      )
+      const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
       await this.replayEvents(events)
       index++
     }
