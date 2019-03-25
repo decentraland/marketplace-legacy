@@ -30,7 +30,7 @@ function getProgram(actions) {
         )
         .option('--check-parcel [parcelId]', 'Check a specific parcel')
         .option(
-          '--start-from-block [blockNumber]',
+          '--from-block [blockNumber]',
           'In order to not get from 0 to latest, set the started block to get events. Decentraland starts at 4900000'
         )
         .option(

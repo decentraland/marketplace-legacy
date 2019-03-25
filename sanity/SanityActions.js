@@ -45,7 +45,7 @@ export class SanityActions {
     }
 
     if (options.selfHeal) {
-      await this.selfHeal(diagnostics, faultyAssets, options.startFromBlock)
+      await this.selfHeal(diagnostics, faultyAssets, options.fromBlock)
     } else {
       log.info(`${faultyAssets.length} found`)
 
@@ -64,7 +64,7 @@ export class SanityActions {
     )
   }
 
-  async selfHeal(diagnostics, faultyAssets, startFromBlock) {
+  async selfHeal(diagnostics, faultyAssets, fromBlock) {
     if (diagnostics.length > 0) {
       log.info('Attempting to heal problems. Re-fetching events')
 
@@ -77,7 +77,7 @@ export class SanityActions {
             {
               diagnostics,
               faultyAssets,
-              startFromBlock
+              fromBlock
             },
             ...args
           ),
@@ -95,7 +95,7 @@ class SanitiyMonitorActions extends MonitorActions {
     super(...args)
     this.diagnostics = options.diagnostics
     this.faultyAssets = options.faultyAssets
-    this.startFromBlock = parseInt(options.startFromBlock, 10) || 0
+    this.fromBlock = parseInt(options.fromBlock, 10) || 0
     this.resolve = {}
   }
 
@@ -106,17 +106,17 @@ class SanitiyMonitorActions extends MonitorActions {
     const steps = parseInt(env.get('BLOCK_STEP', 50000), 10)
 
     const lastBlock = await eth.getBlockNumber()
-    const times = (lastBlock - this.startFromBlock) / steps + 1
+    const times = (lastBlock - this.fromBlock) / steps + 1
 
     for (let i = 0; i < times; i++) {
-      const fromBlock = steps * i + this.startFromBlock
+      const fromBlock = steps * i + this.fromBlock
 
       // Stop the loop if last block is achieved
       if (fromBlock >= lastBlock) {
         continue
       }
 
-      let toBlock = steps * (i + 1) + this.startFromBlock
+      let toBlock = steps * (i + 1) + this.fromBlock
       // Set toBlock to latest if last block is achieved
       if (toBlock >= lastBlock) {
         toBlock = 'latest'
@@ -152,7 +152,7 @@ class SanitiyMonitorActions extends MonitorActions {
 
   processEvents() {
     log.info('Do nothing...')
-    return new Promise(res => res(true))
+    return Promise.resolve()
   }
 
   async _processEvents() {

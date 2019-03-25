@@ -72,6 +72,7 @@ export class EstateDoctor extends Doctor {
           currentParcels = [...currentParcels, ...parcelPromises]
         },
         batchSize: env.get('BATCH_SIZE'),
+        logFormat: '',
         retryAttempts: 20
       })
       if (!this.isEqualParcels(currentParcels, parcels)) {
