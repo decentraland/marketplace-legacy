@@ -66,13 +66,14 @@ export class PublicationDoctor extends Doctor {
     const nftAddress = this.getNFTAddressFromAsset(asset)
     const assetType = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
     const publication = (await Publication.findByAssetId(id, assetType))[0]
-    const order = await marketplace.orderByAssetId(nftAddress, token_id)
-    let publicationId = order[0]
+    let publicationId = (await marketplace.orderByAssetId(
+      nftAddress,
+      token_id
+    ))[0]
 
     if (isParcel(asset)) {
       const legacyMarketplace = eth.getContract('LegacyMarketplace')
-      const auction = await legacyMarketplace.auctionByAssetId(token_id)
-      const contractId = auction[0]
+      const contractId = (await legacyMarketplace.auctionByAssetId(token_id))[0]
 
       // Check if the last publication was created by the LegacyMarketplace contract or if it is
       // the only one and was not inserted.
@@ -86,6 +87,7 @@ export class PublicationDoctor extends Doctor {
           .pop()
 
         if (
+          !publication ||
           !lastAuctionCreatedEvent ||
           lastAuctionCreatedEvent.block_number >= publication.block_number
         ) {

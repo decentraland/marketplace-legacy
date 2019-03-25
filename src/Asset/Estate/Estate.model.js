@@ -52,7 +52,8 @@ export class Estate extends Model {
       SQL`SELECT *
         FROM ${SQL.raw(BlockchainEvent.tableName)}
         WHERE ${BlockchainEventQueries.byArgs('_estateId', estateId)}
-          OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND address = ${address})
+          OR ${BlockchainEventQueries.byArgs('assetId', estateId)}
+          OR ((${BlockchainEventQueries.byArgs('_tokenId', estateId)} OR ${BlockchainEventQueries.byArgs('_assetId', estateId)}) AND address = ${address})
           OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND ${BlockchainEventQueries.byArgs('_tokenAddress', address)})
         ORDER BY block_number ASC, log_index ASC`)
   }
@@ -64,7 +65,8 @@ export class Estate extends Model {
     return Estate.query(
       SQL`DELETE FROM ${SQL.raw(BlockchainEvent.tableName)}
         WHERE ${BlockchainEventQueries.byArgs('_estateId', estateId)}
-        OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND address = ${address})
+        OR ${BlockchainEventQueries.byArgs('assetId', estateId)}
+        OR ((${BlockchainEventQueries.byArgs('_tokenId', estateId)} OR ${BlockchainEventQueries.byArgs('_assetId', estateId)}) AND address = ${address})
         OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND ${BlockchainEventQueries.byArgs('_tokenAddress', address)})`)
   }
 
