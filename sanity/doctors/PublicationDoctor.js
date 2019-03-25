@@ -20,14 +20,14 @@ export class PublicationDoctor extends Doctor {
     let parcels
     let estates
 
-    // if (options.checkParcel) {
-    //   const [x, y] = parseCLICoords(options.checkParcel)
-    //   parcels = await Parcel.find({ x, y })
-    //   estates = []
-    // } else {
-    parcels = await Parcel.find({ id: '-39,-110' })
-    estates = await Estate.find({ id: '1870' })
-    //}
+    if (options.checkParcel) {
+      const [x, y] = parseCLICoords(options.checkParcel)
+      parcels = await Parcel.find({ x, y })
+      estates = []
+    } else {
+      parcels = await Parcel.find()
+      estates = await Estate.find()
+    }
 
     const assets = parcels.concat(estates)
     const faultyAssets = await this.filterInconsistentPublishedAssets(assets)
