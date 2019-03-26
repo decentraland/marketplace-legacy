@@ -1,7 +1,4 @@
 import { sortListings, isOpen, LISTING_SORT_BY } from 'shared/listing'
-import { localStorage } from 'lib/localStorage'
-
-const ARCHIVE_BIDS = 'decentraland-marketplace-archive-bids'
 
 export function getBidIdFromTxReceipt({ logs }) {
   const createBidLog = logs.find(log => log.name === 'BidCreated')
@@ -47,42 +44,4 @@ export function orderBids(bids, address) {
     address
   )
   return bidsReceived.concat(bidsPlaced)
-}
-
-/**
- * Get archive bid ids
- * @return {array<string>} bid ids
- */
-export function getArchivedBids() {
-  return JSON.parse(localStorage.getItem(ARCHIVE_BIDS)) || {}
-}
-
-/**
- * Get whether a bid is archive or not
- * @return {bool} true | false
- */
-export function isBidArchived(bidId) {
-  return getArchivedBids()[bidId]
-}
-
-/**
- * Archive bid
- * @param {string} bid id
- */
-export function archiveBid(bidId) {
-  const archivedBids = getArchivedBids()
-  archivedBids[bidId] = true
-
-  localStorage.setItem(ARCHIVE_BIDS, JSON.stringify(archivedBids))
-}
-
-/**
- * Unarchive bid
- * @param {string} bid id
- */
-export function unarchiveBid(bidId) {
-  const archivedBids = getArchivedBids()
-  delete archivedBids[bidId]
-
-  localStorage.setItem(ARCHIVE_BIDS, JSON.stringify(archivedBids))
 }
