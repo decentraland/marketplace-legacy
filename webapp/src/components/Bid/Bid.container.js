@@ -5,7 +5,7 @@ import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
 import { splitCoordinate } from 'shared/coordinates'
 import { getEstates } from 'modules/estates/selectors'
-import { archiveBid, unarchiveBid } from 'modules/bid/actions'
+import { archiveBid, unarchiveBid } from 'modules/archivedBid/actions'
 import Bid from './Bid'
 
 const mapState = state => ({

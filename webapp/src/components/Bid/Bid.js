@@ -12,7 +12,7 @@ import { shortenOwner } from 'shared/map'
 import { calculateMapProps } from 'shared/estate'
 import { splitCoordinate } from 'shared/coordinates'
 import { hasFingerprintChanged } from 'shared/bid'
-import { isBidArchived, archiveBid, unarchiveBid } from 'modules/bid/utils'
+import { isBidArchived } from 'modules/bid/utils'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
@@ -141,15 +141,11 @@ export default class Bid extends React.PureComponent {
 
   handleArchiveBid = () => {
     const { bid, onArchive } = this.props
-    archiveBid(bid.id)
-    // Update store in order to re-render the parent component
     onArchive(bid.id)
   }
 
   handleUnarchiveBid = () => {
     const { bid, onUnarchive } = this.props
-    unarchiveBid(bid.id)
-    // Update store in order to re-render the parent component
     onUnarchive(bid.id)
   }
 
