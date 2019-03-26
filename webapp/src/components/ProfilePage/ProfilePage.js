@@ -171,7 +171,10 @@ export default class ProfilePage extends React.PureComponent {
             {bidsReceived.length > 0 && (
               <React.Fragment>
                 <h3 className="bids-title">{t('bid.received')}</h3>
-                <Card.Group stackable={true}>
+                <Card.Group
+                  stackable={true}
+                  className={bidsPlaced.length > 0 ? 'with-placed' : ''}
+                >
                   {bidsReceived.map(bid => (
                     <BidCard
                       key={bid.id}
@@ -185,7 +188,7 @@ export default class ProfilePage extends React.PureComponent {
 
             {bidsPlaced.length > 0 && (
               <React.Fragment>
-                <h3 className="bids-title placed">{t('bid.placed')}</h3>
+                <h3 className="bids-title">{t('bid.placed')}</h3>
                 <Card.Group stackable={true}>
                   {bidsPlaced.map(bid => (
                     <BidCard

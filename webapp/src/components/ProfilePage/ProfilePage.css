@@ -33,8 +33,8 @@
   color: var(--gray);
 }
 
-.ProfilePage .profile-grid .bids-title.placed {
-  margin-top: 50px
+.ProfilePage .profile-grid .cards.with-placed {
+  margin-bottom: 50px
 }
 
 .ProfilePage .pagination {

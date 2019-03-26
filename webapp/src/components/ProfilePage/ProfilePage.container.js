@@ -9,7 +9,8 @@ import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
-import { orderBids, getArchivedBids } from 'modules/bid/utils'
+import { getData as getArchivedBids } from 'modules/archivedBid/selectors'
+import { orderBids } from 'modules/bid/utils'
 import ProfilePage from './ProfilePage'
 
 const mapState = (state, { location, match }) => {
@@ -62,13 +63,13 @@ const mapState = (state, { location, match }) => {
       break
     }
     case PROFILE_PAGE_TABS.bids: {
-      const archivedBids = getArchivedBids()
+      const archivedBids = getArchivedBids(state)
       bids = orderBids(bids.filter(bid => !archivedBids[bid.id]), address)
       pagination = Pagination.paginate(bids, page)
       break
     }
     case PROFILE_PAGE_TABS.archivebids: {
-      const archivedBids = getArchivedBids()
+      const archivedBids = getArchivedBids(state)
       bids = orderBids(bids.filter(bid => archivedBids[bid.id]), address)
 
       pagination = Pagination.paginate(bids, page)

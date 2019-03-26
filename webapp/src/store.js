@@ -61,7 +61,7 @@ const analyticsMiddleware = createAnalyticsMiddleware(
 const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   migrations,
   paths: [['auction', 'parcelOnChainOwners'], 'archivedBid'],
-  action: [SET_ON_CHAIN_PARCEL_OWNER, ARCHIVE_BID, UNARCHIVE_BID],
+  actions: [SET_ON_CHAIN_PARCEL_OWNER, ARCHIVE_BID, UNARCHIVE_BID],
   storageKey: env.get('REACT_APP_LOCAL_STORAGE_KEY')
 })
 

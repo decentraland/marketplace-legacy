@@ -1,5 +1,5 @@
-export const ARCHIVE_BID = 'Unarchive Bid'
-export const UNARCHIVE_BID = 'Archive Bid '
+export const ARCHIVE_BID = 'Archive Bid'
+export const UNARCHIVE_BID = 'Unarchive Bid'
 
 export function archiveBid(bidId) {
   return {

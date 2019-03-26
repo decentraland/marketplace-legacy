@@ -12,7 +12,6 @@ import { shortenOwner } from 'shared/map'
 import { calculateMapProps } from 'shared/estate'
 import { splitCoordinate } from 'shared/coordinates'
 import { hasFingerprintChanged } from 'shared/bid'
-import { isBidArchived } from 'modules/bid/utils'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
@@ -26,6 +25,7 @@ const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 export default class Bid extends React.PureComponent {
   static propTypes = {
     isOwner: PropTypes.bool.isRequired,
+    isBidArchived: PropTypes.bool.isRequired,
     bid: bidType.isRequired,
     estates: PropTypes.objectOf(estateType),
     className: PropTypes.string,
@@ -150,7 +150,14 @@ export default class Bid extends React.PureComponent {
   }
 
   render() {
-    const { bid, isOwner, onConfirm, onUpdate, showAssetDetail } = this.props
+    const {
+      bid,
+      isOwner,
+      onConfirm,
+      onUpdate,
+      showAssetDetail,
+      isBidArchived
+    } = this.props
 
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const fingerprintChanged = hasFingerprintChanged(bid)
@@ -240,7 +247,7 @@ export default class Bid extends React.PureComponent {
                     </Button>
                   )}
                 {isOwner ? (
-                  isBidArchived(bid.id) ? (
+                  isBidArchived ? (
                     <Button onClick={preventDefault(this.handleUnarchiveBid)}>
                       {t('global.unarchive')}
                     </Button>
