@@ -3,6 +3,7 @@ import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
+import { getData as getArchivedBids } from 'modules/archivedBid/selectors'
 import { getData as getTiles } from 'modules/tile/selectors'
 import { fetchAsset } from 'modules/asset/actions'
 import { getData as getPublications } from 'modules/publication/selectors'
@@ -12,10 +13,13 @@ import EstateDetailPage from './EstateDetailPage'
 
 const mapState = (state, ownProps) => {
   const estate = ownProps.asset
+  const bids = getWalletBidsByAsset(state, estate, ASSET_TYPES.estate)
+  const archivedBids = getArchivedBids(state)
+
   return {
     publications: getPublications(state),
     tiles: getTiles(state),
-    bids: getWalletBidsByAsset(state, estate, ASSET_TYPES.estate),
+    bids: bids.filter(bid => !archivedBids[bid.id]),
     estate
   }
 }

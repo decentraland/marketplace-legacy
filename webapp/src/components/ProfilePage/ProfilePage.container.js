@@ -43,6 +43,13 @@ const mapState = (state, { location, match }) => {
   }
 
   const publishedAssets = publishedParcels.concat(publishedEstates)
+  const archivedBids = getArchivedBids(state)
+
+  if (tab === PROFILE_PAGE_TABS.archivebids) {
+    bids = bids.filter(bid => archivedBids[bid.id])
+  } else {
+    bids = bids.filter(bid => !archivedBids[bid.id])
+  }
 
   let pagination
   switch (tab) {
@@ -63,15 +70,12 @@ const mapState = (state, { location, match }) => {
       break
     }
     case PROFILE_PAGE_TABS.bids: {
-      const archivedBids = getArchivedBids(state)
-      bids = orderBids(bids.filter(bid => !archivedBids[bid.id]), address)
+      bids = orderBids(bids, address)
       pagination = Pagination.paginate(bids, page)
       break
     }
     case PROFILE_PAGE_TABS.archivebids: {
-      const archivedBids = getArchivedBids(state)
-      bids = orderBids(bids.filter(bid => archivedBids[bid.id]), address)
-
+      bids = orderBids(bids, address)
       pagination = Pagination.paginate(bids, page)
       break
     }
