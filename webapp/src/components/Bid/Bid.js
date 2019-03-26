@@ -141,12 +141,12 @@ export default class Bid extends React.PureComponent {
 
   handleArchiveBid = () => {
     const { bid, onArchive } = this.props
-    onArchive(bid.id)
+    onArchive(bid)
   }
 
   handleUnarchiveBid = () => {
     const { bid, onUnarchive } = this.props
-    onUnarchive(bid.id)
+    onUnarchive(bid)
   }
 
   render() {

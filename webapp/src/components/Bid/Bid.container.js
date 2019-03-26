@@ -55,8 +55,8 @@ const mapDispatch = (dispatch, ownProps) => {
       break
   }
   return {
-    onArchive: bidId => dispatch(archiveBid(bidId)),
-    onUnarchive: bidId => dispatch(unarchiveBid(bidId)),
+    onArchive: bid => dispatch(archiveBid(bid)),
+    onUnarchive: bid => dispatch(unarchiveBid(bid)),
     onUpdate,
     onConfirm
   }

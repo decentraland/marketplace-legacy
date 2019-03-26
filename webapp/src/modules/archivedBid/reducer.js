@@ -7,20 +7,20 @@ const INITIAL_STATE = {
 export function archivedBidReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ARCHIVE_BID: {
-      const { bidId } = action
+      const { bid } = action
       return {
         data: {
           ...state.data,
-          [bidId]: true
+          [bid.id]: true
         }
       }
     }
     case UNARCHIVE_BID: {
-      const { bidId } = action
+      const { bid } = action
       return {
         data: {
           ...state.data,
-          [bidId]: false
+          [bid.id]: false
         }
       }
     }

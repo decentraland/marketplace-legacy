@@ -38,6 +38,7 @@ import {
   CANCEL_BID_SUCCESS,
   ACCEPT_BID_SUCCESS
 } from 'modules/bid/actions'
+import { ARCHIVE_BID, UNARCHIVE_BID } from 'modules/archivedBid/actions'
 
 const addAssetType = (actionName, assetType) =>
   `${actionName} ${assetType[0].toUpperCase() + assetType.slice(1)}`
@@ -210,6 +211,26 @@ export function track() {
       id: bid.id,
       assetId: bid.asset_id,
       bidder: bid.bidder
+    })
+  )
+
+  add(
+    ARCHIVE_BID,
+    ({ bid }) => addAssetType('Archive Bid', bid.asset_type),
+    ({ bid }) => ({
+      id: bid.id,
+      assetId: bid.asset_id,
+      price: bid.price
+    })
+  )
+
+  add(
+    UNARCHIVE_BID,
+    ({ bid }) => addAssetType('Unarchive Bid', bid.asset_type),
+    ({ bid }) => ({
+      id: bid.id,
+      assetId: bid.asset_id,
+      price: bid.price
     })
   )
 
