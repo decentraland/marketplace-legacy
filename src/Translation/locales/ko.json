@@ -219,7 +219,9 @@
   },
   "bid": {
     "placed": "배치 된 입찰가",
-    "received": "받은 입찰가"
+    "received": "받은 입찰가",
+    "see_all": "모두보기",
+    "see_archived": "자료실보기"
   },
   "buy_mana": {
     "action": "더 사",
@@ -304,6 +306,8 @@
     "activity": "활동",
     "add": "더하다",
     "address_placeholder": "0x...",
+    "archive": "아카이브",
+    "archive_bids": "저장된 입찰가",
     "atlas": "지도",
     "auction": "경매",
     "balance": "밸런스",
@@ -368,6 +372,7 @@
     "time_left": "남은 시간",
     "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
     "type": "유형",
+    "unarchive": "보관 취소",
     "unauthorized": "무단",
     "undo": "끄르다",
     "update": "최신 정보",

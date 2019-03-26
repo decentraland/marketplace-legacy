@@ -224,8 +224,8 @@
   "bid": {
     "placed": "bids placed",
     "received": "bids received",
-    "see_archived": "See Archives",
-    "see_all": "See All"
+    "see_all": "See All",
+    "see_archived": "See Archives"
   },
   "buy_mana": {
     "action": "Buy More",

@@ -203,7 +203,9 @@
   },
   "bid": {
     "placed": "出价",
-    "received": "收到的出价"
+    "received": "收到的出价",
+    "see_all": "查看全部",
+    "see_archived": "请参阅档案"
   },
   "buy_mana": {
     "action": "购买",
@@ -288,6 +290,8 @@
     "activity": "活动",
     "add": "加",
     "address_placeholder": "0x...",
+    "archive": "档案",
+    "archive_bids": "存档的出价",
     "atlas": "地图",
     "auction": "拍卖",
     "balance": "余额",
@@ -352,6 +356,7 @@
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
     "type": "类型",
+    "unarchive": "取消封存",
     "unauthorized": "未授权",
     "undo": "撤消",
     "update": "更新",

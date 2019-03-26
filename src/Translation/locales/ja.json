@@ -217,7 +217,9 @@
   },
   "bid": {
     "placed": "入札単価",
-    "received": "入札を受けました"
+    "received": "入札を受けました",
+    "see_all": "すべてを見る",
+    "see_archived": "アーカイブを見る"
   },
   "buy_mana": {
     "action": "更に購入する",
@@ -303,6 +305,8 @@
     "activity": "取引履歴",
     "add": "追加する",
     "address_placeholder": "0x...",
+    "archive": "アーカイブ",
+    "archive_bids": "アーカイブされた入札",
     "atlas": "地図",
     "auction": "オークション",
     "balance": "残高",
@@ -367,6 +371,7 @@
     "time_left": "残り時間",
     "transfer_irreversible": "転送は元に戻すことができません",
     "type": "タイプ",
+    "unarchive": "アーカイブ解除",
     "unauthorized": "未承認",
     "undo": "戻す",
     "update": "更新",
