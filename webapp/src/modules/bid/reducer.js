@@ -19,7 +19,9 @@ import {
   ACCEPT_BID_FAILURE,
   FETCH_ASSET_ACCEPTED_BIDS_REQUEST,
   FETCH_ASSET_ACCEPTED_BIDS_SUCCESS,
-  FETCH_ASSET_ACCEPTED_BIDS_FAILURE
+  FETCH_ASSET_ACCEPTED_BIDS_FAILURE,
+  ARCHIVE_BID,
+  UNARCHIVE_BID
 } from './actions'
 import { getBidIdFromTxReceipt } from './utils'
 import { LISTING_STATUS } from 'shared/listing'
@@ -94,6 +96,28 @@ export function bidReducer(state = INITIAL_STATE, action) {
         loading: loadingReducer(state.loading, action),
         error: null,
         data: newData
+      }
+    }
+    case ARCHIVE_BID: {
+      // This flag is only used to re-render the components
+      const { bidId } = action
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [bidId]: { ...state.data[bidId], archived: true }
+        }
+      }
+    }
+    case UNARCHIVE_BID: {
+      // This flag is only used to re-render the components
+      const { bidId } = action
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [bidId]: { ...state.data[bidId], archived: false }
+        }
       }
     }
     case FETCH_TRANSACTION_SUCCESS: {

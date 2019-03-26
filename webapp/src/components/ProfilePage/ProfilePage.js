@@ -154,6 +154,20 @@ export default class ProfilePage extends React.PureComponent {
 
         return (
           <React.Fragment>
+            <a
+              className="archive-toggle-title"
+              onClick={() =>
+                this.handleItemClick(null, {
+                  name: this.isActive(PROFILE_PAGE_TABS.bids)
+                    ? PROFILE_PAGE_TABS.archivebids
+                    : PROFILE_PAGE_TABS.bids
+                })
+              }
+            >
+              {this.isActive(PROFILE_PAGE_TABS.bids)
+                ? t('bid.see_archived')
+                : t('bid.see_all')}
+            </a>
             {bidsReceived.length > 0 && (
               <React.Fragment>
                 <h3 className="bids-title">{t('bid.received')}</h3>
@@ -346,8 +360,8 @@ export default class ProfilePage extends React.PureComponent {
           </Menu>
         </Container>
         <Container className="profile-grid">
-          {isEmpty && !isLoading ? this.renderEmpty() : null}
           {isLoading ? this.renderLoading() : this.renderGrid()}
+          {isEmpty && !isLoading ? this.renderEmpty() : null}
         </Container>
         <Container textAlign="center" className="pagination">
           {isEmpty || pages <= 1 ? null : (

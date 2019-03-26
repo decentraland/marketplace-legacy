@@ -12,6 +12,7 @@ import { shortenOwner } from 'shared/map'
 import { calculateMapProps } from 'shared/estate'
 import { splitCoordinate } from 'shared/coordinates'
 import { hasFingerprintChanged } from 'shared/bid'
+import { isBidArchived, archiveBid, unarchiveBid } from 'modules/bid/utils'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
@@ -27,7 +28,11 @@ export default class Bid extends React.PureComponent {
     isOwner: PropTypes.bool.isRequired,
     bid: bidType.isRequired,
     estates: PropTypes.objectOf(estateType),
-    className: PropTypes.string
+    className: PropTypes.string,
+    onConfirm: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    onArchive: PropTypes.func.isRequired,
+    onUnarchive: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -134,6 +139,20 @@ export default class Bid extends React.PureComponent {
     return gridClassName
   }
 
+  handleArchiveBid = () => {
+    const { bid, onArchive } = this.props
+    archiveBid(bid.id)
+    // Update store in order to re-render the parent component
+    onArchive(bid.id)
+  }
+
+  handleUnarchiveBid = () => {
+    const { bid, onUnarchive } = this.props
+    unarchiveBid(bid.id)
+    // Update store in order to re-render the parent component
+    onUnarchive(bid.id)
+  }
+
   render() {
     const { bid, isOwner, onConfirm, onUpdate, showAssetDetail } = this.props
 
@@ -224,6 +243,17 @@ export default class Bid extends React.PureComponent {
                       {t('global.update')}
                     </Button>
                   )}
+                {isOwner ? (
+                  isBidArchived(bid.id) ? (
+                    <Button onClick={preventDefault(this.handleUnarchiveBid)}>
+                      {t('global.unarchive')}
+                    </Button>
+                  ) : (
+                    <Button onClick={preventDefault(this.handleArchiveBid)}>
+                      {t('global.archive')}
+                    </Button>
+                  )
+                ) : null}
               </Grid.Column>
             </Grid>
           </Grid.Column>

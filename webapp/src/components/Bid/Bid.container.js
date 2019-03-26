@@ -5,6 +5,7 @@ import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
 import { splitCoordinate } from 'shared/coordinates'
 import { getEstates } from 'modules/estates/selectors'
+import { archiveBid, unarchiveBid } from 'modules/bid/actions'
 import Bid from './Bid'
 
 const mapState = state => ({
@@ -48,6 +49,8 @@ const mapDispatch = (dispatch, ownProps) => {
       break
   }
   return {
+    onArchive: bidId => dispatch(archiveBid(bidId)),
+    onUnarchive: bidId => dispatch(unarchiveBid(bidId)),
     onUpdate,
     onConfirm
   }
