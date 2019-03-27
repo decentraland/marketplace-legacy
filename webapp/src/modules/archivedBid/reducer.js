@@ -1,3 +1,5 @@
+import { utils } from 'decentraland-commons'
+
 import { ARCHIVE_BID, UNARCHIVE_BID } from './actions'
 
 const INITIAL_STATE = {
@@ -11,17 +13,14 @@ export function archivedBidReducer(state = INITIAL_STATE, action) {
       return {
         data: {
           ...state.data,
-          [bid.id]: true
+          [bid.id]: Date.now()
         }
       }
     }
     case UNARCHIVE_BID: {
       const { bid } = action
       return {
-        data: {
-          ...state.data,
-          [bid.id]: false
-        }
+        data: utils.omit(state.data, [bid.id])
       }
     }
     default:

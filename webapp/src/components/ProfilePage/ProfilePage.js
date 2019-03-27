@@ -48,7 +48,8 @@ export default class ProfilePage extends React.PureComponent {
     isOwner: PropTypes.bool,
     isConnecting: PropTypes.bool,
     onNavigate: PropTypes.func.isRequired,
-    bids: PropTypes.arrayOf(bidType)
+    bids: PropTypes.arrayOf(bidType),
+    totalHiddenBids: PropTypes.number.isRequired
   }
 
   componentWillMount() {
@@ -108,7 +109,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   renderGrid() {
-    const { grid, tab, address } = this.props
+    const { grid, tab, address, totalHiddenBids } = this.props
     switch (tab) {
       case PROFILE_PAGE_TABS.parcels: {
         return (
@@ -164,9 +165,11 @@ export default class ProfilePage extends React.PureComponent {
                 })
               }
             >
-              {this.isActive(PROFILE_PAGE_TABS.bids)
-                ? t('bid.see_archived')
-                : t('bid.see_all')}
+              {`${
+                this.isActive(PROFILE_PAGE_TABS.bids)
+                  ? t('bid.see_archived')
+                  : t('bid.see_all')
+              } (${totalHiddenBids})`}
             </a>
             {bidsReceived.length > 0 && (
               <React.Fragment>
@@ -237,18 +240,6 @@ export default class ProfilePage extends React.PureComponent {
     )
   }
 
-  renderBidBadge(bids) {
-    if (this.isActive(PROFILE_PAGE_TABS.bids)) {
-      return this.renderBadge(bids, PROFILE_PAGE_TABS.bids)
-    }
-
-    if (this.isActive(PROFILE_PAGE_TABS.archivebids)) {
-      return this.renderBadge(bids, PROFILE_PAGE_TABS.archivebids)
-    }
-
-    return this.renderBadge(bids, '')
-  }
-
   handleItemClick = (event, { name }) => {
     const { address, onNavigate } = this.props
     const url = buildUrl({
@@ -263,12 +254,9 @@ export default class ProfilePage extends React.PureComponent {
     this.isActive(PROFILE_PAGE_TABS.bids) ||
     this.isActive(PROFILE_PAGE_TABS.mortgages)
 
-  isBidActive() {
-    return (
-      this.isActive(PROFILE_PAGE_TABS.bids) ||
-      this.isActive(PROFILE_PAGE_TABS.archivebids)
-    )
-  }
+  isBidActive = () =>
+    this.isActive(PROFILE_PAGE_TABS.bids) ||
+    this.isActive(PROFILE_PAGE_TABS.archivebids)
 
   render() {
     const {
@@ -343,7 +331,12 @@ export default class ProfilePage extends React.PureComponent {
                     onClick={this.handleItemClick}
                   >
                     {t('global.bids')}
-                    {this.renderBidBadge(bids)}
+                    {this.renderBadge(
+                      bids,
+                      this.isActive(PROFILE_PAGE_TABS.archivebids)
+                        ? PROFILE_PAGE_TABS.archivebids
+                        : PROFILE_PAGE_TABS.bids
+                    )}
                   </Menu.Item>
                 )}
 

@@ -44,11 +44,14 @@ const mapState = (state, { location, match }) => {
 
   const publishedAssets = publishedParcels.concat(publishedEstates)
   const archivedBids = getArchivedBids(state)
+  let totalHiddenBids = bids.length
 
   if (tab === PROFILE_PAGE_TABS.archivebids) {
     bids = bids.filter(bid => archivedBids[bid.id])
+    totalHiddenBids = totalHiddenBids - bids.length
   } else {
     bids = bids.filter(bid => !archivedBids[bid.id])
+    totalHiddenBids = totalHiddenBids - bids.length
   }
 
   let pagination
@@ -100,6 +103,7 @@ const mapState = (state, { location, match }) => {
     isLoading,
     isEmpty,
     bids,
+    totalHiddenBids,
     isOwner: wallet.address === address,
     isConnecting: isConnecting(state)
   }
