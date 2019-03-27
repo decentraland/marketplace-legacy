@@ -68,8 +68,8 @@ export class EstateDoctor extends Doctor {
             promises.push(this.buildCurrentEstateParcel(estate.id, index++))
           }
 
-          const parcelPromises = await Promise.all(promises)
-          currentParcels = [...currentParcels, ...parcelPromises]
+          const parcels = await Promise.all(promises)
+          currentParcels = [...currentParcels, ...parcels]
         },
         batchSize: env.get('BATCH_SIZE'),
         logFormat: '',
@@ -145,8 +145,7 @@ export class EstateDiagnosis extends Diagnosis {
     })
 
     const total = this.faultyEstates.length
-    let index = 0
-    for (const estate of this.faultyEstates) {
+    for (const [index, estate] of this.faultyEstates.entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`)
       const events = await Estate.findBlockchainEvents(estate.id)
       const filteredEvents = events.filter(
@@ -164,8 +163,6 @@ export class EstateDiagnosis extends Diagnosis {
         )
         await this.replayEvents(events)
       }
-
-      index++
     }
   }
 }

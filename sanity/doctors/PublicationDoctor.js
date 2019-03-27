@@ -186,12 +186,10 @@ export class PublicationDiagnosis extends Diagnosis {
 
     // TODO: add NFTAddress
     const total = this.faultyAssets.length
-    let index = 0
-    for (const asset of this.faultyAssets) {
+    for (const [index, asset] of this.faultyAssets.entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for asset Id ${asset.id}`)
       const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
       await this.replayEvents(events)
-      index++
     }
 
     log.info('Update expired publications')

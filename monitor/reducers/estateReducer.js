@@ -12,7 +12,7 @@ import { getParcelMatcher, isEqualCoords } from '../../shared/parcel'
 import { isDuplicatedConstraintError } from '../../src/database'
 
 const log = new Log('estateReducer')
-const shouldUpdateCache = parseInt(env.get('UPDATE_CACHE', 1), 10)
+const shouldUpdateCache = !env.get('SKIP_TILES_CACHE_UPDATE', false)
 
 export async function estateReducer(event) {
   const { address } = event

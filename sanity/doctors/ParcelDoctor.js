@@ -40,7 +40,6 @@ export class ParcelDoctor extends Doctor {
             estateRegistry.landIdEstate(parcel.token_id)
           ])
 
-          // @Nacho: Check the 'return', if should play with else or add errors
           if (this.isPartOfEstateMismatch(currentEstateId.toString(), parcel)) {
             const { id, estate_id } = parcel
             const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
@@ -90,7 +89,7 @@ export class ParcelDoctor extends Doctor {
   isPartOfEstateMismatch(currentEstateId, parcel) {
     return (
       (parcel.estate_id && parcel.estate_id !== currentEstateId) ||
-      (!parcel.estate_id && parseInt(currentEstateId, 10) > 0)
+      (!parcel.estate_id && currentEstateId > 0)
     )
   }
 }
@@ -133,16 +132,13 @@ export class ParcelDiagnosis extends Diagnosis {
   async doTreatment() {
     // Run events for Parcels with different estates
     const estateIds = new Set(
-      this.faultyParcels.map(({ currentEstateId }) =>
-        parseInt(currentEstateId || 0, 10)
-      )
+      this.faultyParcels
+        .filter(({ currentEstateId }) => !!currentEstateId)
+        .map(({ currentEstateId }) => parseInt(currentEstateId, 10))
     )
 
-    estateIds.delete(0) // Remove 0 from the estateIds
-
     let total = estateIds.size
-    let index = 0
-    for (const estateId of [...estateIds]) {
+    for (const [index, estateId] of [...estateIds].entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
       const events = await Estate.findBlockchainEvents(estateId)
       await this.replayEvents(events)
@@ -160,20 +156,16 @@ export class ParcelDiagnosis extends Diagnosis {
           await this.replayEvents(events)
         }
       }
-
-      index++
     }
 
     total = this.faultyParcels.length
-    index = 0
-    for (const parcel of this.faultyParcels) {
+    for (const [index, parcel] of this.faultyParcels.entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for parcel Id ${parcel.id}`)
       const events = await BlockchainEvent.findByAnyArgs(
         ['assetId', '_landId', 'landId', 'tokenId', '_tokenId'],
         parcel.token_id
       )
       await this.replayEvents(events)
-      index++
     }
   }
 }

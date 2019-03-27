@@ -15,4 +15,5 @@ exports.up = pgm => {
   pgm.createIndex(tableName, `(${args}'_assetId')`, {
     method: 'BTREE'
   })
+  pgm.createIndex(tableName, 'name')
 }

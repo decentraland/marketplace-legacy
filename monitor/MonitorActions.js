@@ -22,7 +22,7 @@ export class MonitorActions {
       await this.monitor(contractName, eventNames, options).catch(this.onError)
     }
     if (options.skipProcess) {
-      this.finish({ monitorFinished: true })
+      this.finish({ hasMonitorFinished: true })
     }
   }
 
@@ -62,7 +62,7 @@ export class MonitorActions {
       this.finish({ ...options, contractName, eventName })
     const monitorOptions = { ...options, fromBlock }
 
-    eventMonitor.run(monitorOptions, eventName => async (error, logs) => {
+    eventMonitor.run(monitorOptions, async (error, logs, eventName) => {
       if (error) {
         log.error(`Error monitoring "${contractName}" for "${eventNames}"`)
         this.onError(error)

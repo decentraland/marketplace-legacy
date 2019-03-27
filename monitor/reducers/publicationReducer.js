@@ -10,7 +10,7 @@ import { LISTING_STATUS } from '../../shared/listing'
 import { getAssetTypeFromEvent, getAssetIdFromEvent } from './utils'
 
 const log = new Log('publicationReducer')
-const shouldUpdateCache = parseInt(env.get('UPDATE_CACHE', 1), 10)
+const shouldUpdateCache = !env.get('SKIP_TILES_CACHE_UPDATE', false)
 
 export async function publicationReducer(event) {
   const { address, name } = event

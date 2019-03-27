@@ -1,22 +1,17 @@
 import { Parcel, Estate } from '../src/Asset'
 
-const tableName = Parcel.tableName
+const parcelTableName = Parcel.tableName
+const estateTableName = Estate.tableName
 
 exports.up = pgm => {
-  pgm.dropConstraint(tableName, 'ref_estate_id', {
-    foreignKeys: {
-      columns: ['estate_id'],
-      references: `"${Estate.tableName}"`,
-      onDelete: 'SET NULL'
-    }
-  })
+  pgm.dropConstraint(parcelTableName, 'ref_estate_id', { ifExists: true })
 }
 
 exports.down = pgm => {
-  pgm.addConstraint(tableName, 'ref_estate_id', {
+  pgm.addConstraint(parcelTableName, 'ref_estate_id', {
     foreignKeys: {
       columns: ['estate_id'],
-      references: `"${Estate.tableName}"`,
+      references: `"${estateTableName}" (id)`,
       onDelete: 'SET NULL'
     }
   })

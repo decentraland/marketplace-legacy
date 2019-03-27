@@ -4,7 +4,7 @@ import { eth } from 'decentraland-eth'
 import { MonitorActions } from '../monitor/MonitorActions'
 import { main as indexMissingEvents } from '../monitor/program'
 import { doctors } from './doctors'
-import { getNumberTypesOfEvents } from '../src/ethereum'
+import { getCountOfEvents } from '../src/ethereum'
 import { asyncBatch } from '../src/lib'
 import { isParcel } from '../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
@@ -30,10 +30,10 @@ export class SanityActions {
       const doctor = new doctors[key]()
       const diagnoses = await doctor.diagnose(options)
 
-      if (!diagnoses.hasProblems()) {
-        continue
-      } else {
+      if (diagnoses.hasProblems()) {
         faultyAssets.push(...diagnoses.getFaultyAssets())
+      } else {
+        continue
       }
 
       diagnostics.push(diagnoses)
@@ -74,11 +74,7 @@ export class SanityActions {
       await indexMissingEvents(
         (...args) =>
           new SanitiyMonitorActions(
-            {
-              diagnostics,
-              faultyAssets,
-              fromBlock
-            },
+            { diagnostics, faultyAssets, fromBlock },
             ...args
           ),
         true
@@ -96,7 +92,7 @@ class SanitiyMonitorActions extends MonitorActions {
     this.diagnostics = options.diagnostics
     this.faultyAssets = options.faultyAssets
     this.fromBlock = parseInt(options.fromBlock, 10) || 0
-    this.resolve = {}
+    this.delayedEvents = {}
   }
 
   async monitor(contractName, eventNames, options) {
@@ -130,14 +126,14 @@ class SanitiyMonitorActions extends MonitorActions {
 
       for (let eventName of eventNames) {
         const key = this.getKey(contractName, eventName, fromBlock, toBlock)
-        if (!this.resolve[key]) {
-          this.resolve[key] = []
+        if (!this.delayedEvents[key]) {
+          this.delayedEvents[key] = []
         }
 
-        const numberTypeEvents = getNumberTypesOfEvents(contractName, eventName)
+        const numberTypeEvents = getCountOfEvents(contractName, eventName)
 
         for (let j = 0; j < numberTypeEvents; j++) {
-          const promise = new Promise(res => this.resolve[key].push(res))
+          const promise = new Promise(res => this.delayedEvents[key].push(res))
           promises.push(promise)
         }
         super.monitor(contractName, [eventName], {
@@ -180,9 +176,7 @@ class SanitiyMonitorActions extends MonitorActions {
     await asyncBatch({
       elements: createEstateEvents,
       callback: async createEstateEventsBatch => {
-        const createEventsPromises = createEstateEventsBatch.map(event =>
-          processEvent(event)
-        )
+        const createEventsPromises = createEstateEventsBatch.map(processEvent)
         await Promise.all(createEventsPromises)
       },
       batchSize: env.get('BATCH_SIZE'),
@@ -226,7 +220,7 @@ class SanitiyMonitorActions extends MonitorActions {
   }
 
   async finish(options) {
-    if (options.monitorFinished) {
+    if (options.hasMonitorFinished) {
       await this._processEvents()
     } else {
       const fromBlock = options.fromBlock
@@ -245,9 +239,9 @@ class SanitiyMonitorActions extends MonitorActions {
       )
 
       // Resolve promise and shift it
-      if (this.resolve[key]) {
-        this.resolve[key][0](true)
-        this.resolve[key].shift()
+      if (this.delayedEvents[key]) {
+        const resolve = this.delayedEvents[key].shift()
+        resolve()
       }
     }
   }

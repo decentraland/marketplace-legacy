@@ -65,7 +65,7 @@ export function loadContracts() {
         'Approval',
         'ApprovalForAll'
       ],
-      types: { Transfer: 2 }
+      count: { Transfer: 2 }
     },
     EstateRegistry: {
       address: getEnvAddress('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
@@ -139,12 +139,12 @@ function getEnvAddress(name) {
   return value.toLowerCase()
 }
 
-export function getNumberTypesOfEvents(contractName, eventName) {
-  if (!contractsData[contractName].types) {
+export function getCountOfEvents(contractName, eventName) {
+  if (!contractsData[contractName].count) {
     return 1
   }
 
-  const types = contractsData[contractName].types
+  const types = contractsData[contractName].count
 
   return types[eventName] || 1
 }
