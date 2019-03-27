@@ -49,7 +49,7 @@ export default class ProfilePage extends React.PureComponent {
     isConnecting: PropTypes.bool,
     onNavigate: PropTypes.func.isRequired,
     bids: PropTypes.arrayOf(bidType),
-    totalHiddenBids: PropTypes.number.isRequired
+    hiddenBidsCount: PropTypes.number.isRequired
   }
 
   componentWillMount() {
@@ -109,7 +109,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   renderGrid() {
-    const { grid, tab, address, totalHiddenBids } = this.props
+    const { grid, tab, address, hiddenBidsCount } = this.props
     switch (tab) {
       case PROFILE_PAGE_TABS.parcels: {
         return (
@@ -169,7 +169,7 @@ export default class ProfilePage extends React.PureComponent {
                 this.isActive(PROFILE_PAGE_TABS.bids)
                   ? t('bid.see_archived')
                   : t('bid.see_all')
-              } (${totalHiddenBids})`}
+              } (${hiddenBidsCount})`}
             </a>
             {bidsReceived.length > 0 && (
               <React.Fragment>

@@ -34,7 +34,7 @@ const mapState = (state, { location, match }) => {
     publishedParcels = addresses[address].publishedParcels
     publishedEstates = addresses[address].publishedEstates
     estates = addresses[address].estates
-    bids = orderBids(addresses[address].bids, address)
+    bids = addresses[address].bids
     mortgagedParcels = addresses[address].mortgagedParcels
   }
 
@@ -44,14 +44,12 @@ const mapState = (state, { location, match }) => {
 
   const publishedAssets = publishedParcels.concat(publishedEstates)
   const archivedBids = getArchivedBids(state)
-  let totalHiddenBids = bids.length
+  const allBidsCount = bids.length
 
   if (tab === PROFILE_PAGE_TABS.archivebids) {
     bids = bids.filter(bid => archivedBids[bid.id])
-    totalHiddenBids = totalHiddenBids - bids.length
   } else {
     bids = bids.filter(bid => !archivedBids[bid.id])
-    totalHiddenBids = totalHiddenBids - bids.length
   }
 
   let pagination
@@ -72,11 +70,7 @@ const mapState = (state, { location, match }) => {
       pagination = Pagination.paginate(mortgagedParcels, page)
       break
     }
-    case PROFILE_PAGE_TABS.bids: {
-      bids = orderBids(bids, address)
-      pagination = Pagination.paginate(bids, page)
-      break
-    }
+    case PROFILE_PAGE_TABS.bids:
     case PROFILE_PAGE_TABS.archivebids: {
       bids = orderBids(bids, address)
       pagination = Pagination.paginate(bids, page)
@@ -103,7 +97,7 @@ const mapState = (state, { location, match }) => {
     isLoading,
     isEmpty,
     bids,
-    totalHiddenBids,
+    hiddenBidsCount: allBidsCount - bids.length,
     isOwner: wallet.address === address,
     isConnecting: isConnecting(state)
   }
