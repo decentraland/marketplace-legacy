@@ -223,7 +223,9 @@
   },
   "bid": {
     "placed": "bids placed",
-    "received": "bids received"
+    "received": "bids received",
+    "see_all": "See All",
+    "see_archived": "See Archives"
   },
   "buy_mana": {
     "action": "Buy More",
@@ -310,6 +312,8 @@
     "activity": "Activity",
     "add": "add",
     "address_placeholder": "0x...",
+    "archive": "Archive",
+    "archive_bids": "archived bids",
     "atlas": "Atlas",
     "auction": "Auction",
     "balance": "Balance",
@@ -375,6 +379,7 @@
     "transfer_irreversible":
       "Remember that transferring is an irreversible operation.",
     "type": "Type",
+    "unarchive": "Unarchive",
     "unauthorized": "Unauthorized",
     "undo": "Undo",
     "update": "Update",

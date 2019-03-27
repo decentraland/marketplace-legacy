@@ -4,12 +4,19 @@ import { navigateTo } from '@dapps/modules/location/actions'
 import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
 import { splitCoordinate } from 'shared/coordinates'
+import { archiveBid, unarchiveBid } from 'modules/archivedBid/actions'
 import { getEstates } from 'modules/estates/selectors'
+import { getData as getArchivedBids } from 'modules/archivedBid/selectors'
 import Bid from './Bid'
 
-const mapState = state => ({
-  estates: getEstates(state)
-})
+const mapState = (state, ownProps) => {
+  const archivedBids = getArchivedBids(state)
+
+  return {
+    estates: getEstates(state),
+    isBidArchived: !!archivedBids[ownProps.bid.id]
+  }
+}
 
 const mapDispatch = (dispatch, ownProps) => {
   const { bid, isOwner } = ownProps
@@ -48,6 +55,8 @@ const mapDispatch = (dispatch, ownProps) => {
       break
   }
   return {
+    onArchive: bid => dispatch(archiveBid(bid)),
+    onUnarchive: bid => dispatch(unarchiveBid(bid)),
     onUpdate,
     onConfirm
   }

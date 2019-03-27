@@ -6,16 +6,17 @@ import { ASSET_TYPES } from 'shared/asset'
 import { getData as getTiles } from 'modules/tile/selectors'
 import { fetchAsset } from 'modules/asset/actions'
 import { getData as getPublications } from 'modules/publication/selectors'
-import { getWalletBidsByAsset } from 'modules/bid/selectors'
+import { getWalletUnarchivedBidsByAsset } from 'modules/archivedBid/selectors'
 
 import EstateDetailPage from './EstateDetailPage'
 
 const mapState = (state, ownProps) => {
   const estate = ownProps.asset
+
   return {
     publications: getPublications(state),
     tiles: getTiles(state),
-    bids: getWalletBidsByAsset(state, estate, ASSET_TYPES.estate),
+    bids: getWalletUnarchivedBidsByAsset(state, estate, ASSET_TYPES.estate),
     estate
   }
 }

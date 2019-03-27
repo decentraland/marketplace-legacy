@@ -25,9 +25,14 @@ const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 export default class Bid extends React.PureComponent {
   static propTypes = {
     isOwner: PropTypes.bool.isRequired,
+    isBidArchived: PropTypes.bool.isRequired,
     bid: bidType.isRequired,
     estates: PropTypes.objectOf(estateType),
-    className: PropTypes.string
+    className: PropTypes.string,
+    onConfirm: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    onArchive: PropTypes.func.isRequired,
+    onUnarchive: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -134,8 +139,25 @@ export default class Bid extends React.PureComponent {
     return gridClassName
   }
 
+  handleArchiveBid = () => {
+    const { bid, onArchive } = this.props
+    onArchive(bid)
+  }
+
+  handleUnarchiveBid = () => {
+    const { bid, onUnarchive } = this.props
+    onUnarchive(bid)
+  }
+
   render() {
-    const { bid, isOwner, onConfirm, onUpdate, showAssetDetail } = this.props
+    const {
+      bid,
+      isOwner,
+      onConfirm,
+      onUpdate,
+      showAssetDetail,
+      isBidArchived
+    } = this.props
 
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const fingerprintChanged = hasFingerprintChanged(bid)
@@ -224,6 +246,17 @@ export default class Bid extends React.PureComponent {
                       {t('global.update')}
                     </Button>
                   )}
+                {isOwner ? (
+                  isBidArchived ? (
+                    <Button onClick={preventDefault(this.handleUnarchiveBid)}>
+                      {t('global.unarchive')}
+                    </Button>
+                  ) : (
+                    <Button onClick={preventDefault(this.handleArchiveBid)}>
+                      {t('global.archive')}
+                    </Button>
+                  )
+                ) : null}
               </Grid.Column>
             </Grid>
           </Grid.Column>

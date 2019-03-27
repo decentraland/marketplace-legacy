@@ -48,7 +48,8 @@ export default class ProfilePage extends React.PureComponent {
     isOwner: PropTypes.bool,
     isConnecting: PropTypes.bool,
     onNavigate: PropTypes.func.isRequired,
-    bids: PropTypes.arrayOf(bidType)
+    bids: PropTypes.arrayOf(bidType),
+    hiddenBidsCount: PropTypes.number.isRequired
   }
 
   componentWillMount() {
@@ -108,7 +109,7 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   renderGrid() {
-    const { grid, tab, address } = this.props
+    const { grid, tab, address, hiddenBidsCount } = this.props
     switch (tab) {
       case PROFILE_PAGE_TABS.parcels: {
         return (
@@ -145,7 +146,8 @@ export default class ProfilePage extends React.PureComponent {
           </Card.Group>
         )
       }
-      case PROFILE_PAGE_TABS.bids: {
+      case PROFILE_PAGE_TABS.bids:
+      case PROFILE_PAGE_TABS.archivebids: {
         const [bidsReceived, bidsPlaced] = getBidsByReceivedAndPlaced(
           grid,
           address
@@ -153,10 +155,29 @@ export default class ProfilePage extends React.PureComponent {
 
         return (
           <React.Fragment>
+            <a
+              className="archive-toggle-title"
+              onClick={() =>
+                this.handleItemClick(null, {
+                  name: this.isActive(PROFILE_PAGE_TABS.bids)
+                    ? PROFILE_PAGE_TABS.archivebids
+                    : PROFILE_PAGE_TABS.bids
+                })
+              }
+            >
+              {`${
+                this.isActive(PROFILE_PAGE_TABS.bids)
+                  ? t('bid.see_archived')
+                  : t('bid.see_all')
+              } (${hiddenBidsCount})`}
+            </a>
             {bidsReceived.length > 0 && (
               <React.Fragment>
                 <h3 className="bids-title">{t('bid.received')}</h3>
-                <Card.Group stackable={true}>
+                <Card.Group
+                  stackable={true}
+                  className={bidsPlaced.length > 0 ? 'with-placed' : ''}
+                >
                   {bidsReceived.map(bid => (
                     <BidCard
                       key={bid.id}
@@ -170,7 +191,7 @@ export default class ProfilePage extends React.PureComponent {
 
             {bidsPlaced.length > 0 && (
               <React.Fragment>
-                <h3 className="bids-title placed">{t('bid.placed')}</h3>
+                <h3 className="bids-title">{t('bid.placed')}</h3>
                 <Card.Group stackable={true}>
                   {bidsPlaced.map(bid => (
                     <BidCard
@@ -232,6 +253,10 @@ export default class ProfilePage extends React.PureComponent {
   onlyOwnerCanAccess = () =>
     this.isActive(PROFILE_PAGE_TABS.bids) ||
     this.isActive(PROFILE_PAGE_TABS.mortgages)
+
+  isBidActive = () =>
+    this.isActive(PROFILE_PAGE_TABS.bids) ||
+    this.isActive(PROFILE_PAGE_TABS.archivebids)
 
   render() {
     const {
@@ -302,11 +327,16 @@ export default class ProfilePage extends React.PureComponent {
                 {isFeatureEnabled('BIDS') && (
                   <Menu.Item
                     name={PROFILE_PAGE_TABS.bids}
-                    active={this.isActive(PROFILE_PAGE_TABS.bids)}
+                    active={this.isBidActive()}
                     onClick={this.handleItemClick}
                   >
                     {t('global.bids')}
-                    {this.renderBadge(bids, PROFILE_PAGE_TABS.bids)}
+                    {this.renderBadge(
+                      bids,
+                      this.isActive(PROFILE_PAGE_TABS.archivebids)
+                        ? PROFILE_PAGE_TABS.archivebids
+                        : PROFILE_PAGE_TABS.bids
+                    )}
                   </Menu.Item>
                 )}
 
@@ -326,8 +356,8 @@ export default class ProfilePage extends React.PureComponent {
           </Menu>
         </Container>
         <Container className="profile-grid">
-          {isEmpty && !isLoading ? this.renderEmpty() : null}
           {isLoading ? this.renderLoading() : this.renderGrid()}
+          {isEmpty && !isLoading ? this.renderEmpty() : null}
         </Container>
         <Container textAlign="center" className="pagination">
           {isEmpty || pages <= 1 ? null : (

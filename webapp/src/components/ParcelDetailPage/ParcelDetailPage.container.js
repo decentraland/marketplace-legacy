@@ -3,11 +3,11 @@ import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
+import { getWalletUnarchivedBidsByAsset } from 'modules/archivedBid/selectors'
 import { getParcelMortgageFactory } from 'modules/mortgage/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { getDistricts } from 'modules/districts/selectors'
 import { getEstates } from 'modules/estates/selectors'
-import { getWalletBidsByAsset } from 'modules/bid/selectors'
 import ParcelDetailPage from './ParcelDetailPage'
 
 const mapState = (state, ownProps) => {
@@ -20,7 +20,11 @@ const mapState = (state, ownProps) => {
     districts: getDistricts(state),
     mortgage: getParcelMortgage(state),
     estates: getEstates(state),
-    bids: getWalletBidsByAsset(state, ownProps.asset, ASSET_TYPES.parcel)
+    bids: getWalletUnarchivedBidsByAsset(
+      state,
+      ownProps.asset,
+      ASSET_TYPES.parcel
+    )
   }
 }
 

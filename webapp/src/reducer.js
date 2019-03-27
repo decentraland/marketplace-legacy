@@ -6,6 +6,7 @@ import {
 } from '@dapps/modules/storage/reducer'
 import { transactionReducer as transaction } from '@dapps/modules/transaction/reducer'
 import { translationReducer as translation } from '@dapps/modules/translation/reducer'
+import { locationReducer as location } from '@dapps/modules/location/reducer'
 
 import { addressReducer as address } from 'modules/address/reducer'
 import { auctionReducer as auction } from 'modules/auction/reducer'
@@ -19,6 +20,7 @@ import { publicationReducer as publication } from 'modules/publication/reducer'
 import { uiReducer as ui } from 'modules/ui/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
 import { bidReducer as bid } from 'modules/bid/reducer'
+import { archivedBidReducer as archivedBid } from 'modules/archivedBid/reducer'
 
 export const rootReducer = storageReducerWrapper(
   combineReducers({
@@ -32,11 +34,13 @@ export const rootReducer = storageReducerWrapper(
     parcels,
     publication,
     bid,
+    archivedBid,
     transaction,
     translation,
     ui,
     wallet,
     router,
-    storage
+    storage,
+    location
   })
 )
