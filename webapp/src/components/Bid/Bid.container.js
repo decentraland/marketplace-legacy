@@ -8,9 +8,11 @@ import { archiveBid, unarchiveBid } from 'modules/archivedBid/actions'
 import { getEstates } from 'modules/estates/selectors'
 import { getData as getArchivedBids } from 'modules/archivedBid/selectors'
 import { getWallet } from 'modules/wallet/selectors'
+import Bid from './Bid'
 
 const mapState = (state, ownProps) => {
   const wallet = getWallet(state)
+
   const archivedBids = getArchivedBids(state)
 
   return {

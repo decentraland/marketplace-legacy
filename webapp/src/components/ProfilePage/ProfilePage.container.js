@@ -9,7 +9,10 @@ import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
-import { getData as getArchivedBids } from 'modules/archivedBid/selectors'
+import {
+  getWalletArchivedBids,
+  getWalletUnarchivedBids
+} from 'modules/archivedBid/selectors'
 import { orderBids } from 'modules/bid/utils'
 import ProfilePage from './ProfilePage'
 
@@ -28,13 +31,18 @@ const mapState = (state, { location, match }) => {
   let mortgagedParcels = []
   let publishedEstates = []
   let bids = []
+  let allBidsCount = 0
   if (address in addresses) {
     parcels = addresses[address].parcels
     contributions = addresses[address].contributions
     publishedParcels = addresses[address].publishedParcels
     publishedEstates = addresses[address].publishedEstates
     estates = addresses[address].estates
-    bids = addresses[address].bids
+    allBidsCount = addresses[address].bids.length
+    bids =
+      tab === PROFILE_PAGE_TABS.archivebids
+        ? getWalletArchivedBids(state, addresses[address].bids)
+        : getWalletUnarchivedBids(state, addresses[address].bids)
     mortgagedParcels = addresses[address].mortgagedParcels
   }
 
@@ -43,14 +51,6 @@ const mapState = (state, { location, match }) => {
   }
 
   const publishedAssets = publishedParcels.concat(publishedEstates)
-  const archivedBids = getArchivedBids(state)
-  const allBidsCount = bids.length
-
-  if (tab === PROFILE_PAGE_TABS.archivebids) {
-    bids = bids.filter(bid => archivedBids[bid.id])
-  } else {
-    bids = bids.filter(bid => !archivedBids[bid.id])
-  }
 
   let pagination
   switch (tab) {
