@@ -144,16 +144,12 @@ export class EstateDiagnosis extends Diagnosis {
       retryAttempts: 20
     })
 
+    // Replay events for the estate and old parcels
     const total = this.faultyEstates.length
     for (const [index, estate] of this.faultyEstates.entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`)
       const events = await Estate.findBlockchainEvents(estate.id)
-      const filteredEvents = events.filter(
-        event =>
-          event.name !== eventNames.AddLand &&
-          event.name !== eventNames.RemoveLand
-      )
-      await this.replayEvents(filteredEvents)
+      await this.replayEvents(events)
 
       for (const parcel of estate.data.parcels) {
         const tokenId = await Parcel.encodeTokenId(parcel.x, parcel.y)
