@@ -138,6 +138,7 @@ export class ParcelDiagnosis extends Diagnosis {
         .map(({ currentEstateId }) => parseInt(currentEstateId, 10))
     )
 
+    // Delete asset publications
     await asyncBatch({
       elements: this.faultyParcels.map(parcel => parcel.id).concat(estateIds),
       callback: async assetIdsBatch => {
