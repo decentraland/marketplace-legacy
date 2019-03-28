@@ -1,7 +1,7 @@
 import { eth, txUtils } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
 
-import { Publication, Listing } from '../../src/Listing'
+import { Publication } from '../../src/Listing'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
