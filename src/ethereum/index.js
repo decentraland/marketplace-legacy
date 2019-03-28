@@ -26,7 +26,14 @@ export async function connectEth(options = {}) {
   let provider
 
   if (options.isWebsocket) {
-    provider = new providers.WebSocketProvider(env.get('WEB_SOCKET_RPC_URL'), {
+    const websocketURL = env.get('WEB_SOCKET_RPC_URL')
+    if (!websocketURL) {
+      throw new Error(
+        'You need to set the WEB_SOCKET_RPC_URL env var to connect via websockets'
+      )
+    }
+
+    provider = new providers.WebSocketProvider(websocketURL, {
       WebSocketConstructor: w3cwebsocket
     })
     await provider.connection
