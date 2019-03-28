@@ -63,7 +63,12 @@ async function reduceBid(event) {
       ])
 
       const asset = await Asset.getNew(assetType).findById(assetId)
-      if (asset && isDistrict(asset)) {
+
+      if (!asset) {
+        return log.info(`[${name}] Asset with id: ${_tokenId} does not exist`)
+      }
+
+      if (isDistrict(asset)) {
         return log.info(
           `[${name}] Token with address: ${_tokenAddress} and id: ${_tokenId} is part of a district and won't be indexed`
         )
