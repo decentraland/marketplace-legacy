@@ -7,6 +7,7 @@ import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { eventNames } from '../../src/ethereum'
+import { Publication } from '../../src/Listing'
 
 const log = new Log('EstateDoctor')
 
@@ -136,7 +137,10 @@ export class EstateDiagnosis extends Diagnosis {
       elements: this.faultyEstates,
       callback: async estatesBatch => {
         const deletes = estatesBatch.map(estate =>
-          Estate.delete({ id: estate.id })
+          Promise.all([
+            Publication.deleteByAssetId(estate.id),
+            Estate.delete({ id: estate.id })
+          ])
         )
         await Promise.all(deletes)
       },

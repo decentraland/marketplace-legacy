@@ -6,6 +6,7 @@ import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { Publication } from '../../src/Listing'
 import { parseCLICoords } from '../../scripts/utils'
 import { eventNames } from '../../src/ethereum'
 
@@ -136,6 +137,16 @@ export class ParcelDiagnosis extends Diagnosis {
         .filter(({ currentEstateId }) => !!currentEstateId)
         .map(({ currentEstateId }) => parseInt(currentEstateId, 10))
     )
+
+    await asyncBatch({
+      elements: this.faultyParcels.map(parcel => parcel.id).concat(estateIds),
+      callback: async assetIdsBatch => {
+        const deletes = assetIdsBatch.map(id => Publication.deleteByAssetId(id))
+        await Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
 
     let total = estateIds.size
     for (const [index, estateId] of [...estateIds].entries()) {
