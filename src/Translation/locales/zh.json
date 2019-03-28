@@ -19,6 +19,7 @@
     "expired": "出价过期"
   },
   "asset_bid": {
+    "bid_asset": "出价{asset_type}",
     "errors": {
       "maximum_expiration": "最迟到期时间为 {date}（6个月）",
       "maximum_land_price": "{asset_name} 的最高价为 {value} MANA",
