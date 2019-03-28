@@ -140,20 +140,22 @@ export class ParcelDiagnosis extends Diagnosis {
     let total = estateIds.size
     for (const [index, estateId] of [...estateIds].entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
+      // Replay events related to the estate
       const events = await Estate.findBlockchainEvents(estateId)
-      await this.replayEvents(events)
-
-      // Replay events on old parcels for that estate
       for (const event of events) {
         if (
           event.name === eventNames.AddLand ||
           event.name === eventNames.RemoveLand
         ) {
+          // Replay parcels events based on AddLand and RemoveLand estate events
           const events = await BlockchainEvent.findByAnyArgs(
             ['_landId'],
             event.args._landId
           )
           await this.replayEvents(events)
+        } else {
+          // Replay estate events only for update or creation
+          await this.replayEvents([event])
         }
       }
     }
