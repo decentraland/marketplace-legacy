@@ -111,25 +111,20 @@ async function reduceMarketplace(event) {
       const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
 
-      const Asset = Listing.getListableAsset(assetType)
-
       if (!contract_id) {
         return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
       }
       log.info(`[${name}] Publication ${contract_id} sold to ${buyer}`)
 
-      await Promise.all([
-        Publication.update(
-          {
-            status: LISTING_STATUS.sold,
-            buyer: buyer.toLowerCase(),
-            price: eth.utils.fromWei(totalPrice),
-            block_time_updated_at: blockTime
-          },
-          { contract_id }
-        ),
-        Asset.update({ owner: buyer }, { id: assetId })
-      ])
+      await Publication.update(
+        {
+          status: LISTING_STATUS.sold,
+          buyer: buyer.toLowerCase(),
+          price: eth.utils.fromWei(totalPrice),
+          block_time_updated_at: blockTime
+        },
+        { contract_id }
+      )
       if (shouldUpdateCache) {
         await Tile.upsertAsset(assetId, assetType)
       }
