@@ -20,7 +20,10 @@ import {
   fetchBidByIdFailure,
   FETCH_ASSET_ACCEPTED_BIDS_REQUEST,
   fetchAssetAcceptedBidsSuccess,
-  fetchAssetAcceptedBidsFailure
+  fetchAssetAcceptedBidsFailure,
+  FETCH_ASSET_BIDS_REQUEST,
+  fetchBidsByAssetSuccess,
+  fetchBidsByAssetFailure
 } from './actions'
 import { locations } from 'locations'
 import { api } from 'lib/api'
@@ -41,6 +44,7 @@ export function* bidSagas() {
     FETCH_ASSET_ACCEPTED_BIDS_REQUEST,
     handleFetchAssetAcceptedBidsRequest
   )
+  yield takeLatest(FETCH_ASSET_BIDS_REQUEST, handleFetchBidsByAsset)
 }
 
 function* handlePlaceBid({ bid }) {
@@ -143,6 +147,20 @@ function* handleFetchBidByAsset({ assetId, assetType, status }) {
     yield put(fetchBidByAssetSuccess(bids[0]))
   } catch (error) {
     yield put(fetchBidByAssetFailure(error.message))
+  }
+}
+
+function* handleFetchBidsByAsset({ assetId, assetType, status }) {
+  try {
+    const bids = yield call(() =>
+      api.fetchBidsByAsset(assetId, {
+        asset_type: assetType,
+        status
+      })
+    )
+    yield put(fetchBidsByAssetSuccess(bids))
+  } catch (error) {
+    yield put(fetchBidsByAssetFailure(error.message))
   }
 }
 

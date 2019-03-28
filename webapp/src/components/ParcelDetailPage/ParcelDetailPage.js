@@ -69,6 +69,8 @@ export default class ParcelDetailPage extends React.PureComponent {
 
     const description = this.getDescription()
     const publication = getOpenPublication(parcel, publications)
+    const bidsToShow = bids.filter(bid => shouldShowBid(bid, isOwner))
+
     return (
       <div className="ParcelDetailPage">
         <Grid columns={2} stackable>
@@ -130,17 +132,15 @@ export default class ParcelDetailPage extends React.PureComponent {
           </Grid.Row>
         </Grid>
 
-        {bids &&
-          bids.length > 0 && (
+        {bidsToShow &&
+          bidsToShow.length > 0 && (
             <Grid stackable className="parcel-detail-row">
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
-                  {bids
-                    .filter(bid => shouldShowBid(bid, isOwner))
-                    .map(bid => (
-                      <Bid key={bid.id} bid={bid} isOwner={isOwner} />
-                    ))}
+                  {bidsToShow.map(bid => (
+                    <Bid key={bid.id} bid={bid} isOwner={isOwner} />
+                  ))}
                 </Grid.Column>
               </Grid.Row>
             </Grid>

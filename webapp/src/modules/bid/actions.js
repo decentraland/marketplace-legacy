@@ -129,6 +129,35 @@ export function fetchBidByAssetFailure(error) {
   }
 }
 
+// Fetch Asset Bids
+
+export const FETCH_ASSET_BIDS_REQUEST = '[Request] Fetch Asset Bids'
+export const FETCH_ASSET_BIDS_SUCCESS = '[Success] Fetch Asset Bids'
+export const FETCH_ASSET_BIDS_FAILURE = '[Failure] Fetch Asset Bids'
+
+export function fetchBidsByAssetRequest(assetId, assetType, status) {
+  return {
+    type: FETCH_ASSET_BIDS_REQUEST,
+    assetId,
+    assetType,
+    status
+  }
+}
+
+export function fetchBidsByAssetSuccess(bids) {
+  return {
+    type: FETCH_ASSET_BIDS_SUCCESS,
+    bids
+  }
+}
+
+export function fetchBidsByAssetFailure(error) {
+  return {
+    type: FETCH_ASSET_BIDS_FAILURE,
+    error
+  }
+}
+
 // Fetch Bid
 
 export const FETCH_BID_REQUEST = '[Request] Fetch Bid'

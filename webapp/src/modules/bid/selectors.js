@@ -49,21 +49,22 @@ export const getWalletBidsByAsset = (state, asset, assetType) => {
   const walletAddress = getAddress(state)
 
   const isOwner = asset.owner === walletAddress
+  const firstBid = []
+  return [
+    ...firstBid,
+    ...Object.values(allBids).reduce((bids, bid) => {
+      const isBidder = !isOwner && bid.bidder === walletAddress
 
-  return Object.values(allBids).reduce((bids, bid) => {
-    const isBidderOrSeller =
-      (isOwner && bid.seller === walletAddress) ||
-      (!isOwner && bid.bidder === walletAddress)
-
-    if (
-      isAssetBid(bid, asset.id, assetType) &&
-      isActive(bid) &&
-      isBidderOrSeller
-    ) {
-      return [...bids, bid]
-    }
-    return bids
-  }, [])
+      if (isAssetBid(bid, asset.id, assetType) && isActive(bid)) {
+        if (isBidder) {
+          firstBid.push(bid)
+        } else {
+          return [...bids, bid]
+        }
+      }
+      return bids
+    }, [])
+  ]
 }
 
 export const getAcceptedBidsByAsset = (state, asset) => {

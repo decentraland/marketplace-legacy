@@ -7,14 +7,18 @@ import { splitCoordinate } from 'shared/coordinates'
 import { archiveBid, unarchiveBid } from 'modules/archivedBid/actions'
 import { getEstates } from 'modules/estates/selectors'
 import { getData as getArchivedBids } from 'modules/archivedBid/selectors'
+import { getWallet } from 'modules/wallet/selectors'
 import Bid from './Bid'
 
 const mapState = (state, ownProps) => {
+  const wallet = getWallet(state)
+
   const archivedBids = getArchivedBids(state)
 
   return {
     estates: getEstates(state),
-    isBidArchived: !!archivedBids[ownProps.bid.id]
+    isBidArchived: !!archivedBids[ownProps.bid.id],
+    address: wallet ? wallet.address : null
   }
 }
 

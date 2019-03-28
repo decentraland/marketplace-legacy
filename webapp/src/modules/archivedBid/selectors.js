@@ -8,3 +8,13 @@ export const getWalletUnarchivedBidsByAsset = (state, asset, asseyType) => {
   const archivedBids = getData(state)
   return bids.filter(bid => !archivedBids[bid.id])
 }
+
+export const getWalletArchivedBids = (state, bids) => {
+  const archivedBids = getData(state)
+  return bids.filter(bid => archivedBids[bid.id])
+}
+
+export const getWalletUnarchivedBids = (state, bids) => {
+  const archivedBids = getData(state)
+  return bids.filter(bid => !archivedBids[bid.id])
+}

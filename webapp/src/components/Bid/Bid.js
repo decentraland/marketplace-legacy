@@ -29,6 +29,7 @@ export default class Bid extends React.PureComponent {
     bid: bidType.isRequired,
     estates: PropTypes.objectOf(estateType),
     className: PropTypes.string,
+    address: PropTypes.string,
     onConfirm: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onArchive: PropTypes.func.isRequired,
@@ -156,9 +157,11 @@ export default class Bid extends React.PureComponent {
       onConfirm,
       onUpdate,
       showAssetDetail,
-      isBidArchived
+      isBidArchived,
+      address
     } = this.props
 
+    const isBidderOrSeller = address === bid.seller || address === bid.bidder
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const fingerprintChanged = hasFingerprintChanged(bid)
     const assetDetailLink = this.getDetailLink()
@@ -223,41 +226,43 @@ export default class Bid extends React.PureComponent {
                 <h3>{t('global.time_left')}</h3>
                 <p>{distanceInWordStrict(parseInt(bid.expires_at, 10))}</p>
               </Grid.Column>
-              <Grid.Column
-                computer={showAssetDetail ? 16 : 7}
-                tablet={showAssetDetail ? 16 : 7}
-                mobile={16}
-                className={'actions'}
-              >
-                <Button
-                  className={`${isOwner ? 'primary' : ''}`}
-                  onClick={preventDefault(onConfirm)}
+              {isBidderOrSeller && (
+                <Grid.Column
+                  computer={showAssetDetail ? 16 : 7}
+                  tablet={showAssetDetail ? 16 : 7}
+                  mobile={16}
+                  className={'actions'}
                 >
-                  {!isOwner || hasSameSellerAndBidder
-                    ? t('global.cancel')
-                    : t('global.accept')}
-                </Button>
-                {!isOwner &&
-                  !hasSameSellerAndBidder && (
-                    <Button
-                      className="primary"
-                      onClick={preventDefault(onUpdate)}
-                    >
-                      {t('global.update')}
-                    </Button>
-                  )}
-                {isOwner ? (
-                  isBidArchived ? (
-                    <Button onClick={preventDefault(this.handleUnarchiveBid)}>
-                      {t('global.unarchive')}
-                    </Button>
-                  ) : (
-                    <Button onClick={preventDefault(this.handleArchiveBid)}>
-                      {t('global.archive')}
-                    </Button>
-                  )
-                ) : null}
-              </Grid.Column>
+                  <Button
+                    className={`${isOwner ? 'primary' : ''}`}
+                    onClick={preventDefault(onConfirm)}
+                  >
+                    {!isOwner || hasSameSellerAndBidder
+                      ? t('global.cancel')
+                      : t('global.accept')}
+                  </Button>
+                  {!isOwner &&
+                    !hasSameSellerAndBidder && (
+                      <Button
+                        className="primary"
+                        onClick={preventDefault(onUpdate)}
+                      >
+                        {t('global.update')}
+                      </Button>
+                    )}
+                  {isOwner ? (
+                    isBidArchived ? (
+                      <Button onClick={preventDefault(this.handleUnarchiveBid)}>
+                        {t('global.unarchive')}
+                      </Button>
+                    ) : (
+                      <Button onClick={preventDefault(this.handleArchiveBid)}>
+                        {t('global.archive')}
+                      </Button>
+                    )
+                  ) : null}
+                </Grid.Column>
+              )}
             </Grid>
           </Grid.Column>
         </Grid.Row>

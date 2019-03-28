@@ -18,9 +18,12 @@ import {
   fetchAvailableParcelFailure
 } from './actions'
 import { getData as getParcels } from './selectors'
+import { fetchBidsByAssetRequest } from 'modules/bid/actions'
 import { getAddress } from 'modules/wallet/selectors'
 import { api } from 'lib/api'
 import { buildCoordinate } from 'shared/coordinates'
+import { ASSET_TYPES } from 'shared/asset'
+import { LISTING_STATUS } from 'shared/listing'
 
 export function* parcelsSaga() {
   yield takeEvery(FETCH_PARCEL_REQUEST, handleParcelRequest)
@@ -32,6 +35,14 @@ export function* parcelsSaga() {
 function* handleParcelRequest(action) {
   const { x, y } = action
   try {
+    // fetch bids
+    yield put(
+      fetchBidsByAssetRequest(
+        buildCoordinate(x, y),
+        ASSET_TYPES.parcel,
+        LISTING_STATUS.open
+      )
+    )
     const parcel = yield call(() => api.fetchParcel(x, y))
 
     yield put(fetchParcelSuccess(x, y, parcel))

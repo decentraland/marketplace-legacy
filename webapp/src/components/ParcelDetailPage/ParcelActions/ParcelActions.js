@@ -10,12 +10,14 @@ import {
   parcelType,
   publicationType,
   mortgageType,
-  bidType
+  bidType,
+  walletType
 } from 'components/types'
 import { isLegacyPublication } from 'modules/publication/utils'
 import { getOpenPublication } from 'shared/asset'
 import { hasParcelsConnected } from 'shared/parcel'
 import { isParcelListable } from 'shared/listing'
+import { hasBid } from 'shared/bid'
 
 import './ParcelActions.css'
 
@@ -26,7 +28,8 @@ export default class ParcelActions extends React.PureComponent {
     mortgage: mortgageType,
     bids: PropTypes.arrayOf(bidType),
     publications: PropTypes.objectOf(publicationType).isRequired,
-    isLoading: PropTypes.bool.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    wallet: walletType
   }
 
   canCreateEstate = isOnSale => {
@@ -99,7 +102,7 @@ export default class ParcelActions extends React.PureComponent {
                 </Link>
               )}
             {isFeatureEnabled('BIDS') &&
-              !bids.length &&
+              !hasBid(bids, wallet.address) &&
               isParcelListable(parcel) && (
                 <Link to={locations.bidParcel(x, y)}>
                   <Button size="large">{t('asset_detail.bid.place')}</Button>
