@@ -21,6 +21,7 @@
     "expired": "Bid expired"
   },
   "asset_bid": {
+    "bid_asset": "Bid {asset_type}",
     "errors": {
       "maximum_expiration": "The maximum expiration date is {date} (6 months)",
       "maximum_land_price": "The maximum {asset_name} price is {value} MANA",

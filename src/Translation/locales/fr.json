@@ -22,6 +22,7 @@
     "expired": "Offre expirée"
   },
   "asset_bid": {
+    "bid_asset": "Bid {asset_type}",
     "errors": {
       "maximum_expiration": "La date d'expiration maximale est {date} (6 mois)",
       "maximum_land_price":

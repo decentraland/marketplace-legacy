@@ -21,6 +21,7 @@
     "expired": "입찰가 만료"
   },
   "asset_bid": {
+    "bid_asset": "입찰가 {asset_type}",
     "errors": {
       "maximum_expiration": "최대 만기 날짜는 {date} (6 개월)입니다.",
       "maximum_land_price": "최대 {asset_name} 가격은 {value} MANA입니다.",

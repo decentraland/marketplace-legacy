@@ -21,6 +21,7 @@
     "expired": "期限切れの入札"
   },
   "asset_bid": {
+    "bid_asset": "入札{asset_type}",
     "errors": {
       "maximum_expiration": "最大有効期限は{date}（6ヶ月）です。",
       "maximum_land_price": "最大{asset_name}価格は{value} MANAです",
