@@ -21,7 +21,7 @@
     "expired": "Oferta caducada"
   },
   "asset_bid": {
-    "bid_asset": "Puja {asset_type}",
+    "bid_asset": "Ofertar {asset_type}",
     "errors": {
       "maximum_expiration":
         "La fecha máxima de vencimiento es {date} (6 meses).",
