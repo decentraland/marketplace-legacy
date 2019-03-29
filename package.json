@@ -11,6 +11,7 @@
     "watch:test":
       "./node_modules/mocha/bin/mocha -r babel-register -r specs/specs_setup.js specs/setup.js src/*.spec.js src/**/*.spec.js --watch",
     "init-db": "./scripts/initDb.js",
+    "restore-dump": "./scripts/restoreDump.js",
     "migrate": "./migrations/migrate",
     "renew-blockchain-data": "./scripts/renewBlockchainData.js",
     "seed": "./scripts/seed.js",
