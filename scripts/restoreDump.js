@@ -1,5 +1,6 @@
 #!/usr/bin/env babel-node
 
+import fs from 'fs'
 import { execSync } from 'child_process'
 import { Log, env } from 'decentraland-commons'
 
@@ -21,6 +22,10 @@ export async function restoreDump(dumpPath) {
 
   const databaseName = connectionString.split('/').pop()
   const dumpFullPath = resolvePath(dumpPath)
+
+  if (!fs.existsSync(dumpFullPath)) {
+    throw new Error(`Couldn't find dump file "${dumpFullPath}"`)
+  }
 
   log.info(`Reseting ${databaseName}`)
   execSync(`psql -c 'DROP DATABASE IF EXISTS ${databaseName}'`)
