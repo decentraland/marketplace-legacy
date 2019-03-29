@@ -8,6 +8,10 @@ export class Diagnosis {
     throw new Error('Not implemented')
   }
 
+  getFaultyAssets() {
+    throw new Error('Not implemented')
+  }
+
   hasProblems() {
     throw new Error('Not implemented')
   }

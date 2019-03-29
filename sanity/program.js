@@ -13,9 +13,6 @@ export async function main(getActions = createSanityActions) {
   log.info('Connecting to database')
   await db.connect()
 
-  log.info('Connecting to Ethereum node')
-  await connectEth()
-
   log.info('Starting CLI')
   const sanityActions = getActions()
 
@@ -33,12 +30,20 @@ function getProgram(actions) {
         )
         .option('--check-parcel [parcelId]', 'Check a specific parcel')
         .option(
+          '--from-block [blockNumber]',
+          'In order to not get from 0 to latest, set the started block to get events. Decentraland starts at 4900000'
+        )
+        .option(
           '--self-heal',
           'Try to fix found errors. Supports all flags supported by the monitor, except watch'
         )
-        .action(options => {
-          actions.run(options)
-          process.exit()
+        .option('--websocket', 'Should run doctors in a websocket')
+        .action(async options => {
+          log.info('Connecting to Ethereum node')
+          await connectEth({ isWebsocket: options.websocket })
+
+          log.info('Starting sanity')
+          await actions.run(options)
         })
     }
   }

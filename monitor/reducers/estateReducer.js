@@ -1,4 +1,4 @@
-import { Log } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 
 import { getParcelIdFromEvent, debouncedUpsertTileAsset } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
@@ -12,6 +12,7 @@ import { getParcelMatcher, isEqualCoords } from '../../shared/parcel'
 import { isDuplicatedConstraintError } from '../../src/database'
 
 const log = new Log('estateReducer')
+const shouldUpdateCache = !env.get('SKIP_TILES_CACHE_UPDATE', false)
 
 export async function estateReducer(event) {
   const { address } = event
@@ -83,7 +84,9 @@ async function reduceEstateRegistry(event) {
           { data: { ...estate.data, parcels } },
           { id: estate.id }
         )
-        debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+        if (shouldUpdateCache) {
+          debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+        }
       }
       break
     }
@@ -110,7 +113,9 @@ async function reduceEstateRegistry(event) {
         { data: { ...estate.data, parcels } },
         { id: estate.id }
       )
-      debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+      if (shouldUpdateCache) {
+        debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+      }
       break
     }
     case eventNames.Transfer: {
@@ -135,8 +140,9 @@ async function reduceEstateRegistry(event) {
         },
         { id: estateId }
       )
-
-      await Tile.upsertAsset(estateId, ASSET_TYPES.estate)
+      if (shouldUpdateCache) {
+        await Tile.upsertAsset(estateId, ASSET_TYPES.estate)
+      }
       break
     }
     case eventNames.UpdateOperator: {

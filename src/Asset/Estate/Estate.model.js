@@ -1,8 +1,9 @@
-import { env, Model } from 'decentraland-commons'
+import { Model } from 'decentraland-commons'
 
+import { EstateQueries } from './Estate.queries'
 import { Asset } from '../Asset'
 import { Parcel } from '../Parcel'
-import { BlockchainEvent, BlockchainEventQueries } from '../../BlockchainEvent'
+import { BlockchainEvent } from '../../BlockchainEvent'
 import { SQL } from '../../database'
 
 export class Estate extends Model {
@@ -45,25 +46,19 @@ export class Estate extends Model {
   }
 
   static findBlockchainEvents(estateId) {
-    const address = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
-
-    // prettier-ignore
     return Estate.query(
       SQL`SELECT *
         FROM ${SQL.raw(BlockchainEvent.tableName)}
-        WHERE ${BlockchainEventQueries.byArgs('_estateId', estateId)}
-          OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND address = ${address})
-        ORDER BY block_number ASC, log_index ASC`)
+        WHERE ${EstateQueries.areEstateEvents(estateId)}
+        ORDER BY block_number ASC, log_index ASC`
+    )
   }
 
   static deleteBlockchainEvents(estateId) {
-    const address = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
-
-    // prettier-ignore
     return Estate.query(
       SQL`DELETE FROM ${SQL.raw(BlockchainEvent.tableName)}
-        WHERE ${BlockchainEventQueries.byArgs('_estateId', estateId)}
-          OR (${BlockchainEventQueries.byArgs('_tokenId', estateId)} AND address = ${address})`)
+        WHERE ${EstateQueries.areEstateEvents(estateId)}`
+    )
   }
 
   static async updateDistrictIds() {
