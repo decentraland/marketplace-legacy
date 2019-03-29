@@ -1,5 +1,5 @@
-import { Log, env } from 'decentraland-commons'
 import { eth } from 'decentraland-eth'
+import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
@@ -9,8 +9,6 @@ import { Parcel } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { Publication } from '../../src/Listing'
 import { parseCLICoords } from '../../scripts/utils'
-
-const log = new Log('ParcelDoctor')
 
 export class ParcelDoctor extends Doctor {
   async diagnose(options) {
@@ -44,7 +42,6 @@ export class ParcelDoctor extends Doctor {
           if (this.isPartOfEstateMismatch(currentEstateId.toString(), parcel)) {
             const { id, estate_id } = parcel
             const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
-            log.error(error)
             faultyParcels.push({ ...parcel, currentEstateId, error })
             return
           }
@@ -52,7 +49,6 @@ export class ParcelDoctor extends Doctor {
           if (this.isOwnerMismatch(currentOwner, parcel)) {
             const { id, owner } = parcel
             const error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
-            log.error(error)
             faultyParcels.push({ ...parcel, error })
             return
           }
@@ -62,7 +58,6 @@ export class ParcelDoctor extends Doctor {
           if (this.isUpdateOperatorMismatch(currentUpdateOperator, parcel)) {
             const { id, update_operator } = parcel
             const error = `Mismatch: operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
-            log.error(error)
             faultyParcels.push({ ...parcel, error })
             return
           }
@@ -72,6 +67,8 @@ export class ParcelDoctor extends Doctor {
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
     })
+
+    this.logErrors(faultyParcels)
 
     return faultyParcels
   }
@@ -162,7 +159,9 @@ export class ParcelDiagnosis extends Diagnosis {
 
     total = this.faultyParcels.length
     for (const [index, parcel] of this.faultyParcels.entries()) {
-      log.info(`[${index + 1}/${total}]: Treatment for parcel Id ${parcel.id}`)
+      this.log.info(
+        `[${index + 1}/${total}]: Treatment for parcel Id ${parcel.id}`
+      )
       const events = await BlockchainEvent.findByAnyArgs(
         ['assetId', '_landId', 'landId', 'tokenId', '_tokenId'],
         parcel.token_id

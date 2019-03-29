@@ -47,11 +47,6 @@ export class SanityActions {
     if (options.selfHeal) {
       await this.selfHeal(diagnostics, faultyAssets, options.fromBlock)
     } else {
-      log.info(`${faultyAssets.length} found`)
-
-      faultyAssets.forEach(asset =>
-        console.log(`Asset ${asset.id} with error: ${asset.error}`)
-      )
       process.exit()
     }
   }

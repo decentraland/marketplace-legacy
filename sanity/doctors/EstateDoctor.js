@@ -1,5 +1,5 @@
 import { eth } from 'decentraland-eth'
-import { Log, env } from 'decentraland-commons'
+import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
@@ -8,8 +8,6 @@ import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { eventNames } from '../../src/ethereum'
 import { Publication } from '../../src/Listing'
-
-const log = new Log('EstateDoctor')
 
 export class EstateDoctor extends Doctor {
   async diagnose() {
@@ -29,7 +27,6 @@ export class EstateDoctor extends Doctor {
           const error = await this.getEstateInconsistencies(estate)
 
           if (error) {
-            log.error(error)
             faultyEstates.push({ ...estate, error })
           }
         })
@@ -39,6 +36,8 @@ export class EstateDoctor extends Doctor {
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
     })
+
+    this.logErrors(faultyEstates)
 
     return faultyEstates
   }
