@@ -41,7 +41,6 @@ function getProgram(actions) {
         .action(async options => {
           log.info('Connecting to Ethereum node')
           await connectEth({ isWebsocket: options.websocket })
-
           log.info('Starting sanity')
           await actions.run(options)
         })

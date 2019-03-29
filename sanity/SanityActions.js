@@ -22,6 +22,7 @@ export class SanityActions {
     const diagnostics = []
     const faultyAssets = []
     const total = validations.length
+    const fromBlock = Number(options.fromBlock || 0)
 
     for (let i = 0; i < total; i++) {
       const key = validations[i]
@@ -40,12 +41,12 @@ export class SanityActions {
 
       if (options.selfHeal) {
         log.info(`Preparing ${key} problems`)
-        await diagnoses.prepare()
+        await diagnoses.prepare(fromBlock)
       }
     }
 
     if (options.selfHeal) {
-      await this.selfHeal(diagnostics, faultyAssets, options.fromBlock)
+      await this.selfHeal(diagnostics, faultyAssets, fromBlock)
     } else {
       log.info(`${faultyAssets.length} found`)
 
@@ -91,7 +92,7 @@ class SanitiyMonitorActions extends MonitorActions {
     super(...args)
     this.diagnostics = options.diagnostics
     this.faultyAssets = options.faultyAssets
-    this.fromBlock = parseInt(options.fromBlock, 10) || 0
+    this.fromBlock = options.fromBlock
     this.delayedEvents = {}
   }
 

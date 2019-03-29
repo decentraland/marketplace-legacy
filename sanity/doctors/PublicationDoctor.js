@@ -154,13 +154,13 @@ export class PublicationDiagnosis extends Diagnosis {
     return this.faultyAssets.length > 0
   }
 
-  async prepare() {
+  async prepare(fromBlock) {
     // TODO: asset_type
     return asyncBatch({
       elements: this.faultyAssets,
       callback: async assetsBatch => {
         const deletes = assetsBatch.map(asset =>
-          BlockchainEvent.deleteByArgs('assetId', asset.token_id)
+          BlockchainEvent.deleteByArgs('assetId', asset.token_id, fromBlock)
         )
         await Promise.all(deletes)
       },

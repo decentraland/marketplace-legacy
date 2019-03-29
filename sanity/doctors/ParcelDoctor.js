@@ -109,14 +109,17 @@ export class ParcelDiagnosis extends Diagnosis {
     return this.faultyParcels.length > 0
   }
 
-  async prepare() {
+  async prepare(fromBlock) {
     await asyncBatch({
       elements: this.faultyParcels,
       callback: async parcelsBatch => {
         const promises = parcelsBatch.map(parcel =>
           Promise.all([
-            BlockchainEvent.deleteByArgs('assetId', parcel.token_id),
-            BlockchainEvent.deleteByArgs('_landId', parcel.token_id),
+            BlockchainEvent.deleteByAnyArgs(
+              ['assetId', '_landId'],
+              parcel.token_id,
+              fromBlock
+            ),
             Parcel.update(
               { estate_id: null, update_operator: null },
               { id: parcel.id }
