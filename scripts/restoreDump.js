@@ -2,7 +2,7 @@
 
 import fs from 'fs'
 import { execSync } from 'child_process'
-import { Log, env } from 'decentraland-commons'
+import { Log, env, cli } from 'decentraland-commons'
 
 import { loadEnv, resolvePath, runpsql } from './utils'
 
@@ -19,6 +19,12 @@ export async function restoreDump(dumpPath) {
   if (!connectionString) {
     throw new Error('Connection string empty. Please fill your env file')
   }
+
+  const shouldContinue = await cli.confirm(
+    `Careful! this will DROP your database and re CREATE it
+Do you wish to continue?`
+  )
+  if (!shouldContinue) return process.exit()
 
   const databaseName = connectionString.split('/').pop()
   const dumpFullPath = resolvePath(dumpPath)
