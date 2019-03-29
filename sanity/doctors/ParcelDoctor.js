@@ -5,11 +5,10 @@ import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { EstateDiagnosis } from './EstateDoctor'
 import { asyncBatch } from '../../src/lib'
-import { Parcel, Estate } from '../../src/Asset'
+import { Parcel } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { Publication } from '../../src/Listing'
 import { parseCLICoords } from '../../scripts/utils'
-import { eventNames } from '../../src/ethereum'
 
 const log = new Log('ParcelDoctor')
 
