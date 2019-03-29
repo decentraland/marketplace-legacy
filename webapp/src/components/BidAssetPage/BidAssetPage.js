@@ -38,7 +38,9 @@ export default class BidAssetPage extends React.PureComponent {
         <div>
           <Container text textAlign="center" className="NotConnected">
             <SignInNotice
-              title={t('asset_bid.bid_asset', { asset_type: assetType })}
+              title={t('asset_bid.bid_asset', {
+                asset_type: t(`name.${assetType}`)
+              })}
             />
           </Container>
         </div>
