@@ -22,7 +22,7 @@ export class SanityActions {
     const diagnostics = []
     const faultyAssets = []
     const total = validations.length
-    const fromBlock = Number(options.fromBlock || 0)
+    const fromBlock = await this.getFromBlock(options)
 
     for (let i = 0; i < total; i++) {
       const key = validations[i]
@@ -40,7 +40,7 @@ export class SanityActions {
       diagnostics.push(diagnoses)
 
       if (options.selfHeal) {
-        log.info(`Preparing ${key} problems`)
+        log.info(`Preparing ${key} problems from block ${fromBlock}`)
         await diagnoses.prepare(fromBlock)
       }
     }
@@ -67,7 +67,9 @@ export class SanityActions {
 
   async selfHeal(diagnostics, faultyAssets, fromBlock) {
     if (diagnostics.length > 0) {
-      log.info('Attempting to heal problems. Re-fetching events')
+      log.info(
+        `Attempting to heal problems. Re-fetching events from block ${fromBlock}`
+      )
 
       // @nico Hack: change the command name so we can keep the flags but run the monitor
       process.argv = process.argv.map(arg => (arg === 'run' ? 'index' : arg))
@@ -84,6 +86,17 @@ export class SanityActions {
       log.info('Everything good. No differences found')
       process.exit()
     }
+  }
+
+  async getFromBlock(options) {
+    let fromBlock = Number(options.fromBlock || 0)
+
+    if (options.blocks) {
+      const lastBlock = await eth.getBlockNumber()
+      fromBlock = lastBlock - options.blocks
+    }
+
+    return fromBlock
   }
 }
 
