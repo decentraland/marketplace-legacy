@@ -57,7 +57,7 @@ export class Estate extends Model {
   static deleteBlockchainEvents(estateId, fromBlock) {
     return Estate.query(
       SQL`DELETE FROM ${SQL.raw(BlockchainEvent.tableName)}
-        WHERE ${EstateQueries.areEstateEvents(estateId)}
+        WHERE (${EstateQueries.areEstateEvents(estateId)})
         AND block_number >= ${fromBlock}`
     )
   }

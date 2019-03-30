@@ -83,7 +83,7 @@ export class BlockchainEvent extends Model {
   static deleteByAnyArgs(argNames, argValue, fromBlock) {
     return this.db.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
-        WHERE ${BlockchainEventQueries.byAnyArgs(argNames, argValue)}
+        WHERE (${BlockchainEventQueries.byAnyArgs(argNames, argValue)})
         AND block_number >= ${fromBlock}`
     )
   }
