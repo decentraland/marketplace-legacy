@@ -13,6 +13,7 @@ import { createLogger } from 'redux-logger'
 import { api } from 'lib/api'
 
 import { SET_ON_CHAIN_PARCEL_OWNER } from 'modules/auction/actions'
+import { ARCHIVE_BID, UNARCHIVE_BID } from 'modules/archivedBid/actions'
 
 import { migrations } from 'lib/localStorage'
 import { etherscan } from 'lib/EtherscanAPI'
@@ -59,8 +60,8 @@ const analyticsMiddleware = createAnalyticsMiddleware(
 
 const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   migrations,
-  paths: [['auction', 'parcelOnChainOwners']],
-  action: [SET_ON_CHAIN_PARCEL_OWNER],
+  paths: [['auction', 'parcelOnChainOwners'], 'archivedBid'],
+  actions: [SET_ON_CHAIN_PARCEL_OWNER, ARCHIVE_BID, UNARCHIVE_BID],
   storageKey: env.get('REACT_APP_LOCAL_STORAGE_KEY')
 })
 

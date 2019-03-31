@@ -43,7 +43,9 @@ const eventCache = {
     eventCache._values[eventCache.getKey(event)] = true
   },
   getKey(event) {
-    return event.tx_hash + event.name
+    return `${event.tx_hash}_${event.name}_${event.block_number}_${
+      event.log_index
+    }`
   },
   size() {
     return Object.keys(eventCache._values).length

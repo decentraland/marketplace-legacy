@@ -19,6 +19,7 @@ import {
 import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
 import { getDistrict } from 'shared/district'
 import { hasTags } from 'shared/parcel'
+import { shouldShowBid } from 'shared/bid'
 import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
@@ -68,6 +69,8 @@ export default class ParcelDetailPage extends React.PureComponent {
 
     const description = this.getDescription()
     const publication = getOpenPublication(parcel, publications)
+    const bidsToShow = bids.filter(bid => shouldShowBid(bid, isOwner))
+
     return (
       <div className="ParcelDetailPage">
         <Grid columns={2} stackable>
@@ -129,13 +132,13 @@ export default class ParcelDetailPage extends React.PureComponent {
           </Grid.Row>
         </Grid>
 
-        {bids &&
-          bids.length > 0 && (
+        {bidsToShow &&
+          bidsToShow.length > 0 && (
             <Grid stackable className="parcel-detail-row">
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
-                  {bids.map(bid => (
+                  {bidsToShow.map(bid => (
                     <Bid key={bid.id} bid={bid} isOwner={isOwner} />
                   ))}
                 </Grid.Column>

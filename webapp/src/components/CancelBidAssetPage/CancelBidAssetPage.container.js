@@ -68,7 +68,10 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     onFetchBidByAsset: () =>
       dispatch(
-        fetchBidByAssetRequest(assetId, ownProps.assetType, LISTING_STATUS.open)
+        fetchBidByAssetRequest(assetId, ownProps.assetType, [
+          LISTING_STATUS.open,
+          LISTING_STATUS.fingerprintChanged
+        ])
       ),
     onConfirm: bid => dispatch(cancelBidRequest(bid)),
     onCancel: () => dispatch(goBack())

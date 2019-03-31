@@ -21,6 +21,7 @@
     "expired": "Bid expired"
   },
   "asset_bid": {
+    "bid_asset": "Bid {asset_type}",
     "errors": {
       "maximum_expiration": "The maximum expiration date is {date} (6 months)",
       "maximum_land_price": "The maximum {asset_name} price is {value} MANA",
@@ -29,6 +30,8 @@
     },
     "expiration": "Expiration",
     "expiration_placeholder": "Expiration date for this publication",
+    "fingerprint_changed":
+      "This {asset_name} has been modified. Plase update or cancel the bid.",
     "insufficient_funds":
       "The bidder has insufficient funds to pay for the bid",
     "list_asset": "Place a bid for the {asset_name}",
@@ -221,7 +224,9 @@
   },
   "bid": {
     "placed": "bids placed",
-    "received": "bids received"
+    "received": "bids received",
+    "see_all": "See All",
+    "see_archived": "See Archives"
   },
   "buy_mana": {
     "action": "Buy More",
@@ -297,8 +302,8 @@
   "footer": {
     "code_of_ethics": "Code of Ethics",
     "color_key": "Color Key",
-    "copyright": "© 2018 Decentraland. All rights reserved.",
-    "mini_copyright": "© 2018 Decentraland.",
+    "copyright": "© 2019 Decentraland. All rights reserved.",
+    "mini_copyright": "© 2019 Decentraland.",
     "privacy_policy": "Privacy Policy",
     "terms": "Terms & Conditions"
   },
@@ -308,6 +313,8 @@
     "activity": "Activity",
     "add": "add",
     "address_placeholder": "0x...",
+    "archive": "Archive",
+    "archive_bids": "archived bids",
     "atlas": "Atlas",
     "auction": "Auction",
     "balance": "Balance",
@@ -373,6 +380,7 @@
     "transfer_irreversible":
       "Remember that transferring is an irreversible operation.",
     "type": "Type",
+    "unarchive": "Unarchive",
     "unauthorized": "Unauthorized",
     "undo": "Undo",
     "update": "Update",

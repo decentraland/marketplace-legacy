@@ -11,6 +11,7 @@ import { ASSET_TYPES } from 'shared/asset'
 import { shortenOwner } from 'shared/map'
 import { calculateMapProps } from 'shared/estate'
 import { splitCoordinate } from 'shared/coordinates'
+import { hasFingerprintChanged } from 'shared/bid'
 import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import ParcelPreview from 'components/ParcelPreview'
@@ -24,9 +25,15 @@ const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 export default class Bid extends React.PureComponent {
   static propTypes = {
     isOwner: PropTypes.bool.isRequired,
+    isBidArchived: PropTypes.bool.isRequired,
     bid: bidType.isRequired,
     estates: PropTypes.objectOf(estateType),
-    className: PropTypes.string
+    className: PropTypes.string,
+    address: PropTypes.string,
+    onConfirm: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    onArchive: PropTypes.func.isRequired,
+    onUnarchive: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -124,6 +131,25 @@ export default class Bid extends React.PureComponent {
     }
   }
 
+  getClassName = fingerprintChanged => {
+    const { showAssetDetail, className } = this.props
+
+    let gridClassName = `Bid ${className}`
+    gridClassName += showAssetDetail ? ' show-asset-detail' : ''
+    gridClassName += fingerprintChanged ? ' fingerprint-changed' : ''
+    return gridClassName
+  }
+
+  handleArchiveBid = () => {
+    const { bid, onArchive } = this.props
+    onArchive(bid)
+  }
+
+  handleUnarchiveBid = () => {
+    const { bid, onUnarchive } = this.props
+    onUnarchive(bid)
+  }
+
   render() {
     const {
       bid,
@@ -131,10 +157,13 @@ export default class Bid extends React.PureComponent {
       onConfirm,
       onUpdate,
       showAssetDetail,
-      className
+      isBidArchived,
+      address
     } = this.props
 
+    const isBidderOrSeller = address === bid.seller || address === bid.bidder
     const hasSameSellerAndBidder = bid.seller === bid.bidder
+    const fingerprintChanged = hasFingerprintChanged(bid)
     const assetDetailLink = this.getDetailLink()
     const sizeByResolution = {
       computer: showAssetDetail ? 4 : 3,
@@ -142,13 +171,10 @@ export default class Bid extends React.PureComponent {
       mobile: showAssetDetail ? 8 : 16
     }
 
+    const gridClassName = this.getClassName(fingerprintChanged)
+
     return (
-      <Grid
-        stackable
-        className={`Bid ${className} ${
-          showAssetDetail ? 'showAssetDetail' : ''
-        }`}
-      >
+      <Grid stackable className={gridClassName}>
         <Grid.Row>
           {showAssetDetail && (
             <React.Fragment>
@@ -190,7 +216,7 @@ export default class Bid extends React.PureComponent {
               <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.price')}</h3>
                 <Mana
-                  amount={bid.price}
+                  amount={Math.floor(bid.price)}
                   size={15}
                   scale={1}
                   className="mortgage-amount-icon"
@@ -200,33 +226,58 @@ export default class Bid extends React.PureComponent {
                 <h3>{t('global.time_left')}</h3>
                 <p>{distanceInWordStrict(parseInt(bid.expires_at, 10))}</p>
               </Grid.Column>
-              <Grid.Column
-                computer={showAssetDetail ? 16 : 7}
-                tablet={showAssetDetail ? 16 : 7}
-                mobile={16}
-                className={'actions'}
-              >
-                <Button
-                  className={`${isOwner ? 'primary' : ''}`}
-                  onClick={preventDefault(onConfirm)}
+              {isBidderOrSeller && (
+                <Grid.Column
+                  computer={showAssetDetail ? 16 : 7}
+                  tablet={showAssetDetail ? 16 : 7}
+                  mobile={16}
+                  className={'actions'}
                 >
-                  {!isOwner || hasSameSellerAndBidder
-                    ? t('global.cancel')
-                    : t('global.accept')}
-                </Button>
-                {!isOwner &&
-                  !hasSameSellerAndBidder && (
-                    <Button
-                      className="primary"
-                      onClick={preventDefault(onUpdate)}
-                    >
-                      {t('global.update')}
-                    </Button>
-                  )}
-              </Grid.Column>
+                  <Button
+                    className={`${isOwner ? 'primary' : ''}`}
+                    onClick={preventDefault(onConfirm)}
+                  >
+                    {!isOwner || hasSameSellerAndBidder
+                      ? t('global.cancel')
+                      : t('global.accept')}
+                  </Button>
+                  {!isOwner &&
+                    !hasSameSellerAndBidder && (
+                      <Button
+                        className="primary"
+                        onClick={preventDefault(onUpdate)}
+                      >
+                        {t('global.update')}
+                      </Button>
+                    )}
+                  {isOwner ? (
+                    isBidArchived ? (
+                      <Button onClick={preventDefault(this.handleUnarchiveBid)}>
+                        {t('global.unarchive')}
+                      </Button>
+                    ) : (
+                      <Button onClick={preventDefault(this.handleArchiveBid)}>
+                        {t('global.archive')}
+                      </Button>
+                    )
+                  ) : null}
+                </Grid.Column>
+              )}
             </Grid>
           </Grid.Column>
         </Grid.Row>
+        {!isOwner &&
+          fingerprintChanged && (
+            <Grid.Row className="fingerprint-changed">
+              <Grid.Column>
+                <p>
+                  {t('asset_bid.fingerprint_changed', {
+                    asset_name: t('name.estate')
+                  })}
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          )}
       </Grid>
     )
   }

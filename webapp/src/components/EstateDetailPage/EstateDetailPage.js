@@ -10,7 +10,13 @@ import { hasTags } from 'shared/parcel'
 import { calculateMapProps } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
 import { isDistrict } from 'shared/district'
-import { estateType, publicationType, bidType } from 'components/types'
+import { shouldShowBid } from 'shared/bid'
+import {
+  estateType,
+  publicationType,
+  bidType,
+  walletType
+} from 'components/types'
 import EstateActions from './EstateActions'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
@@ -36,7 +42,8 @@ export default class EstateDetailPage extends React.PureComponent {
     onEditMetadata: PropTypes.func.isRequired,
     onManageEstate: PropTypes.func.isRequired,
     onParcelClick: PropTypes.func.isRequired,
-    bids: PropTypes.arrayOf(bidType)
+    bids: PropTypes.arrayOf(bidType),
+    wallet: walletType
   }
 
   getEstateParcels() {
@@ -74,7 +81,8 @@ export default class EstateDetailPage extends React.PureComponent {
       onEditMetadata,
       onManageEstate,
       onParcelClick,
-      bids
+      bids,
+      wallet
     } = this.props
 
     if (estate.data.parcels.length === 0) {
@@ -83,6 +91,7 @@ export default class EstateDetailPage extends React.PureComponent {
 
     const publication = getOpenPublication(estate, publications)
     const { center } = calculateMapProps(estate.data.parcels)
+    const bidsToShow = bids.filter(bid => shouldShowBid(bid, isOwner))
 
     return (
       <div className="EstateDetailPage">
@@ -186,20 +195,21 @@ export default class EstateDetailPage extends React.PureComponent {
               }
             >
               <EstateActions
+                wallet={wallet}
                 isOwner={isOwner}
                 publications={publications}
                 estate={estate}
-                bids={bids}
+                bids={bidsToShow}
               />
             </Grid.Column>
           </Grid.Row>
 
-          {bids &&
-            bids.length > 0 && (
+          {bidsToShow &&
+            bidsToShow.length > 0 && (
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
-                  {bids.map(bid => (
+                  {bidsToShow.map(bid => (
                     <Bid key={bid.id} bid={bid} isOwner={isOwner} />
                   ))}
                 </Grid.Column>

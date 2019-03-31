@@ -19,6 +19,7 @@
     "expired": "出价过期"
   },
   "asset_bid": {
+    "bid_asset": "出价 {asset_type}",
     "errors": {
       "maximum_expiration": "最迟到期时间为 {date}（6个月）",
       "maximum_land_price": "{asset_name} 的最高价为 {value} MANA",
@@ -27,6 +28,7 @@
     },
     "expiration": "到期",
     "expiration_placeholder": "截止日期",
+    "fingerprint_changed": "此{asset_name}已被修改。 请更新或取消出价。",
     "insufficient_funds": "出价人没有足够的资金支付",
     "list_asset": "对 {asset_name} 出价",
     "not_enough": "您的帐户中没有足够的 MANA",
@@ -202,7 +204,9 @@
   },
   "bid": {
     "placed": "出价",
-    "received": "收到的出价"
+    "received": "收到的出价",
+    "see_all": "查看全部",
+    "see_archived": "归档的出价"
   },
   "buy_mana": {
     "action": "购买",
@@ -258,7 +262,8 @@
     "subtitle": "设置名称和说明，及连块土地的相关地块。"
   },
   "estate_select": {
-    "bids_warning": "这个连块土地有人出价，如果增加或移除土地，则所有的出价将无效。",
+    "bids_warning":
+      "这个连块土地有人出价，如果增加或移除土地，则所有的出价将无效。",
     "description": "选择彼此相邻的地块",
     "detail": "连块土地细节",
     "edit_selection": "在地图上选择地块",
@@ -267,7 +272,7 @@
   },
   "fatfinger_modal": {
     "bid_type": "出价",
-    "description": "你要为{price} {asset_name} tk1",
+    "description": "你要对 {asset_name} {listing_type}，价格为 {price} ",
     "error": "价格不符合",
     "publication_type": "名单",
     "re-enter": "请重新输入价格进行确认"
@@ -275,8 +280,8 @@
   "footer": {
     "code_of_ethics": "道德准则",
     "color_key": "图示",
-    "copyright": "© 2018 Decentraland。保留所有权利。",
-    "mini_copyright": "© 2018 Decentraland.",
+    "copyright": "© 2019 Decentraland。保留所有权利。",
+    "mini_copyright": "© 2019 Decentraland.",
     "privacy_policy": "隐私政策",
     "terms": "服务条款"
   },
@@ -286,6 +291,8 @@
     "activity": "活动",
     "add": "加",
     "address_placeholder": "0x...",
+    "archive": "归档",
+    "archive_bids": "归档的出价",
     "atlas": "地图",
     "auction": "拍卖",
     "balance": "余额",
@@ -350,6 +357,7 @@
     "time_left": "剩余时间",
     "transfer_irreversible": "请记住，转让是不可逆转的操作。",
     "type": "类型",
+    "unarchive": "取消封存",
     "unauthorized": "未授权",
     "undo": "撤消",
     "update": "更新",

@@ -7,7 +7,7 @@
   margin: 0;
 }
 
-.ui.grid.stackable.grid.Bid:not(.showAssetDetail) {
+.ui.grid.stackable.grid.Bid:not(.show-asset-detail) {
   margin: 1rem auto !important;
 }
 
@@ -32,6 +32,10 @@
 .Bid .row .ParcelCanvasWrapper {
   border-radius: 10px 0 0 10px;
   overflow: hidden;
+}
+
+.Bid.fingerprint-changed .row .ParcelCanvasWrapper {
+  border-radius: 10px 0 0 0;
 }
 
 .Bid .row h3 {
@@ -75,7 +79,7 @@
   text-align: left;
 }
 
-.ui.grid.stackable.grid.Bid:not(.showAssetDetail) .row .actions {
+.ui.grid.stackable.grid.Bid:not(.show-asset-detail) .row .actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -87,6 +91,15 @@
 
 .ui.grid.Bid .row .actions button + button {
   margin-left: 15px !important;
+}
+
+.ui.stackable.grid.Bid .row.fingerprint-changed {
+  margin-top: 1rem;
+  border-top: 1px solid var(--background);
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--gray);
 }
 
 @media(max-width: 768px) { 
@@ -102,7 +115,7 @@
     text-align: left;
   }
 
-  .ui.grid.stackable.grid.Bid:not(.showAssetDetail) .row .actions {
+  .ui.grid.stackable.grid.Bid:not(.show-asset-detail) .row .actions {
     justify-content: flex-start;
   }
 }

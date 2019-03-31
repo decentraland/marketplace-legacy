@@ -1,15 +1,18 @@
-import { Log } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 
+import { getParcelIdFromEvent, debouncedUpsertTileAsset } from './utils'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
+import { Approval } from '../../src/Approval'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { ASSET_TYPES, decodeMetadata } from '../../shared/asset'
 import { getParcelMatcher, isEqualCoords } from '../../shared/parcel'
-import { getParcelIdFromEvent, debouncedUpsertTileAsset } from './utils'
+import { isDuplicatedConstraintError } from '../../src/database'
 
 const log = new Log('estateReducer')
+const shouldUpdateCache = !env.get('SKIP_TILES_CACHE_UPDATE', false)
 
 export async function estateReducer(event) {
   const { address } = event
@@ -25,7 +28,7 @@ export async function estateReducer(event) {
 }
 
 async function reduceEstateRegistry(event) {
-  const { tx_hash, block_number, name } = event
+  const { tx_hash, block_number, name, address } = event
 
   switch (name) {
     case eventNames.CreateEstate: {
@@ -81,7 +84,9 @@ async function reduceEstateRegistry(event) {
           { data: { ...estate.data, parcels } },
           { id: estate.id }
         )
-        debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+        if (shouldUpdateCache) {
+          debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+        }
       }
       break
     }
@@ -108,7 +113,9 @@ async function reduceEstateRegistry(event) {
         { data: { ...estate.data, parcels } },
         { id: estate.id }
       )
-      debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+      if (shouldUpdateCache) {
+        debouncedUpsertTileAsset(_estateId, ASSET_TYPES.estate)
+      }
       break
     }
     case eventNames.Transfer: {
@@ -128,12 +135,14 @@ async function reduceEstateRegistry(event) {
         {
           owner: _to.toLowerCase(),
           update_operator: null,
+          operator: null,
           last_transferred_at
         },
         { id: estateId }
       )
-
-      await Tile.upsertAsset(estateId, ASSET_TYPES.estate)
+      if (shouldUpdateCache) {
+        await Tile.upsertAsset(estateId, ASSET_TYPES.estate)
+      }
       break
     }
     case eventNames.UpdateOperator: {
@@ -164,6 +173,47 @@ async function reduceEstateRegistry(event) {
         Estate.update({ data }, { id: estate.id }),
         Tile.update({ name: data.name }, { estate_id: estate.id })
       ])
+      break
+    }
+    case eventNames.Approval: {
+      const { _approved } = event.args
+      const estateId = event.args._tokenId
+
+      log.info(
+        `[${name}] Updating Estate id: "${estateId}" operator: ${_approved}`
+      )
+      await Estate.update(
+        { operator: _approved.toLowerCase() },
+        { id: estateId }
+      )
+      break
+    }
+    case eventNames.ApprovalForAll: {
+      const _owner = event.args._owner.toLowerCase()
+      const _operator = event.args._operator.toLowerCase()
+      const _approved = event.args._approved === 'true'
+
+      try {
+        log.info(
+          `[${name}] ${_owner} ${
+            _approved ? 'set' : 'remove'
+          } ${_operator} as approved for all`
+        )
+        if (_approved) {
+          await Approval.approveForAll(address, _owner, _operator)
+        } else {
+          await Approval.delete({
+            token_address: address,
+            owner: _owner,
+            operator: _operator
+          })
+        }
+      } catch (error) {
+        if (!isDuplicatedConstraintError(error)) throw error
+        log.info(
+          `[${name}] ${_owner} has already set ${_operator} as approved for all`
+        )
+      }
       break
     }
     default:

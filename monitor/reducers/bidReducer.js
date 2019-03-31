@@ -63,6 +63,11 @@ async function reduceBid(event) {
       ])
 
       const asset = await Asset.getNew(assetType).findById(assetId)
+
+      if (!asset) {
+        return log.info(`[${name}] Asset with id: ${_tokenId} does not exist`)
+      }
+
       if (isDistrict(asset)) {
         return log.info(
           `[${name}] Token with address: ${_tokenAddress} and id: ${_tokenId} is part of a district and won't be indexed`
@@ -132,26 +137,25 @@ async function reduceBid(event) {
     }
     case eventNames.RemoveLand:
     case eventNames.AddLand: {
-      const bids = await Bid.getWithStatuses(address, assetId, [
+      const tokenId = event.args._estateId
+      const exists = await Bid.hasWithStatuses(address, tokenId, [
         LISTING_STATUS.open,
         LISTING_STATUS.fingerprintChanged
       ])
 
-      const estateHasActiveBids = bids.length > 0
-
-      if (estateHasActiveBids) {
+      if (exists) {
         log.info(
-          `[${name}] Updating bids for the Estate ${assetId}, fingerprint changed`
+          `[${name}] Updating bids for the Estate ${tokenId}, fingerprint changed`
         )
 
         const estateContract = eth.getContract('EstateRegistry')
-        const fingerprint = await estateContract.getFingerprint(assetId)
+        const fingerprint = await estateContract.getFingerprint(tokenId)
 
         await Bid.updateBidsByAssetFingerprintChange(
           blockTime,
           block_number,
-          contractAddresses.EstateRegistry,
-          assetId,
+          address,
+          tokenId,
           fingerprint
         )
       }
@@ -174,17 +178,20 @@ async function reduceBid(event) {
         return
       }
 
-      log.info(
-        `[${name}] Updating seller for the asset with token address ${address} and id "${asset_id}" to "${to}"`
-      )
+      const exists = await Bid.count({ token_address: address, asset_id })
+      if (exists) {
+        log.info(
+          `[${name}] Updating seller for the asset with token address ${address} and id "${asset_id}" to "${to}"`
+        )
 
-      await Bid.updateAssetOwner(
-        to.toLowerCase(),
-        blockTime,
-        block_number,
-        address,
-        asset_id
-      )
+        await Bid.updateAssetOwner(
+          to.toLowerCase(),
+          blockTime,
+          block_number,
+          address,
+          asset_id
+        )
+      }
 
       break
     }

@@ -1,11 +1,13 @@
 import { eth } from 'decentraland-eth'
 import { Log, env } from 'decentraland-commons'
+
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
 import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { eventNames } from '../../src/ethereum'
 import { ASSET_TYPES } from '../../shared/asset'
 import { isParcel } from '../../shared/parcel'
 import { LISTING_STATUS } from '../../shared/listing'
@@ -29,9 +31,8 @@ export class PublicationDoctor extends Doctor {
 
     const assets = parcels.concat(estates)
     const faultyAssets = await this.filterInconsistentPublishedAssets(assets)
-    const inactivePublications = await Publication.findInactive()
 
-    return new PublicationDiagnosis(faultyAssets, inactivePublications)
+    return new PublicationDiagnosis(faultyAssets)
   }
 
   async filterInconsistentPublishedAssets(allAssets) {
@@ -41,19 +42,13 @@ export class PublicationDoctor extends Doctor {
       elements: allAssets,
       callback: async assetsBatch => {
         const promises = assetsBatch.map(async asset => {
-          const errors = [this.getPublicationInconsistencies(asset)]
+          const error = await this.getPublicationInconsistencies(asset)
 
-          if (isParcel(asset)) {
-            errors.push(this.getLegacyPublicationInconsistencies(asset))
-          }
-
-          const error = (await Promise.all(errors)).join('\n')
-          if (error.trim()) {
+          if (error.length) {
             log.error(error)
             faultyAssets.push({ ...asset, error })
           }
         })
-
         await Promise.all(promises)
       },
       batchSize: env.get('BATCH_SIZE'),
@@ -71,25 +66,37 @@ export class PublicationDoctor extends Doctor {
     const nftAddress = this.getNFTAddressFromAsset(asset)
     const assetType = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
     const publication = (await Publication.findByAssetId(id, assetType))[0]
-    const order = await marketplace.orderByAssetId(nftAddress, token_id)
-    const contractId = order[0]
-
-    return this.getPublicationError(id, publication, contractId)
-  }
-
-  async getLegacyPublicationInconsistencies(parcel) {
-    if (!parcel) return ''
-
-    const { id, token_id } = parcel
-    const marketplace = eth.getContract('LegacyMarketplace')
-    const publication = (await Publication.findByAssetId(
-      id,
-      ASSET_TYPES.parcel
+    let publicationId = (await marketplace.orderByAssetId(
+      nftAddress,
+      token_id
     ))[0]
-    const auction = await marketplace.auctionByAssetId(token_id)
-    const contractId = auction[0]
 
-    return this.getPublicationError(id, publication, contractId)
+    if (isParcel(asset)) {
+      const legacyMarketplace = eth.getContract('LegacyMarketplace')
+      const contractId = (await legacyMarketplace.auctionByAssetId(token_id))[0]
+
+      // Check if the last publication was created by the LegacyMarketplace contract or if it is
+      // the only one and was not inserted.
+      if (this.isNullHash(publicationId) && !this.isNullHash(contractId)) {
+        const events = await BlockchainEvent.findByArgs(
+          'assetId',
+          asset.token_id
+        )
+        const lastAuctionCreatedEvent = events
+          .filter(event => event.name === eventNames.AuctionCreated)
+          .pop()
+
+        if (
+          !publication ||
+          !lastAuctionCreatedEvent ||
+          lastAuctionCreatedEvent.block_number >= publication.block_number
+        ) {
+          publicationId = contractId
+        }
+      }
+    }
+
+    return this.getPublicationError(id, publication, publicationId)
   }
 
   getPublicationError(assetId, publication, contractId) {
@@ -134,38 +141,58 @@ export class PublicationDoctor extends Doctor {
 }
 
 export class PublicationDiagnosis extends Diagnosis {
-  constructor(faultyAssets, inactivePublications) {
+  constructor(faultyAssets) {
     super()
     this.faultyAssets = faultyAssets
-    this.inactivePublications = inactivePublications
+  }
+
+  getFaultyAssets() {
+    return this.faultyAssets
   }
 
   hasProblems() {
-    return this.faultyAssets.length > 0 || this.inactivePublications.length > 0
+    return this.faultyAssets.length > 0
   }
 
   async prepare() {
     // TODO: asset_type
-    const deletes = this.faultyAssets.map(asset =>
-      BlockchainEvent.deleteByArgs('assetId', asset.token_id)
-    )
-    return Promise.all(deletes)
+    return asyncBatch({
+      elements: this.faultyAssets,
+      callback: async assetsBatch => {
+        const deletes = assetsBatch.map(asset =>
+          BlockchainEvent.deleteByArgs('assetId', asset.token_id)
+        )
+        await Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
   }
 
   async doTreatment() {
     // TODO: asset_type
-    await Promise.all(
-      this.faultyAssets.map(parcel => Publication.deleteByAssetId(parcel.id))
-    )
+    await asyncBatch({
+      elements: this.faultyAssets,
+      callback: async assetsBatch => {
+        const deletes = assetsBatch.map(asset =>
+          Publication.deleteByAssetId(asset.id)
+        )
+
+        await Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
 
     // TODO: add NFTAddress
-    for (const asset of this.faultyAssets) {
+    const total = this.faultyAssets.length
+    for (const [index, asset] of this.faultyAssets.entries()) {
+      log.info(`[${index + 1}/${total}]: Treatment for asset Id ${asset.id}`)
       const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
       await this.replayEvents(events)
     }
 
-    if (this.inactivePublications.length > 0) {
-      await Publication.updateExpired()
-    }
+    log.info('Update expired publications')
+    await Publication.updateExpired()
   }
 }

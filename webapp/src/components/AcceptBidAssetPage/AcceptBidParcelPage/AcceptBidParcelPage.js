@@ -54,7 +54,7 @@ export default class AcceptBidParcelPage extends React.PureComponent {
                       id="asset_accept_bid.about_to_accept_bid"
                       values={{
                         name: <ParcelDetailLink parcel={parcel} />,
-                        price: <Mana amount={price} size={14} />
+                        price: <Mana amount={Math.floor(price)} size={14} />
                       }}
                     />
                   )

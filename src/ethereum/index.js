@@ -1,14 +1,17 @@
+import { w3cwebsocket } from 'websocket'
 import { eth, contracts } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
+// @nacho hack: eth-connect expects to have window defined
+global.window = {}
+const providers = require('eth-connect')
 
 let isLoaded = false
-
 export let contractsData // { ContractName: { address, eventNames: [] } }
 export let contractNames // [ContractName, ...]
 export let contractAddresses // ContractName: address
 export let eventNames // eventName: eventName
 
-export async function connectEth() {
+export async function connectEth(options = {}) {
   if (!isLoaded) loadContracts()
 
   const contractsToConnect = []
@@ -20,9 +23,27 @@ export async function connectEth() {
     contractsToConnect.push(new contracts[contractName](contract.address))
   }
 
+  let provider
+
+  if (options.isWebsocket) {
+    const websocketURL = env.get('WEB_SOCKET_RPC_URL')
+    if (!websocketURL) {
+      throw new Error(
+        'You need to set the WEB_SOCKET_RPC_URL env var to connect via websockets'
+      )
+    }
+
+    provider = new providers.WebSocketProvider(websocketURL, {
+      WebSocketConstructor: w3cwebsocket
+    })
+    await provider.connection
+  } else {
+    provider = env.get('RPC_URL')
+  }
+
   await eth.connect({
     contracts: contractsToConnect,
-    provider: env.get('RPC_URL')
+    provider
   })
 
   return contractsData
@@ -44,7 +65,14 @@ export function loadContracts() {
     },
     LANDRegistry: {
       address: getEnvAddress('LAND_REGISTRY_CONTRACT_ADDRESS'),
-      eventNames: ['Update', 'Transfer', 'UpdateOperator']
+      eventNames: [
+        'Update',
+        'Transfer',
+        'UpdateOperator',
+        'Approval',
+        'ApprovalForAll'
+      ],
+      count: { Transfer: 2 }
     },
     EstateRegistry: {
       address: getEnvAddress('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
@@ -54,7 +82,9 @@ export function loadContracts() {
         'RemoveLand',
         'Transfer',
         'Update',
-        'UpdateOperator'
+        'UpdateOperator',
+        'Approval',
+        'ApprovalForAll'
       ]
     },
     LANDAuction: {
@@ -114,4 +144,14 @@ function getEnvAddress(name) {
     throw new Error(`Could not find env ${name}`)
   }
   return value.toLowerCase()
+}
+
+export function getCountOfEvents(contractName, eventName) {
+  if (!contractsData[contractName].count) {
+    return 1
+  }
+
+  const types = contractsData[contractName].count
+
+  return types[eventName] || 1
 }

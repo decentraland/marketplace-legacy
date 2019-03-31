@@ -27,7 +27,8 @@ export class BlockchainEvent extends Model {
        ${this.db.toColumnFields(blockchainEvent)}
       ) VALUES(
        ${this.db.toValuePlaceholders(blockchainEvent)}
-      ) ON CONFLICT (tx_hash, log_index) DO NOTHING;`,
+      ) ON CONFLICT (tx_hash, log_index) DO UPDATE SET
+       ${this.db.toAssignmentFields(blockchainEvent)};`,
       values
     )
   }

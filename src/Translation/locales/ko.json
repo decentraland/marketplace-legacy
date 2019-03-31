@@ -21,6 +21,7 @@
     "expired": "입찰가 만료"
   },
   "asset_bid": {
+    "bid_asset": "입찰가 {asset_type}",
     "errors": {
       "maximum_expiration": "최대 만기 날짜는 {date} (6 개월)입니다.",
       "maximum_land_price": "최대 {asset_name} 가격은 {value} MANA입니다.",
@@ -29,6 +30,8 @@
     },
     "expiration": "만료",
     "expiration_placeholder": "이 발행물의 만료일",
+    "fingerprint_changed":
+      "이 {asset_name}가 수정되었습니다. 입찰가를 업데이트하거나 취소하십시오.",
     "insufficient_funds": "입찰자가 입찰 비용을 지불하기에 부족합니다.",
     "list_asset": "{asset_name}에 입찰하기",
     "not_enough": "계정에 MANA가 충분하지 않습니다.",
@@ -217,7 +220,9 @@
   },
   "bid": {
     "placed": "배치 된 입찰가",
-    "received": "받은 입찰가"
+    "received": "받은 입찰가",
+    "see_all": "모두보기",
+    "see_archived": "자료실보기"
   },
   "buy_mana": {
     "action": "더 사",
@@ -291,8 +296,8 @@
   "footer": {
     "code_of_ethics": "윤리 강령",
     "color_key": "색상 키",
-    "copyright": "© 2018 Decentraland. 판권 소유.",
-    "mini_copyright": "© 2018 Decentraland.",
+    "copyright": "© 2019 Decentraland. 판권 소유.",
+    "mini_copyright": "© 2019 Decentraland.",
     "privacy_policy": "개인 정보 정책",
     "terms": "이용 약관"
   },
@@ -302,6 +307,8 @@
     "activity": "활동",
     "add": "더하다",
     "address_placeholder": "0x...",
+    "archive": "아카이브",
+    "archive_bids": "저장된 입찰가",
     "atlas": "지도",
     "auction": "경매",
     "balance": "밸런스",
@@ -366,6 +373,7 @@
     "time_left": "남은 시간",
     "transfer_irreversible": "전송은 돌이킬 수없는 작업임을 기억하십시오.",
     "type": "유형",
+    "unarchive": "보관 취소",
     "unauthorized": "무단",
     "undo": "끄르다",
     "update": "최신 정보",

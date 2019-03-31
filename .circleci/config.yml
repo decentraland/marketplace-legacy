@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.11.3
+      - image: circleci/node:8.15.1
       - image: circleci/postgres:9.6
         environment:
           POSTGRES_USER: marketplace
@@ -54,7 +54,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:8.11.3
+      - image: circleci/node:8.15.1
     working_directory: /tmp/marketplace
     steps:
       - restore_cache:

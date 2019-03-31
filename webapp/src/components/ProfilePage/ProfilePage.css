@@ -22,13 +22,20 @@
   padding: 1px;
 }
 
+.ProfilePage  .profile-grid  .archive-toggle-title {
+  text-align: right;
+  display: block;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
 .ProfilePage .profile-grid .bids-title {
   text-transform: uppercase;
   color: var(--gray);
 }
 
-.ProfilePage .profile-grid .bids-title.placed {
-  margin-top: 50px
+.ProfilePage .profile-grid .cards.with-placed {
+  margin-bottom: 50px
 }
 
 .ProfilePage .pagination {

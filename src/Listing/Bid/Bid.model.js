@@ -80,13 +80,14 @@ export class Bid extends Model {
     )
   }
 
-  static async getWithStatuses(tokenAddress, tokenId, statuses) {
-    return this.db.query(
-      SQL`SELECT *
+  static async hasWithStatuses(tokenAddress, tokenId, statuses) {
+    const result = await this.db.query(
+      SQL`SELECT COUNT(*)
         FROM ${raw(this.tableName)}
         WHERE ${BidQueries.isForToken(tokenAddress, tokenId)}
           AND ${ListingQueries.hasStatuses(statuses)}`
     )
+    return parseInt(result[0].count, 10)
   }
 
   /**

@@ -136,7 +136,7 @@ export function addressReducer(state = INITIAL_STATE, action) {
 
       const parcel_ids = new Set([
         ...(addressData.parcel_ids || []),
-        bids
+        ...bids
           .filter(
             ({ asset_type, seller }) =>
               ASSET_TYPES.parcel === asset_type && seller === action.address

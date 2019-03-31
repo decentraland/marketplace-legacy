@@ -9,6 +9,10 @@ import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
+import {
+  getWalletArchivedBids,
+  getWalletUnarchivedBids
+} from 'modules/archivedBid/selectors'
 import { orderBids } from 'modules/bid/utils'
 import ProfilePage from './ProfilePage'
 
@@ -27,13 +31,18 @@ const mapState = (state, { location, match }) => {
   let mortgagedParcels = []
   let publishedEstates = []
   let bids = []
+  let allBidsCount = 0
   if (address in addresses) {
     parcels = addresses[address].parcels
     contributions = addresses[address].contributions
     publishedParcels = addresses[address].publishedParcels
     publishedEstates = addresses[address].publishedEstates
     estates = addresses[address].estates
-    bids = orderBids(addresses[address].bids, address)
+    allBidsCount = addresses[address].bids.length
+    bids =
+      tab === PROFILE_PAGE_TABS.archivebids
+        ? getWalletArchivedBids(state, addresses[address].bids)
+        : getWalletUnarchivedBids(state, addresses[address].bids)
     mortgagedParcels = addresses[address].mortgagedParcels
   }
 
@@ -61,7 +70,8 @@ const mapState = (state, { location, match }) => {
       pagination = Pagination.paginate(mortgagedParcels, page)
       break
     }
-    case PROFILE_PAGE_TABS.bids: {
+    case PROFILE_PAGE_TABS.bids:
+    case PROFILE_PAGE_TABS.archivebids: {
       bids = orderBids(bids, address)
       pagination = Pagination.paginate(bids, page)
       break
@@ -87,6 +97,7 @@ const mapState = (state, { location, match }) => {
     isLoading,
     isEmpty,
     bids,
+    hiddenBidsCount: allBidsCount - bids.length,
     isOwner: wallet.address === address,
     isConnecting: isConnecting(state)
   }

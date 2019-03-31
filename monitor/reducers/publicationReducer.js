@@ -1,7 +1,7 @@
 import { eth, txUtils } from 'decentraland-eth'
-import { Log } from 'decentraland-commons'
+import { Log, env } from 'decentraland-commons'
 
-import { Publication, Listing } from '../../src/Listing'
+import { Publication } from '../../src/Listing'
 import { BlockTimestampService } from '../../src/BlockTimestamp'
 import { Tile } from '../../src/Tile'
 import { contractAddresses, eventNames } from '../../src/ethereum'
@@ -10,6 +10,7 @@ import { LISTING_STATUS } from '../../shared/listing'
 import { getAssetTypeFromEvent, getAssetIdFromEvent } from './utils'
 
 const log = new Log('publicationReducer')
+const shouldUpdateCache = !env.get('SKIP_TILES_CACHE_UPDATE', false)
 
 export async function publicationReducer(event) {
   const { address, name } = event
@@ -93,7 +94,9 @@ async function reduceMarketplace(event) {
           block_number,
           contract_id
         })
-        await Tile.upsertAsset(assetId, assetType)
+        if (shouldUpdateCache) {
+          await Tile.upsertAsset(assetId, assetType)
+        }
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
         log.info(
@@ -108,26 +111,23 @@ async function reduceMarketplace(event) {
       const buyer = event.args.winner || event.args.buyer // winner is from the LegacyMarketplace
       const contract_id = event.args.id
 
-      const Asset = Listing.getListableAsset(assetType)
-
       if (!contract_id) {
         return log.info(`[${name}] Publication ${tx_hash} doesn't have an id`)
       }
       log.info(`[${name}] Publication ${contract_id} sold to ${buyer}`)
 
-      await Promise.all([
-        Publication.update(
-          {
-            status: LISTING_STATUS.sold,
-            buyer: buyer.toLowerCase(),
-            price: eth.utils.fromWei(totalPrice),
-            block_time_updated_at: blockTime
-          },
-          { contract_id }
-        ),
-        Asset.update({ owner: buyer }, { id: assetId })
-      ])
-      await Tile.upsertAsset(assetId, assetType)
+      await Publication.update(
+        {
+          status: LISTING_STATUS.sold,
+          buyer: buyer.toLowerCase(),
+          price: eth.utils.fromWei(totalPrice),
+          block_time_updated_at: blockTime
+        },
+        { contract_id }
+      )
+      if (shouldUpdateCache) {
+        await Tile.upsertAsset(assetId, assetType)
+      }
       break
     }
     case eventNames.AuctionCancelled:
@@ -146,7 +146,9 @@ async function reduceMarketplace(event) {
         },
         { contract_id }
       )
-      await Tile.upsertAsset(assetId, assetType)
+      if (shouldUpdateCache) {
+        await Tile.upsertAsset(assetId, assetType)
+      }
       break
     }
     default:

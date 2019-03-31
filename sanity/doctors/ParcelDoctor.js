@@ -1,10 +1,14 @@
 import { Log, env } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
+
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
-import { Parcel, ParcelService } from '../../src/Asset'
+import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { Publication } from '../../src/Listing'
 import { parseCLICoords } from '../../scripts/utils'
+import { eventNames } from '../../src/ethereum'
 
 const log = new Log('ParcelDoctor')
 
@@ -24,40 +28,46 @@ export class ParcelDoctor extends Doctor {
   }
 
   async filterInconsistentParcels(parcels) {
-    const service = new ParcelService()
     const faultyParcels = []
+    const landRegistry = eth.getContract('LANDRegistry')
+    const estateRegistry = eth.getContract('EstateRegistry')
 
     await asyncBatch({
       elements: parcels,
       callback: async parcelsBatch => {
-        let updatedParcels = []
+        const promises = parcelsBatch.map(async parcel => {
+          const [currentOwner, currentEstateId] = await Promise.all([
+            landRegistry.ownerOf(parcel.token_id),
+            estateRegistry.landIdEstate(parcel.token_id)
+          ])
 
-        try {
-          updatedParcels = await service.addOwners(parcelsBatch)
-        } catch (error) {
-          log.info(`Error processing ${parcelsBatch.length} parcels, skipping`)
-          return
-        }
+          if (this.isPartOfEstateMismatch(currentEstateId.toString(), parcel)) {
+            const { id, estate_id } = parcel
+            const error = `Mismatch: estate_id of '${id}' is '${estate_id}' on the DB and '${currentEstateId}' in blockchain`
+            log.error(error)
+            faultyParcels.push({ ...parcel, currentEstateId, error })
+            return
+          }
 
-        for (const [index, parcel] of parcelsBatch.entries()) {
-          const currentOwner = updatedParcels[index].owner
-
-          if (this.isOwnerMissmatch(currentOwner, parcel)) {
+          if (this.isOwnerMismatch(currentOwner, parcel)) {
             const { id, owner } = parcel
             const error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
             log.error(error)
             faultyParcels.push({ ...parcel, error })
+            return
           }
 
-          const currentUpdateOperator = updatedParcels[index].update_operator
+          const currentUpdateOperator = parcel.update_operator
 
           if (this.isUpdateOperatorMismatch(currentUpdateOperator, parcel)) {
             const { id, update_operator } = parcel
             const error = `Mismatch: operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
             log.error(error)
             faultyParcels.push({ ...parcel, error })
+            return
           }
-        }
+        })
+        await Promise.all(promises)
       },
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
@@ -66,7 +76,7 @@ export class ParcelDoctor extends Doctor {
     return faultyParcels
   }
 
-  isOwnerMissmatch(currentOwner, parcel) {
+  isOwnerMismatch(currentOwner, parcel) {
     return !!currentOwner && parcel.owner !== currentOwner
   }
 
@@ -74,6 +84,13 @@ export class ParcelDoctor extends Doctor {
     return (
       !!currentUpdateOperator &&
       parcel.update_operator !== currentUpdateOperator
+    )
+  }
+
+  isPartOfEstateMismatch(currentEstateId, parcel) {
+    return (
+      (parcel.estate_id && parcel.estate_id !== currentEstateId) ||
+      (!parcel.estate_id && currentEstateId > 0)
     )
   }
 }
@@ -84,29 +101,82 @@ export class ParcelDiagnosis extends Diagnosis {
     this.faultyParcels = faultyParcels
   }
 
+  getFaultyAssets() {
+    return this.faultyParcels
+  }
+
   hasProblems() {
     return this.faultyParcels.length > 0
   }
 
   async prepare() {
-    let deletes = []
-    for (const parcel of this.faultyParcels) {
-      deletes = deletes.concat([
-        BlockchainEvent.deleteByArgs('assetId', parcel.token_id),
-        BlockchainEvent.deleteByArgs('_landId', parcel.token_id),
-        Parcel.update(
-          { estate_id: null, update_operator: null },
-          { id: parcel.id }
+    await asyncBatch({
+      elements: this.faultyParcels,
+      callback: async parcelsBatch => {
+        const promises = parcelsBatch.map(parcel =>
+          Promise.all([
+            BlockchainEvent.deleteByArgs('assetId', parcel.token_id),
+            BlockchainEvent.deleteByArgs('_landId', parcel.token_id),
+            Parcel.update(
+              { estate_id: null, update_operator: null },
+              { id: parcel.id }
+            )
+          ])
         )
-      ])
-    }
-    return Promise.all(deletes)
+        await Promise.all(promises)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
   }
 
   async doTreatment() {
-    for (const parcel of this.faultyParcels) {
+    // Run events for Parcels with different estates
+    const estateIds = new Set(
+      this.faultyParcels
+        .filter(({ currentEstateId }) => !!currentEstateId)
+        .map(({ currentEstateId }) => parseInt(currentEstateId, 10))
+    )
+
+    // Delete asset publications
+    await asyncBatch({
+      elements: this.faultyParcels.map(parcel => parcel.id).concat(estateIds),
+      callback: async assetIdsBatch => {
+        const deletes = assetIdsBatch.map(id => Publication.deleteByAssetId(id))
+        await Promise.all(deletes)
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      retryAttempts: 20
+    })
+
+    let total = estateIds.size
+    for (const [index, estateId] of [...estateIds].entries()) {
+      log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
+      // Replay events related to the estate
+      const events = await Estate.findBlockchainEvents(estateId)
+      for (const event of events) {
+        if (
+          event.name === eventNames.AddLand ||
+          event.name === eventNames.RemoveLand
+        ) {
+          // Replay parcels events based on AddLand and RemoveLand estate events
+          const events = await BlockchainEvent.findByAnyArgs(
+            ['_landId'],
+            event.args._landId
+          )
+          await this.replayEvents(events)
+        } else {
+          // Replay estate events only for update or creation
+          await this.replayEvents([event])
+        }
+      }
+    }
+
+    total = this.faultyParcels.length
+    for (const [index, parcel] of this.faultyParcels.entries()) {
+      log.info(`[${index + 1}/${total}]: Treatment for parcel Id ${parcel.id}`)
       const events = await BlockchainEvent.findByAnyArgs(
-        ['assetId', '_landId'],
+        ['assetId', '_landId', 'landId', 'tokenId', '_tokenId'],
         parcel.token_id
       )
       await this.replayEvents(events)

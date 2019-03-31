@@ -14,30 +14,30 @@ import { MapRouter } from './Map'
 import { MarketplaceRouter } from './Marketplace'
 import { InviteRouter } from './Invite'
 import { BidRouter, PublicationRouter } from './Listing'
-
-env.load()
+import { AuthorizationRouter } from './Authorization'
 
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
+const CORS_ORIGIN = env.get('CORS_ORIGIN', '*')
+const CORS_METHOD = env.get('CORS_METHOD', '*')
 
 const app = express()
 const httpServer = http.Server(app)
 
 app.use(bodyParser.urlencoded({ extended: false, limit: '2mb' }))
 app.use(bodyParser.json())
+app.use((_, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', CORS_ORIGIN)
+  res.setHeader('Access-Control-Request-Method', CORS_METHOD)
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, DELETE'
+  )
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
-if (env.isDevelopment()) {
-  app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Request-Method', '*')
-    res.setHeader(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, GET, POST, PUT, DELETE'
-    )
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  next()
+})
 
-    next()
-  })
-} else {
+if (!env.isDevelopment()) {
   // This is not ideal, but adding newrelic to development is worst
   require('newrelic')
 }
@@ -68,6 +68,7 @@ export async function startServer() {
   new ParcelRouter(router).mount()
   new InviteRouter(router).mount()
   new BidRouter(router).mount()
+  new AuthorizationRouter(router).mount()
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)

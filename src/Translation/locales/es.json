@@ -21,6 +21,7 @@
     "expired": "Oferta caducada"
   },
   "asset_bid": {
+    "bid_asset": "Ofertar {asset_type}",
     "errors": {
       "maximum_expiration":
         "La fecha máxima de vencimiento es {date} (6 meses).",
@@ -30,12 +31,14 @@
     },
     "expiration": "Vencimiento",
     "expiration_placeholder": "Fecha de expiración de esta publicación.",
+    "fingerprint_changed":
+      "Este {asset_name} ha sido modificado. Por favor modifica o cancela la oferta.",
     "insufficient_funds":
       "El ofertante no tiene fondos suficientes para pagar la oferta.",
     "list_asset": "Haz una oferta por el {asset_name}",
     "not_enough": "No tienes suficiente MANA en tu cuenta",
     "please_authorize":
-      "Debe ir a {settings_link} y autorizar el contrato de la Oferta para utilizar MANA en su nombre antes de poder realizar una oferta.",
+      "Debe ir a {settings_link} y autorizar el contrato de la oferta para utilizar MANA en su nombre antes de poder realizar una oferta.",
     "price_placeholder": "Precio en MANA para este {asset_name}.",
     "set_asset_price":
       "Establecer un precio y una fecha de vencimiento para {asset_name}.",
@@ -225,7 +228,9 @@
   },
   "bid": {
     "placed": "ofertas puestas",
-    "received": "ofertas recibidas"
+    "received": "ofertas recibidas",
+    "see_all": "Ver todas",
+    "see_archived": "Ver archivadas"
   },
   "buy_mana": {
     "action": "Comprar Más",
@@ -299,8 +304,8 @@
   "footer": {
     "code_of_ethics": "Código de Ética",
     "color_key": "Mapa de Colores",
-    "copyright": "© 2018 Decentraland. Todos los derechos reservados.",
-    "mini_copyright": "© 2018 Decentraland.",
+    "copyright": "© 2019 Decentraland. Todos los derechos reservados.",
+    "mini_copyright": "© 2019 Decentraland.",
     "privacy_policy": "Política de Privacidad",
     "terms": "Términos & Condiciones"
   },
@@ -310,6 +315,8 @@
     "activity": "Actividad",
     "add": "añadir",
     "address_placeholder": "0x...",
+    "archive": "Archivar",
+    "archive_bids": "ofertas archivadas",
     "atlas": "Atlas",
     "auction": "Subasta",
     "balance": "Balance",
@@ -375,6 +382,7 @@
     "transfer_irreversible":
       "Recuerde que la transferencia es una operación irreversible.",
     "type": "Tipo",
+    "unarchive": "Desarchivar",
     "unauthorized": "No autorizado",
     "undo": "Deshacer",
     "update": "Actualizar",

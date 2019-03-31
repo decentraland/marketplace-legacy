@@ -16,6 +16,7 @@ export class Parcel extends Model {
     'y',
     'token_id',
     'owner',
+    'operator',
     'update_operator',
     'data',
     'district_id',

@@ -10,8 +10,7 @@ import {
   FETCH_BID_REQUEST
 } from './actions'
 import { LISTING_STATUS } from 'shared/listing'
-import { isOpen } from 'shared/listing'
-import { isAssetBid } from 'shared/bid'
+import { isAssetBid, isActive } from 'shared/bid'
 
 export const getState = state => state.bid
 export const getData = state => getState(state).data
@@ -28,10 +27,10 @@ export const isCancelIdle = state =>
 export const isAcceptIdle = state =>
   isLoadingType(getLoading(state), ACCEPT_BID_REQUEST)
 
-export const getOpenBids = createSelector(getData, allBids =>
+export const getActiveBids = createSelector(getData, allBids =>
   Object.keys(allBids).reduce((bids, bidId) => {
     const bid = allBids[bidId]
-    if (isOpen(bid)) {
+    if (isActive(bid)) {
       return { ...bids, [bidId]: bid }
     }
     return bids
@@ -50,21 +49,22 @@ export const getWalletBidsByAsset = (state, asset, assetType) => {
   const walletAddress = getAddress(state)
 
   const isOwner = asset.owner === walletAddress
+  const firstBid = []
+  return [
+    ...firstBid,
+    ...Object.values(allBids).reduce((bids, bid) => {
+      const isBidder = !isOwner && bid.bidder === walletAddress
 
-  return Object.values(allBids).reduce((bids, bid) => {
-    const isBidderOrSeller =
-      (isOwner && bid.seller === walletAddress) ||
-      (!isOwner && bid.bidder === walletAddress)
-
-    if (
-      isAssetBid(bid, asset.id, assetType) &&
-      bid.status === LISTING_STATUS.open &&
-      isBidderOrSeller
-    ) {
-      return [...bids, bid]
-    }
-    return bids
-  }, [])
+      if (isAssetBid(bid, asset.id, assetType) && isActive(bid)) {
+        if (isBidder) {
+          firstBid.push(bid)
+        } else {
+          return [...bids, bid]
+        }
+      }
+      return bids
+    }, [])
+  ]
 }
 
 export const getAcceptedBidsByAsset = (state, asset) => {

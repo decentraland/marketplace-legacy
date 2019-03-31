@@ -19,7 +19,10 @@ import {
   ACCEPT_BID_FAILURE,
   FETCH_ASSET_ACCEPTED_BIDS_REQUEST,
   FETCH_ASSET_ACCEPTED_BIDS_SUCCESS,
-  FETCH_ASSET_ACCEPTED_BIDS_FAILURE
+  FETCH_ASSET_ACCEPTED_BIDS_FAILURE,
+  FETCH_ASSET_BIDS_REQUEST,
+  FETCH_ASSET_BIDS_SUCCESS,
+  FETCH_ASSET_BIDS_FAILURE
 } from './actions'
 import { getBidIdFromTxReceipt } from './utils'
 import { LISTING_STATUS } from 'shared/listing'
@@ -47,7 +50,9 @@ export function bidReducer(state = INITIAL_STATE, action) {
     case ACCEPT_BID_REQUEST:
     case ACCEPT_BID_FAILURE:
     case FETCH_ASSET_ACCEPTED_BIDS_REQUEST:
-    case FETCH_ASSET_ACCEPTED_BIDS_FAILURE: {
+    case FETCH_ASSET_ACCEPTED_BIDS_FAILURE:
+    case FETCH_ASSET_BIDS_REQUEST:
+    case FETCH_ASSET_BIDS_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
@@ -80,7 +85,8 @@ export function bidReducer(state = INITIAL_STATE, action) {
       }
     }
     case FETCH_ASSET_ACCEPTED_BIDS_SUCCESS:
-    case FETCH_ADDRESS_BIDS_SUCCESS: {
+    case FETCH_ADDRESS_BIDS_SUCCESS:
+    case FETCH_ASSET_BIDS_SUCCESS: {
       const { bids } = action
       const newData = bids.reduce(
         (stateBids, bid) => ({

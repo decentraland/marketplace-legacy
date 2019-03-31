@@ -1,7 +1,7 @@
 import { select, takeEvery, call, put, all } from 'redux-saga/effects'
 
 import { LISTING_STATUS } from 'shared/listing'
-import { getAssetPublications } from 'shared/asset'
+import { getAssetPublications, ASSET_TYPES } from 'shared/asset'
 import {
   FETCH_ADDRESS,
   FETCH_ADDRESS_PARCELS_REQUEST,
@@ -124,7 +124,15 @@ function* handleAddressBidsRequest(action) {
       call(() => api.fetchBidAssets(address, status))
     ])
 
-    yield put(fetchAddressBidsSuccess(address, bids, assets))
+    // We need to filter bids for empty estates.
+    // api.fetchBidAssets(address, status)) will return only estates with parcels
+    const sanitizedBids = bids.filter(
+      bid =>
+        bid.asset_type === ASSET_TYPES.parcel ||
+        assets.some(asset => asset.token_id === bid.asset_id)
+    )
+
+    yield put(fetchAddressBidsSuccess(address, sanitizedBids, assets))
   } catch (error) {
     yield put(fetchAddressBidsFailure(address, error.message))
   }
@@ -138,5 +146,10 @@ function* handleFetchAddress(action) {
   yield put(fetchAddressPublicationsRequest(address, LISTING_STATUS.open))
   yield put(fetchAddressContributionsRequest(address))
   yield put(fetchMortgagedParcelsRequest(address))
-  yield put(fetchAddressBidsRequest(address, LISTING_STATUS.open))
+  yield put(
+    fetchAddressBidsRequest(address, [
+      LISTING_STATUS.open,
+      LISTING_STATUS.fingerprintChanged
+    ])
+  )
 }

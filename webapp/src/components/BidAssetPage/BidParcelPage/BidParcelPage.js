@@ -5,7 +5,7 @@ import { Container, Message } from 'semantic-ui-react'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { isOpen } from 'shared/listing'
+import { isActive } from 'shared/bid'
 import { splitCoordinate } from 'shared/coordinates'
 import BidAssetForm from '../BidAssetForm'
 import { authorizationType, bidType, walletType } from 'components/types'
@@ -32,7 +32,7 @@ export default class BidParcelPage extends React.PureComponent {
     const { id, bid, isTxIdle, onBid, onCancel, isAllowed, wallet } = this.props
 
     const [x, y] = splitCoordinate(id)
-    const isBidOpen = isOpen(bid)
+    const isBidActive = isActive(bid)
 
     return (
       <Parcel x={x} y={y} ownerNotAllowed>
@@ -64,7 +64,7 @@ export default class BidParcelPage extends React.PureComponent {
               title={
                 <T
                   id={
-                    isBidOpen
+                    isBidActive
                       ? 'asset_bid.update_asset'
                       : 'asset_bid.list_asset'
                   }
@@ -74,7 +74,7 @@ export default class BidParcelPage extends React.PureComponent {
               subtitle={
                 <T
                   id={
-                    isBidOpen
+                    isBidActive
                       ? 'asset_bid.set_new_asset_price'
                       : 'asset_bid.set_asset_price'
                   }
@@ -88,7 +88,7 @@ export default class BidParcelPage extends React.PureComponent {
               <BidAssetForm
                 asset={parcel}
                 assetName={t('name.parcel')}
-                bid={isBidOpen ? bid : null}
+                bid={isBidActive ? bid : null}
                 isTxIdle={isTxIdle}
                 onBid={onBid}
                 onCancel={onCancel}

@@ -10,7 +10,7 @@ export function isParcel(asset) {
   )
 }
 
-export function isEstate(parcel) {
+export function isPartOfEstate(parcel) {
   return parcel.estate_id != null
 }
 

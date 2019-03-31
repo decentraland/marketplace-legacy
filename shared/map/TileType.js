@@ -1,6 +1,6 @@
 import { TYPES } from './tile'
 import { isDistrict, isPlaza, isRoad } from '../district'
-import { isEstate } from '../parcel'
+import { isPartOfEstate } from '../parcel'
 
 export class TileType {
   constructor(parcel) {
@@ -60,13 +60,13 @@ export class TileType {
 
     if (isOnSale) {
       newType = isOwner
-        ? isEstate(this.parcel)
+        ? isPartOfEstate(this.parcel)
           ? TYPES.myEstatesOnSale
           : TYPES.myParcelsOnSale
         : TYPES.onSale
     } else {
       newType = isOwner
-        ? isEstate(this.parcel)
+        ? isPartOfEstate(this.parcel)
           ? TYPES.myEstates
           : TYPES.myParcels
         : this.parcel.owner
