@@ -19,7 +19,7 @@
     "expired": "出价过期"
   },
   "asset_bid": {
-    "bid_asset": "出价{asset_type}",
+    "bid_asset": "出价 {asset_type}",
     "errors": {
       "maximum_expiration": "最迟到期时间为 {date}（6个月）",
       "maximum_land_price": "{asset_name} 的最高价为 {value} MANA",
@@ -206,7 +206,7 @@
     "placed": "出价",
     "received": "收到的出价",
     "see_all": "查看全部",
-    "see_archived": "请参阅档案"
+    "see_archived": "归档的出价"
   },
   "buy_mana": {
     "action": "购买",
@@ -272,7 +272,7 @@
   },
   "fatfinger_modal": {
     "bid_type": "出价",
-    "description": "你要为{price} {asset_name} tk1",
+    "description": "你要对 {asset_name} {listing_type}，价格为 {price} ",
     "error": "价格不符合",
     "publication_type": "名单",
     "re-enter": "请重新输入价格进行确认"
@@ -291,8 +291,8 @@
     "activity": "活动",
     "add": "加",
     "address_placeholder": "0x...",
-    "archive": "档案",
-    "archive_bids": "存档的出价",
+    "archive": "归档",
+    "archive_bids": "归档的出价",
     "atlas": "地图",
     "auction": "拍卖",
     "balance": "余额",
