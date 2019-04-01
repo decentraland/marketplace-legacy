@@ -3,7 +3,7 @@ import { Model } from 'decentraland-commons'
 import { EstateQueries } from './Estate.queries'
 import { Asset } from '../Asset'
 import { Parcel } from '../Parcel'
-import { BlockchainEvent } from '../../BlockchainEvent'
+import { BlockchainEvent, BlockchainEventQueries } from '../../BlockchainEvent'
 import { SQL } from '../../database'
 
 export class Estate extends Model {
@@ -45,11 +45,12 @@ export class Estate extends Model {
     return new Asset(this).findByTokenIds(tokenIds)
   }
 
-  static findBlockchainEvents(estateId) {
+  static findBlockchainEvents(estateId, fromBlock) {
     return Estate.query(
       SQL`SELECT *
         FROM ${SQL.raw(BlockchainEvent.tableName)}
-        WHERE ${EstateQueries.areEstateEvents(estateId)}
+        WHERE (${EstateQueries.areEstateEvents(estateId)})
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}
         ORDER BY block_number ASC, log_index ASC`
     )
   }
@@ -58,7 +59,7 @@ export class Estate extends Model {
     return Estate.query(
       SQL`DELETE FROM ${SQL.raw(BlockchainEvent.tableName)}
         WHERE (${EstateQueries.areEstateEvents(estateId)})
-        AND block_number >= ${fromBlock}`
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
     )
   }
 

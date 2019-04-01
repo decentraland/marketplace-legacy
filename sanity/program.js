@@ -34,8 +34,8 @@ function getProgram(actions) {
           'In order to not get from 0 to latest, set the started block to get events. Decentraland starts at 4900000'
         )
         .option(
-          '--blocks [blocks]',
-          'Number of block to be substracted to the latest block to be used as a from-block'
+          '--blocks-behind [blocks]',
+          'Number of block to be substracted to the latest block used as a from-block'
         )
         .option(
           '--self-heal',

@@ -51,23 +51,25 @@ export class BlockchainEvent extends Model {
     )
   }
 
-  static findByArgs(argName, argValue) {
+  static findByArgs(argName, argValue, fromBlock) {
     return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE ${BlockchainEventQueries.byArgs(argName, argValue)}
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}
         ORDER BY block_number ASC, log_index ASC`
     )
   }
 
-  static findByAnyArgs(argNames, argValue) {
+  static findByAnyArgs(argNames, argValue, fromBlock) {
     if (!Array.isArray(argNames)) {
       throw new Error('First argument must be an array')
     }
     return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
-        WHERE ${BlockchainEventQueries.byAnyArgs(argNames, argValue)}
+        WHERE (${BlockchainEventQueries.byAnyArgs(argNames, argValue)})
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}
         ORDER BY block_number ASC, log_index ASC`
     )
   }
@@ -76,7 +78,7 @@ export class BlockchainEvent extends Model {
     return this.db.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
         WHERE ${BlockchainEventQueries.byArgs(argName, argValue)}
-        AND block_number >= ${fromBlock}`
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
     )
   }
 
@@ -84,7 +86,7 @@ export class BlockchainEvent extends Model {
     return this.db.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
         WHERE (${BlockchainEventQueries.byAnyArgs(argNames, argValue)})
-        AND block_number >= ${fromBlock}`
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
     )
   }
 

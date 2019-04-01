@@ -89,14 +89,16 @@ export class SanityActions {
   }
 
   async getFromBlock(options) {
-    let fromBlock = Number(options.fromBlock || 0)
-
-    if (options.blocks) {
-      const lastBlock = await eth.getBlockNumber()
-      fromBlock = lastBlock - options.blocks
+    if (options.fromBlock) {
+      return Number(options.fromBlock)
     }
 
-    return fromBlock
+    if (options.blocksBehind) {
+      const lastBlock = await eth.getBlockNumber()
+      return lastBlock - Number(options.blocksBehind)
+    }
+
+    return 0
   }
 }
 
