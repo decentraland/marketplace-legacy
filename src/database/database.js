@@ -23,7 +23,7 @@ export const database = {
   },
 
   async reconnect() {
-    const timeout = env.get('DATABASE_RECONNECTION_TIMEOUT', '3000')
+    const timeout = env.get('DATABASE_RECONNECTION_TIMEOUT', 3000)
     console.log(`Database connection ended, waiting ${timeout}ms to retry`)
 
     await utils.sleep(Number(timeout))
