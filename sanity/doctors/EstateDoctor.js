@@ -152,23 +152,33 @@ export class EstateDiagnosis extends Diagnosis {
     const total = this.faultyEstates.length
     for (const [index, estate] of this.faultyEstates.entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`)
-      const events = await Estate.findBlockchainEvents(estate.id)
-      for (const event of events) {
-        if (
-          event.name === eventNames.AddLand ||
-          event.name === eventNames.RemoveLand
-        ) {
-          // Replay parcels events based on AddLand and RemoveLand estate events
-          const events = await BlockchainEvent.findByAnyArgs(
-            ['_landId'],
-            event.args._landId
-          )
-          await this.replayEvents(events)
-        } else {
-          // Replay estate events only for update or creation
-          await this.replayEvents([event])
-        }
+
+      const events = await this.getEventsToReplay(estate.id)
+      await this.replayEvents(events)
+    }
+  }
+
+  async getEventsToReplay(estateId) {
+    const estateEvents = await Estate.findBlockchainEvents(estateId)
+    let allEvents = []
+
+    for (const event of estateEvents) {
+      if (
+        event.name === eventNames.AddLand ||
+        event.name === eventNames.RemoveLand
+      ) {
+        // Replay parcels events based on AddLand and RemoveLand estate events
+        const events = await BlockchainEvent.findByAnyArgs(
+          ['_landId'],
+          event.args._landId
+        )
+        allEvents = allEvents.concat(events)
+      } else {
+        // Replay estate events only for update or creation
+        allEvents.push(event)
       }
     }
+
+    return allEvents
   }
 }

@@ -3,12 +3,12 @@ import { eth } from 'decentraland-eth'
 
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
+import { EstateDiagnosis } from './EstateDoctor'
 import { asyncBatch } from '../../src/lib'
-import { Parcel, Estate } from '../../src/Asset'
+import { Parcel } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { Publication } from '../../src/Listing'
 import { parseCLICoords } from '../../scripts/utils'
-import { eventNames } from '../../src/ethereum'
 
 const log = new Log('ParcelDoctor')
 
@@ -149,27 +149,15 @@ export class ParcelDiagnosis extends Diagnosis {
       retryAttempts: 20
     })
 
+    const estateDiagnosis = new EstateDiagnosis()
+
     let total = estateIds.size
     for (const [index, estateId] of [...estateIds].entries()) {
       log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
+
       // Replay events related to the estate
-      const events = await Estate.findBlockchainEvents(estateId)
-      for (const event of events) {
-        if (
-          event.name === eventNames.AddLand ||
-          event.name === eventNames.RemoveLand
-        ) {
-          // Replay parcels events based on AddLand and RemoveLand estate events
-          const events = await BlockchainEvent.findByAnyArgs(
-            ['_landId'],
-            event.args._landId
-          )
-          await this.replayEvents(events)
-        } else {
-          // Replay estate events only for update or creation
-          await this.replayEvents([event])
-        }
-      }
+      const events = await estateDiagnosis.getEventsToReplay(estateId)
+      await this.replayEvents(events)
     }
 
     total = this.faultyParcels.length
