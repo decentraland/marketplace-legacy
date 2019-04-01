@@ -37,8 +37,6 @@ export class EstateDoctor extends Doctor {
       retryAttempts: 20
     })
 
-    this.logErrors(faultyEstates)
-
     return faultyEstates
   }
 

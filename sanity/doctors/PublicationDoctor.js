@@ -52,8 +52,6 @@ export class PublicationDoctor extends Doctor {
       retryAttempts: 20
     })
 
-    this.logErrors(faultyAssets)
-
     return faultyAssets
   }
 

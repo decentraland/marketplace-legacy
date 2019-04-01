@@ -68,8 +68,6 @@ export class ParcelDoctor extends Doctor {
       retryAttempts: 20
     })
 
-    this.logErrors(faultyParcels)
-
     return faultyParcels
   }
 

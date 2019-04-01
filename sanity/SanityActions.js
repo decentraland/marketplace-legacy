@@ -32,6 +32,10 @@ export class SanityActions {
 
       if (diagnoses.hasProblems()) {
         faultyAssets.push(...diagnoses.getFaultyAssets())
+
+        if (options.skipLogs) {
+          this.logErrors(faultyAssets)
+        }
       } else {
         continue
       }
@@ -49,6 +53,10 @@ export class SanityActions {
     } else {
       process.exit()
     }
+  }
+
+  logErrors(faultyAssets) {
+    log.error(faultyAssets.map(({ error }) => error).join('\n'))
   }
 
   getValidations(skip = '') {
