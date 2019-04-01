@@ -33,7 +33,7 @@ export class SanityActions {
       if (diagnoses.hasProblems()) {
         faultyAssets.push(...diagnoses.getFaultyAssets())
 
-        if (options.skipLogs) {
+        if (!options.skipLogs) {
           this.logErrors(faultyAssets)
         }
       } else {
