@@ -51,31 +51,42 @@ export class BlockchainEvent extends Model {
     )
   }
 
-  static findByArgs(argName, argValue) {
+  static findByArgs(argName, argValue, fromBlock) {
     return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE ${BlockchainEventQueries.byArgs(argName, argValue)}
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}
         ORDER BY block_number ASC, log_index ASC`
     )
   }
 
-  static findByAnyArgs(argNames, argValue) {
+  static findByAnyArgs(argNames, argValue, fromBlock) {
     if (!Array.isArray(argNames)) {
       throw new Error('First argument must be an array')
     }
     return this.db.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
-        WHERE ${BlockchainEventQueries.byAnyArgs(argNames, argValue)}
+        WHERE (${BlockchainEventQueries.byAnyArgs(argNames, argValue)})
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}
         ORDER BY block_number ASC, log_index ASC`
     )
   }
 
-  static deleteByArgs(argName, argValue) {
+  static deleteByArgs(argName, argValue, fromBlock) {
     return this.db.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
-        WHERE ${BlockchainEventQueries.byArgs(argName, argValue)}`
+        WHERE ${BlockchainEventQueries.byArgs(argName, argValue)}
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
+    )
+  }
+
+  static deleteByAnyArgs(argNames, argValue, fromBlock) {
+    return this.db.query(
+      SQL`DELETE FROM ${SQL.raw(this.tableName)}
+        WHERE (${BlockchainEventQueries.byAnyArgs(argNames, argValue)})
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
     )
   }
 

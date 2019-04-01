@@ -34,6 +34,10 @@ function getProgram(actions) {
           'In order to not get from 0 to latest, set the started block to get events. Decentraland starts at 4900000'
         )
         .option(
+          '--blocks-behind [blocks]',
+          'Number of block to be substracted to the latest block used as a from-block'
+        )
+        .option(
           '--self-heal',
           'Try to fix found errors. Supports all flags supported by the monitor, except watch'
         )
@@ -41,7 +45,6 @@ function getProgram(actions) {
         .action(async options => {
           log.info('Connecting to Ethereum node')
           await connectEth({ isWebsocket: options.websocket })
-
           log.info('Starting sanity')
           await actions.run(options)
         })

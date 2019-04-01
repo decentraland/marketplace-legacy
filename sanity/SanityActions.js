@@ -22,6 +22,7 @@ export class SanityActions {
     const diagnostics = []
     const faultyAssets = []
     const total = validations.length
+    const fromBlock = await this.getFromBlock(options)
 
     for (let i = 0; i < total; i++) {
       const key = validations[i]
@@ -39,13 +40,13 @@ export class SanityActions {
       diagnostics.push(diagnoses)
 
       if (options.selfHeal) {
-        log.info(`Preparing ${key} problems`)
-        await diagnoses.prepare()
+        log.info(`Preparing ${key} problems from block ${fromBlock}`)
+        await diagnoses.prepare(fromBlock)
       }
     }
 
     if (options.selfHeal) {
-      await this.selfHeal(diagnostics, faultyAssets, options.fromBlock)
+      await this.selfHeal(diagnostics, faultyAssets, fromBlock)
     } else {
       log.info(`${faultyAssets.length} found`)
 
@@ -66,7 +67,9 @@ export class SanityActions {
 
   async selfHeal(diagnostics, faultyAssets, fromBlock) {
     if (diagnostics.length > 0) {
-      log.info('Attempting to heal problems. Re-fetching events')
+      log.info(
+        `Attempting to heal problems. Re-fetching events from block ${fromBlock}`
+      )
 
       // @nico Hack: change the command name so we can keep the flags but run the monitor
       process.argv = process.argv.map(arg => (arg === 'run' ? 'index' : arg))
@@ -84,6 +87,19 @@ export class SanityActions {
       process.exit()
     }
   }
+
+  async getFromBlock(options) {
+    if (options.fromBlock) {
+      return Number(options.fromBlock)
+    }
+
+    if (options.blocksBehind) {
+      const lastBlock = await eth.getBlockNumber()
+      return lastBlock - Number(options.blocksBehind)
+    }
+
+    return 0
+  }
 }
 
 class SanitiyMonitorActions extends MonitorActions {
@@ -91,7 +107,7 @@ class SanitiyMonitorActions extends MonitorActions {
     super(...args)
     this.diagnostics = options.diagnostics
     this.faultyAssets = options.faultyAssets
-    this.fromBlock = parseInt(options.fromBlock, 10) || 0
+    this.fromBlock = options.fromBlock
     this.delayedEvents = {}
   }
 

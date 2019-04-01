@@ -16,7 +16,7 @@ export class Diagnosis {
     throw new Error('Not implemented')
   }
 
-  async prepare() {
+  async prepare(fromBlock) {
     throw new Error('Not implemented')
   }
 
