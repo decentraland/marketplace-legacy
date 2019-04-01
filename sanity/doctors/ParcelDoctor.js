@@ -148,7 +148,9 @@ export class ParcelDiagnosis extends Diagnosis {
 
     let total = estateIds.size
     for (const [index, estateId] of [...estateIds].entries()) {
-      log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estateId}`)
+      this.log.info(
+        `[${index + 1}/${total}]: Treatment for estate Id ${estateId}`
+      )
 
       // Replay events related to the estate
       const events = await estateDiagnosis.getEventsToReplay(estateId)

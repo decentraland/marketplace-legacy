@@ -148,7 +148,9 @@ export class EstateDiagnosis extends Diagnosis {
     // Replay events for the estate and old parcels
     const total = this.faultyEstates.length
     for (const [index, estate] of this.faultyEstates.entries()) {
-      log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`)
+      this.log.info(
+        `[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`
+      )
 
       const events = await this.getEventsToReplay(estate.id)
       await this.replayEvents(events)
