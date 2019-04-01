@@ -10,7 +10,8 @@ export const database = {
     this.client = await db.postgres.connect(CONNECTION_STRING)
 
     this.client.once('error', async () => {
-      this.client.end()
+      // We don't care If the ending the connection fails, it ussualy means it was already closed
+      this.client.end().catch(() => {})
       await this.reconnect()
     })
 
