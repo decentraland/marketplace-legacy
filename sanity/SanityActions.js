@@ -33,6 +33,10 @@ export class SanityActions {
 
       if (diagnoses.hasProblems()) {
         faultyAssets.push(...diagnoses.getFaultyAssets())
+
+        if (!options.skipLogs) {
+          this.logErrors(faultyAssets)
+        }
       } else {
         continue
       }
@@ -48,13 +52,12 @@ export class SanityActions {
     if (options.selfHeal) {
       await this.selfHeal(diagnostics, faultyAssets, fromBlock)
     } else {
-      log.info(`${faultyAssets.length} found`)
-
-      faultyAssets.forEach(asset =>
-        console.log(`Asset ${asset.id} with error: ${asset.error}`)
-      )
       process.exit()
     }
+  }
+
+  logErrors(faultyAssets) {
+    log.error(faultyAssets.map(({ error }) => error).join('\n'))
   }
 
   getValidations(skip = '') {

@@ -1,5 +1,5 @@
 import { eth } from 'decentraland-eth'
-import { Log, env } from 'decentraland-commons'
+import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
@@ -12,8 +12,6 @@ import { ASSET_TYPES } from '../../shared/asset'
 import { isParcel } from '../../shared/parcel'
 import { LISTING_STATUS } from '../../shared/listing'
 import { parseCLICoords } from '../../scripts/utils'
-
-const log = new Log('PublicationDoctor')
 
 export class PublicationDoctor extends Doctor {
   async diagnose(options) {
@@ -45,7 +43,6 @@ export class PublicationDoctor extends Doctor {
           const error = await this.getPublicationInconsistencies(asset)
 
           if (error.length) {
-            log.error(error)
             faultyAssets.push({ ...asset, error })
           }
         })
@@ -187,12 +184,14 @@ export class PublicationDiagnosis extends Diagnosis {
     // TODO: add NFTAddress
     const total = this.faultyAssets.length
     for (const [index, asset] of this.faultyAssets.entries()) {
-      log.info(`[${index + 1}/${total}]: Treatment for asset Id ${asset.id}`)
+      this.log.info(
+        `[${index + 1}/${total}]: Treatment for asset Id ${asset.id}`
+      )
       const events = await BlockchainEvent.findByArgs('assetId', asset.token_id)
       await this.replayEvents(events)
     }
 
-    log.info('Update expired publications')
+    this.log.info('Update expired publications')
     await Publication.updateExpired()
   }
 }

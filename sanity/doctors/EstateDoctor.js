@@ -1,5 +1,5 @@
 import { eth } from 'decentraland-eth'
-import { Log, env } from 'decentraland-commons'
+import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
@@ -8,8 +8,6 @@ import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { eventNames } from '../../src/ethereum'
 import { Publication } from '../../src/Listing'
-
-const log = new Log('EstateDoctor')
 
 export class EstateDoctor extends Doctor {
   async diagnose() {
@@ -29,7 +27,6 @@ export class EstateDoctor extends Doctor {
           const error = await this.getEstateInconsistencies(estate)
 
           if (error) {
-            log.error(error)
             faultyEstates.push({ ...estate, error })
           }
         })
@@ -151,7 +148,9 @@ export class EstateDiagnosis extends Diagnosis {
     // Replay events for the estate and old parcels
     const total = this.faultyEstates.length
     for (const [index, estate] of this.faultyEstates.entries()) {
-      log.info(`[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`)
+      this.log.info(
+        `[${index + 1}/${total}]: Treatment for estate Id ${estate.id}`
+      )
 
       const events = await this.getEventsToReplay(estate.id)
       await this.replayEvents(events)

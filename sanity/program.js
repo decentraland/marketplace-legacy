@@ -41,6 +41,7 @@ function getProgram(actions) {
           '--self-heal',
           'Try to fix found errors. Supports all flags supported by the monitor, except watch'
         )
+        .option('--skip-logs', 'Skip logging errors at the end of the process')
         .option('--websocket', 'Should run doctors in a websocket')
         .action(async options => {
           log.info('Connecting to Ethereum node')
