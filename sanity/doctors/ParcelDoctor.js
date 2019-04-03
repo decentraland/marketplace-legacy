@@ -106,7 +106,10 @@ export class ParcelDiagnosis extends Diagnosis {
         Estate.findOne({ id: estateId }),
         this.estateDiagnosis.getEstateParcels(estateId)
       ])
-      faultyAssets.push(estate, ...parcels)
+      if (estate) {
+        faultyAssets.push(estate)
+      }
+      faultyAssets.push(...parcels)
     }
 
     return faultyAssets
