@@ -219,12 +219,11 @@ class SanitiyMonitorActions extends MonitorActions {
     for (const asset of this.faultyAssets) {
       if (!singleAssets[asset.id]) {
         singleAssets[asset.id] = true
+        const assetType = isParcel(asset)
+          ? ASSET_TYPES.parcel
+          : ASSET_TYPES.estate
 
-        const fixedAsset = await (isParcel(asset)
-          ? Parcel.findOne({ id: asset.id })
-          : Estate.findOne({ id: asset.id }))
-
-        assets.push(fixedAsset)
+        assets.push({ assetType, id: asset.id })
       }
     }
 
@@ -232,13 +231,9 @@ class SanitiyMonitorActions extends MonitorActions {
     await asyncBatch({
       elements: assets,
       callback: async assetsBatch => {
-        const promises = assetsBatch.map(asset => {
-          const assetType = isParcel(asset)
-            ? ASSET_TYPES.parcel
-            : ASSET_TYPES.estate
-
-          return Tile.upsertAsset(asset, assetType)
-        })
+        const promises = assetsBatch.map(({ id, assetType }) =>
+          Tile.upsertAsset(id, assetType)
+        )
         await Promise.all(promises)
       },
       batchSize: env.get('BATCH_SIZE'),
