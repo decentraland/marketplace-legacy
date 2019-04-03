@@ -1,9 +1,11 @@
 import { Log } from 'decentraland-commons'
 import { processEvent } from '../../monitor/processEvents'
 
-const log = new Log('Diagnosis')
-
 export class Diagnosis {
+  constructor() {
+    this.log = new Log(this.constructor.name)
+  }
+
   async doTreatment() {
     throw new Error('Not implemented')
   }
@@ -22,7 +24,7 @@ export class Diagnosis {
 
   async replayEvents(events) {
     for (let i = 0; i < events.length; i++) {
-      log.info(`[${i + 1}/${events.length}] Processing ${events[i].name}`)
+      this.log.info(`[${i + 1}/${events.length}] Processing ${events[i].name}`)
       await processEvent(events[i])
     }
   }
