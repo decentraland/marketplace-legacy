@@ -102,8 +102,11 @@ export class ParcelDiagnosis extends Diagnosis {
     const estateIds = this.getEstateIds()
 
     for (const estateId of [...estateIds]) {
-      faultyAssets.push(await Estate.findOne({ id: estateId }))
-      faultyAssets.concat(await this.estateDiagnosis.getEstateParcels(estateId))
+      const [estate, parcels] = await Promise.all([
+        Estate.findOne({ id: estateId }),
+        this.estateDiagnosis.getEstateParcels(estateId)
+      ])
+      faultyAssets.push(estate, ...parcels)
     }
 
     return faultyAssets

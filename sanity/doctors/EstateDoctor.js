@@ -111,9 +111,9 @@ export class EstateDiagnosis extends Diagnosis {
     const faultyAssets = [...this.faultyEstates]
 
     for (const estate of this.faultyEstates) {
-      faultyAssets.concat(await this.getEstateParcels(estate.id))
+      const parcels = await this.getEstateParcels(estate.id)
+      faultyAssets.push(...parcels)
     }
-
     return faultyAssets
   }
 
@@ -200,8 +200,7 @@ export class EstateDiagnosis extends Diagnosis {
         const parcel = await Parcel.findOne({ token_id: event.args._landId })
         parcels.push(parcel)
       }
-
-      return parcels
     }
+    return parcels
   }
 }

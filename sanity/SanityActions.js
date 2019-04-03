@@ -32,7 +32,8 @@ export class SanityActions {
       const diagnoses = await doctor.diagnose(options)
 
       if (diagnoses.hasProblems()) {
-        faultyAssets.concat(await diagnoses.getFaultyAssets())
+        const assets = await diagnoses.getFaultyAssets()
+        faultyAssets.push(...assets)
 
         if (!options.skipLogs) {
           this.logErrors(faultyAssets)
@@ -214,6 +215,7 @@ class SanitiyMonitorActions extends MonitorActions {
     log.info('Removing duplicates tiles')
     const singleAssets = {}
     const assets = []
+
     for (const asset of this.faultyAssets) {
       if (!singleAssets[asset.id]) {
         singleAssets[asset.id] = true
@@ -234,6 +236,7 @@ class SanitiyMonitorActions extends MonitorActions {
           const assetType = isParcel(asset)
             ? ASSET_TYPES.parcel
             : ASSET_TYPES.estate
+
           return Tile.upsertAsset(asset, assetType)
         })
         await Promise.all(promises)
