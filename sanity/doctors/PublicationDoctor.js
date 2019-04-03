@@ -143,7 +143,7 @@ export class PublicationDiagnosis extends Diagnosis {
     this.faultyAssets = faultyAssets
   }
 
-  getFaultyAssets() {
+  async getFaultyAssets() {
     return this.faultyAssets
   }
 

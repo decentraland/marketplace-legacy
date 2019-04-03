@@ -10,7 +10,7 @@ export class Diagnosis {
     throw new Error('Not implemented')
   }
 
-  getFaultyAssets() {
+  async getFaultyAssets() {
     throw new Error('Not implemented')
   }
 

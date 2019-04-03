@@ -32,7 +32,7 @@ export class SanityActions {
       const diagnoses = await doctor.diagnose(options)
 
       if (diagnoses.hasProblems()) {
-        faultyAssets.push(...diagnoses.getFaultyAssets())
+        faultyAssets.concat(await diagnoses.getFaultyAssets())
 
         if (!options.skipLogs) {
           this.logErrors(faultyAssets)
@@ -57,7 +57,12 @@ export class SanityActions {
   }
 
   logErrors(faultyAssets) {
-    log.error(faultyAssets.map(({ error }) => error).join('\n'))
+    log.error(
+      faultyAssets
+        .filter(({ error }) => !!error)
+        .map(({ error }) => error)
+        .join('\n')
+    )
   }
 
   getValidations(skip = '') {
@@ -210,8 +215,8 @@ class SanitiyMonitorActions extends MonitorActions {
     const singleAssets = {}
     const assets = []
     for (const asset of this.faultyAssets) {
-      if (!singleAssets[asset.token_id]) {
-        singleAssets[asset.token_id] = true
+      if (!singleAssets[asset.id]) {
+        singleAssets[asset.id] = true
 
         const fixedAsset = await (isParcel(asset)
           ? Parcel.findOne({ id: asset.id })
