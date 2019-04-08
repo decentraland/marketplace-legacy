@@ -11,7 +11,9 @@ export const database = {
 
     this.client.once('error', async () => {
       // We don't care If the ending the connection fails, it ussualy means it was already closed
-      this.client.end().catch(() => {})
+      try {
+        await this.client.end()
+      } catch (error) {}
       await this.reconnect()
     })
 
