@@ -101,7 +101,7 @@ export class ParcelDiagnosis extends Diagnosis {
     const faultyAssets = [...this.faultyParcels]
     const estateIds = this.getEstateIds()
 
-    for (const estateId of [...estateIds]) {
+    for (const estateId of estateIds) {
       const [estate, parcels] = await Promise.all([
         Estate.findOne({ id: estateId }),
         this.estateDiagnosis.getEstateParcels(estateId)
@@ -158,8 +158,8 @@ export class ParcelDiagnosis extends Diagnosis {
       retryAttempts: 20
     })
 
-    let total = estateIds.size
-    for (const [index, estateId] of [...estateIds].entries()) {
+    let total = estateIds.length
+    for (const [index, estateId] of estateIds.entries()) {
       this.log.info(
         `[${index + 1}/${total}]: Treatment for estate Id ${estateId}`
       )
@@ -183,10 +183,14 @@ export class ParcelDiagnosis extends Diagnosis {
   }
 
   getEstateIds() {
-    return new Set(
-      this.faultyParcels
-        .filter(({ currentEstateId }) => !!currentEstateId)
-        .map(({ currentEstateId }) => parseInt(currentEstateId, 10))
-    )
+    const estateIds = new Set()
+
+    for (const { currentEstateId } of this.faultyParcels) {
+      if (currentEstateId) {
+        estateIds.add(parseInt(currentEstateId, 10))
+      }
+    }
+
+    return Array.from(estateIds)
   }
 }
