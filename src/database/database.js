@@ -13,7 +13,9 @@ export const database = {
       // We don't care If the ending the connection fails, it ussualy means it was already closed
       try {
         await this.client.end()
-      } catch (error) {}
+      } catch (error) {
+        // Ignore socket errors
+      }
       await this.reconnect()
     })
 
