@@ -9,7 +9,6 @@ import { asyncBatch } from '../src/lib'
 import { isParcel } from '../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
 import { Tile } from '../src/Tile'
-import { Parcel, Estate } from '../src/Asset'
 import { BlockchainEvent } from '../src/BlockchainEvent'
 import { eventNames } from '../src/ethereum'
 import { processEvent } from '../monitor/processEvents'
@@ -32,7 +31,8 @@ export class SanityActions {
       const diagnoses = await doctor.diagnose(options)
 
       if (diagnoses.hasProblems()) {
-        faultyAssets.push(...diagnoses.getFaultyAssets())
+        const assets = await diagnoses.getFaultyAssets()
+        faultyAssets.push(...assets)
 
         if (!options.skipLogs) {
           this.logErrors(faultyAssets)
@@ -57,7 +57,12 @@ export class SanityActions {
   }
 
   logErrors(faultyAssets) {
-    log.error(faultyAssets.map(({ error }) => error).join('\n'))
+    log.error(
+      faultyAssets
+        .filter(({ error }) => !!error)
+        .map(({ error }) => error)
+        .join('\n')
+    )
   }
 
   getValidations(skip = '') {
@@ -209,15 +214,15 @@ class SanitiyMonitorActions extends MonitorActions {
     log.info('Removing duplicates tiles')
     const singleAssets = {}
     const assets = []
+
     for (const asset of this.faultyAssets) {
-      if (!singleAssets[asset.token_id]) {
-        singleAssets[asset.token_id] = true
+      if (!singleAssets[asset.id]) {
+        singleAssets[asset.id] = true
+        const assetType = isParcel(asset)
+          ? ASSET_TYPES.parcel
+          : ASSET_TYPES.estate
 
-        const fixedAsset = await (isParcel(asset)
-          ? Parcel.findOne({ id: asset.id })
-          : Estate.findOne({ id: asset.id }))
-
-        assets.push(fixedAsset)
+        assets.push({ assetType, id: asset.id })
       }
     }
 
@@ -225,12 +230,9 @@ class SanitiyMonitorActions extends MonitorActions {
     await asyncBatch({
       elements: assets,
       callback: async assetsBatch => {
-        const promises = assetsBatch.map(asset => {
-          const assetType = isParcel(asset)
-            ? ASSET_TYPES.parcel
-            : ASSET_TYPES.estate
-          return Tile.upsertAsset(asset, assetType)
-        })
+        const promises = assetsBatch.map(({ id, assetType }) =>
+          Tile.upsertAsset(id, assetType)
+        )
         await Promise.all(promises)
       },
       batchSize: env.get('BATCH_SIZE'),

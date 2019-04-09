@@ -5,7 +5,7 @@ import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { EstateDiagnosis } from './EstateDoctor'
 import { asyncBatch } from '../../src/lib'
-import { Parcel } from '../../src/Asset'
+import { Parcel, Estate } from '../../src/Asset'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { Publication } from '../../src/Listing'
 import { parseCLICoords } from '../../scripts/utils'
@@ -94,10 +94,25 @@ export class ParcelDiagnosis extends Diagnosis {
   constructor(faultyParcels) {
     super()
     this.faultyParcels = faultyParcels
+    this.estateDiagnosis = new EstateDiagnosis()
   }
 
-  getFaultyAssets() {
-    return this.faultyParcels
+  async getFaultyAssets() {
+    const faultyAssets = [...this.faultyParcels]
+    const estateIds = this.getEstateIds()
+
+    for (const estateId of estateIds) {
+      const [estate, parcels] = await Promise.all([
+        Estate.findOne({ id: estateId }),
+        this.estateDiagnosis.getEstateParcels(estateId)
+      ])
+      if (estate) {
+        faultyAssets.push(estate)
+      }
+      faultyAssets.push(...parcels)
+    }
+
+    return faultyAssets
   }
 
   hasProblems() {
@@ -130,11 +145,7 @@ export class ParcelDiagnosis extends Diagnosis {
 
   async doTreatment() {
     // Run events for Parcels with different estates
-    const estateIds = new Set(
-      this.faultyParcels
-        .filter(({ currentEstateId }) => !!currentEstateId)
-        .map(({ currentEstateId }) => parseInt(currentEstateId, 10))
-    )
+    const estateIds = this.getEstateIds()
 
     // Delete asset publications
     await asyncBatch({
@@ -147,16 +158,14 @@ export class ParcelDiagnosis extends Diagnosis {
       retryAttempts: 20
     })
 
-    const estateDiagnosis = new EstateDiagnosis()
-
-    let total = estateIds.size
-    for (const [index, estateId] of [...estateIds].entries()) {
+    let total = estateIds.length
+    for (const [index, estateId] of estateIds.entries()) {
       this.log.info(
         `[${index + 1}/${total}]: Treatment for estate Id ${estateId}`
       )
 
       // Replay events related to the estate
-      const events = await estateDiagnosis.getEventsToReplay(estateId)
+      const events = await this.estateDiagnosis.getEventsToReplay(estateId)
       await this.replayEvents(events)
     }
 
@@ -171,5 +180,17 @@ export class ParcelDiagnosis extends Diagnosis {
       )
       await this.replayEvents(events)
     }
+  }
+
+  getEstateIds() {
+    const estateIds = new Set()
+
+    for (const { currentEstateId } of this.faultyParcels) {
+      if (currentEstateId) {
+        estateIds.add(parseInt(currentEstateId, 10))
+      }
+    }
+
+    return Array.from(estateIds)
   }
 }

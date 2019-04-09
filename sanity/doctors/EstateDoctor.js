@@ -107,8 +107,14 @@ export class EstateDiagnosis extends Diagnosis {
     this.faultyEstates = faultyEstates
   }
 
-  getFaultyAssets() {
-    return this.faultyEstates
+  async getFaultyAssets() {
+    const faultyAssets = [...this.faultyEstates]
+
+    for (const estate of this.faultyEstates) {
+      const parcels = await this.getEstateParcels(estate.id)
+      faultyAssets.push(...parcels)
+    }
+    return faultyAssets
   }
 
   hasProblems() {
@@ -179,5 +185,22 @@ export class EstateDiagnosis extends Diagnosis {
     }
 
     return allEvents
+  }
+
+  async getEstateParcels(estateId) {
+    const parcels = []
+    const estateEvents = await Estate.findBlockchainEvents(estateId)
+
+    // Get parcels where events are going to be replayed
+    for (const event of estateEvents) {
+      if (
+        event.name === eventNames.AddLand ||
+        event.name === eventNames.RemoveLand
+      ) {
+        const parcel = await Parcel.findOne({ token_id: event.args._landId })
+        parcels.push(parcel)
+      }
+    }
+    return parcels
   }
 }
