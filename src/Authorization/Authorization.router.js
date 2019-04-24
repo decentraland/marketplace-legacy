@@ -4,6 +4,7 @@ import { env } from 'decentraland-commons'
 import { Approval } from '../Approval'
 import { Parcel, Estate } from '../Asset'
 import { ASSET_TYPES } from '../shared/asset'
+import { APPROVAL_TYPES } from '../shared/approval'
 import { ReqQueryParams } from '../ReqQueryParams'
 
 export class AuthorizationRouter {
@@ -52,11 +53,12 @@ export class AuthorizationRouter {
         throw new Error(`The assetType ${assetType} is invalid`)
     }
 
-    const isApprovedForAll = await Approval.isApprovedForAll(
-      tokenAddress.toLowerCase(),
-      asset.owner,
-      address
-    )
+    const isApprovedForAll = await Approval.count({
+      type: APPROVAL_TYPES.operator,
+      token_address: tokenAddress.toLowerCase(),
+      owner: asset.owner,
+      operator: address
+    })
 
     return {
       isApprovedForAll,

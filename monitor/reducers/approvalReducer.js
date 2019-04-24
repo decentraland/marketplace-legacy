@@ -3,6 +3,7 @@ import { Log } from 'decentraland-commons'
 import { Approval } from '../../src/Approval'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
+import { APPROVAL_TYPES } from '../../shared/approval'
 
 const log = new Log('approvalReducer')
 
@@ -29,24 +30,25 @@ async function reduceLANDRegistry(event) {
   switch (name) {
     case eventNames.ApprovalForAll: {
       // operator and holder are inverted in the contact
-      const holder = event.args.holder.toLowerCase()
+      const owner = event.args.holder.toLowerCase()
       const operator = event.args.operator.toLowerCase()
       const authorized = event.args.authorized === 'true'
+      const action = authorized ? 'set' : 'remove'
+
+      log.info(`[${name}] ${holder} ${action} ${operator} as approved for all`)
 
       try {
-        log.info(
-          `[${name}] ${holder} ${
-            authorized ? 'set' : 'remove'
-          } ${operator} as approved for all`
-        )
+        const approval = {
+          type: APPROVAL_TYPES.operator,
+          token_address: address,
+          owner,
+          operator
+        }
+
         if (authorized) {
-          await Approval.approveForAll(address, holder, operator)
+          await Approval.create(approval)
         } else {
-          await Approval.delete({
-            token_address: address,
-            owner: holder,
-            operator
-          })
+          await Approval.delete(approval)
         }
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
@@ -66,24 +68,25 @@ async function reduceEstateRegistry(event) {
 
   switch (name) {
     case eventNames.ApprovalForAll: {
-      const _owner = event.args._owner.toLowerCase()
-      const _operator = event.args._operator.toLowerCase()
-      const _approved = event.args._approved === 'true'
+      const owner = event.args._owner.toLowerCase()
+      const operator = event.args._operator.toLowerCase()
+      const approved = event.args._approved === 'true'
+      const action = approved ? 'set' : 'remove'
+
+      log.info(`[${name}] ${owner} ${action} ${operator} as approved for all`)
 
       try {
-        log.info(
-          `[${name}] ${_owner} ${
-            _approved ? 'set' : 'remove'
-          } ${_operator} as approved for all`
-        )
+        const approval = {
+          type: APPROVAL_TYPES.operator,
+          token_address: address,
+          owner,
+          operator
+        }
+
         if (_approved) {
-          await Approval.approveForAll(address, _owner, _operator)
+          await Approval.create(approval)
         } else {
-          await Approval.delete({
-            token_address: address,
-            owner: _owner,
-            operator: _operator
-          })
+          await Approval.delete(approval)
         }
       } catch (error) {
         if (!isDuplicatedConstraintError(error)) throw error
