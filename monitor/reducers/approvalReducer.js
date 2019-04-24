@@ -30,32 +30,28 @@ async function reduceLANDRegistry(event) {
   switch (name) {
     case eventNames.ApprovalForAll: {
       // operator and holder are inverted in the contact
-      const owner = event.args.holder.toLowerCase()
-      const operator = event.args.operator.toLowerCase()
-      const authorized = event.args.authorized === 'true'
-      const action = authorized ? 'set' : 'remove'
-
-      log.info(`[${name}] ${holder} ${action} ${operator} as approved for all`)
-
-      try {
-        const approval = {
-          type: APPROVAL_TYPES.operator,
-          token_address: address,
-          owner,
-          operator
-        }
-
-        if (authorized) {
-          await Approval.create(approval)
-        } else {
-          await Approval.delete(approval)
-        }
-      } catch (error) {
-        if (!isDuplicatedConstraintError(error)) throw error
-        log.info(
-          `[${name}] ${holder} has already set ${operator} as approved for all`
-        )
+      const approval = {
+        type: APPROVAL_TYPES.operator,
+        token_address: address,
+        owner: event.args.holder.toLowerCase(),
+        operator: event.args.operator.toLowerCase()
       }
+      const isApproved = event.args.authorized === 'true'
+
+      await handleApproval(event, approval, isApproved)
+      break
+    }
+    case eventNames.UpdateManager: {
+      // operator and holder are inverted in the contact
+      const approval = {
+        type: APPROVAL_TYPES.manager,
+        token_address: address,
+        owner: event.args._owner.toLowerCase(),
+        operator: event.args._operator.toLowerCase()
+      }
+      const isApproved = event.args._approved === 'true'
+
+      await handleApproval(event, approval, isApproved)
       break
     }
     default:
@@ -68,35 +64,37 @@ async function reduceEstateRegistry(event) {
 
   switch (name) {
     case eventNames.ApprovalForAll: {
-      const owner = event.args._owner.toLowerCase()
-      const operator = event.args._operator.toLowerCase()
-      const approved = event.args._approved === 'true'
-      const action = approved ? 'set' : 'remove'
-
-      log.info(`[${name}] ${owner} ${action} ${operator} as approved for all`)
-
-      try {
-        const approval = {
-          type: APPROVAL_TYPES.operator,
-          token_address: address,
-          owner,
-          operator
-        }
-
-        if (_approved) {
-          await Approval.create(approval)
-        } else {
-          await Approval.delete(approval)
-        }
-      } catch (error) {
-        if (!isDuplicatedConstraintError(error)) throw error
-        log.info(
-          `[${name}] ${_owner} has already set ${_operator} as approved for all`
-        )
+      const approval = {
+        type: APPROVAL_TYPES.operator,
+        token_address: address,
+        owner: event.args._owner.toLowerCase(),
+        operator: event.args._operator.toLowerCase()
       }
+      const isApproved = event.args._approved === 'true'
+
+      await handleApproval(event, approval, isApproved)
       break
     }
     default:
       break
+  }
+}
+
+async function handleApproval(event, approval, isApproved) {
+  const { name } = event
+  const { type, owner, operator } = approval
+  const action = isApproved ? 'set' : 'remove'
+
+  log.info(`[${name}] ${owner} ${action} ${operator} as ${type}`)
+
+  if (isApproved) {
+    try {
+      await Approval.insert(approval)
+    } catch (error) {
+      if (!isDuplicatedConstraintError(error)) throw error
+      log.info(`[${name}] ${owner} already set ${operator} as ${type}`)
+    }
+  } else {
+    await Approval.delete(approval)
   }
 }

@@ -69,6 +69,7 @@ export function loadContracts() {
         'Update',
         'Transfer',
         'UpdateOperator',
+        'UpdateManager',
         'Approval',
         'ApprovalForAll'
       ],
