@@ -53,15 +53,19 @@ export class AuthorizationRouter {
         throw new Error(`The assetType ${assetType} is invalid`)
     }
 
-    const isApprovedForAll = await Approval.count({
-      type: APPROVAL_TYPES.operator,
+    const approval = {
       token_address: tokenAddress.toLowerCase(),
       owner: asset.owner,
       operator: address
-    })
+    }
+    const [isApprovedForAll, isUpdateManager] = await Promise.all([
+      Approval.count({ type: APPROVAL_TYPES.operator, ...approval }),
+      Approval.count({ type: APPROVAL_TYPES.manager, ...approval })
+    ])
 
     return {
       isApprovedForAll,
+      isUpdateManager,
       isOwner: asset.owner === address,
       isOperator: asset.operator === address,
       isUpdateOperator: asset.update_operator === address
