@@ -5,6 +5,7 @@ import { env, Log } from 'decentraland-commons'
 
 import * as handlers from './handlers'
 import { MonitorActions } from './MonitorActions'
+import { processEvents } from './processEvents'
 import { connectEth } from '../src/ethereum'
 import { db } from '../src/database'
 import { loadEnv } from '../scripts/utils'
