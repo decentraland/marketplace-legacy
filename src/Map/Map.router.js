@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
 import { createCanvas } from 'canvas'
 
 import { indexedTiles } from '../Tile'

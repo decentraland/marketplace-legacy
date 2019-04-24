@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { Listing } from '../Listing'
 import { ListingQueries } from '../Listing.queries'
@@ -30,8 +30,8 @@ export class Bid extends Model {
   ]
 
   static async deleteBid(tokenAddress, tokenId, bidder, statuses) {
-    return this.db.query(
-      SQL`DELETE 
+    return this.query(
+      SQL`DELETE
       FROM ${raw(this.tableName)}
       WHERE ${BidQueries.isForToken(tokenAddress, tokenId)}
         AND ${ListingQueries.hasStatuses(statuses)}
@@ -40,18 +40,18 @@ export class Bid extends Model {
   }
 
   static async findByAddress(address) {
-    return this.db.query(
-      SQL`SELECT * 
+    return this.query(
+      SQL`SELECT *
         FROM ${raw(this.tableName)}
         WHERE ${BidQueries.bidderOrSeller(address)}`
     )
   }
 
   static async findByAddressAndStatus(address, status) {
-    return this.db.query(
-      SQL`SELECT * 
+    return this.query(
+      SQL`SELECT *
         FROM ${raw(this.tableName)}
-        WHERE ${BidQueries.bidderOrSeller(address)} 
+        WHERE ${BidQueries.bidderOrSeller(address)}
           AND ${ListingQueries.hasStatuses([status])}`
     )
   }
@@ -65,7 +65,7 @@ export class Bid extends Model {
   }
 
   static async cancelBids(blockTime, blockNumber, tokenAddress, tokenId) {
-    return this.db.query(
+    return this.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET status = ${
           LISTING_STATUS.cancelled
@@ -81,7 +81,7 @@ export class Bid extends Model {
   }
 
   static async hasWithStatuses(tokenAddress, tokenId, statuses) {
-    const result = await this.db.query(
+    const result = await this.query(
       SQL`SELECT COUNT(*)
         FROM ${raw(this.tableName)}
         WHERE ${BidQueries.isForToken(tokenAddress, tokenId)}
@@ -105,7 +105,7 @@ export class Bid extends Model {
     fingerprint
   ) {
     // Invalidate bids for assets with its fingerprint changed
-    await this.db.query(
+    await this.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET status = ${
           LISTING_STATUS.fingerprintChanged
@@ -117,7 +117,7 @@ export class Bid extends Model {
     )
 
     // Re-validate bids for assets with its fingerprint back to the original value
-    await this.db.query(
+    await this.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET status = ${
           LISTING_STATUS.open
@@ -136,11 +136,11 @@ export class Bid extends Model {
     tokenAddress,
     assetId
   ) {
-    return this.db.query(
+    return this.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET seller = ${seller}, block_time_updated_at = ${blockTime}, block_number = ${blockNumber}
         WHERE block_time_created_at <= ${blockTime}
-          AND token_address = ${tokenAddress} 
+          AND token_address = ${tokenAddress}
           AND asset_id = ${assetId}
           AND ${ListingQueries.hasStatuses([
             LISTING_STATUS.open,

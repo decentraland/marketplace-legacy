@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { SQL } from '../database'
 import { MORTGAGE_STATUS } from '../shared/mortgage'
@@ -35,7 +35,7 @@ export class Mortgage extends Model {
   }
 
   static findByBorrower(borrower, status = Object.values(MORTGAGE_STATUS)) {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE borrower = ${borrower}
@@ -49,7 +49,7 @@ export class Mortgage extends Model {
   }
 
   static findInCoordinate(assetId, status = Object.values(MORTGAGE_STATUS)) {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE asset_id = ${assetId}

@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
 
 import { Publication } from './Publication.model'
 import { Parcel } from '../../Asset'

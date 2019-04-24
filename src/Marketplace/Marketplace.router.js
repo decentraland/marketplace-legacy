@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
 
 import { Marketplace } from './Marketplace'
 import { Listing } from '../Listing'

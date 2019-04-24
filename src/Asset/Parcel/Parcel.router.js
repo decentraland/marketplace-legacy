@@ -1,4 +1,5 @@
-import { env, server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
+import { env } from 'decentraland-commons'
 
 import { Parcel } from './Parcel.model'
 import { AssetRouter } from '../Asset.router'

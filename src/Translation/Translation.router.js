@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
 import { Translation } from './Translation'
 
 export class TranslationRouter {

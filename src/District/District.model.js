@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 import uuid from 'uuid'
 
 import { isRoad, isPlaza } from '../../shared/district'

@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 import { SQL } from '../database'
 
 export class Contribution extends Model {
@@ -21,7 +21,7 @@ export class Contribution extends Model {
   }
 
   static findGroupedByAddress(address) {
-    return this.db.query(
+    return this.query(
       SQL`SELECT address, district_id, sum(land_count) as land_count
         FROM ${SQL.raw(this.tableName)}
         WHERE address = ${address}

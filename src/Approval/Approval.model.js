@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { SQL } from '../database'
 
@@ -7,10 +7,10 @@ export class Approval extends Model {
   static columnNames = ['token_address', 'owner', 'operator']
 
   static async approveForAll(tokenAddress, owner, operator) {
-    return this.db.query(
+    return this.query(
       SQL`INSERT INTO ${SQL.raw(
         this.tableName
-      )} (token_address, owner, operator) 
+      )} (token_address, owner, operator)
           VALUES (${tokenAddress}, ${owner}, ${operator});`
     )
   }
