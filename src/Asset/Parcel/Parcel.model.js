@@ -148,7 +148,7 @@ export class Parcel extends Model {
     )
   }
 
-  static async create(parcel) {
+  static async insert(parcel) {
     const { x, y } = parcel
     parcel.id = Parcel.buildId(x, y)
 
