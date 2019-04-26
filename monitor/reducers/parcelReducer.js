@@ -31,15 +31,10 @@ export async function parcelReducer(event) {
 
 async function reduceLANDRegistry(event) {
   const { name, block_number } = event
-  const shouldOmitParcelId = event.name === eventNames.ApprovalForAll
 
-  let parcelId
-
-  if (!shouldOmitParcelId) {
-    parcelId = await getParcelIdFromEvent(event)
-    if (!parcelId) {
-      return log.info(`[${name}] Invalid Parcel Id`)
-    }
+  let parcelId = await getParcelIdFromEvent(event)
+  if (!parcelId) {
+    return log.info(`[${name}] Invalid Parcel Id`)
   }
 
   switch (name) {
