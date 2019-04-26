@@ -64,8 +64,8 @@ export class AuthorizationRouter {
     ])
 
     return {
-      isApprovedForAll,
-      isUpdateManager,
+      isApprovedForAll: isApprovedForAll > 0,
+      isUpdateManager: isUpdateManager > 0,
       isOwner: asset.owner === address,
       isOperator: asset.operator === address,
       isUpdateOperator: asset.update_operator === address
