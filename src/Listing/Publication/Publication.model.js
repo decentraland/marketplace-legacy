@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { Listing } from '../Listing'
 import { ListingQueries } from '../Listing.queries'
@@ -49,7 +49,7 @@ export class Publication extends Model {
       throw new Error(`Invalid status "${status}"`)
     }
 
-    const result = await this.db.query(
+    const result = await this.query(
       SQL`SELECT *
         FROM ${raw(this.tableName)}
         WHERE status = ${status}
@@ -62,7 +62,7 @@ export class Publication extends Model {
   }
 
   static async findInactive() {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${raw(this.tableName)}
         WHERE ${ListingQueries.isInactive()}
@@ -73,7 +73,7 @@ export class Publication extends Model {
   static async cancelOlder(asset_id, block_number, eventName) {
     const status = LISTING_STATUS.open
 
-    const rows = await this.db.query(
+    const rows = await this.query(
       SQL`SELECT p.tx_hash
         FROM ${raw(this.tableName)} p
         JOIN ${raw(
@@ -98,7 +98,7 @@ export class Publication extends Model {
       throw new Error(`Trying to filter by invalid status "${newStatus}"`)
     }
 
-    return this.db.query(
+    return this.query(
       SQL`UPDATE ${raw(this.tableName)}
         SET status = ${newStatus},
             updated_at = NOW()

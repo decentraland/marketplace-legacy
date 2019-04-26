@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { ParcelQueries } from './Parcel.queries'
 import { Asset } from '../Asset'
@@ -44,7 +44,7 @@ export class Parcel extends Model {
   }
 
   static async findOwneableParcels() {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NULL`
@@ -52,7 +52,7 @@ export class Parcel extends Model {
   }
 
   static async findLandmarks() {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE district_id IS NOT NULL`
@@ -60,7 +60,7 @@ export class Parcel extends Model {
   }
 
   static findWithLastActiveMortgageByBorrower(borrower) {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
       ) as publication
@@ -70,7 +70,7 @@ export class Parcel extends Model {
   }
 
   static async findAvailable() {
-    const parcels = await this.db.query(
+    const parcels = await this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE owner IS NULL
@@ -82,7 +82,7 @@ export class Parcel extends Model {
   }
 
   static async findAssociationIds(id) {
-    const parcels = await this.db.query(
+    const parcels = await this.query(
       SQL`SELECT estate_id, district_id
         FROM ${SQL.raw(this.tableName)}
         WHERE id = ${id}`
@@ -91,14 +91,14 @@ export class Parcel extends Model {
   }
 
   static async findFrom(fromDate) {
-    return this.db.query(SQL`
+    return this.query(SQL`
       SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE updated_at >= ${fromDate}`)
   }
 
   static async countAvailable() {
-    const result = await this.db.query(
+    const result = await this.query(
       SQL`SELECT COUNT(*)
         FROM ${SQL.raw(this.tableName)}
         WHERE owner IS NULL
@@ -108,7 +108,7 @@ export class Parcel extends Model {
   }
 
   static async inRange(topLeft, bottomRight) {
-    return this.db.query(SQL`SELECT *, (
+    return this.query(SQL`SELECT *, (
       ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
     ) as publication
       FROM ${SQL.raw(this.tableName)}
@@ -117,7 +117,7 @@ export class Parcel extends Model {
   }
 
   static async encodeTokenId(x, y) {
-    const rows = await this.db.query(
+    const rows = await this.query(
       SQL`SELECT token_id
         FROM ${SQL.raw(this.tableName)}
         WHERE x = ${x}
@@ -128,7 +128,7 @@ export class Parcel extends Model {
   }
 
   static async decodeTokenId(tokenId) {
-    const rows = await this.db.query(
+    const rows = await this.query(
       SQL`SELECT id
         FROM ${SQL.raw(this.tableName)}
         WHERE token_id = ${tokenId}
@@ -138,7 +138,7 @@ export class Parcel extends Model {
   }
 
   static async updateAuctionData(price, owner, timestamp, ids) {
-    return this.db.query(
+    return this.query(
       SQL`UPDATE ${SQL.raw(this.tableName)}
         SET auction_price = ${price},
             auction_owner = ${owner},

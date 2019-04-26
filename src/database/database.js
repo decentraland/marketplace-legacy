@@ -1,57 +1,59 @@
-import { db, env, utils } from 'decentraland-commons'
+import { db } from 'decentraland-server'
+import { env, utils } from 'decentraland-commons'
 
+const pg = db.clients.postgres
 const connectCallbacks = []
 
-export const database = {
-  ...db.postgres,
+export const database = Object.create(pg)
 
-  async connect() {
-    const CONNECTION_STRING = env.get('CONNECTION_STRING')
-    this.client = await db.postgres.connect(CONNECTION_STRING)
+database.connect = async function() {
+  const CONNECTION_STRING = env.get('CONNECTION_STRING')
+  await pg.connect(CONNECTION_STRING)
 
-    this.client.once('error', async () => {
-      // We don't care If the ending the connection fails, it ussualy means it was already closed
-      try {
-        await this.client.end()
-      } catch (error) {
-        // Ignore socket errors
-      }
-      await this.reconnect()
-    })
+  this.client = pg.client
 
-    for (const callback of connectCallbacks) {
-      callback()
+  this.client.once('error', async () => {
+    // We don't care If the ending the connection fails, it ussualy means it was already closed
+    try {
+      await this.client.end()
+    } catch (error) {
+      // Ignore socket errors
     }
+    await this.reconnect()
+  })
 
-    return this
-  },
+  for (const callback of connectCallbacks) {
+    callback()
+  }
 
-  async reconnect() {
-    const timeout = env.get('DATABASE_RECONNECTION_TIMEOUT', 3000)
-    console.log(`Database connection ended, waiting ${timeout}ms to retry`)
+  return this
+}
 
-    await utils.sleep(Number(timeout))
-    return this.connect()
-      .then(() => console.log('Database reconnection successfull'))
-      .catch(() => this.reconnect())
-  },
+database.reconnect = async function() {
+  const timeout = env.get('DATABASE_RECONNECTION_TIMEOUT', 3000)
+  console.log(`Database connection ended, waiting ${timeout}ms to retry`)
 
-  async on(name, callback) {
-    this.client.on('notification', msg => {
-      if (msg.name === 'notification' && msg.channel === name) {
-        callback(msg)
-      }
-    })
-    return this.client.query(`LISTEN ${name}`)
-  },
+  await utils.sleep(Number(timeout))
+  return this.connect()
+    .then(() => console.log('Database reconnection successfull'))
+    .catch(() => this.reconnect())
+}
 
-  async off(name) {
-    return this.client.query(`UNLISTEN ${name}`)
-  },
-
-  onConnect(callback) {
-    if (typeof callback === 'function') {
-      connectCallbacks.push(callback)
+database.on = async function(name, callback) {
+  this.client.on('notification', msg => {
+    if (msg.name === 'notification' && msg.channel === name) {
+      callback(msg)
     }
+  })
+  return this.client.query(`LISTEN ${name}`)
+}
+
+database.off = async function(name) {
+  return this.client.query(`UNLISTEN ${name}`)
+}
+
+database.onConnect = function(callback) {
+  if (typeof callback === 'function') {
+    connectCallbacks.push(callback)
   }
 }

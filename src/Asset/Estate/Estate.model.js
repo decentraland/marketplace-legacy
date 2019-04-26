@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { EstateQueries } from './Estate.queries'
 import { Asset } from '../Asset'
@@ -21,7 +21,7 @@ export class Estate extends Model {
   ]
 
   static findWithParcels() {
-    return this.db.query(
+    return this.query(
       SQL`SELECT e.*, array_to_json(array_agg(p.*)) as parcels
         FROM ${SQL.raw(this.tableName)} as e
         JOIN ${SQL.raw(Parcel.tableName)} as p ON e.id = p.estate_id
@@ -64,12 +64,12 @@ export class Estate extends Model {
   }
 
   static async updateDistrictIds() {
-    return this.db.query(
-      SQL`UPDATE ${SQL.raw(this.tableName)} 
+    return this.query(
+      SQL`UPDATE ${SQL.raw(this.tableName)}
       SET district_id = P.district_id
-        FROM parcels as P 
-        WHERE ${SQL.raw(this.tableName)}.id = P.estate_id AND 
-        P.estate_id IS NOT NULL AND 
+        FROM parcels as P
+        WHERE ${SQL.raw(this.tableName)}.id = P.estate_id AND
+        P.estate_id IS NOT NULL AND
         P.district_id IS NOT NULL;`
     )
   }

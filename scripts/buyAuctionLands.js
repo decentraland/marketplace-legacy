@@ -1,7 +1,8 @@
 #!/usr/bin/env babel-node
 
 import { eth, Contract } from 'decentraland-eth'
-import { Log, cli, utils } from 'decentraland-commons'
+import { cli } from 'decentraland-server'
+import { Log, utils } from 'decentraland-commons'
 
 import { Bounds } from '../shared/map'
 import { buildCoordinate, splitCoodinatePairs } from '../shared/coordinates'

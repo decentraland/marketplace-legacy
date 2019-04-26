@@ -2,7 +2,8 @@
 
 import fs from 'fs'
 import { execSync } from 'child_process'
-import { Log, env, cli } from 'decentraland-commons'
+import { cli } from 'decentraland-server'
+import { Log, env } from 'decentraland-commons'
 
 import { loadEnv, resolvePath, runpsql } from './utils'
 

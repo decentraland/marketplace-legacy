@@ -1,8 +1,9 @@
 #!/usr/bin/env babel-node
 
-import { eth, txUtils } from 'decentraland-eth'
-import { Log, cli } from 'decentraland-commons'
 import faker from 'faker'
+import { eth, txUtils } from 'decentraland-eth'
+import { cli } from 'decentraland-server'
+import { Log } from 'decentraland-commons'
 
 import { loadEnv } from './utils'
 import { db } from '../src/database'

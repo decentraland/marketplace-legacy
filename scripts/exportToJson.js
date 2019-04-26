@@ -1,7 +1,8 @@
 #!/usr/bin/env babel-node
 
 import fs from 'fs'
-import { Log, cli } from 'decentraland-commons'
+import { cli } from 'decentraland-server'
+import { Log } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { District } from '../src/District'

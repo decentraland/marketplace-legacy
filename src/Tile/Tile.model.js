@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { TileAttributes } from './TileAttributes'
 import { Asset, Parcel, Estate } from '../Asset'
@@ -79,7 +79,7 @@ export class Tile extends Model {
 
     const values = Object.values(row)
 
-    return this.db.query(
+    return this.query(
       `INSERT INTO ${this.tableName}(
        ${this.db.toColumnFields(row)}
       ) VALUES(
@@ -93,7 +93,7 @@ export class Tile extends Model {
   static async findFrom(fromDate) {
     const columnNames = this.filterColumnNames(propertiesBlacklist).join(', ')
 
-    return this.db.query(SQL`
+    return this.query(SQL`
       SELECT ${raw(columnNames)}
         FROM ${raw(this.tableName)}
         WHERE ${this.getWhereUpdatedSQL(fromDate)}`)
@@ -120,7 +120,7 @@ export class Tile extends Model {
 
     const [districtTiles, ownerTiles] = await Promise.all([
       // prettier-ignore
-      this.db.query(SQL`
+      this.query(SQL`
         SELECT ${raw(districtColumnNames)}
           FROM ${raw(this.tableName)} t
           JOIN ${raw(Contribution.tableName)} c ON c.address = ${owner} AND c.district_id = t.district_id
@@ -128,7 +128,7 @@ export class Tile extends Model {
             AND t.district_id IS NOT NULL
             AND ${whereNewSQL}
           GROUP BY c.id, ${raw(districtColumnNames)}`),
-      this.db.query(SQL`
+      this.query(SQL`
         SELECT ${raw(ownerColumnNames)}
           FROM ${raw(this.tableName)} t
           WHERE owner = ${owner}

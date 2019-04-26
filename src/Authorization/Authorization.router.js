@@ -1,4 +1,5 @@
-import { server, env } from 'decentraland-commons'
+import { server } from 'decentraland-server'
+import { env } from 'decentraland-commons'
 
 import { Approval } from '../Approval'
 import { Parcel, Estate } from '../Asset'

@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
 import { Contribution } from './Contribution.model'
 import { sanitizeContributions } from '../sanitize'
 

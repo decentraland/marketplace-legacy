@@ -1,7 +1,8 @@
 #!/usr/bin/env babel-node
 
 import { execSync } from 'child_process'
-import { Log, cli } from 'decentraland-commons'
+import { cli } from 'decentraland-server'
+import { Log } from 'decentraland-commons'
 
 import { db } from '../src/database'
 import { Parcel } from '../src/Asset'
@@ -142,7 +143,7 @@ async function normalizeProjects() {
     })
   }
 
-  return District.db.query(`
+  return District.query(`
     UPDATE districts PJ
       SET parcel_ids = (
         SELECT ARRAY_AGG(P.id)

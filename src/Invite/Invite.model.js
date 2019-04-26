@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 import { SQL } from '../database'
 
@@ -8,7 +8,7 @@ export class Invite extends Model {
 
   static createOrUpdate(address, invited) {
     return Invite.query(
-      SQL`INSERT INTO ${SQL.raw(this.tableName)} (address, invited) 
+      SQL`INSERT INTO ${SQL.raw(this.tableName)} (address, invited)
           VALUES (${address}, ${invited})
           ON CONFLICT (address) DO UPDATE
           SET invited = EXCLUDED.invited`

@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
 
 import { Bid } from './Bid.model'
 import { Parcel } from '../../Asset'

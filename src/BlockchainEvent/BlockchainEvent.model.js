@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 import { BlockchainEventQueries } from './BlockchainEvent.queries'
 import { SQL } from '../database'
 
@@ -22,7 +22,7 @@ export class BlockchainEvent extends Model {
 
     const values = Object.values(blockchainEvent)
 
-    return this.db.query(
+    return this.query(
       `INSERT INTO ${this.tableName}(
        ${this.db.toColumnFields(blockchainEvent)}
       ) VALUES(
@@ -43,7 +43,7 @@ export class BlockchainEvent extends Model {
   }
 
   static findFrom(blockNumber) {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE block_number > ${blockNumber}
@@ -52,7 +52,7 @@ export class BlockchainEvent extends Model {
   }
 
   static findByArgs(argName, argValue, fromBlock) {
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE ${BlockchainEventQueries.byArgs(argName, argValue)}
@@ -65,7 +65,7 @@ export class BlockchainEvent extends Model {
     if (!Array.isArray(argNames)) {
       throw new Error('First argument must be an array')
     }
-    return this.db.query(
+    return this.query(
       SQL`SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE (${BlockchainEventQueries.byAnyArgs(argNames, argValue)})
@@ -75,7 +75,7 @@ export class BlockchainEvent extends Model {
   }
 
   static deleteByArgs(argName, argValue, fromBlock) {
-    return this.db.query(
+    return this.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
         WHERE ${BlockchainEventQueries.byArgs(argName, argValue)}
         AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
@@ -83,7 +83,7 @@ export class BlockchainEvent extends Model {
   }
 
   static deleteByAnyArgs(argNames, argValue, fromBlock) {
-    return this.db.query(
+    return this.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
         WHERE (${BlockchainEventQueries.byAnyArgs(argNames, argValue)})
         AND ${BlockchainEventQueries.fromBlock(fromBlock)}`

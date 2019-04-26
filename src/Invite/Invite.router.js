@@ -1,4 +1,4 @@
-import { server } from 'decentraland-commons'
+import { server } from 'decentraland-server'
 import { Invite } from './Invite.model'
 
 export class InviteRouter {

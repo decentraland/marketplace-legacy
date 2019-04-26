@@ -1,4 +1,4 @@
-import { Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
 
 export class BlockTimestamp extends Model {
   static tableName = 'block_timestamps'
