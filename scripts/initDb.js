@@ -143,7 +143,7 @@ async function normalizeProjects() {
     })
   }
 
-  return District.db.query(`
+  return District.query(`
     UPDATE districts PJ
       SET parcel_ids = (
         SELECT ARRAY_AGG(P.id)

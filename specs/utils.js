@@ -1,4 +1,5 @@
-import { utils, Log, Model } from 'decentraland-commons'
+import { Model } from 'decentraland-server'
+import { utils, Log } from 'decentraland-commons'
 
 export function omitProps(obj, omittedProps) {
   const newObj = utils.omit(obj, omittedProps)
