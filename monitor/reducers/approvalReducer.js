@@ -29,7 +29,6 @@ async function reduceLANDRegistry(event) {
 
   switch (name) {
     case eventNames.ApprovalForAll: {
-      // operator and holder are inverted in the contact
       const approval = {
         type: APPROVAL_TYPES.operator,
         token_address: address,
@@ -42,7 +41,6 @@ async function reduceLANDRegistry(event) {
       break
     }
     case eventNames.UpdateManager: {
-      // operator and holder are inverted in the contact
       const approval = {
         type: APPROVAL_TYPES.manager,
         token_address: address,

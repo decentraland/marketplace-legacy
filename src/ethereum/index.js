@@ -73,7 +73,7 @@ export function loadContracts() {
         'Approval',
         'ApprovalForAll'
       ],
-      count: { Transfer: 2 }
+      count: { Transfer: 3 }
     },
     EstateRegistry: {
       address: getEnvAddress('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
