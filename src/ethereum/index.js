@@ -69,10 +69,11 @@ export function loadContracts() {
         'Update',
         'Transfer',
         'UpdateOperator',
+        'UpdateManager',
         'Approval',
         'ApprovalForAll'
       ],
-      count: { Transfer: 2 }
+      count: { Transfer: 3 }
     },
     EstateRegistry: {
       address: getEnvAddress('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
@@ -84,7 +85,8 @@ export function loadContracts() {
         'Update',
         'UpdateOperator',
         'Approval',
-        'ApprovalForAll'
+        'ApprovalForAll',
+        'UpdateManager'
       ]
     },
     LANDAuction: {
@@ -113,7 +115,7 @@ export function loadContracts() {
       eventNames: ['Transfer']
     },
     ERC721Bid: {
-      address: env.get('ERC721_BID_CONTRACT_ADDRESS').toLowerCase(),
+      address: getEnvAddress('ERC721_BID_CONTRACT_ADDRESS'),
       eventNames: ['BidCreated', 'BidAccepted', 'BidCancelled']
     }
   })

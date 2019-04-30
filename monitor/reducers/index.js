@@ -1,4 +1,5 @@
 import { auctionReducer as auction } from './auctionReducer'
+import { approvalReducer as approval } from './approvalReducer'
 import { parcelReducer as parcel } from './parcelReducer'
 import { publicationReducer as publication } from './publicationReducer'
 import { mortgageReducer as mortgage } from './mortgageReducer'
@@ -8,6 +9,7 @@ import { bidReducer as bids } from './bidReducer'
 
 export const reducers = {
   auction,
+  approval,
   parcel,
   publication,
   mortgage,

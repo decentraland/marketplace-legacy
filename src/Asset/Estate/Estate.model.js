@@ -2,7 +2,6 @@ import { Model } from 'decentraland-server'
 
 import { EstateQueries } from './Estate.queries'
 import { Asset } from '../Asset'
-import { Parcel } from '../Parcel'
 import { BlockchainEvent, BlockchainEventQueries } from '../../BlockchainEvent'
 import { SQL } from '../../database'
 
@@ -19,15 +18,6 @@ export class Estate extends Model {
     'data',
     'last_transferred_at'
   ]
-
-  static findWithParcels() {
-    return this.query(
-      SQL`SELECT e.*, array_to_json(array_agg(p.*)) as parcels
-        FROM ${SQL.raw(this.tableName)} as e
-        JOIN ${SQL.raw(Parcel.tableName)} as p ON e.id = p.estate_id
-        GROUP BY e.id`
-    )
-  }
 
   static findByOwner(owner) {
     return new Asset(this).findByOwner(owner)
