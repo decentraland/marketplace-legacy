@@ -69,6 +69,12 @@ export class AuthorizationRouter {
     const isOwner = asset.owner === address
     const isOperator = asset.operator === address
     const isUpdateOperator = asset.update_operator === address
+    const isUpdateAuthorized =
+      isApprovedForAll ||
+      isUpdateManager ||
+      isOwner ||
+      isOperator ||
+      isUpdateOperator
 
     return {
       isApprovedForAll,
@@ -76,12 +82,7 @@ export class AuthorizationRouter {
       isOwner,
       isOperator,
       isUpdateOperator,
-      isUpdateAuthorized:
-        isApprovedForAll ||
-        isUpdateManager ||
-        isOwner ||
-        isOperator ||
-        isUpdateOperator
+      isUpdateAuthorized
     }
   }
 
@@ -98,29 +99,24 @@ export class AuthorizationRouter {
       throw new Error('Parcel does not exist')
     }
 
-    const parcelAuthorizations = await this.getAuthorizations(
+    const authorizations = await this.getAuthorizations(
       parcel,
       ASSET_TYPES.parcel,
       address
     )
 
-    let estateAuthorizations = {}
     if (parcel.estate_id) {
       const estate = await Estate.findOne({ id: parcel.estate_id })
 
-      estateAuthorizations = await this.getAuthorizations(
+      const { isUpdateAuthorized } = await this.getAuthorizations(
         estate,
         ASSET_TYPES.estate,
         address
       )
-    }
 
-    const authorizations = {
-      ...parcelAuthorizations,
-      isUpdateAuthorized: !!(
-        parcelAuthorizations.isUpdateAuthorized ||
-        estateAuthorizations.isUpdateAuthorized
-      )
+      if (isUpdateAuthorized) {
+        authorizations.isUpdateAuthorized = true
+      }
     }
 
     return {
