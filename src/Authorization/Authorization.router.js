@@ -85,22 +85,12 @@ export class AuthorizationRouter {
       throw new Error('Parcel does not exist')
     }
 
-    let authorizations
-    if (parcel.estate_id) {
-      const estate = await Estate.findOne({ id: parcel.estate_id })
+    const authorizations = await this.getAuthorizations(
+      parcel,
+      ASSET_TYPES.parcel,
+      address
+    )
 
-      authorizations = await this.getAuthorizations(
-        estate,
-        ASSET_TYPES.estate,
-        address
-      )
-    } else {
-      authorizations = await this.getAuthorizations(
-        parcel,
-        ASSET_TYPES.parcel,
-        address
-      )
-    }
     return { id: parcel.id, address, ...authorizations }
   }
 

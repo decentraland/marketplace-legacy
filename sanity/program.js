@@ -1,6 +1,7 @@
 #!/usr/bin/env babel-node
 
-import { cli, Log } from 'decentraland-commons'
+import { cli } from 'decentraland-server'
+import { Log } from 'decentraland-commons'
 
 import { SanityActions } from './SanityActions'
 import { db } from '../src/database'
