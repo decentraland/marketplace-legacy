@@ -11,12 +11,9 @@ export async function approvalReducer(event) {
   const { address } = event
 
   switch (address) {
-    case contractAddresses.LANDRegistry: {
-      await reduceLANDRegistry(event)
-      break
-    }
+    case contractAddresses.LANDRegistry:
     case contractAddresses.EstateRegistry: {
-      await reduceEstateRegistry(event)
+      await reduceRegistries(event)
       break
     }
     default:
@@ -24,32 +21,16 @@ export async function approvalReducer(event) {
   }
 }
 
-async function reduceLANDRegistry(event) {
-  const { name, address } = event
+async function reduceRegistries(event) {
+  const { name } = event
 
   switch (name) {
     case eventNames.ApprovalForAll: {
-      const approval = {
-        type: APPROVAL_TYPES.operator,
-        token_address: address,
-        owner: event.args.holder.toLowerCase(),
-        operator: event.args.operator.toLowerCase()
-      }
-      const isApproved = event.args.authorized === 'true'
-
-      await handleApproval(event, approval, isApproved)
+      await handleApprovalForAll(event)
       break
     }
     case eventNames.UpdateManager: {
-      const approval = {
-        type: APPROVAL_TYPES.manager,
-        token_address: address,
-        owner: event.args._owner.toLowerCase(),
-        operator: event.args._operator.toLowerCase()
-      }
-      const isApproved = event.args._approved === 'true'
-
-      await handleApproval(event, approval, isApproved)
+      await handleUpdateManager(event)
       break
     }
     default:
@@ -57,25 +38,35 @@ async function reduceLANDRegistry(event) {
   }
 }
 
-async function reduceEstateRegistry(event) {
-  const { name, address } = event
+async function handleApprovalForAll(event) {
+  // The props on the rightmost part of the following checks follow the standard
+  // To the left, we have our own old implementation of the LANDRegistry
+  // and we should add any other non-standard props we find if we add new contracts
+  const owner = event.args.holder || event.args._owner
+  const operator = event.args.operator || event.args._operator
+  const authorization = event.args.authorized || event.args._approved
 
-  switch (name) {
-    case eventNames.ApprovalForAll: {
-      const approval = {
-        type: APPROVAL_TYPES.operator,
-        token_address: address,
-        owner: event.args._owner.toLowerCase(),
-        operator: event.args._operator.toLowerCase()
-      }
-      const isApproved = event.args._approved === 'true'
-
-      await handleApproval(event, approval, isApproved)
-      break
-    }
-    default:
-      break
+  const approval = {
+    type: APPROVAL_TYPES.operator,
+    token_address: event.address,
+    owner: owner.toLowerCase(),
+    operator: operator.toLowerCase()
   }
+  const isApproved = authorization === 'true'
+
+  await handleApproval(event, approval, isApproved)
+}
+
+async function handleUpdateManager(event) {
+  const approval = {
+    type: APPROVAL_TYPES.manager,
+    token_address: event.address,
+    owner: event.args._owner.toLowerCase(),
+    operator: event.args._operator.toLowerCase()
+  }
+  const isApproved = event.args._approved === 'true'
+
+  await handleApproval(event, approval, isApproved)
 }
 
 async function handleApproval(event, approval, isApproved) {
