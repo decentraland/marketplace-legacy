@@ -58,17 +58,30 @@ export class AuthorizationRouter {
       owner: asset.owner,
       operator: address
     }
-    const [isApprovedForAll, isUpdateManager] = await Promise.all([
+    let [isApprovedForAll, isUpdateManager] = await Promise.all([
       Approval.count({ type: APPROVAL_TYPES.operator, ...approval }),
       Approval.count({ type: APPROVAL_TYPES.manager, ...approval })
     ])
 
+    isApprovedForAll = isApprovedForAll > 0
+    isUpdateManager = isUpdateManager > 0
+
+    const isOwner = asset.owner === address
+    const isOperator = asset.operator === address
+    const isUpdateOperator = asset.update_operator === address
+
     return {
-      isApprovedForAll: isApprovedForAll > 0,
-      isUpdateManager: isUpdateManager > 0,
-      isOwner: asset.owner === address,
-      isOperator: asset.operator === address,
-      isUpdateOperator: asset.update_operator === address
+      isApprovedForAll,
+      isUpdateManager,
+      isOwner,
+      isOperator,
+      isUpdateOperator,
+      isUpdateAuthorized:
+        isApprovedForAll ||
+        isUpdateManager ||
+        isOwner ||
+        isOperator ||
+        isUpdateOperator
     }
   }
 
@@ -85,13 +98,36 @@ export class AuthorizationRouter {
       throw new Error('Parcel does not exist')
     }
 
-    const authorizations = await this.getAuthorizations(
+    const parcelAuthorizations = await this.getAuthorizations(
       parcel,
       ASSET_TYPES.parcel,
       address
     )
 
-    return { id: parcel.id, address, ...authorizations }
+    let estateAuthorizations = {}
+    if (parcel.estate_id) {
+      const estate = await Estate.findOne({ id: parcel.estate_id })
+
+      estateAuthorizations = await this.getAuthorizations(
+        estate,
+        ASSET_TYPES.estate,
+        address
+      )
+    }
+
+    const authorizations = {
+      ...parcelAuthorizations,
+      isUpdateAuthorized: !!(
+        parcelAuthorizations.isUpdateAuthorized ||
+        estateAuthorizations.isUpdateAuthorized
+      )
+    }
+
+    return {
+      id: parcel.id,
+      address,
+      ...authorizations
+    }
   }
 
   async getEstateAuthorizations(req) {

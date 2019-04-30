@@ -85,7 +85,8 @@ export function loadContracts() {
         'Update',
         'UpdateOperator',
         'Approval',
-        'ApprovalForAll'
+        'ApprovalForAll',
+        'UpdateManager'
       ]
     },
     LANDAuction: {

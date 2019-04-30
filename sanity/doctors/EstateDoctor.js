@@ -11,7 +11,7 @@ import { Publication } from '../../src/Listing'
 
 export class EstateDoctor extends Doctor {
   async diagnose() {
-    const estates = await Estate.findWithParcels()
+    const estates = await Estate.find()
     const faultyEstates = await this.filterInconsistentEstates(estates)
 
     return new EstateDiagnosis(faultyEstates)
