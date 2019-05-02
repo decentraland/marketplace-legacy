@@ -5,6 +5,12 @@ import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { APPROVAL_TYPES } from '../../shared/approval'
 
+// At block 5808417 the ApprovalForAll event for the LANDRegistry contract kept its signature
+// (topic0), but changed its param order:
+// Before block 5808417:  ApprovalForAll(operator, owner, authorized)
+// After block 5808417: ApprovalForAll(owner, operator, authorized)
+// The EstateRegistry is not affected because it was created at block number 6236547.
+const APPROVAL_FOR_ALL_ARGS_ORDER_CHANGE_BLOCK_NUMBER = 5808417
 const log = new Log('approvalReducer')
 
 export async function approvalReducer(event) {
@@ -49,8 +55,14 @@ async function handleApprovalForAll(event) {
   const approval = {
     type: APPROVAL_TYPES.operator,
     token_address: event.address,
-    owner: owner.toLowerCase(),
-    operator: operator.toLowerCase()
+    owner:
+      event.block_number > APPROVAL_FOR_ALL_ARGS_ORDER_CHANGE_BLOCK_NUMBER
+        ? owner.toLowerCase()
+        : operator.toLowerCase(),
+    operator:
+      event.block_number > APPROVAL_FOR_ALL_ARGS_ORDER_CHANGE_BLOCK_NUMBER
+        ? operator.toLowerCase()
+        : owner.toLowerCase()
   }
   const isApproved = authorization === 'true'
 
