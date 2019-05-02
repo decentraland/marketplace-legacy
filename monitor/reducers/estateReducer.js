@@ -166,11 +166,15 @@ async function reduceEstateRegistry(event) {
       }
 
       log.info(`[${name}] Updating Estate id: "${estate.id}" data: ${_data}`)
-      const data = { ...estate.data, ...decodeMetadata(_data) }
-      await Promise.all([
-        Estate.update({ data }, { id: estate.id }),
-        Tile.update({ name: data.name }, { estate_id: estate.id })
-      ])
+      try {
+        const data = { ...estate.data, ...decodeMetadata(_data) }
+        await Promise.all([
+          Estate.update({ data }, { id: estate.id }),
+          Tile.update({ name: data.name }, { estate_id: estate.id })
+        ])
+      } catch (error) {
+        log.info(`[${name}] Skipping badly formed data for "${estate.id}"`)
+      }
       break
     }
     case eventNames.Approval: {
