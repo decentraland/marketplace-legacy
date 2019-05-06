@@ -6,7 +6,7 @@ export class Diagnosis {
     this.log = new Log(this.constructor.name)
   }
 
-  async doTreatment() {
+  async doTreatment(fromBlock) {
     throw new Error('Not implemented')
   }
 
