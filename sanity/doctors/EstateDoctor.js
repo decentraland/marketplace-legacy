@@ -1,4 +1,4 @@
-import { eth } from 'decentraland-eth'
+import { eth, Contract } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
@@ -41,13 +41,8 @@ export class EstateDoctor extends Doctor {
   }
 
   async getEstateInconsistencies(estate) {
-    const {
-      id,
-      owner,
-      operator,
-      update_operator,
-      data: { parcels }
-    } = estate
+    const { id, owner, operator, update_operator, data } = estate
+    const { parcels } = data
 
     const estateRegistry = eth.getContract('EstateRegistry')
     const [
@@ -72,10 +67,22 @@ export class EstateDoctor extends Doctor {
       return `Mismatch: update operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
     }
 
-    const estateSize = await estateRegistry.getEstateSize(estate.id)
-    let currentParcels = []
+    const currentParcels = await this.getCurrentEstateParcels()
 
+    if (!this.isEqualParcels(currentParcels, parcels)) {
+      return `Parcels: db parcels for estate ${id} are different from blockchain`
+    }
+
+    return null
+  }
+
+  async getCurrentEstateParcels(estate) {
+    const estateRegistry = eth.getContract('EstateRegistry')
+    const estateSize = await estateRegistry.getEstateSize(estate.id)
+
+    let currentParcels = []
     let index = 0
+
     await asyncBatch({
       elements: new Array(estateSize.toNumber()),
       callback: async sizeBatch => {
@@ -91,10 +98,8 @@ export class EstateDoctor extends Doctor {
       logFormat: '',
       retryAttempts: 20
     })
-    if (!this.isEqualParcels(currentParcels, parcels)) {
-      return `Parcels: db parcels for estate ${id} are different from blockchain`
-    }
-    return null
+
+    return currentParcels
   }
 
   async buildCurrentEstateParcel(estateId, index) {
@@ -118,7 +123,7 @@ export class EstateDoctor extends Doctor {
 
   isOperatorMismatch(currentOperator, operator) {
     return (
-      (!operator && currentOperator !== this.EMPTY_ADDRESS) ||
+      (!operator && !Contract.isEmptyAddress(currentOperator)) ||
       (operator && operator !== currentOperator)
     )
   }

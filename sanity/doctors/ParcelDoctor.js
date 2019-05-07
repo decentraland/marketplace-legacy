@@ -1,4 +1,4 @@
-import { eth } from 'decentraland-eth'
+import { eth, Contract } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
@@ -94,7 +94,7 @@ export class ParcelDoctor extends Doctor {
 
   isOperatorMismatch(currentOperator, operator) {
     return (
-      (!operator && currentOperator !== this.EMPTY_ADDRESS) ||
+      (!operator && !Contract.isEmptyAddress(currentOperator)) ||
       (operator && operator !== currentOperator)
     )
   }
