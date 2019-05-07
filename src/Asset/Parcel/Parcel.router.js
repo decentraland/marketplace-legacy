@@ -1,10 +1,12 @@
 import { server } from 'decentraland-server'
 import { env } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 
 import { Parcel } from './Parcel.model'
 import { AssetRouter } from '../Asset.router'
 import { ASSET_TYPES } from '../../shared/asset'
 import { Bounds } from '../../shared/map'
+import { splitCoordinate } from '../../shared/coordinates'
 import { sanitizeParcels, sanitizeParcel } from '../../sanitize'
 import { unsafeParseInt } from '../../lib'
 
@@ -27,6 +29,16 @@ export class ParcelRouter {
      * @return {array<Parcel>}
      */
     this.app.get('/parcels', server.handleRequest(this.getParcels))
+
+    /**
+     * Returns the parcel coordinate by its token id
+     * @param  {string} tokenId  - Parcel owner
+     * @return {string} coordinates
+     */
+    this.app.get(
+      '/parcels/:tokenId/decodedId',
+      server.handleRequest(this.getParcelCoordinates)
+    )
 
     /**
      * Returns the parcels in between the supplied coordinates
@@ -53,6 +65,17 @@ export class ParcelRouter {
     this.app.get(
       '/parcels/availableCount',
       server.handleRequest(this.getAvailableParcelCount)
+    )
+
+    /**
+     * Returns the parcel token id by its coordinates
+     * @param  {string} x - coordinate X
+     * @param  {string} y - coordinate Y
+     * @return {string} token id
+     */
+    this.app.get(
+      '/parcels/:x/:y/encodedId',
+      server.handleRequest(this.getParcelTokenId)
     )
 
     /**
@@ -144,5 +167,23 @@ export class ParcelRouter {
     }
 
     return sanitizeParcels(parcels)
+  }
+
+  async getParcelCoordinates(req) {
+    const token_id = eth.utils
+      .toBigNumber(server.extractFromReq(req, 'tokenId'))
+      .toString()
+
+    const { id } = await Parcel.findOne({ token_id })
+
+    const [x, y] = splitCoordinate(id)
+    return { x, y }
+  }
+
+  async getParcelTokenId(req) {
+    const x = server.extractFromReq(req, 'x')
+    const y = server.extractFromReq(req, 'y')
+    const { token_id } = await Parcel.findOne({ x, y })
+    return { decimal: token_id, hex: eth.utils.toHex(token_id) }
   }
 }
