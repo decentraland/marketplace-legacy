@@ -184,6 +184,6 @@ export class ParcelRouter {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
     const { token_id } = await Parcel.findOne({ x, y })
-    return { decimal: token_id, hex: eth.utils.toHex(token_id) }
+    return eth.utils.toHex(token_id)
   }
 }
