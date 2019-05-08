@@ -6,7 +6,6 @@ import { Parcel } from './Parcel.model'
 import { AssetRouter } from '../Asset.router'
 import { ASSET_TYPES } from '../../shared/asset'
 import { Bounds } from '../../shared/map'
-import { splitCoordinate } from '../../shared/coordinates'
 import { sanitizeParcels, sanitizeParcel } from '../../sanitize'
 import { unsafeParseInt } from '../../lib'
 
@@ -31,18 +30,7 @@ export class ParcelRouter {
     this.app.get('/parcels', server.handleRequest(this.getParcels))
 
     /**
-     * Returns the parcel coordinate by its token id
-     * @param  {string} tokenId  - Parcel owner
-     * @return {string} coordinates
-     */
-    this.app.get(
-      '/parcels/:tokenId/decodedId',
-      server.handleRequest(this.getParcelCoordinates)
-    )
-
-    /**
-     * Returns the parcels in between the supplied coordinates
-     * Or filtered by the supplied params
+     * Returns the parcels by its coordinates
      * @param  {string} x - coordinate X
      * @param  {string} y - coordinate Y
      * @return {array<Parcel>}
@@ -65,6 +53,16 @@ export class ParcelRouter {
     this.app.get(
       '/parcels/availableCount',
       server.handleRequest(this.getAvailableParcelCount)
+    )
+
+    /**
+     * Returns the parcel by its token id
+     * @param  {string} tokenId  - Parcel token id
+     * @return {string} coordinates
+     */
+    this.app.get(
+      '/parcels/:tokenId',
+      server.handleRequest(this.getParcelByTokenId)
     )
 
     /**
@@ -169,21 +167,20 @@ export class ParcelRouter {
     return sanitizeParcels(parcels)
   }
 
-  async getParcelCoordinates(req) {
+  async getParcelByTokenId(req) {
     const token_id = eth.utils
       .toBigNumber(server.extractFromReq(req, 'tokenId'))
       .toString()
 
-    const { id } = await Parcel.findOne({ token_id })
+    const parcel = await Parcel.findOne({ token_id })
 
-    const [x, y] = splitCoordinate(id)
-    return { x, y }
+    return sanitizeParcel(parcel)
   }
 
   async getParcelTokenId(req) {
     const x = server.extractFromReq(req, 'x')
     const y = server.extractFromReq(req, 'y')
     const { token_id } = await Parcel.findOne({ x, y })
-    return eth.utils.toHex(token_id)
+    return { encoded_id: eth.utils.toHex(token_id) }
   }
 }
