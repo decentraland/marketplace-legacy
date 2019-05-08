@@ -181,7 +181,7 @@ class SanitiyMonitorActions extends MonitorActions {
     await this.createEstates()
 
     for (const diagnoses of this.diagnostics) {
-      await diagnoses.doTreatment(this.fromBlock)
+      await diagnoses.doTreatment()
     }
 
     await this.updateTiles()
@@ -191,7 +191,7 @@ class SanitiyMonitorActions extends MonitorActions {
   }
 
   async createEstates() {
-    // Create Estates in case they were not created by missing an event and there are faulty assets
+    // Run creation estate events in case estates were not created by missing an event
     if (this.faultyAssets.length > 0) {
       log.info('Creating Estates...')
       const createEstateEvents = await BlockchainEvent.find({
