@@ -28,7 +28,7 @@ export class ApprovalDiagnosis extends Diagnosis {
   }
 
   async prepare(fromBlock) {
-    this.fromBlock = fromBlock || 0
+    this.fromBlock = Number(fromBlock) || 0
 
     return Promise.all([
       BlockchainEvent.deleteByName(eventNames.ApprovalForAll, fromBlock),
