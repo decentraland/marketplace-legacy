@@ -3,8 +3,12 @@ import { SQL, raw } from '../database'
 export const BlockchainEventQueries = Object.freeze({
   byAddress: address => (address ? SQL`address = ${address}` : SQL`1 = 1`),
   byEventName: name => (name ? SQL`name = ${name}` : SQL`1 = 1`),
-  byMultipleArgs: args =>
-    args.length > 0
+  byMultipleArgs: args => {
+    console.log(
+      args,
+      BlockchainEventQueries.byArgs(args[0].name, args[0].value)
+    )
+    return args.length > 0
       ? args
           .slice(1)
           .reduce(
@@ -12,7 +16,8 @@ export const BlockchainEventQueries = Object.freeze({
               query.append(SQL` AND args->>'${raw(arg.name)}' = ${arg.value}`),
             BlockchainEventQueries.byArgs(args[0].name, args[0].value)
           )
-      : SQL`1 = 1`,
+      : SQL`1 = 1`
+  },
   byArgs: (argName, value) => SQL`args->>'${raw(argName)}' = ${value}`,
   byAnyArgs: (argNames, value) =>
     argNames

@@ -24,7 +24,14 @@ export class BlockchainEventsReqQueryParams {
   }
 
   getArgs() {
-    return JSON.parse(this.reqQueryParams.get('args', '[]'))
+    return JSON.parse(this.reqQueryParams.get('args', '[]')).map(arg => {
+      if (arg.name === 'value') {
+        // If the value is 1e+10 will appear as 1 e10. We need to replace that empty space to +
+        arg.value = arg.value.replace(' ', '+')
+      }
+
+      return arg
+    })
   }
 
   getFromBlock() {
