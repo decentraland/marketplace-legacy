@@ -134,6 +134,7 @@ export class Parcel extends Model {
         WHERE token_id = ${tokenId}
         LIMIT 1`
     )
+
     return rows.length ? rows[0].id : null
   }
 

@@ -1,5 +1,6 @@
 import { server } from 'decentraland-server'
 import { env } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
 
 import { Parcel } from './Parcel.model'
 import { AssetRouter } from '../Asset.router'
@@ -29,8 +30,7 @@ export class ParcelRouter {
     this.app.get('/parcels', server.handleRequest(this.getParcels))
 
     /**
-     * Returns the parcels in between the supplied coordinates
-     * Or filtered by the supplied params
+     * Returns the parcels by its coordinates
      * @param  {string} x - coordinate X
      * @param  {string} y - coordinate Y
      * @return {array<Parcel>}
@@ -53,6 +53,27 @@ export class ParcelRouter {
     this.app.get(
       '/parcels/availableCount',
       server.handleRequest(this.getAvailableParcelCount)
+    )
+
+    /**
+     * Returns the parcel by its token id
+     * @param  {string} tokenId  - Parcel token id
+     * @return {string} coordinates
+     */
+    this.app.get(
+      '/parcels/:tokenId',
+      server.handleRequest(this.getParcelByTokenId)
+    )
+
+    /**
+     * Returns the parcel token id by its coordinates
+     * @param  {string} x - coordinate X
+     * @param  {string} y - coordinate Y
+     * @return {string} token id
+     */
+    this.app.get(
+      '/parcels/:x/:y/encodedId',
+      server.handleRequest(this.getParcelTokenId)
     )
 
     /**
@@ -144,5 +165,22 @@ export class ParcelRouter {
     }
 
     return sanitizeParcels(parcels)
+  }
+
+  async getParcelByTokenId(req) {
+    const token_id = eth.utils
+      .toBigNumber(server.extractFromReq(req, 'tokenId'))
+      .toString()
+
+    const parcel = await Parcel.findOne({ token_id })
+
+    return sanitizeParcel(parcel)
+  }
+
+  async getParcelTokenId(req) {
+    const x = server.extractFromReq(req, 'x')
+    const y = server.extractFromReq(req, 'y')
+    const { token_id } = await Parcel.findOne({ x, y })
+    return { encoded_id: eth.utils.toHex(token_id) }
   }
 }
