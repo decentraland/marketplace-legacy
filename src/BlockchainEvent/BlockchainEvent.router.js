@@ -12,9 +12,10 @@ export class BlockchainEventRouter {
   mount() {
     /**
      * Returns the assets for the supplied params
+     * Note that arg name owner should be _owner
      * @param  {string} address - contract address
      * @param  {string} name - event name
-     * @param  {array} args - arg key -> value
+     * @param  {array} args - array of { name: arg_name, value: arg_value }
      * @param  {number} from_block
      * @param  {number} to_block
      * @return {array<Asset>}
