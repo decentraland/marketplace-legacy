@@ -94,7 +94,8 @@ export class ParcelDoctor extends Doctor {
 
   isOperatorMismatch(currentOperator, operator) {
     return (
-      (!operator && !Contract.isEmptyAddress(currentOperator)) ||
+      (Contract.isEmptyAddress(operator) &&
+        !Contract.isEmptyAddress(currentOperator)) ||
       (operator && operator !== currentOperator)
     )
   }
