@@ -6,7 +6,7 @@ import { mortgageReducer as mortgage } from './mortgageReducer'
 import { estateReducer as estates } from './estateReducer'
 import { inviteReducer as invites } from './inviteReducer'
 import { bidReducer as bids } from './bidReducer'
-import { nameReducer as names } from './nameReducer'
+import { claimedNameReducer as claimedNames } from './claimedNameReducer'
 
 export const reducers = {
   auction,
@@ -17,5 +17,5 @@ export const reducers = {
   estates,
   invites,
   bids,
-  names
+  claimedNames
 }

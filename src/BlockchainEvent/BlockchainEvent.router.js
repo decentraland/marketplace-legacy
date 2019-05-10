@@ -35,8 +35,6 @@ export class BlockchainEventRouter {
       blockchainEventsReqQueryParams
     )
 
-    return {
-      events
-    }
+    return { events }
   }
 }

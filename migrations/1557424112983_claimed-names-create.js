@@ -1,6 +1,6 @@
-import { Name } from '../src/Name'
+import { ClaimedName } from '../src/ClaimedName'
 
-const tableName = Name.tableName
+const tableName = ClaimedName.tableName
 
 exports.up = pgm => {
   pgm.createTable(
