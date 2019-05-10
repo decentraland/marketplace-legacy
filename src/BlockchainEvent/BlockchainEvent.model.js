@@ -93,4 +93,20 @@ export class BlockchainEvent extends Model {
   static getEventName(event) {
     return event.split('-')[1]
   }
+
+  static filterAll(filters) {
+    const { address, name, args, fromBlock, toBlock } = filters.sanitize()
+
+    return this.query(
+      SQL`SELECT *
+          FROM ${SQL.raw(this.tableName)}
+          WHERE ${BlockchainEventQueries.byAddress(address)}
+            AND ${BlockchainEventQueries.byEventName(name)}
+            AND ${BlockchainEventQueries.byMultipleArgs(args)}
+            AND ${BlockchainEventQueries.fromBlock(fromBlock)}
+            AND ${BlockchainEventQueries.toBlock(toBlock)}
+          ORDER BY block_number ASC, log_index ASC
+          LIMIT 1000`
+    )
+  }
 }

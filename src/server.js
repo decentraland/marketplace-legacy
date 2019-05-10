@@ -15,6 +15,7 @@ import { MarketplaceRouter } from './Marketplace'
 import { InviteRouter } from './Invite'
 import { BidRouter, PublicationRouter } from './Listing'
 import { AuthorizationRouter } from './Authorization'
+import { BlockchainEventRouter } from './BlockchainEvent'
 
 const SERVER_PORT = env.get('SERVER_PORT', 5000)
 const CORS_ORIGIN = env.get('CORS_ORIGIN', '*')
@@ -69,6 +70,7 @@ export async function startServer() {
   new InviteRouter(router).mount()
   new BidRouter(router).mount()
   new AuthorizationRouter(router).mount()
+  new BlockchainEventRouter(router).mount()
 
   return httpServer.listen(SERVER_PORT, () =>
     console.log('Server running on port', SERVER_PORT)

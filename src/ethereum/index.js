@@ -53,7 +53,7 @@ export function loadContracts() {
   contractsData = Object.freeze({
     MANAToken: {
       address: getEnvAddress('MANA_TOKEN_CONTRACT_ADDRESS'),
-      eventNames: []
+      eventNames: ['Approval']
     },
     LegacyMarketplace: {
       address: getEnvAddress('LEGACY_MARKETPLACE_CONTRACT_ADDRESS'),
@@ -117,6 +117,10 @@ export function loadContracts() {
     ERC721Bid: {
       address: getEnvAddress('ERC721_BID_CONTRACT_ADDRESS'),
       eventNames: ['BidCreated', 'BidAccepted', 'BidCancelled']
+    },
+    ClaimName: {
+      address: getEnvAddress('CLAIM_NAME_CONTRACT_ADDRESS'),
+      eventNames: ['Register', 'MetadataChanged']
     }
   })
 
