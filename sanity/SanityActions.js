@@ -178,7 +178,6 @@ class SanitiyMonitorActions extends MonitorActions {
   async _processEvents() {
     log.info('Replaying events for inconsistent data')
 
-    // Create Estates in case they were not created by missing an event
     await this.createEstates()
 
     for (const diagnoses of this.diagnostics) {
@@ -192,20 +191,23 @@ class SanitiyMonitorActions extends MonitorActions {
   }
 
   async createEstates() {
-    log.info('Creating Estates...')
-    const createEstateEvents = await BlockchainEvent.find({
-      name: eventNames.CreateEstate
-    })
+    // Run creation estate events in case estates were not created by missing an event
+    if (this.faultyAssets.length > 0) {
+      log.info('Creating Estates...')
+      const createEstateEvents = await BlockchainEvent.find({
+        name: eventNames.CreateEstate
+      })
 
-    await asyncBatch({
-      elements: createEstateEvents,
-      callback: async createEstateEventsBatch => {
-        const createEventsPromises = createEstateEventsBatch.map(processEvent)
-        await Promise.all(createEventsPromises)
-      },
-      batchSize: env.get('BATCH_SIZE'),
-      retryAttempts: 20
-    })
+      await asyncBatch({
+        elements: createEstateEvents,
+        callback: async createEstateEventsBatch => {
+          const createEventsPromises = createEstateEventsBatch.map(processEvent)
+          await Promise.all(createEventsPromises)
+        },
+        batchSize: env.get('BATCH_SIZE'),
+        retryAttempts: 20
+      })
+    }
   }
 
   async updateTiles() {
