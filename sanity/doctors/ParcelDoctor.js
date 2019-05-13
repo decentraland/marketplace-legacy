@@ -1,4 +1,4 @@
-import { eth } from 'decentraland-eth'
+import { eth, Contract } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
@@ -34,9 +34,16 @@ export class ParcelDoctor extends Doctor {
       elements: parcels,
       callback: async parcelsBatch => {
         const promises = parcelsBatch.map(async parcel => {
-          const [currentOwner, currentEstateId] = await Promise.all([
+          const [
+            currentOwner,
+            currentEstateId,
+            currentOperator,
+            currentUpdateOperator
+          ] = await Promise.all([
             landRegistry.ownerOf(parcel.token_id),
-            estateRegistry.landIdEstate(parcel.token_id)
+            estateRegistry.landIdEstate(parcel.token_id),
+            landRegistry.getApproved(parcel.token_id),
+            landRegistry.updateOperator(parcel.token_id)
           ])
 
           if (this.isPartOfEstateMismatch(currentEstateId.toString(), parcel)) {
@@ -53,11 +60,21 @@ export class ParcelDoctor extends Doctor {
             return
           }
 
-          const currentUpdateOperator = parcel.update_operator
+          if (this.isOperatorMismatch(currentOperator, parcel.operator)) {
+            const { id, operator } = parcel
+            const error = `Mismatch: operator of '${id}' is '${operator}' on the DB and '${currentOperator}' in blockchain`
+            faultyParcels.push({ ...parcel, error })
+            return
+          }
 
-          if (this.isUpdateOperatorMismatch(currentUpdateOperator, parcel)) {
+          if (
+            this.isOperatorMismatch(
+              currentUpdateOperator,
+              parcel.update_operator
+            )
+          ) {
             const { id, update_operator } = parcel
-            const error = `Mismatch: operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
+            const error = `Mismatch: update operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
             faultyParcels.push({ ...parcel, error })
             return
           }
@@ -75,10 +92,11 @@ export class ParcelDoctor extends Doctor {
     return !!currentOwner && parcel.owner !== currentOwner
   }
 
-  isUpdateOperatorMismatch(currentUpdateOperator, parcel) {
+  isOperatorMismatch(currentOperator, operator) {
     return (
-      !!currentUpdateOperator &&
-      parcel.update_operator !== currentUpdateOperator
+      (Contract.isEmptyAddress(operator) &&
+        !Contract.isEmptyAddress(currentOperator)) ||
+      (operator && operator !== currentOperator)
     )
   }
 

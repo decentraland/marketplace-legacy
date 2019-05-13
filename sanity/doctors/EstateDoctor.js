@@ -1,4 +1,4 @@
-import { eth } from 'decentraland-eth'
+import { eth, Contract } from 'decentraland-eth'
 import { env } from 'decentraland-commons'
 
 import { Doctor } from './Doctor'
@@ -41,44 +41,65 @@ export class EstateDoctor extends Doctor {
   }
 
   async getEstateInconsistencies(estate) {
-    const {
-      id,
-      owner,
-      data: { parcels }
-    } = estate
-    let error = ''
+    const { id, owner, operator, update_operator, data } = estate
+    const { parcels } = data
 
     const estateRegistry = eth.getContract('EstateRegistry')
-    const currentOwner = await estateRegistry.ownerOf(estate.id)
+    const [
+      currentOwner,
+      currentOperator,
+      currentUpdateOperator
+    ] = await Promise.all([
+      estateRegistry.ownerOf(estate.id),
+      estateRegistry.getApproved(estate.id),
+      estateRegistry.updateOperator(estate.id)
+    ])
 
     if (owner !== currentOwner) {
-      error = `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
-    } else {
-      const estateSize = await estateRegistry.getEstateSize(estate.id)
-      let currentParcels = []
-
-      let index = 0
-      await asyncBatch({
-        elements: new Array(estateSize.toNumber()),
-        callback: async sizeBatch => {
-          const promises = []
-          for (let i = 0; i < sizeBatch.length; i++) {
-            promises.push(this.buildCurrentEstateParcel(estate.id, index++))
-          }
-
-          const parcels = await Promise.all(promises)
-          currentParcels = [...currentParcels, ...parcels]
-        },
-        batchSize: env.get('BATCH_SIZE'),
-        logFormat: '',
-        retryAttempts: 20
-      })
-      if (!this.isEqualParcels(currentParcels, parcels)) {
-        error = `Parcels: db parcels for estate ${id} are different from blockchain`
-      }
+      return `Mismatch: owner of '${id}' is '${owner}' on the DB and '${currentOwner}' in blockchain`
     }
 
-    return error
+    if (this.isOperatorMismatch(currentOperator, operator)) {
+      return `Mismatch: operator of '${id}' is '${operator}' on the DB and '${currentOperator}' in blockchain`
+    }
+
+    if (this.isOperatorMismatch(currentUpdateOperator, update_operator)) {
+      return `Mismatch: update operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
+    }
+
+    const currentParcels = await this.getCurrentEstateParcels()
+
+    if (!this.isEqualParcels(currentParcels, parcels)) {
+      return `Parcels: db parcels for estate ${id} are different from blockchain`
+    }
+
+    return null
+  }
+
+  async getCurrentEstateParcels(estate) {
+    const estateRegistry = eth.getContract('EstateRegistry')
+    const estateSize = await estateRegistry.getEstateSize(estate.id)
+
+    let currentParcels = []
+    let index = 0
+
+    await asyncBatch({
+      elements: new Array(estateSize.toNumber()),
+      callback: async sizeBatch => {
+        const promises = []
+        for (let i = 0; i < sizeBatch.length; i++) {
+          promises.push(this.buildCurrentEstateParcel(estate.id, index++))
+        }
+
+        const parcels = await Promise.all(promises)
+        currentParcels = [...currentParcels, ...parcels]
+      },
+      batchSize: env.get('BATCH_SIZE'),
+      logFormat: '',
+      retryAttempts: 20
+    })
+
+    return currentParcels
   }
 
   async buildCurrentEstateParcel(estateId, index) {
@@ -98,6 +119,14 @@ export class EstateDoctor extends Doctor {
     const rightIds = right.map(({ x, y }) => Parcel.buildId(x, y)).sort()
 
     return leftIds.every((parcelId, index) => parcelId === rightIds[index])
+  }
+
+  isOperatorMismatch(currentOperator, operator) {
+    return (
+      (Contract.isEmptyAddress(operator) &&
+        !Contract.isEmptyAddress(currentOperator)) ||
+      (operator && operator !== currentOperator)
+    )
   }
 }
 
