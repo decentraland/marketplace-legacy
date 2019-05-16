@@ -118,8 +118,8 @@ export function loadContracts() {
       address: getEnvAddress('ERC721_BID_CONTRACT_ADDRESS'),
       eventNames: ['BidCreated', 'BidAccepted', 'BidCancelled']
     },
-    ClaimName: {
-      address: getEnvAddress('CLAIM_NAME_CONTRACT_ADDRESS'),
+    UsernameRegistry: {
+      address: getEnvAddress('USERNAME_REGISTRY_CONTRACT_ADDRESS'),
       eventNames: ['Register', 'MetadataChanged']
     }
   })

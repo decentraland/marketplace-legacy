@@ -9,7 +9,7 @@ export async function claimedNameReducer(event) {
   const { address } = event
 
   switch (address) {
-    case contractAddresses.ClaimName: {
+    case contractAddresses.UsernameRegistry: {
       await reduceClaimName(event)
       break
     }
