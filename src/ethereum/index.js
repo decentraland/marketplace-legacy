@@ -119,7 +119,7 @@ export function loadContracts() {
       eventNames: ['BidCreated', 'BidAccepted', 'BidCancelled']
     },
     AvatarNameRegistry: {
-      address: getEnvAddress('USERNAME_REGISTRY_CONTRACT_ADDRESS'),
+      address: getEnvAddress('AVATAR_NAME_REGISTRY_CONTRACT_ADDRESS'),
       eventNames: ['Register', 'MetadataChanged']
     }
   })
