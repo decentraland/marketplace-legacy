@@ -30,7 +30,7 @@
     "date-fns": "^1.29.0",
     "decentraland-commons": "^4.0.1",
     "decentraland-dapps": "^4.0.0",
-    "decentraland-eth": "^8.15.0",
+    "decentraland-eth": "^8.16.0",
     "decentraland-ui": "^1.13.1",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
