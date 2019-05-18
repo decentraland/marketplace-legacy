@@ -7,7 +7,6 @@ exports.up = pgm => {
     tableName,
     {
       owner: { type: 'TEXT', notNull: true },
-      user_id: { type: 'TEXT', notNull: false }, // Not null because is not clear how it will be defined yet
       username: { type: 'TEXT', notNull: true },
       metadata: { type: 'TEXT', notNull: false }
     },
