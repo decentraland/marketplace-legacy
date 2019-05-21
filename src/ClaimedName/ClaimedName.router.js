@@ -14,7 +14,7 @@ export class ClaimedNameRouter {
      * @return {<username, metadata>}
      */
     this.app.get(
-      '/addresses/:address/avatars',
+      '/addresses/:address/avatar',
       server.handleRequest(this.getAddressAvatar.bind(this))
     )
   }
