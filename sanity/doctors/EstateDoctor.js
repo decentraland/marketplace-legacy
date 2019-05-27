@@ -67,7 +67,7 @@ export class EstateDoctor extends Doctor {
       return `Mismatch: update operator of '${id}' is '${update_operator}' on the DB and '${currentUpdateOperator}' in blockchain`
     }
 
-    const currentParcels = await this.getCurrentEstateParcels()
+    const currentParcels = await this.getCurrentEstateParcels(estate)
 
     if (!this.isEqualParcels(currentParcels, parcels)) {
       return `Parcels: db parcels for estate ${id} are different from blockchain`
