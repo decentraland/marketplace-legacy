@@ -2,7 +2,7 @@ import { Model } from 'decentraland-server'
 
 import { ApprovalQueries } from './Approval.queries'
 import { SQL } from '../database'
-import { BlockchainEvent, BlockchainEventQueries } from '/../BlockchainEvent'
+import { BlockchainEvent, BlockchainEventQueries } from '../BlockchainEvent'
 
 export class Approval extends Model {
   static tableName = 'approvals'
@@ -13,7 +13,7 @@ export class Approval extends Model {
   static deleteManaApprovalEvents(fromBlock) {
     return Approval.query(
       SQL`DELETE FROM ${SQL.raw(BlockchainEvent.tableName)}
-        WHERE (${ApprovalQueries.areManaEvents()})
+        WHERE ${ApprovalQueries.areManaEvents()}
         AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
     )
   }
