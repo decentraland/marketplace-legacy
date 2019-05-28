@@ -5,7 +5,7 @@ import { eventNames } from '../../src/ethereum'
 
 export const ApprovalQueries = Object.freeze({
   areManaEvents: () => {
-    const address = env.get('MANA_TOKEN_CONTRACT_ADDRESS')
+    const address = env.get('MANA_TOKEN_CONTRACT_ADDRESS').toLowerCase()
     // prettier-ignore
     return SQL`address = ${address} and name = ${eventNames.Approval}`
   }
