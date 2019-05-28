@@ -84,6 +84,16 @@ export class BlockchainEvent extends Model {
     )
   }
 
+  static findByAddress(address, fromBlock) {
+    return this.query(
+      SQL`SELECT *
+      FROM ${SQL.raw(this.tableName)}
+      WHERE address = ${address}
+      AND ${BlockchainEventQueries.fromBlock(fromBlock)}
+      ORDER BY block_number ASC, log_index ASC`
+    )
+  }
+
   static deleteByArgs(argName, argValue, fromBlock) {
     return this.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
@@ -104,6 +114,14 @@ export class BlockchainEvent extends Model {
     return this.query(
       SQL`DELETE FROM ${SQL.raw(this.tableName)}
         WHERE name = ${name}
+        AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
+    )
+  }
+
+  static deleteByAddress(address, fromBlock) {
+    return this.query(
+      SQL`DELETE FROM ${SQL.raw(this.tableName)}
+        WHERE address = ${address}
         AND ${BlockchainEventQueries.fromBlock(fromBlock)}`
     )
   }

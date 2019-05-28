@@ -5,6 +5,7 @@ import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { asyncBatch } from '../../src/lib'
 import { ClaimedName } from '../../src/ClaimedName'
+import { BlockchainEvent } from '../../src/BlockchainEvent'
 
 export class ClaimedNameDoctor extends Doctor {
   async diagnose() {
@@ -68,7 +69,10 @@ export class ClaimedNameDiagnosis extends Diagnosis {
   }
 
   hasProblems() {
-    return this.faultyClaimedNames.length > 0
+    // Always run this doctor.
+    // There is no way to check if a specific claim is missing because of how the contract
+    // stores those mappings
+    return true
   }
 
   async prepare(fromBlock) {
@@ -76,27 +80,31 @@ export class ClaimedNameDiagnosis extends Diagnosis {
       elements: this.faultyClaimedNames,
       callback: async claimedNameBatch => {
         const deletes = claimedNameBatch.map(claimedName =>
-          ClaimedName.deleteBlockchainEvents(claimedName.owner, fromBlock)
+          ClaimedName.delete({ owner: claimedName.owner })
         )
         await Promise.all(deletes)
       },
       batchSize: env.get('BATCH_SIZE'),
       retryAttempts: 20
     })
+
+    const avatarNameRegistry = eth.getContract('AvatarNameRegistry')
+
+    return BlockchainEvent.deleteByAddress(
+      avatarNameRegistry.address,
+      fromBlock
+    )
   }
 
   async doTreatment() {
-    // Replay events for the estate and old parcels
-    const total = this.faultyClaimedNames.length
-    for (const [index, claimedName] of this.faultyClaimedNames.entries()) {
-      this.log.info(
-        `[${index + 1}/${total}]: Treatment for claim of owner ${
-          claimedName.owner
-        }`
-      )
+    const { fromBlock } = this
 
-      const events = await ClaimedName.findBlockchainEvents(claimedName.owner)
-      await this.replayEvents(events)
-    }
+    const avatarNameRegistry = eth.getContract('AvatarNameRegistry')
+
+    const events = await BlockchainEvent.findByAddress(
+      avatarNameRegistry.address,
+      fromBlock
+    )
+    await this.replayEvents(events)
   }
 }
