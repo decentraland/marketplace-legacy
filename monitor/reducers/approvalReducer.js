@@ -18,8 +18,10 @@ export async function approvalReducer(event) {
 
   switch (address) {
     case contractAddresses.LANDRegistry:
+      await reduceLANDRegistryApprovals(event)
+      break
     case contractAddresses.EstateRegistry: {
-      await reduceRegistries(event)
+      await reduceEstateRegistryApprovals(event)
       break
     }
     default:
@@ -27,12 +29,12 @@ export async function approvalReducer(event) {
   }
 }
 
-async function reduceRegistries(event) {
+async function reduceLANDRegistryApprovals(event) {
   const { name } = event
 
   switch (name) {
     case eventNames.ApprovalForAll: {
-      await handleApprovalForAll(event)
+      await handleLANDRegistryApprovalForAll(event)
       break
     }
     case eventNames.UpdateManager: {
@@ -44,25 +46,55 @@ async function reduceRegistries(event) {
   }
 }
 
-async function handleApprovalForAll(event) {
-  // The props on the rightmost part of the following checks follow the standard
-  // To the left, we have our own old implementation of the LANDRegistry
-  // and we should add any other non-standard props we find if we add new contracts
-  const owner = event.args.holder || event.args._owner
-  const operator = event.args.operator || event.args._operator
-  const authorization = event.args.authorized || event.args._approved
+async function reduceEstateRegistryApprovals(event) {
+  const { name } = event
+
+  switch (name) {
+    case eventNames.ApprovalForAll: {
+      await handleEstateRegistryApprovalForAll(event)
+      break
+    }
+    case eventNames.UpdateManager: {
+      await handleUpdateManager(event)
+      break
+    }
+    default:
+      break
+  }
+}
+
+async function handleLANDRegistryApprovalForAll(event) {
+  const owner = event.args.holder.toLowerCase()
+  const operator = event.args.operator.toLowerCase()
+  const authorization = event.args.authorized
 
   const approval = {
     type: APPROVAL_TYPES.operator,
     token_address: event.address,
     owner:
       event.block_number > APPROVAL_FOR_ALL_ARGS_ORDER_CHANGE_BLOCK_NUMBER
-        ? owner.toLowerCase()
-        : operator.toLowerCase(),
+        ? owner
+        : operator,
     operator:
       event.block_number > APPROVAL_FOR_ALL_ARGS_ORDER_CHANGE_BLOCK_NUMBER
-        ? operator.toLowerCase()
-        : owner.toLowerCase()
+        ? operator
+        : owner
+  }
+  const isApproved = authorization === 'true'
+
+  await handleApproval(event, approval, isApproved)
+}
+
+async function handleEstateRegistryApprovalForAll(event) {
+  const owner = event.args._owner.toLowerCase()
+  const operator = event.args._operator.toLowerCase()
+  const authorization = event.args._approved
+
+  const approval = {
+    type: APPROVAL_TYPES.operator,
+    token_address: event.address,
+    owner,
+    operator
   }
   const isApproved = authorization === 'true'
 
