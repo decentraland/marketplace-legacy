@@ -1,6 +1,7 @@
 import { Doctor } from './Doctor'
 import { Diagnosis } from './Diagnosis'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
+import { Approval } from '../../src/Approval'
 import { eventNames } from '../../src/ethereum'
 
 export class ApprovalDoctor extends Doctor {
@@ -30,15 +31,18 @@ export class ApprovalDiagnosis extends Diagnosis {
   async prepare(fromBlock) {
     this.fromBlock = Number(fromBlock) || 0
 
+    // Delete approvalForAll, UpdateManager and Mana Approval blockchain events
     return Promise.all([
       BlockchainEvent.deleteByName(eventNames.ApprovalForAll, fromBlock),
-      BlockchainEvent.deleteByName(eventNames.UpdateManager, fromBlock)
+      BlockchainEvent.deleteByName(eventNames.UpdateManager, fromBlock),
+      Approval.deleteManaApprovalEvents(fromBlock)
     ])
   }
 
   async doTreatment() {
     const { fromBlock } = this
 
+    // Mana Approval events are only saved as blockchain events there is no need to replay them
     const [approvalForAllEvents, updateManagerEvents] = await Promise.all([
       BlockchainEvent.findByName(eventNames.ApprovalForAll, fromBlock),
       BlockchainEvent.findByName(eventNames.UpdateManager, fromBlock)
