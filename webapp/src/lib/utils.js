@@ -89,3 +89,10 @@ export function isBlacklistedAddress(address) {
 export function sanitizePrice(value = '') {
   return value.toString().replace(/\.|,/g, '')
 }
+
+/*
+* Get Third Party URL to buy MANA
+*/
+export function getBuyManaURL() {
+  return env.get('REACT_APP_BUY_MANA_URL', '')
+}

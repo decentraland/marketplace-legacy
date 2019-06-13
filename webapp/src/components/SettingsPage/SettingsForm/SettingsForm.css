@@ -29,7 +29,6 @@
 
 .SettingsForm .Mana {
   font-size: 16px;
-  margin-top: 8px;
 }
 
 .SettingsForm #wallet-address {
@@ -88,6 +87,11 @@
   margin-right: 1.5em;
 }
 
+.SettingsForm .buy-more.external-link {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .SettingsForm .disabled-buy-more {
   display: inline-block;
 }
@@ -98,6 +102,10 @@
   }
   .SettingsForm .authorization-checks:first-child {
     margin-top: 0;
+  }
+
+  .SettingsForm .Mana {
+    margin-top: 8px;
   }
 }
 
