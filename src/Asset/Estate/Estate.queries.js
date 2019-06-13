@@ -12,7 +12,7 @@ export const EstateQueries = Object.freeze({
     AND EXISTS(SELECT 1 FROM ${raw(Parcel.tableName)} AS p WHERE p.estate_id = ${raw(tableRef)}.asset_id)
     OR ${raw(tableRef)}.asset_type != ${ASSET_TYPES.estate})`,
   areEstateEvents: estateId => {
-    const address = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS').toLowercase()
+    const address = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS').toLowerCase()
     // prettier-ignore
     return SQL`${BlockchainEventQueries.byArgs('_estateId', estateId)}
     OR ${BlockchainEventQueries.byArgs('assetId', estateId)}
