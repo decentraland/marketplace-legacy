@@ -221,7 +221,7 @@ export default class SettingsForm extends React.PureComponent {
                 ) : buyManaURL ? (
                   <a
                     className="buy-more external-link"
-                    href={getBuyManaURL()}
+                    href={buyManaURL}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
