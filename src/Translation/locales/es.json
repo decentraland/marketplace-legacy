@@ -233,7 +233,7 @@
     "see_archived": "Ver archivadas"
   },
   "buy_mana": {
-    "action": "Comprar Más",
+    "action": "Comprar más",
     "amount_too_big": "Este monto es demaciado grande para la red de Bancor",
     "available_eth": "Disponible: {eth} ETH",
     "not_enough": "No tienes suficiente ETH para pagar esto",
