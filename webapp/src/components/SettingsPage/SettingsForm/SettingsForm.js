@@ -15,6 +15,7 @@ import {
 } from 'components/types'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { token } from 'lib/token'
+import { getBuyManaURL } from 'lib/utils'
 import DerivationPathDropdown from './DerivationPathDropdown'
 
 import './SettingsForm.css'
@@ -185,6 +186,7 @@ export default class SettingsForm extends React.PureComponent {
 
     const allowances = this.filterWalletContracts(authorization.allowances)
     const approvals = this.filterWalletContracts(authorization.approvals)
+    const buyManaURL = getBuyManaURL()
 
     return (
       <Form className="SettingsForm">
@@ -216,6 +218,15 @@ export default class SettingsForm extends React.PureComponent {
                   <Link to={locations.buyMana()} replace>
                     <Button className="buy-more">{t('buy_mana.action')}</Button>
                   </Link>
+                ) : buyManaURL ? (
+                  <a
+                    className="buy-more external-link"
+                    href={buyManaURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t('buy_mana.action')}
+                  </a>
                 ) : (
                   <span
                     className="disabled-buy-more"

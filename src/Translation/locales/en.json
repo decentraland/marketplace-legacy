@@ -229,7 +229,7 @@
     "see_archived": "See Archives"
   },
   "buy_mana": {
-    "action": "Buy More",
+    "action": "Buy more",
     "amount_too_big": "This amount is too big for the Bancor Network",
     "available_eth": "Available: {eth} ETH",
     "not_enough": "You don't have enough ETH to pay for this",
