@@ -8,7 +8,7 @@ log () {
 }
 
 run () {
-    cd $PROC_PATH && npm run sanity-check -- --from-block=4900000 --websocket --self-heal
+    cd $PROC_PATH && npm run sanity-check -- --blocks-behind 5760 --websocket --self-heal
 }
 
 main () {
