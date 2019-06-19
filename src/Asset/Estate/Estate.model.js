@@ -1,3 +1,4 @@
+import { env } from 'decentraland-commons'
 import { Model } from 'decentraland-server'
 
 import { EstateQueries } from './Estate.queries'
@@ -42,6 +43,23 @@ export class Estate extends Model {
         WHERE (${EstateQueries.areEstateEvents(estateId)})
         AND ${BlockchainEventQueries.fromBlock(fromBlock)}
         ORDER BY block_number ASC, log_index ASC`
+    )
+  }
+
+  static findUpdateAuthorized(address) {
+    const tokenAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
+
+    return this.query(
+      SQL`SELECT * FROM ${SQL.raw(this.tableName)} 
+        WHERE owner = ${address} 
+          OR operator = ${address}
+          OR update_operator = ${address}
+          OR owner IN (
+            SELECT DISTINCT(A.owner) 
+            FROM approvals A 
+            WHERE A.type IN ('operator', 'manager') 
+              AND A.operator = ${address}
+              AND A.token_address = ${tokenAddress})`
     )
   }
 
