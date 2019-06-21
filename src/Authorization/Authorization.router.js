@@ -19,7 +19,16 @@ export class AuthorizationRouter {
      */
     this.app.get(
       '/address/:address/assets/authorized',
-      server.handleRequest(this.getAddressAuthorizations.bind(this))
+      server.handleRequest(this.getAddressAssetsAuthorizations.bind(this))
+    )
+
+    /**
+     * Returns the parcels that an address is update authorized
+     * @param {string} [address] - address to get parcels update authorized
+     */
+    this.app.get(
+      '/address/:address/parcels/authorized',
+      server.handleRequest(this.getAddressParcelsAuthorizations.bind(this))
     )
 
     /**
@@ -95,31 +104,39 @@ export class AuthorizationRouter {
     }
   }
 
-  async getAddressAuthorizations(req) {
-    const reqQueryParams = new ReqQueryParams(req)
-
-    const flatten = reqQueryParams.getBoolean('flatten')
-    const address = reqQueryParams.get('address').toLowerCase()
-
-    let [parcels, estates] = await Promise.all([
+  getAddressAuthorizations(address) {
+    return Promise.all([
       Parcel.findUpdateAuthorized(address),
       Estate.findUpdateAuthorized(address)
     ])
+  }
 
-    if (flatten) {
-      const estateParcels = await Parcel.findInEstateIds(
-        estates.map(estate => estate.id)
-      )
-      parcels = [...parcels, ...estateParcels]
-    }
+  async getAddressAssetsAuthorizations(req) {
+    const reqQueryParams = new ReqQueryParams(req)
+    const address = reqQueryParams.get('address').toLowerCase()
 
-    return Object.assign(
-      {
-        address,
-        parcels
-      },
-      flatten ? {} : { estates }
+    const [parcels, estates] = await this.getAddressAuthorizations(address)
+    return Object.assign({
+      address,
+      parcels,
+      estates
+    })
+  }
+
+  async getAddressParcelsAuthorizations(req) {
+    const reqQueryParams = new ReqQueryParams(req)
+    const address = reqQueryParams.get('address').toLowerCase()
+
+    let [parcels, estates] = await this.getAddressAuthorizations(address)
+    const estateParcels = await Parcel.findInEstateIds(
+      estates.map(estate => estate.id)
     )
+    parcels = [...parcels, ...estateParcels]
+
+    return Object.assign({
+      address,
+      parcels
+    })
   }
 
   async getParcelAuthorizations(req) {

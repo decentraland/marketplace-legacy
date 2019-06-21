@@ -100,9 +100,9 @@ export class Parcel extends Model {
   }
 
   static async findInEstateIds(estateIds) {
-    return this.query(`
-      SELECT * FROM ${this.tableName}
-        WHERE estate_id IN (${estateIds.map(e => `'${e}'`).join(',')})`)
+    return this.query(SQL`
+      SELECT * FROM ${SQL.raw(this.tableName)}
+        WHERE estate_id = ANY(${estateIds})`)
   }
 
   static findUpdateAuthorized(address) {
