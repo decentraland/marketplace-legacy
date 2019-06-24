@@ -14,11 +14,29 @@ export class AuthorizationRouter {
 
   mount() {
     /**
-     * Returns the bids for a parcel
+     * Returns the assets that an address is update authorized
+     * @param {string} [address] - address to get assets update authorized
+     */
+    this.app.get(
+      '/address/:address/assets/authorized',
+      server.handleRequest(this.getAddressAssetsAuthorizations.bind(this))
+    )
+
+    /**
+     * Returns the parcels that an address is update authorized
+     * @param {string} [address] - address to get parcels update authorized
+     */
+    this.app.get(
+      '/address/:address/parcels/authorized',
+      server.handleRequest(this.getAddressParcelsAuthorizations.bind(this))
+    )
+
+    /**
+     * Returns the authorizations for a parcel
      * @param  {string} x
      * @param  {string} y
      * @param  {string} [address] - address to get authorizations
-     * @return {<id, address, isOwner, isApprovedForAll, isOwner, isOperator, isUpdateOperator>}
+     * @return {<id, address, isApprovedForAll, isUpdateManager, isOwner, isOperator, isUpdateOperator, isUpdateAuthorized>}
      */
     this.app.get(
       '/parcels/:x/:y/:address/authorizations',
@@ -26,10 +44,10 @@ export class AuthorizationRouter {
     )
 
     /**
-     * Returns the bids for a parcel
+     * Returns the authorizations for an estate
      * @param  {string} id
      * @param  {string} [address] - address to get authorizations
-     * @return {<id, address, isOwner, isApprovedForAll, isOwner, isOperator, isUpdateOperator>}
+     * @return {<id, address, isApprovedForAll, isUpdateManager, isOwner, isOperator, isUpdateOperator, isUpdateAuthorized>}
      */
     this.app.get(
       '/estates/:id/:address/authorizations',
@@ -84,6 +102,41 @@ export class AuthorizationRouter {
       isUpdateOperator,
       isUpdateAuthorized
     }
+  }
+
+  getAddressAuthorizations(address) {
+    return Promise.all([
+      Parcel.findUpdateAuthorized(address),
+      Estate.findUpdateAuthorized(address)
+    ])
+  }
+
+  async getAddressAssetsAuthorizations(req) {
+    const reqQueryParams = new ReqQueryParams(req)
+    const address = reqQueryParams.get('address').toLowerCase()
+
+    const [parcels, estates] = await this.getAddressAuthorizations(address)
+    return Object.assign({
+      address,
+      parcels,
+      estates
+    })
+  }
+
+  async getAddressParcelsAuthorizations(req) {
+    const reqQueryParams = new ReqQueryParams(req)
+    const address = reqQueryParams.get('address').toLowerCase()
+
+    let [parcels, estates] = await this.getAddressAuthorizations(address)
+    const estateParcels = await Parcel.findInEstateIds(
+      estates.map(estate => estate.id)
+    )
+    parcels = [...parcels, ...estateParcels]
+
+    return Object.assign({
+      address,
+      parcels
+    })
   }
 
   async getParcelAuthorizations(req) {
