@@ -7,7 +7,7 @@ import { Location } from 'lib/Location'
 import { Pagination } from 'lib/Pagination'
 import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
-import { getWallet, isConnecting } from 'modules/wallet/selectors'
+import { getWallet, isConnected } from 'modules/wallet/selectors'
 import { getAddresses } from 'modules/address/selectors'
 import {
   getWalletArchivedBids,
@@ -99,7 +99,7 @@ const mapState = (state, { location, match }) => {
     bids,
     hiddenBidsCount: allBidsCount - bids.length,
     isOwner: wallet.address === address,
-    isConnecting: isConnecting(state)
+    isConnected: isConnected(state)
   }
 }
 

@@ -22,13 +22,13 @@ export default class AssetDetailPage extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     this.setState({ isLoadingNextAsset: false })
   }
 
-  handleAssetClick = ({ id, x, y, assetType }) => {
+  handleAssetClick = ({ id, assetType }) => {
     this.setState({ isLoadingNextAsset: true })
-    this.props.onAssetClick({ id, x, y }, assetType) // {id, x, y} are enough props for the asset interface here
+    this.props.onAssetClick(id, assetType)
   }
 
   hasPreviewHeader(asset, assetType) {

@@ -46,18 +46,20 @@ export default class ProfilePage extends React.PureComponent {
     isLoading: PropTypes.bool,
     isEmpty: PropTypes.bool,
     isOwner: PropTypes.bool,
-    isConnecting: PropTypes.bool,
+    isConnected: PropTypes.bool,
     onNavigate: PropTypes.func.isRequired,
     bids: PropTypes.arrayOf(bidType),
     hiddenBidsCount: PropTypes.number.isRequired
   }
 
   componentWillMount() {
-    const { address, onAccessDenied } = this.props
+    const { address, isConnected, onAccessDenied, onFetchAddress } = this.props
     if (isBlacklistedAddress(address)) {
       onAccessDenied()
     }
-    this.props.onFetchAddress()
+    if (isConnected) {
+      onFetchAddress()
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -271,13 +273,13 @@ export default class ProfilePage extends React.PureComponent {
       estates,
       mortgagedParcels,
       isOwner,
-      isConnecting,
+      isConnected,
       bids
     } = this.props
 
     return (
       <div className="ProfilePage">
-        {isOwner || isConnecting ? null : (
+        {isOwner || isConnected ? null : (
           <Container className="profile-header">
             <div>
               <AddressBlock scale={16} address={address} hasTooltip={false} />

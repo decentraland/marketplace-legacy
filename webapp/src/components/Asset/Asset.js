@@ -8,6 +8,7 @@ import { isOwner } from 'shared/asset'
 
 let shouldRefresh = false
 let isNavigatingAway = false
+let isAssetFetched = false
 
 export default class Asset extends React.PureComponent {
   static propTypes = {
@@ -32,14 +33,6 @@ export default class Asset extends React.PureComponent {
     publication: null
   }
 
-  componentWillMount() {
-    const { isLoading, onFetchAsset } = this.props
-    if (isLoading) {
-      return
-    }
-    onFetchAsset()
-  }
-
   componentWillReceiveProps(nextProps) {
     const {
       id,
@@ -54,6 +47,10 @@ export default class Asset extends React.PureComponent {
 
     if (isConnecting || isLoading) {
       return
+    }
+
+    if (!isConnecting) {
+      this.fetchAsset()
     }
 
     if (this.props.id !== id) {
@@ -83,6 +80,7 @@ export default class Asset extends React.PureComponent {
 
   componentWillUnmount() {
     isNavigatingAway = false
+    isAssetFetched = false
   }
 
   redirect() {
@@ -95,6 +93,13 @@ export default class Asset extends React.PureComponent {
   checkOwnership(wallet, assetId) {
     if (!isOwner(wallet, assetId)) {
       this.redirect()
+    }
+  }
+
+  fetchAsset() {
+    if (!isAssetFetched) {
+      this.props.onFetchAsset()
+      isAssetFetched = true
     }
   }
 

@@ -1,4 +1,5 @@
 import { ASSET_TYPES } from 'shared/asset'
+import { splitCoordinate } from 'shared/coordinates'
 
 const asCoordinateParam = key => `:${key}(-?\\d+)`
 const asIntParam = key => `:${key}(\\d+)`
@@ -64,13 +65,17 @@ export const locations = {
 
   // Generic assets
 
-  assetDetail: function(asset, assetType) {
-    if (!assetType) {
-      throw new Error('Undefined assetType provided to locations.assetDetail')
+  assetDetail: function(assetId, assetType) {
+    switch (assetType) {
+      case ASSET_TYPES.parcel: {
+        const [x, y] = splitCoordinate(assetId)
+        return this.parcelDetail(x, y)
+      }
+      case ASSET_TYPES.estate:
+        return this.estateDetail(assetId)
+      default:
+        throw new Error(`Unknown assetType "${assetType}"`)
     }
-    return assetType === ASSET_TYPES.parcel
-      ? this.parcelDetail(asset.x, asset.y)
-      : this.estateDetail(asset.id)
   },
 
   // Mortgages
