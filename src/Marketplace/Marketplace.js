@@ -10,22 +10,12 @@ import { db, SQL, raw } from '../database'
 export class Marketplace {
   async filterAll(filters) {
     const { status, sort, pagination } = filters.sanitize()
-    const Assets = Listing.getListableAssets()
 
-    const selectAssetsSQL = Assets.map(
-      ({ tableName }) => `row_to_json(${tableName}.*) as ${tableName}`
-    ).join(', ')
-
-    const joinAssetsSQL = Assets.map(
-      ({ tableName }) =>
-        `LEFT JOIN ${tableName} as ${tableName} ON ${tableName}.id = pub.asset_id`
-    ).join('\n')
-
-    let [assets, total] = await Promise.all([
+    const [assets, total] = await Promise.all([
       db.query(
-        SQL`SELECT row_to_json(pub.*) as publication, ${raw(selectAssetsSQL)}
+        SQL`SELECT row_to_json(pub.*) as publication, ${ListingQueries.selectListableAssets()}
           FROM ${raw(Publication.tableName)} as pub
-          ${raw(joinAssetsSQL)}
+          ${ListingQueries.joinListableAssets('pub')}
           WHERE ${ListingQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}
             AND ${EstateQueries.estateHasParcels('pub')}
@@ -35,10 +25,11 @@ export class Marketplace {
       this.countAssetPublications(filters)
     ])
 
-    // Keep only the model that had a publication defined from the Assets list
-    assets = Listing.filterAssetsByModelAssets(assets)
-
-    return { assets, total }
+    return {
+      // Keep only the model that had a publication defined from the Assets list
+      assets: Listing.filterAssetsByModelAssets(assets),
+      total
+    }
   }
 
   async filter(queryParams, PublicableAsset) {
