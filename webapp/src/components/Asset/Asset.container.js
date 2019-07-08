@@ -15,13 +15,12 @@ const mapState = (state, { value }) => {
   const wallet = getWallet(state)
   const addresses = getAddresses(state)
 
-  let isConnecting = isWalletConnecting(state) || isAddressLoading(state)
+  const isConnecting = isWalletConnecting(state) || isAddressLoading(state)
 
-  let publication = null
   let asset = value
   if (asset) {
     const publications = getPublications(state)
-    publication = publications[asset.publication_tx_hash]
+    const publication = publications[asset.publication_tx_hash]
     asset = { ...asset, publication }
   }
 
@@ -33,6 +32,6 @@ const mapState = (state, { value }) => {
   }
 }
 
-const mapDispatch = dispatch => ({})
+const mapDispatch = () => ({})
 
 export default connect(mapState, mapDispatch)(Asset)

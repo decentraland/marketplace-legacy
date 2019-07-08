@@ -36,12 +36,10 @@ const mapState = (state, { id, assetType }) => {
   return { isLoading, asset }
 }
 
-const mapDispatch = (dispatch, { id, assetType }) => {
-  return {
-    onFetchAsset: () => dispatch(fetchAssetRequest(id, assetType)),
-    onAccessDenied: () =>
-      dispatch(navigateTo(locations.assetDetail(id, assetType)))
-  }
-}
+const mapDispatch = (dispatch, { id, assetType }) => ({
+  onFetchAsset: () => dispatch(fetchAssetRequest(id, assetType)),
+  onAccessDenied: () =>
+    dispatch(navigateTo(locations.assetDetail(id, assetType)))
+})
 
 export default connect(mapState, mapDispatch)(AssetLoader)

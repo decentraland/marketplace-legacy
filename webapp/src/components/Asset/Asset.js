@@ -8,7 +8,7 @@ import { isOwner } from 'shared/asset'
 
 let shouldRefresh = false
 let isNavigatingAway = false
-let isAssetFetched = false
+let isAssetPrefetched = false
 
 export default class Asset extends React.PureComponent {
   static propTypes = {
@@ -49,10 +49,6 @@ export default class Asset extends React.PureComponent {
       return
     }
 
-    if (!isConnecting) {
-      this.fetchAsset()
-    }
-
     if (this.props.id !== id) {
       shouldRefresh = true
     }
@@ -69,6 +65,9 @@ export default class Asset extends React.PureComponent {
     if (ownerIsNotAllowed || assetShouldBeOnSale) {
       this.redirect()
     }
+
+    // Will run only once. After mount and wallet connection is resolved
+    this.prefetchAsset()
   }
 
   componentDidUpdate() {
@@ -80,7 +79,7 @@ export default class Asset extends React.PureComponent {
 
   componentWillUnmount() {
     isNavigatingAway = false
-    isAssetFetched = false
+    isAssetPrefetched = false
   }
 
   redirect() {
@@ -96,10 +95,10 @@ export default class Asset extends React.PureComponent {
     }
   }
 
-  fetchAsset() {
-    if (!isAssetFetched) {
+  prefetchAsset() {
+    if (!isAssetPrefetched) {
       this.props.onFetchAsset()
-      isAssetFetched = true
+      isAssetPrefetched = true
     }
   }
 
