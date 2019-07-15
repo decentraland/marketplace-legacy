@@ -2,7 +2,6 @@ import { env } from 'decentraland-commons'
 import { Model } from 'decentraland-server'
 
 import { ParcelQueries } from './Parcel.queries'
-// import { Approval } from '../Approval'
 import { Asset } from '../Asset'
 import { PublicationQueries } from '../../Listing'
 import { District } from '../../District'
@@ -103,23 +102,6 @@ export class Parcel extends Model {
     return this.query(SQL`
       SELECT * FROM ${SQL.raw(this.tableName)}
         WHERE estate_id = ANY(${estateIds})`)
-  }
-
-  static findUpdateAuthorized(address) {
-    const tokenAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
-
-    return this.query(
-      SQL`SELECT * FROM ${SQL.raw(this.tableName)} 
-        WHERE owner = ${address} 
-          OR operator = ${address}
-          OR update_operator = ${address}
-          OR owner IN (
-            SELECT DISTINCT(A.owner) 
-            FROM approvals A 
-            WHERE A.type IN ('operator', 'manager') 
-              AND A.operator = ${address}
-              AND A.token_address = ${tokenAddress})`
-    )
   }
 
   static async countAvailable() {

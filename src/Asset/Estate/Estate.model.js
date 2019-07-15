@@ -46,23 +46,6 @@ export class Estate extends Model {
     )
   }
 
-  static findUpdateAuthorized(address) {
-    const tokenAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
-
-    return this.query(
-      SQL`SELECT * FROM ${SQL.raw(this.tableName)} 
-        WHERE owner = ${address} 
-          OR operator = ${address}
-          OR update_operator = ${address}
-          OR owner IN (
-            SELECT DISTINCT(A.owner) 
-            FROM approvals A 
-            WHERE A.type IN ('operator', 'manager') 
-              AND A.operator = ${address}
-              AND A.token_address = ${tokenAddress})`
-    )
-  }
-
   static deleteBlockchainEvents(estateId, fromBlock) {
     return Estate.query(
       SQL`DELETE FROM ${SQL.raw(BlockchainEvent.tableName)}
