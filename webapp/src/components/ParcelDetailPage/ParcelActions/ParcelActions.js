@@ -9,40 +9,29 @@ import { isFeatureEnabled } from 'lib/featureUtils'
 import {
   parcelType,
   publicationType,
-  mortgageType,
   bidType,
   walletType
 } from 'components/types'
-import { isLegacyPublication } from 'modules/publication/utils'
-import { getOpenPublication } from 'modules/asset/utils'
-import { hasParcelsConnected } from 'shared/parcel'
-import { isParcelListable } from 'shared/listing'
-import { hasBid } from 'shared/bid'
+import { isOnSale } from 'modules/asset/utils'
+import { can, ACTIONS } from 'modules/permission/utils'
 
 import './ParcelActions.css'
 
 export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
-    isOwner: PropTypes.bool,
-    mortgage: mortgageType,
+    hasMortgage: PropTypes.bool,
     bids: PropTypes.arrayOf(bidType),
     publications: PropTypes.objectOf(publicationType).isRequired,
     isLoading: PropTypes.bool.isRequired,
     wallet: walletType
   }
 
-  canCreateEstate = isOnSale => {
-    const { wallet, parcel } = this.props
-    return hasParcelsConnected(parcel, wallet.parcelsById) && !isOnSale
-  }
-
   render() {
     const {
       wallet,
       parcel,
-      isOwner,
-      mortgage,
+      hasMortgage,
       isLoading,
       publications,
       bids
@@ -51,64 +40,68 @@ export default class ParcelActions extends React.PureComponent {
     if (!parcel || isLoading) {
       return null
     }
+
     const { x, y } = parcel
-    const publication = getOpenPublication(parcel, publications)
-    const isOnSale = publication != null
+    const isListed = isOnSale(parcel, publications)
 
     return (
       <div className="ParcelActions">
-        {isOwner ? (
+        {can(ACTIONS.transfer, wallet, parcel) && (
+          <Link to={locations.transferParcel(x, y)}>
+            <Button size="tiny">
+              <Icon name="exchange" />
+              {t('asset_detail.actions.transfer')}
+            </Button>
+          </Link>
+        )}
+
+        {can(ACTIONS.canCreateEstate, wallet, parcel) && (
+          <Link to={locations.createEstate(x, y)}>
+            <Button size="tiny">
+              <Icon name="object group" />
+              {t('parcel_detail.actions.create_estate')}
+            </Button>
+          </Link>
+        )}
+
+        {can(ACTIONS.sell, wallet, parcel) && (
+          <Link to={locations.sellParcel(x, y)}>
+            <Button size="tiny" primary={!isListed}>
+              <Icon name="tag" />
+              {isListed
+                ? t('asset_detail.actions.update_price')
+                : t('asset_detail.actions.sell')}
+            </Button>
+          </Link>
+        )}
+
+        {can(ACTIONS.cancelSale, wallet, parcel) && (
+          <Link to={locations.cancelSaleParcel(x, y)}>
+            <Button size="tiny" primary>
+              <Icon name="cancel" />
+              {t('asset_detail.actions.cancel')}
+            </Button>
+          </Link>
+        )}
+
+        {hasMortgage ? null : (
           <React.Fragment>
-            <Link to={locations.transferParcel(x, y)}>
-              <Button size="tiny">
-                <Icon name="exchange" />
-                {t('asset_detail.actions.transfer')}
-              </Button>
-            </Link>
-            {this.canCreateEstate(isOnSale) && (
-              <Link to={locations.createEstate(x, y)}>
-                <Button size="tiny">
-                  <Icon name="object group" />
-                  {t('parcel_detail.actions.create_estate')}
-                </Button>
-              </Link>
-            ) /* Estate Feature */}
-            <Link to={locations.sellParcel(x, y)}>
-              <Button size="tiny" primary={!isOnSale}>
-                <Icon name="tag" />
-                {isOnSale
-                  ? t('asset_detail.actions.update_price')
-                  : t('asset_detail.actions.sell')}
-              </Button>
-            </Link>
-            {isOnSale && (
-              <Link to={locations.cancelSaleParcel(x, y)}>
-                <Button size="tiny" primary>
-                  <Icon name="cancel" />
-                  {t('asset_detail.actions.cancel')}
+            {can(ACTIONS.getMortgage, wallet, parcel) && (
+              <Link to={locations.buyParcelByMortgage(x, y)}>
+                <Button size="large">
+                  {t('parcel_detail.publication.mortgage')}
                 </Button>
               </Link>
             )}
-          </React.Fragment>
-        ) : !mortgage ? (
-          <React.Fragment>
-            {isOnSale &&
-              wallet.address &&
-              !isLegacyPublication(publication) && (
-                <Link to={locations.buyParcelByMortgage(x, y)}>
-                  <Button size="large">
-                    {t('parcel_detail.publication.mortgage')}
-                  </Button>
-                </Link>
-              )}
+
             {isFeatureEnabled('BIDS') &&
-              !hasBid(bids, wallet.address) &&
-              isParcelListable(parcel) && (
+              can(ACTIONS.bid, wallet, parcel) && (
                 <Link to={locations.bidParcel(x, y)}>
                   <Button size="large">{t('asset_detail.bid.place')}</Button>
                 </Link>
               )}
-            {isOnSale && (
+
+            {can(ACTIONS.buy, wallet, parcel) && (
               <Link to={locations.buyParcel(x, y)}>
                 <Button primary size="large">
                   {t('asset_detail.publication.buy')}
@@ -116,7 +109,7 @@ export default class ParcelActions extends React.PureComponent {
               </Link>
             )}
           </React.Fragment>
-        ) : null}
+        )}
       </div>
     )
   }

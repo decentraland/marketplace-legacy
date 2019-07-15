@@ -4,7 +4,7 @@ import { Loader } from 'semantic-ui-react'
 
 import { walletType } from 'components/types'
 import NotFound from 'components/NotFound'
-import { isOwner } from 'shared/asset'
+import { isOwner } from 'shared/permissions'
 
 let shouldRefresh = false
 let isNavigatingAway = false
@@ -54,12 +54,12 @@ export default class Asset extends React.PureComponent {
     }
 
     const ownerIsNotAllowed =
-      ownerNotAllowed && value && isOwner(wallet, value.id)
+      ownerNotAllowed && value && isOwner(wallet.address, value)
     const assetShouldBeOnSale =
       withPublications && value && !value['publication_tx_hash']
 
     if (ownerOnly) {
-      this.checkOwnership(wallet, value.id)
+      this.checkOwnership(wallet, value)
     }
 
     if (ownerIsNotAllowed || assetShouldBeOnSale) {
@@ -89,8 +89,8 @@ export default class Asset extends React.PureComponent {
     }
   }
 
-  checkOwnership(wallet, assetId) {
-    if (!isOwner(wallet, assetId)) {
+  checkOwnership(wallet, asset) {
+    if (!isOwner(wallet.address, asset)) {
       this.redirect()
     }
   }
@@ -130,6 +130,6 @@ export default class Asset extends React.PureComponent {
         return <NotFound />
       }
     }
-    return children(value, { isOwner: isOwner(wallet, value.id), wallet })
+    return children(value, { isOwner: isOwner(wallet.address, value), wallet })
   }
 }

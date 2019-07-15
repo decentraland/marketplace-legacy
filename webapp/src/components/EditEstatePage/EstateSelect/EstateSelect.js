@@ -15,13 +15,15 @@ import ParcelCoords from 'components/ParcelCoords'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType, bidType } from 'components/types'
-import { ASSET_TYPES, isOwner } from 'shared/asset'
+import { ASSET_TYPES } from 'shared/asset'
+import { isOwner } from 'shared/permissions'
 import {
   getParcelMatcher,
   isEqualCoords,
   getParcelsNotIncluded
 } from 'shared/parcel'
 import { hasNeighbour, areConnected, MAX_PARCELS_PER_TX } from 'shared/estate'
+import { TYPES } from 'shared/map'
 import { buildCoordinate } from 'shared/coordinates'
 import EstateSelectActions from './EstateSelectActions'
 import './EstateSelect.css'
@@ -43,13 +45,14 @@ export default class EstateSelect extends React.PureComponent {
     onDeleteEstate: PropTypes.func.isRequired
   }
 
-  handleParcelClick = ({ id, x, y, assetType }) => {
-    const { wallet } = this.props
-    if (!isOwner(wallet, buildCoordinate(x, y)) && !isOwner(wallet, id)) {
+  handleParcelClick = tile => {
+    const { id, x, y, assetType, type } = tile
+
+    if (type > TYPES.myEstatesOnSale) {
       return
     }
 
-    const { estate, onChange } = this.props
+    const { wallet, estate, onChange } = this.props
     const parcels = estate.data.parcels
 
     if (assetType === ASSET_TYPES.estate && id !== estate.id) {
@@ -186,7 +189,7 @@ export default class EstateSelect extends React.PureComponent {
     } = this.props
 
     const parcels = estate.data.parcels
-    const canEdit = isCreation || isOwner(wallet, estate.id)
+    const canEdit = isCreation || isOwner(wallet.address, estate)
 
     return (
       <div className="EstateSelect">
@@ -231,7 +234,7 @@ export default class EstateSelect extends React.PureComponent {
                     : t('estate_select.edit_selection')}
                 </Header>
                 {!isCreation &&
-                  isOwner(wallet, estate.id) && (
+                  isOwner(wallet.address, estate) && (
                     <Button
                       size="tiny"
                       className="link dissolve-button"
