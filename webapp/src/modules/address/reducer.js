@@ -41,9 +41,9 @@ import { getEstateIdFromTxReceipt } from 'modules/estates/utils'
 import { getBidIdFromTxReceipt } from 'modules/bid/utils'
 
 const EMPTY_ADDRESS = {
+  publication_ids: [],
   contributions: [],
   parcel_ids: [],
-  publication_ids: [],
   estate_ids: [],
   bid_ids: []
 }

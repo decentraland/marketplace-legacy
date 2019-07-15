@@ -14,7 +14,7 @@ import {
   walletType
 } from 'components/types'
 import { isLegacyPublication } from 'modules/publication/utils'
-import { getOpenPublication } from 'shared/asset'
+import { getOpenPublication } from 'modules/asset/utils'
 import { hasParcelsConnected } from 'shared/parcel'
 import { isParcelListable } from 'shared/listing'
 import { hasBid } from 'shared/bid'

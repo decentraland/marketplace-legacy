@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import {
   getWallet,
   isConnecting as isWalletConnecting

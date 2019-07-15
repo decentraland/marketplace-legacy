@@ -5,7 +5,8 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
+import { getOpenPublication } from 'modules/asset/utils'
+import { ASSET_TYPES } from 'shared/asset'
 import { hasTags } from 'shared/parcel'
 import { calculateMapProps } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
@@ -17,7 +18,6 @@ import {
   bidType,
   walletType
 } from 'components/types'
-import EstateActions from './EstateActions'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
 import AddressBlock from 'components/AddressBlock'
@@ -26,6 +26,7 @@ import Expiration from 'components/Expiration'
 import LandAmount from 'components/LandAmount'
 import Bid from 'components/Bid'
 import AssetTransactionHistory from 'components/AssetTransactionHistory'
+import EstateActions from './EstateActions'
 
 import './EstateDetailPage.css'
 

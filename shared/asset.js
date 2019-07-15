@@ -1,5 +1,4 @@
 import { eth, contracts } from 'decentraland-eth'
-import { isOpen } from './listing'
 import { isParcel } from './parcel'
 import { calculateMapProps } from './estate'
 
@@ -10,34 +9,6 @@ export const ASSET_TYPES = Object.freeze({
 
 export const MAX_NAME_LENGTH = 50
 export const MAX_DESCRIPTION_LENGTH = 140
-
-// TODO: This shouldn't be on shared, it relies on `publication_tx_hash` which is a front-end only concept
-export function getOpenPublication(asset, publications) {
-  if (asset && publications && asset.publication_tx_hash in publications) {
-    const publication = publications[asset.publication_tx_hash]
-    if (isOpen(publication)) {
-      return publication
-    }
-  }
-  return null
-}
-
-// TODO: This shouldn't be on shared, it relies on `publication_tx_hash` which is a front-end only concept
-export function isOnSale(asset, publications) {
-  return getOpenPublication(asset, publications) != null
-}
-
-// TODO: This shouldn't be on shared, it relies on `wallet` which is a front-end only concept
-export function isOwner(wallet, assetId) {
-  if (!wallet) {
-    return false
-  }
-
-  if (wallet.parcelsById && wallet.parcelsById[assetId]) {
-    return true
-  }
-  return !!(wallet.estatesById && wallet.estatesById[assetId])
-}
 
 export function isValidName(name = '') {
   return name.length > 0 && name.length <= MAX_NAME_LENGTH

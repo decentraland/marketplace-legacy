@@ -16,7 +16,8 @@ import {
   estateType,
   bidType
 } from 'components/types'
-import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
+import { getOpenPublication } from 'modules/asset/utils'
+import { ASSET_TYPES } from 'shared/asset'
 import { getDistrict } from 'shared/district'
 import { hasTags } from 'shared/parcel'
 import { shouldShowBid } from 'shared/bid'
@@ -123,9 +124,9 @@ export default class ParcelDetailPage extends React.PureComponent {
               <ParcelActions
                 wallet={wallet}
                 parcel={parcel}
-                mortgage={mortgage}
                 publications={publications}
                 isOwner={isOwner}
+                hasMortgage={!!mortgage}
                 bids={bids}
               />
             </Grid.Column>

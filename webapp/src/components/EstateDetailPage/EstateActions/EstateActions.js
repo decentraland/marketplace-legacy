@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { isOnSale } from 'shared/asset'
+import { isOnSale } from 'modules/asset/utils'
 import { isListable } from 'shared/listing'
 import { hasBid } from 'shared/bid'
 import { isFeatureEnabled } from 'lib/featureUtils'
-import { t } from '@dapps/modules/translation/utils'
 import {
   publicationType,
   estateType,
@@ -31,6 +31,7 @@ export default class EstateActions extends React.PureComponent {
     const { estate, publications, isOwner, bids, wallet } = this.props
     const { id } = estate
     const isListed = isOnSale(estate, publications)
+
     return (
       <div className="EstateActions">
         {!isOwner &&
@@ -68,7 +69,7 @@ export default class EstateActions extends React.PureComponent {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {isOnSale(estate, publications) && (
+            {isListed && (
               <Link to={locations.buyEstate(id)}>
                 <Button primary size="large">
                   {t('asset_detail.publication.buy')}
