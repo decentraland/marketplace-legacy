@@ -40,6 +40,12 @@ export class Asset {
   }
 
   async findByTokenId(tokenId) {
+    // prettier-ignore
+    const rolesSQL = SQL`
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.manager})) as update_managers,
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.operator})) as operators_for_all
+    `
+
     const assets = await db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql('asset')}
