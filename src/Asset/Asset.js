@@ -22,11 +22,17 @@ export class Asset {
   }
 
   async findById(id) {
+    // prettier-ignore
+    const rolesSQL = SQL`
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.manager})) as update_managers,
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.operator})) as operators_for_all
+    `
+
     const assets = await db.query(
-      SQL`SELECT ${raw(this.tableName)}.*, (
-        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-      ) as publication
-        FROM ${raw(this.tableName)}
+      SQL`SELECT *, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql('asset')}
+      ) as publication, ${rolesSQL}
+        FROM ${raw(this.tableName)} asset
         WHERE id = ${id}
         LIMIT 1`
     )
@@ -35,10 +41,10 @@ export class Asset {
 
   async findByTokenId(tokenId) {
     const assets = await db.query(
-      SQL`SELECT ${raw(this.tableName)}.*, (
-        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-      ) as publication
-        FROM ${raw(this.tableName)}
+      SQL`SELECT *, (
+        ${PublicationQueries.findLastAssetPublicationJsonSql('asset')}
+      ) as publication, ${rolesSQL}
+        FROM ${raw(this.tableName)} asset
         WHERE token_id = ${tokenId}
         LIMIT 1`
     )
@@ -48,16 +54,24 @@ export class Asset {
   findByTokenIds(tokenIds) {
     if (tokenIds.length === 0) return []
 
+    // prettier-ignore
+    const rolesSQL = SQL`
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.manager})) as update_managers,
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.operator})) as operators_for_all
+    `
+
     return db.query(
       SQL`SELECT *, (
-        ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-      ) as publication
-        FROM ${raw(this.tableName)}
+        ${PublicationQueries.findLastAssetPublicationJsonSql('asset')}
+      ) as publication, ${rolesSQL}
+        FROM ${raw(this.tableName)} asset
         WHERE token_id = ANY(${tokenIds})`
     )
   }
 
   async findByOwner(owner) {
+    // TODO: Extract. Use APPROVAL_TYPES on rolesSQL
+
     // prettier-ignore
     const isAssetOwnerSQL = SQL`(
       asset.owner = ${owner}
@@ -65,13 +79,16 @@ export class Asset {
         OR EXISTS (SELECT 1 FROM approvals a WHERE a.owner = asset.owner AND a.operator = ${owner} AND a.type = ANY(${Object.values(APPROVAL_TYPES)}) LIMIT 1)
     )`
 
-    const permissionsSQL = SQL`(SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = 'manager')) as managers,
-    (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = 'operator')) as operators`
+    // prettier-ignore
+    const rolesSQL = SQL`
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.manager})) as update_managers,
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.operator})) as operators_for_all
+    `
 
     return db.query(
       SQL`SELECT asset.*, (
         ${PublicationQueries.findLastAssetPublicationJsonSql('asset')}
-      ) as publication, ${permissionsSQL}
+      ) as publication, ${rolesSQL}
         FROM ${raw(this.tableName)} asset
         WHERE ${isAssetOwnerSQL}`
     )
@@ -85,12 +102,15 @@ export class Asset {
         OR EXISTS (SELECT 1 FROM approvals a WHERE a.owner = asset.owner AND a.operator = ${owner} AND a.type = ANY(${Object.values(APPROVAL_TYPES)}) LIMIT 1)
     )`
 
-    const permissionsSQL = SQL`(SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = 'manager')) as managers,
-    (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = 'operator')) as operators`
+    // prettier-ignore
+    const rolesSQL = SQL`
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.manager})) as update_managers,
+      (SELECT array(SELECT operator FROM approvals a WHERE a.owner = asset.owner AND a.type = ${APPROVAL_TYPES.operator})) as operators_for_all
+    `
 
     return db.query(
       // prettier-ignore
-      SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication, ${permissionsSQL}
+      SQL`SELECT DISTINCT ON(asset.id, pub.status) asset.*, row_to_json(pub.*) as publication, ${rolesSQL}
         FROM ${raw(this.tableName)} as asset
         LEFT JOIN (${PublicationQueries.findByStatusSql(status)}) as pub ON asset.id = pub.asset_id
         WHERE ${isAssetOwnerSQL}
@@ -103,9 +123,9 @@ export class Asset {
 
     const [assets, total] = await Promise.all([
       db.query(
-        SQL`SELECT model.*
-          FROM ${raw(this.tableName)} as model
-          ORDER BY model.${raw(sort.by)} ${raw(sort.order)}
+        SQL`SELECT *
+          FROM ${raw(this.tableName)}
+          ORDER BY ${raw(sort.by)} ${raw(sort.order)}
           LIMIT ${raw(pagination.limit)} OFFSET ${raw(pagination.offset)}`
       ),
       this.Model.count()

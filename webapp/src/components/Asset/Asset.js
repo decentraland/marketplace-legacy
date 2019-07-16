@@ -4,7 +4,7 @@ import { Loader } from 'semantic-ui-react'
 
 import { walletType } from 'components/types'
 import NotFound from 'components/NotFound'
-import { isOwner } from 'shared/permissions'
+import { isOwner } from 'shared/roles'
 
 let shouldRefresh = false
 let isNavigatingAway = false

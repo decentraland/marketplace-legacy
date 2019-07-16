@@ -5,7 +5,7 @@ import { MARKETPLACE_PAGE_TABS } from 'locations'
 
 export function hasLegacyPublication(asset) {
   const publication = getOpenPublication(asset)
-  return isLegacyPublication(publication)
+  return !!publication && isLegacyPublication(publication)
 }
 
 export function isLegacyPublication(publication) {

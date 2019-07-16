@@ -16,7 +16,7 @@ import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType, bidType } from 'components/types'
 import { ASSET_TYPES } from 'shared/asset'
-import { isOwner } from 'shared/permissions'
+import { isOwner } from 'shared/roles'
 import {
   getParcelMatcher,
   isEqualCoords,

@@ -5,7 +5,7 @@ import { Button, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { isFeatureEnabled } from 'lib/featureUtils'
+import Permission from 'components/Permission'
 import {
   parcelType,
   publicationType,
@@ -13,7 +13,9 @@ import {
   walletType
 } from 'components/types'
 import { isOnSale } from 'modules/asset/utils'
-import { can, ACTIONS } from 'modules/permission/utils'
+import { getRoles, isAllowedTo, ACTIONS } from 'shared/roles'
+import { ASSET_TYPES } from 'shared/asset'
+import { isFeatureEnabled } from 'lib/featureUtils'
 
 import './ParcelActions.css'
 
@@ -42,72 +44,101 @@ export default class ParcelActions extends React.PureComponent {
     }
 
     const { x, y } = parcel
-    const isListed = isOnSale(parcel, publications)
+    const roles = getRoles(wallet.address, parcel)
 
     return (
       <div className="ParcelActions">
-        {can(ACTIONS.transfer, wallet, parcel) && (
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.transfer]}
+        >
           <Link to={locations.transferParcel(x, y)}>
             <Button size="tiny">
               <Icon name="exchange" />
               {t('asset_detail.actions.transfer')}
             </Button>
           </Link>
-        )}
+        </Permission>
 
-        {can(ACTIONS.canCreateEstate, wallet, parcel) && (
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.createEstate]}
+        >
           <Link to={locations.createEstate(x, y)}>
             <Button size="tiny">
               <Icon name="object group" />
               {t('parcel_detail.actions.create_estate')}
             </Button>
           </Link>
-        )}
+        </Permission>
 
-        {can(ACTIONS.sell, wallet, parcel) && (
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.sell]}
+        >
           <Link to={locations.sellParcel(x, y)}>
-            <Button size="tiny" primary={!isListed}>
+            <Button size="tiny" primary={!isOnSale(parcel, publications)}>
               <Icon name="tag" />
-              {isListed
+              {isOnSale(parcel, publications)
                 ? t('asset_detail.actions.update_price')
                 : t('asset_detail.actions.sell')}
             </Button>
           </Link>
-        )}
+        </Permission>
 
-        {can(ACTIONS.cancelSale, wallet, parcel) && (
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.cancelSale]}
+        >
           <Link to={locations.cancelSaleParcel(x, y)}>
             <Button size="tiny" primary>
               <Icon name="cancel" />
               {t('asset_detail.actions.cancel')}
             </Button>
           </Link>
-        )}
+        </Permission>
 
         {hasMortgage ? null : (
           <React.Fragment>
-            {can(ACTIONS.getMortgage, wallet, parcel) && (
+            <Permission
+              asset={parcel}
+              assetType={ASSET_TYPES.parcel}
+              actions={[ACTIONS.getMortgage]}
+            >
               <Link to={locations.buyParcelByMortgage(x, y)}>
                 <Button size="large">
                   {t('parcel_detail.publication.mortgage')}
                 </Button>
               </Link>
-            )}
+            </Permission>
 
-            {isFeatureEnabled('BIDS') &&
-              can(ACTIONS.bid, wallet, parcel) && (
+            {isFeatureEnabled('BIDS') && (
+              <Permission
+                asset={parcel}
+                assetType={ASSET_TYPES.parcel}
+                actions={[ACTIONS.bid]}
+              >
                 <Link to={locations.bidParcel(x, y)}>
                   <Button size="large">{t('asset_detail.bid.place')}</Button>
                 </Link>
-              )}
+              </Permission>
+            )}
 
-            {can(ACTIONS.buy, wallet, parcel) && (
+            <Permission
+              asset={parcel}
+              assetType={ASSET_TYPES.parcel}
+              actions={[ACTIONS.buy]}
+            >
               <Link to={locations.buyParcel(x, y)}>
                 <Button primary size="large">
                   {t('asset_detail.publication.buy')}
                 </Button>
               </Link>
-            )}
+            </Permission>
           </React.Fragment>
         )}
       </div>

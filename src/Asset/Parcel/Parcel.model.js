@@ -36,6 +36,10 @@ export class Parcel extends Model {
     return splitCoordinate(id)
   }
 
+  static async findById(id) {
+    return new Asset(this).findById(id)
+  }
+
   static async findByOwner(owner) {
     return new Asset(this).findByOwner(owner)
   }

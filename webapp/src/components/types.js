@@ -10,7 +10,9 @@ import {
   oneOf,
   oneOfType
 } from 'prop-types'
+
 import { LISTING_STATUS } from 'shared/listing'
+import { ACTIONS } from 'shared/roles'
 
 export const publicationType = shape({
   tx_hash: string,
@@ -147,3 +149,5 @@ export const bidType = shape({
   asset_type: string,
   expires_at: oneOfType([number, string])
 })
+
+export const actionType = oneOf(Object.values(ACTIONS))
