@@ -1,6 +1,13 @@
 apps:
-  - script   : server-node.js
-    cwd      : src/
+  - script   : 'server-node.js'
+    cwd      : 'src/'
     name     : 'marketplace'
-    instances: 2
+    instances: 0
     exec_mode: cluster
+
+  - script   : './monitor/program.js'
+    args     : 'index --from-block latest --watch'
+    name     : 'monitor'
+    instance : 1
+    exec_mode: fork
+    interpreter: 'babel-node'

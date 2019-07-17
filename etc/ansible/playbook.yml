@@ -81,30 +81,3 @@
             ./build-env.sh "{{ network }}" "{{ connection_string }}" "{{ rpc_url }}" "{{ new_relic_key }}"> ../src/.env
           args:
             chdir: '{{ app_location }}/scripts'
-
-    - name: Setup supervisor
-      block:
-        - name: Install supervisor
-          apt:
-            name: supervisor
-            state: present
-        - name: App config file
-          copy:
-            src: '{{ app_location }}/etc/supervisor/mkt-app.conf'
-            dest: /etc/supervisor/conf.d
-            remote_src: yes
-        - name: Monitor config file
-          copy:
-            src: '{{ app_location }}/etc/supervisor/mkt-monitor.conf'
-            dest: /etc/supervisor/conf.d
-            remote_src: yes
-        - name: Reload app
-          supervisorctl:
-            name: 'app:'
-            state: restarted
-        - name: Reload monitor
-          supervisorctl:
-            name: monitor
-            state: restarted
-      become: yes
-      become_method: sudo
