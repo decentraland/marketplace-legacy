@@ -80,15 +80,23 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_PUBLICATIONS_SUCCESS: {
       const { assets } = action
-      const parcels = assets.filter(asset => isParcel(asset))
+
+      const data = { ...state.data }
+
+      for (const asset of assets) {
+        if (isParcel(asset)) {
+          data[asset.id] = {
+            ...data[asset.id],
+            ...normalizeParcel(asset)
+          }
+        }
+      }
+
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
         error: null,
-        data: {
-          ...state.data,
-          ...toParcelObject(parcels)
-        }
+        data
       }
     }
     case FETCH_PARCEL_FAILURE: {
