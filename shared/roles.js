@@ -11,6 +11,7 @@ export const ACTIONS = {
   createEstate: 'createEstate',
   sell: 'sell',
   bid: 'bid',
+  buy: 'buy',
   cancelSale: 'cancelSale',
   getMortgage: 'getMortgage',
   setOperatorForAll: 'setOperatorForAll',
@@ -43,7 +44,7 @@ const UNOWNED_ACTIONS = [ACTIONS.bid, ACTIONS.buy, ACTIONS.getMortgage]
 
 export function can(action, address, asset) {
   const roles = getRoles(address, asset)
-  return isAllowedTo(roles)
+  return isAllowedTo(roles, action)
 }
 
 export function isAllowedTo(roles, action) {
@@ -51,13 +52,13 @@ export function isAllowedTo(roles, action) {
     // WARN: break early here. In this cases we check the lack of a role
     return !roles.includes(ROLES.owner)
   }
-  let allowedActions = []
 
+  let allowedActions = new Set([])
   for (const role of roles) {
-    allowedActions = allowedActions.concat(getAllowedActions(role))
+    getAllowedActions(role).forEach(action => allowedActions.add(action))
   }
 
-  return allowedActions.includes(action)
+  return allowedActions.has(action)
 }
 
 export function getAllowedActions(role) {
