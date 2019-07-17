@@ -197,10 +197,9 @@ export default class EstateDetailPage extends React.PureComponent {
             >
               <EstateActions
                 wallet={wallet}
-                isOwner={isOwner}
-                publications={publications}
                 estate={estate}
                 bids={bidsToShow}
+                publications={publications}
               />
             </Grid.Column>
           </Grid.Row>
@@ -260,8 +259,10 @@ export default class EstateDetailPage extends React.PureComponent {
             )}
           </Grid.Row>
         </Grid>
+
         <AssetTransactionHistory
-          asset={{ ...estate, type: ASSET_TYPES.estate }}
+          asset={estate}
+          assetType={ASSET_TYPES.estate}
           publications={publications}
         />
       </div>

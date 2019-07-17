@@ -7,6 +7,8 @@ import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
+import Bid from 'components/Bid'
+import AssetTransactionHistory from 'components/AssetTransactionHistory'
 import {
   parcelType,
   districtType,
@@ -25,8 +27,6 @@ import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelMortgage from './ParcelMortgage'
-import Bid from 'components/Bid'
-import AssetTransactionHistory from 'components/AssetTransactionHistory'
 
 import './ParcelDetailPage.css'
 
@@ -124,10 +124,9 @@ export default class ParcelDetailPage extends React.PureComponent {
               <ParcelActions
                 wallet={wallet}
                 parcel={parcel}
-                publications={publications}
-                isOwner={isOwner}
-                hasMortgage={!!mortgage}
                 bids={bids}
+                publications={publications}
+                hasMortgage={!!mortgage}
               />
             </Grid.Column>
           </Grid.Row>
@@ -161,7 +160,8 @@ export default class ParcelDetailPage extends React.PureComponent {
         )}
 
         <AssetTransactionHistory
-          asset={{ ...parcel, type: ASSET_TYPES.parcel }}
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
           publications={publications}
         />
       </div>

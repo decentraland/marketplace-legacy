@@ -2,28 +2,35 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Grid, Responsive } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
-import { assetType, publicationType, bidType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import {
-  normalizePublications,
-  normalizeBids,
+  parcelType,
+  estateType,
+  publicationType,
+  bidType
+} from 'components/types'
+import {
+  publicationToListing,
+  bidToListing,
   sortListings,
   LISTING_STATUS,
   LISTING_SORT_BY
 } from 'shared/listing'
 import { findAssetPublications } from 'shared/publication'
+import { ASSET_TYPES } from 'shared/asset'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
 import './AssetTransactionHistory.css'
 
 export default class AssetTransactionHistory extends React.PureComponent {
   static propTypes = {
-    asset: assetType.isRequired,
+    asset: PropTypes.oneOfType([parcelType, estateType]).isRequired,
+    assetType: PropTypes.string.isRequired,
     publications: PropTypes.objectOf(publicationType),
     bids: PropTypes.arrayOf(bidType)
   }
@@ -40,10 +47,11 @@ export default class AssetTransactionHistory extends React.PureComponent {
       LISTING_STATUS.sold
     )
 
-    const normalizedPublications = normalizePublications(assetPublications)
-    const normalizedBids = normalizeBids(bids)
+    const listingPublications = assetPublications.map(publicationToListing)
+    const listingBids = bids.map(bidToListing)
+
     return sortListings(
-      normalizedPublications.concat(normalizedBids),
+      listingPublications.concat(listingBids),
       LISTING_SORT_BY.BLOCK_UPDATED
     )
   }

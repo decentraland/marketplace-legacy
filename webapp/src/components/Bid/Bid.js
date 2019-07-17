@@ -63,7 +63,6 @@ export default class Bid extends React.PureComponent {
           zoom = mapProps.zoom
           selected = estate.data.parcels
         }
-
         break
       }
     }
@@ -119,7 +118,9 @@ export default class Bid extends React.PureComponent {
   }
 
   getAssetTypeTitle = () => {
-    switch (this.props.bid.asset_type) {
+    const { asset_type } = this.props.bid
+
+    switch (asset_type) {
       case ASSET_TYPES.parcel: {
         return t('name.parcel')
       }
@@ -234,7 +235,7 @@ export default class Bid extends React.PureComponent {
                   className={'actions'}
                 >
                   <Button
-                    className={`${isOwner ? 'primary' : ''}`}
+                    className={isOwner ? 'primary' : ''}
                     onClick={preventDefault(onConfirm)}
                   >
                     {!isOwner || hasSameSellerAndBidder

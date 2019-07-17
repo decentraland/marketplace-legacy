@@ -67,13 +67,13 @@ export const getWalletBidsByAsset = (state, asset, assetType) => {
   ]
 }
 
-export const getAcceptedBidsByAsset = (state, asset) => {
+export const getAcceptedBidsByAsset = (state, asset, assetType) => {
   const allBids = getData(state)
 
   return Object.keys(allBids).reduce((bids, bidId) => {
     const bid = allBids[bidId]
     if (
-      isAssetBid(bid, asset.id, asset.type) &&
+      isAssetBid(bid, asset.id, assetType) &&
       bid.status === LISTING_STATUS.sold
     ) {
       return [...bids, bid]
