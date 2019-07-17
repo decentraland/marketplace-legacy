@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 
 import { ASSET_TYPES } from 'shared/asset'
+import { bidType, assetTypingType } from 'components/types'
 import CancelBidParcelPage from './CancelBidParcelPage'
 import CancelBidEstatePage from './CancelBidEstatePage'
-import { bidType } from 'components/types'
 
 export default class CancelBidAssetPage extends React.PureComponent {
   static propTypes = {
     id: PropTypes.string.isRequired,
     bid: bidType,
-    assetType: PropTypes.string.isRequired,
+    assetType: assetTypingType.isRequired,
     isConnected: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired

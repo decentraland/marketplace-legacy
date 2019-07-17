@@ -6,12 +6,13 @@ import AssetLoader from 'components/AssetLoader'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import EstateDetailPage from 'components/EstateDetailPage'
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
+import { assetTypingType } from 'components/types'
 import { ASSET_TYPES } from 'shared/asset'
 import './AssetDetailPage.css'
 
 export default class AssetDetailPage extends React.PureComponent {
   static propTypes = {
-    assetType: PropTypes.string.isRequired,
+    assetType: assetTypingType.isRequired,
     onAssetClick: PropTypes.func.isRequired
   }
 
@@ -62,7 +63,7 @@ export default class AssetDetailPage extends React.PureComponent {
     if (ASSET_TYPES[assetType] == null) {
       const assetTypesStr = Object.values(ASSET_TYPES).join(', ')
       throw new Error(
-        `[AssetDetailPage] You must provide one of the following asset types: [${assetTypesStr}] but received "${assetType}" instead`
+        `You must provide one of the following asset types: [${assetTypesStr}], received "${assetType}" instead`
       )
     }
 

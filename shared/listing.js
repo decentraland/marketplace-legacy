@@ -1,3 +1,4 @@
+import { ASSET_TYPES } from './asset'
 import { isDistrict } from './district'
 import { isPartOfEstate } from './parcel'
 
@@ -10,8 +11,8 @@ export const LISTING_STATUS = Object.freeze({
 })
 
 export const LISTING_ASSET_TYPES = Object.freeze({
-  parcel: 'parcel',
-  estate: 'estate'
+  [ASSET_TYPES.parcel]: ASSET_TYPES.parcel,
+  [ASSET_TYPES.estate]: ASSET_TYPES.estate
 })
 
 export const LISTING_TYPES = Object.freeze({
@@ -47,48 +48,40 @@ export function isExpired(expires_at) {
   return parseInt(expires_at, 10) < Date.now()
 }
 
-export function normalizePublications(publications) {
-  return publications.map(publication => ({
-    block_number: publication.block_number,
-    price: publication.price,
-    block_time_created_at: publication.block_time_created_at,
-    block_time_updated_at: publication.block_time_updated_at,
+export function publicationToListing(publication) {
+  return {
     id: publication.tx_hash,
+    type: LISTING_TYPES.PUBLICATION,
     from: publication.owner,
     to: publication.buyer,
-    type: LISTING_TYPES.PUBLICATION
-  }))
+    price: publication.price,
+    block_number: publication.block_number,
+    block_time_created_at: publication.block_time_created_at,
+    block_time_updated_at: publication.block_time_updated_at
+  }
 }
 
-export function normalizeBids(bids) {
-  return bids.map(bid => ({
-    block_number: bid.block_number,
-    price: bid.price,
-    block_time_created_at: bid.block_time_created_at,
-    block_time_updated_at: bid.block_time_updated_at,
+export function bidToListing(bid) {
+  return {
     id: bid.id,
+    type: LISTING_TYPES.BID,
     from: bid.seller,
     to: bid.bidder,
-    type: LISTING_TYPES.BID
-  }))
+    price: bid.price,
+    block_number: bid.block_number,
+    block_time_created_at: bid.block_time_created_at,
+    block_time_updated_at: bid.block_time_updated_at
+  }
 }
 
 export function sortListings(listings, key) {
   if (!Object.values(LISTING_SORT_BY).includes(key)) {
-    throw 'Invalid key'
+    throw new Error(`Invalid sort listing key ${key}`)
   }
+
   return listings.sort(
     (a, b) => (parseInt(a[key], 10) > parseInt(b[key], 10) ? -1 : 1)
   )
-}
-
-/**
- * Check if asset is listable or not
- * @param asset
- * @return boolean - whether is listable or not
- */
-export function isListable(asset) {
-  return !isDistrict(asset) && asset.owner
 }
 
 /**
@@ -98,4 +91,13 @@ export function isListable(asset) {
  */
 export function isParcelListable(parcel) {
   return isListable(parcel) && !isPartOfEstate(parcel)
+}
+
+/**
+ * Check if asset is listable or not
+ * @param asset
+ * @return boolean - whether is listable or not
+ */
+export function isListable(asset) {
+  return !isDistrict(asset) && asset.owner
 }

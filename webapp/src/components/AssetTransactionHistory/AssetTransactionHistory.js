@@ -9,8 +9,8 @@ import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
 import {
-  parcelType,
-  estateType,
+  assetType,
+  assetTypingType,
   publicationType,
   bidType
 } from 'components/types'
@@ -29,8 +29,8 @@ import './AssetTransactionHistory.css'
 
 export default class AssetTransactionHistory extends React.PureComponent {
   static propTypes = {
-    asset: PropTypes.oneOfType([parcelType, estateType]).isRequired,
-    assetType: PropTypes.string.isRequired,
+    asset: assetType.isRequired,
+    assetType: assetTypingType.isRequired,
     publications: PropTypes.objectOf(publicationType),
     bids: PropTypes.arrayOf(bidType)
   }

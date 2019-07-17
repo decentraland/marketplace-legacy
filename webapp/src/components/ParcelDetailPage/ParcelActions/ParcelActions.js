@@ -13,9 +13,9 @@ import {
   walletType
 } from 'components/types'
 import { isOnSale } from 'modules/asset/utils'
-import { getRoles, isAllowedTo, ACTIONS } from 'shared/roles'
-import { ASSET_TYPES } from 'shared/asset'
 import { isFeatureEnabled } from 'lib/featureUtils'
+import { ACTIONS } from 'shared/roles'
+import { ASSET_TYPES } from 'shared/asset'
 
 import './ParcelActions.css'
 
@@ -44,7 +44,6 @@ export default class ParcelActions extends React.PureComponent {
     }
 
     const { x, y } = parcel
-    const roles = getRoles(wallet.address, parcel)
 
     return (
       <div className="ParcelActions">

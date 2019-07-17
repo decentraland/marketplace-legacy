@@ -4,24 +4,20 @@ import { Loader } from 'semantic-ui-react'
 
 import {
   walletType,
-  parcelType,
-  estateType,
-  actionType
+  assetType,
+  actionType,
+  assetTypingType
 } from 'components/types'
-import {
-  isOnSale,
-  canGetMortgage,
-  canCreateEstate,
-  isBiddeable
-} from 'modules/asset/utils'
+import { isOnSale, canGetMortgage, isBiddeable } from 'modules/asset/utils'
+import { canCreateEstate } from 'modules/parcels/utils'
 import { can, ACTIONS } from 'shared/roles'
 import { ASSET_TYPES } from 'shared/asset'
 
 export default class Permission extends React.PureComponent {
   static propTypes = {
     wallet: walletType.isRequired,
-    asset: PropTypes.oneOfType([parcelType, estateType]).isRequired,
-    assetType: PropTypes.oneOf(Object.values(ASSET_TYPES)).isRequired,
+    asset: assetType.isRequired,
+    assetType: assetTypingType.isRequired,
     isConnecting: PropTypes.bool,
     children: PropTypes.node.isRequired,
     actions: PropTypes.arrayOf(actionType)
@@ -35,9 +31,8 @@ export default class Permission extends React.PureComponent {
     const { wallet, asset, publications, bids } = this.props
 
     switch (action) {
-      case ACTIONS.bid: {
+      case ACTIONS.bid:
         return isBiddeable(wallet, asset, bids)
-      }
       case ACTIONS.buy:
         return !isOnSale(asset, publications)
       case ACTIONS.cancelSale:

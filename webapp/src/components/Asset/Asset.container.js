@@ -12,13 +12,12 @@ import { getData as getPublications } from 'modules/publication/selectors'
 
 import Asset from './Asset'
 
-const mapState = (state, { value }) => {
+const mapState = (state, { asset }) => {
   const wallet = getWallet(state)
   const addresses = getAddresses(state)
 
   const isConnecting = isWalletConnecting(state) || isAddressLoading(state)
 
-  let asset = value
   if (asset) {
     const publications = getPublications(state)
     const publication = publications[asset.publication_tx_hash]

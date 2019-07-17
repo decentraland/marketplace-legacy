@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 
-import { walletType } from 'components/types'
+import { walletType, assetType } from 'components/types'
 import NotFound from 'components/NotFound'
 import { isOwner } from 'shared/roles'
 
@@ -13,7 +13,7 @@ let isAssetPrefetched = false
 export default class Asset extends React.PureComponent {
   static propTypes = {
     wallet: walletType.isRequired,
-    value: PropTypes.object,
+    asset: assetType,
     isConnecting: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
     ownerOnly: PropTypes.bool,
@@ -29,14 +29,14 @@ export default class Asset extends React.PureComponent {
     ownerOnly: false,
     ownerNotAllowed: false,
     withPublications: false,
-    value: null,
+    asset: null,
     publication: null
   }
 
   componentWillReceiveProps(nextProps) {
     const {
       id,
-      value,
+      asset,
       isConnecting,
       isLoading,
       ownerOnly,
@@ -54,12 +54,12 @@ export default class Asset extends React.PureComponent {
     }
 
     const ownerIsNotAllowed =
-      ownerNotAllowed && value && isOwner(wallet.address, value)
+      ownerNotAllowed && asset && isOwner(wallet.address, asset)
     const assetShouldBeOnSale =
-      withPublications && value && !value['publication_tx_hash']
+      withPublications && asset && !asset['publication_tx_hash']
 
     if (ownerOnly) {
-      this.checkOwnership(wallet, value)
+      this.checkOwnership(wallet, asset)
     }
 
     if (ownerIsNotAllowed || assetShouldBeOnSale) {
@@ -104,7 +104,7 @@ export default class Asset extends React.PureComponent {
 
   render() {
     const {
-      value,
+      asset,
       isConnecting,
       ownerOnly,
       ownerNotAllowed,
@@ -113,7 +113,7 @@ export default class Asset extends React.PureComponent {
       children
     } = this.props
 
-    if (!value || isLoading) {
+    if (!asset || isLoading) {
       const shouldBeConnected = ownerOnly || ownerNotAllowed
 
       if (
@@ -130,6 +130,6 @@ export default class Asset extends React.PureComponent {
         return <NotFound />
       }
     }
-    return children(value, { isOwner: isOwner(wallet.address, value), wallet })
+    return children(asset, { isOwner: isOwner(wallet.address, asset), wallet })
   }
 }

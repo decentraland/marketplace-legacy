@@ -11,6 +11,7 @@ import {
   oneOfType
 } from 'prop-types'
 
+import { ASSET_TYPES } from 'shared/asset'
 import { LISTING_STATUS } from 'shared/listing'
 import { ACTIONS } from 'shared/roles'
 
@@ -30,11 +31,6 @@ export const publicationType = shape({
 export const coordsType = shape({
   x: number,
   y: number
-})
-
-export const assetType = shape({
-  id: string,
-  owner: string
 })
 
 export const parcelType = shape({
@@ -150,4 +146,6 @@ export const bidType = shape({
   expires_at: oneOfType([number, string])
 })
 
+export const assetType = oneOfType([parcelType, estateType])
 export const actionType = oneOf(Object.values(ACTIONS))
+export const assetTypingType = oneOf(Object.values(ASSET_TYPES))
