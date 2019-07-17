@@ -5,79 +5,98 @@ import { Button, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { isOnSale } from 'modules/asset/utils'
-import { isListable } from 'shared/listing'
-import { hasBid } from 'shared/bid'
-import { isFeatureEnabled } from 'lib/featureUtils'
+import Permission from 'components/Permission'
 import {
   publicationType,
   estateType,
   bidType,
   walletType
 } from 'components/types'
+import { isFeatureEnabled } from 'lib/featureUtils'
+import { isOnSale } from 'modules/asset/utils'
+import { ACTIONS } from 'shared/roles'
+import { ASSET_TYPES } from 'shared/asset'
 
 import './EstateActions.css'
 
 export default class EstateActions extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
-    isOwner: PropTypes.bool.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
     bids: PropTypes.arrayOf(bidType),
     wallet: walletType
   }
 
   render() {
-    const { estate, publications, isOwner, bids, wallet } = this.props
+    const { estate, publications, bids, wallet } = this.props
     const { id } = estate
-    const isListed = isOnSale(estate, publications)
 
     return (
       <div className="EstateActions">
-        {!isOwner &&
-          isFeatureEnabled('BIDS') &&
-          isListable(estate) &&
-          !hasBid(bids, wallet.address) && (
+        {isFeatureEnabled('BIDS') && (
+          <Permission
+            asset={estate}
+            assetType={ASSET_TYPES.estate}
+            actions={[ACTIONS.bid]}
+          >
             <Link to={locations.bidEstate(id)}>
               <Button size="large">{t('asset_detail.bid.place')}</Button>
             </Link>
-          )}
-        {isOwner ? (
-          <React.Fragment>
-            <Link to={locations.transferEstate(id)}>
-              <Button size="tiny">
-                <Icon name="exchange" />
-                {t('asset_detail.actions.transfer')}
-              </Button>
-            </Link>
-            <Link to={locations.sellEstate(id)}>
-              <Button size="tiny" primary={!isListed}>
-                <Icon name="tag" />
-                {isListed
-                  ? t('asset_detail.actions.update_price')
-                  : t('asset_detail.actions.sell')}
-              </Button>
-            </Link>
-            {isListed && (
-              <Link to={locations.cancelSaleEstate(id)}>
-                <Button size="tiny" primary>
-                  <Icon name="cancel" />
-                  {t('asset_detail.actions.cancel')}
-                </Button>
-              </Link>
-            )}
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {isListed && (
-              <Link to={locations.buyEstate(id)}>
-                <Button primary size="large">
-                  {t('asset_detail.publication.buy')}
-                </Button>
-              </Link>
-            )}
-          </React.Fragment>
+          </Permission>
         )}
+
+        <Permission
+          asset={estate}
+          assetType={ASSET_TYPES.estate}
+          actions={[ACTIONS.transfer]}
+        >
+          <Link to={locations.transferEstate(id)}>
+            <Button size="tiny">
+              <Icon name="exchange" />
+              {t('asset_detail.actions.transfer')}
+            </Button>
+          </Link>
+        </Permission>
+
+        <Permission
+          asset={estate}
+          assetType={ASSET_TYPES.estate}
+          actions={[ACTIONS.sell]}
+        >
+          <Link to={locations.sellEstate(id)}>
+            <Button size="tiny" primary={!isOnSale(estate, publications)}>
+              <Icon name="tag" />
+              {isOnSale(estate, publications)
+                ? t('asset_detail.actions.update_price')
+                : t('asset_detail.actions.sell')}
+            </Button>
+          </Link>
+        </Permission>
+
+        <Permission
+          asset={estate}
+          assetType={ASSET_TYPES.estate}
+          actions={[ACTIONS.cancelSale]}
+        >
+          <Link to={locations.cancelSaleEstate(id)}>
+            <Button size="tiny" primary>
+              <Icon name="cancel" />
+              {t('asset_detail.actions.cancel')}
+            </Button>
+          </Link>
+        </Permission>
+
+        <Permission
+          asset={estate}
+          assetType={ASSET_TYPES.estate}
+          actions={[ACTIONS.buy]}
+        >
+          <Link to={locations.buyEstate(id)}>
+            <Button primary size="large">
+              {t('asset_detail.publication.buy')}
+            </Button>
+          </Link>
+        </Permission>
       </div>
     )
   }
