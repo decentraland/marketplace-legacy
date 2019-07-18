@@ -43,9 +43,10 @@ export function navigateToAsset(assetId, assetType) {
 
 export const FETCH_ASSET_LISTING_HISTORY = 'Fetch asset listing history'
 
-export function fetchAssetListingHistory(asset) {
+export function fetchAssetListingHistory(asset, assetType) {
   return {
     type: FETCH_ASSET_LISTING_HISTORY,
-    asset
+    asset,
+    assetType
   }
 }

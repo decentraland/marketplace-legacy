@@ -48,9 +48,9 @@ function* handleNavigateToAsset(action) {
 }
 
 function* handleFetchAssetListingHistory(action) {
-  const { asset } = action
+  const { asset, assetType } = action
   // TODO: fetch publications (?) and mortgages
-  yield put(fetchAssetAcceptedBidsRequest(asset))
+  yield put(fetchAssetAcceptedBidsRequest(asset, assetType))
 }
 
 export function* fetchAsset(assetId, assetType) {
@@ -66,7 +66,7 @@ export function* fetchAsset(assetId, assetType) {
       return yield take(FETCH_ESTATE_SUCCESS)
     }
     default:
-      throw new Error(`Unkown asset type ${assetType}`)
+      throw new Error(`Invalid asset type "${assetType}"`)
   }
 }
 

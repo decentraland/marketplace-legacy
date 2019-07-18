@@ -164,12 +164,11 @@ function* handleFetchBidsByAsset({ assetId, assetType, status }) {
   }
 }
 
-function* handleFetchAssetAcceptedBidsRequest({ asset }) {
-  const { id, type } = asset
+function* handleFetchAssetAcceptedBidsRequest({ asset, assetType }) {
   try {
     const bids = yield call(() =>
-      api.fetchBidsByAsset(id, {
-        asset_type: type,
+      api.fetchBidsByAsset(asset.id, {
+        asset_type: assetType,
         status: LISTING_STATUS.sold
       })
     )

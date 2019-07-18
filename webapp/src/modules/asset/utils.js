@@ -12,7 +12,7 @@ export function getNFTAddressByType(assetType) {
     case ASSET_TYPES.estate:
       return getContractAddress('EstateRegistry')
     default:
-      throw Error(`Invalid asset type ${assetType}`)
+      throw new Error(`Invalid asset type "${assetType}"`)
   }
 }
 

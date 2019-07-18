@@ -57,23 +57,20 @@ export async function getAssetTokenId(assetType, asset) {
       const landRegistry = eth.getContract('LANDRegistry')
       return landRegistry.encodeTokenId(asset.x, asset.y)
     }
-    case ASSET_TYPES.estate: {
+    case ASSET_TYPES.estate:
       return asset.id
-    }
     default:
-      throw new Error(`The assetType ${assetType} is invalid`)
+      throw new Error(`Invalid asset type "${assetType}"`)
   }
 }
 
 export function getContractByAssetType(assetType) {
   switch (assetType) {
-    case ASSET_TYPES.parcel: {
+    case ASSET_TYPES.parcel:
       return eth.getContract('LANDRegistry')
-    }
-    case ASSET_TYPES.estate: {
+    case ASSET_TYPES.estate:
       return eth.getContract('EstateRegistry')
-    }
     default:
-      throw new Error(`The assetType ${assetType} is invalid`)
+      throw new Error(`Invalid asset type "${assetType}"`)
   }
 }
