@@ -21,17 +21,9 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
-  const id = ownProps.asset.id
-
-  return {
-    onEditParcels: () => dispatch(navigateTo(locations.editEstateParcels(id))),
-    onEditMetadata: () =>
-      dispatch(navigateTo(locations.editEstateMetadata(id))),
-    onManageEstate: () => dispatch(navigateTo(locations.manageEstate(id))),
-    onParcelClick: parcel =>
-      dispatch(navigateToAsset(parcel.id, ASSET_TYPES.parcel))
-  }
-}
+const mapDispatch = dispatch => ({
+  onParcelClick: parcel =>
+    dispatch(navigateToAsset(parcel.id, ASSET_TYPES.parcel))
+})
 
 export default connect(mapState, mapDispatch)(EstateDetailPage)

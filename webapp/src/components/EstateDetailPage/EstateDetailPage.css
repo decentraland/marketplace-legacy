@@ -12,10 +12,6 @@
   margin-left: 25px;
 }
 
-.EstateDetailPage .estate-title > span {
-  margin-right: 16px;
-}
-
 .EstateDetailPage .estate-title .LandAmount {
   display: inline-flex;
   font-size: 20px;
@@ -54,14 +50,6 @@
   text-align: right;
 }
 
-.EstateDetailPage .owned-by {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  color: var(--gray);
-}
-
 .EstateDetailPage h3 {
   font-family: var(--font-family) !important;
 }
@@ -83,10 +71,6 @@
 
 .EstateDetailPage .details {
   margin-top: 20px;
-}
-
-.EstateDetailPage .details .button.tiny.link {
-  margin-left: 16px;
 }
 
 .EstateDetailPage.empty {

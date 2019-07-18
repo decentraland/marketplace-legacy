@@ -13,10 +13,11 @@ import { buildCoordinate } from 'shared/coordinates'
 import { isDistrict } from 'shared/district'
 import { shouldShowBid } from 'shared/bid'
 import {
+  walletType,
   estateType,
   publicationType,
-  bidType,
-  walletType
+  tileType,
+  bidType
 } from 'components/types'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
@@ -26,6 +27,7 @@ import Expiration from 'components/Expiration'
 import LandAmount from 'components/LandAmount'
 import Bid from 'components/Bid'
 import AssetTransactionHistory from 'components/AssetTransactionHistory'
+import EstateOwner from './EstateOwner'
 import EstateActions from './EstateActions'
 
 import './EstateDetailPage.css'
@@ -36,15 +38,13 @@ const WITHOUT_ACTION_BUTTONS_WIDTH = 16
 export default class EstateDetailPage extends React.PureComponent {
   // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
+    wallet: walletType,
     estate: estateType.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
-    isOwner: PropTypes.bool.isRequired,
-    onEditParcels: PropTypes.func.isRequired,
-    onEditMetadata: PropTypes.func.isRequired,
-    onManageEstate: PropTypes.func.isRequired,
-    onParcelClick: PropTypes.func.isRequired,
+    tiles: PropTypes.objectOf(tileType),
     bids: PropTypes.arrayOf(bidType),
-    wallet: walletType
+    isOwner: PropTypes.bool.isRequired,
+    onParcelClick: PropTypes.func.isRequired
   }
 
   getEstateParcels() {
@@ -74,16 +74,13 @@ export default class EstateDetailPage extends React.PureComponent {
 
   render() {
     const {
+      wallet,
       estate,
       publications,
+      bids,
       tiles,
       isOwner,
-      onEditParcels,
-      onEditMetadata,
-      onManageEstate,
-      onParcelClick,
-      bids,
-      wallet
+      onParcelClick
     } = this.props
 
     if (estate.data.parcels.length === 0) {
@@ -129,31 +126,7 @@ export default class EstateDetailPage extends React.PureComponent {
                 mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
                 className="estate-owner-container"
               >
-                {isOwner ? (
-                  <div>
-                    <Button
-                      size="tiny"
-                      className="link"
-                      onClick={onEditMetadata}
-                    >
-                      <Icon name="pencil" />
-                      {t('global.edit')}
-                    </Button>
-                    <Button
-                      size="tiny"
-                      className="link manage-button"
-                      onClick={onManageEstate}
-                    >
-                      <Icon name="add user" />
-                      {t('asset_detail.actions.permissions')}
-                    </Button>
-                  </div>
-                ) : (
-                  <span className="owned-by">
-                    <span>{t('global.owned_by')}</span>
-                    <AddressBlock address={estate.owner} scale={4} />
-                  </span>
-                )}
+                <EstateOwner wallet={wallet} estate={estate} />
               </Grid.Column>
             )}
           </Grid.Row>
@@ -236,14 +209,15 @@ export default class EstateDetailPage extends React.PureComponent {
                   <h3>
                     {t('estate_detail.parcels')}
                     {isOwner && (
-                      <Button
-                        size="tiny"
-                        className="link"
-                        onClick={onEditParcels}
+                      <Link
+                        to={locations.editEstateParcels(estate.id)}
+                        className="edit-button"
                       >
-                        <Icon name="pencil" />
-                        {t('estate_detail.edit_parcels')}{' '}
-                      </Button>
+                        <Button size="tiny" className="link">
+                          <Icon name="pencil" />
+                          {t('estate_detail.edit_parcels')}{' '}
+                        </Button>
+                      </Link>
                     )}
                   </h3>
                 </Grid.Column>

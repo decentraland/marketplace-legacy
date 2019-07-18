@@ -32,14 +32,15 @@ import './ParcelDetailPage.css'
 
 export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType.isRequired,
     wallet: walletType.isRequired,
+    parcel: parcelType.isRequired,
     publications: PropTypes.objectOf(publicationType),
     estates: PropTypes.objectOf(estateType),
     districts: PropTypes.objectOf(districtType).isRequired,
+    bids: PropTypes.arrayOf(bidType),
     mortgage: mortgageType,
-    onBuy: PropTypes.func.isRequired,
-    bids: PropTypes.arrayOf(bidType)
+    isOwner: PropTypes.bool.isRequired,
+    onBuy: PropTypes.func.isRequired
   }
 
   getDescription() {
@@ -58,14 +59,14 @@ export default class ParcelDetailPage extends React.PureComponent {
 
   render() {
     const {
-      parcel,
-      districts,
-      estates,
-      publications,
-      isOwner,
-      mortgage,
       wallet,
-      bids
+      parcel,
+      publications,
+      estates,
+      districts,
+      bids,
+      mortgage,
+      isOwner
     } = this.props
 
     const description = this.getDescription()
@@ -84,10 +85,10 @@ export default class ParcelDetailPage extends React.PureComponent {
             </Grid.Column>
             <Grid.Column className="parcel-owner-container">
               <ParcelOwner
+                wallet={wallet}
                 parcel={parcel}
                 estates={estates}
                 districts={districts}
-                isOwner={isOwner}
               />
             </Grid.Column>
           </Grid.Row>
