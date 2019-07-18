@@ -36,8 +36,8 @@ const mapDispatch = (dispatch, ownProps) => {
       onConfirm = () =>
         dispatch(
           !isOwner || hasSameSellerAndBidder
-            ? navigateTo(locations.cancelBidParcel(x, y))
-            : navigateTo(locations.acceptBidParcel(x, y, bid.id))
+            ? navigateTo(locations.cancelParcelBid(x, y))
+            : navigateTo(locations.acceptParcelBid(x, y, bid.id))
         )
 
       onUpdate = () => dispatch(navigateTo(locations.bidParcel(x, y)))
@@ -48,8 +48,8 @@ const mapDispatch = (dispatch, ownProps) => {
       onConfirm = () =>
         dispatch(
           !isOwner || hasSameSellerAndBidder
-            ? navigateTo(locations.cancelBidEstate(estateId))
-            : navigateTo(locations.acceptBidEstate(estateId, bid.id))
+            ? navigateTo(locations.cancelEstateBid(estateId))
+            : navigateTo(locations.acceptEstateBid(estateId, bid.id))
         )
 
       onUpdate = () => dispatch(navigateTo(locations.bidEstate(estateId)))

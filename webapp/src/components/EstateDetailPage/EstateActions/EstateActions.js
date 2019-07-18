@@ -78,7 +78,7 @@ export default class EstateActions extends React.PureComponent {
           assetType={ASSET_TYPES.estate}
           actions={[ACTIONS.cancelSale]}
         >
-          <Link to={locations.cancelSaleEstate(id)}>
+          <Link to={locations.cancelEstateSale(id)}>
             <Button size="tiny" primary>
               <Icon name="cancel" />
               {t('asset_detail.actions.cancel')}

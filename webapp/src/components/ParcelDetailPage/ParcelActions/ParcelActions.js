@@ -93,7 +93,7 @@ export default class ParcelActions extends React.PureComponent {
           assetType={ASSET_TYPES.parcel}
           actions={[ACTIONS.cancelSale]}
         >
-          <Link to={locations.cancelSaleParcel(x, y)}>
+          <Link to={locations.cancelParcelSale(x, y)}>
             <Button size="tiny" primary>
               <Icon name="cancel" />
               {t('asset_detail.actions.cancel')}
