@@ -209,9 +209,7 @@ export default class EstateDetailPage extends React.PureComponent {
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
-                  {bidsToShow.map(bid => (
-                    <Bid key={bid.id} bid={bid} isOwner={isOwner} />
-                  ))}
+                  {bidsToShow.map(bid => <Bid key={bid.id} bid={bid} />)}
                 </Grid.Column>
               </Grid.Row>
             )}

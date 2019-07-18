@@ -167,11 +167,9 @@ export default class ProfilePage extends React.PureComponent {
                 })
               }
             >
-              {`${
-                this.isActive(PROFILE_PAGE_TABS.bids)
-                  ? t('bid.see_archived')
-                  : t('bid.see_all')
-              } (${hiddenBidsCount})`}
+              {this.isActive(PROFILE_PAGE_TABS.bids)
+                ? t('bid.see_archived')
+                : t('bid.see_all')}&nbsp;({hiddenBidsCount})
             </a>
             {bidsReceived.length > 0 && (
               <React.Fragment>
@@ -180,13 +178,7 @@ export default class ProfilePage extends React.PureComponent {
                   stackable={true}
                   className={bidsPlaced.length > 0 ? 'with-placed' : ''}
                 >
-                  {bidsReceived.map(bid => (
-                    <BidCard
-                      key={bid.id}
-                      bid={bid}
-                      isOwner={address === bid.seller}
-                    />
-                  ))}
+                  {bidsReceived.map(bid => <BidCard key={bid.id} bid={bid} />)}
                 </Card.Group>
               </React.Fragment>
             )}
@@ -195,13 +187,7 @@ export default class ProfilePage extends React.PureComponent {
               <React.Fragment>
                 <h3 className="bids-title">{t('bid.placed')}</h3>
                 <Card.Group stackable={true}>
-                  {bidsPlaced.map(bid => (
-                    <BidCard
-                      key={bid.id}
-                      bid={bid}
-                      isOwner={address === bid.seller}
-                    />
-                  ))}
+                  {bidsPlaced.map(bid => <BidCard key={bid.id} bid={bid} />)}
                 </Card.Group>
               </React.Fragment>
             )}

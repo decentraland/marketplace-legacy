@@ -9,15 +9,14 @@ import './BidCard.css'
 
 export default class BidCard extends React.PureComponent {
   static propTypes = {
-    bid: bidType.isRequired,
-    isOwner: PropTypes.bool.isRequired
+    bid: bidType.isRequired
   }
 
   render() {
-    const { bid, isOwner } = this.props
+    const { bid } = this.props
     return (
       <Card className="BidCard">
-        <Bid bid={bid} isOwner={isOwner} showAssetDetail={true} />
+        <Bid bid={bid} showAssetDetail={true} />
       </Card>
     )
   }
