@@ -75,16 +75,16 @@ export const locations = {
   // Generic assets
 
   assetDetail: (assetId, assetType) =>
-    this.goToAssetLocation('detail', assetId, assetType),
+    locations.goToAssetLocation('detail', assetId, assetType),
   bidAsset: (assetId, assetType) =>
-    this.goToAssetLocation('bid', assetId, assetType),
+    locations.goToAssetLocation('bid', assetId, assetType),
   acceptAssetBid: (assetId, assetType, bidId) =>
-    this.goToAssetLocation('acceptBid', assetId, assetType, bidId),
+    locations.goToAssetLocation('acceptBid', assetId, assetType, bidId),
   cancelAssetBid: (assetId, assetType, bidId) =>
-    this.goToAssetLocation('cancelBid', assetId, assetType, bidId),
+    locations.goToAssetLocation('cancelBid', assetId, assetType, bidId),
 
   goToAssetLocation(action, assetId, assetType, ...args) {
-    const assetLocations = this.byAsset[assetType]
+    const assetLocations = LOCATION_BY_ASSET[assetType]
     if (!assetLocations) {
       throw new Error(`Invalid asset type "${assetType}"`)
     }
@@ -95,25 +95,6 @@ export const locations = {
     }
 
     return location(assetId, ...args)
-  },
-
-  byAsset: {
-    [ASSET_TYPES.parcel]: {
-      detail: withCoordinates((x, y) => locations.parcelDetail(x, y)),
-      bid: withCoordinates((x, y) => locations.bidParcel(x, y)),
-      acceptBid: withCoordinates((x, y, bidId) =>
-        locations.acceptParcelBid(x, y, bidId)
-      ),
-      cancelBid: withCoordinates((x, y, bidId) =>
-        locations.cancelParcelBid(x, y, bidId)
-      )
-    },
-    [ASSET_TYPES.estate]: {
-      detail: assetId => locations.estateDetail(assetId),
-      bid: assetId => locations.bidEstate(assetId),
-      acceptBid: (assetId, bidId) => locations.acceptEstateBid(assetId, bidId),
-      cancelBid: (assetId, bidId) => locations.cancelEstateBid(assetId, bidId)
-    }
   },
 
   // Auction
@@ -132,6 +113,25 @@ export const locations = {
   colorKey: () => '/colorKey',
 
   signIn: () => '/sign-in'
+}
+
+const LOCATION_BY_ASSET = {
+  [ASSET_TYPES.parcel]: {
+    detail: withCoordinates((x, y) => locations.parcelDetail(x, y)),
+    bid: withCoordinates((x, y) => locations.bidParcel(x, y)),
+    acceptBid: withCoordinates((x, y, bidId) =>
+      locations.acceptParcelBid(x, y, bidId)
+    ),
+    cancelBid: withCoordinates((x, y, bidId) =>
+      locations.cancelParcelBid(x, y, bidId)
+    )
+  },
+  [ASSET_TYPES.estate]: {
+    detail: assetId => locations.estateDetail(assetId),
+    bid: assetId => locations.bidEstate(assetId),
+    acceptBid: (assetId, bidId) => locations.acceptEstateBid(assetId, bidId),
+    cancelBid: (assetId, bidId) => locations.cancelEstateBid(assetId, bidId)
+  }
 }
 
 export const PROFILE_PAGE_TABS = Object.freeze({
