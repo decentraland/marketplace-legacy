@@ -84,7 +84,7 @@ export function getRoles(address, asset) {
     roles.push(ROLES.operatorForAll)
   }
   if (asset.update_managers.includes(address)) {
-    roles.push(ROLES.updateManagers)
+    roles.push(ROLES.updateManager)
   }
   return roles
 }
