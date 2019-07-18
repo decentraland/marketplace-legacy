@@ -12,6 +12,10 @@
   margin-left: 25px;
 }
 
+.EstateDetailPage .estate-title .estate-name {
+  margin-right: 15px;
+}
+
 .EstateDetailPage .estate-title .LandAmount {
   display: inline-flex;
   font-size: 20px;
@@ -40,10 +44,6 @@
 
 .EstateDetailPage .estate-data h3 {
   margin: auto 0 15px 0;
-}
-
-.EstateDetailPage .estate-data .description {
-  margin: 0 0 auto 0;
 }
 
 .EstateDetailPage .estate-actions-container {

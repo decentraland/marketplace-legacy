@@ -101,8 +101,10 @@ export default class EstateDetailPage extends React.PureComponent {
               className="estate-data"
             >
               <Header size="large">
-                <p className="estate-title">
-                  <span>{estate.data.name || t('estate_select.detail')}</span>
+                <div className="estate-title">
+                  <span className="estate-name">
+                    {estate.data.name || t('estate_select.detail')}
+                  </span>
                   <Link
                     to={locations.parcelMapDetail(
                       center.x,
@@ -112,7 +114,7 @@ export default class EstateDetailPage extends React.PureComponent {
                   >
                     <LandAmount value={estate.data.parcels.length} />
                   </Link>
-                </p>
+                </div>
                 {estate.data.description && (
                   <p className="estate-description">
                     {estate.data.description}
