@@ -10,9 +10,9 @@ const mapState = (state, { asset, assetType }) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => ({
+const mapDispatch = (dispatch, { asset, assetType }) => ({
   onFetchAssetTransactionHistory: () =>
-    dispatch(fetchAssetListingHistory(ownProps.asset))
+    dispatch(fetchAssetListingHistory(asset, assetType))
 })
 
 export default connect(mapState, mapDispatch)(AssetTransactionHistory)
