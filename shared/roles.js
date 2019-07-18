@@ -96,5 +96,8 @@ export function getRoles(address, asset) {
  * @return {Boolean}
  */
 export function isOwner(address, owneable) {
-  return address && owneable && address === owneable.owner
+  if (!address || !owneable) {
+    return false
+  }
+  return address === owneable.owner
 }
