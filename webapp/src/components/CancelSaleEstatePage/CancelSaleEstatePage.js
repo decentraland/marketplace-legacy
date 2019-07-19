@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
 import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
-import { t, T } from '@dapps/modules/translation/utils'
 import CancelListingAssetForm from 'components/CancelListingAssetForm'
 import { publicationType } from 'components/types'
 
@@ -44,9 +44,9 @@ export default class CancelSaleEstatePage extends React.PureComponent {
     const { id, publication, isTxIdle, onCancel } = this.props
 
     return (
-      <Estate id={id} ownerOnly>
+      <Estate id={id} shouldBeOwner>
         {estate => (
-          <div className="CancelSalePage">
+          <div className="CancelSaleEstatePage">
             <EstateModal
               parcels={estate.data.parcels}
               title={t('asset_cancel.cancel_sale')}

@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 
-import { walletType, assetType } from 'components/types'
+import { walletType, assetType, actionType } from 'components/types'
 import NotFound from 'components/NotFound'
-import { isOwner } from 'shared/roles'
+import { can, isOwner } from 'shared/roles'
 
 let shouldRefresh = false
 let isNavigatingAway = false
@@ -14,36 +14,25 @@ export default class Asset extends React.PureComponent {
   static propTypes = {
     wallet: walletType.isRequired,
     asset: assetType,
+    shouldBeAllowedTo: PropTypes.arrayOf(actionType),
+    shouldBeOwner: PropTypes.bool,
+    shouldDisallowOwner: PropTypes.bool,
+    shouldBeOnSale: PropTypes.bool,
     isConnecting: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
-    ownerOnly: PropTypes.bool,
-    ownerNotAllowed: PropTypes.bool,
-    onAccessDenied: PropTypes.func.isRequired,
-    withPublications: PropTypes.bool,
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    onAccessDenied: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    isConnecting: false,
-    isLoading: false,
-    ownerOnly: false,
-    ownerNotAllowed: false,
-    withPublications: false,
     asset: null,
-    publication: null
+    shouldBeAllowedTo: [],
+    isConnecting: false,
+    isLoading: false
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      id,
-      asset,
-      isConnecting,
-      isLoading,
-      ownerOnly,
-      wallet,
-      ownerNotAllowed,
-      withPublications
-    } = nextProps
+    const { id, wallet, asset, isConnecting, isLoading } = nextProps
 
     if (isConnecting || isLoading) {
       return
@@ -53,17 +42,8 @@ export default class Asset extends React.PureComponent {
       shouldRefresh = true
     }
 
-    const ownerIsNotAllowed =
-      ownerNotAllowed && asset && isOwner(wallet.address, asset)
-    const assetShouldBeOnSale =
-      withPublications && asset && !asset['publication_tx_hash']
-
-    if (ownerOnly) {
-      this.checkOwnership(wallet, asset)
-    }
-
-    if (ownerIsNotAllowed || assetShouldBeOnSale) {
-      this.redirect()
+    if (!this.isValid(wallet, asset)) {
+      return this.redirect()
     }
 
     // Will run only once. After mount and wallet connection is resolved
@@ -82,16 +62,48 @@ export default class Asset extends React.PureComponent {
     isAssetPrefetched = false
   }
 
+  isValid(wallet, asset) {
+    return (
+      this.isValidOwnership(wallet, asset) &&
+      this.isValidRole(wallet, asset) &&
+      this.isValidAssetState(asset)
+    )
+  }
+
+  isValidOwnership(wallet, asset) {
+    const { shouldDisallowOwner, shouldBeOwner } = this.props
+    const isAssetOwner = isOwner(wallet.address, asset)
+
+    let ownership = true
+
+    if (shouldBeOwner !== undefined) {
+      ownership = ownership && (isAssetOwner && shouldBeOwner)
+    }
+
+    if (shouldDisallowOwner !== undefined) {
+      ownership = ownership && (!isAssetOwner && !!asset && shouldDisallowOwner)
+    }
+
+    return ownership
+  }
+
+  isValidRole(wallet, asset) {
+    const { shouldBeAllowedTo } = this.props
+    return shouldBeAllowedTo.every(action => can(action, wallet.address, asset))
+  }
+
+  isValidAssetState(asset) {
+    const { shouldBeOnSale } = this.props
+    if (shouldBeOnSale === undefined) {
+      return true
+    }
+    return shouldBeOnSale && !!asset && !asset['publication_tx_hash']
+  }
+
   redirect() {
     if (!isNavigatingAway) {
       isNavigatingAway = true
       return this.props.onAccessDenied()
-    }
-  }
-
-  checkOwnership(wallet, asset) {
-    if (!isOwner(wallet.address, asset)) {
-      this.redirect()
     }
   }
 
@@ -106,15 +118,15 @@ export default class Asset extends React.PureComponent {
     const {
       asset,
       isConnecting,
-      ownerOnly,
-      ownerNotAllowed,
+      shouldBeOwner,
+      shouldDisallowOwner,
       isLoading,
       wallet,
       children
     } = this.props
 
     if (!asset || isLoading) {
-      const shouldBeConnected = ownerOnly || ownerNotAllowed
+      const shouldBeConnected = shouldBeOwner || shouldDisallowOwner
 
       if (
         (shouldBeConnected && isConnecting) ||

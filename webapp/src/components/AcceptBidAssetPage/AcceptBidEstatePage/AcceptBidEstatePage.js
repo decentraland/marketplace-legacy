@@ -33,10 +33,10 @@ export default class AcceptBidEstatePage extends React.PureComponent {
     } = this.props
     const { price } = bid
     return (
-      <Estate id={id} ownerOnly>
+      <Estate id={id} shouldBeOwner>
         {estate => {
           return (
-            <div className="BuyEstatePage">
+            <div className="AcceptBidEstatePage">
               <EstateModal
                 parcels={estate.data.parcels}
                 title={t('asset_accept_bid.accept_bid_asset', {

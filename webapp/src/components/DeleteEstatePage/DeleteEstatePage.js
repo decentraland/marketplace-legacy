@@ -21,36 +21,34 @@ export default class DeleteEstatePage extends React.PureComponent {
   render() {
     const { id, isTxIdle, onCancel, onConfirm } = this.props
     return (
-      <div className="DeleteEstatePage">
-        <Estate id={id} ownerOnly>
-          {estate => (
-            <React.Fragment>
-              {this.isTooBig(estate) ? (
-                <Message
-                  warning
-                  icon="warning sign"
-                  header={t('estate_dissolve.too_big')}
-                  content={t('estate_dissolve.too_big_desc', {
-                    max: MAX_PARCELS_PER_TX
-                  })}
-                />
-              ) : null}
-              <EstateModal
-                estate={estate}
-                parcels={estate.data.parcels}
-                title={t('estate_detail.dissolve')}
-                subtitle={t('estate_detail.dissolve_desc', {
-                  name: estate.data.name
+      <Estate id={id} shouldBeOwner>
+        {estate => (
+          <div className="DeleteEstatePage">
+            {this.isTooBig(estate) ? (
+              <Message
+                warning
+                icon="warning sign"
+                header={t('estate_dissolve.too_big')}
+                content={t('estate_dissolve.too_big_desc', {
+                  max: MAX_PARCELS_PER_TX
                 })}
-                isTxIdle={isTxIdle}
-                onCancel={onCancel}
-                onConfirm={onConfirm}
-                isDisabled={isNewEstate(estate) || this.isTooBig(estate)}
               />
-            </React.Fragment>
-          )}
-        </Estate>
-      </div>
+            ) : null}
+            <EstateModal
+              estate={estate}
+              parcels={estate.data.parcels}
+              title={t('estate_detail.dissolve')}
+              subtitle={t('estate_detail.dissolve_desc', {
+                name: estate.data.name
+              })}
+              isTxIdle={isTxIdle}
+              onCancel={onCancel}
+              onConfirm={onConfirm}
+              isDisabled={isNewEstate(estate) || this.isTooBig(estate)}
+            />
+          </div>
+        )}
+      </Estate>
     )
   }
 }

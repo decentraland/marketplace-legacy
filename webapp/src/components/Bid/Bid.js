@@ -31,7 +31,8 @@ export default class Bid extends React.PureComponent {
     showAssetDetail: PropTypes.bool,
     isOwner: PropTypes.bool.isRequired,
     isBidArchived: PropTypes.bool.isRequired,
-    onConfirm: PropTypes.func.isRequired,
+    onAccept: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onArchive: PropTypes.func.isRequired,
     onUnarchive: PropTypes.func.isRequired
@@ -151,21 +152,29 @@ export default class Bid extends React.PureComponent {
     onUnarchive(bid)
   }
 
+  handleCancelBid = () => {
+    const { bid, onCancel } = this.props
+    onCancel(bid)
+  }
+
+  handleAcceptBid = () => {
+    const { bid, onAccept } = this.props
+    onAccept(bid)
+  }
+
+  handleUpdateBid = () => {
+    const { bid, onUpdate } = this.props
+    onUpdate(bid)
+  }
+
   render() {
-    const {
-      bid,
-      isOwner,
-      onConfirm,
-      onUpdate,
-      showAssetDetail,
-      isBidArchived,
-      address
-    } = this.props
+    const { bid, isOwner, showAssetDetail, isBidArchived, address } = this.props
 
     const isBidderOrSeller = address === bid.seller || address === bid.bidder
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const fingerprintChanged = hasFingerprintChanged(bid)
     const assetDetailLink = this.getDetailLink()
+
     const sizeByResolution = {
       computer: showAssetDetail ? 4 : 3,
       tablet: showAssetDetail ? 4 : 3,
@@ -173,6 +182,9 @@ export default class Bid extends React.PureComponent {
     }
 
     const gridClassName = this.getClassName(fingerprintChanged)
+
+    const canCancelBid = !isOwner || hasSameSellerAndBidder
+    const canUpdateBid = !isOwner && !hasSameSellerAndBidder
 
     return (
       <Grid stackable className={gridClassName}>
@@ -216,12 +228,7 @@ export default class Bid extends React.PureComponent {
               ) : null}
               <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.price')}</h3>
-                <Mana
-                  amount={Math.floor(bid.price)}
-                  size={15}
-                  scale={1}
-                  className="mortgage-amount-icon"
-                />
+                <Mana amount={Math.floor(bid.price)} size={15} scale={1} />
               </Grid.Column>
               <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.time_left')}</h3>
@@ -232,25 +239,24 @@ export default class Bid extends React.PureComponent {
                   computer={showAssetDetail ? 16 : 7}
                   tablet={showAssetDetail ? 16 : 7}
                   mobile={16}
-                  className={'actions'}
+                  className="actions"
                 >
                   <Button
                     className={isOwner ? 'primary' : ''}
-                    onClick={preventDefault(onConfirm)}
-                  >
-                    {!isOwner || hasSameSellerAndBidder
-                      ? t('global.cancel')
-                      : t('global.accept')}
-                  </Button>
-                  {!isOwner &&
-                    !hasSameSellerAndBidder && (
-                      <Button
-                        className="primary"
-                        onClick={preventDefault(onUpdate)}
-                      >
-                        {t('global.update')}
-                      </Button>
+                    onClick={preventDefault(
+                      canCancelBid ? this.handleCancelBid : this.handleAcceptBid
                     )}
+                  >
+                    {canCancelBid ? t('global.cancel') : t('global.accept')}
+                  </Button>
+                  {canUpdateBid && (
+                    <Button
+                      className="primary"
+                      onClick={preventDefault(this.handleUpdateBid)}
+                    >
+                      {t('global.update')}
+                    </Button>
+                  )}
                   {isOwner ? (
                     isBidArchived ? (
                       <Button onClick={preventDefault(this.handleUnarchiveBid)}>

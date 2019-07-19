@@ -26,21 +26,19 @@ const mapState = (state, { bid }) => {
   }
 }
 
-const mapDispatch = (dispatch, { bid, isOwner }) => {
-  const { id, asset_id, asset_type } = bid
-
-  return {
-    onArchive: bid => dispatch(archiveBid(bid)),
-    onUnarchive: bid => dispatch(unarchiveBid(bid)),
-    onConfirm: () =>
-      dispatch(
-        !isOwner || bid.seller === bid.bidder
-          ? navigateTo(locations.cancelAssetBid(asset_id, asset_type))
-          : navigateTo(locations.acceptAssetBid(asset_id, asset_type, id))
-      ),
-    onUpdate: () =>
-      dispatch(navigateTo(locations.bidAsset(asset_id, asset_type)))
-  }
-}
+const mapDispatch = dispatch => ({
+  onArchive: bid => dispatch(archiveBid(bid)),
+  onUnarchive: bid => dispatch(unarchiveBid(bid)),
+  onAccept: bid =>
+    dispatch(
+      navigateTo(locations.acceptAssetBid(bid.asset_id, bid.asset_type, bid.id))
+    ),
+  onCancel: bid =>
+    dispatch(
+      navigateTo(locations.cancelAssetBid(bid.asset_id, bid.asset_type))
+    ),
+  onUpdate: bid =>
+    dispatch(navigateTo(locations.bidAsset(bid.asset_id, bid.asset_type)))
+})
 
 export default connect(mapState, mapDispatch)(Bid)

@@ -80,8 +80,8 @@ export const locations = {
     locations.goToAssetLocation('bid', assetId, assetType),
   acceptAssetBid: (assetId, assetType, bidId) =>
     locations.goToAssetLocation('acceptBid', assetId, assetType, bidId),
-  cancelAssetBid: (assetId, assetType, bidId) =>
-    locations.goToAssetLocation('cancelBid', assetId, assetType, bidId),
+  cancelAssetBid: (assetId, assetType) =>
+    locations.goToAssetLocation('cancelBid', assetId, assetType),
 
   goToAssetLocation(action, assetId, assetType, ...args) {
     const assetLocations = LOCATION_BY_ASSET[assetType]

@@ -49,7 +49,7 @@ export default class BuyParcelPage extends React.PureComponent {
     const { mana } = wallet
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed withPublications>
+      <Parcel x={x} y={y} shouldDisallowOwner shouldBeOnSale>
         {parcel => {
           if (publication) {
             // to avoid a race condition we expect a valid publication

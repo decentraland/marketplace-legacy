@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Container, Message, Loader } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import Estate from 'components/Estate'
@@ -9,7 +10,6 @@ import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModa
 import EstateName from 'components/EstateName'
 import TxStatus from 'components/TxStatus'
 import { publicationType, authorizationType } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
 import { isOpen } from 'shared/listing'
 import PublishAssetForm from '../PublishAssetForm'
 
@@ -48,13 +48,13 @@ export default class PublishEstatePage extends React.PureComponent {
     }
 
     return (
-      <Estate id={id} ownerOnly>
+      <Estate id={id} shouldBeOwner>
         {estate => {
           const isMarketplaceApproved =
             authorization && authorization.approvals.Marketplace.EstateRegistry
           const isOnSale = isOpen(publication)
           return (
-            <div className="PublishPage">
+            <div className="PublishEstatePage">
               {!isMarketplaceApproved ? (
                 <Container text>
                   <Message

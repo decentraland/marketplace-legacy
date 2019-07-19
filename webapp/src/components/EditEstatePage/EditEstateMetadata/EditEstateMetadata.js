@@ -1,31 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { t } from '@dapps/modules/translation/utils'
 
 import { estateType } from 'components/types'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
-import { t } from '@dapps/modules/translation/utils'
 import EditEstateMetadataForm from './EditEstateMetadataForm'
 import EstateModal from './EstateModal'
 
 export default class EditEstateMetadata extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
+    isTxIdle: PropTypes.bool.isRequired,
     isCreation: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    isTxIdle: PropTypes.bool.isRequired
+    onChange: PropTypes.func.isRequired
   }
 
   render() {
     const {
-      onSubmit,
-      onChange,
-      onCancel,
       estate,
       isTxIdle,
-      isCreation
+      isCreation,
+      onSubmit,
+      onChange,
+      onCancel
     } = this.props
 
     return (

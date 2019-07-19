@@ -26,7 +26,7 @@ export default class TransferParcelPage extends React.PureComponent {
     const { x, y, isTxIdle, publications, onSubmit, onCancel } = this.props
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
+      <Parcel x={x} y={y} shouldBeOwner>
         {parcel => (
           <div className="TransferParcelPage">
             {isOnSale(parcel, publications) ? (

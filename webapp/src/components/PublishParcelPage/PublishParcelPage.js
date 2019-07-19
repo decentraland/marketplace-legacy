@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Loader, Container, Message } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import Parcel from 'components/Parcel'
@@ -9,10 +10,9 @@ import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
-import { publicationType, authorizationType } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
-import { isOpen } from 'shared/listing'
 import PublishAssetForm from 'components/PublishAssetForm'
+import { publicationType, authorizationType } from 'components/types'
+import { isOpen } from 'shared/listing'
 
 export default class PublishPage extends React.PureComponent {
   static propTypes = {
@@ -49,7 +49,7 @@ export default class PublishPage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
+      <Parcel x={x} y={y} shouldBeOwner>
         {parcel => {
           const isMarketplaceApproved =
             authorization && authorization.approvals.Marketplace.LANDRegistry

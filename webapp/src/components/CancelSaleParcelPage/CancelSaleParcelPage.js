@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
-import { t, T } from '@dapps/modules/translation/utils'
 import CancelListingAssetForm from 'components/CancelListingAssetForm'
 import { publicationType } from 'components/types'
 
@@ -46,9 +46,9 @@ export default class CancelSaleParcelPage extends React.PureComponent {
     const { x, y, publication, isTxIdle, onCancel } = this.props
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
+      <Parcel x={x} y={y} shouldBeOwner>
         {parcel => (
-          <div className="CancelSalePage">
+          <div className="CancelSaleParcelPage">
             <ParcelModal
               x={x}
               y={y}

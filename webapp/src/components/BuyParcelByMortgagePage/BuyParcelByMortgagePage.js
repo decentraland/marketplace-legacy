@@ -76,7 +76,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed>
+      <Parcel x={x} y={y} shouldDisallowOwner>
         {parcel => {
           const { allowances } = authorization
 
@@ -85,7 +85,11 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
           const isMortgageApprovedForRCN =
             allowances.MortgageManager.RCNToken > 0
 
-          return isOpen(publication) ? (
+          if (!isOpen(publication)) {
+            return null
+          }
+
+          return (
             <div className="BuyParcelByMortgage">
               {!isMortgageApprovedForMana ? (
                 <Container text>
@@ -165,7 +169,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
                 />
               </ParcelModal>
             </div>
-          ) : null
+          )
         }}
       </Parcel>
     )

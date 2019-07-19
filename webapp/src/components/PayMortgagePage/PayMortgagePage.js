@@ -79,47 +79,45 @@ export default class PayMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed>
+      <Parcel x={x} y={y} shouldDisallowOwner>
         {parcel => (
-          <React.Fragment>
-            <ParcelModal
-              x={parcel.x}
-              y={parcel.y}
-              selected={parcel}
-              isLoading={isLoading || isFetchingMortgages}
-              title={t('mortgage.partial_payment')}
-              subtitle={
-                <T
-                  id="mortgage.partial_payment_desc"
-                  values={{
-                    parcel_name: <ParcelDetailLink parcel={parcel} />,
-                    outstanding_amount: formatMana(
-                      getMortgageOutstandingAmount(mortgage)
-                    )
-                  }}
-                />
+          <ParcelModal
+            x={parcel.x}
+            y={parcel.y}
+            selected={parcel}
+            isLoading={isLoading || isFetchingMortgages}
+            title={t('mortgage.partial_payment')}
+            subtitle={
+              <T
+                id="mortgage.partial_payment_desc"
+                values={{
+                  parcel_name: <ParcelDetailLink parcel={parcel} />,
+                  outstanding_amount: formatMana(
+                    getMortgageOutstandingAmount(mortgage)
+                  )
+                }}
+              />
+            }
+            hasCustomFooter
+          >
+            <PayMortgageForm
+              mana={wallet.mana}
+              mortgage={mortgage}
+              onSubmit={onSubmit}
+              onCancel={onCancel}
+              isTxIdle={isTxIdle}
+              isDisabled={!isMortgageOngoing(mortgage)}
+            />
+            <TxStatus.Asset
+              asset={parcel}
+              name={
+                <span>
+                  {`${t('mortgage.pending_tx')} `}
+                  <ParcelName parcel={parcel} />
+                </span>
               }
-              hasCustomFooter
-            >
-              <PayMortgageForm
-                mana={wallet.mana}
-                mortgage={mortgage}
-                onSubmit={onSubmit}
-                onCancel={onCancel}
-                isTxIdle={isTxIdle}
-                isDisabled={!isMortgageOngoing(mortgage)}
-              />
-              <TxStatus.Asset
-                asset={parcel}
-                name={
-                  <span>
-                    {`${t('mortgage.pending_tx')} `}
-                    <ParcelName parcel={parcel} />
-                  </span>
-                }
-              />
-            </ParcelModal>
-          </React.Fragment>
+            />
+          </ParcelModal>
         )}
       </Parcel>
     )

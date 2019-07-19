@@ -21,9 +21,9 @@ export default class ManageEstatePage extends React.PureComponent {
     const { onSubmit, onCancel } = this.props
 
     return (
-      <Estate id={id} ownerOnly>
+      <Estate id={id} shouldBeOwner>
         {estate => (
-          <div className="ManageParcelPage">
+          <div className="ManageEstatePage">
             <EstateModal
               parcels={estate.data.parcels}
               title={t('asset_manage.manage', {

@@ -27,14 +27,13 @@ export default class Permission extends React.PureComponent {
     actions: []
   }
 
-  extraChecks(action) {
+  isDoable(action) {
     const { wallet, asset, publications, bids } = this.props
 
     switch (action) {
       case ACTIONS.bid:
         return isBiddeable(wallet, asset, bids)
       case ACTIONS.buy:
-        return !isOnSale(asset, publications)
       case ACTIONS.cancelSale:
         return isOnSale(asset, publications)
       case ACTIONS.createEstate:
@@ -59,7 +58,7 @@ export default class Permission extends React.PureComponent {
 
     for (const action of actions) {
       const hasPermission =
-        can(action, wallet.address, asset) && this.extraChecks(action)
+        can(action, wallet.address, asset) && this.isDoable(action)
 
       if (!hasPermission) {
         return null

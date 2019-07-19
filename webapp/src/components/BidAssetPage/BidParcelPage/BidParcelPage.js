@@ -7,13 +7,13 @@ import { t, T } from '@dapps/modules/translation/utils'
 import { locations } from 'locations'
 import { isActive } from 'shared/bid'
 import { splitCoordinate } from 'shared/coordinates'
-import BidAssetForm from '../BidAssetForm'
 import { authorizationType, bidType, walletType } from 'components/types'
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
+import BidAssetForm from '../BidAssetForm'
 
 export default class BidParcelPage extends React.PureComponent {
   static propTypes = {
@@ -35,9 +35,9 @@ export default class BidParcelPage extends React.PureComponent {
     const isBidActive = isActive(bid)
 
     return (
-      <Parcel x={x} y={y} ownerNotAllowed>
+      <Parcel x={x} y={y} shouldDisallowOwner>
         {parcel => (
-          <div className="PublishPage">
+          <div className="BidParcelPage">
             {!isAllowed ? (
               <Container text>
                 <Message

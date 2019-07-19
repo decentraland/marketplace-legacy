@@ -36,10 +36,10 @@ export default class AcceptBidParcelPage extends React.PureComponent {
     const { price } = bid
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
+      <Parcel x={x} y={y} shouldBeOwner>
         {parcel => {
           return (
-            <div className="BuyParcelPage">
+            <div className="AcceptBidParcelPage">
               <ParcelModal
                 x={x}
                 y={y}

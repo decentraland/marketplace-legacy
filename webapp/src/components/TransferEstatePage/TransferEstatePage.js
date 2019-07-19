@@ -20,7 +20,7 @@ export default class TransferEstatePage extends React.PureComponent {
     const { id, isTxIdle, onSubmit, onCancel } = this.props
 
     return (
-      <Estate id={id} ownerOnly>
+      <Estate id={id} shouldBeOwner>
         {estate => (
           <div className="TransferEstatePage">
             <EstateModal
