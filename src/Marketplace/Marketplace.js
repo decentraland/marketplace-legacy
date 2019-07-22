@@ -26,7 +26,7 @@ export class Marketplace {
     ])
 
     return {
-      // Keep only the model that had a publication defined from the Assets list
+      // Keep only the assets that had a publication defined from the Assets list
       assets: Listing.filterAssetsByModelAssets(assets),
       total
     }
@@ -36,11 +36,11 @@ export class Marketplace {
     const { status, asset_type, sort, pagination } = queryParams.sanitize()
     const [assets, total] = await Promise.all([
       db.query(
-        SQL`SELECT model.*, row_to_json(pub.*) as publication
+        SQL`SELECT assets.*, row_to_json(pub.*) as publication
           FROM ${raw(Publication.tableName)} as pub
           JOIN ${raw(
             PublicableAsset.tableName
-          )} as model ON model.id = pub.asset_id
+          )} as assets ON assets.id = pub.asset_id
           WHERE ${PublicationQueries.hasAssetType(asset_type)}
             AND ${ListingQueries.hasStatus(status)}
             AND ${PublicationQueries.isActive()}

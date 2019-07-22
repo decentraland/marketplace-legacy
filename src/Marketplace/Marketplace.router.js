@@ -41,6 +41,7 @@ export class MarketplaceRouter {
         PublicableAsset
       )
     } else {
+      console.log('HEREEEEE')
       result = await new Marketplace().filterAll(marketplaceReqQueryParams)
     }
 
