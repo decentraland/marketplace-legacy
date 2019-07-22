@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import CancelListingAssetForm from 'components/CancelListingAssetForm'

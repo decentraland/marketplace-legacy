@@ -47,20 +47,6 @@ export default class EditParcelForm extends React.PureComponent {
     this.setState({ ipns: event.target.value, formErrors: [] })
   }
 
-  handleCancel = () => {
-    this.props.onCancel()
-  }
-
-  hasChanged() {
-    const { name = '', description = '', ipns = '' } = this.props.parcel.data
-
-    return (
-      this.state.name !== name ||
-      this.state.description !== description ||
-      this.state.ipns !== ipns
-    )
-  }
-
   handleSubmit = () => {
     if (this.hasChanged()) {
       const { parcel, onSubmit } = this.props
@@ -84,6 +70,7 @@ export default class EditParcelForm extends React.PureComponent {
           })
         )
       }
+
       if (formErrors.length === 0) {
         onSubmit({
           ...parcel,
@@ -98,6 +85,20 @@ export default class EditParcelForm extends React.PureComponent {
         this.setState({ formErrors })
       }
     }
+  }
+
+  handleCancel = () => {
+    this.props.onCancel()
+  }
+
+  hasChanged() {
+    const { name = '', description = '', ipns = '' } = this.props.parcel.data
+
+    return (
+      this.state.name !== name ||
+      this.state.description !== description ||
+      this.state.ipns !== ipns
+    )
   }
 
   isValidName(name) {

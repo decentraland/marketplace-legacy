@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import EstateName from 'components/EstateName'
 import Mana from 'components/Mana'
 import {
@@ -11,7 +12,6 @@ import {
   authorizationType,
   publicationType
 } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
 import { BuyWarningMessage, NotConnected } from 'components/BuyAssetPage'
 import { getCurrentAllowance } from 'modules/authorization/utils'
 

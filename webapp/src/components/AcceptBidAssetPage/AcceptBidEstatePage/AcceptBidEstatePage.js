@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import EstateName from 'components/EstateName'
 import Mana from 'components/Mana'
 import { walletType, bidType } from 'components/types'

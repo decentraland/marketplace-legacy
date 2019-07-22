@@ -6,7 +6,7 @@ import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import EstateName from 'components/EstateName'
 import TxStatus from 'components/TxStatus'
 import { publicationType, authorizationType } from 'components/types'

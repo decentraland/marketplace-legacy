@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { getWallet } from 'modules/wallet/selectors'
 
+import { getWallet } from 'modules/wallet/selectors'
 import AddressBlock from './AddressBlock'
 
 const mapState = (state, { address }) => {

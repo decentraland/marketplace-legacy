@@ -10,7 +10,7 @@ import { authorizationType, bidType, walletType } from 'components/types'
 import Estate from 'components/Estate'
 import EstateName from 'components/EstateName'
 import TxStatus from 'components/TxStatus'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import BidAssetForm from '../BidAssetForm'
 
 export default class BidEstatePage extends React.PureComponent {
