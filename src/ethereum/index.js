@@ -53,80 +53,74 @@ export function loadContracts() {
   contractsData = Object.freeze({
     MANAToken: {
       address: getEnvAddress('MANA_TOKEN_CONTRACT_ADDRESS'),
-      // eventNames: ['Approval']
-      eventNames: []
+      eventNames: ['Approval']
     },
     LegacyMarketplace: {
       address: getEnvAddress('LEGACY_MARKETPLACE_CONTRACT_ADDRESS'),
-      // eventNames: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled']
-      eventNames: []
+      eventNames: ['AuctionCreated', 'AuctionSuccessful', 'AuctionCancelled']
     },
     Marketplace: {
       address: getEnvAddress('MARKETPLACE_CONTRACT_ADDRESS'),
-      // eventNames: ['OrderCreated', 'OrderSuccessful', 'OrderCancelled']
-      eventNames: []
+      eventNames: ['OrderCreated', 'OrderSuccessful', 'OrderCancelled']
     },
     LANDRegistry: {
       address: getEnvAddress('LAND_REGISTRY_CONTRACT_ADDRESS'),
       eventNames: [
-        // 'Update',
-        // 'UpdateOperator',
-        // 'Approval',
-        'ApprovalForAll',
-        'UpdateManager'
+        'Update',
+        'Transfer',
+        'UpdateOperator',
+        'UpdateManager',
+        'Approval',
+        'ApprovalForAll'
       ],
       count: { Transfer: 3 }
     },
     EstateRegistry: {
       address: getEnvAddress('ESTATE_REGISTRY_CONTRACT_ADDRESS'),
       eventNames: [
-        // 'CreateEstate',
-        // 'AddLand',
-        // 'RemoveLand',
-        // 'Update',
-        // 'UpdateOperator',
-        // 'Approval',
+        'CreateEstate',
+        'AddLand',
+        'RemoveLand',
+        'Transfer',
+        'Update',
+        'UpdateOperator',
+        'Approval',
         'ApprovalForAll',
         'UpdateManager'
       ]
     },
     LANDAuction: {
       address: getEnvAddress('LAND_AUCTION_CONTRACT_ADDRESS'),
-      // eventNames: ['BidSuccessful']
-      eventNames: []
+      eventNames: ['BidSuccessful']
     },
     MortgageHelper: {
       address: getEnvAddress('MORTGAGE_HELPER_CONTRACT_ADDRESS'),
-      // eventNames: ['NewMortgage']
-      eventNames: []
+      eventNames: ['NewMortgage']
     },
     MortgageManager: {
       address: getEnvAddress('MORTGAGE_MANAGER_CONTRACT_ADDRESS'),
       eventNames: [
-        // 'CanceledMortgage',
-        // 'StartedMortgage',
-        // 'PaidMortgage',
-        // 'DefaultedMortgage'
+        'CanceledMortgage',
+        'StartedMortgage',
+        'PaidMortgage',
+        'DefaultedMortgage'
       ]
     },
     RCNEngine: {
       address: getEnvAddress('RCN_ENGINE_CONTRACT_ADDRESS'),
-      // eventNames: ['PartialPayment', 'TotalPayment']
-      eventNames: []
+      eventNames: ['PartialPayment', 'TotalPayment']
     },
     DecentralandInvite: {
       address: getEnvAddress('DECENTRALAND_INVITE_CONTRACT_ADDRESS'),
-      eventNames: []
+      eventNames: ['Transfer']
     },
     ERC721Bid: {
       address: getEnvAddress('ERC721_BID_CONTRACT_ADDRESS'),
-      // eventNames: ['BidCreated', 'BidAccepted', 'BidCancelled']
-      eventNames: []
+      eventNames: ['BidCreated', 'BidAccepted', 'BidCancelled']
     },
     AvatarNameRegistry: {
       address: getEnvAddress('AVATAR_NAME_REGISTRY_CONTRACT_ADDRESS'),
-      // eventNames: ['Register', 'MetadataChanged']
-      eventNames: []
+      eventNames: ['Register', 'MetadataChanged']
     }
   })
 

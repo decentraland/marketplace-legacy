@@ -22,7 +22,6 @@ import {
   LISTING_SORT_BY
 } from 'shared/listing'
 import { findAssetPublications } from 'shared/publication'
-import { ASSET_TYPES } from 'shared/asset'
 import { distanceInWordsToNow, shortenAddress } from 'lib/utils'
 
 import './AssetTransactionHistory.css'

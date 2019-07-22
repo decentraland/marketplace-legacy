@@ -6,12 +6,7 @@ import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import Permission from 'components/Permission'
-import {
-  parcelType,
-  publicationType,
-  bidType,
-  walletType
-} from 'components/types'
+import { parcelType, publicationType } from 'components/types'
 import { isOnSale } from 'modules/asset/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { ACTIONS } from 'shared/roles'
@@ -23,20 +18,11 @@ export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
     hasMortgage: PropTypes.bool,
-    bids: PropTypes.arrayOf(bidType),
-    publications: PropTypes.objectOf(publicationType).isRequired,
-    wallet: walletType
+    publications: PropTypes.objectOf(publicationType).isRequired
   }
 
   render() {
-    const {
-      wallet,
-      parcel,
-      hasMortgage,
-      isLoading,
-      publications,
-      bids
-    } = this.props
+    const { parcel, hasMortgage, publications } = this.props
 
     if (!parcel) {
       return null

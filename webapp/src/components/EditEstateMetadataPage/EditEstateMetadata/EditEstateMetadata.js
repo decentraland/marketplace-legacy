@@ -7,7 +7,6 @@ import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import EstateModal from 'components/EstateModal'
 import { isNewEstate } from 'shared/estate'
-import { ACTIONS } from 'shared/roles'
 import EditEstateMetadataForm from '../EditEstateMetadataForm'
 
 export default class EditEstateMetadata extends React.PureComponent {

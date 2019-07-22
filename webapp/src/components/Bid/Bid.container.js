@@ -2,8 +2,6 @@ import { connect } from 'react-redux'
 import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
-import { ASSET_TYPES } from 'shared/asset'
-import { splitCoordinate } from 'shared/coordinates'
 import { isOwner } from 'shared/roles'
 import { getAsset } from 'modules/asset/selectors'
 import { archiveBid, unarchiveBid } from 'modules/archivedBid/actions'

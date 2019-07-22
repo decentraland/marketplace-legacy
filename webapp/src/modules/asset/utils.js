@@ -1,7 +1,7 @@
 import { getContractAddress } from 'modules/wallet/utils'
 import { hasLegacyPublication } from 'modules/publication/utils'
 import { ASSET_TYPES } from 'shared/asset'
-import { hasParcelsConnected, isParcel } from 'shared/parcel'
+import { isParcel } from 'shared/parcel'
 import { isParcelListable, isListable, isOpen } from 'shared/listing'
 import { hasBid } from 'shared/bid'
 

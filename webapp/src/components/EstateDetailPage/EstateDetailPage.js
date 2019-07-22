@@ -21,7 +21,6 @@ import {
 } from 'components/types'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
-import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
 import LandAmount from 'components/LandAmount'
@@ -170,12 +169,7 @@ export default class EstateDetailPage extends React.PureComponent {
                   : WITHOUT_ACTION_BUTTONS_WIDTH
               }
             >
-              <EstateActions
-                wallet={wallet}
-                estate={estate}
-                bids={bidsToShow}
-                publications={publications}
-              />
+              <EstateActions estate={estate} publications={publications} />
             </Grid.Column>
           </Grid.Row>
 

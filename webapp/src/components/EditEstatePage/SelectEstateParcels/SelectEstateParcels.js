@@ -70,7 +70,6 @@ export default class SelectEstateParcels extends React.PureComponent {
     }
 
     const { estate } = this.state
-    const { wallet } = this.props
     const parcels = estate.data.parcels
 
     if (assetType === ASSET_TYPES.estate && id !== estate.id) {

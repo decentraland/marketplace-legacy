@@ -36,7 +36,7 @@ export default class ParcelOwner extends React.PureComponent {
   }
 
   renderDistrict() {
-    const { wallet, parcel, estates, districts } = this.props
+    const { parcel, districts } = this.props
     const district = getDistrict(parcel, districts)
     if (!district) return null
 

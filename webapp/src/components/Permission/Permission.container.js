@@ -6,7 +6,6 @@ import {
 } from 'modules/wallet/selectors'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { getWalletBidsByAsset } from 'modules/bid/selectors'
-import { ASSET_TYPES } from 'shared/asset'
 
 import Permission from './Permission'
 

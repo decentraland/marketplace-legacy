@@ -123,9 +123,7 @@ export default class ParcelDetailPage extends React.PureComponent {
               computer={publication ? 8 : 16}
             >
               <ParcelActions
-                wallet={wallet}
                 parcel={parcel}
-                bids={bids}
                 publications={publications}
                 hasMortgage={!!mortgage}
               />

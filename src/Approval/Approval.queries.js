@@ -1,6 +1,6 @@
 import { Approval } from './Approval.model'
 import { APPROVAL_TYPES } from '../shared/approval'
-import { ASSET_TYPES, getContractAddressByAssetType } from '../shared/asset'
+import { getContractAddressByAssetType } from '../shared/asset'
 import { SQL, raw } from '../database'
 
 export const ApprovalQueries = Object.freeze({

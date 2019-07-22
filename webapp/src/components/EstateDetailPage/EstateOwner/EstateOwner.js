@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'

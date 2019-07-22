@@ -4,18 +4,9 @@ import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
-import {
-  createEstateRequest,
-  editEstateParcelsRequest,
-  editEstateMetadataRequest
-} from 'modules/estates/actions'
-import { getMatchParams } from 'modules/location/selectors'
 import { getWallet } from 'modules/wallet/selectors'
 import { getData as getParcels } from 'modules/parcels/selectors'
-import {
-  getData as getEstates,
-  isEstateTransactionIdle
-} from 'modules/estates/selectors'
+import { isEstateTransactionIdle } from 'modules/estates/selectors'
 import { getWalletBidsByAsset } from 'modules/bid/selectors'
 import SelectEstateParcels from './SelectEstateParcels'
 

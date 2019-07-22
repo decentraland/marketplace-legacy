@@ -1,7 +1,5 @@
 import { connect } from 'react-redux'
-import { navigateTo } from '@dapps/modules/location/actions'
 
-import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
 import { getData as getTiles } from 'modules/tile/selectors'
 import { navigateToAsset } from 'modules/asset/actions'

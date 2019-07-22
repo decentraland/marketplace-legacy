@@ -10,7 +10,6 @@ import {
 import { isOnSale, canGetMortgage, isBiddeable } from 'modules/asset/utils'
 import { canCreateEstate } from 'modules/parcels/utils'
 import { can, ACTIONS } from 'shared/roles'
-import { ASSET_TYPES } from 'shared/asset'
 
 export default class Permission extends React.PureComponent {
   static propTypes = {

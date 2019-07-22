@@ -6,12 +6,7 @@ import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import Permission from 'components/Permission'
-import {
-  publicationType,
-  estateType,
-  bidType,
-  walletType
-} from 'components/types'
+import { estateType, publicationType } from 'components/types'
 import { isFeatureEnabled } from 'lib/featureUtils'
 import { isOnSale } from 'modules/asset/utils'
 import { ACTIONS } from 'shared/roles'
@@ -22,13 +17,11 @@ import './EstateActions.css'
 export default class EstateActions extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
-    publications: PropTypes.objectOf(publicationType).isRequired,
-    bids: PropTypes.arrayOf(bidType),
-    wallet: walletType
+    publications: PropTypes.objectOf(publicationType).isRequired
   }
 
   render() {
-    const { estate, publications, bids, wallet } = this.props
+    const { estate, publications } = this.props
     const { id } = estate
 
     return (

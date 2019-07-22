@@ -30,9 +30,6 @@ export class Asset {
   }
 
   async findById(id) {
-    console.log('*********************************************')
-    console.log(this.assetType)
-    console.log('*********************************************')
     const assets = await db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql('assets')}

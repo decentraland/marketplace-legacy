@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { t } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
 import { ACTIONS } from 'shared/roles'
