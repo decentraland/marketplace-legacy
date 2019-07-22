@@ -8,7 +8,7 @@ import { Parcel, Estate } from '../../src/Asset'
 import { Publication } from '../../src/Listing'
 import { BlockchainEvent } from '../../src/BlockchainEvent'
 import { eventNames } from '../../src/ethereum'
-import { ASSET_TYPES } from '../../shared/asset'
+import { ASSET_TYPES, getContractAddressByAssetType } from '../../shared/asset'
 import { isParcel } from '../../shared/parcel'
 import { LISTING_STATUS } from '../../shared/listing'
 import { parseCLICoords } from '../../scripts/utils'
@@ -60,8 +60,8 @@ export class PublicationDoctor extends Doctor {
 
     const { id, token_id } = asset
     const marketplace = eth.getContract('Marketplace')
-    const nftAddress = this.getNFTAddressFromAsset(asset)
     const assetType = isParcel(asset) ? ASSET_TYPES.parcel : ASSET_TYPES.estate
+    const nftAddress = getContractAddressByAssetType(assetType)
     const publication = (await Publication.findByAssetId(id, assetType))[0]
     let publicationId = (await marketplace.orderByAssetId(
       nftAddress,
@@ -125,15 +125,6 @@ export class PublicationDoctor extends Doctor {
       '0x0000000000000000000000000000000000000000000000000000000000000000'
     const NULL_PARITY = '0x'
     return hash === NULL || hash === NULL_PARITY
-  }
-
-  // TODO: Find a common place for this
-  getNFTAddressFromAsset(asset) {
-    if (isParcel(asset)) {
-      return env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
-    } else {
-      return env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
-    }
   }
 }
 

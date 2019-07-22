@@ -1,3 +1,4 @@
+import { env } from 'decentraland-commons'
 import { eth, contracts } from 'decentraland-eth'
 import { isParcel } from './parcel'
 import { calculateMapProps } from './estate'
@@ -59,6 +60,17 @@ export async function getAssetTokenId(assetType, asset) {
     }
     case ASSET_TYPES.estate:
       return asset.id
+    default:
+      throw new Error(`Invalid asset type "${assetType}"`)
+  }
+}
+
+export function getContractAddressByAssetType(assetType) {
+  switch (assetType) {
+    case ASSET_TYPES.parcel:
+      return env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
+    case ASSET_TYPES.estate:
+      return env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
     default:
       throw new Error(`Invalid asset type "${assetType}"`)
   }

@@ -3,7 +3,7 @@ import { env } from 'decentraland-commons'
 
 import { Approval } from '../Approval'
 import { Parcel, Estate } from '../Asset'
-import { ASSET_TYPES } from '../shared/asset'
+import { ASSET_TYPES, getContractAddressByAssetType } from '../shared/asset'
 import { APPROVAL_TYPES } from '../shared/approval'
 import { ReqQueryParams } from '../ReqQueryParams'
 
@@ -38,20 +38,7 @@ export class AuthorizationRouter {
   }
 
   async getAuthorizations(asset, assetType, address) {
-    let tokenAddress
-
-    switch (assetType) {
-      case ASSET_TYPES.parcel: {
-        tokenAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
-        break
-      }
-      case ASSET_TYPES.estate: {
-        tokenAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
-        break
-      }
-      default:
-        throw new Error(`The assetType ${assetType} is invalid`)
-    }
+    const tokenAddress = getContractAddressByAssetType(assetType)
 
     const approval = {
       token_address: tokenAddress.toLowerCase(),

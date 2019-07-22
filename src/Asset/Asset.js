@@ -20,13 +20,23 @@ export class Asset {
   constructor(Model) {
     this.Model = Model
     this.tableName = Model.tableName
+
+    for (const assetType in ASSETS) {
+      if (Model === ASSETS[assetType]) {
+        this.assetType = assetType
+        break
+      }
+    }
   }
 
   async findById(id) {
+    console.log('*********************************************')
+    console.log(this.assetType)
+    console.log('*********************************************')
     const assets = await db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql('assets')}
-      ) as publication, ${ApprovalQueries.selectAssetApprovals()}
+      ) as publication, ${ApprovalQueries.selectAssetApprovals(this.assetType)}
         FROM ${raw(this.tableName)} assets
         WHERE id = ${id}
         LIMIT 1`
@@ -38,7 +48,7 @@ export class Asset {
     const assets = await db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql('assets')}
-      ) as publication, ${ApprovalQueries.selectAssetApprovals()}
+      ) as publication, ${ApprovalQueries.selectAssetApprovals(this.assetType)}
         FROM ${raw(this.tableName)} assets
         WHERE token_id = ${tokenId}
         LIMIT 1`
@@ -52,7 +62,7 @@ export class Asset {
     return db.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql('assets')}
-      ) as publication, ${ApprovalQueries.selectAssetApprovals()}
+      ) as publication, ${ApprovalQueries.selectAssetApprovals(this.assetType)}
         FROM ${raw(this.tableName)} assets
         WHERE token_id = ANY(${tokenIds})`
     )
@@ -62,7 +72,7 @@ export class Asset {
     return db.query(
       SQL`SELECT assets.*, (
         ${PublicationQueries.findLastAssetPublicationJsonSql('assets')}
-      ) as publication, ${ApprovalQueries.selectAssetApprovals()}
+      ) as publication, ${ApprovalQueries.selectAssetApprovals(this.assetType)}
         FROM ${raw(this.tableName)} assets
         WHERE ${AssetQueries.canAccessAsset(owner)}`
     )
@@ -73,7 +83,7 @@ export class Asset {
       // prettier-ignore
       SQL`SELECT DISTINCT ON(assets.id, pub.status) assets.*,
           row_to_json(pub.*) as publication,
-          ${ApprovalQueries.selectAssetApprovals()}
+          ${ApprovalQueries.selectAssetApprovals(this.assetType)}
         FROM ${raw(this.tableName)} as assets
         LEFT JOIN (${PublicationQueries.findByStatusSql(status)}) as pub ON assets.id = pub.asset_id
         WHERE ${AssetQueries.canAccessAsset(owner)}
@@ -83,7 +93,9 @@ export class Asset {
 
   async findApprovals(assetId, assetType) {
     const approvalRows = await db.query(
-      SQL`SELECT assets.operator, assets.update_operator, ${ApprovalQueries.selectAssetApprovals()}
+      SQL`SELECT assets.operator, assets.update_operator, ${ApprovalQueries.selectAssetApprovals(
+        this.assetType
+      )}
         FROM ${raw(this.tableName)} assets
         WHERE assets.id = ${assetId}
         LIMIT 1`
