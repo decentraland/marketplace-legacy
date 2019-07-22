@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Loader } from 'semantic-ui-react'
 
 import {
   walletType,
@@ -49,11 +48,7 @@ export default class Permission extends React.PureComponent {
     const { wallet, isConnecting, asset, actions, children } = this.props
 
     if (isConnecting) {
-      return (
-        <div>
-          <Loader active size="tiny" />
-        </div>
-      )
+      return null
     }
 
     for (const action of actions) {
@@ -64,6 +59,7 @@ export default class Permission extends React.PureComponent {
         return null
       }
     }
+
     return children
   }
 }

@@ -1,3 +1,3 @@
-import ParcelActions from './ParcelActions.container'
+import ParcelActions from './ParcelActions'
 
 export default ParcelActions

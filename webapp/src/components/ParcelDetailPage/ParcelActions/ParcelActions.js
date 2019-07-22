@@ -25,7 +25,6 @@ export default class ParcelActions extends React.PureComponent {
     hasMortgage: PropTypes.bool,
     bids: PropTypes.arrayOf(bidType),
     publications: PropTypes.objectOf(publicationType).isRequired,
-    isLoading: PropTypes.bool.isRequired,
     wallet: walletType
   }
 
@@ -39,7 +38,7 @@ export default class ParcelActions extends React.PureComponent {
       bids
     } = this.props
 
-    if (!parcel || isLoading) {
+    if (!parcel) {
       return null
     }
 
