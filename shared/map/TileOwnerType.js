@@ -1,6 +1,5 @@
 import { TYPES } from './tile'
 import { isDistrict, isPlaza, isRoad } from '../district'
-import { isPartOfEstate } from '../parcel'
 
 export class TileOwnerType {
   constructor(owner) {

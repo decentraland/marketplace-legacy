@@ -3,7 +3,7 @@ import { Model } from 'decentraland-server'
 import { Listing } from '../Listing'
 import { ListingQueries } from '../Listing.queries'
 import { BidQueries } from './Bid.queries'
-import { db, SQL, raw } from '../../database'
+import { SQL, raw } from '../../database'
 import { EstateQueries } from '../../Asset'
 import { LISTING_STATUS } from '../../shared/listing'
 

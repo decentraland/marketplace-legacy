@@ -2,7 +2,6 @@ import { AssetQueries } from './Asset.queries'
 import { ApprovalQueries } from '../Approval'
 import { PublicationQueries } from '../Listing'
 import { db, SQL, raw } from '../database'
-import { APPROVAL_TYPES } from '../shared/approval'
 import { ASSETS } from '.'
 
 export class Asset {

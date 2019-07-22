@@ -1,4 +1,3 @@
-import { env } from 'decentraland-commons'
 import { Model } from 'decentraland-server'
 
 import { ParcelQueries } from './Parcel.queries'

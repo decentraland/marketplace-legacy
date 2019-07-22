@@ -1,4 +1,3 @@
-import { env } from 'decentraland-commons'
 import { Model } from 'decentraland-server'
 
 import { EstateQueries } from './Estate.queries'
