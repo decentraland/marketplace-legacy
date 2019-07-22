@@ -20,6 +20,10 @@ export class Estate extends Model {
     'last_transferred_at'
   ]
 
+  static async findById(id) {
+    return new Asset(this).findById(id)
+  }
+
   static findByOwner(owner) {
     return new Asset(this).findByOwner(owner)
   }

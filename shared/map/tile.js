@@ -3,15 +3,16 @@ export const TYPES = Object.freeze({
   myParcelsOnSale: 1,
   myEstates: 2,
   myEstatesOnSale: 3,
-  district: 4,
-  contribution: 5,
-  roads: 6,
-  plaza: 7,
-  taken: 8,
-  onSale: 9,
-  unowned: 10,
-  background: 11,
-  loading: 12
+  withAccess: 4,
+  district: 5,
+  contribution: 6,
+  roads: 7,
+  plaza: 8,
+  taken: 9,
+  onSale: 10,
+  unowned: 11,
+  background: 12,
+  loading: 13
 })
 
 export const COLORS = Object.freeze({
@@ -19,11 +20,12 @@ export const COLORS = Object.freeze({
   myParcelsOnSale: '#ff4053',
   myEstates: '#ff9990',
   myEstatesOnSale: '#ff4053',
-  district: '#5054D4',
+  withAccess: '#ffbd33',
+  district: '#5054d4',
   contribution: '#563db8',
-  roads: '#716C7A',
-  plaza: '#70AC76',
-  taken: '#3D3A46',
+  roads: '#716c7a',
+  plaza: '#70ac76',
+  taken: '#3d3a46',
   onSale: '#00d3ff',
   unowned: '#09080A',
   background: '#18141a',
@@ -41,6 +43,8 @@ export function getBackgroundColor(type, colors = COLORS) {
       return colors.myParcels
     case TYPES.myEstatesOnSale:
       return colors.myParcelsOnSale
+    case TYPES.withAccess:
+      return colors.withAccess
     case TYPES.district:
       return colors.district
     case TYPES.contribution:
@@ -75,6 +79,7 @@ export function getTextColor(type) {
     case TYPES.myParcelsOnSale:
     case TYPES.myEstates:
     case TYPES.myEstatesOnSale:
+    case TYPES.withAccess:
     case TYPES.plaza:
     case TYPES.onSale:
     default:

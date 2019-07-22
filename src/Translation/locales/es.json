@@ -136,7 +136,8 @@
     "owner": "Dueño: {owner}",
     "road": "Carretera",
     "your_estate": "Su propiedad",
-    "your_parcel": "Tu parcela"
+    "your_parcel": "Tu parcela",
+    "has_access": "Tienes acceso"
   },
   "auction": {
     "description_after_finish": "La subasta de LAND ha terminado!",

@@ -52,31 +52,6 @@ export class TileType {
     }
   }
 
-  getForOwner(owner, currentType = null) {
-    const isOwner = this.parcel.owner === owner
-    const isOnSale = currentType === TYPES.onSale || this.isOnSale()
-
-    let newType = ''
-
-    if (isOnSale) {
-      newType = isOwner
-        ? isPartOfEstate(this.parcel)
-          ? TYPES.myEstatesOnSale
-          : TYPES.myParcelsOnSale
-        : TYPES.onSale
-    } else {
-      newType = isOwner
-        ? isPartOfEstate(this.parcel)
-          ? TYPES.myEstates
-          : TYPES.myParcels
-        : this.parcel.owner
-          ? TYPES.taken
-          : TYPES.unowned
-    }
-
-    return newType
-  }
-
   isOnSale() {
     return !!this.parcel.publication
   }

@@ -65,7 +65,7 @@ export class Asset {
         ${PublicationQueries.findLastAssetPublicationJsonSql('assets')}
       ) as publication, ${ApprovalQueries.selectAssetApprovals()}
         FROM ${raw(this.tableName)} assets
-        WHERE ${AssetQueries.canManageAsset(owner)}`
+        WHERE ${AssetQueries.canAccessAsset(owner)}`
     )
   }
 
@@ -77,9 +77,19 @@ export class Asset {
           ${ApprovalQueries.selectAssetApprovals()}
         FROM ${raw(this.tableName)} as assets
         LEFT JOIN (${PublicationQueries.findByStatusSql(status)}) as pub ON assets.id = pub.asset_id
-        WHERE ${AssetQueries.canManageAsset(owner)}
+        WHERE ${AssetQueries.canAccessAsset(owner)}
         AND pub.tx_hash IS NOT NULL`
     )
+  }
+
+  async findApprovals(assetId, assetType) {
+    const approvalRows = await db.query(
+      SQL`SELECT assets.operator, assets.update_operator, ${ApprovalQueries.selectAssetApprovals()}
+        FROM ${raw(this.tableName)} assets
+        WHERE assets.id = ${assetId}
+        LIMIT 1`
+    )
+    return approvalRows[0]
   }
 
   async filter(queryParams) {

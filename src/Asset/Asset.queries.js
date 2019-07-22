@@ -2,7 +2,7 @@ import { APPROVAL_TYPES } from '../shared/approval'
 import { SQL, raw } from '../database'
 
 export const AssetQueries = Object.freeze({
-  canManageAsset: (owner, tableName = 'assets') =>
+  canAccessAsset: (owner, tableName = 'assets') =>
     SQL`(
       ${raw(tableName)}.owner = ${owner}
         OR ${raw(tableName)}.operator = ${owner}

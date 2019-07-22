@@ -133,7 +133,8 @@
     "owner": "Owner: {owner}",
     "road": "Road",
     "your_estate": "Your estate",
-    "your_parcel": "Your parcel"
+    "your_parcel": "Your parcel",
+    "has_access": "You have access"
   },
   "auction": {
     "description_after_finish": "The LAND auction has ended!",

@@ -166,6 +166,8 @@ export function getDescription(type, owner) {
     case TYPES.myEstates:
     case TYPES.myEstatesOnSale:
       return t('atlas.your_estate')
+    case TYPES.withAccess:
+      return t('atlas.has_access')
     case TYPES.taken:
     case TYPES.onSale: {
       return t('atlas.owner', { owner })

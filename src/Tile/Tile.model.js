@@ -8,7 +8,7 @@ import { Publication } from '../Listing'
 import { SQL, raw } from '../database'
 import { asyncBatch } from '../lib'
 import { isDistrict } from '../../shared/district'
-import { TileType } from '../../shared/map'
+import { TileType, TileOwnerType } from '../../shared/map'
 import { isPartOfEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../shared/asset'
 import { LISTING_STATUS } from '../shared/listing'
@@ -28,10 +28,19 @@ export class Tile extends Model {
     'name',
     'type',
     'asset_type',
+    'approvals',
     'is_connected_left',
     'is_connected_top',
     'is_connected_topleft'
   ]
+
+  static findByAnyApproval(address) {
+    return this.query(
+      SQL`SELECT *
+        FROM ${raw(this.tableName)}
+        WHERE ${address} = ANY(approvals)`
+    )
+  }
 
   static async upsertAsset(assetId, assetType) {
     // getNew throws if the assetType is invalid
@@ -107,43 +116,44 @@ export class Tile extends Model {
   static async getForOwner(owner, fromDate) {
     const districtColumnNames = this.filterColumnNames(
       ['owner', 'price', 'estate_id', ...propertiesBlacklist],
-      't'
+      'tiles'
     ).join(', ')
     const ownerColumnNames = this.filterColumnNames(
-      ['owner', ...propertiesBlacklist],
-      't'
+      propertiesBlacklist,
+      'tiles'
     ).join(', ')
 
     const whereNewSQL = fromDate
-      ? this.getWhereUpdatedSQL(fromDate, 't')
+      ? this.getWhereUpdatedSQL(fromDate, 'tiles')
       : SQL`1 = 1`
 
     const [districtTiles, ownerTiles] = await Promise.all([
       // prettier-ignore
       this.query(SQL`
         SELECT ${raw(districtColumnNames)}
-          FROM ${raw(this.tableName)} t
-          JOIN ${raw(Contribution.tableName)} c ON c.address = ${owner} AND c.district_id = t.district_id
-          WHERE (t.owner != ${owner} OR t.owner IS NULL)
-            AND t.district_id IS NOT NULL
+          FROM ${raw(this.tableName)} tiles
+          JOIN ${raw(Contribution.tableName)} c ON c.address = ${owner} AND c.district_id = tiles.district_id
+          WHERE (tiles.owner != ${owner} OR tiles.owner IS NULL)
+            AND tiles.district_id IS NOT NULL
             AND ${whereNewSQL}
           GROUP BY c.id, ${raw(districtColumnNames)}`),
       this.query(SQL`
         SELECT ${raw(ownerColumnNames)}
-          FROM ${raw(this.tableName)} t
-          WHERE owner = ${owner}
+          FROM ${raw(this.tableName)} tiles
+          WHERE (owner = ${owner} OR ${owner} = ANY(approvals))
             AND ${whereNewSQL}`)
     ])
 
     for (const tile of districtTiles) {
       // Mock a contribution for perf reasons
-      const tileType = new TileType({ owner, contribution: { id: tile.id } })
+      const parcel = { owner, contribution: { id: tile.id } }
+      const tileType = new TileType(parcel)
       tile.type = tileType.get()
     }
 
     for (const tile of ownerTiles) {
-      const tileType = new TileType({ owner })
-      tile.type = tileType.getForOwner(owner, tile.type)
+      const tileOwnerType = new TileOwnerType(owner)
+      tile.type = tileOwnerType.get(tile)
     }
 
     return districtTiles.concat(ownerTiles)
@@ -169,15 +179,17 @@ export class Tile extends Model {
     const tileAttributes = new TileAttributes(fullParcel)
 
     const [connections, reference] = await Promise.all([
-      tileAttributes.getConnections(parcel),
-      tileAttributes.getReference(parcel)
+      tileAttributes.getConnections(),
+      tileAttributes.getReference()
     ])
+    const approvals = tileAttributes.getApprovals()
 
     return {
       id: parcel.id,
       x: parcel.x,
       y: parcel.y,
       district_id: parcel.district_id,
+      approvals,
       ...reference,
       ...connections
     }
@@ -186,25 +198,30 @@ export class Tile extends Model {
   static async getFullParcel(parcel) {
     const assetId = isPartOfEstate(parcel) ? parcel.estate_id : parcel.id
 
+    const approvalsPromise = isPartOfEstate(parcel)
+      ? null // We already get these on Estate.findById below
+      : new Asset(Parcel).findApprovals(parcel.id, ASSET_TYPES.parcel)
+
     const publicationPromise = Publication.findActiveByAssetIdWithStatus(
       assetId,
       LISTING_STATUS.open
     )
 
     const estatePromise = isPartOfEstate(parcel)
-      ? Estate.findOne(parcel.estate_id)
+      ? Estate.findById(parcel.estate_id)
       : null
 
     const districtPromise = isDistrict(parcel)
       ? District.findOne(parcel.district_id)
       : null
 
-    const [publication, estate, district] = await Promise.all([
+    const [approvals, publication, estate, district] = await Promise.all([
+      approvalsPromise,
       publicationPromise,
       estatePromise,
       districtPromise
     ])
 
-    return { ...parcel, publication, estate, district }
+    return { ...parcel, ...approvals, publication, estate, district }
   }
 }

@@ -153,7 +153,7 @@ export class Bid extends Model {
     address,
     statuses = Object.values(LISTING_STATUS)
   ) {
-    let assets = await db.query(
+    let assets = await this.query(
       SQL`SELECT row_to_json(bid.*) as bids, ${ListingQueries.selectListableAssets()}
           FROM ${raw(this.tableName)} as bid
           ${ListingQueries.joinListableAssets('bid')}

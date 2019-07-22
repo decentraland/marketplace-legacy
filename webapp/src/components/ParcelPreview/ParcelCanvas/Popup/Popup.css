@@ -1,10 +1,10 @@
-.parcel-popup {
+.Popup {
   font-size: 14px;
   color: #fff;
   user-select: none;
 }
 
-.parcel-popup .header {
+.Popup .header {
   padding: 8px 8px;
   text-align: center;
   border-top-left-radius: 4px;
@@ -12,54 +12,54 @@
   color: #fff;
 }
 
-.parcel-popup .header span {
+.Popup .header span {
   opacity: 0.9;
 }
 
-.parcel-popup .header.genesis,
-.parcel-popup .header.roads {
+.Popup .header.genesis,
+.Popup .header.roads {
   color: #666;
 }
 
-.parcel-popup .body {
+.Popup .body {
   padding: 16px;
 }
 
-.parcel-popup .body .coordinates {
+.Popup .body .coordinates {
   text-align: center;
 }
 
-.parcel-popup .header:first-letter,
-.parcel-popup .current-bid-status:first-letter {
+.Popup .header:first-letter,
+.Popup .current-bid-status:first-letter {
   text-transform: capitalize;
 }
 
-.parcel-popup .body a {
+.Popup .body a {
   color: var(--primary);
 }
 
-.parcel-popup .body a:hover {
+.Popup .body a:hover {
   color: var(--primary);
   text-decoration: none;
 }
 
-.parcel-popup .description {
+.Popup .description {
   color: #b2b2b2;
 }
 
-.parcel-popup .publication {
+.Popup .publication {
   color: white;
   display: flex;
 }
 
-.parcel-popup .publication .Mana {
+.Popup .publication .Mana {
   margin-left: 10px;
 }
 
-.parcel-popup .body > div {
+.Popup .body > div {
   margin-bottom: 8px;
 }
-.parcel-popup .body > div:last-child {
+.Popup .body > div:last-child {
   margin-bottom: 0;
 }
 
@@ -67,7 +67,7 @@
   color: var(--gray) !important;
 }
 
-.parcel-popup .on-sale {
+.Popup .on-sale {
   font-weight: bold;
   color: white;
 }

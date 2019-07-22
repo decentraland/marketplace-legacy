@@ -89,6 +89,10 @@ export function getRoles(address, asset) {
   return roles
 }
 
+export function hasAccess(address, asset) {
+  return getRoles(address, asset).length > 0
+}
+
 /**
  * Check if an owneable item is owned by an address
  * @param  {string}  address

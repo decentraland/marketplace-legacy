@@ -28,7 +28,7 @@ export default class Popup extends React.PureComponent {
     } = this.props
 
     return (
-      <div className="parcel-popup">
+      <div className="Popup">
         <div className="header" style={{ color, backgroundColor }}>
           <span>
             {x},{y}

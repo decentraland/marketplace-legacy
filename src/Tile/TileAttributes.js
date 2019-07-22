@@ -9,6 +9,7 @@ export class TileAttributes {
     this.parcel = parcel
     this.isEstate = isPartOfEstate(parcel)
     this.isDistrict = isDistrict(parcel)
+    this.asset = this.isEstate ? parcel.estate : parcel
 
     this.tileLocation = new TileLocation(parcel)
     this.tileType = new TileType(parcel)
@@ -53,11 +54,27 @@ export class TileAttributes {
     }
   }
 
+  getApprovals() {
+    if (this.isDistrict) {
+      return []
+    }
+
+    const approvals = new Set([
+      ...this.asset.update_managers,
+      ...this.asset.operators_for_all
+    ])
+
+    if (this.asset.operator) {
+      approvals.add(this.asset.operator)
+    }
+    if (this.asset.update_operator) {
+      approvals.add(this.asset.update_operator)
+    }
+
+    return Array.from(approvals)
+  }
+
   getOwner() {
-    return this.parcel.district_id
-      ? null
-      : this.isEstate
-        ? this.parcel.estate.owner
-        : this.parcel.owner
+    return this.isDistrict ? null : this.asset.owner
   }
 }
