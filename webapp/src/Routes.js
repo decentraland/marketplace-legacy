@@ -32,6 +32,7 @@ import DeleteEstatePage from 'components/DeleteEstatePage'
 import TransferEstatePage from 'components/TransferEstatePage'
 import AssetDetailPage from 'components/AssetDetailPage'
 import EditEstatePage from 'components/EditEstatePage'
+import EditEstateMetadataPage from 'components/EditEstateMetadataPage'
 import ManageEstatePage from 'components/ManageEstatePage'
 import AuctionRouterPage from 'components/AuctionRouterPage'
 import BidAssetPage from 'components/BidAssetPage'
@@ -121,15 +122,15 @@ export default class Routes extends React.Component {
         {/*Estates*/}
         <Route
           exact
-          path={locations.createEstate()}
-          component={EditEstatePage}
-        />
-        <Route
-          exact
           path={locations.estateDetail()}
           render={props => (
             <AssetDetailPage assetType={ASSET_TYPES.estate} {...props} />
           )}
+        />
+        <Route
+          exact
+          path={locations.createEstate()}
+          component={EditEstatePage}
         />
         <Route
           exact
@@ -139,7 +140,7 @@ export default class Routes extends React.Component {
         <Route
           exact
           path={locations.editEstateMetadata()}
-          render={props => <EditEstatePage isSelecting={false} {...props} />}
+          component={EditEstateMetadataPage}
         />
         <Route
           exact

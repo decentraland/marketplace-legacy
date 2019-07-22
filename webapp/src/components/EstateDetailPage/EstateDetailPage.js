@@ -208,13 +208,10 @@ export default class EstateDetailPage extends React.PureComponent {
                   }
                   mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
                 >
-                  <h3>
+                  <h3 className="estate-parcels">
                     {t('estate_detail.parcels')}
                     {isOwner && (
-                      <Link
-                        to={locations.editEstateParcels(estate.id)}
-                        className="edit-button"
-                      >
+                      <Link to={locations.editEstateParcels(estate.id)}>
                         <Button size="tiny" className="link">
                           <Icon name="pencil" />
                           {t('estate_detail.edit_parcels')}{' '}

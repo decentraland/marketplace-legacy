@@ -69,7 +69,7 @@
     min-width: 420px;
   }
 
-  .ParcelModal .modal-buttons .ui.button + .ui.button {
+  .ParcelModal .modal-buttons button + button {
     margin-left: 20px;
   }
 }

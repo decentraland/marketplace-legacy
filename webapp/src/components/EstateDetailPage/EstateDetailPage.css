@@ -8,10 +8,6 @@
   margin-bottom: 5px;
 }
 
-.EstateDetailPage .manage-button {
-  margin-left: 25px;
-}
-
 .EstateDetailPage .estate-title .estate-name {
   margin-right: 15px;
 }
@@ -52,6 +48,10 @@
 
 .EstateDetailPage h3 {
   font-family: var(--font-family) !important;
+}
+
+.EstateDetailPage .estate-parcels .link {
+  margin-left: 20px;
 }
 
 .EstateDetailPage .mana-price-icon {

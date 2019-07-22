@@ -69,7 +69,7 @@
     min-width: 420px;
   }
 
-  .EstateModal .modal-buttons .ui.button + .ui.button {
+  .EstateModal .modal-buttons button + button {
     margin-left: 20px;
   }
 }

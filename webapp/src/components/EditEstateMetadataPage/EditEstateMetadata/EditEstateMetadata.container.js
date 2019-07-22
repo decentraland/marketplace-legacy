@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import EditEstateMetadata from './EditEstateMetadata'
 import { isEstateTransactionIdle } from 'modules/estates/selectors'
+import EditEstateMetadata from './EditEstateMetadata'
 
 const mapState = state => ({
   isTxIdle: isEstateTransactionIdle(state)
