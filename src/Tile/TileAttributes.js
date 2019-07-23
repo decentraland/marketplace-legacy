@@ -3,6 +3,7 @@ import { isDistrict } from '../../shared/district'
 import { TileType, TileLocation } from '../../shared/map'
 import { isPartOfEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../../shared/asset'
+import { flattenRoleAddresses } from '../../shared/roles'
 
 export class TileAttributes {
   constructor(parcel) {
@@ -42,7 +43,7 @@ export class TileAttributes {
 
   async getReference() {
     const type = this.tileType.get()
-    const publication = this.parcel.publication
+    const publication = this.asset.publication
 
     return {
       type,
@@ -59,19 +60,7 @@ export class TileAttributes {
       return []
     }
 
-    const approvals = new Set([
-      ...this.asset.update_managers,
-      ...this.asset.operators_for_all
-    ])
-
-    if (this.asset.operator) {
-      approvals.add(this.asset.operator)
-    }
-    if (this.asset.update_operator) {
-      approvals.add(this.asset.update_operator)
-    }
-
-    return Array.from(approvals)
+    return flattenRoleAddresses(this.asset)
   }
 
   getOwner() {

@@ -4,6 +4,18 @@ import { PublicationQueries } from '../Listing'
 import { db, SQL, raw } from '../database'
 import { ASSETS } from '.'
 
+// TODO: The concept of this class might be a bit flawed.
+// While it's useful to have an abstraction for asset calls, it works differently from all of the other Models.
+// The models have instance methods you can call supplying an object representing the model to the constructor:
+//   const parcel = new Parcel({ x, y, estate_id, (...) })
+//   parcel.insert()
+// but Asset receives a Model and each instance method uses it to get the tableName and assetType.
+// Maybe we can have an interface where:
+//   const parcelAttributes = { id, x, y, type }
+//   const asset = new Asset(parcel)
+//   asset.insert() // knows it's a parcel
+//   (...)
+//   Asset.findById(id, type)
 export class Asset {
   static getNew(assetType) {
     const Model = this.getModel(assetType)
@@ -26,6 +38,10 @@ export class Asset {
         this.assetType = assetType
         break
       }
+    }
+
+    if (!this.assetType) {
+      throw new Error(`Invalid Model "${Model}"`)
     }
   }
 
@@ -53,7 +69,7 @@ export class Asset {
     return assets[0]
   }
 
-  findByTokenIds(tokenIds) {
+  async findByTokenIds(tokenIds) {
     if (tokenIds.length === 0) return []
 
     return db.query(
@@ -88,7 +104,7 @@ export class Asset {
     )
   }
 
-  async findApprovals(assetId, assetType) {
+  async findApprovals(assetId) {
     const approvalRows = await db.query(
       SQL`SELECT assets.operator, assets.update_operator, ${ApprovalQueries.selectAssetApprovals(
         this.assetType

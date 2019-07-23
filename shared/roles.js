@@ -89,6 +89,22 @@ export function getRoles(address, asset) {
   return roles
 }
 
+export function flattenRoleAddresses(asset) {
+  const addresses = new Set([
+    ...asset.update_managers,
+    ...asset.operators_for_all
+  ])
+
+  if (asset.operator) {
+    addresses.add(asset.operator)
+  }
+  if (asset.update_operator) {
+    addresses.add(asset.update_operator)
+  }
+
+  return Array.from(addresses)
+}
+
 export function hasAccess(address, asset) {
   return getRoles(address, asset).length > 0
 }

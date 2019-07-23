@@ -47,6 +47,18 @@ export class Parcel extends Model {
     return new Asset(this).findByOwnerAndStatus(owner, status)
   }
 
+  static findApprovals(id) {
+    return new Asset(this).findApprovals(id)
+  }
+
+  static async findByIds(ids) {
+    return this.query(
+      SQL`SELECT *
+        FROM ${SQL.raw(this.tableName)}
+        WHERE id = ANY(${ids})`
+    )
+  }
+
   static async findOwneableParcels() {
     return this.query(
       SQL`SELECT *
@@ -85,26 +97,11 @@ export class Parcel extends Model {
     return parcels[0]
   }
 
-  static async findAssociationIds(id) {
-    const parcels = await this.query(
-      SQL`SELECT estate_id, district_id
-        FROM ${SQL.raw(this.tableName)}
-        WHERE id = ${id}`
-    )
-    return parcels[0]
-  }
-
   static async findFrom(fromDate) {
     return this.query(SQL`
       SELECT *
         FROM ${SQL.raw(this.tableName)}
         WHERE updated_at >= ${fromDate}`)
-  }
-
-  static async findInEstateIds(estateIds) {
-    return this.query(SQL`
-      SELECT * FROM ${SQL.raw(this.tableName)}
-        WHERE estate_id = ANY(${estateIds})`)
   }
 
   static async countAvailable() {

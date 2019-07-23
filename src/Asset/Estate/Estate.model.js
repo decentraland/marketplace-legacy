@@ -39,6 +39,10 @@ export class Estate extends Model {
     return new Asset(this).findByTokenIds(tokenIds)
   }
 
+  static findApprovals(id) {
+    return new Asset(this).findApprovals(id)
+  }
+
   static findBlockchainEvents(estateId, fromBlock) {
     return Estate.query(
       SQL`SELECT *

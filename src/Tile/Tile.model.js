@@ -196,20 +196,20 @@ export class Tile extends Model {
   }
 
   static async getFullParcel(parcel) {
-    const assetId = isPartOfEstate(parcel) ? parcel.estate_id : parcel.id
+    const isEstate = isPartOfEstate(parcel)
 
-    const approvalsPromise = isPartOfEstate(parcel)
-      ? null // We already get these on Estate.findById below
-      : new Asset(Parcel).findApprovals(parcel.id, ASSET_TYPES.parcel)
+    const assetId = isEstate ? parcel.estate_id : parcel.id
+
+    const approvalsPromise = isEstate
+      ? Estate.findApprovals(parcel.estate_id)
+      : Parcel.findApprovals(parcel.id)
 
     const publicationPromise = Publication.findActiveByAssetIdWithStatus(
       assetId,
       LISTING_STATUS.open
     )
 
-    const estatePromise = isPartOfEstate(parcel)
-      ? Estate.findById(parcel.estate_id)
-      : null
+    const estatePromise = isEstate ? Estate.findOne(parcel.estate_id) : null
 
     const districtPromise = isDistrict(parcel)
       ? District.findOne(parcel.district_id)
@@ -222,6 +222,12 @@ export class Tile extends Model {
       districtPromise
     ])
 
-    return { ...parcel, ...approvals, publication, estate, district }
+    const fullParcel = { ...parcel, estate, district }
+
+    // Assign attributes to the correct asset.
+    const asset = isEstate ? estate : fullParcel
+    Object.assign(asset, approvals, { publication })
+
+    return fullParcel
   }
 }
