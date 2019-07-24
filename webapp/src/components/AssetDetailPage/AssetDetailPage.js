@@ -82,7 +82,7 @@ export default class AssetDetailPage extends React.PureComponent {
   render() {
     const { id, assetType } = this.props
     return (
-      <AssetLoader id={id} assetType={assetType}>
+      <AssetLoader assetId={id} assetType={assetType}>
         {(asset, attributes) =>
           this.hasPreviewHeader(asset, assetType) ? (
             <AssetPreviewHeader

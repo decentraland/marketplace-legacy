@@ -18,7 +18,11 @@ export default class Parcel extends React.PureComponent {
       id = buildCoordinate(x, y)
     }
     return (
-      <AssetLoader id={id} assetType={ASSET_TYPES.parcel} {...this.props} />
+      <AssetLoader
+        assetId={id}
+        assetType={ASSET_TYPES.parcel}
+        {...this.props}
+      />
     )
   }
 }

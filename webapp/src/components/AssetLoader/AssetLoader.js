@@ -6,9 +6,9 @@ import Asset from 'components/Asset'
 
 export default class AssetLoader extends React.PureComponent {
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    asset: assetType,
+    assetId: PropTypes.string.isRequired,
     assetType: assetTypingType.isRequired,
+    asset: assetType,
     isLoading: PropTypes.bool.isRequired,
     onAccessDenied: PropTypes.func.isRequired
   }

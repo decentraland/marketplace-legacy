@@ -6,15 +6,15 @@ import { fetchAssetRequest } from 'modules/asset/actions'
 import { getAsset, isLoading } from 'modules/asset/selectors'
 import AssetLoader from './AssetLoader'
 
-const mapState = (state, { id, assetType }) => ({
-  isLoading: isLoading(state, id, assetType),
-  asset: getAsset(state, id, assetType)
+const mapState = (state, { assetId, assetType }) => ({
+  isLoading: isLoading(state, assetId, assetType),
+  asset: getAsset(state, assetId, assetType)
 })
 
-const mapDispatch = (dispatch, { id, assetType }) => ({
-  onFetchAsset: () => dispatch(fetchAssetRequest(id, assetType)),
+const mapDispatch = (dispatch, { assetId, assetType }) => ({
+  onFetchAsset: () => dispatch(fetchAssetRequest(assetId, assetType)),
   onAccessDenied: () =>
-    dispatch(navigateTo(locations.assetDetail(id, assetType)))
+    dispatch(navigateTo(locations.assetDetail(assetId, assetType)))
 })
 
 export default connect(mapState, mapDispatch)(AssetLoader)

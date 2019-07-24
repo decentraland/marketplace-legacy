@@ -2,7 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 
-import { walletType, assetType, actionType } from 'components/types'
+import {
+  walletType,
+  assetType,
+  assetTypingType,
+  actionType
+} from 'components/types'
 import NotFound from 'components/NotFound'
 import { can, isOwner } from 'shared/roles'
 
@@ -12,6 +17,8 @@ let isAssetPrefetched = false
 
 export default class Asset extends React.PureComponent {
   static propTypes = {
+    assetId: PropTypes.string,
+    assetType: assetTypingType,
     wallet: walletType.isRequired,
     asset: assetType,
     shouldBeAllowedTo: PropTypes.arrayOf(actionType),
@@ -31,14 +38,28 @@ export default class Asset extends React.PureComponent {
     isLoading: false
   }
 
+  componentWillMount() {
+    if (this.props.isLoading) {
+      return
+    }
+    this.prefetchAsset()
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { id, wallet, asset, isConnecting, isLoading } = nextProps
+    const {
+      assetId,
+      assetType,
+      wallet,
+      asset,
+      isConnecting,
+      isLoading
+    } = nextProps
 
     if (isConnecting || isLoading) {
       return
     }
 
-    if (this.props.id !== id) {
+    if (this.props.assetId !== assetId && this.props.assetType !== assetType) {
       shouldRefresh = true
     }
 
@@ -46,7 +67,7 @@ export default class Asset extends React.PureComponent {
       return this.redirect()
     }
 
-    // Will run only once. After mount and wallet connection is resolved
+    // Will run only once after every asset change
     this.prefetchAsset()
   }
 
