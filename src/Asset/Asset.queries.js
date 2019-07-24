@@ -6,12 +6,12 @@ export const AssetQueries = Object.freeze({
     SQL`(
       ${raw(tableName)}.owner = ${owner}
         OR ${raw(tableName)}.operator = ${owner}
+        OR ${raw(tableName)}.update_operator = ${owner}
         OR EXISTS (
           SELECT 1
             FROM approvals a
             WHERE a.owner = ${raw(tableName)}.owner
               AND a.operator = ${owner}
-              AND a.update_operator = ${owner}
               AND a.type = ANY(${Object.values(APPROVAL_TYPES)})
             LIMIT 1
         )
