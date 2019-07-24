@@ -11,6 +11,7 @@ export const AssetQueries = Object.freeze({
             FROM approvals a
             WHERE a.owner = ${raw(tableName)}.owner
               AND a.operator = ${owner}
+              AND a.update_operator = ${owner}
               AND a.type = ANY(${Object.values(APPROVAL_TYPES)})
             LIMIT 1
         )
