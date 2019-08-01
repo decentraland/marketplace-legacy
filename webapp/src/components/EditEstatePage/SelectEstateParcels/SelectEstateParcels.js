@@ -65,7 +65,7 @@ export default class SelectEstateParcels extends React.PureComponent {
   handleParcelClick = tile => {
     const { id, x, y, assetType, type } = tile
 
-    if (type > TYPES.myEstatesOnSale) {
+    if (type > TYPES.withAccess) {
       return
     }
 
