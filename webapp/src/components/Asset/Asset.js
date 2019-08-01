@@ -118,7 +118,7 @@ export default class Asset extends React.PureComponent {
     if (shouldBeOnSale === undefined) {
       return true
     }
-    return shouldBeOnSale && !!asset && !asset['publication_tx_hash']
+    return shouldBeOnSale && !!asset && asset['publication_tx_hash'] != null
   }
 
   redirect() {
@@ -146,23 +146,20 @@ export default class Asset extends React.PureComponent {
       children
     } = this.props
 
-    if (!asset || isLoading) {
-      const shouldBeConnected = shouldBeOwner || shouldDisallowOwner
+    const shouldBeConnected = shouldBeOwner || shouldDisallowOwner
 
-      if (
-        (shouldBeConnected && isConnecting) ||
-        isNavigatingAway ||
-        isLoading
-      ) {
-        return (
-          <div>
-            <Loader active size="massive" />
-          </div>
-        )
-      } else {
-        return <NotFound />
-      }
+    if (isNavigatingAway || isLoading || (shouldBeConnected && isConnecting)) {
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
     }
+
+    if (!asset) {
+      return <NotFound />
+    }
+
     return children(asset, { isOwner: isOwner(wallet.address, asset), wallet })
   }
 }
