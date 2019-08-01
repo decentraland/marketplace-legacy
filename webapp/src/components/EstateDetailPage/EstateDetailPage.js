@@ -12,6 +12,7 @@ import { calculateMapProps } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
 import { isDistrict } from 'shared/district'
 import { shouldShowBid } from 'shared/bid'
+import { ACTIONS } from 'shared/roles'
 import {
   walletType,
   estateType,
@@ -19,6 +20,7 @@ import {
   tileType,
   bidType
 } from 'components/types'
+import Permission from 'components/Permission'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
 import Mana from 'components/Mana'
@@ -92,7 +94,7 @@ export default class EstateDetailPage extends React.PureComponent {
 
     return (
       <div className="EstateDetailPage">
-        <Grid className="details" stackable>
+        <Grid stackable>
           <Grid.Row>
             <Grid.Column
               computer={WITH_ACTION_BUTTONS_WIDTH}
@@ -195,23 +197,23 @@ export default class EstateDetailPage extends React.PureComponent {
             {tiles && (
               <React.Fragment>
                 <Grid.Column
-                  computer={
-                    isOwner
-                      ? WITH_ACTION_BUTTONS_WIDTH
-                      : WITHOUT_ACTION_BUTTONS_WIDTH
-                  }
+                  computer={WITHOUT_ACTION_BUTTONS_WIDTH}
                   mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
                 >
                   <h3 className="estate-parcels">
                     {t('estate_detail.parcels')}
-                    {isOwner && (
+                    <Permission
+                      asset={estate}
+                      assetType={ASSET_TYPES.estate}
+                      actions={[ACTIONS.transfer]}
+                    >
                       <Link to={locations.editEstateParcels(estate.id)}>
                         <Button size="tiny" className="link">
                           <Icon name="pencil" />
                           {t('estate_detail.edit_parcels')}{' '}
                         </Button>
                       </Link>
-                    )}
+                    </Permission>
                   </h3>
                 </Grid.Column>
                 <Grid.Column width={WITHOUT_ACTION_BUTTONS_WIDTH}>

@@ -95,17 +95,17 @@ export default class Asset extends React.PureComponent {
     const { shouldDisallowOwner, shouldBeOwner } = this.props
     const isAssetOwner = isOwner(wallet.address, asset)
 
-    let ownership = true
+    let isValid = true
 
     if (shouldBeOwner !== undefined) {
-      ownership = ownership && (isAssetOwner && shouldBeOwner)
+      isValid = isValid && (isAssetOwner && shouldBeOwner)
     }
 
     if (shouldDisallowOwner !== undefined) {
-      ownership = ownership && (!isAssetOwner && !!asset && shouldDisallowOwner)
+      isValid = isValid && (!isAssetOwner && !!asset && shouldDisallowOwner)
     }
 
-    return ownership
+    return isValid
   }
 
   isValidRole(wallet, asset) {

@@ -46,7 +46,7 @@ export default class Permission extends React.PureComponent {
   render() {
     const { wallet, isConnecting, asset, actions, children } = this.props
 
-    if (isConnecting) {
+    if (isConnecting || actions.length === 0) {
       return null
     }
 

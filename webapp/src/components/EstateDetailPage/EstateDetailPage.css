@@ -4,6 +4,10 @@
   padding-top: 0px;
 }
 
+.EstateDetailPage {
+  padding-top: 35px;
+}
+
 .EstateDetailPage .estate-title {
   margin-bottom: 5px;
 }
@@ -67,10 +71,6 @@
 .EstateDetailPage .AddressBlock {
   height: 24px;
   margin-left: 10px;
-}
-
-.EstateDetailPage .details {
-  margin-top: 20px;
 }
 
 .EstateDetailPage.empty {

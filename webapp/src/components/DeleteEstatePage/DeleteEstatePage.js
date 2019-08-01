@@ -5,6 +5,7 @@ import { t } from '@dapps/modules/translation/utils'
 
 import EstateModal from 'components/EstateModal'
 import Estate from 'components/Estate'
+import { ACTIONS } from 'shared/roles'
 import { isNewEstate, MAX_PARCELS_PER_TX } from 'shared/estate'
 
 export default class DeleteEstatePage extends React.PureComponent {
@@ -22,7 +23,7 @@ export default class DeleteEstatePage extends React.PureComponent {
   render() {
     const { id, isTxIdle, onCancel, onConfirm } = this.props
     return (
-      <Estate id={id} shouldBeOwner>
+      <Estate id={id} shouldBeAllowedTo={[ACTIONS.transfer]}>
         {estate => (
           <div className="DeleteEstatePage">
             {this.isTooBig(estate) ? (

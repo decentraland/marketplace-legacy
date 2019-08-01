@@ -16,15 +16,15 @@ import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType, bidType } from 'components/types'
 import { ASSET_TYPES } from 'shared/asset'
+import { ACTIONS, can } from 'shared/roles'
+import { TYPES } from 'shared/map'
 import { isNewEstate } from 'shared/estate'
-import { isOwner } from 'shared/roles'
 import {
   getParcelMatcher,
   isEqualCoords,
   getParcelsNotIncluded
 } from 'shared/parcel'
 import { hasNeighbour, areConnected, MAX_PARCELS_PER_TX } from 'shared/estate'
-import { TYPES } from 'shared/map'
 import { buildCoordinate } from 'shared/coordinates'
 import './SelectEstateParcels.css'
 
@@ -213,7 +213,7 @@ export default class SelectEstateParcels extends React.PureComponent {
     const parcels = estate.data.parcels
     const isCreation = isNewEstate(pristineEstate)
 
-    const canEdit = isCreation || isOwner(wallet.address, estate)
+    const canTransfer = can(ACTIONS.transfer, wallet.address, estate)
     const canContinue = this.hasParcels(parcels)
     const canSubmit = canContinue && this.haveParcelsChanged(parcels)
 
@@ -260,7 +260,7 @@ export default class SelectEstateParcels extends React.PureComponent {
                     : t('estate_select.edit_selection')}
                 </Header>
                 {!isCreation &&
-                  isOwner(wallet.address, estate) && (
+                  canTransfer && (
                     <Button
                       size="tiny"
                       className="link dissolve-button"
@@ -282,7 +282,7 @@ export default class SelectEstateParcels extends React.PureComponent {
                   />
                 </Grid.Column>
               )}
-              {canEdit && (
+              {canTransfer && (
                 <Grid.Column width={16}>
                   <div className="actions">
                     {isTxIdle && <TxStatus.Idle isIdle={isTxIdle} />}
