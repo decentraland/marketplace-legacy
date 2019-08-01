@@ -1,9 +1,11 @@
 import { TYPES } from './tile'
 import { isDistrict, isPlaza, isRoad } from '../district'
+import { isPartOfEstate } from '../../shared/parcel'
 
 export class TileType {
   constructor(parcel) {
     this.parcel = parcel
+    this.asset = isPartOfEstate(this.parcel) ? this.parcel.estate : this.parcel
   }
 
   get() {
@@ -39,8 +41,7 @@ export class TileType {
       case TYPES.myEstatesOnSale:
       case TYPES.taken:
       case TYPES.onSale: {
-        const asset = this.parcel.estate || this.parcel
-        return asset.data.name || ''
+        return this.asset.data.name || ''
       }
       case TYPES.roads:
       case TYPES.plaza:
@@ -52,6 +53,6 @@ export class TileType {
   }
 
   isOnSale() {
-    return !!this.parcel.publication
+    return !!this.asset.publication
   }
 }

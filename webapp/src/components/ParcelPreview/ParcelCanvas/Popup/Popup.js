@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { t } from '@dapps/modules/translation/utils'
 
 import Mana from 'components/Mana'
-import { t } from '@dapps/modules/translation/utils'
 import './Popup.css'
 
 export default class Popup extends React.PureComponent {
