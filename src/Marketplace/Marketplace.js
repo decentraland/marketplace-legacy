@@ -5,6 +5,7 @@ import {
   ListingQueries
 } from '../Listing'
 import { EstateQueries } from '../Asset'
+import { ApprovalQueries } from '../Approval'
 import { db, SQL, raw } from '../database'
 
 export class Marketplace {
@@ -34,9 +35,12 @@ export class Marketplace {
 
   async filter(queryParams, PublicableAsset) {
     const { status, asset_type, sort, pagination } = queryParams.sanitize()
+
     const [assets, total] = await Promise.all([
       db.query(
-        SQL`SELECT assets.*, row_to_json(pub.*) as publication
+        SQL`SELECT assets.*,
+            row_to_json(pub.*) as publication,
+            ${ApprovalQueries.selectAssetApprovals(asset_type)}
           FROM ${raw(Publication.tableName)} as pub
           JOIN ${raw(
             PublicableAsset.tableName
