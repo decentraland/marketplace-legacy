@@ -290,10 +290,10 @@
   "estate_select": {
     "bids_warning": "Este Estate tiene ofertas activas. ",
     "description": "Seleccione parcelas adyacentes entre sí",
-    "detail": "Detalle de finca",
+    "detail": "Detalle de propiedad",
     "edit_selection": "Seleccione las parcelas en el mapa",
-    "new_selection": "Seleccione las parcelas en el mapa para su nueva finca",
-    "tx_to_be_send": "Enviarás una transacción a {action} parcels: {parcels}"
+    "new_selection": "Seleccione las parcelas en el mapa para su nueva propiedad",
+    "tx_to_be_send": "Enviarás una transacción a {action} parcelas: {parcels}"
   },
   "fatfinger_modal": {
     "bid_type": "oferta",
