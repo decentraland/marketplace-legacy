@@ -7,6 +7,7 @@ import EstateModal from 'components/EstateModal'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import ManageAssetForm from 'components/ManageAssetForm'
+import { ACTIONS } from 'shared/roles'
 
 export default class ManageEstatePage extends React.PureComponent {
   static propTypes = {
@@ -21,7 +22,7 @@ export default class ManageEstatePage extends React.PureComponent {
     const { onSubmit, onCancel } = this.props
 
     return (
-      <Estate id={id} shouldBeOwner>
+      <Estate id={id} shouldBeAllowedTo={[ACTIONS.setUpdateOperator]}>
         {estate => (
           <div className="ManageEstatePage">
             <EstateModal

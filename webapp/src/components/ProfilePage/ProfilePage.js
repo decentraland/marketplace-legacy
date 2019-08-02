@@ -37,6 +37,8 @@ export default class ProfilePage extends React.PureComponent {
     contributions: PropTypes.arrayOf(contributionType),
     publishedAssets: PropTypes.arrayOf(assetType),
     mortgagedParcels: PropTypes.arrayOf(parcelType),
+    bids: PropTypes.arrayOf(bidType),
+    hiddenBidsCount: PropTypes.number.isRequired,
     grid: PropTypes.arrayOf(
       PropTypes.oneOfType([parcelType, contributionType])
     ),
@@ -46,20 +48,16 @@ export default class ProfilePage extends React.PureComponent {
     isLoading: PropTypes.bool,
     isEmpty: PropTypes.bool,
     isOwner: PropTypes.bool,
-    isConnected: PropTypes.bool,
-    onNavigate: PropTypes.func.isRequired,
-    bids: PropTypes.arrayOf(bidType),
-    hiddenBidsCount: PropTypes.number.isRequired
+    isConnecting: PropTypes.bool,
+    onNavigate: PropTypes.func.isRequired
   }
 
   componentWillMount() {
-    const { address, isConnected, onAccessDenied, onFetchAddress } = this.props
+    const { address, onAccessDenied, onFetchAddress } = this.props
     if (isBlacklistedAddress(address)) {
       onAccessDenied()
     }
-    if (isConnected) {
-      onFetchAddress()
-    }
+    onFetchAddress()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -232,8 +230,8 @@ export default class ProfilePage extends React.PureComponent {
     const { address, onNavigate } = this.props
     const url = buildUrl({
       page: 1,
-      address,
-      tab: name
+      tab: name,
+      address
     })
     onNavigate(url)
   }
@@ -249,23 +247,23 @@ export default class ProfilePage extends React.PureComponent {
   render() {
     const {
       address,
-      page,
-      pages,
-      isLoading,
-      isEmpty,
       parcels,
       contributions,
       publishedAssets,
       estates,
       mortgagedParcels,
+      bids,
+      page,
+      pages,
+      isLoading,
+      isEmpty,
       isOwner,
-      isConnected,
-      bids
+      isConnecting
     } = this.props
 
     return (
       <div className="ProfilePage">
-        {isOwner || isConnected ? null : (
+        {isOwner || isConnecting ? null : (
           <Container className="profile-header">
             <div>
               <AddressBlock scale={16} address={address} hasTooltip={false} />

@@ -16,7 +16,7 @@ export const EstateQueries = Object.freeze({
 
   areEstateEvents: estateId => {
     const address = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS').toLowerCase()
-    const byArgs = BlockchainEventQueries.byArgs()
+    const byArgs = BlockchainEventQueries.byArgs
 
     // prettier-ignore
     return SQL`${byArgs('_estateId', estateId)}

@@ -117,20 +117,16 @@ export const locations = {
 
 const LOCATION_BY_ASSET = {
   [ASSET_TYPES.parcel]: {
-    detail: withCoordinates((x, y) => locations.parcelDetail(x, y)),
-    bid: withCoordinates((x, y) => locations.bidParcel(x, y)),
-    acceptBid: withCoordinates((x, y, bidId) =>
-      locations.acceptParcelBid(x, y, bidId)
-    ),
-    cancelBid: withCoordinates((x, y, bidId) =>
-      locations.cancelParcelBid(x, y, bidId)
-    )
+    detail: withCoordinates(locations.parcelDetail),
+    bid: withCoordinates(locations.bidParcel),
+    acceptBid: withCoordinates(locations.acceptParcelBid),
+    cancelBid: withCoordinates(locations.cancelParcelBid)
   },
   [ASSET_TYPES.estate]: {
-    detail: assetId => locations.estateDetail(assetId),
-    bid: assetId => locations.bidEstate(assetId),
-    acceptBid: (assetId, bidId) => locations.acceptEstateBid(assetId, bidId),
-    cancelBid: (assetId, bidId) => locations.cancelEstateBid(assetId, bidId)
+    detail: locations.estateDetail,
+    bid: locations.bidEstate,
+    acceptBid: locations.acceptEstateBid,
+    cancelBid: locations.cancelEstateBid
   }
 }
 
