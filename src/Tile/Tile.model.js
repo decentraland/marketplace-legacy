@@ -220,12 +220,11 @@ export class Tile extends Model {
     ])
 
     const fullParcel = { ...parcel, estate, district }
+    const attributes = { ...approvals, publication }
 
-    // Assign attributes to the correct asset
-    const asset = isEstate ? fullParcel.estate : fullParcel
-    Object.assign(asset, approvals, { publication })
-
-    return fullParcel
+    return isEstate
+      ? { ...fullParcel, estate: { ...estate, ...attributes } }
+      : { ...fullParcel, ...attributes }
   }
 
   static getWhereUpdatedSQL(fromDate, alias = this.tableName) {
