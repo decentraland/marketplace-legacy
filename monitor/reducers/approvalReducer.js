@@ -1,7 +1,6 @@
 import { Log } from 'decentraland-commons'
 
 import { Approval } from '../../src/Approval'
-import { Asset } from '../../src/Asset'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { Tile } from '../../src/Tile'
