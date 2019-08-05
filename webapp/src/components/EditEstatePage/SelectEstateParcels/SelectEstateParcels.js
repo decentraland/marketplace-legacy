@@ -197,12 +197,16 @@ export default class SelectEstateParcels extends React.PureComponent {
     )
   }
 
+  canTransfer() {
+    const { wallet, estate } = this.props
+    return isNewEstate(estate) || can(ACTIONS.transfer, wallet.address, estate)
+  }
+
   render() {
     const { estate } = this.state
     const {
       pristineEstate,
       bids,
-      wallet,
       allParcels,
       isTxIdle,
       onDeleteEstate,
@@ -213,7 +217,7 @@ export default class SelectEstateParcels extends React.PureComponent {
     const parcels = estate.data.parcels
     const isCreation = isNewEstate(pristineEstate)
 
-    const canTransfer = can(ACTIONS.transfer, wallet.address, estate)
+    const canTransfer = this.canTransfer()
     const canContinue = this.hasParcels(parcels)
     const canSubmit = canContinue && this.haveParcelsChanged(parcels)
 
