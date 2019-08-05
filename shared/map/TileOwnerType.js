@@ -11,26 +11,26 @@ export class TileOwnerType {
     const hasAccess = tile.approvals.includes(this.owner)
     const isOnSale = tile.type === TYPES.onSale || tile.price != null
 
-    let newType = ''
+    let type = ''
 
     if (isOnSale) {
-      newType = isOwner
-        ? isPartOfEstate(tile)
+      if (isOwner) {
+        type = isPartOfEstate(tile)
           ? TYPES.myEstatesOnSale
           : TYPES.myParcelsOnSale
-        : TYPES.onSale
+      } else {
+        type = TYPES.onSale
+      }
     } else {
-      newType = isOwner
-        ? isPartOfEstate(tile)
-          ? TYPES.myEstates
-          : TYPES.myParcels
-        : hasAccess
-          ? TYPES.withAccess
-          : tile.owner
-            ? TYPES.taken
-            : TYPES.unowned
+      if (isOwner) {
+        type = isPartOfEstate(tile) ? TYPES.myEstates : TYPES.myParcels
+      } else if (hasAccess) {
+        type = TYPES.withAccess
+      } else {
+        type = tile.owner ? TYPES.taken : TYPES.unowned
+      }
     }
 
-    return newType
+    return type
   }
 }

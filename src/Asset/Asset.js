@@ -104,13 +104,13 @@ export class Asset {
     )
   }
 
-  async findApprovals(assetId) {
+  async findApprovals(id) {
     const approvalRows = await db.query(
       SQL`SELECT assets.operator, assets.update_operator, ${ApprovalQueries.selectAssetApprovals(
         this.assetType
       )}
         FROM ${raw(this.tableName)} assets
-        WHERE assets.id = ${assetId}
+        WHERE assets.id = ${id}
         LIMIT 1`
     )
     return approvalRows[0]

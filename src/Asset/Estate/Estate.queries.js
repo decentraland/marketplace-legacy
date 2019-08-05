@@ -6,12 +6,12 @@ import { ASSET_TYPES } from '../../../shared/asset'
 import { BlockchainEventQueries } from '../../BlockchainEvent'
 
 export const EstateQueries = Object.freeze({
-  estateHasParcels: tableRef =>
+  estateHasParcels: tableName =>
     // prettier-ignore
     SQL`(
-      ${raw(tableRef)}.asset_type = ${ASSET_TYPES.estate}
-      AND EXISTS(SELECT 1 FROM ${raw(Parcel.tableName)} AS p WHERE p.estate_id = ${raw(tableRef)}.asset_id LIMIT 1)
-      OR ${raw(tableRef)}.asset_type != ${ASSET_TYPES.estate}
+      ${raw(tableName)}.asset_type = ${ASSET_TYPES.estate}
+      AND EXISTS(SELECT 1 FROM ${raw(Parcel.tableName)} AS p WHERE p.estate_id = ${raw(tableName)}.asset_id LIMIT 1)
+      OR ${raw(tableName)}.asset_type != ${ASSET_TYPES.estate}
     )`,
 
   areEstateEvents: estateId => {
