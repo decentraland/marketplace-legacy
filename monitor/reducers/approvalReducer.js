@@ -6,7 +6,6 @@ import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
 import { Tile } from '../../src/Tile'
 import { APPROVAL_TYPES } from '../../shared/approval'
-import { flattenRoleAddresses } from '../../shared/roles'
 
 // At block 5808417 the ApprovalForAll event for the LANDRegistry contract kept its signature
 // (topic0), but changed its param order:
@@ -139,16 +138,5 @@ async function handleApproval(event, approval, isApproved) {
     ? await Tile.find({ owner })
     : await Tile.findByAnyApproval(operator)
 
-  await Promise.all(
-    tiles.map(tile =>
-      Asset.getNew(tile.asset_type)
-        .findApprovals(tile.estate_id || tile.id)
-        .then(approvals =>
-          Tile.update(
-            { approvals: flattenRoleAddresses(approvals) }, // Mocking an asset by just using the approvals
-            { id: tile.id }
-          )
-        )
-    )
-  )
+  await Promise.all(tiles.map(tile => Tile.updateApprovals(tile)))
 }
