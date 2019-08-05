@@ -42,11 +42,26 @@ const ROLE_ACTIONS = {
 
 const UNOWNED_ACTIONS = [ACTIONS.bid, ACTIONS.buy, ACTIONS.getMortgage]
 
+/**
+ * Checks to see if a wallet can perform an action on an asset
+ * It's a shorthand for getting the list of roles an address has for an asset,
+ * and then checking if any of those are allowed to peform the action
+ * @param  {ACTIONS[keyof ACTIONS]} action - A value from the ACTIONS object
+ * @param  {string} address - Wallet address
+ * @param  {Asset} asset - Asset you're checking against
+ * @return {boolean}
+ */
 export function can(action, address, asset) {
   const roles = getRoles(address, asset)
   return isAllowedTo(roles, action)
 }
 
+/**
+ * Check if any role on a list can perform an action
+ * @param  {ROLES[keyof ROLES][]}   roles - A list of roles from the ROLES object
+ * @param  {ACTIONS[keyof ACTIONS]} action - A value from the ACTIONS object
+ * @return {boolean}
+ */
 export function isAllowedTo(roles, action) {
   if (UNOWNED_ACTIONS.includes(action)) {
     // WARN: break early here. In this cases we check the lack of a role
@@ -61,10 +76,21 @@ export function isAllowedTo(roles, action) {
   return allowedActions.has(action)
 }
 
+/**
+ * Returns the actions a role can perform
+ * @param  {ROLES[keyof ROLES]} role - A value from the ROLES object
+ * @return {ROLE_ACTIONS[keyof ROLE_ACTIONS]}
+ */
 export function getAllowedActions(role) {
   return ROLE_ACTIONS[role] || []
 }
 
+/**
+ * Returns the list of roles the address has on a particular asset
+ * @param  {string} address - Wallet address
+ * @param  {Asset} asset - Asset you're checking against
+ * @return {ROLES[keyof ROLES][]}
+ */
 export function getRoles(address, asset) {
   if (!address || !asset) {
     return []
@@ -89,6 +115,12 @@ export function getRoles(address, asset) {
   return roles
 }
 
+/**
+ * Returns an array of string with all addresses that have a role on a certain asset
+ * It'll pull the data from properties like `operator`, `update_operator`, etc
+ * @param  {Asset} asset - Asset you're checking against
+ * @return {string[]}
+ */
 export function flattenRoleAddresses(asset) {
   const addresses = new Set([
     ...asset.update_managers,
@@ -103,10 +135,6 @@ export function flattenRoleAddresses(asset) {
   }
 
   return Array.from(addresses)
-}
-
-export function hasAccess(address, asset) {
-  return getRoles(address, asset).length > 0
 }
 
 /**
