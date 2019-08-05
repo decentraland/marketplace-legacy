@@ -2,7 +2,7 @@ export const ROLES = {
   owner: 'owner',
   operator: 'operator',
   updateOperator: 'updateOperator',
-  operatorForAll: 'operatorForAll',
+  approvalForAll: 'approvalForAll',
   updateManager: 'updateManager'
 }
 
@@ -23,7 +23,7 @@ export const ACTIONS = {
 
 const ROLE_ACTIONS = {
   [ROLES.owner]: Object.values(ACTIONS),
-  [ROLES.operatorForAll]: [
+  [ROLES.approvalForAll]: [
     ACTIONS.transfer,
     ACTIONS.createEstate,
     ACTIONS.setUpdateOperator,
@@ -106,8 +106,8 @@ export function getRoles(address, asset) {
   if (address === asset.update_operator) {
     roles.push(ROLES.updateOperator)
   }
-  if (asset.operators_for_all.includes(address)) {
-    roles.push(ROLES.operatorForAll)
+  if (asset.approvals_for_all.includes(address)) {
+    roles.push(ROLES.approvalForAll)
   }
   if (asset.update_managers.includes(address)) {
     roles.push(ROLES.updateManager)
@@ -124,7 +124,7 @@ export function getRoles(address, asset) {
 export function flattenRoleAddresses(asset) {
   const addresses = new Set([
     ...asset.update_managers,
-    ...asset.operators_for_all
+    ...asset.approvals_for_all
   ])
 
   if (asset.operator) {

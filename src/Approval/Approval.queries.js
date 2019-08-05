@@ -7,7 +7,7 @@ export const ApprovalQueries = Object.freeze({
   selectAssetApprovals: (assetType, tableName = 'assets') =>
     // prettier-ignore
     SQL`(${ApprovalQueries.selectApprovalByType(assetType, APPROVAL_TYPES.manager, tableName)}) as update_managers,
-    (${ApprovalQueries.selectApprovalByType(assetType, APPROVAL_TYPES.operator, tableName)}) as operators_for_all`,
+    (${ApprovalQueries.selectApprovalByType(assetType, APPROVAL_TYPES.operator, tableName)}) as approvals_for_all`,
 
   selectApprovalByType: (assetType, approvalType, tableName = 'assets') =>
     SQL`

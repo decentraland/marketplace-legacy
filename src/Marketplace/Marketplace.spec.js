@@ -130,7 +130,7 @@ describe('Marketplace', function() {
           tags: {},
           estate_id: null,
           operator: null,
-          operators_for_all: [],
+          approvals_for_all: [],
           update_managers: [],
           publication: {
             tx_hash: '0x4',
