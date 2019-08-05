@@ -23,7 +23,6 @@ export default class BuyEstatePage extends React.PureComponent {
     wallet: walletType,
     authorization: authorizationType,
     publication: publicationType,
-    isDisabled: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
@@ -47,7 +46,7 @@ export default class BuyEstatePage extends React.PureComponent {
     const { mana } = wallet
 
     return (
-      <Estate id={id} shouldDisallowOwner shouldBeOnSale>
+      <Estate id={id} shouldBeOwner={false} shouldBeOnSale>
         {estate => {
           if (publication) {
             // to avoid a race condition we expect a valid publication

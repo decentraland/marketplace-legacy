@@ -32,7 +32,7 @@ export default class BidEstatePage extends React.PureComponent {
     const isBidActive = isActive(bid)
 
     return (
-      <Estate id={id} shouldDisallowOwner>
+      <Estate id={id} shouldBeOwner={false}>
         {estate => (
           <div className="BidEstatePage">
             {!isAllowed ? (

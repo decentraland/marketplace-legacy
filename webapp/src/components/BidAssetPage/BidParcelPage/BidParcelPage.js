@@ -35,7 +35,7 @@ export default class BidParcelPage extends React.PureComponent {
     const isBidActive = isActive(bid)
 
     return (
-      <Parcel x={x} y={y} shouldDisallowOwner>
+      <Parcel x={x} y={y} shouldBeOwner={false}>
         {parcel => (
           <div className="BidParcelPage">
             {!isAllowed ? (

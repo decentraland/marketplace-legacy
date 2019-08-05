@@ -79,7 +79,7 @@ export default class PayMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} shouldDisallowOwner>
+      <Parcel x={x} y={y} shouldBeOwner={false}>
         {parcel => (
           <ParcelModal
             x={parcel.x}

@@ -15,6 +15,14 @@ let shouldRefresh = false
 let isNavigatingAway = false
 let isAssetPrefetched = false
 
+/**
+ * Fetch an asset via type and id
+ * Use a function as children to get the result, the component will handle loading states and not founds
+ * Keep in mind that `should(...)` properties have three states, true/false/undefined. So for example:
+ *   <Asset id="1" assetType="parcel">                        // Anyone can access
+ *   <Asset id="1" assetType="parcel" shouldBeOnSale={true}>  // You can only access if it's on sale
+ *   <Asset id="1" assetType="parcel" shouldBeOnSale={false}> // You can only access if it is NOT on sale
+ */
 export default class Asset extends React.PureComponent {
   static propTypes = {
     assetId: PropTypes.string,
@@ -23,7 +31,6 @@ export default class Asset extends React.PureComponent {
     asset: assetType,
     shouldBeAllowedTo: PropTypes.arrayOf(actionType),
     shouldBeOwner: PropTypes.bool,
-    shouldDisallowOwner: PropTypes.bool,
     shouldBeOnSale: PropTypes.bool,
     isConnecting: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
@@ -92,20 +99,11 @@ export default class Asset extends React.PureComponent {
   }
 
   isValidOwnership(wallet, asset) {
-    const { shouldDisallowOwner, shouldBeOwner } = this.props
-    const isAssetOwner = isOwner(wallet.address, asset)
-
-    let isValid = true
-
-    if (shouldBeOwner !== undefined) {
-      isValid = isValid && (isAssetOwner && shouldBeOwner)
+    const { shouldBeOwner } = this.props
+    if (shouldBeOwner === undefined) {
+      return true
     }
-
-    if (shouldDisallowOwner !== undefined) {
-      isValid = isValid && (!isAssetOwner && !!asset && shouldDisallowOwner)
-    }
-
-    return isValid
+    return shouldBeOwner && isOwner(wallet.address, asset)
   }
 
   isValidRole(wallet, asset) {
@@ -140,15 +138,12 @@ export default class Asset extends React.PureComponent {
       asset,
       isConnecting,
       shouldBeOwner,
-      shouldDisallowOwner,
       isLoading,
       wallet,
       children
     } = this.props
 
-    const shouldBeConnected = shouldBeOwner || shouldDisallowOwner
-
-    if (isNavigatingAway || isLoading || (shouldBeConnected && isConnecting)) {
+    if (isNavigatingAway || isLoading || (shouldBeOwner && isConnecting)) {
       return (
         <div>
           <Loader active size="massive" />

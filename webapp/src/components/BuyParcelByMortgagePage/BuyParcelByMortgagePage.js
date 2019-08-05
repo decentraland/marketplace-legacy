@@ -76,7 +76,7 @@ export default class BuyParcelByMortgagePage extends React.PureComponent {
     }
 
     return (
-      <Parcel x={x} y={y} shouldDisallowOwner>
+      <Parcel x={x} y={y} shouldBeOwner={false}>
         {parcel => {
           const { allowances } = authorization
 
