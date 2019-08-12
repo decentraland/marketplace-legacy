@@ -16,7 +16,7 @@ import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType, bidType } from 'components/types'
 import { ASSET_TYPES } from 'shared/asset'
-import { ACTIONS, can } from 'shared/roles'
+import { ACTIONS, can, isOwner } from 'shared/roles'
 import { TYPES } from 'shared/map'
 import { isNewEstate } from 'shared/estate'
 import {
@@ -207,6 +207,7 @@ export default class SelectEstateParcels extends React.PureComponent {
     const {
       pristineEstate,
       bids,
+      wallet,
       allParcels,
       isTxIdle,
       onDeleteEstate,
@@ -263,8 +264,9 @@ export default class SelectEstateParcels extends React.PureComponent {
                     ? t('estate_select.new_selection')
                     : t('estate_select.edit_selection')}
                 </Header>
-                {!isCreation &&
-                  canTransfer && (
+                {/*We only allow owners to dissolve their own states to avoid confusing transfers with operators*/
+                !isCreation &&
+                  isOwner(wallet.address, estate) && (
                     <Button
                       size="tiny"
                       className="link dissolve-button"
