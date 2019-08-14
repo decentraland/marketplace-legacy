@@ -12,6 +12,7 @@ import {
   checkContains,
   readJSONElements
 } from './utils'
+import { PROVIDER_TYPES } from '../src/ethereum'
 
 const log = new Log('manageMana')
 const DEFAULT_OPTIONS = {
@@ -32,6 +33,10 @@ const manageMana = {
       )
       .option('--account [account]', 'Account address')
       .option('--password [password]', 'Password for the account')
+      .option(
+        `--provider [${Object.values(PROVIDER_TYPES).join(' | ')}]`,
+        `Prodiver type to be used. Default: ${PROVIDER_TYPES.HTTP}`
+      )
       .option(
         '--batchSize [batchSize]',
         `Amount of simultaneous transfer transactions. Default ${
@@ -59,7 +64,11 @@ const manageMana = {
           const options = Object.assign(DEFAULT_OPTIONS, userOptions)
           checkContains(options, requiredOptionNames)
 
-          await setupEth(options.account, options.password)
+          await setupEth({
+            account: options.account,
+            password: options.password,
+            providerType: options.provider
+          })
 
           const recipients = await readJSONElements(
             options.recipients,

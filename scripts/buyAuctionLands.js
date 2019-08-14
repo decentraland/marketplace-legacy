@@ -50,7 +50,10 @@ const buyAuctionLands = {
           const options = Object.assign(DEFAULT_OPTIONS, userOptions)
           checkContains(options, requiredOptionNames)
 
-          await setupEth(options.account, options.password)
+          await setupEth({
+            account: options.account,
+            password: options.password
+          })
 
           const parcels = await readJSONElements(
             options.parcels,

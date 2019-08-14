@@ -5,7 +5,7 @@ import { Log } from 'decentraland-commons'
 
 import { SanityActions } from './SanityActions'
 import { db } from '../src/database'
-import { connectEth } from '../src/ethereum'
+import { connectEth, PROVIDER_TYPES } from '../src/ethereum'
 import { loadEnv } from '../scripts/utils'
 
 const log = new Log('main')
@@ -46,7 +46,11 @@ function getProgram(actions) {
         .option('--websocket', 'Should run doctors in a websocket')
         .action(async options => {
           log.info('Connecting to Ethereum node')
-          await connectEth({ isWebsocket: options.websocket })
+          await connectEth({
+            providerType: options.websocket
+              ? PROVIDER_TYPES.WEBSOCKET
+              : PROVIDER_TYPES.HTTP
+          })
           log.info('Starting sanity')
           await actions.run(options)
         })
