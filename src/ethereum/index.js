@@ -9,7 +9,7 @@ const HDWalletProvider = require('truffle-hdwallet-provider')
 export const PROVIDER_TYPES = {
   WEBSOCKET: 'websocket',
   HTTP: 'http',
-  HWALLET: 'hWallet'
+  HDWALLET: 'hWallet'
 }
 
 let isLoaded = false
@@ -47,11 +47,11 @@ export async function connectEth(options = {}) {
       await provider.connection
       break
     }
-    case PROVIDER_TYPES.HWALLET: {
+    case PROVIDER_TYPES.HDWALLET: {
       provider = new HDWalletProvider(
-        env.get('HWALLET_MNEMONIC'),
+        env.get('HDWALLET_MNEMONIC'),
         env.get('RPC_URL'),
-        env.get('HWALLET_INDEX', 0)
+        env.get('HDWALLET_INDEX', 0)
       )
       break
     }
