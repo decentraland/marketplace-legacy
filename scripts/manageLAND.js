@@ -2,7 +2,7 @@
 
 import { eth } from 'decentraland-eth'
 import { cli } from 'decentraland-server'
-import { Log, env } from 'decentraland-commons'
+import { Log } from 'decentraland-commons'
 
 import {
   setupEth,
