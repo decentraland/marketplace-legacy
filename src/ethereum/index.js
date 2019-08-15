@@ -51,7 +51,7 @@ export async function connectEth(options = {}) {
       provider = new HDWalletProvider(
         env.get('HDWALLET_MNEMONIC').replace(/,/g, ' '),
         env.get('RPC_URL'),
-        env.get('HDWALLET_INDEX', 0)
+        env.get('HDWALLET_INDEX') || 0
       )
       break
     }
