@@ -78,14 +78,16 @@ const manageMana = {
             if (!shouldTransfer) process.exit()
           }
 
+          const landBatches = await getLANDBatches(from, balance.toNumber())
+
           await transferLANDs({
             batchSize: options.batchSize,
             gasPrice: options.gasPrice,
             txDelay: options.txDelay,
             retryFailedTxs: options.retryFailedTxs,
-            balance: balance.toNumber(),
             from,
-            to
+            to,
+            landBatches
           })
         })
       )
@@ -93,12 +95,19 @@ const manageMana = {
 }
 
 async function transferLANDs(args) {
-  const { from, to, balance, batchSize, gasPrice, shouldRetry, txDelay } = args
+  const {
+    from,
+    to,
+    landBatches,
+    batchSize,
+    gasPrice,
+    shouldRetry,
+    txDelay
+  } = args
 
   const account = eth.getAccount()
   const LANDRegistryContract = eth.getContract('LANDRegistry')
 
-  const lands = await getLANDs(from, balance)
   const isApprovedForAll = await LANDRegistryContract.isApprovedForAll(
     from,
     account
@@ -107,44 +116,53 @@ async function transferLANDs(args) {
   log.info(`Transfering LANDs to ${to}`)
 
   const txsToRetry = await executeTransactions(
-    lands,
+    landBatches,
     recipientsBatch =>
-      recipientsBatch.map(async land => {
-        if (!isApprovedForAll && from.toLowerCase() !== account.toLowerCase()) {
+      recipientsBatch.map(async landBatch => {
+        const xs = []
+        const ys = []
+        let message = ''
+        const landBatchPromises = landBatch.map(async land => {
           if (
-            (await LANDRegistryContract.getApproved(land.id)).toLowerCase() !==
-            account.toLowerCase()
+            !isApprovedForAll &&
+            from.toLowerCase() !== account.toLowerCase()
           ) {
-            throw new Error(
-              `Error: ${account} does not have permission to move (${land.x}, ${
-                land.y
-              })`
-            )
+            if (
+              (await LANDRegistryContract.getApproved(
+                land.id
+              )).toLowerCase() !== account.toLowerCase()
+            ) {
+              throw new Error(
+                `Error: ${account} does not have permission to move (${
+                  land.x
+                }, ${land.y})`
+              )
+            }
           }
-        }
+          xs.push(land.x)
+          ys.push(land.y)
+          message += `Sending (${land.x}, ${land.y}) to ${to}\n`
+        })
 
-        log.info(`Sending (${land.x}, ${land.y}) to ${to}`)
-        const hash = await LANDRegistryContract.transferFrom(
-          from,
-          to,
-          land.id,
-          {
-            gasPrice: gasPrice,
-            from: account
-          }
-        )
+        await Promise.all(landBatchPromises)
 
-        return { hash, data: land }
+        log.info(message)
+        const hash = await LANDRegistryContract.transferManyLand(xs, ys, to, {
+          gasPrice: gasPrice,
+          from: account
+        })
+
+        return { hash, data: landBatch }
       }),
     { batchSize, txDelay }
   )
 
-  log.info(`Sent ${lands.length - txsToRetry.length} transactions`)
+  log.info(`Sent ${landBatches.length - txsToRetry.length} transactions`)
 
   if (txsToRetry.length > 0 && shouldRetry) {
-    const landsToRetry = txsToRetry.map(tx => tx.data)
-    log.info(`Retrying on ${landsToRetry.length} recipients`)
-    return transferLANDs(landsToRetry, ...args.slice(1))
+    const landBatchessToRetry = txsToRetry.map(tx => tx.data)
+    log.info(`Retrying on ${landBatchessToRetry.length} recipients`)
+    return transferLANDs(landBatchessToRetry, ...args.slice(1))
   }
 }
 
@@ -152,16 +170,17 @@ async function getBalance(from) {
   return eth.getContract('LANDRegistry').balanceOf(from)
 }
 
-async function getLANDs(from, balance) {
-  log.info(`Getting ${balance} LANDs to transfer...`)
+async function getLANDBatches(from, balance) {
+  log.info(`Getting ${balance} LAND ids to transfer...`)
 
   const LANDRegistryContract = eth.getContract('LANDRegistry')
-  const lands = []
   let index = 0
+  const landBatches = []
 
   await asyncBatch({
     elements: new Array(balance).fill(0),
     callback: async fakeIndexes => {
+      const lands = []
       const promises = fakeIndexes.map(async () => {
         const id = await LANDRegistryContract.tokenOfOwnerByIndex(from, index++)
         const [x, y] = await LANDRegistryContract.decodeTokenId(id)
@@ -169,12 +188,13 @@ async function getLANDs(from, balance) {
       })
 
       await Promise.all(promises)
+      landBatches.push(lands)
     },
-    batchSize: env.get('BATCH_SIZE', 50),
+    batchSize: 70, //Maximum LAND to be transferred in bulk
     retryAttempts: 20
   })
 
-  return lands
+  return landBatches
 }
 
 if (require.main === module) {
