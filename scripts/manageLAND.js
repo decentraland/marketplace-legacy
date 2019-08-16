@@ -19,6 +19,7 @@ const DEFAULT_OPTIONS = {
   retryFailedTxs: false,
   txDelay: 5000,
   batchSize: 10,
+  landBatchSize: 35,
   gasPrice: undefined
 }
 const requiredOptionNames = ['from', 'to']
@@ -33,7 +34,13 @@ const manageMana = {
       .option('--password [password]', 'Password for the account')
       .option(
         `--provider [${Object.values(PROVIDER_TYPES).join(' | ')}]`,
-        `Prodiver type to be used. Default: ${PROVIDER_TYPES.HTTP}`
+        `Provider type to be used. Default: ${PROVIDER_TYPES.HTTP}`
+      )
+      .option(
+        '--landBatchSize [landBatchSize]',
+        `Amount of simultaneous LAND to be transfer in one transaction. Default ${
+          DEFAULT_OPTIONS.batchSize
+        } (.5 of an ethereum block)`
       )
       .option(
         '--batchSize [batchSize]',
@@ -78,7 +85,11 @@ const manageMana = {
             if (!shouldTransfer) process.exit()
           }
 
-          const landBatches = await getLANDBatches(from, balance.toNumber())
+          const landBatches = await getLANDBatches(
+            from,
+            balance.toNumber(),
+            options.landBatchSize
+          )
 
           await transferLANDs({
             batchSize: options.batchSize,
@@ -170,7 +181,7 @@ async function getBalance(from) {
   return eth.getContract('LANDRegistry').balanceOf(from)
 }
 
-async function getLANDBatches(from, balance) {
+async function getLANDBatches(from, balance, landBatchSize) {
   log.info(`Getting ${balance} LAND ids to transfer...`)
 
   const LANDRegistryContract = eth.getContract('LANDRegistry')
@@ -190,7 +201,7 @@ async function getLANDBatches(from, balance) {
       await Promise.all(promises)
       landBatches.push(lands)
     },
-    batchSize: 70, //Maximum LAND to be transferred in bulk
+    batchSize: landBatchSize, //Maximum LAND to be transferred in bulk
     retryAttempts: 20
   })
 
