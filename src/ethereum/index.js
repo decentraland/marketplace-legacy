@@ -7,9 +7,9 @@ const providers = require('eth-connect')
 const HDWalletProvider = require('truffle-hdwallet-provider')
 
 export const PROVIDER_TYPES = {
-  WEBSOCKET: 'websocket',
-  HTTP: 'http',
-  HDWALLET: 'hdWallet'
+  websocket: 'websocket',
+  http: 'http',
+  hdWallet: 'hdWallet'
 }
 
 let isLoaded = false
@@ -33,7 +33,7 @@ export async function connectEth(options = {}) {
   let provider
 
   switch (options.providerType) {
-    case PROVIDER_TYPES.WEBSOCKET: {
+    case PROVIDER_TYPES.websocket: {
       const websocketURL = env.get('WEB_SOCKET_RPC_URL')
       if (!websocketURL) {
         throw new Error(
@@ -47,7 +47,7 @@ export async function connectEth(options = {}) {
       await provider.connection
       break
     }
-    case PROVIDER_TYPES.HDWALLET: {
+    case PROVIDER_TYPES.hdWallet: {
       provider = new HDWalletProvider(
         env.get('HDWALLET_MNEMONIC').replace(/,/g, ' '),
         env.get('RPC_URL'),
@@ -55,10 +55,10 @@ export async function connectEth(options = {}) {
       )
       break
     }
-    case PROVIDER_TYPES.HTTP:
-    default: {
+    case PROVIDER_TYPES.http:
+    default:
       provider = env.get('RPC_URL')
-    }
+      break
   }
 
   await eth.connect({

@@ -48,8 +48,8 @@ function getProgram(actions) {
           log.info('Connecting to Ethereum node')
           await connectEth({
             providerType: options.websocket
-              ? PROVIDER_TYPES.WEBSOCKET
-              : PROVIDER_TYPES.HTTP
+              ? PROVIDER_TYPES.websocket
+              : PROVIDER_TYPES.http
           })
           log.info('Starting sanity')
           await actions.run(options)

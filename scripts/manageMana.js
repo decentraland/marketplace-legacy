@@ -35,7 +35,7 @@ const manageMana = {
       .option('--password [password]', 'Password for the account')
       .option(
         `--provider [${Object.values(PROVIDER_TYPES).join(' | ')}]`,
-        `Prodiver type to be used. Default: ${PROVIDER_TYPES.HTTP}`
+        `Provider type to be used. Default: ${PROVIDER_TYPES.http}`
       )
       .option(
         '--batchSize [batchSize]',
