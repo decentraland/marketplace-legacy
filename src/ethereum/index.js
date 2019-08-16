@@ -4,6 +4,13 @@ import { env } from 'decentraland-commons'
 // @nacho hack: eth-connect expects to have window defined
 global.window = {}
 const providers = require('eth-connect')
+const HDWalletProvider = require('truffle-hdwallet-provider')
+
+export const PROVIDER_TYPES = {
+  websocket: 'websocket',
+  http: 'http',
+  hdWallet: 'hdWallet'
+}
 
 let isLoaded = false
 export let contractsData // { ContractName: { address, eventNames: [] } }
@@ -25,20 +32,33 @@ export async function connectEth(options = {}) {
 
   let provider
 
-  if (options.isWebsocket) {
-    const websocketURL = env.get('WEB_SOCKET_RPC_URL')
-    if (!websocketURL) {
-      throw new Error(
-        'You need to set the WEB_SOCKET_RPC_URL env var to connect via websockets'
-      )
-    }
+  switch (options.providerType) {
+    case PROVIDER_TYPES.websocket: {
+      const websocketURL = env.get('WEB_SOCKET_RPC_URL')
+      if (!websocketURL) {
+        throw new Error(
+          'You need to set the WEB_SOCKET_RPC_URL env var to connect via websockets'
+        )
+      }
 
-    provider = new providers.WebSocketProvider(websocketURL, {
-      WebSocketConstructor: w3cwebsocket
-    })
-    await provider.connection
-  } else {
-    provider = env.get('RPC_URL')
+      provider = new providers.WebSocketProvider(websocketURL, {
+        WebSocketConstructor: w3cwebsocket
+      })
+      await provider.connection
+      break
+    }
+    case PROVIDER_TYPES.hdWallet: {
+      provider = new HDWalletProvider(
+        env.get('HDWALLET_MNEMONIC').replace(/,/g, ' '),
+        env.get('RPC_URL'),
+        env.get('HDWALLET_INDEX', 0)
+      )
+      break
+    }
+    case PROVIDER_TYPES.http:
+    default:
+      provider = env.get('RPC_URL')
+      break
   }
 
   await eth.connect({

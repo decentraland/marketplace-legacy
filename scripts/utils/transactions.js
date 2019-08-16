@@ -4,19 +4,21 @@ import { utils } from 'decentraland-commons'
 import { asyncBatch } from '../../src/lib'
 import { connectEth } from '../../src/ethereum'
 
-export async function setupEth(account, password) {
-  account = account || eth.getAccount()
+export async function setupEth(options) {
+  const account = options.account || eth.getAccount()
 
   console.log('Connecting to a node')
-  await connectEth()
+
+  await connectEth(options)
+
   if (!eth.isConnected()) {
     throw new Error('Connection to the node failed')
   }
 
-  if (password) {
+  if (options.password) {
     console.log(`Unlocking account ${account}`)
     eth.wallet.setAccount(account)
-    await eth.wallet.unlockAccount(password)
+    await eth.wallet.unlockAccount(options.password)
   }
 }
 
