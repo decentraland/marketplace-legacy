@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { parcelType, estateType } from 'components/types'
+import { assetType, assetTypingType } from 'components/types'
 import Asset from 'components/Asset'
 
 export default class AssetLoader extends React.PureComponent {
   static propTypes = {
-    id: PropTypes.string.isRequired,
+    assetId: PropTypes.string.isRequired,
+    assetType: assetTypingType.isRequired,
+    asset: assetType,
     isLoading: PropTypes.bool.isRequired,
-    asset: PropTypes.oneOfType([parcelType, estateType]),
-    assetType: PropTypes.string.isRequired,
     onAccessDenied: PropTypes.func.isRequired
   }
 
@@ -19,6 +19,6 @@ export default class AssetLoader extends React.PureComponent {
 
   render() {
     const { asset } = this.props
-    return <Asset value={asset} {...this.props} />
+    return <Asset asset={asset} {...this.props} />
   }
 }

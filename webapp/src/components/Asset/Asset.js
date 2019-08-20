@@ -2,76 +2,80 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
 
-import { walletType } from 'components/types'
+import {
+  walletType,
+  assetType,
+  assetTypingType,
+  actionType
+} from 'components/types'
 import NotFound from 'components/NotFound'
-import { isOwner } from 'shared/asset'
+import { can, isOwner } from 'shared/roles'
 
 let shouldRefresh = false
 let isNavigatingAway = false
+let isAssetPrefetched = false
 
+/**
+ * Fetch an asset via type and id
+ * Use a function as children to get the result, the component will handle loading states and not founds
+ * Keep in mind that `should(...)` properties have three states, true/false/undefined. So for example:
+ *   <Asset id="1" assetType="parcel">                        // Anyone can access
+ *   <Asset id="1" assetType="parcel" shouldBeOnSale={true}>  // You can only access if it's on sale
+ *   <Asset id="1" assetType="parcel" shouldBeOnSale={false}> // You can only access if it is NOT on sale
+ */
 export default class Asset extends React.PureComponent {
   static propTypes = {
+    assetId: PropTypes.string,
+    assetType: assetTypingType,
     wallet: walletType.isRequired,
-    value: PropTypes.object,
+    asset: assetType,
+    shouldBeAllowedTo: PropTypes.arrayOf(actionType),
+    shouldBeOwner: PropTypes.bool,
+    shouldBeOnSale: PropTypes.bool,
     isConnecting: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
-    ownerOnly: PropTypes.bool,
-    ownerNotAllowed: PropTypes.bool,
-    onAccessDenied: PropTypes.func.isRequired,
-    withPublications: PropTypes.bool,
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    onAccessDenied: PropTypes.func.isRequired
   }
 
   static defaultProps = {
+    asset: null,
+    shouldBeAllowedTo: [],
     isConnecting: false,
-    isLoading: false,
-    ownerOnly: false,
-    ownerNotAllowed: false,
-    withPublications: false,
-    value: null,
-    publication: null
+    isLoading: false
   }
 
   componentWillMount() {
-    const { isLoading, onFetchAsset } = this.props
-    if (isLoading) {
+    if (this.props.isLoading) {
       return
     }
-    onFetchAsset()
+    this.prefetchAsset()
   }
 
   componentWillReceiveProps(nextProps) {
     const {
-      id,
-      value,
-      isConnecting,
-      isLoading,
-      ownerOnly,
+      assetId,
+      assetType,
       wallet,
-      ownerNotAllowed,
-      withPublications
+      asset,
+      isConnecting,
+      isLoading
     } = nextProps
 
     if (isConnecting || isLoading) {
       return
     }
 
-    if (this.props.id !== id) {
+    if (this.props.assetId !== assetId && this.props.assetType !== assetType) {
       shouldRefresh = true
     }
 
-    const ownerIsNotAllowed =
-      ownerNotAllowed && value && isOwner(wallet, value.id)
-    const assetShouldBeOnSale =
-      withPublications && value && !value['publication_tx_hash']
-
-    if (ownerOnly) {
-      this.checkOwnership(wallet, value.id)
+    if (!this.isValid(wallet, asset)) {
+      return this.redirect()
     }
 
-    if (ownerIsNotAllowed || assetShouldBeOnSale) {
-      this.redirect()
-    }
+    // Will run only once after every asset change
+    this.prefetchAsset()
   }
 
   componentDidUpdate() {
@@ -83,6 +87,36 @@ export default class Asset extends React.PureComponent {
 
   componentWillUnmount() {
     isNavigatingAway = false
+    isAssetPrefetched = false
+  }
+
+  isValid(wallet, asset) {
+    return (
+      this.isValidOwnership(wallet, asset) &&
+      this.isValidRole(wallet, asset) &&
+      this.isValidAssetState(asset)
+    )
+  }
+
+  isValidOwnership(wallet, asset) {
+    const { shouldBeOwner } = this.props
+    if (shouldBeOwner === undefined) {
+      return true
+    }
+    return shouldBeOwner && isOwner(wallet.address, asset)
+  }
+
+  isValidRole(wallet, asset) {
+    const { shouldBeAllowedTo } = this.props
+    return shouldBeAllowedTo.every(action => can(action, wallet.address, asset))
+  }
+
+  isValidAssetState(asset) {
+    const { shouldBeOnSale } = this.props
+    if (shouldBeOnSale === undefined) {
+      return true
+    }
+    return shouldBeOnSale && !!asset && asset['publication_tx_hash'] != null
   }
 
   redirect() {
@@ -92,40 +126,35 @@ export default class Asset extends React.PureComponent {
     }
   }
 
-  checkOwnership(wallet, assetId) {
-    if (!isOwner(wallet, assetId)) {
-      this.redirect()
+  prefetchAsset() {
+    if (!isAssetPrefetched) {
+      this.props.onFetchAsset()
+      isAssetPrefetched = true
     }
   }
 
   render() {
     const {
-      value,
+      asset,
       isConnecting,
-      ownerOnly,
-      ownerNotAllowed,
+      shouldBeOwner,
       isLoading,
       wallet,
       children
     } = this.props
 
-    if (!value || isLoading) {
-      const shouldBeConnected = ownerOnly || ownerNotAllowed
-
-      if (
-        (shouldBeConnected && isConnecting) ||
-        isNavigatingAway ||
-        isLoading
-      ) {
-        return (
-          <div>
-            <Loader active size="massive" />
-          </div>
-        )
-      } else {
-        return <NotFound />
-      }
+    if (isNavigatingAway || isLoading || (shouldBeOwner && isConnecting)) {
+      return (
+        <div>
+          <Loader active size="massive" />
+        </div>
+      )
     }
-    return children(value, { isOwner: isOwner(wallet, value.id), wallet })
+
+    if (!asset) {
+      return <NotFound />
+    }
+
+    return children(asset, { isOwner: isOwner(wallet.address, asset), wallet })
   }
 }

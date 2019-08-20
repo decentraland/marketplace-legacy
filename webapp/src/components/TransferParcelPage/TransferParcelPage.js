@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container, Message } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
+
 import Parcel from 'components/Parcel'
 import ParcelModal from 'components/ParcelModal'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import TxStatus from 'components/TxStatus'
-import { publicationType } from 'components/types'
 import ParcelName from 'components/ParcelName'
 import TransferAssetForm from 'components/TransferAssetForm'
-import { t, T } from '@dapps/modules/translation/utils'
-import { isOnSale } from 'shared/asset'
+import { publicationType } from 'components/types'
+import { isOnSale } from 'modules/asset/utils'
 
 export default class TransferParcelPage extends React.PureComponent {
   static propTypes = {
@@ -25,7 +26,7 @@ export default class TransferParcelPage extends React.PureComponent {
     const { x, y, isTxIdle, publications, onSubmit, onCancel } = this.props
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
+      <Parcel x={x} y={y} shouldBeOwner>
         {parcel => (
           <div className="TransferParcelPage">
             {isOnSale(parcel, publications) ? (

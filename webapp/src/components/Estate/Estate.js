@@ -12,7 +12,11 @@ export default class Estate extends React.PureComponent {
   render() {
     const { id } = this.props
     return (
-      <AssetLoader id={id} assetType={ASSET_TYPES.estate} {...this.props} />
+      <AssetLoader
+        assetId={id}
+        assetType={ASSET_TYPES.estate}
+        {...this.props}
+      />
     )
   }
 }

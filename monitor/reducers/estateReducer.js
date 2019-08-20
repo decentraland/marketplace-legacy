@@ -143,19 +143,6 @@ async function reduceEstateRegistry(event) {
       }
       break
     }
-    case eventNames.UpdateOperator: {
-      const { _operator } = event.args
-      const estateId = event.args._estateId
-
-      log.info(
-        `[${name}] Updating Estate id: "${estateId}" operator: ${_operator}`
-      )
-      await Estate.update(
-        { update_operator: _operator.toLowerCase() },
-        { id: estateId }
-      )
-      break
-    }
     case eventNames.Update: {
       const { _assetId, _data } = event.args
       const estate = await Estate.findByTokenId(_assetId)
@@ -177,6 +164,22 @@ async function reduceEstateRegistry(event) {
       }
       break
     }
+    case eventNames.UpdateOperator: {
+      const { _operator } = event.args
+      const estateId = event.args._estateId
+
+      log.info(
+        `[${name}] Updating Estate id: "${estateId}" operator: ${_operator}`
+      )
+      await Estate.update(
+        { update_operator: _operator.toLowerCase() },
+        { id: estateId }
+      )
+      if (shouldUpdateCache) {
+        debouncedUpsertTileAsset(estateId, ASSET_TYPES.estate)
+      }
+      break
+    }
     case eventNames.Approval: {
       const { _approved } = event.args
       const estateId = event.args._tokenId
@@ -188,6 +191,9 @@ async function reduceEstateRegistry(event) {
         { operator: _approved.toLowerCase() },
         { id: estateId }
       )
+      if (shouldUpdateCache) {
+        debouncedUpsertTileAsset(estateId, ASSET_TYPES.estate)
+      }
       break
     }
     default:

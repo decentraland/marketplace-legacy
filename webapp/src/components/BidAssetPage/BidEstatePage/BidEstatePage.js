@@ -6,12 +6,12 @@ import { t, T } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import { isActive } from 'shared/bid'
-import BidAssetForm from '../BidAssetForm'
 import { authorizationType, bidType, walletType } from 'components/types'
 import Estate from 'components/Estate'
 import EstateName from 'components/EstateName'
 import TxStatus from 'components/TxStatus'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
+import BidAssetForm from '../BidAssetForm'
 
 export default class BidEstatePage extends React.PureComponent {
   static propTypes = {
@@ -32,9 +32,9 @@ export default class BidEstatePage extends React.PureComponent {
     const isBidActive = isActive(bid)
 
     return (
-      <Estate id={id} ownerNotAllowed>
+      <Estate id={id} shouldBeOwner={false}>
         {estate => (
-          <div className="PublishPage">
+          <div className="BidEstatePage">
             {!isAllowed ? (
               <Container text>
                 <Message

@@ -4,15 +4,15 @@ import { fetchAssetListingHistory } from 'modules/asset//actions'
 import { getAcceptedBidsByAsset } from 'modules/bid/selectors'
 import AssetTransactionHistory from './AssetTransactionHistory'
 
-const mapState = (state, ownProps) => {
+const mapState = (state, { asset, assetType }) => {
   return {
-    bids: getAcceptedBidsByAsset(state, ownProps.asset)
+    bids: getAcceptedBidsByAsset(state, asset, assetType)
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => ({
+const mapDispatch = (dispatch, { asset, assetType }) => ({
   onFetchAssetTransactionHistory: () =>
-    dispatch(fetchAssetListingHistory(ownProps.asset))
+    dispatch(fetchAssetListingHistory(asset, assetType))
 })
 
 export default connect(mapState, mapDispatch)(AssetTransactionHistory)

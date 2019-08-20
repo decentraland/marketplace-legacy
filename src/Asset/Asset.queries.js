@@ -1,14 +1,19 @@
-export const AssetQueries = Object.freeze({
-  selectAssetsSQL: assets =>
-    assets
-      .map(({ tableName }) => `row_to_json(${tableName}.*) as ${tableName}`)
-      .join(', '),
+import { APPROVAL_TYPES } from '../shared/approval'
+import { SQL, raw } from '../database'
 
-  joinAssetsSQL: assets =>
-    assets
-      .map(
-        ({ tableName }) =>
-          `LEFT JOIN ${tableName} as ${tableName} ON ${tableName}.id = bid.asset_id`
-      )
-      .join('\n')
+export const AssetQueries = Object.freeze({
+  canAccessAsset: (address, tableName = 'assets') =>
+    SQL`(
+      ${raw(tableName)}.owner = ${address}
+        OR ${raw(tableName)}.operator = ${address}
+        OR ${raw(tableName)}.update_operator = ${address}
+        OR EXISTS (
+          SELECT 1
+            FROM approvals a
+            WHERE a.owner = ${raw(tableName)}.owner
+              AND a.operator = ${address}
+              AND a.type = ANY(${Object.values(APPROVAL_TYPES)})
+            LIMIT 1
+        )
+    )`
 })

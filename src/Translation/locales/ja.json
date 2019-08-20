@@ -130,7 +130,8 @@
     "owner": "所有者: {owner}",
     "road": "道路",
     "your_estate": "あなたのエステート",
-    "your_parcel": "あなたの区画"
+    "your_parcel": "あなたの区画",
+    "has_access": "あなたはアクセス権を持っています"
   },
   "auction": {
     "description_after_finish": "土地オークションは終了しました！",

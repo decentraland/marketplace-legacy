@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import EstateName from 'components/EstateName'
 import Mana from 'components/Mana'
 import { walletType, bidType } from 'components/types'
@@ -33,10 +33,10 @@ export default class AcceptBidEstatePage extends React.PureComponent {
     } = this.props
     const { price } = bid
     return (
-      <Estate id={id} ownerOnly>
+      <Estate id={id} shouldBeOwner>
         {estate => {
           return (
-            <div className="BuyEstatePage">
+            <div className="AcceptBidEstatePage">
               <EstateModal
                 parcels={estate.data.parcels}
                 title={t('asset_accept_bid.accept_bid_asset', {

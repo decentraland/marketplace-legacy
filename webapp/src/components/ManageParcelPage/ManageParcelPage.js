@@ -8,6 +8,7 @@ import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
 import ManageAssetForm from 'components/ManageAssetForm'
+import { ACTIONS } from 'shared/roles'
 
 export default class ManageParcelPage extends React.PureComponent {
   static propTypes = {
@@ -23,7 +24,7 @@ export default class ManageParcelPage extends React.PureComponent {
     const { onSubmit, onCancel } = this.props
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
+      <Parcel x={x} y={y} shouldBeAllowedTo={[ACTIONS.setUpdateOperator]}>
         {parcel => (
           <div className="ManageParcelPage">
             <ParcelModal

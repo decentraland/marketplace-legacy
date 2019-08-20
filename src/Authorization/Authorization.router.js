@@ -1,9 +1,8 @@
 import { server } from 'decentraland-server'
-import { env } from 'decentraland-commons'
 
 import { Approval } from '../Approval'
 import { Parcel, Estate } from '../Asset'
-import { ASSET_TYPES } from '../shared/asset'
+import { ASSET_TYPES, getContractAddressByAssetType } from '../shared/asset'
 import { APPROVAL_TYPES } from '../shared/approval'
 import { ReqQueryParams } from '../ReqQueryParams'
 
@@ -13,24 +12,6 @@ export class AuthorizationRouter {
   }
 
   mount() {
-    /**
-     * Returns the assets that an address is update authorized
-     * @param {string} [address] - address to get assets update authorized
-     */
-    this.app.get(
-      '/address/:address/assets/authorized',
-      server.handleRequest(this.getAddressAssetsAuthorizations.bind(this))
-    )
-
-    /**
-     * Returns the parcels that an address is update authorized
-     * @param {string} [address] - address to get parcels update authorized
-     */
-    this.app.get(
-      '/address/:address/parcels/authorized',
-      server.handleRequest(this.getAddressParcelsAuthorizations.bind(this))
-    )
-
     /**
      * Returns the authorizations for a parcel
      * @param  {string} x
@@ -56,20 +37,7 @@ export class AuthorizationRouter {
   }
 
   async getAuthorizations(asset, assetType, address) {
-    let tokenAddress
-
-    switch (assetType) {
-      case ASSET_TYPES.parcel: {
-        tokenAddress = env.get('LAND_REGISTRY_CONTRACT_ADDRESS')
-        break
-      }
-      case ASSET_TYPES.estate: {
-        tokenAddress = env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS')
-        break
-      }
-      default:
-        throw new Error(`The assetType ${assetType} is invalid`)
-    }
+    const tokenAddress = getContractAddressByAssetType(assetType)
 
     const approval = {
       token_address: tokenAddress.toLowerCase(),
@@ -102,41 +70,6 @@ export class AuthorizationRouter {
       isUpdateOperator,
       isUpdateAuthorized
     }
-  }
-
-  getAddressAuthorizations(address) {
-    return Promise.all([
-      Parcel.findUpdateAuthorized(address),
-      Estate.findUpdateAuthorized(address)
-    ])
-  }
-
-  async getAddressAssetsAuthorizations(req) {
-    const reqQueryParams = new ReqQueryParams(req)
-    const address = reqQueryParams.get('address').toLowerCase()
-
-    const [parcels, estates] = await this.getAddressAuthorizations(address)
-    return Object.assign({
-      address,
-      parcels,
-      estates
-    })
-  }
-
-  async getAddressParcelsAuthorizations(req) {
-    const reqQueryParams = new ReqQueryParams(req)
-    const address = reqQueryParams.get('address').toLowerCase()
-
-    let [parcels, estates] = await this.getAddressAuthorizations(address)
-    const estateParcels = await Parcel.findInEstateIds(
-      estates.map(estate => estate.id)
-    )
-    parcels = [...parcels, ...estateParcels]
-
-    return Object.assign({
-      address,
-      parcels
-    })
   }
 
   async getParcelAuthorizations(req) {

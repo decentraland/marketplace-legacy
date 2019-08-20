@@ -6,12 +6,13 @@ import AssetLoader from 'components/AssetLoader'
 import ParcelDetailPage from 'components/ParcelDetailPage'
 import EstateDetailPage from 'components/EstateDetailPage'
 import AssetPreviewHeader from 'components/AssetPreviewHeader'
+import { assetTypingType } from 'components/types'
 import { ASSET_TYPES } from 'shared/asset'
 import './AssetDetailPage.css'
 
 export default class AssetDetailPage extends React.PureComponent {
   static propTypes = {
-    assetType: PropTypes.string.isRequired,
+    assetType: assetTypingType.isRequired,
     onAssetClick: PropTypes.func.isRequired
   }
 
@@ -22,13 +23,13 @@ export default class AssetDetailPage extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     this.setState({ isLoadingNextAsset: false })
   }
 
-  handleAssetClick = ({ id, x, y, assetType }) => {
+  handleAssetClick = ({ id, assetType }) => {
     this.setState({ isLoadingNextAsset: true })
-    this.props.onAssetClick({ id, x, y }, assetType) // {id, x, y} are enough props for the asset interface here
+    this.props.onAssetClick(id, assetType)
   }
 
   hasPreviewHeader(asset, assetType) {
@@ -62,7 +63,7 @@ export default class AssetDetailPage extends React.PureComponent {
     if (ASSET_TYPES[assetType] == null) {
       const assetTypesStr = Object.values(ASSET_TYPES).join(', ')
       throw new Error(
-        `[AssetDetailPage] You must provide one of the following asset types: [${assetTypesStr}] but received "${assetType}" instead`
+        `You must provide one of the following asset types: [${assetTypesStr}], received "${assetType}" instead`
       )
     }
 
@@ -81,7 +82,7 @@ export default class AssetDetailPage extends React.PureComponent {
   render() {
     const { id, assetType } = this.props
     return (
-      <AssetLoader id={id} assetType={assetType}>
+      <AssetLoader assetId={id} assetType={assetType}>
         {(asset, attributes) =>
           this.hasPreviewHeader(asset, assetType) ? (
             <AssetPreviewHeader

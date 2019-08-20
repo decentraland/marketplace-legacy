@@ -15,7 +15,10 @@ import ParcelCoords from 'components/ParcelCoords'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { parcelType, estateType, bidType } from 'components/types'
-import { ASSET_TYPES, isOwner } from 'shared/asset'
+import { ASSET_TYPES } from 'shared/asset'
+import { ACTIONS, can, isOwner } from 'shared/roles'
+import { TYPES } from 'shared/map'
+import { isNewEstate } from 'shared/estate'
 import {
   getParcelMatcher,
   isEqualCoords,
@@ -23,33 +26,50 @@ import {
 } from 'shared/parcel'
 import { hasNeighbour, areConnected, MAX_PARCELS_PER_TX } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
-import EstateSelectActions from './EstateSelectActions'
-import './EstateSelect.css'
+import './SelectEstateParcels.css'
 
-export default class EstateSelect extends React.PureComponent {
+export default class SelectEstateParcels extends React.PureComponent {
   static propTypes = {
-    estate: estateType.isRequired,
     bids: PropTypes.arrayOf(bidType),
     pristineEstate: estateType,
     allParcels: PropTypes.objectOf(parcelType),
     wallet: PropTypes.object.isRequired,
-    isCreation: PropTypes.bool.isRequired,
     isTxIdle: PropTypes.bool.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onCreateCancel: PropTypes.func.isRequired,
-    onContinue: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onDeleteEstate: PropTypes.func.isRequired
+    onDeleteEstate: PropTypes.func.isRequired,
+    onCreateCancel: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
   }
 
-  handleParcelClick = ({ id, x, y, assetType }) => {
-    const { wallet } = this.props
-    if (!isOwner(wallet, buildCoordinate(x, y)) && !isOwner(wallet, id)) {
+  constructor(props) {
+    super(props)
+    this.state = {
+      estate: props.pristineEstate
+    }
+  }
+
+  handleChangeParcels = parcels => {
+    const { estate } = this.state
+
+    this.setState({
+      estate: {
+        ...estate,
+        data: {
+          ...estate.data,
+          parcels
+        }
+      }
+    })
+  }
+
+  handleParcelClick = tile => {
+    const { id, x, y, assetType, type } = tile
+
+    if (type > TYPES.withAccess) {
       return
     }
 
-    const { estate, onChange } = this.props
+    const { estate } = this.state
     const parcels = estate.data.parcels
 
     if (assetType === ASSET_TYPES.estate && id !== estate.id) {
@@ -72,14 +92,18 @@ export default class EstateSelect extends React.PureComponent {
       if (!areConnected(newParcels)) {
         return
       }
-      return onChange(newParcels)
+      return this.handleChangeParcels(newParcels)
     }
 
     if (this.hasReachedAddLimit()) {
       return
     }
 
-    onChange([...parcels, { x, y }])
+    this.handleChangeParcels([...parcels, { x, y }])
+  }
+
+  handleSubmit = () => {
+    this.props.onSubmit(this.state.estate)
   }
 
   haveParcelsChanged = parcels => {
@@ -108,14 +132,16 @@ export default class EstateSelect extends React.PureComponent {
   }
 
   getParcelsToAdd() {
-    const { estate, pristineEstate } = this.props
+    const { estate } = this.state
+    const { pristineEstate } = this.props
     const newParcels = estate.data.parcels
     const pristineParcels = pristineEstate ? pristineEstate.data.parcels : []
     return getParcelsNotIncluded(newParcels, pristineParcels)
   }
 
   getParcelsToRemove() {
-    const { estate, pristineEstate } = this.props
+    const { estate } = this.state
+    const { pristineEstate } = this.props
     const newParcels = estate.data.parcels
     const pristineParcels = pristineEstate ? pristineEstate.data.parcels : []
     return getParcelsNotIncluded(pristineParcels, newParcels)
@@ -132,7 +158,8 @@ export default class EstateSelect extends React.PureComponent {
   }
 
   getEstateParcels() {
-    const { estate, allParcels } = this.props
+    const { estate } = this.state
+    const { allParcels } = this.props
     const parcels = []
 
     for (const { x, y } of estate.data.parcels) {
@@ -170,26 +197,33 @@ export default class EstateSelect extends React.PureComponent {
     )
   }
 
+  canTransfer() {
+    const { wallet, estate } = this.props
+    return isNewEstate(estate) || can(ACTIONS.transfer, wallet.address, estate)
+  }
+
   render() {
+    const { estate } = this.state
     const {
-      estate,
+      pristineEstate,
       bids,
-      onCancel,
-      onContinue,
-      onSubmit,
       wallet,
       allParcels,
-      isCreation,
-      onCreateCancel,
       isTxIdle,
-      onDeleteEstate
+      onDeleteEstate,
+      onCreateCancel,
+      onCancel
     } = this.props
 
     const parcels = estate.data.parcels
-    const canEdit = isCreation || isOwner(wallet, estate.id)
+    const isCreation = isNewEstate(pristineEstate)
+
+    const canTransfer = this.canTransfer()
+    const canContinue = this.hasParcels(parcels)
+    const canSubmit = canContinue && this.haveParcelsChanged(parcels)
 
     return (
-      <div className="EstateSelect">
+      <div className="SelectEstateParcels">
         <AssetPreviewHeader
           asset={estate}
           showMiniMap={false}
@@ -230,8 +264,9 @@ export default class EstateSelect extends React.PureComponent {
                     ? t('estate_select.new_selection')
                     : t('estate_select.edit_selection')}
                 </Header>
-                {!isCreation &&
-                  isOwner(wallet, estate.id) && (
+                {/*We only allow owners to dissolve their own states to avoid confusing transfers with operators*/
+                !isCreation &&
+                  isOwner(wallet.address, estate) && (
                     <Button
                       size="tiny"
                       className="link dissolve-button"
@@ -253,20 +288,26 @@ export default class EstateSelect extends React.PureComponent {
                   />
                 </Grid.Column>
               )}
-              {canEdit && (
+              {canTransfer && (
                 <Grid.Column width={16}>
-                  <EstateSelectActions
-                    isTxIdle={isTxIdle}
-                    isCreation={isCreation}
-                    onSubmit={onSubmit}
-                    onCancel={isCreation ? onCreateCancel : onCancel}
-                    onContinue={onContinue}
-                    canContinue={this.hasParcels(parcels)}
-                    canSubmit={
-                      this.hasParcels(parcels) &&
-                      this.haveParcelsChanged(parcels)
-                    }
-                  />
+                  <div className="actions">
+                    {isTxIdle && <TxStatus.Idle isIdle={isTxIdle} />}
+                    <Button
+                      size="tiny"
+                      onClick={isCreation ? onCreateCancel : onCancel}
+                    >
+                      {t('global.cancel')}
+                    </Button>
+                    <Button
+                      size="tiny"
+                      disabled={isCreation ? !canContinue : !canSubmit}
+                      onClick={this.handleSubmit}
+                      primary
+                    >
+                      {isCreation ? t('global.continue') : t('global.submit')}
+                    </Button>
+                  </div>
+
                   {!isCreation && this.renderTxLabel()}
                   <TxStatus.Asset
                     asset={estate}

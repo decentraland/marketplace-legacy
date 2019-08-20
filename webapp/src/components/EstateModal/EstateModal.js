@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Grid, Header } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import ParcelPreview from 'components/ParcelPreview'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { coordsType, estateType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import { calculateMapProps } from 'shared/estate'
 import './EstateModal.css'
 

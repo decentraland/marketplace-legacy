@@ -4,7 +4,7 @@ import { t, T } from '@dapps/modules/translation/utils'
 
 import CancelListingAssetForm from 'components/CancelListingAssetForm'
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import { bidType } from 'components/types'

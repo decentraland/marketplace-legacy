@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { Loader, Container, Message } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
+import { fetchMANABalance } from 'modules/wallet/utils'
 import { isOpen } from 'shared/listing'
 import { ASSET_TYPES } from 'shared/asset'
-import { fetchMANABalance } from 'modules/wallet/utils'
+import { bidType, assetTypingType } from 'components/types'
 import AcceptBidParcelPage from './AcceptBidParcelPage'
 import AcceptBidEstatePage from './AcceptBidEstatePage'
-import { bidType } from 'components/types'
 
 export default class AcceptBidAssetPage extends React.PureComponent {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class AcceptBidAssetPage extends React.PureComponent {
     bid: bidType,
     onFetchBidById: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    assetType: PropTypes.string.isRequired,
+    assetType: assetTypingType.isRequired,
     isConnected: PropTypes.bool.isRequired,
     isBidLoading: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired

@@ -3,8 +3,8 @@ import { Model } from 'decentraland-server'
 import { Listing } from '../Listing'
 import { ListingQueries } from '../Listing.queries'
 import { BidQueries } from './Bid.queries'
-import { db, SQL, raw } from '../../database'
-import { AssetQueries, EstateQueries } from '../../Asset'
+import { SQL, raw } from '../../database'
+import { EstateQueries } from '../../Asset'
 import { LISTING_STATUS } from '../../shared/listing'
 
 export class Bid extends Model {
@@ -153,14 +153,10 @@ export class Bid extends Model {
     address,
     statuses = Object.values(LISTING_STATUS)
   ) {
-    const Assets = Listing.getListableAssets()
-
-    let assets = await db.query(
-      SQL`SELECT row_to_json(bid.*) as bids, ${raw(
-        AssetQueries.selectAssetsSQL(Assets)
-      )}
+    let assets = await this.query(
+      SQL`SELECT row_to_json(bid.*) as bids, ${ListingQueries.selectListableAssets()}
           FROM ${raw(this.tableName)} as bid
-          ${raw(AssetQueries.joinAssetsSQL(Assets))}
+          ${ListingQueries.joinListableAssets('bid')}
           WHERE ${BidQueries.bidderOrSeller(address)}
             AND ${EstateQueries.estateHasParcels('bid')}
             AND ${ListingQueries.hasStatuses(statuses)}`

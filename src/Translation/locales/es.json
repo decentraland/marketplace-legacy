@@ -136,7 +136,8 @@
     "owner": "Dueño: {owner}",
     "road": "Carretera",
     "your_estate": "Su propiedad",
-    "your_parcel": "Tu parcela"
+    "your_parcel": "Tu parcela",
+    "has_access": "Tienes acceso"
   },
   "auction": {
     "description_after_finish": "La subasta de LAND ha terminado!",
@@ -289,10 +290,10 @@
   "estate_select": {
     "bids_warning": "Este Estate tiene ofertas activas. ",
     "description": "Seleccione parcelas adyacentes entre sí",
-    "detail": "Detalle de finca",
+    "detail": "Detalle de propiedad",
     "edit_selection": "Seleccione las parcelas en el mapa",
-    "new_selection": "Seleccione las parcelas en el mapa para su nueva finca",
-    "tx_to_be_send": "Enviarás una transacción a {action} parcels: {parcels}"
+    "new_selection": "Seleccione las parcelas en el mapa para su nueva propiedad",
+    "tx_to_be_send": "Enviarás una transacción a {action} parcelas: {parcels}"
   },
   "fatfinger_modal": {
     "bid_type": "oferta",

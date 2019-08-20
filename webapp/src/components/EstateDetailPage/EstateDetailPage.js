@@ -5,27 +5,31 @@ import { Icon, Header, Grid, Button } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
+import { getOpenPublication } from 'modules/asset/utils'
+import { ASSET_TYPES } from 'shared/asset'
 import { hasTags } from 'shared/parcel'
 import { calculateMapProps } from 'shared/estate'
 import { buildCoordinate } from 'shared/coordinates'
 import { isDistrict } from 'shared/district'
 import { shouldShowBid } from 'shared/bid'
+import { ACTIONS } from 'shared/roles'
 import {
+  walletType,
   estateType,
   publicationType,
-  bidType,
-  walletType
+  tileType,
+  bidType
 } from 'components/types'
-import EstateActions from './EstateActions'
+import Permission from 'components/Permission'
 import ParcelTags from 'components/ParcelTags'
 import ParcelCoords from 'components/ParcelCoords'
-import AddressBlock from 'components/AddressBlock'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
 import LandAmount from 'components/LandAmount'
 import Bid from 'components/Bid'
 import AssetTransactionHistory from 'components/AssetTransactionHistory'
+import EstateOwner from './EstateOwner'
+import EstateActions from './EstateActions'
 
 import './EstateDetailPage.css'
 
@@ -35,15 +39,13 @@ const WITHOUT_ACTION_BUTTONS_WIDTH = 16
 export default class EstateDetailPage extends React.PureComponent {
   // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
+    wallet: walletType,
     estate: estateType.isRequired,
     publications: PropTypes.objectOf(publicationType).isRequired,
-    isOwner: PropTypes.bool.isRequired,
-    onEditParcels: PropTypes.func.isRequired,
-    onEditMetadata: PropTypes.func.isRequired,
-    onManageEstate: PropTypes.func.isRequired,
-    onParcelClick: PropTypes.func.isRequired,
+    tiles: PropTypes.objectOf(tileType),
     bids: PropTypes.arrayOf(bidType),
-    wallet: walletType
+    isOwner: PropTypes.bool.isRequired,
+    onParcelClick: PropTypes.func.isRequired
   }
 
   getEstateParcels() {
@@ -73,16 +75,13 @@ export default class EstateDetailPage extends React.PureComponent {
 
   render() {
     const {
+      wallet,
       estate,
       publications,
+      bids,
       tiles,
       isOwner,
-      onEditParcels,
-      onEditMetadata,
-      onManageEstate,
-      onParcelClick,
-      bids,
-      wallet
+      onParcelClick
     } = this.props
 
     if (estate.data.parcels.length === 0) {
@@ -95,7 +94,7 @@ export default class EstateDetailPage extends React.PureComponent {
 
     return (
       <div className="EstateDetailPage">
-        <Grid className="details" stackable>
+        <Grid stackable>
           <Grid.Row>
             <Grid.Column
               computer={WITH_ACTION_BUTTONS_WIDTH}
@@ -103,8 +102,10 @@ export default class EstateDetailPage extends React.PureComponent {
               className="estate-data"
             >
               <Header size="large">
-                <p className="estate-title">
-                  <span>{estate.data.name || t('estate_select.detail')}</span>
+                <div className="estate-title">
+                  <span className="estate-name">
+                    {estate.data.name || t('estate_select.detail')}
+                  </span>
                   <Link
                     to={locations.parcelMapDetail(
                       center.x,
@@ -114,7 +115,7 @@ export default class EstateDetailPage extends React.PureComponent {
                   >
                     <LandAmount value={estate.data.parcels.length} />
                   </Link>
-                </p>
+                </div>
                 {estate.data.description && (
                   <p className="estate-description">
                     {estate.data.description}
@@ -128,31 +129,7 @@ export default class EstateDetailPage extends React.PureComponent {
                 mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
                 className="estate-owner-container"
               >
-                {isOwner ? (
-                  <div>
-                    <Button
-                      size="tiny"
-                      className="link"
-                      onClick={onEditMetadata}
-                    >
-                      <Icon name="pencil" />
-                      {t('global.edit')}
-                    </Button>
-                    <Button
-                      size="tiny"
-                      className="link manage-button"
-                      onClick={onManageEstate}
-                    >
-                      <Icon name="add user" />
-                      {t('asset_detail.actions.permissions')}
-                    </Button>
-                  </div>
-                ) : (
-                  <span className="owned-by">
-                    <span>{t('global.owned_by')}</span>
-                    <AddressBlock address={estate.owner} scale={4} />
-                  </span>
-                )}
+                <EstateOwner wallet={wallet} estate={estate} />
               </Grid.Column>
             )}
           </Grid.Row>
@@ -194,13 +171,7 @@ export default class EstateDetailPage extends React.PureComponent {
                   : WITHOUT_ACTION_BUTTONS_WIDTH
               }
             >
-              <EstateActions
-                wallet={wallet}
-                isOwner={isOwner}
-                publications={publications}
-                estate={estate}
-                bids={bidsToShow}
-              />
+              <EstateActions estate={estate} publications={publications} />
             </Grid.Column>
           </Grid.Row>
 
@@ -209,9 +180,7 @@ export default class EstateDetailPage extends React.PureComponent {
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
-                  {bidsToShow.map(bid => (
-                    <Bid key={bid.id} bid={bid} isOwner={isOwner} />
-                  ))}
+                  {bidsToShow.map(bid => <Bid key={bid.id} bid={bid} />)}
                 </Grid.Column>
               </Grid.Row>
             )}
@@ -228,25 +197,23 @@ export default class EstateDetailPage extends React.PureComponent {
             {tiles && (
               <React.Fragment>
                 <Grid.Column
-                  computer={
-                    isOwner
-                      ? WITH_ACTION_BUTTONS_WIDTH
-                      : WITHOUT_ACTION_BUTTONS_WIDTH
-                  }
+                  computer={WITHOUT_ACTION_BUTTONS_WIDTH}
                   mobile={WITHOUT_ACTION_BUTTONS_WIDTH}
                 >
-                  <h3>
+                  <h3 className="estate-parcels">
                     {t('estate_detail.parcels')}
-                    {isOwner && (
-                      <Button
-                        size="tiny"
-                        className="link"
-                        onClick={onEditParcels}
-                      >
-                        <Icon name="pencil" />
-                        {t('estate_detail.edit_parcels')}{' '}
-                      </Button>
-                    )}
+                    <Permission
+                      asset={estate}
+                      assetType={ASSET_TYPES.estate}
+                      actions={[ACTIONS.transfer]}
+                    >
+                      <Link to={locations.editEstateParcels(estate.id)}>
+                        <Button size="tiny" className="link">
+                          <Icon name="pencil" />
+                          {t('estate_detail.edit_parcels')}{' '}
+                        </Button>
+                      </Link>
+                    </Permission>
                   </h3>
                 </Grid.Column>
                 <Grid.Column width={WITHOUT_ACTION_BUTTONS_WIDTH}>
@@ -259,8 +226,10 @@ export default class EstateDetailPage extends React.PureComponent {
             )}
           </Grid.Row>
         </Grid>
+
         <AssetTransactionHistory
-          asset={{ ...estate, type: ASSET_TYPES.estate }}
+          asset={estate}
+          assetType={ASSET_TYPES.estate}
           publications={publications}
         />
       </div>

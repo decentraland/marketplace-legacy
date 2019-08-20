@@ -140,7 +140,8 @@
     "owner": "Propriétaire : {owner}",
     "road": "Route",
     "your_estate": "Votre domaine",
-    "your_parcel": "Votre parcelle"
+    "your_parcel": "Votre parcelle",
+    "has_access": "Vous avez accès"
   },
   "auction": {
     "description_after_finish": "La vente aux enchères LAND est terminée!",

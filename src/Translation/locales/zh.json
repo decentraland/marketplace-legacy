@@ -122,7 +122,8 @@
     "owner": "所有者：{owner}",
     "road": "路",
     "your_estate": "您的连块土地",
-    "your_parcel": "您的地块"
+    "your_parcel": "您的地块",
+    "has_access": "你有权访问"
   },
   "auction": {
     "description_after_finish": "LAND 拍卖结束了！",

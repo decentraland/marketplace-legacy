@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import EstateName from 'components/EstateName'
 import Mana from 'components/Mana'
 import {
@@ -11,7 +12,6 @@ import {
   authorizationType,
   publicationType
 } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
 import { BuyWarningMessage, NotConnected } from 'components/BuyAssetPage'
 import { getCurrentAllowance } from 'modules/authorization/utils'
 
@@ -23,7 +23,6 @@ export default class BuyEstatePage extends React.PureComponent {
     wallet: walletType,
     authorization: authorizationType,
     publication: publicationType,
-    isDisabled: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
@@ -47,7 +46,7 @@ export default class BuyEstatePage extends React.PureComponent {
     const { mana } = wallet
 
     return (
-      <Estate id={id} ownerNotAllowed withPublications>
+      <Estate id={id} shouldBeOwner={false} shouldBeOnSale>
         {estate => {
           if (publication) {
             // to avoid a race condition we expect a valid publication

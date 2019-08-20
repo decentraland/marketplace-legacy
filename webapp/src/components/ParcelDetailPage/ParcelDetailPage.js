@@ -7,6 +7,8 @@ import ParcelName from 'components/ParcelName'
 import Mana from 'components/Mana'
 import Expiration from 'components/Expiration'
 import ParcelTags from 'components/ParcelTags'
+import Bid from 'components/Bid'
+import AssetTransactionHistory from 'components/AssetTransactionHistory'
 import {
   parcelType,
   districtType,
@@ -16,7 +18,8 @@ import {
   estateType,
   bidType
 } from 'components/types'
-import { getOpenPublication, ASSET_TYPES } from 'shared/asset'
+import { getOpenPublication } from 'modules/asset/utils'
+import { ASSET_TYPES } from 'shared/asset'
 import { getDistrict } from 'shared/district'
 import { hasTags } from 'shared/parcel'
 import { shouldShowBid } from 'shared/bid'
@@ -24,21 +27,20 @@ import ParcelOwner from './ParcelOwner'
 import ParcelActions from './ParcelActions'
 import ParcelDescription from './ParcelDescription'
 import ParcelMortgage from './ParcelMortgage'
-import Bid from 'components/Bid'
-import AssetTransactionHistory from 'components/AssetTransactionHistory'
 
 import './ParcelDetailPage.css'
 
 export default class ParcelDetailPage extends React.PureComponent {
   static propTypes = {
-    parcel: parcelType.isRequired,
     wallet: walletType.isRequired,
+    parcel: parcelType.isRequired,
     publications: PropTypes.objectOf(publicationType),
     estates: PropTypes.objectOf(estateType),
     districts: PropTypes.objectOf(districtType).isRequired,
+    bids: PropTypes.arrayOf(bidType),
     mortgage: mortgageType,
-    onBuy: PropTypes.func.isRequired,
-    bids: PropTypes.arrayOf(bidType)
+    isOwner: PropTypes.bool.isRequired,
+    onBuy: PropTypes.func.isRequired
   }
 
   getDescription() {
@@ -57,14 +59,14 @@ export default class ParcelDetailPage extends React.PureComponent {
 
   render() {
     const {
-      parcel,
-      districts,
-      estates,
-      publications,
-      isOwner,
-      mortgage,
       wallet,
-      bids
+      parcel,
+      publications,
+      estates,
+      districts,
+      bids,
+      mortgage,
+      isOwner
     } = this.props
 
     const description = this.getDescription()
@@ -83,10 +85,10 @@ export default class ParcelDetailPage extends React.PureComponent {
             </Grid.Column>
             <Grid.Column className="parcel-owner-container">
               <ParcelOwner
+                wallet={wallet}
                 parcel={parcel}
                 estates={estates}
                 districts={districts}
-                isOwner={isOwner}
               />
             </Grid.Column>
           </Grid.Row>
@@ -121,12 +123,9 @@ export default class ParcelDetailPage extends React.PureComponent {
               computer={publication ? 8 : 16}
             >
               <ParcelActions
-                wallet={wallet}
                 parcel={parcel}
-                mortgage={mortgage}
                 publications={publications}
-                isOwner={isOwner}
-                bids={bids}
+                hasMortgage={!!mortgage}
               />
             </Grid.Column>
           </Grid.Row>
@@ -138,9 +137,7 @@ export default class ParcelDetailPage extends React.PureComponent {
               <Grid.Row>
                 <Grid.Column>
                   <h3>{t('asset_detail.bid.title')}</h3>
-                  {bidsToShow.map(bid => (
-                    <Bid key={bid.id} bid={bid} isOwner={isOwner} />
-                  ))}
+                  {bidsToShow.map(bid => <Bid key={bid.id} bid={bid} />)}
                 </Grid.Column>
               </Grid.Row>
             </Grid>
@@ -160,7 +157,8 @@ export default class ParcelDetailPage extends React.PureComponent {
         )}
 
         <AssetTransactionHistory
-          asset={{ ...parcel, type: ASSET_TYPES.parcel }}
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
           publications={publications}
         />
       </div>

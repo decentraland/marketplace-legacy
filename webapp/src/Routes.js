@@ -32,6 +32,7 @@ import DeleteEstatePage from 'components/DeleteEstatePage'
 import TransferEstatePage from 'components/TransferEstatePage'
 import AssetDetailPage from 'components/AssetDetailPage'
 import EditEstatePage from 'components/EditEstatePage'
+import EditEstateMetadataPage from 'components/EditEstateMetadataPage'
 import ManageEstatePage from 'components/ManageEstatePage'
 import AuctionRouterPage from 'components/AuctionRouterPage'
 import BidAssetPage from 'components/BidAssetPage'
@@ -82,7 +83,7 @@ export default class Routes extends React.Component {
         />
         <Route
           exact
-          path={this.addLegacySupport(locations.cancelSaleParcel())}
+          path={this.addLegacySupport(locations.cancelParcelSale())}
           component={CancelSaleParcelPage}
         />
         <Route
@@ -102,7 +103,7 @@ export default class Routes extends React.Component {
         {isFeatureEnabled('BIDS') && (
           <Route
             exact
-            path={locations.cancelBidParcel()}
+            path={locations.cancelParcelBid()}
             component={props => (
               <CancelBidAssetPage assetType={ASSET_TYPES.parcel} {...props} />
             )}
@@ -111,7 +112,7 @@ export default class Routes extends React.Component {
         {isFeatureEnabled('BIDS') && (
           <Route
             exact
-            path={locations.acceptBidParcel()}
+            path={locations.acceptParcelBid()}
             component={props => (
               <AcceptBidAssetPage assetType={ASSET_TYPES.parcel} {...props} />
             )}
@@ -121,15 +122,15 @@ export default class Routes extends React.Component {
         {/*Estates*/}
         <Route
           exact
-          path={locations.createEstate()}
-          component={EditEstatePage}
-        />
-        <Route
-          exact
           path={locations.estateDetail()}
           render={props => (
             <AssetDetailPage assetType={ASSET_TYPES.estate} {...props} />
           )}
+        />
+        <Route
+          exact
+          path={locations.createEstate()}
+          component={EditEstatePage}
         />
         <Route
           exact
@@ -139,7 +140,7 @@ export default class Routes extends React.Component {
         <Route
           exact
           path={locations.editEstateMetadata()}
-          render={props => <EditEstatePage isSelecting={false} {...props} />}
+          component={EditEstateMetadataPage}
         />
         <Route
           exact
@@ -159,7 +160,7 @@ export default class Routes extends React.Component {
         <Route exact path={locations.buyEstate()} component={BuyEstatePage} />
         <Route
           exact
-          path={locations.cancelSaleEstate()}
+          path={locations.cancelEstateSale()}
           component={CancelSaleEstatePage}
         />
         <Route
@@ -179,7 +180,7 @@ export default class Routes extends React.Component {
         {isFeatureEnabled('BIDS') && (
           <Route
             exact
-            path={locations.cancelBidEstate()}
+            path={locations.cancelEstateBid()}
             component={props => (
               <CancelBidAssetPage assetType={ASSET_TYPES.estate} {...props} />
             )}
@@ -188,7 +189,7 @@ export default class Routes extends React.Component {
         {isFeatureEnabled('BIDS') && (
           <Route
             exact
-            path={locations.acceptBidEstate()}
+            path={locations.acceptEstateBid()}
             component={props => (
               <AcceptBidAssetPage assetType={ASSET_TYPES.estate} {...props} />
             )}
@@ -203,7 +204,7 @@ export default class Routes extends React.Component {
         />
         <Route
           exact
-          path={locations.payMortgageParcel()}
+          path={locations.payParcelMortgage()}
           component={PayMortgagePage}
         />
 

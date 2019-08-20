@@ -112,7 +112,7 @@ export class ParcelRouter {
   }
 
   async getParcel(req) {
-    let parcel, x, y
+    let x, y
 
     try {
       x = unsafeParseInt(server.extractFromReq(req, 'x'))
@@ -128,12 +128,10 @@ export class ParcelRouter {
 
     Bounds.validateInBounds(x, y)
 
-    const coords = Parcel.buildId(x, y)
-    const range = await Parcel.inRange(coords, coords)
+    const id = Parcel.buildId(x, y)
+    const parcel = await Parcel.findById(id)
 
-    parcel = sanitizeParcel(range[0])
-
-    return parcel
+    return sanitizeParcel(parcel)
   }
 
   async getAvailableParcel() {

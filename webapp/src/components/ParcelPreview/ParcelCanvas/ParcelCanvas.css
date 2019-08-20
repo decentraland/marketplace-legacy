@@ -24,7 +24,7 @@
   pointer-events: none;
 }
 
-.ParcelCanvasPopup .parcel-popup {
+.ParcelCanvasPopup .Popup {
   width: 100%;
   margin-left: -50%;
   border-radius: 4px;
@@ -34,14 +34,14 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.ParcelCanvasPopup.move-left .parcel-popup {
+.ParcelCanvasPopup.move-left .Popup {
   margin-left: -100%;
 }
 
-.ParcelCanvasPopup.move-right .parcel-popup {
+.ParcelCanvasPopup.move-right .Popup {
   margin-left: 0%;
 }
 
-.ParcelCanvasPopup.visible .parcel-popup {
+.ParcelCanvasPopup.visible .Popup {
   opacity: 1;
 }

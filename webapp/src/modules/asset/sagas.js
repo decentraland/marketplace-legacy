@@ -3,7 +3,13 @@ import { push } from 'react-router-redux'
 import { eth } from 'decentraland-eth'
 
 import { locations } from 'locations'
-import { FETCH_ASSET, FETCH_ASSET_LISTING_HISTORY } from './actions'
+import {
+  FETCH_ASSET_REQUEST,
+  NAVIGATE_TO_ASSET,
+  FETCH_ASSET_LISTING_HISTORY,
+  fetchAssetSuccess,
+  fetchAssetFailure
+} from './actions'
 import { ASSET_TYPES } from 'shared/asset'
 import { splitCoordinate } from 'shared/coordinates'
 import {
@@ -18,38 +24,55 @@ import { fetchAssetAcceptedBidsRequest } from 'modules/bid/actions'
 import { getData as getEstates } from 'modules/estates/selectors'
 
 export function* assetSaga() {
-  yield takeEvery(FETCH_ASSET, handleFetchAsset)
+  yield takeEvery(FETCH_ASSET_REQUEST, handleFetchAsset)
+  yield takeEvery(NAVIGATE_TO_ASSET, handleNavigateToAsset)
   yield takeEvery(FETCH_ASSET_LISTING_HISTORY, handleFetchAssetListingHistory)
 }
 
 function* handleFetchAsset(action) {
-  const { asset, assetType } = action
+  const { assetId, assetType } = action
 
-  switch (assetType) {
-    case ASSET_TYPES.parcel: {
-      yield put(fetchParcelRequest(asset.x, asset.y))
-      const { x, y } = yield take(FETCH_PARCEL_SUCCESS)
-      yield put(push(locations.parcelDetail(x, y)))
-      break
-    }
-    case ASSET_TYPES.estate: {
-      yield put(fetchEstateRequest(asset.id))
-      const { estate } = yield take(FETCH_ESTATE_SUCCESS)
-      yield put(push(locations.estateDetail(estate.id)))
-      break
-    }
-    default:
-      throw new Error(`Unkown asset type ${action.assetType}`)
+  try {
+    const asset = yield fetchAsset(assetId, assetType)
+    yield put(fetchAssetSuccess(asset, assetType))
+  } catch (error) {
+    yield put(fetchAssetFailure(assetId, assetType, error.message))
   }
 }
 
-function* handleFetchAssetListingHistory({ asset }) {
-  // @TODO: fetch publications (?) and mortgages
-  yield put(fetchAssetAcceptedBidsRequest(asset))
+function* handleNavigateToAsset(action) {
+  const { assetId, assetType } = action
+
+  yield fetchAsset(assetId, assetType) // fill state
+  yield put(push(locations.assetDetail(assetId, assetType)))
+}
+
+function* handleFetchAssetListingHistory(action) {
+  const { asset, assetType } = action
+  // TODO: fetch publications (?) and mortgages
+  yield put(fetchAssetAcceptedBidsRequest(asset, assetType))
+}
+
+export function* fetchAsset(assetId, assetType) {
+  // TODO: Check for _FAILURE cases
+  switch (assetType) {
+    case ASSET_TYPES.parcel: {
+      const [x, y] = splitCoordinate(assetId)
+      yield put(fetchParcelRequest(x, y))
+      return yield take(FETCH_PARCEL_SUCCESS)
+    }
+    case ASSET_TYPES.estate: {
+      yield put(fetchEstateRequest(assetId))
+      return yield take(FETCH_ESTATE_SUCCESS)
+    }
+    default:
+      throw new Error(`Invalid asset type "${assetType}"`)
+  }
 }
 
 export function* buildAsset(assetId, assetType) {
   let asset
+
   if (assetType === ASSET_TYPES.parcel) {
     const [x, y] = splitCoordinate(assetId)
 

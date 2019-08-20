@@ -1,7 +1,9 @@
 import { ASSET_TYPES } from 'shared/asset'
+import { splitCoordinate } from 'shared/coordinates'
 
 const asCoordinateParam = key => `:${key}(-?\\d+)`
 const asIntParam = key => `:${key}(\\d+)`
+
 const params = {
   x: asCoordinateParam('x'),
   y: asCoordinateParam('y'),
@@ -28,7 +30,7 @@ export const locations = {
 
   sellParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/sell`,
   buyParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/buy`,
-  cancelSaleParcel: (x = params.x, y = params.y) =>
+  cancelParcelSale: (x = params.x, y = params.y) =>
     `/parcels/${x}/${y}/cancel-sale`,
 
   editParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/edit`,
@@ -39,45 +41,61 @@ export const locations = {
     `/parcels/${x}/${y}/create-estate`, // this could be /estates/create once it's parcel independent
 
   bidParcel: (x = params.x, y = params.y) => `/parcels/${x}/${y}/bid`,
-  cancelBidParcel: (x = params.x, y = params.y) =>
+  cancelParcelBid: (x = params.x, y = params.y) =>
     `/parcels/${x}/${y}/cancel-bid`,
-  acceptBidParcel: (x = params.x, y = params.y, bidId = ':bidId') =>
+  acceptParcelBid: (x = params.x, y = params.y, bidId = ':bidId') =>
     `/parcels/${x}/${y}/accept-bid/${bidId}`,
 
   // Estates
 
   estateDetail: (id = params.id) => `/estates/${id}/detail`,
 
-  editEstateParcels: (id = params.id) => `/estates/${id}/edit-parcels`,
-  editEstateMetadata: (id = params.id) => `/estates/${id}/edit-metadata`,
-
-  transferEstate: (id = params.id) => `/estates/${id}/transfer`,
-  deleteEstate: (id = params.id) => `/estates/${id}/delete-estate`,
   sellEstate: (id = params.id) => `/estates/${id}/sell`,
   buyEstate: (id = params.id) => `/estates/${id}/buy`,
-  cancelSaleEstate: (id = params.id) => `/estates/${id}/cancel-sale`,
+  cancelEstateSale: (id = params.id) => `/estates/${id}/cancel-sale`,
+
+  editEstateParcels: (id = params.id) => `/estates/${id}/edit-parcels`,
+  editEstateMetadata: (id = params.id) => `/estates/${id}/edit-metadata`,
   manageEstate: (id = params.id) => `/estates/${id}/manage`,
+  transferEstate: (id = params.id) => `/estates/${id}/transfer`,
+
+  deleteEstate: (id = params.id) => `/estates/${id}/delete-estate`,
+
   bidEstate: (id = params.id) => `/estates/${id}/bid`,
-  cancelBidEstate: (id = params.id) => `/estates/${id}/cancel-bid`,
-  acceptBidEstate: (id = params.id, bidId = ':bidId') =>
+  cancelEstateBid: (id = params.id) => `/estates/${id}/cancel-bid`,
+  acceptEstateBid: (id = params.id, bidId = ':bidId') =>
     `/estates/${id}/accept-bid/${bidId}`,
-
-  // Generic assets
-
-  assetDetail: function(asset, assetType) {
-    if (!assetType) {
-      throw new Error('Undefined assetType provided to locations.assetDetail')
-    }
-    return assetType === ASSET_TYPES.parcel
-      ? this.parcelDetail(asset.x, asset.y)
-      : this.estateDetail(asset.id)
-  },
 
   // Mortgages
 
   buyParcelByMortgage: (x = params.x, y = params.y) =>
     `/mortgages/${x}/${y}/buy`,
-  payMortgageParcel: (x = params.x, y = params.y) => `/mortgages/${x}/${y}/pay`,
+  payParcelMortgage: (x = params.x, y = params.y) => `/mortgages/${x}/${y}/pay`,
+
+  // Generic assets
+
+  assetDetail: (assetId, assetType) =>
+    locations.goToAssetLocation('detail', assetId, assetType),
+  bidAsset: (assetId, assetType) =>
+    locations.goToAssetLocation('bid', assetId, assetType),
+  acceptAssetBid: (assetId, assetType, bidId) =>
+    locations.goToAssetLocation('acceptBid', assetId, assetType, bidId),
+  cancelAssetBid: (assetId, assetType) =>
+    locations.goToAssetLocation('cancelBid', assetId, assetType),
+
+  goToAssetLocation(action, assetId, assetType, ...args) {
+    const assetLocations = LOCATION_BY_ASSET[assetType]
+    if (!assetLocations) {
+      throw new Error(`Invalid asset type "${assetType}"`)
+    }
+
+    const location = assetLocations[action]
+    if (!location) {
+      throw new Error(`Invalid asset location "${action}"`)
+    }
+
+    return location(assetId, ...args)
+  },
 
   // Auction
 
@@ -95,6 +113,21 @@ export const locations = {
   colorKey: () => '/colorKey',
 
   signIn: () => '/sign-in'
+}
+
+const LOCATION_BY_ASSET = {
+  [ASSET_TYPES.parcel]: {
+    detail: withCoordinates(locations.parcelDetail),
+    bid: withCoordinates(locations.bidParcel),
+    acceptBid: withCoordinates(locations.acceptParcelBid),
+    cancelBid: withCoordinates(locations.cancelParcelBid)
+  },
+  [ASSET_TYPES.estate]: {
+    detail: locations.estateDetail,
+    bid: locations.bidEstate,
+    acceptBid: locations.acceptEstateBid,
+    cancelBid: locations.cancelEstateBid
+  }
 }
 
 export const PROFILE_PAGE_TABS = Object.freeze({
@@ -121,3 +154,7 @@ export const MARKETPLACE_PAGE_TABS = Object.freeze({
   parcels: 'parcels',
   estates: 'estates'
 })
+
+function withCoordinates(callback) {
+  return (assetId, ...args) => callback(...splitCoordinate(assetId), ...args)
+}

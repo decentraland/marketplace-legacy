@@ -1,10 +1,8 @@
 import { connect } from 'react-redux'
-import { navigateTo } from '@dapps/modules/location/actions'
 
-import { locations } from 'locations'
 import { ASSET_TYPES } from 'shared/asset'
 import { getData as getTiles } from 'modules/tile/selectors'
-import { fetchAsset } from 'modules/asset/actions'
+import { navigateToAsset } from 'modules/asset/actions'
 import { getData as getPublications } from 'modules/publication/selectors'
 import { getWalletUnarchivedBidsByAsset } from 'modules/archivedBid/selectors'
 
@@ -21,16 +19,9 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
-  const id = ownProps.asset.id
-
-  return {
-    onEditParcels: () => dispatch(navigateTo(locations.editEstateParcels(id))),
-    onEditMetadata: () =>
-      dispatch(navigateTo(locations.editEstateMetadata(id))),
-    onManageEstate: () => dispatch(navigateTo(locations.manageEstate(id))),
-    onParcelClick: parcel => dispatch(fetchAsset(parcel, ASSET_TYPES.parcel))
-  }
-}
+const mapDispatch = dispatch => ({
+  onParcelClick: parcel =>
+    dispatch(navigateToAsset(parcel.id, ASSET_TYPES.parcel))
+})
 
 export default connect(mapState, mapDispatch)(EstateDetailPage)

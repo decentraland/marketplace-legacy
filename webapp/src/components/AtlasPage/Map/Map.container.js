@@ -1,6 +1,6 @@
 import { withRouter } from 'react-router'
-import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
 import { getData as getParcels } from 'modules/parcels/selectors'
@@ -33,9 +33,9 @@ const mapState = (state, { match, location }) => {
 
 const mapDispatch = (dispatch, { location }) => ({
   onChange: (x, y) =>
-    dispatch(push(locations.parcelMapDetail(x, y, getMarker(location)))),
-  onSelect: ({ id, x, y, assetType }) =>
-    dispatch(push(locations.assetDetail({ id, x, y }, assetType))) // {id, x, y} are enough props for the asset interface here
+    dispatch(navigateTo(locations.parcelMapDetail(x, y, getMarker(location)))),
+  onSelect: ({ id, assetType }) =>
+    dispatch(navigateTo(locations.assetDetail(id, assetType)))
 })
 
 export default withRouter(connect(mapState, mapDispatch)(MapComponent))

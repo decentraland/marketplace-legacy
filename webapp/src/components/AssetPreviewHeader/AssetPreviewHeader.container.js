@@ -1,9 +1,9 @@
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { navigateTo } from '@dapps/modules/location/actions'
 
 import { locations } from 'locations'
 import { getError, isLoading } from 'modules/parcels/selectors'
-import { navigateTo } from '@dapps/modules/location/actions'
 import { getCenterCoords } from 'shared/asset'
 
 import AssetPreviewHeader from './AssetPreviewHeader'

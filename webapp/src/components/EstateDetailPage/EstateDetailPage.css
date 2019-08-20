@@ -4,16 +4,16 @@
   padding-top: 0px;
 }
 
+.EstateDetailPage {
+  padding-top: 35px;
+}
+
 .EstateDetailPage .estate-title {
   margin-bottom: 5px;
 }
 
-.EstateDetailPage .manage-button {
-  margin-left: 25px;
-}
-
-.EstateDetailPage .estate-title > span {
-  margin-right: 16px;
+.EstateDetailPage .estate-title .estate-name {
+  margin-right: 15px;
 }
 
 .EstateDetailPage .estate-title .LandAmount {
@@ -46,24 +46,16 @@
   margin: auto 0 15px 0;
 }
 
-.EstateDetailPage .estate-data .description {
-  margin: 0 0 auto 0;
-}
-
 .EstateDetailPage .estate-actions-container {
   text-align: right;
 }
 
-.EstateDetailPage .owned-by {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  color: var(--gray);
-}
-
 .EstateDetailPage h3 {
   font-family: var(--font-family) !important;
+}
+
+.EstateDetailPage .estate-parcels .link {
+  margin-left: 20px;
 }
 
 .EstateDetailPage .mana-price-icon {
@@ -79,14 +71,6 @@
 .EstateDetailPage .AddressBlock {
   height: 24px;
   margin-left: 10px;
-}
-
-.EstateDetailPage .details {
-  margin-top: 20px;
-}
-
-.EstateDetailPage .details .button.tiny.link {
-  margin-left: 16px;
 }
 
 .EstateDetailPage.empty {

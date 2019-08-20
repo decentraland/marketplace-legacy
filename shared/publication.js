@@ -15,10 +15,3 @@ export function findAssetPublications(publications, asset, status) {
       (!status || publication.status === status)
   )
 }
-
-export function toPublicationObject(publicationsArray) {
-  return publicationsArray.reduce((map, publication) => {
-    map[publication.tx_hash] = publication
-    return map
-  }, {})
-}

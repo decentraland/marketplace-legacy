@@ -5,7 +5,7 @@ import { Grid, Button, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
-import { bidType, estateType } from 'components/types'
+import { assetType, bidType } from 'components/types'
 import { distanceInWordStrict, preventDefault } from 'lib/utils'
 import { ASSET_TYPES } from 'shared/asset'
 import { shortenOwner } from 'shared/map'
@@ -24,13 +24,15 @@ const PARCEL_SIZE = PREVIEW_SIZE / NUM_PARCELS
 
 export default class Bid extends React.PureComponent {
   static propTypes = {
-    isOwner: PropTypes.bool.isRequired,
-    isBidArchived: PropTypes.bool.isRequired,
+    asset: assetType,
     bid: bidType.isRequired,
-    estates: PropTypes.objectOf(estateType),
     className: PropTypes.string,
     address: PropTypes.string,
-    onConfirm: PropTypes.func.isRequired,
+    showAssetDetail: PropTypes.bool,
+    isOwner: PropTypes.bool.isRequired,
+    isBidArchived: PropTypes.bool.isRequired,
+    onAccept: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onArchive: PropTypes.func.isRequired,
     onUnarchive: PropTypes.func.isRequired
@@ -42,28 +44,26 @@ export default class Bid extends React.PureComponent {
   }
 
   renderAssetPreview = () => {
-    const { bid, estates } = this.props
-    const { asset_id, asset_type } = bid
+    const { bid, asset } = this.props
+    const { asset_type } = bid
+
     let x, y, zoom, pan, selected
+
     switch (asset_type) {
-      case ASSET_TYPES.parcel: {
-        const coordinates = splitCoordinate(asset_id)
-        x = coordinates[0]
-        y = coordinates[1]
+      case ASSET_TYPES.parcel:
+        x = asset.x
+        y = asset.y
         selected = { x, y }
         break
-      }
       case ASSET_TYPES.estate: {
-        const estate = estates[asset_id]
-        if (estate) {
-          const mapProps = calculateMapProps(estate.data.parcels, PARCEL_SIZE)
+        if (asset) {
+          const mapProps = calculateMapProps(asset.data.parcels, PARCEL_SIZE)
           x = mapProps.center.x
           y = mapProps.center.y
           pan = mapProps.pan
           zoom = mapProps.zoom
-          selected = estate.data.parcels
+          selected = asset.data.parcels
         }
-
         break
       }
     }
@@ -119,7 +119,9 @@ export default class Bid extends React.PureComponent {
   }
 
   getAssetTypeTitle = () => {
-    switch (this.props.bid.asset_type) {
+    const { asset_type } = this.props.bid
+
+    switch (asset_type) {
       case ASSET_TYPES.parcel: {
         return t('name.parcel')
       }
@@ -150,21 +152,29 @@ export default class Bid extends React.PureComponent {
     onUnarchive(bid)
   }
 
+  handleCancelBid = () => {
+    const { bid, onCancel } = this.props
+    onCancel(bid)
+  }
+
+  handleAcceptBid = () => {
+    const { bid, onAccept } = this.props
+    onAccept(bid)
+  }
+
+  handleUpdateBid = () => {
+    const { bid, onUpdate } = this.props
+    onUpdate(bid)
+  }
+
   render() {
-    const {
-      bid,
-      isOwner,
-      onConfirm,
-      onUpdate,
-      showAssetDetail,
-      isBidArchived,
-      address
-    } = this.props
+    const { bid, isOwner, showAssetDetail, isBidArchived, address } = this.props
 
     const isBidderOrSeller = address === bid.seller || address === bid.bidder
     const hasSameSellerAndBidder = bid.seller === bid.bidder
     const fingerprintChanged = hasFingerprintChanged(bid)
     const assetDetailLink = this.getDetailLink()
+
     const sizeByResolution = {
       computer: showAssetDetail ? 4 : 3,
       tablet: showAssetDetail ? 4 : 3,
@@ -172,6 +182,9 @@ export default class Bid extends React.PureComponent {
     }
 
     const gridClassName = this.getClassName(fingerprintChanged)
+
+    const canCancelBid = !isOwner || hasSameSellerAndBidder
+    const canUpdateBid = !isOwner && !hasSameSellerAndBidder
 
     return (
       <Grid stackable className={gridClassName}>
@@ -215,12 +228,7 @@ export default class Bid extends React.PureComponent {
               ) : null}
               <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.price')}</h3>
-                <Mana
-                  amount={Math.floor(bid.price)}
-                  size={15}
-                  scale={1}
-                  className="mortgage-amount-icon"
-                />
+                <Mana amount={Math.floor(bid.price)} size={15} scale={1} />
               </Grid.Column>
               <Grid.Column {...sizeByResolution}>
                 <h3>{t('global.time_left')}</h3>
@@ -231,25 +239,24 @@ export default class Bid extends React.PureComponent {
                   computer={showAssetDetail ? 16 : 7}
                   tablet={showAssetDetail ? 16 : 7}
                   mobile={16}
-                  className={'actions'}
+                  className="actions"
                 >
                   <Button
-                    className={`${isOwner ? 'primary' : ''}`}
-                    onClick={preventDefault(onConfirm)}
-                  >
-                    {!isOwner || hasSameSellerAndBidder
-                      ? t('global.cancel')
-                      : t('global.accept')}
-                  </Button>
-                  {!isOwner &&
-                    !hasSameSellerAndBidder && (
-                      <Button
-                        className="primary"
-                        onClick={preventDefault(onUpdate)}
-                      >
-                        {t('global.update')}
-                      </Button>
+                    className={isOwner ? 'primary' : ''}
+                    onClick={preventDefault(
+                      canCancelBid ? this.handleCancelBid : this.handleAcceptBid
                     )}
+                  >
+                    {canCancelBid ? t('global.cancel') : t('global.accept')}
+                  </Button>
+                  {canUpdateBid && (
+                    <Button
+                      className="primary"
+                      onClick={preventDefault(this.handleUpdateBid)}
+                    >
+                      {t('global.update')}
+                    </Button>
+                  )}
                   {isOwner ? (
                     isBidArchived ? (
                       <Button onClick={preventDefault(this.handleUnarchiveBid)}>

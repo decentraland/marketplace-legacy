@@ -32,12 +32,12 @@
   text-decoration: line-through;
 }
 
-.loader-wrapper {
+.ManageAssetForm .address-actions button + button {
+  margin-left: 20px;
+}
+
+.ManageAssetForm .loader-wrapper {
   position: relative;
   width: 100%;
   height: 100px;
-}
-
-.ManageAssetForm .address-actions .ui.button + .ui.button {
-  margin-left: 20px;
 }

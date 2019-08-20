@@ -3,6 +3,7 @@ import { Log } from 'decentraland-commons'
 import { Approval } from '../../src/Approval'
 import { contractAddresses, eventNames } from '../../src/ethereum'
 import { isDuplicatedConstraintError } from '../../src/database'
+import { Tile } from '../../src/Tile'
 import { APPROVAL_TYPES } from '../../shared/approval'
 
 // At block 5808417 the ApprovalForAll event for the LANDRegistry contract kept its signature
@@ -130,4 +131,11 @@ async function handleApproval(event, approval, isApproved) {
   } else {
     await Approval.delete(approval)
   }
+
+  // Update related tiles
+  const tiles = isApproved
+    ? await Tile.find({ owner })
+    : await Tile.findByAnyApproval(operator)
+
+  await Promise.all(tiles.map(tile => Tile.updateApprovals(tile)))
 }

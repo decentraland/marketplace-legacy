@@ -7,6 +7,7 @@ import ParcelModal from 'components/ParcelModal'
 import TxStatus from 'components/TxStatus'
 import ParcelName from 'components/ParcelName'
 import ParcelDetailLink from 'components/ParcelDetailLink'
+import { ACTIONS } from 'shared/roles'
 import EditParcelForm from './EditParcelForm'
 
 import './EditParcelPage.css'
@@ -24,7 +25,7 @@ export default class EditParcelPage extends React.PureComponent {
     const { x, y, isTxIdle, onSubmit, onCancel } = this.props
 
     return (
-      <Parcel x={x} y={y} ownerOnly>
+      <Parcel x={x} y={y} shouldBeAllowedTo={[ACTIONS.updateMetadata]}>
         {parcel => (
           <div className="EditParcelPage">
             <ParcelModal

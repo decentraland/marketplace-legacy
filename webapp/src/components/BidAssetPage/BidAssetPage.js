@@ -4,7 +4,7 @@ import { Loader, Container } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { ASSET_TYPES } from 'shared/asset'
-import { bidType } from 'components/types'
+import { bidType, assetTypingType } from 'components/types'
 import BidParcelPage from './BidParcelPage'
 import BidEstatePage from './BidEstatePage'
 import SignInNotice from 'components/SignInNotice'
@@ -13,7 +13,7 @@ export default class BidAssetPage extends React.PureComponent {
   static propTypes = {
     id: PropTypes.string.isRequired,
     bid: bidType,
-    assetType: PropTypes.string.isRequired,
+    assetType: assetTypingType.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isConnected: PropTypes.bool.isRequired
   }

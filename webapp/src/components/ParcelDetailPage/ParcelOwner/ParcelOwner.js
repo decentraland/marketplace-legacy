@@ -1,108 +1,133 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { utils } from 'decentraland-commons'
 import { Button, Icon } from 'semantic-ui-react'
+import { t, T } from '@dapps/modules/translation/utils'
+
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
-import { parcelType, districtType, estateType } from 'components/types'
-import { t, T } from '@dapps/modules/translation/utils'
+import {
+  walletType,
+  parcelType,
+  districtType,
+  estateType
+} from 'components/types'
 import { getDistrict, isDistrict } from 'shared/district'
+import { can, ACTIONS, isOwner } from 'shared/roles'
 
 import './ParcelOwner.css'
 
 export default class ParcelOwner extends React.PureComponent {
   static propTypes = {
+    wallet: walletType.isRequired,
     parcel: parcelType.isRequired,
-    isOwner: PropTypes.bool.isRequired,
-    districts: PropTypes.objectOf(districtType).isRequired,
-    estates: PropTypes.objectOf(estateType).isRequired
+    estates: PropTypes.objectOf(estateType).isRequired,
+    districts: PropTypes.objectOf(districtType).isRequired
+  }
+
+  renderOwner() {
+    const { parcel } = this.props
+    return (
+      <span className="is-address">
+        <span>{t('global.owned_by')}</span>
+        <AddressBlock address={parcel.owner} scale={4} />
+      </span>
+    )
+  }
+
+  renderDistrict() {
+    const { parcel, districts } = this.props
+    const district = getDistrict(parcel, districts)
+    if (!district) return null
+
+    let districtName = !district.link ? (
+      <a
+        title={district.name}
+        href={district.link}
+        target="blank"
+        rel="nooper noreferrer"
+      >
+        {district.name}
+      </a>
+    ) : (
+      <span className="district-name">{district.name}</span>
+    )
+
+    return (
+      <span className="part-of">
+        <T id="parcel_detail.owner.part_of" values={{ name: districtName }} />
+      </span>
+    )
+  }
+
+  renderAccess(canEdit, canManage) {
+    const { wallet, parcel } = this.props
+    return (
+      <React.Fragment>
+        <span className="has-access">
+          {canEdit ? (
+            <Link to={locations.editParcel(parcel.x, parcel.y)}>
+              <Button size="tiny" className="link">
+                <Icon name="pencil" />
+                {t('global.edit')}
+              </Button>
+            </Link>
+          ) : null}
+          {canManage ? (
+            <Link to={locations.manageParcel(parcel.x, parcel.y)}>
+              <Button size="tiny" className="link">
+                <Icon name="add user" />
+                {t('asset_detail.actions.permissions')}
+              </Button>
+            </Link>
+          ) : null}
+        </span>
+        {!isOwner(wallet.address, parcel) ? this.renderOwner() : null}
+      </React.Fragment>
+    )
+  }
+
+  renderInEstate() {
+    const { estates, parcel } = this.props
+    if (!estates) return null
+    const estate = estates[parcel.estate_id]
+    if (estate) {
+      const estateName = (
+        <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
+      )
+      return (
+        <span className="part-of">
+          <T id="parcel_detail.owner.part_of" values={{ name: estateName }} />
+        </span>
+      )
+    }
   }
 
   render() {
-    const { districts, estates, parcel, isOwner } = this.props
-    if (!parcel || utils.isEmptyObject(districts)) {
+    const { wallet, parcel } = this.props
+    if (!parcel) {
       return null
     }
 
-    if (isOwner) {
-      return (
-        <span className="ParcelOwner is-owner">
-          <Link
-            to={locations.editParcel(parcel.x, parcel.y)}
-            className="edit-button"
-          >
-            <Button size="tiny" className="link">
-              <Icon name="pencil" />
-              {t('global.edit')}
-            </Button>
-          </Link>
-          <Link
-            to={locations.manageParcel(parcel.x, parcel.y)}
-            className="manage-button"
-          >
-            <Button size="tiny" className="link">
-              <Icon name="add user" />
-              {t('asset_detail.actions.permissions')}
-            </Button>
-          </Link>
-        </span>
-      )
-    }
-
-    if (isDistrict(parcel)) {
-      const district = getDistrict(parcel, districts)
-      if (!district) return
-
-      let districtName = <span className="district-name">{district.name}</span>
-      if (district.link) {
-        districtName = (
-          <a
-            title={district.name}
-            href={district.link}
-            target="blank"
-            rel="nooper noreferrer"
-          >
-            {district.name}
-          </a>
-        )
-      }
-
-      return (
-        <span className="ParcelOwner part-of">
-          <T id="parcel_detail.owner.part_of" values={{ name: districtName }} />
-        </span>
-      )
-    }
-
-    if (parcel.estate_id) {
-      if (!estates) return null
-      const estate = estates[parcel.estate_id]
-      if (estate) {
-        const estateName = (
-          <Link to={locations.estateDetail(estate.id)}>{estate.data.name}</Link>
-        )
-        return (
-          <span className="ParcelOwner part-of">
-            <T id="parcel_detail.owner.part_of" values={{ name: estateName }} />
-          </span>
-        )
-      }
-    }
-
-    if (parcel.owner) {
-      return (
-        <span className="ParcelOwner is-address">
-          <span>{t('global.owned_by')}</span>
-          <AddressBlock address={parcel.owner} scale={4} />
-        </span>
-      )
-    }
+    const canEdit = can(ACTIONS.updateMetadata, wallet.address, parcel)
+    const canManage = can(ACTIONS.setUpdateOperator, wallet.address, parcel)
 
     return (
-      <span className="ParcelOwner is-address">
-        {t('parcel_detail.owner.no_owner')}
-      </span>
+      <div className="ParcelOwner">
+        {isDistrict(parcel) ? (
+          this.renderDistrict()
+        ) : canEdit || canManage ? (
+          this.renderAccess(canEdit, canManage)
+        ) : parcel.estate_id ? (
+          this.renderInEstate()
+        ) : parcel.owner ? (
+          this.renderOwner()
+        ) : (
+          <span className="is-address">
+            {t('parcel_detail.owner.no_owner')}
+          </span>
+        )}
+      </div>
     )
   }
 }

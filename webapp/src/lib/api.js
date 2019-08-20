@@ -112,8 +112,12 @@ export class API {
     return this.request('get', `/parcels/${x}/${y}/mortgages`, { status })
   }
 
-  fetchBidsByAsset(assetId, opt) {
-    return this.request('get', `/assets/${assetId}/bids`, opt)
+  fetchBidsByAsset(assetId, { asset_type, bidder, status }) {
+    return this.request('get', `/assets/${assetId}/bids`, {
+      asset_type,
+      bidder,
+      status
+    })
   }
 
   fetchBidById(bidId) {
@@ -165,7 +169,7 @@ export class API {
           Object.assign(error, err)
         }
 
-        console.warn(`[WARN] ${error.message || ''}`, error)
+        console.warn(`[WARN] ${error.message || ''} on ${options.url}`, error)
 
         throw error
       })

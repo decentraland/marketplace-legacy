@@ -194,10 +194,11 @@ export const FETCH_ASSET_ACCEPTED_BIDS_SUCCESS =
 export const FETCH_ASSET_ACCEPTED_BIDS_FAILURE =
   '[Failure] Fetch Asset Accepted Bids'
 
-export function fetchAssetAcceptedBidsRequest(asset) {
+export function fetchAssetAcceptedBidsRequest(asset, assetType) {
   return {
     type: FETCH_ASSET_ACCEPTED_BIDS_REQUEST,
-    asset
+    asset,
+    assetType
   }
 }
 

@@ -8,7 +8,7 @@
 }
 
 .MortgageForm p {
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   margin-left: 5px;
   color: #fff;
 }
@@ -23,7 +23,7 @@
   bottom: 10px;
 }
 
-.MortgageForm .actions button + button{
+.MortgageForm .actions button + button {
   margin-left: 15px !important;
 }
 
@@ -34,20 +34,19 @@
   padding-bottom: 8px;
   margin-left: 0;
   border-bottom: 2px solid var(--dark-gray);
-
 }
 
-.MortgageForm .ui.error.message{
+.MortgageForm .ui.error.message {
   max-width: 500px;
 }
 
 .MortgageForm .ui.error.message div {
-   word-wrap: break-word;
- }
+  word-wrap: break-word;
+}
 
- .MortgageForm .loader-wrapper {
-   position: relative;
- }
+.MortgageForm .loader-wrapper {
+  position: relative;
+}
 
 .MortgageForm .deposit {
   font-size: 14px;

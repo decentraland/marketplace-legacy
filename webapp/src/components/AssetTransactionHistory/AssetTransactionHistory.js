@@ -2,16 +2,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Grid, Responsive } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
 import AddressBlock from 'components/AddressBlock'
 import BlockDate from 'components/BlockDate'
 import Mana from 'components/Mana'
-import { assetType, publicationType, bidType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
 import {
-  normalizePublications,
-  normalizeBids,
+  assetType,
+  assetTypingType,
+  publicationType,
+  bidType
+} from 'components/types'
+import {
+  publicationToListing,
+  bidToListing,
   sortListings,
   LISTING_STATUS,
   LISTING_SORT_BY
@@ -24,6 +29,7 @@ import './AssetTransactionHistory.css'
 export default class AssetTransactionHistory extends React.PureComponent {
   static propTypes = {
     asset: assetType.isRequired,
+    assetType: assetTypingType.isRequired,
     publications: PropTypes.objectOf(publicationType),
     bids: PropTypes.arrayOf(bidType)
   }
@@ -40,10 +46,11 @@ export default class AssetTransactionHistory extends React.PureComponent {
       LISTING_STATUS.sold
     )
 
-    const normalizedPublications = normalizePublications(assetPublications)
-    const normalizedBids = normalizeBids(bids)
+    const listingPublications = assetPublications.map(publicationToListing)
+    const listingBids = bids.map(bidToListing)
+
     return sortListings(
-      normalizedPublications.concat(normalizedBids),
+      listingPublications.concat(listingBids),
       LISTING_SORT_BY.BLOCK_UPDATED
     )
   }

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {
   Menu,
   Container,
@@ -10,10 +9,11 @@ import {
   Loader,
   Label
 } from 'semantic-ui-react'
+import { t } from '@dapps/modules/translation/utils'
+
 import AssetCard from 'components/AssetCard'
 import { getTypeByMarketplaceTab } from 'modules/publication/utils'
-import { parcelType, estateType } from 'components/types'
-import { t } from '@dapps/modules/translation/utils'
+import { assetType, assetTypingType } from 'components/types'
 import {
   getSortOptions,
   getOptionsFromSortType,
@@ -26,8 +26,8 @@ import './MarketplacePage.css'
 
 export default class MarketplacePage extends React.PureComponent {
   static propTypes = {
-    assets: PropTypes.arrayOf(PropTypes.oneOfType([parcelType, estateType])),
-    assetType: PropTypes.string.isRequired,
+    assets: PropTypes.arrayOf(assetType),
+    assetType: assetTypingType.isRequired,
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
     totals: PropTypes.object.isRequired,

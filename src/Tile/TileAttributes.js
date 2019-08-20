@@ -3,12 +3,14 @@ import { isDistrict } from '../../shared/district'
 import { TileType, TileLocation } from '../../shared/map'
 import { isPartOfEstate } from '../../shared/parcel'
 import { ASSET_TYPES } from '../../shared/asset'
+import { flattenRoleAddresses } from '../../shared/roles'
 
 export class TileAttributes {
   constructor(parcel) {
     this.parcel = parcel
     this.isEstate = isPartOfEstate(parcel)
     this.isDistrict = isDistrict(parcel)
+    this.asset = this.isEstate ? parcel.estate : parcel
 
     this.tileLocation = new TileLocation(parcel)
     this.tileType = new TileType(parcel)
@@ -41,7 +43,7 @@ export class TileAttributes {
 
   async getReference() {
     const type = this.tileType.get()
-    const publication = this.parcel.publication
+    const publication = this.asset.publication
 
     return {
       type,
@@ -53,11 +55,15 @@ export class TileAttributes {
     }
   }
 
+  getApprovals() {
+    if (this.isDistrict) {
+      return []
+    }
+
+    return flattenRoleAddresses(this.asset)
+  }
+
   getOwner() {
-    return this.parcel.district_id
-      ? null
-      : this.isEstate
-        ? this.parcel.estate.owner
-        : this.parcel.owner
+    return this.isDistrict ? null : this.asset.owner
   }
 }

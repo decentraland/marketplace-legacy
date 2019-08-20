@@ -1,6 +1,12 @@
+import { getOpenPublication } from 'modules/asset/utils'
 import { getContractAddress } from 'modules/wallet/utils'
 import { ASSET_TYPES } from 'shared/asset'
 import { MARKETPLACE_PAGE_TABS } from 'locations'
+
+export function hasLegacyPublication(asset) {
+  const publication = getOpenPublication(asset)
+  return !!publication && isLegacyPublication(publication)
+}
 
 export function isLegacyPublication(publication) {
   return (

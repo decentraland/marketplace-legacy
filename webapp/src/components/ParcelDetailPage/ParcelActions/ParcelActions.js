@@ -5,118 +5,126 @@ import { Button, Icon } from 'semantic-ui-react'
 import { t } from '@dapps/modules/translation/utils'
 
 import { locations } from 'locations'
+import Permission from 'components/Permission'
+import { parcelType, publicationType } from 'components/types'
+import { isOnSale } from 'modules/asset/utils'
 import { isFeatureEnabled } from 'lib/featureUtils'
-import {
-  parcelType,
-  publicationType,
-  mortgageType,
-  bidType,
-  walletType
-} from 'components/types'
-import { isLegacyPublication } from 'modules/publication/utils'
-import { getOpenPublication } from 'shared/asset'
-import { hasParcelsConnected } from 'shared/parcel'
-import { isParcelListable } from 'shared/listing'
-import { hasBid } from 'shared/bid'
+import { ACTIONS } from 'shared/roles'
+import { ASSET_TYPES } from 'shared/asset'
 
 import './ParcelActions.css'
 
 export default class ParcelActions extends React.PureComponent {
   static propTypes = {
     parcel: parcelType.isRequired,
-    isOwner: PropTypes.bool,
-    mortgage: mortgageType,
-    bids: PropTypes.arrayOf(bidType),
-    publications: PropTypes.objectOf(publicationType).isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    wallet: walletType
-  }
-
-  canCreateEstate = isOnSale => {
-    const { wallet, parcel } = this.props
-    return hasParcelsConnected(parcel, wallet.parcelsById) && !isOnSale
+    hasMortgage: PropTypes.bool,
+    publications: PropTypes.objectOf(publicationType).isRequired
   }
 
   render() {
-    const {
-      wallet,
-      parcel,
-      isOwner,
-      mortgage,
-      isLoading,
-      publications,
-      bids
-    } = this.props
+    const { parcel, hasMortgage, publications } = this.props
 
-    if (!parcel || isLoading) {
+    if (!parcel) {
       return null
     }
+
     const { x, y } = parcel
-    const publication = getOpenPublication(parcel, publications)
-    const isOnSale = publication != null
 
     return (
       <div className="ParcelActions">
-        {isOwner ? (
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.transfer]}
+        >
+          <Link to={locations.transferParcel(x, y)}>
+            <Button size="tiny">
+              <Icon name="exchange" />
+              {t('asset_detail.actions.transfer')}
+            </Button>
+          </Link>
+        </Permission>
+
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.createEstate]}
+        >
+          <Link to={locations.createEstate(x, y)}>
+            <Button size="tiny">
+              <Icon name="object group" />
+              {t('parcel_detail.actions.create_estate')}
+            </Button>
+          </Link>
+        </Permission>
+
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.sell]}
+        >
+          <Link to={locations.sellParcel(x, y)}>
+            <Button size="tiny" primary={!isOnSale(parcel, publications)}>
+              <Icon name="tag" />
+              {isOnSale(parcel, publications)
+                ? t('asset_detail.actions.update_price')
+                : t('asset_detail.actions.sell')}
+            </Button>
+          </Link>
+        </Permission>
+
+        <Permission
+          asset={parcel}
+          assetType={ASSET_TYPES.parcel}
+          actions={[ACTIONS.cancelSale]}
+        >
+          <Link to={locations.cancelParcelSale(x, y)}>
+            <Button size="tiny" primary>
+              <Icon name="cancel" />
+              {t('asset_detail.actions.cancel')}
+            </Button>
+          </Link>
+        </Permission>
+
+        {hasMortgage ? null : (
           <React.Fragment>
-            <Link to={locations.transferParcel(x, y)}>
-              <Button size="tiny">
-                <Icon name="exchange" />
-                {t('asset_detail.actions.transfer')}
-              </Button>
-            </Link>
-            {this.canCreateEstate(isOnSale) && (
-              <Link to={locations.createEstate(x, y)}>
-                <Button size="tiny">
-                  <Icon name="object group" />
-                  {t('parcel_detail.actions.create_estate')}
+            <Permission
+              asset={parcel}
+              assetType={ASSET_TYPES.parcel}
+              actions={[ACTIONS.getMortgage]}
+            >
+              <Link to={locations.buyParcelByMortgage(x, y)}>
+                <Button size="large">
+                  {t('parcel_detail.publication.mortgage')}
                 </Button>
               </Link>
-            ) /* Estate Feature */}
-            <Link to={locations.sellParcel(x, y)}>
-              <Button size="tiny" primary={!isOnSale}>
-                <Icon name="tag" />
-                {isOnSale
-                  ? t('asset_detail.actions.update_price')
-                  : t('asset_detail.actions.sell')}
-              </Button>
-            </Link>
-            {isOnSale && (
-              <Link to={locations.cancelSaleParcel(x, y)}>
-                <Button size="tiny" primary>
-                  <Icon name="cancel" />
-                  {t('asset_detail.actions.cancel')}
-                </Button>
-              </Link>
-            )}
-          </React.Fragment>
-        ) : !mortgage ? (
-          <React.Fragment>
-            {isOnSale &&
-              wallet.address &&
-              !isLegacyPublication(publication) && (
-                <Link to={locations.buyParcelByMortgage(x, y)}>
-                  <Button size="large">
-                    {t('parcel_detail.publication.mortgage')}
-                  </Button>
-                </Link>
-              )}
-            {isFeatureEnabled('BIDS') &&
-              !hasBid(bids, wallet.address) &&
-              isParcelListable(parcel) && (
+            </Permission>
+
+            {isFeatureEnabled('BIDS') && (
+              <Permission
+                asset={parcel}
+                assetType={ASSET_TYPES.parcel}
+                actions={[ACTIONS.bid]}
+              >
                 <Link to={locations.bidParcel(x, y)}>
                   <Button size="large">{t('asset_detail.bid.place')}</Button>
                 </Link>
-              )}
-            {isOnSale && (
+              </Permission>
+            )}
+
+            <Permission
+              asset={parcel}
+              assetType={ASSET_TYPES.parcel}
+              actions={[ACTIONS.buy]}
+            >
               <Link to={locations.buyParcel(x, y)}>
                 <Button primary size="large">
                   {t('asset_detail.publication.buy')}
                 </Button>
               </Link>
-            )}
+            </Permission>
           </React.Fragment>
-        ) : null}
+        )}
       </div>
     )
   }

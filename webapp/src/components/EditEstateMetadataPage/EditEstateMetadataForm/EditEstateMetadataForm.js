@@ -17,74 +17,33 @@ import './EditEstateMetadataForm.css'
 export default class EditEstateMetadataForm extends React.PureComponent {
   static propTypes = {
     estate: estateType.isRequired,
+    isTxIdle: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    isTxIdle: PropTypes.bool.isRequired
+    onCancel: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
-    const { estate } = this.props
-    this.initialEstate = estate
-    this.state = { formErrors: [] }
-  }
 
-  componentWillUnmount() {
-    const { estate, onChange } = this.props
-    onChange({
-      ...estate,
-      data: {
-        ...estate.data,
-        description: '',
-        name: ''
-      }
-    })
+    const { data } = this.props.estate
+    this.state = {
+      name: data.name || '',
+      description: data.description || '',
+      formErrors: []
+    }
   }
 
   handleNameChange = event => {
-    const { estate, onChange } = this.props
-    onChange({
-      ...estate,
-      data: {
-        ...estate.data,
-        name: event.target.value
-      }
-    })
-    this.setState({ formErrors: [] })
+    this.setState({ name: event.target.value, formErrors: [] })
   }
 
   handleDescriptionChange = event => {
-    const { estate, onChange } = this.props
-    onChange({
-      ...estate,
-      data: {
-        ...estate.data,
-        description: event.target.value
-      }
-    })
-    this.setState({ formErrors: [] })
+    this.setState({ description: event.target.value, formErrors: [] })
   }
 
-  hasChanged() {
-    const { data } = this.props.estate
-    const { name, description } = this.initialEstate.data
-
-    return (
-      name.toString() !== data.name.toString() ||
-      description.toString() !== data.description.toString()
-    )
-  }
-
-  isValidName(name) {
-    return !this.hasChanged() || isValidName(name)
-  }
-
-  isValidDescription(description) {
-    return !this.hasChanged() || isValidDescription(description)
-  }
-
-  onSubmit = () => {
-    const { name, description } = this.props.estate.data
+  handleSubmit = () => {
+    const { estate, onSubmit } = this.props
+    const { name, description } = this.state
     const formErrors = []
 
     if (!this.isValidName(name)) {
@@ -106,26 +65,50 @@ export default class EditEstateMetadataForm extends React.PureComponent {
     }
 
     if (formErrors.length === 0) {
-      this.props.onSubmit()
+      onSubmit({
+        ...estate,
+        data: {
+          ...estate.data,
+          name,
+          description
+        }
+      })
     } else {
       this.setState({ formErrors })
     }
+  }
+
+  handleCancel = () => {
+    this.props.onCancel()
   }
 
   handleClearFormErrors = () => {
     this.setState({ formErrors: [] })
   }
 
+  hasChanged() {
+    const { name = '', description = '' } = this.props.estate.data
+
+    return this.state.name !== name || this.state.description !== description
+  }
+
+  isValidName(name) {
+    return !this.hasChanged() || isValidName(name)
+  }
+
+  isValidDescription(description) {
+    return !this.hasChanged() || isValidDescription(description)
+  }
+
   render() {
-    const { formErrors } = this.state
-    const { onCancel, estate, isTxIdle } = this.props
-    const { name, description } = estate.data
+    const { isTxIdle } = this.props
+    const { name, description, formErrors } = this.state
 
     return (
       <Form
         className="EditEstateMetadataForm"
         error={!!formErrors}
-        onSubmit={preventDefault(this.onSubmit)}
+        onSubmit={preventDefault(this.handleSubmit)}
       >
         <Form.Field>
           <label>{t('estate_edit.name')}</label>
@@ -153,7 +136,7 @@ export default class EditEstateMetadataForm extends React.PureComponent {
           </Message>
         ) : null}
         <div className="modal-buttons">
-          <Button type="button" onClick={onCancel}>
+          <Button type="button" onClick={this.handleCancel}>
             {t('global.cancel')}
           </Button>
           <Button type="submit" primary={true} disabled={!this.hasChanged()}>

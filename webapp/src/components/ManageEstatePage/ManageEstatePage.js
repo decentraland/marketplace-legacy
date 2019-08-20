@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { t, T } from '@dapps/modules/translation/utils'
 
 import Estate from 'components/Estate'
-import EstateModal from 'components/EditEstatePage/EditEstateMetadata/EstateModal'
+import EstateModal from 'components/EstateModal'
 import TxStatus from 'components/TxStatus'
 import EstateName from 'components/EstateName'
 import ManageAssetForm from 'components/ManageAssetForm'
+import { ACTIONS } from 'shared/roles'
 
 export default class ManageEstatePage extends React.PureComponent {
   static propTypes = {
@@ -21,9 +22,9 @@ export default class ManageEstatePage extends React.PureComponent {
     const { onSubmit, onCancel } = this.props
 
     return (
-      <Estate id={id} ownerOnly>
+      <Estate id={id} shouldBeAllowedTo={[ACTIONS.setUpdateOperator]}>
         {estate => (
-          <div className="ManageParcelPage">
+          <div className="ManageEstatePage">
             <EstateModal
               parcels={estate.data.parcels}
               title={t('asset_manage.manage', {

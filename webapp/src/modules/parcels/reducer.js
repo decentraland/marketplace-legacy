@@ -80,7 +80,8 @@ export function parcelsReducer(state = INITIAL_STATE, action) {
     }
     case FETCH_PUBLICATIONS_SUCCESS: {
       const { assets } = action
-      const parcels = assets.filter(asset => isParcel(asset))
+      const parcels = assets.filter(isParcel)
+
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

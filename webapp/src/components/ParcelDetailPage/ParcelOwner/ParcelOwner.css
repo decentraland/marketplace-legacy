@@ -1,5 +1,4 @@
-.ParcelOwner.is-address,
-.ParcelOwner.is-owner {
+.ParcelOwner .is-address {
   display: inline-flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -7,24 +6,21 @@
   color: var(--gray);
 }
 
-.ParcelOwner.is-owner .manage-button {
-  margin-left: 25px;
+.ParcelOwner .is-address,
+.ParcelOwner .has-access .link {
+  margin-left: 20px;
 }
 
-.ParcelOwner.part-of {
+.ParcelOwner .AddressBlock {
+  height: 24px;
+  margin-left: 10px;
+}
+
+.ParcelOwner .part-of {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--gray);
   max-width: 100%;
-}
-
-.ParcelOwner.part-of .district-name {
-  color: var(--gray);
-}
-
-.ParcelOwner .AddressBlock {
-  height: 24px;
-  margin-left: 10px;
 }

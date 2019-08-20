@@ -36,7 +36,7 @@ const { minX, minY, maxX, maxY } = Bounds.getBounds()
 
 let lastNewTilesRequestTimestamp = Date.now()
 
-export default class ParcelPreview extends React.PureComponent {
+export default class ParcelCanvas extends React.PureComponent {
   // We also have a 'tiles' prop which is an object of 'tilesType'. We don't check it here because it takes up to 6 seconds
   static propTypes = {
     /** where to position the map in the X axis */

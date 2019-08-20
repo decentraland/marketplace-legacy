@@ -37,6 +37,8 @@ export default class ProfilePage extends React.PureComponent {
     contributions: PropTypes.arrayOf(contributionType),
     publishedAssets: PropTypes.arrayOf(assetType),
     mortgagedParcels: PropTypes.arrayOf(parcelType),
+    bids: PropTypes.arrayOf(bidType),
+    hiddenBidsCount: PropTypes.number.isRequired,
     grid: PropTypes.arrayOf(
       PropTypes.oneOfType([parcelType, contributionType])
     ),
@@ -47,17 +49,15 @@ export default class ProfilePage extends React.PureComponent {
     isEmpty: PropTypes.bool,
     isOwner: PropTypes.bool,
     isConnecting: PropTypes.bool,
-    onNavigate: PropTypes.func.isRequired,
-    bids: PropTypes.arrayOf(bidType),
-    hiddenBidsCount: PropTypes.number.isRequired
+    onNavigate: PropTypes.func.isRequired
   }
 
   componentWillMount() {
-    const { address, onAccessDenied } = this.props
+    const { address, onAccessDenied, onFetchAddress } = this.props
     if (isBlacklistedAddress(address)) {
       onAccessDenied()
     }
-    this.props.onFetchAddress()
+    onFetchAddress()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -165,11 +165,9 @@ export default class ProfilePage extends React.PureComponent {
                 })
               }
             >
-              {`${
-                this.isActive(PROFILE_PAGE_TABS.bids)
-                  ? t('bid.see_archived')
-                  : t('bid.see_all')
-              } (${hiddenBidsCount})`}
+              {this.isActive(PROFILE_PAGE_TABS.bids)
+                ? t('bid.see_archived')
+                : t('bid.see_all')}&nbsp;({hiddenBidsCount})
             </a>
             {bidsReceived.length > 0 && (
               <React.Fragment>
@@ -178,13 +176,7 @@ export default class ProfilePage extends React.PureComponent {
                   stackable={true}
                   className={bidsPlaced.length > 0 ? 'with-placed' : ''}
                 >
-                  {bidsReceived.map(bid => (
-                    <BidCard
-                      key={bid.id}
-                      bid={bid}
-                      isOwner={address === bid.seller}
-                    />
-                  ))}
+                  {bidsReceived.map(bid => <BidCard key={bid.id} bid={bid} />)}
                 </Card.Group>
               </React.Fragment>
             )}
@@ -193,13 +185,7 @@ export default class ProfilePage extends React.PureComponent {
               <React.Fragment>
                 <h3 className="bids-title">{t('bid.placed')}</h3>
                 <Card.Group stackable={true}>
-                  {bidsPlaced.map(bid => (
-                    <BidCard
-                      key={bid.id}
-                      bid={bid}
-                      isOwner={address === bid.seller}
-                    />
-                  ))}
+                  {bidsPlaced.map(bid => <BidCard key={bid.id} bid={bid} />)}
                 </Card.Group>
               </React.Fragment>
             )}
@@ -244,8 +230,8 @@ export default class ProfilePage extends React.PureComponent {
     const { address, onNavigate } = this.props
     const url = buildUrl({
       page: 1,
-      address,
-      tab: name
+      tab: name,
+      address
     })
     onNavigate(url)
   }
@@ -261,18 +247,18 @@ export default class ProfilePage extends React.PureComponent {
   render() {
     const {
       address,
-      page,
-      pages,
-      isLoading,
-      isEmpty,
       parcels,
       contributions,
       publishedAssets,
       estates,
       mortgagedParcels,
+      bids,
+      page,
+      pages,
+      isLoading,
+      isEmpty,
       isOwner,
-      isConnecting,
-      bids
+      isConnecting
     } = this.props
 
     return (

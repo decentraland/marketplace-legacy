@@ -53,3 +53,7 @@
   color: var(--primary);
   background: transparent;
 }
+
+.ui.loading.button:after {
+  border-color: var(--red) transparent transparent !important;
+}

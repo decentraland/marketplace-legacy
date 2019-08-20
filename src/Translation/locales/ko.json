@@ -131,7 +131,8 @@
     "owner": "소유자 : {owner}",
     "road": "도로",
     "your_estate": "당신의 재산",
-    "your_parcel": "당신의 토지"
+    "your_parcel": "당신의 토지",
+    "has_access": "너는 접근 할 수있어"
   },
   "auction": {
     "description_after_finish": "LAND 경매가 끝났습니다!",

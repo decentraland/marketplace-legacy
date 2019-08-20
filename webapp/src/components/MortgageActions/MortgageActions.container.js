@@ -16,7 +16,7 @@ const mapDispatch = (dispatch, { mortgage }) => {
   return {
     onCancel: () =>
       dispatch(cancelMortgageRequest(mortgage.mortgage_id, mortgage.asset_id)),
-    onPay: () => dispatch(push(locations.payMortgageParcel(x, y))),
+    onPay: () => dispatch(push(locations.payParcelMortgage(x, y))),
     onClaim: () =>
       dispatch(
         claimMortgageResolutionRequest(mortgage.loan_id, mortgage.asset_id)

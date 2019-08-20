@@ -64,6 +64,31 @@ async function reduceLANDRegistry(event) {
           { update_operator: operator.toLowerCase() },
           { id: parcelId }
         )
+        if (shouldUpdateCache) {
+          await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+        }
+      } catch (error) {
+        log.info(
+          `[${name}] Skipping badly formed data for "${parcelId}" -- ${
+            error.stack
+          }`
+        )
+      }
+      break
+    }
+    case eventNames.Approval: {
+      const { operator } = event.args
+      try {
+        log.info(
+          `[${name}] Updating "${parcelId}": new operator is ${operator}`
+        )
+        await Parcel.update(
+          { operator: operator.toLowerCase() },
+          { id: parcelId }
+        )
+        if (shouldUpdateCache) {
+          await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
+        }
       } catch (error) {
         log.info(
           `[${name}] Skipping badly formed data for "${parcelId}" -- ${
@@ -100,25 +125,6 @@ async function reduceLANDRegistry(event) {
       )
       if (shouldUpdateCache) {
         await Tile.upsertAsset(parcelId, ASSET_TYPES.parcel)
-      }
-      break
-    }
-    case eventNames.Approval: {
-      const { operator } = event.args
-      try {
-        log.info(
-          `[${name}] Updating "${parcelId}": new operator is ${operator}`
-        )
-        await Parcel.update(
-          { operator: operator.toLowerCase() },
-          { id: parcelId }
-        )
-      } catch (error) {
-        log.info(
-          `[${name}] Skipping badly formed data for "${parcelId}" -- ${
-            error.stack
-          }`
-        )
       }
       break
     }
