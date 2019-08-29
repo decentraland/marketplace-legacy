@@ -96,3 +96,14 @@ export function sanitizePrice(value = '') {
 export function getBuyManaURL() {
   return env.get('REACT_APP_BUY_MANA_URL', '')
 }
+
+/*
+* Get whether two address are equal and not undefined
+*/
+export function areEqualAddresses(address1, address2) {
+  return (
+    !!address1 &&
+    !!address2 &&
+    address1.toLowerCase() === address2.toLowerCase()
+  )
+}

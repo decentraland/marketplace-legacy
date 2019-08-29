@@ -5,8 +5,10 @@ import { Asset } from '../Asset'
 import { PublicationQueries } from '../../Listing'
 import { District } from '../../District'
 import { MortgageQueries } from '../../Mortgage'
+import { ApprovalQueries } from '../../Approval'
 import { SQL } from '../../database'
 import { buildCoordinate, splitCoordinate } from '../../shared/coordinates'
+import { ASSET_TYPES } from '../../shared/asset'
 
 export class Parcel extends Model {
   static tableName = 'parcels'
@@ -79,7 +81,11 @@ export class Parcel extends Model {
     return this.query(
       SQL`SELECT *, (
         ${PublicationQueries.findLastAssetPublicationJsonSql(this.tableName)}
-      ) as publication
+      ) as publication,
+        ${ApprovalQueries.selectAssetApprovals(
+          ASSET_TYPES.parcel,
+          this.tableName
+        )}
         FROM ${SQL.raw(this.tableName)}
         WHERE EXISTS(${MortgageQueries.findLastByBorrowerSql(borrower)})`
     )

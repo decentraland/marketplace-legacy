@@ -61,13 +61,13 @@ export default class ProfilePage extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isLoading, isOwner, address } = nextProps
+    const { isLoading, isOwner, address, isConnecting } = nextProps
 
     if (address !== this.props.address) {
       this.props.onFetchAddress(address)
     }
 
-    if (!isLoading && !isOwner && this.onlyOwnerCanAccess()) {
+    if (!isLoading && !isConnecting && !isOwner && this.onlyOwnerCanAccess()) {
       this.handleAddressChange(address)
     }
   }
@@ -81,7 +81,7 @@ export default class ProfilePage extends React.PureComponent {
     this.props.onNavigate(url)
   }
 
-  handlePageChange = (event, data) => {
+  handlePageChange = (_, data) => {
     const { address, tab, onNavigate } = this.props
     const url = buildUrl({
       page: data.activePage,
@@ -197,7 +197,7 @@ export default class ProfilePage extends React.PureComponent {
           <Card.Group stackable={true}>
             {grid.map(parcel => (
               <AssetCard
-                key={parcel.id}
+                key={parcel.mortgage.tx_hash}
                 asset={parcel}
                 isOwnerVisible={false}
                 showMortgage={true}
@@ -226,7 +226,7 @@ export default class ProfilePage extends React.PureComponent {
     )
   }
 
-  handleItemClick = (event, { name }) => {
+  handleItemClick = (_, { name }) => {
     const { address, onNavigate } = this.props
     const url = buildUrl({
       page: 1,
