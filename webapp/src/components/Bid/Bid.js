@@ -82,9 +82,9 @@ export default class Bid extends React.PureComponent {
   }
 
   renderAssetData = () => {
-    const { bid, estates } = this.props
+    const { bid, asset } = this.props
     const { asset_id, asset_type } = bid
-
+    console.log(asset)
     switch (asset_type) {
       case ASSET_TYPES.parcel: {
         const [x, y] = splitCoordinate(asset_id)
@@ -96,8 +96,7 @@ export default class Bid extends React.PureComponent {
         )
       }
       case ASSET_TYPES.estate: {
-        const estate = estates[asset_id]
-        return <span>{estate ? estate.data.name : ''}</span>
+        return <span>{asset ? asset.data.name : ''}</span>
       }
     }
   }
