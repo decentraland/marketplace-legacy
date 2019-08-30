@@ -5,7 +5,6 @@ import { navigateTo } from '@dapps/modules/location/actions'
 import { PROFILE_PAGE_TABS, locations } from 'locations'
 import { Location } from 'lib/Location'
 import { Pagination } from 'lib/Pagination'
-import { areEqualAddresses } from 'lib/utils'
 import { fetchAddress } from 'modules/address/actions'
 import { getLoading } from 'modules/address/selectors'
 import { getWallet, isConnecting } from 'modules/wallet/selectors'
@@ -99,7 +98,7 @@ const mapState = (state, { location, match }) => {
     isEmpty,
     bids,
     hiddenBidsCount: allBidsCount - bids.length,
-    isOwner: areEqualAddresses(wallet.address, address),
+    isOwner: wallet.address === address,
     isConnecting: isConnecting(state)
   }
 }
