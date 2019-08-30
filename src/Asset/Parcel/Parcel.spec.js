@@ -223,6 +223,8 @@ describe('Parcel', function() {
           auction_owner: null,
           estate_id: null,
           tags: {},
+          approvals_for_all: [],
+          update_managers: [],
           publication
         },
         {
@@ -240,6 +242,8 @@ describe('Parcel', function() {
           auction_owner: null,
           estate_id: null,
           tags: {},
+          approvals_for_all: [],
+          update_managers: [],
           publication: publication2
         }
       ])

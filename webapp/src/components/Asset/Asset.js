@@ -10,6 +10,7 @@ import {
 } from 'components/types'
 import NotFound from 'components/NotFound'
 import { can, isOwner } from 'shared/roles'
+import { isOnSale } from 'modules/asset/utils'
 
 let shouldRefresh = false
 let isNavigatingAway = false
@@ -100,10 +101,11 @@ export default class Asset extends React.PureComponent {
 
   isValidOwnership(wallet, asset) {
     const { shouldBeOwner } = this.props
+
     if (shouldBeOwner === undefined) {
       return true
     }
-    return shouldBeOwner && isOwner(wallet.address, asset)
+    return shouldBeOwner === isOwner(wallet.address, asset)
   }
 
   isValidRole(wallet, asset) {
@@ -116,7 +118,7 @@ export default class Asset extends React.PureComponent {
     if (shouldBeOnSale === undefined) {
       return true
     }
-    return shouldBeOnSale && !!asset && asset['publication_tx_hash'] != null
+    return shouldBeOnSale === isOnSale(asset)
   }
 
   redirect() {

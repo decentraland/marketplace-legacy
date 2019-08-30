@@ -16,7 +16,7 @@ import { isLoading, getAuthorizations } from 'modules/authorization/selectors'
 import { isBidIdle, getBidByAssetIdFactory } from 'modules/bid/selectors'
 import BidAssetPage from './BidAssetPage'
 
-const mapState = (state, ownProps) => {
+const mapState = (_, ownProps) => {
   let assetId
   switch (ownProps.assetType) {
     case ASSET_TYPES.parcel: {
