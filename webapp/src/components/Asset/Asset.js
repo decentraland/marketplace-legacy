@@ -72,7 +72,6 @@ export default class Asset extends React.PureComponent {
     }
 
     if (!this.isValid(wallet, asset)) {
-      console.log('aaaa', wallet, asset)
       return this.redirect()
     }
 
