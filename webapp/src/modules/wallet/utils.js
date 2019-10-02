@@ -28,7 +28,11 @@ export function getWalletSagaOptions() {
       ...getMortgageContracts(),
       ...getBidContracts()
     ],
-    eth
+    eth,
+    options: {
+      autoRefreshOnNetworkChange: true,
+      onAccountChanged: () => window.location.reload()
+    }
   }
 }
 

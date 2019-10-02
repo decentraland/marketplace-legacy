@@ -74,7 +74,7 @@ export async function startServer() {
   new BlockchainEventRouter(router).mount()
   new ClaimedNameRouter(router).mount()
 
-  return httpServer.listen(SERVER_PORT, () =>
+  return httpServer.listen(5001, () =>
     console.log('Server running on port', SERVER_PORT)
   )
 }
