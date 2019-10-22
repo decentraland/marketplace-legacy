@@ -141,12 +141,11 @@ async function manageLANDAction(options) {
     if (!shouldTransfer) process.exit()
   }
 
-  await transferLANDs({
+  await transferLANDs(recipients, {
     batchSize: options.batchSize,
     gasPrice: options.gasPrice,
     txDelay: options.txDelay,
-    retryFailedTxs: options.retryFailedTxs,
-    recipients
+    retryFailedTxs: options.retryFailedTxs
   })
 }
 
@@ -175,19 +174,18 @@ async function transferAllAction(options) {
     options.landBatchSize
   )
 
-  await transferManyLAND({
+  await transferManyLAND(landBatches, {
     batchSize: options.batchSize,
     gasPrice: options.gasPrice,
     txDelay: options.txDelay,
     retryFailedTxs: options.retryFailedTxs,
     from,
-    to,
-    landBatches
+    to
   })
 }
 
-async function transferLANDs(args) {
-  const { recipients, batchSize, gasPrice, shouldRetry, txDelay } = args
+async function transferLANDs(...args) {
+  const [recipients, { batchSize, gasPrice, shouldRetry, txDelay }] = args
 
   const account = eth.getAccount()
   const LANDRegistryContract = eth.getContract('LANDRegistry')
@@ -237,16 +235,11 @@ async function transferLANDs(args) {
   }
 }
 
-async function transferManyLAND(args) {
-  const {
-    from,
-    to,
+async function transferManyLAND(...args) {
+  const [
     landBatches,
-    batchSize,
-    gasPrice,
-    shouldRetry,
-    txDelay
-  } = args
+    { from, to, batchSize, gasPrice, shouldRetry, txDelay }
+  ] = args
 
   const account = eth.getAccount()
   const LANDRegistryContract = eth.getContract('LANDRegistry')
@@ -302,10 +295,8 @@ async function transferManyLAND(args) {
 async function checkAllowance(land) {
   const account = eth.getAccount()
   const LANDRegistryContract = eth.getContract('LANDRegistry')
-  if (
-    (await LANDRegistryContract.getApproved(land.id)).toLowerCase() !==
-    account.toLowerCase()
-  ) {
+  const operator = await LANDRegistryContract.getApproved(land.id)
+  if (operator.toLowerCase() !== account.toLowerCase()) {
     throw new Error(
       `Error: ${account} does not have permission to move (${land.x}, ${
         land.y
