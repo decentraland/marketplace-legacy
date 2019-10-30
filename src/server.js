@@ -40,7 +40,7 @@ app.use((_, res, next) => {
 })
 
 if (!env.isDevelopment()) {
-  // This is not ideal, but adding newrelic to development is worst
+  // This is not ideal, but adding newrelic to development is worse
   require('newrelic')
 }
 
