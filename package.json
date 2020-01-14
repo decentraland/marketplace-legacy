@@ -1,6 +1,6 @@
 {
   "name": "marketplace",
-  "version": "1.19.1",
+  "version": "1.19.2",
   "description": "Decentraland's LAND Marketplace",
   "main": "src/server.js",
   "scripts": {
