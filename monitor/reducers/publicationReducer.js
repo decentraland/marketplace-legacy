@@ -48,6 +48,11 @@ async function reduceMarketplace(event) {
   const { tx_hash, block_number, name, address } = event
 
   const assetType = getAssetTypeFromEvent(event)
+
+  if (!assetType) {
+    return log.info(`[${name}] Invalid Asset Type`)
+  }
+
   const [assetId, blockTime] = await Promise.all([
     getAssetIdFromEvent(event),
     new BlockTimestampService().getBlockTime(block_number)

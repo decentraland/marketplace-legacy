@@ -13,7 +13,14 @@ export function getAssetTypeFromEvent(event) {
       return ASSET_TYPES.estate
     case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'): // Supports the old marketplace, default should be undefined when deprecated
     default:
-      return ASSET_TYPES.parcel
+      if (
+        event.address.toLowerCase() ===
+        env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS').toLowerCase()
+      ) {
+        return ASSET_TYPES.parcel
+      } else {
+        return null
+      }
   }
 }
 
