@@ -1,8 +1,8 @@
 const BOUND_COORDINATES = {
   minX: -150,
   minY: -150,
-  maxX: 150,
-  maxY: 150
+  maxX: 165,
+  maxY: 165
 }
 
 export class Bounds {
