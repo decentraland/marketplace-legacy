@@ -11,8 +11,11 @@ export function getAssetTypeFromEvent(event) {
   switch (nftAddress) {
     case env.get('ESTATE_REGISTRY_CONTRACT_ADDRESS'):
       return ASSET_TYPES.estate
-    case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'): // Supports the old marketplace, default should be undefined when deprecated
+    case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'):
+      return ASSET_TYPES.parcel
+
     default:
+      // Supports the old marketplace, default should be undefined when deprecated
       if (
         event.address.toLowerCase() ===
         env.get('LEGACY_MARKETPLACE_CONTRACT_ADDRESS').toLowerCase()
