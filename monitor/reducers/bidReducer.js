@@ -29,11 +29,6 @@ export async function bidReducer(event) {
 
 async function reduceBid(event) {
   const { address, name, block_number } = event
-  const assetType = getAssetTypeFromEvent(event)
-
-  if (!assetType) {
-    return log.info(`[${name}] Invalid Asset Type`)
-  }
 
   const [assetId, blockTime] = await Promise.all([
     getAssetIdFromEvent(event),
@@ -47,6 +42,12 @@ async function reduceBid(event) {
 
   switch (name) {
     case eventNames.BidCreated: {
+      const assetType = getAssetTypeFromEvent(event)
+
+      if (!assetType) {
+        return log.info(`[${name}] Invalid Asset Type`)
+      }
+
       const {
         _id,
         _tokenAddress,
