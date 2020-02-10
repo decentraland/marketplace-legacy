@@ -13,7 +13,6 @@ export function getAssetTypeFromEvent(event) {
       return ASSET_TYPES.estate
     case env.get('LAND_REGISTRY_CONTRACT_ADDRESS'):
       return ASSET_TYPES.parcel
-
     default:
       // Supports the old marketplace, default should be undefined when deprecated
       if (
