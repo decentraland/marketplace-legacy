@@ -26,14 +26,14 @@ jobs:
       #       CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
       - restore_cache:
           keys:
-            - frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
+            - frontend-dependencies-legacy-{{ checksum "webapp/package-lock.json" }}
       - run:
           name: (frontend) Install packages
           command: cd webapp && npm i
       - save_cache:
           paths:
             - node_modules
-          key: frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
+          key: frontend-dependencies-legacy-{{ checksum "webapp/package-lock.json" }}
       - run:
           name: (frontend) Build
           command: cd webapp && npm run build
