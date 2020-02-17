@@ -3,10 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:8.15.1
-      - image: circleci/postgres:9.6
-        environment:
-          POSTGRES_USER: marketplace
-          POSTGRES_DB: marketplace
     working_directory: /tmp/marketplace
     steps:
       - checkout
