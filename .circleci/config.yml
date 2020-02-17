@@ -13,21 +13,21 @@ jobs:
       - run:
           name: Install system dependencies
           command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
-      - restore_cache:
-          keys:
-            - backend-dependencies-{{ checksum "package-lock.json" }}
-      - run:
-          name: (backend) Install packages
-          command: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: backend-dependencies-{{ checksum "package-lock.json" }}
-      - run:
-          name: (backend) Build
-          command: npm run build:ci
-          environment:
-            CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
+      # - restore_cache:
+      #     keys:
+      #       - backend-dependencies-{{ checksum "package-lock.json" }}
+      # - run:
+      #     name: (backend) Install packages
+      #     command: npm install
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: backend-dependencies-{{ checksum "package-lock.json" }}
+      # - run:
+      #     name: (backend) Build
+      #     command: npm run build:ci
+      #     environment:
+      #       CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
       - restore_cache:
           keys:
             - frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
@@ -100,7 +100,8 @@ workflows:
           context: marketplace-dev
           filters:
             branches:
-              only: master
+              only: /(.*)/
+              # only: master
       - deploy:
           context: marketplace-dev
           requires:
