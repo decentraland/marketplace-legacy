@@ -20,8 +20,39 @@ import { bidSagas } from 'modules/bid/sagas'
 
 import { api } from 'lib/api'
 
+const localTranslations = {
+  en: {
+    warning:
+      'Due to an error in our indexer the new marketplace is under mantainance'
+  },
+  es: {
+    warning:
+      'Due to an error in our indexer the new marketplace is under mantainance'
+  },
+  fr: {
+    warning:
+      'Due to an error in our indexer the new marketplace is under mantainance'
+  },
+  ja: {
+    warning:
+      'Due to an error in our indexer the new marketplace is under mantainance'
+  },
+  zh: {
+    warning:
+      'Due to an error in our indexer the new marketplace is under mantainance'
+  },
+  ko: {
+    warning:
+      'Due to an error in our indexer the new marketplace is under mantainance'
+  }
+}
+
 const translationSaga = createTranslationSaga({
-  getTranslation: locale => api.fetchTranslations(locale)
+  getTranslation: locale =>
+    api.fetchTranslations(locale).then(translations => ({
+      ...translations,
+      ...localTranslations[locale]
+    }))
 })
 
 export function* rootSaga() {
