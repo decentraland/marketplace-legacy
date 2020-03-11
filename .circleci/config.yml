@@ -70,8 +70,8 @@ jobs:
           name: Upload new assets => S3
           command: ~/.local/bin/aws s3 cp webapp/build ${APP_S3_BUCKET} --acl public-read --recursive
       - run:
-          name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id ${APP_CF_DISTRIBUTION} --paths "/" "/*"
+          name: Invalidate cloudflare cache
+          command: curl --silent ${PURGE_CACHE_URL}
 
 workflows:
   version: 2
