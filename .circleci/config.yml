@@ -23,11 +23,11 @@ jobs:
           paths:
             - node_modules
           key: backend-dependencies-{{ checksum "package-lock.json" }}
-      - run:
-          name: (backend) Build
-          command: npm run build:ci
-          environment:
-            CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
+      # - run:
+      #     name: (backend) Build
+      #     command: npm run build:ci
+      #     environment:
+      #       CONNECTION_STRING: 'postgres://marketplace@localhost:5432/marketplace'
       - restore_cache:
           keys:
             - frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
