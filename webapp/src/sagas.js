@@ -27,23 +27,21 @@ const localTranslations = {
   },
   es: {
     warning:
-      'Due to an error in our indexer the new marketplace is under mantainance'
+      'Debido a un error con nuestro indexador, el nuevo mercado está en mantenimiento'
   },
   fr: {
     warning:
-      'Due to an error in our indexer the new marketplace is under mantainance'
+      "En raison d'une erreur avec notre indexeur, le nouveau marché est sous contrôle"
   },
   ja: {
     warning:
-      'Due to an error in our indexer the new marketplace is under mantainance'
+      'インデクサーのエラーにより、新しいマーケットプレイスは管理下にあります'
   },
   zh: {
-    warning:
-      'Due to an error in our indexer the new marketplace is under mantainance'
+    warning: '由于我们的索引器出现错误，因此新市场处于维护状态'
   },
   ko: {
-    warning:
-      'Due to an error in our indexer the new marketplace is under mantainance'
+    warning: '인덱서의 오류로 인해 새로운 마켓 플레이스가 관리 중입니다.'
   }
 }
 
