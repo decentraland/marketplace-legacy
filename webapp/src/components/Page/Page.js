@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { T } from '@dapps/modules/translation/utils'
-import { Icon } from 'decentraland-ui'
 
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
@@ -26,10 +24,6 @@ export default class Page extends React.PureComponent {
     onFetchTiles: () => {},
     onFetchDistricts: () => {},
     onFirstVisit: () => {}
-  }
-
-  state = {
-    isBannerOpen: true
   }
 
   componentWillMount() {
@@ -64,15 +58,6 @@ export default class Page extends React.PureComponent {
 
     return (
       <React.Fragment>
-        {this.state.isBannerOpen ? (
-          <div className="Banner">
-            <T id="warning" />
-            <Icon
-              name="close"
-              onClick={() => this.setState({ isBannerOpen: false })}
-            />
-          </div>
-        ) : null}
         <Navbar />
         <div className="Page">
           {children}
