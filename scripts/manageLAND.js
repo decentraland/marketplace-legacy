@@ -9,7 +9,8 @@ import {
   executeTransactions,
   loadEnv,
   asSafeAction,
-  checkContains
+  checkContains,
+  readJSONElements
 } from './utils'
 import { PROVIDER_TYPES } from '../src/ethereum'
 import { asyncBatch } from '../src/lib'
@@ -22,9 +23,55 @@ const DEFAULT_OPTIONS = {
   landBatchSize: 35,
   gasPrice: undefined
 }
-const requiredOptionNames = ['from', 'to']
+const requiredManageLANDOptionNames = ['recipients']
+const requiredTransferAllOptionNames = ['from', 'to']
 
-const manageMana = {
+const manageLAND = {
+  addCommands(program) {
+    program
+      .command('manage-land')
+      .option('--account [account]', 'Account address')
+      .option('--password [password]', 'Password for the account')
+      .option(
+        `--provider [${Object.values(PROVIDER_TYPES).join(' | ')}]`,
+        `Provider type to be used. Default: ${PROVIDER_TYPES.HTTP}`
+      )
+      .option(
+        '--recipients [recipients]',
+        'List of recipients with from, to and LAND id'
+      )
+      .option(
+        '--batchSize [batchSize]',
+        `Amount of simultaneous transfer transactions. Default ${
+          DEFAULT_OPTIONS.batchSize
+        }`
+      )
+      .option(
+        '--gasPrice [gasPrice]',
+        'Value to use as gas price. By default it will let the node calculate it'
+      )
+      .option(
+        '-d, --txDelay [txDelay]',
+        `Delay between txs in milliseconds. Default: ${DEFAULT_OPTIONS.txDelay}`
+      )
+      .option(
+        '-r, --retryFailedTxs',
+        'If this flag is present, the script will try to retry failed transactions'
+      )
+      .option(
+        '-y, --yes',
+        'If this flag is present the confirm prompt will be skipped'
+      )
+      .action(
+        asSafeAction(async userOptions => {
+          const options = Object.assign(DEFAULT_OPTIONS, userOptions)
+          await manageLANDAction(options)
+        })
+      )
+  }
+}
+
+const transferAll = {
   addCommands(program) {
     program
       .command('transfer-all')
@@ -67,54 +114,132 @@ const manageMana = {
       .action(
         asSafeAction(async userOptions => {
           const options = Object.assign(DEFAULT_OPTIONS, userOptions)
-          checkContains(options, requiredOptionNames)
-
-          await setupEth({
-            account: options.account,
-            password: options.password,
-            providerType: options.provider
-          })
-
-          const balance = await getBalance(options.from)
-          const { from, to } = options
-
-          if (!options.yes) {
-            const shouldTransfer = await cli.confirm(
-              `About to move ${balance} LANDs from ${from} to ${to} by ${eth.getAccount()}. Ok?`
-            )
-            if (!shouldTransfer) process.exit()
-          }
-
-          const landBatches = await getLANDBatches(
-            from,
-            balance.toNumber(),
-            options.landBatchSize
-          )
-
-          await transferLANDs({
-            batchSize: options.batchSize,
-            gasPrice: options.gasPrice,
-            txDelay: options.txDelay,
-            retryFailedTxs: options.retryFailedTxs,
-            from,
-            to,
-            landBatches
-          })
+          await transferAllAction(options)
         })
       )
   }
 }
 
-async function transferLANDs(args) {
-  const {
+async function manageLANDAction(options) {
+  checkContains(options, requiredManageLANDOptionNames)
+
+  await setupEth({
+    account: options.account,
+    password: options.password,
+    providerType: options.provider
+  })
+
+  const recipients = await readJSONElements(
+    options.recipients,
+    getValidRecipients
+  )
+
+  if (!options.yes) {
+    const shouldTransfer = await cli.confirm(
+      `About to transfer ${recipients.length} LANDs by ${eth.getAccount()}. Ok?`
+    )
+    if (!shouldTransfer) process.exit()
+  }
+
+  await transferLANDs(recipients, {
+    batchSize: options.batchSize,
+    gasPrice: options.gasPrice,
+    txDelay: options.txDelay,
+    retryFailedTxs: options.retryFailedTxs
+  })
+}
+
+async function transferAllAction(options) {
+  checkContains(options, requiredTransferAllOptionNames)
+
+  await setupEth({
+    account: options.account,
+    password: options.password,
+    providerType: options.provider
+  })
+
+  const balance = await getBalance(options.from)
+  const { from, to } = options
+
+  if (!options.yes) {
+    const shouldTransfer = await cli.confirm(
+      `About to transfer ${balance} LANDs from ${from} to ${to} by ${eth.getAccount()}. Ok?`
+    )
+    if (!shouldTransfer) process.exit()
+  }
+
+  const landBatches = await getLANDBatches(
     from,
-    to,
+    balance.toNumber(),
+    options.landBatchSize
+  )
+
+  await transferManyLAND(landBatches, {
+    batchSize: options.batchSize,
+    gasPrice: options.gasPrice,
+    txDelay: options.txDelay,
+    retryFailedTxs: options.retryFailedTxs,
+    from,
+    to
+  })
+}
+
+async function transferLANDs(...args) {
+  const [recipients, { batchSize, gasPrice, shouldRetry, txDelay }] = args
+
+  const account = eth.getAccount()
+  const LANDRegistryContract = eth.getContract('LANDRegistry')
+
+  log.info('Transfering LANDs')
+
+  const txsToRetry = await executeTransactions(
+    recipients,
+    recipientsBatch =>
+      recipientsBatch.map(async recipient => {
+        const { from, to, id } = recipient
+        const [x, y] = id.split(',')
+        const encodedId = await LANDRegistryContract.encodeTokenId(x, y)
+        if (from.toLowerCase() !== account.toLowerCase()) {
+          const isApprovedForAll = await LANDRegistryContract.isApprovedForAll(
+            from,
+            account
+          )
+          if (!isApprovedForAll) {
+            await checkAllowance({ id: encodedId, x, y })
+          }
+        }
+
+        console.log(`Sending (${x}, ${y}) from ${from} to ${to}\n`)
+
+        const hash = await LANDRegistryContract.transferFrom(
+          from,
+          to,
+          encodedId,
+          {
+            gasPrice: gasPrice,
+            from: account
+          }
+        )
+
+        return { hash, data: recipient }
+      }),
+    { batchSize, txDelay }
+  )
+
+  log.info(`Sent ${recipients.length - txsToRetry.length} transactions`)
+
+  if (txsToRetry.length > 0 && shouldRetry) {
+    const recipientsToRetry = txsToRetry.map(tx => tx.data)
+    log.info(`Retrying on ${recipientsToRetry.length} recipients`)
+    return transferLANDs(recipientsToRetry, ...args.slice(1))
+  }
+}
+
+async function transferManyLAND(...args) {
+  const [
     landBatches,
-    batchSize,
-    gasPrice,
-    shouldRetry,
-    txDelay
-  } = args
+    { from, to, batchSize, gasPrice, shouldRetry, txDelay }
+  ] = args
 
   const account = eth.getAccount()
   const LANDRegistryContract = eth.getContract('LANDRegistry')
@@ -138,17 +263,7 @@ async function transferLANDs(args) {
             !isApprovedForAll &&
             from.toLowerCase() !== account.toLowerCase()
           ) {
-            if (
-              (await LANDRegistryContract.getApproved(
-                land.id
-              )).toLowerCase() !== account.toLowerCase()
-            ) {
-              throw new Error(
-                `Error: ${account} does not have permission to move (${
-                  land.x
-                }, ${land.y})`
-              )
-            }
+            await checkAllowance(isApprovedForAll, from, land.id)
           }
           xs.push(land.x)
           ys.push(land.y)
@@ -173,7 +288,20 @@ async function transferLANDs(args) {
   if (txsToRetry.length > 0 && shouldRetry) {
     const landBatchessToRetry = txsToRetry.map(tx => tx.data)
     log.info(`Retrying on ${landBatchessToRetry.length} recipients`)
-    return transferLANDs(landBatchessToRetry, ...args.slice(1))
+    return transferManyLAND(landBatchessToRetry, ...args.slice(1))
+  }
+}
+
+async function checkAllowance(land) {
+  const account = eth.getAccount()
+  const LANDRegistryContract = eth.getContract('LANDRegistry')
+  const operator = await LANDRegistryContract.getApproved(land.id)
+  if (operator.toLowerCase() !== account.toLowerCase()) {
+    throw new Error(
+      `Error: ${account} does not have permission to move (${land.x}, ${
+        land.y
+      })`
+    )
   }
 }
 
@@ -208,10 +336,26 @@ async function getLANDBatches(from, balance, landBatchSize) {
   return landBatches
 }
 
+async function getValidRecipients(allRecipients) {
+  const recipients = []
+
+  for (const recipient of allRecipients) {
+    const { from, to, id } = recipient
+
+    if (!from || !to || !id || id.split(',').length !== 2) {
+      log.info(`Invalid recipient: ${from}, ${to}, ${id}`)
+      continue
+    }
+    recipients.push(recipient)
+  }
+
+  return recipients
+}
+
 if (require.main === module) {
   loadEnv()
 
   Promise.resolve()
-    .then(() => cli.runProgram([manageMana]))
+    .then(() => cli.runProgram([manageLAND, transferAll]))
     .catch(console.error)
 }
