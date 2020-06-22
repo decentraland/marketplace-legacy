@@ -34,6 +34,7 @@ app.use((_, res, next) => {
     'Access-Control-Allow-Methods',
     'OPTIONS, GET, POST, PUT, DELETE'
   )
+  res.setHeader('Access-Control-Expose-Headers', 'etag')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
   next()
