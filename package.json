@@ -57,7 +57,7 @@
     "eslint-plugin-react": "^7.5.1",
     "eth-connect": "^4.0.1",
     "ethereumjs-abi": "^0.6.5",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "faker": "^4.1.0",
     "flat": "^4.0.0",
     "inquirer": "^5.2.0",
