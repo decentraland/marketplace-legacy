@@ -59,7 +59,7 @@
     "ethereumjs-abi": "^0.6.5",
     "express": "^4.16.2",
     "faker": "^4.1.0",
-    "flat": "^4.0.0",
+    "flat": "^5.0.1",
     "inquirer": "^5.2.0",
     "mocha": "^4.0.1",
     "newrelic": "^4.8.0",
